@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6751" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MeViewController">
+            <connections>
+                <outlet property="btnAuth" destination="tL2-6n-gXn" id="eNm-rd-PxZ"/>
+                <outlet property="btnEdit" destination="qRJ-9x-nOe" id="IVw-Tz-l6R"/>
+                <outlet property="btnInvite" destination="iPL-IK-YHQ" id="ggk-xV-6g6"/>
+                <outlet property="btnUserPic" destination="d3m-6M-nt5" id="UPH-hl-LqM"/>
+                <outlet property="lblCommission" destination="64f-fi-XSs" id="Bfz-gg-SEJ"/>
+                <outlet property="lblYuan" destination="Y7Y-dZ-AIv" id="yhx-kj-Dfg"/>
+                <outlet property="txtNickName" destination="6To-Qa-Lsq" id="PmY-uP-EVu"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
+            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+        </view>
+        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Aif-Hw-V8z">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="160"/>
+            <subviews>
+                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="d3m-6M-nt5">
+                    <rect key="frame" x="27" y="38" width="55" height="55"/>
+                    <state key="normal" backgroundImage="edit.png">
+                        <color key="titleColor" red="0.41304337330000002" green="0.59745956489999996" blue="0.66666666669999997" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="actionUserpic:" destination="-1" eventType="touchUpInside" id="w8y-Dz-EiQ"/>
+                    </connections>
+                </button>
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Icarus" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6To-Qa-Lsq">
+                    <rect key="frame" x="116" y="20" width="150" height="25"/>
+                    <fontDescription key="fontDescription" name="Palatino-Roman" family="Palatino" pointSize="15"/>
+                    <textInputTraits key="textInputTraits"/>
+                </textField>
+                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qRJ-9x-nOe">
+                    <rect key="frame" x="194" y="23" width="20" height="20"/>
+                    <state key="normal" image="edit.png">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="actionEdit:" destination="-1" eventType="touchUpInside" id="zP6-bd-1bk"/>
+                    </connections>
+                </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="总佣金:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="q1o-qa-HVh">
+                    <rect key="frame" x="116" y="53" width="56" height="25"/>
+                    <fontDescription key="fontDescription" name="Palatino-Roman" family="Palatino" pointSize="15"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="888888" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="64f-fi-XSs">
+                    <rect key="frame" x="173" y="53" width="85" height="25"/>
+                    <fontDescription key="fontDescription" name="Palatino-Roman" family="Palatino" pointSize="15"/>
+                    <color key="textColor" red="0.85868112664473684" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="元" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y7Y-dZ-AIv">
+                    <rect key="frame" x="224" y="53" width="19" height="25"/>
+                    <fontDescription key="fontDescription" name="Palatino-Roman" family="Palatino" pointSize="15"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iPL-IK-YHQ">
+                    <rect key="frame" x="201" y="86" width="64" height="25"/>
+                    <fontDescription key="fontDescription" name="Palatino-Roman" family="Palatino" pointSize="13"/>
+                    <state key="normal" title="邀请好友">
+                        <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="actionInvite:" destination="-1" eventType="touchUpInside" id="mVo-RQ-Ea8"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FcH-M1-Kun">
+                    <rect key="frame" x="0.0" y="130" width="107" height="30"/>
+                    <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.93725490196078431" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="200" id="6dK-89-RQA"/>
+                    </constraints>
+                    <state key="normal">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="6dK-89-RQA"/>
+                        </mask>
+                    </variation>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tL2-6n-gXn">
+                    <rect key="frame" x="109" y="86" width="70" height="25"/>
+                    <fontDescription key="fontDescription" name="Palatino-Roman" family="Palatino" pointSize="13"/>
+                    <state key="normal" title="身份认证">
+                        <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="actionAuth:" destination="-1" eventType="touchUpInside" id="VmU-cV-63i"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="29u-g9-ANO">
+                    <rect key="frame" x="23" y="132" width="60" height="12"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                    <state key="normal" title="15">
+                        <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KoY-uq-cM5">
+                    <rect key="frame" x="23" y="145" width="60" height="15"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                    <state key="normal" title="圈子">
+                        <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                </button>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="height" constant="131" id="9a8-eT-8XE"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="9a8-eT-8XE"/>
+                </mask>
+            </variation>
+            <point key="canvasLocation" x="341" y="-401"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="edit.png" width="25" height="25"/>
+    </resources>
+</document>

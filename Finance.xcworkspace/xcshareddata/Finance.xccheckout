@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>1EB954C7-4D39-4D93-82E1-A49A85416B65</string>
+	<key>IDESourceControlProjectName</key>
+	<string>Finance</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>e34d2a61-9546-42ae-90fa-6bc0f1558e70++3454</key>
+		<string>svn://120.26.114.154/jinrong/sc/ios/branches/cchx</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>Finance.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>e34d2a61-9546-42ae-90fa-6bc0f1558e70++3454</key>
+		<string>..</string>
+	</dict>
+	<key>IDESourceControlProjectRepositoryRootDictionary</key>
+	<dict>
+		<key>e34d2a61-9546-42ae-90fa-6bc0f1558e70++3454</key>
+		<string>svn://120.26.114.154/jinrong</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>svn://120.26.114.154/jinrong/sc/ios/branches/cchx/Finance.xcworkspace</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>e34d2a61-9546-42ae-90fa-6bc0f1558e70++3454</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.subversion</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>e34d2a61-9546-42ae-90fa-6bc0f1558e70++3454</string>
+			<key>IDESourceControlWCCName</key>
+			<string>cchx</string>
+		</dict>
+	</array>
+</dict>
+</plist>

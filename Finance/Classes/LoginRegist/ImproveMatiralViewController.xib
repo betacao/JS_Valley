@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ImproveMatiralViewController">
+            <connections>
+                <outlet property="bgScrollView" destination="lqE-ir-O2y" id="XNj-V0-sXr"/>
+                <outlet property="companyTextField" destination="qVX-cf-bbV" id="VAE-y8-OEM"/>
+                <outlet property="headImageButton" destination="ZIl-lr-lRE" id="WaB-DS-Qt4"/>
+                <outlet property="nameTextField" destination="eVr-1T-PNk" id="Oez-3J-gyp"/>
+                <outlet property="titleTextField" destination="Hnk-G5-0Cf" id="QmA-69-Mcn"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" id="lqE-ir-O2y">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    <subviews>
+                        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="qtb-wf-Lmp">
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="ZIl-lr-lRE">
+                                    <rect key="frame" x="137" y="22" width="46" height="45"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <state key="normal" backgroundImage="default_head">
+                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="headImageButtonClicked:" destination="-1" eventType="touchUpInside" id="ki0-Yy-dfc"/>
+                                    </connections>
+                                </button>
+                                <view contentMode="scaleToFill" id="Cco-xL-6Bt">
+                                    <rect key="frame" x="12" y="76" width="296" height="1"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                </view>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="姓名" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="0U0-pU-LOb">
+                                    <rect key="frame" x="16" y="97" width="69" height="30"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <fontDescription key="fontDescription" name="Palatino-Roman" family="Palatino" pointSize="17"/>
+                                    <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入你的姓名" minimumFontSize="17" id="eVr-1T-PNk">
+                                    <rect key="frame" x="88" y="90" width="214" height="44"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    <fontDescription key="fontDescription" name="Palatino-Roman" family="Palatino" pointSize="17"/>
+                                    <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                                    <connections>
+                                        <outlet property="delegate" destination="-1" id="hCO-3e-8fd"/>
+                                    </connections>
+                                </textField>
+                                <view contentMode="scaleToFill" id="OKG-ju-zhE">
+                                    <rect key="frame" x="12" y="135" width="296" height="1"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                </view>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="公司" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="J6r-FJ-d5q">
+                                    <rect key="frame" x="16" y="157" width="69" height="30"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <fontDescription key="fontDescription" name="Palatino-Roman" family="Palatino" pointSize="17"/>
+                                    <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入你的公司名" minimumFontSize="17" id="qVX-cf-bbV">
+                                    <rect key="frame" x="88" y="150" width="214" height="44"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    <fontDescription key="fontDescription" name="Palatino-Roman" family="Palatino" pointSize="17"/>
+                                    <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                                    <connections>
+                                        <outlet property="delegate" destination="-1" id="35Y-US-yV9"/>
+                                    </connections>
+                                </textField>
+                                <view contentMode="scaleToFill" id="Pb5-pR-GMI">
+                                    <rect key="frame" x="12" y="195" width="296" height="1"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                </view>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="职务" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="8ka-TG-47W">
+                                    <rect key="frame" x="16" y="217" width="69" height="30"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <fontDescription key="fontDescription" name="Palatino-Roman" family="Palatino" pointSize="17"/>
+                                    <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入你的职称" minimumFontSize="17" id="Hnk-G5-0Cf">
+                                    <rect key="frame" x="88" y="211" width="214" height="44"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    <fontDescription key="fontDescription" name="Palatino-Roman" family="Palatino" pointSize="17"/>
+                                    <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                                    <connections>
+                                        <outlet property="delegate" destination="-1" id="hy1-Oo-Xcu"/>
+                                    </connections>
+                                </textField>
+                                <view contentMode="scaleToFill" id="6qc-gG-jEl">
+                                    <rect key="frame" x="12" y="255" width="296" height="1"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                </view>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="注：所填信息需与上传名片保持一致(认证时需上传名片)" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="byx-le-Rxc">
+                                    <rect key="frame" x="16" y="273" width="286" height="35"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
+                                    <color key="textColor" red="0.50588235290000005" green="0.50588235290000005" blue="0.50588235290000005" alpha="1" colorSpace="calibratedRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="nrN-0V-LdX">
+                                    <rect key="frame" x="12" y="316" width="296" height="50"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                    <color key="backgroundColor" red="0.97254901959999995" green="0.35686274509999999" blue="0.32549019610000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                    <state key="normal" title="下一步">
+                                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="submitButtonClicked:" destination="-1" eventType="touchUpInside" id="FZB-45-eRe"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        </view>
+                    </subviews>
+                    <connections>
+                        <outlet property="delegate" destination="-1" id="yhl-H8-fsk"/>
+                    </connections>
+                </scrollView>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <point key="canvasLocation" x="232" y="341"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="default_head" width="272" height="272"/>
+    </resources>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination" type="retina4"/>
+    </simulatedMetricsContainer>
+</document>

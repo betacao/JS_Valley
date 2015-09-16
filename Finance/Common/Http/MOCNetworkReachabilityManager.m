@@ -1,0 +1,81 @@
+//
+//  MOCNetworkReachabilityManager.m
+//  
+//
+//  Created by 吴仕海 on 4/2/15.
+//
+//
+
+#import "MOCNetworkReachabilityManager.h"
+#import "AFHTTPRequestOperationManager.h"
+
+NSString * const moc_network_status_change_notification = @"moc_network_status_change_notification";
+
+static AFHTTPRequestOperationManager *moc_http_request_operation_manager(NSString *checkURLString){
+    static AFHTTPRequestOperationManager *mow_http_request_operation_manager;
+    static dispatch_once_t oneToken;
+    if (IsStrEmpty(checkURLString)) {
+        checkURLString = @"www.baidu.com";
+    }
+    dispatch_once(&oneToken,^{
+        NSURL *baseURL = [NSURL URLWithString:checkURLString];
+        mow_http_request_operation_manager = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:baseURL];
+    });
+    return mow_http_request_operation_manager;
+}
+
+AFNetworkReachabilityStatus netwokStatus = AFNetworkReachabilityStatusReachableViaWWAN;//默认环境
+BOOL monitorIsInit;
+
+@implementation MOCNetworkReachabilityManager
+
++ (void)startMonitor:(NSString *)checkURLString{
+    [MOCNetworkReachabilityManager startMonitor:checkURLString viaWWAN:nil viaWiFi:nil notReachable:nil];
+}
+
++ (void)startMonitor:(NSString *)checkURLString viaWWAN:(MOCNetworkReachabilityManagerBlock)viaWWANBlock viaWiFi:(MOCNetworkReachabilityManagerBlock)viaWiFiBlock notReachable:(MOCNetworkReachabilityManagerBlock)notReachableBlock{
+    
+    AFHTTPRequestOperationManager *manager = moc_http_request_operation_manager(checkURLString);
+    monitorIsInit = YES;
+    
+    [manager.reachabilityManager setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
+        switch (status) {
+            case AFNetworkReachabilityStatusReachableViaWWAN:{
+                netwokStatus = AFNetworkReachabilityStatusReachableViaWWAN;
+                viaWWANBlock?viaWWANBlock():nil;
+            }
+                break;
+            case AFNetworkReachabilityStatusReachableViaWiFi:{
+                netwokStatus = AFNetworkReachabilityStatusReachableViaWiFi;
+                viaWiFiBlock?viaWiFiBlock():nil;
+            }
+                break;
+            case AFNetworkReachabilityStatusNotReachable:{
+                netwokStatus = AFNetworkReachabilityStatusNotReachable;
+                notReachableBlock?notReachableBlock():nil;
+            }
+                break;
+            default:
+                break;
+        }
+        [[NSNotificationCenter defaultCenter] postNotificationName:moc_network_status_change_notification object:@(status)];
+    }];
+    
+    [manager.reachabilityManager startMonitoring];
+}
+
++ (AFNetworkReachabilityStatus)status{
+    return netwokStatus;
+}
++ (BOOL)isReachable{
+    if (!monitorIsInit) {//如果没有初始化则默认可通
+        return YES;
+    }
+    if (netwokStatus == AFNetworkReachabilityStatusReachableViaWWAN || netwokStatus == AFNetworkReachabilityStatusReachableViaWiFi) {
+        return YES;
+    }else{
+        return NO;
+    }
+}
+
+@end

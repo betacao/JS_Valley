@@ -1,0 +1,297 @@
+//
+//  MOCHTTPRequestOperationManager.m
+//  
+//
+//  Created by 吴仕海 on 4/1/15.
+//
+//
+
+#import "MOCHTTPRequestOperationManager.h"
+#import "AFNetworking.h"
+#import <Mantle/Mantle.h>
+#import "MOCNetworkReachabilityManager.h"
+
+NSString * const moc_http_request_operation_manager_response_server_error_message = @"亲，您的网络不给力哦，请您稍后重试。";
+NSString * const moc_http_request_operation_manager_response_server_error_code = @"-9989";
+NSString * const moc_http_request_operation_manager_response_network_error_message = @"本地网络异常，请检查你的网络";
+NSString * const moc_http_request_operation_manager_response_network_error_code = @"-9998";
+NSString * const moc_http_request_operation_manager_response_token_error_message = @"token错误";
+NSString * const moc_http_request_operation_manager_response_token_error_code = @"-9899";
+NSString * const moc_http_request_operation_manager_response_other_error_message = @"系统级错误";
+NSString * const moc_http_request_operation_manager_response_other_error_code = @"-8999";
+
+NSString *moc_http_request_operation_manager_base_url_string;//base URL
+
+//http返回的结果key
+static NSString *moc_http_request_operation_manager_base_request_success_code;//请求成功码
+static NSString *moc_http_request_operation_manager_base_request_result_key;//请求结果code的key
+static NSString *moc_http_request_operation_manager_base_request_data_key;//数据部分
+static NSString *moc_http_request_operation_manager_base_request_message_key;//错误信息部分
+
+NSString *moc_http_request_operation_manager_token;
+
+@interface MOCHTTPRequestOperationManager ()
+@property (nonatomic, strong) MOCHTTPResponse *response;
+@property (nonatomic, strong) AFHTTPRequestOperationManager *manager;
+@end
+
+@implementation MOCHTTPRequestOperationManager
+
++ (void)setupRequestOperationManagerBaseURLString:(NSString *)baseURLString{
+    moc_http_request_operation_manager_base_url_string = baseURLString;
+}
++ (void)setupRequestOperationManager:(NSString *)resultKey
+                         successCode:(NSString *)successCode
+                             dataKey:(NSString *)dataKey 
+                          messageKey:(NSString *)messageKey{
+    NSAssert(!IsStrEmpty(resultKey), @"结果key不能为空");
+    NSAssert(!IsStrEmpty(successCode), @"成功码不能为空");
+    NSAssert(!IsStrEmpty(dataKey), @"数据key不能为空");
+    NSAssert(!IsStrEmpty(messageKey), @"信息key不能为空");
+    moc_http_request_operation_manager_base_request_success_code = successCode;
+    moc_http_request_operation_manager_base_request_result_key = resultKey;
+    moc_http_request_operation_manager_base_request_data_key = dataKey;
+    moc_http_request_operation_manager_base_request_message_key = messageKey;
+}
+
+#pragma mark -
++ (void )postWithURL:(NSString *)url
+           parameters:(id)parameters
+              success:(MOCResponseBlock)success
+               failed:(MOCResponseBlock)failed{
+    [MOCHTTPRequestOperationManager postWithURL:url class:nil parameters:parameters success:success failed:failed complete:nil];
+}
+
++ (void )postWithURL:(NSString *)url
+                class:(Class)aclass
+           parameters:(id)parameters
+              success:(MOCResponseBlock)success
+               failed:(MOCResponseBlock)failed{
+    [MOCHTTPRequestOperationManager postWithURL:url class:aclass parameters:parameters success:success failed:failed complete:nil];
+}
+
++ (void )postWithURL:(NSString *)url
+           parameters:(id)parameters
+              success:(MOCResponseBlock)success
+               failed:(MOCResponseBlock)failed
+             complete:(Block)complete{
+    [MOCHTTPRequestOperationManager postWithURL:url class:nil parameters:parameters success:success failed:failed complete:complete];
+}
+
++ (void )postWithURL:(NSString *)url
+                class:(Class)aclass
+           parameters:(id)parameters
+              success:(MOCResponseBlock)success
+               failed:(MOCResponseBlock)failed
+             complete:(Block)complete{
+    [MOCHTTPRequestOperationManager requestWithURL:url post:YES class:aclass parameters:parameters success:success failed:failed complete:complete];
+}
+
+#pragma mark -
++ (void )getWithURL:(NSString *)url
+           parameters:(id)parameters
+              success:(MOCResponseBlock)success
+               failed:(MOCResponseBlock)failed{
+    [MOCHTTPRequestOperationManager getWithURL:url class:nil parameters:parameters success:success failed:failed complete:nil];
+}
+
++ (void )getWithURL:(NSString *)url
+                class:(Class)aclass
+           parameters:(id)parameters
+              success:(MOCResponseBlock)success
+               failed:(MOCResponseBlock)failed{
+    [MOCHTTPRequestOperationManager getWithURL:url class:aclass parameters:parameters success:success failed:failed complete:nil];
+}
+
++ (void )getWithURL:(NSString *)url
+           parameters:(id)parameters
+              success:(MOCResponseBlock)success
+               failed:(MOCResponseBlock)failed
+             complete:(Block)complete{
+    [MOCHTTPRequestOperationManager getWithURL:url class:nil parameters:parameters success:success failed:failed complete:complete];
+}
+
++ (void )getWithURL:(NSString *)url
+                class:(Class)aclass
+           parameters:(id)parameters
+              success:(MOCResponseBlock)success
+               failed:(MOCResponseBlock)failed
+             complete:(Block)complete{
+    [MOCHTTPRequestOperationManager requestWithURL:url post:NO class:aclass parameters:parameters success:success failed:failed complete:complete];
+}
+
+#pragma mark -
++ (void )requestWithURL:(NSString *)url
+                   post:(BOOL)isPost
+                class:(Class)class
+           parameters:(id)parameters
+              success:(MOCResponseBlock)success
+               failed:(MOCResponseBlock)failed
+               complete:(Block)complete{
+    
+    NSAssert(url, @"请求地址不能为空");
+    
+    MOCHTTPRequestOperationManager *client = [MOCHTTPRequestOperationManager manager];
+    
+    if (![MOCNetworkReachabilityManager isReachable]) {//网络不可达
+       // [Hud showMessageWithText:@"断网了~"];
+        [client parseResponseFailed:nil failed:failed logInfo:@"网络不可达"];
+        return;
+    }
+    parameters = [client packageParameters:parameters];
+    NSLog(@"%@   parameters:%@", url,parameters);
+    if (isPost) {
+        [client.manager POST:url parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    
+            [client parseResponseSuccess:responseObject class:class success:success failed:failed logInfo:url];
+            complete?complete():nil;
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            [client parseResponseFailed:error failed:failed logInfo:error.domain];
+            complete?complete():nil;
+        }];
+    }else{
+        [client.manager GET:url parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            [client parseResponseSuccess:responseObject class:class success:success failed:failed logInfo:url];
+            complete?complete():nil;
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            [client parseResponseFailed:error failed:failed logInfo:error.domain];
+            complete?complete():nil;
+        }];
+    }
+}
+
+#pragma mark -
+//data为对应部分的数据
+- (void)parseResponseSuccess:(id)responseObject class:(Class)class success:(MOCResponseBlock)success failed:(MOCResponseBlock)failed logInfo:(NSString *)info{
+
+    NSLog(@"%@:%@",info,(NSDictionary *)responseObject);
+    
+    self.response.data = responseObject;
+    
+    if ([self validateTokenIsLegal:responseObject]){//token合法
+        NSString *code = [responseObject valueForKey:moc_http_request_operation_manager_base_request_result_key];\
+        if ([code isEqualToString:moc_http_request_operation_manager_base_request_success_code]) {//返回成功
+            id data = [responseObject objectForKey:moc_http_request_operation_manager_base_request_data_key];
+            
+            if ([data isKindOfClass:[NSString class]]) {
+                NSString *dataStr = (NSString *)data;
+                id parseData = [dataStr parseToArrayOrNSDictionary];//解析前的数据保存
+                if ([parseData isKindOfClass:[NSDictionary class]]) {
+                    self.response.dataDictionary = parseData;
+                }else if ([parseData isKindOfClass:[NSArray class]]) {
+                    [self parseServerJsonArrayToJSONModel:parseData class:class];
+                }
+            }
+            success?success(self.response):nil;
+        }else{
+            [self parseResponseFailed:responseObject failed:failed logInfo:info];
+        }
+    }else{//token不合法
+        self.response.errorCode = moc_http_request_operation_manager_response_token_error_code;
+        self.response.errorMessage = moc_http_request_operation_manager_response_token_error_message;
+        failed?failed(self.response):nil;
+    }
+}
+//data 可能为NSError 或者NSDictionary
+- (void)parseResponseFailed:(id)responseObject
+                     failed:(MOCResponseBlock)failed
+                    logInfo:(NSString *)info{
+    if (![MOCNetworkReachabilityManager isReachable]) {//网络可达
+        self.response.errorCode = moc_http_request_operation_manager_response_server_error_code;
+        self.response.errorMessage = moc_http_request_operation_manager_response_network_error_message;
+        MOCLogDebug(@"网络错误");
+    }else{
+        if ([responseObject isKindOfClass:[NSError class]]) {//failed block里面的error
+            NSLog(@"本地请求报错:%@:%@",info,responseObject);
+            
+            self.response.errorCode = moc_http_request_operation_manager_response_server_error_code;
+            self.response.errorMessage = moc_http_request_operation_manager_response_server_error_message;
+            
+            self.response.error = responseObject;
+        }else{//服务器请求成功,但是操作失败,这个需要由外部定义成功码
+            if ([responseObject isKindOfClass:[NSDictionary class]]) {//如果错误中全为英文,那么则可以认为是系统级的错误,统一处理为服务器错误
+            
+                self.response.errorCode = [responseObject valueForKey:moc_http_request_operation_manager_base_request_result_key];
+                if ([self.response.errorCode isEqualToString:@"99999"]) {
+                    self.response.errorMessage = moc_http_request_operation_manager_response_server_error_message;
+                }
+                else
+                {
+                        self.response.errorMessage = [responseObject valueForKey:moc_http_request_operation_manager_base_request_message_key] ;
+                }
+            }else{
+                  self.response.errorMessage = [responseObject valueForKey:moc_http_request_operation_manager_base_request_message_key] ;
+                self.response.errorCode = moc_http_request_operation_manager_response_other_error_code;
+                
+                MOCLogDebug(@"服务器返回非字典的数据类型,暂时无法解析");
+            }
+            self.response.data = responseObject;
+        }
+    }
+    failed?failed(self.response):nil;
+}
+
+//解析服务器的数据到对应的response里面去
+- (void)parseServerJsonArrayToJSONModel:(NSArray *)array class:(Class)class{
+    if ([class isSubclassOfClass:[MTLModel class]]) {
+        NSMutableArray *saveArray = [[NSMutableArray alloc] init];
+        for(id obj in array){
+            if ([obj isKindOfClass:[NSDictionary class]]) {
+                NSError *error;
+                id model = [MTLJSONAdapter modelOfClass:class fromJSONDictionary:obj error:&error];
+                if (error) {
+                    MOCLogDebug(error.domain);
+                }else{
+                    [saveArray addObject:model];
+                }
+            }else{
+                MOCLogDebug(@"服务器返回的数据应该为字典形式");
+            }
+        }
+        self.response.dataArray = [saveArray copy];
+    }else{
+        MOCLogDebug(@"class没有继承于JSONModel,只做单纯的返回数据,不处理");
+        self.response.dataArray = array;
+    }
+}
+#pragma mark -
++ (MOCHTTPRequestOperationManager *)manager{
+    
+    NSAssert(moc_http_request_operation_manager_base_request_result_key != nil, @"请有且仅调一次setupRequestOperationManager:successCode:dataKey:messageKey:方法进行网络请求的配置");
+    MOCHTTPRequestOperationManager *client = [[MOCHTTPRequestOperationManager alloc] init];
+
+    if (IsStrEmpty(moc_http_request_operation_manager_base_url_string)){
+        client.manager= [AFHTTPRequestOperationManager manager];
+        client.response = [[MOCHTTPResponse alloc] init];
+        [client clientSetup];
+        return client;
+    }else{
+        NSURL *baseURL = [[NSURL alloc] initWithString:moc_http_request_operation_manager_base_url_string];
+        if (baseURL) {
+            client.manager = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:baseURL];
+        }else{
+            client.manager = [AFHTTPRequestOperationManager manager];
+        }
+        client.response = [[MOCHTTPResponse alloc] init];
+        [client clientSetup];
+        return client;
+    }
+}
+
+- (void)clientSetup{
+    self.manager.requestSerializer = [AFHTTPRequestSerializer serializer];
+    self.manager.requestSerializer.timeoutInterval = 30;
+    self.manager.responseSerializer = [AFJSONResponseSerializer serializer];
+    self.manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"text/html",@"application/json", nil];
+}
+
+#pragma mark -
+//具体工程中建议重载的部分
+- (BOOL)validateTokenIsLegal:(id)responseObject{
+    return YES;
+}
+- (id)packageParameters:(id)parameters{
+    return parameters;
+}
+
+@end

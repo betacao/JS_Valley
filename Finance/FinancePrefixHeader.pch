@@ -1,0 +1,69 @@
+//
+//  FinancePrefixHeader.pch
+//  Finance
+//
+//  Created by HuMin on 15/4/7.
+//  Copyright (c) 2015年 HuMin. All rights reserved.
+//
+
+#ifndef Finance_FinancePrefixHeader_pch
+#define Finance_FinancePrefixHeader_pch
+#ifdef __OBJC__
+// Include any system framework and library headers here that should be included in all compilation units.
+// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
+#import "NSManagedObject+MagicalFinders.h"
+#import "CoreData+MagicalRecord.h"
+#import "MobClick.h"
+#import "BPush.h"
+#import "Constant.h"
+#import "EaseMob.h"
+#import "CocoaLumberjack.h"
+#import "DDlog.h"
+#import "AFNetworking.h"
+#import "MJRefresh.h"
+#import "MBProgressHUD.h"
+#import "MWPhotoBrowser.h"
+#import "UIImageView+WebCache.h"
+#import "MagicalRecord.h"
+#import "BaseNavigationController.h"
+#import "BaseTableViewController.h"
+#import "BaseViewController.h"
+#import "ZSYPopoverListView.h"
+#import "ZYQAssetPickerController.h"
+#import "CPTextViewPlaceholder.h"
+#import "BRCommonPopup.h"
+#import "PopoverListObj.h"
+#import "ZSYPopoverListView.h"
+#import "ZYQAssetPickerController.h"
+#import "CommonMethod.h"
+#import "Mantle.h"
+#import "NSString+Check.h"
+#import "Hud.h"
+#import "NSDictionary+Common.h"
+#import "MTLModel.h"
+#import "MOWHttpManager.h"
+#import "NSDate+Customized.h"
+#import "UIView+Additions.h"
+#import "DDTapGestureRecognizer.h"
+#import "UIImage+Customized.h"
+#import "BRCommentView.h"
+#import "TabBarViewController.h"
+#import "UIViewController+HUD.h"
+#import <ShareSDK/ShareSDK.h>
+#import <TencentOpenAPI/QQApiInterface.h>
+#import <TencentOpenAPI/TencentOAuth.h>
+#import "WXApi.h"
+#import "WeiboSDK.h"
+#import "FriendsListViewController.h"
+#import "MPNotificationView.h"
+#import <AddressBook/AddressBook.h>
+#import "MessageViewController.h"
+#import "UIColor+extend.h"
+#import "Extend_Description.h"
+#import "VerifyIdentityViewController.h"
+#import "CircleDetailViewController.h"
+#import "SHGGloble.h"
+#import "headerView.h"
+#import "DXAlertView.h"
+#endif
+#endif

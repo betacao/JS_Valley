@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ProtocolViewController">
+            <connections>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" id="N3y-Pv-2tD">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <string key="text">服务协议
+
+本协议由您与”大牛圈”的经营者江苏生活谷信息科技有限责任公司共同缔结，本协议具有法律效力。
+
+一、大牛圈使用规范：
+1. 您根据大牛圈的理财资讯向客户进行推广宣传业务，需保证客户是符合相关法律规定的合格投资者。
+2. 您应严格按照国家各金融监管机构的规定开展业务活动，不采用误导或可能误导客户的方式和内容进行宣传推广。
+3. 您保证在接到客户的投诉后，积极妥善处理。您与客户的一切纠纷，均与大牛圈经营者无关。
+4. 大牛圈中的资料信息，仅供推广业务参考，未得大牛圈经营者同意，不得将之在业务范围外交予第三方使用。
+5. 大牛圈经营者与您不具有雇佣、代理等关系，您不得利用大牛圈的名称或公司数据（包括但不限于地址及电话等），行不实夸大之宣传而误导客户及其他损害客户利益的行为。
+6. 您在推广活动中，不得利用不正当竞争手段、恶意手段发展客户。
+7. 您提交的注册信息及您设置的银行卡信息，都将严格进行保密。除法律另有规定或监管机构要求披露外，江苏生活谷信息科技有限责任公司均不会任意对外泄露。
+二、协议内容及签署：
+1. 本协议内容包括协议正文及所有大牛圈已经发布的或将来可能发布的各类规则。所有规则为本协议不可分割的组成部分，与协议正文具有同等法律效力。
+2. 您应当在使用大牛圈服务之前认真阅读全部协议内容，对于协议中以加粗字体显示的内容，您应重点阅读。如您使用大牛圈服务，则本协议即对您产生约束，届时您不应以未阅读本协议的内容为由，主张本协议无效，或要求撤销本协议。
+3. 您承诺接受并遵守本协议的约定。如果您不同意本协议的约定，您应立即停止注册使用金融港。如果您注册完成本平台，将被视为接受本协议全部条款，接受本协议约束。
+4. 江苏生活谷信息科技有限责任公司有权根据需要不时地制订、修改本协议及/或各类规则，并以网站公示的方式进行公告，不再单独通知您。变更后的协议和规则一经在网站公布后，立即自动生效。如您不同意相关变更，应当立即停止使用大牛圈服务。您继续使用大牛圈服务的，即表示您接受经修订的协议和规则。
+5. 大牛圈即江苏生活谷信息科技有限责任公司提供给您用于查看理财资讯、进行专业投资管理服务的平台。
+三、违约责任
+您未按本协议约定履行其义务，出现违反上述条款之一的，大牛圈经营者有权终止支付服务费。情节严重的，大牛圈经营者有权单方终止本协议。协议终止后，大牛圈经营者依旧有权要求您承担违约责任。
+四、其他约定
+1. 本协议之效力、解释、变更、执行与争议解决均适用中华人民共和国大陆地区法律，如无相关法律规定的，则应参照通用国际商业惯例和（或）行业惯例。
+2. 因本协议产生之争议的，您与大牛圈经营者均同意以江苏生活谷信息科技有限责任公司经营者住所地人民法院为管辖法院。</string>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                </textView>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <point key="canvasLocation" x="565" y="268"/>
+        </view>
+    </objects>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination" type="retina4"/>
+    </simulatedMetricsContainer>
+</document>

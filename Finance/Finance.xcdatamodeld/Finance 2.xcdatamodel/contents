@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="7549" systemVersion="14B25" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="Event">
+        <attribute name="timeStamp" optional="YES" attributeType="Date">
+            <userInfo/>
+        </attribute>
+        <userInfo/>
+    </entity>
+    <entity name="HeadImage" syncable="YES">
+        <attribute name="commonfriend" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="commonnum" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="company" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="headimg" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="nickname" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="rela" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="uid" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="TwainContactInfo" syncable="YES">
+        <attribute name="commonfriend" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="commonnum" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="company" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="headimg" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="nickname" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="rela" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="uid" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="Event" positionX="261" positionY="189" width="128" height="60"/>
+        <element name="HeadImage" positionX="34" positionY="189" width="128" height="148"/>
+        <element name="TwainContactInfo" positionX="144" positionY="243" width="128" height="150"/>
+    </elements>
+</model>
