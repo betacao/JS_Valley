@@ -10,36 +10,31 @@
 	<string>Finance</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>e34d2a61-9546-42ae-90fa-6bc0f1558e70++3454</key>
-		<string>svn://120.26.114.154/jinrong/sc/ios/branches/cchx</string>
+		<key>82DC4FD3AF9671E472C36DC3FC51D10514CB1EF0</key>
+		<string>https://github.com/caochangxi/JS_Valley.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>Finance.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>e34d2a61-9546-42ae-90fa-6bc0f1558e70++3454</key>
+		<key>82DC4FD3AF9671E472C36DC3FC51D10514CB1EF0</key>
 		<string>..</string>
 	</dict>
-	<key>IDESourceControlProjectRepositoryRootDictionary</key>
-	<dict>
-		<key>e34d2a61-9546-42ae-90fa-6bc0f1558e70++3454</key>
-		<string>svn://120.26.114.154/jinrong</string>
-	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>svn://120.26.114.154/jinrong/sc/ios/branches/cchx/Finance.xcworkspace</string>
+	<string>https://github.com/caochangxi/JS_Valley.git</string>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>e34d2a61-9546-42ae-90fa-6bc0f1558e70++3454</string>
+	<string>82DC4FD3AF9671E472C36DC3FC51D10514CB1EF0</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
-			<string>public.vcs.subversion</string>
+			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>e34d2a61-9546-42ae-90fa-6bc0f1558e70++3454</string>
+			<string>82DC4FD3AF9671E472C36DC3FC51D10514CB1EF0</string>
 			<key>IDESourceControlWCCName</key>
-			<string>cchx</string>
+			<string>JS_Valley</string>
 		</dict>
 	</array>
 </dict>
