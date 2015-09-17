@@ -431,7 +431,6 @@ static NSString * const kCommonFNum			= @"commonnum";
             dispatch_async(dispatch_get_main_queue(), ^{
                 [Hud hideHud];
                 BOOL moreData = NO;
-                NSMutableArray *arr = [NSMutableArray array];
                 for (NSDictionary *dics in response.dataArray) {
                     NSString *rela = [dics valueForKey:@"rela"];
                     if (![rela isEqualToString:@"2"]) {

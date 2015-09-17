@@ -435,23 +435,9 @@
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (buttonIndex != actionSheet.cancelButtonIndex && _currentLongPressIndex) {
-        EMBuddy *buddy = [[self.dataSource objectAtIndex:(_currentLongPressIndex.section - 1)] objectAtIndex:_currentLongPressIndex.row];
         [self hideHud];
         [self showHudInView:self.view hint:NSLocalizedString(@"wait", @"Pleae wait...")];
 
-        __weak typeof(self) weakSelf = self;
-//        [[EaseMob sharedInstance].chatManager asyncBlockBuddy:buddy.username relationship:eRelationshipBoth withCompletion:^(NSString *username, EMError *error){
-//            typeof(weakSelf) strongSelf = weakSelf;
-//            [strongSelf hideHud];
-//            if (!error)
-//            {
-//                //由于加入黑名单成功后会刷新黑名单，所以此处不需要再更改好友列表
-//            }
-//            else
-//            {
-//                [strongSelf showHint:error.description];
-//            }
-//        } onQueue:nil];
     }
     _currentLongPressIndex = nil;
 }

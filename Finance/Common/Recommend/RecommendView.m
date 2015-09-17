@@ -31,30 +31,15 @@
         self.isShaking = NO;
         
         CGRect rect = self.bounds;
-//        rect.size.height -= 30;
         
         UIImageView *imageVTemp = [[UIImageView alloc] initWithFrame:rect];
         imageVTemp.backgroundColor = [UIColor clearColor];
         self.imageVInfo = imageVTemp;
-        UILongPressGestureRecognizer *longGestureRec = [[UILongPressGestureRecognizer alloc]
-                                                        initWithTarget:self
-                                                        action:@selector(longGestureTaped:)];
-        DDTapGestureRecognizer *ges = [[DDTapGestureRecognizer alloc] initWithTarget:self action:@selector(tap)];
+        UILongPressGestureRecognizer *longGestureRec = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longGestureTaped:)];
         longGestureRec.minimumPressDuration = 0.4;
         [self.imageVInfo addGestureRecognizer:longGestureRec];
         self.imageVInfo.userInteractionEnabled = YES;
         [self addSubview:_imageVInfo];
-        
-//        rect.origin.y = rect.size.height;
-//        rect.size.height = 30;
-//        UILabel *lblTemp = [[UILabel alloc] initWithFrame:rect];
-//        lblTemp.textAlignment = NSTextAlignmentCenter;
-//        lblTemp.backgroundColor = [UIColor clearColor];
-//        lblTemp.textColor = [UIColor blackColor];
-//        lblTemp.font = [UIFont systemFontOfSize:14];
-//        self.lblTitle = lblTemp;
-//        [lblTemp release];
-//        [self addSubview:_lblTitle];
     }
     return self;
 }

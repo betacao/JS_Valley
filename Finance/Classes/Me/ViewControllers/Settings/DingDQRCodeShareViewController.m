@@ -104,7 +104,7 @@
 //            DLog(@"Result: SMS not sent");
             break;
     }
-    [self dismissModalViewControllerAnimated:YES];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end

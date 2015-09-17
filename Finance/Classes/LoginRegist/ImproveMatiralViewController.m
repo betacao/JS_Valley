@@ -77,8 +77,6 @@
 -(void )getAddress
 {
     ABAddressBookRef addressBook = ABAddressBookCreate();
-    //取得授权状态
-    ABAuthorizationStatus authStatus = ABAddressBookGetAuthorizationStatus();
     
     ABAddressBookRequestAccessWithCompletion
     (addressBook, ^(bool granted, CFErrorRef error)
@@ -101,15 +99,11 @@
                      ABMultiValueRef phone = ABRecordCopyValue(person, kABPersonPhoneProperty);
                      for (int k = 0; k<ABMultiValueGetCount(phone); k++)
                      {
-                         //获取电话Label
-                         NSString * personPhoneLabel = (__bridge NSString*)ABAddressBookCopyLocalizedLabel(ABMultiValueCopyLabelAtIndex(phone, k));
                          //获取該Label下的电话值
                          NSString *personPhone = (__bridge NSString*)ABMultiValueCopyValueAtIndex(phone, k);
                          NSString *phone = [personPhone validPhone];
                          NSString *personNameFirst = (__bridge NSString*)ABRecordCopyValue(person, kABPersonFirstNameProperty);
                          NSString *personNameLast = (__bridge NSString*)ABRecordCopyValue(person, kABPersonLastNameProperty);
-                         NSString *personNameCompany = (__bridge NSString*)ABRecordCopyValue(person, kABPersonOrganizationProperty);
-                         //NSLog(@"%@=======%@=====%@",personNameFirst,personNameLast,personNameCompany);
                          NSString *personName = @"";
                          
                          if (!IsStrEmpty(personNameLast))
@@ -420,7 +414,7 @@
 					 NSLog(NSLocalizedString(@"error.connectServerFail", @"Connect to the server failed!"));
 					 break;
 				 case EMErrorServerAuthenticationFailure:
-					 NSLog(error.description);
+					 NSLog(@"%@",error.description);
 					 break;
 				 case EMErrorServerTimeout:
 					 NSLog(NSLocalizedString(@"error.connectServerTimeout", @"Connect to the server timed out!"));

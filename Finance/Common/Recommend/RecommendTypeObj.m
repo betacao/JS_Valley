@@ -13,7 +13,6 @@
 - (id)init
 {
     if (self = [super init]) {
-        self.content = @"";
     }
     return self;
 }

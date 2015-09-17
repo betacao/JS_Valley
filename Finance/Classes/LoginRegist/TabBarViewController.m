@@ -67,15 +67,11 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     [super viewDidLoad];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(chageNavTitle:) name:NOTIFI_CHANGE_NAV_TITLEVIEW object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pushCircle) name:NOTIFI_CHANGE_HAS_RECEIVE_NOTI object:nil];
     
     NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:
-                         RGB(51, 51, 51), NSForegroundColorAttributeName, nil];
-    NSDictionary *dic1 = [NSDictionary dictionaryWithObjectsAndKeys:
-                          RGB(255, 57, 67), NSForegroundColorAttributeName, nil];
+                         RGB(51, 51, 51), NSForegroundColorAttributeName, nil];;
     [[UITabBarItem appearance] setTitleTextAttributes:dic forState:UIControlStateNormal];
     self.tabBar.tintColor = RGB(255, 57, 67);
-    //    [[UITabBarItem appearance] setTitleTextAttributes:dic1 forState:UIControlStateSelected];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setupUntreatedApplyCount) name:@"setupUntreatedApplyCount" object:nil];
     
@@ -532,7 +528,6 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
 }
 -(void)refreshFriendListWithUid:(NSString *)userId
 {
-    NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
     [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/user/%@",rBaseAddressForHttp,userId] parameters:nil success:^(MOCHTTPResponse *response) {
         NSMutableArray *arr = [NSMutableArray array];
         NSDictionary *dic = response.dataDictionary;

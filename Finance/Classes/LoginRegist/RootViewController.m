@@ -140,7 +140,7 @@
                      NSLog(NSLocalizedString(@"error.connectServerFail", @"Connect to the server failed!"));
                      break;
                  case EMErrorServerAuthenticationFailure:
-                     NSLog(error.description);
+                     NSLog(@"%@",[NSString stringWithFormat:@"%@", error.description]);
                      break;
                  case EMErrorServerTimeout:
                      NSLog(NSLocalizedString(@"error.connectServerTimeout", @"Connect to the server timed out!"));

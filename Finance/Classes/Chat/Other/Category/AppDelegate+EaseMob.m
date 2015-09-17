@@ -29,7 +29,7 @@
     
     [self registerRemoteNotification];
     
-#warning SDK注册 APNS文件的名字, 需要与后台上传证书时的名字一一对应
+//  #warning SDK注册 APNS文件的名字, 需要与后台上传证书时的名字一一对应
     NSString *apnsCertName = nil;
 #if DEBUG
     apnsCertName = @"daniuquan";
@@ -362,18 +362,9 @@
     _connectionState = connectionState;
 //    [self.mainController networkChanged:connectionState];
 }
--(void)didReiveceRemoteNotificatison:(NSDictionary *)userInfo{
-    NSError *parseError = nil;
-    NSData  *jsonData = [NSJSONSerialization dataWithJSONObject:userInfo
-                                                        options:NSJSONWritingPrettyPrinted error:&parseError];
-    NSString *str =  [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+-(void)didReiveceRemoteNotificatison:(NSDictionary *)userInfo
+{
     
-//    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"推送内容"
-//                                                    message:str
-//                                                   delegate:nil
-//                                          cancelButtonTitle:NSLocalizedString(@"ok", @"OK")
-//                                          otherButtonTitles:nil];
-//    [alert show];
     
 }
 

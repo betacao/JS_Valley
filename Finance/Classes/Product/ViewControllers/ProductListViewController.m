@@ -569,7 +569,6 @@
     ProdListObj *obj = self.dataArr[indexPath.row];
     ProdConfigViewController *vc = [[ProdConfigViewController alloc] initWithNibName:@"ProdConfigViewController" bundle:nil];
     vc.obj = obj;
-    CirclleItemObj *itemObj = itemArr[index];
     NSString *type ;
     if ([obj.type isEqualToString:@"pz"])
     {

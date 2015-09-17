@@ -883,7 +883,6 @@
 
 - (IBAction)actionShare:(id)sender {
 
-    NSString *imagePath = [[NSBundle mainBundle] pathForResource:@"ShareSDK" ofType:@"png"];
     id<ISSCAttachment> image  = [ShareSDK pngImageWithImage:[UIImage imageNamed:@"80"]];
 
     if (!IsArrEmpty(self.obj.photoArr)  ) {
@@ -917,87 +916,49 @@
         
     }
     NSString *content = [NSString stringWithFormat:@"%@\"%@\"%@%@",@"Hi，我在金融大牛圈上看到了一个非常棒的帖子,关于",postContent,@"，赶快下载大牛圈查看吧！",[NSString stringWithFormat:@"%@%@",rBaseAddressForHttpShare,self.obj.rid]];
-    id<ISSShareActionSheetItem> item1 = [ShareSDK shareActionSheetItemWithTitle:@"动态"
-                                                                           icon:[UIImage imageNamed:@"圈子图标"]
-                                                                   clickHandler:^{
-                                                                       [self circleShareWithObj:self.obj];
-                                                                   }];
-    id<ISSShareActionSheetItem> item2 = [ShareSDK shareActionSheetItemWithTitle:@"圈内好友"
-                                                                           icon:[UIImage imageNamed:@"圈内好友图标"]
-                                                                   clickHandler:^{
-                                                                    
-                                                                       [self shareToFriendWithText:self.obj.detail];
-                                                                   }];
+    id<ISSShareActionSheetItem> item1 = [ShareSDK shareActionSheetItemWithTitle:@"动态" icon:[UIImage imageNamed:@"圈子图标"] clickHandler:^{
+        [self circleShareWithObj:self.obj];
+    }];
+    id<ISSShareActionSheetItem> item2 = [ShareSDK shareActionSheetItemWithTitle:@"圈内好友" icon:[UIImage imageNamed:@"圈内好友图标"] clickHandler:^{
+        
+        [self shareToFriendWithText:self.obj.detail];
+    }];
     
-    id<ISSShareActionSheetItem> item3 = [ShareSDK shareActionSheetItemWithTitle:@"短信"
-                                                                           icon:[UIImage imageNamed:@"sns_icon_19"]
-                                                                   clickHandler:^{
-                                                                       [self shareToSMS:content rid:self.obj.rid];
-                                                                   }];
+    id<ISSShareActionSheetItem> item3 = [ShareSDK shareActionSheetItemWithTitle:@"短信" icon:[UIImage imageNamed:@"sns_icon_19"] clickHandler:^{
+        [self shareToSMS:content rid:self.obj.rid];
+    }];
     
+    id<ISSShareActionSheetItem> item4 = [ShareSDK shareActionSheetItemWithTitle:@"微信朋友圈" icon:[UIImage imageNamed:@"sns_icon_23"] clickHandler:^{
+        [[AppDelegate currentAppdelegate]wechatShare:self.obj shareType:1];
+    }];
     
-    id<ISSShareActionSheetItem> item0 = [ShareSDK shareActionSheetItemWithTitle:@"新浪微博"
-                                                                           icon:[UIImage imageNamed:@"sns_icon_1"]
-                                                                   clickHandler:^{
-                                                                       [self shareToWeibo:content rid:self.obj.rid];
-                                                                   }];
-    id<ISSShareActionSheetItem> item4 = [ShareSDK shareActionSheetItemWithTitle:@"微信朋友圈"
-                                                                           icon:[UIImage imageNamed:@"sns_icon_23"]
-                                                                   clickHandler:^{
-                                                                       [[AppDelegate currentAppdelegate]wechatShare:self.obj shareType:1];
-                                                                   }];
-    id<ISSShareActionSheetItem> item5 = [ShareSDK shareActionSheetItemWithTitle:@"微信好友"
-                                                                           icon:[UIImage imageNamed:@"sns_icon_22"]
-                                                                   clickHandler:^{
-                                                                       [[AppDelegate currentAppdelegate]wechatShare:self.obj shareType:0];
-                                                                   }];
-    NSArray *shareList = [ShareSDK customShareListWithType:
-                          item3,
-                          item5,
-                          item4,
-                          SHARE_TYPE_NUMBER(ShareTypeQQ),                          
-
-                          item1,item2,nil];
-//    NSArray *shareList = [ShareSDK customShareListWithType:
-//                          item3,
-//                          item5,
-//                          item4,
-//                          item0,
-//                          item1,item2,nil];
+    id<ISSShareActionSheetItem> item5 = [ShareSDK shareActionSheetItemWithTitle:@"微信好友" icon:[UIImage imageNamed:@"sns_icon_22"] clickHandler:^{
+        [[AppDelegate currentAppdelegate]wechatShare:self.obj shareType:0];
+    }];
+    NSArray *shareList = [ShareSDK customShareListWithType: item3, item5, item4, SHARE_TYPE_NUMBER(ShareTypeQQ), item1,item2,nil];
+    
     NSString *shareUrl = [NSString stringWithFormat:@"%@%@",rBaseAddressForHttpShare,self.obj.rid];
     //构造分享内容
-    id<ISSContent> publishContent = [ShareSDK content:shareContent
-                                       defaultContent:shareContent
-                                                image:image
-                                                title:SHARE_TITLE
-                                                  url:shareUrl
-                                          description:shareContent
-                                            mediaType:SHARE_TYPE];
+    id<ISSContent> publishContent = [ShareSDK content:shareContent defaultContent:shareContent image:image title:SHARE_TITLE url:shareUrl description:shareContent mediaType:SHARE_TYPE];
     //创建弹出菜单容器
-
-        //创建弹出菜单容器
-        id<ISSContainer> container = [ShareSDK container];
-        [container setIPadContainerWithView:self.view arrowDirect:UIPopoverArrowDirectionUp];
+    
+    //创建弹出菜单容器
+    id<ISSContainer> container = [ShareSDK container];
+    [container setIPadContainerWithView:self.view arrowDirect:UIPopoverArrowDirectionUp];
+    
+    //弹出分享菜单
+    [ShareSDK showShareActionSheet:container shareList:shareList content:publishContent statusBarTips:YES authOptions:nil shareOptions:nil result:^(ShareType type, SSResponseState state, id<ISSPlatformShareInfo> statusInfo, id<ICMErrorInfo> error, BOOL end) {
         
-        //弹出分享菜单
-        [ShareSDK showShareActionSheet:container
-                             shareList:shareList
-                               content:publishContent
-                         statusBarTips:YES
-                           authOptions:nil
-                          shareOptions:nil
-                                result:^(ShareType type, SSResponseState state, id<ISSPlatformShareInfo> statusInfo, id<ICMErrorInfo> error, BOOL end) {
-                                    
-                                    if (state == SSResponseStateSuccess)
-                                    {
-                                        [self otherShareWithObj:self.obj];
-                                    }
-                                    else if (state == SSResponseStateFail)
-                                    {
-                                        NSLog(NSLocalizedString(@"TEXT_ShARE_FAI", @"分享失败,错误码:%d,错误描述:%@"), [error errorCode], [error errorDescription]);
-                                        [Hud showMessageWithText:@"分享失败"];
-                                    }
-                                }];
+        if (state == SSResponseStateSuccess)
+        {
+            [self otherShareWithObj:self.obj];
+        }
+        else if (state == SSResponseStateFail)
+        {
+            NSLog(NSLocalizedString(@"TEXT_ShARE_FAI", @"分享失败,错误码:%d,错误描述:%@"), [error errorCode], [error errorDescription]);
+            [Hud showMessageWithText:@"分享失败"];
+        }
+    }];
 }
 -(void)shareToSMS:(NSString *)text rid:(NSString *)rid
 {

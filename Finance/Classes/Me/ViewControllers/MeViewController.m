@@ -435,7 +435,6 @@
 
 - (IBAction)actionInvite:(id)sender {
     
-//    NSString *imagePath = [[NSBundle mainBundle] pathForResource:@"ShareSDK" ofType:@"png"];
     id<ISSCAttachment> image  = [ShareSDK pngImageWithImage:[UIImage imageNamed:@"80"]];
     
     NSString *contentOther =[NSString stringWithFormat:@"%@",@"诚邀您加入金融大牛圈！金融从业人员的家！"];
@@ -446,11 +445,7 @@
                                                                    clickHandler:^{
                                                                        [self shareToSMS:content];
                                                                    }];
-    id<ISSShareActionSheetItem> item0 = [ShareSDK shareActionSheetItemWithTitle:@"新浪微博"
-                                                                           icon:[UIImage imageNamed:@"sns_icon_1"]
-                                                                   clickHandler:^{
-                                                                       [self shareToWeibo:content rid:contentOther];
-                                                                   }];
+    
     NSString *shareUrl =[NSString stringWithFormat:@"%@?uid=%@",SHARE_YAOQING_URL,[[NSUserDefaults standardUserDefaults]objectForKey:KEY_UID]];
     id<ISSShareActionSheetItem> item4 = [ShareSDK shareActionSheetItemWithTitle:@"微信朋友圈"
                                                                            icon:[UIImage imageNamed:@"sns_icon_23"]

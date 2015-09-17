@@ -89,11 +89,8 @@
     CGSize keyboardSize = [value CGRectValue].size;
     
     NSLog(@"keyBoard:%f", keyboardSize.height);
-    CGFloat keyboardHeight = keyboardSize.height;
 
     [UIView beginAnimations:nil context:nil];
-    CGFloat height = self.view.height - self.textEdit.origin.y - keyboardHeight - CGRectGetHeight(self.imageBackView.frame);
-//    self.textEdit.height = height > 50.0f ? 80 :50.0f;
     self.textEdit.height = 80;
     if(!kIsScreen3_5Inch){
         self.imageBackView.origin = CGPointMake(self.imageBackView.origin.x, CGRectGetMaxY(self.textEdit.frame)) ;

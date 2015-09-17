@@ -33,61 +33,46 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
 	self.title = @"我的合伙人";
-	
 	self.dataSource = [[NSMutableArray alloc] init];
-	
-//	for (int i = 0; i<10; i++) {
-//		TeamDetailObject *obj = [[TeamDetailObject alloc] init];
-//		obj.name = @"胡小敏";
-//		obj.money = @"1000";
-//		[self.dataSource addObject:obj];
-//	}
-	
 	UIView *view = [[UIView alloc] init];
 	view.backgroundColor = [UIColor clearColor];
-	[_tableView setTableFooterView:view];
-
+    [_tableView setTableFooterView:view];
 	
-	NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
-
-		[MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttp,@"user",@"team"] parameters:@{@"uid":uid}success:^(MOCHTTPResponse *response) {
-			
-			self.myMoneyLabel.text = [NSString stringWithFormat:@"%@ 元",[response.dataDictionary valueForKey:@"me"]];
-			self.teamMoneyLabel.text = [NSString stringWithFormat:@"%@ 元",[response.dataDictionary valueForKey:@"team"]];
-			NSArray *array = [response.dataDictionary valueForKey:@"detail"];
-			
-			for (NSDictionary *dic in array) {
-				
-				
-				TeamDetailObject *obj = [[TeamDetailObject alloc] init];
-				obj.name = [dic valueForKey:@"name"];
-				obj.money = [dic valueForKey:@"commission"];
-				[self.dataSource addObject:obj];
-			}
-			[self.tableView reloadData];
-
-
-			NSLog(@"%@",response.data);
-			NSLog(@"%@",response.errorMessage);
-			
-		} failed:^(MOCHTTPResponse *response) {
-			
-		}];
-
-	
-	[self.tableView reloadData];
+    NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
+    
+    [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttp,@"user",@"team"] parameters:@{@"uid":uid}success:^(MOCHTTPResponse *response){
+        
+        self.myMoneyLabel.text = [NSString stringWithFormat:@"%@ 元",[response.dataDictionary valueForKey:@"me"]];
+        self.teamMoneyLabel.text = [NSString stringWithFormat:@"%@ 元",[response.dataDictionary valueForKey:@"team"]];
+        NSArray *array = [response.dataDictionary valueForKey:@"detail"];
+        
+        for (NSDictionary *dic in array) {
+            TeamDetailObject *obj = [[TeamDetailObject alloc] init];
+            obj.name = [dic valueForKey:@"name"];
+            obj.money = [dic valueForKey:@"commission"];
+            [self.dataSource addObject:obj];
+        }
+        [self.tableView reloadData];
+        
+        
+        NSLog(@"%@",response.data);
+        NSLog(@"%@",response.errorMessage);
+        
+    } failed:^(MOCHTTPResponse *response) {
+        
+    }];
+    
+    
+    [self.tableView reloadData];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-	// Return the number of sections.
 	return 3;
 }
 
@@ -108,19 +93,6 @@
 {
 	return 50;
 }
-
-//- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
-//{
-//	if (section == 0) {
-//		return [NSString stringWithFormat:@"团队总计%ld位",(long)self.dataSource.count];
-//	}else if(section == 1){
-//		return @"团队明细";
-//	}else if (section == 2){
-//		return @"团队激励机制说明";
-//	}
-//	return @"";
-//
-//}
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
@@ -188,63 +160,30 @@
 	[tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
-- (IBAction)inviteButtonClicked:(id *)sender {
-    NSString *imagePath = [[NSBundle mainBundle] pathForResource:@"ShareSDK" ofType:@"png"];
-//    id<ISSCAttachment> image  = [ShareSDK imageWithPath:imagePath];
+- (IBAction)inviteButtonClicked:(id *)sender
+{
     id<ISSCAttachment> image  = [ShareSDK pngImageWithImage:[UIImage imageNamed:@"80"]];
     NSString *contentOther =[NSString stringWithFormat:@"%@",@"诚邀您加入金融大牛圈！金融从业人员的家！"];
     
     NSString *content =[NSString stringWithFormat:@"%@%@",@"诚邀您加入金融大牛圈！金融从业人员的家！这里有干货资讯、人脉嫁接、业务互助！赶快加入吧！",[NSString stringWithFormat:@"%@?uid=%@",SHARE_YAOQING_URL,[[NSUserDefaults standardUserDefaults]objectForKey:KEY_UID]]];
-//    //构造分享内容
-//    id<ISSContent> publishContent = [ShareSDK content:@"诚邀您加入大牛圈！金融从业人员的家！"
-//                                       defaultContent:SHARE_DEFAULT_CONTENT
-//                                                image:image
-//                                                title:@"大牛圈"
-//                                                  url:[NSString stringWithFormat:@"%@?uid=%@",SHARE_YAOQING_URL,[[NSUserDefaults standardUserDefaults]objectForKey:KEY_UID]]
-//                                          description:SHARE_DESCRIPTION
-//                                            mediaType:SHARE_TYPE];
     
-    id<ISSShareActionSheetItem> item3 = [ShareSDK shareActionSheetItemWithTitle:@"短信"
-                                                                           icon:[UIImage imageNamed:@"sns_icon_19"]
-                                                                   clickHandler:^{
-                                                                       [self shareToSMS:content];
-                                                                   }];
-    id<ISSShareActionSheetItem> item0 = [ShareSDK shareActionSheetItemWithTitle:@"新浪微博"
-                                                                           icon:[UIImage imageNamed:@"sns_icon_1"]
-                                                                   clickHandler:^{
-                                                                       [self shareToWeibo:content rid:@""];
-                                                                   }];
-      NSString *shareUrl =[NSString stringWithFormat:@"%@?uid=%@",SHARE_YAOQING_URL,[[NSUserDefaults standardUserDefaults]objectForKey:KEY_UID]];
-    id<ISSShareActionSheetItem> item4 = [ShareSDK shareActionSheetItemWithTitle:@"微信朋友圈"
-                                                                           icon:[UIImage imageNamed:@"sns_icon_23"]
-                                                                   clickHandler:^{
-                                                                       [[AppDelegate currentAppdelegate] wechatShareWithText:contentOther shareUrl:shareUrl shareType:1];
-                                                                   }];
-    id<ISSShareActionSheetItem> item5 = [ShareSDK shareActionSheetItemWithTitle:@"微信好友"
-                                                                           icon:[UIImage imageNamed:@"sns_icon_22"]
-                                                                   clickHandler:^{
-                                                                       [[AppDelegate currentAppdelegate] wechatShareWithText:contentOther shareUrl:shareUrl shareType:0];
-                                                                   }];
-    NSArray *shareList = [ShareSDK customShareListWithType:
-                          item3,
-                          item5,
-                          item4,
-                          SHARE_TYPE_NUMBER(ShareTypeQQ),                          
-                          nil];
-//    NSArray *shareList = [ShareSDK customShareListWithType:
-//                          item3,
-//                          item5,
-//                          item4,
-//                          item0,
-//                          nil];
+    id<ISSShareActionSheetItem> item3 = [ShareSDK shareActionSheetItemWithTitle:@"短信" icon:[UIImage imageNamed:@"sns_icon_19"]  clickHandler:^{
+        [self shareToSMS:content];
+    }];
+    
+    NSString *shareUrl =[NSString stringWithFormat:@"%@?uid=%@",SHARE_YAOQING_URL,[[NSUserDefaults standardUserDefaults]objectForKey:KEY_UID]];
+    
+    id<ISSShareActionSheetItem> item4 = [ShareSDK shareActionSheetItemWithTitle:@"微信朋友圈" icon:[UIImage imageNamed:@"sns_icon_23"] clickHandler:^{
+        [[AppDelegate currentAppdelegate] wechatShareWithText:contentOther shareUrl:shareUrl shareType:1];
+    }];
+    
+    id<ISSShareActionSheetItem> item5 = [ShareSDK shareActionSheetItemWithTitle:@"微信好友" icon:[UIImage imageNamed:@"sns_icon_22"] clickHandler:^{
+        [[AppDelegate currentAppdelegate] wechatShareWithText:contentOther shareUrl:shareUrl shareType:0];
+    }];
+    NSArray *shareList = [ShareSDK customShareListWithType: item3, item5, item4, SHARE_TYPE_NUMBER(ShareTypeQQ), nil];
+    
     //构造分享内容
-    id<ISSContent> publishContent = [ShareSDK content:contentOther
-                                       defaultContent:SHARE_DEFAULT_CONTENT
-                                                image:image
-                                                title:SHARE_TITLE_INVITE
-                                                  url:shareUrl
-                                          description:SHARE_DEFAULT_CONTENT
-                                            mediaType:SHARE_TYPE];
+    id<ISSContent> publishContent = [ShareSDK content:contentOther defaultContent:SHARE_DEFAULT_CONTENT image:image title:SHARE_TITLE_INVITE url:shareUrl description:SHARE_DEFAULT_CONTENT mediaType:SHARE_TYPE];
     //创建弹出菜单容器
     
     //创建弹出菜单容器
@@ -252,25 +191,19 @@
     [container setIPadContainerWithView:self.view arrowDirect:UIPopoverArrowDirectionUp];
     
     //弹出分享菜单
-    [ShareSDK showShareActionSheet:container
-                         shareList:shareList
-                           content:publishContent
-                     statusBarTips:YES
-                       authOptions:nil
-                      shareOptions:nil
-                            result:^(ShareType type, SSResponseState state, id<ISSPlatformShareInfo> statusInfo, id<ICMErrorInfo> error, BOOL end) {
-                                
-                                if (state == SSResponseStateSuccess)
-                                {
-                                     NSLog(NSLocalizedString(@"TEXT_ShARE_SUC", @"分享成功"));
-                                }
-                                else if (state == SSResponseStateFail)
-                                {
-                                    NSLog(NSLocalizedString(@"TEXT_ShARE_FAI", @"分享失败,错误码:%d,错误描述:%@"), [error errorCode], [error errorDescription]);
-                                    [Hud showMessageWithText:@"分享失败"];
-                                    
-                                }
-                            }];
+    [ShareSDK showShareActionSheet:container shareList:shareList content:publishContent statusBarTips:YES authOptions:nil shareOptions:nil result:^(ShareType type, SSResponseState state, id<ISSPlatformShareInfo> statusInfo, id<ICMErrorInfo> error, BOOL end) {
+        
+        if (state == SSResponseStateSuccess)
+        {
+            NSLog(NSLocalizedString(@"TEXT_ShARE_SUC", @"分享成功"));
+        }
+        else if (state == SSResponseStateFail)
+        {
+            NSLog(NSLocalizedString(@"TEXT_ShARE_FAI", @"分享失败,错误码:%d,错误描述:%@"), [error errorCode], [error errorDescription]);
+            [Hud showMessageWithText:@"分享失败"];
+            
+        }
+    }];
 }
 
 -(void)shareToWeibo:(NSString *)text rid:(NSString *)rid
