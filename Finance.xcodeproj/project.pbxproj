@@ -882,6 +882,7 @@
 		B0EAB2551B467AB8005A760F /* MLEmojiLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = B0EAB2511B467AB8005A760F /* MLEmojiLabel.m */; };
 		B0EAB2561B467AB8005A760F /* TTTAttributedLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = B0EAB2531B467AB8005A760F /* TTTAttributedLabel.m */; };
 		CEB958E5843B739F6CB8F600 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B1E0AB5E4D6E1102E811C936 /* libPods.a */; };
+		F91B2B881BAA788300BC166D /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F91B2B871BAA788300BC166D /* Info.plist */; settings = {ASSET_TAGS = (); }; };
 		F92835DE1BA6E16C00E1CF22 /* UIButton+EnlargeEdge.m in Sources */ = {isa = PBXBuildFile; fileRef = F92835DD1BA6E16C00E1CF22 /* UIButton+EnlargeEdge.m */; };
 		F932E2551B859DEC00EF2332 /* CircleListRecommendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F932E2531B859DEC00EF2332 /* CircleListRecommendViewController.m */; };
 		F932E2561B859DEC00EF2332 /* CircleListRecommendViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F932E2541B859DEC00EF2332 /* CircleListRecommendViewController.xib */; };
@@ -1316,7 +1317,6 @@
 		6149CFE71B2605FC006E45FE /* TwainContactInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TwainContactInfo.h; sourceTree = "<group>"; };
 		6149CFE81B2605FC006E45FE /* TwainContactInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TwainContactInfo.m; sourceTree = "<group>"; };
 		614A59721AD3AEA1005DAB04 /* 大牛圈.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "大牛圈.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		614A59761AD3AEA1005DAB04 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		614A59771AD3AEA1005DAB04 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		614A59791AD3AEA1005DAB04 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		614A597A1AD3AEA1005DAB04 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -2082,6 +2082,7 @@
 		B0EAB2531B467AB8005A760F /* TTTAttributedLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTTAttributedLabel.m; sourceTree = "<group>"; };
 		B0EAB2541B467AB8005A760F /* TTTAttributedLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTTAttributedLabel.h; sourceTree = "<group>"; };
 		B1E0AB5E4D6E1102E811C936 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		F91B2B871BAA788300BC166D /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F92835DC1BA6E16C00E1CF22 /* UIButton+EnlargeEdge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+EnlargeEdge.h"; sourceTree = "<group>"; };
 		F92835DD1BA6E16C00E1CF22 /* UIButton+EnlargeEdge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+EnlargeEdge.m"; sourceTree = "<group>"; };
 		F932E2521B859DEC00EF2332 /* CircleListRecommendViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CircleListRecommendViewController.h; sourceTree = "<group>"; };
@@ -2748,7 +2749,7 @@
 		614A59751AD3AEA1005DAB04 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				614A59761AD3AEA1005DAB04 /* Info.plist */,
+				F91B2B871BAA788300BC166D /* Info.plist */,
 				614A59771AD3AEA1005DAB04 /* main.m */,
 			);
 			name = "Supporting Files";
@@ -4540,7 +4541,7 @@
 		614A596A1AD3AEA0005DAB04 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0610;
+				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = HuMin;
 				TargetAttributes = {
 					614A59711AD3AEA1005DAB04 = {
@@ -5085,6 +5086,7 @@
 				B04D6E2A1B60C01300E3863E /* 评论x@2x.png in Resources */,
 				569C6D391B7CAB6A00AD59C3 /* 手机@2x.png in Resources */,
 				61E83D221AF7C78E00703651 /* 行业选择图标@2x.png in Resources */,
+				F91B2B881BAA788300BC166D /* Info.plist in Resources */,
 				61E83CE01AF7C78E00703651 /* 新三板@2x.png in Resources */,
 				61E83D701AF7C78E00703651 /* 消息-选中@3x.png in Resources */,
 				B06459DC1B61C208004EB495 /* 收藏x@2x.png in Resources */,
@@ -5492,6 +5494,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Jiangsu SHGOO Technology Co., Ltd";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -5557,7 +5560,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 1E2E93AFC47590ACE52CAE24 /* Pods.debug.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: JiangSu Yunli Technology and Information Company (6FFGT2HSCN)";
@@ -5602,6 +5604,7 @@
 					"$(PROJECT_DIR)/Finance/Classes/Chat/3rdparty/UMeng",
 				);
 				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.danniuquan.apptest;
 				PRODUCT_NAME = "大牛圈";
 				PROVISIONING_PROFILE = "72072637-8960-4188-a83a-da16211f9511";
 				SDKROOT = iphoneos;
@@ -5613,7 +5616,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 57516AFB5C0CF19AA809B098 /* Pods.release.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: JiangSu Yunli Technology and Information Company (6FFGT2HSCN)";
@@ -5658,6 +5660,7 @@
 					"$(PROJECT_DIR)/Finance/Classes/Chat/3rdparty/UMeng",
 				);
 				ONLY_ACTIVE_ARCH = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = com.danniuquan.apptest;
 				PRODUCT_NAME = "大牛圈";
 				PROVISIONING_PROFILE = "72072637-8960-4188-a83a-da16211f9511";
 				SDKROOT = iphoneos;
@@ -5707,7 +5710,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 57516AFB5C0CF19AA809B098 /* Pods.release.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: JiangSu Yunli Technology and Information Company (6FFGT2HSCN)";
@@ -5752,6 +5754,7 @@
 					"$(PROJECT_DIR)/Finance/Classes/Chat/3rdparty/UMeng",
 				);
 				ONLY_ACTIVE_ARCH = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = com.danniuquan.apptest;
 				PRODUCT_NAME = "大牛圈";
 				PROVISIONING_PROFILE = "72072637-8960-4188-a83a-da16211f9511";
 				SDKROOT = iphoneos;

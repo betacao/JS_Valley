@@ -10,9 +10,9 @@
 static NSString * const kUid				= @"uid";
 static NSString * const kHeadImg			= @"headimg";
 static NSString * const kNickName			= @"nickname";
-static NSString * const kRela			= @"rela";
+static NSString * const kRela               = @"rela";
 static NSString * const kCompany			= @"company";
-static NSString * const kCommonFriend			= @"commonfriend";
+static NSString * const kCommonFriend		= @"commonfriend";
 static NSString * const kCommonFNum			= @"commonnum";
 
 @implementation TwainContactInfo
