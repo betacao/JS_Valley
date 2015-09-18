@@ -295,7 +295,7 @@
         [Hud showNoAuthMessage];
     } else{
         __weak typeof(self)weakSelf = self;
-        DXAlertView *alert = [[DXAlertView alloc] initWithTitle:@"提示" contentText:@"是否需要发布产品" leftButtonTitle:@"否" rightButtonTitle:@"是"];
+        DXAlertView *alert = [[DXAlertView alloc] initWithTitle:@"提示" contentText:@"是否需要发布产品?" leftButtonTitle:@"否" rightButtonTitle:@"是"];
         alert.rightBlock = ^{
             NSString *url = [NSString stringWithFormat:@"%@/%@",rBaseAddressForHttpProd,@"publish"];
             [Hud showLoadingWithMessage:@"加载中"];

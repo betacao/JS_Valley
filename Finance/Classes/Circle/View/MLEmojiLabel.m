@@ -212,7 +212,7 @@ static CGFloat widthCallback(void *refCon) {
 
     NSMutableDictionary *mutableActiveLinkAttributes = [@{(NSString *)kCTUnderlineStyleAttributeName:@(NO)}mutableCopy];
 
-    UIColor *commonLinkColor = [UIColor colorWithRed:0.112 green:0.000 blue:0.791 alpha:1.000];
+    UIColor *commonLinkColor = [UIColor colorWithHexString:@"4B88B7"];
 
     //点击时候的背景色
     [mutableActiveLinkAttributes setValue:(__bridge id)[[UIColor colorWithWhite:0.631 alpha:1.000] CGColor] forKey:(NSString *)kTTTBackgroundFillColorAttributeName];
@@ -525,8 +525,6 @@ static inline CGFloat TTTFlushFactorForTextAlignment(NSTextAlignment textAlignme
 
     //这里直接调用父类私有方法，好处能内部只会setNeedDisplay一次。一次更新所有添加的链接
     [super addLinksWithTextCheckingResults:results attributes:self.linkAttributes];
-
-    //    [self checkAndSetEmoji:self.attributedText];
 }
 
 - (NSMutableAttributedString *)checkAndSetEmoji:(id)text
