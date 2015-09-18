@@ -7,8 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-
-
 @class SDButton, SDPhotoBrowser;
 
 @protocol SDPhotoBrowserDelegate <NSObject>
@@ -20,6 +18,8 @@
 @optional
 
 - (NSURL *)photoBrowser:(SDPhotoBrowser *)browser highQualityImageURLForIndex:(NSInteger)index;
+
+- (void)photoBrowser:(SDPhotoBrowser *)browser didSlideAtIndex:(NSInteger)index;
 
 @end
 

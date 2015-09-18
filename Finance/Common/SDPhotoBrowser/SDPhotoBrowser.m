@@ -9,8 +9,7 @@
 #import "SDPhotoBrowser.h"
 #import "UIImageView+WebCache.h"
 #import "SDBrowserImageView.h"
-
-
+ 
 //  ============在这里方便配置样式相关设置===========
 
 //                      ||
@@ -20,15 +19,15 @@
 //                      \/
 
 #import "SDPhotoBrowserConfig.h"
+#import <AssetsLibrary/AssetsLibrary.h>
 
 //  =============================================
 
-@interface SDPhotoBrowser ()
+@interface SDPhotoBrowser ()<UIActionSheetDelegate>
 
-@property(strong, nonatomic) UIScrollView *scrollView;
-@property(assign, nonatomic) BOOL hasShowedFistView;
-@property(strong, nonatomic) UILabel *indexLabel;
-@property(strong, nonatomic) UIButton *saveButton;
+@property (strong ,nonatomic) UIScrollView *scrollView;
+@property (strong ,nonatomic) UILabel *indexLabel;
+@property (assign ,nonatomic) BOOL hasShowedFistView;
 
 @end
 
@@ -46,20 +45,18 @@
 
 - (void)didMoveToSuperview
 {
+    [super didMoveToSuperview];
     if(self.superview){
         [self setupScrollView];
-        
         [self setupToolbars];
     }
-    [super didMoveToSuperview];
 }
 
 - (void)setupToolbars
 {
     // 1. 序标
     UILabel *indexLabel = [[UILabel alloc] init];
-    indexLabel.bounds = CGRectMake(0, 0, 80, 30);
-    indexLabel.center = CGPointMake(self.bounds.size.width * 0.5, 30);
+    indexLabel.frame = CGRectMake(self.bounds.size.width - 100, self.bounds.size.height - 50, 80, 30);
     indexLabel.textAlignment = NSTextAlignmentCenter;
     indexLabel.textColor = [UIColor whiteColor];
     indexLabel.font = [UIFont boldSystemFontOfSize:20];
@@ -69,92 +66,67 @@
     }
     self.indexLabel = indexLabel;
     [self addSubview:indexLabel];
-    
-    // 2.保存按钮
-    UIButton *saveButton = [[UIButton alloc] init];
-    [saveButton setTitle:@"保存" forState:UIControlStateNormal];
-    [saveButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    saveButton.backgroundColor = [UIColor colorWithRed:0.1f green:0.1f blue:0.1f alpha:0.90f];
-    saveButton.frame = CGRectMake(30, self.bounds.size.height - 70, 50, 25);
-    saveButton.layer.cornerRadius = 5;
-    saveButton.clipsToBounds = YES;
-    [saveButton addTarget:self action:@selector(saveImage) forControlEvents:UIControlEventTouchUpInside];
-    self.saveButton = saveButton;
-    [self addSubview:saveButton];
+    UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longSaveImage:)];
+    [self addGestureRecognizer:longPress];
 }
 
-- (void)saveImage
-{
-    int index = self.scrollView.contentOffset.x / self.scrollView.bounds.size.width;
-    UIImageView *currentImageView = self.scrollView.subviews[index];
-    
-    UIImageWriteToSavedPhotosAlbum(currentImageView.image, self, @selector(image:didFinishSavingWithError:contextInfo:), NULL);
-}
-
-- (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo;
-{
-    UILabel *label = [[UILabel alloc] init];
-    label.textColor = [UIColor whiteColor];
-    label.backgroundColor = [UIColor colorWithRed:0.1f green:0.1f blue:0.1f alpha:0.90f];
-    label.layer.cornerRadius = 5;
-    label.clipsToBounds = YES;
-    label.bounds = CGRectMake(0, 0, 150, 30);
-    label.center = self.center;
-    label.textAlignment = NSTextAlignmentCenter;
-    label.font = [UIFont boldSystemFontOfSize:17];
-    [[UIApplication sharedApplication].keyWindow addSubview:label];
-    [[UIApplication sharedApplication].keyWindow bringSubviewToFront:label];
-    if (error) {
-        label.text = SDPhotoBrowserSaveImageFailText;
-    }   else {
-        label.text = SDPhotoBrowserSaveImageSuccessText;
-    }
-    [label performSelector:@selector(removeFromSuperview) withObject:nil afterDelay:1.0];
-}
-
-- (UIScrollView *)scrollView
-{
-    if(!_scrollView){
-        _scrollView = [[UIScrollView alloc] init];
-        _scrollView.delegate = self;
-        _scrollView.showsHorizontalScrollIndicator = NO;
-        _scrollView.showsVerticalScrollIndicator = NO;
-        [self addSubview:_scrollView];
-        
-    }
-    return _scrollView;
-}
 
 - (void)setupScrollView
 {
+    self.scrollView = [[UIScrollView alloc] init];
+    self.scrollView.delegate = self;
+    self.scrollView.showsHorizontalScrollIndicator = NO;
+    self.scrollView.showsVerticalScrollIndicator = NO;
+    [self addSubview:self.scrollView];
+    
     for (int i = 0; i < self.imageCount; i++) {
+        UIScrollView *inserScrollView = [[UIScrollView alloc] init];
+        inserScrollView.delegate = self;
+        inserScrollView.maximumZoomScale = 2.0f;
+        inserScrollView.minimumZoomScale = 1.0f;
+        inserScrollView.showsHorizontalScrollIndicator = NO;
+        inserScrollView.showsVerticalScrollIndicator = NO;
+        inserScrollView.decelerationRate = 0.2f;
         SDBrowserImageView *imageView = [[SDBrowserImageView alloc] init];
+        imageView.contentMode = UIViewContentModeScaleAspectFit;
         imageView.tag = i;
         [imageView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(photoClick:)]];
-        [self.scrollView addSubview:imageView];
+        [inserScrollView addSubview:imageView];
+        [self.scrollView addSubview:inserScrollView];
+        [self setupImageOfImageViewForIndex:i];
     }
-    [self setupImageOfImageViewForIndex:self.currentImageIndex];
+
     
 }
 
 // 加载图片
 - (void)setupImageOfImageViewForIndex:(NSInteger)index
 {
-    SDBrowserImageView *imageView = self.scrollView.subviews[index];
-    if (imageView.hasLoadedImage)
-        return;
+    SDBrowserImageView *imageView = [[[self.scrollView.subviews objectAtIndex:index]subviews] objectAtIndex:0];
+    if (imageView.hasLoadedImage) return;
     if ([self highQualityImageURLForIndex:index]) {
-        [imageView setImageWithURL:[self highQualityImageURLForIndex:index] placeholderImage:[self placeholderImageForIndex:index]];
+        [imageView sd_setImageWithURL:[self highQualityImageURLForIndex:index] placeholderImage:nil];
     } else {
         imageView.image = [self placeholderImageForIndex:index];
     }
     imageView.hasLoadedImage = YES;
 }
 
+- (void)photoClick:(UITapGestureRecognizer *)recognizer
+{
+    __block CGRect frame = self.frame;
+    frame.origin.y =  CGRectGetHeight(frame);
+    
+    [UIView animateWithDuration:SDPhotoBrowserHideImageAnimationDuration animations:^{
+        self.frame = frame;
+    } completion:^(BOOL finished) {
+        [self removeFromSuperview];
+    }];
+}
+
 - (void)layoutSubviews
 {
     [super layoutSubviews];
-    
     CGRect rect = self.bounds;
     rect.size.width += SDPhotoBrowserImageViewMargin * 2;
     
@@ -164,10 +136,13 @@
     CGFloat y = SDPhotoBrowserImageViewMargin;
     CGFloat w = self.scrollView.frame.size.width - SDPhotoBrowserImageViewMargin * 2;
     CGFloat h = self.scrollView.frame.size.height - SDPhotoBrowserImageViewMargin * 2;
+
     
-    [self.scrollView.subviews enumerateObjectsUsingBlock:^(SDBrowserImageView *obj, NSUInteger idx, BOOL *stop) {
+    [self.scrollView.subviews enumerateObjectsUsingBlock:^(UIScrollView *obj, NSUInteger idx, BOOL *stop) {
         CGFloat x = SDPhotoBrowserImageViewMargin + idx * (SDPhotoBrowserImageViewMargin * 2 + w);
         obj.frame = CGRectMake(x, y, w, h);
+        UIView *view = [[obj subviews] firstObject];
+        view.frame = CGRectMake(0, 0, w, h);
     }];
     
     self.scrollView.contentSize = CGSizeMake(self.scrollView.subviews.count * self.scrollView.frame.size.width, 0);
@@ -217,18 +192,6 @@
     return nil;
 }
 
-- (void)photoClick:(UITapGestureRecognizer *)recognizer
-{
-    __block CGRect frame = self.frame;
-    frame.origin.y =  CGRectGetHeight(frame);
-    
-    [UIView animateWithDuration:SDPhotoBrowserHideImageAnimationDuration animations:^{
-        self.frame = frame;
-    } completion:^(BOOL finished) {
-        [self removeFromSuperview];
-    }];
-}
-
 #pragma mark - scrollview代理方法
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
@@ -241,10 +204,10 @@
             UIScrollView *insertScrollView = [[scrollView subviews] objectAtIndex:page];
             [insertScrollView setZoomScale:1.0f];
             self.indexLabel.text = [NSString stringWithFormat:@"%d/%ld", index + 1, (long)self.imageCount];
-//            if(self.delegate && [self.delegate respondsToSelector:@selector(photoBrowser:didSlideAtIndex:)]){
-//                [self.delegate photoBrowser:self didSlideAtIndex:index];
+            if(self.delegate && [self.delegate respondsToSelector:@selector(photoBrowser:didSlideAtIndex:)]){
+                [self.delegate photoBrowser:self didSlideAtIndex:index];
                 self.currentImageIndex = index;
-//            }
+            }
         }
     } else{
         
@@ -266,6 +229,59 @@
 }
 
 
+- (void)longSaveImage:(UILongPressGestureRecognizer *)longPress
+{
+    if (longPress.state == UIGestureRecognizerStateBegan) {
+        UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:NSLocalizedString(@"cancel", nil) destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"save images", nil), nil];
+        [actionSheet showInView:[[UIApplication sharedApplication] keyWindow]];
+    }
+}
+#pragma mark - ActionSheet Delegate
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 0) {
+        if ([ALAssetsLibrary authorizationStatus] == ALAuthorizationStatusDenied) {
+            NSString *tips = NSLocalizedString(@"please goto“setting->private->photo”\n allow YOHO access to the album。", nil);
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"can't save", nil) message:tips delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil];
+            [alert show];
+        } else {
+            
+            int index = self.scrollView.contentOffset.x / self.scrollView.bounds.size.width;
+            UIImageView *currentImageView = self.scrollView.subviews[index];
+            // 如果取不到image，遍历一次subviews寻找
+            if (![currentImageView respondsToSelector:@selector(image)]) {
+                for (UIImageView *aView in currentImageView.subviews) {
+                    if ([aView respondsToSelector:@selector(image)]) {
+                        currentImageView = aView;
+                        break;
+                    }
+                }
+            }
+
+            // 这里再一次判断是否
+            if ([currentImageView respondsToSelector:@selector(image)]) {
+//                [self showWait];
+                UIImageWriteToSavedPhotosAlbum(currentImageView.image, self, @selector(imageSavedToPhotosAlbum:didFinishSavingWithError:contextInfo:), nil);
+            } else {
+                // 取不到图片，不保存
+            }
+        }
+    }
+}
+- (void)imageSavedToPhotosAlbum:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo
+{
+    if (!error){
+//        [YH_Tool alertMessage:NSLocalizedString(@"saved successfully", nil)];
+    } else {
+//        [YH_Tool alertMessage:NSLocalizedString(@"save failed", nil)];
+    }
+//    __weak typeof(self) weakSelf = self;
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        sleep(1.5);
+        dispatch_async(dispatch_get_main_queue(), ^{
+//            [weakSelf hideWait];
+        });
+    });
+}
 
 @end
-
