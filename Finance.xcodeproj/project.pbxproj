@@ -893,6 +893,11 @@
 		F9B18C081BA0521600EA0314 /* SHGNoticeView.m in Sources */ = {isa = PBXBuildFile; fileRef = F9B18C071BA0521600EA0314 /* SHGNoticeView.m */; };
 		F9B7CC321B8AD6C000E55EFD /* SHGGloble.m in Sources */ = {isa = PBXBuildFile; fileRef = F9B7CC311B8AD6C000E55EFD /* SHGGloble.m */; };
 		F9EDD5E91BABF3E100506C0C /* expressionImage.plist in Resources */ = {isa = PBXBuildFile; fileRef = F9EDD5E81BABF3E100506C0C /* expressionImage.plist */; settings = {ASSET_TAGS = (); }; };
+		F9EDD5F61BABFBCF00506C0C /* SDBrowserImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = F9EDD5EC1BABFBCF00506C0C /* SDBrowserImageView.m */; settings = {ASSET_TAGS = (); }; };
+		F9EDD5F71BABFBCF00506C0C /* SDPhotoBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = F9EDD5EE1BABFBCF00506C0C /* SDPhotoBrowser.m */; settings = {ASSET_TAGS = (); }; };
+		F9EDD5F81BABFBCF00506C0C /* SDPhotoGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = F9EDD5F11BABFBCF00506C0C /* SDPhotoGroup.m */; settings = {ASSET_TAGS = (); }; };
+		F9EDD5F91BABFBCF00506C0C /* SDPhotoItem.m in Sources */ = {isa = PBXBuildFile; fileRef = F9EDD5F31BABFBCF00506C0C /* SDPhotoItem.m */; settings = {ASSET_TAGS = (); }; };
+		F9EDD5FA1BABFBCF00506C0C /* SDWaitingView.m in Sources */ = {isa = PBXBuildFile; fileRef = F9EDD5F51BABFBCF00506C0C /* SDWaitingView.m */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -2102,6 +2107,17 @@
 		F9B7CC301B8AD6C000E55EFD /* SHGGloble.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGGloble.h; sourceTree = "<group>"; };
 		F9B7CC311B8AD6C000E55EFD /* SHGGloble.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGGloble.m; sourceTree = "<group>"; };
 		F9EDD5E81BABF3E100506C0C /* expressionImage.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = expressionImage.plist; sourceTree = "<group>"; };
+		F9EDD5EB1BABFBCF00506C0C /* SDBrowserImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDBrowserImageView.h; sourceTree = "<group>"; };
+		F9EDD5EC1BABFBCF00506C0C /* SDBrowserImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDBrowserImageView.m; sourceTree = "<group>"; };
+		F9EDD5ED1BABFBCF00506C0C /* SDPhotoBrowser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDPhotoBrowser.h; sourceTree = "<group>"; };
+		F9EDD5EE1BABFBCF00506C0C /* SDPhotoBrowser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDPhotoBrowser.m; sourceTree = "<group>"; };
+		F9EDD5EF1BABFBCF00506C0C /* SDPhotoBrowserConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDPhotoBrowserConfig.h; sourceTree = "<group>"; };
+		F9EDD5F01BABFBCF00506C0C /* SDPhotoGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDPhotoGroup.h; sourceTree = "<group>"; };
+		F9EDD5F11BABFBCF00506C0C /* SDPhotoGroup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDPhotoGroup.m; sourceTree = "<group>"; };
+		F9EDD5F21BABFBCF00506C0C /* SDPhotoItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDPhotoItem.h; sourceTree = "<group>"; };
+		F9EDD5F31BABFBCF00506C0C /* SDPhotoItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDPhotoItem.m; sourceTree = "<group>"; };
+		F9EDD5F41BABFBCF00506C0C /* SDWaitingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDWaitingView.h; sourceTree = "<group>"; };
+		F9EDD5F51BABFBCF00506C0C /* SDWaitingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDWaitingView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -2982,6 +2998,7 @@
 		614DC8891AD65F6900F610D4 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				F9EDD5EA1BABFBCF00506C0C /* SDPhotoBrowser */,
 				F99B60291B9E7D9500759AAC /* HeaderView */,
 				614EFEDC1AEF8F5800F2BDD1 /* Hud */,
 				61046C731AE0FF440065F59D /* Recommend */,
@@ -4516,6 +4533,24 @@
 			path = HeaderView;
 			sourceTree = "<group>";
 		};
+		F9EDD5EA1BABFBCF00506C0C /* SDPhotoBrowser */ = {
+			isa = PBXGroup;
+			children = (
+				F9EDD5EB1BABFBCF00506C0C /* SDBrowserImageView.h */,
+				F9EDD5EC1BABFBCF00506C0C /* SDBrowserImageView.m */,
+				F9EDD5ED1BABFBCF00506C0C /* SDPhotoBrowser.h */,
+				F9EDD5EE1BABFBCF00506C0C /* SDPhotoBrowser.m */,
+				F9EDD5EF1BABFBCF00506C0C /* SDPhotoBrowserConfig.h */,
+				F9EDD5F01BABFBCF00506C0C /* SDPhotoGroup.h */,
+				F9EDD5F11BABFBCF00506C0C /* SDPhotoGroup.m */,
+				F9EDD5F21BABFBCF00506C0C /* SDPhotoItem.h */,
+				F9EDD5F31BABFBCF00506C0C /* SDPhotoItem.m */,
+				F9EDD5F41BABFBCF00506C0C /* SDWaitingView.h */,
+				F9EDD5F51BABFBCF00506C0C /* SDWaitingView.m */,
+			);
+			path = SDPhotoBrowser;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -5320,6 +5355,7 @@
 				610FF0711AD6227F0027EBA6 /* NSString+Base64.m in Sources */,
 				5331DF181AFC017600E035B8 /* ChineseToPinyin.m in Sources */,
 				5331DF1C1AFC017600E035B8 /* ApplyFriendCell.m in Sources */,
+				F9EDD5F81BABFBCF00506C0C /* SDPhotoGroup.m in Sources */,
 				B0EAB2551B467AB8005A760F /* MLEmojiLabel.m in Sources */,
 				6187D2DC1AF1C693008E1D21 /* FacialView.m in Sources */,
 				61D62BEF1ADD1C4D002DD395 /* MOCHTTPResponse.m in Sources */,
@@ -5393,6 +5429,7 @@
 				610FF07A1AD6227F0027EBA6 /* UIImage+Customized.m in Sources */,
 				6190274A1B2359C600D9EEA2 /* popTableViewCell.m in Sources */,
 				4088DDB91AF102FE00393855 /* SettingQuestionDetailViewController.m in Sources */,
+				F9EDD5FA1BABFBCF00506C0C /* SDWaitingView.m in Sources */,
 				B04D032E1B43F88A009BE7C2 /* ZYExceptionHandler.m in Sources */,
 				61D62BF11ADD1C4D002DD395 /* MOWHttp.m in Sources */,
 				614A597E1AD3AEA1005DAB04 /* Finance.xcdatamodeld in Sources */,
@@ -5425,6 +5462,7 @@
 				61046C791AE0FFBA0065F59D /* RecommendTypeObj.m in Sources */,
 				614A597B1AD3AEA1005DAB04 /* AppDelegate.m in Sources */,
 				614DC8931AD66B3200F610D4 /* BRCommonPopup.m in Sources */,
+				F9EDD5F71BABFBCF00506C0C /* SDPhotoBrowser.m in Sources */,
 				5331DF191AFC017600E035B8 /* ContactsViewController.m in Sources */,
 				6187D2DB1AF1C693008E1D21 /* DXFaceView.m in Sources */,
 				6145FF251AE4FCFE0074AB49 /* ProductListViewController.m in Sources */,
@@ -5436,6 +5474,7 @@
 				5331DF261AFC02B400E035B8 /* EMAlertView.m in Sources */,
 				5331DF1D1AFC017600E035B8 /* ApplyViewController.m in Sources */,
 				610FF06E1AD6227F0027EBA6 /* DDTapGestureRecognizer.m in Sources */,
+				F9EDD5F61BABFBCF00506C0C /* SDBrowserImageView.m in Sources */,
 				61425B7B1AFAB75E00758BCB /* ResetPasswardViewController.m in Sources */,
 				F9B7CC321B8AD6C000E55EFD /* SHGGloble.m in Sources */,
 				6187D2F41AF1C693008E1D21 /* EMTextView.m in Sources */,
@@ -5458,6 +5497,7 @@
 				F99B602C1B9E7D9500759AAC /* headerView.m in Sources */,
 				611B8CD71AFD5C09009CB21F /* ReplyTableViewCell.m in Sources */,
 				409DB3E41B03483500E6665E /* ImproveMatiralViewController.m in Sources */,
+				F9EDD5F91BABFBCF00506C0C /* SDPhotoItem.m in Sources */,
 				538964D41AFC6BEB00041548 /* NSString+Valid.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
