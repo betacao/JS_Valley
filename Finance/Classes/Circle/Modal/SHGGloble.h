@@ -7,7 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "MLEmojiLabel.h"
 
 typedef void (^SHHomeDataCompletionBlock)(NSArray *dataArray);
 
