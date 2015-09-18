@@ -557,7 +557,7 @@ const CGFloat kAdButtomMargin = 20.0f;
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     NSObject *obj = self.dataArr[indexPath.row];
     if(![obj isKindOfClass:[CircleListObj class]]){
-        static NSString *cellIdentifier = @"circleListThreeIdentifier";
+        NSString *cellIdentifier = @"circleListThreeIdentifier";
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
         if (!cell){
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"circleListThreeIdentifier"];
@@ -577,7 +577,7 @@ const CGFloat kAdButtomMargin = 20.0f;
         NSLog(@"%@",obj.postType);
         if ([obj.postType isEqualToString:@"normal"]){
             if ([obj.status boolValue]){
-                static NSString *cellIdentifier = @"circleListIdentifier";
+                NSString *cellIdentifier = @"circleListIdentifier";
                 CircleListTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
                 if (!cell){
                     cell = [[[NSBundle mainBundle] loadNibNamed:@"CircleListTableViewCell" owner:self options:nil] lastObject];
@@ -588,7 +588,7 @@ const CGFloat kAdButtomMargin = 20.0f;
                 [cell loadDatasWithObj:obj];
                 
                 MLEmojiLabel *mlLable = (MLEmojiLabel *)[cell viewWithTag:521];
-                mlLable.emojiDelegate = self;
+                mlLable.delegate = self;
                 return cell;
             }
         }
@@ -597,7 +597,7 @@ const CGFloat kAdButtomMargin = 20.0f;
         {
             if ([obj.status boolValue])
             {
-                static NSString *cellIdentifier = @"circleListTwoIdentifier";
+                NSString *cellIdentifier = @"circleListTwoIdentifier";
                 CircleListTwoTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
                 if (!cell){
                     cell = [[[NSBundle mainBundle] loadNibNamed:@"CircleListTwoTableViewCell" owner:self options:nil] lastObject];

@@ -892,6 +892,7 @@
 		F99B602C1B9E7D9500759AAC /* headerView.m in Sources */ = {isa = PBXBuildFile; fileRef = F99B602B1B9E7D9500759AAC /* headerView.m */; };
 		F9B18C081BA0521600EA0314 /* SHGNoticeView.m in Sources */ = {isa = PBXBuildFile; fileRef = F9B18C071BA0521600EA0314 /* SHGNoticeView.m */; };
 		F9B7CC321B8AD6C000E55EFD /* SHGGloble.m in Sources */ = {isa = PBXBuildFile; fileRef = F9B7CC311B8AD6C000E55EFD /* SHGGloble.m */; };
+		F9EDD5E91BABF3E100506C0C /* expressionImage.plist in Resources */ = {isa = PBXBuildFile; fileRef = F9EDD5E81BABF3E100506C0C /* expressionImage.plist */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -2100,6 +2101,7 @@
 		F9B18C071BA0521600EA0314 /* SHGNoticeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGNoticeView.m; sourceTree = "<group>"; };
 		F9B7CC301B8AD6C000E55EFD /* SHGGloble.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGGloble.h; sourceTree = "<group>"; };
 		F9B7CC311B8AD6C000E55EFD /* SHGGloble.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGGloble.m; sourceTree = "<group>"; };
+		F9EDD5E81BABF3E100506C0C /* expressionImage.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = expressionImage.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -4468,6 +4470,7 @@
 				B080FE851B81E30100426579 /* emoji_unselected_center_bg.png */,
 				B080FE861B81E30100426579 /* emoji_unselected_center_bg@2x.png */,
 				B080FE871B81E30100426579 /* EmojisList.plist */,
+				F9EDD5E81BABF3E100506C0C /* expressionImage.plist */,
 			);
 			name = resources;
 			sourceTree = "<group>";
@@ -5141,6 +5144,7 @@
 				408D8B5B1AF8618C0055810C /* chatBar_more_camera.png in Resources */,
 				408D8B401AF8618C0055810C /* chatBar_faceSelected@2x.png in Resources */,
 				6186DF241AFABC6F00960934 /* ShareSDKLocalizable.strings in Resources */,
+				F9EDD5E91BABF3E100506C0C /* expressionImage.plist in Resources */,
 				B04355CF1B4BD3560033BBBF /* LinkViewController.xib in Resources */,
 				408D8B421AF8618C0055810C /* chatBar_keyboard@2x.png in Resources */,
 				6190274B1B2359C600D9EEA2 /* popTableViewCell.xib in Resources */,
@@ -5562,8 +5566,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: JiangSu Yunli Technology and Information Company (6FFGT2HSCN)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: xie jian (A35C7Q22SB)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: JiangSu Yunli Technology and Information Company (6FFGT2HSCN)";
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Finance/External/ShareSDK/Connection",
@@ -5606,7 +5611,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.danniuquan.apptest;
 				PRODUCT_NAME = "大牛圈";
-				PROVISIONING_PROFILE = "72072637-8960-4188-a83a-da16211f9511";
+				PROVISIONING_PROFILE = "b5987c73-8279-4077-adf7-6be59791bd1b";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -5618,8 +5623,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: JiangSu Yunli Technology and Information Company (6FFGT2HSCN)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: xie jian (A35C7Q22SB)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: JiangSu Yunli Technology and Information Company (6FFGT2HSCN)";
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Finance/External/ShareSDK/Connection",
@@ -5662,7 +5668,7 @@
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.danniuquan.apptest;
 				PRODUCT_NAME = "大牛圈";
-				PROVISIONING_PROFILE = "72072637-8960-4188-a83a-da16211f9511";
+				PROVISIONING_PROFILE = "b5987c73-8279-4077-adf7-6be59791bd1b";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -5712,8 +5718,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: JiangSu Yunli Technology and Information Company (6FFGT2HSCN)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: xie jian (A35C7Q22SB)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: JiangSu Yunli Technology and Information Company (6FFGT2HSCN)";
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Finance/External/ShareSDK/Connection",
@@ -5756,7 +5763,7 @@
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.danniuquan.apptest;
 				PRODUCT_NAME = "大牛圈";
-				PROVISIONING_PROFILE = "72072637-8960-4188-a83a-da16211f9511";
+				PROVISIONING_PROFILE = "b5987c73-8279-4077-adf7-6be59791bd1b";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 			};

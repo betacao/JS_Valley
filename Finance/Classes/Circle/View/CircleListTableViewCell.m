@@ -69,9 +69,15 @@
     self.lblContent.numberOfLines = 5;
     self.lblContent.lineBreakMode = NSLineBreakByWordWrapping;
     self.lblContent.font = [UIFont systemFontOfSize:14.0f];
-    self.lblContent.emojiDelegate = self;
+    self.lblContent.delegate = self;
     self.lblContent.backgroundColor = [UIColor clearColor];
-    self.lblContent.isNeedAtAndPoundSign = YES;
+
+    DDTapGestureRecognizer *hdGes = [[DDTapGestureRecognizer alloc] initWithTarget:self action:@selector(headTap:)];
+    [self.imageHeader addGestureRecognizer:hdGes];
+    self.imageHeader.userInteractionEnabled = YES;
+
+    [self.viewComment setBackgroundColor:BACK_COLOR];
+
 }
 
 -(void)longtap:(UILongPressGestureRecognizer *)rec
@@ -84,6 +90,9 @@
 {
     self.totalHeight = 0.0f;
     self.dataObj = obj;
+
+    [self sizeUIWithObj:obj];
+
     //设置好友关系、定位标签的内容
     self.lblCityName.textColor = RGB(210, 209, 209);
     if ([[[NSUserDefaults standardUserDefaults]objectForKey:KEY_UID] isEqualToString:obj.userid]){
@@ -130,11 +139,7 @@
     
     [self.imageHeader updateHeaderView:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,obj.potname] placeholderImage:[UIImage imageNamed:@"默认头像"]];
     [self.imageHeader updateStatus:[obj.userstatus isEqualToString:@"true"] ? YES : NO];
-    NSLog(@"%@",obj.potname);
-    self.imageHeader.userInteractionEnabled = YES;
-    
-    DDTapGestureRecognizer *hdGes = [[DDTapGestureRecognizer alloc] initWithTarget:self action:@selector(headTap:)];
-    [self.imageHeader addGestureRecognizer:hdGes];
+
     
     NSString *name = obj.nickname;
     if (obj.nickname.length > 4) {
@@ -161,25 +166,31 @@
     } else{
         [self.btnAttention setImage:[UIImage imageNamed:@"关注14"] forState:UIControlStateNormal] ;
     }
+
     NSString *detail = obj.detail;
     NSLog(@"%@",obj.detail);
-    [self.lblContent setEmojiText:detail];
-    [self.lblContent sizeToFit];
-    [self sizeUIWithObj:obj];
+    self.lblContent.text = detail;
+    CGSize size = [self.lblContent preferredSizeWithMaxWidth:kCellContentWidth];
+    CGRect frame = self.lblContent.frame;
+    frame.size.width = kCellContentWidth;
+    frame.size.height = size.height;
+    self.lblContent.frame = frame;
     
     CGFloat photoOriginX = CGRectGetMinX(self.lblContent.frame);
     CGFloat photoOriginY = CGRectGetMaxY(self.lblContent.frame);
     //第一次计算高度
     self.totalHeight = photoOriginY;
-    
-    CGRect frame = self.photoView.frame;
+
+    //暂时这么写 不是很好 以后修改
+    [self.photoView removeAllSubviews];
+    frame = self.photoView.frame;
     frame.origin.x = photoOriginX;
     frame.origin.y = photoOriginY;
     frame.size.height = 0.0f;
     self.photoView.frame = frame;
     
     CGFloat width = (SCREENWIDTH - kPhotoViewRightMargin - kPhotoViewLeftMargin - CELL_PHOTO_SEP * 2.0f) / 3.0f;
-    
+
     if ([obj.type isEqualToString:@"link"]){
         self.photoView.backgroundColor = RGB(245, 245, 241);
         linkOBj *link = obj.linkObj;
@@ -205,8 +216,6 @@
         [self.photoView addGestureRecognizer:ges];
         
     } else if ([obj.type isEqualToString:TYPE_PHOTO]){
-        //暂时这么写 不是很好 以后修改
-        [self.photoView removeAllSubviews];
         self.photoArr = (NSArray *)obj.photoArr;
         if (!IsArrEmpty(obj.photoArr)){
             if (self.photoArr.count == 1){
@@ -325,8 +334,7 @@
     actionViewRect.origin.y = self.photoView.bottom;
     self.actionView.frame = actionViewRect;
     self.totalHeight = CGRectGetMaxY(actionViewRect);
-    
-    [self.viewComment setBackgroundColor:BACK_COLOR];
+
     [self.viewComment removeAllSubviews];
     //显示的评论数
     NSInteger num = obj.comments.count;

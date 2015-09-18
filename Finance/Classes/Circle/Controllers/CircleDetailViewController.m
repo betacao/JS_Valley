@@ -65,9 +65,7 @@
 -(id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    
-    if (self)
-    {
+    if (self){
         self.title = @"帖子详情";
     }
     return  self;
@@ -79,13 +77,12 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    _lblContent.numberOfLines = 0;
-    _lblContent.lineBreakMode = NSLineBreakByWordWrapping;
-    _lblContent.font = [UIFont systemFontOfSize:14.0f];
-    _lblContent.emojiDelegate = self;
-    _lblContent.backgroundColor = [UIColor clearColor];
-    _lblContent.isNeedAtAndPoundSign = YES;
-    NSLog(@"%@",self.rid);
+    self.lblContent.numberOfLines = 0;
+    self.lblContent.lineBreakMode = NSLineBreakByWordWrapping;
+    self.lblContent.font = [UIFont systemFontOfSize:14.0f];
+    self.lblContent.delegate = self;
+    self.lblContent.backgroundColor = [UIColor clearColor];
+
     [self initData];
     _viewHeader.hidden = YES;
     self.listTable.tag = 1101;
@@ -261,8 +258,12 @@
         [self.btnAttention setImage:[UIImage imageNamed:@"关注14"] forState:UIControlStateNormal] ;
     }
     
-    [self.lblContent setEmojiText:obj.detail];
-    [self.lblContent sizeToFit];
+    self.lblContent.text = obj.detail;
+    CGSize size = [self.lblContent preferredSizeWithMaxWidth:kCellContentWidth];
+    CGRect frame = self.lblContent.frame;
+    frame.size.width = kCellContentWidth;
+    frame.size.height = size.height;
+    self.lblContent.frame = frame;
     [self sizeUIWithObj:obj];
     
     UIView *photoView = [[UIView alloc] initWithFrame:CGRectMake(60, _lblContent.bottom + 10, SCREENWIDTH-CELLRIGHT_WIDTH, 0)];
@@ -1322,7 +1323,6 @@
     vc.url = link;
     switch(type){
         case MLEmojiLabelLinkTypeURL:
-           // [self openURL:[NSURL URLWithString:link]];
             [self.navigationController pushViewController:vc animated:YES];
             NSLog(@"点击了链接%@",link);
             break;

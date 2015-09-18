@@ -8,6 +8,7 @@
 
 #import "CircleListObj.h"
 #import "SHGGloble.h"
+#import "MLEmojiLabel.h"
 
 const CGFloat kUserInfoHeight = 55.0f;
 const CGFloat kMoreCommentHeight = 20.0f;
@@ -64,14 +65,13 @@ const CGFloat kActionViewHeight = 40.0f;
     if (IsStrEmpty(self.detail)){
         self.totalHeight = kUserInfoHeight;
     } else{
-        MLEmojiLabel *globleLabel = [[MLEmojiLabel alloc] initWithFrame:CGRectMake(0, 0, 240, 0)];
+        MLEmojiLabel *globleLabel = [MLEmojiLabel new];
         globleLabel.numberOfLines = 5;
         globleLabel.lineBreakMode = NSLineBreakByWordWrapping;
         globleLabel.font = [UIFont systemFontOfSize:14.0f];
-        globleLabel.isNeedAtAndPoundSign = YES;
-        [globleLabel setEmojiText:self.detail];
-        [globleLabel sizeToFit];
-        self.totalHeight = CGRectGetHeight(globleLabel.frame) + kUserInfoHeight;
+        globleLabel.text = self.detail;
+        CGSize size = [globleLabel preferredSizeWithMaxWidth:kCellContentWidth];
+        self.totalHeight = size.height + kUserInfoHeight;
     }
     CGFloat photoHeight = 0.0;
     self.photoArr = (NSArray *)self.photos;

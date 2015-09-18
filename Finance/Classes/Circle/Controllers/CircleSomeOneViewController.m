@@ -434,7 +434,7 @@
         [cell loadDatasWithObj:obj];
         
         MLEmojiLabel *mlLable = (MLEmojiLabel *)[cell viewWithTag:521];
-        mlLable.emojiDelegate = self;
+        mlLable.delegate = self;
         return cell;
     } else{
         static NSString *cellIdentifier = @"noListIdentifier";
@@ -457,7 +457,6 @@
     vc.url = link;
     switch(type){
         case MLEmojiLabelLinkTypeURL:
-            // [self openURL:[NSURL URLWithString:link]];
             [self.navigationController pushViewController:vc animated:YES];
             NSLog(@"点击了链接%@",link);
             break;
