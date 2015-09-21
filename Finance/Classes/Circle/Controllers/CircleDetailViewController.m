@@ -10,13 +10,15 @@
 #import "MLEmojiLabel.h"
 #import "LinkViewController.h"
 #import "TWEmojiKeyBoard.h"
+#import "SDPhotoGroup.h"
+#import "SDPhotoItem.h"
+
 #define PRAISE_SEPWIDTH     6
 #define PRAISE_RIGHTWIDTH     40
 
 @interface CircleDetailViewController ()<MLEmojiLabelDelegate>
 {
     UIControl *backView;
-    CGFloat contentOrigin;
     UIView *PickerBackView;
     NSString *copyString;
     NSString *commentRid;
@@ -24,24 +26,13 @@
 }
 - (IBAction)actionDelete:(id)sender;
 @property (weak, nonatomic) IBOutlet UIButton *btnDelete;
-@property (weak, nonatomic) IBOutlet UILabel *linComent;
-@property (weak, nonatomic) IBOutlet UILabel *linePraise;
-
 @property (weak, nonatomic) IBOutlet UIButton *btnSend;
-@property (weak, nonatomic) IBOutlet UITextField *txtInput;
 @property (weak, nonatomic) IBOutlet UIView *viewInput;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollPraise;
-- (IBAction)actionGoSome:(id)sender;
 @property (weak, nonatomic) IBOutlet UIButton *btnNickname;
-
-@property (weak, nonatomic) IBOutlet UIView *viewComment;
-@property (nonatomic, strong)BRCommentView *popupView;
-
 @property (weak, nonatomic) IBOutlet UIButton *btnCollet;
 @property (weak, nonatomic) IBOutlet UIButton *btnComment;
 @property (weak, nonatomic) IBOutlet UIButton *btnPraise;
-@property (weak, nonatomic) IBOutlet UILabel *lblLine;
-@property (strong, nonatomic) IBOutlet UIView *viewHeader;
 @property (weak, nonatomic) IBOutlet UIView *viewPraise;
 @property (weak, nonatomic) IBOutlet UIButton *btnShare;
 @property (weak, nonatomic) IBOutlet UITableView *listTable;
@@ -52,12 +43,15 @@
 @property (weak, nonatomic) IBOutlet UILabel *lblPosition;
 @property (weak, nonatomic) IBOutlet UILabel *lblUserName;
 @property (weak, nonatomic) IBOutlet headerView *imageHeader;
+@property (strong, nonatomic)BRCommentView *popupView;
+@property (strong, nonatomic) IBOutlet UIView *viewHeader;
 
 - (IBAction)actionAttention:(id)sender;
 - (IBAction)actionComment:(id)sender;
 - (IBAction)actionPraise:(id)sender;
 - (IBAction)actionShare:(id)sender;
 - (IBAction)actionCollection:(id)sender;
+- (IBAction)actionGoSome:(id)sender;
 
 @end
 
@@ -77,36 +71,11 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.lblContent.numberOfLines = 0;
-    self.lblContent.lineBreakMode = NSLineBreakByWordWrapping;
-    self.lblContent.font = [UIFont systemFontOfSize:14.0f];
-    self.lblContent.delegate = self;
-    self.lblContent.backgroundColor = [UIColor clearColor];
-
-    [self initData];
-    _viewHeader.hidden = YES;
-    self.listTable.tag = 1101;
-    self.listTable.backgroundColor = [UIColor whiteColor];
-    [self.view bringSubviewToFront:self.viewInput];
-    NSLog(@"%f/%f",SCREENHEIGHT,SCREENWIDTH);
-    if (SCREENHEIGHT == 480)
-    {
-        CGRect rect = self.listTable.frame;
-        rect.size.height = self.view.height;
-        [self.listTable setFrame:rect];
-    }
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(smsShareSuccess:) name:NOTIFI_CHANGE_SHARE_TO_SMSSUCCESS object:nil];
-     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(smsShareSuccess:) name:NOTIFI_CHANGE_SHARE_TO_FRIENDSUCCESS object:nil];
-    
-    _btnSend.layer.masksToBounds = YES;
-    _btnSend.layer.cornerRadius = 8;
-    contentOrigin = _lblContent.origin.y;
     [CommonMethod setExtraCellLineHidden:self.listTable];
     [self addHeaderRefresh:self.listTable headerRefesh:NO andFooter:NO];
     [Hud showLoadingWithMessage:@"加载中"];
     [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttpCircle,@"circledetail"] class:[CircleListObj class] parameters:@{@"rid":self.rid,@"uid":[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID]} success:^(MOCHTTPResponse *response) {
         [Hud hideHud];
-        
         NSLog(@"%@  arr === %@",response.data,response.dataDictionary);
         if (response.dataDictionary) {
             [self parseObjWithDic:response.dataDictionary];
@@ -114,9 +83,34 @@
         }
     } failed:^(MOCHTTPResponse *response) {
         [Hud hideHud];
-        
         [Hud showMessageWithText:response.errorMessage];
     }];
+
+    self.lblContent.numberOfLines = 0;
+    self.lblContent.lineBreakMode = NSLineBreakByWordWrapping;
+    self.lblContent.font = [UIFont systemFontOfSize:14.0f];
+    self.lblContent.delegate = self;
+    self.lblContent.backgroundColor = [UIColor clearColor];
+
+    [self initData];
+    self.viewHeader.hidden = YES;
+    self.listTable.backgroundColor = [UIColor whiteColor];
+    [self.view bringSubviewToFront:self.viewInput];
+    if (SCREENHEIGHT == 480){
+        CGRect rect = self.listTable.frame;
+        rect.size.height = self.view.height;
+        [self.listTable setFrame:rect];
+    }
+
+    self.btnSend.layer.masksToBounds = YES;
+    self.btnSend.layer.cornerRadius = 8;
+
+    DDTapGestureRecognizer *hdGes = [[DDTapGestureRecognizer alloc] initWithTarget:self action:@selector(headTap:)];
+    [self.imageHeader addGestureRecognizer:hdGes];
+    self.imageHeader.userInteractionEnabled = YES;
+
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(smsShareSuccess:) name:NOTIFI_CHANGE_SHARE_TO_SMSSUCCESS object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(smsShareSuccess:) name:NOTIFI_CHANGE_SHARE_TO_FRIENDSUCCESS object:nil];
     
     
 }
@@ -150,11 +144,11 @@
             obj.rid = cmt[@"rid"];
             [self.obj.comments addObject:obj];
         }
-        
+
     }
     self.obj.ispraise = dic[@"ispraise"];
     self.obj.iscollection = dics[@"iscollection"];
-   NSArray *heads = dics[@"heads"];
+    NSArray *heads = dics[@"heads"];
     for (NSDictionary *head in heads) {
         praiseOBj *obj = [[praiseOBj alloc] init];
         obj.pnickname = head[@"pnickname"];
@@ -162,7 +156,7 @@
         obj.puserid = head[@"puserid"];
         [self.obj.heads addObject:obj];
     }
-    
+
     self.obj.cmmtnum = [NSString stringWithFormat:@"%@",dic[@"cmmtnum"]];
     self.obj.company = dic[@"company"];
     self.obj.detail = dic[@"detail"];
@@ -181,14 +175,10 @@
     self.obj.userid = dic[@"userid"];
     self.obj.sizes = dic[@"sizes"];
     NSDictionary *link = dic[@"link"];
-    if ([self.obj.type isEqualToString:@"link"])
-    {
+    if ([self.obj.type isEqualToString:@"link"]){
         linkOBj *linkObj = [[linkOBj alloc] init];
         linkObj.title = link[@"title"];
         linkObj.desc = link[@"desc"];
-        
-        linkObj.desc = link[@"desc"];
-        
         linkObj.thumbnail = link[@"thumbnail"];
         self.obj.linkObj = linkObj;
     }
@@ -204,7 +194,6 @@
 -(void)loadDatasWithObj:(CircleListObj *)obj
 {
     self.viewHeader.hidden = NO;
-
     self.obj.photoArr = (NSArray *)obj.photos;
     if ([obj.userid isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID]] || [obj.userid isEqualToString:CHATID_MANAGER]) {
         self.btnAttention.hidden = YES;
@@ -217,10 +206,7 @@
     
     [self.imageHeader updateHeaderView:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,obj.potname] placeholderImage:[UIImage imageNamed:@"默认头像"]];
     [self.imageHeader updateStatus:[obj.userstatus isEqualToString:@"true"] ? YES : NO];
-    
-    DDTapGestureRecognizer *hdGes = [[DDTapGestureRecognizer alloc] initWithTarget:self action:@selector(headTap:)];
-    [self.imageHeader addGestureRecognizer:hdGes];
-    self.imageHeader.userInteractionEnabled = YES;
+
     if (![obj.ispraise isEqualToString:@"Y"]) {
         [self.btnPraise setImage:[UIImage imageNamed:@"未赞"] forState:UIControlStateNormal];
     } else{
@@ -267,10 +253,7 @@
     [self sizeUIWithObj:obj];
     
     UIView *photoView = [[UIView alloc] initWithFrame:CGRectMake(60, _lblContent.bottom + 10, SCREENWIDTH-CELLRIGHT_WIDTH, 0)];
-    NSInteger width = (SCREENWIDTH - kPhotoViewRightMargin - kPhotoViewLeftMargin - CELL_PHOTO_SEP * 2.0f) / 3.0f;
-    
-    if ([self.obj.type isEqualToString:@"link"])
-    {
+    if ([self.obj.type isEqualToString:@"link"]){
         photoView.backgroundColor = RGB(245, 245, 241);
         linkOBj *link = obj.linkObj;
         UIImageView *linkImageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 5, 40, 40)];
@@ -295,303 +278,57 @@
         DDTapGestureRecognizer *ges = [[DDTapGestureRecognizer alloc] initWithTarget:self action:@selector(linkTap:)];
         [photoView addGestureRecognizer:ges];
     } else if ([self.obj.type isEqualToString:TYPE_PHOTO]){
-        
-        if (!IsArrEmpty(obj.photoArr))
-        {
-            NSArray *photoArr = obj.photoArr;
-            if (photoArr.count == 1)
-            {
-                UIImageView *imageView = [[UIImageView alloc] init];
-                imageView.userInteractionEnabled = YES;
-                imageView.clipsToBounds = YES;
-                imageView.contentMode = UIViewContentModeScaleAspectFit;
-                imageView.tag = 9999 ;
-                
-                DDTapGestureRecognizer *ges = [[DDTapGestureRecognizer alloc] initWithTarget:self action:@selector(imageTap:)];
-                ges.tag = 9999;
-                [imageView addGestureRecognizer:ges];
-                CGSize size = CGSizeZero;
-                CGSize imageSize = CGSizeZero;
+        SDPhotoGroup *photoGroup = [[SDPhotoGroup alloc] init];
+        NSMutableArray *temp = [NSMutableArray array];
+        [obj.photoArr enumerateObjectsUsingBlock:^(NSString *src, NSUInteger idx, BOOL *stop) {
+            SDPhotoItem *item = [[SDPhotoItem alloc] init];
+            item.thumbnail_pic = [NSString stringWithFormat:@"%@%@",rBaseAddressForImage,src];
+            [temp addObject:item];
+        }];
+        photoGroup.photoItemArray = temp;
+        [photoView addSubview:photoGroup];
 
-                NSArray *sizeArr = [obj.sizes[0] componentsSeparatedByString:@"*"];
-                if (sizeArr.count > 1){
-                    size.width = [sizeArr[0] floatValue];
-                    size.height = [sizeArr[1] floatValue];
-                    //高度大于宽度
-                    if (size.height > size.width){
-                        if (size.height > width * 2.5f){
-                            //超过3倍尺寸，需要缩放
-                            imageSize.width = imageSize.height = 2.0f * width + CELL_PHOTO_SEP;
-                            imageView.contentMode = UIViewContentModeScaleAspectFill;
-                        } else{
-                            //用图片尺寸，不需要缩放
-                            imageSize.height = size.height;
-                            imageSize.width = size.width;
-                        }
-                    } else{
-                        if (size.width > width * 2.5f){
-                            //超过3倍尺寸，需要缩放
-                            imageSize.width = imageSize.height = 2.0f * width + CELL_PHOTO_SEP;
-                            imageView.contentMode = UIViewContentModeScaleAspectFill;
-                        } else{
-                            //用图片尺寸，不需要缩放
-                            imageSize.height = size.height;
-                            imageSize.width = size.width;
-                        }
-                    }
-                    
-                   
-                }
-                [imageView setFrame:CGRectMake(0, 0, imageSize.width, imageSize.height)];
-                NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,obj.photoArr[0]]];
-                [imageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"default_image"]];
-                [photoView addSubview:imageView];
-                photoView.frame = CGRectMake(60, _lblContent.bottom + 10, SCREENWIDTH-CELLRIGHT_WIDTH, imageSize.height);
-            }
-            else if (photoArr.count <4 )
-            {
-                
-                for (int i = 0; i < obj.photoArr.count; i ++)
-                {
-                    int originY;
-                    originY = 0;
-                    UIImageView *imageView = [[UIImageView alloc] init];
-                    imageView.userInteractionEnabled = YES;
-                    imageView.tag = 9999 + i;
-                    
-                    DDTapGestureRecognizer *ges = [[DDTapGestureRecognizer alloc] initWithTarget:self action:@selector(imageTap:)];
-                    ges.tag = 9999+ i;
-                    [imageView addGestureRecognizer:ges];
-                    [imageView setFrame:CGRectMake((width +CELL_PHOTO_SEP) * (i%3) ,originY,width , width)];
-                    [imageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,obj.photoArr[i]]] placeholderImage:[UIImage imageNamed:@"default_image"]];
-                    [photoView addSubview:imageView];
-                }
-                photoView.frame = CGRectMake(60, _lblContent.bottom + 10, SCREENWIDTH-CELLRIGHT_WIDTH,width);
-            }
-            
-            else if (obj.photoArr.count == 4)
-            {
-                for (int i = 0; i < obj.photoArr.count; i ++)
-                {
-                    NSInteger originY = 0;
-                    if (i > 1) {
-                        originY = width + CELL_PHOTO_SEP;
-                    }
-                    else
-                    {
-                        originY = 0;
-                    }
-                    UIImageView *imageView = [[UIImageView alloc] init];
-                    imageView.userInteractionEnabled = YES;
-                    imageView.tag = 9999 + i;
-                    
-                    DDTapGestureRecognizer *ges = [[DDTapGestureRecognizer alloc] initWithTarget:self action:@selector(imageTap:)];
-                    ges.tag = 9999+ i;
-                    [imageView addGestureRecognizer:ges];
-                    [imageView setFrame:CGRectMake((width +CELL_PHOTO_SEP) * (i%2) ,originY,width , width)];
-                    [imageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,obj.photoArr[i]]] placeholderImage:[UIImage imageNamed:@"default_image"]];
-                    [photoView addSubview:imageView];
-                }
-                photoView.frame = CGRectMake(60, _lblContent.bottom + 10, SCREENWIDTH-CELLRIGHT_WIDTH, (width*2) + CELL_PHOTO_SEP);
-            }
-            else
-            {
-                for (int i = 0; i < obj.photoArr.count; i ++)
-                {
-                    NSInteger originY = 0;
-                    if (i > 2) {
-                        originY = width + CELL_PHOTO_SEP;
-                    }
-                    else
-                    {
-                        originY = 0;
-                    }
-                    UIImageView *imageView = [[UIImageView alloc] init];
-                    imageView.userInteractionEnabled = YES;
-                    imageView.tag = 9999 + i;
-                    
-                    DDTapGestureRecognizer *ges = [[DDTapGestureRecognizer alloc] initWithTarget:self action:@selector(imageTap:)];
-                    ges.tag = 9999+ i;
-                    [imageView addGestureRecognizer:ges];
-                    [imageView setFrame:CGRectMake((width +CELL_PHOTO_SEP) * (i%3) ,originY,width , width)];
-                    [imageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,obj.photoArr[i]]] placeholderImage:[UIImage imageNamed:@"default_image"]];
-                    [photoView addSubview:imageView];
-                }
-                photoView.frame = CGRectMake(60, _lblContent.bottom + 10, SCREENWIDTH-CELLRIGHT_WIDTH, (width*2) + CELL_PHOTO_SEP);
-            }
-            //   ======================
-            
-        }
-
-        //=============
-      
-        
-    }else{
-    
+        photoView.frame = CGRectMake(kPhotoViewLeftMargin, self.lblContent.bottom, CGRectGetWidth(photoGroup.frame),CGRectGetHeight(photoGroup.frame));
     }
     [self.viewHeader addSubview:photoView];
-    CGRect actionViewRect = _actionView.frame;
-    actionViewRect.origin.y = photoView.bottom + 20.0f;
-    _actionView.frame = actionViewRect;
+    CGRect actionViewRect = self.actionView.frame;
+    actionViewRect.origin.y = photoView.bottom;
+    self.actionView.frame = actionViewRect;
     
-    CGRect praiseRect = _viewPraise.frame;
-    praiseRect.origin.y = _actionView.bottom;
+    CGRect praiseRect = self.viewPraise.frame;
+    praiseRect.origin.y = self.actionView.bottom;
     CGFloat praiseWidth = 0;
-    if ([self.obj.praisenum intValue] >0)
-    {
-        for (UIView *subView in _scrollPraise.subviews)
-        {
+    if ([self.obj.praisenum intValue] > 0){
+        for (UIView *subView in self.scrollPraise.subviews){
             if (subView.tag >=1000) {
                 [subView removeFromSuperview];
             }
         }
         praiseRect.size.height = 55;
-        for (int i = 0; i < self.obj.heads.count; i ++ )
-        {
+        for (int i = 0; i < self.obj.heads.count; i ++ ) {
             praiseOBj *obj = self.obj.heads[i];
-
             praiseWidth = (340-75-6*PRAISE_SEPWIDTH -PRAISE_RIGHTWIDTH )/6;
             NSLog(@"%f",SCREENWIDTH);
-            CGRect rect = CGRectMake(0 + (praiseWidth+PRAISE_SEPWIDTH) *i , (55-praiseWidth)/2, praiseWidth, praiseWidth);
+            CGRect rect = CGRectMake((praiseWidth+PRAISE_SEPWIDTH) * i , (CGRectGetHeight(praiseRect) - praiseWidth) / 2.0f, praiseWidth, praiseWidth);
             UIImageView *head = [[UIImageView alloc] initWithFrame:rect];
             head.tag = i + 1000;
             [head sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,obj.ppotname]] placeholderImage:[UIImage imageNamed:@"默认头像"]];
             head.userInteractionEnabled = YES;
             DDTapGestureRecognizer *ges = [[DDTapGestureRecognizer alloc] initWithTarget:self action:@selector(pushSome:)];
-            ges.tag = i+ 1000;
+            ges.tag = i + 1000;
             [head addGestureRecognizer:ges];
             [_scrollPraise addSubview:head];
             
         }
-        [_scrollPraise setContentSize:CGSizeMake(self.obj.heads.count *(praiseWidth+PRAISE_SEPWIDTH), 55)];
-        _viewPraise.hidden = NO;
-
-        
-    }
-    else
-    {
+        [self.scrollPraise setContentSize:CGSizeMake(self.obj.heads.count *(praiseWidth+PRAISE_SEPWIDTH), 55)];
+        self.viewPraise.hidden = NO;
+    } else{
         praiseRect.size.height = 0;
-        _viewPraise.hidden = YES;
+        self.viewPraise.hidden = YES;
     }
-    _viewPraise.frame = praiseRect;
-    CGRect  commentRect = _viewComment.frame;
-    NSInteger num = [self.obj.cmmtnum integerValue];
-    num = 0;
-    for (int i = 0; i < num; i ++)
-    {
-        UILabel *replyLabel = [[UILabel alloc] initWithFrame:CGRectMake(60, i * 20 + 10, SCREENWIDTH - CELLRIGHT_WIDTH, 20)];
+    self.viewPraise.frame = praiseRect;
 
-        replyLabel.numberOfLines = 0;
-        replyLabel.lineBreakMode = NSLineBreakByWordWrapping;
-        replyLabel.font = [UIFont fontWithName:@"Palatino" size:14];
-        replyLabel.userInteractionEnabled = YES;
-        replyLabel.tag = i + 1000;
-        replyLabel.textColor = TEXT_COLOR;
-        //replyLabel.textColor = [UIColor redColor];
-        NSString *text ;
-        commentOBj *comobj = obj.comments[i];
-        
-        NSMutableAttributedString *str;
-        UIButton *cnickButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        UIButton *rnickButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        [cnickButton setBackgroundImage:[UIImage imageWithColor:BTN_SELECT_BACK_COLOR andSize:CGSizeMake(40, 40)] forState:UIControlStateHighlighted];
-        [rnickButton setBackgroundImage:[UIImage imageWithColor:BTN_SELECT_BACK_COLOR andSize:CGSizeMake(40, 40)] forState:UIControlStateHighlighted];
-        cnickButton.tag = i;
-        rnickButton.tag = i;
-        if (IsStrEmpty(comobj.rnickname))
-        {
-            text = [NSString stringWithFormat:@"%@:x%@",comobj.cnickname,comobj.cdetail];
-            
-            
-            CGSize cSize = [[NSString stringWithFormat:@"%@:",comobj.cnickname] sizeForFont:replyLabel.font constrainedToSize:CGSizeMake(200, 15) lineBreakMode:replyLabel.lineBreakMode];
-            [cnickButton setBackgroundColor:[UIColor whiteColor]];
-            [cnickButton setFrame:CGRectMake(-3, 0, cSize.width, cSize.height)];
-            [cnickButton.titleLabel setTextAlignment:NSTextAlignmentCenter];
-            [cnickButton setTitle:[NSString stringWithFormat:@"%@:",comobj.cnickname] forState:UIControlStateNormal];
-            [cnickButton setTitleColor:RGB(255, 57, 67) forState:UIControlStateNormal];
-            [cnickButton.titleLabel setFont:replyLabel.font];
-            [replyLabel addSubview:cnickButton];
-            str = [[NSMutableAttributedString alloc] initWithString:text];
-            
-            [str addAttribute:NSForegroundColorAttributeName value:[UIColor clearColor] range:NSMakeRange(0,comobj.cnickname.length+1+1 )];
-            [str addAttribute:NSFontAttributeName value:replyLabel.font range:NSMakeRange(0, comobj.cnickname.length+1)];
-            
-            
-        }
-        else
-        {
-            
-            text = [NSString stringWithFormat:@"%@回复%@:x%@",comobj.cnickname,comobj.rnickname,comobj.cdetail];
-            CGSize cSize = [comobj.cnickname sizeForFont:replyLabel.font constrainedToSize:CGSizeMake(200, 15) lineBreakMode:replyLabel.lineBreakMode];
-            NSLog(@"%@",comobj.cnickname);
-            [cnickButton setBackgroundColor:[UIColor whiteColor]];
-            [cnickButton setFrame:CGRectMake(-3, 0, cSize.width, cSize.height)];
-            [cnickButton.titleLabel setTextAlignment:NSTextAlignmentCenter];
-            [cnickButton setTitle:comobj.cnickname forState:UIControlStateNormal];
-            [cnickButton setTitleColor:RGB(255, 57, 67) forState:UIControlStateNormal];
-            [cnickButton.titleLabel setFont:replyLabel.font];
-            [replyLabel addSubview:cnickButton];
-            str = [[NSMutableAttributedString alloc] initWithString:text];
-            
-            [str addAttribute:NSForegroundColorAttributeName value:[UIColor clearColor] range:NSMakeRange(0,comobj.cnickname.length)];
-            
-            [str addAttribute:NSForegroundColorAttributeName value:[UIColor clearColor] range:NSMakeRange(comobj.cnickname.length + 2,1 + comobj.rnickname.length +1)];
-            
-            NSString *leftText = [NSString stringWithFormat:@"回复"];
-            CGSize leftSize = [leftText sizeForFont:replyLabel.font constrainedToSize:CGSizeMake(200, 15) lineBreakMode:replyLabel.lineBreakMode];
-            CGSize rSize = [[NSString stringWithFormat:@"%@:",comobj.rnickname] sizeForFont:replyLabel.font constrainedToSize:CGSizeMake(200, 15) lineBreakMode:replyLabel.lineBreakMode];
-        
-            [rnickButton setBackgroundColor:[UIColor whiteColor]];
-            [rnickButton setFrame:CGRectMake(leftSize.width+cSize.width, 0, rSize.width, rSize.height)];
-            [rnickButton setTitle:[NSString stringWithFormat:@"%@:",comobj.rnickname] forState:UIControlStateNormal];
-            [rnickButton setTitleColor:RGB(255, 57, 67) forState:UIControlStateNormal];
-            [rnickButton.titleLabel setFont:replyLabel.font];
-            [rnickButton.titleLabel setTextAlignment:NSTextAlignmentLeft];
-            
-            [replyLabel addSubview:rnickButton];
-            }
-        [cnickButton addTarget:self action:@selector(cnickClick:) forControlEvents:UIControlEventTouchUpInside];
-        [rnickButton addTarget:self action:@selector(rnickClick:) forControlEvents:UIControlEventTouchUpInside];
-        replyLabel.attributedText = str;
-      
-        // replyLabel.textColor = TEXT_COLOR;
-        CGRect replyRect = replyLabel.frame;
-        if (i == 0)
-        {
-            replyRect.origin.y = 10;
-        }
-        else
-        {
-            UIView *view = [_viewComment viewWithTag:i + 1000 -1];
-            replyRect.origin.y = view.bottom + 10;
-        }
-        
-        CGSize replySize = [text sizeForFont:replyLabel.font constrainedToSize:CGSizeMake(SCREENWIDTH - CELLRIGHT_WIDTH, 400) lineBreakMode:replyLabel.lineBreakMode];
-        
-        replyRect.size.height = replySize.height;
-        replyLabel.frame = replyRect;
-        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-        [button setFrame:CGRectMake(0, replyLabel.top, SCREENWIDTH, replyRect.size.height)];
-        [button addTarget:self action:@selector(replyClick:) forControlEvents:UIControlEventTouchUpInside];
-        button.tag = i;
-        [button setBackgroundImage:[UIImage imageWithColor:[UIColor clearColor] andSize:button.size] forState:UIControlStateNormal];
-        [button setBackgroundImage:[UIImage imageWithColor:[UIColor greenColor] andSize:button.size] forState:UIControlStateHighlighted];
-        [button addSubview:replyLabel];
-        DDTapGestureRecognizer *cGes = [[DDTapGestureRecognizer alloc] initWithTarget:self action:@selector(replyClick:)];
-        cGes.tag = i;
-       // [replyLabel addGestureRecognizer:cGes];
-        [_viewComment addSubview:replyLabel];
-    }
-    commentRect.origin.y = _viewPraise.bottom;
-    commentRect.size.height = [_viewComment viewWithTag:(1000 + num -1)].bottom  - [_viewComment viewWithTag:1000].top + 20;
-    _viewComment.frame = commentRect;
-    [_viewHeader setSize:CGSizeMake(_viewHeader.width, _viewPraise.bottom)];
-    //[_listTable setContentSize:CGSizeMake(_viewHeader.width, _viewPraise.bottom)];
-    
-    if (!IsArrEmpty(self.obj.heads) && !IsArrEmpty(self.obj.comments)) {
-        _linComent.hidden = YES;
-    }
-    [_viewComment removeFromSuperview];
+    [self.viewHeader setSize:CGSizeMake(self.viewHeader.width, self.viewPraise.bottom)];
     [self.listTable reloadData];
 }
 
@@ -672,7 +409,6 @@
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 -(void)imageTap:(DDTapGestureRecognizer *)ges
@@ -685,7 +421,6 @@
         
     }];
 }
-// [ap setCurrentPhotoIndex:ges.tag - 9999];
 
 #pragma mark - MWPhotoBrowserDelegate
 - (NSUInteger)numberOfPhotosInPhotoBrowser:(MWPhotoBrowser *)photoBrowser{
@@ -698,8 +433,6 @@
 
 - (IBAction)actionComment:(id)sender
 {
-
-    
     _popupView = [[BRCommentView alloc] initWithFrame:self.view.bounds superFrame:CGRectZero isController:YES type:@"comment"];
     _popupView.delegate = self;
     _popupView.fid=@"-1";//评论
@@ -749,10 +482,6 @@
 - (void)commentViewDidComment:(NSString *)comment reply:(NSString *) reply fid:(NSString *) fid rid:(NSString *)rid
 {
     [_popupView hideWithAnimated:YES];
-//    if ([CommonMethod stringContainsEmoji:comment]) {
-//        [Hud showMessageWithText:@"评论内容不能含有表情"];
-//        return;
-//    }
     NSString *nickName = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_USER_NAME];
     commentOBj *cmntObj= [[commentOBj alloc] init];
     for (commentOBj *cObj in self.obj.comments)
@@ -886,13 +615,10 @@
 
     id<ISSCAttachment> image  = [ShareSDK pngImageWithImage:[UIImage imageNamed:@"80"]];
 
-    if (!IsArrEmpty(self.obj.photoArr)  ) {
-      //  image = [ShareSDK imageWithUrl:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,self.obj.photoArr[0]]];
-    }
-    NSString *postContent;
-    NSString *shareContent;
+    NSString *postContent = @"";
+    NSString *shareContent = @"";
     
-    NSString *shareTitle ;
+    NSString *shareTitle = @"";
     if (IsStrEmpty(self.obj.detail)) {
         postContent = SHARE_CONTENT;
         shareTitle = SHARE_TITLE;
@@ -1024,11 +750,6 @@
 
 #pragma mark -收藏
 - (IBAction)actionCollection:(id)sender {
-    
-//    if ([self.obj.userid isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID]]) {
-//        [Hud showMessageWithText:@"不能收藏自己的帖子"];
-//        return;
-//    }
     NSString *url = [NSString stringWithFormat:@"%@/%@",rBaseAddressForHttpCircle,@"circlestore"];
     NSDictionary *param = @{@"uid":[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID],
                             @"rid":self.obj.rid};

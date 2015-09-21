@@ -232,7 +232,7 @@
 - (void)longSaveImage:(UILongPressGestureRecognizer *)longPress
 {
     if (longPress.state == UIGestureRecognizerStateBegan) {
-        UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:NSLocalizedString(@"cancel", nil) destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"save images", nil), nil];
+        UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"保存图片", nil];
         [actionSheet showInView:[[UIApplication sharedApplication] keyWindow]];
     }
 }
@@ -241,7 +241,7 @@
 {
     if (buttonIndex == 0) {
         if ([ALAssetsLibrary authorizationStatus] == ALAuthorizationStatusDenied) {
-            NSString *tips = NSLocalizedString(@"please goto“setting->private->photo”\n allow YOHO access to the album。", nil);
+            NSString *tips = @"请在iPhone的“设置->隐私->照片”选项中\n允许本App访问你的相册。";
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"can't save", nil) message:tips delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil];
             [alert show];
         } else {
@@ -271,15 +271,14 @@
 - (void)imageSavedToPhotosAlbum:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo
 {
     if (!error){
-//        [YH_Tool alertMessage:NSLocalizedString(@"saved successfully", nil)];
+        [Hud showMessageWithText:@"保存成功"];
     } else {
-//        [YH_Tool alertMessage:NSLocalizedString(@"save failed", nil)];
+        [Hud showMessageWithText:@"保存失败"];
     }
-//    __weak typeof(self) weakSelf = self;
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         sleep(1.5);
         dispatch_async(dispatch_get_main_queue(), ^{
-//            [weakSelf hideWait];
+            [Hud hideHud];
         });
     });
 }

@@ -24,7 +24,6 @@
                 <outlet property="listTable" destination="4Dg-M9-dvf" id="k3v-po-Yo0"/>
                 <outlet property="scrollPraise" destination="aWm-Lk-eH9" id="KIK-W2-uD9"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
-                <outlet property="viewComment" destination="OJj-Sm-BE2" id="Axg-of-m1V"/>
                 <outlet property="viewHeader" destination="Zk8-gE-mjJ" id="U9Z-48-a18"/>
                 <outlet property="viewInput" destination="QyD-ga-fkw" id="FTy-DG-HJn"/>
                 <outlet property="viewPraise" destination="ffx-YA-YXJ" id="Kft-j5-qR0"/>
@@ -44,7 +43,7 @@
                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <fontDescription key="fontDescription" name="Palatino-Roman" family="Palatino" pointSize="14"/>
-                            <state key="normal" title="说点什么吧">
+                            <state key="normal" title=" 说点什么吧">
                                 <color key="titleColor" red="0.61960784310000006" green="0.61568627450000002" blue="0.61960784310000006" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
@@ -126,7 +125,7 @@
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="OyJ-4H-wTc">
-                            <rect key="frame" x="105.00000017448716" y="0.0" width="50" height="40"/>
+                            <rect key="frame" x="104.99999544284822" y="0.0" width="50" height="40"/>
                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" name="Palatino-Roman" family="Palatino" pointSize="14"/>
                             <inset key="titleEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
@@ -165,7 +164,7 @@
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="wJ4-Up-4Rh">
-                            <rect key="frame" x="70" y="10" width="20" height="20"/>
+                            <rect key="frame" x="70.000001713633537" y="10" width="20" height="20"/>
                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" name="Palatino-Roman" family="Palatino" pointSize="12"/>
                             <inset key="titleEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
@@ -250,11 +249,6 @@
                         <action selector="actionAttention:" destination="-1" eventType="touchUpInside" id="2Mh-w5-i7u"/>
                     </connections>
                 </button>
-                <view contentMode="scaleToFill" id="OJj-Sm-BE2">
-                    <rect key="frame" x="0.0" y="186" width="320" height="100"/>
-                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                </view>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <nil key="simulatedStatusBarMetrics"/>
