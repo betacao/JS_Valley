@@ -11,8 +11,6 @@
 #import "UIButton+WebCache.h"
 #import "SDPhotoBrowser.h"
 
-#define SDPhotoGroupImageMargin 15
-
 @interface SDPhotoGroup () <SDPhotoBrowserDelegate>
 
 @end
@@ -35,29 +33,50 @@
     _photoItemArray = photoItemArray;
     [photoItemArray enumerateObjectsUsingBlock:^(SDPhotoItem *obj, NSUInteger idx, BOOL *stop) {
         NSString *url = obj.thumbnail_pic;
-        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-        [button sd_setImageWithURL:[NSURL URLWithString:url] forState:UIControlStateNormal];
-        button.adjustsImageWhenHighlighted = NO;
-        button.frame = self.bounds;
-        button.tag = idx;
-        [button addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchUpInside];
-        [self addSubview:button];
+        UIImageView *imageView = [[UIImageView alloc] init];
+        imageView.userInteractionEnabled = YES;
+        imageView.tag = idx;
+        UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(imageViewDidTap:)];
+        [imageView addGestureRecognizer:recognizer];
+        [imageView sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:[UIImage imageNamed:@"default_image"]];
+        [self addSubview:imageView];
     }];
+    [self makeupSubViews];
 }
 
-- (void)layoutSubviews
+- (void)makeupSubViews
 {
-    [super layoutSubviews];
+    NSInteger imageCount = self.photoItemArray.count;
+    NSInteger perRowImageCount = ((imageCount == 4) ? 2 : 3);
+
+    CGFloat width = ceilf((SCREENWIDTH - kPhotoViewRightMargin - kPhotoViewLeftMargin - CELL_PHOTO_SEP * 2.0f) / 3.0f);
+    CGFloat height = width;
+    __block CGFloat totalHeight = 0.0f;
+    if(self.subviews.count > 1){
+        [self.subviews enumerateObjectsUsingBlock:^(UIImageView *imageView, NSUInteger idx, BOOL *stop) {
+            NSInteger rowIndex = idx / perRowImageCount;
+            NSInteger columnIndex = idx % perRowImageCount;
+            CGFloat x = columnIndex * (width + CELL_PHOTO_SEP);
+            CGFloat y = rowIndex * (height + CELL_PHOTO_SEP);
+            imageView.frame = CGRectMake(x, y, width, height);
+            totalHeight = CGRectGetMaxY(imageView.frame);
+        }];
+    } else if(self.subviews.count == 1){
+        UIImageView *imageView = (UIImageView *)[self.subviews firstObject];
+        imageView.frame = CGRectMake(0.0f, 0.0f, 2 * width + CELL_PHOTO_SEP, 2 * height + CELL_PHOTO_SEP);
+        totalHeight = 2 * width + CELL_PHOTO_SEP;
+    }
+
+    self.frame = CGRectMake(0.0f, 0.0f, SCREENWIDTH - kPhotoViewRightMargin - kPhotoViewLeftMargin, totalHeight);
     
 }
 
-- (void)buttonClick:(UIButton *)button
+- (void)imageViewDidTap:(UITapGestureRecognizer *)recognizer
 {
     SDPhotoBrowser *browser = [[SDPhotoBrowser alloc] initWithFrame:CGRectMake(0.0f, 0.0f, CGRectGetWidth([UIScreen mainScreen].bounds), CGRectGetHeight([UIScreen mainScreen].bounds))];
-    browser.sourceImagesContainerView = self; // 原图的父控件
-    browser.imageCount = self.photoItemArray.count; // 图片总数
-    NSLog(@" index %ld",(long)button.tag);
-    browser.currentImageIndex = button.tag;
+    browser.sourceImagesContainerView = self;
+    browser.imageCount = self.photoItemArray.count;
+    browser.currentImageIndex = recognizer.view.tag;
     browser.delegate = self;
     [browser show];
     
@@ -81,8 +100,5 @@
 
 - (void)photoBrowser:(SDPhotoBrowser *)browser didSlideAtIndex:(NSInteger)index
 {
-//    if(self.block){
-//        self.block(index);
-//    }
 }
 @end

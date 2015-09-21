@@ -63,7 +63,8 @@ const CGFloat kActionViewHeight = 40.0f;
 {
     self.totalHeight = 0.0f;
     if (IsStrEmpty(self.detail)){
-        self.totalHeight = kUserInfoHeight;
+        //加1的作用是引入的新的MLEmojiLabel 空字符也算1 的高度
+        self.totalHeight = kUserInfoHeight + 1.0f;
     } else{
         MLEmojiLabel *globleLabel = [MLEmojiLabel new];
         globleLabel.numberOfLines = 5;
@@ -75,7 +76,7 @@ const CGFloat kActionViewHeight = 40.0f;
     }
     CGFloat photoHeight = 0.0;
     self.photoArr = (NSArray *)self.photos;
-    NSInteger width = (SCREENWIDTH - kPhotoViewRightMargin - kPhotoViewLeftMargin - CELL_PHOTO_SEP * 2.0f) / 3.0f;
+    NSInteger width = ceilf((SCREENWIDTH - kPhotoViewRightMargin - kPhotoViewLeftMargin - CELL_PHOTO_SEP * 2.0f) / 3.0f);
     if ([self.type isEqualToString:@"link"]){
         //这个是link的固定高度
         photoHeight = 50.0f;
@@ -83,45 +84,12 @@ const CGFloat kActionViewHeight = 40.0f;
         if (IsArrEmpty(self.photoArr)) {
             photoHeight = 0.0f;
         } else{
-            if (self.photoArr.count == 1){
-                NSArray *sizeArr = [self.sizes[0] componentsSeparatedByString:@"*"];
-                
-                CGSize size = CGSizeZero;
-                if (sizeArr.count >1) {
-                    size.width = [sizeArr[0] floatValue];
-                    size.height = [sizeArr[1] floatValue];
-                    if (size.height > size.width){
-                        //高度大于宽度
-                        if (size.height > width * 2.5f){
-                            photoHeight = width * 2.0f + CELL_PHOTO_SEP;
-                            //超过3倍尺寸，需要缩放
-                        } else{
-                            //用图片尺寸，不需要缩放
-                            photoHeight = size.height;
-                        }
-                    } else{
-                        if (size.width > width * 2.5f){
-                            //超过3倍尺寸，需要缩放
-                            photoHeight =  width * 2.0f + CELL_PHOTO_SEP;
-                        } else{
-                            //用图片尺寸，不需要缩放
-                            photoHeight = size.height;
-                        }
-                    }
-                } else{
-                    photoHeight = width;
-                }
+            if (self.photoArr.count == 1 || self.photoArr.count >= 4){
+                photoHeight = width * 2.0f + CELL_PHOTO_SEP;
             } else if(self.photoArr.count < 4){
-                //加上10 的间隔
-                photoHeight = width + kObjectMargin;
-            } else if(self.photoArr.count == 4){
-                photoHeight = width * 2 + CELL_PHOTO_SEP + kObjectMargin;
-            } else{
-                photoHeight = width * 2 + CELL_PHOTO_SEP + kObjectMargin;
+                photoHeight = width;
             }
         }
-    } else{
-        photoHeight = 0.0f;
     }
     self.totalHeight += photoHeight;
     NSInteger num = 0;

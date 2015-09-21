@@ -46,7 +46,8 @@
             self.scrollImageView.contentMode = UIViewContentModeScaleAspectFit;
             self.scrollImageView .image = self.image;
             self.height = self.image.size.height * CGRectGetWidth(self.scroll.bounds) / self.image.size.width;
-            self.scrollImageView.frame = CGRectMake(0, 0, CGRectGetWidth(self.scroll.bounds), self.height);
+            CGFloat orgin_Y = self.height > CGRectGetHeight(self.frame) ? 0.0f : (SCREENHEIGHT - self.height) / 2.0f;
+            self.scrollImageView.frame = CGRectMake(0, orgin_Y, CGRectGetWidth(self.scroll.bounds), self.height);
             self.scroll.backgroundColor = SDPhotoBrowserBackgrounColor;
             
             [self.scroll addSubview:self.scrollImageView];

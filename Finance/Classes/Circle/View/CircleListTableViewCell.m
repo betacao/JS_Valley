@@ -8,6 +8,10 @@
 
 #import "CircleListTableViewCell.h"
 #import "MLEmojiLabel.h"
+#import "SDPhotoGroup.h"
+#import "SDPhotoItem.h"
+
+
 @interface CircleListTableViewCell()<MLEmojiLabelDelegate>
 
 //删除按钮
@@ -188,8 +192,6 @@
     frame.origin.y = photoOriginY;
     frame.size.height = 0.0f;
     self.photoView.frame = frame;
-    
-    CGFloat width = (SCREENWIDTH - kPhotoViewRightMargin - kPhotoViewLeftMargin - CELL_PHOTO_SEP * 2.0f) / 3.0f;
 
     if ([obj.type isEqualToString:@"link"]){
         self.photoView.backgroundColor = RGB(245, 245, 241);
@@ -211,123 +213,23 @@
         [self.photoView addSubview:linkImageView];
         [self.photoView addSubview:titleLabel];
         [self.photoView addSubview:detailLabel];
-        [self.photoView setFrame:CGRectMake(60, _lblContent.bottom + 10, SCREENWIDTH-CELLRIGHT_WIDTH, 50)];
+        [self.photoView setFrame:CGRectMake(60, self.lblContent.bottom + 10, SCREENWIDTH-CELLRIGHT_WIDTH, 50)];
         DDTapGestureRecognizer *ges = [[DDTapGestureRecognizer alloc] initWithTarget:self action:@selector(linkTap:)];
         [self.photoView addGestureRecognizer:ges];
         
     } else if ([obj.type isEqualToString:TYPE_PHOTO]){
         self.photoArr = (NSArray *)obj.photoArr;
-        if (!IsArrEmpty(obj.photoArr)){
-            if (self.photoArr.count == 1){
-                //只有一张图片
-                UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, width, width)];
-                imageView.contentMode = UIViewContentModeScaleAspectFit;
-                imageView.clipsToBounds = YES;
-                imageView.userInteractionEnabled = YES;
-                imageView.tag = 9999 ;
-                
-                DDTapGestureRecognizer *ges = [[DDTapGestureRecognizer alloc] initWithTarget:self action:@selector(imageTap:)];
-                ges.tag = 9999;
-                [imageView addGestureRecognizer:ges];
-                CGSize size = CGSizeZero;
-                
-                [imageView setFrame:CGRectMake(0 ,0,width , width)];
-                NSArray *sizeArr = [obj.sizes[0] componentsSeparatedByString:@"*"];
-                if (sizeArr.count > 1)
-                {
-                    size.width = [sizeArr[0] floatValue];
-                    size.height = [sizeArr[1] floatValue];
-                    CGSize imageSize = CGSizeZero;
-                    
-                    //高度大于宽度
-                    if (size.height > size.width){
-                        if (size.height > width * 2.5f){
-                            //超过3倍尺寸，需要缩放
-                            imageSize.width = imageSize.height = 2.0f * width + CELL_PHOTO_SEP;
-                            imageView.contentMode = UIViewContentModeScaleAspectFill;
-                        } else{
-                            //用图片尺寸，不需要缩放
-                            imageSize.height = size.height;
-                            imageSize.width = size.width;
-                        }
-                    } else{
-                        if (size.width > width * 2.5f){
-                            //超过3倍尺寸，需要缩放
-                            imageSize.width = imageSize.height = 2.0f * width + CELL_PHOTO_SEP;
-                            imageView.contentMode = UIViewContentModeScaleAspectFill;
-                        } else{
-                            //用图片尺寸，不需要缩放
-                            imageSize.height = size.height;
-                            imageSize.width = size.width;
-                        }
-                    }
-                    [imageView setFrame:CGRectMake(0, 0, imageSize.width, imageSize.height)];
-                }
-                
-                NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,obj.photoArr[0]]];
-                [imageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"default_image"]] ;
-                CGRect photoRect = self.photoView.frame;
-                photoRect.size = imageView.size;
-                self.photoView.frame = photoRect;
-                [self.photoView addSubview:imageView];
-            } else if (self.photoArr.count < 4){
-                for (NSInteger i = 0; i < obj.photoArr.count; i ++){
-                    NSInteger originY = 0.0f;
-                    UIImageView *imageView = [[UIImageView alloc] init];
-                    imageView.userInteractionEnabled = YES;
-                    imageView.tag = 9999 + i;
-                    
-                    DDTapGestureRecognizer *ges = [[DDTapGestureRecognizer alloc] initWithTarget:self action:@selector(imageTap:)];
-                    ges.tag = 9999+ i;
-                    [imageView addGestureRecognizer:ges];
-                    [imageView setFrame:CGRectMake((width +CELL_PHOTO_SEP) * (i%3) ,originY,width , width)];
-                    [imageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,obj.photoArr[i]]] placeholderImage:[UIImage imageNamed:@"default_image"]];
-                    [self.photoView addSubview:imageView];
-                }
-                self.photoView.frame = CGRectMake(kPhotoViewLeftMargin, self.lblContent.bottom + kObjectMargin, SCREENWIDTH - (kPhotoViewLeftMargin + kPhotoViewRightMargin),width);
-            } else if (obj.photoArr.count == 4){
-                for (NSInteger i = 0; i < obj.photoArr.count; i ++){
-                    NSInteger originY = 0.0f;
-                    if (i > 1) {
-                        originY = width + CELL_PHOTO_SEP;
-                    } else{
-                        originY = 0;
-                    }
-                    UIImageView *imageView = [[UIImageView alloc] init];
-                    imageView.userInteractionEnabled = YES;
-                    imageView.tag = 9999 + i;
-                    
-                    DDTapGestureRecognizer *ges = [[DDTapGestureRecognizer alloc] initWithTarget:self action:@selector(imageTap:)];
-                    ges.tag = 9999+ i;
-                    [imageView addGestureRecognizer:ges];
-                    [imageView setFrame:CGRectMake((width +CELL_PHOTO_SEP) * (i % 2) ,originY,width , width)];
-                    [imageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,obj.photoArr[i]]] placeholderImage:[UIImage imageNamed:@"default_image"]];
-                    [self.photoView addSubview:imageView];
-                }
-                self.photoView.frame = CGRectMake(kPhotoViewLeftMargin, self.lblContent.bottom + kObjectMargin, SCREENWIDTH - (kPhotoViewLeftMargin + kPhotoViewRightMargin), (width * 2) + CELL_PHOTO_SEP);
-            } else{
-                for (NSInteger i = 0; i < obj.photoArr.count; i ++){
-                    NSInteger originY = 0.0f;
-                    if (i > 2) {
-                        originY = width + CELL_PHOTO_SEP;
-                    } else{
-                        originY = 0.0f;
-                    }
-                    UIImageView *imageView = [[UIImageView alloc] init];
-                    imageView.userInteractionEnabled = YES;
-                    imageView.tag = 9999 + i;
-                    
-                    DDTapGestureRecognizer *ges = [[DDTapGestureRecognizer alloc] initWithTarget:self action:@selector(imageTap:)];
-                    ges.tag = 9999+ i;
-                    [imageView addGestureRecognizer:ges];
-                    [imageView setFrame:CGRectMake((width + CELL_PHOTO_SEP) * (i%3) ,originY,width , width)];
-                    [imageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,obj.photoArr[i]]] placeholderImage:[UIImage imageNamed:@"default_image"]];
-                    [self.photoView addSubview:imageView];
-                }
-                self.photoView.frame = CGRectMake(kPhotoViewLeftMargin, self.lblContent.bottom + kObjectMargin, SCREENWIDTH - (kPhotoViewLeftMargin + kPhotoViewRightMargin), (width * 2) + CELL_PHOTO_SEP);
-            }
-            
-        }
+        SDPhotoGroup *photoGroup = [[SDPhotoGroup alloc] init];
+        NSMutableArray *temp = [NSMutableArray array];
+        [obj.photoArr enumerateObjectsUsingBlock:^(NSString *src, NSUInteger idx, BOOL *stop) {
+            SDPhotoItem *item = [[SDPhotoItem alloc] init];
+            item.thumbnail_pic = [NSString stringWithFormat:@"%@%@",rBaseAddressForImage,src];
+            [temp addObject:item];
+        }];
+        photoGroup.photoItemArray = temp;
+        [self.photoView addSubview:photoGroup];
+
+        self.photoView.frame = CGRectMake(kPhotoViewLeftMargin, self.lblContent.bottom, CGRectGetWidth(photoGroup.frame),CGRectGetHeight(photoGroup.frame));
         
     }
     CGRect actionViewRect = self.actionView.frame;
