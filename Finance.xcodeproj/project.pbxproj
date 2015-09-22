@@ -208,7 +208,6 @@
 		408D8B861AF9F57B0055810C /* SettingsSuggestionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 408D8B841AF9F57B0055810C /* SettingsSuggestionsViewController.m */; };
 		408D8B871AF9F57B0055810C /* SettingsSuggestionsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 408D8B851AF9F57B0055810C /* SettingsSuggestionsViewController.xib */; };
 		409DB3E41B03483500E6665E /* ImproveMatiralViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 409DB3E21B03483500E6665E /* ImproveMatiralViewController.m */; };
-		409DB3E51B03483500E6665E /* ImproveMatiralViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 409DB3E31B03483500E6665E /* ImproveMatiralViewController.xib */; };
 		40D6CC0B1B064122005F61C8 /* ProtocolViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 40D6CC091B064122005F61C8 /* ProtocolViewController.m */; };
 		40D6CC0C1B064122005F61C8 /* ProtocolViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 40D6CC0A1B064122005F61C8 /* ProtocolViewController.xib */; };
 		532AF6AD1AFC3499007D3E4B /* FriendsListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 532AF6AC1AFC3499007D3E4B /* FriendsListViewController.m */; };
@@ -886,6 +885,7 @@
 		F92835DE1BA6E16C00E1CF22 /* UIButton+EnlargeEdge.m in Sources */ = {isa = PBXBuildFile; fileRef = F92835DD1BA6E16C00E1CF22 /* UIButton+EnlargeEdge.m */; };
 		F932E2551B859DEC00EF2332 /* CircleListRecommendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F932E2531B859DEC00EF2332 /* CircleListRecommendViewController.m */; };
 		F932E2561B859DEC00EF2332 /* CircleListRecommendViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F932E2541B859DEC00EF2332 /* CircleListRecommendViewController.xib */; };
+		F9758A631BB002D70085D32C /* ImproveMatiralViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9758A621BB002D70085D32C /* ImproveMatiralViewController.xib */; settings = {ASSET_TAGS = (); }; };
 		F99580C41B9D338B001F8AA6 /* SHGModifyInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F99580C21B9D338B001F8AA6 /* SHGModifyInfoViewController.m */; };
 		F99580C51B9D338B001F8AA6 /* SHGModifyInfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F99580C31B9D338B001F8AA6 /* SHGModifyInfoViewController.xib */; };
 		F99580C81B9D7F39001F8AA6 /* DXAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = F99580C71B9D7F39001F8AA6 /* DXAlertView.m */; };
@@ -1132,7 +1132,6 @@
 		408D8B851AF9F57B0055810C /* SettingsSuggestionsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsSuggestionsViewController.xib; sourceTree = "<group>"; };
 		409DB3E11B03483500E6665E /* ImproveMatiralViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImproveMatiralViewController.h; sourceTree = "<group>"; };
 		409DB3E21B03483500E6665E /* ImproveMatiralViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImproveMatiralViewController.m; sourceTree = "<group>"; };
-		409DB3E31B03483500E6665E /* ImproveMatiralViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ImproveMatiralViewController.xib; sourceTree = "<group>"; };
 		40D6CC081B064122005F61C8 /* ProtocolViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProtocolViewController.h; sourceTree = "<group>"; };
 		40D6CC091B064122005F61C8 /* ProtocolViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProtocolViewController.m; sourceTree = "<group>"; };
 		40D6CC0A1B064122005F61C8 /* ProtocolViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProtocolViewController.xib; sourceTree = "<group>"; };
@@ -2094,6 +2093,7 @@
 		F932E2521B859DEC00EF2332 /* CircleListRecommendViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CircleListRecommendViewController.h; sourceTree = "<group>"; };
 		F932E2531B859DEC00EF2332 /* CircleListRecommendViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CircleListRecommendViewController.m; sourceTree = "<group>"; };
 		F932E2541B859DEC00EF2332 /* CircleListRecommendViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CircleListRecommendViewController.xib; sourceTree = "<group>"; };
+		F9758A621BB002D70085D32C /* ImproveMatiralViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ImproveMatiralViewController.xib; sourceTree = "<group>"; };
 		F99580C11B9D338B001F8AA6 /* SHGModifyInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGModifyInfoViewController.h; sourceTree = "<group>"; };
 		F99580C21B9D338B001F8AA6 /* SHGModifyInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGModifyInfoViewController.m; sourceTree = "<group>"; };
 		F99580C31B9D338B001F8AA6 /* SHGModifyInfoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGModifyInfoViewController.xib; sourceTree = "<group>"; };
@@ -2835,7 +2835,7 @@
 				61425B7A1AFAB75E00758BCB /* ResetPasswardViewController.xib */,
 				409DB3E11B03483500E6665E /* ImproveMatiralViewController.h */,
 				409DB3E21B03483500E6665E /* ImproveMatiralViewController.m */,
-				409DB3E31B03483500E6665E /* ImproveMatiralViewController.xib */,
+				F9758A621BB002D70085D32C /* ImproveMatiralViewController.xib */,
 				40D6CC081B064122005F61C8 /* ProtocolViewController.h */,
 				40D6CC091B064122005F61C8 /* ProtocolViewController.m */,
 				40D6CC0A1B064122005F61C8 /* ProtocolViewController.xib */,
@@ -4698,6 +4698,7 @@
 				408D8B6B1AF8618C0055810C /* chat_receiver_audio_playing001@2x.png in Resources */,
 				408D8B651AF8618C0055810C /* chatBar_more_photoSelected.png in Resources */,
 				61D62C0C1ADE3E85002DD395 /* personal_showBac@2x.png in Resources */,
+				F9758A631BB002D70085D32C /* ImproveMatiralViewController.xib in Resources */,
 				B080FEA01B81E30100426579 /* emoji_face_n.png in Resources */,
 				615234B21B0E146B00011EAC /* 一度跳转页面@3x.jpg in Resources */,
 				56E9E5DC1B81F89C00CE45E6 /* RecommendTableViewCell.xib in Resources */,
@@ -5059,7 +5060,6 @@
 				61E83D4E1AF7C78E00703651 /* 身份验证弹出对话框@3x.png in Resources */,
 				61E83CD21AF7C78E00703651 /* 分享@2x.png in Resources */,
 				B04D6E311B60C01300E3863E /* 消息x@2x.png in Resources */,
-				409DB3E51B03483500E6665E /* ImproveMatiralViewController.xib in Resources */,
 				61E83D1F1AF7C78E00703651 /* 相互关注图标@2x.png in Resources */,
 				614EFF091AF114D800F2BDD1 /* mine_press.png in Resources */,
 				B04D6E351B60C01300E3863E /* 指定人圈子2.jpg in Resources */,
@@ -5606,7 +5606,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: xie jian (A35C7Q22SB)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: JiangSu Yunli Technology and Information Company (6FFGT2HSCN)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: JiangSu Yunli Technology and Information Company (6FFGT2HSCN)";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -5651,7 +5651,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.danniuquan.apptest;
 				PRODUCT_NAME = "大牛圈";
-				PROVISIONING_PROFILE = "b5987c73-8279-4077-adf7-6be59791bd1b";
+				PROVISIONING_PROFILE = "72072637-8960-4188-a83a-da16211f9511";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -5663,7 +5663,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: xie jian (A35C7Q22SB)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: JiangSu Yunli Technology and Information Company (6FFGT2HSCN)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: JiangSu Yunli Technology and Information Company (6FFGT2HSCN)";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -5708,7 +5708,7 @@
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.danniuquan.apptest;
 				PRODUCT_NAME = "大牛圈";
-				PROVISIONING_PROFILE = "b5987c73-8279-4077-adf7-6be59791bd1b";
+				PROVISIONING_PROFILE = "72072637-8960-4188-a83a-da16211f9511";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -5758,7 +5758,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: xie jian (A35C7Q22SB)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: JiangSu Yunli Technology and Information Company (6FFGT2HSCN)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: JiangSu Yunli Technology and Information Company (6FFGT2HSCN)";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -5803,7 +5803,7 @@
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.danniuquan.apptest;
 				PRODUCT_NAME = "大牛圈";
-				PROVISIONING_PROFILE = "b5987c73-8279-4077-adf7-6be59791bd1b";
+				PROVISIONING_PROFILE = "72072637-8960-4188-a83a-da16211f9511";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 			};

@@ -51,7 +51,8 @@
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
     if(!uid || uid.length == 0){
         //纯粹为了省事 如果没有登录则用一个默认的用户id去拉取首页数据 下个版本要修改了
-        uid = @"10917";
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userDefaultsDidChange:) name:NSUserDefaultsDidChangeNotification object:nil];
+        return;
     }
     NSDictionary *param = @{@"uid":uid, @"type":@"all", @"target":@"first", @"rid":@(0), @"num": rRequestNum, @"total":@(0)};
     
@@ -77,6 +78,15 @@
     _CompletionBlock = CompletionBlock;
     if(self.homeArray && [self.homeArray count] > 0){
         _CompletionBlock(self.homeArray);
+    }
+}
+
+- (void)userDefaultsDidChange:(NSNotification *)notification
+{
+    NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
+    if(uid && uid.length != 0){
+        [self requestHomePageData];
+        [[NSNotificationCenter defaultCenter] removeObserver:self];
     }
 }
 

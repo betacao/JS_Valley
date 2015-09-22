@@ -10,49 +10,68 @@
 #import "AppDelegate.h"
 #import "ApplyViewController.h"
 #import <AddressBook/AddressBook.h>
+
+const CGFloat kPersonCategoryLeftMargin = 13.0f;
+const CGFloat kPersonCategoryTopMargin = 10.0f;
+const CGFloat kPersonCategoryMargin = 7.0f;
+#define kPersonCategoryHeight 22.0f * YFACTOR
+
 @interface ImproveMatiralViewController ()<UIScrollViewDelegate>
 {
     BOOL hasUploadHead;
 }
-@property (nonatomic, weak) IBOutlet UITextField *nameTextField;
-@property (nonatomic, weak) IBOutlet UITextField *companyTextField;
-@property (nonatomic, weak) IBOutlet UITextField *titleTextField;
-@property (nonatomic, weak) IBOutlet UIButton *headImageButton;
-@property (nonatomic, weak) IBOutlet UIScrollView *bgScrollView;
-@property (nonatomic, strong) UIImage *headImage;
-@property (nonatomic, strong) NSString *headImageName;
-@property (nonatomic, strong) NSMutableArray *phones;
+@property (weak, nonatomic) IBOutlet UITextField *nameTextField;
+@property (weak, nonatomic) IBOutlet UITextField *companyTextField;
+@property (weak, nonatomic) IBOutlet UITextField *titleTextField;
+@property (weak, nonatomic) IBOutlet UIButton *headImageButton;
+@property (weak, nonatomic) IBOutlet UIScrollView *bgScrollView;
+@property (weak, nonatomic) IBOutlet SHGPersonCategoryView *personCategoryView;
+@property (weak, nonatomic) IBOutlet UIButton *nextButton;
+@property (strong, nonatomic) UIImage *headImage;
+@property (strong, nonatomic) NSString *headImageName;
+@property (strong, nonatomic) NSMutableArray *phones;
 @property (strong, nonatomic) UITextField *currentField;
 @property (assign, nonatomic) CGRect keyboaradRect;
 
 - (IBAction)headImageButtonClicked:(id)sender;
 - (IBAction)submitButtonClicked:(id)sender;
+
 @end
 
 @implementation ImproveMatiralViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.bgScrollView.contentSize = CGSizeMake(SCREENWIDTH, SCREENHEIGHT);
-    
+
+    self.title = @"完善信息";
+
+    self.bgScrollView.backgroundColor = [UIColor colorWithHexString:@"eeeeee"];
+
     UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [leftButton setFrame:CGRectMake(0, 0, 24, 24)];
-    NSString *imageName ;
-    
-    imageName = @"返回";
-    [leftButton setBackgroundImage:[UIImage imageNamed:imageName] forState:UIControlStateNormal];
-  
+    [leftButton setFrame:CGRectZero];
+    NSString *imageName = @"返回";
+    [leftButton setImage:[UIImage imageNamed:imageName] forState:UIControlStateNormal];
     [leftButton addTarget:self action:@selector(btnBackClick:) forControlEvents:UIControlEventTouchUpInside];
+    [leftButton sizeToFit];
     UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:leftButton];
     self.navigationItem.leftBarButtonItem = leftItem;
-    
-    // Do any additional setup after loading the view from its nib.
-    self.title = @"完善信息";
+
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0), ^{
         //更新好友
         [self getAddress];
     });
-    
+    self.headImageButton.layer.masksToBounds = YES;
+    self.headImageButton.layer.cornerRadius = CGRectGetHeight(self.headImageButton.frame) / 2.0f;
+    [self initTextFieldStyle:@[self.nameTextField, self.companyTextField, self.titleTextField]];
+
+}
+
+- (void)initTextFieldStyle:(NSArray *)arrays
+{
+    for(UITextField *field in arrays){
+        field.layer.masksToBounds = YES;
+        field.layer.cornerRadius = 5.0f;
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -60,6 +79,16 @@
     [super viewDidAppear:animated];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardDidShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardDidHideNotification object:nil];
+    [self.personCategoryView updateViewWithArray:@[@"银行", @"证券", @"二级市场", @"三方", @"PV/PE", @"信托/资管", @"新三板", @"定增", @"项目融资", @"P2P", @"招聘培训"]];
+
+    CGPoint point = CGPointMake(0.0f, CGRectGetMaxY(self.personCategoryView.frame) + 2 * kPersonCategoryTopMargin);
+    point = [self.view convertPoint:point fromView:self.personCategoryView.superview];
+    CGRect frame = self.nextButton.frame;
+    frame.origin.y = point.y;
+    self.nextButton.frame = frame;
+
+
+    self.bgScrollView.contentSize = CGSizeMake(SCREENWIDTH, CGRectGetMaxY(self.nextButton.frame) + 2 * kPersonCategoryTopMargin);
 }
 
 - (void)viewDidDisappear:(BOOL)animated
@@ -77,78 +106,61 @@
 -(void )getAddress
 {
     ABAddressBookRef addressBook = ABAddressBookCreate();
-    
-    ABAddressBookRequestAccessWithCompletion
-    (addressBook, ^(bool granted, CFErrorRef error)
-     {
-         dispatch_async(dispatch_get_main_queue(), ^{
-             if (error)
-                 NSLog(@"Error: %@", (__bridge NSError *)error);
-             else if (!granted)
-             {
-                 UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"获取权限失败" message:@"请设置权限." delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
-                 [av show];
-             }
-             else
-             {
-                 CFArrayRef results = ABAddressBookCopyArrayOfAllPeople(addressBook);
-                 
-                 for(int i = 0; i < CFArrayGetCount(results); i++)
-                 {
-                     ABRecordRef person = CFArrayGetValueAtIndex(results, i);
-                     ABMultiValueRef phone = ABRecordCopyValue(person, kABPersonPhoneProperty);
-                     for (int k = 0; k<ABMultiValueGetCount(phone); k++)
-                     {
-                         //获取該Label下的电话值
-                         NSString *personPhone = (__bridge NSString*)ABMultiValueCopyValueAtIndex(phone, k);
-                         NSString *phone = [personPhone validPhone];
-                         NSString *personNameFirst = (__bridge NSString*)ABRecordCopyValue(person, kABPersonFirstNameProperty);
-                         NSString *personNameLast = (__bridge NSString*)ABRecordCopyValue(person, kABPersonLastNameProperty);
-                         NSString *personName = @"";
-                         
-                         if (!IsStrEmpty(personNameLast))
-                         {
-                             personName =[NSString stringWithFormat:@"%@",personNameLast];
-                             
-                         }
-                         if (!IsStrEmpty(personNameFirst)){
-                             personName =[NSString stringWithFormat:@"%@%@",personNameLast,personNameFirst];
-                         }
-                         
-                         NSString *text = [NSString stringWithFormat:@"%@#%@",personName,phone];
-                         NSLog(@"%@",text);
-                         BOOL hasExsis = NO;
-                         NSInteger index = 0;
-                         for (int i = 0 ; i < self.phones.count; i ++)
-                         {
-                             NSString *phoneStr = self.phones[i];
-                             if ([phoneStr hasSuffix:phone]) {
-                                 hasExsis = YES;
-                                 index = i;
-                                 break;
-                             }
-                         }
-                         if ([phone isValidateMobile])
-                         {
-                             if (hasExsis)
-                             {
-                                 [self.phones replaceObjectAtIndex:index withObject:text];
-                             }
-                             else
-                             {
-                                 [self.phones addObject:text];
-                             }
-                         }
-                     }
-                 }
-                 if (!IsArrEmpty(self.phones))
-                 {
-                     
-                     [self uploadPhonesWithPhone:self.phones];
-                 }
-             }
-         });
-     });
+    ABAddressBookRequestAccessWithCompletion(addressBook, ^(bool granted, CFErrorRef error){
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (error)
+                NSLog(@"Error: %@", (__bridge NSError *)error);
+            else if (!granted){
+                UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"获取权限失败" message:@"请设置权限." delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
+                [av show];
+            } else{
+                CFArrayRef results = ABAddressBookCopyArrayOfAllPeople(addressBook);
+                for(int i = 0; i < CFArrayGetCount(results); i++){
+                    ABRecordRef person = CFArrayGetValueAtIndex(results, i);
+                    ABMultiValueRef phone = ABRecordCopyValue(person, kABPersonPhoneProperty);
+                    for (int k = 0; k<ABMultiValueGetCount(phone); k++){
+                        //获取該Label下的电话值
+                        NSString *personPhone = (__bridge NSString*)ABMultiValueCopyValueAtIndex(phone, k);
+                        NSString *phone = [personPhone validPhone];
+                        NSString *personNameFirst = (__bridge NSString*)ABRecordCopyValue(person, kABPersonFirstNameProperty);
+                        NSString *personNameLast = (__bridge NSString*)ABRecordCopyValue(person, kABPersonLastNameProperty);
+                        NSString *personName = @"";
+
+                        if (!IsStrEmpty(personNameLast)){
+                            personName =[NSString stringWithFormat:@"%@",personNameLast];
+
+                        }
+                        if (!IsStrEmpty(personNameFirst)){
+                            personName =[NSString stringWithFormat:@"%@%@",personNameLast,personNameFirst];
+                        }
+
+                        NSString *text = [NSString stringWithFormat:@"%@#%@",personName,phone];
+                        NSLog(@"%@",text);
+                        BOOL hasExsis = NO;
+                        NSInteger index = 0;
+                        for (int i = 0 ; i < self.phones.count; i ++){
+                            NSString *phoneStr = self.phones[i];
+                            if ([phoneStr hasSuffix:phone]) {
+                                hasExsis = YES;
+                                index = i;
+                                break;
+                            }
+                        }
+                        if ([phone isValidateMobile]){
+                            if (hasExsis){
+                                [self.phones replaceObjectAtIndex:index withObject:text];
+                            } else{
+                                [self.phones addObject:text];
+                            }
+                        }
+                    }
+                }
+                if (!IsArrEmpty(self.phones)){
+                    [self uploadPhonesWithPhone:self.phones];
+                }
+            }
+        });
+    });
 }
 -(NSMutableArray *)phones
 {
@@ -230,10 +242,7 @@
 {
     if (hasUploadHead) {
         [self uploadMaterial];
-    }
-    
-    else
-    {
+    }else{
         if (self.headImage) {
             [self uploadHeadImage:self.headImage];
         }else{
@@ -436,9 +445,6 @@
 
 - (void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView
 {
-    if(self.currentField && [self.currentField isFirstResponder]){
-        [self.currentField resignFirstResponder];
-    }
 }
 
 - (void)keyboardDidShow:(NSNotification *)notification
@@ -451,7 +457,6 @@
 
 - (void)keyboardDidHide:(NSNotification *)notification
 {
-//    self.bgScrollView.contentOffset = CGPointZero;
 }
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField
@@ -475,5 +480,101 @@
     [textField resignFirstResponder];
     return YES;
 }
+
+@end
+
+@interface SHGPersonCategoryView ()
+
+@property (strong, nonatomic) NSArray *dataArray;
+@property (strong, nonatomic) NSMutableArray *selectedArray;
+
+@end
+
+@implementation SHGPersonCategoryView
+
+- (instancetype) initWithFrame:(CGRect)frame
+{
+    self = [super initWithFrame:frame];
+    if(self){
+        self.backgroundColor = [UIColor whiteColor];
+        self.selectedArray = [NSMutableArray array];
+    }
+    return self;
+}
+
+- (void)awakeFromNib
+{
+    self.backgroundColor = [UIColor whiteColor];
+    self.selectedArray = [NSMutableArray array];
+}
+
+- (void)updateViewWithArray:(NSArray *)dataArray
+{
+    self.dataArray = dataArray;
+}
+
+- (void)setDataArray:(NSArray *)dataArray
+{
+    _dataArray = dataArray;
+    [self removeAllSubviews];
+    CGFloat width = (CGRectGetWidth(self.frame) - 2 * kPersonCategoryLeftMargin - 3 * kPersonCategoryMargin) / 4.0f;
+    for(NSString *string in dataArray){
+        NSInteger index = [dataArray indexOfObject:string];
+        NSInteger row = index / 4;
+        NSInteger col = index % 4;
+
+        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+        button.layer.borderWidth = 0.5f;
+        button.layer.borderColor = [UIColor colorWithHexString:@"D6D6D6"].CGColor;
+        button.titleLabel.font = [UIFont systemFontOfSize:11.0f];
+
+        [button setTitle:string forState:UIControlStateNormal];
+        [button setTitleColor:[UIColor colorWithHexString:@"D2D1D1"] forState:UIControlStateNormal];
+        [button setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
+        [button setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
+
+        [button setBackgroundImage:[UIImage imageWithColor:[UIColor whiteColor]] forState:UIControlStateNormal];
+        [button setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithHexString:@"f04240"]] forState:UIControlStateHighlighted];
+        [button setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithHexString:@"f04240"]] forState:UIControlStateSelected];
+        [button addTarget:self action:@selector(didSelectCategory:) forControlEvents:UIControlEventTouchUpInside];
+        CGRect frame = CGRectMake(kPersonCategoryLeftMargin + (kPersonCategoryMargin + width) * col, kPersonCategoryTopMargin + (kPersonCategoryMargin + kPersonCategoryHeight) * row, width, kPersonCategoryHeight);
+        button.frame = frame;
+        [self addSubview:button];
+        frame = self.frame;
+        frame.size.height = CGRectGetMaxY(button.frame);
+        self.frame = frame;
+    }
+
+    UILabel *label = [[UILabel alloc] init];
+    label.text = @"最多选3项（个人中心可更新）";
+    label.font = [UIFont systemFontOfSize:11.0f];
+    label.textColor = [UIColor colorWithHexString:@"D2D1D1"];
+    [label sizeToFit];
+    CGRect frame = label.frame;
+    frame.origin.y = CGRectGetHeight(self.frame) + kPersonCategoryTopMargin;
+    frame.origin.x = kPersonCategoryLeftMargin;
+    label.frame = frame;
+    frame = self.frame;
+    frame.size.height = CGRectGetMaxY(label.frame) + kPersonCategoryTopMargin;
+    self.frame = frame;
+    [self addSubview:label];
+}
+
+- (void)didSelectCategory:(UIButton *)button
+{
+    BOOL isSelecetd = button.selected;
+    if(!isSelecetd){
+        if(self.selectedArray.count >= 3){
+            [Hud showMessageWithText:@"最多选3项"];
+        } else{
+            button.selected = !isSelecetd;
+            [self.selectedArray addObject:button];
+        }
+    } else{
+        button.selected = !isSelecetd;
+        [self.selectedArray removeObject:button];
+    }
+}
+
 
 @end

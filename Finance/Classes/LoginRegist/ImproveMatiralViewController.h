@@ -11,3 +11,9 @@
 @interface ImproveMatiralViewController : BaseViewController<UINavigationControllerDelegate,UIImagePickerControllerDelegate,UIActionSheetDelegate,UIAlertViewDelegate>
 @property (nonatomic,strong) NSDictionary *rid;
 @end
+
+@interface SHGPersonCategoryView : UIView
+
+- (void)updateViewWithArray:(NSArray *)dataArray;
+
+@end

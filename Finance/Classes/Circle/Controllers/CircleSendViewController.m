@@ -681,14 +681,14 @@
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         
-        for (int i=0; i < assets.count; i++){
+        for (NSInteger i=0; i < assets.count; i++){
             ALAsset *asset = assets[i];
-            UIImage *tempImg = [UIImage imageWithCGImage:asset.defaultRepresentation.fullResolutionImage scale:asset.defaultRepresentation.scale orientation:(UIImageOrientation)asset.defaultRepresentation.orientation];
+            UIImage *tempImg = [UIImage imageWithCGImage:asset.defaultRepresentation.fullScreenImage scale:asset.defaultRepresentation.scale orientation:(UIImageOrientation)asset.defaultRepresentation.orientation];
             
             if (tempImg){
                 CGSize size = CGSizeMake(70, 70);
                 UIImage *imageNew = [tempImg reSizeImagetoSize:CGSizeMake(size.width*2, size.height*2)];
-                NSData *dataImage = UIImageJPEGRepresentation(tempImg, 0.1);//压缩
+                NSData *dataImage = UIImageJPEGRepresentation(tempImg, 1.0);//压缩
                 RecommendTypeObj *detailObj = [[RecommendTypeObj alloc] init];
                 detailObj.image = imageNew;
                 detailObj.type = RECOMMENDPICOBJTYPEPIC;
@@ -726,8 +726,6 @@
         
         UIImage *imageData = [UIImage fixOrientation:image];
         NSData *dataImage = UIImageJPEGRepresentation(imageData, 0.032);//压缩
-        
-        // NSString *strBase64Data = [NSString base64StringFromData:dataImage length:dataImage.length];
         
         RecommendTypeObj *detailObj = [[RecommendTypeObj alloc] init];
         detailObj.image = [UIImage fixOrientation:imageNew];;
