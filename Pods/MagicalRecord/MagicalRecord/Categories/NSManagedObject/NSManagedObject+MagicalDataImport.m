@@ -177,8 +177,7 @@ NSString * const kMagicalRecordImportAttributeUseDefaultValueWhenNotPresent = @"
         {
             return NO;
         }
-    }   
-
+    }
     if ([self respondsToSelector:@selector(willImport:)])
     {
         [self performSelector:@selector(willImport:) withObject:objectData];

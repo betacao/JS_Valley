@@ -173,15 +173,12 @@
         [Hud showMessageWithText:response.errorMessage];
     }];
 }
-
--(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    if (buttonIndex == 1) {
-        [self go];
-    }
-}
 - (IBAction)actionGo:(id)sender {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"是否预约该产品" delegate:self cancelButtonTitle:@"否" otherButtonTitles:@"是", nil];
+    DXAlertView *alert = [[DXAlertView alloc] initWithTitle:@"提示" contentText:@"是否预约该产品？" leftButtonTitle:@"否" rightButtonTitle:@"是"];
+    __weak typeof(self) weakSelf = self;
+    alert.rightBlock = ^{
+        [weakSelf go];
+    };
     
     [alert show];
 }
@@ -197,8 +194,8 @@
 }
 - (IBAction)actionShare:(id)sender {
 
-        id<ISSCAttachment> image  = [ShareSDK pngImageWithImage:[UIImage imageNamed:@"80"]];
-    
+    id<ISSCAttachment> image  = [ShareSDK pngImageWithImage:[UIImage imageNamed:@"80"]];
+
     NSString *name = self.obj.name;
     if (self.obj.name.length > 15) {
         name = [NSString stringWithFormat:@"%@…",[self.obj.name substringToIndex:15]];
@@ -208,7 +205,7 @@
     id<ISSShareActionSheetItem> item1 = [ShareSDK shareActionSheetItemWithTitle:@"圈内好友" icon:[UIImage imageNamed:@"圈内好友图标"] clickHandler:^{
         NSString *text = [NSString stringWithFormat:@"%@%@",@"Hi，我在金融大牛圈上看到了一款非常好的金融产品:",self.obj.name];
         NSString *detail = [NSString stringWithFormat:@"，%@%@，%@，%@，",self.obj.left1,self.obj.right1,self.obj.left2,self.obj.right2];
-        
+
         NSString *remain = @"想了解的话到发现模块去看吧！";
         NSString *shareContent = [NSString stringWithFormat:@"%@%@%@",text,detail,remain];
         [self shareToFriendWithText:shareContent];
@@ -217,9 +214,9 @@
         NSString *content = [NSString stringWithFormat:@"Hi，我在金融大牛圈上看到了一款非常好的%@金融产品，分享给你一起赚钱哦，赶快下载大牛圈查看吧！%@",self.type,[NSString stringWithFormat:@"%@%@", rBaseAddressForHttpProductShare,self.obj.pid]];
         [self shareToSMS:content];
     }];
-    
+
     NSString *shareUrl = [NSString stringWithFormat:@"%@%@",rBaseAddressForHttpProductShare,self.obj.pid];
-    
+
     id<ISSShareActionSheetItem> item4 = [ShareSDK shareActionSheetItemWithTitle:@"微信朋友圈" icon:[UIImage imageNamed:@"sns_icon_23"] clickHandler:^{
         [[AppDelegate currentAppdelegate] wechatShareWithText:detail shareUrl:shareUrl shareType:1];
     }];
@@ -227,26 +224,26 @@
         [[AppDelegate currentAppdelegate] wechatShareWithText:detail shareUrl:shareUrl shareType:1];
     }];
     NSArray *shareList = [ShareSDK customShareListWithType: item3, item5, item4, SHARE_TYPE_NUMBER(ShareTypeQQ), item1,nil];
-    
+
     //构造分享内容
     id<ISSContent> publishContent = [ShareSDK content:detail defaultContent:detail image:image title:SHARE_TITLE url:shareUrl description:detail mediaType:SHARE_TYPE];
     //创建弹出菜单容器
     id<ISSContainer> container = [ShareSDK container];
     [container setIPadContainerWithView:self.view arrowDirect:UIPopoverArrowDirectionUp];
-    
+
     //弹出分享菜单
     [ShareSDK showShareActionSheet:container shareList:shareList content:publishContent statusBarTips:YES authOptions:nil shareOptions:nil result:^(ShareType type, SSResponseState state, id<ISSPlatformShareInfo> statusInfo, id<ICMErrorInfo> error, BOOL end) {
-        
+
         if (state == SSResponseStateSuccess){
             [self otherShareWithObj:_obj];
             NSLog(NSLocalizedString(@"TEXT_ShARE_SUC", @"分享成功"));
-            
+
         } else if (state == SSResponseStateFail){
             NSLog(NSLocalizedString(@"TEXT_ShARE_FAI", @"分享失败,错误码:%d,错误描述:%@"), [error errorCode], [error errorDescription]);
             [Hud showMessageWithText:@"分享失败"];
         }
     }];
-    
+
 
 }
 
