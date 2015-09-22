@@ -27,7 +27,7 @@
 const CGFloat kAdTableViewCellHeight = 191.0f;
 const CGFloat kAdButtomMargin = 20.0f;
 
-@interface CircleListViewController ()<MLEmojiLabelDelegate,CLLocationManagerDelegate>
+@interface CircleListViewController ()<MLEmojiLabelDelegate,CLLocationManagerDelegate,circleActionDelegate>
 {
     NSString *_circleType;
     NSString *_target;
@@ -377,18 +377,18 @@ const CGFloat kAdButtomMargin = 20.0f;
             }
         }
     }
-    
+
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
     NSInteger rid = [time intValue];
     NSDictionary *param = @{@"uid":uid, @"type":_circleType, @"target":target, @"rid":@(rid), @"num": rRequestNum, @"total":@(self.totalNum)};
-    
+
     __weak typeof(self) weakSelf = self;
     [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttpCircle,circleBak] class:[CircleListObj class] parameters:param success:^(MOCHTTPResponse *response){
         NSLog(@"==============%@",response.dataArray);
         if ([target isEqualToString:@"first"]){
             [weakSelf.dataArr removeAllObjects];
             [weakSelf.dataArr addObjectsFromArray:response.dataArray];
-            
+
         } else if ([target isEqualToString:@"refresh"]){
             if (response.dataArray.count > 0){
                 for (NSInteger i = response.dataArray.count-1; i >= 0; i --){
@@ -419,7 +419,7 @@ const CGFloat kAdButtomMargin = 20.0f;
         [weakSelf.listTable.header endRefreshing];
         [weakSelf performSelector:@selector(endrefresh) withObject:nil afterDelay:1.0];
         [Hud hideHud];
-        
+
     }];
 }
 -(void)reloadTable
@@ -431,11 +431,10 @@ const CGFloat kAdButtomMargin = 20.0f;
 {
     [self.listTable.footer endRefreshing];
 }
+
 -(void)initUI
 {
-    segmentedControl = [[UISegmentedControl alloc] initWithItems:
-                        [NSArray arrayWithObjects:
-                         @"动态", @"已关注", nil]];
+    segmentedControl = [[UISegmentedControl alloc] initWithItems: [NSArray arrayWithObjects:@"动态", @"已关注", nil]];
     segmentedControl.frame = CGRectMake(0, 50, 170, 26);
     segmentedControl.enabled = YES;
     segmentedControl.layer.masksToBounds = YES;
@@ -726,15 +725,18 @@ const CGFloat kAdButtomMargin = 20.0f;
             vc.url = obj.feedhtml;
             [self.navigationController pushViewController:vc animated:YES];
         } else{
-            CircleDetailViewController *vc = [[CircleDetailViewController alloc] initWithNibName:@"CircleDetailViewController" bundle:nil];
-            vc.delegate = self;
-            vc.rid = obj.rid;
-            [self.navigationController pushViewController:vc animated:YES];
+            CircleDetailViewController *viewController = [[CircleDetailViewController alloc] initWithNibName:@"CircleDetailViewController" bundle:nil];
+            viewController.delegate = self;
+            viewController.rid = obj.rid;
+            NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:obj.praisenum, kPraiseNum,obj.sharenum,kShareNum,obj.cmmtnum,kCommentNum, nil];
+            viewController.itemInfoDictionary = dictionary;
+            [self.navigationController pushViewController:viewController animated:YES];
         }
     } else{
         return;
     }
 }
+
 //处理tableView左边空白
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
     if ([cell respondsToSelector:@selector(setSeparatorInset:)])
@@ -749,6 +751,24 @@ const CGFloat kAdButtomMargin = 20.0f;
         
         [cell setLayoutMargins:UIEdgeInsetsZero];
         
+    }
+}
+
+//获得详情后如果存在数据更新则在首页进行更新
+- (void)homeListShouldRefresh:(CircleListObj *)currentObj
+{
+    for(NSInteger i = 0;i < self.dataArr.count; i ++){
+        id object = [self.dataArr objectAtIndex:i];
+        if([object isKindOfClass:[CircleListObj class]]){
+            CircleListObj *obj = (CircleListObj *)object;
+            if([obj.rid isEqualToString:currentObj.rid]){
+                obj.sharenum = currentObj.sharenum;
+                obj.cmmtnum = currentObj.cmmtnum;
+                obj.praisenum = currentObj.praisenum;
+                [self.listTable reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:i inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
+                break;
+            }
+        }
     }
 }
 - (void)didReceiveMemoryWarning
@@ -948,10 +968,7 @@ const CGFloat kAdButtomMargin = 20.0f;
             break;
         }
     }
-    NSDictionary *param = @{@"uid":[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID],
-                            @"rid":rid,
-                            @"fid":cmntObj.cid,
-                            @"detail":comment};
+    NSDictionary *param = @{@"uid":[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID], @"rid":rid, @"fid":cmntObj.cid, @"detail":comment};
     NSString *url = [NSString stringWithFormat:@"%@/%@",rBaseAddressForHttpCircle,@"comments"];
     [MOCHTTPRequestOperationManager postWithURL:url class:nil parameters:param success:^(MOCHTTPResponse *response) {
         NSLog(@"%@",response.data);
@@ -1000,12 +1017,8 @@ const CGFloat kAdButtomMargin = 20.0f;
 #pragma mark -分享
 - (void)shareClicked:(CircleListObj *)obj
 {
-//    NSString *imagePath = [[NSBundle mainBundle] pathForResource:@"ShareSDK" ofType:@"png"];
     UIImage *png = [UIImage imageNamed:@"80.png"];
     id<ISSCAttachment> image  = [ShareSDK pngImageWithImage:png];
-    
-    if (!IsArrEmpty(obj.photoArr)) {
-    }
     NSString *postContent;
     NSString *shareContent;
     
@@ -1043,10 +1056,6 @@ const CGFloat kAdButtomMargin = 20.0f;
     id<ISSShareActionSheetItem> item3 = [ShareSDK shareActionSheetItemWithTitle:@"短信" icon:[UIImage imageNamed:@"sns_icon_19"] clickHandler:^{
         [self shareToSMS:content rid:obj.rid];
     }];
-    
-//    id<ISSShareActionSheetItem> item0 = [ShareSDK shareActionSheetItemWithTitle:@"新浪微博" icon:[UIImage imageNamed:@"sns_icon_1"] clickHandler:^{
-//        [self shareToWeibo:content rid:obj.rid];
-//    }];
     
     id<ISSShareActionSheetItem> item4 = [ShareSDK shareActionSheetItemWithTitle:@"朋友圈" icon:[UIImage imageNamed:@"sns_icon_23"] clickHandler:^{
         [[AppDelegate currentAppdelegate]wechatShare:obj shareType:1];
@@ -1354,16 +1363,6 @@ const CGFloat kAdButtomMargin = 20.0f;
             
         }
     }
-//    for (CircleListObj *obj in self.dataArr)
-//    {
-//        if ([obj.rid isEqualToString:rid])
-//        {
-//            obj.cmmtnum = num;
-//            obj.comments = comments;
-//            break;
-//        }
-//        
-//    }
     [self.listTable reloadData];
     
 }

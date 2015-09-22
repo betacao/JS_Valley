@@ -16,7 +16,7 @@
 #define PRAISE_SEPWIDTH     6
 #define PRAISE_RIGHTWIDTH     40
 
-@interface CircleDetailViewController ()<MLEmojiLabelDelegate>
+@interface CircleDetailViewController ()<MLEmojiLabelDelegate, CircleListDelegate>
 {
     UIControl *backView;
     UIView *PickerBackView;
@@ -74,12 +74,14 @@
     [CommonMethod setExtraCellLineHidden:self.listTable];
     [self addHeaderRefresh:self.listTable headerRefesh:NO andFooter:NO];
     [Hud showLoadingWithMessage:@"加载中"];
+    __weak typeof(self) weakSelf = self;
     [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttpCircle,@"circledetail"] class:[CircleListObj class] parameters:@{@"rid":self.rid,@"uid":[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID]} success:^(MOCHTTPResponse *response) {
         [Hud hideHud];
         NSLog(@"%@  arr === %@",response.data,response.dataDictionary);
         if (response.dataDictionary) {
-            [self parseObjWithDic:response.dataDictionary];
-            [self loadDatasWithObj:self.obj];
+            [weakSelf parseObjWithDic:response.dataDictionary];
+            [weakSelf loadDatasWithObj:weakSelf.obj];
+            [weakSelf homeListShouldRefresh:weakSelf.obj];
         }
     } failed:^(MOCHTTPResponse *response) {
         [Hud hideHud];
@@ -114,21 +116,7 @@
     
     
 }
--(void)shareSuccess
-{
-    self.obj.sharenum = [NSString stringWithFormat:@"%ld",(long)([self.obj.sharenum integerValue] + 1)];
-}
--(void)smsShareSuccess:(NSNotification *)noti
-{
-    id obj = noti.object;
-    if ([obj isKindOfClass:[NSString class]])
-    {
-        NSString *rid = obj;
-            if ([self.obj.rid isEqualToString:rid]) {
-                [self otherShareWithObj:self.obj];
-        }
-    }
-}
+
 -(void)parseObjWithDic:(NSDictionary *)dics
 {
     NSDictionary *dic = dics[@"circle"][0];
@@ -184,10 +172,41 @@
     }
 
 }
+
 -(void)initData
 {
     if (!self.obj) {
         self.obj = [[CircleListObj alloc] init];
+    }
+}
+
+
+-(void)shareSuccess
+{
+    self.obj.sharenum = [NSString stringWithFormat:@"%ld",(long)([self.obj.sharenum integerValue] + 1)];
+}
+
+-(void)smsShareSuccess:(NSNotification *)noti
+{
+    id obj = noti.object;
+    if ([obj isKindOfClass:[NSString class]])
+    {
+        NSString *rid = obj;
+        if ([self.obj.rid isEqualToString:rid]) {
+            [self otherShareWithObj:self.obj];
+        }
+    }
+}
+
+- (void)homeListShouldRefresh:(CircleListObj *)obj
+{
+    NSString *shareNum = obj.sharenum;
+    NSString *commentNum =  obj.cmmtnum;
+    NSString *praiseNum = obj.praisenum;
+    if(![shareNum isEqualToString:[self.itemInfoDictionary objectForKey:kShareNum]] || ![commentNum isEqualToString:[self.itemInfoDictionary objectForKey:kCommentNum]] || ![praiseNum isEqualToString:[self.itemInfoDictionary objectForKey:kPraiseNum]]){
+        if(self.delegate && [self.delegate respondsToSelector:@selector(homeListShouldRefresh:)]){
+            [self.delegate homeListShouldRefresh:obj];
+        }
     }
 }
 
@@ -241,7 +260,7 @@
     if ([obj.isattention isEqualToString:@"Y"]){
         [self.btnAttention setImage:[UIImage imageNamed:@"已关注14"] forState:UIControlStateNormal] ;
     } else{
-        [self.btnAttention setImage:[UIImage imageNamed:@"关注14"] forState:UIControlStateNormal] ;
+        [self.btnAttention setImage:[UIImage imageNamed:@"关注14"] forState:UIControlStateNormal];
     }
     
     self.lblContent.text = obj.detail;
@@ -361,22 +380,9 @@
 }
 -(void)replyClick:(NSInteger )index
 {
-    
     [self replyClicked:self.obj commentIndex:index];
 }
 
--(void)showReplyWithObj
-{
-    backView = [[UIControl alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT - 45)];
-    backView.backgroundColor = RGBA(210, 210, 210,0.8);
-    [backView addTarget:self action:@selector(replyCancel:) forControlEvents:UIControlEventTouchDown];
-    [[AppDelegate currentAppdelegate].window addSubview:backView];
-}
-
--(void)replyCancel:(UIControl *)view
-{
-    [backView removeFromSuperview];
-}
 -(void)sizeUIWithObj:(CircleListObj *)obj
 {
     NSString *name = obj.nickname;
@@ -452,10 +458,7 @@
     [_popupView hideWithAnimated:YES];
     NSString *nickName = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_USER_NAME];
 
-    NSDictionary *param = @{@"uid":[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID],
-                            @"rid":rid,
-                            @"fid":@"-1",
-                            @"detail":comment};
+    NSDictionary *param = @{@"uid":[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID], @"rid":rid, @"fid":@"-1", @"detail":comment};
     NSString *url = [NSString stringWithFormat:@"%@/%@",rBaseAddressForHttpCircle,@"comments"];
     [MOCHTTPRequestOperationManager postWithURL:url class:nil parameters:param success:^(MOCHTTPResponse *response) {
         NSLog(@"%@",response.data);
@@ -479,6 +482,7 @@
         [Hud showMessageWithText:response.errorMessage];
     }];
 }
+
 - (void)commentViewDidComment:(NSString *)comment reply:(NSString *) reply fid:(NSString *) fid rid:(NSString *)rid
 {
     [_popupView hideWithAnimated:YES];
@@ -491,10 +495,7 @@
             break;
         }
     }
-    NSDictionary *param = @{@"uid":[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID],
-                            @"rid":rid,
-                            @"fid":cmntObj.cid,
-                            @"detail":comment};
+    NSDictionary *param = @{@"uid":[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID], @"rid":rid, @"fid":cmntObj.cid, @"detail":comment};
     NSString *url = [NSString stringWithFormat:@"%@/%@",rBaseAddressForHttpCircle,@"comments"];
     [MOCHTTPRequestOperationManager postWithURL:url class:nil parameters:param success:^(MOCHTTPResponse *response) {
         NSLog(@"%@",response.data);
@@ -524,7 +525,7 @@
 
 -(void)replyClicked:(CircleListObj *)obj commentIndex:(NSInteger)index;
 {
- 
+
     commentOBj *cmbObj = obj.comments[index];
     _popupView = [[BRCommentView alloc] initWithFrame:self.view.bounds superFrame:CGRectZero isController:YES type:@"reply" name:cmbObj.cnickname];
     _popupView.delegate = self;
@@ -557,35 +558,27 @@
                 obj.ppotname = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_HEAD_IMAGE];
                 obj.puserid =[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
                 [self.obj.heads addObject:obj];
-                
+
                 [Hud showMessageWithText:@"赞成功"];
                 [MobClick event:@"ActionPraiseClicked_On" label:@"onClick"];
                 [self loadDatasWithObj:self.obj];
                 [self.listTable reloadData];
-                
+
                 [self.delegate detailPraiseWithRid:self.obj.rid praiseNum:self.obj.praisenum isPraised:@"Y"];
                 [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_COLLECT_PRAISE_CLICK object:self.obj];
-
-                
             }
-           
             [Hud hideHud];
-            
         } failed:^(MOCHTTPResponse *response) {
             [Hud hideHud];
             [Hud showMessageWithText:response.errorMessage];
         }];
         
-    }
-    else
-    {
+    } else{
         [Hud showLoadingWithMessage:@"正在取消点赞"];
-
         [[AFHTTPRequestOperationManager manager] DELETE:url parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject) {
             NSLog(@"%@",responseObject);
             NSString *code = [responseObject valueForKey:@"code"];
-            if ([code isEqualToString:@"000"])
-            {
+            if ([code isEqualToString:@"000"]){
                 self.obj.ispraise = @"N";
                 self.obj.praisenum = [NSString stringWithFormat:@"%ld",(long)([self.obj.praisenum integerValue] - 1)];
                 for (praiseOBj *obj in self.obj.heads) {
@@ -598,12 +591,12 @@
                 [MobClick event:@"ActionPraiseClicked_Off" label:@"onClick"];
                 [self loadDatasWithObj:self.obj];
                 [self.listTable reloadData];
-                
+
                 [self.delegate detailPraiseWithRid:self.obj.rid praiseNum:self.obj.praisenum isPraised:@"N"];
                 [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_COLLECT_PRAISE_CLICK object:self.obj];
 
             }
-               [Hud hideHud];
+            [Hud hideHud];
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             [Hud showMessageWithText:error.domain];
             [Hud hideHud];
@@ -713,7 +706,6 @@
     [[AFHTTPRequestOperationManager manager] PUT:url parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSString *code = [responseObject valueForKey:@"code"];
         if ([code isEqualToString:@"000"]) {
-            // [self refreshData];
             obj.sharenum = [NSString stringWithFormat:@"%ld",(long)([obj.sharenum integerValue] + 1)];
             [self.delegate detailShareWithRid:obj.rid shareNum:obj.sharenum];
             [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_COLLECT_SHARE_CLIC object:obj];
@@ -763,16 +755,13 @@
             [self loadDatasWithObj:self.obj];
             [Hud showMessageWithText:@"收藏成功"];
             [MobClick event:@"ActionCollection_On" label:@"onClick"];
-            if (_delegate && [_delegate respondsToSelector:@selector(detailCollectionWithRid:collected:)])
-            {
-                  [self.delegate detailCollectionWithRid:self.obj.rid collected:self.obj.iscollection];
+            if (_delegate && [_delegate respondsToSelector:@selector(detailCollectionWithRid:collected:)]){
+                [self.delegate detailCollectionWithRid:self.obj.rid collected:self.obj.iscollection];
             }
         } failed:^(MOCHTTPResponse *response) {
             [Hud showMessageWithText:response.errorMessage];
         }];
-    }
-    else
-    {
+    } else{
         [[AFHTTPRequestOperationManager manager] DELETE:url parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject)
         {
             NSString *code = [responseObject valueForKey:@"code"];
@@ -780,8 +769,7 @@
                 self.obj.iscollection = @"N";
             }
             [self loadDatasWithObj:self.obj];
-            if (_delegate && [_delegate respondsToSelector:@selector(detailCollectionWithRid:collected:)])
-            {
+            if (_delegate && [_delegate respondsToSelector:@selector(detailCollectionWithRid:collected:)]){
                 [self.delegate detailCollectionWithRid:self.obj.rid collected:self.obj.iscollection];
             }
             [MobClick event:@"ActionCollection_Off" label:@"onClick"];
@@ -815,8 +803,6 @@
             
             [self.delegate detailAttentionWithRid:self.obj.userid attention:self.obj.isattention];
             [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_COLLECT_COLLECT_CLIC object:self.obj];
-
-
         } failed:^(MOCHTTPResponse *response) {
             [Hud showMessageWithText:response.errorMessage];
         }];
@@ -962,11 +948,11 @@
 
 -(void)detailPraiseWithRid:(NSString *)rid praiseNum:(NSString *)num isPraised:(NSString *)isPrased
 {
-        if ([self.obj.rid isEqualToString:rid]) {
-            self.obj.praisenum = num;
-           self.obj.ispraise = isPrased;
-        }
-        
+    if ([self.obj.rid isEqualToString:rid]) {
+        self.obj.praisenum = num;
+        self.obj.ispraise = isPrased;
+    }
+
     [self loadDatasWithObj:self.obj];
 
     [self.listTable reloadData];
@@ -976,35 +962,37 @@
 
 -(void)detailShareWithRid:(NSString *)rid shareNum:(NSString *)num
 {
-        if ([self.obj.rid isEqualToString:rid]) {
-            self.obj.sharenum = num;
-        }
+    if ([self.obj.rid isEqualToString:rid]) {
+        self.obj.sharenum = num;
+    }
     [self loadDatasWithObj:self.obj];
     [self.listTable reloadData];
     [self.delegate detailShareWithRid:rid shareNum:num];
     
 }
+
 -(void)detailAttentionWithRid:(NSString *)rid attention:(NSString *)atten
 {
-        if ([self.obj.userid isEqualToString:rid]) {
-            self.obj.isattention = atten;
-        }
+    if ([self.obj.userid isEqualToString:rid]) {
+        self.obj.isattention = atten;
+    }
     [self loadDatasWithObj:self.obj];
 
     [self.listTable reloadData];
     [self.delegate detailAttentionWithRid:rid attention:atten];
     
 }
+
 -(void)detailCommentWithRid:(NSString *)rid commentNum:(NSString*)num comments:(NSMutableArray *)comments
 {
-        if ([self.obj.rid isEqualToString:rid]){
-            self.obj.cmmtnum = num;
-            self.obj.comments = comments;
-        }
+    if ([self.obj.rid isEqualToString:rid]){
+        self.obj.cmmtnum = num;
+        self.obj.comments = comments;
+    }
     [self loadDatasWithObj:self.obj];
     [self.listTable reloadData];
     [self.delegate detailCommentWithRid:rid commentNum:num comments:comments];
-    
+
 }
 
 -(void)deleteSelf

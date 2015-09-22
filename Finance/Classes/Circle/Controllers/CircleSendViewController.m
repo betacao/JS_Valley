@@ -354,7 +354,7 @@
     if (buttonIndex == 0){
         return;
     } else {
-        self.textEdit.text = tf.text;
+        [self.textEdit insertText:tf.text];
     }
     if (alertView.tag == 100){
         if (buttonIndex == 1){

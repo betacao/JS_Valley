@@ -376,13 +376,12 @@
                 [self.navigationController pushViewController:detailVC animated:YES];
             } else if(indexPath.row==2){//清除缓存
 
-                DXAlertView *alert = [[DXAlertView alloc] initWithTitle:@"提示" contentText:@"是否确认清除本地缓存" leftButtonTitle:@"取消" rightButtonTitle:@"确定"];
+                DXAlertView *alert = [[DXAlertView alloc] initWithTitle:@"提示" contentText:@"是否确认清除本地缓存？" leftButtonTitle:@"取消" rightButtonTitle:@"确定"];
                 __weak typeof(self) weakSelf = self;
                 alert.rightBlock = ^{
                     [[SDImageCache sharedImageCache] clearDiskOnCompletion:^{
                         [weakSelf.tableView reloadData];
                     }];
-                    
                 };
                 [alert show];
             } else if(indexPath.row==3){
