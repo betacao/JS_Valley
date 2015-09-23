@@ -8,10 +8,18 @@
 
 #import "MeTableViewCell.h"
 
+@interface MeTableViewCell()
+@property (weak, nonatomic) IBOutlet UILabel *lineLabel;
+
+@end
+
 @implementation MeTableViewCell
 
 - (void)awakeFromNib {
     // Initialization code
+    CGRect frame = self.lineLabel.frame;
+    frame.size.height = 0.5f;
+    self.lineLabel.frame = frame;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

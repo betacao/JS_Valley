@@ -18,23 +18,26 @@
 #import "SHGModifyInfoViewController.h"
 
 @interface MeViewController ()<UITextFieldDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UIActionSheetDelegate,UITableViewDataSource,UITableViewDelegate,ModifyInfoDelegate>
-{
-}
+
 @property (weak, nonatomic) IBOutlet UITableView	*tableView;
 @property (weak, nonatomic) IBOutlet UIView		*headerView;
-@property (weak, nonatomic) IBOutlet UIImageView	*headerBackgroundImageView;
-@property (weak, nonatomic) IBOutlet UIView *labelView;
+@property (weak, nonatomic) IBOutlet UIView     *labelView;
+@property (weak, nonatomic) IBOutlet UILabel    *moneyLabel;  //职位
+@property (weak, nonatomic) IBOutlet UIButton   *btnEdit;
+@property (weak, nonatomic) IBOutlet UILabel    *txtNickName;
+@property (weak, nonatomic) IBOutlet UILabel    *companyName; //公司名称
+@property (weak, nonatomic) IBOutlet UIImageView *btnUserPic;
+@property (weak, nonatomic) IBOutlet UIImageView *lineImageView;
+@property (weak, nonatomic) IBOutlet UIButton *verifyButton;
+@property (weak, nonatomic) IBOutlet UIButton *tagButton;
+@property (weak, nonatomic) IBOutlet UIButton *invateButton;
+
+
+
 @property (strong, nonatomic) SettingsViewController *vc;
 @property (strong, nonatomic) UILabel	*circleHeaderLabel;  //动态lable
 @property (strong, nonatomic) UILabel	*followHeaderLabel;  //关注label
 @property (strong, nonatomic) UILabel	*fansHeaderLabel;  //粉丝label
-@property (weak, nonatomic) IBOutlet UILabel *moneyLabel;  //职位
-@property (weak, nonatomic) IBOutlet UIButton *btnEdit;
-@property (weak, nonatomic) IBOutlet UITextField *txtNickName;
-@property (weak, nonatomic) IBOutlet UILabel *companyName; //公司名称
-@property (weak, nonatomic) IBOutlet UIImageView *btnUserPic;
-@property (weak, nonatomic) IBOutlet UIImageView *VImageView;
-
 @property (strong, nonatomic) NSString *nickName;
 @property (strong, nonatomic) NSString *department;
 @property (strong, nonatomic) NSString *company;
@@ -63,24 +66,9 @@
     self.department = @"";
     self.company = @"";
     [self initUI];
-    
+
     [self addHeaderRefresh:self.tableView headerRefesh:YES andFooter:NO];
-    NSString *headImage = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_HEAD_IMAGE];
-    self.btnUserPic.contentMode = UIViewContentModeScaleAspectFit;
-    [self.btnUserPic sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,headImage]] placeholderImage:[UIImage imageNamed:@"default_head"]];
-    
     self.tableView.tableHeaderView = self.headerView;
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshData) name:NOTIFI_CHANGE_UPDATE_AUTO_STATUE object:nil];
-    self.circleHeaderLabel.text = @"0\n动态";
-    self.followHeaderLabel.text = @"0\n关注";
-    self.fansHeaderLabel.text	= @"0\n粉丝";
-    UIView *spaceView1 = [[UIView alloc] initWithFrame:CGRectMake(SCREENWIDTH/3,15, 1, 30)];
-    UIView *spaceView2 = [[UIView alloc] initWithFrame:CGRectMake(SCREENWIDTH/3*2,15, 1, 30)];
-    spaceView1.backgroundColor = [[UIColor alloc]initWithHue:0 saturation:0 brightness:0 alpha:0.2];
-    spaceView2.backgroundColor = [[UIColor alloc]initWithHue:0 saturation:0 brightness:0 alpha:0.2];
-    
-    [self.labelView addSubview:spaceView1];
-    [self.labelView addSubview:spaceView2];
     
     //处理tableView左边空白
     if ([self.tableView respondsToSelector:@selector(setSeparatorInset:)]) {
@@ -89,51 +77,9 @@
     if ([self.tableView respondsToSelector:@selector(setLayoutMargins:)]) {
         [self.tableView setLayoutMargins:UIEdgeInsetsZero];
     }
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshData) name:NOTIFI_CHANGE_UPDATE_AUTO_STATUE object:nil];
 }
 
--(void)refreshHeader
-{
-    [self getMyselfMaterial];
-}
--(UILabel *)titleLabel
-{
-    if (!_titleLabel)
-    {
-        _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 60, 30)];
-        _titleLabel.font = [UIFont fontWithName:@"Palatino" size:17];
-        _titleLabel.textColor = TEXT_COLOR;
-        _titleLabel.text = @"个人中心";
-    }
-    return _titleLabel;
-}
-- (UIBarButtonItem *)rightBarButtonItem
-{
-    if (!_rightBarButtonItem) {
-        
-        UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 24, 24)];
-        [button addTarget:self action:@selector(goToSettings) forControlEvents:UIControlEventTouchUpInside];
-        [button setBackgroundImage:[UIImage imageNamed:@"me_settings"] forState:UIControlStateNormal];
-        [button setBackgroundImage:[UIImage imageNamed:@"me_settings"] forState:UIControlStateHighlighted];
-        
-        self.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:button];
-        
-    }
-    return _rightBarButtonItem;
-}
-
-- (SHGModifyInfoViewController *)modifyInfoController
-{
-    if(!_modifyInfoController){
-        _modifyInfoController = [[SHGModifyInfoViewController alloc] initWithNibName:@"SHGModifyInfoViewController" bundle:nil];
-        _modifyInfoController.delegate = self;
-    }
-    return _modifyInfoController;
-}
-
--(void)scrollViewDidScroll:(UIScrollView *)scrollView
-{
-    [_txtNickName resignFirstResponder];
-}
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
@@ -148,10 +94,52 @@
 {
     [super viewDidAppear:animated];
 }
+
+-(UILabel *)titleLabel
+{
+    if (!_titleLabel)
+    {
+        _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 60, 30)];
+        _titleLabel.font = [UIFont fontWithName:@"Palatino" size:17];
+        _titleLabel.textColor = TEXT_COLOR;
+        _titleLabel.text = @"个人中心";
+    }
+    return _titleLabel;
+}
+- (UIBarButtonItem *)rightBarButtonItem
+{
+    if (!_rightBarButtonItem) {
+
+        UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 24, 24)];
+        [button addTarget:self action:@selector(goToSettings) forControlEvents:UIControlEventTouchUpInside];
+        [button setBackgroundImage:[UIImage imageNamed:@"me_settings"] forState:UIControlStateNormal];
+        [button setBackgroundImage:[UIImage imageNamed:@"me_settings"] forState:UIControlStateHighlighted];
+
+        self.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:button];
+
+    }
+    return _rightBarButtonItem;
+}
+
+- (SHGModifyInfoViewController *)modifyInfoController
+{
+    if(!_modifyInfoController){
+        _modifyInfoController = [[SHGModifyInfoViewController alloc] initWithNibName:@"SHGModifyInfoViewController" bundle:nil];
+        _modifyInfoController.delegate = self;
+    }
+    return _modifyInfoController;
+}
+
 -(void)refreshData
 {
     [self getMyselfMaterial];
 }
+
+-(void)refreshHeader
+{
+    [self getMyselfMaterial];
+}
+
 - (void)getMyselfMaterial
 {
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
@@ -161,31 +149,15 @@
         NSString *followCount = [response.dataDictionary valueForKey:@"attention"];
         NSString *fansCount = [response.dataDictionary valueForKey:@"fans"];
         
-        NSString *circleString = [NSString stringWithFormat:@"%@\n动态",circleCount];
-        NSString *followString = [NSString stringWithFormat:@"%@\n关注",followCount];
-        NSString *fansString = [NSString stringWithFormat:@"%@\n粉丝",fansCount];
+        NSString *circleString = [NSString stringWithFormat:@"\n动态 %@",circleCount];
+        NSString *followString = [NSString stringWithFormat:@"\n关注 %@",followCount];
+        NSString *fansString = [NSString stringWithFormat:@"\n粉丝 %@",fansCount];
         
-        NSMutableAttributedString *circleAttributedString = [[NSMutableAttributedString alloc] initWithString:circleString];
-        NSMutableAttributedString *followAttributedString = [[NSMutableAttributedString alloc] initWithString:followString];
-        NSMutableAttributedString *fansAttributedString = [[NSMutableAttributedString alloc] initWithString:fansString];
-        
-        NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
-        [paragraphStyle setLineSpacing:5.0];//调整行间距
-        
-        [circleAttributedString addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, circleString.length)];
-        [followAttributedString addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, followString.length)];
-        [fansAttributedString addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, fansString.length)];
-        
-        self.circleHeaderLabel.attributedText = circleAttributedString;
-        self.followHeaderLabel.attributedText = followAttributedString;
-        self.fansHeaderLabel.attributedText = fansAttributedString;
-        
-        self.circleHeaderLabel.textAlignment = NSTextAlignmentCenter;
-        self.followHeaderLabel.textAlignment = NSTextAlignmentCenter;
-        self.fansHeaderLabel.textAlignment = NSTextAlignmentCenter;
-        
+        self.circleHeaderLabel.text = circleString;
+        self.followHeaderLabel.text = followString;
+        self.fansHeaderLabel.text = fansString;
+
         self.txtNickName.text = [response.dataDictionary valueForKey:@"name"];
-        
         self.nickName = [response.dataDictionary valueForKey:@"name"];
         if([response.dataDictionary valueForKey:@"titles"]){
             self.moneyLabel.text = [response.dataDictionary valueForKey:@"titles"];
@@ -199,15 +171,7 @@
         } else{
             self.companyName.text = @"暂无公司名";
         }
-        
-        if([response.dataDictionary valueForKey:@"userstatus"]){
-            NSString *userStatus = [response.dataDictionary valueForKey:@"userstatus"];
-            if(userStatus && [userStatus isEqualToString:@"true"]){
-                self.VImageView.hidden = YES;
-            } else{
-                self.VImageView.hidden = YES;
-            }
-        }
+
         NSString *headImageUrl = [response.dataDictionary valueForKey:@"head_img"];
         if (!IsStrEmpty(headImageUrl)) {
             UIImage *placeImage = self.btnUserPic.image;
@@ -246,34 +210,56 @@
 {
     self.btnUserPic.layer.masksToBounds = YES;
     self.btnUserPic.layer.cornerRadius = CGRectGetHeight(self.btnUserPic.frame) / 2.0f;
-    self.btnUserPic.layer.borderWidth = 2;
-    self.btnUserPic.layer.borderColor = [[UIColor whiteColor] CGColor];
-    self.btnUserPic.layer.borderColor = [[UIColor whiteColor] CGColor];
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(changeUserHeadImage)];
     tap.cancelsTouchesInView = YES;
     [self.btnUserPic addGestureRecognizer:tap];
     self.btnUserPic.userInteractionEnabled = YES;
-    self.VImageView.hidden = YES;
-}
--(void)loadUI
-{
-    CGSize size = [self.txtNickName.text sizeWithFont:self.txtNickName.font constrainedToSize:CGSizeMake(200, 25)];
-    CGRect rect = self.btnEdit.frame;
-    rect.origin.x = self.txtNickName.frame.origin.x + size.width + 15;
-    self.btnEdit.frame = rect;
+
+    NSString *headImage = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_HEAD_IMAGE];
+    self.btnUserPic.contentMode = UIViewContentModeScaleAspectFit;
+    [self.btnUserPic sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,headImage]] placeholderImage:[UIImage imageNamed:@"default_head"]];
+
+    self.circleHeaderLabel.text = @"动态 0";
+    self.followHeaderLabel.text = @"关注 0";
+    self.fansHeaderLabel.text	= @"粉丝 0";
+    UIView *spaceView1 = [[UIView alloc] initWithFrame:CGRectMake(SCREENWIDTH/3,15, 1.0f, 30)];
+    UIView *spaceView2 = [[UIView alloc] initWithFrame:CGRectMake(SCREENWIDTH/3*2,15, 1.0f, 30)];
+    spaceView1.backgroundColor = [UIColor colorWithHexString:@"f5f5f5"];
+    spaceView2.backgroundColor = [UIColor colorWithHexString:@"f5f5f5"];
+    [self.labelView addSubview:spaceView1];
+    [self.labelView addSubview:spaceView2];
+
+    UIImage *image = [[UIImage imageNamed:@"me_line"] resizableImageWithCapInsets:UIEdgeInsetsMake(40.0f, 100.0f, 40.0f, 100.0f) resizingMode:UIImageResizingModeStretch];
+    self.lineImageView.image = image;
+
+    CGRect frame = self.verifyButton.frame;
+    CGFloat margin = (SCREENWIDTH - CGRectGetWidth(frame) * 4.0f) / 8.0f;
+    frame.origin.x = margin;
+    self.verifyButton.frame = frame;
+
+    frame = self.btnEdit.frame;
+    frame.origin.x = 3.0f * margin + CGRectGetWidth(frame);
+    self.btnEdit.frame = frame;
+
+    frame = self.tagButton.frame;
+    frame.origin.x = 5.0f * margin + 2.0f * CGRectGetWidth(frame);
+    self.tagButton.frame = frame;
+    
+    frame = self.invateButton.frame;
+    frame.origin.x = 7.0f * margin + 3.0f * CGRectGetWidth(frame);
+    self.invateButton.frame = frame;
+
 }
 
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 - (void)changeUserHeadImage
 {
     UIActionSheet *takeSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"拍照",@"选图", nil];
     [takeSheet showInView:self.view];
-    
 }
 
 
@@ -431,74 +417,54 @@
     vc.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:vc animated:YES];
 }
+
+#pragma mark ------标签
+
+- (IBAction)changeTags:(id)sender
+{
+    
+}
 #pragma mark -邀请好友
 
 - (IBAction)actionInvite:(id)sender {
-    
+
     id<ISSCAttachment> image  = [ShareSDK pngImageWithImage:[UIImage imageNamed:@"80"]];
-    
+
     NSString *contentOther =[NSString stringWithFormat:@"%@",@"诚邀您加入金融大牛圈！金融从业人员的家！"];
-    
+
     NSString *content =[NSString stringWithFormat:@"%@%@",@"诚邀您加入大牛圈APP！金融从业人员的家！这里有干货资讯、人脉嫁接、业务互助！赶快加入吧！",[NSString stringWithFormat:@"%@?uid=%@",SHARE_YAOQING_URL,[[NSUserDefaults standardUserDefaults]objectForKey:KEY_UID]]];
-    id<ISSShareActionSheetItem> item3 = [ShareSDK shareActionSheetItemWithTitle:@"短信"
-                                                                           icon:[UIImage imageNamed:@"sns_icon_19"]
-                                                                   clickHandler:^{
-                                                                       [self shareToSMS:content];
-                                                                   }];
-    
+    id<ISSShareActionSheetItem> item3 = [ShareSDK shareActionSheetItemWithTitle:@"短信" icon:[UIImage imageNamed:@"sns_icon_19"] clickHandler:^{
+        [self shareToSMS:content];
+    }];
+
     NSString *shareUrl =[NSString stringWithFormat:@"%@?uid=%@",SHARE_YAOQING_URL,[[NSUserDefaults standardUserDefaults]objectForKey:KEY_UID]];
-    id<ISSShareActionSheetItem> item4 = [ShareSDK shareActionSheetItemWithTitle:@"微信朋友圈"
-                                                                           icon:[UIImage imageNamed:@"sns_icon_23"]
-                                                                   clickHandler:^{
-                                                                       [[AppDelegate currentAppdelegate] wechatShareWithText:contentOther shareUrl:shareUrl shareType:1];
-                                                                   }];
-    id<ISSShareActionSheetItem> item5 = [ShareSDK shareActionSheetItemWithTitle:@"微信好友"
-                                                                           icon:[UIImage imageNamed:@"sns_icon_22"]
-                                                                   clickHandler:^{
-                                                                       [[AppDelegate currentAppdelegate] wechatShareWithText:contentOther shareUrl:shareUrl shareType:0];
-                                                                   }];
-    NSArray *shareList = [ShareSDK customShareListWithType:
-                          item3,
-                          item5,
-                          item4,
-                          SHARE_TYPE_NUMBER(ShareTypeQQ),
-                          nil];
-    
+    id<ISSShareActionSheetItem> item4 = [ShareSDK shareActionSheetItemWithTitle:@"微信朋友圈" icon:[UIImage imageNamed:@"sns_icon_23"] clickHandler:^{
+        [[AppDelegate currentAppdelegate] wechatShareWithText:contentOther shareUrl:shareUrl shareType:1];
+    }];
+    id<ISSShareActionSheetItem> item5 = [ShareSDK shareActionSheetItemWithTitle:@"微信好友" icon:[UIImage imageNamed:@"sns_icon_22"] clickHandler:^{
+        [[AppDelegate currentAppdelegate] wechatShareWithText:contentOther shareUrl:shareUrl shareType:0];
+    }];
+    NSArray *shareList = [ShareSDK customShareListWithType:item3, item5, item4, SHARE_TYPE_NUMBER(ShareTypeQQ), nil];
+
     //构造分享内容
-    id<ISSContent> publishContent = [ShareSDK content:contentOther
-                                       defaultContent:SHARE_DEFAULT_CONTENT
-                                                image:image
-                                                title:SHARE_TITLE_INVITE
-                                                  url:shareUrl
-                                          description:SHARE_DEFAULT_CONTENT
-                                            mediaType:SHARE_TYPE];
-    //创建弹出菜单容器
-    
+    id<ISSContent> publishContent = [ShareSDK content:contentOther defaultContent:SHARE_DEFAULT_CONTENT image:image title:SHARE_TITLE_INVITE url:shareUrl description:SHARE_DEFAULT_CONTENT mediaType:SHARE_TYPE];
+
     //创建弹出菜单容器
     id<ISSContainer> container = [ShareSDK container];
     [container setIPadContainerWithView:self.view arrowDirect:UIPopoverArrowDirectionUp];
-    
+
     //弹出分享菜单
-    [ShareSDK showShareActionSheet:container
-                         shareList:shareList
-                           content:publishContent
-                     statusBarTips:YES
-                       authOptions:nil
-                      shareOptions:nil
-                            result:^(ShareType type, SSResponseState state, id<ISSPlatformShareInfo> statusInfo, id<ICMErrorInfo> error, BOOL end) {
-                                
-                                if (state == SSResponseStateSuccess)
-                                {
-                                    [MobClick event:@"ActionInviteFriend" label:@"onClick"];
-                                    NSLog(NSLocalizedString(@"TEXT_ShARE_SUC", @"分享成功"));
-                                }
-                                else if (state == SSResponseStateFail)
-                                {
-                                    NSLog(NSLocalizedString(@"TEXT_ShARE_FAI", @"分享失败,错误码:%d,错误描述:%@"), [error errorCode], [error errorDescription]);
-                                    [Hud showMessageWithText:@"分享失败"];
-                                    
-                                }
-                            }];
+    [ShareSDK showShareActionSheet:container shareList:shareList content:publishContent statusBarTips:YES authOptions:nil shareOptions:nil result:^(ShareType type, SSResponseState state, id<ISSPlatformShareInfo> statusInfo, id<ICMErrorInfo> error, BOOL end) {
+        if (state == SSResponseStateSuccess){
+            [MobClick event:@"ActionInviteFriend" label:@"onClick"];
+            NSLog(NSLocalizedString(@"TEXT_ShARE_SUC", @"分享成功"));
+        }
+        else if (state == SSResponseStateFail){
+            NSLog(NSLocalizedString(@"TEXT_ShARE_FAI", @"分享失败,错误码:%d,错误描述:%@"), [error errorCode], [error errorDescription]);
+            [Hud showMessageWithText:@"分享失败"];
+
+        }
+    }];
 }
 
 -(void)shareToSMS:(NSString *)text
@@ -509,28 +475,6 @@
 -(void)shareToWeibo:(NSString *)text rid:(NSString *)rid
 {
     [[AppDelegate currentAppdelegate] sendmessageToShareWithObjContent:text rid:rid];
-}
-- (BOOL)textFieldShouldEndEditing:(UITextField *)textField
-{
-    if (textField == self.txtNickName) {
-        NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
-        [[AFHTTPRequestOperationManager manager] PUT:[NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttp,@"user",@"modifyuser"] parameters:@{@"uid":uid,@"type":@"name",@"value":self.txtNickName.text} success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            NSLog(@"%@",operation);
-            NSLog(@"%@",responseObject);
-            NSString *code = [responseObject valueForKey:@"code"];
-            if ([code isEqualToString:@"000"]) {
-                self.nickName = self.txtNickName.text;
-            }else{
-                self.txtNickName.text = self.nickName;
-                [Hud showMessageWithText:@"修改失败"];
-            }
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            self.txtNickName.text = self.nickName;
-            [Hud showMessageWithText:@"修改失败"];
-        }];
-    }
-    
-    return YES;
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
@@ -553,19 +497,6 @@
     return 5;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-{
-    return 10;
-}
-
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-{
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 10)];
-    view.backgroundColor = RGB(234, 234, 234);
-    return view;
-}
-
-
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return 50;
@@ -575,14 +506,10 @@
 {
     static NSString *CellIdentifier = @"MeCell";
     MeTableViewCell *cell = (MeTableViewCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    
-    // Configure the cell...
-    if (cell == nil)
-    {
-        cell =   [[[NSBundle mainBundle] loadNibNamed:@"MeTableViewCell" owner:self options:nil] lastObject];
+
+    if (cell == nil){
+        cell = [[[NSBundle mainBundle] loadNibNamed:@"MeTableViewCell" owner:self options:nil] lastObject];
     }
-    
-    
     if (indexPath.row == 0) {
         cell.lblName.text = @"我的合伙人";
     }else if (indexPath.row == 1) {
@@ -651,7 +578,7 @@
         _circleHeaderLabel.textAlignment = NSTextAlignmentCenter;
         _circleHeaderLabel.numberOfLines = 0;
         _circleHeaderLabel.font = [UIFont fontWithName:@"Palatino" size:13.0f] ;
-        _circleHeaderLabel.textColor = TEXT_COLOR;
+        _circleHeaderLabel.textColor = [UIColor colorWithHexString:@"434343"];
         _circleHeaderLabel.userInteractionEnabled = YES;
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(goToMyCircle)];
         [_circleHeaderLabel addGestureRecognizer:tap];
@@ -676,7 +603,7 @@
         _followHeaderLabel.textAlignment = NSTextAlignmentCenter;
         _followHeaderLabel.numberOfLines = 0;
         _followHeaderLabel.font = [UIFont fontWithName:@"Palatino" size:13.0f];
-        _followHeaderLabel.textColor = TEXT_COLOR;
+        _followHeaderLabel.textColor = [UIColor colorWithHexString:@"434343"];
         
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(goToFollowList)];
         [_followHeaderLabel addGestureRecognizer:tap];
@@ -695,7 +622,7 @@
     if (!_fansHeaderLabel) {
         _fansHeaderLabel = [[UILabel alloc] initWithFrame:CGRectMake(spaceWidth + labelWidth*2, 0, labelWidth, self.labelView.height)];
         _fansHeaderLabel.textAlignment = NSTextAlignmentCenter;
-        _fansHeaderLabel.textColor = TEXT_COLOR;
+        _fansHeaderLabel.textColor = [UIColor colorWithHexString:@"434343"];
         _fansHeaderLabel.numberOfLines = 0;
         _fansHeaderLabel.font = [UIFont fontWithName:@"Palatino" size:13.0f];
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(goToFansList)];
