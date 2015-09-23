@@ -30,12 +30,23 @@
     return sharedGlobleInstance;
 }
 
-- (NSString *)cityName
+- (instancetype)init
 {
-    if(!_cityName){
-        _cityName = @"";
+    self = [super init];
+    if(self){
+        self.cityName = @"";
     }
-    return _cityName;
+    return self;
+}
+
+- (void)setCityName:(NSString *)cityName
+{
+    if(_cityName != cityName){
+        _cityName = cityName;
+        if(self.delegate && [self.delegate respondsToSelector:@selector(userlocationDidShow:)]){
+            [self.delegate userlocationDidShow:cityName];
+        }
+    }
 }
 
 - (NSMutableArray *)homeArray
@@ -50,7 +61,7 @@
 {
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
     if(!uid || uid.length == 0){
-        //纯粹为了省事 如果没有登录则用一个默认的用户id去拉取首页数据 下个版本要修改了
+        //添加一个通知 观察uid的变化
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userDefaultsDidChange:) name:NSUserDefaultsDidChangeNotification object:nil];
         return;
     }

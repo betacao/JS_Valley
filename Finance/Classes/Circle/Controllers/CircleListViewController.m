@@ -39,7 +39,6 @@ const CGFloat kAdButtomMargin = 20.0f;
     NSTimer *timer;
     NSArray *phopoArr;
     NSString *currentCity;
-    CLLocationManager *locationmanager; //定位
 }
 
 @property (weak, nonatomic) IBOutlet UITableView *listTable;
@@ -193,16 +192,6 @@ const CGFloat kAdButtomMargin = 20.0f;
     return _noticeView;
 }
 
-- (void)locationManager
-{
-    if (IS_IOS8){
-        locationmanager = [[CLLocationManager alloc] init];
-        [locationmanager requestAlwaysAuthorization];        //NSLocationAlwaysUsageDescription
-        [locationmanager requestWhenInUseAuthorization];     //NSLocationWhenInUseDescription
-        locationmanager.delegate = self;
-    }
-    [self getAllInfo];
-}
 -(void)requestAlermInfo
 {
     if(!self.hasRequestedRecomand || !self.hasLocated){
@@ -247,10 +236,10 @@ const CGFloat kAdButtomMargin = 20.0f;
     }];
 }
 
--(void)getAllInfo
+- (void)getAllInfo
 {
     __block __weak CircleListViewController *wself = self;
-    [[CCLocationManager shareLocation]getCity:^(NSString *cityString) {
+    [[CCLocationManager shareLocation] getCity:^(NSString *cityString) {
         NSLog(@"%@",cityString);
         if(cityString && cityString.length > 0){
             NSArray *array = [cityString componentsSeparatedByString:@"省"];
@@ -268,8 +257,6 @@ const CGFloat kAdButtomMargin = 20.0f;
             }
             wself.hasLocated = YES;
             [wself requestAlermInfo];
-        } else{
-            
         }
     }];
 }

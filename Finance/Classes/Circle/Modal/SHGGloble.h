@@ -9,8 +9,24 @@
 #import <Foundation/Foundation.h>
 
 typedef void (^SHHomeDataCompletionBlock)(NSArray *dataArray);
+typedef void (^SHHomeDataCompletionBlock)(NSArray *dataArray);
+
+@protocol SHGGlobleDelegate <NSObject>
+
+@optional
+
+- (void)userlocationDidShow:(NSString *)cityName;
+
+@end
 
 @interface SHGGloble : NSObject
+
+/**
+ @brief  全局代理
+
+ @since 1.5.0
+ */
+@property (assign, nonatomic) id<SHGGlobleDelegate> delegate;
 
 /**
  @brief  当前的省份名称

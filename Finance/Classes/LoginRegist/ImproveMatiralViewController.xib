@@ -10,6 +10,8 @@
                 <outlet property="bgScrollView" destination="If2-Fr-IoG" id="zhi-J6-yI5"/>
                 <outlet property="companyTextField" destination="9li-ju-5BG" id="rKj-nG-Q8O"/>
                 <outlet property="headImageButton" destination="seF-p3-hoX" id="ycK-3f-XkG"/>
+                <outlet property="locationLabel" destination="3l1-MR-5L5" id="Y7G-a4-ENt"/>
+                <outlet property="manualButton" destination="0q6-Z2-nKU" id="r7z-XU-wPz"/>
                 <outlet property="nameTextField" destination="tUH-hT-iJQ" id="1N0-3A-6zs"/>
                 <outlet property="nextButton" destination="G8s-J8-Q8C" id="qlL-RT-2AQ"/>
                 <outlet property="personCategoryView" destination="gxE-AO-bYt" id="xYq-q9-PY9"/>
@@ -115,6 +117,14 @@
                                     <connections>
                                         <action selector="submitButtonClicked:" destination="-1" eventType="touchUpInside" id="cOF-73-mp0"/>
                                     </connections>
+                                </button>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="0q6-Z2-nKU">
+                                    <rect key="frame" x="178" y="227" width="46" height="30"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                    <state key="normal" title="手动选择">
+                                        <color key="titleColor" red="0.29411764705882354" green="0.53333333333333333" blue="0.71764705882352942" alpha="1" colorSpace="calibratedRGB"/>
+                                    </state>
                                 </button>
                             </subviews>
                             <color key="backgroundColor" red="0.93333333330000001" green="0.93333333330000001" blue="0.93333333330000001" alpha="1" colorSpace="calibratedRGB"/>

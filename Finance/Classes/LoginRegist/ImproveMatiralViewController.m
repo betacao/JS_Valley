@@ -10,13 +10,14 @@
 #import "AppDelegate.h"
 #import "ApplyViewController.h"
 #import <AddressBook/AddressBook.h>
+#import "CCLocationManager.h"
 
 const CGFloat kPersonCategoryLeftMargin = 13.0f;
 const CGFloat kPersonCategoryTopMargin = 10.0f;
 const CGFloat kPersonCategoryMargin = 7.0f;
 #define kPersonCategoryHeight 22.0f * YFACTOR
 
-@interface ImproveMatiralViewController ()<UIScrollViewDelegate>
+@interface ImproveMatiralViewController ()<UIScrollViewDelegate,SHGGlobleDelegate>
 {
     BOOL hasUploadHead;
 }
@@ -27,6 +28,8 @@ const CGFloat kPersonCategoryMargin = 7.0f;
 @property (weak, nonatomic) IBOutlet UIScrollView *bgScrollView;
 @property (weak, nonatomic) IBOutlet SHGPersonCategoryView *personCategoryView;
 @property (weak, nonatomic) IBOutlet UIButton *nextButton;
+@property (weak, nonatomic) IBOutlet UILabel *locationLabel;
+@property (weak, nonatomic) IBOutlet UIButton *manualButton;
 @property (strong, nonatomic) UIImage *headImage;
 @property (strong, nonatomic) NSString *headImageName;
 @property (strong, nonatomic) NSMutableArray *phones;
@@ -42,7 +45,7 @@ const CGFloat kPersonCategoryMargin = 7.0f;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    [SHGGloble sharedGloble].delegate = self;
     self.title = @"完善信息";
 
     self.bgScrollView.backgroundColor = [UIColor colorWithHexString:@"eeeeee"];
@@ -56,14 +59,16 @@ const CGFloat kPersonCategoryMargin = 7.0f;
     UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:leftButton];
     self.navigationItem.leftBarButtonItem = leftItem;
 
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0), ^{
-        //更新好友
-        [self getAddress];
-    });
     self.headImageButton.layer.masksToBounds = YES;
     self.headImageButton.layer.cornerRadius = CGRectGetHeight(self.headImageButton.frame) / 2.0f;
     [self initTextFieldStyle:@[self.nameTextField, self.companyTextField, self.titleTextField]];
 
+    [self.personCategoryView updateViewWithArray:@[@"银行", @"证券", @"二级市场", @"三方", @"PV/PE", @"信托/资管", @"新三板", @"定增", @"项目融资", @"P2P", @"招聘培训"]];
+
+    [self getAddress];
+    [[CCLocationManager shareLocation] getCity:^(NSString *addressString) {
+
+    }];
 }
 
 - (void)initTextFieldStyle:(NSArray *)arrays
@@ -78,8 +83,6 @@ const CGFloat kPersonCategoryMargin = 7.0f;
 {
     [super viewDidAppear:animated];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardDidShowNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardDidHideNotification object:nil];
-    [self.personCategoryView updateViewWithArray:@[@"银行", @"证券", @"二级市场", @"三方", @"PV/PE", @"信托/资管", @"新三板", @"定增", @"项目融资", @"P2P", @"招聘培训"]];
 
     CGPoint point = CGPointMake(0.0f, CGRectGetMaxY(self.personCategoryView.frame) + 2 * kPersonCategoryTopMargin);
     point = [self.view convertPoint:point fromView:self.personCategoryView.superview];
@@ -87,32 +90,31 @@ const CGFloat kPersonCategoryMargin = 7.0f;
     frame.origin.y = point.y;
     self.nextButton.frame = frame;
 
-
     self.bgScrollView.contentSize = CGSizeMake(SCREENWIDTH, CGRectGetMaxY(self.nextButton.frame) + 2 * kPersonCategoryTopMargin);
 }
 
 - (void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
+    [SHGGloble sharedGloble].delegate = nil;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     
 }
 #pragma mark -- sdc
 #pragma mark -- 获得联系人
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
--(void )getAddress
+- (void)getAddress
 {
+    __weak typeof(self) weakSelf = self;
     ABAddressBookRef addressBook = ABAddressBookCreate();
     ABAddressBookRequestAccessWithCompletion(addressBook, ^(bool granted, CFErrorRef error){
-        dispatch_async(dispatch_get_main_queue(), ^{
-            if (error)
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0), ^{
+            if (error){
                 NSLog(@"Error: %@", (__bridge NSError *)error);
-            else if (!granted){
-                UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"获取权限失败" message:@"请设置权限." delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
-                [av show];
+            } else if (!granted){
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"获取权限失败" message:@"请设置权限." delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
+                    [av show];
+                });
             } else{
                 CFArrayRef results = ABAddressBookCopyArrayOfAllPeople(addressBook);
                 for(int i = 0; i < CFArrayGetCount(results); i++){
@@ -133,12 +135,10 @@ const CGFloat kPersonCategoryMargin = 7.0f;
                         if (!IsStrEmpty(personNameFirst)){
                             personName =[NSString stringWithFormat:@"%@%@",personNameLast,personNameFirst];
                         }
-
                         NSString *text = [NSString stringWithFormat:@"%@#%@",personName,phone];
-                        NSLog(@"%@",text);
                         BOOL hasExsis = NO;
                         NSInteger index = 0;
-                        for (int i = 0 ; i < self.phones.count; i ++){
+                        for (NSInteger i = 0 ; i < self.phones.count; i ++){
                             NSString *phoneStr = self.phones[i];
                             if ([phoneStr hasSuffix:phone]) {
                                 hasExsis = YES;
@@ -148,15 +148,15 @@ const CGFloat kPersonCategoryMargin = 7.0f;
                         }
                         if ([phone isValidateMobile]){
                             if (hasExsis){
-                                [self.phones replaceObjectAtIndex:index withObject:text];
+                                [weakSelf.phones replaceObjectAtIndex:index withObject:text];
                             } else{
-                                [self.phones addObject:text];
+                                [weakSelf.phones addObject:text];
                             }
                         }
                     }
                 }
-                if (!IsArrEmpty(self.phones)){
-                    [self uploadPhonesWithPhone:self.phones];
+                if (!IsArrEmpty(weakSelf.phones)){
+                    [weakSelf uploadPhonesWithPhone:weakSelf.phones];
                 }
             }
         });
@@ -347,6 +347,7 @@ const CGFloat kPersonCategoryMargin = 7.0f;
 {
     [self uploadPhonesWithPhone:self.phones];
 }
+
 -(void)uploadPhonesWithPhone:(NSMutableArray *)phones
 {
     NSInteger num = phones.count/100+1;
@@ -356,7 +357,6 @@ const CGFloat kPersonCategoryMargin = 7.0f;
         NSInteger count = 0;
         if (phones.count > i * 100) {
             count =  i *100;
-            
         }
         else
         {
@@ -396,45 +396,41 @@ const CGFloat kPersonCategoryMargin = 7.0f;
         
     }];
 }
+
 - (void)chatLoagin
 {
-	NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
-	NSString *password = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_PASSWORD];
-	
-	[[EaseMob sharedInstance].chatManager asyncLoginWithUsername:uid
-														password:password
-													  completion:
-	 ^(NSDictionary *loginInfo, EMError *error) {
-		 if (loginInfo && !error) {
-			 [[EaseMob sharedInstance].chatManager setIsAutoLoginEnabled:NO];
-			 //发送自动登陆状态通知
-			 //             [[NSNotificationCenter defaultCenter] postNotificationName:KNOTIFICATION_LOGINCHANGE object:@YES];
-			 //将旧版的coredata数据导入新的数据库
-			 EMError *error = [[EaseMob sharedInstance].chatManager importDataToNewDatabase];
-			 if (!error) {
-				 error = [[EaseMob sharedInstance].chatManager loadDataFromDatabase];
-			 }
-			 
-			 [[ApplyViewController shareController] loadDataSourceFromLocalDB];
-             
-		 }else {
-			 switch (error.errorCode) {
-				 case EMErrorServerNotReachable:
-					 NSLog(NSLocalizedString(@"error.connectServerFail", @"Connect to the server failed!"));
-					 break;
-				 case EMErrorServerAuthenticationFailure:
-					 NSLog(@"%@",error.description);
-					 break;
-				 case EMErrorServerTimeout:
-					 NSLog(NSLocalizedString(@"error.connectServerTimeout", @"Connect to the server timed out!"));
-					 break;
-				 default:
-					 break;
-			 }
+    NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
+    NSString *password = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_PASSWORD];
 
-		 }
-	 } onQueue:nil];
+    [[EaseMob sharedInstance].chatManager asyncLoginWithUsername:uid password:password completion:^(NSDictionary *loginInfo, EMError *error) {
+        if (loginInfo && !error) {
+            [[EaseMob sharedInstance].chatManager setIsAutoLoginEnabled:NO];
+            EMError *error = [[EaseMob sharedInstance].chatManager importDataToNewDatabase];
+            if (!error) {
+                error = [[EaseMob sharedInstance].chatManager loadDataFromDatabase];
+            }
+
+            [[ApplyViewController shareController] loadDataSourceFromLocalDB];
+
+        }else {
+            switch (error.errorCode) {
+                case EMErrorServerNotReachable:
+                    NSLog(NSLocalizedString(@"error.connectServerFail", @"Connect to the server failed!"));
+                    break;
+                case EMErrorServerAuthenticationFailure:
+                    NSLog(@"%@",error.description);
+                    break;
+                case EMErrorServerTimeout:
+                    NSLog(NSLocalizedString(@"error.connectServerTimeout", @"Connect to the server timed out!"));
+                    break;
+                default:
+                    break;
+            }
+
+        }
+    } onQueue:nil];
 }
+
 -(void)loginSuccess
 {
     TabBarViewController *vc = [[TabBarViewController alloc] init];
@@ -443,20 +439,12 @@ const CGFloat kPersonCategoryMargin = 7.0f;
     [AppDelegate currentAppdelegate].window.rootViewController = nav;
 }
 
-- (void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView
-{
-}
-
 - (void)keyboardDidShow:(NSNotification *)notification
 {
     CGRect rect = [[notification.userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
     self.keyboaradRect = rect;
     [self scrollFieldToVisible];
     
-}
-
-- (void)keyboardDidHide:(NSNotification *)notification
-{
 }
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField
@@ -479,6 +467,36 @@ const CGFloat kPersonCategoryMargin = 7.0f;
 {
     [textField resignFirstResponder];
     return YES;
+}
+
+//异步获取地理位置信息
+- (void)userlocationDidShow:(NSString *)cityName
+{
+    NSMutableString *string = [NSMutableString stringWithString:@"地点：大牛圈猜你在，没猜对？"];
+    NSRange range = [string rangeOfString:@"，"];
+    if(range.location != NSNotFound){
+        [string insertString:cityName atIndex:range.location];
+        range = [string rangeOfString:cityName];
+        NSMutableAttributedString *aString = [[NSMutableAttributedString alloc] initWithString:string];
+        [aString setAttributes:[NSDictionary dictionaryWithObject:[UIColor colorWithHexString:@"f04241"] forKey:NSForegroundColorAttributeName] range:range];
+        //替换显示的字符串，随后要更改“手动选择”的button位置
+        [self.locationLabel setAttributedText:aString];
+        CGSize size = [self.locationLabel sizeThatFits:CGSizeMake(MAXFLOAT, CGRectGetHeight(self.locationLabel.frame))];
+
+        CGRect frame = self.locationLabel.frame;
+        frame.size.width = size.width;
+        self.locationLabel.frame = frame;
+
+        self.manualButton.center = self.locationLabel.center;
+        frame = self.manualButton.frame;
+        frame.origin.x = CGRectGetMaxX(self.locationLabel.frame);
+        self.manualButton.frame = frame;
+    }
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
 }
 
 @end
@@ -513,13 +531,11 @@ const CGFloat kPersonCategoryMargin = 7.0f;
     self.dataArray = dataArray;
 }
 
-- (void)setDataArray:(NSArray *)dataArray
+- (void)layoutSubviews
 {
-    _dataArray = dataArray;
-    [self removeAllSubviews];
     CGFloat width = (CGRectGetWidth(self.frame) - 2 * kPersonCategoryLeftMargin - 3 * kPersonCategoryMargin) / 4.0f;
-    for(NSString *string in dataArray){
-        NSInteger index = [dataArray indexOfObject:string];
+    for(NSString *string in self.dataArray){
+        NSInteger index = [self.dataArray indexOfObject:string];
         NSInteger row = index / 4;
         NSInteger col = index % 4;
 
