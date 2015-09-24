@@ -647,16 +647,17 @@ static NSString * const kCommonFNum			= @"commonnum";
     }
 }
 
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
     if (self.chatListType == ContactListView || self.chatListType == ContactTwainListView) {
         return 72;
     }
     return [ChatListCell tableView:tableView heightForRowAtIndexPath:indexPath];
 }
 
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    
     if (self.chatListType == ChatListView){
         if(indexPath.row==0){
             ApplyViewController *vc=[ApplyViewController shareController];
@@ -666,7 +667,6 @@ static NSString * const kCommonFNum			= @"commonnum";
             [self.tabBarController.navigationController pushViewController:mViewController animated:YES];
         } else{
             EMConversation *conversation = [self.dataSource objectAtIndex:indexPath.row];
-            
             ChatViewController *chatController;
             NSString *title = conversation.chatter;
             if (conversation.isGroup) {
@@ -678,20 +678,17 @@ static NSString * const kCommonFNum			= @"commonnum";
                     }
                 }
             }
-            
             NSString *chatter = conversation.chatter;
-            NSString *titleName=@"";
+            NSString *titleName = @"";
             chatController = [[ChatViewController alloc] initWithChatter:chatter isGroup:conversation.isGroup];
             for (BasePeopleObject *obj in self.contactsSource) {
                 if ([obj.uid isEqualToString:conversation.chatter]) {
                     titleName = obj.name;
                 }
             }
-            if (conversation.isGroup)
-            {
-                chatController.title=title;
-            }else
-            {
+            if (conversation.isGroup){
+                chatController.title = title;
+            } else{
                 chatController.title=titleName;
             }
             [self.tabBarController.navigationController pushViewController:chatController animated:YES];
@@ -700,16 +697,14 @@ static NSString * const kCommonFNum			= @"commonnum";
         BasePeopleObject *buddy = [self.contactsSource  objectAtIndex:indexPath.row];
         NSDictionary *loginInfo = [[[EaseMob sharedInstance] chatManager] loginInfo];
         NSString *loginUsername = [loginInfo objectForKey:kSDKUsername];
-        if (loginUsername && loginUsername.length > 0) {
-            if ([loginUsername isEqualToString:buddy.uid])
-            {
+        if (loginUsername && loginUsername.length > 0){
+            if ([loginUsername isEqualToString:buddy.uid]){
                 UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"prompt", @"Prompt") message:NSLocalizedString(@"friend.notChatSelf", @"can't talk to yourself") delegate:nil cancelButtonTitle:NSLocalizedString(@"ok", @"OK") otherButtonTitles:nil, nil];
                 [alertView show];
                 return;
             }
         }
-        if ([buddy.rela isEqualToString:@"2"])
-        {
+        if ([buddy.rela isEqualToString:@"2"]){
             return;
         }
         CircleSomeOneViewController *vc = [[CircleSomeOneViewController alloc] initWithNibName:@"CircleSomeOneViewController" bundle:nil];
@@ -717,11 +712,6 @@ static NSString * const kCommonFNum			= @"commonnum";
         vc.userName = buddy.name;
         vc.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:vc animated:YES];
-        
-    }
-    else
-    {
-        
     }
 }
 

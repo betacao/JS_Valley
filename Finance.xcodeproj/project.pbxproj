@@ -892,6 +892,8 @@
 		F99B602C1B9E7D9500759AAC /* headerView.m in Sources */ = {isa = PBXBuildFile; fileRef = F99B602B1B9E7D9500759AAC /* headerView.m */; };
 		F9B18C081BA0521600EA0314 /* SHGNoticeView.m in Sources */ = {isa = PBXBuildFile; fileRef = F9B18C071BA0521600EA0314 /* SHGNoticeView.m */; };
 		F9B7CC321B8AD6C000E55EFD /* SHGGloble.m in Sources */ = {isa = PBXBuildFile; fileRef = F9B7CC311B8AD6C000E55EFD /* SHGGloble.m */; };
+		F9EBB7CD1BB3DCD20023E84E /* SHGPersonDynamicViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9EBB7CB1BB3DCD20023E84E /* SHGPersonDynamicViewController.m */; settings = {ASSET_TAGS = (); }; };
+		F9EBB7CE1BB3DCD20023E84E /* SHGPersonDynamicViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9EBB7CC1BB3DCD20023E84E /* SHGPersonDynamicViewController.xib */; settings = {ASSET_TAGS = (); }; };
 		F9EDD5E91BABF3E100506C0C /* expressionImage.plist in Resources */ = {isa = PBXBuildFile; fileRef = F9EDD5E81BABF3E100506C0C /* expressionImage.plist */; settings = {ASSET_TAGS = (); }; };
 		F9EDD5F61BABFBCF00506C0C /* SDBrowserImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = F9EDD5EC1BABFBCF00506C0C /* SDBrowserImageView.m */; settings = {ASSET_TAGS = (); }; };
 		F9EDD5F71BABFBCF00506C0C /* SDPhotoBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = F9EDD5EE1BABFBCF00506C0C /* SDPhotoBrowser.m */; settings = {ASSET_TAGS = (); }; };
@@ -2106,6 +2108,9 @@
 		F9B18C071BA0521600EA0314 /* SHGNoticeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGNoticeView.m; sourceTree = "<group>"; };
 		F9B7CC301B8AD6C000E55EFD /* SHGGloble.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGGloble.h; sourceTree = "<group>"; };
 		F9B7CC311B8AD6C000E55EFD /* SHGGloble.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGGloble.m; sourceTree = "<group>"; };
+		F9EBB7CA1BB3DCD20023E84E /* SHGPersonDynamicViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGPersonDynamicViewController.h; sourceTree = "<group>"; };
+		F9EBB7CB1BB3DCD20023E84E /* SHGPersonDynamicViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGPersonDynamicViewController.m; sourceTree = "<group>"; };
+		F9EBB7CC1BB3DCD20023E84E /* SHGPersonDynamicViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGPersonDynamicViewController.xib; sourceTree = "<group>"; };
 		F9EDD5E81BABF3E100506C0C /* expressionImage.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = expressionImage.plist; sourceTree = "<group>"; };
 		F9EDD5EB1BABFBCF00506C0C /* SDBrowserImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDBrowserImageView.h; sourceTree = "<group>"; };
 		F9EDD5EC1BABFBCF00506C0C /* SDBrowserImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDBrowserImageView.m; sourceTree = "<group>"; };
@@ -2888,6 +2893,9 @@
 				6145FF1A1AE4E1210074AB49 /* CircleSomeOneViewController.h */,
 				6145FF1B1AE4E1210074AB49 /* CircleSomeOneViewController.m */,
 				6145FF1C1AE4E1210074AB49 /* CircleSomeOneViewController.xib */,
+				F9EBB7CA1BB3DCD20023E84E /* SHGPersonDynamicViewController.h */,
+				F9EBB7CB1BB3DCD20023E84E /* SHGPersonDynamicViewController.m */,
+				F9EBB7CC1BB3DCD20023E84E /* SHGPersonDynamicViewController.xib */,
 				613CAC4E1AFFFFDE00EA8C23 /* CircleLinkViewController.h */,
 				613CAC4F1AFFFFDE00EA8C23 /* CircleLinkViewController.m */,
 				613CAC501AFFFFDE00EA8C23 /* CircleLinkViewController.xib */,
@@ -4652,6 +4660,7 @@
 				40302B111AEF57F600F22EB6 /* MyAddressTableViewCell.xib in Resources */,
 				408D8B4A1AF8618C0055810C /* chatBar_record@2x.png in Resources */,
 				408D8B311AF8618C0055810C /* chat_location_annotation_someone.png in Resources */,
+				F9EBB7CE1BB3DCD20023E84E /* SHGPersonDynamicViewController.xib in Resources */,
 				B04D6E291B60C01300E3863E /* 个人中心2.jpg in Resources */,
 				B09BF76C1B7C6C1F008260B3 /* 2度@3x.png in Resources */,
 				40302B461AF0C67F00F22EB6 /* MyAppointmentTableViewCell.xib in Resources */,
@@ -5404,6 +5413,7 @@
 				53AFF7841AFBF5F700D04B6B /* THProgressView.m in Sources */,
 				610FF0451AD621500027EBA6 /* PopoverListObj.m in Sources */,
 				538964D11AFC6BEB00041548 /* AppDelegate+EaseMob.m in Sources */,
+				F9EBB7CD1BB3DCD20023E84E /* SHGPersonDynamicViewController.m in Sources */,
 				6153B9481ADFB4CA0015F6E1 /* CircleSendViewController.m in Sources */,
 				6187D2D91AF1C693008E1D21 /* LocationViewController.m in Sources */,
 				B0BAA36E1B6A059E0036C367 /* TWEmojiKeyBoard.m in Sources */,
@@ -5651,7 +5661,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.danniuquan.apptest;
 				PRODUCT_NAME = "大牛圈";
-				PROVISIONING_PROFILE = "b5987c73-8279-4077-adf7-6be59791bd1b";
+				PROVISIONING_PROFILE = "690ae0fe-3269-4801-97b3-b26b209573f0";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -5663,8 +5673,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: xie jian (A35C7Q22SB)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: xie jian (A35C7Q22SB)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Jiangsu SHGOO Technology Co., Ltd";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Jiangsu SHGOO Technology Co., Ltd";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -5708,7 +5718,7 @@
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.danniuquan.apptest;
 				PRODUCT_NAME = "大牛圈";
-				PROVISIONING_PROFILE = "b5987c73-8279-4077-adf7-6be59791bd1b";
+				PROVISIONING_PROFILE = "690ae0fe-3269-4801-97b3-b26b209573f0";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -5803,7 +5813,7 @@
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.danniuquan.apptest;
 				PRODUCT_NAME = "大牛圈";
-				PROVISIONING_PROFILE = "b5987c73-8279-4077-adf7-6be59791bd1b";
+				PROVISIONING_PROFILE = "690ae0fe-3269-4801-97b3-b26b209573f0";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 			};

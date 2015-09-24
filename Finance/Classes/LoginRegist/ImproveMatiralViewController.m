@@ -63,14 +63,14 @@
     self.headImageButton.layer.cornerRadius = CGRectGetHeight(self.headImageButton.frame) / 2.0f;
     [self initTextFieldStyle:@[self.nameTextField, self.companyTextField, self.titleTextField]];
 
+    __weak typeof(self) weakSelf = self;
     [self.personCategoryView updateViewWithArray:[SHGGloble sharedGloble].tagsArray finishBlock:^{
-        CGPoint point = CGPointMake(0.0f, CGRectGetMaxY(self.personCategoryView.frame) + 2 * kPersonCategoryTopMargin);
-        point = [self.view convertPoint:point fromView:self.personCategoryView.superview];
-        CGRect frame = self.nextButton.frame;
+        CGPoint point = CGPointMake(0.0f, CGRectGetMaxY(weakSelf.personCategoryView.frame) + 2 * kPersonCategoryTopMargin);
+        point = [weakSelf.view convertPoint:point fromView:weakSelf.personCategoryView.superview];
+        CGRect frame = weakSelf.nextButton.frame;
         frame.origin.y = point.y;
-        self.nextButton.frame = frame;
-
-        self.bgScrollView.contentSize = CGSizeMake(SCREENWIDTH, CGRectGetMaxY(self.nextButton.frame) + 2 * kPersonCategoryTopMargin);
+        weakSelf.nextButton.frame = frame;
+        weakSelf.bgScrollView.contentSize = CGSizeMake(SCREENWIDTH, CGRectGetMaxY(self.nextButton.frame) + 2 * kPersonCategoryTopMargin);
 
     }];
 

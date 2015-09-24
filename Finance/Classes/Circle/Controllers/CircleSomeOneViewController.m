@@ -17,9 +17,6 @@
     NSArray *photoArr;
     CircleListObj *deleteObj;
 }
-@property (weak, nonatomic) IBOutlet UILabel *lineView;
-@property (weak, nonatomic) IBOutlet UILabel *lineView2;
-
 @property (weak, nonatomic) IBOutlet UILabel *lblFriendList;
 @property (weak, nonatomic) IBOutlet UIView *viewHeader;
 @property (nonatomic, strong)BRCommentView *popupView;
@@ -28,26 +25,20 @@
 @property (weak, nonatomic) IBOutlet UIButton *btnChat;
 @property (weak, nonatomic) IBOutlet UIButton *btnFriendsNum;
 @property (weak, nonatomic) IBOutlet UIButton *btnSendNum;
-@property (weak, nonatomic) IBOutlet UILabel *lblPosition;
-@property (weak, nonatomic) IBOutlet UILabel *lblCompany;
+@property (weak, nonatomic) IBOutlet UILabel *nameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *departmentLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *imageHeader;
 @property (weak, nonatomic) IBOutlet UIImageView *imageBack;
 @property (weak, nonatomic) IBOutlet UITableView *listTable;
-@property (weak, nonatomic) IBOutlet UILabel *comPanyName;  //公司名称
-@property (weak, nonatomic) IBOutlet UIImageView *VImageView;
+@property (weak, nonatomic) IBOutlet UILabel *companyLabel;  //公司名称
 
 @property (nonatomic, strong) NSString *titles;//职称
 @property (nonatomic, strong) NSString *rela;
-
 @property (nonatomic, strong) NSString *potname;
-
 @property (nonatomic, strong) NSString *num;
-
 @property (nonatomic, strong) NSString *nickname;
-
 @property (nonatomic, strong) NSString *company;
 @property (strong ,nonatomic) NSString *userStatus;
-
 @property (nonatomic, strong) NSString *fans;
 - (IBAction)actionFriendList:(id)sender;
 - (IBAction)actionChat:(id)sender;
@@ -74,15 +65,12 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    self.title = @"个人动态";
     self.imageHeader.userInteractionEnabled = YES;
     self.imageHeader.layer.masksToBounds = YES;
-    self.imageHeader.layer.cornerRadius = 33;
-    self.imageHeader.layer.borderWidth = 2;
-    self.imageHeader.layer.borderColor = [[UIColor whiteColor] CGColor];
-    self.imageHeader.layer.borderColor = [[UIColor whiteColor] CGColor];
-    [self.VImageView sizeToFit];
-    self.VImageView.hidden = YES;
+    self.imageHeader.layer.cornerRadius = CGRectGetHeight(self.imageHeader.frame) / 2.0f;
+    UIImage *image = [self.imageBack.image resizableImageWithCapInsets:UIEdgeInsetsZero resizingMode:UIImageResizingModeTile];
+    self.imageBack.image = image;
     
     DDTapGestureRecognizer *headGes = [[DDTapGestureRecognizer alloc] initWithTarget:self action:@selector(portraitTap:)];
     [self.imageHeader addGestureRecognizer:headGes];
@@ -113,8 +101,6 @@
     {
         self.btnChat.hidden = YES;
     }
-    self.lineView.backgroundColor = [UIColor getColor:@"dcdcdc"];
-    self.lineView2.backgroundColor = [UIColor getColor:@"dcdcdc"];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(smsShareSuccess:) name:NOTIFI_CHANGE_SHARE_TO_SMSSUCCESS object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(smsShareSuccess:) name:NOTIFI_CHANGE_SHARE_TO_FRIENDSUCCESS object:nil];
    
@@ -154,45 +140,34 @@
 -(void)loadUI
 {
     [self.imageHeader sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,self.potname]] placeholderImage:[UIImage imageNamed:@"默认头像"]];
-    self.lblCompany.text = self.titles;
-    self.comPanyName.text = self.company;
-    
+    self.departmentLabel.text = self.titles;
+    self.companyLabel.text = self.company;
+    self.nameLabel.text = self.nickname;
     [self.btnSendNum setTitle:self.num forState:UIControlStateNormal];
     [self.btnFriendsNum setTitle:self.fans forState:UIControlStateNormal];
     [self.btnFriendsNum setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.btnSendNum setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    NSLog(@"%@====%@",self.titles,self.fans);
-    
+
     if ([self.rela intValue] == 0){        //未关注
-        [_btnChat setImage:[UIImage imageNamed:@"加关注按钮"] forState:UIControlStateNormal];
-        _btnChat.enabled = YES;
+        [self.btnChat setImage:[UIImage imageNamed:@"加关注按钮"] forState:UIControlStateNormal];
+        self.btnChat.enabled = YES;
         
     } else if ([self.rela intValue] == 1){
         //已关注
-        [_btnChat setImage:[UIImage imageNamed:@"不能会话"] forState:UIControlStateNormal];
+        [self.btnChat setImage:[UIImage imageNamed:@"不能会话"] forState:UIControlStateNormal];
     } else{
         //互相关注
-        [_btnChat setImage:[UIImage imageNamed:@"会话"] forState:UIControlStateNormal];
-        _btnChat.enabled = YES;
+        [self.btnChat setImage:[UIImage imageNamed:@"会话"] forState:UIControlStateNormal];
+        self.btnChat.enabled = YES;
 
     }
-    
-    CGSize size = [self.company sizeForFont:_lblCompany.font constrainedToSize:CGSizeMake(146, 37) lineBreakMode:_lblCompany.lineBreakMode];
-    CGRect rect = _lblPosition.frame;
-    rect.origin.x = _lblCompany.left + size.width + 8;
-    _lblPosition.frame = rect;
-    //self.title = [NSString stringWithFormat:@"%@的圈子",self.userName];
-
 }
 -(void)parseDataWithDic:(NSDictionary *)dic
 {
     self.company = dic[@"company"];
     self.fans = dic[@"fans"];
-    
     self.nickname = dic[@"nickname"];
-    self.title = [NSString stringWithFormat:@"%@的动态",self.nickname];
     self.num = dic[@"num"];
-    
     self.potname = dic[@"potname"];
     self.rela = dic[@"rela"];
     self.titles = dic[@"title"];
@@ -201,9 +176,7 @@
     NSArray *list = dic[@"list"];
     if (IsArrEmpty(list)) {
         hasDataFinished = YES;
-    }
-    else
-    {
+    } else{
         hasDataFinished = NO;
     }
     for (NSDictionary *dics in list) {
@@ -263,33 +236,24 @@
 -(void)refreshHeader
 {
     NSLog(@"refreshHeader");
-    if (self.dataArr.count > 0)
-    {
+    if (self.dataArr.count > 0){
         CircleListObj *obj = self.dataArr[0];
         [self requestDataWithTarget:@"refresh" time:obj.rid];
-    }
-    else
-    {
+    } else{
         [self requestDataWithTarget:@"first" time:@""];
-
     }
 }
 
 -(void)refreshFooter
 {
-    
-    if (hasDataFinished)
-    {
+    if (hasDataFinished){
         [self.listTable.footer noticeNoMoreData];
-        
         return;
     }
     NSLog(@"refreshFooter");
-    if (self.dataArr.count > 0)
-    {
+    if (self.dataArr.count > 0){
         CircleListObj *obj = [self.dataArr lastObject];
         [self requestDataWithTarget:@"load" time:obj.rid];
-        
     }
     else
     {
@@ -305,9 +269,6 @@
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"确认删除吗" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"删除", nil];
     deleteObj = obj;
     [alert show];
-    
- 
-
 }
 
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
@@ -410,7 +371,6 @@
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 #pragma mark =============  UITableView DataSource  =============
 
@@ -519,15 +479,11 @@
 //处理tableView左边空白
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
     if ([cell respondsToSelector:@selector(setSeparatorInset:)]) {
-        
         [cell setSeparatorInset:UIEdgeInsetsZero];
-        
     }
     
     if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
-        
         [cell setLayoutMargins:UIEdgeInsetsZero];
-        
     }
 }
 #pragma mark cellDelegate
@@ -666,10 +622,6 @@
 - (void)shareClicked:(CircleListObj *)obj
 {
     id<ISSCAttachment> image  = [ShareSDK pngImageWithImage:[UIImage imageNamed:@"80"]];
-    
-    if (!IsArrEmpty(obj.photoArr)  ) {
-        //  image = [ShareSDK imageWithUrl:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,obj.photoArr[0]]];
-    }
     NSString *postContent;
     NSString *shareContent;
     
@@ -678,25 +630,15 @@
         postContent = SHARE_CONTENT;
         shareTitle = SHARE_TITLE;
         shareContent = SHARE_CONTENT;
-    }
-    else
-    {
+    } else{
         postContent = obj.detail;
         shareTitle = obj.detail;
         shareContent = obj.detail;
     }
-    
-    if (obj.detail.length > 15)
-    {
+    if (obj.detail.length > 15){
         postContent = [NSString stringWithFormat:@"%@…",[obj.detail substringToIndex:15]];
-    }
-    if (obj.detail.length > 15)
-    {
-        
         shareTitle = [obj.detail substringToIndex:15];
-        
         shareContent = [NSString stringWithFormat:@"%@…",[obj.detail substringToIndex:15]];
-        
     }
     NSString *content = [NSString stringWithFormat:@"%@\"%@\"%@%@",@"Hi，我在金融大牛圈上看到了一个非常棒的帖子,关于",postContent,@"，赶快下载大牛圈查看吧！",[NSString stringWithFormat:@"%@%@",rBaseAddressForHttpShare,obj.rid]];
     id<ISSShareActionSheetItem> item1 = [ShareSDK shareActionSheetItemWithTitle:@"大牛说" icon:[UIImage imageNamed:@"圈子图标"] clickHandler:^{
@@ -713,10 +655,9 @@
     id<ISSShareActionSheetItem> item4 = [ShareSDK shareActionSheetItemWithTitle:@"微信朋友圈" icon:[UIImage imageNamed:@"sns_icon_23"] clickHandler:^{
         [[AppDelegate currentAppdelegate]wechatShare:obj shareType:1];
     }];
-    id<ISSShareActionSheetItem> item5 = [ShareSDK shareActionSheetItemWithTitle:@"微信好友" icon:[UIImage imageNamed:@"sns_icon_22"]
-                                                                   clickHandler:^{
-                                                                       [[AppDelegate currentAppdelegate]wechatShare:obj shareType:0];
-                                                                   }];
+    id<ISSShareActionSheetItem> item5 = [ShareSDK shareActionSheetItemWithTitle:@"微信好友" icon:[UIImage imageNamed:@"sns_icon_22"] clickHandler:^{
+        [[AppDelegate currentAppdelegate]wechatShare:obj shareType:0];
+    }];
     NSArray *shareList = [ShareSDK customShareListWithType: item3, item5, item4, SHARE_TYPE_NUMBER(ShareTypeQQ), item1,item2,nil];
     
     NSString *shareUrl = [NSString stringWithFormat:@"%@%@",rBaseAddressForHttpShare,obj.rid];
@@ -731,14 +672,10 @@
     
     //弹出分享菜单
     [ShareSDK showShareActionSheet:container shareList:shareList content:publishContent statusBarTips:YES authOptions:nil shareOptions:nil result:^(ShareType type, SSResponseState state, id<ISSPlatformShareInfo> statusInfo, id<ICMErrorInfo> error, BOOL end) {
-        
-        if (state == SSResponseStateSuccess)
-        {
+        if (state == SSResponseStateSuccess){
             NSLog(NSLocalizedString(@"TEXT_ShARE_SUC", @"分享成功"));
             [self otherShareWithObj:obj];
-        }
-        else if (state == SSResponseStateFail)
-        {
+        } else if (state == SSResponseStateFail){
             NSLog(NSLocalizedString(@"TEXT_ShARE_FAI", @"分享失败,错误码:%d,错误描述:%@"), [error errorCode], [error errorDescription]);
             [Hud showMessageWithText:@"分享失败"];
         }
@@ -817,16 +754,12 @@
 
 - (void)attentionClicked:(CircleListObj *)obj
 {
-
     NSString *url = [NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"friends"];
-    NSDictionary *param = @{@"uid":[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID],
-                            @"oid":obj.userid};
+    NSDictionary *param = @{@"uid":[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID], @"oid":obj.userid};
     if (![obj.isattention isEqualToString:@"Y"]) {
         [MOCHTTPRequestOperationManager postWithURL:url class:nil parameters:param success:^(MOCHTTPResponse *response) {
-            
             NSString *code = [response.data valueForKey:@"code"];
-            if ([code isEqualToString:@"000"])
-            {
+            if ([code isEqualToString:@"000"]){
                 for (CircleListObj *cobj in self.dataArr) {
                     if ([cobj.userid isEqualToString:obj.userid]) {
                         cobj.isattention = @"Y";
@@ -841,29 +774,22 @@
                     [[NSUserDefaults standardUserDefaults] setValue:@"0" forKey:KEY_UPDATE_SQL];
                 }
                 [self loadUI];
-
+                
             }
             [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_COLLECT_COLLECT_CLIC object:obj];
-
-            
             [self.listTable reloadData];
         } failed:^(MOCHTTPResponse *response) {
             [Hud showMessageWithText:response.errorMessage];
         }];
-    }
-    else
-    {
-        [[AFHTTPRequestOperationManager manager] DELETE:url parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    } else{
+        [[AFHTTPRequestOperationManager manager] DELETE:url parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject){
             NSString *code = [responseObject valueForKey:@"code"];
-            if ([code isEqualToString:@"000"])
-            {
-                for (CircleListObj *cobj in self.dataArr)
-                {
+            if ([code isEqualToString:@"000"]){
+                for (CircleListObj *cobj in self.dataArr){
                     if ([cobj.userid isEqualToString:obj.userid]) {
                         cobj.isattention = @"N";
                     }
                 }
-                
                 self.rela = [NSString stringWithFormat:@"%d",[self.rela intValue] -1];
                 [self.delegate detailAttentionWithRid:obj.userid attention:obj.isattention];
                 [self loadUI];
@@ -877,10 +803,7 @@
                 
                 [Hud showMessageWithText:@"取消关注成功"];
             }
-            
             [self.listTable reloadData];
-         
-            
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             [Hud showMessageWithText:error.domain];
         }];
@@ -896,11 +819,10 @@
         
     }];
 }
-// [ap setCurrentPhotoIndex:ges.tag - 9999];
 
 
--(void)action{
-    
+-(void)action
+{
     NSString *url = [NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"friends"];
     NSDictionary *param = @{@"uid":[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID],@"oid":self.userId};
     [MOCHTTPRequestOperationManager postWithURL:url class:nil parameters:param success:^(MOCHTTPResponse *response) {
