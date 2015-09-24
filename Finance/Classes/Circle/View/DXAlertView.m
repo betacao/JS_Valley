@@ -9,21 +9,18 @@
 #import "DXAlertView.h"
 #import <QuartzCore/QuartzCore.h>
 
-
-#define kAlertWidth 221.0f * XFACTOR
-#define kAlertHeight 156.0f *YFACTOR
-
 @interface DXAlertView ()
 {
     BOOL _leftLeave;
 }
 
-@property (nonatomic, strong) UILabel *alertTitleLabel;
-@property (nonatomic, strong) UILabel *alertContentLabel;
-@property (nonatomic, strong) UILabel *lineLabel;
-@property (nonatomic, strong) UIButton *leftBtn;
-@property (nonatomic, strong) UIButton *rightBtn;
-@property (nonatomic, strong) UIView *backImageView;
+@property (strong, nonatomic) UILabel *alertTitleLabel;
+@property (strong, nonatomic) UILabel *alertContentLabel;
+@property (strong, nonatomic) UILabel *lineLabel;
+@property (strong, nonatomic) UIButton *leftBtn;
+@property (strong, nonatomic) UIButton *rightBtn;
+@property (strong, nonatomic) UIView *backImageView;
+@property (strong, nonatomic) UIView *customView;
 
 @end
 
@@ -54,9 +51,16 @@
 #define kContentOffset 30.0f
 #define kBetweenLabelOffset 20.0f
 
-- (id)initWithTitle:(NSString *)title contentText:(NSString *)content leftButtonTitle:(NSString *)leftTitle rightButtonTitle:(NSString *)rigthTitle
+#define kSingleButtonWidth 160.0f
+#define kCoupleButtonWidth 95.0f * XFACTOR
+#define kButtonHeight 32.0f * YFACTOR
+#define kButtonBottomOffset 14.0f * YFACTOR
+#define kButtomMargin 6.0f * XFACTOR
+#define kCustomViewButtomMargin 18.0f * YFACTOR
+
+- (instancetype)initWithTitle:(NSString *)title contentText:(NSString *)content leftButtonTitle:(NSString *)leftTitle rightButtonTitle:(NSString *)rigthTitle
 {
-    if (self = [super init]) {
+    if (self = [super init]){
         self.layer.cornerRadius = 8.0f;
         self.backgroundColor = [UIColor whiteColor];
         self.alertTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, kTitleYOffset, kAlertWidth, kTitleHeight)];
@@ -64,7 +68,7 @@
         self.alertTitleLabel.textColor = [UIColor colorWithRed:249.0f/255.0f green:92.0f/255.0f blue:83.0f/255.0f alpha:1.0f];
         [self addSubview:self.alertTitleLabel];
         
-        CGFloat contentLabelWidth = kAlertWidth - 16 * 2;
+        CGFloat contentLabelWidth = kAlertWidth - 19 * 2 * XFACTOR;
         
         self.lineLabel = [[UILabel alloc] initWithFrame:CGRectMake((kAlertWidth - contentLabelWidth) * 0.5, CGRectGetMaxY(self.alertTitleLabel.frame), contentLabelWidth, 1.0f)];
         self.lineLabel.backgroundColor = [UIColor colorWithRed:249.0f/255.0f green:92.0f/255.0f blue:83.0f/255.0f alpha:1.0f];
@@ -81,11 +85,7 @@
         
         CGRect leftBtnFrame = CGRectZero;
         CGRect rightBtnFrame = CGRectZero;
-#define kSingleButtonWidth 160.0f
-#define kCoupleButtonWidth 96.0f * XFACTOR
-#define kButtonHeight 32.0f * YFACTOR
-#define kButtonBottomOffset 14.0f * YFACTOR
-#define kButtomMargin 6.0f * XFACTOR
+
         if (!leftTitle) {
             rightBtnFrame = CGRectMake((kAlertWidth - kSingleButtonWidth) * 0.5, kAlertHeight - kButtonBottomOffset - kButtonHeight, kSingleButtonWidth, kButtonHeight);
             self.rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -128,13 +128,68 @@
         self.alertTitleLabel.text = title;
         self.alertContentLabel.text = content;
         
-        UIButton *xButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        [xButton setImage:[UIImage imageNamed:@"btn_close_normal.png"] forState:UIControlStateNormal];
-        [xButton setImage:[UIImage imageNamed:@"btn_close_selected.png"] forState:UIControlStateHighlighted];
-        xButton.frame = CGRectMake(kAlertWidth - 32, 0, 32, 32);
-        //        [self addSubview:xButton];
-        [xButton addTarget:self action:@selector(dismissAlert) forControlEvents:UIControlEventTouchUpInside];
-        
+        self.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin;
+    }
+    return self;
+}
+
+- (instancetype)initWithTitle:(NSString *)title customView:(UIView *)customView leftButtonTitle:(NSString *)leftTitle rightButtonTitle:(NSString *)rigthTitle
+{
+    self = [super init];
+    if(self){
+        self.layer.cornerRadius = 8.0f;
+        self.backgroundColor = [UIColor whiteColor];
+        self.alertTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, kTitleYOffset, kAlertWidth, kTitleHeight)];
+        self.alertTitleLabel.font = [UIFont systemFontOfSize:16.0f];
+        self.alertTitleLabel.textColor = [UIColor colorWithRed:249.0f/255.0f green:92.0f/255.0f blue:83.0f/255.0f alpha:1.0f];
+        self.alertTitleLabel.textAlignment = NSTextAlignmentCenter;
+        [self addSubview:self.alertTitleLabel];
+
+        CGFloat contentLabelWidth = kAlertWidth - 19 * 2 * XFACTOR;
+
+        self.lineLabel = [[UILabel alloc] initWithFrame:CGRectMake((kAlertWidth - contentLabelWidth) * 0.5, CGRectGetMaxY(self.alertTitleLabel.frame), contentLabelWidth, 1.0f)];
+        self.lineLabel.backgroundColor = [UIColor colorWithRed:249.0f/255.0f green:92.0f/255.0f blue:83.0f/255.0f alpha:1.0f];
+        [self addSubview:self.lineLabel];
+
+        CGRect frame = customView.frame;
+        frame.origin.y = CGRectGetMaxY(self.lineLabel.frame);
+        customView.frame = frame;
+        [self addSubview:customView];
+        self.customView = customView;
+
+        CGRect leftBtnFrame = CGRectZero;
+        CGRect rightBtnFrame = CGRectZero;
+        if (!leftTitle) {
+            rightBtnFrame = CGRectMake((kAlertWidth - kSingleButtonWidth) * 0.5, kAlertHeight - kButtonBottomOffset - kButtonHeight, kSingleButtonWidth, kButtonHeight);
+            self.rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+            self.rightBtn.frame = rightBtnFrame;
+
+        }else {
+            leftBtnFrame = CGRectMake((kAlertWidth - 2 * kCoupleButtonWidth - kButtomMargin) * 0.5, CGRectGetMaxY(customView.frame) + kCustomViewButtomMargin, kCoupleButtonWidth, kButtonHeight);
+            rightBtnFrame = CGRectMake(CGRectGetMaxX(leftBtnFrame) + kButtomMargin, CGRectGetMaxY(customView.frame) + kCustomViewButtomMargin, kCoupleButtonWidth, kButtonHeight);
+            self.leftBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+            self.rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+            self.leftBtn.frame = leftBtnFrame;
+            self.rightBtn.frame = rightBtnFrame;
+        }
+
+        [self.rightBtn setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithHexString:@"F85C53"]] forState:UIControlStateNormal];
+        [self.leftBtn setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithHexString:@"C5C5C5"]] forState:UIControlStateNormal];
+        [self.rightBtn setTitle:rigthTitle forState:UIControlStateNormal];
+        [self.leftBtn setTitle:leftTitle forState:UIControlStateNormal];
+        self.leftBtn.titleLabel.font = self.rightBtn.titleLabel.font = [UIFont boldSystemFontOfSize:14];
+        [self.leftBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [self.rightBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+
+        [self.leftBtn addTarget:self action:@selector(leftBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+        [self.rightBtn addTarget:self action:@selector(rightBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+        self.leftBtn.layer.masksToBounds = self.rightBtn.layer.masksToBounds = YES;
+        self.leftBtn.layer.cornerRadius = self.rightBtn.layer.cornerRadius = 3.0;
+        [self addSubview:self.leftBtn];
+        [self addSubview:self.rightBtn];
+
+        self.alertTitleLabel.text = title;
+
         self.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin;
     }
     return self;
@@ -161,7 +216,12 @@
 - (void)show
 {
     UIViewController *topVC = [self appRootViewController];
-    self.frame = CGRectMake((CGRectGetWidth(topVC.view.bounds) - kAlertWidth) * 0.5, - kAlertHeight - 30, kAlertWidth, kAlertHeight);
+    [topVC.view addSubview:self];
+}
+
+- (void)customShow
+{
+    UIViewController *topVC = [self appRootViewController];
     [topVC.view addSubview:self];
 }
 
@@ -205,8 +265,14 @@
         self.backImageView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
     }
     [topVC.view addSubview:self.backImageView];
-    CGRect afterFrame = CGRectMake((CGRectGetWidth(topVC.view.bounds) - kAlertWidth) * 0.5, (CGRectGetHeight(topVC.view.bounds) - kAlertHeight) * 0.5, kAlertWidth, kAlertHeight);
-    
+    CGRect afterFrame = CGRectZero;
+    if(self.customView){
+        CGFloat height = CGRectGetMaxY(self.leftBtn.frame) + kButtonBottomOffset;
+        afterFrame = CGRectMake((CGRectGetWidth(topVC.view.bounds) - kAlertWidth) * 0.5, (CGRectGetHeight(topVC.view.bounds) - height) * 0.5, kAlertWidth, height);
+    } else{
+        afterFrame = CGRectMake((CGRectGetWidth(topVC.view.bounds) - kAlertWidth) * 0.5, (CGRectGetHeight(topVC.view.bounds) - kAlertHeight) * 0.5, kAlertWidth, kAlertHeight);
+    }
+
     self.frame = afterFrame;
     
     [UIView animateKeyframesWithDuration:0.45f delay:0.0f options:UIViewKeyframeAnimationOptionCalculationModeCubic | UIViewAnimationOptionCurveLinear animations:^{

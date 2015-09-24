@@ -57,6 +57,14 @@
     return _homeArray;
 }
 
+- (NSArray *)tagsArray
+{
+    if(!_tagsArray){
+        _tagsArray = @[@"银行", @"证券", @"二级市场", @"三方", @"PV/PE", @"信托/资管", @"新三板", @"定增", @"项目融资", @"P2P", @"招聘培训"];
+    }
+    return _tagsArray;
+}
+
 - (void)requestHomePageData
 {
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];

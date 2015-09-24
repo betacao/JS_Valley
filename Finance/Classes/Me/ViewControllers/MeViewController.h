@@ -15,3 +15,7 @@
 @property (nonatomic ,strong)    UILabel *titleLabel;
 
 @end
+
+@interface SHGTagsView : UIView
+
+@end

@@ -17,6 +17,13 @@
 #import "SettingsViewController.h"
 #import "SHGModifyInfoViewController.h"
 
+//为标签弹出框定义的值
+#define kItemTopMargin  19.0f * YFACTOR
+#define kItemLeftMargin 19.0f * YFACTOR
+#define kItemMargin 11.0f * YFACTOR
+#define kItemBottomMargin  18.0f * YFACTOR
+#define kItemHeight 22.0f * YFACTOR
+
 @interface MeViewController ()<UITextFieldDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UIActionSheetDelegate,UITableViewDataSource,UITableViewDelegate,ModifyInfoDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView	*tableView;
@@ -32,8 +39,6 @@
 @property (weak, nonatomic) IBOutlet UIButton *tagButton;
 @property (weak, nonatomic) IBOutlet UIButton *invateButton;
 
-
-
 @property (strong, nonatomic) SettingsViewController *vc;
 @property (strong, nonatomic) UILabel	*circleHeaderLabel;  //动态lable
 @property (strong, nonatomic) UILabel	*followHeaderLabel;  //关注label
@@ -41,10 +46,11 @@
 @property (strong, nonatomic) NSString *nickName;
 @property (strong, nonatomic) NSString *department;
 @property (strong, nonatomic) NSString *company;
+@property (strong, nonatomic) UIView *tagsView;
 
 @property (strong, nonatomic) UIBarButtonItem *rightBarButtonItem;
-@property (assign, nonatomic) BOOL shouldRefresh;
 @property (strong ,nonatomic) SHGModifyInfoViewController *modifyInfoController;
+@property (assign, nonatomic) BOOL shouldRefresh;
 
 - (IBAction)actionInvite:(id)sender;
 - (IBAction)actionAuth:(id)sender;
@@ -128,6 +134,15 @@
         _modifyInfoController.delegate = self;
     }
     return _modifyInfoController;
+}
+
+- (UIView *)tagsView
+{
+    if(!_tagsView){
+        //宽度设置和弹出框的线一样宽
+        _tagsView = [[SHGTagsView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, kAlertWidth - 38.0f * XFACTOR, 0.0f)];
+    }
+    return _tagsView;
 }
 
 -(void)refreshData
@@ -219,9 +234,9 @@
     self.btnUserPic.contentMode = UIViewContentModeScaleAspectFit;
     [self.btnUserPic sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,headImage]] placeholderImage:[UIImage imageNamed:@"default_head"]];
 
-    self.circleHeaderLabel.text = @"动态 0";
-    self.followHeaderLabel.text = @"关注 0";
-    self.fansHeaderLabel.text	= @"粉丝 0";
+    self.circleHeaderLabel.text = @"\n动态 0";
+    self.followHeaderLabel.text = @"\n关注 0";
+    self.fansHeaderLabel.text	= @"\n粉丝 0";
     UIView *spaceView1 = [[UIView alloc] initWithFrame:CGRectMake(SCREENWIDTH/3,15, 1.0f, 30)];
     UIView *spaceView2 = [[UIView alloc] initWithFrame:CGRectMake(SCREENWIDTH/3*2,15, 1.0f, 30)];
     spaceView1.backgroundColor = [UIColor colorWithHexString:@"f5f5f5"];
@@ -422,7 +437,8 @@
 
 - (IBAction)changeTags:(id)sender
 {
-    
+    DXAlertView *alert = [[DXAlertView alloc] initWithTitle:@"选择喜欢的方向" customView:self.tagsView leftButtonTitle:@"取消" rightButtonTitle:@"确定"];
+    [alert customShow];
 }
 #pragma mark -邀请好友
 
@@ -678,6 +694,77 @@
     }];
 }
 
+@end
 
+
+#pragma mark ------tagsView
+
+@interface SHGTagsView ()
+
+@property (strong, nonatomic) NSMutableArray *selectedArray;
+
+@end
+
+
+
+@implementation SHGTagsView
+
+- (instancetype)initWithFrame:(CGRect)frame
+{
+    self = [super initWithFrame:frame];
+    if(self){
+        [self initUI];
+        self.selectedArray = [NSMutableArray array];
+    }
+    return self;
+}
+
+- (void)initUI
+{
+    NSArray *tagsArray = [SHGGloble sharedGloble].tagsArray;
+    CGFloat width = (CGRectGetWidth(self.frame) - 2 * kItemMargin) / 3.0f;
+    for(NSString *string in tagsArray){
+        NSInteger index = [tagsArray indexOfObject:string];
+        NSInteger row = index / 3;
+        NSInteger col = index % 3;
+
+        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+        button.layer.borderWidth = 0.5f;
+        button.layer.borderColor = [UIColor colorWithHexString:@"D6D6D6"].CGColor;
+        button.titleLabel.font = [UIFont systemFontOfSize:11.0f];
+
+        [button setTitle:string forState:UIControlStateNormal];
+        [button setTitleColor:[UIColor colorWithHexString:@"D2D1D1"] forState:UIControlStateNormal];
+        [button setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
+        [button setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
+
+        [button setBackgroundImage:[UIImage imageWithColor:[UIColor whiteColor]] forState:UIControlStateNormal];
+        [button setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithHexString:@"f04240"]] forState:UIControlStateHighlighted];
+        [button setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithHexString:@"f04240"]] forState:UIControlStateSelected];
+        [button addTarget:self action:@selector(didSelectCategory:) forControlEvents:UIControlEventTouchUpInside];
+        CGRect frame = CGRectMake(kItemLeftMargin + (kItemMargin + width) * col, kItemTopMargin + (kItemMargin + kItemHeight) * row, width, kItemHeight);
+        button.frame = frame;
+        [self addSubview:button];
+        frame = self.frame;
+        frame.size.height = CGRectGetMaxY(button.frame);
+        self.frame = frame;
+    }
+}
+
+- (void)didSelectCategory:(UIButton *)button
+{
+    BOOL isSelecetd = button.selected;
+    if(!isSelecetd){
+        if(self.selectedArray.count >= 3){
+            [Hud showMessageWithText:@"最多选3项"];
+        } else{
+            button.selected = !isSelecetd;
+            [self.selectedArray addObject:button];
+        }
+    } else{
+        button.selected = !isSelecetd;
+        [self.selectedArray removeObject:button];
+    }
+}
 
 @end

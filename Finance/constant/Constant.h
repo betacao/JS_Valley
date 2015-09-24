@@ -37,8 +37,8 @@
 //屏幕尺寸
 #define SCREENWIDTH [[UIScreen mainScreen] bounds].size.width
 #define SCREENHEIGHT [[UIScreen mainScreen] bounds].size.height
-#define XFACTOR SCREENWIDTH/320.0f
-#define YFACTOR SCREENHEIGHT/568.0f
+#define XFACTOR SCREENWIDTH / 320.0f
+#define YFACTOR SCREENHEIGHT / 568.0f
 
 //计算颜色
 #define RGB(r,g,b) [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:1.0]

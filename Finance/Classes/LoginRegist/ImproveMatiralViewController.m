@@ -12,9 +12,9 @@
 #import <AddressBook/AddressBook.h>
 #import "CCLocationManager.h"
 
-const CGFloat kPersonCategoryLeftMargin = 13.0f;
-const CGFloat kPersonCategoryTopMargin = 10.0f;
-const CGFloat kPersonCategoryMargin = 7.0f;
+#define kPersonCategoryLeftMargin 13.0f * XFACTOR
+#define kPersonCategoryTopMargin 10.0f * YFACTOR
+#define kPersonCategoryMargin 7.0f *XFACTOR
 #define kPersonCategoryHeight 22.0f * YFACTOR
 
 @interface ImproveMatiralViewController ()<UIScrollViewDelegate,SHGGlobleDelegate>
@@ -63,7 +63,16 @@ const CGFloat kPersonCategoryMargin = 7.0f;
     self.headImageButton.layer.cornerRadius = CGRectGetHeight(self.headImageButton.frame) / 2.0f;
     [self initTextFieldStyle:@[self.nameTextField, self.companyTextField, self.titleTextField]];
 
-    [self.personCategoryView updateViewWithArray:@[@"银行", @"证券", @"二级市场", @"三方", @"PV/PE", @"信托/资管", @"新三板", @"定增", @"项目融资", @"P2P", @"招聘培训"]];
+    [self.personCategoryView updateViewWithArray:[SHGGloble sharedGloble].tagsArray finishBlock:^{
+        CGPoint point = CGPointMake(0.0f, CGRectGetMaxY(self.personCategoryView.frame) + 2 * kPersonCategoryTopMargin);
+        point = [self.view convertPoint:point fromView:self.personCategoryView.superview];
+        CGRect frame = self.nextButton.frame;
+        frame.origin.y = point.y;
+        self.nextButton.frame = frame;
+
+        self.bgScrollView.contentSize = CGSizeMake(SCREENWIDTH, CGRectGetMaxY(self.nextButton.frame) + 2 * kPersonCategoryTopMargin);
+
+    }];
 
     [self getAddress];
     [[CCLocationManager shareLocation] getCity:^(NSString *addressString) {
@@ -79,18 +88,10 @@ const CGFloat kPersonCategoryMargin = 7.0f;
     }
 }
 
-- (void)viewDidAppear:(BOOL)animated
+- (void)viewWillAppear:(BOOL)animated
 {
-    [super viewDidAppear:animated];
+    [super viewWillAppear:animated];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardDidShowNotification object:nil];
-
-    CGPoint point = CGPointMake(0.0f, CGRectGetMaxY(self.personCategoryView.frame) + 2 * kPersonCategoryTopMargin);
-    point = [self.view convertPoint:point fromView:self.personCategoryView.superview];
-    CGRect frame = self.nextButton.frame;
-    frame.origin.y = point.y;
-    self.nextButton.frame = frame;
-
-    self.bgScrollView.contentSize = CGSizeMake(SCREENWIDTH, CGRectGetMaxY(self.nextButton.frame) + 2 * kPersonCategoryTopMargin);
 }
 
 - (void)viewDidDisappear:(BOOL)animated
@@ -353,25 +354,20 @@ const CGFloat kPersonCategoryMargin = 7.0f;
     NSInteger num = phones.count/100+1;
     for (int i = 1; i <= num; i ++ ) {
         NSMutableArray *arr = [NSMutableArray array];
-        
+
         NSInteger count = 0;
         if (phones.count > i * 100) {
             count =  i *100;
         }
-        else
-        {
+        else{
             count = (i-1) *100 +phones.count % 100;
         }
-        
-        for (int j = (i -1)*100; j < count; j ++)
-        {
-            
+
+        for (int j = (i -1)*100; j < count; j ++){
             [arr addObject:phones[j]];
         }
         if (!IsArrEmpty(arr)) {
-           
-        [self uploadPhone:arr];
-            
+            [self uploadPhone:arr];
         }
     }
 }
@@ -387,10 +383,6 @@ const CGFloat kPersonCategoryMargin = 7.0f;
     NSDictionary *parm = @{@"phones":str,
                            @"uid":[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID]};
     [MOCHTTPRequestOperationManager postWithURL:url class:nil parameters:parm success:^(MOCHTTPResponse *response) {
-        NSString *code = [response.data valueForKey:@"code"];
-        if ([code isEqualToString:@"000"])
-        {
-        }
         
     } failed:^(MOCHTTPResponse *response) {
         
@@ -409,7 +401,6 @@ const CGFloat kPersonCategoryMargin = 7.0f;
             if (!error) {
                 error = [[EaseMob sharedInstance].chatManager loadDataFromDatabase];
             }
-
             [[ApplyViewController shareController] loadDataSourceFromLocalDB];
 
         }else {
@@ -505,6 +496,8 @@ const CGFloat kPersonCategoryMargin = 7.0f;
 
 @property (strong, nonatomic) NSArray *dataArray;
 @property (strong, nonatomic) NSMutableArray *selectedArray;
+@property (copy, nonatomic) SHGPersonCategoryViewLoadFinish finishBlock;
+
 
 @end
 
@@ -526,9 +519,10 @@ const CGFloat kPersonCategoryMargin = 7.0f;
     self.selectedArray = [NSMutableArray array];
 }
 
-- (void)updateViewWithArray:(NSArray *)dataArray
+- (void)updateViewWithArray:(NSArray *)dataArray finishBlock:(SHGPersonCategoryViewLoadFinish)block
 {
     self.dataArray = dataArray;
+    self.finishBlock = block;
 }
 
 - (void)layoutSubviews
@@ -574,6 +568,9 @@ const CGFloat kPersonCategoryMargin = 7.0f;
     frame.size.height = CGRectGetMaxY(label.frame) + kPersonCategoryTopMargin;
     self.frame = frame;
     [self addSubview:label];
+    if(self.finishBlock){
+        self.finishBlock();
+    }
 }
 
 - (void)didSelectCategory:(UIButton *)button

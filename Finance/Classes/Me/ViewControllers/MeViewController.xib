@@ -144,6 +144,9 @@
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                     <state key="normal" title="标签"/>
+                    <connections>
+                        <action selector="changeTags:" destination="-1" eventType="touchUpInside" id="LsR-Ug-WgE"/>
+                    </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="qfu-Lh-4zU">
                     <rect key="frame" x="259" y="128" width="42" height="42"/>

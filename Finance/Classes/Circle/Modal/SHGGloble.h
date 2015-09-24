@@ -43,6 +43,13 @@ typedef void (^SHHomeDataCompletionBlock)(NSArray *dataArray);
 @property (strong, nonatomic) NSString *cityName;
 
 /**
+ @brief  个人标签数据(供选择)
+
+ @since 1.5.0
+ */
+@property (strong, nonatomic) NSArray *tagsArray;
+
+/**
  @brief  首页请求完成的回掉
  
  @since 1.4.1
