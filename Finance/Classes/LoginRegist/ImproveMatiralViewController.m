@@ -11,14 +11,14 @@
 #import "ApplyViewController.h"
 #import <AddressBook/AddressBook.h>
 #import "CCLocationManager.h"
-#import "SHGAreaViewController.h"
+#import "SHGProvincesViewController.h"
 
 #define kPersonCategoryLeftMargin 13.0f * XFACTOR
 #define kPersonCategoryTopMargin 10.0f * YFACTOR
 #define kPersonCategoryMargin 7.0f *XFACTOR
 #define kPersonCategoryHeight 22.0f * YFACTOR
 
-@interface ImproveMatiralViewController ()<UIScrollViewDelegate,SHGGlobleDelegate>
+@interface ImproveMatiralViewController ()<UIScrollViewDelegate,SHGGlobleDelegate,SHGAreaDelegate>
 {
     BOOL hasUploadHead;
 }
@@ -31,6 +31,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *nextButton;
 @property (weak, nonatomic) IBOutlet UILabel *locationLabel;
 @property (weak, nonatomic) IBOutlet UIButton *manualButton;
+
 @property (strong, nonatomic) UIImage *headImage;
 @property (strong, nonatomic) NSString *headImageName;
 @property (strong, nonatomic) NSMutableArray *phones;
@@ -64,18 +65,10 @@
     self.headImageButton.layer.cornerRadius = CGRectGetHeight(self.headImageButton.frame) / 2.0f;
     [self initTextFieldStyle:@[self.nameTextField, self.companyTextField, self.titleTextField]];
 
-    __weak typeof(self) weakSelf = self;
-    [self.personCategoryView updateViewWithArray:[SHGGloble sharedGloble].tagsArray finishBlock:^{
-        CGPoint point = CGPointMake(0.0f, CGRectGetMaxY(weakSelf.personCategoryView.frame) + 2 * kPersonCategoryTopMargin);
-        point = [weakSelf.view convertPoint:point fromView:weakSelf.personCategoryView.superview];
-        CGRect frame = weakSelf.nextButton.frame;
-        frame.origin.y = point.y;
-        weakSelf.nextButton.frame = frame;
-        weakSelf.bgScrollView.contentSize = CGSizeMake(SCREENWIDTH, CGRectGetMaxY(self.nextButton.frame) + 2 * kPersonCategoryTopMargin);
-
-    }];
+    self.personCategoryView.superview.hidden = YES;
 
     [self getAddress];
+    [self downloadUserSelectedInfo];
     [[CCLocationManager shareLocation] getCity:^(NSString *addressString) {
 
     }];
@@ -255,8 +248,9 @@
 
 - (IBAction)manualSelectCity:(id)sender
 {
-    SHGAreaViewController *controller = [[SHGAreaViewController alloc] initWithNibName:@"SHGAreaViewController" bundle:nil];
+    SHGProvincesViewController *controller = [[SHGProvincesViewController alloc] initWithNibName:@"SHGProvincesViewController" bundle:nil];
     if(controller){
+        controller.delegate = self;
         [self.navigationController pushViewController:controller animated:YES];
     }
 }
@@ -353,12 +347,39 @@
     }];
 }
 
--(void)uploadPhones
+- (void)downloadUserSelectedInfo
+{
+    __weak typeof(self) weakSelf = self;
+    [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/v1/user/tag/baseUserTag",rBaseAddRessHttp] parameters:nil success:^(MOCHTTPResponse *response) {
+        [weakSelf.personCategoryView updateViewWithArray:[SHGGloble sharedGloble].tagsArray finishBlock:^{
+            CGPoint point = CGPointMake(0.0f, CGRectGetMaxY(weakSelf.personCategoryView.frame) + 2 * kPersonCategoryTopMargin);
+            point = [weakSelf.view convertPoint:point fromView:weakSelf.personCategoryView.superview];
+            CGRect frame = weakSelf.nextButton.frame;
+            frame.origin.y = point.y;
+            weakSelf.nextButton.frame = frame;
+            weakSelf.bgScrollView.contentSize = CGSizeMake(SCREENWIDTH, CGRectGetMaxY(self.nextButton.frame) + 2 * kPersonCategoryTopMargin);
+            weakSelf.personCategoryView.superview.hidden = NO;
+        }];
+    } failed:^(MOCHTTPResponse *response) {
+
+    }];
+}
+
+- (void)uploadUserSelectedInfo
+{
+//    [MOCHTTPRequestOperationManager postWithURL:[NSString stringWithFormat:@"%@%@",rBaseAddRessHttp,] parameters:nil success:^(MOCHTTPResponse *response) {
+//
+//    } failed:^(MOCHTTPResponse *response) {
+//        
+//    }];
+}
+
+- (void)uploadPhones
 {
     [self uploadPhonesWithPhone:self.phones];
 }
 
--(void)uploadPhonesWithPhone:(NSMutableArray *)phones
+- (void)uploadPhonesWithPhone:(NSMutableArray *)phones
 {
     NSInteger num = phones.count/100+1;
     for (int i = 1; i <= num; i ++ ) {
@@ -382,7 +403,7 @@
 }
 
 
--(void)uploadPhone:(NSMutableArray *)arr
+- (void)uploadPhone:(NSMutableArray *)arr
 {
     NSString *str = arr[0];
     for (int i = 1 ; i < arr.count; i ++) {
@@ -493,6 +514,11 @@
     }
 }
 
+- (void)didSelectCity:(NSString *)city
+{
+    [self userlocationDidShow:city];
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -595,6 +621,11 @@
         button.selected = !isSelecetd;
         [self.selectedArray removeObject:button];
     }
+}
+
+- (NSArray *)userSelectedTags
+{
+    return self.selectedArray;
 }
 
 

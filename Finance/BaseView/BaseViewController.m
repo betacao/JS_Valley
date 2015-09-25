@@ -60,17 +60,13 @@
     UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [leftButton setFrame:CGRectMake(0, 0, 24, 24)];
     NSString *imageName ;
-    if (IsStrEmpty(self.leftItemtitleName))
-    {
-        if (!IsStrEmpty(self.leftItemImageName))
-        {
+    if (IsStrEmpty(self.leftItemtitleName)){
+        if (!IsStrEmpty(self.leftItemImageName)){
             imageName = self.leftItemImageName;
-        }
-        else
-        {
+        } else{
             imageName = @"返回";
         }
-            [leftButton setBackgroundImage:[UIImage imageNamed:imageName] forState:UIControlStateNormal];
+        [leftButton setBackgroundImage:[UIImage imageNamed:imageName] forState:UIControlStateNormal];
     }
     else
     {
@@ -78,7 +74,7 @@
         [leftButton setTitleColor:RGB(255, 0, 40) forState:UIControlStateNormal];
         [leftButton.titleLabel setFont:[UIFont fontWithName:@"Palatino" size:14]];
     }
-    
+
     [leftButton addTarget:self action:@selector(btnBackClick:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:leftButton];
     self.navigationItem.leftBarButtonItem = leftItem;

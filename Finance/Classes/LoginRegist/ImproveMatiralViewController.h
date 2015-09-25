@@ -16,5 +16,5 @@ typedef void (^SHGPersonCategoryViewLoadFinish)();
 @interface SHGPersonCategoryView : UIView
 
 - (void)updateViewWithArray:(NSArray *)dataArray finishBlock:(SHGPersonCategoryViewLoadFinish)block;
-
+- (NSArray *)userSelectedTags;
 @end
