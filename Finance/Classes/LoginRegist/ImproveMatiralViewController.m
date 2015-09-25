@@ -11,6 +11,7 @@
 #import "ApplyViewController.h"
 #import <AddressBook/AddressBook.h>
 #import "CCLocationManager.h"
+#import "SHGAreaViewController.h"
 
 #define kPersonCategoryLeftMargin 13.0f * XFACTOR
 #define kPersonCategoryTopMargin 10.0f * YFACTOR
@@ -252,6 +253,14 @@
     }
 }
 
+- (IBAction)manualSelectCity:(id)sender
+{
+    SHGAreaViewController *controller = [[SHGAreaViewController alloc] initWithNibName:@"SHGAreaViewController" bundle:nil];
+    if(controller){
+        [self.navigationController pushViewController:controller animated:YES];
+    }
+}
+
 - (void)uploadHeadImage:(UIImage *)image
 {
 	[Hud showLoadingWithMessage:@"正在上传图片..."];
@@ -380,8 +389,7 @@
         str = [NSString stringWithFormat:@"%@,%@",str,arr[i]];
     }
     NSString *url = [NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"friend/contact"];
-    NSDictionary *parm = @{@"phones":str,
-                           @"uid":[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID]};
+    NSDictionary *parm = @{@"phones":str, @"uid":[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID]};
     [MOCHTTPRequestOperationManager postWithURL:url class:nil parameters:parm success:^(MOCHTTPResponse *response) {
         
     } failed:^(MOCHTTPResponse *response) {

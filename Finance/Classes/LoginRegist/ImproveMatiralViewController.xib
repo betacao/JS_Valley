@@ -125,6 +125,9 @@
                                     <state key="normal" title="手动选择">
                                         <color key="titleColor" red="0.29411764705882354" green="0.53333333333333333" blue="0.71764705882352942" alpha="1" colorSpace="calibratedRGB"/>
                                     </state>
+                                    <connections>
+                                        <action selector="manualSelectCity:" destination="-1" eventType="touchUpInside" id="i5b-Ze-d64"/>
+                                    </connections>
                                 </button>
                             </subviews>
                             <color key="backgroundColor" red="0.93333333330000001" green="0.93333333330000001" blue="0.93333333330000001" alpha="1" colorSpace="calibratedRGB"/>
