@@ -43,11 +43,9 @@
 
 - (void)setCityName:(NSString *)cityName
 {
-    if(_cityName != cityName){
-        _cityName = cityName;
-        if(self.delegate && [self.delegate respondsToSelector:@selector(userlocationDidShow:)]){
-            [self.delegate userlocationDidShow:cityName];
-        }
+    _cityName = cityName;
+    if(self.delegate && [self.delegate respondsToSelector:@selector(userlocationDidShow:)]){
+        [self.delegate userlocationDidShow:cityName];
     }
 }
 
@@ -140,7 +138,7 @@
 {
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
     __weak typeof(self) weakSelf = self;
-    [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/v1/user/tag/getUserTagAndBase",rBaseAddRessHttp] class:[SHGUserTagModel class] parameters:@{@"uid":uid} success:^(MOCHTTPResponse *response) {
+    [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/v1/user/tag/getUserSelectedTags",rBaseAddRessHttp] class:[SHGUserTagModel class] parameters:@{@"uid":uid} success:^(MOCHTTPResponse *response) {
         [weakSelf.selectedTagsArray removeAllObjects];
         [weakSelf.selectedTagsArray addObjectsFromArray:response.dataArray];
         block();
@@ -152,8 +150,9 @@
 - (void)uploadUserSelectedInfo:(NSArray *)array completion:(void(^)(BOOL finished))block
 {
     NSString *string = @"";
-    for(NSInteger i = 0;i < array.count;i++){
-        SHGUserTagModel *model = [[SHGGloble sharedGloble].tagsArray objectAtIndex:i];
+    for(NSNumber *number in array){
+        NSInteger index = [number integerValue];
+        SHGUserTagModel *model = [[SHGGloble sharedGloble].tagsArray objectAtIndex:index];
         string = [string stringByAppendingFormat:@",%@",model.tagId];
     }
     if([string rangeOfString:@","].location != NSNotFound){

@@ -30,6 +30,7 @@
 
 @implementation GameViewController
 @synthesize delegate = _delegate;
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = self.titleName;

@@ -535,12 +535,43 @@
 //异步获取地理位置信息
 - (void)userlocationDidShow:(NSString *)cityName
 {
-    NSMutableString *string = [NSMutableString stringWithString:@"地点：大牛圈猜你在，没猜对？"];
-    NSRange range = [string rangeOfString:@"，"];
+    [self.activityView removeFromSuperview];
+    if(cityName.length == 0){
+        self.locationLabel.text = @"未定位到您的位置  ";
+    } else{
+        NSMutableString *string = [NSMutableString stringWithString:@"地点：大牛圈猜你在，没猜对？"];
+        NSRange range = [string rangeOfString:@"，"];
+        if(range.location != NSNotFound){
+            [string insertString:cityName atIndex:range.location];
+            range = [string rangeOfString:cityName];
+            NSMutableAttributedString *aString = [[NSMutableAttributedString alloc] initWithString:string];
+            [aString setAttributes:[NSDictionary dictionaryWithObject:[UIColor colorWithHexString:@"f04241"] forKey:NSForegroundColorAttributeName] range:range];
+            //替换显示的字符串，随后要更改“手动选择”的button位置
+            [self.locationLabel setAttributedText:aString];
+        }
+    }
+
+    CGSize size = [self.locationLabel sizeThatFits:CGSizeMake(MAXFLOAT, CGRectGetHeight(self.locationLabel.frame))];
+
+    CGRect frame = self.locationLabel.frame;
+    frame.size.width = size.width;
+    self.locationLabel.frame = frame;
+
+    self.manualButton.center = self.locationLabel.center;
+    frame = self.manualButton.frame;
+    frame.origin.x = CGRectGetMaxX(self.locationLabel.frame);
+    self.manualButton.frame = frame;
+}
+
+- (void)didSelectCity:(NSString *)city
+{
+    city = [city stringByAppendingString:@"  "];
+    NSMutableString *string = [NSMutableString stringWithString:@"地点："];
+    NSRange range = [string rangeOfString:@"："];
     if(range.location != NSNotFound){
         [self.activityView removeFromSuperview];
-        [string insertString:cityName atIndex:range.location];
-        range = [string rangeOfString:cityName];
+        [string insertString:city atIndex:range.location + 1];
+        range = [string rangeOfString:city];
         NSMutableAttributedString *aString = [[NSMutableAttributedString alloc] initWithString:string];
         [aString setAttributes:[NSDictionary dictionaryWithObject:[UIColor colorWithHexString:@"f04241"] forKey:NSForegroundColorAttributeName] range:range];
         //替换显示的字符串，随后要更改“手动选择”的button位置
@@ -556,11 +587,6 @@
         frame.origin.x = CGRectGetMaxX(self.locationLabel.frame);
         self.manualButton.frame = frame;
     }
-}
-
-- (void)didSelectCity:(NSString *)city
-{
-    [self userlocationDidShow:city];
 }
 
 - (void)didReceiveMemoryWarning {

@@ -148,10 +148,22 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    SHGCitysViewController *controller = [[SHGCitysViewController alloc] initWithStyle:UITableViewStylePlain];
-    controller.citys = [[self.provinces objectAtIndex:indexPath.row] objectForKey:@"cities"];
-    controller.delegate = self.delegate;
-    [self.navigationController pushViewController:controller animated:YES];
+    if(indexPath.section == 0){
+        NSString *cityName = [SHGGloble sharedGloble].cityName;
+        if(cityName && cityName.length > 0){
+            if(self.delegate && [self.delegate respondsToSelector:@selector(didSelectCity:)]){
+                [self.delegate didSelectCity:cityName];
+                [self.navigationController popViewControllerAnimated:YES];
+            }
+        } else{
+            [Hud showMessageWithText:@"正在定位，请稍后..."];
+        }
+    } else{
+        SHGCitysViewController *controller = [[SHGCitysViewController alloc] initWithStyle:UITableViewStylePlain];
+        controller.citys = [[self.provinces objectAtIndex:indexPath.row] objectForKey:@"cities"];
+        controller.delegate = self.delegate;
+        [self.navigationController pushViewController:controller animated:YES];
+    }
 }
 
 @end
@@ -251,7 +263,11 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if(self.delegate && [self.delegate respondsToSelector:@selector(didSelectCity:)]){
         [self.delegate didSelectCity:[self.citys objectAtIndex:indexPath.row]];
-        [self.navigationController popToRootViewControllerAnimated:YES];
+        NSInteger index = [[self.navigationController viewControllers] indexOfObject:self];
+        UIViewController *controller = [[self.navigationController viewControllers] objectAtIndex:index - 2];
+        if(controller){
+            [self.navigationController popToViewController:controller animated:YES];
+        }
     }
 }
 
