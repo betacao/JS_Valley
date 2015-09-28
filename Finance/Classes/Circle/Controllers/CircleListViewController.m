@@ -278,7 +278,7 @@ const CGFloat kAdButtomMargin = 20.0f;
     {
         NSString *rid = obj;
         for (CircleListObj *objs in self.dataArr) {
-            if ([objs.rid isEqualToString:rid]) {
+            if ([objs isKindOfClass:[CircleListObj class]] && [objs.rid isEqualToString:rid]) {
                 [self otherShareWithObj:objs];
             }
         }

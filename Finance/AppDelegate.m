@@ -522,49 +522,15 @@
 }
 
 
-- (BOOL)application:(UIApplication *)application
-      handleOpenURL:(NSURL *)url
+- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
 {
-//    if ( [url.scheme hasPrefix:@"QQ"] )
-//    {
-//        return [ShareSDK handleOpenURL:url
-//                            wxDelegate:self];
-//    }
-//    if ([url.scheme hasPrefix:@"wb"]) {
-//        return [WeiboSDK handleOpenURL:url delegate:self ];
-//        
-//    }
-//    
-//    if ([url.scheme hasPrefix:@"wx"]) {
-//        [WXApi handleOpenURL:url delegate:self];
-//    }
-    return [ShareSDK handleOpenURL:url
-                        wxDelegate:self];
+    return [ShareSDK handleOpenURL:url wxDelegate:self];
     return YES;
 }
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
 {
-//    if ( [url.scheme hasPrefix:@"QQ"] )
-//    {
-//        return [ShareSDK handleOpenURL:url
-//                     sourceApplication:sourceApplication
-//                            annotation:annotation
-//                            wxDelegate:self];
-//    }
-//    if ([url.scheme hasPrefix:@"wb"])
-//    {
-//        return [WeiboSDK handleOpenURL:url delegate:self ];
-//    }
-//    
-//    if ([url.scheme hasPrefix:@"wx"]) {
-//        [WXApi handleOpenURL:url delegate:self];
-//    }
-    return [ShareSDK handleOpenURL:url
-                 sourceApplication:sourceApplication
-                        annotation:annotation
-                        wxDelegate:self];
-//    return YES;
+    return [ShareSDK handleOpenURL:url sourceApplication:sourceApplication annotation:annotation wxDelegate:self]|[WXApi handleOpenURL:url delegate:self];
 }
 
 #pragma mark - share
@@ -731,7 +697,7 @@
     
     // [UIView setAnimationTransition:UIViewAnimationCurveEaseOut forView:self.view.window cache:NO];
     
-    [UIView setAnimationTransition:UIViewAnimationCurveEaseOut forView:self.window cache:NO];
+    [UIView setAnimationTransition:UIViewAnimationTransitionCurlUp forView:self.window cache:NO];
     
     [UIView setAnimationDidStopSelector:@selector(animationFinished:finished:context:)];
     
@@ -892,43 +858,30 @@
 
 -(void)wechatShare:(CircleListObj *)obj shareType:(NSInteger)scene
 {
-    
-    if([WXApi isWXAppInstalled ])
-    {
-        if ([WXApi isWXAppSupportApi])
-        {
+    if([WXApi isWXAppInstalled ]){
+        if ([WXApi isWXAppSupportApi]){
             WXMediaMessage *message = [WXMediaMessage message];
-            
             NSString *detail = obj.detail;
             if (obj.detail.length > 0) {
-                if (obj.detail.length > 15)
-                {
+                if (obj.detail.length > 15){
                     detail = [NSString stringWithFormat:@"%@…",[obj.detail substringToIndex:15]];
                 }
-            }
-            else
-            {
+            } else{
                 detail = @"大牛圈";
             }
-            
+
             message.messageExt = [NSString stringWithFormat:@"%@%@",rBaseAddressForHttpShare,obj.rid];
             if (scene == 0) {
-                
                 message.title = @"大牛圈";
-            }
-            else
-            {
+            } else{
                 message.title = detail;
-                
+
             }
             message.description =detail;
             [message setThumbImage:[UIImage imageNamed:@"80.png"]];
-            // UIImage *png = [UIImage imageNamed:@"80.png"];
             shareRid = obj.rid;
             [self sendLinkContentWithMessage:message type:scene];
-        }
-        else
-        {
+        } else{
             [Hud showMessageWithText:@"现版本微信不支持分享,请更新"];
         }
     }

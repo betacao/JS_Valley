@@ -39,6 +39,8 @@
 @property (weak, nonatomic) IBOutlet UIButton *verifyButton;
 @property (weak, nonatomic) IBOutlet UIButton *tagButton;
 @property (weak, nonatomic) IBOutlet UIButton *invateButton;
+@property (weak, nonatomic) IBOutlet UILabel *locationLabel;
+@property (weak, nonatomic) IBOutlet UILabel *phoneLabel;
 
 @property (strong, nonatomic) SettingsViewController *vc;
 @property (strong, nonatomic) UILabel	*circleHeaderLabel;  //动态lable
@@ -187,6 +189,17 @@
             self.company = self.companyName.text;
         } else{
             self.companyName.text = @"暂无公司名";
+        }
+        if([response.dataDictionary valueForKey:@"phone"]){
+            self.phoneLabel.text = [response.dataDictionary valueForKey:@"phone"];
+        } else{
+            self.phoneLabel.text = @"";
+        }
+
+        if([response.dataDictionary valueForKey:@"position"]){
+            self.locationLabel.text = [response.dataDictionary valueForKey:@"position"];
+        } else{
+            self.locationLabel.text = @"";
         }
 
         NSString *headImageUrl = [response.dataDictionary valueForKey:@"head_img"];
