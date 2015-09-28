@@ -23,6 +23,7 @@
 #import "ContactsViewController.h"
 #import "ChatListViewController.h"
 #import "HeadImage.h"
+
 static NSString * const kUid				= @"uid";
 static NSString * const kHeadImg			= @"headimg";
 static NSString * const kNickName			= @"nickname";
@@ -61,15 +62,14 @@ static NSString * const kCommonFNum			= @"commonnum";
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-//    self.navigationItem.leftBarButtonItem = nil;
-    self.title=@"选择好友";
+    self.title = @"选择好友";
     [self removeEmptyConversationsFromDB];
     [self addHeaderRefresh:self.tableView headerRefesh:YES andFooter:YES];
 
-    //[self.view addSubview:self.searchBar];
+
     self.searchBar.hidden = NO;
     [self.view addSubview:self.tableView];
-    _tableView.separatorStyle = 1;
+    _tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     [self.tableView addSubview:self.slimeView];
     [self networkStateView];
     
@@ -112,9 +112,7 @@ static NSString * const kCommonFNum			= @"commonnum";
     }
     
     if (needRemoveConversations && needRemoveConversations.count > 0) {
-        [[EaseMob sharedInstance].chatManager removeConversationsByChatters:needRemoveConversations
-                                                             deleteMessages:YES
-                                                                append2Chat:NO];
+        [[EaseMob sharedInstance].chatManager removeConversationsByChatters:needRemoveConversations deleteMessages:YES append2Chat:NO];
     }
 }
 
@@ -395,23 +393,16 @@ static NSString * const kCommonFNum			= @"commonnum";
     [self showHudInView:self.view hint:NSLocalizedString(@"refreshData", @"Refresh data...")];
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
     
-    NSDictionary *param = @{@"uid":uid,
-                            @"pagenum":[NSNumber numberWithInteger:pageNum],
-                            @"pagesize":@15};
-    //  NSDictionary *param = @{@"uid":uid};
-    [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"friends/level/one"] parameters:param success:^(MOCHTTPResponse *response) {
-      
-        
-        if(response.dataArray.count>0)
-        {
+    NSDictionary *param = @{@"uid":uid, @"pagenum":[NSNumber numberWithInteger:pageNum], @"pagesize":@15};
+    [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"friends/level/one"] parameters:param success:^(MOCHTTPResponse *response){
+        if(response.dataArray.count > 0){
             if (pageNum == 1) {
                 [self.contactsSource removeAllObjects];
-               // [HeadImage deleteAll];
             }
             NSString *needentUpdateSql = @"1";
             [[NSUserDefaults standardUserDefaults] setValue:needentUpdateSql forKey:KEY_UPDATE_SQL];
         }
-        for (int i = 0; i<response.dataArray.count; i++) {
+        for (int i = 0; i<response.dataArray.count; i++){
             NSDictionary *dic = response.dataArray[i];
             BasePeopleObject *obj = [[BasePeopleObject alloc] init];
             obj.name = [dic valueForKey:@"nick"];
@@ -460,8 +451,6 @@ static NSString * const kCommonFNum			= @"commonnum";
         [self.tableView.header endRefreshing];
         [self.tableView.footer endRefreshing];
     }];
-    
-//    [_tableView reloadData];
     
 }
 

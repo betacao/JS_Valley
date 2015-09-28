@@ -445,8 +445,7 @@ const CGFloat kAdButtomMargin = 20.0f;
     segmentedControl.selected = NO;
     segmentedControl.selectedSegmentIndex = 0;
     
-    [segmentedControl addTarget:self action:@selector(valueChange:)
-               forControlEvents:UIControlEventValueChanged];
+    [segmentedControl addTarget:self action:@selector(valueChange:) forControlEvents:UIControlEventValueChanged];
     
     self.navigationItem.leftBarButtonItem = nil;
 }
@@ -896,9 +895,7 @@ const CGFloat kAdButtomMargin = 20.0f;
     _popupView.detail=@"";
     _popupView.rid = obj.rid;
     [self.navigationController.view addSubview:_popupView];
-    //    [popupView release];
     [_popupView showWithAnimated:YES];
-    //[self.listTable reloadData];
 }
 
 - (void)commentViewDidComment:(NSString *)comment rid:(NSString *)rid
@@ -912,10 +909,7 @@ const CGFloat kAdButtomMargin = 20.0f;
             break;
         }
     }
-    NSDictionary *param = @{@"uid":[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID],
-                            @"rid":rid,
-                            @"fid":@"-1",
-                            @"detail":comment};
+    NSDictionary *param = @{@"uid":[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID], @"rid":rid, @"fid":@"-1", @"detail":comment};
     NSString *url = [NSString stringWithFormat:@"%@/%@",rBaseAddressForHttpCircle,@"comments"];
     [MOCHTTPRequestOperationManager postWithURL:url class:nil parameters:param success:^(MOCHTTPResponse *response)
      {
