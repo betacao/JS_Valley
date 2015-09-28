@@ -47,7 +47,14 @@ typedef void (^SHHomeDataCompletionBlock)(NSArray *dataArray);
 
  @since 1.5.0
  */
-@property (strong, nonatomic) NSArray *tagsArray;
+@property (strong, nonatomic) NSMutableArray *tagsArray;
+
+/**
+ @brief  用户选择的标签
+
+ @since 1.5.0
+ */
+@property (strong, nonatomic) NSMutableArray *selectedTagsArray;
 
 /**
  @brief  首页请求完成的回掉
@@ -71,6 +78,30 @@ typedef void (^SHHomeDataCompletionBlock)(NSArray *dataArray);
  @since 1.4.1
  */
 - (void)requestHomePageData;
+
+/**
+ @brief  获取所有的标签
+
+ @since 1.5.0
+ */
+- (void)downloadUserTagInfo:(void(^)())block;
+
+/**
+ @brief  获取用户选择的标签
+
+ @param block
+
+ @since 1.5.0
+ */
+- (void)downloadUserSelectedInfo:(void (^)())block;
+
+/**
+ @brief  上传用户选择的标签
+
+ @since 1.5.0
+ */
+- (void)uploadUserSelectedInfo:(NSArray *)array completion:(void(^)(BOOL finished))block;
+
 
 
 @end

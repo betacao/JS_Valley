@@ -264,7 +264,6 @@
     // Return NO if you do not want the specified item to be editable.
     if (indexPath.section == 0) {
         return NO;
-        [self isViewLoaded];
     }
     return YES;
 }

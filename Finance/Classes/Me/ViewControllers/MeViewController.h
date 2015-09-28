@@ -18,4 +18,8 @@
 
 @interface SHGTagsView : UIView
 
+- (void)updateSelectedArray;
+
+- (NSArray *)userSelectedTags;
+
 @end

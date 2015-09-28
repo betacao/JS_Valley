@@ -116,14 +116,6 @@
     [super viewWillAppear:animated];
     [MobClick event:@"SettingQuestionViewController" label:@"onClick"];
     self.title = @"常见问题";
-    UIButton *btnBack = [UIButton buttonWithType:UIButtonTypeCustom];
-    [btnBack setFrame:CGRectMake(0, 0, 44, 44)];
-    [btnBack setBackgroundImage:[UIImage imageNamed:@"nav_back.png"] forState:UIControlStateNormal];
-    [btnBack addTarget:self action:@selector(btnBackClick:) forControlEvents:UIControlEventTouchUpInside];
-    
-
-    
-    
 }
 
 - (void)didReceiveMemoryWarning

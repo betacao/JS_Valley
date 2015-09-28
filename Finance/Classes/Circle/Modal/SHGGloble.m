@@ -7,6 +7,8 @@
 //
 
 #import "SHGGloble.h"
+#import "SHGUserTagModel.h"
+
 
 @interface SHGGloble ()
 /**
@@ -57,12 +59,20 @@
     return _homeArray;
 }
 
-- (NSArray *)tagsArray
+- (NSMutableArray *)tagsArray
 {
     if(!_tagsArray){
-        _tagsArray = @[@"银行", @"证券", @"二级市场", @"三方", @"PV/PE", @"信托/资管", @"新三板", @"定增", @"项目融资", @"P2P", @"招聘培训"];
+        _tagsArray = [NSMutableArray array];
     }
     return _tagsArray;
+}
+
+- (NSMutableArray *)selectedTagsArray
+{
+    if(!_selectedTagsArray){
+        _selectedTagsArray = [NSMutableArray array];
+    }
+    return _selectedTagsArray;
 }
 
 - (void)requestHomePageData
@@ -81,13 +91,13 @@
         [weakSelf.homeArray removeAllObjects];
         [weakSelf.homeArray addObjectsFromArray:response.dataArray];
         if(weakSelf.CompletionBlock){
-            weakSelf.CompletionBlock(self.homeArray);
+            weakSelf.CompletionBlock(weakSelf.homeArray);
         }
     } failed:^(MOCHTTPResponse *response){
         NSLog(@"首页预加载数据失败");
         [weakSelf.homeArray removeAllObjects];
         if(weakSelf.CompletionBlock){
-            weakSelf.CompletionBlock(self.homeArray);
+            weakSelf.CompletionBlock(weakSelf.homeArray);
         }
     }];
 }
@@ -109,5 +119,55 @@
     }
 }
 
+
+- (void)downloadUserTagInfo:(void (^)())block
+{
+    if(self.tagsArray.count > 0){
+        block();
+        return;
+    }
+    __weak typeof(self) weakSelf = self;
+    [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/v1/user/tag/baseUserTag",rBaseAddRessHttp] class:[SHGUserTagModel class] parameters:nil success:^(MOCHTTPResponse *response) {
+        [weakSelf.tagsArray removeAllObjects];
+        [weakSelf.tagsArray addObjectsFromArray:response.dataArray];
+        block();
+    } failed:^(MOCHTTPResponse *response) {
+        [Hud showMessageWithText:@"拉取标签列表失败"];
+    } complete:nil];
+}
+
+- (void)downloadUserSelectedInfo:(void (^)())block
+{
+    NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
+    __weak typeof(self) weakSelf = self;
+    [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/v1/user/tag/getUserTagAndBase",rBaseAddRessHttp] class:[SHGUserTagModel class] parameters:@{@"uid":uid} success:^(MOCHTTPResponse *response) {
+        [weakSelf.selectedTagsArray removeAllObjects];
+        [weakSelf.selectedTagsArray addObjectsFromArray:response.dataArray];
+        block();
+    } failed:^(MOCHTTPResponse *response) {
+        [Hud showMessageWithText:@"拉取个人标签失败"];
+    } complete:nil];
+}
+
+- (void)uploadUserSelectedInfo:(NSArray *)array completion:(void(^)(BOOL finished))block
+{
+    NSString *string = @"";
+    for(NSInteger i = 0;i < array.count;i++){
+        SHGUserTagModel *model = [[SHGGloble sharedGloble].tagsArray objectAtIndex:i];
+        string = [string stringByAppendingFormat:@",%@",model.tagId];
+    }
+    if([string rangeOfString:@","].location != NSNotFound){
+        string = [string substringFromIndex:1];
+    }
+    NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
+    NSDictionary *param = [NSDictionary dictionaryWithObjectsAndKeys:uid,@"uid",string,@"tagIds",@"edit",@"flag", nil];
+    [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/v1/user/tag/saveOrUpdateUserTag",rBaseAddRessHttp] parameters:param success:^(MOCHTTPResponse *response) {
+        [Hud showMessageWithText:@"上传个人信息成功"];
+        block(YES);
+    } failed:^(MOCHTTPResponse *response) {
+        [Hud showMessageWithText:@"上传个人信息失败"];
+        block(NO);
+    }];
+}
 
 @end

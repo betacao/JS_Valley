@@ -12,6 +12,7 @@
 #import <AddressBook/AddressBook.h>
 #import "CCLocationManager.h"
 #import "SHGProvincesViewController.h"
+#import "SHGUserTagModel.h"
 
 #define kPersonCategoryLeftMargin 13.0f * XFACTOR
 #define kPersonCategoryTopMargin 10.0f * YFACTOR
@@ -37,6 +38,9 @@
 @property (strong, nonatomic) NSMutableArray *phones;
 @property (strong, nonatomic) UITextField *currentField;
 @property (assign, nonatomic) CGRect keyboaradRect;
+@property (strong, nonatomic) UIActivityIndicatorView *activityView;
+@property (assign, nonatomic) BOOL uploadUserInfoSuccess;
+@property (assign, nonatomic) BOOL uploadTagsSuccess;
 
 - (IBAction)headImageButtonClicked:(id)sender;
 - (IBAction)submitButtonClicked:(id)sender;
@@ -69,6 +73,7 @@
 
     [self getAddress];
     [self downloadUserSelectedInfo];
+    [self adjustLocationFrame];
     [[CCLocationManager shareLocation] getCity:^(NSString *addressString) {
 
     }];
@@ -86,6 +91,31 @@
 {
     [super viewWillAppear:animated];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardDidShowNotification object:nil];
+}
+
+//调整选择地理位置label button等控件的位置
+- (void)adjustLocationFrame
+{
+
+    self.activityView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    [self.activityView startAnimating];
+
+    CGRect frame = self.locationLabel.frame;
+    CGSize size = [self.locationLabel sizeThatFits:CGSizeMake(MAXFLOAT, CGRectGetHeight(self.locationLabel.frame))];
+    frame.size.width = size.width;
+    self.locationLabel.frame = frame;
+
+    self.manualButton.center = self.locationLabel.center;
+    frame = self.manualButton.frame;
+    frame.origin.x = CGRectGetMaxX(self.locationLabel.frame);
+    self.manualButton.frame = frame;
+
+    self.activityView.center = self.locationLabel.center;
+    frame = self.activityView.frame;
+    frame.origin.x = CGRectGetMaxX(self.manualButton.frame);
+    self.activityView.frame = frame;
+
+    [self.locationLabel.superview addSubview:self.activityView];
 }
 
 - (void)viewDidDisappear:(BOOL)animated
@@ -237,6 +267,7 @@
 {
     if (hasUploadHead) {
         [self uploadMaterial];
+        [self uploadUserSelectedInfo];
     }else{
         if (self.headImage) {
             [self uploadHeadImage:self.headImage];
@@ -258,19 +289,19 @@
 - (void)uploadHeadImage:(UIImage *)image
 {
 	[Hud showLoadingWithMessage:@"正在上传图片..."];
+    __weak typeof(self) weakSelf = self;
 	[[AFHTTPRequestOperationManager manager] POST:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"image/base"] parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
 		NSData *imageData = UIImageJPEGRepresentation(image, 0.1);
 		[formData appendPartWithFileData:imageData name:@"hahaggggggg.jpg" fileName:@"hahaggggggg.jpg" mimeType:@"image/jpeg"];
 	} success:^(AFHTTPRequestOperation *operation, id responseObject) {
 		NSLog(@"%@",responseObject);
-		
 		NSDictionary *dic = [(NSString *)[responseObject valueForKey:@"data"] parseToArrayOrNSDictionary];
-		self.headImageName = [(NSArray *)[dic valueForKey:@"pname"] objectAtIndex:0];
-        [[NSUserDefaults standardUserDefaults] setObject:self.headImageName forKey:KEY_HEAD_IMAGE];
+		weakSelf.headImageName = [(NSArray *)[dic valueForKey:@"pname"] objectAtIndex:0];
+        [[NSUserDefaults standardUserDefaults] setObject:weakSelf.headImageName forKey:KEY_HEAD_IMAGE];
         hasUploadHead = YES;
-		[self uploadMaterial];
+		[weakSelf uploadMaterial];
+        [weakSelf uploadUserSelectedInfo];
 		[Hud hideHud];
-		
 	} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 		NSLog(@"%@",error);
 		[Hud hideHud];
@@ -324,7 +355,6 @@
     [[AFHTTPRequestOperationManager manager] PUT:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"register"] parameters:@{@"uid":uid, @"head_img":self.headImageName, @"name":self.nameTextField.text, @"company":self.companyTextField.text, @"title":self.titleTextField.text} success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"%@",operation);
         NSLog(@"%@",responseObject);
-        [Hud hideHud];
         NSString *code = [responseObject valueForKey:@"code"];
         if ([code isEqualToString:@"000"]) {
             [[NSUserDefaults standardUserDefaults] setObject:self.nameTextField.text forKey:KEY_USER_NAME];
@@ -336,11 +366,9 @@
                 if (!IsArrEmpty(self.phones)) {
                     [weakSelf uploadPhones];
                 }
-                
             });
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [weakSelf loginSuccess];
-            });
+            weakSelf.uploadUserInfoSuccess = YES;
+            [weakSelf didUploadAllUserInfo];
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [Hud hideHud];
@@ -350,7 +378,7 @@
 - (void)downloadUserSelectedInfo
 {
     __weak typeof(self) weakSelf = self;
-    [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/v1/user/tag/baseUserTag",rBaseAddRessHttp] parameters:nil success:^(MOCHTTPResponse *response) {
+    [[SHGGloble sharedGloble] downloadUserTagInfo:^{
         [weakSelf.personCategoryView updateViewWithArray:[SHGGloble sharedGloble].tagsArray finishBlock:^{
             CGPoint point = CGPointMake(0.0f, CGRectGetMaxY(weakSelf.personCategoryView.frame) + 2 * kPersonCategoryTopMargin);
             point = [weakSelf.view convertPoint:point fromView:weakSelf.personCategoryView.superview];
@@ -360,18 +388,33 @@
             weakSelf.bgScrollView.contentSize = CGSizeMake(SCREENWIDTH, CGRectGetMaxY(self.nextButton.frame) + 2 * kPersonCategoryTopMargin);
             weakSelf.personCategoryView.superview.hidden = NO;
         }];
-    } failed:^(MOCHTTPResponse *response) {
-
     }];
 }
 
 - (void)uploadUserSelectedInfo
 {
-//    [MOCHTTPRequestOperationManager postWithURL:[NSString stringWithFormat:@"%@%@",rBaseAddRessHttp,] parameters:nil success:^(MOCHTTPResponse *response) {
-//
-//    } failed:^(MOCHTTPResponse *response) {
-//        
-//    }];
+    __weak typeof(self) weakSelf = self;
+    NSArray *array = [self.personCategoryView userSelectedTags];
+    [[SHGGloble sharedGloble] uploadUserSelectedInfo:array completion:^(BOOL finished) {
+        if(finished){
+            weakSelf.uploadTagsSuccess = YES;
+            [weakSelf didUploadAllUserInfo];
+        } else{
+            [Hud hideHud];
+        }
+    }];
+}
+
+//上传个人信息和标签是在两个地方分别上传的 要等两个请求全部完成才能去跳转到下一页
+- (void)didUploadAllUserInfo
+{
+    [Hud hideHud];
+    if(self.uploadTagsSuccess && self.uploadUserInfoSuccess){
+        __weak typeof(self) weakSelf = self;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [weakSelf loginSuccess];
+        });
+    }
 }
 
 - (void)uploadPhones
@@ -495,6 +538,7 @@
     NSMutableString *string = [NSMutableString stringWithString:@"地点：大牛圈猜你在，没猜对？"];
     NSRange range = [string rangeOfString:@"，"];
     if(range.location != NSNotFound){
+        [self.activityView removeFromSuperview];
         [string insertString:cityName atIndex:range.location];
         range = [string rangeOfString:cityName];
         NSMutableAttributedString *aString = [[NSMutableAttributedString alloc] initWithString:string];
@@ -530,6 +574,8 @@
 
 @property (strong, nonatomic) NSArray *dataArray;
 @property (strong, nonatomic) NSMutableArray *selectedArray;
+@property (strong, nonatomic) UILabel *noticeLabel;
+@property (strong, nonatomic) NSMutableArray *buttonArrays;
 @property (copy, nonatomic) SHGPersonCategoryViewLoadFinish finishBlock;
 
 
@@ -543,6 +589,7 @@
     if(self){
         self.backgroundColor = [UIColor whiteColor];
         self.selectedArray = [NSMutableArray array];
+        self.buttonArrays = [NSMutableArray array];
     }
     return self;
 }
@@ -551,19 +598,21 @@
 {
     self.backgroundColor = [UIColor whiteColor];
     self.selectedArray = [NSMutableArray array];
+    self.buttonArrays = [NSMutableArray array];
 }
 
 - (void)updateViewWithArray:(NSArray *)dataArray finishBlock:(SHGPersonCategoryViewLoadFinish)block
 {
     self.dataArray = dataArray;
     self.finishBlock = block;
+    [self setNeedsLayout];
 }
 
 - (void)layoutSubviews
 {
     CGFloat width = (CGRectGetWidth(self.frame) - 2 * kPersonCategoryLeftMargin - 3 * kPersonCategoryMargin) / 4.0f;
-    for(NSString *string in self.dataArray){
-        NSInteger index = [self.dataArray indexOfObject:string];
+    for(SHGUserTagModel *model in self.dataArray){
+        NSInteger index = [self.dataArray indexOfObject:model];
         NSInteger row = index / 4;
         NSInteger col = index % 4;
 
@@ -572,7 +621,7 @@
         button.layer.borderColor = [UIColor colorWithHexString:@"D6D6D6"].CGColor;
         button.titleLabel.font = [UIFont systemFontOfSize:11.0f];
 
-        [button setTitle:string forState:UIControlStateNormal];
+        [button setTitle:model.tagName forState:UIControlStateNormal];
         [button setTitleColor:[UIColor colorWithHexString:@"D2D1D1"] forState:UIControlStateNormal];
         [button setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
         [button setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
@@ -587,39 +636,48 @@
         frame = self.frame;
         frame.size.height = CGRectGetMaxY(button.frame);
         self.frame = frame;
+        [self.buttonArrays addObject:button];
     }
 
-    UILabel *label = [[UILabel alloc] init];
-    label.text = @"最多选3项（个人中心可更新）";
-    label.font = [UIFont systemFontOfSize:11.0f];
-    label.textColor = [UIColor colorWithHexString:@"D2D1D1"];
-    [label sizeToFit];
-    CGRect frame = label.frame;
+    [self.noticeLabel sizeToFit];
+    CGRect frame = self.noticeLabel.frame;
     frame.origin.y = CGRectGetHeight(self.frame) + kPersonCategoryTopMargin;
     frame.origin.x = kPersonCategoryLeftMargin;
-    label.frame = frame;
+    self.noticeLabel.frame = frame;
     frame = self.frame;
-    frame.size.height = CGRectGetMaxY(label.frame) + kPersonCategoryTopMargin;
+    frame.size.height = CGRectGetMaxY(self.noticeLabel.frame) + kPersonCategoryTopMargin;
     self.frame = frame;
-    [self addSubview:label];
     if(self.finishBlock){
         self.finishBlock();
     }
 }
 
+- (UILabel *)noticeLabel
+{
+    if(!_noticeLabel){
+        _noticeLabel = [[UILabel alloc] init];
+        _noticeLabel.text = @"最多选3项（个人中心可更新）";
+        _noticeLabel.font = [UIFont systemFontOfSize:11.0f];
+        _noticeLabel.textColor = [UIColor colorWithHexString:@"D2D1D1"];
+        [self addSubview:_noticeLabel];
+    }
+    return _noticeLabel;
+}
+
 - (void)didSelectCategory:(UIButton *)button
 {
     BOOL isSelecetd = button.selected;
+    NSInteger index = [self.buttonArrays indexOfObject:button];
     if(!isSelecetd){
         if(self.selectedArray.count >= 3){
             [Hud showMessageWithText:@"最多选3项"];
         } else{
             button.selected = !isSelecetd;
-            [self.selectedArray addObject:button];
+            [self.selectedArray addObject:@(index)];
         }
     } else{
         button.selected = !isSelecetd;
-        [self.selectedArray removeObject:button];
+        [self.selectedArray removeObject:@(index)];
     }
 }
 

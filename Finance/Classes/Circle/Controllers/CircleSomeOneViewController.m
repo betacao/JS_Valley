@@ -372,7 +372,7 @@
             NSString *code = [responseObject valueForKey:@"code"];
             if ([code isEqualToString:@"000"]) {
                 obj.ispraise = @"N";
-                obj.praisenum = [NSString stringWithFormat:@"%ld",[obj.praisenum integerValue] -1];
+                obj.praisenum = [NSString stringWithFormat:@"%ld",(long)[obj.praisenum integerValue] -1];
 
             }
             [Hud showMessageWithText:@"取消点赞"];
@@ -576,7 +576,7 @@
             obj.cdetail = comment;
             obj.cid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
             [rObj.comments addObject:obj];
-            rObj.cmmtnum = [NSString stringWithFormat:@"%ld",[rObj.cmmtnum integerValue] +1];
+            rObj.cmmtnum = [NSString stringWithFormat:@"%ld",(long)[rObj.cmmtnum integerValue] +1];
         }
         [self.listTable reloadData];
         [self.delegate detailCommentWithRid:rObj.rid commentNum:rObj.cmmtnum comments:rObj.comments];
@@ -621,7 +621,7 @@
             obj.rnickname = cmntObj.cnickname;
             obj.cid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
             [rObj.comments addObject:obj];
-            rObj.cmmtnum = [NSString stringWithFormat:@"%ld",[rObj.cmmtnum integerValue] +1];
+            rObj.cmmtnum = [NSString stringWithFormat:@"%ld",(long)[rObj.cmmtnum integerValue] +1];
         }
         [self.listTable reloadData];
         [self.delegate detailCommentWithRid:rObj.rid commentNum:rObj.cmmtnum comments:rObj.comments];

@@ -7,6 +7,7 @@
 //
 
 #import "SHGProvincesViewController.h"
+#import "CCLocationManager.h"
 //主要目的是记录“全部”显示的位置，与cell里面的对齐
 #define leftMargin 16.0f * XFACTOR
 
@@ -14,6 +15,7 @@
 
 @property (strong, nonatomic) NSArray *provinces;
 @property (strong, nonatomic) UITableViewCell *gpsCell;
+@property (strong, nonatomic) UIActivityIndicatorView *indicator;
 
 @end
 
@@ -31,6 +33,11 @@
     [leftButton addTarget:self action:@selector(btnBackClick:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:leftButton];
     self.navigationItem.leftBarButtonItem = leftItem;
+    __weak typeof(self) weakSelf = self;
+    [[CCLocationManager shareLocation] getCity:^(NSString *addressString) {
+        [weakSelf.indicator removeFromSuperview];
+        weakSelf.gpsCell.textLabel.text = [SHGGloble sharedGloble].cityName;
+    }];
 }
 
 - (void)btnBackClick:(id)sender
@@ -107,10 +114,22 @@
 - (UITableViewCell *)gpsCell
 {
     if(!_gpsCell){
+        self.indicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+        NSString *cityName = [SHGGloble sharedGloble].cityName;
+
         _gpsCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
         _gpsCell.textLabel.font = [UIFont boldSystemFontOfSize:15.0f];
         _gpsCell.textLabel.textColor = [UIColor colorWithHexString:@"141414"];
-        _gpsCell.textLabel.text = @"南京";
+        if(!cityName || cityName.length == 0){
+            self.indicator.center = _gpsCell.contentView.center;
+            CGRect frame = self.indicator.frame;
+            frame.origin.x = leftMargin;
+            self.indicator.frame = frame;
+            [_gpsCell.contentView addSubview:self.indicator];
+            [self.indicator startAnimating];
+        } else{
+            _gpsCell.textLabel.text = @"南京";
+        }
         UILabel *gpsLabel = [[UILabel alloc] init];
         gpsLabel.text = @"GPS定位";
         gpsLabel.textColor = [UIColor colorWithHexString:@"4b88b7"];

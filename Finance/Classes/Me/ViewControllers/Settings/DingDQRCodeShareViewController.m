@@ -45,15 +45,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
     self.title = @"应用二维码";
-    UIButton *btnBack = [UIButton buttonWithType:UIButtonTypeCustom];
-    [btnBack setFrame:CGRectMake(0, 0, 44, 44)];
-    [btnBack setBackgroundImage:[UIImage imageNamed:@"nav_back.png"] forState:UIControlStateNormal];
-    [btnBack addTarget:self action:@selector(btnBackClick:) forControlEvents:UIControlEventTouchUpInside];
-    
-//    [self.navigationController navbarLeftItemCustomized:@[btnBack] onwer:self.navigationItem];
-	
 }
 
 - (IBAction)showSMSPicker:(id)sender

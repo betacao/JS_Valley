@@ -285,7 +285,6 @@
 		61046C6F1AE0A53B0065F59D /* recommed_takephotos@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 61046C6E1AE0A53B0065F59D /* recommed_takephotos@2x.png */; };
 		61046C761AE0FF440065F59D /* RecommendView.m in Sources */ = {isa = PBXBuildFile; fileRef = 61046C751AE0FF440065F59D /* RecommendView.m */; };
 		61046C791AE0FFBA0065F59D /* RecommendTypeObj.m in Sources */ = {isa = PBXBuildFile; fileRef = 61046C781AE0FFBA0065F59D /* RecommendTypeObj.m */; };
-		61046C7F1AE1140E0065F59D /* DDActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 61046C7E1AE1140E0065F59D /* DDActionSheet.m */; };
 		610BC8221AFBC76B001F07EC /* default_image.png in Resources */ = {isa = PBXBuildFile; fileRef = 610BC8211AFBC76B001F07EC /* default_image.png */; };
 		610FF0451AD621500027EBA6 /* PopoverListObj.m in Sources */ = {isa = PBXBuildFile; fileRef = 610FF0441AD621500027EBA6 /* PopoverListObj.m */; };
 		610FF06E1AD6227F0027EBA6 /* DDTapGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 610FF04B1AD6227F0027EBA6 /* DDTapGestureRecognizer.m */; };
@@ -892,6 +891,7 @@
 		F99B602C1B9E7D9500759AAC /* headerView.m in Sources */ = {isa = PBXBuildFile; fileRef = F99B602B1B9E7D9500759AAC /* headerView.m */; };
 		F9B18C081BA0521600EA0314 /* SHGNoticeView.m in Sources */ = {isa = PBXBuildFile; fileRef = F9B18C071BA0521600EA0314 /* SHGNoticeView.m */; };
 		F9B7CC321B8AD6C000E55EFD /* SHGGloble.m in Sources */ = {isa = PBXBuildFile; fileRef = F9B7CC311B8AD6C000E55EFD /* SHGGloble.m */; };
+		F9D9F1571BB51D5F00F94E70 /* SHGUserTagModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F9D9F1561BB51D5F00F94E70 /* SHGUserTagModel.m */; settings = {ASSET_TAGS = (); }; };
 		F9EBB7CD1BB3DCD20023E84E /* SHGPersonDynamicViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9EBB7CB1BB3DCD20023E84E /* SHGPersonDynamicViewController.m */; settings = {ASSET_TAGS = (); }; };
 		F9EBB7CE1BB3DCD20023E84E /* SHGPersonDynamicViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9EBB7CC1BB3DCD20023E84E /* SHGPersonDynamicViewController.xib */; settings = {ASSET_TAGS = (); }; };
 		F9EBB7D01BB3F4470023E84E /* China_City.plist in Resources */ = {isa = PBXBuildFile; fileRef = F9EBB7CF1BB3F4470023E84E /* China_City.plist */; settings = {ASSET_TAGS = (); }; };
@@ -1255,8 +1255,6 @@
 		61046C751AE0FF440065F59D /* RecommendView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecommendView.m; sourceTree = "<group>"; };
 		61046C771AE0FFBA0065F59D /* RecommendTypeObj.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecommendTypeObj.h; sourceTree = "<group>"; };
 		61046C781AE0FFBA0065F59D /* RecommendTypeObj.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecommendTypeObj.m; sourceTree = "<group>"; };
-		61046C7D1AE1140E0065F59D /* DDActionSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDActionSheet.h; sourceTree = "<group>"; };
-		61046C7E1AE1140E0065F59D /* DDActionSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDActionSheet.m; sourceTree = "<group>"; };
 		610BC8211AFBC76B001F07EC /* default_image.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = default_image.png; sourceTree = "<group>"; };
 		610FF0431AD621500027EBA6 /* PopoverListObj.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PopoverListObj.h; sourceTree = "<group>"; };
 		610FF0441AD621500027EBA6 /* PopoverListObj.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PopoverListObj.m; sourceTree = "<group>"; };
@@ -2111,6 +2109,8 @@
 		F9B18C071BA0521600EA0314 /* SHGNoticeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGNoticeView.m; sourceTree = "<group>"; };
 		F9B7CC301B8AD6C000E55EFD /* SHGGloble.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGGloble.h; sourceTree = "<group>"; };
 		F9B7CC311B8AD6C000E55EFD /* SHGGloble.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGGloble.m; sourceTree = "<group>"; };
+		F9D9F1551BB51D5F00F94E70 /* SHGUserTagModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGUserTagModel.h; sourceTree = "<group>"; };
+		F9D9F1561BB51D5F00F94E70 /* SHGUserTagModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGUserTagModel.m; sourceTree = "<group>"; };
 		F9EBB7CA1BB3DCD20023E84E /* SHGPersonDynamicViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGPersonDynamicViewController.h; sourceTree = "<group>"; };
 		F9EBB7CB1BB3DCD20023E84E /* SHGPersonDynamicViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGPersonDynamicViewController.m; sourceTree = "<group>"; };
 		F9EBB7CC1BB3DCD20023E84E /* SHGPersonDynamicViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGPersonDynamicViewController.xib; sourceTree = "<group>"; };
@@ -2820,6 +2820,7 @@
 		614AD1A61AD7AC4D00DDF43E /* LoginRegist */ = {
 			isa = PBXGroup;
 			children = (
+				F9D9F1541BB51D2C00F94E70 /* Model */,
 				6146B4A81B011B7800D62678 /* RootViewController.h */,
 				6146B4A91B011B7800D62678 /* RootViewController.m */,
 				6146B4AA1B011B7800D62678 /* RootViewController.xib */,
@@ -3684,8 +3685,6 @@
 				610FF0811AD623F80027EBA6 /* NSString+Check.m */,
 				B00903531B622274000EAD7D /* UIColor+extend.h */,
 				B00903541B622274000EAD7D /* UIColor+extend.m */,
-				61046C7D1AE1140E0065F59D /* DDActionSheet.h */,
-				61046C7E1AE1140E0065F59D /* DDActionSheet.m */,
 			);
 			path = Categray;
 			sourceTree = "<group>";
@@ -4552,6 +4551,15 @@
 			path = HeaderView;
 			sourceTree = "<group>";
 		};
+		F9D9F1541BB51D2C00F94E70 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				F9D9F1551BB51D5F00F94E70 /* SHGUserTagModel.h */,
+				F9D9F1561BB51D5F00F94E70 /* SHGUserTagModel.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		F9EDD5EA1BABFBCF00506C0C /* SDPhotoBrowser */ = {
 			isa = PBXGroup;
 			children = (
@@ -5346,6 +5354,7 @@
 				6187D2D71AF1C693008E1D21 /* ChatViewController.m in Sources */,
 				6187D2DE1AF1C693008E1D21 /* DXRecordView.m in Sources */,
 				61425B3D1AFA7CDD00758BCB /* CinfigView.m in Sources */,
+				F9D9F1571BB51D5F00F94E70 /* SHGUserTagModel.m in Sources */,
 				6187D2F71AF1C693008E1D21 /* EMChooseViewController.m in Sources */,
 				6187D2CF1AF1C693008E1D21 /* GroupSettingViewController.m in Sources */,
 				6145FF0E1AE49D180074AB49 /* BasePopupView.m in Sources */,
@@ -5508,7 +5517,6 @@
 				610FF07E1AD6227F0027EBA6 /* UIView+Additions.m in Sources */,
 				614EFECE1AEF594A00F2BDD1 /* ProdConfigTableViewCell.m in Sources */,
 				4088DD8C1AF0FB2B00393855 /* SettingsObj.m in Sources */,
-				61046C7F1AE1140E0065F59D /* DDActionSheet.m in Sources */,
 				6187D2C91AF1C693008E1D21 /* ChatGroupDetailViewController.m in Sources */,
 				614EFEDF1AEF8F7300F2BDD1 /* Hud.m in Sources */,
 				61B992FB1ADBBE540025BE7B /* CircleListTableViewCell.m in Sources */,
@@ -5675,7 +5683,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.danniuquan.apptest;
 				PRODUCT_NAME = "大牛圈";
-				PROVISIONING_PROFILE = "690ae0fe-3269-4801-97b3-b26b209573f0";
+				PROVISIONING_PROFILE = "b5987c73-8279-4077-adf7-6be59791bd1b";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -5687,8 +5695,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Jiangsu SHGOO Technology Co., Ltd";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Jiangsu SHGOO Technology Co., Ltd";
+				CODE_SIGN_IDENTITY = "iPhone Developer: xie jian (A35C7Q22SB)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: xie jian (A35C7Q22SB)";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -5732,7 +5740,7 @@
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.danniuquan.apptest;
 				PRODUCT_NAME = "大牛圈";
-				PROVISIONING_PROFILE = "690ae0fe-3269-4801-97b3-b26b209573f0";
+				PROVISIONING_PROFILE = "b5987c73-8279-4077-adf7-6be59791bd1b";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -5827,7 +5835,7 @@
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.danniuquan.apptest;
 				PRODUCT_NAME = "大牛圈";
-				PROVISIONING_PROFILE = "690ae0fe-3269-4801-97b3-b26b209573f0";
+				PROVISIONING_PROFILE = "b5987c73-8279-4077-adf7-6be59791bd1b";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 			};

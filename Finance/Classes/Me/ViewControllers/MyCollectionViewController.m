@@ -298,7 +298,7 @@
             NSString *code = [response.data valueForKey:@"code"];
             if ([code isEqualToString:@"000"]) {
                 obj.ispraise = @"Y";
-                obj.praisenum = [NSString stringWithFormat:@"%ld",[obj.praisenum integerValue] +1];
+                obj.praisenum = [NSString stringWithFormat:@"%ld",(long)[obj.praisenum integerValue] +1];
                 [Hud showMessageWithText:@"赞成功"];
           
                 [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_COLLECT_PRAISE_CLICK object:obj];
@@ -323,7 +323,7 @@
             NSString *code = [responseObject valueForKey:@"code"];
             if ([code isEqualToString:@"000"]) {
                 obj.ispraise = @"N";
-                obj.praisenum = [NSString stringWithFormat:@"%ld",[obj.praisenum integerValue] -1];
+                obj.praisenum = [NSString stringWithFormat:@"%ld",(long)[obj.praisenum integerValue] -1];
                 [Hud showMessageWithText:@"取消点赞"];
                 [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_COLLECT_PRAISE_CLICK object:obj];
 
@@ -521,7 +521,7 @@
         
         NSString *code = [response.data valueForKey:@"code"];
         if ([code isEqualToString:@"000"]) {
-            obj.sharenum = [NSString stringWithFormat:@"%ld",[obj.sharenum integerValue]+1];
+            obj.sharenum = [NSString stringWithFormat:@"%ld",(long)[obj.sharenum integerValue]+1];
             [self.tableView reloadData];
             [Hud showMessageWithText:@"分享成功"];
             [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_COLLECT_SHARE_CLIC object:obj];
@@ -541,7 +541,7 @@
         NSString *code = [responseObject valueForKey:@"code"];
         if ([code isEqualToString:@"000"]) {
             // [self refreshData];
-            obj.sharenum = [NSString stringWithFormat:@"%ld",[obj.sharenum integerValue]+1];
+            obj.sharenum = [NSString stringWithFormat:@"%ld",(long)[obj.sharenum integerValue]+1];
             [self.tableView reloadData];
             [Hud showMessageWithText:@"分享成功"];
         }

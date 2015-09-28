@@ -8,7 +8,6 @@
 
 #import "BaseViewController.h"
 #import "RecommendTypeObj.h"
-#import "DDActionSheet.h"
 @interface CircleSendViewController : BaseViewController<UIActionSheetDelegate,UIScrollViewDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,ZYQAssetPickerControllerDelegate,UITextViewDelegate,UIAlertViewDelegate>
 
 @end
