@@ -41,6 +41,7 @@
 @property (strong, nonatomic) UIActivityIndicatorView *activityView;
 @property (assign, nonatomic) BOOL uploadUserInfoSuccess;
 @property (assign, nonatomic) BOOL uploadTagsSuccess;
+@property (strong, nonatomic) NSString *userLocation;
 
 - (IBAction)headImageButtonClicked:(id)sender;
 - (IBAction)submitButtonClicked:(id)sender;
@@ -290,7 +291,8 @@
 {
 	[Hud showLoadingWithMessage:@"正在上传图片..."];
     __weak typeof(self) weakSelf = self;
-	[[AFHTTPRequestOperationManager manager] POST:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"image/base"] parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+    //头像需要压缩 跟其他的上传图片接口不一样了
+	[[AFHTTPRequestOperationManager manager] POST:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"image/basephoto"] parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
 		NSData *imageData = UIImageJPEGRepresentation(image, 0.1);
 		[formData appendPartWithFileData:imageData name:@"hahaggggggg.jpg" fileName:@"hahaggggggg.jpg" mimeType:@"image/jpeg"];
 	} success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -352,7 +354,7 @@
 	NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
     
     [Hud showLoadingWithMessage:@"完善信息中"];
-    [[AFHTTPRequestOperationManager manager] PUT:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"register"] parameters:@{@"uid":uid, @"head_img":self.headImageName, @"name":self.nameTextField.text, @"company":self.companyTextField.text, @"title":self.titleTextField.text} success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [[AFHTTPRequestOperationManager manager] PUT:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"register"] parameters:@{@"uid":uid, @"head_img":self.headImageName, @"name":self.nameTextField.text, @"company":self.companyTextField.text, @"title":self.titleTextField.text, @"position":self.userLocation ? self.userLocation : @""} success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"%@",operation);
         NSLog(@"%@",responseObject);
         NSString *code = [responseObject valueForKey:@"code"];
@@ -363,7 +365,7 @@
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0), ^{
                 [weakSelf chatLoagin];
                 [weakSelf dealFriendPush];
-                if (!IsArrEmpty(self.phones)) {
+                if (!IsArrEmpty(weakSelf.phones)) {
                     [weakSelf uploadPhones];
                 }
             });
@@ -539,6 +541,7 @@
     if(cityName.length == 0){
         self.locationLabel.text = @"未定位到您的位置  ";
     } else{
+        self.userLocation = cityName;
         NSMutableString *string = [NSMutableString stringWithString:@"地点：大牛圈猜你在，没猜对？"];
         NSRange range = [string rangeOfString:@"，"];
         if(range.location != NSNotFound){
@@ -565,6 +568,7 @@
 
 - (void)didSelectCity:(NSString *)city
 {
+    self.userLocation = city;
     city = [city stringByAppendingString:@"  "];
     NSMutableString *string = [NSMutableString stringWithString:@"地点："];
     NSRange range = [string rangeOfString:@"："];
