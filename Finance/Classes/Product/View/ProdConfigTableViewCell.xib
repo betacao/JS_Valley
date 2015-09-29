@@ -21,10 +21,11 @@
                         <color key="textColor" red="0.31372549020000001" green="0.31372549020000001" blue="0.31372549020000001" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <webView contentMode="scaleToFill" scalesPageToFit="YES" id="1Tx-7m-IKa">
+                    <webView contentMode="scaleToFill" id="1Tx-7m-IKa">
                         <rect key="frame" x="15" y="44" width="290" height="1"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <dataDetectorType key="dataDetectorTypes"/>
                     </webView>
                 </subviews>
             </tableViewCellContentView>
