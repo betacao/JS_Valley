@@ -173,7 +173,7 @@
 
 }
 
--(void)initData
+- (void)initData
 {
     if (!self.obj) {
         self.obj = [[CircleListObj alloc] init];
@@ -181,12 +181,12 @@
 }
 
 
--(void)shareSuccess
+- (void)shareSuccess
 {
     self.obj.sharenum = [NSString stringWithFormat:@"%ld",(long)([self.obj.sharenum integerValue] + 1)];
 }
 
--(void)smsShareSuccess:(NSNotification *)noti
+- (void)smsShareSuccess:(NSNotification *)noti
 {
     id obj = noti.object;
     if ([obj isKindOfClass:[NSString class]])

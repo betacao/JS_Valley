@@ -375,10 +375,6 @@ static NSString * const kCommonFNum			= @"commonnum";
                 }
             }
             [weakSBar resignFirstResponder];
-            //			ChatViewController *chatVC = [[ChatViewController alloc] initWithChatter:buddy.uid isGroup:NO];
-            //			chatVC.title = buddy.name;
-            //			chatVC.hidesBottomBarWhenPushed = YES;
-            //			[weakSelf.navigationController pushViewController:chatVC animated:YES];
             if ([buddy.rela isEqualToString:@"2"])
             {
                 return;

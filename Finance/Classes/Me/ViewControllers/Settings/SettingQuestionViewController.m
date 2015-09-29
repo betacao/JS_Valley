@@ -92,24 +92,8 @@
     UIButton *chat = [UIButton buttonWithType:UIButtonTypeCustom];
     [chat setFrame:CGRectMake(0, 0, 44, 44)];
     [chat setBackgroundImage:[UIImage imageNamed:@"message"] forState:UIControlStateNormal];
-//    [chat addTarget:self action:@selector(gotoMessage) forControlEvents:UIControlEventTouchUpInside];
-   // [self.navigationController navbarRightItemCustomized:@[chat] onwer:self.navigationItem];
-//    [self.tablevContent reloadData];
 	
 }
-
-//-(void)gotoMessage
-//{
-//    NSString *userId=[NSString stringWithFormat:@"x90%@",self.keepId];
-//    ChatViewController *chatController = [[ChatViewController alloc] initWithChatter:userId];
-//    chatController.title = self.keepName;
-//    chatController.nickName=self.keepName;
-//    
-//    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",kImageRequestBaseURL,self.keeperImage]]];
-//    UIImage *keepImage = [UIImage imageWithData:data];
-//    chatController.potImage= keepImage;
-//    [self.navigationController pushViewController:chatController animated:YES];
-//}
 
 - (void)viewWillAppear:(BOOL)animated
 {
