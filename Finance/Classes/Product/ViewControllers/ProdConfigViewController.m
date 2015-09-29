@@ -10,13 +10,8 @@
 #import "ProdConfigTableViewCell.h"
 #import "ConfigObj.h"
 #import "AppDelegate.h"
-@interface ProdConfigViewController ()
-@property (strong, nonatomic) IBOutlet UIView *configView;
-@property (weak, nonatomic) IBOutlet UITableView *tableList;
-- (IBAction)actionTel:(id)sender;
-- (IBAction)actionGo:(id)sender;
-- (IBAction)actionShare:(id)sender;
-- (IBAction)actionCollet:(id)sender;
+@interface ProdConfigViewController ()<ProdConfigDelegate>
+
 @property (weak, nonatomic) IBOutlet UIButton *btnShare;
 @property (weak, nonatomic) IBOutlet UIButton *btnCollet;
 @property (weak, nonatomic) IBOutlet UILabel *lblPercent;
@@ -27,6 +22,23 @@
 @property (weak, nonatomic) IBOutlet UILabel *lblProdName;
 @property (strong, nonatomic) IBOutlet UIView *viewFooter;
 @property (strong, nonatomic) IBOutlet UIView *viewHeader;
+@property (strong, nonatomic) IBOutlet UIView *configView;
+@property (weak, nonatomic) IBOutlet UITableView *tableList;
+@property (strong, nonatomic) NSMutableArray *heightArray;
+
+//业务介绍 产品信息 和业务流程的cell这边写死 不会去重复加载了
+//如果想写的灵活 就要使用缓存了
+@property (strong, nonatomic) ProdConfigTableViewCell *intoductionCell;
+@property (strong, nonatomic) ProdConfigTableViewCell *infomationCell;
+@property (strong, nonatomic) ProdConfigTableViewCell *flowCell;
+@property (strong, nonatomic) NSArray *cellArray;
+
+
+- (IBAction)actionTel:(id)sender;
+- (IBAction)actionGo:(id)sender;
+- (IBAction)actionShare:(id)sender;
+- (IBAction)actionCollet:(id)sender;
+
 
 @end
 
@@ -36,9 +48,7 @@
 -(id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    
-    if (self)
-    {
+    if (self){
         
     }
     return  self;
@@ -92,8 +102,56 @@
 
     }];
     [self initView];
-    // Do any additional setup after loading the view from its nib.
 }
+
+- (NSMutableArray *)heightArray
+{
+    if(!_heightArray){
+        _heightArray = [NSMutableArray array];
+        for (NSInteger i = 0; i < 3; i++) {
+            [_heightArray addObject:@(44.0f)];
+        }
+    }
+    return _heightArray;
+}
+
+- (ProdConfigTableViewCell *)intoductionCell
+{
+    if(!_intoductionCell){
+        _intoductionCell = [[[NSBundle mainBundle] loadNibNamed:@"ProdConfigTableViewCell" owner:self options:nil] lastObject];
+        _intoductionCell.delegate = self;
+        _intoductionCell.lblDetail.text = @"业务介绍";
+        NSString *url = [NSString stringWithFormat:@"%@/businessintroduction/%@",rBaseAddressForHttpProd,self.obj.pid];
+        [_intoductionCell loadHtml:url];
+    }
+    return _intoductionCell;
+}
+
+- (ProdConfigTableViewCell *)infomationCell
+{
+    if(!_infomationCell){
+        _infomationCell = [[[NSBundle mainBundle] loadNibNamed:@"ProdConfigTableViewCell" owner:self options:nil] lastObject];
+        _infomationCell.delegate = self;
+        _infomationCell.lblDetail.text = @"产品信息";
+        NSString *url = [NSString stringWithFormat:@"%@/%@",rBaseAddressForHttpProd,self.obj.pid];
+        [_infomationCell loadRequest:url];
+    }
+    return _infomationCell;
+}
+
+
+- (ProdConfigTableViewCell *)flowCell
+{
+    if(!_flowCell){
+        _flowCell = [[[NSBundle mainBundle] loadNibNamed:@"ProdConfigTableViewCell" owner:self options:nil] lastObject];
+        _flowCell.delegate = self;
+        _flowCell.lblDetail.text = @"业务流程";
+        NSString *url = [NSString stringWithFormat:@"%@/businessprocess/%@",rBaseAddressForHttpProd,self.obj.pid];
+        [_flowCell loadHtml:url];
+    }
+    return _flowCell;
+}
+
 
 -(void)rightItemClick:(id)sender
 {
@@ -122,12 +180,14 @@
     _lblRight2.text = self.obj.right2;
     NSString *imaeName ;
     if ([_obj.iscollected boolValue]) {
-       imaeName = @"已收藏prod";
+        imaeName = @"已收藏prod";
     }else{
         imaeName = @"收藏prod";
 
     }
-      [_btnCollet setImage:[UIImage imageNamed:imaeName] forState:UIControlStateNormal];
+    [_btnCollet setImage:[UIImage imageNamed:imaeName] forState:UIControlStateNormal];
+
+    self.cellArray = @[self.intoductionCell,self.infomationCell,self.flowCell];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -153,8 +213,7 @@
 {
     NSString *url = [NSString stringWithFormat:@"%@/%@",rBaseAddressForHttpProd,@"appointment"];
     [Hud showLoadingWithMessage:@"正在预约……"];
-    NSDictionary *param = @{@"uid":[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID],
-                            @"pid":_obj.pid};
+    NSDictionary *param = @{@"uid":[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID], @"pid":_obj.pid};
     [MOCHTTPRequestOperationManager postWithURL:url class:nil parameters:param success:^(MOCHTTPResponse *response) {
         [Hud hideHud];
 
@@ -165,7 +224,7 @@
             ProdConsulutionViewController *vc = [[ProdConsulutionViewController alloc] initWithNibName:@"ProdConsulutionViewController" bundle:nil];
             vc.codeStr = value;
             [self.navigationController pushViewController:vc animated:YES];
-            
+
         }
     } failed:^(MOCHTTPResponse *response) {
         [Hud hideHud];
@@ -254,8 +313,6 @@
     [[AFHTTPRequestOperationManager manager] PUT:url parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSString *code = [responseObject valueForKey:@"code"];
         if ([code isEqualToString:@"000"]) {
-            // [self refreshData];
-
             [Hud showMessageWithText:@"分享成功"];
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -277,31 +334,23 @@
 
 - (IBAction)actionCollet:(id)sender {
     NSString *url = [NSString stringWithFormat:@"%@/%@",rBaseAddressForHttpProd,@"collection"];
-    NSDictionary *param = @{@"uid":[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID],
-                            @"pid":self.obj.pid};
-    if ([_obj.iscollected boolValue])
-    {
+    NSDictionary *param = @{@"uid":[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID], @"pid":self.obj.pid};
+    if ([_obj.iscollected boolValue]){
         [[AFHTTPRequestOperationManager manager ] DELETE:url parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject) {
             NSString *code = [responseObject valueForKey:@"code"];
-            if ([code isEqualToString:@"000"])
-            {
+            if ([code isEqualToString:@"000"]) {
                 _obj.iscollected = @"0";
-                   [_btnCollet setImage:[UIImage imageNamed:@"收藏prod"] forState:UIControlStateNormal];
+                [_btnCollet setImage:[UIImage imageNamed:@"收藏prod"] forState:UIControlStateNormal];
             }
             [Hud showMessageWithText:@"取消收藏成功"];
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             [Hud showMessageWithText:error.domain];
         }];
-    }
-    
-    else
-    {
+    } else{
         [MOCHTTPRequestOperationManager postWithURL:url class:nil parameters:param success:^(MOCHTTPResponse *response) {
             NSString *code = [response.data valueForKey:@"code"];
-            if ([code isEqualToString:@"000"])
-            {
+            if ([code isEqualToString:@"000"]){
                 ProdListObj *obj = _obj;
-                
                 obj.iscollected = @"1";
                 _obj = obj;
                 [_btnCollet setImage:[UIImage imageNamed:@"已收藏prod"] forState:UIControlStateNormal];
@@ -323,27 +372,23 @@
     return 1;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    CGFloat height = [[self.heightArray objectAtIndex:indexPath.row] floatValue];
+    return height;
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *cellIdentifier = @"cellIdentifier";
-    ProdConfigTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-    if (!cell) {
-        cell = [[[NSBundle mainBundle] loadNibNamed:@"ProdConfigTableViewCell" owner:self options:nil] lastObject];
-    }
     if (indexPath.row == 0) {
-        cell.lblDetail.text = @"业务介绍";
+        return self.intoductionCell;
+    } else if (indexPath.row == 1) {
+        return self.infomationCell;
+    } else{
+        return self.flowCell;
     }
-    if (indexPath.row == 1) {
-        cell.lblDetail.text = @"产品信息";
-
-    }
-    if (indexPath.row == 2) {
-        cell.lblDetail.text = @"业务流程";
-        
-    }
-   // cell.lblDetail =
-    return cell;
 }
+
 
 -(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {
@@ -356,8 +401,8 @@
         for (int i = 0; i < self.dataArr.count; i++)
         {
             ConfigObj *obj = self.dataArr[i];
-          CinfigView *view = [[[NSBundle mainBundle] loadNibNamed:@"ConfigView" owner:self options:nil] lastObject];
-         
+            CinfigView *view = [[[NSBundle mainBundle] loadNibNamed:@"ConfigView" owner:self options:nil] lastObject];
+
             [view setFrame:CGRectMake(0, 34*i+15, SCREENWIDTH, 34)];
             [view configViewWithObj:obj];
             [self.configView addSubview:view];
@@ -365,9 +410,14 @@
     }
     return self.configView;
 }
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+
+- (void)didUpdateCell:(ProdConfigTableViewCell *)cell height:(CGFloat)height
 {
-    return 44;
+    NSInteger index = [self.cellArray indexOfObject:cell];
+    if([[self.heightArray objectAtIndex:index] integerValue] == 44){
+        [self.heightArray replaceObjectAtIndex:index withObject:@(height)];
+        [self.tableList reloadData];
+    }
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -377,6 +427,7 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
     SubDetailViewController *vc = [[SubDetailViewController alloc] initWithNibName:@"SubDetailViewController" bundle:nil];
     vc.pid = _obj.pid;
     switch (indexPath.row)
