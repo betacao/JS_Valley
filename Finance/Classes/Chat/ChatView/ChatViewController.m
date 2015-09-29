@@ -1102,8 +1102,9 @@
             weakSelf.dataSource = [[weakSelf formatMessages:messages] mutableCopy];
             dispatch_async(dispatch_get_main_queue(), ^{
                 [weakSelf.tableView reloadData];
-                
-                [weakSelf.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:[weakSelf.dataSource count] - currentCount - 1 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
+                if(weakSelf.dataSource.count > currentCount){
+                    [weakSelf.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:weakSelf.dataSource.count - currentCount - 1 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
+                }
             });
 
             //从数据库导入时重新下载没有下载成功的附件

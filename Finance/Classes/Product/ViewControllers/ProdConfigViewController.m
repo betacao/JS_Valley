@@ -428,33 +428,6 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    SubDetailViewController *vc = [[SubDetailViewController alloc] initWithNibName:@"SubDetailViewController" bundle:nil];
-    vc.pid = _obj.pid;
-    switch (indexPath.row)
-    {
-        case 0:
-        {
-            vc.method = @"businessintroduction";
-
-        }
-            break;
-        case 1:
-        {
-            vc.method = @"";
-
-        }
-            break;
-        case 2:
-        {
-            //业务流程
-         
-            vc.method = @"businessprocess";
-        }
-            break;
-        default:
-            break;
-    }
-    [self.navigationController pushViewController:vc animated:YES];
 
 }
 
