@@ -10,6 +10,5 @@
 #import "ConfigObj.h"
 @interface CinfigView : UIView
 
--(void)configViewWithObj:(ConfigObj *)obj
-;
+-(void)configViewWithObj:(ConfigObj *)obj;
 @end

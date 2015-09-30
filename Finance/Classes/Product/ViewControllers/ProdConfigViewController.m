@@ -26,10 +26,9 @@
 @property (weak, nonatomic) IBOutlet UILabel *lblProdName;
 @property (strong, nonatomic) IBOutlet UIView *viewFooter;
 @property (strong, nonatomic) IBOutlet UIView *viewHeader;
-@property (strong, nonatomic) IBOutlet UIView *configView;
 @property (weak, nonatomic) IBOutlet UITableView *tableList;
 @property (strong, nonatomic) NSMutableArray *heightArray;
-
+@property (strong, nonatomic) UIView *footerView;
 //业务介绍 产品信息 和业务流程的cell这边写死 不会去重复加载了
 //如果想写的灵活 就要使用缓存了
 @property (strong, nonatomic) ProdConfigTableViewCell *infomationCell;
@@ -117,14 +116,22 @@
     return _heightArray;
 }
 
+- (UIView *)footerView
+{
+    if(!_footerView){
+        _footerView = [[UIView alloc] init];
+        _footerView.backgroundColor = [UIColor colorWithHexString:@"eeeeee"];
+    }
+    return _footerView;
+}
+
 
 - (ProdConfigTableViewCell *)infomationCell
 {
     if(!_infomationCell){
         _infomationCell = [[[NSBundle mainBundle] loadNibNamed:@"ProdConfigTableViewCell" owner:self options:nil] lastObject];
         _infomationCell.delegate = self;
-//        NSString *url = [NSString stringWithFormat:@"%@/other/%@",rBaseAddressForHttpProd,self.obj.pid];
-        NSString *url = [NSString stringWithFormat:@"%@/other/4",rBaseAddressForHttpProd];
+        NSString *url = [NSString stringWithFormat:@"%@/other/%@",rBaseAddressForHttpProd,self.obj.pid];
         [_infomationCell loadRequest:url];
     }
     return _infomationCell;
@@ -364,23 +371,33 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {
-    return 255;
+    if(self.dataArr && self.dataArr.count > 0){
+        return CGRectGetHeight(self.footerView.frame);
+    } else{
+        return 0.0f;
+    }
 }
 
 -(UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
 {
     if (!IsArrEmpty(self.dataArr)) {
-        for (int i = 0; i < self.dataArr.count; i++)
-        {
-            ConfigObj *obj = self.dataArr[i];
-            CinfigView *view = [[[NSBundle mainBundle] loadNibNamed:@"ConfigView" owner:self options:nil] lastObject];
-
-            [view setFrame:CGRectMake(0, 34*i+15, SCREENWIDTH, 34)];
-            [view configViewWithObj:obj];
-            [self.configView addSubview:view];
+        if([self.footerView subviews].count == 0){
+            for (int i = 0; i < self.dataArr.count; i++){
+                ConfigObj *obj = self.dataArr[i];
+                CinfigView *view = [[[NSBundle mainBundle] loadNibNamed:@"ConfigView" owner:self options:nil] lastObject];
+                CGRect frame = self.footerView.frame;
+                [view setFrame:CGRectMake(0, 34.0f * i, SCREENWIDTH, 34.0f)];
+                [view configViewWithObj:obj];
+                frame.size.height = CGRectGetMaxY(view.frame);
+                frame.size.width = SCREENWIDTH;
+                self.footerView.frame = frame;
+                [self.footerView addSubview:view];
+            }
+        } else{
+            return self.footerView;
         }
     }
-    return self.configView;
+    return nil;
 }
 
 - (void)didUpdateCell:(ProdConfigTableViewCell *)cell height:(CGFloat)height

@@ -8,6 +8,7 @@
 
 #import "CinfigView.h"
 @interface CinfigView()
+
 @property (weak, nonatomic) IBOutlet UILabel *lbl5;
 @property (weak, nonatomic) IBOutlet UILabel *lbl4;
 @property (weak, nonatomic) IBOutlet UILabel *lbl3;

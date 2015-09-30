@@ -9,7 +9,6 @@
             <connections>
                 <outlet property="btnCollet" destination="5EJ-Ui-y9T" id="IC3-4G-rHc"/>
                 <outlet property="btnShare" destination="lbk-Qn-cZx" id="Etf-ve-fRO"/>
-                <outlet property="configView" destination="W22-Dq-aIQ" id="Itd-E8-Tj2"/>
                 <outlet property="lblLeft1" destination="Bcf-yV-hmB" id="pOe-Gz-J2u"/>
                 <outlet property="lblLeft2" destination="Vp6-Op-zpy" id="8FA-aI-uEq"/>
                 <outlet property="lblPercent" destination="CeD-q0-hbm" id="ba3-5o-vt0"/>
