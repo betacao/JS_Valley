@@ -34,4 +34,6 @@
 @property (strong, nonatomic)   CircleListObj *obj;
 @property (strong, nonatomic)   NSDictionary *itemInfoDictionary;
 
+- (void)smsShareSuccess:(NSNotification *)noti;
+
 @end

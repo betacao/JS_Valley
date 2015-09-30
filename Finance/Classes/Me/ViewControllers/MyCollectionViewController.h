@@ -13,4 +13,6 @@
 #import "CircleDetailViewController.h"
 @interface MyCollectionViewController : BaseTableViewController<MWPhotoBrowserDelegate,CircleListDelegate,circleActionDelegate,UIAlertViewDelegate>
 
+- (void)smsShareSuccess:(NSNotification *)noti;
+
 @end

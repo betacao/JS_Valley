@@ -18,4 +18,6 @@
 
 @property (nonatomic, weak)id<circleActionDelegate> delegate;
 
+- (void)smsShareSuccess:(NSNotification *)noti;
+
 @end

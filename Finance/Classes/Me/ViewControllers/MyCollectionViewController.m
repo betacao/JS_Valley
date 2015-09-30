@@ -42,10 +42,6 @@
 	self.selectType = 1;
 	self.navigationItem.titleView = self.segmentControl;
     [self addHeaderRefresh:self.tableView headerRefesh:YES andFooter:YES];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(smsShareSuccess:) name:NOTIFI_CHANGE_SHARE_TO_SMSSUCCESS object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(smsShareSuccess:) name:NOTIFI_CHANGE_SHARE_TO_FRIENDSUCCESS object:nil];
-
 
     [CommonMethod setExtraCellLineHidden:self.tableView];
     self.tableView.separatorStyle = 1;

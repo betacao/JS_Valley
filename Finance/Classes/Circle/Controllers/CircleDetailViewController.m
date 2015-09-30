@@ -110,11 +110,6 @@
     DDTapGestureRecognizer *hdGes = [[DDTapGestureRecognizer alloc] initWithTarget:self action:@selector(headTap:)];
     [self.imageHeader addGestureRecognizer:hdGes];
     self.imageHeader.userInteractionEnabled = YES;
-
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(smsShareSuccess:) name:NOTIFI_CHANGE_SHARE_TO_SMSSUCCESS object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(smsShareSuccess:) name:NOTIFI_CHANGE_SHARE_TO_FRIENDSUCCESS object:nil];
-    
-    
 }
 
 -(void)parseObjWithDic:(NSDictionary *)dics

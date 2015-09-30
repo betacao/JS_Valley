@@ -115,8 +115,6 @@
     }
     self.lineView.backgroundColor = [UIColor getColor:@"dcdcdc"];
     self.lineView2.backgroundColor = [UIColor getColor:@"dcdcdc"];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(smsShareSuccess:) name:NOTIFI_CHANGE_SHARE_TO_SMSSUCCESS object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(smsShareSuccess:) name:NOTIFI_CHANGE_SHARE_TO_FRIENDSUCCESS object:nil];
    
     [self.listTable setTableHeaderView:self.viewHeader];
     [self requestDataWithTarget:@"first" time:@""];
