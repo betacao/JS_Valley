@@ -10,6 +10,10 @@
 #import "ProdConfigTableViewCell.h"
 #import "ConfigObj.h"
 #import "AppDelegate.h"
+
+#define kNumberOfRows 1
+#define kHeightForNormalCell 44.0f
+
 @interface ProdConfigViewController ()<ProdConfigDelegate>
 
 @property (weak, nonatomic) IBOutlet UIButton *btnShare;
@@ -28,9 +32,7 @@
 
 //业务介绍 产品信息 和业务流程的cell这边写死 不会去重复加载了
 //如果想写的灵活 就要使用缓存了
-@property (strong, nonatomic) ProdConfigTableViewCell *intoductionCell;
 @property (strong, nonatomic) ProdConfigTableViewCell *infomationCell;
-@property (strong, nonatomic) ProdConfigTableViewCell *flowCell;
 @property (strong, nonatomic) NSArray *cellArray;
 
 
@@ -108,48 +110,24 @@
 {
     if(!_heightArray){
         _heightArray = [NSMutableArray array];
-        for (NSInteger i = 0; i < 3; i++) {
-            [_heightArray addObject:@(44.0f)];
+        for (NSInteger i = 0; i < kNumberOfRows; i++) {
+            [_heightArray addObject:@(kHeightForNormalCell)];
         }
     }
     return _heightArray;
 }
 
-- (ProdConfigTableViewCell *)intoductionCell
-{
-    if(!_intoductionCell){
-        _intoductionCell = [[[NSBundle mainBundle] loadNibNamed:@"ProdConfigTableViewCell" owner:self options:nil] lastObject];
-        _intoductionCell.delegate = self;
-        _intoductionCell.lblDetail.text = @"业务介绍";
-        NSString *url = [NSString stringWithFormat:@"%@/businessintroduction/%@",rBaseAddressForHttpProd,self.obj.pid];
-        [_intoductionCell loadHtml:url];
-    }
-    return _intoductionCell;
-}
 
 - (ProdConfigTableViewCell *)infomationCell
 {
     if(!_infomationCell){
         _infomationCell = [[[NSBundle mainBundle] loadNibNamed:@"ProdConfigTableViewCell" owner:self options:nil] lastObject];
         _infomationCell.delegate = self;
-        _infomationCell.lblDetail.text = @"产品信息";
-        NSString *url = [NSString stringWithFormat:@"%@/%@",rBaseAddressForHttpProd,self.obj.pid];
+//        NSString *url = [NSString stringWithFormat:@"%@/other/%@",rBaseAddressForHttpProd,self.obj.pid];
+        NSString *url = [NSString stringWithFormat:@"%@/other/4",rBaseAddressForHttpProd];
         [_infomationCell loadRequest:url];
     }
     return _infomationCell;
-}
-
-
-- (ProdConfigTableViewCell *)flowCell
-{
-    if(!_flowCell){
-        _flowCell = [[[NSBundle mainBundle] loadNibNamed:@"ProdConfigTableViewCell" owner:self options:nil] lastObject];
-        _flowCell.delegate = self;
-        _flowCell.lblDetail.text = @"业务流程";
-        NSString *url = [NSString stringWithFormat:@"%@/businessprocess/%@",rBaseAddressForHttpProd,self.obj.pid];
-        [_flowCell loadHtml:url];
-    }
-    return _flowCell;
 }
 
 
@@ -187,7 +165,7 @@
     }
     [_btnCollet setImage:[UIImage imageNamed:imaeName] forState:UIControlStateNormal];
 
-    self.cellArray = @[self.intoductionCell,self.infomationCell,self.flowCell];
+    self.cellArray = @[self.infomationCell];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -380,13 +358,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row == 0) {
-        return self.intoductionCell;
-    } else if (indexPath.row == 1) {
-        return self.infomationCell;
-    } else{
-        return self.flowCell;
-    }
+    return self.infomationCell;
 }
 
 
@@ -414,7 +386,7 @@
 - (void)didUpdateCell:(ProdConfigTableViewCell *)cell height:(CGFloat)height
 {
     NSInteger index = [self.cellArray indexOfObject:cell];
-    if([[self.heightArray objectAtIndex:index] integerValue] == 44){
+    if([[self.heightArray objectAtIndex:index] floatValue] == kHeightForNormalCell){
         [self.heightArray replaceObjectAtIndex:index withObject:@(height)];
         [self.tableList reloadData];
     }
@@ -422,7 +394,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 3;
+    return kNumberOfRows;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

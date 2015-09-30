@@ -17,7 +17,6 @@
 @end
 
 @interface ProdConfigTableViewCell : UITableViewCell
-@property (weak, nonatomic) IBOutlet UILabel *lblDetail;
 @property (assign, nonatomic) id<ProdConfigDelegate> delegate;
 
 - (void)loadRequest:(NSString *)url;
