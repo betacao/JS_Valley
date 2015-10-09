@@ -884,6 +884,7 @@
 		F932E2551B859DEC00EF2332 /* CircleListRecommendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F932E2531B859DEC00EF2332 /* CircleListRecommendViewController.m */; };
 		F932E2561B859DEC00EF2332 /* CircleListRecommendViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F932E2541B859DEC00EF2332 /* CircleListRecommendViewController.xib */; };
 		F9758A631BB002D70085D32C /* ImproveMatiralViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9758A621BB002D70085D32C /* ImproveMatiralViewController.xib */; settings = {ASSET_TAGS = (); }; };
+		F98B16EF1BC7947D000A577C /* libGeTuiSdk-1.2.1.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F98B16EE1BC7947D000A577C /* libGeTuiSdk-1.2.1.a */; settings = {ASSET_TAGS = (); }; };
 		F99580C41B9D338B001F8AA6 /* SHGModifyInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F99580C21B9D338B001F8AA6 /* SHGModifyInfoViewController.m */; };
 		F99580C51B9D338B001F8AA6 /* SHGModifyInfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F99580C31B9D338B001F8AA6 /* SHGModifyInfoViewController.xib */; };
 		F99580C81B9D7F39001F8AA6 /* DXAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = F99580C71B9D7F39001F8AA6 /* DXAlertView.m */; };
@@ -2105,6 +2106,9 @@
 		F9489B141BBA81BD000C215A /* WBSDKRelationshipButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBSDKRelationshipButton.h; sourceTree = "<group>"; };
 		F9489B151BBA81BD000C215A /* WeiboUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeiboUser.h; sourceTree = "<group>"; };
 		F9758A621BB002D70085D32C /* ImproveMatiralViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ImproveMatiralViewController.xib; sourceTree = "<group>"; };
+		F98B16EC1BC7947D000A577C /* GeTuiSdk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeTuiSdk.h; sourceTree = "<group>"; };
+		F98B16ED1BC7947D000A577C /* GeTuiSdkError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeTuiSdkError.h; sourceTree = "<group>"; };
+		F98B16EE1BC7947D000A577C /* libGeTuiSdk-1.2.1.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libGeTuiSdk-1.2.1.a"; sourceTree = "<group>"; };
 		F99580C11B9D338B001F8AA6 /* SHGModifyInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGModifyInfoViewController.h; sourceTree = "<group>"; };
 		F99580C21B9D338B001F8AA6 /* SHGModifyInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGModifyInfoViewController.m; sourceTree = "<group>"; };
 		F99580C31B9D338B001F8AA6 /* SHGModifyInfoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGModifyInfoViewController.xib; sourceTree = "<group>"; };
@@ -2167,6 +2171,7 @@
 				6189CAA51AD3CFD9000FF15D /* AVFoundation.framework in Frameworks */,
 				6189CAA31AD3CFD3000FF15D /* CoreMedia.framework in Frameworks */,
 				6189CAA11AD3CFCA000FF15D /* CoreVideo.framework in Frameworks */,
+				F98B16EF1BC7947D000A577C /* libGeTuiSdk-1.2.1.a in Frameworks */,
 				6189CA9D1AD3CFB2000FF15D /* libstdc++.6.0.9.dylib in Frameworks */,
 				6186DF2E1AFABC6F00960934 /* ShareSDKFlatShareViewUI.framework in Frameworks */,
 				61ED1A6A1AD3C562005B73E8 /* UIKit.framework in Frameworks */,
@@ -3721,6 +3726,7 @@
 		61D6E7401AD50FCA0016C13A /* External */ = {
 			isa = PBXGroup;
 			children = (
+				F98B16EA1BC7947D000A577C /* GeTui */,
 				619027401B2359C600D9EEA2 /* MenuPopover */,
 				6147ADFC1B050E7F00DFBD50 /* MPNotificationView */,
 				5331DF271AFC12EA00E035B8 /* Localizable.strings */,
@@ -4557,6 +4563,24 @@
 				B0CA7C871B7A022F0038BABB /* wx@3x.png */,
 			);
 			name = "登录";
+			sourceTree = "<group>";
+		};
+		F98B16EA1BC7947D000A577C /* GeTui */ = {
+			isa = PBXGroup;
+			children = (
+				F98B16EB1BC7947D000A577C /* include */,
+				F98B16EE1BC7947D000A577C /* libGeTuiSdk-1.2.1.a */,
+			);
+			path = GeTui;
+			sourceTree = "<group>";
+		};
+		F98B16EB1BC7947D000A577C /* include */ = {
+			isa = PBXGroup;
+			children = (
+				F98B16EC1BC7947D000A577C /* GeTuiSdk.h */,
+				F98B16ED1BC7947D000A577C /* GeTuiSdkError.h */,
+			);
+			path = include;
 			sourceTree = "<group>";
 		};
 		F99B60291B9E7D9500759AAC /* HeaderView */ = {
@@ -5695,6 +5719,7 @@
 					2/Extend/WeChatSDK,
 					"$(PROJECT_DIR)/Finance/External/ShareSDK/Extend/SinaWeiboSDK",
 					"$(PROJECT_DIR)/Finance/Classes/Chat/3rdparty/UMeng",
+					"$(PROJECT_DIR)/Finance/External/GeTui",
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.danniuquan.apptest;
@@ -5752,6 +5777,7 @@
 					2/Extend/WeChatSDK,
 					"$(PROJECT_DIR)/Finance/External/ShareSDK/Extend/SinaWeiboSDK",
 					"$(PROJECT_DIR)/Finance/Classes/Chat/3rdparty/UMeng",
+					"$(PROJECT_DIR)/Finance/External/GeTui",
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.danniuquan.apptest;
@@ -5847,6 +5873,7 @@
 					2/Extend/WeChatSDK,
 					"$(PROJECT_DIR)/Finance/External/ShareSDK/Extend/SinaWeiboSDK",
 					"$(PROJECT_DIR)/Finance/Classes/Chat/3rdparty/UMeng",
+					"$(PROJECT_DIR)/Finance/External/GeTui",
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.danniuquan.apptest;
