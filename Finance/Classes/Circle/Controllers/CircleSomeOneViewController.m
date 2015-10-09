@@ -36,19 +36,15 @@
 @property (weak, nonatomic) IBOutlet UILabel *comPanyName;  //公司名称
 @property (weak, nonatomic) IBOutlet UIImageView *VImageView;
 
-@property (nonatomic, strong) NSString *titles;//职称
-@property (nonatomic, strong) NSString *rela;
-
-@property (nonatomic, strong) NSString *potname;
-
-@property (nonatomic, strong) NSString *num;
-
-@property (nonatomic, strong) NSString *nickname;
-
-@property (nonatomic, strong) NSString *company;
+@property (strong, nonatomic) NSString *titles;//职称
+@property (strong, nonatomic) NSString *rela;
+@property (strong, nonatomic) NSString *potname;
+@property (strong, nonatomic) NSString *num;
+@property (strong, nonatomic) NSString *nickname;
+@property (strong, nonatomic) NSString *company;
 @property (strong ,nonatomic) NSString *userStatus;
+@property (strong, nonatomic) NSString *fans;
 
-@property (nonatomic, strong) NSString *fans;
 - (IBAction)actionFriendList:(id)sender;
 - (IBAction)actionChat:(id)sender;
 
@@ -131,21 +127,22 @@
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
     [Hud showLoadingWithMessage:@"加载中"];
 
+    __weak typeof(self) weakSelf = self;
     NSDictionary *param = @{@"uid":uid, @"target":target, @"rid":[NSNumber numberWithInt:[time intValue]], @"num":rRequestNum};
     [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttpCircle,actioncircle,self.userId] class:[CircleListObj class] parameters:param success:^(MOCHTTPResponse *response) {
         [Hud hideHud];
         NSLog(@"=data = %@",response.dataDictionary);
-        [self parseDataWithDic:response.dataDictionary];
-        [self.listTable.header endRefreshing];
-        [self.listTable.footer endRefreshing];
-        [self loadUI];
-        [self.listTable reloadData];
+        [weakSelf parseDataWithDic:response.dataDictionary];
+        [weakSelf.listTable.header endRefreshing];
+        [weakSelf.listTable.footer endRefreshing];
+        [weakSelf loadUI];
+        [weakSelf.listTable reloadData];
     } failed:^(MOCHTTPResponse *response) {
         [Hud showMessageWithText:response.errorMessage];
         [Hud hideHud];
         NSLog(@"%@",response.errorMessage);
-        [self.listTable.header endRefreshing];
-        [self.listTable.footer endRefreshing];
+        [weakSelf.listTable.header endRefreshing];
+        [weakSelf.listTable.footer endRefreshing];
         
     }];
 }
@@ -185,7 +182,7 @@
 -(void)parseDataWithDic:(NSDictionary *)dic
 {
     self.company = dic[@"company"];
-    self.fans = dic[@"fans"];
+    self.fans = [NSString stringWithFormat:@"%@",[dic objectForKey:@"fans"]];;
     
     self.nickname = dic[@"nickname"];
     self.title = [NSString stringWithFormat:@"%@的动态",self.nickname];
@@ -233,11 +230,8 @@
             commentOBj *cmbobj = [[commentOBj alloc] init];
             cmbobj.cdetail = ment[@"cdetail"];
             cmbobj.cnickname = ment[@"cnickname"];
-
             cmbobj.rnickname = ment[@"rnickname"];
-
             cmbobj.cid = ment[@"cid"];
-
             cmbobj.rid = ment[@"rid"];
             [obj.comments addObject:cmbobj];
 
