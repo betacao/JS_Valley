@@ -60,6 +60,9 @@
 #define KEY_SHARESDK    @"5540914ce0f55a5ee70002a2"
 //
 
+#define kAppId      @"YJVwxGvDAm9xzBUj6ECms"
+#define kAppKey     @"rn8Nk0eHBGAQ1rf4IFSVi2"
+#define kAppSecret  @"ryyfVg7IiI6LIaUVGYVzr3"
 
 
 
