@@ -789,6 +789,7 @@
     NSArray *selectedArray = [SHGGloble sharedGloble].selectedTagsArray;
     NSArray *tagsArray = [SHGGloble sharedGloble].tagsArray;
     [self.selectedArray removeAllObjects];
+    [self clearButtonState];
     for(SHGUserTagModel *model in selectedArray){
         NSInteger index = [tagsArray indexOfObject:model];
         NSLog(@"......%ld",(long)index);
@@ -815,6 +816,16 @@
         button.selected = !isSelecetd;
         [self.selectedArray removeObject:@(index)];
     }
+}
+
+- (void)clearButtonState
+{
+    [self.subviews enumerateObjectsUsingBlock:^(__kindof UIView * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if([obj isKindOfClass:[UIButton class]]){
+            UIButton *button = (UIButton *)obj;
+            [button setSelected:NO];
+        }
+    }];
 }
 
 - (NSArray *)userSelectedTags
