@@ -577,66 +577,19 @@
 	</dict>
 	<dict>
 		<key>cities</key>
-		<array>
-			<string>新竹</string>
-			<string>基隆</string>
-			<string>高雄</string>
-			<string>台北</string>
-			<string>台南</string>
-			<string>嘉义</string>
-			<string>台中</string>
-			<string>宜兰</string>
-			<string>屏东</string>
-			<string>桃园</string>
-			<string>台东</string>
-			<string>苗栗</string>
-			<string>金门</string>
-			<string>花莲</string>
-			<string>云林</string>
-			<string>连江</string>
-			<string>澎湖</string>
-			<string>南投</string>
-			<string>彰化</string>
-		</array>
+		<array/>
 		<key>state</key>
 		<string>台湾</string>
 	</dict>
 	<dict>
 		<key>cities</key>
-		<array>
-			<string>油尖旺</string>
-			<string>黄大仙</string>
-			<string>深水埗</string>
-			<string>观塘</string>
-			<string>九龙城</string>
-			<string>湾仔</string>
-			<string>葵青</string>
-			<string>离岛</string>
-			<string>中西</string>
-			<string>南</string>
-			<string>东</string>
-			<string>荃湾</string>
-			<string>元朗</string>
-			<string>沙田</string>
-			<string>西贡</string>
-			<string>屯门</string>
-			<string>大埔</string>
-			<string>北</string>
-		</array>
+		<array/>
 		<key>state</key>
 		<string>香港</string>
 	</dict>
 	<dict>
 		<key>cities</key>
-		<array>
-			<string>花地玛堂</string>
-			<string>圣安多尼堂</string>
-			<string>大堂</string>
-			<string>望德堂</string>
-			<string>风顺堂</string>
-			<string>嘉模堂</string>
-			<string>圣方济各堂</string>
-		</array>
+		<array/>
 		<key>state</key>
 		<string>澳门</string>
 	</dict>
