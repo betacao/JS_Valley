@@ -159,10 +159,21 @@
             [Hud showMessageWithText:@"正在定位，请稍后..."];
         }
     } else{
-        SHGCitysViewController *controller = [[SHGCitysViewController alloc] initWithStyle:UITableViewStylePlain];
-        controller.citys = [[self.provinces objectAtIndex:indexPath.row] objectForKey:@"cities"];
-        controller.delegate = self.delegate;
-        [self.navigationController pushViewController:controller animated:YES];
+        NSArray *citys = [[self.provinces objectAtIndex:indexPath.row] objectForKey:@"cities"];
+        if(citys && citys.count > 0){
+            SHGCitysViewController *controller = [[SHGCitysViewController alloc] initWithStyle:UITableViewStylePlain];
+            controller.citys = citys;
+            controller.delegate = self.delegate;
+            [self.navigationController pushViewController:controller animated:YES];
+        } else{
+            NSString *cityName = [[self.provinces objectAtIndex:indexPath.row] objectForKey:@"state"];
+            if(cityName && cityName.length > 0){
+                if(self.delegate && [self.delegate respondsToSelector:@selector(didSelectCity:)]){
+                    [self.delegate didSelectCity:cityName];
+                    [self.navigationController popViewControllerAnimated:YES];
+                }
+            }
+        }
     }
 }
 
