@@ -246,7 +246,6 @@
     self.btnUserPic.userInteractionEnabled = YES;
 
     NSString *headImage = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_HEAD_IMAGE];
-    self.btnUserPic.contentMode = UIViewContentModeScaleAspectFit;
     [self.btnUserPic sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,headImage]] placeholderImage:[UIImage imageNamed:@"default_head"]];
 
     self.circleHeaderLabel.text = @"\n动态 0";
