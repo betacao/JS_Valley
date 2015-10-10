@@ -149,11 +149,16 @@
 
 - (void)uploadUserSelectedInfo:(NSArray *)array completion:(void(^)(BOOL finished))block
 {
+    if(array.count == 0){
+        return;
+    }
     NSString *string = @"";
     for(NSNumber *number in array){
         NSInteger index = [number integerValue];
-        SHGUserTagModel *model = [[SHGGloble sharedGloble].tagsArray objectAtIndex:index];
-        string = [string stringByAppendingFormat:@",%@",model.tagId];
+        if(index < [SHGGloble sharedGloble].tagsArray.count){
+            SHGUserTagModel *model = [[SHGGloble sharedGloble].tagsArray objectAtIndex:index];
+            string = [string stringByAppendingFormat:@",%@",model.tagId];
+        }
     }
     if([string rangeOfString:@","].location != NSNotFound){
         string = [string substringFromIndex:1];

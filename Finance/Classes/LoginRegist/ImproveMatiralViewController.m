@@ -268,7 +268,6 @@
 {
     if (hasUploadHead) {
         [self uploadMaterial];
-        [self uploadUserSelectedInfo];
     }else{
         if (self.headImage) {
             [self uploadHeadImage:self.headImage];
@@ -302,7 +301,6 @@
         [[NSUserDefaults standardUserDefaults] setObject:weakSelf.headImageName forKey:KEY_HEAD_IMAGE];
         hasUploadHead = YES;
 		[weakSelf uploadMaterial];
-        [weakSelf uploadUserSelectedInfo];
 		[Hud hideHud];
 	} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 		NSLog(@"%@",error);
@@ -365,6 +363,7 @@
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0), ^{
                 [weakSelf chatLoagin];
                 [weakSelf dealFriendPush];
+                [weakSelf uploadUserSelectedInfo];
                 if (!IsArrEmpty(weakSelf.phones)) {
                     [weakSelf uploadPhones];
                 }
@@ -400,7 +399,7 @@
     [[SHGGloble sharedGloble] uploadUserSelectedInfo:array completion:^(BOOL finished) {
         if(finished){
             weakSelf.uploadTagsSuccess = YES;
-            [weakSelf didUploadAllUserInfo];
+            [weakSelf performSelector:@selector(didUploadAllUserInfo) withObject:nil afterDelay:1.0f];
         } else{
             [Hud hideHud];
         }
