@@ -254,11 +254,11 @@
 
     UIView *spaceView1 = [[UIView alloc] initWithFrame:CGRectMake(SCREENWIDTH / 3.0f, 10.0f, 1.0f, 30)];
     UIView *spaceView2 = [[UIView alloc] initWithFrame:CGRectMake(SCREENWIDTH / 3.0f * 2.0f,10.0f, 1.0f, 30)];
-    spaceView1.backgroundColor = [UIColor colorWithHexString:@"efeeef"];
-    spaceView2.backgroundColor = [UIColor colorWithHexString:@"efeeef"];
+    spaceView1.backgroundColor = [UIColor colorWithHexString:@"e8e8e8"];
+    spaceView2.backgroundColor = [UIColor colorWithHexString:@"e8e8e8"];
 
     UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, CGRectGetHeight(self.labelView.frame) - 1.0f, SCREENHEIGHT, 0.5f)];
-    lineView.backgroundColor = [UIColor colorWithHexString:@"efeeef"];
+    lineView.backgroundColor = [UIColor colorWithHexString:@"e8e8e8"];
     [self.labelView addSubview:lineView];
     [self.labelView addSubview:spaceView1];
     [self.labelView addSubview:spaceView2];
