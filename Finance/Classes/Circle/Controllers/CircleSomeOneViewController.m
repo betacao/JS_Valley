@@ -182,7 +182,7 @@
 -(void)parseDataWithDic:(NSDictionary *)dic
 {
     self.company = dic[@"company"];
-    self.fans = [NSString stringWithFormat:@"%@",[dic objectForKey:@"fans"]];;
+    self.fans = [NSString stringWithFormat:@"%@",[dic objectForKey:@"fans"]];
     
     self.nickname = dic[@"nickname"];
     self.title = [NSString stringWithFormat:@"%@的动态",self.nickname];

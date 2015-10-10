@@ -13,7 +13,6 @@
 #import "SettingModifyPWDViewController.h"
 #import "SettingAboutUsViewController.h"
 #import "LoginViewController.h"
-#import "BPush.h"
 #import "DingDQRCodeShareViewController.h"
 #import "EaseMob.h"
 #import "SettingsSuggestionsViewController.h"

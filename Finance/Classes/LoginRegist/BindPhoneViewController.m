@@ -163,18 +163,9 @@ typedef NS_ENUM(NSInteger, RegistType)
     NSString *osv = [UIDevice currentDevice].systemVersion;
     NSString *channelId = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_BPUSH_CHANNELID];
     NSString *userId = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_BPUSH_USERID];
-    NSDictionary *param = @{@"loginNum":thirdUid,
-                            @"loginType":logType,
-                            @"ctype":@"iphone",
-                            @"phone":phoneText.text,
-                            @"validateCode":authCodeText.text,
-                            @"os":@"ios",
-                            @"osv":osv,
-                            @"appv":LOCAL_Version,
-                            @"yuncid":channelId?:@"",
-                            @"yunuid":userId?:@""};
-    [MOCHTTPRequestOperationManager postWithURL:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"thirdLogin/bindingPhone"] class:nil parameters:param success:^(MOCHTTPResponse *response)
-     {
+
+    NSDictionary *param = @{@"loginNum":thirdUid, @"loginType":logType, @"ctype":@"iphone", @"phone":phoneText.text, @"validateCode":authCodeText.text, @"os":@"ios", @"osv":osv, @"appv":LOCAL_Version, @"yuncid":channelId?:@"", @"yunuid":userId?:@""};
+    [MOCHTTPRequestOperationManager postWithURL:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"thirdLogin/bindingPhone"] class:nil parameters:param success:^(MOCHTTPResponse *response){
          [Hud hideHud];
          NSString *isthirdlogin = response.dataDictionary[@"bindresult"];
          NSString *uid = response.dataDictionary[@"uid"];

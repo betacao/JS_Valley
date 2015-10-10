@@ -49,12 +49,12 @@
         return;
     }
     [Hud showLoadingWithMessage:@"登录中……"];
-	NSString *password = [_lblPassward.text md5];
-//	NSString *password = _lblPassward.text ;
+    NSString *password = [_lblPassward.text md5];
+    //	NSString *password = _lblPassward.text ;
 
     NSString *osv = [UIDevice currentDevice].systemVersion;
     NSString *channelId = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_BPUSH_CHANNELID];
-     NSString *userId = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_BPUSH_USERID];
+    NSString *userId = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_BPUSH_USERID];
     NSDictionary *param = @{@"phone":self.phone,
                             @"pwd":[_lblPassward.text md5],
                             @"ctype":@"iphone",
@@ -63,8 +63,7 @@
                             @"appv":LOCAL_Version,
                             @"yuncid":channelId?:@"",
                             @"yunuid":userId?:@""};
-    [MOCHTTPRequestOperationManager postWithURL:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,actionlogin] class:nil parameters:param success:^(MOCHTTPResponse *response)
-    {
+    [MOCHTTPRequestOperationManager postWithURL:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,actionlogin] class:nil parameters:param success:^(MOCHTTPResponse *response){
         [Hud hideHud];
         NSString *uid = response.dataDictionary[@"uid"];
         NSString *token = response.dataDictionary[@"token"];
@@ -75,7 +74,7 @@
         NSString *isfull = response.dataDictionary[@"isfull"];
         self.isFull = isfull;
         [[NSUserDefaults standardUserDefaults] setObject:uid forKey:KEY_UID];
-		[[NSUserDefaults standardUserDefaults] setObject:password forKey:KEY_PASSWORD];
+        [[NSUserDefaults standardUserDefaults] setObject:password forKey:KEY_PASSWORD];
         [[NSUserDefaults standardUserDefaults] setObject:state forKey:KEY_AUTHSTATE];
         [[NSUserDefaults standardUserDefaults] setObject:name forKey:KEY_USER_NAME];
         [[NSUserDefaults standardUserDefaults] setObject:head_img forKey:KEY_HEAD_IMAGE];
@@ -86,9 +85,9 @@
         [self regiestToken];
     } failed:^(MOCHTTPResponse *response)
      {
-        [Hud showMessageWithText:response.errorMessage];
-        [Hud hideHud];
-    }];
+         [Hud showMessageWithText:response.errorMessage];
+         [Hud hideHud];
+     }];
 }
 
 -(void)regiestToken

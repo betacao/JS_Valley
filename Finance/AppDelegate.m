@@ -28,12 +28,16 @@
 #import "MeViewController.h"
 #import "CircleSomeOneViewController.h"
 #import "VerifyIdentityViewController.h"
+#import "GeTuiSdk.h"
+#import "GeTuiSdkError.h"
+
 #define resultcodekey       @"code"
 #define successcode         @"000"
 #define datakey             @"data"
 #define messagekey          @"msg"
 
-@interface AppDelegate ()
+
+@interface AppDelegate ()<GeTuiSdkDelegate>
 {
     NSString *shareRid;
 }
@@ -41,6 +45,9 @@
 //新浪微博
 @property (strong, nonatomic) NSString *wbtoken;
 @property (strong, nonatomic) NSString *wbCurrentUserID;
+@property (strong, nonatomic) NSString *deviceToken;
+@property (strong, nonatomic) NSString *clientId;
+@property (strong, nonatomic) NSString *payloadId;
 @end
 
 @implementation AppDelegate
@@ -50,17 +57,18 @@
 {
     return (AppDelegate *)[[UIApplication sharedApplication] delegate];
 }
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     [self umengTrack];
     InstallUncaughtExceptionHandler();
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     [MOCNetworkReachabilityManager startMonitor:kNetworkCheckAddress viaWWAN:^{
-        
+
     } viaWiFi:^{
-        
+
     } notReachable:^{
-        
+
     }];
     
     //一天启动次数
@@ -79,41 +87,23 @@
         [[NSUserDefaults standardUserDefaults] synchronize];
     }
     
-    
     [MOCHTTPRequestOperationManager setupRequestOperationManager:resultcodekey successCode:successcode dataKey:datakey messageKey:messagekey];
     [self easemobApplication:application didFinishLaunchingWithOptions:launchOptions];
     [self setupShare];
-    
     //
     [MagicalRecord setupCoreDataStackWithAutoMigratingSqliteStoreNamed:@"Finance.sqlite"];
-  
-    // iOS8 下需要使用新的 API
-    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)
-    {
-        UIUserNotificationType myTypes = UIUserNotificationTypeBadge | UIUserNotificationTypeSound | UIUserNotificationTypeAlert;
 
-        UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:myTypes categories:nil];
-        [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
-    }else
-    {
-        UIRemoteNotificationType myTypes = UIRemoteNotificationTypeBadge|UIRemoteNotificationTypeAlert|UIRemoteNotificationTypeSound;
-        [[UIApplication sharedApplication] registerForRemoteNotificationTypes:myTypes];
-    }
-    
-    [BPush registerChannel:launchOptions apiKey:KEY_BPUSH pushMode:BPushModeDevelopment isDebug:YES];
-    
-    // 设置 BPush 的回调
-    [BPush setDelegate:self];
-    
+    [self startSdkWith:kAppId appKey:kAppKey appSecret:kAppSecret];
+    [self registerForRemoteNotification];
+
     // App 是用户点击推送消息启动
-    
     NSDictionary *userInfo = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
     RootViewController *rootVC =[[RootViewController alloc]init];
     if (userInfo) {
-        NSLog(@"从消息启动:%@",userInfo);        
+        NSLog(@"从消息启动______:%@",userInfo);
         rootVC.rid =userInfo;
         pushInfo = [userInfo copy];
-        [BPush handleNotification:userInfo];
+//        [BPush handleNotification:userInfo];
     }
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pushCircle:) name:kMPNotificationViewTapReceivedNotification object:userInfo];
     self.window.rootViewController = rootVC;
@@ -121,7 +111,50 @@
     [self.window makeKeyAndVisible];
     return YES;
 }
--(void)setupShare
+
+- (void)startSdkWith:(NSString *)appID appKey:(NSString*)appKey appSecret:(NSString *)appSecret
+{
+    NSError *err =nil;
+
+    //[1-1]:通过 AppId、appKey 、appSecret 启动SDK
+
+    [GeTuiSdk startSdkWithAppId:appID appKey:appKey appSecret:appSecret delegate:self error:&err];
+
+    //[1-2]:设置是否后台运行开关
+    [GeTuiSdk runBackgroundEnable:YES];
+
+    //[1-3]:设置地理围栏功能，开启LBS定位服务和是否允许SDK 弹出用户定位请求，请求NSLocationAlwaysUsageDescription权限,如果UserVerify设置为NO，需第三方负责提示用户定位授权。
+
+    [GeTuiSdk lbsLocationEnable:NO andUserVerify:NO];
+
+
+    if (err) {
+        NSLog(@"%@",[NSString stringWithFormat:@"%@", [err localizedDescription]]);
+        
+    }
+}
+
+- (void)GeTuiSdkDidSetPushMode:(BOOL)isModeOff error:(NSError *)error
+{
+
+}
+
+- (void)registerForRemoteNotification
+{
+    // iOS8 下需要使用新的 API
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0){
+        UIUserNotificationType myTypes = UIUserNotificationTypeBadge | UIUserNotificationTypeSound | UIUserNotificationTypeAlert;
+
+        UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:myTypes categories:nil];
+        [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
+    } else{
+        UIRemoteNotificationType myTypes = UIRemoteNotificationTypeBadge|UIRemoteNotificationTypeAlert|UIRemoteNotificationTypeSound;
+        [[UIApplication sharedApplication] registerForRemoteNotificationTypes:myTypes];
+    }
+    
+}
+
+- (void)setupShare
 {
     [ShareSDK registerApp:KEY_SHARESDK];
     [ShareSDK connectSMS];
@@ -154,65 +187,60 @@
     //友盟分析,线下渠道
     [MobClick startWithAppkey:kUMENGAppKey reportPolicy:BATCH  channelId:@"App Store"];
 }
-#pragma mark - BPUSh
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler{
     pushInfo = [userInfo copy];
     [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
-    if ([userInfo objectForKey:@"code"]){  //objectForKey will return nil if a key doesn't exists.
+
+    [self receiveNotification:userInfo];
+
+    NSDictionary *aps = userInfo[@"aps"];
+    NSString *alert = [aps valueForKey:@"alert"];
+//    [BPush handleNotification:userInfo];
+    NSLog(@"%@",alert);
+    completionHandler(UIBackgroundFetchResultNewData);
+}
+
+- (void)receiveNotification:(NSDictionary *)userInfo
+{
+    if ([userInfo objectForKey:@"code"]){
         NSString *code = [userInfo objectForKey:@"code"];
-        
+        UIApplication *application = [UIApplication sharedApplication];
         if (application.applicationState != UIApplicationStateActive){
             [self pushToNoticeViewController:userInfo];
         } else{
             //程序活跃在前台
-            NSString *rid;
-            if ([userInfo objectForKey:@"rid"])
-            {
+            NSString *rid = @"";
+            if ([userInfo objectForKey:@"rid"]){
                 rid = [userInfo objectForKey:@"rid"];
             }
-            if ([userInfo objectForKey:@"aps"])
-            {
+            if ([userInfo objectForKey:@"aps"]){
                 id aps = [userInfo objectForKey:@"aps"];
-                if ([aps isKindOfClass:[NSDictionary class]])
-                {
+                if ([aps isKindOfClass:[NSDictionary class]]){
                     NSDictionary *dicAps = (NSDictionary *)aps;
                     if ([dicAps objectForKey:@"alert"]) {
                         NSString *alert = dicAps[@"alert"];
                         UIImage *image = [UIImage imageNamed:@"80.png"];
                         image = [image reSizeImagetoSize:CGSizeMake(28, 28)];
                         [MPNotificationView notifyWithText:@"大牛圈" detail:alert image:image duration:3.0 andTouchBlock:nil pushId:userInfo];
-                        [application setApplicationIconBadgeNumber:0];
                     }
                 }
             }
         }
         //身份认证信息推送
-        if ([code isEqualToString:@"1005"])
-        {
+        if ([code isEqualToString:@"1005"]){
             [[NSUserDefaults standardUserDefaults] setObject:@"1" forKey:KEY_AUTHSTATE];
             [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_CHANGE_UPDATE_AUTO_STATUE object:nil];
-        }else if ([code isEqualToString:@"1006"]){
+        } else if ([code isEqualToString:@"1006"]){
             [[NSUserDefaults standardUserDefaults] setObject:@"0" forKey:KEY_AUTHSTATE];
             [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_CHANGE_UPDATE_AUTO_STATUE object:nil];
         }
         //有好友关注推送
-        if ([code isEqualToString:@"1004"])
-        {
-            
+        if ([code isEqualToString:@"1004"]){
             [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_CHANGE_UPDATE_FRIEND_LIST object:nil];  //刷新好友列表
-            
             //进入对方的个人空间
-            
-            
         }
     }
-    
-    NSDictionary *aps = userInfo[@"aps"];
-    NSString *alert = [aps valueForKey:@"alert"];
-    [BPush handleNotification:userInfo];
-    NSLog(@"%@",alert);
-    
 }
 
 /**
@@ -269,33 +297,30 @@
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
 {
     [[EaseMob sharedInstance] application:application didRegisterForRemoteNotificationsWithDeviceToken:deviceToken];
-    
-    NSLog(@"test:%@",deviceToken);
-    [BPush registerDeviceToken:deviceToken];
-    [BPush bindChannel];
+
+    NSString *token = [[deviceToken description] stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<>"]];
+    self.deviceToken = [token stringByReplacingOccurrencesOfString:@" " withString:@""];
+    NSLog(@"deviceToken:%@",self.deviceToken);
+    // [3]:向个推服务器注册deviceToken
+    [GeTuiSdk registerDeviceToken:self.deviceToken];
 }
 
 // 当 DeviceToken 获取失败时，系统会回调此方法
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
 {
     NSLog(@"DeviceToken 获取失败，原因：%@",error);
+    // [3-EXT]:如果APNS注册失败，通知个推服务器
+    [GeTuiSdk registerDeviceToken:@""];
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
     // App 收到推送的通知
-    [BPush handleNotification:userInfo];
     NSLog(@"%@",userInfo);
-    //[self.viewController addLogString:[NSString stringWithFormat:@"Received Remote Notification :\n%@",userInfo]];
-    
-    if ([TabBarViewController tabBar])
-    {
+    if ([TabBarViewController tabBar]){
         [[TabBarViewController tabBar] jumpToChatList];
     }
-    
-    
-    if (application.applicationState != UIApplicationStateActive)
-    {
+    if (application.applicationState != UIApplicationStateActive){
         [self presentViewControllerWithUserInfo:userInfo];
     }
 
@@ -303,6 +328,13 @@
 - (void)presentViewControllerWithUserInfo:(NSDictionary *)userInfo{
     
 }
+
+-(void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
+{
+    [GeTuiSdk resume];  // 恢复个推SDK运行
+    completionHandler(UIBackgroundFetchResultNewData);
+}
+
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
 {
     if ([TabBarViewController tabBar]) {
@@ -311,38 +343,38 @@
 
 }
 
-#pragma mark Push Delegate
-- (void)onMethod:(NSString*)method response:(NSDictionary*)data
+#pragma mark 个推 Delegate
+- (void)GeTuiSdkDidRegisterClient:(NSString *)clientId  // SDK 返回clientid
 {
-    //    [self.viewController addLogString:[NSString stringWithFormat:@"Method: %@\n%@",method,data]];
-    
-    NSLog(@"On method:%@", method);
-    NSLog(@"data:%@", [data description]);
-    NSDictionary* res = [[NSDictionary alloc] initWithDictionary:data];
-    if ([BPushRequestMethodBind isEqualToString:method])
-    {
-        NSString *userid = [res valueForKey:BPushRequestUserIdKey];
-        NSString *channelid = [res valueForKey:BPushRequestChannelIdKey];
-        NSString *appid = [res valueForKey:BPushRequestAppIdKey];
-        int returnCode = [[res valueForKey:BPushRequestErrorCodeKey] intValue];
-        if (returnCode == 0)
-        {
-            [[NSUserDefaults standardUserDefaults] setObject:appid forKey:KEY_BPUSH_APPID];
-            [[NSUserDefaults standardUserDefaults] setObject:userid forKey:KEY_BPUSH_USERID];
-            [[NSUserDefaults standardUserDefaults] setObject:channelid forKey:KEY_BPUSH_CHANNELID];
-            [[NSUserDefaults standardUserDefaults] setObject:@"YES" forKey:KEY_BPUSH_IESUCCESS];
-        }
+    // [4-EXT-1]: 个推SDK已注册，返回clientId
+    self.clientId = clientId;
+    if (self.deviceToken) {
+        [GeTuiSdk registerDeviceToken:self.deviceToken];
+        [GeTuiSdk setPushModeForOff:NO];
+
+        [[NSUserDefaults standardUserDefaults] setObject:clientId forKey:KEY_BPUSH_CHANNELID];
+        [[NSUserDefaults standardUserDefaults] setObject:@"getui" forKey:KEY_BPUSH_USERID];
+        [[NSUserDefaults standardUserDefaults] synchronize];
     }
-    else if ([BPushRequestMethodUnbind isEqualToString:method])
-    {
-        int returnCode = [[res valueForKey:BPushRequestErrorCodeKey] intValue];
-        if (returnCode == 0)
-        {
-            
-        }
-    }
-    
 }
+
+- (void)GeTuiSdkDidReceivePayload:(NSString *)payloadId andTaskId:(NSString *)taskId andMessageId:(NSString *)aMsgId fromApplication:(NSString *)appId
+{
+    self.payloadId = payloadId;
+    NSData* payload = [GeTuiSdk retrivePayloadById:payloadId]; //根据 payloadId 取回 Payload
+    NSString *payloadMsg = nil;
+    if (payload) {
+        payloadMsg = [[NSString alloc] initWithBytes:payload.bytes length:payload.length encoding:NSUTF8StringEncoding];
+    }
+    NSLog(@"%@",payloadMsg);
+    NSLog(@"收到了透传消息");
+}
+
+- (void)GeTuiSdkDidOccurError:(NSError *)error
+{
+    NSLog(@"个推出错啦");
+}
+
 
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
@@ -350,12 +382,12 @@
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
-    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
-    // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+    [GeTuiSdk enterBackground];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+//    [GeTuiSdk resume];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
@@ -564,7 +596,7 @@
     [controller dismissViewControllerAnimated:YES completion:nil];
     
     NSString *text ;
-    if (shareRid.length  >9) {
+    if (shareRid.length > 9) {
         switch (result)
         {
             case MessageComposeResultCancelled:
@@ -740,8 +772,8 @@
         WXAppExtendObject *obj = msg.mediaObject;
         
         NSString *strTitle = [NSString stringWithFormat:@"微信请求App显示内容"];
-        NSString *strMsg = [NSString stringWithFormat:@"openID: %@, 标题：%@ \n内容：%@ \n附带信息：%@ \n缩略图:%u bytes\n附加消息:%@\n", temp.openID, msg.title, msg.description, obj.extInfo, msg.thumbData.length, msg.messageExt];
-        
+        NSString *strMsg = [NSString stringWithFormat:@"openID: %@, 标题：%@ \n内容：%@ \n附带信息：%@ \n缩略图:%lu bytes\n附加消息:%@\n", temp.openID, msg.title, msg.description, obj.extInfo, (unsigned long)msg.thumbData.length, msg.messageExt];
+
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:strTitle message:strMsg delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         [alert show];
     }
@@ -798,7 +830,7 @@
     SendMessageToWXReq* req = [[SendMessageToWXReq alloc] init];
     req.bText = NO;
     req.message = message;
-    req.scene = type ;
+    req.scene = (int)type ;
     [WXApi sendReq:req];
 }
 

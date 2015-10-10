@@ -15,7 +15,7 @@
 #import "WeiboSDK.h"
 #import "CircleListObj.h"
 #import "WXApi.h"
-@interface AppDelegate : UIResponder <UIApplicationDelegate,BPushDelegate,IChatManagerDelegate,MFMessageComposeViewControllerDelegate,WeiboSDKDelegate,UIAlertViewDelegate,WXApiDelegate>
+@interface AppDelegate : UIResponder <UIApplicationDelegate,IChatManagerDelegate,MFMessageComposeViewControllerDelegate,WeiboSDKDelegate,UIAlertViewDelegate,WXApiDelegate>
 {
     EMConnectionState _connectionState;
     NSDictionary *pushInfo;

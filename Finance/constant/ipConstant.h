@@ -37,7 +37,6 @@
 #define kNetworkCheckAddress            @"http://www.baidu.com"
 #define KEY_HUANXIN                     @"daniuquan123#daniuquan"
 #define kUMENGAppKey                    @"558e0e1367e58ea419006a14"
-#define KBpushAppKey                    @"qZZdB3DnuWRxFYzRTeh8CyNc"
 
 #define kAppId      @"YJVwxGvDAm9xzBUj6ECms"
 #define kAppKey     @"rn8Nk0eHBGAQ1rf4IFSVi2"
@@ -61,7 +60,6 @@
 #define kNetworkCheckAddress            @"http://www.baidu.com"
 #define KEY_HUANXIN                     @"daniuquan123#daniuquanproduction"
 #define kUMENGAppKey                    @"558e0e1367e58ea419006a14"
-#define KBpushAppKey                    @"xQs4KBG4UTI9ssZPCgzC1gbK"
 
 
 #define kAppId      @"YJVwxGvDAm9xzBUj6ECms"

@@ -541,7 +541,6 @@
 		61D6E7D21AD50FCB0016C13A /* BaseNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61D6E7361AD50FCA0016C13A /* BaseNavigationController.m */; };
 		61D6E7D31AD50FCB0016C13A /* BaseTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61D6E7381AD50FCA0016C13A /* BaseTableViewController.m */; };
 		61D6E7D41AD50FCB0016C13A /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61D6E73A1AD50FCA0016C13A /* BaseViewController.m */; };
-		61D6E7D51AD50FCB0016C13A /* libBPush.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 61D6E7431AD50FCA0016C13A /* libBPush.a */; };
 		61D6E7DC1AD50FCB0016C13A /* libEaseMobClientSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 61D6E7CC1AD50FCB0016C13A /* libEaseMobClientSDK.a */; };
 		61D6E7DD1AD50FCB0016C13A /* EaseMob.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 61D6E7CE1AD50FCB0016C13A /* EaseMob.bundle */; };
 		61D6E7DE1AD50FCB0016C13A /* libMobClickLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 61D6E7D01AD50FCB0016C13A /* libMobClickLibrary.a */; };
@@ -1638,8 +1637,6 @@
 		61D6E7381AD50FCA0016C13A /* BaseTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseTableViewController.m; sourceTree = "<group>"; };
 		61D6E7391AD50FCA0016C13A /* BaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseViewController.h; sourceTree = "<group>"; };
 		61D6E73A1AD50FCA0016C13A /* BaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseViewController.m; sourceTree = "<group>"; };
-		61D6E7421AD50FCA0016C13A /* BPush.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BPush.h; sourceTree = "<group>"; };
-		61D6E7431AD50FCA0016C13A /* libBPush.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libBPush.a; sourceTree = "<group>"; };
 		61D6E7571AD50FCA0016C13A /* ICallManagerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICallManagerDelegate.h; sourceTree = "<group>"; };
 		61D6E7591AD50FCA0016C13A /* EMCallManagerCallDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMCallManagerCallDelegate.h; sourceTree = "<group>"; };
 		61D6E75A1AD50FCA0016C13A /* EMCallManagerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMCallManagerDelegate.h; sourceTree = "<group>"; };
@@ -2184,7 +2181,6 @@
 				61ED1A621AD3C52B005B73E8 /* AddressBook.framework in Frameworks */,
 				61ED1A601AD3C524005B73E8 /* libiconv.dylib in Frameworks */,
 				61D6E7DC1AD50FCB0016C13A /* libEaseMobClientSDK.a in Frameworks */,
-				61D6E7D51AD50FCB0016C13A /* libBPush.a in Frameworks */,
 				61ED1A5C1AD3C4F5005B73E8 /* MobileCoreServices.framework in Frameworks */,
 				6186DF291AFABC6F00960934 /* libWeiboSDK.a in Frameworks */,
 				61ED1A561AD3C4D9005B73E8 /* libresolv.dylib in Frameworks */,
@@ -3746,8 +3742,6 @@
 		61D6E7411AD50FCA0016C13A /* BPush */ = {
 			isa = PBXGroup;
 			children = (
-				61D6E7421AD50FCA0016C13A /* BPush.h */,
-				61D6E7431AD50FCA0016C13A /* libBPush.a */,
 				564FC1691B5670490033BC8E /* opensource */,
 			);
 			path = BPush;
@@ -5708,7 +5702,6 @@
 					"$(PROJECT_DIR)/Finance/Classes/External/BPush",
 					"$(PROJECT_DIR)/Finance/Classes/External/Mob",
 					"$(PROJECT_DIR)/Finance/Classes/External/EaseMobSDK/lib",
-					"$(PROJECT_DIR)/Finance/External/BPush",
 					"$(PROJECT_DIR)/Finance/External/EaseMobSDK/lib",
 					"$(PROJECT_DIR)/Finance/External/Mob",
 					"$(PROJECT_DIR)/Finance/External/ShareSDK/Extend/TencentWeiboSDK",
@@ -5766,7 +5759,6 @@
 					"$(PROJECT_DIR)/Finance/Classes/External/BPush",
 					"$(PROJECT_DIR)/Finance/Classes/External/Mob",
 					"$(PROJECT_DIR)/Finance/Classes/External/EaseMobSDK/lib",
-					"$(PROJECT_DIR)/Finance/External/BPush",
 					"$(PROJECT_DIR)/Finance/External/EaseMobSDK/lib",
 					"$(PROJECT_DIR)/Finance/External/Mob",
 					"$(PROJECT_DIR)/Finance/External/ShareSDK/Extend/TencentWeiboSDK",
@@ -5862,7 +5854,6 @@
 					"$(PROJECT_DIR)/Finance/Classes/External/BPush",
 					"$(PROJECT_DIR)/Finance/Classes/External/Mob",
 					"$(PROJECT_DIR)/Finance/Classes/External/EaseMobSDK/lib",
-					"$(PROJECT_DIR)/Finance/External/BPush",
 					"$(PROJECT_DIR)/Finance/External/EaseMobSDK/lib",
 					"$(PROJECT_DIR)/Finance/External/Mob",
 					"$(PROJECT_DIR)/Finance/External/ShareSDK/Extend/TencentWeiboSDK",
