@@ -150,6 +150,7 @@
 - (void)uploadUserSelectedInfo:(NSArray *)array completion:(void(^)(BOOL finished))block
 {
     if(array.count == 0){
+        block(YES);
         return;
     }
     NSString *string = @"";

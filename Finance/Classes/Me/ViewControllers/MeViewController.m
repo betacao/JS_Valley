@@ -718,14 +718,19 @@
             self.department = department;
             self.company = company;
             [[NSUserDefaults standardUserDefaults] setObject:self.nickName forKey:KEY_USER_NAME];
-            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_SENDPOST object:nil];
-            
+            [Hud showMessageWithText:@"修改个人信息成功"];
+            [self performSelector:@selector(delayPostNotification) withObject:nil afterDelay:1.2f];
         }else{
-            [Hud showMessageWithText:@"修改失败"];
+            [Hud showMessageWithText:@"修改个人信息失败"];
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [Hud showMessageWithText:@"修改失败"];
+        [Hud showMessageWithText:@"修改个人信息失败"];
     }];
+}
+
+- (void)delayPostNotification
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_SENDPOST object:nil];
 }
 
 @end

@@ -248,6 +248,7 @@
 		pickerImage.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
 		pickerImage.mediaTypes = [UIImagePickerController availableMediaTypesForSourceType:pickerImage.sourceType];
 	}
+    pickerImage.allowsEditing = YES;
 	pickerImage.delegate = self;
 	[self.navigationController presentViewController:pickerImage animated:YES completion:nil];
 }
@@ -399,7 +400,7 @@
     [[SHGGloble sharedGloble] uploadUserSelectedInfo:array completion:^(BOOL finished) {
         if(finished){
             weakSelf.uploadTagsSuccess = YES;
-            [weakSelf performSelector:@selector(didUploadAllUserInfo) withObject:nil afterDelay:1.0f];
+            [weakSelf didUploadAllUserInfo];
         } else{
             [Hud hideHud];
         }
