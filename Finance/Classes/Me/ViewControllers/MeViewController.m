@@ -168,9 +168,9 @@
         NSString *followCount = [response.dataDictionary valueForKey:@"attention"];
         NSString *fansCount = [response.dataDictionary valueForKey:@"fans"];
         
-        NSString *circleString = [NSString stringWithFormat:@"\n动态 %@",circleCount];
-        NSString *followString = [NSString stringWithFormat:@"\n关注 %@",followCount];
-        NSString *fansString = [NSString stringWithFormat:@"\n粉丝 %@",fansCount];
+        NSString *circleString = [NSString stringWithFormat:@"动态 %@",circleCount];
+        NSString *followString = [NSString stringWithFormat:@"关注 %@",followCount];
+        NSString *fansString = [NSString stringWithFormat:@"粉丝 %@",fansCount];
         
         self.circleHeaderLabel.text = circleString;
         self.followHeaderLabel.text = followString;
@@ -248,13 +248,18 @@
     NSString *headImage = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_HEAD_IMAGE];
     [self.btnUserPic sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,headImage]] placeholderImage:[UIImage imageNamed:@"default_head"]];
 
-    self.circleHeaderLabel.text = @"\n动态 0";
-    self.followHeaderLabel.text = @"\n关注 0";
-    self.fansHeaderLabel.text	= @"\n粉丝 0";
-    UIView *spaceView1 = [[UIView alloc] initWithFrame:CGRectMake(SCREENWIDTH/3,15, 1.0f, 30)];
-    UIView *spaceView2 = [[UIView alloc] initWithFrame:CGRectMake(SCREENWIDTH/3*2,15, 1.0f, 30)];
-    spaceView1.backgroundColor = [UIColor colorWithHexString:@"f5f5f5"];
-    spaceView2.backgroundColor = [UIColor colorWithHexString:@"f5f5f5"];
+    self.circleHeaderLabel.text = @"动态 0";
+    self.followHeaderLabel.text = @"关注 0";
+    self.fansHeaderLabel.text	= @"粉丝 0";
+
+    UIView *spaceView1 = [[UIView alloc] initWithFrame:CGRectMake(SCREENWIDTH / 3.0f, 10.0f, 1.0f, 30)];
+    UIView *spaceView2 = [[UIView alloc] initWithFrame:CGRectMake(SCREENWIDTH / 3.0f * 2.0f,10.0f, 1.0f, 30)];
+    spaceView1.backgroundColor = [UIColor colorWithHexString:@"efeeef"];
+    spaceView2.backgroundColor = [UIColor colorWithHexString:@"efeeef"];
+
+    UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, CGRectGetHeight(self.labelView.frame) - 1.0f, SCREENHEIGHT, 0.5f)];
+    lineView.backgroundColor = [UIColor colorWithHexString:@"efeeef"];
+    [self.labelView addSubview:lineView];
     [self.labelView addSubview:spaceView1];
     [self.labelView addSubview:spaceView2];
 
