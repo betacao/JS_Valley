@@ -23,6 +23,7 @@
 #ifdef kSitTest
 #define rBaseAddRessHttp                @"http://120.26.114.154:8080/api"
 //#define rBaseAddRessHttp                @"http://192.168.1.116:8080/api"
+
 #define rBaseAddressForHttp				[NSString stringWithFormat:@"%@/v1",rBaseAddRessHttp]
 #define rBaseAddressForHttpCircle		[NSString stringWithFormat:@"%@/v1/group",rBaseAddRessHttp]
 #define rBaseAddressForHttpProd         [NSString stringWithFormat:@"%@/v1/prod",rBaseAddRessHttp]
@@ -37,6 +38,10 @@
 #define KEY_HUANXIN                     @"daniuquan123#daniuquan"
 #define kUMENGAppKey                    @"558e0e1367e58ea419006a14"
 #define KBpushAppKey                    @"qZZdB3DnuWRxFYzRTeh8CyNc"
+
+#define kAppId      @"YJVwxGvDAm9xzBUj6ECms"
+#define kAppKey     @"rn8Nk0eHBGAQ1rf4IFSVi2"
+#define kAppSecret  @"ryyfVg7IiI6LIaUVGYVzr3"
 
 #else
 #define rBaseAddRessHttp                 @"http://120.26.114.181:8080/api"
@@ -57,6 +62,11 @@
 #define KEY_HUANXIN                     @"daniuquan123#daniuquanproduction"
 #define kUMENGAppKey                    @"558e0e1367e58ea419006a14"
 #define KBpushAppKey                    @"xQs4KBG4UTI9ssZPCgzC1gbK"
+
+
+#define kAppId      @"YJVwxGvDAm9xzBUj6ECms"
+#define kAppKey     @"rn8Nk0eHBGAQ1rf4IFSVi2"
+#define kAppSecret  @"ryyfVg7IiI6LIaUVGYVzr3"
 
 #endif
 

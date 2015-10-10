@@ -9,7 +9,7 @@
 #import "MeTableViewCell.h"
 
 @interface MeTableViewCell()
-@property (weak, nonatomic) IBOutlet UILabel *lineLabel;
+@property (weak, nonatomic) IBOutlet UIView *lineView;
 
 @end
 
@@ -17,9 +17,10 @@
 
 - (void)awakeFromNib {
     // Initialization code
-    CGRect frame = self.lineLabel.frame;
+    self.lineView.backgroundColor = [UIColor colorWithHexString:@"e8e8e8"];
+    CGRect frame = self.lineView.frame;
     frame.size.height = 0.5f;
-    self.lineLabel.frame = frame;
+    self.lineView.frame = frame;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
