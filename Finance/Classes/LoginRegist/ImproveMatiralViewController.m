@@ -39,8 +39,6 @@
 @property (strong, nonatomic) UITextField *currentField;
 @property (assign, nonatomic) CGRect keyboaradRect;
 @property (strong, nonatomic) UIActivityIndicatorView *activityView;
-@property (assign, nonatomic) BOOL uploadUserInfoSuccess;
-@property (assign, nonatomic) BOOL uploadTagsSuccess;
 @property (strong, nonatomic) NSString *userLocation;
 
 - (IBAction)headImageButtonClicked:(id)sender;
@@ -364,13 +362,11 @@
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0), ^{
                 [weakSelf chatLoagin];
                 [weakSelf dealFriendPush];
-                [weakSelf uploadUserSelectedInfo];
                 if (!IsArrEmpty(weakSelf.phones)) {
                     [weakSelf uploadPhones];
                 }
             });
-            weakSelf.uploadUserInfoSuccess = YES;
-            [weakSelf didUploadAllUserInfo];
+            [weakSelf uploadUserSelectedInfo];
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [Hud hideHud];
@@ -399,7 +395,6 @@
     NSArray *array = [self.personCategoryView userSelectedTags];
     [[SHGGloble sharedGloble] uploadUserSelectedInfo:array completion:^(BOOL finished) {
         if(finished){
-            weakSelf.uploadTagsSuccess = YES;
             [weakSelf didUploadAllUserInfo];
         } else{
             [Hud hideHud];
@@ -411,12 +406,10 @@
 - (void)didUploadAllUserInfo
 {
     [Hud hideHud];
-    if(self.uploadTagsSuccess && self.uploadUserInfoSuccess){
-        __weak typeof(self) weakSelf = self;
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [weakSelf loginSuccess];
-        });
-    }
+    __weak typeof(self) weakSelf = self;
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.2f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [weakSelf loginSuccess];
+    });
 }
 
 - (void)uploadPhones
