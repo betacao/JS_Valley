@@ -252,8 +252,8 @@
     self.followHeaderLabel.text = @"关注 0";
     self.fansHeaderLabel.text	= @"粉丝 0";
 
-    UIView *spaceView1 = [[UIView alloc] initWithFrame:CGRectMake(SCREENWIDTH / 3.0f, 10.0f, 1.0f, 30)];
-    UIView *spaceView2 = [[UIView alloc] initWithFrame:CGRectMake(SCREENWIDTH / 3.0f * 2.0f,10.0f, 1.0f, 30)];
+    UIView *spaceView1 = [[UIView alloc] initWithFrame:CGRectMake(SCREENWIDTH / 3.0f, 10.0f, 0.5f, 30)];
+    UIView *spaceView2 = [[UIView alloc] initWithFrame:CGRectMake(SCREENWIDTH / 3.0f * 2.0f,10.0f, 0.5f, 30)];
     spaceView1.backgroundColor = [UIColor colorWithHexString:@"e8e8e8"];
     spaceView2.backgroundColor = [UIColor colorWithHexString:@"e8e8e8"];
 

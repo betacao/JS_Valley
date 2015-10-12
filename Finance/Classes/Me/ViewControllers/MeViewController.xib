@@ -120,7 +120,7 @@
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                 </imageView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="yFG-qU-8BY">
-                    <rect key="frame" x="19" y="128" width="42" height="42"/>
+                    <rect key="frame" x="19" y="130" width="42" height="42"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                     <state key="normal" title="认证">
@@ -131,7 +131,7 @@
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="qRJ-9x-nOe">
-                    <rect key="frame" x="99" y="128" width="42" height="42"/>
+                    <rect key="frame" x="99" y="130" width="42" height="42"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                     <state key="normal" title="编辑">
@@ -142,7 +142,7 @@
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Ka0-KG-f4a">
-                    <rect key="frame" x="179" y="128" width="42" height="42"/>
+                    <rect key="frame" x="179" y="130" width="42" height="42"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                     <state key="normal" title="标签"/>
@@ -151,7 +151,7 @@
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="qfu-Lh-4zU">
-                    <rect key="frame" x="259" y="128" width="42" height="42"/>
+                    <rect key="frame" x="259" y="130" width="42" height="42"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                     <state key="normal" title="邀请">
