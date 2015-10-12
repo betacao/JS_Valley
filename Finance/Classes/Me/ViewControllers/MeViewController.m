@@ -267,7 +267,7 @@
     self.lineImageView.image = image;
 
     CGRect frame = self.verifyButton.frame;
-    CGFloat margin = (SCREENWIDTH - CGRectGetWidth(frame) * 4.0f) / 8.0f;
+    CGFloat margin = (SCREENWIDTH - CGRectGetWidth(frame) * 3.0f) / 6.0f;
     frame.origin.x = margin;
     self.verifyButton.frame = frame;
 
@@ -275,12 +275,13 @@
     frame.origin.x = 3.0f * margin + CGRectGetWidth(frame);
     self.btnEdit.frame = frame;
 
-    frame = self.tagButton.frame;
-    frame.origin.x = 5.0f * margin + 2.0f * CGRectGetWidth(frame);
-    self.tagButton.frame = frame;
+//    frame = self.tagButton.frame;
+//    frame.origin.x = 5.0f * margin + 2.0f * CGRectGetWidth(frame);
+//    self.tagButton.frame = frame;
+    self.tagButton.hidden = YES;
     
     frame = self.invateButton.frame;
-    frame.origin.x = 7.0f * margin + 3.0f * CGRectGetWidth(frame);
+    frame.origin.x = 5.0f * margin + 2.0f * CGRectGetWidth(frame);
     self.invateButton.frame = frame;
 
 }

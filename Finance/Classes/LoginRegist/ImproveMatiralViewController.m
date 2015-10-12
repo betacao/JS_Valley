@@ -71,7 +71,7 @@
     self.personCategoryView.superview.hidden = YES;
 
     [self getAddress];
-    [self downloadUserSelectedInfo];
+//    [self downloadUserSelectedInfo];
     [self adjustLocationFrame];
     [[CCLocationManager shareLocation] getCity:^(NSString *addressString) {
 
@@ -95,7 +95,6 @@
 //调整选择地理位置label button等控件的位置
 - (void)adjustLocationFrame
 {
-
     self.activityView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     [self.activityView startAnimating];
 
@@ -366,7 +365,7 @@
                     [weakSelf uploadPhones];
                 }
             });
-            [weakSelf uploadUserSelectedInfo];
+            [weakSelf didUploadAllUserInfo];
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [Hud hideHud];
