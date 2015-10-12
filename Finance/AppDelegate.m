@@ -48,6 +48,7 @@
 @property (strong, nonatomic) NSString *deviceToken;
 @property (strong, nonatomic) NSString *clientId;
 @property (strong, nonatomic) NSString *payloadId;
+@property (strong, nonatomic) NSDictionary *pushInfo;
 @end
 
 @implementation AppDelegate
@@ -102,7 +103,7 @@
     if (userInfo) {
         NSLog(@"从消息启动______:%@",userInfo);
         rootVC.rid =userInfo;
-        pushInfo = [userInfo copy];
+        self.pushInfo = userInfo;
 //        [BPush handleNotification:userInfo];
     }
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pushCircle:) name:kMPNotificationViewTapReceivedNotification object:userInfo];
@@ -189,14 +190,9 @@
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler{
-    pushInfo = [userInfo copy];
-    [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
-
-    [self receiveNotification:userInfo];
-
+    self.pushInfo = userInfo;
     NSDictionary *aps = userInfo[@"aps"];
     NSString *alert = [aps valueForKey:@"alert"];
-//    [BPush handleNotification:userInfo];
     NSLog(@"%@",alert);
     completionHandler(UIBackgroundFetchResultNewData);
 }
@@ -205,9 +201,10 @@
 {
     if ([userInfo objectForKey:@"code"]){
         NSString *code = [userInfo objectForKey:@"code"];
-        UIApplication *application = [UIApplication sharedApplication];
-        if (application.applicationState != UIApplicationStateActive){
+//        UIApplication *application = [UIApplication sharedApplication];
+        if (self.pushInfo){
             [self pushToNoticeViewController:userInfo];
+            self.pushInfo = nil;
         } else{
             //程序活跃在前台
             NSString *rid = @"";
@@ -215,11 +212,11 @@
                 rid = [userInfo objectForKey:@"rid"];
             }
             if ([userInfo objectForKey:@"aps"]){
-                id aps = [userInfo objectForKey:@"aps"];
+                NSDictionary *aps = [userInfo objectForKey:@"aps"];
                 if ([aps isKindOfClass:[NSDictionary class]]){
-                    NSDictionary *dicAps = (NSDictionary *)aps;
+                    NSDictionary *dicAps = [aps objectForKey:@"aps"];
                     if ([dicAps objectForKey:@"alert"]) {
-                        NSString *alert = dicAps[@"alert"];
+                        NSString *alert = [dicAps[@"alert"] objectForKey:@"body"];
                         UIImage *image = [UIImage imageNamed:@"80.png"];
                         image = [image reSizeImagetoSize:CGSizeMake(28, 28)];
                         [MPNotificationView notifyWithText:@"大牛圈" detail:alert image:image duration:3.0 andTouchBlock:nil pushId:userInfo];
@@ -350,8 +347,7 @@
     self.clientId = clientId;
     if (self.deviceToken) {
         [GeTuiSdk registerDeviceToken:self.deviceToken];
-        [GeTuiSdk setPushModeForOff:NO];
-
+//        [GeTuiSdk setPushModeForOff:NO];
         [[NSUserDefaults standardUserDefaults] setObject:clientId forKey:KEY_BPUSH_CHANNELID];
         [[NSUserDefaults standardUserDefaults] setObject:@"getui" forKey:KEY_BPUSH_USERID];
         [[NSUserDefaults standardUserDefaults] synchronize];
@@ -360,6 +356,11 @@
 
 - (void)GeTuiSdkDidReceivePayload:(NSString *)payloadId andTaskId:(NSString *)taskId andMessageId:(NSString *)aMsgId fromApplication:(NSString *)appId
 {
+//    if(self.pushInfo){
+//        [self receiveNotification:self.pushInfo];
+//        self.pushInfo = nil;
+//        return;
+//    }
     self.payloadId = payloadId;
     NSData* payload = [GeTuiSdk retrivePayloadById:payloadId]; //根据 payloadId 取回 Payload
     NSString *payloadMsg = nil;
@@ -367,6 +368,8 @@
         payloadMsg = [[NSString alloc] initWithBytes:payload.bytes length:payload.length encoding:NSUTF8StringEncoding];
     }
     NSLog(@"%@",payloadMsg);
+    NSDictionary *userInfo = [NSJSONSerialization JSONObjectWithData:payload options:NSJSONReadingMutableContainers error:nil];
+    [self receiveNotification:userInfo];
     NSLog(@"收到了透传消息");
 }
 
@@ -391,7 +394,10 @@
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
-    // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    [[UIApplication sharedApplication] cancelAllLocalNotifications];
+    [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
+    // [EXT] 重新上线
+    [self startSdkWith:kAppId appKey:kAppKey appSecret:kAppSecret];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
@@ -479,7 +485,7 @@
     UIViewController *TopVC = [self getCurrentRootViewController];
     NSString *ridCode = [userInfo objectForKey:@"code"];
     if ([ridCode isEqualToString:@"1001"]){ //进入通知
-    MessageViewController *detailVC=[[MessageViewController alloc] init];
+        MessageViewController *detailVC=[[MessageViewController alloc] init];
         [self pushIntoViewController:TopVC newViewController:detailVC];
     }else if ([ridCode isEqualToString:@"1004"]){  //进入个人关注主页
         CircleSomeOneViewController  *detaiVC =[[CircleSomeOneViewController alloc]init];
@@ -492,7 +498,7 @@
         }else{
             [[NSUserDefaults standardUserDefaults] setObject:@"0" forKey:KEY_AUTHSTATE];
         }
-        
+
         VerifyIdentityViewController *meControl =[[VerifyIdentityViewController alloc]init];
         [self pushIntoViewController:TopVC newViewController:meControl];
     }else{  //进入帖子详情
@@ -510,7 +516,7 @@
         for (UIViewController *viewControl in navs.viewControllers){
             if ([viewControl isKindOfClass:[LoginViewController class]]){ //未登录,先登录再查看
                 LoginViewController *viewControll = (LoginViewController*)viewControl;
-                viewControll.rid=pushInfo;
+                viewControll.rid = self.pushInfo;
                 break;
             }else{
                 if (navs.visibleViewController.navigationController){

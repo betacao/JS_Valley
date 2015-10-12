@@ -98,7 +98,8 @@
     NSString *token = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_TOKEN];
     NSDictionary *param = @{@"uid":uid,
                             @"t":token?:@"",
-                            @"channelid":channelId?:@""};
+                            @"channelid":channelId?:@"",
+                            @"channeluid":@"getui"};
     [[AFHTTPRequestOperationManager manager] PUT:rBaseAddressForHttpUBpush parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject)
     {
         NSString *code = [responseObject valueForKey:@"code"];
