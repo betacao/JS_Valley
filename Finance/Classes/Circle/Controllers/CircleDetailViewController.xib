@@ -125,7 +125,7 @@
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="OyJ-4H-wTc">
-                            <rect key="frame" x="104.99999544284822" y="0.0" width="50" height="40"/>
+                            <rect key="frame" x="104.99999697823681" y="0.0" width="50" height="40"/>
                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" name="Palatino-Roman" family="Palatino" pointSize="14"/>
                             <inset key="titleEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
@@ -181,7 +181,7 @@
                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" name="Palatino-Roman" family="Palatino" pointSize="14"/>
                             <inset key="titleEdgeInsets" minX="20" minY="0.0" maxX="0.0" maxY="0.0"/>
-                            <state key="normal" image="收藏x.png">
+                            <state key="normal" image="collected">
                                 <color key="titleColor" red="0.23137254900000001" green="0.23137254900000001" blue="0.23137254900000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
@@ -259,10 +259,10 @@
         </view>
     </objects>
     <resources>
+        <image name="collected" width="15" height="14"/>
         <image name="分享-14.png" width="16" height="16"/>
         <image name="删除-14.png" width="16" height="16"/>
         <image name="已赞" width="16" height="16"/>
-        <image name="收藏x.png" width="20" height="20"/>
         <image name="未赞" width="16" height="16"/>
         <image name="表情.png" width="25" height="25"/>
         <image name="评论-14.png" width="16" height="16"/>

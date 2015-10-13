@@ -795,8 +795,6 @@
 		B04D6E421B60F2D500E3863E /* 组-46@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = B04D6E3E1B60F2D500E3863E /* 组-46@3x.png */; };
 		B04D6E451B60F50E00E3863E /* 组-47@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B04D6E431B60F50E00E3863E /* 组-47@2x.png */; };
 		B04D6E461B60F50E00E3863E /* 组-48@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B04D6E441B60F50E00E3863E /* 组-48@2x.png */; };
-		B06459DB1B61C208004EB495 /* 收藏m@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B06459D91B61C208004EB495 /* 收藏m@2x.png */; };
-		B06459DC1B61C208004EB495 /* 收藏x@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B06459DA1B61C208004EB495 /* 收藏x@2x.png */; };
 		B06D06DA1B4FA2180036A3E3 /* CircleListTwoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B06D06D81B4FA2180036A3E3 /* CircleListTwoTableViewCell.m */; };
 		B06D06DB1B4FA2180036A3E3 /* CircleListTwoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B06D06D91B4FA2180036A3E3 /* CircleListTwoTableViewCell.xib */; };
 		B06F1C131B74B159005157A2 /* 发帖14@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B06F1C111B74B159005157A2 /* 发帖14@2x.png */; };
@@ -1994,8 +1992,6 @@
 		B04D6E3E1B60F2D500E3863E /* 组-46@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "组-46@3x.png"; sourceTree = "<group>"; };
 		B04D6E431B60F50E00E3863E /* 组-47@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "组-47@2x.png"; sourceTree = "<group>"; };
 		B04D6E441B60F50E00E3863E /* 组-48@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "组-48@2x.png"; sourceTree = "<group>"; };
-		B06459D91B61C208004EB495 /* 收藏m@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "收藏m@2x.png"; sourceTree = "<group>"; };
-		B06459DA1B61C208004EB495 /* 收藏x@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "收藏x@2x.png"; sourceTree = "<group>"; };
 		B06D06D71B4FA2180036A3E3 /* CircleListTwoTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CircleListTwoTableViewCell.h; sourceTree = "<group>"; };
 		B06D06D81B4FA2180036A3E3 /* CircleListTwoTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CircleListTwoTableViewCell.m; sourceTree = "<group>"; };
 		B06D06D91B4FA2180036A3E3 /* CircleListTwoTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CircleListTwoTableViewCell.xib; sourceTree = "<group>"; };
@@ -4399,8 +4395,6 @@
 				B03938AF1B623F83003A85EC /* 5s.png */,
 				B03938B01B623F83003A85EC /* 6.png */,
 				B03938B11B623F83003A85EC /* 6P.png */,
-				B06459D91B61C208004EB495 /* 收藏m@2x.png */,
-				B06459DA1B61C208004EB495 /* 收藏x@2x.png */,
 				B04D6E431B60F50E00E3863E /* 组-47@2x.png */,
 				B04D6E441B60F50E00E3863E /* 组-48@2x.png */,
 				B04D6E3B1B60F2D500E3863E /* 组-45@2x.png */,
@@ -4766,7 +4760,6 @@
 				B03938B51B623F83003A85EC /* 6P.png in Resources */,
 				53C9D98F1AFF44C900827169 /* 添加群组@2x.png in Resources */,
 				408D8B1C1AF8618C0055810C /* VoiceSearchFeedback020@2x.png in Resources */,
-				B06459DB1B61C208004EB495 /* 收藏m@2x.png in Resources */,
 				61BF11951B276B3F00FEC690 /* 1_1@3x.png in Resources */,
 				61E83D5F1AF7C78E00703651 /* 评论输入框@3x.png in Resources */,
 				61E83D341AF7C78E00703651 /* 选择好友@2x.png in Resources */,
@@ -5182,7 +5175,6 @@
 				61E83D221AF7C78E00703651 /* 行业选择图标@2x.png in Resources */,
 				61E83CE01AF7C78E00703651 /* 新三板@2x.png in Resources */,
 				61E83D701AF7C78E00703651 /* 消息-选中@3x.png in Resources */,
-				B06459DC1B61C208004EB495 /* 收藏x@2x.png in Resources */,
 				B0CA7C801B7A021E0038BABB /* url@3x.png in Resources */,
 				40302B411AF0C31F00F22EB6 /* MyAppointmentViewController.xib in Resources */,
 				61E83CE81AF7C78E00703651 /* 身份验证弹出对话框@2x.png in Resources */,

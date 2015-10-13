@@ -227,9 +227,9 @@
         [self.btnPraise setImage:[UIImage imageNamed:@"已赞"] forState:UIControlStateNormal];
     }
     if (![obj.iscollection isEqualToString:@"Y"]) {
-        [self.btnCollet setImage:[UIImage imageNamed:@"收藏m"] forState:UIControlStateNormal];
+        [self.btnCollet setImage:[UIImage imageNamed:@"uncollected"] forState:UIControlStateNormal];
     } else{
-        [self.btnCollet setImage:[UIImage imageNamed:@"收藏x"] forState:UIControlStateNormal];
+        [self.btnCollet setImage:[UIImage imageNamed:@"collected"] forState:UIControlStateNormal];
     }
     NSString *name = obj.nickname;
     if (obj.nickname.length > 4){
