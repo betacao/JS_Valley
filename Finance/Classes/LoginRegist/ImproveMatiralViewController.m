@@ -361,9 +361,6 @@
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0), ^{
                 [weakSelf chatLoagin];
                 [weakSelf dealFriendPush];
-                if (!IsArrEmpty(weakSelf.phones)) {
-                    [weakSelf uploadPhones];
-                }
             });
             [weakSelf didUploadAllUserInfo];
         }
@@ -411,15 +408,10 @@
     });
 }
 
-- (void)uploadPhones
-{
-    [self uploadPhonesWithPhone:self.phones];
-}
-
 - (void)uploadPhonesWithPhone:(NSMutableArray *)phones
 {
     NSInteger num = phones.count/100+1;
-    for (int i = 1; i <= num; i ++ ) {
+    for (int i = 1; i <= num; i++) {
         NSMutableArray *arr = [NSMutableArray array];
 
         NSInteger count = 0;

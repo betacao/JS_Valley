@@ -257,9 +257,9 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
 -(void)initSubpage
 {
     //圈子
-    UIImage *image = [UIImage imageNamed:@"圈子14-默认"];
+    UIImage *image = [UIImage imageNamed:@"dynamic_normal"];
     image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    UIImage *selectedImage = [UIImage imageNamed:@"圈子14-选中"];
+    UIImage *selectedImage = [UIImage imageNamed:@"dynamic_selected"];
     selectedImage = [selectedImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     self.circle.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"动态" image:image selectedImage:selectedImage];
     self.circle.tabBarItem.tag = 1000;
