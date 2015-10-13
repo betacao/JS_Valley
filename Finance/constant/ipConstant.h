@@ -13,7 +13,7 @@
 /**
  *  各环境接口定义
  */
-#define kSitTest
+//#define kSitTest
 #define kReleaseH
 //#define kDevelopT
 // 192.168.1.90:8080   本地
@@ -61,10 +61,12 @@
 #define KEY_HUANXIN                     @"daniuquan123#daniuquanproduction"
 #define kUMENGAppKey                    @"558e0e1367e58ea419006a14"
 
-
-#define kAppId      @"YJVwxGvDAm9xzBUj6ECms"
-#define kAppKey     @"rn8Nk0eHBGAQ1rf4IFSVi2"
-#define kAppSecret  @"ryyfVg7IiI6LIaUVGYVzr3"
+//#define kAppId      @"YJVwxGvDAm9xzBUj6ECms"
+//#define kAppKey     @"rn8Nk0eHBGAQ1rf4IFSVi2"
+//#define kAppSecret  @"ryyfVg7IiI6LIaUVGYVzr3"
+#define kAppId      @"KaNF1q1jSd68efMI4z5Nk4"
+#define kAppKey     @"MCzODNoIuQALHdoWnney96"
+#define kAppSecret  @"HbQaMqPHbj7i7Y3NddS9V7"
 
 #endif
 

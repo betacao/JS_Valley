@@ -5672,8 +5672,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: xie jian (A35C7Q22SB)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: xie jian (A35C7Q22SB)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: JiangSu Yunli Technology and Information Company (6FFGT2HSCN)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: JiangSu Yunli Technology and Information Company (6FFGT2HSCN)";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -5715,9 +5715,9 @@
 					"$(PROJECT_DIR)/Finance/External/GeTui",
 				);
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.danniuquan.apptest;
+				PRODUCT_BUNDLE_IDENTIFIER = com.appstore.daniu;
 				PRODUCT_NAME = "大牛圈";
-				PROVISIONING_PROFILE = "9ced2b99-7031-47e6-a34f-21b81d140530";
+				PROVISIONING_PROFILE = "50ce2a84-2c8b-4ebd-8c8a-f03e740e3f40";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -5729,8 +5729,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: xie jian (A35C7Q22SB)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: xie jian (A35C7Q22SB)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: JiangSu Yunli Technology and Information Company (6FFGT2HSCN)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: JiangSu Yunli Technology and Information Company (6FFGT2HSCN)";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -5772,9 +5772,9 @@
 					"$(PROJECT_DIR)/Finance/External/GeTui",
 				);
 				ONLY_ACTIVE_ARCH = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = com.danniuquan.apptest;
+				PRODUCT_BUNDLE_IDENTIFIER = com.appstore.daniu;
 				PRODUCT_NAME = "大牛圈";
-				PROVISIONING_PROFILE = "9ced2b99-7031-47e6-a34f-21b81d140530";
+				PROVISIONING_PROFILE = "50ce2a84-2c8b-4ebd-8c8a-f03e740e3f40";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -5824,8 +5824,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: xie jian (A35C7Q22SB)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: xie jian (A35C7Q22SB)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: JiangSu Yunli Technology and Information Company (6FFGT2HSCN)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: JiangSu Yunli Technology and Information Company (6FFGT2HSCN)";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -5867,9 +5867,9 @@
 					"$(PROJECT_DIR)/Finance/External/GeTui",
 				);
 				ONLY_ACTIVE_ARCH = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = com.danniuquan.apptest;
+				PRODUCT_BUNDLE_IDENTIFIER = com.appstore.daniu;
 				PRODUCT_NAME = "大牛圈";
-				PROVISIONING_PROFILE = "9ced2b99-7031-47e6-a34f-21b81d140530";
+				PROVISIONING_PROFILE = "50ce2a84-2c8b-4ebd-8c8a-f03e740e3f40";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
