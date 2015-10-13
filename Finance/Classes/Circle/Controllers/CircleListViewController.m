@@ -274,8 +274,8 @@ const CGFloat kAdButtomMargin = 20.0f;
 -(void)smsShareSuccess:(NSNotification *)noti
 {
     NSInteger count = [self.navigationController viewControllers].count;
-    if(count >= 3){
-        UIViewController *controller = [[self.navigationController viewControllers] objectAtIndex:count - 3];
+    for (NSInteger index = count - 1; index >= 0; index--){
+        UIViewController *controller = [[self.navigationController viewControllers] objectAtIndex:index];
         if([controller respondsToSelector:@selector(smsShareSuccess:)]){
             [controller performSelector:@selector(smsShareSuccess:) withObject:noti];
             return;

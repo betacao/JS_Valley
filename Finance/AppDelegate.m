@@ -799,22 +799,17 @@
 
 -(void)onResp:(BaseResp*)resp
 {
-    if([resp isKindOfClass:[SendMessageToWXResp class]])
-    {
-        NSString *message;
+    if([resp isKindOfClass:[SendMessageToWXResp class]]){
+        NSString *message = @"";
         if (resp.errCode == 0) {
             message = @"分享成功";
             [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_CHANGE_SHARE_TO_SMSSUCCESS object:shareRid];
             
-        }
-        else if (resp.errCode == -1)
-        {
+        } else if(resp.errCode == -1){
             message = @"分享失败";
             [Hud showMessageWithText:message];
             
-        }
-        else
-        {
+        } else{
             message = @"分享取消";
             [Hud showMessageWithText:message];
             
