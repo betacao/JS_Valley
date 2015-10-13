@@ -11,7 +11,7 @@
 #import "ProdListObj.h"
 #import "ProdConfigViewController.h"
 #import "CircleDetailViewController.h"
-@interface MyCollectionViewController : BaseTableViewController<MWPhotoBrowserDelegate,CircleListDelegate,circleActionDelegate,UIAlertViewDelegate>
+@interface MyCollectionViewController : BaseTableViewController<MWPhotoBrowserDelegate,CircleListDelegate,CircleActionDelegate,UIAlertViewDelegate>
 
 - (void)smsShareSuccess:(NSNotification *)noti;
 

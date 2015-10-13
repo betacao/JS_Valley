@@ -18,7 +18,7 @@
 @property (strong, nonatomic) UILabel *noticeLabel;
 @property (strong, nonatomic) UIView *bgView;
 @property (strong, nonatomic) UIButton *closeButton;
-//@property (
+@property (strong, nonatomic) NSString *uid;
 
 @end
 
@@ -102,6 +102,19 @@
         [self removeFromSuperview];
         
     }];
+}
+
+- (void)loadUserUid:(NSString *)uid
+{
+    self.uid = uid;
+}
+
+- (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+{
+    if(self.delegate && [self.delegate respondsToSelector:@selector(didClickNoticeViewWithUid:)]){
+        [self hide];
+        [self.delegate didClickNoticeViewWithUid:self.uid];
+    }
 }
 
 @end

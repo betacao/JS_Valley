@@ -25,7 +25,7 @@
 #define kColOfRow 5
 #define kContactSize 60
 
-@interface ChatGroupDetailViewController ()<IChatManagerDelegate, EMChooseViewDelegate, ChatListContactViewDelegate,circleActionDelegate, UIActionSheetDelegate,UIAlertViewDelegate>
+@interface ChatGroupDetailViewController ()<IChatManagerDelegate, EMChooseViewDelegate, ChatListContactViewDelegate,CircleActionDelegate, UIActionSheetDelegate,UIAlertViewDelegate>
 
 - (void)unregisterNotifications;
 - (void)registerNotifications;

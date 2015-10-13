@@ -6,7 +6,7 @@
 //  Copyright (c) 2015年 HuMin. All rights reserved.
 //
 
-@protocol circleActionDelegate <NSObject>
+@protocol CircleActionDelegate <NSObject>
 @optional
 - (void)detailPraiseWithRid:(NSString *)rid praiseNum:(NSString*)num isPraised:(NSString *)isPrased;
 - (void)detailCommentWithRid:(NSString *)rid commentNum:(NSString *)num comments:(NSMutableArray *)comments;
@@ -28,8 +28,8 @@
 #define kCommentNum     @"commentNum"
 #define kPraiseNum      @"praiseNum"
 
-@interface CircleDetailViewController : BaseTableViewController<MWPhotoBrowserDelegate,BRCommentViewDelegate,UIScrollViewDelegate,UITextFieldDelegate,ReplyDelegate,circleActionDelegate>
-@property (weak, nonatomic)     id<circleActionDelegate> delegate;
+@interface CircleDetailViewController : BaseTableViewController<MWPhotoBrowserDelegate,BRCommentViewDelegate,UIScrollViewDelegate,UITextFieldDelegate,ReplyDelegate,CircleActionDelegate>
+@property (weak, nonatomic)     id<CircleActionDelegate> delegate;
 @property (strong, nonatomic)   NSString *rid;
 @property (strong, nonatomic)   CircleListObj *obj;
 @property (strong, nonatomic)   NSDictionary *itemInfoDictionary;

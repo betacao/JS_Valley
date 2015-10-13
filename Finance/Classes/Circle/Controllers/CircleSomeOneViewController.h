@@ -12,11 +12,11 @@
 #import "CircleDetailViewController.h"
 #import "ChatViewController.h"
 #import "ChatListViewController.h"
-@interface CircleSomeOneViewController :BaseTableViewController<CircleListDelegate,BRCommentViewDelegate,circleActionDelegate,UIAlertViewDelegate,circleActionDelegate,MWPhotoBrowserDelegate>
+@interface CircleSomeOneViewController :BaseTableViewController<CircleListDelegate,BRCommentViewDelegate,CircleActionDelegate,UIAlertViewDelegate,MWPhotoBrowserDelegate>
 @property (nonatomic, strong)NSString *userId;
 @property (nonatomic, strong)NSString *userName;
 
-@property (nonatomic, weak)id<circleActionDelegate> delegate;
+@property (nonatomic, weak)id<CircleActionDelegate> delegate;
 
 - (void)smsShareSuccess:(NSNotification *)noti;
 

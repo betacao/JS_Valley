@@ -27,7 +27,7 @@
 const CGFloat kAdTableViewCellHeight = 191.0f;
 const CGFloat kAdButtomMargin = 20.0f;
 
-@interface CircleListViewController ()<MLEmojiLabelDelegate,CLLocationManagerDelegate,circleActionDelegate>
+@interface CircleListViewController ()<MLEmojiLabelDelegate,CLLocationManagerDelegate,CircleActionDelegate,SHGNoticeDelegate>
 {
     NSString *_circleType;
     NSString *_target;
@@ -188,6 +188,7 @@ const CGFloat kAdButtomMargin = 20.0f;
     if(!_noticeView){
         _noticeView = [[SHGNoticeView alloc] initWithFrame:CGRectZero];
         _noticeView.superView = self.view;
+        _noticeView.delegate = self;
     }
     return _noticeView;
 }
@@ -342,13 +343,16 @@ const CGFloat kAdButtomMargin = 20.0f;
 
 - (void)loadRegisterPushFriend
 {
+    __weak typeof(self) weakSelf = self;
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
     [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@%@",rBaseAddressForHttp,@"/recommended/friends/registerPushFriend"] parameters:@{@"uid":uid} success:^(MOCHTTPResponse *response) {
         NSDictionary *dictionary = response.dataDictionary;
         if(dictionary){
             NSString *message = [dictionary objectForKey:@"message"];
+            NSString *uid = [dictionary objectForKey:@"uid"];
             if(message && message.length > 0){
-                [self.noticeView showWithText:message];
+                [weakSelf.noticeView showWithText:message];
+                [weakSelf.noticeView loadUserUid:uid];
             }
         }
     } failed:^(MOCHTTPResponse *response) {
@@ -538,6 +542,12 @@ const CGFloat kAdButtomMargin = 20.0f;
         
     }
     
+}
+
+#pragma mark ------ SHGNoticeDelegate ------
+-(void)didClickNoticeViewWithUid:(NSString *)uid
+{
+    [self gotoSomeOne:uid name:nil];
 }
 
 #pragma mark =============  UITableView DataSource  =============
@@ -863,12 +873,10 @@ const CGFloat kAdButtomMargin = 20.0f;
     }
     
 }
--(void)headTap:(NSInteger)index
+- (void)headTap:(NSInteger)index
 {
-    
     CircleListObj *obj = self.dataArr[index];
     [self gotoSomeOne:obj.userid name:obj.nickname];
-    
 }
 
 
