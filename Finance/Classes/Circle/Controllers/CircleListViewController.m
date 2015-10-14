@@ -324,7 +324,8 @@ const CGFloat kAdButtomMargin = 20.0f;
     {
         UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [rightButton setFrame:CGRectZero];
-        [rightButton setBackgroundImage:[UIImage imageNamed:@"发帖14"] forState:UIControlStateNormal];
+        UIImage *image = [UIImage imageNamed:@"right_send"];
+        [rightButton setBackgroundImage:image forState:UIControlStateNormal];
         [rightButton.imageView setContentMode:UIViewContentModeScaleAspectFill];
         [rightButton addTarget:self action:@selector(actionPost:) forControlEvents:UIControlEventTouchUpInside];
         [rightButton sizeToFit];
