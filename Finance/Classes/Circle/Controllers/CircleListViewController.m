@@ -76,8 +76,6 @@ const CGFloat kAdButtomMargin = 20.0f;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    [Hud showLoadingWithMessage:@"加载中"];
     [CommonMethod setExtraCellLineHidden:self.listTable];
     [self addHeaderRefresh:self.listTable headerRefesh:YES andFooter:YES];
     self.listTable.separatorStyle = NO;
@@ -140,14 +138,13 @@ const CGFloat kAdButtomMargin = 20.0f;
                 [weakSelf performSelector:@selector(endrefresh) withObject:nil afterDelay:1.0];
             }
         };
-
-        BOOL needUploadContact = [[NSUserDefaults standardUserDefaults] boolForKey:KEY_USER_NEEDUPLOADCONTACT];
-        if(needUploadContact){
-            [[SHGGloble sharedGloble] uploadPhonesWithPhone:^(BOOL finish) {
-                [[NSUserDefaults standardUserDefaults] setBool:NO forKey:KEY_USER_NEEDUPLOADCONTACT];
-                [[NSUserDefaults standardUserDefaults] synchronize];
-            }];
-        }
+    }
+    BOOL needUploadContact = [[NSUserDefaults standardUserDefaults] boolForKey:KEY_USER_NEEDUPLOADCONTACT];
+    if(needUploadContact){
+        [[SHGGloble sharedGloble] uploadPhonesWithPhone:^(BOOL finish) {
+            [[NSUserDefaults standardUserDefaults] setBool:NO forKey:KEY_USER_NEEDUPLOADCONTACT];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+        }];
     }
 }
 

@@ -246,22 +246,26 @@
 
 - (void)uploadPhonesWithPhone:(void(^)(BOOL finish))block
 {
-    NSInteger num = self.contactArray.count / 100 + 1;
-    for (NSInteger i = 1; i <= num; i++) {
-        NSMutableArray *arr = [NSMutableArray array];
+    if(self.contactArray.count == 0){
+        block(YES);
+    } else{
+        NSInteger num = self.contactArray.count / 100 + 1;
+        for (NSInteger i = 1; i <= num; i++) {
+            NSMutableArray *arr = [NSMutableArray array];
 
-        NSInteger count = 0;
-        if (self.contactArray.count > i * 100) {
-            count =  i * 100;
-        }
-        else{
-            count = (i - 1) *100 + self.contactArray.count % 100;
-        }
-        for (NSInteger j = (i - 1) * 100; j < count; j ++){
-            [arr addObject:self.contactArray[j]];
-        }
-        if (!IsArrEmpty(arr)) {
-            [self uploadPhone:arr finishBlock:block];
+            NSInteger count = 0;
+            if (self.contactArray.count > i * 100) {
+                count =  i * 100;
+            }
+            else{
+                count = (i - 1) *100 + self.contactArray.count % 100;
+            }
+            for (NSInteger j = (i - 1) * 100; j < count; j ++){
+                [arr addObject:self.contactArray[j]];
+            }
+            if (!IsArrEmpty(arr)) {
+                [self uploadPhone:arr finishBlock:block];
+            }
         }
     }
 }

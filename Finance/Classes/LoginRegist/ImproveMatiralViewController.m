@@ -20,9 +20,7 @@
 #define kPersonCategoryHeight 22.0f * YFACTOR
 
 @interface ImproveMatiralViewController ()<UIScrollViewDelegate,SHGGlobleDelegate,SHGAreaDelegate>
-{
-    BOOL hasUploadHead;
-}
+
 @property (weak, nonatomic) IBOutlet UITextField *nameTextField;
 @property (weak, nonatomic) IBOutlet UITextField *companyTextField;
 @property (weak, nonatomic) IBOutlet UITextField *titleTextField;
@@ -199,15 +197,7 @@
 
 - (IBAction)submitButtonClicked:(id)sender
 {
-    if (hasUploadHead) {
-        [self uploadMaterial];
-    }else{
-        if (self.headImage) {
-            [self uploadHeadImage:self.headImage];
-        }else{
-            [Hud showMessageWithText:@"选择头像"];
-        }
-    }
+    [self uploadMaterial];
 }
 
 - (IBAction)manualSelectCity:(id)sender
@@ -221,7 +211,11 @@
 
 - (void)uploadHeadImage:(UIImage *)image
 {
-	[Hud showLoadingWithMessage:@"正在上传图片..."];
+    if(!image){
+        [self didUploadAllUserInfo];
+        return;
+    }
+    [Hud showLoadingWithMessage:@"正在上传图片..."];
     __weak typeof(self) weakSelf = self;
     //头像需要压缩 跟其他的上传图片接口不一样了
 	[[AFHTTPRequestOperationManager manager] POST:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"image/basephoto"] parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
@@ -232,9 +226,7 @@
 		NSDictionary *dic = [(NSString *)[responseObject valueForKey:@"data"] parseToArrayOrNSDictionary];
 		weakSelf.headImageName = [(NSArray *)[dic valueForKey:@"pname"] objectAtIndex:0];
         [[NSUserDefaults standardUserDefaults] setObject:weakSelf.headImageName forKey:KEY_HEAD_IMAGE];
-        hasUploadHead = YES;
-		[weakSelf uploadMaterial];
-		[Hud hideHud];
+		[weakSelf didUploadAllUserInfo];
 	} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 		NSLog(@"%@",error);
 		[Hud hideHud];
@@ -283,9 +275,10 @@
     
     __weak typeof(self)weakSelf = self;
 	NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
-    
+
+    NSDictionary *param = @{@"uid":uid, @"head_img":self.headImageName ? self.headImageName : @"", @"name":self.nameTextField.text, @"company":self.companyTextField.text, @"title":self.titleTextField.text, @"position":self.userLocation ? self.userLocation : @""};
     [Hud showLoadingWithMessage:@"完善信息中"];
-    [[AFHTTPRequestOperationManager manager] PUT:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"register"] parameters:@{@"uid":uid, @"head_img":self.headImageName, @"name":self.nameTextField.text, @"company":self.companyTextField.text, @"title":self.titleTextField.text, @"position":self.userLocation ? self.userLocation : @""} success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [[AFHTTPRequestOperationManager manager] PUT:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"register"] parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"%@",operation);
         NSLog(@"%@",responseObject);
         NSString *code = [responseObject valueForKey:@"code"];
@@ -293,11 +286,9 @@
             [[NSUserDefaults standardUserDefaults] setObject:self.nameTextField.text forKey:KEY_USER_NAME];
             [[NSUserDefaults standardUserDefaults] setObject:self.headImageName forKey:KEY_HEAD_IMAGE];
             [[NSUserDefaults standardUserDefaults] synchronize];
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0), ^{
-                [weakSelf chatLoagin];
-                [weakSelf dealFriendPush];
-            });
-            [weakSelf didUploadAllUserInfo];
+            [weakSelf chatLoagin];
+            [weakSelf dealFriendPush];
+            [weakSelf uploadHeadImage:self.headImage];
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [Hud hideHud];
@@ -336,9 +327,9 @@
 //上传个人信息和标签是在两个地方分别上传的 要等两个请求全部完成才能去跳转到下一页
 - (void)didUploadAllUserInfo
 {
-    [Hud hideHud];
     __weak typeof(self) weakSelf = self;
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.2f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [Hud hideHud];
         [weakSelf loginSuccess];
     });
 }
