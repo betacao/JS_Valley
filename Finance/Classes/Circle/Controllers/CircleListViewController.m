@@ -62,6 +62,7 @@ const CGFloat kAdButtomMargin = 20.0f;
 
 @property (assign, nonatomic) NSInteger totalNum;
 @property (strong, nonatomic) SHGNoticeView *noticeView;
+@property (assign, nonatomic) BOOL isRefreshing;
 
 @end
 
@@ -367,6 +368,7 @@ const CGFloat kAdButtomMargin = 20.0f;
 -(void)requestDataWithTarget:(NSString *)target time:(NSString *)time
 {
     [Hud showLoadingWithMessage:@"加载中"];
+    self.isRefreshing = YES;
     if ([target isEqualToString:@"first"])
     {
         [self.listTable.footer resetNoMoreData];
@@ -376,7 +378,7 @@ const CGFloat kAdButtomMargin = 20.0f;
     if ([_circleType isEqualToString:@"all"] && ![target isEqualToString:@"first"]){
         for (CircleListObj *obj in self.dataArr){
             if ([obj isKindOfClass:[CircleListObj class]] && [obj.postType isEqualToString:@"normal"]){
-                self.totalNum +=1;
+                self.totalNum += 1;
             }
         }
     }
@@ -387,6 +389,7 @@ const CGFloat kAdButtomMargin = 20.0f;
 
     __weak typeof(self) weakSelf = self;
     [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttpCircle,circleBak] class:[CircleListObj class] parameters:param success:^(MOCHTTPResponse *response){
+        weakSelf.isRefreshing = NO;
         NSLog(@"==============%@",response.dataArray);
         if ([target isEqualToString:@"first"]){
             [weakSelf.dataArr removeAllObjects];
@@ -416,6 +419,7 @@ const CGFloat kAdButtomMargin = 20.0f;
             [weakSelf.listTable reloadData];
         });
     } failed:^(MOCHTTPResponse *response){
+        weakSelf.isRefreshing = NO;
         weakSelf.listTable.footer.hidden = NO;
         [Hud showMessageWithText:response.errorMessage];
         NSLog(@"%@",response.errorMessage);
@@ -489,11 +493,13 @@ const CGFloat kAdButtomMargin = 20.0f;
     }
 }
 
--(void)refreshHeader
+- (void)refreshHeader
 {
     NSLog(@"refreshHeader");
     _target = @"refresh";
-    
+    if(self.isRefreshing){
+        return;
+    }
     if (self.dataArr.count > 0)
     {
         int i = 0;
