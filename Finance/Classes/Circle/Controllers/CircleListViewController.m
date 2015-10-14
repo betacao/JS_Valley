@@ -140,7 +140,14 @@ const CGFloat kAdButtomMargin = 20.0f;
                 [weakSelf performSelector:@selector(endrefresh) withObject:nil afterDelay:1.0];
             }
         };
-        
+
+        BOOL needUploadContact = [[NSUserDefaults standardUserDefaults] boolForKey:KEY_USER_NEEDUPLOADCONTACT];
+        if(needUploadContact){
+            [[SHGGloble sharedGloble] uploadPhonesWithPhone:^(BOOL finish) {
+                [[NSUserDefaults standardUserDefaults] setBool:NO forKey:KEY_USER_NEEDUPLOADCONTACT];
+                [[NSUserDefaults standardUserDefaults] synchronize];
+            }];
+        }
     }
 }
 

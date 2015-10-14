@@ -9,6 +9,5 @@
 #import "BaseViewController.h"
 #import "HeadImage.h"
 @interface SettingsViewController : BaseViewController
-@property (nonatomic, strong) NSMutableArray *phones;
 
 @end

@@ -58,6 +58,7 @@
 
 #define KEY_BPUSH   @"qZZdB3DnuWRxFYzRTeh8CyNc"
 #define KEY_SHARESDK    @"5540914ce0f55a5ee70002a2"
+#define KEY_USER_NEEDUPLOADCONTACT @"com.Finance.needUploadContact"
 //
 
 

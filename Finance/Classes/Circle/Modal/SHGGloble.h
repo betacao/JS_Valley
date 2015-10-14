@@ -57,6 +57,13 @@ typedef void (^SHHomeDataCompletionBlock)(NSArray *dataArray);
 @property (strong, nonatomic) NSMutableArray *selectedTagsArray;
 
 /**
+ @brief  获取到的通讯录数组
+
+ @since 1.5.0
+ */
+@property (strong, nonatomic) NSMutableArray *contactArray;
+
+/**
  @brief  首页请求完成的回掉
  
  @since 1.4.1
@@ -101,6 +108,24 @@ typedef void (^SHHomeDataCompletionBlock)(NSArray *dataArray);
  @since 1.5.0
  */
 - (void)uploadUserSelectedInfo:(NSArray *)array completion:(void(^)(BOOL finished))block;
+
+/**
+ @brief  获取用户的通讯录
+
+ @param block 是否完成获取操作
+
+ @since 1.5.0
+ */
+- (void)getUserAddressList:(void(^)(BOOL finished))block;
+
+/**
+ @brief  上传用户的通讯录
+
+ @param block 是否完成上传操作
+
+ @since 1.5.0
+ */
+- (void)uploadPhonesWithPhone:(void(^)(BOOL finish))block;
 
 
 

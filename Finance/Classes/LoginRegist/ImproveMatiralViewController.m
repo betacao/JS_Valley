@@ -35,7 +35,6 @@
 
 @property (strong, nonatomic) UIImage *headImage;
 @property (strong, nonatomic) NSString *headImageName;
-@property (strong, nonatomic) NSMutableArray *phones;
 @property (strong, nonatomic) UITextField *currentField;
 @property (assign, nonatomic) CGRect keyboaradRect;
 @property (strong, nonatomic) UIActivityIndicatorView *activityView;
@@ -70,7 +69,12 @@
 
     self.personCategoryView.superview.hidden = YES;
 
-    [self getAddress];
+    [[SHGGloble sharedGloble] getUserAddressList:^(BOOL finished) {
+        if(finished){
+            [[NSUserDefaults standardUserDefaults] setBool:YES forKey:KEY_USER_NEEDUPLOADCONTACT];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+        }
+    }];
 //    [self downloadUserSelectedInfo];
     [self adjustLocationFrame];
     [[CCLocationManager shareLocation] getCity:^(NSString *addressString) {
@@ -122,75 +126,6 @@
     [SHGGloble sharedGloble].delegate = nil;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     
-}
-#pragma mark -- sdc
-#pragma mark -- 获得联系人
-- (void)getAddress
-{
-    __weak typeof(self) weakSelf = self;
-    ABAddressBookRef addressBook = ABAddressBookCreate();
-    ABAddressBookRequestAccessWithCompletion(addressBook, ^(bool granted, CFErrorRef error){
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0), ^{
-            if (error){
-                NSLog(@"Error: %@", (__bridge NSError *)error);
-            } else if (!granted){
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"获取权限失败" message:@"请设置权限." delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
-                    [av show];
-                });
-            } else{
-                CFArrayRef results = ABAddressBookCopyArrayOfAllPeople(addressBook);
-                for(int i = 0; i < CFArrayGetCount(results); i++){
-                    ABRecordRef person = CFArrayGetValueAtIndex(results, i);
-                    ABMultiValueRef phone = ABRecordCopyValue(person, kABPersonPhoneProperty);
-                    for (int k = 0; k<ABMultiValueGetCount(phone); k++){
-                        //获取該Label下的电话值
-                        NSString *personPhone = (__bridge NSString*)ABMultiValueCopyValueAtIndex(phone, k);
-                        NSString *phone = [personPhone validPhone];
-                        NSString *personNameFirst = (__bridge NSString*)ABRecordCopyValue(person, kABPersonFirstNameProperty);
-                        NSString *personNameLast = (__bridge NSString*)ABRecordCopyValue(person, kABPersonLastNameProperty);
-                        NSString *personName = @"";
-
-                        if (!IsStrEmpty(personNameLast)){
-                            personName =[NSString stringWithFormat:@"%@",personNameLast];
-
-                        }
-                        if (!IsStrEmpty(personNameFirst)){
-                            personName =[NSString stringWithFormat:@"%@%@",personNameLast,personNameFirst];
-                        }
-                        NSString *text = [NSString stringWithFormat:@"%@#%@",personName,phone];
-                        BOOL hasExsis = NO;
-                        NSInteger index = 0;
-                        for (NSInteger i = 0 ; i < self.phones.count; i ++){
-                            NSString *phoneStr = self.phones[i];
-                            if ([phoneStr hasSuffix:phone]) {
-                                hasExsis = YES;
-                                index = i;
-                                break;
-                            }
-                        }
-                        if ([phone isValidateMobile]){
-                            if (hasExsis){
-                                [weakSelf.phones replaceObjectAtIndex:index withObject:text];
-                            } else{
-                                [weakSelf.phones addObject:text];
-                            }
-                        }
-                    }
-                }
-                if (!IsArrEmpty(weakSelf.phones)){
-                    [weakSelf uploadPhonesWithPhone:weakSelf.phones];
-                }
-            }
-        });
-    });
-}
--(NSMutableArray *)phones
-{
-    if (!_phones) {
-        _phones = [NSMutableArray array];
-    }
-    return _phones;
 }
 
 -(void)btnBackClick:(id)sender
@@ -406,45 +341,6 @@
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.2f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [weakSelf loginSuccess];
     });
-}
-
-- (void)uploadPhonesWithPhone:(NSMutableArray *)phones
-{
-    NSInteger num = phones.count/100+1;
-    for (int i = 1; i <= num; i++) {
-        NSMutableArray *arr = [NSMutableArray array];
-
-        NSInteger count = 0;
-        if (phones.count > i * 100) {
-            count =  i *100;
-        }
-        else{
-            count = (i-1) *100 +phones.count % 100;
-        }
-
-        for (int j = (i -1)*100; j < count; j ++){
-            [arr addObject:phones[j]];
-        }
-        if (!IsArrEmpty(arr)) {
-            [self uploadPhone:arr];
-        }
-    }
-}
-
-
-- (void)uploadPhone:(NSMutableArray *)arr
-{
-    NSString *str = arr[0];
-    for (int i = 1 ; i < arr.count; i ++) {
-        str = [NSString stringWithFormat:@"%@,%@",str,arr[i]];
-    }
-    NSString *url = [NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"friend/contact"];
-    NSDictionary *parm = @{@"phones":str, @"uid":[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID]};
-    [MOCHTTPRequestOperationManager postWithURL:url class:nil parameters:parm success:^(MOCHTTPResponse *response) {
-        
-    } failed:^(MOCHTTPResponse *response) {
-        
-    }];
 }
 
 - (void)chatLoagin

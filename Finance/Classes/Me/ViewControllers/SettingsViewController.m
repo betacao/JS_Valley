@@ -39,7 +39,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
     [self initArrContents];
     [self loadSwitchInfo];
     self.title = @"设置";
@@ -52,156 +51,26 @@
     [super viewWillAppear:animated];
     [MobClick event:@"SettingsViewController" label:@"onClick"];
 }
--(void)uploadContact
-{
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        [self getAddress];
-    });
-    
-}
--(NSMutableArray *)phones
-{
-    if (!_phones) {
-        _phones = [NSMutableArray array];
-    }
-    return _phones;
-}
-#pragma mark -- sdc
-#pragma mark -- 获得通讯录
--(void )getAddress
-{
-    ABAddressBookRef addressBook = ABAddressBookCreate();
-    
-    ABAddressBookRequestAccessWithCompletion
-    (addressBook, ^(bool granted, CFErrorRef error)
-     {
-         dispatch_async(dispatch_get_main_queue(), ^{
-             if (error)
-                 NSLog(@"Error: %@", (__bridge NSError *)error);
-             else if (!granted)
-             {
-                 UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"获取权限失败" message:@"请设置权限." delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
-                 [av show];
-             }
-             else
-             {
-                 CFArrayRef results = ABAddressBookCopyArrayOfAllPeople(addressBook);
-                 
-                 for(int i = 0; i < CFArrayGetCount(results); i++)
-                 {
-                     ABRecordRef person = CFArrayGetValueAtIndex(results, i);
-                     ABMultiValueRef phone = ABRecordCopyValue(person, kABPersonPhoneProperty);
-                     for (int k = 0; k<ABMultiValueGetCount(phone); k++)
-                     {
-                         //获取該Label下的电话值
-                         NSString *personPhone = (__bridge NSString*)ABMultiValueCopyValueAtIndex(phone, k);
-                         NSString *phone = [personPhone validPhone];
-                         NSString *personNameFirst = (__bridge NSString*)ABRecordCopyValue(person, kABPersonFirstNameProperty);
-                         NSString *personNameLast = (__bridge NSString*)ABRecordCopyValue(person, kABPersonLastNameProperty);
-                         NSString *personNameCompany = (__bridge NSString*)ABRecordCopyValue(person, kABPersonOrganizationProperty);
-                         NSLog(@"%@=======%@=====%@",personNameFirst,personNameLast,personNameCompany);
-                         NSString *personName = @"";
-                         
-                         if (!IsStrEmpty(personNameLast))
-                         {
-                             personName =[NSString stringWithFormat:@"%@",personNameLast];
-                             
-                         }
-                         if (!IsStrEmpty(personNameFirst)){
-                             personName =[NSString stringWithFormat:@"%@%@",personNameLast,personNameFirst];
-                         }
-                         
-                         NSString *text = [NSString stringWithFormat:@"%@#%@",personName,phone];
-                         NSLog(@"%@",text);
-                         BOOL hasExsis = NO;
-                         NSInteger index = 0;
-                         for (int i = 0 ; i < self.phones.count; i ++)
-                         {
-                             NSString *phoneStr = self.phones[i];
-                             if ([phoneStr hasSuffix:phone]) {
-                                 hasExsis = YES;
-                                 index = i;
-                                 break;
-                             }
-                         }
-                         if ([phone isValidateMobile])
-                         {
-                             if (hasExsis)
-                             {
-                                 [self.phones replaceObjectAtIndex:index withObject:text];
-                             }
-                             else
-                             {
-                                 [self.phones addObject:text];
-                             }
-                         }
-                     }
-                 }
-                 if (!IsArrEmpty(self.phones))
-                 {
-                     
-                     [self uploadPhonesWithPhone:self.phones];
-                 }
-             }
-         });
-     });
-}
 
--(void)uploadPhonesWithPhone:(NSMutableArray *)phones
+- (void)uploadContact
 {
-    
-    NSInteger num = phones.count/100+1;
-    for (int i = 1; i <= num; i ++ )
-    {
-        NSMutableArray *arr = [NSMutableArray array];
-        
-        NSInteger count = 0;
-        if (phones.count > i * 100)
-        {
-            count =  i *100;
-            
+    [[SHGGloble sharedGloble] getUserAddressList:^(BOOL finished) {
+        if(finished){
+            [[SHGGloble sharedGloble] uploadPhonesWithPhone:^(BOOL finish) {
+                if(finished){
+                    [Hud showLoadingWithMessage:@"通讯录更新成功"];
+                } else{
+                    [Hud showLoadingWithMessage:@"上传通讯录列表失败"];
+                }
+            }];
+        } else{
+            [Hud showLoadingWithMessage:@"获取通讯录列表失败，请到系统设置设置权限"];
         }
-        else
-        {
-            count = (i-1) *100 +phones.count % 100;
-        }
-        
-        for (int j = (i -1)*100; j < count; j ++)
-        {
-            
-            [arr addObject:phones[j]];
-        }
-        if (!IsArrEmpty(arr)) {
-            [self uploadPhone:arr];
-            NSLog(@"-----------%@",arr);
-        }
-        
-        
-    }
-    
-}
--(void)uploadPhone:(NSMutableArray *)arr
-{
-    NSString *str = arr[0];
-    for (int i = 1 ; i < arr.count; i ++) {
-        str = [NSString stringWithFormat:@"%@,%@",str,arr[i]];
-    }
-    NSString *url = [NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"friend/contact"];
-    //向服务器发请求
-    NSLog(@"=========%@",str);
-    NSDictionary *parm = @{@"phones":str,
-                           @"uid":[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID]};
-    [MOCHTTPRequestOperationManager postWithURL:url class:nil parameters:parm success:^(MOCHTTPResponse *response){
-        NSString *code = [response.data valueForKey:@"code"];
-        if ([code isEqualToString:@"000"])
-        {
-            [MobClick event:@"ActionUpdatedContacts" label:@"onClick"];
-        }
-        
-    } failed:^(MOCHTTPResponse *response) {
-        
     }];
 }
+
+
+
 - (void)initArrContents
 {
     self.arrTitles=@[@"偏好设置",@"关于我们"];

@@ -73,6 +73,15 @@
     return _selectedTagsArray;
 }
 
+- (NSMutableArray *)contactArray
+{
+    if(!_contactArray){
+        _contactArray = [NSMutableArray array];
+    }
+    return _contactArray;
+}
+
+#pragma mark ------ 请求首页数据 ------
 - (void)requestHomePageData
 {
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
@@ -118,6 +127,7 @@
 }
 
 
+#pragma mark ------ 标签功能 ------
 - (void)downloadUserTagInfo:(void (^)())block
 {
     if(self.tagsArray.count > 0){
@@ -174,5 +184,109 @@
         block(NO);
     }];
 }
+
+#pragma mark ------ 通讯录功能 ------
+
+- (void)getUserAddressList:(void (^)(BOOL))block
+{
+    __weak typeof(self) weakSelf = self;
+    ABAddressBookRef addressBook = ABAddressBookCreate();
+    ABAddressBookRequestAccessWithCompletion(addressBook, ^(bool granted, CFErrorRef error){
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0), ^{
+            if (error){
+                NSLog(@"Error: %@", (__bridge NSError *)error);
+                block(NO);
+            } else if (!granted){
+                block(NO);
+            } else{
+                CFArrayRef results = ABAddressBookCopyArrayOfAllPeople(addressBook);
+                for(int i = 0; i < CFArrayGetCount(results); i++){
+                    ABRecordRef person = CFArrayGetValueAtIndex(results, i);
+                    ABMultiValueRef phone = ABRecordCopyValue(person, kABPersonPhoneProperty);
+                    for (int k = 0; k < ABMultiValueGetCount(phone); k++){
+                        //获取該Label下的电话值
+                        NSString *personPhone = (__bridge NSString*)ABMultiValueCopyValueAtIndex(phone, k);
+                        NSString *phone = [personPhone validPhone];
+                        NSString *personNameFirst = (__bridge NSString*)ABRecordCopyValue(person, kABPersonFirstNameProperty);
+                        NSString *personNameLast = (__bridge NSString*)ABRecordCopyValue(person, kABPersonLastNameProperty);
+                        NSString *personName = @"";
+
+                        if (!IsStrEmpty(personNameLast)){
+                            personName =[NSString stringWithFormat:@"%@",personNameLast];
+
+                        }
+                        if (!IsStrEmpty(personNameFirst)){
+                            personName =[NSString stringWithFormat:@"%@%@",personNameLast,personNameFirst];
+                        }
+                        NSString *text = [NSString stringWithFormat:@"%@#%@",personName,phone];
+                        BOOL hasExsis = NO;
+                        NSInteger index = 0;
+                        for (NSInteger i = 0 ; i < self.contactArray.count; i ++){
+                            NSString *phoneStr = self.contactArray[i];
+                            if ([phoneStr hasSuffix:phone]) {
+                                hasExsis = YES;
+                                index = i;
+                                break;
+                            }
+                        }
+                        if ([phone isValidateMobile]){
+                            if (hasExsis){
+                                [weakSelf.contactArray replaceObjectAtIndex:index withObject:text];
+                            } else{
+                                [weakSelf.contactArray addObject:text];
+                            }
+                        }
+                    }
+                }
+                block(YES);
+            }
+        });
+    });
+}
+
+- (void)uploadPhonesWithPhone:(void(^)(BOOL finish))block
+{
+    NSInteger num = self.contactArray.count / 100 + 1;
+    for (NSInteger i = 1; i <= num; i++) {
+        NSMutableArray *arr = [NSMutableArray array];
+
+        NSInteger count = 0;
+        if (self.contactArray.count > i * 100) {
+            count =  i * 100;
+        }
+        else{
+            count = (i - 1) *100 + self.contactArray.count % 100;
+        }
+        for (NSInteger j = (i - 1) * 100; j < count; j ++){
+            [arr addObject:self.contactArray[j]];
+        }
+        if (!IsArrEmpty(arr)) {
+            [self uploadPhone:arr finishBlock:block];
+        }
+    }
+}
+
+
+- (void)uploadPhone:(NSMutableArray *)arr finishBlock:(void(^)(BOOL finish))block
+{
+    NSString *str = arr[0];
+    for (int i = 1 ; i < arr.count; i ++) {
+        str = [NSString stringWithFormat:@"%@,%@",str,arr[i]];
+    }
+    NSString *url = [NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"friend/contact"];
+    NSDictionary *parm = @{@"phones":str, @"uid":[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID]};
+    [MOCHTTPRequestOperationManager postWithURL:url class:nil parameters:parm success:^(MOCHTTPResponse *response) {
+        NSString *code = [response.data valueForKey:@"code"];
+        if ([code isEqualToString:@"000"]){
+            [MobClick event:@"ActionUpdatedContacts" label:@"onClick"];
+            block(YES);
+        } else{
+            block(NO);
+        }
+    } failed:^(MOCHTTPResponse *response) {
+        block(NO);
+    }];
+}
+
 
 @end
