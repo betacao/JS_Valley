@@ -60,6 +60,8 @@
             CGFloat y = rowIndex * (height + CELL_PHOTO_SEP);
             imageView.frame = CGRectMake(x, y, width, height);
             totalHeight = CGRectGetMaxY(imageView.frame);
+            imageView.contentMode = UIViewContentModeScaleAspectFill;
+            imageView.clipsToBounds = YES;
         }];
     } else if(self.subviews.count == 1){
         UIImageView *imageView = (UIImageView *)[self.subviews firstObject];
