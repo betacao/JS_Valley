@@ -197,7 +197,11 @@
 
 - (IBAction)submitButtonClicked:(id)sender
 {
-    [self uploadMaterial];
+    if(self.headImage){
+        [self uploadHeadImage:self.headImage];
+    } else{
+        [self uploadMaterial];
+    }
 }
 
 - (IBAction)manualSelectCity:(id)sender
@@ -211,28 +215,27 @@
 
 - (void)uploadHeadImage:(UIImage *)image
 {
-    if(!image){
-        [self didUploadAllUserInfo];
-        return;
+    if([self checkInputMessageValid]){
+        [Hud showLoadingWithMessage:@"正在上传图片..."];
+        __weak typeof(self) weakSelf = self;
+        //头像需要压缩 跟其他的上传图片接口不一样了
+        [[AFHTTPRequestOperationManager manager] POST:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"image/basephoto"] parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+            NSData *imageData = UIImageJPEGRepresentation(image, 0.1);
+            [formData appendPartWithFileData:imageData name:@"hahaggggggg.jpg" fileName:@"hahaggggggg.jpg" mimeType:@"image/jpeg"];
+        } success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            NSLog(@"%@",responseObject);
+            [Hud hideHud];
+            NSDictionary *dic = [(NSString *)[responseObject valueForKey:@"data"] parseToArrayOrNSDictionary];
+            weakSelf.headImageName = [(NSArray *)[dic valueForKey:@"pname"] objectAtIndex:0];
+            [[NSUserDefaults standardUserDefaults] setObject:weakSelf.headImageName forKey:KEY_HEAD_IMAGE];
+            [weakSelf uploadMaterial];
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            NSLog(@"%@",error);
+            [Hud hideHud];
+            [Hud showMessageWithText:@"上传图片失败"];
+            
+        }];
     }
-    [Hud showLoadingWithMessage:@"正在上传图片..."];
-    __weak typeof(self) weakSelf = self;
-    //头像需要压缩 跟其他的上传图片接口不一样了
-	[[AFHTTPRequestOperationManager manager] POST:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"image/basephoto"] parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
-		NSData *imageData = UIImageJPEGRepresentation(image, 0.1);
-		[formData appendPartWithFileData:imageData name:@"hahaggggggg.jpg" fileName:@"hahaggggggg.jpg" mimeType:@"image/jpeg"];
-	} success:^(AFHTTPRequestOperation *operation, id responseObject) {
-		NSLog(@"%@",responseObject);
-		NSDictionary *dic = [(NSString *)[responseObject valueForKey:@"data"] parseToArrayOrNSDictionary];
-		weakSelf.headImageName = [(NSArray *)[dic valueForKey:@"pname"] objectAtIndex:0];
-        [[NSUserDefaults standardUserDefaults] setObject:weakSelf.headImageName forKey:KEY_HEAD_IMAGE];
-		[weakSelf didUploadAllUserInfo];
-	} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-		NSLog(@"%@",error);
-		[Hud hideHud];
-		[Hud showMessageWithText:@"上传图片失败"];
-		
-	}];
     
 }
 
@@ -256,43 +259,49 @@
 
 - (void)uploadMaterial
 {
-	if (IsStrEmpty(self.nameTextField.text)) {
-		[Hud showMessageWithText:@"请输入名字"];
-		return;
-	}
+    if([self checkInputMessageValid]){
+        __weak typeof(self)weakSelf = self;
+        NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
+
+        NSDictionary *param = @{@"uid":uid, @"head_img":self.headImageName ? self.headImageName : @"", @"name":self.nameTextField.text, @"company":self.companyTextField.text, @"title":self.titleTextField.text, @"position":self.userLocation ? self.userLocation : @""};
+        [Hud showLoadingWithMessage:@"完善信息中"];
+        [[AFHTTPRequestOperationManager manager] PUT:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"register"] parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            NSLog(@"%@",operation);
+            NSLog(@"%@",responseObject);
+            NSString *code = [responseObject valueForKey:@"code"];
+            if ([code isEqualToString:@"000"]) {
+                [[NSUserDefaults standardUserDefaults] setObject:self.nameTextField.text forKey:KEY_USER_NAME];
+                [[NSUserDefaults standardUserDefaults] setObject:self.headImageName forKey:KEY_HEAD_IMAGE];
+                [[NSUserDefaults standardUserDefaults] synchronize];
+                [weakSelf chatLoagin];
+                [weakSelf dealFriendPush];
+                [weakSelf didUploadAllUserInfo];
+            }
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            [Hud hideHud];
+        }];
+    }
+}
+
+- (BOOL)checkInputMessageValid
+{
+    if (IsStrEmpty(self.nameTextField.text)) {
+        [Hud showMessageWithText:@"请输入名字"];
+        return NO;
+    }
     if (self.nameTextField.text.length > 12) {
         [Hud showMessageWithText:@"名字过长，最大长度为12个字"];
-        return;
+        return NO;
     }
-	if (IsStrEmpty(self.companyTextField.text)) {
-		[Hud showMessageWithText:@"请输入公司名"];
-		return;
-	}
-	if (IsStrEmpty(self.titleTextField.text)) {
-		[Hud showMessageWithText:@"请输入职务"];
-		return;
-	}
-    
-    __weak typeof(self)weakSelf = self;
-	NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
-
-    NSDictionary *param = @{@"uid":uid, @"head_img":self.headImageName ? self.headImageName : @"", @"name":self.nameTextField.text, @"company":self.companyTextField.text, @"title":self.titleTextField.text, @"position":self.userLocation ? self.userLocation : @""};
-    [Hud showLoadingWithMessage:@"完善信息中"];
-    [[AFHTTPRequestOperationManager manager] PUT:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"register"] parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"%@",operation);
-        NSLog(@"%@",responseObject);
-        NSString *code = [responseObject valueForKey:@"code"];
-        if ([code isEqualToString:@"000"]) {
-            [[NSUserDefaults standardUserDefaults] setObject:self.nameTextField.text forKey:KEY_USER_NAME];
-            [[NSUserDefaults standardUserDefaults] setObject:self.headImageName forKey:KEY_HEAD_IMAGE];
-            [[NSUserDefaults standardUserDefaults] synchronize];
-            [weakSelf chatLoagin];
-            [weakSelf dealFriendPush];
-            [weakSelf uploadHeadImage:self.headImage];
-        }
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [Hud hideHud];
-    }];
+    if (IsStrEmpty(self.companyTextField.text)) {
+        [Hud showMessageWithText:@"请输入公司名"];
+        return NO;
+    }
+    if (IsStrEmpty(self.titleTextField.text)) {
+        [Hud showMessageWithText:@"请输入职务"];
+        return NO;
+    }
+    return YES;
 }
 
 - (void)downloadUserSelectedInfo
