@@ -541,8 +541,7 @@ static inline CGFloat TTTFlushFactorForTextAlignment(NSTextAlignment textAlignme
 
             NSMutableString *newText = [[NSMutableString alloc] initWithString:text];
 
-            NSRegularExpression *regularExpression = [NSRegularExpression regularExpressionWithPattern:
-                                                      kURLEXPRESSION options:0 error:nil];
+            NSRegularExpression *regularExpression = [NSRegularExpression regularExpressionWithPattern: kURLEXPRESSION options:0 error:nil];
 
             NSMutableArray *results = [NSMutableArray array];
 

@@ -185,7 +185,7 @@
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
-	UIImage *newHeadiamge = info[UIImagePickerControllerOriginalImage];
+	UIImage *newHeadiamge = info[UIImagePickerControllerEditedImage];
 	[picker dismissViewControllerAnimated:YES completion:nil];
 	
 	self.headImage = newHeadiamge;

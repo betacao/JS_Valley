@@ -588,7 +588,7 @@ static inline CGSize CTFramesetterSuggestFrameSizeForAttributedStringWithConstra
 }
 
 - (void)addLinks:(NSArray *)links {
-    NSMutableArray *mutableLinkModels = [NSMutableArray arrayWithArray:self.linkModels];
+    NSMutableArray *mutableLinkModels = [NSMutableArray array];
 
     NSMutableAttributedString *mutableAttributedString = [self.attributedText mutableCopy];
 

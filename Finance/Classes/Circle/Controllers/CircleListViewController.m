@@ -344,7 +344,10 @@ const CGFloat kAdButtomMargin = 20.0f;
 
 -(void)refreshData
 {
-    [self requestDataWithTarget:@"first" time:@""];
+    __weak typeof(self) weakSelf = self;
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [weakSelf requestDataWithTarget:@"first" time:@""];
+    });
 }
 
 - (void)loadRegisterPushFriend
@@ -754,18 +757,11 @@ const CGFloat kAdButtomMargin = 20.0f;
 
 //处理tableView左边空白
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
-    if ([cell respondsToSelector:@selector(setSeparatorInset:)])
-    {
-        
+    if ([cell respondsToSelector:@selector(setSeparatorInset:)]){
         [cell setSeparatorInset:UIEdgeInsetsZero];
-        
     }
-    
-    if ([cell respondsToSelector:@selector(setLayoutMargins:)])
-    {
-        
+    if ([cell respondsToSelector:@selector(setLayoutMargins:)]){
         [cell setLayoutMargins:UIEdgeInsetsZero];
-        
     }
 }
 

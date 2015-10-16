@@ -8,15 +8,14 @@
 
 #import "SHGModifyInfoViewController.h"
 
-const CGFloat bgWidth = 221.0f;
-const CGFloat bgHeight = 253.0f;
+const CGFloat bgWidth = 250.0f;
+const CGFloat bgHeight = 256.0f;
 const CGFloat keyboardMargin = 64.0f;
 
 @interface SHGModifyInfoViewController ()
 @property (weak, nonatomic) IBOutlet UIView *bgView;
 @property (weak, nonatomic) IBOutlet UITextField *nameTextField;
 @property (weak, nonatomic) IBOutlet UITextField *companyTextField;
-
 @property (weak, nonatomic) IBOutlet UITextField *departTextField;
 @property (weak, nonatomic) IBOutlet UIButton *cancelButton;
 @property (weak, nonatomic) IBOutlet UIButton *okButton;
@@ -39,8 +38,8 @@ const CGFloat keyboardMargin = 64.0f;
     
     self.cancelButton.layer.masksToBounds = YES;
     self.okButton.layer.masksToBounds = YES;
-    self.cancelButton.layer.cornerRadius = 5.0f;
-    self.okButton.layer.cornerRadius = 5.0f;
+    self.cancelButton.layer.cornerRadius = 4.0f;
+    self.okButton.layer.cornerRadius = 4.0f;
     
     CGRect frame = self.nameTextField.frame;
     frame.origin.y *= YFACTOR;
@@ -61,6 +60,15 @@ const CGFloat keyboardMargin = 64.0f;
     frame = self.okButton.frame;
     frame.origin.y *= YFACTOR;
     self.okButton.frame = frame;
+
+    self.nameTextField.layer.masksToBounds = YES;
+    self.nameTextField.layer.cornerRadius = 4.0f;
+
+    self.companyTextField.layer.masksToBounds = YES;
+    self.companyTextField.layer.cornerRadius = 4.0f;
+
+    self.departTextField.layer.masksToBounds = YES;
+    self.departTextField.layer.cornerRadius = 4.0f;
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -149,7 +157,13 @@ const CGFloat keyboardMargin = 64.0f;
 - (void)textFieldDidBeginEditing:(UITextField *)textField
 {
     self.currentField = textField;
+    textField.textColor = [UIColor colorWithHexString:@"333333"];
     [self scrollFieldToVisible];
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField
+{
+    textField.textColor = [UIColor colorWithHexString:@"d2d1d1"];
 }
 
 - (void)scrollFieldToVisible

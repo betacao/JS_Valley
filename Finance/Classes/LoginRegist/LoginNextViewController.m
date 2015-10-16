@@ -92,32 +92,29 @@
 
 -(void)regiestToken
 {
-   NSString *channelId = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_BPUSH_CHANNELID];
-   NSString *uid =  [[NSUserDefaults standardUserDefaults]objectForKey:KEY_UID];
+    NSString *channelId = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_BPUSH_CHANNELID];
+    NSString *uid =  [[NSUserDefaults standardUserDefaults]objectForKey:KEY_UID];
 
     NSString *token = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_TOKEN];
-    NSDictionary *param = @{@"uid":uid,
-                            @"t":token?:@"",
-                            @"channelid":channelId?:@"",
-                            @"channeluid":@"getui"};
+    NSDictionary *param = @{@"uid":uid, @"t":token?:@"", @"channelid":channelId?:@"", @"channeluid":@"getui"};
     [[AFHTTPRequestOperationManager manager] PUT:rBaseAddressForHttpUBpush parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject)
-    {
-        NSString *code = [responseObject valueForKey:@"code"];
-        if ([code isEqualToString:@"000"])
-        {
-            if ([self.isFull isEqualToString:@"1"])
-            {
-                [self chatLoagin];
-                [self loginSuccess];
-            }
-            else
-            {
-                ImproveMatiralViewController *vc = [[ImproveMatiralViewController alloc] init];
-                [self.navigationController pushViewController:vc animated:YES];
-            }
-        }
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error)
-    {
+     {
+         NSString *code = [responseObject valueForKey:@"code"];
+         if ([code isEqualToString:@"000"])
+         {
+             if ([self.isFull isEqualToString:@"1"])
+             {
+                 [self chatLoagin];
+                 [self loginSuccess];
+             }
+             else
+             {
+                 ImproveMatiralViewController *vc = [[ImproveMatiralViewController alloc] init];
+                 [self.navigationController pushViewController:vc animated:YES];
+             }
+         }
+     } failure:^(AFHTTPRequestOperation *operation, NSError *error)
+     {
         [Hud showLoadingWithMessage:error.domain];
         
     }];
@@ -132,9 +129,7 @@
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
     NSString *password = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_PASSWORD];
     
-    [[EaseMob sharedInstance].chatManager asyncLoginWithUsername:uid
-                                                        password:password
-                                                      completion:
+    [[EaseMob sharedInstance].chatManager asyncLoginWithUsername:uid password:password completion:
      ^(NSDictionary *loginInfo, EMError *error) {
          if (loginInfo && !error) {
              [[EaseMob sharedInstance].chatManager setIsAutoLoginEnabled:NO];
@@ -159,7 +154,6 @@
                      NSLog(NSLocalizedString(@"error.connectServerTimeout", @"Connect to the server timed out!"));
                      break;
                  default:
-                     //					 TTAlertNoTitle(NSLocalizedString(@"login.fail", @"Logon failure"));
                      break;
              }
 
