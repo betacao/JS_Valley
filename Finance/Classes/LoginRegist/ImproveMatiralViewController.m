@@ -529,16 +529,16 @@
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
         button.layer.borderWidth = 0.5f;
         button.layer.borderColor = [UIColor colorWithHexString:@"D6D6D6"].CGColor;
-        button.titleLabel.font = [UIFont systemFontOfSize:11.0f];
+        button.titleLabel.font = [UIFont fontWithName:@"Hiragino Sans" size:12.0f];
 
         [button setTitle:model.tagName forState:UIControlStateNormal];
-        [button setTitleColor:[UIColor colorWithHexString:@"D2D1D1"] forState:UIControlStateNormal];
+        [button setTitleColor:[UIColor colorWithHexString:@"8c8c8c"] forState:UIControlStateNormal];
         [button setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
         [button setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
 
         [button setBackgroundImage:[UIImage imageWithColor:[UIColor whiteColor]] forState:UIControlStateNormal];
-        [button setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithHexString:@"f04240"]] forState:UIControlStateHighlighted];
-        [button setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithHexString:@"f04240"]] forState:UIControlStateSelected];
+        [button setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithHexString:@"f95c53"]] forState:UIControlStateHighlighted];
+        [button setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithHexString:@"f95c53"]] forState:UIControlStateSelected];
         [button addTarget:self action:@selector(didSelectCategory:) forControlEvents:UIControlEventTouchUpInside];
         CGRect frame = CGRectMake(kPersonCategoryLeftMargin + (kPersonCategoryMargin + width) * col, kPersonCategoryTopMargin + (kPersonCategoryMargin + kPersonCategoryHeight) * row, width, kPersonCategoryHeight);
         button.frame = frame;
@@ -567,7 +567,8 @@
     if(!_noticeLabel){
         _noticeLabel = [[UILabel alloc] init];
         _noticeLabel.text = @"最多选3项（个人中心可更新）";
-        _noticeLabel.font = [UIFont systemFontOfSize:11.0f];
+        _noticeLabel.font = [UIFont fontWithName:@"Hiragino Sans" size:11.0f];
+
         _noticeLabel.textColor = [UIColor colorWithHexString:@"D2D1D1"];
         [self addSubview:_noticeLabel];
     }

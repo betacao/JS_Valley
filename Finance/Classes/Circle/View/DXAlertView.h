@@ -7,8 +7,18 @@
 //
 
 #import <UIKit/UIKit.h>
-#define kAlertWidth 221.0f * XFACTOR
-#define kAlertHeight 156.0f *YFACTOR
+#define kAlertWidth 250.0f * XFACTOR
+#define kAlertHeight 167.0f * XFACTOR
+
+#define kLineViewTopMargin 44.0f * XFACTOR
+#define kContentOffset 30.0f
+#define kBetweenLabelOffset 20.0f
+#define kSingleButtonWidth 160.0f
+#define kCoupleButtonWidth 99.0f * XFACTOR
+#define kButtonHeight 32.0f * YFACTOR
+#define kButtonBottomOffset 20.0f * XFACTOR
+#define kLineViewLeftMargin 20.0f * XFACTOR
+#define kCustomViewButtomMargin 18.0f * YFACTOR
 
 @interface DXAlertView : UIView
 

@@ -19,11 +19,9 @@
 #import "SHGUserTagModel.h"
 
 //为标签弹出框定义的值
-#define kItemTopMargin  19.0f * YFACTOR
-#define kItemLeftMargin 19.0f * YFACTOR
-#define kItemMargin 11.0f * YFACTOR
-#define kItemBottomMargin  18.0f * YFACTOR
-#define kItemHeight 22.0f * YFACTOR
+#define kItemTopMargin  18.0f * XFACTOR
+#define kItemMargin 14.0f * XFACTOR
+#define kItemHeight 25.0f * XFACTOR
 
 @interface MeViewController ()<UITextFieldDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UIActionSheetDelegate,UITableViewDataSource,UITableViewDelegate,ModifyInfoDelegate>
 
@@ -155,7 +153,7 @@
     __weak typeof(self)weakSelf = self;
     [[SHGGloble sharedGloble] downloadUserTagInfo:^{
         //宽度设置和弹出框的线一样宽
-        weakSelf.tagsView = [[SHGTagsView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, kAlertWidth - 38.0f * XFACTOR, 0.0f)];
+        weakSelf.tagsView = [[SHGTagsView alloc] initWithFrame:CGRectMake(kLineViewLeftMargin, 0.0f, kAlertWidth - 2 * kLineViewLeftMargin, 0.0f)];
     }];
 }
 
@@ -267,7 +265,7 @@
     self.lineImageView.image = image;
 
     CGRect frame = self.verifyButton.frame;
-    CGFloat margin = (SCREENWIDTH - CGRectGetWidth(frame) * 3.0f) / 6.0f;
+    CGFloat margin = (SCREENWIDTH - CGRectGetWidth(frame) * 4.0f) / 8.0f;
     frame.origin.x = margin;
     self.verifyButton.frame = frame;
 
@@ -275,13 +273,12 @@
     frame.origin.x = 3.0f * margin + CGRectGetWidth(frame);
     self.btnEdit.frame = frame;
 
-//    frame = self.tagButton.frame;
-//    frame.origin.x = 5.0f * margin + 2.0f * CGRectGetWidth(frame);
-//    self.tagButton.frame = frame;
-    self.tagButton.hidden = YES;
-    
-    frame = self.invateButton.frame;
+    frame = self.tagButton.frame;
     frame.origin.x = 5.0f * margin + 2.0f * CGRectGetWidth(frame);
+    self.tagButton.frame = frame;
+
+    frame = self.invateButton.frame;
+    frame.origin.x = 7.0f * margin + 3.0f * CGRectGetWidth(frame);
     self.invateButton.frame = frame;
 
 }
@@ -319,7 +316,7 @@
 -(void)cameraClick
 {
     UIImagePickerController *pickerImage = [[UIImagePickerController alloc] init];
-    
+
     if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
         pickerImage.sourceType = UIImagePickerControllerSourceTypeCamera;
         pickerImage.mediaTypes = [UIImagePickerController availableMediaTypesForSourceType:pickerImage.sourceType];
@@ -327,7 +324,7 @@
     pickerImage.delegate = self;
     pickerImage.allowsEditing = YES;
     [self presentViewController:pickerImage animated:YES completion:^{
-        
+
     }];
 }
 
@@ -773,18 +770,18 @@
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
         button.layer.borderWidth = 0.5f;
         button.layer.borderColor = [UIColor colorWithHexString:@"D6D6D6"].CGColor;
-        button.titleLabel.font = [UIFont systemFontOfSize:11.0f];
+        button.titleLabel.font = [UIFont fontWithName:@"Hiragino Sans" size:12.0f];
 
         [button setTitle:model.tagName forState:UIControlStateNormal];
-        [button setTitleColor:[UIColor colorWithHexString:@"D2D1D1"] forState:UIControlStateNormal];
+        [button setTitleColor:[UIColor colorWithHexString:@"8c8c8c"] forState:UIControlStateNormal];
         [button setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
         [button setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
 
         [button setBackgroundImage:[UIImage imageWithColor:[UIColor whiteColor]] forState:UIControlStateNormal];
-        [button setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithHexString:@"f04240"]] forState:UIControlStateHighlighted];
-        [button setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithHexString:@"f04240"]] forState:UIControlStateSelected];
+        [button setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithHexString:@"f95c53"]] forState:UIControlStateHighlighted];
+        [button setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithHexString:@"f95c53"]] forState:UIControlStateSelected];
         [button addTarget:self action:@selector(didSelectCategory:) forControlEvents:UIControlEventTouchUpInside];
-        CGRect frame = CGRectMake(kItemLeftMargin + (kItemMargin + width) * col, kItemTopMargin + (kItemMargin + kItemHeight) * row, width, kItemHeight);
+        CGRect frame = CGRectMake((kItemMargin + width) * col, kItemTopMargin + (kItemMargin + kItemHeight) * row, width, kItemHeight);
         button.frame = frame;
         [self addSubview:button];
         frame = self.frame;

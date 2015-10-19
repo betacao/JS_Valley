@@ -954,4 +954,9 @@
     
 }
 
+- (void)didReceiveWeiboRequest:(WBBaseRequest *)request
+{
+
+}
+
 @end

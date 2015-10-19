@@ -329,7 +329,7 @@
             keyBoard=[[TWEmojiKeyBoard alloc]init];
             [keyBoard createEmojiKeyBoard];
         }
-        [keyBoard bindKeyBoardWithTextField:self.textEdit];
+        [keyBoard bindKeyBoardWithTextField:(UITextField *)self.textEdit];
     } else{
         [keyBoard unbindKeyBoard];
         isEmojiKeyBoard = NO;

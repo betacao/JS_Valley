@@ -45,42 +45,29 @@
     return self;
 }
 
-#define kTitleYOffset 5 * YFACTOR
-#define kTitleHeight 35.0f * YFACTOR
-
-#define kContentOffset 30.0f
-#define kBetweenLabelOffset 20.0f
-
-#define kSingleButtonWidth 160.0f
-#define kCoupleButtonWidth 95.0f * XFACTOR
-#define kButtonHeight 32.0f * YFACTOR
-#define kButtonBottomOffset 14.0f * YFACTOR
-#define kButtomMargin 6.0f * XFACTOR
-#define kCustomViewButtomMargin 18.0f * YFACTOR
-
 - (instancetype)initWithTitle:(NSString *)title contentText:(NSString *)content leftButtonTitle:(NSString *)leftTitle rightButtonTitle:(NSString *)rigthTitle
 {
     if (self = [super init]){
         self.layer.cornerRadius = 8.0f;
         self.backgroundColor = [UIColor whiteColor];
-        self.alertTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, kTitleYOffset, kAlertWidth, kTitleHeight)];
-        self.alertTitleLabel.font = [UIFont systemFontOfSize:16.0f];
+        self.alertTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, 0.0f, kAlertWidth, kLineViewTopMargin)];
+        self.alertTitleLabel.font = [UIFont fontWithName:@"Hiragino Sans" size:17.0f];
         self.alertTitleLabel.textColor = [UIColor colorWithRed:249.0f/255.0f green:92.0f/255.0f blue:83.0f/255.0f alpha:1.0f];
         [self addSubview:self.alertTitleLabel];
         
-        CGFloat contentLabelWidth = kAlertWidth - 19 * 2 * XFACTOR;
+        CGFloat contentLabelWidth = kAlertWidth - kLineViewLeftMargin * 2;
         
-        self.lineLabel = [[UILabel alloc] initWithFrame:CGRectMake((kAlertWidth - contentLabelWidth) * 0.5, CGRectGetMaxY(self.alertTitleLabel.frame), contentLabelWidth, 1.0f)];
+        self.lineLabel = [[UILabel alloc] initWithFrame:CGRectMake((kAlertWidth - contentLabelWidth) * 0.5, kLineViewTopMargin, contentLabelWidth, 1.0f)];
         self.lineLabel.backgroundColor = [UIColor colorWithRed:249.0f/255.0f green:92.0f/255.0f blue:83.0f/255.0f alpha:1.0f];
         [self addSubview:self.lineLabel];
         
         //content的高度先设置为0 下面动态计算高度
         self.alertContentLabel = [[UILabel alloc] initWithFrame:CGRectMake((kAlertWidth - contentLabelWidth) * 0.5, CGRectGetMaxY(self.lineLabel.frame), contentLabelWidth, 0.0f)];
         self.alertContentLabel.numberOfLines = 0;
-        self.alertContentLabel.textAlignment = NSTextAlignmentLeft;
+        self.alertContentLabel.textAlignment = NSTextAlignmentCenter;
         self.alertTitleLabel.textAlignment = NSTextAlignmentCenter;
         self.alertContentLabel.textColor = [UIColor colorWithRed:141.0/255.0 green:141.0/255.0 blue:141.0/255.0 alpha:1];
-        self.alertContentLabel.font = [UIFont systemFontOfSize:12.0f];
+        self.alertContentLabel.font = [UIFont fontWithName:@"Hiragino Sans" size:14.0f];
         [self addSubview:self.alertContentLabel];
         
         CGRect leftBtnFrame = CGRectZero;
@@ -97,8 +84,8 @@
             self.alertContentLabel.frame = frame;
             
         }else {
-            leftBtnFrame = CGRectMake((kAlertWidth - 2 * kCoupleButtonWidth - kButtomMargin) * 0.5, kAlertHeight - kButtonBottomOffset - kButtonHeight, kCoupleButtonWidth, kButtonHeight);
-            rightBtnFrame = CGRectMake(CGRectGetMaxX(leftBtnFrame) + kButtomMargin, kAlertHeight - kButtonBottomOffset - kButtonHeight, kCoupleButtonWidth, kButtonHeight);
+            leftBtnFrame = CGRectMake(kLineViewLeftMargin, kAlertHeight - kButtonBottomOffset - kButtonHeight, kCoupleButtonWidth, kButtonHeight);
+            rightBtnFrame = CGRectMake(kAlertWidth - kCoupleButtonWidth - kLineViewLeftMargin, kAlertHeight - kButtonBottomOffset - kButtonHeight, kCoupleButtonWidth, kButtonHeight);
             self.leftBtn = [UIButton buttonWithType:UIButtonTypeCustom];
             self.rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
             self.leftBtn.frame = leftBtnFrame;
@@ -114,7 +101,7 @@
         [self.leftBtn setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithHexString:@"C5C5C5"]] forState:UIControlStateNormal];
         [self.rightBtn setTitle:rigthTitle forState:UIControlStateNormal];
         [self.leftBtn setTitle:leftTitle forState:UIControlStateNormal];
-        self.leftBtn.titleLabel.font = self.rightBtn.titleLabel.font = [UIFont boldSystemFontOfSize:14];
+        self.leftBtn.titleLabel.font = self.rightBtn.titleLabel.font = [UIFont fontWithName:@"Hiragino Sans" size:15.0f];
         [self.leftBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [self.rightBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         
@@ -139,15 +126,15 @@
     if(self){
         self.layer.cornerRadius = 8.0f;
         self.backgroundColor = [UIColor whiteColor];
-        self.alertTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, kTitleYOffset, kAlertWidth, kTitleHeight)];
-        self.alertTitleLabel.font = [UIFont systemFontOfSize:16.0f];
+        self.alertTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, 0.0f, kAlertWidth, kLineViewTopMargin)];
+        self.alertTitleLabel.font = [UIFont fontWithName:@"Hiragino Sans" size:17.0f];
         self.alertTitleLabel.textColor = [UIColor colorWithRed:249.0f/255.0f green:92.0f/255.0f blue:83.0f/255.0f alpha:1.0f];
         self.alertTitleLabel.textAlignment = NSTextAlignmentCenter;
         [self addSubview:self.alertTitleLabel];
 
-        CGFloat contentLabelWidth = kAlertWidth - 19 * 2 * XFACTOR;
+        CGFloat contentLabelWidth = kAlertWidth - 2 * kLineViewLeftMargin;
 
-        self.lineLabel = [[UILabel alloc] initWithFrame:CGRectMake((kAlertWidth - contentLabelWidth) * 0.5, CGRectGetMaxY(self.alertTitleLabel.frame), contentLabelWidth, 1.0f)];
+        self.lineLabel = [[UILabel alloc] initWithFrame:CGRectMake((kAlertWidth - contentLabelWidth) * 0.5, kLineViewTopMargin, contentLabelWidth, 1.0f)];
         self.lineLabel.backgroundColor = [UIColor colorWithRed:249.0f/255.0f green:92.0f/255.0f blue:83.0f/255.0f alpha:1.0f];
         [self addSubview:self.lineLabel];
 
@@ -165,8 +152,8 @@
             self.rightBtn.frame = rightBtnFrame;
 
         }else {
-            leftBtnFrame = CGRectMake((kAlertWidth - 2 * kCoupleButtonWidth - kButtomMargin) * 0.5, CGRectGetMaxY(customView.frame) + kCustomViewButtomMargin, kCoupleButtonWidth, kButtonHeight);
-            rightBtnFrame = CGRectMake(CGRectGetMaxX(leftBtnFrame) + kButtomMargin, CGRectGetMaxY(customView.frame) + kCustomViewButtomMargin, kCoupleButtonWidth, kButtonHeight);
+            leftBtnFrame = CGRectMake(kLineViewLeftMargin, CGRectGetMaxY(customView.frame) + kCustomViewButtomMargin, kCoupleButtonWidth, kButtonHeight);
+            rightBtnFrame = CGRectMake(kAlertWidth - kLineViewLeftMargin - kCoupleButtonWidth, CGRectGetMaxY(customView.frame) + kCustomViewButtomMargin, kCoupleButtonWidth, kButtonHeight);
             self.leftBtn = [UIButton buttonWithType:UIButtonTypeCustom];
             self.rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
             self.leftBtn.frame = leftBtnFrame;
@@ -177,7 +164,7 @@
         [self.leftBtn setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithHexString:@"C5C5C5"]] forState:UIControlStateNormal];
         [self.rightBtn setTitle:rigthTitle forState:UIControlStateNormal];
         [self.leftBtn setTitle:leftTitle forState:UIControlStateNormal];
-        self.leftBtn.titleLabel.font = self.rightBtn.titleLabel.font = [UIFont boldSystemFontOfSize:14];
+        self.leftBtn.titleLabel.font = self.rightBtn.titleLabel.font = [UIFont fontWithName:@"Hiragino Sans" size:15.0f];;
         [self.leftBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [self.rightBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
 

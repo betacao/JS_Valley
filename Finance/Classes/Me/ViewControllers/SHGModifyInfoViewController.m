@@ -33,7 +33,7 @@ const CGFloat keyboardMargin = 64.0f;
     self.bgView.layer.masksToBounds = YES;
     self.bgView.layer.cornerRadius = 8.0f;
     self.bgView.backgroundColor = [UIColor whiteColor];
-    self.bgView.frame = CGRectMake(0.0f, 0.0f, bgWidth * XFACTOR, bgHeight * YFACTOR);
+    self.bgView.frame = CGRectMake(0.0f, 0.0f, bgWidth * XFACTOR, bgHeight * XFACTOR);
     self.bgView.center = self.view.center;
     
     self.cancelButton.layer.masksToBounds = YES;
@@ -42,23 +42,23 @@ const CGFloat keyboardMargin = 64.0f;
     self.okButton.layer.cornerRadius = 4.0f;
     
     CGRect frame = self.nameTextField.frame;
-    frame.origin.y *= YFACTOR;
+    frame.size.height *= XFACTOR;
     self.nameTextField.frame = frame;
     
     frame = self.departTextField.frame;
-    frame.origin.y *= YFACTOR;
+    frame.size.height *= XFACTOR;
     self.departTextField.frame = frame;
     
     frame = self.companyTextField.frame;
-    frame.origin.y *= YFACTOR;
+    frame.size.height *= XFACTOR;
     self.companyTextField.frame = frame;
     
     frame = self.cancelButton.frame;
-    frame.origin.y *= YFACTOR;
+    frame.size.height *= XFACTOR;
     self.cancelButton.frame = frame;
     
     frame = self.okButton.frame;
-    frame.origin.y *= YFACTOR;
+    frame.size.height *= XFACTOR;
     self.okButton.frame = frame;
 
     self.nameTextField.layer.masksToBounds = YES;
