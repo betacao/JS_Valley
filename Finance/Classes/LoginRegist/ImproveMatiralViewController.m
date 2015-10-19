@@ -15,9 +15,10 @@
 #import "SHGUserTagModel.h"
 
 #define kPersonCategoryLeftMargin 13.0f * XFACTOR
-#define kPersonCategoryTopMargin 10.0f * YFACTOR
-#define kPersonCategoryMargin 7.0f *XFACTOR
-#define kPersonCategoryHeight 22.0f * YFACTOR
+#define kPersonCategoryTopMargin 10.0f * XFACTOR
+#define kPersonCategoryHorizontalMargin 7.0f * XFACTOR
+#define kPersonCategoryVerticalMargin 9.0f * XFACTOR
+#define kPersonCategoryHeight 22.0f * XFACTOR
 
 @interface ImproveMatiralViewController ()<UIScrollViewDelegate,SHGGlobleDelegate,SHGAreaDelegate>
 
@@ -73,7 +74,7 @@
             [[NSUserDefaults standardUserDefaults] synchronize];
         }
     }];
-//    [self downloadUserSelectedInfo];
+    [self downloadUserSelectedInfo];
     [self adjustLocationFrame];
     [[CCLocationManager shareLocation] getCity:^(NSString *addressString) {
 
@@ -520,7 +521,7 @@
 
 - (void)layoutSubviews
 {
-    CGFloat width = (CGRectGetWidth(self.frame) - 2 * kPersonCategoryLeftMargin - 3 * kPersonCategoryMargin) / 4.0f;
+    CGFloat width = (CGRectGetWidth(self.frame) - 2 * kPersonCategoryLeftMargin - 3 * kPersonCategoryHorizontalMargin) / 4.0f;
     for(SHGUserTagModel *model in self.dataArray){
         NSInteger index = [self.dataArray indexOfObject:model];
         NSInteger row = index / 4;
@@ -529,7 +530,7 @@
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
         button.layer.borderWidth = 0.5f;
         button.layer.borderColor = [UIColor colorWithHexString:@"D6D6D6"].CGColor;
-        button.titleLabel.font = [UIFont fontWithName:@"Hiragino Sans" size:12.0f];
+        button.titleLabel.font = [UIFont fontWithName:@"Hiragino Sans" size:11.0f];
 
         [button setTitle:model.tagName forState:UIControlStateNormal];
         [button setTitleColor:[UIColor colorWithHexString:@"8c8c8c"] forState:UIControlStateNormal];
@@ -540,7 +541,7 @@
         [button setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithHexString:@"f95c53"]] forState:UIControlStateHighlighted];
         [button setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithHexString:@"f95c53"]] forState:UIControlStateSelected];
         [button addTarget:self action:@selector(didSelectCategory:) forControlEvents:UIControlEventTouchUpInside];
-        CGRect frame = CGRectMake(kPersonCategoryLeftMargin + (kPersonCategoryMargin + width) * col, kPersonCategoryTopMargin + (kPersonCategoryMargin + kPersonCategoryHeight) * row, width, kPersonCategoryHeight);
+        CGRect frame = CGRectMake(kPersonCategoryLeftMargin + (kPersonCategoryHorizontalMargin + width) * col, kPersonCategoryTopMargin + (kPersonCategoryVerticalMargin + kPersonCategoryHeight) * row, width, kPersonCategoryHeight);
         button.frame = frame;
         [self addSubview:button];
         frame = self.frame;
