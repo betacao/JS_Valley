@@ -72,7 +72,7 @@
 {
     self.lblContent.numberOfLines = 5;
     self.lblContent.lineBreakMode = NSLineBreakByWordWrapping;
-    self.lblContent.font = [UIFont fontWithName:@"Hiragino Sans" size:14.0f];
+    self.lblContent.font = [UIFont fontWithName:@"HiraginoSans-W3" size:14.0f];
     self.lblContent.delegate = self;
     self.lblContent.backgroundColor = [UIColor clearColor];
 
@@ -203,11 +203,11 @@
             linkImageView.image = [UIImage imageNamed:@"default_image"];
         }
         UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(45,5, SCREENWIDTH -CELLRIGHT_WIDTH - 45,20 )];
-        [titleLabel setFont:[UIFont fontWithName:@"Hiragino Sans" size:13.0f]];
+        [titleLabel setFont:[UIFont fontWithName:@"HiraginoSans-W3" size:13.0f]];
         [titleLabel setTextColor:TEXT_COLOR];
         [titleLabel setText:link.title];
         UILabel *detailLabel = [[UILabel alloc] initWithFrame:CGRectMake(45, 25, SCREENWIDTH -CELLRIGHT_WIDTH - 45,20 )];
-        [detailLabel setFont:[UIFont fontWithName:@"Hiragino Sans" size:13.0f]];
+        [detailLabel setFont:[UIFont fontWithName:@"HiraginoSans-W3" size:13.0f]];
         [detailLabel setTextColor:TEXT_COLOR];
         detailLabel.text = link.desc;
         [self.photoView addSubview:linkImageView];
@@ -256,7 +256,7 @@
             UILabel *replyLabel = [[UILabel alloc] initWithFrame:CGRectMake(CELLRIGHT_COMMENT_WIDTH, i * 20 + 10, SCREENWIDTH - kPhotoViewRightMargin - kPhotoViewLeftMargin - CELLRIGHT_COMMENT_WIDTH, 20)];
             replyLabel.numberOfLines = 0;
             replyLabel.lineBreakMode = NSLineBreakByWordWrapping;
-            replyLabel.font = [UIFont fontWithName:@"Hiragino Sans" size:14.0f];
+            replyLabel.font = [UIFont fontWithName:@"HiraginoSans-W3" size:14.0f];
             replyLabel.userInteractionEnabled = YES;
             replyLabel.tag = i + 1000;
             replyLabel.textColor = TEXT_COLOR;
@@ -300,7 +300,7 @@
             UILabel *replyLabel = [[UILabel alloc] initWithFrame:CGRectMake(CELLRIGHT_COMMENT_WIDTH,CGRectGetHeight(commentRect), SCREENWIDTH-CELLRIGHT_WIDTH, 20)];
             replyLabel.numberOfLines = 1;
             replyLabel.text = @"查看全部";
-            replyLabel.font = [UIFont fontWithName:@"Hiragino Sans" size:14.0f];
+            replyLabel.font = [UIFont fontWithName:@"HiraginoSans-W3" size:14.0f];
             replyLabel.userInteractionEnabled = YES;
             replyLabel.textColor = RGB(210, 209, 209);
             [self.viewComment addSubview:replyLabel];

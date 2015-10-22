@@ -396,7 +396,7 @@ static inline CGSize CTFramesetterSuggestFrameSizeForAttributedStringWithConstra
 
     self.linkModels = [NSArray array];
 
-    self.linkBackgroundEdgeInset = UIEdgeInsetsMake(0.0f, -1.0f, 0.0f, -1.0f);
+    self.linkBackgroundEdgeInset = UIEdgeInsetsMake(-10.0f, 0.0f, 0.0f, 0.0f);
 
     NSMutableDictionary *mutableLinkAttributes = [NSMutableDictionary dictionary];
     [mutableLinkAttributes setObject:[NSNumber numberWithBool:YES] forKey:(NSString *)kCTUnderlineStyleAttributeName];
@@ -650,7 +650,6 @@ static inline CGSize CTFramesetterSuggestFrameSizeForAttributedStringWithConstra
     for (NSTextCheckingResult *result in MResult) {
         NSDictionary *activeAttributes = attributes ? self.activeLinkAttributes : nil;
         NSDictionary *inactiveAttributes = attributes ? self.inactiveLinkAttributes : nil;
-
         TTTAttributedLabelLink *link = [[TTTAttributedLabelLink alloc] initWithAttributes:attributes activeAttributes:activeAttributes inactiveAttributes:inactiveAttributes textCheckingResult:result];
 
         [links addObject:link];

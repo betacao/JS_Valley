@@ -44,12 +44,12 @@ REGULAREXPRESSION_OPTION(PoundSignRegularExpression, @"#([\\u4e00-\\u9fa5\\w\\-]
 //@"/:[\\w:~!@$&*()|+<>',?-]{1,8}" , // @"/:[\\x21-\\x2E\\x30-\\x7E]{1,8}" ，经过检测发现\w会匹配中文，好奇葩。
 REGULAREXPRESSION(SlashEmojiRegularExpression, @"/:[\\x21-\\x2E\\x30-\\x7E]{1,8}")
 
-const CGFloat kLineSpacing = 4.0;
+const CGFloat kLineSpacing = 5.0;
 const CGFloat kAscentDescentScale = 0.25; //在这里的话无意义，高度的结局都是和宽度一样
 
-const CGFloat kEmojiWidthRatioWithLineHeight = 0.75;//和字体高度的比例
+const CGFloat kEmojiWidthRatioWithLineHeight = 1;//和字体高度的比例
 
-const CGFloat kEmojiOriginYOffsetRatioWithLineHeight = -0.1; //表情绘制的y坐标矫正值，和字体高度的比例，越大越往下
+const CGFloat kEmojiOriginYOffsetRatioWithLineHeight = 0.2; //表情绘制的y坐标矫正值，和字体高度的比例，越大越往下
 NSString *const kCustomGlyphAttributeImageName = @"CustomGlyphAttributeImageName";
 
 #define kEmojiReplaceCharacter @"\uFFFC"
@@ -199,7 +199,7 @@ static CGFloat widthCallback(void *refCon) {
     [super commonInit];
 
     self.numberOfLines = 0;
-    self.font = [UIFont systemFontOfSize:14.0];
+    self.font = [UIFont fontWithName:@"HiraginoSans-W3" size:14.0f];
     self.textColor = [UIColor blackColor];
     self.backgroundColor = [UIColor clearColor];
 
@@ -225,7 +225,7 @@ static CGFloat widthCallback(void *refCon) {
         [mutableActiveLinkAttributes setObject:(__bridge id)[commonLinkColor CGColor] forKey:(NSString *)kCTForegroundColorAttributeName];
     }
 
-    [mutableLinkAttributes setObject:[UIFont systemFontOfSize:14.0f] forKey:(NSString *)kCTFontAttributeName];
+    [mutableLinkAttributes setObject:[UIFont fontWithName:@"HiraginoSans-W3" size:14.0f] forKey:(NSString *)kCTFontAttributeName];
 
     self.linkAttributes = [NSDictionary dictionaryWithDictionary:mutableLinkAttributes];
     self.activeLinkAttributes = [NSDictionary dictionaryWithDictionary:mutableActiveLinkAttributes];

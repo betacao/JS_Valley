@@ -177,10 +177,8 @@
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
     NSDictionary *param = [NSDictionary dictionaryWithObjectsAndKeys:uid,@"uid",string,@"tagIds",@"edit",@"flag", nil];
     [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/v1/user/tag/saveOrUpdateUserTag",rBaseAddRessHttp] parameters:param success:^(MOCHTTPResponse *response) {
-        [Hud showMessageWithText:@"上传个人信息成功"];
         block(YES);
     } failed:^(MOCHTTPResponse *response) {
-        [Hud showMessageWithText:@"上传个人信息失败"];
         block(NO);
     }];
 }
