@@ -8,6 +8,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CircleDetailViewController">
             <connections>
                 <outlet property="actionView" destination="HFs-C6-FpA" id="cj0-9n-gwW"/>
+                <outlet property="breakLineView" destination="O6d-SK-hTf" id="3NY-i9-ODj"/>
                 <outlet property="btnAttention" destination="Kgd-tr-IWO" id="UTm-WJ-xop"/>
                 <outlet property="btnCollet" destination="h3Y-4G-plf" id="mz2-sT-ld1"/>
                 <outlet property="btnComment" destination="jTv-Gm-ZGF" id="un2-D9-5GC"/>
@@ -17,14 +18,15 @@
                 <outlet property="btnSend" destination="a0u-4d-vNm" id="NjW-6P-Ql5"/>
                 <outlet property="btnShare" destination="eU6-gQ-ToL" id="HzG-zM-C5r"/>
                 <outlet property="imageHeader" destination="9Sx-ef-Sas" id="1RY-fp-lPg"/>
+                <outlet property="lblCompanyName" destination="0bu-Jl-Pav" id="qJc-5Z-j0z"/>
                 <outlet property="lblContent" destination="YrT-Xh-muG" id="JZ5-Yv-DKG"/>
-                <outlet property="lblPosition" destination="Scx-sD-Z3A" id="Mg2-fL-bZf"/>
                 <outlet property="lblTime" destination="nr5-PN-i9k" id="rYI-57-daI"/>
-                <outlet property="lblUserName" destination="0bu-Jl-Pav" id="aDq-pp-eGw"/>
+                <outlet property="lbldepartName" destination="Scx-sD-Z3A" id="x0b-lT-v5E"/>
                 <outlet property="listTable" destination="4Dg-M9-dvf" id="k3v-po-Yo0"/>
+                <outlet property="navigationView" destination="XOQ-nE-ewr" id="3ES-Nq-9S1"/>
                 <outlet property="scrollPraise" destination="aWm-Lk-eH9" id="KIK-W2-uD9"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
-                <outlet property="viewHeader" destination="Zk8-gE-mjJ" id="U9Z-48-a18"/>
+                <outlet property="viewHeader" destination="Zk8-gE-mjJ" id="omM-Qh-SA3"/>
                 <outlet property="viewInput" destination="QyD-ga-fkw" id="FTy-DG-HJn"/>
                 <outlet property="viewPraise" destination="ffx-YA-YXJ" id="Kft-j5-qR0"/>
             </connections>
@@ -91,11 +93,11 @@
             <point key="canvasLocation" x="-270" y="-369"/>
         </view>
         <view contentMode="scaleToFill" id="Zk8-gE-mjJ">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="300"/>
+            <rect key="frame" x="0.0" y="0.0" width="320" height="249"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" id="ffx-YA-YXJ">
-                    <rect key="frame" x="0.0" y="123" width="320" height="55"/>
+                    <rect key="frame" x="0.0" y="72" width="320" height="55"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
                     <subviews>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="已赞" id="C9f-ml-Jsf">
@@ -121,11 +123,11 @@
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
                 <view contentMode="scaleToFill" id="HFs-C6-FpA">
-                    <rect key="frame" x="0.0" y="80" width="320" height="40"/>
+                    <rect key="frame" x="0.0" y="29" width="320" height="40"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="OyJ-4H-wTc">
-                            <rect key="frame" x="105.00000562138601" y="0.0" width="50" height="40"/>
+                            <rect key="frame" x="105.00000206351723" y="0.0" width="50" height="40"/>
                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <inset key="titleEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
@@ -192,35 +194,41 @@
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
-                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="nr5-PN-i9k">
-                    <rect key="frame" x="60" y="32" width="143" height="11"/>
-                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                    <fontDescription key="fontDescription" name="Palatino-Roman" family="Palatino" pointSize="10"/>
-                    <color key="textColor" red="0.31372549020000001" green="0.31372549020000001" blue="0.31372549020000001" alpha="1" colorSpace="calibratedRGB"/>
-                    <nil key="highlightedColor"/>
-                </label>
-                <view contentMode="scaleToFill" id="9Sx-ef-Sas" customClass="headerView">
-                    <rect key="frame" x="15" y="10" width="34" height="34"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                </view>
-                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Scx-sD-Z3A">
-                    <rect key="frame" x="166" y="14" width="64" height="12"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <fontDescription key="fontDescription" name="Palatino-Roman" family="Palatino" pointSize="12"/>
-                    <color key="textColor" red="0.31372549020000001" green="0.31372549020000001" blue="0.31372549020000001" alpha="1" colorSpace="calibratedRGB"/>
-                    <nil key="highlightedColor"/>
-                </label>
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="YrT-Xh-muG" customClass="MLEmojiLabel">
-                    <rect key="frame" x="60" y="51" width="240" height="24"/>
+                    <rect key="frame" x="14" y="12" width="292" height="24"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                     <attributedString key="attributedText"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="M4c-zm-HYD">
-                    <rect key="frame" x="60" y="12" width="100" height="15"/>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <nil key="simulatedStatusBarMetrics"/>
+            <nil key="simulatedTopBarMetrics"/>
+            <nil key="simulatedBottomBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="87" y="-651.5"/>
+        </view>
+        <view contentMode="scaleToFill" id="XOQ-nE-ewr" customClass="SHGNavigationView">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="gmB-8Y-fr0">
+                    <rect key="frame" x="9" y="12" width="22" height="22"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <fontDescription key="fontDescription" name="Palatino-Roman" family="Palatino" pointSize="15"/>
+                    <state key="normal" image="返回.png"/>
+                    <connections>
+                        <action selector="btnBackClick:" destination="-1" eventType="touchUpInside" id="pw0-4P-fxp"/>
+                    </connections>
+                </button>
+                <view contentMode="scaleToFill" id="9Sx-ef-Sas" customClass="headerView">
+                    <rect key="frame" x="37" y="9" width="27" height="27"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </view>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="M4c-zm-HYD">
+                    <rect key="frame" x="73" y="9" width="26" height="12"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" name="HiraginoSans-W3" family="Hiragino Sans" pointSize="13"/>
                     <state key="normal">
                         <color key="titleColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -229,19 +237,38 @@
                         <action selector="actionGoSome:" destination="-1" eventType="touchUpInside" id="Fbf-qe-Mn5"/>
                     </connections>
                 </button>
-                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="0bu-Jl-Pav">
-                    <rect key="frame" x="60" y="14" width="84" height="12"/>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="哈哈" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="0bu-Jl-Pav">
+                    <rect key="frame" x="73" y="9" width="26" height="12"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <fontDescription key="fontDescription" name="Palatino-Roman" family="Palatino" pointSize="12"/>
-                    <color key="textColor" red="0.23137254900000001" green="0.23137254900000001" blue="0.23137254900000001" alpha="1" colorSpace="calibratedRGB"/>
+                    <fontDescription key="fontDescription" name="HiraginoSans-W3" family="Hiragino Sans" pointSize="11"/>
+                    <color key="textColor" red="0.37647058823529411" green="0.37647058823529411" blue="0.37647058823529411" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="哈哈" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="nr5-PN-i9k">
+                    <rect key="frame" x="73" y="25" width="143" height="11"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" name="HiraginoSans-W3" family="Hiragino Sans" pointSize="9"/>
+                    <color key="textColor" red="0.82352941176470584" green="0.81960784313725488" blue="0.81960784313725488" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <view contentMode="scaleToFill" id="O6d-SK-hTf">
+                    <rect key="frame" x="106" y="9" width="1" height="10"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" red="0.7803921568627451" green="0.7803921568627451" blue="0.7803921568627451" alpha="1" colorSpace="calibratedRGB"/>
+                </view>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="哈哈" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Scx-sD-Z3A">
+                    <rect key="frame" x="114" y="9" width="100" height="12"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" name="HiraginoSans-W3" family="Hiragino Sans" pointSize="11"/>
+                    <color key="textColor" red="0.37647058823529411" green="0.37647058823529411" blue="0.37647058823529411" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Kgd-tr-IWO">
-                    <rect key="frame" x="248" y="15" width="57" height="26"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                    <rect key="frame" x="269" y="9" width="37" height="16"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" name="Palatino-Roman" family="Palatino" pointSize="12"/>
                     <inset key="titleEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
-                    <state key="normal">
+                    <state key="normal" image="关注14">
                         <color key="titleColor" red="1" green="0.22352941179999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
@@ -250,21 +277,20 @@
                     </connections>
                 </button>
             </subviews>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-            <nil key="simulatedStatusBarMetrics"/>
-            <nil key="simulatedTopBarMetrics"/>
-            <nil key="simulatedBottomBarMetrics"/>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <point key="canvasLocation" x="87" y="-677"/>
+            <point key="canvasLocation" x="135" y="-400"/>
         </view>
     </objects>
     <resources>
         <image name="collected" width="16" height="15"/>
+        <image name="关注14" width="37" height="16"/>
         <image name="分享-14.png" width="16" height="16"/>
         <image name="删除-14.png" width="16" height="16"/>
         <image name="已赞" width="16" height="16"/>
         <image name="未赞" width="16" height="16"/>
         <image name="表情.png" width="25" height="25"/>
         <image name="评论-14.png" width="16" height="16"/>
+        <image name="返回.png" width="22" height="22"/>
     </resources>
 </document>

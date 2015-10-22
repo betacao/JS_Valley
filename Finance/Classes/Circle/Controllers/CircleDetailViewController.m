@@ -12,9 +12,12 @@
 #import "TWEmojiKeyBoard.h"
 #import "SDPhotoGroup.h"
 #import "SDPhotoItem.h"
+#import "SHGNavigationView.h"
 
 #define PRAISE_SEPWIDTH     6
 #define PRAISE_RIGHTWIDTH     40
+#define kItemMargin 7.0f * XFACTOR
+#define kPhotoViewTopMargin 12.0f * XFACTOR
 
 @interface CircleDetailViewController ()<MLEmojiLabelDelegate, CircleListDelegate>
 {
@@ -24,7 +27,6 @@
     NSString *commentRid;
     
 }
-- (IBAction)actionDelete:(id)sender;
 @property (weak, nonatomic) IBOutlet UIButton *btnDelete;
 @property (weak, nonatomic) IBOutlet UIButton *btnSend;
 @property (weak, nonatomic) IBOutlet UIView *viewInput;
@@ -40,11 +42,13 @@
 @property (weak, nonatomic) IBOutlet MLEmojiLabel *lblContent;
 @property (weak, nonatomic) IBOutlet UIButton *btnAttention;
 @property (weak, nonatomic) IBOutlet UILabel *lblTime;
-@property (weak, nonatomic) IBOutlet UILabel *lblPosition;
-@property (weak, nonatomic) IBOutlet UILabel *lblUserName;
+@property (weak, nonatomic) IBOutlet UILabel *lbldepartName;
+@property (weak, nonatomic) IBOutlet UILabel *lblCompanyName;
 @property (weak, nonatomic) IBOutlet headerView *imageHeader;
-@property (strong, nonatomic)BRCommentView *popupView;
+@property (strong, nonatomic) BRCommentView *popupView;
 @property (strong, nonatomic) IBOutlet UIView *viewHeader;
+@property (strong, nonatomic) IBOutlet UIView *navigationView;
+@property (weak,nonatomic) IBOutlet UIView *breakLineView;
 
 - (IBAction)actionAttention:(id)sender;
 - (IBAction)actionComment:(id)sender;
@@ -52,6 +56,7 @@
 - (IBAction)actionShare:(id)sender;
 - (IBAction)actionCollection:(id)sender;
 - (IBAction)actionGoSome:(id)sender;
+- (IBAction)actionDelete:(id)sender;
 
 @end
 
@@ -62,15 +67,22 @@
     if (self){
         self.title = @"帖子详情";
     }
-    return  self;
+    return self;
 }
--(void)viewWillAppear:(BOOL)animated
+
+- (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     [MobClick event:@"CircleDetailViewController" label:@"onClick"];
 }
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.navigationItem.leftBarButtonItem = nil;
+    self.navigationItem.hidesBackButton = YES;
+    self.navigationItem.titleView = self.navigationView;
+
     [CommonMethod setExtraCellLineHidden:self.listTable];
     [self addHeaderRefresh:self.listTable headerRefesh:NO andFooter:NO];
     [Hud showLoadingWithMessage:@"加载中"];
@@ -90,8 +102,9 @@
 
     self.lblContent.numberOfLines = 0;
     self.lblContent.lineBreakMode = NSLineBreakByWordWrapping;
-    self.lblContent.font = [UIFont systemFontOfSize:14.0f];
+    self.lblContent.font = [UIFont fontWithName:@"Hiragino Sans" size:14.0f];
     self.lblContent.delegate = self;
+    self.lblContent.textColor = [UIColor colorWithHexString:@"606060"];
     self.lblContent.backgroundColor = [UIColor clearColor];
 
     [self initData];
@@ -107,9 +120,14 @@
     self.btnSend.layer.masksToBounds = YES;
     self.btnSend.layer.cornerRadius = 8;
 
-    DDTapGestureRecognizer *hdGes = [[DDTapGestureRecognizer alloc] initWithTarget:self action:@selector(headTap:)];
+    DDTapGestureRecognizer *hdGes = [[DDTapGestureRecognizer alloc] initWithTarget:self action:@selector(didTapHeaderView:)];
     [self.imageHeader addGestureRecognizer:hdGes];
     self.imageHeader.userInteractionEnabled = YES;
+}
+
+- (IBAction)btnBackClick:(id)sender
+{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 -(void)parseObjWithDic:(NSDictionary *)dics
@@ -220,6 +238,10 @@
     
     [self.imageHeader updateHeaderView:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,obj.potname] placeholderImage:[UIImage imageNamed:@"默认头像"]];
     [self.imageHeader updateStatus:[obj.userstatus isEqualToString:@"true"] ? YES : NO];
+    CGRect frame = self.imageHeader.frame;
+    frame.origin.x *= XFACTOR;
+    self.imageHeader.frame = frame;
+
 
     if (![obj.ispraise isEqualToString:@"Y"]) {
         [self.btnPraise setImage:[UIImage imageNamed:@"未赞"] forState:UIControlStateNormal];
@@ -240,13 +262,13 @@
     [self.btnNickname setTitle:name forState:UIControlStateNormal];
     [self.btnNickname setBackgroundImage:[UIImage imageWithColor:BTN_SELECT_BACK_COLOR andSize:self.btnNickname.size] forState:UIControlStateHighlighted];
     
-    self.lblUserName.text = obj.company;
+    self.lblCompanyName.text = obj.company;
     NSString *str= obj.title;
     if (obj.title.length > 4){
         str= [obj.title substringToIndex:4];
         str = [NSString stringWithFormat:@"%@…",str];
     }
-    self.lblPosition.text = str;
+    self.lbldepartName.text = str;
     self.lblTime.text = obj.publishdate;
     [self.btnShare setTitle:obj.sharenum forState:UIControlStateNormal];
     [self.btnComment setTitle:obj.cmmtnum forState:UIControlStateNormal];
@@ -260,7 +282,7 @@
     
     self.lblContent.text = obj.detail;
     CGSize size = [self.lblContent preferredSizeWithMaxWidth:kCellContentWidth];
-    CGRect frame = self.lblContent.frame;
+    frame = self.lblContent.frame;
     frame.size.width = kCellContentWidth;
     frame.size.height = size.height;
     self.lblContent.frame = frame;
@@ -277,11 +299,11 @@
             linkImageView.image = [UIImage imageNamed:@"default_image"];
         }
         UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(45,5, SCREENWIDTH -CELLRIGHT_WIDTH - 45,20 )];
-        [titleLabel setFont:[UIFont systemFontOfSize:13]];
+        [titleLabel setFont:[UIFont fontWithName:@"Hiragino Sans" size:13.0f]];
         [titleLabel setTextColor:TEXT_COLOR];
         [titleLabel setText:link.title];
         UILabel *detailLabel = [[UILabel alloc] initWithFrame:CGRectMake(45, 25, SCREENWIDTH -CELLRIGHT_WIDTH - 45,20 )];
-        [detailLabel setFont:[UIFont systemFontOfSize:13]];
+        [detailLabel setFont:[UIFont fontWithName:@"Hiragino Sans" size:13.0f]];
         [detailLabel setTextColor:TEXT_COLOR];
         detailLabel.text = link.desc;
         [photoView addSubview:linkImageView];
@@ -302,7 +324,7 @@
         photoGroup.photoItemArray = temp;
         [photoView addSubview:photoGroup];
 
-        photoView.frame = CGRectMake(kPhotoViewLeftMargin, self.lblContent.bottom, CGRectGetWidth(photoGroup.frame),CGRectGetHeight(photoGroup.frame));
+        photoView.frame = CGRectMake(kPhotoViewLeftMargin, self.lblContent.bottom + kPhotoViewTopMargin, CGRectGetWidth(photoGroup.frame),CGRectGetHeight(photoGroup.frame));
     }
     [self.viewHeader addSubview:photoView];
     CGRect actionViewRect = self.actionView.frame;
@@ -385,27 +407,49 @@
         name = [obj.nickname substringToIndex:4];
         name = [NSString stringWithFormat:@"%@…",name];
     }
-    CGSize nameSize = [name sizeForFont:self.btnNickname.titleLabel.font constrainedToSize:CGSizeMake(100.0f, 20.0f) lineBreakMode:self.btnNickname.titleLabel.lineBreakMode];
     CGRect userRect = self.btnNickname.frame;
+    [self.btnNickname sizeToFit];
+    CGSize nameSize = self.btnNickname.frame.size;
     userRect.size.width = nameSize.width;
+    userRect.origin.x *= XFACTOR;
     self.btnNickname.frame = userRect;
+
+    //设置分割线的坐标
+    CGRect frame = self.breakLineView.frame;
+    frame.origin.x = kItemMargin + CGRectGetMaxX(userRect);
+    frame.size.width = 0.5f;
+    frame.size.height = CGRectGetHeight(userRect);
+    self.breakLineView.frame = frame;
     
-    CGRect companRect = self.lblUserName.frame;
-    companRect.origin.x = self.btnNickname.right + kObjectMargin;
+    CGRect companRect = self.lblCompanyName.frame;
+    companRect.origin.x = kItemMargin + CGRectGetMaxX(frame);
     NSString *comp = obj.company;
     if (obj.company.length > 5) {
         NSString *str = [obj.company substringToIndex:5];
         comp = [NSString stringWithFormat:@"%@…",str];
     }
-    CGSize companSize = [comp sizeForFont:self.lblUserName.font constrainedToSize:CGSizeMake(84.0f, 15.0f) lineBreakMode:self.lblUserName.lineBreakMode];
-    companRect.size.width = companSize.width;
-    self.lblUserName.frame = companRect;
+    [self.lblCompanyName sizeToFit];
+    CGSize size = self.lblCompanyName.frame.size;
+    companRect.size.width = size.width;
+    companRect.size.height = size.height;
+    self.lblCompanyName.frame = companRect;
     
-    CGRect positionRect = self.lblPosition.frame;
-    positionRect.origin.x = self.lblUserName.right + kObjectMargin / 2.0f;
-    self.lblPosition.frame = positionRect;
- 
-    
+    CGRect positionRect = self.lbldepartName.frame;
+    positionRect.origin.x = kItemMargin + CGRectGetMaxX(companRect);
+    [self.lbldepartName sizeToFit];
+    size = self.lbldepartName.frame.size;
+    positionRect.size.width = size.width;
+    positionRect.size.height = size.height;
+    self.lbldepartName.frame = positionRect;
+
+    frame = self.lblTime.frame;
+    [self.lblTime sizeToFit];
+    frame.origin.x *= XFACTOR;
+    [self.lblTime setOrigin:frame.origin];
+
+    frame = self.btnAttention.frame;
+    frame.origin.x *= XFACTOR;
+    self.btnAttention.frame = frame;
     [self.btnNickname setBackgroundImage:[UIImage imageWithColor:BTN_SELECT_BACK_COLOR andSize:nameSize] forState:UIControlStateHighlighted];
 }
 - (void)didReceiveMemoryWarning {
@@ -820,10 +864,11 @@
     }
 }
 
--(void)headTap:(DDTapGestureRecognizer *)ges
+- (void)didTapHeaderView:(DDTapGestureRecognizer *)ges
 {
     [self gotoSomeOneWithId:self.obj.userid name:self.obj.nickname];
 }
+
 -(void)refreshFooter
 {
     
@@ -855,7 +900,7 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     commentOBj *obj = self.obj.comments[indexPath.row];
-    UIFont *font = [UIFont fontWithName:@"Palatino" size:14.0f];
+    UIFont *font = [UIFont fontWithName:@"Hiragino Sans" size:14.0f];
     
     NSString *text;
     if (IsStrEmpty(obj.rnickname))
