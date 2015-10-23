@@ -76,7 +76,7 @@
     }];
     [self downloadUserSelectedInfo];
     [self adjustLocationFrame];
-    [[CCLocationManager shareLocation] getCity:^(NSString *addressString) {
+    [[CCLocationManager shareLocation] getCity:^{
 
     }];
 }

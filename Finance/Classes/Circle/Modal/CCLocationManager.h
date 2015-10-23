@@ -12,17 +12,20 @@
 
 #define  CCLastLongitude @"CCLastLongitude"
 #define  CCLastLatitude  @"CCLastLatitude"
-#define  CCLastCity      @"CCLastCity"
+#define  CCLastCityName      @"CCLastCityName"
+#define  CCLastProvinceName      @"CCLastProvinceName"
 #define  CCLastAddress   @"CCLastAddress"
 
 typedef void (^LocationBlock)(CLLocationCoordinate2D locationCorrrdinate);
 typedef void (^LocationErrorBlock) (NSError *error);
 typedef void(^NSStringBlock)(NSString *cityString);
 typedef void(^NSStringBlock)(NSString *addressString);
+typedef void(^FYFinishBlock) (void);
 
 @interface CCLocationManager : NSObject<CLLocationManagerDelegate>
 @property (nonatomic) CLLocationCoordinate2D lastCoordinate;
-@property (nonatomic, strong) NSString *lastCity;
+@property (nonatomic, strong) NSString *lastCityName;
+@property (nonatomic, strong) NSString *lastPrivinceName;
 @property (nonatomic, strong) NSString *lastAddress;
 
 @property(nonatomic,assign)float latitude;
@@ -58,7 +61,7 @@ typedef void(^NSStringBlock)(NSString *addressString);
  *
  *  @param cityBlock cityBlock description
  */
-- (void) getCity:(NSStringBlock)cityBlock;
+- (void) getCity:(FYFinishBlock)finishBlock;
 
 
 @end

@@ -38,7 +38,6 @@ const CGFloat kAdButtomMargin = 20.0f;
     UISegmentedControl *segmentedControl;
     NSTimer *timer;
     NSArray *phopoArr;
-    NSString *currentCity;
 }
 
 @property (weak, nonatomic) IBOutlet UITableView *listTable;
@@ -64,6 +63,7 @@ const CGFloat kAdButtomMargin = 20.0f;
 @property (strong, nonatomic) SHGNoticeView *newFriendNoticeView;
 @property (strong, nonatomic) SHGNoticeView *newMessageNoticeView;
 @property (assign, nonatomic) BOOL isRefreshing;
+@property (strong, nonatomic) NSString *currentCity;
 
 @end
 
@@ -255,16 +255,12 @@ const CGFloat kAdButtomMargin = 20.0f;
 - (void)getAllInfo
 {
     __block __weak CircleListViewController *wself = self;
-    [[CCLocationManager shareLocation] getCity:^(NSString *cityString) {
-        NSLog(@"%@",cityString);
-        if(cityString && cityString.length > 0){
-            NSArray *array = [cityString componentsSeparatedByString:@"省"];
-            NSString *provinceName = [array[0] stringByAppendingString:@"\r"];
-            NSString *cityName = array[1];
-            
-            NSArray *cityArray = [cityName componentsSeparatedByString:@"市"];
-            currentCity = cityArray[0];
-            NSLog(@"self.cityName = %@",currentCity);
+    [[CCLocationManager shareLocation] getCity:^{
+        NSString *cityName = [SHGGloble sharedGloble].cityName;
+        NSString *provinceName = [[SHGGloble sharedGloble].provinceName stringByAppendingString:@"\r"];
+        if(cityName && cityName.length > 0){
+            self.currentCity = cityName;
+            NSLog(@"self.cityName = %@",self.currentCity);
             for(popObj *obj in self.arrCityCode){
                 if([obj.name isEqualToString:provinceName]){
                     self.cityCode = obj.code;
@@ -275,6 +271,7 @@ const CGFloat kAdButtomMargin = 20.0f;
             [wself requestAlermInfo];
         }
     }];
+    
 }
 
 
@@ -596,7 +593,7 @@ const CGFloat kAdButtomMargin = 20.0f;
         if(self.recommendViewController.view.superview){
             [self.recommendViewController.view removeFromSuperview];
         }
-        [self.recommendViewController loadViewWithData:array cityCode:currentCity];
+        [self.recommendViewController loadViewWithData:array cityCode:self.currentCity];
         [cell addSubview:self.recommendViewController.view];
         return cell;
         

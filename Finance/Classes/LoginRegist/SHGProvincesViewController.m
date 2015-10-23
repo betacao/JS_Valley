@@ -34,7 +34,7 @@
     UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:leftButton];
     self.navigationItem.leftBarButtonItem = leftItem;
     __weak typeof(self) weakSelf = self;
-    [[CCLocationManager shareLocation] getCity:^(NSString *addressString) {
+    [[CCLocationManager shareLocation] getCity:^{
         [weakSelf.indicator removeFromSuperview];
         weakSelf.gpsCell.textLabel.text = [SHGGloble sharedGloble].cityName;
     }];
