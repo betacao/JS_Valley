@@ -144,6 +144,8 @@
             CGRect frame = CGRectZero;
             viewRecommend.frame = frame;
             viewRecommend.tag = 200 + i;
+            viewRecommend.contentMode = UIViewContentModeScaleAspectFill;
+            viewRecommend.clipsToBounds = YES;
             viewRecommend.image = obj.image;
             UILongPressGestureRecognizer *longTapGes = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longTap:)];
             longTapGes.minimumPressDuration = 0.4;
@@ -685,13 +687,10 @@
         for (NSInteger i=0; i < assets.count; i++){
             ALAsset *asset = assets[i];
             UIImage *tempImg = [UIImage imageWithCGImage:asset.defaultRepresentation.fullScreenImage scale:asset.defaultRepresentation.scale orientation:(UIImageOrientation)asset.defaultRepresentation.orientation];
-            
             if (tempImg){
-                CGSize size = CGSizeMake(70, 70);
-                UIImage *imageNew = [tempImg reSizeImagetoSize:CGSizeMake(size.width*2, size.height*2)];
                 NSData *dataImage = UIImageJPEGRepresentation(tempImg, 1.0);//压缩
                 RecommendTypeObj *detailObj = [[RecommendTypeObj alloc] init];
-                detailObj.image = imageNew;
+                detailObj.image = tempImg;
                 detailObj.type = RECOMMENDPICOBJTYPEPIC;
                 detailObj.content = dataImage;
                 [self.imageArr addObject:detailObj];
