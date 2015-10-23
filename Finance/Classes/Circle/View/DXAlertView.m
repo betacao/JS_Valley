@@ -51,7 +51,7 @@
         self.layer.cornerRadius = 8.0f;
         self.backgroundColor = [UIColor whiteColor];
         self.alertTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, 0.0f, kAlertWidth, kLineViewTopMargin)];
-        self.alertTitleLabel.font = [UIFont fontWithName:@"HiraginoSans-W3" size:17.0f];
+        self.alertTitleLabel.font = [UIFont systemFontOfSize:17.0f];
         self.alertTitleLabel.textColor = [UIColor colorWithRed:249.0f/255.0f green:92.0f/255.0f blue:83.0f/255.0f alpha:1.0f];
         [self addSubview:self.alertTitleLabel];
         
@@ -67,7 +67,7 @@
         self.alertContentLabel.textAlignment = NSTextAlignmentCenter;
         self.alertTitleLabel.textAlignment = NSTextAlignmentCenter;
         self.alertContentLabel.textColor = [UIColor colorWithRed:141.0/255.0 green:141.0/255.0 blue:141.0/255.0 alpha:1];
-        self.alertContentLabel.font = [UIFont fontWithName:@"HiraginoSans-W3" size:14.0f];
+        self.alertContentLabel.font = [UIFont systemFontOfSize:14.0f];
         [self addSubview:self.alertContentLabel];
         
         CGRect leftBtnFrame = CGRectZero;
@@ -101,7 +101,7 @@
         [self.leftBtn setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithHexString:@"C5C5C5"]] forState:UIControlStateNormal];
         [self.rightBtn setTitle:rigthTitle forState:UIControlStateNormal];
         [self.leftBtn setTitle:leftTitle forState:UIControlStateNormal];
-        self.leftBtn.titleLabel.font = self.rightBtn.titleLabel.font = [UIFont fontWithName:@"HiraginoSans-W3" size:15.0f];
+        self.leftBtn.titleLabel.font = self.rightBtn.titleLabel.font = [UIFont systemFontOfSize:15.0f];
         [self.leftBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [self.rightBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         
@@ -127,7 +127,7 @@
         self.layer.cornerRadius = 8.0f;
         self.backgroundColor = [UIColor whiteColor];
         self.alertTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, 0.0f, kAlertWidth, kLineViewTopMargin)];
-        self.alertTitleLabel.font = [UIFont fontWithName:@"HiraginoSans-W3" size:17.0f];
+        self.alertTitleLabel.font = [UIFont systemFontOfSize:17.0f];
         self.alertTitleLabel.textColor = [UIColor colorWithRed:249.0f/255.0f green:92.0f/255.0f blue:83.0f/255.0f alpha:1.0f];
         self.alertTitleLabel.textAlignment = NSTextAlignmentCenter;
         [self addSubview:self.alertTitleLabel];
@@ -164,7 +164,7 @@
         [self.leftBtn setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithHexString:@"C5C5C5"]] forState:UIControlStateNormal];
         [self.rightBtn setTitle:rigthTitle forState:UIControlStateNormal];
         [self.leftBtn setTitle:leftTitle forState:UIControlStateNormal];
-        self.leftBtn.titleLabel.font = self.rightBtn.titleLabel.font = [UIFont fontWithName:@"HiraginoSans-W3" size:15.0f];;
+        self.leftBtn.titleLabel.font = self.rightBtn.titleLabel.font = [UIFont systemFontOfSize:15.0f];;
         [self.leftBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [self.rightBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
 

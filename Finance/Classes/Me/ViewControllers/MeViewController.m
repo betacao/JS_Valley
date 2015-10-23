@@ -770,7 +770,7 @@
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
         button.layer.borderWidth = 0.5f;
         button.layer.borderColor = [UIColor colorWithHexString:@"D6D6D6"].CGColor;
-        button.titleLabel.font = [UIFont fontWithName:@"HiraginoSans-W3" size:12.0f];
+        button.titleLabel.font = [UIFont systemFontOfSize:12.0f];
 
         [button setTitle:model.tagName forState:UIControlStateNormal];
         [button setTitleColor:[UIColor colorWithHexString:@"8c8c8c"] forState:UIControlStateNormal];

@@ -530,7 +530,7 @@
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
         button.layer.borderWidth = 0.5f;
         button.layer.borderColor = [UIColor colorWithHexString:@"D6D6D6"].CGColor;
-        button.titleLabel.font = [UIFont fontWithName:@"HiraginoSans-W3" size:11.0f];
+        button.titleLabel.font = [UIFont systemFontOfSize:11.0f];
 
         [button setTitle:model.tagName forState:UIControlStateNormal];
         [button setTitleColor:[UIColor colorWithHexString:@"8c8c8c"] forState:UIControlStateNormal];
@@ -568,7 +568,7 @@
     if(!_noticeLabel){
         _noticeLabel = [[UILabel alloc] init];
         _noticeLabel.text = @"最多选3项（个人中心可更新）";
-        _noticeLabel.font = [UIFont fontWithName:@"HiraginoSans-W3" size:11.0f];
+        _noticeLabel.font = [UIFont systemFontOfSize:11.0f];
 
         _noticeLabel.textColor = [UIColor colorWithHexString:@"D2D1D1"];
         [self addSubview:_noticeLabel];

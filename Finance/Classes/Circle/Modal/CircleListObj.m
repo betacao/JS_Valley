@@ -69,7 +69,7 @@ const CGFloat kActionViewHeight = 40.0f;
         MLEmojiLabel *globleLabel = [MLEmojiLabel new];
         globleLabel.numberOfLines = 5;
         globleLabel.lineBreakMode = NSLineBreakByWordWrapping;
-        globleLabel.font = [UIFont fontWithName:@"HiraginoSans-W3" size:14.0f];
+        globleLabel.font = [UIFont systemFontOfSize:14.0f];
         globleLabel.text = self.detail;
         CGSize size = [globleLabel preferredSizeWithMaxWidth:kCellContentWidth];
         self.totalHeight = size.height + kUserInfoHeight;
@@ -116,7 +116,7 @@ const CGFloat kActionViewHeight = 40.0f;
             } else{
                 text = [NSString stringWithFormat:@"%@回复%@:  %@",comobj.cnickname,comobj.rnickname,comobj.cdetail];
             }
-            CGFloat height = [text sizeForFont:[UIFont fontWithName:@"HiraginoSans-W3" size:14.0f] constrainedToSize:CGSizeMake(SCREENWIDTH - (kPhotoViewLeftMargin + kPhotoViewRightMargin) - CELLRIGHT_COMMENT_WIDTH, MAXFLOAT) lineBreakMode:NSLineBreakByWordWrapping].height;
+            CGFloat height = [text sizeForFont:[UIFont systemFontOfSize:14.0f] constrainedToSize:CGSizeMake(SCREENWIDTH - (kPhotoViewLeftMargin + kPhotoViewRightMargin) - CELLRIGHT_COMMENT_WIDTH, MAXFLOAT) lineBreakMode:NSLineBreakByWordWrapping].height;
             commentHeight += (height + kObjectMargin);
         }
         //这边加10 是为了让分割线和评论区域有个间隔 没有评论则不会加这个10
@@ -151,7 +151,7 @@ const CGFloat kActionViewHeight = 40.0f;
               @"ispraise":@"ispraise",
               @"type":@"attachtype",
               @"linkObj":@"link",
-              @"sizes":@"sizes",
+//              @"sizes":@"sizes",
               @"postType":@"type",
               @"friendship":@"friendship",
               @"userstatus":@"userstatus",

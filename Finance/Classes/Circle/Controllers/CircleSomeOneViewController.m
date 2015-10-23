@@ -222,7 +222,7 @@
         obj.rid = dics[@"rid"];
         obj.type = dics[@"attachtype"];
         obj.userid = dics[@"userid"];
-        obj.sizes = dics[@"sizes"];
+//        obj.sizes = dics[@"sizes"];
         obj.friendship = dics[@"friendship"];
         obj.userstatus = dics[@"userstatus"];
         NSArray *comments = dics[@"comments"];

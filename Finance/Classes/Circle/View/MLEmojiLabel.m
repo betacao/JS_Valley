@@ -199,7 +199,7 @@ static CGFloat widthCallback(void *refCon) {
     [super commonInit];
 
     self.numberOfLines = 0;
-    self.font = [UIFont fontWithName:@"HiraginoSans-W3" size:14.0f];
+    self.font = [UIFont systemFontOfSize:14.0f];
     self.textColor = [UIColor blackColor];
     self.backgroundColor = [UIColor clearColor];
 
@@ -225,7 +225,7 @@ static CGFloat widthCallback(void *refCon) {
         [mutableActiveLinkAttributes setObject:(__bridge id)[commonLinkColor CGColor] forKey:(NSString *)kCTForegroundColorAttributeName];
     }
 
-    [mutableLinkAttributes setObject:[UIFont fontWithName:@"HiraginoSans-W3" size:14.0f] forKey:(NSString *)kCTFontAttributeName];
+    [mutableLinkAttributes setObject:[UIFont systemFontOfSize:14.0f] forKey:(NSString *)kCTFontAttributeName];
 
     self.linkAttributes = [NSDictionary dictionaryWithDictionary:mutableLinkAttributes];
     self.activeLinkAttributes = [NSDictionary dictionaryWithDictionary:mutableActiveLinkAttributes];

@@ -102,7 +102,7 @@
 
     self.lblContent.numberOfLines = 0;
     self.lblContent.lineBreakMode = NSLineBreakByWordWrapping;
-    self.lblContent.font = [UIFont fontWithName:@"HiraginoSans-W3" size:14.0f];
+    self.lblContent.font = [UIFont systemFontOfSize:14.0f];
     self.lblContent.delegate = self;
     self.lblContent.textColor = [UIColor colorWithHexString:@"606060"];
     self.lblContent.backgroundColor = [UIColor clearColor];
@@ -174,7 +174,7 @@
     self.obj.title = dic[@"title"];
     self.obj.userstatus = [dic objectForKey:@"userstatus"];
     self.obj.userid = dic[@"userid"];
-    self.obj.sizes = dic[@"sizes"];
+//    self.obj.sizes = dic[@"sizes"];
     NSDictionary *link = dic[@"link"];
     if ([self.obj.type isEqualToString:@"link"]){
         linkOBj *linkObj = [[linkOBj alloc] init];
@@ -299,11 +299,11 @@
             linkImageView.image = [UIImage imageNamed:@"default_image"];
         }
         UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(45,5, SCREENWIDTH -CELLRIGHT_WIDTH - 45,20 )];
-        [titleLabel setFont:[UIFont fontWithName:@"HiraginoSans-W3" size:13.0f]];
+        [titleLabel setFont:[UIFont systemFontOfSize:13.0f]];
         [titleLabel setTextColor:TEXT_COLOR];
         [titleLabel setText:link.title];
         UILabel *detailLabel = [[UILabel alloc] initWithFrame:CGRectMake(45, 25, SCREENWIDTH -CELLRIGHT_WIDTH - 45,20 )];
-        [detailLabel setFont:[UIFont fontWithName:@"HiraginoSans-W3" size:13.0f]];
+        [detailLabel setFont:[UIFont systemFontOfSize:13.0f]];
         [detailLabel setTextColor:TEXT_COLOR];
         detailLabel.text = link.desc;
         [photoView addSubview:linkImageView];
@@ -900,7 +900,7 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     commentOBj *obj = self.obj.comments[indexPath.row];
-    UIFont *font = [UIFont fontWithName:@"HiraginoSans-W3" size:14.0f];
+    UIFont *font = [UIFont systemFontOfSize:14.0f];
     
     NSString *text;
     if (IsStrEmpty(obj.rnickname))
