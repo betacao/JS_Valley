@@ -72,18 +72,19 @@
 }
 
 #pragma mark CLLocationManagerDelegate
-- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
+- (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
 {
     [SHGGloble sharedGloble].provinceName = @"";
     [SHGGloble sharedGloble].cityName = @"";
     NSUserDefaults *standard = [NSUserDefaults standardUserDefaults];
-    CLLocation *newLocation = [locations firstObject];
+//    CLLocation *newLocation = [locations firstObject];
     CLGeocoder *geocoder=[[CLGeocoder alloc]init];
     [geocoder reverseGeocodeLocation:newLocation completionHandler:^(NSArray *placemarks,NSError *error){
         if (placemarks.count > 0) {
             CLPlacemark *placemark = [placemarks objectAtIndex:0];
             self.lastCity = [NSString stringWithFormat:@"%@%@",placemark.administrativeArea,placemark.locality];
             [standard setObject:self.lastCity forKey:CCLastCity];//省市地址
+            [standard synchronize];
             NSLog(@"______%@",self.lastCity);
 
             if([self.lastCity rangeOfString:@"市"].location != NSNotFound && [self.lastCity rangeOfString:@"省"].location != NSNotFound){
@@ -120,7 +121,7 @@
     NSLog(@"%f--%f",newLocation.coordinate.latitude,newLocation.coordinate.longitude);
     [standard setObject:@(newLocation.coordinate.latitude) forKey:CCLastLatitude];
     [standard setObject:@(newLocation.coordinate.longitude) forKey:CCLastLongitude];
-    
+    [standard synchronize];
     [manager stopUpdatingLocation];
 }
 

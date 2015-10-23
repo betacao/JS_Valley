@@ -91,7 +91,7 @@ const CGFloat kActionViewHeight = 40.0f;
             }
         }
     }
-    self.totalHeight += photoHeight;
+    self.totalHeight += (photoHeight + kPhotoViewTopMargin);
     NSInteger num = 0;
     if ([self.cmmtnum intValue] > 3){
         if (self.isPull){

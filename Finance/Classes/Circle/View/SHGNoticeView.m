@@ -9,9 +9,11 @@
 #import "SHGNoticeView.h"
 #import "UIButton+EnlargeEdge.h"
 
-#define kNoticeViewHeight 30.0f * YFACTOR
+#define kNoticeFriendViewHeight 30.0f * XFACTOR
 #define kCloseButtonMargin 25.0f
 #define kCloseButtonEnlargeEdge 20.0f
+#define kNoticeMessageViewHeight 25.0f * XFACTOR
+#define kNoticeLeftMargin 14.0f
 
 @interface SHGNoticeView()
 
@@ -19,16 +21,34 @@
 @property (strong, nonatomic) UIView *bgView;
 @property (strong, nonatomic) UIButton *closeButton;
 @property (strong, nonatomic) NSString *uid;
+@property (assign, nonatomic) SHGNoticeType noticeType;
 
 @end
 
 
 @implementation SHGNoticeView
 
-- (instancetype)initWithFrame:(CGRect)frame
+- (instancetype)initWithFrame:(CGRect)frame type:(SHGNoticeType)type
 {
-    self = [super initWithFrame:CGRectMake(0.0f, kNavigationBarHeight + kStatusBarHeight, SCREENWIDTH, kNoticeViewHeight)];
+
+    self = [super initWithFrame:CGRectZero];
     if(self){
+        switch (type) {
+            case SHGNoticeTypeNewFriend:
+            {
+                self.frame = CGRectMake(0.0f, kNavigationBarHeight + kStatusBarHeight, SCREENWIDTH, kNoticeFriendViewHeight);
+            }
+                break;
+                
+            default:
+            {
+                self.frame = CGRectMake(kNoticeLeftMargin, kNavigationBarHeight + kStatusBarHeight, SCREENWIDTH - 2 * kNoticeLeftMargin, kNoticeMessageViewHeight);
+                self.layer.masksToBounds = YES;
+                self.layer.cornerRadius = 3.0f;
+                self.noticeType = type;
+            }
+                break;
+        }
         self.clipsToBounds = YES;
         self.bgView.backgroundColor = [UIColor colorWithWhite:0.0f alpha:0.6f];
     }
@@ -60,6 +80,9 @@
         frame.origin.x = SCREENWIDTH - kCloseButtonMargin * XFACTOR;
         _closeButton.frame = frame;
         [_closeButton addTarget:self action:@selector(hide) forControlEvents:UIControlEventTouchUpInside];
+        if(self.noticeType == SHGNoticeTypeNewMessage){
+            _closeButton.hidden = YES;
+        }
     }
     return _closeButton;
 }
@@ -81,6 +104,12 @@
 
 - (void)showWithText:(NSString *)string
 {
+
+    if(self.noticeType == SHGNoticeTypeNewMessage){
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3.0f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [self hide];
+        });
+    }
     self.noticeLabel.text = string;
     [self.superView.window addSubview:self];
     [UIView animateWithDuration:0.25f animations:^{
@@ -88,7 +117,7 @@
         frame.origin.y = 0.0f;
         self.bgView.frame = frame;
     } completion:^(BOOL finished) {
-        
+
     }];
 }
 

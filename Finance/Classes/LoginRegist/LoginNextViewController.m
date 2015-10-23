@@ -133,9 +133,7 @@
      ^(NSDictionary *loginInfo, EMError *error) {
          if (loginInfo && !error) {
              [[EaseMob sharedInstance].chatManager setIsAutoLoginEnabled:NO];
-             //发送自动登陆状态通知
-             //             [[NSNotificationCenter defaultCenter] postNotificationName:KNOTIFICATION_LOGINCHANGE object:@YES];
-             //将旧版的coredata数据导入新的数据库
+
              EMError *error = [[EaseMob sharedInstance].chatManager importDataToNewDatabase];
              if (!error) {
                  error = [[EaseMob sharedInstance].chatManager loadDataFromDatabase];

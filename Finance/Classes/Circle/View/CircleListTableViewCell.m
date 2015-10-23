@@ -229,7 +229,7 @@
         photoGroup.photoItemArray = temp;
         [self.photoView addSubview:photoGroup];
 
-        self.photoView.frame = CGRectMake(kPhotoViewLeftMargin, self.lblContent.bottom, CGRectGetWidth(photoGroup.frame),CGRectGetHeight(photoGroup.frame));
+        self.photoView.frame = CGRectMake(kPhotoViewLeftMargin, self.lblContent.bottom + kPhotoViewTopMargin, CGRectGetWidth(photoGroup.frame),CGRectGetHeight(photoGroup.frame));
         
     }
     CGRect actionViewRect = self.actionView.frame;

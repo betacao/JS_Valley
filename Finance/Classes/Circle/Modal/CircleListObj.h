@@ -13,6 +13,7 @@
 #define kPhotoViewLeftMargin 14.0f
 #define kPhotoViewRightMargin 14.0f
 #define kCellContentWidth 292.0f * XFACTOR
+#define kPhotoViewTopMargin 12.0f * XFACTOR
 
 @class linkOBj;
 

@@ -8,6 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+typedef NS_ENUM(NSInteger, SHGNoticeType)
+{
+    SHGNoticeTypeNewFriend = 0,
+    SHGNoticeTypeNewMessage = 1
+};
+
 @protocol SHGNoticeDelegate <NSObject>
 
 @optional
@@ -19,8 +25,8 @@
 
 @property (assign, nonatomic) id<SHGNoticeDelegate> delegate;
 @property (weak, nonatomic) UIView *superView;
-
 - (void)loadUserUid:(NSString *)uid;
 - (void)showWithText:(NSString *)string;
+- (instancetype)initWithFrame:(CGRect)frame type:(SHGNoticeType)type;
 
 @end

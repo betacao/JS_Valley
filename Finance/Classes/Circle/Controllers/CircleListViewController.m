@@ -61,7 +61,8 @@ const CGFloat kAdButtomMargin = 20.0f;
 @property (nonatomic, strong) NSString *cityCode;
 
 @property (assign, nonatomic) NSInteger totalNum;
-@property (strong, nonatomic) SHGNoticeView *noticeView;
+@property (strong, nonatomic) SHGNoticeView *newFriendNoticeView;
+@property (strong, nonatomic) SHGNoticeView *newMessageNoticeView;
 @property (assign, nonatomic) BOOL isRefreshing;
 
 @end
@@ -188,14 +189,23 @@ const CGFloat kAdButtomMargin = 20.0f;
     return _arrCityCode;
 }
 
-- (SHGNoticeView *)noticeView
+- (SHGNoticeView *)newFriendNoticeView
 {
-    if(!_noticeView){
-        _noticeView = [[SHGNoticeView alloc] initWithFrame:CGRectZero];
-        _noticeView.superView = self.view;
-        _noticeView.delegate = self;
+    if(!_newFriendNoticeView){
+        _newFriendNoticeView = [[SHGNoticeView alloc] initWithFrame:CGRectZero type:SHGNoticeTypeNewFriend];
+        _newFriendNoticeView.superView = self.view;
+        _newFriendNoticeView.delegate = self;
     }
-    return _noticeView;
+    return _newFriendNoticeView;
+}
+
+- (SHGNoticeView *)newMessageNoticeView
+{
+    if(!_newMessageNoticeView){
+        _newMessageNoticeView = [[SHGNoticeView alloc] initWithFrame:CGRectZero type:SHGNoticeTypeNewMessage];
+        _newMessageNoticeView.superView = self.view;
+    }
+    return _newMessageNoticeView;
 }
 
 -(void)requestAlermInfo
@@ -360,8 +370,8 @@ const CGFloat kAdButtomMargin = 20.0f;
             NSString *message = [dictionary objectForKey:@"message"];
             NSString *uid = [dictionary objectForKey:@"uid"];
             if(message && message.length > 0){
-                [weakSelf.noticeView showWithText:message];
-                [weakSelf.noticeView loadUserUid:uid];
+                [weakSelf.newFriendNoticeView showWithText:message];
+                [weakSelf.newFriendNoticeView loadUserUid:uid];
             }
         }
     } failed:^(MOCHTTPResponse *response) {
@@ -394,6 +404,7 @@ const CGFloat kAdButtomMargin = 20.0f;
     __weak typeof(self) weakSelf = self;
     [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttpCircle,circleBak] class:[CircleListObj class] parameters:param success:^(MOCHTTPResponse *response){
         weakSelf.isRefreshing = NO;
+        [self.newMessageNoticeView showWithText:@"为你加载了10条新动态"];
         NSLog(@"==============%@",response.dataArray);
         if ([target isEqualToString:@"first"]){
             [weakSelf.dataArr removeAllObjects];

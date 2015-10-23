@@ -288,7 +288,7 @@
     self.lblContent.frame = frame;
     [self sizeUIWithObj:obj];
     
-    UIView *photoView = [[UIView alloc] initWithFrame:CGRectMake(60, _lblContent.bottom + 10, SCREENWIDTH-CELLRIGHT_WIDTH, 0)];
+    UIView *photoView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, CGRectGetMaxY(frame), 0.0f, 0.0f)];
     if ([self.obj.type isEqualToString:@"link"]){
         photoView.backgroundColor = RGB(245, 245, 241);
         linkOBj *link = obj.linkObj;
