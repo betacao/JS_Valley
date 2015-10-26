@@ -53,11 +53,10 @@
 
 #define TEXT_COLOR [UIColor colorWithRed:51/255.0 green:51/255.0 blue:51/255.0 alpha:1.0]
 
-#define CELL_PHOTO_SEP  6
-#define CELL_PHOTO_NUM  4
+#define CELL_PHOTO_SEP  6 * XFACTOR
 
 #define CELLRIGHT_WIDTH  45
-#define CELLRIGHT_COMMENT_WIDTH  10
+#define CELLRIGHT_COMMENT_WIDTH  7.0f * XFACTOR
 
 #define BACK_COLOR  RGBA(247,247,247,1)
 

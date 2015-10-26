@@ -800,8 +800,6 @@
 		B06F1C161B74B4AE005157A2 /* 矢量智能对象.png in Resources */ = {isa = PBXBuildFile; fileRef = B06F1C151B74B4AE005157A2 /* 矢量智能对象.png */; };
 		B07B65071B7DC8E0005B8EE1 /* 信息14-默认@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B07B64FF1B7DC8E0005B8EE1 /* 信息14-默认@2x.png */; };
 		B07B65081B7DC8E0005B8EE1 /* 信息14-选中@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B07B65001B7DC8E0005B8EE1 /* 信息14-选中@2x.png */; };
-		B07B65181B7DDE13005B8EE1 /* 评论-14@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B07B65141B7DDE13005B8EE1 /* 评论-14@2x.png */; };
-		B07B65191B7DDE13005B8EE1 /* 删除-14@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B07B65151B7DDE13005B8EE1 /* 删除-14@2x.png */; };
 		B080FE881B81E30100426579 /* btn_publish_face_a@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B080FE5F1B81E30100426579 /* btn_publish_face_a@2x.png */; };
 		B080FE891B81E30100426579 /* btn_publish_face_a@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = B080FE601B81E30100426579 /* btn_publish_face_a@3x.png */; };
 		B080FE8A1B81E30100426579 /* btn_publish_face_b@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B080FE611B81E30100426579 /* btn_publish_face_b@2x.png */; };
@@ -875,27 +873,27 @@
 		F92835DE1BA6E16C00E1CF22 /* UIButton+EnlargeEdge.m in Sources */ = {isa = PBXBuildFile; fileRef = F92835DD1BA6E16C00E1CF22 /* UIButton+EnlargeEdge.m */; };
 		F932E2551B859DEC00EF2332 /* CircleListRecommendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F932E2531B859DEC00EF2332 /* CircleListRecommendViewController.m */; };
 		F932E2561B859DEC00EF2332 /* CircleListRecommendViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F932E2541B859DEC00EF2332 /* CircleListRecommendViewController.xib */; };
-		F9758A631BB002D70085D32C /* ImproveMatiralViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9758A621BB002D70085D32C /* ImproveMatiralViewController.xib */; settings = {ASSET_TAGS = (); }; };
-		F98B16EF1BC7947D000A577C /* libGeTuiSdk-1.2.1.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F98B16EE1BC7947D000A577C /* libGeTuiSdk-1.2.1.a */; settings = {ASSET_TAGS = (); }; };
+		F9758A631BB002D70085D32C /* ImproveMatiralViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9758A621BB002D70085D32C /* ImproveMatiralViewController.xib */; };
+		F98B16EF1BC7947D000A577C /* libGeTuiSdk-1.2.1.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F98B16EE1BC7947D000A577C /* libGeTuiSdk-1.2.1.a */; };
 		F99580C41B9D338B001F8AA6 /* SHGModifyInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F99580C21B9D338B001F8AA6 /* SHGModifyInfoViewController.m */; };
 		F99580C51B9D338B001F8AA6 /* SHGModifyInfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F99580C31B9D338B001F8AA6 /* SHGModifyInfoViewController.xib */; };
 		F99580C81B9D7F39001F8AA6 /* DXAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = F99580C71B9D7F39001F8AA6 /* DXAlertView.m */; };
 		F99B602C1B9E7D9500759AAC /* headerView.m in Sources */ = {isa = PBXBuildFile; fileRef = F99B602B1B9E7D9500759AAC /* headerView.m */; };
-		F9B0636B1BD7699400471DF4 /* SHGNavigationView.m in Sources */ = {isa = PBXBuildFile; fileRef = F9B0636A1BD7699400471DF4 /* SHGNavigationView.m */; settings = {ASSET_TAGS = (); }; };
+		F9B0636B1BD7699400471DF4 /* SHGNavigationView.m in Sources */ = {isa = PBXBuildFile; fileRef = F9B0636A1BD7699400471DF4 /* SHGNavigationView.m */; };
 		F9B18C081BA0521600EA0314 /* SHGNoticeView.m in Sources */ = {isa = PBXBuildFile; fileRef = F9B18C071BA0521600EA0314 /* SHGNoticeView.m */; };
 		F9B7CC321B8AD6C000E55EFD /* SHGGloble.m in Sources */ = {isa = PBXBuildFile; fileRef = F9B7CC311B8AD6C000E55EFD /* SHGGloble.m */; };
-		F9D9F1571BB51D5F00F94E70 /* SHGUserTagModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F9D9F1561BB51D5F00F94E70 /* SHGUserTagModel.m */; settings = {ASSET_TAGS = (); }; };
-		F9EBB7CD1BB3DCD20023E84E /* SHGPersonDynamicViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9EBB7CB1BB3DCD20023E84E /* SHGPersonDynamicViewController.m */; settings = {ASSET_TAGS = (); }; };
-		F9EBB7CE1BB3DCD20023E84E /* SHGPersonDynamicViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9EBB7CC1BB3DCD20023E84E /* SHGPersonDynamicViewController.xib */; settings = {ASSET_TAGS = (); }; };
-		F9EBB7D01BB3F4470023E84E /* China_City.plist in Resources */ = {isa = PBXBuildFile; fileRef = F9EBB7CF1BB3F4470023E84E /* China_City.plist */; settings = {ASSET_TAGS = (); }; };
-		F9EBB7D41BB3F4A00023E84E /* SHGProvincesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9EBB7D21BB3F4A00023E84E /* SHGProvincesViewController.m */; settings = {ASSET_TAGS = (); }; };
-		F9EBB7D51BB3F4A00023E84E /* SHGProvincesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9EBB7D31BB3F4A00023E84E /* SHGProvincesViewController.xib */; settings = {ASSET_TAGS = (); }; };
-		F9EDD5E91BABF3E100506C0C /* expressionImage.plist in Resources */ = {isa = PBXBuildFile; fileRef = F9EDD5E81BABF3E100506C0C /* expressionImage.plist */; settings = {ASSET_TAGS = (); }; };
-		F9EDD5F61BABFBCF00506C0C /* SDBrowserImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = F9EDD5EC1BABFBCF00506C0C /* SDBrowserImageView.m */; settings = {ASSET_TAGS = (); }; };
-		F9EDD5F71BABFBCF00506C0C /* SDPhotoBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = F9EDD5EE1BABFBCF00506C0C /* SDPhotoBrowser.m */; settings = {ASSET_TAGS = (); }; };
-		F9EDD5F81BABFBCF00506C0C /* SDPhotoGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = F9EDD5F11BABFBCF00506C0C /* SDPhotoGroup.m */; settings = {ASSET_TAGS = (); }; };
-		F9EDD5F91BABFBCF00506C0C /* SDPhotoItem.m in Sources */ = {isa = PBXBuildFile; fileRef = F9EDD5F31BABFBCF00506C0C /* SDPhotoItem.m */; settings = {ASSET_TAGS = (); }; };
-		F9EDD5FA1BABFBCF00506C0C /* SDWaitingView.m in Sources */ = {isa = PBXBuildFile; fileRef = F9EDD5F51BABFBCF00506C0C /* SDWaitingView.m */; settings = {ASSET_TAGS = (); }; };
+		F9D9F1571BB51D5F00F94E70 /* SHGUserTagModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F9D9F1561BB51D5F00F94E70 /* SHGUserTagModel.m */; };
+		F9EBB7CD1BB3DCD20023E84E /* SHGPersonDynamicViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9EBB7CB1BB3DCD20023E84E /* SHGPersonDynamicViewController.m */; };
+		F9EBB7CE1BB3DCD20023E84E /* SHGPersonDynamicViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9EBB7CC1BB3DCD20023E84E /* SHGPersonDynamicViewController.xib */; };
+		F9EBB7D01BB3F4470023E84E /* China_City.plist in Resources */ = {isa = PBXBuildFile; fileRef = F9EBB7CF1BB3F4470023E84E /* China_City.plist */; };
+		F9EBB7D41BB3F4A00023E84E /* SHGProvincesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9EBB7D21BB3F4A00023E84E /* SHGProvincesViewController.m */; };
+		F9EBB7D51BB3F4A00023E84E /* SHGProvincesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9EBB7D31BB3F4A00023E84E /* SHGProvincesViewController.xib */; };
+		F9EDD5E91BABF3E100506C0C /* expressionImage.plist in Resources */ = {isa = PBXBuildFile; fileRef = F9EDD5E81BABF3E100506C0C /* expressionImage.plist */; };
+		F9EDD5F61BABFBCF00506C0C /* SDBrowserImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = F9EDD5EC1BABFBCF00506C0C /* SDBrowserImageView.m */; };
+		F9EDD5F71BABFBCF00506C0C /* SDPhotoBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = F9EDD5EE1BABFBCF00506C0C /* SDPhotoBrowser.m */; };
+		F9EDD5F81BABFBCF00506C0C /* SDPhotoGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = F9EDD5F11BABFBCF00506C0C /* SDPhotoGroup.m */; };
+		F9EDD5F91BABFBCF00506C0C /* SDPhotoItem.m in Sources */ = {isa = PBXBuildFile; fileRef = F9EDD5F31BABFBCF00506C0C /* SDPhotoItem.m */; };
+		F9EDD5FA1BABFBCF00506C0C /* SDWaitingView.m in Sources */ = {isa = PBXBuildFile; fileRef = F9EDD5F51BABFBCF00506C0C /* SDWaitingView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -1996,8 +1994,6 @@
 		B06F1C151B74B4AE005157A2 /* 矢量智能对象.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "矢量智能对象.png"; sourceTree = "<group>"; };
 		B07B64FF1B7DC8E0005B8EE1 /* 信息14-默认@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "信息14-默认@2x.png"; sourceTree = "<group>"; };
 		B07B65001B7DC8E0005B8EE1 /* 信息14-选中@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "信息14-选中@2x.png"; sourceTree = "<group>"; };
-		B07B65141B7DDE13005B8EE1 /* 评论-14@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "评论-14@2x.png"; sourceTree = "<group>"; };
-		B07B65151B7DDE13005B8EE1 /* 删除-14@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "删除-14@2x.png"; sourceTree = "<group>"; };
 		B080FE5F1B81E30100426579 /* btn_publish_face_a@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn_publish_face_a@2x.png"; sourceTree = "<group>"; };
 		B080FE601B81E30100426579 /* btn_publish_face_a@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn_publish_face_a@3x.png"; sourceTree = "<group>"; };
 		B080FE611B81E30100426579 /* btn_publish_face_b@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn_publish_face_b@2x.png"; sourceTree = "<group>"; };
@@ -4435,8 +4431,6 @@
 		B09BF75E1B7C6C01008260B3 /* 圈子 */ = {
 			isa = PBXGroup;
 			children = (
-				B07B65141B7DDE13005B8EE1 /* 评论-14@2x.png */,
-				B07B65151B7DDE13005B8EE1 /* 删除-14@2x.png */,
 				B07B64FF1B7DC8E0005B8EE1 /* 信息14-默认@2x.png */,
 				B07B65001B7DC8E0005B8EE1 /* 信息14-选中@2x.png */,
 				B06F1C151B74B4AE005157A2 /* 矢量智能对象.png */,
@@ -5028,7 +5022,6 @@
 				569C6D3A1B7CAB6A00AD59C3 /* 手机@3x.png in Resources */,
 				61E83CCF1AF7C78E00703651 /* tab下划线@2x.png in Resources */,
 				61E83D181AF7C78E00703651 /* 常见问题@2x.png in Resources */,
-				B07B65181B7DDE13005B8EE1 /* 评论-14@2x.png in Resources */,
 				61616FEF1B02F29100E5A837 /* new评论@2x.png in Resources */,
 				61E83D561AF7C78E00703651 /* 发起对话按钮@3x.png in Resources */,
 				408D8B501AF8618C0055810C /* chatBar_recordSelectedBg@2x.png in Resources */,
@@ -5213,7 +5206,6 @@
 				61E83D3A1AF7C78E00703651 /* 圈子图标@3x.png in Resources */,
 				61E83D5E1AF7C78E00703651 /* 评论@3x.png in Resources */,
 				4088DDB51AF102FE00393855 /* SettingModifyPWDViewController.xib in Resources */,
-				B07B65191B7DDE13005B8EE1 /* 删除-14@2x.png in Resources */,
 				408D8AF11AF8618C0055810C /* chatFire_audioPlaying2.png in Resources */,
 				408D8AFE1AF8618C0055810C /* VoiceSearchFeedback005@2x.png in Resources */,
 				408D8B641AF8618C0055810C /* chatBar_more_photo@2x.png in Resources */,

@@ -23,6 +23,7 @@
     if (self) {
         // 清除图片缓存，便于测试
 //        [[SDWebImageManager sharedManager].imageCache clearDisk];
+        self.clipsToBounds = YES;
     }
     return self;
 }

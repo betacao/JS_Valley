@@ -73,6 +73,7 @@
     self.lblContent.numberOfLines = 5;
     self.lblContent.lineBreakMode = NSLineBreakByWordWrapping;
     self.lblContent.font = [UIFont systemFontOfSize:14.0f];
+    self.lblContent.textColor = [UIColor colorWithHexString:@"606060"];
     self.lblContent.delegate = self;
     self.lblContent.backgroundColor = [UIColor clearColor];
 
@@ -112,7 +113,11 @@
         }
         self.lblCityName.text = string;
     }
+    CGRect frame = self.lblCityName.frame;
     [self.lblCityName sizeToFit];
+    frame.size.width = CGRectGetWidth(self.lblCityName.frame);
+    frame.size.height = CGRectGetHeight(self.lblCityName.frame);
+    self.lblCityName.frame = frame;
     
     //是否显示删除按钮
     if ([obj.userid isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID]]){
@@ -136,9 +141,9 @@
     
     //判断点赞状态
     if (![obj.ispraise isEqualToString:@"Y"]) {
-        [self.btnPraise setImage:[UIImage imageNamed:@"未赞"] forState:UIControlStateNormal];
+        [self.btnPraise setImage:[UIImage imageNamed:@"home_weizan"] forState:UIControlStateNormal];
     }else{
-        [self.btnPraise setImage:[UIImage imageNamed:@"已赞"] forState:UIControlStateNormal];
+        [self.btnPraise setImage:[UIImage imageNamed:@"home_yizan"] forState:UIControlStateNormal];
     }
     
     [self.imageHeader updateHeaderView:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,obj.potname] placeholderImage:[UIImage imageNamed:@"默认头像"]];
@@ -166,16 +171,16 @@
     [self.btnShare setTitle:obj.sharenum forState:UIControlStateNormal];
     
     if ([obj.isattention isEqualToString:@"Y"]){
-        [self.btnAttention setImage:[UIImage imageNamed:@"已关注14"] forState:UIControlStateNormal] ;
+        [self.btnAttention setBackgroundImage:[UIImage imageNamed:@"已关注14"] forState:UIControlStateNormal] ;
     } else{
-        [self.btnAttention setImage:[UIImage imageNamed:@"关注14"] forState:UIControlStateNormal] ;
+        [self.btnAttention setBackgroundImage:[UIImage imageNamed:@"关注14"] forState:UIControlStateNormal] ;
     }
 
     NSString *detail = obj.detail;
     NSLog(@"%@",obj.detail);
     self.lblContent.text = detail;
     CGSize size = [self.lblContent preferredSizeWithMaxWidth:kCellContentWidth];
-    CGRect frame = self.lblContent.frame;
+    frame = self.lblContent.frame;
     frame.size.width = kCellContentWidth;
     frame.size.height = size.height;
     self.lblContent.frame = frame;
@@ -268,17 +273,23 @@
             if (IsStrEmpty(comobj.rnickname)){
                 text = [NSString stringWithFormat:@"%@:  %@",comobj.cnickname,comobj.cdetail];
                 str = [[NSMutableAttributedString alloc] initWithString:text];
-                [str addAttribute:NSForegroundColorAttributeName value:RGB(255, 57, 67) range:NSMakeRange(0,comobj.cnickname.length+1+2 )];
+                [str addAttribute:NSForegroundColorAttributeName value:RGB(248, 85, 86) range:NSMakeRange(0,comobj.cnickname.length + 1 + 2)];
+                [str addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"606060"] range:NSMakeRange(comobj.cnickname.length + 1 + 2,str.length - comobj.cnickname.length - 1 - 2)];
             } else{
                 text = [NSString stringWithFormat:@"%@回复%@:  %@",comobj.cnickname,comobj.rnickname,comobj.cdetail];
                 str = [[NSMutableAttributedString alloc] initWithString:text];
-                [str addAttribute:NSForegroundColorAttributeName value:RGB(255, 57, 67) range:NSMakeRange(0,comobj.cnickname.length)];
+                [str addAttribute:NSForegroundColorAttributeName value:RGB(248, 85, 86) range:NSMakeRange(0,comobj.cnickname.length)];
                 NSInteger cnicklen = comobj.cnickname.length;
                 NSInteger rnicklen = comobj.rnickname.length;
                 NSRange range = NSMakeRange(cnicklen + 2, rnicklen+1+2 );
-                [str addAttribute:NSForegroundColorAttributeName value:RGB(255, 57, 67) range:range];
+                [str addAttribute:NSForegroundColorAttributeName value:RGB(248, 85, 86) range:range];
+                [str addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"606060"] range:NSMakeRange(range.location + range.length,str.length - range.location - range.length)];
             }
             [str addAttribute:NSFontAttributeName value:replyLabel.font range:NSMakeRange(0,text.length)];
+//            NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc]init];
+//            [paragraphStyle setLineSpacing:3];
+//            [str addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, str.length)];
+
             replyLabel.attributedText = str;
             CGRect replyRect = replyLabel.frame;
             if (i == 0){
@@ -299,7 +310,7 @@
         if ([obj.cmmtnum integerValue] > 3){
             UILabel *replyLabel = [[UILabel alloc] initWithFrame:CGRectMake(CELLRIGHT_COMMENT_WIDTH,CGRectGetHeight(commentRect), SCREENWIDTH-CELLRIGHT_WIDTH, 20)];
             replyLabel.numberOfLines = 1;
-            replyLabel.text = @"查看全部";
+            replyLabel.text = @"更多评论";
             replyLabel.font = [UIFont systemFontOfSize:14.0f];
             replyLabel.userInteractionEnabled = YES;
             replyLabel.textColor = RGB(210, 209, 209);

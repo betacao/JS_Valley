@@ -244,9 +244,9 @@
 
 
     if (![obj.ispraise isEqualToString:@"Y"]) {
-        [self.btnPraise setImage:[UIImage imageNamed:@"未赞"] forState:UIControlStateNormal];
+        [self.btnPraise setImage:[UIImage imageNamed:@"home_weizan"] forState:UIControlStateNormal];
     } else{
-        [self.btnPraise setImage:[UIImage imageNamed:@"已赞"] forState:UIControlStateNormal];
+        [self.btnPraise setImage:[UIImage imageNamed:@"home_yizan"] forState:UIControlStateNormal];
     }
     if (![obj.iscollection isEqualToString:@"Y"]) {
         [self.btnCollet setImage:[UIImage imageNamed:@"uncollected"] forState:UIControlStateNormal];
