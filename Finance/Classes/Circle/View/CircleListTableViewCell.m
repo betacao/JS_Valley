@@ -258,7 +258,7 @@
             }
         }
         for (int i = 0; i < num; i ++){
-            UILabel *replyLabel = [[UILabel alloc] initWithFrame:CGRectMake(CELLRIGHT_COMMENT_WIDTH, i * 20 + 10, SCREENWIDTH - kPhotoViewRightMargin - kPhotoViewLeftMargin - CELLRIGHT_COMMENT_WIDTH, 20)];
+            UILabel *replyLabel = [[UILabel alloc] init];
             replyLabel.numberOfLines = 0;
             replyLabel.lineBreakMode = NSLineBreakByWordWrapping;
             replyLabel.font = [UIFont systemFontOfSize:14.0f];
@@ -269,7 +269,7 @@
             NSString *text = @"";
             commentOBj *comobj = obj.comments[i];
             
-            NSMutableAttributedString *str;
+            NSMutableAttributedString *str = nil;
             if (IsStrEmpty(comobj.rnickname)){
                 text = [NSString stringWithFormat:@"%@:  %@",comobj.cnickname,comobj.cdetail];
                 str = [[NSMutableAttributedString alloc] initWithString:text];
@@ -286,22 +286,25 @@
                 [str addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"606060"] range:NSMakeRange(range.location + range.length,str.length - range.location - range.length)];
             }
             [str addAttribute:NSFontAttributeName value:replyLabel.font range:NSMakeRange(0,text.length)];
-//            NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc]init];
-//            [paragraphStyle setLineSpacing:3];
-//            [str addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, str.length)];
+
+            NSMutableParagraphStyle * paragraphStyle1 = [[NSMutableParagraphStyle alloc] init];
+            [paragraphStyle1 setLineSpacing:3];
+            [str addAttribute:NSParagraphStyleAttributeName value:paragraphStyle1 range:NSMakeRange(0, [str length])];
 
             replyLabel.attributedText = str;
             CGRect replyRect = replyLabel.frame;
             if (i == 0){
-                replyRect.origin.y = kObjectMargin;
+                replyRect.origin.y = kCommentTopMargin;
             } else{
                 replyRect.origin.y = CGRectGetHeight(commentRect);
             }
-            CGSize replySize = [text sizeForFont:replyLabel.font constrainedToSize:CGSizeMake(CGRectGetWidth(replyRect), MAXFLOAT) lineBreakMode:replyLabel.lineBreakMode];
+            CGSize size = [replyLabel sizeThatFits:CGSizeMake(SCREENWIDTH - kPhotoViewRightMargin - kPhotoViewLeftMargin - CELLRIGHT_COMMENT_WIDTH, MAXFLOAT)];
             
-            replyRect.size.height = replySize.height;
+            replyRect.size.height = size.height;
+            replyRect.size.width = size.width;
+            replyRect.origin.x = CELLRIGHT_COMMENT_WIDTH;
             replyLabel.frame = replyRect;
-            commentRect.size.height = CGRectGetMaxY(replyRect) + kObjectMargin;
+            commentRect.size.height = CGRectGetMaxY(replyRect) + kCommentMargin;
             DDTapGestureRecognizer *cGes = [[DDTapGestureRecognizer alloc] initWithTarget:self action:@selector(replyClick:)];
             cGes.tag = i;
             [self.viewComment addSubview:replyLabel];
@@ -315,7 +318,9 @@
             replyLabel.userInteractionEnabled = YES;
             replyLabel.textColor = RGB(210, 209, 209);
             [self.viewComment addSubview:replyLabel];
-            commentRect.size.height = CGRectGetMaxY(replyLabel.frame) + kObjectMargin;
+            commentRect.size.height = CGRectGetMaxY(replyLabel.frame) + kCommentBottomMargin;
+        } else{
+            commentRect.size.height = commentRect.size.height - kCommentMargin + kCommentBottomMargin;
         }
         self.viewComment.frame = commentRect;
         self.totalHeight = CGRectGetMaxY(commentRect) + kObjectMargin;

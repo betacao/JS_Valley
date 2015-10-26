@@ -9,11 +9,14 @@
 #import "MTLModel.h"
 
 
-#define kObjectMargin 10.0f
-#define kPhotoViewLeftMargin 14.0f
-#define kPhotoViewRightMargin 14.0f
+#define kObjectMargin 10.0f * XFACTOR
+#define kPhotoViewLeftMargin 14.0f * XFACTOR
+#define kPhotoViewRightMargin 14.0f * XFACTOR
 #define kCellContentWidth 292.0f * XFACTOR
 #define kPhotoViewTopMargin 6.0f * XFACTOR
+#define kCommentTopMargin 19.0f * XFACTOR
+#define kCommentMargin 2.0f * XFACTOR
+#define kCommentBottomMargin 15.0f * XFACTOR
 
 @class linkOBj;
 

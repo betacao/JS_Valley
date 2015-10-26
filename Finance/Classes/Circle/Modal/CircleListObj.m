@@ -107,24 +107,38 @@ const CGFloat kActionViewHeight = 40.0f;
     if (num == 0) {
         commentHeight = 0.0f;
     } else{
-        commentHeight = kObjectMargin;
+        NSString *text = @"";
+        commentHeight = kCommentTopMargin;
         for (int i = 0; i < num; i ++){
-            NSString *text ;
             commentOBj *comobj = self.comments[i];
             if (IsStrEmpty(comobj.rnickname)){
                 text = [NSString stringWithFormat:@"%@:  %@",comobj.cnickname,comobj.cdetail];
             } else{
                 text = [NSString stringWithFormat:@"%@回复%@:  %@",comobj.cnickname,comobj.rnickname,comobj.cdetail];
             }
-            CGFloat height = [text sizeForFont:[UIFont systemFontOfSize:14.0f] constrainedToSize:CGSizeMake(SCREENWIDTH - (kPhotoViewLeftMargin + kPhotoViewRightMargin) - CELLRIGHT_COMMENT_WIDTH, MAXFLOAT) lineBreakMode:NSLineBreakByWordWrapping].height;
-            commentHeight += (height + kObjectMargin);
+            NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:text];
+            NSMutableParagraphStyle * paragraphStyle1 = [[NSMutableParagraphStyle alloc] init];
+            [paragraphStyle1 setLineSpacing:3];
+            [attributedString addAttribute:NSParagraphStyleAttributeName value:paragraphStyle1 range:NSMakeRange(0, [text length])];
+            UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, 0.0f, SCREENWIDTH - (kPhotoViewLeftMargin + kPhotoViewRightMargin) - CELLRIGHT_COMMENT_WIDTH, 0.0f)];
+            label.numberOfLines = 0;
+            label.lineBreakMode = NSLineBreakByWordWrapping;
+            label.font = [UIFont systemFontOfSize:14.0f];
+
+            [attributedString addAttribute:NSFontAttributeName value:label.font range:NSMakeRange(0,text.length)];
+            label.attributedText = attributedString;
+            CGSize size = [label sizeThatFits:CGSizeMake(CGRectGetWidth(label.frame), MAXFLOAT)];
+            CGFloat height = size.height;
+            commentHeight += (height + kCommentMargin);
         }
         //这边加10 是为了让分割线和评论区域有个间隔 没有评论则不会加这个10
         self.totalHeight += kObjectMargin;
     }
     self.totalHeight += commentHeight;
     if ([self.cmmtnum intValue] > 3) {
-        self.totalHeight += (kObjectMargin + kMoreCommentHeight);
+        self.totalHeight += (kCommentBottomMargin + kMoreCommentHeight);
+    }else{
+        self.totalHeight += (kCommentBottomMargin - kCommentMargin);
     }
     //加上灰色分割线的高度
     self.totalHeight += kCutOffLineHeight;
