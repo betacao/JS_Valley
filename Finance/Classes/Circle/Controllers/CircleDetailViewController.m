@@ -358,7 +358,7 @@
             [_scrollPraise addSubview:head];
             
         }
-        [self.scrollPraise setContentSize:CGSizeMake(self.obj.heads.count *(praiseWidth+PRAISE_SEPWIDTH), 55)];
+        [self.scrollPraise setContentSize:CGSizeMake(self.obj.heads.count *(praiseWidth+PRAISE_SEPWIDTH), CGRectGetHeight(self.scrollPraise.frame))];
         self.viewPraise.hidden = NO;
     } else{
         praiseRect.size.height = 0;

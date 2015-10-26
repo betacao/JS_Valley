@@ -118,7 +118,7 @@
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <animations/>
                         </imageView>
-                        <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" directionalLockEnabled="YES" id="aWm-Lk-eH9">
+                        <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="aWm-Lk-eH9">
                             <rect key="frame" x="38" y="1" width="215" height="53"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
                             <animations/>
