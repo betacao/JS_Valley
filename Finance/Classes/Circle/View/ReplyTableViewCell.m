@@ -25,14 +25,14 @@
     CGRect frame = CGRectZero;
     switch (type) {
         case SHGCommentTypeFirst:
-            frame = CGRectMake(kPhotoViewLeftMargin,kCommentTopMargin, SCREENWIDTH - kPhotoViewLeftMargin - kPhotoViewRightMargin - CELLRIGHT_COMMENT_WIDTH, 0.0f);
+            frame = CGRectMake(CELLRIGHT_COMMENT_WIDTH,kCommentTopMargin, SCREENWIDTH - kPhotoViewLeftMargin - kPhotoViewRightMargin - CELLRIGHT_COMMENT_WIDTH, 0.0f);
 
             break;
         case SHGCommentTypeNormal:
-            frame = CGRectMake(kPhotoViewLeftMargin,0.0f, SCREENWIDTH - kPhotoViewLeftMargin - kPhotoViewRightMargin - CELLRIGHT_COMMENT_WIDTH, 0.0f);
+            frame = CGRectMake(CELLRIGHT_COMMENT_WIDTH,0.0f, SCREENWIDTH - kPhotoViewLeftMargin - kPhotoViewRightMargin - CELLRIGHT_COMMENT_WIDTH, 0.0f);
             break;
         default:
-            frame = CGRectMake(kPhotoViewLeftMargin,0.0f, SCREENWIDTH - kPhotoViewLeftMargin - kPhotoViewRightMargin - CELLRIGHT_COMMENT_WIDTH, 0.0f);
+            frame = CGRectMake(CELLRIGHT_COMMENT_WIDTH,0.0f, SCREENWIDTH - kPhotoViewLeftMargin - kPhotoViewRightMargin - CELLRIGHT_COMMENT_WIDTH, 0.0f);
             break;
     }
     UILabel *replyLabel = [[UILabel alloc] initWithFrame:frame];
@@ -41,6 +41,7 @@
     replyLabel.font = [UIFont systemFontOfSize:14.0f];
     replyLabel.userInteractionEnabled = YES;
     replyLabel.textAlignment = NSTextAlignmentLeft;
+//    replyLabel.backgroundColor = [UIColor blackColor];
     NSString *text = @"";
 
     NSMutableAttributedString *str;

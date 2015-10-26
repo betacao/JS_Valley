@@ -238,7 +238,7 @@
             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
             <subviews>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="gmB-8Y-fr0">
-                    <rect key="frame" x="9" y="12" width="22" height="22"/>
+                    <rect key="frame" x="0.0" y="0.0" width="31" height="44"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <animations/>
                     <state key="normal" image="返回.png"/>
