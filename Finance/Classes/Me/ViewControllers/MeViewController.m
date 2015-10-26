@@ -108,7 +108,7 @@
     if (!_titleLabel)
     {
         _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 60, 30)];
-        _titleLabel.font = [UIFont fontWithName:@"Palatino" size:17];
+        _titleLabel.font = [UIFont systemFontOfSize:17.0f];
         _titleLabel.textColor = TEXT_COLOR;
         _titleLabel.text = @"个人中心";
     }
@@ -625,7 +625,7 @@
         _circleHeaderLabel = [[UILabel alloc] initWithFrame:CGRectMake(spaceWidth, 0, labelWidth, self.labelView.height)];
         _circleHeaderLabel.textAlignment = NSTextAlignmentCenter;
         _circleHeaderLabel.numberOfLines = 0;
-        _circleHeaderLabel.font = [UIFont fontWithName:@"Palatino" size:13.0f] ;
+        _circleHeaderLabel.font = [UIFont systemFontOfSize:13.0f] ;
         _circleHeaderLabel.textColor = [UIColor colorWithHexString:@"434343"];
         _circleHeaderLabel.userInteractionEnabled = YES;
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(goToMyCircle)];
@@ -650,7 +650,7 @@
         _followHeaderLabel = [[UILabel alloc] initWithFrame:CGRectMake(spaceWidth + labelWidth, 0, labelWidth, self.labelView.height)];
         _followHeaderLabel.textAlignment = NSTextAlignmentCenter;
         _followHeaderLabel.numberOfLines = 0;
-        _followHeaderLabel.font = [UIFont fontWithName:@"Palatino" size:13.0f];
+        _followHeaderLabel.font = [UIFont systemFontOfSize:13.0f];
         _followHeaderLabel.textColor = [UIColor colorWithHexString:@"434343"];
         
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(goToFollowList)];
@@ -672,7 +672,7 @@
         _fansHeaderLabel.textAlignment = NSTextAlignmentCenter;
         _fansHeaderLabel.textColor = [UIColor colorWithHexString:@"434343"];
         _fansHeaderLabel.numberOfLines = 0;
-        _fansHeaderLabel.font = [UIFont fontWithName:@"Palatino" size:13.0f];
+        _fansHeaderLabel.font = [UIFont systemFontOfSize:13.0f];
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(goToFansList)];
         [_fansHeaderLabel addGestureRecognizer:tap];
         _fansHeaderLabel.userInteractionEnabled = YES;

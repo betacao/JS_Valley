@@ -112,7 +112,7 @@
 	}else if(section == 1){
 		label.text = @"佣金明细";
 	}
-	label.font = [UIFont fontWithName:@"Palatino" size:17];
+	label.font = [UIFont systemFontOfSize:17.0f];
 	[sectionView addSubview:label];
 	return sectionView;
 }

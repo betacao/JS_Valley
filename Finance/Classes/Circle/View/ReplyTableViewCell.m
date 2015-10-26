@@ -21,7 +21,7 @@
     UILabel *replyLabel = [[UILabel alloc] initWithFrame:CGRectMake(60,5, 240.0f, 17)];
     replyLabel.numberOfLines = 0;
     replyLabel.lineBreakMode = NSLineBreakByWordWrapping;
-    replyLabel.font = [UIFont fontWithName:@"Palatino" size:14];
+    replyLabel.font = [UIFont systemFontOfSize:14.0f];
     replyLabel.userInteractionEnabled = YES;
     replyLabel.textAlignment = NSTextAlignmentLeft;
     NSString *text = @"";

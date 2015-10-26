@@ -253,7 +253,7 @@
     searchItem = [[UIBarButtonItem alloc]initWithCustomView:searchBtn];
     
     _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 60, 30)];
-    _titleLabel.font = [UIFont fontWithName:@"Palatino" size:17];
+    _titleLabel.font = [UIFont systemFontOfSize:17.0f];
     _titleLabel.textColor = TEXT_COLOR;
     
     UIButton *cancelBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -426,7 +426,7 @@
         [item addSubview:timg];
         
         UILabel *tname = [[UILabel alloc] initWithFrame:CGRectMake(0, 60, itemWidth, 20)];
-        [tname setFont:[UIFont fontWithName:@"Palatino" size:14]];
+        [tname setFont:[UIFont systemFontOfSize:14.0f]];
         [tname setTextColor:TEXT_COLOR];
         [tname setTextAlignment:NSTextAlignmentCenter];
         [tname setText:obj.tname];

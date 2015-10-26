@@ -57,7 +57,7 @@
     lblTemp.textAlignment = NSTextAlignmentCenter;
     lblTemp.backgroundColor = [UIColor clearColor];
     lblTemp.textColor = [UIColor blackColor];
-    lblTemp.font = [UIFont fontWithName:@"Palatino" size:16];
+    lblTemp.font = [UIFont systemFontOfSize:16.0f];
     if([description isEqualToString:@""])
     {
         lblTemp.text = @"亲,您还没有相关的记录";
@@ -121,7 +121,7 @@
     
     ps.lineSpacing = lineSpace;
     
-    NSDictionary *attribs = @{NSFontAttributeName: [UIFont fontWithName:@"Palatino" size:fontSize],NSParagraphStyleAttributeName:ps,NSForegroundColorAttributeName: color?:RGBA(59, 59, 59, 1)};
+    NSDictionary *attribs = @{NSFontAttributeName: [UIFont systemFontOfSize:fontSize],NSParagraphStyleAttributeName:ps,NSForegroundColorAttributeName: color?:RGBA(59, 59, 59, 1)};
     
     NSMutableAttributedString *attributeString = [[NSMutableAttributedString alloc] initWithString:text attributes:attribs];
     return attributeString;

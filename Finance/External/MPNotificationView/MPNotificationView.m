@@ -210,7 +210,7 @@ static CGFloat const __imagePadding = 8.0f;
         _imageView.clipsToBounds = YES;
         [self addSubview:_imageView];
         
-        UIFont *textFont = [UIFont fontWithName:@"Palatino" size:14.0];
+        UIFont *textFont = [UIFont systemFontOfSize:14.0f];
         CGRect textFrame = CGRectMake(__imagePadding + CGRectGetMaxX(_imageView.frame),
                                       2,
                                       notificationWidth - __imagePadding * 2 - CGRectGetMaxX(_imageView.frame),
@@ -223,7 +223,7 @@ static CGFloat const __imagePadding = 8.0f;
         _textLabel.backgroundColor = [UIColor clearColor];
         [_contentView addSubview:_textLabel];
         
-        UIFont *detailFont = [UIFont fontWithName:@"Palatino" size:13.0];
+        UIFont *detailFont = [UIFont systemFontOfSize:13.0f];
         CGRect detailFrame = CGRectMake(__imagePadding + CGRectGetMaxX(_imageView.frame),
                                         _textLabel.bottom+ 3,
                                         notificationWidth - __imagePadding * 2 - CGRectGetMaxX(_imageView.frame),

@@ -63,7 +63,7 @@ static const char * const kZSYPopoverListButtonClickForDone = "kZSYPopoverListBu
     self.clipsToBounds = TRUE;
     
     _titleName = [[UILabel alloc] initWithFrame:CGRectZero];
-    self.titleName.font = [UIFont fontWithName:@"Palatino" size:17.0f];
+    self.titleName.font = [UIFont systemFontOfSize:17.0f];
     self.titleName.backgroundColor = RGB(255, 102, 102);
     self.titleName.textAlignment = NSTextAlignmentCenter;
     self.titleName.textColor = [UIColor whiteColor];

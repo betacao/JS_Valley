@@ -70,7 +70,7 @@
     btnTemp = [UIButton buttonWithType:UIButtonTypeCustom];
     [btnTemp setFrame:CGRectMake(SCREENWIDTH - 69, 7, 54, 32)];
     [btnTemp setBackgroundColor:RGB(255, 57, 67)];
-    [btnTemp.titleLabel setFont:[UIFont fontWithName:@"Palatino" size:15]];
+    [btnTemp.titleLabel setFont:[UIFont systemFontOfSize:15.0f]];
     //[btnTemp setBackgroundImage:[UIImage imageNamed:@"comment_btn_ok.png"] forState:UIControlStateNormal];
     [btnTemp setTitle:@"发送" forState:UIControlStateNormal];
     [btnTemp setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -94,7 +94,7 @@
     lblTemp.textAlignment = NSTextAlignmentCenter;
     lblTemp.backgroundColor = [UIColor clearColor];
     lblTemp.textColor = RGBA(51, 51, 51, 1);
-    lblTemp.font = [UIFont fontWithName:@"Palatino" size:16.0];
+    lblTemp.font = [UIFont systemFontOfSize:16.0f];
     if([_type isEqualToString:@"reply"])
     {
         lblTemp.text = @"写回复";
@@ -106,7 +106,7 @@
 
     
     textVTemp = [[UITextField alloc] initWithFrame:rect];
-    textVTemp.font = [UIFont fontWithName:@"Palatino" size:16.0];
+    textVTemp.font = [UIFont systemFontOfSize:16.0f];
     textVTemp.backgroundColor = [UIColor whiteColor];
     textVTemp.borderStyle = UITextBorderStyleRoundedRect;
     textVTemp.textColor = RGB(51, 51, 51);

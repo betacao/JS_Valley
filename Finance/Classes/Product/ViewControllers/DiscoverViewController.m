@@ -255,7 +255,7 @@
     if (!_titleLabel)
     {
         _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 60, 30)];
-        _titleLabel.font = [UIFont fontWithName:@"Palatino" size:17];
+        _titleLabel.font = [UIFont systemFontOfSize:17.0f];
         _titleLabel.textColor = TEXT_COLOR;
         _titleLabel.textAlignment = NSTextAlignmentCenter;
         _titleLabel.text = @"发现";

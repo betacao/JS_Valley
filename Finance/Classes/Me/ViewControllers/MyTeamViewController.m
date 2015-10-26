@@ -106,7 +106,7 @@
 	}else if (section == 2){
 		label.text =@"合伙人激励机制说明";
 	}
-	label.font = [UIFont fontWithName:@"Palatino" size:17];
+	label.font = [UIFont systemFontOfSize:17.0f];
 	[sectionView addSubview:label];
 	return sectionView;
 }

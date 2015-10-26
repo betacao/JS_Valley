@@ -49,7 +49,7 @@
 	[button setTitleColor:RGB(255, 0, 40) forState:UIControlStateNormal];
 	[button setTitleColor:RGB(255, 0, 40) forState:UIControlStateHighlighted];
 	
-	button.titleLabel.font = [UIFont fontWithName:@"Palatino" size:15];
+	button.titleLabel.font = [UIFont systemFontOfSize:15.0f];
 	self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:button];
 	self.nameTextField.text		=self.obj.name;
 	self.phonNumTextField.text	=self.obj.phoneNumber;

@@ -72,7 +72,7 @@
     {
         [leftButton setTitle:self.leftItemtitleName forState:UIControlStateNormal];
         [leftButton setTitleColor:RGB(255, 0, 40) forState:UIControlStateNormal];
-        [leftButton.titleLabel setFont:[UIFont fontWithName:@"Palatino" size:14]];
+        [leftButton.titleLabel setFont:[UIFont systemFontOfSize:14.0f]];
     }
 
     [leftButton addTarget:self action:@selector(btnBackClick:) forControlEvents:UIControlEventTouchUpInside];
@@ -93,7 +93,7 @@
     {
         [rightButton setTitle:self.rightItemtitleName forState:UIControlStateNormal];
         [rightButton setTitleColor:RGB(255, 0, 40) forState:UIControlStateNormal];
-        [rightButton.titleLabel setFont:[UIFont fontWithName:@"Palatino" size:14]];
+        [rightButton.titleLabel setFont:[UIFont systemFontOfSize:14.0f]];
     }
     else
     {

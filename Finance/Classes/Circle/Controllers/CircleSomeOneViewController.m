@@ -435,7 +435,7 @@
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
         }
         cell.textLabel.text = @"原帖已删除";
-        cell.textLabel.font = [UIFont fontWithName:@"Palatino" size:16];
+        cell.textLabel.font = [UIFont systemFontOfSize:16.0f];
         
         return cell;
     }

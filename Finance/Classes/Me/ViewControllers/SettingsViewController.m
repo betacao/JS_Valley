@@ -160,7 +160,7 @@
     sectionView.backgroundColor = RGB(240, 240, 240);
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(16, 0, 300, 50)];
     label.text = [_arrTitles objectAtIndex:section];;
-    label.font = [UIFont fontWithName:@"Palatino" size:17];
+    label.font = [UIFont systemFontOfSize:17.0f];
     label.textColor = TEXT_COLOR;
     [sectionView addSubview:label];
     return sectionView;

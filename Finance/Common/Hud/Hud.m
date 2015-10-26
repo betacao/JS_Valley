@@ -23,7 +23,7 @@
     hud.margin = 10.f;
     hud.backgroundColor = RGBA(200, 200, 200,0.6);
     hud.yOffset = -50;
-    hud.labelFont = [UIFont fontWithName:@"Palatino" size:16];
+    hud.labelFont = [UIFont systemFontOfSize:16.0f];
    // hud.dimBackground = YES;
     hud.labelColor = TEXT_COLOR;
     hud.removeFromSuperViewOnHide = YES;
