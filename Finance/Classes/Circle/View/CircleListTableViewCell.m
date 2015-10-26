@@ -23,7 +23,7 @@
 //评论按钮
 @property (weak, nonatomic) IBOutlet UIButton *btnComment;
 //评论区
-@property (weak, nonatomic) IBOutlet UIView *viewComment;
+@property (weak, nonatomic) IBOutlet UIImageView *viewComment;
 //包含所有操作界面
 @property (weak, nonatomic) IBOutlet UIView *actionView;
 //图片区域
@@ -81,7 +81,9 @@
     [self.imageHeader addGestureRecognizer:hdGes];
     self.imageHeader.userInteractionEnabled = YES;
 
-    [self.viewComment setBackgroundColor:BACK_COLOR];
+    UIImage *image = self.viewComment.image;
+    image = [image resizableImageWithCapInsets:UIEdgeInsetsMake(15.0f, 35.0f, 9.0f, 11.0f) resizingMode:UIImageResizingModeStretch];
+    self.viewComment.image = image;
 
 }
 

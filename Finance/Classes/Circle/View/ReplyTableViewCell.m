@@ -7,18 +7,35 @@
 //
 
 #import "ReplyTableViewCell.h"
+@interface ReplyTableViewCell()
+@property (weak, nonatomic) IBOutlet UIView *bgView;
+@property (assign, nonatomic) SHGCommentType commentType;
+@end
 
 @implementation ReplyTableViewCell
 
-- (void)awakeFromNib {
-   // self.contentView.backgroundColor = BACK_COLOR;
-    // Initialization code
+- (void)awakeFromNib
+{
+
 }
 
-
--(void)loadUIWithObj:(commentOBj  *)comobj
+- (void)loadUIWithObj:(commentOBj *)comobj commentType:(SHGCommentType)type
 {
-    UILabel *replyLabel = [[UILabel alloc] initWithFrame:CGRectMake(60,5, 240.0f, 17)];
+    self.commentType = type;
+    CGRect frame = CGRectZero;
+    switch (type) {
+        case SHGCommentTypeFirst:
+            frame = CGRectMake(kPhotoViewLeftMargin,kCommentTopMargin, SCREENWIDTH - kPhotoViewLeftMargin - kPhotoViewRightMargin - CELLRIGHT_COMMENT_WIDTH, 0.0f);
+
+            break;
+        case SHGCommentTypeNormal:
+            frame = CGRectMake(kPhotoViewLeftMargin,0.0f, SCREENWIDTH - kPhotoViewLeftMargin - kPhotoViewRightMargin - CELLRIGHT_COMMENT_WIDTH, 0.0f);
+            break;
+        default:
+            frame = CGRectMake(kPhotoViewLeftMargin,0.0f, SCREENWIDTH - kPhotoViewLeftMargin - kPhotoViewRightMargin - CELLRIGHT_COMMENT_WIDTH, 0.0f);
+            break;
+    }
+    UILabel *replyLabel = [[UILabel alloc] initWithFrame:frame];
     replyLabel.numberOfLines = 0;
     replyLabel.lineBreakMode = NSLineBreakByWordWrapping;
     replyLabel.font = [UIFont systemFontOfSize:14.0f];
@@ -35,12 +52,11 @@
     [rnickButton setBackgroundImage:[UIImage imageWithColor:BTN_SELECT_BACK_COLOR andSize:CGSizeMake(40, 40)] forState:UIControlStateHighlighted];
     cnickButton.tag = self.index;
     rnickButton.tag = self.index;
-    if (IsStrEmpty(comobj.rnickname))
-    {
+    if (IsStrEmpty(comobj.rnickname)){
         text = [NSString stringWithFormat:@"%@:x%@",comobj.cnickname,comobj.cdetail];
 
         CGSize cSize = [[NSString stringWithFormat:@"%@:",comobj.cnickname] sizeForFont:replyLabel.font constrainedToSize:CGSizeMake(200, 15) lineBreakMode:replyLabel.lineBreakMode];
-        [cnickButton setFrame:CGRectMake(-3, 0, cSize.width, cSize.height)];
+        [cnickButton setFrame:CGRectMake(0, 0, cSize.width, cSize.height)];
         [cnickButton.titleLabel setTextAlignment:NSTextAlignmentCenter];
         [cnickButton setTitle:[NSString stringWithFormat:@"%@:",comobj.cnickname] forState:UIControlStateNormal];
         [cnickButton setTitleColor:RGB(255, 57, 67) forState:UIControlStateNormal];
@@ -48,25 +64,20 @@
         [replyLabel addSubview:cnickButton];
         str = [[NSMutableAttributedString alloc] initWithString:text];
 
-        [str addAttribute:NSForegroundColorAttributeName value:[UIColor clearColor] range:NSMakeRange(0,comobj.cnickname.length+1+1 )];
-
+        [str addAttribute:NSForegroundColorAttributeName value:[UIColor clearColor] range:NSMakeRange(0,comobj.cnickname.length + 1 + 1)];
+        [str addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"606060"] range:NSMakeRange(comobj.cnickname.length + 1 + 1,str.length - comobj.cnickname.length - 1 - 1)];
     }
     else
     {
         text = [NSString stringWithFormat:@"%@回复%@:x%@",comobj.cnickname,comobj.rnickname,comobj.cdetail];
         CGSize cSize = [comobj.cnickname sizeForFont:replyLabel.font constrainedToSize:CGSizeMake(200, 15) lineBreakMode:replyLabel.lineBreakMode];
         [cnickButton setBackgroundColor:[UIColor whiteColor]];
-        [cnickButton setFrame:CGRectMake(-3, 0, cSize.width, cSize.height)];
+        [cnickButton setFrame:CGRectMake(0, 0, cSize.width, cSize.height)];
         [cnickButton.titleLabel setTextAlignment:NSTextAlignmentCenter];
         [cnickButton setTitle:comobj.cnickname forState:UIControlStateNormal];
         [cnickButton setTitleColor:RGB(255, 57, 67) forState:UIControlStateNormal];
         [cnickButton.titleLabel setFont:replyLabel.font];
         [replyLabel addSubview:cnickButton];
-        str = [[NSMutableAttributedString alloc] initWithString:text];
-
-        [str addAttribute:NSForegroundColorAttributeName value:[UIColor clearColor] range:NSMakeRange(0,comobj.cnickname.length)];
-
-        [str addAttribute:NSForegroundColorAttributeName value:[UIColor clearColor] range:NSMakeRange(comobj.cnickname.length + 2,1 + comobj.rnickname.length +1)];
 
         NSString *leftText = [NSString stringWithFormat:@"回复"];
         CGSize leftSize = [leftText sizeForFont:replyLabel.font constrainedToSize:CGSizeMake(200, 15) lineBreakMode:replyLabel.lineBreakMode];
@@ -77,20 +88,33 @@
         [rnickButton setTitleColor:RGB(255, 57, 67) forState:UIControlStateNormal];
         [rnickButton.titleLabel setFont:replyLabel.font];
         [rnickButton.titleLabel setTextAlignment:NSTextAlignmentLeft];
-
         [replyLabel addSubview:rnickButton];
+
+
+        str = [[NSMutableAttributedString alloc] initWithString:text];
+
+        [str addAttribute:NSForegroundColorAttributeName value:[UIColor clearColor] range:NSMakeRange(0,comobj.cnickname.length)];
+
+        [str addAttribute:NSForegroundColorAttributeName value:[UIColor clearColor] range:NSMakeRange(comobj.cnickname.length + 2,1 + comobj.rnickname.length +1)];
+
+        NSRange range = NSMakeRange(comobj.cnickname.length + 2,1 + comobj.rnickname.length +1);
+        [str addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"606060"] range:NSMakeRange(range.location + range.length,str.length - range.length - range.location)];
     }
     [cnickButton addTarget:self action:@selector(cnickClick:) forControlEvents:UIControlEventTouchUpInside];
     [rnickButton addTarget:self action:@selector(rnickClick:) forControlEvents:UIControlEventTouchUpInside];
     [str addAttribute:NSFontAttributeName value:replyLabel.font range:NSMakeRange(0, text.length)];
+    NSMutableParagraphStyle * paragraphStyle1 = [[NSMutableParagraphStyle alloc] init];
+    [paragraphStyle1 setLineSpacing:3];
+    [str addAttribute:NSParagraphStyleAttributeName value:paragraphStyle1 range:NSMakeRange(0, [str length])];
+
     replyLabel.attributedText = str;
 
     CGRect replyRect = replyLabel.frame;
-    CGSize replySize = [text sizeForFont:replyLabel.font constrainedToSize:CGSizeMake(SCREENWIDTH - kPhotoViewRightMargin - kPhotoViewLeftMargin - CELLRIGHT_COMMENT_WIDTH, CGFLOAT_MAX) lineBreakMode:replyLabel.lineBreakMode];
-    NSLog(@"%f",SCREENWIDTH);
-    replyRect.size = replySize;
+    CGSize size = [replyLabel sizeThatFits:CGSizeMake(SCREENWIDTH - kPhotoViewRightMargin - kPhotoViewLeftMargin - CELLRIGHT_COMMENT_WIDTH, CGFLOAT_MAX)];
+    NSLog(@"%f",size.height);
+    replyRect.size = size;
     replyLabel.frame = replyRect;
-    [self.contentView addSubview:replyLabel];
+    [self.bgView addSubview:replyLabel];
 
 }
 -(void)cnickClick:(UIButton *)sender

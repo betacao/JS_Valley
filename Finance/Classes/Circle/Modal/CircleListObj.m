@@ -13,7 +13,7 @@
 const CGFloat kUserInfoHeight = 55.0f;
 const CGFloat kMoreCommentHeight = 20.0f;
 const CGFloat kCutOffLineHeight = 10.0f;
-const CGFloat kActionViewHeight = 40.0f;
+const CGFloat kActionViewHeight = 34.0f;
 
 @interface CircleListObj()
 @property (assign, nonatomic) CGFloat totalHeight;
@@ -76,22 +76,24 @@ const CGFloat kActionViewHeight = 40.0f;
     }
     CGFloat photoHeight = 0.0;
     self.photoArr = (NSArray *)self.photos;
-    NSInteger width = ceilf((SCREENWIDTH - kPhotoViewRightMargin - kPhotoViewLeftMargin - CELL_PHOTO_SEP * 2.0f) / 3.0f);
-    if ([self.type isEqualToString:@"link"]){
-        //这个是link的固定高度
-        photoHeight = 50.0f;
-    } else if ([self.type isEqualToString:TYPE_PHOTO]){
-        if (IsArrEmpty(self.photoArr)) {
-            photoHeight = 0.0f;
-        } else{
-            if (self.photoArr.count == 1 || self.photoArr.count >= 4){
-                photoHeight = width * 2.0f + CELL_PHOTO_SEP;
-            } else if(self.photoArr.count < 4){
-                photoHeight = width;
+    if(self.photoArr.count > 0){
+        NSInteger width = ceilf((SCREENWIDTH - kPhotoViewRightMargin - kPhotoViewLeftMargin - CELL_PHOTO_SEP * 2.0f) / 3.0f);
+        if ([self.type isEqualToString:@"link"]){
+            //这个是link的固定高度
+            photoHeight = 50.0f;
+        } else if ([self.type isEqualToString:TYPE_PHOTO]){
+            if (IsArrEmpty(self.photoArr)) {
+                photoHeight = 0.0f;
+            } else{
+                if (self.photoArr.count == 1 || self.photoArr.count >= 4){
+                    photoHeight = width * 2.0f + CELL_PHOTO_SEP;
+                } else if(self.photoArr.count < 4){
+                    photoHeight = width;
+                }
             }
         }
+        self.totalHeight += (photoHeight + kPhotoViewTopMargin);
     }
-    self.totalHeight += (photoHeight + kPhotoViewTopMargin);
     NSInteger num = 0;
     if ([self.cmmtnum intValue] > 3){
         if (self.isPull){
@@ -135,9 +137,9 @@ const CGFloat kActionViewHeight = 40.0f;
         self.totalHeight += kObjectMargin;
     }
     self.totalHeight += commentHeight;
-    if ([self.cmmtnum intValue] > 3) {
+    if ([self.cmmtnum integerValue] > 3) {
         self.totalHeight += (kCommentBottomMargin + kMoreCommentHeight);
-    }else{
+    }else if([self.cmmtnum integerValue] > 0){
         self.totalHeight += (kCommentBottomMargin - kCommentMargin);
     }
     //加上灰色分割线的高度

@@ -8,6 +8,14 @@
 
 #import <UIKit/UIKit.h>
 #import "CircleListObj.h"
+
+typedef NS_ENUM(NSInteger, SHGCommentType)
+{
+    SHGCommentTypeFirst = 0,
+    SHGCommentTypeNormal,
+    SHGCommentTypeLast
+};
+
 @protocol ReplyDelegate<NSObject>
 
 -(void)cnickClick:(NSInteger)index;
@@ -18,6 +26,6 @@
 @property (nonatomic, assign) NSInteger index;
 
 @property (nonatomic,weak)id<ReplyDelegate> delegate;
--(void)loadUIWithObj:(commentOBj  *)comobj;
+- (void)loadUIWithObj:(commentOBj *)comobj commentType:(SHGCommentType)type;
 
 @end

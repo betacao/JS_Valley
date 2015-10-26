@@ -17,7 +17,6 @@
 #define PRAISE_SEPWIDTH     6
 #define PRAISE_RIGHTWIDTH     40
 #define kItemMargin 7.0f * XFACTOR
-#define kPhotoViewTopMargin 12.0f * XFACTOR
 
 @interface CircleDetailViewController ()<MLEmojiLabelDelegate, CircleListDelegate>
 {
@@ -49,6 +48,8 @@
 @property (strong, nonatomic) IBOutlet UIView *viewHeader;
 @property (strong, nonatomic) IBOutlet UIView *navigationView;
 @property (weak,nonatomic) IBOutlet UIView *breakLineView;
+@property (weak, nonatomic) IBOutlet UIImageView *backImageView;
+@property (weak, nonatomic) IBOutlet UILabel *lineView;
 
 - (IBAction)actionAttention:(id)sender;
 - (IBAction)actionComment:(id)sender;
@@ -123,6 +124,14 @@
     DDTapGestureRecognizer *hdGes = [[DDTapGestureRecognizer alloc] initWithTarget:self action:@selector(didTapHeaderView:)];
     [self.imageHeader addGestureRecognizer:hdGes];
     self.imageHeader.userInteractionEnabled = YES;
+
+    UIImage *image = self.backImageView.image;
+    image = [image resizableImageWithCapInsets:UIEdgeInsetsMake(15.0f, 35.0f, 9.0f, 11.0f) resizingMode:UIImageResizingModeStretch];
+    self.backImageView.image = image;
+
+    CGRect frame = self.lineView.frame;
+    frame.size.height = 0.5f;
+    self.lineView.frame = frame;
 }
 
 - (IBAction)btnBackClick:(id)sender
@@ -893,7 +902,13 @@
     }
     cell.delegate = self;
     cell.index = indexPath.row;
-    [cell loadUIWithObj:obj];
+    SHGCommentType type = SHGCommentTypeNormal;
+    if(indexPath.row == 0){
+        type = SHGCommentTypeFirst;
+    }else if(indexPath.row == self.obj.comments.count - 1){
+        type = SHGCommentTypeLast;
+    }
+    [cell loadUIWithObj:obj commentType:type];
     
     UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(longPressGesturecognized:)];
     [cell addGestureRecognizer:longPress];
@@ -912,9 +927,25 @@
     }else{
       text = [NSString stringWithFormat:@"%@回复%@:x%@",obj.cnickname,obj.rnickname,obj.cdetail];
     }
-    CGSize replySize = [text sizeForFont:font constrainedToSize:CGSizeMake(SCREENWIDTH - CELLRIGHT_WIDTH, 250) lineBreakMode:NSLineBreakByWordWrapping];
-    NSLog(@"%f",SCREENWIDTH);
-    return replySize.height + 10;
+    NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:text];
+    [string addAttribute:NSFontAttributeName value:font range:NSMakeRange(0, text.length)];
+    NSMutableParagraphStyle * paragraphStyle1 = [[NSMutableParagraphStyle alloc] init];
+    [paragraphStyle1 setLineSpacing:3];
+    [string addAttribute:NSParagraphStyleAttributeName value:paragraphStyle1 range:NSMakeRange(0, [string length])];
+    UILabel *replyLabel = [[UILabel alloc] init];
+    replyLabel.numberOfLines = 0;
+    replyLabel.lineBreakMode = NSLineBreakByWordWrapping;
+    replyLabel.font = [UIFont systemFontOfSize:14.0f];
+    replyLabel.attributedText = string;
+    CGSize size = [replyLabel sizeThatFits:CGSizeMake(SCREENWIDTH - kPhotoViewRightMargin - kPhotoViewLeftMargin - CELLRIGHT_COMMENT_WIDTH, MAXFLOAT)];
+    NSLog(@"%f",size.height);
+    CGFloat height = size.height;
+    if(indexPath.row == 0){
+        height += kCommentTopMargin;
+    } else if (indexPath.row == self.obj.comments.count - 1){
+        height += kCommentBottomMargin;
+    }
+    return height + kCommentMargin;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
