@@ -261,14 +261,7 @@
     self.btnNickname.titleLabel.textAlignment = NSTextAlignmentLeft;
     [self.btnNickname setTitle:name forState:UIControlStateNormal];
     [self.btnNickname setBackgroundImage:[UIImage imageWithColor:BTN_SELECT_BACK_COLOR andSize:self.btnNickname.size] forState:UIControlStateHighlighted];
-    
-    self.lblCompanyName.text = obj.company;
-    NSString *str= obj.title;
-    if (obj.title.length > 4){
-        str= [obj.title substringToIndex:4];
-        str = [NSString stringWithFormat:@"%@…",str];
-    }
-    self.lbldepartName.text = str;
+
     self.lblTime.text = obj.publishdate;
     [self.btnShare setTitle:obj.sharenum forState:UIControlStateNormal];
     [self.btnComment setTitle:obj.cmmtnum forState:UIControlStateNormal];
@@ -420,20 +413,30 @@
     frame.size.width = 0.5f;
     frame.size.height = CGRectGetHeight(userRect);
     self.breakLineView.frame = frame;
-    
-    CGRect companRect = self.lblCompanyName.frame;
-    companRect.origin.x = kItemMargin + CGRectGetMaxX(frame);
+
+    //设置公司名称
     NSString *comp = obj.company;
     if (obj.company.length > 5) {
         NSString *str = [obj.company substringToIndex:5];
         comp = [NSString stringWithFormat:@"%@…",str];
     }
+    self.lblCompanyName.text = comp;
+    CGRect companRect = self.lblCompanyName.frame;
+    companRect.origin.x = kItemMargin + CGRectGetMaxX(frame);
     [self.lblCompanyName sizeToFit];
     CGSize size = self.lblCompanyName.frame.size;
     companRect.size.width = size.width;
     companRect.size.height = size.height;
     self.lblCompanyName.frame = companRect;
-    
+
+    //设置职位名称
+    NSString *str = obj.title;
+    if (obj.title.length > 4){
+        str= [obj.title substringToIndex:4];
+        str = [NSString stringWithFormat:@"%@…",str];
+    }
+    self.lbldepartName.text = str;
+
     CGRect positionRect = self.lbldepartName.frame;
     positionRect.origin.x = kItemMargin + CGRectGetMaxX(companRect);
     [self.lbldepartName sizeToFit];
