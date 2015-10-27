@@ -10,6 +10,7 @@
 #import "MLEmojiLabel.h"
 #import "SDPhotoGroup.h"
 #import "SDPhotoItem.h"
+#define kItemMargin 7.0f * XFACTOR
 
 
 @interface CircleListTableViewCell()<MLEmojiLabelDelegate>
@@ -51,6 +52,7 @@
 
 @property (weak, nonatomic) IBOutlet UIView *bottomLineView;
 
+@property (weak, nonatomic) IBOutlet UIView *breakLine;
 @property (assign, nonatomic) CGFloat totalHeight;
 
 //内容数据
@@ -345,22 +347,30 @@
     userRect.size.width = nameSize.width;
     self.btnUserName.frame = userRect;
     
-    CGRect companRect = self.lblCompanyName.frame;
-    companRect.origin.x = self.btnUserName.right + kObjectMargin;
+    //设置分割线的坐标
+    CGRect frame = self.breakLine.frame;
+    frame.origin.x = kItemMargin + CGRectGetMaxX(userRect);
+    frame.size.width = 0.5f;
+    frame.size.height = CGRectGetHeight(userRect);
+    self.breakLine.frame = frame;
+
+    //设置公司名称
     NSString *comp = obj.company;
-    if (obj.company.length > 5)
-    {
+    if (obj.company.length > 5) {
         NSString *str = [obj.company substringToIndex:5];
         comp = [NSString stringWithFormat:@"%@…",str];
     }
     self.lblCompanyName.text = comp;
-    
-    CGSize companSize = [comp sizeForFont:self.lblCompanyName.font constrainedToSize:CGSizeMake(84, 15) lineBreakMode:self.lblCompanyName.lineBreakMode];
-    companRect.size.width = companSize.width;
+    CGRect companRect = self.lblCompanyName.frame;
+    companRect.origin.x = kItemMargin + CGRectGetMaxX(frame);
+    [self.lblCompanyName sizeToFit];
+    CGSize size = self.lblCompanyName.frame.size;
+    companRect.size.width = size.width;
+    companRect.size.height = size.height;
     self.lblCompanyName.frame = companRect;
-    
+
     CGRect positionRect = self.lblPosition.frame;
-    positionRect.origin.x = self.lblCompanyName.right + kObjectMargin / 2.0f;
+    positionRect.origin.x = kItemMargin + CGRectGetMaxX(companRect);
     self.lblPosition.frame = positionRect;
     [self.btnUserName setBackgroundImage:[UIImage imageWithColor:BTN_SELECT_BACK_COLOR andSize:nameSize] forState:UIControlStateHighlighted];
 }

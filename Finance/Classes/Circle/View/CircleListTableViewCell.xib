@@ -36,6 +36,12 @@
                                     <action selector="actionGoSome:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="MQv-ob-Feb"/>
                                 </connections>
                             </button>
+                            <view contentMode="scaleToFill" id="3UQ-Gp-Agm">
+                                <rect key="frame" x="0.0" y="13" width="1" height="10"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <animations/>
+                                <color key="backgroundColor" red="0.7803921568627451" green="0.7803921568627451" blue="0.7803921568627451" alpha="1" colorSpace="calibratedRGB"/>
+                            </view>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="投资顾问我问问" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="yAL-uC-6GC">
                                 <rect key="frame" x="54" y="13" width="84" height="12"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
@@ -192,6 +198,7 @@
                 <outlet property="actionView" destination="Rk5-kk-d3u" id="Z2u-zS-tbt"/>
                 <outlet property="bottomLineView" destination="sKi-a5-zPu" id="oz6-Vs-9OI"/>
                 <outlet property="bottomView" destination="pBX-z8-ltX" id="Cnb-yJ-tbs"/>
+                <outlet property="breakLine" destination="3UQ-Gp-Agm" id="Uey-7b-n4z"/>
                 <outlet property="btnAttention" destination="Y1b-45-Ds8" id="Jtb-sV-0Sk"/>
                 <outlet property="btnComment" destination="i71-3M-Tm0" id="h11-KH-Fz8"/>
                 <outlet property="btnDelete" destination="4hE-Lk-BOL" id="wKE-HE-Agf"/>
