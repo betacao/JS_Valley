@@ -47,9 +47,9 @@ REGULAREXPRESSION(SlashEmojiRegularExpression, @"/:[\\x21-\\x2E\\x30-\\x7E]{1,8}
 const CGFloat kLineSpacing = 3.0;
 const CGFloat kAscentDescentScale = 0.25; //在这里的话无意义，高度的结局都是和宽度一样
 
-const CGFloat kEmojiWidthRatioWithLineHeight = 0.7;//和字体高度的比例
+#define kEmojiWidthRatioWithLineHeight  0.7 * XFACTOR//和字体高度的比例
 
-const CGFloat kEmojiOriginYOffsetRatioWithLineHeight = -0.1; //表情绘制的y坐标矫正值，和字体高度的比例，越大越往下
+#define kEmojiOriginYOffsetRatioWithLineHeight  0.0 //表情绘制的y坐标矫正值，和字体高度的比例，越大越往下
 NSString *const kCustomGlyphAttributeImageName = @"CustomGlyphAttributeImageName";
 
 #define kEmojiReplaceCharacter @"\uFFFC"
