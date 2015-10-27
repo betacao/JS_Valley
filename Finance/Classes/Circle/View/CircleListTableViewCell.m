@@ -317,7 +317,7 @@
         if ([obj.cmmtnum integerValue] > 3){
             UILabel *replyLabel = [[UILabel alloc] initWithFrame:CGRectMake(CELLRIGHT_COMMENT_WIDTH,CGRectGetHeight(commentRect), SCREENWIDTH-CELLRIGHT_WIDTH, 20)];
             replyLabel.numberOfLines = 1;
-            replyLabel.text = @"更多评论";
+            replyLabel.text = @"更多评论...";
             replyLabel.font = [UIFont systemFontOfSize:14.0f];
             replyLabel.userInteractionEnabled = YES;
             replyLabel.textColor = RGB(210, 209, 209);

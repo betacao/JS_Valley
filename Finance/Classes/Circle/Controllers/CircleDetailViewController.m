@@ -249,7 +249,6 @@
     [self.imageHeader updateHeaderView:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,obj.potname] placeholderImage:[UIImage imageNamed:@"default_head"]];
     [self.imageHeader updateStatus:[obj.userstatus isEqualToString:@"true"] ? YES : NO];
     CGRect frame = self.imageHeader.frame;
-    frame.origin.x *= XFACTOR;
     self.imageHeader.frame = frame;
 
 
@@ -413,7 +412,6 @@
     [self.btnNickname sizeToFit];
     CGSize nameSize = self.btnNickname.frame.size;
     userRect.size.width = nameSize.width;
-    userRect.origin.x *= XFACTOR;
     self.btnNickname.frame = userRect;
 
     //设置分割线的坐标
@@ -456,7 +454,6 @@
 
     frame = self.lblTime.frame;
     [self.lblTime sizeToFit];
-    frame.origin.x *= XFACTOR;
     [self.lblTime setOrigin:frame.origin];
 
     frame = self.btnAttention.frame;
