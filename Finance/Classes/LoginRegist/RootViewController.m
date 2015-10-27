@@ -78,7 +78,7 @@
         _playerController = [[MPMoviePlayerController alloc] init];
         _playerController.controlStyle = MPMovieControlStyleNone;
         _playerController.movieSourceType = MPMovieSourceTypeFile;
-        [_playerController.view setFrame:self.view.bounds];
+        [_playerController.view setFrame:CGRectMake(0.0f, 0.0f, SCREENWIDTH, SCREENHEIGHT)];
 
         //此通知获取播放器的播放状态变化
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(videoPlayStateDidChange:) name:MPMoviePlayerPlaybackStateDidChangeNotification object:_playerController];

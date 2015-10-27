@@ -9,9 +9,9 @@
 #import "CircleListRecommendViewController.h"
 #import "popObj.h"
 
-const CGFloat kFirstRecommendCellHeight = 70.0f;
-const CGFloat kOtherRecommendCellHeight = 65.0f;
-const CGFloat kLabelMargin = 10.0f;
+const CGFloat kFirstRecommendCellHeight = 62.0f;
+const CGFloat kOtherRecommendCellHeight = 57.0f;
+#define kLabelMargin  7.0f * XFACTOR
 
 @interface CircleListRecommendViewController ()
 @property (weak, nonatomic) IBOutlet UIView *topView;
@@ -24,6 +24,7 @@ const CGFloat kLabelMargin = 10.0f;
 @property (weak, nonatomic) IBOutlet UILabel *topDetailLabel;
 @property (weak, nonatomic) IBOutlet UIView *topViewLine;
 @property (weak, nonatomic) IBOutlet UIButton *topFocusButton;
+@property (weak, nonatomic) IBOutlet UIView *topBreakLine;
 
 //middleView的subView
 @property (weak, nonatomic) IBOutlet UIImageView *middleImageView;
@@ -32,12 +33,13 @@ const CGFloat kLabelMargin = 10.0f;
 @property (weak, nonatomic) IBOutlet UILabel *middleDetailLabel;
 @property (weak, nonatomic) IBOutlet UIView *middleViewLine;
 @property (weak, nonatomic) IBOutlet UIButton *middleFocusButton;
+@property (weak, nonatomic) IBOutlet UIView *middleBreakLine;
 //bottomView的subView
 @property (weak, nonatomic) IBOutlet UIImageView *bottomImageView;
 @property (weak, nonatomic) IBOutlet UILabel *bottomNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *bottomCompantyLabel;
 @property (weak, nonatomic) IBOutlet UILabel *bottomDetailLabel;
-@property (weak, nonatomic) IBOutlet UIView *bottomViewLine;
+@property (weak, nonatomic) IBOutlet UIView *bottomBreakLine;
 @property (weak, nonatomic) IBOutlet UIButton *bottomFocusButton;
 
 @property (assign, nonatomic) NSInteger arrayCount;
@@ -68,9 +70,9 @@ const CGFloat kLabelMargin = 10.0f;
     
 }
 
-- (void)viewWillAppear:(BOOL)animated
+- (void)viewDidAppear:(BOOL)animated
 {
-    [super viewWillAppear:animated];
+    [super viewDidAppear:animated];
     
     CGRect frame = self.topViewLine.frame;
     frame.size.height = 0.5f;
@@ -104,10 +106,17 @@ const CGFloat kLabelMargin = 10.0f;
             } else{
                 [self.topFocusButton setImage:[UIImage imageNamed:@"已关注14"] forState:UIControlStateNormal];
             }
-            
-            [self.topNameLabel sizeToFit];
-            CGRect frame = self.topCompantyLabel.frame;
+            CGRect frame = self.topNameLabel.frame;
+            CGSize size = [self.topNameLabel sizeThatFits:CGSizeMake(MAXFLOAT, CGRectGetHeight(frame))];
+            frame.size.width = size.width;
+            self.topNameLabel.frame = frame;
+
+            frame = self.topBreakLine.frame;
             frame.origin.x = CGRectGetMaxX(self.topNameLabel.frame) + kLabelMargin;
+            self.topBreakLine.frame = frame;
+
+            frame = self.topCompantyLabel.frame;
+            frame.origin.x = CGRectGetMaxX(self.topBreakLine.frame) + kLabelMargin;
             self.topCompantyLabel.frame = frame;
             
         } else if (index == 1){
@@ -122,9 +131,17 @@ const CGFloat kLabelMargin = 10.0f;
                 [self.middleFocusButton setImage:[UIImage imageNamed:@"已关注14"] forState:UIControlStateNormal];
             }
             
-            [self.middleNameLabel sizeToFit];
-            CGRect frame = self.middleCompantyLabel.frame;
-            frame.origin.x = CGRectGetMaxX(self.middleNameLabel.frame) + kLabelMargin;
+            CGRect frame = self.middleNameLabel.frame;
+            CGSize size = [self.middleNameLabel sizeThatFits:CGSizeMake(MAXFLOAT, CGRectGetHeight(frame))];
+            frame.size.width = size.width;
+            self.middleNameLabel.frame = frame;
+
+            frame = self.middleBreakLine.frame;
+            frame.origin.x = CGRectGetMaxX(self.middleBreakLine.frame) + kLabelMargin;
+            self.middleBreakLine.frame = frame;
+
+            frame = self.middleCompantyLabel.frame;
+            frame.origin.x = CGRectGetMaxX(self.middleBreakLine.frame) + kLabelMargin;
             self.middleCompantyLabel.frame = frame;
             
         } else{
@@ -139,10 +156,19 @@ const CGFloat kLabelMargin = 10.0f;
                 [self.bottomFocusButton setImage:[UIImage imageNamed:@"已关注14"] forState:UIControlStateNormal];
             }
             
-            [self.bottomNameLabel sizeToFit];
-            CGRect frame = self.bottomCompantyLabel.frame;
-            frame.origin.x = CGRectGetMaxX(self.bottomNameLabel.frame) + kLabelMargin;
-            self.bottomCompantyLabel.frame = frame;
+            CGRect frame = self.bottomNameLabel.frame;
+            CGSize size = [self.bottomNameLabel sizeThatFits:CGSizeMake(MAXFLOAT, CGRectGetHeight(frame))];
+            frame.size.width = size.width;
+            self.bottomNameLabel.frame = frame;
+
+            frame = self.bottomBreakLine.frame;
+            frame.origin.x = CGRectGetMaxX(self.bottomBreakLine.frame) + kLabelMargin;
+
+            self.bottomBreakLine.frame = frame;
+
+            frame = self.middleCompantyLabel.frame;
+            frame.origin.x = CGRectGetMaxX(self.bottomBreakLine.frame) + kLabelMargin;
+            self.middleCompantyLabel.frame = frame;
             
         }
     }
