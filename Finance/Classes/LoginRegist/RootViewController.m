@@ -56,7 +56,6 @@
 
 - (void)startPlayVideo
 {
-    [self.launchImage removeFromSuperview];
     NSString *videoPath = [[NSBundle mainBundle] pathForResource:@"15skaiji.mp4" ofType:nil];
     //如果存在视频则直接播放
     if ([[NSFileManager defaultManager] fileExistsAtPath:videoPath]) {
@@ -109,6 +108,7 @@
 {
     if (![self.playerController.view superview]) {
         [self.view addSubview:self.playerController.view];
+        [self.launchImage removeFromSuperview];
     }
     [self.view bringSubviewToFront:self.playerController.view];
 }
