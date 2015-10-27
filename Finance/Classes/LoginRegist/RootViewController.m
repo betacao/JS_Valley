@@ -11,11 +11,13 @@
 #import "ApplyViewController.h"
 #import "LoginViewController.h"
 #import "ImproveMatiralViewController.h"
-#import <MediaPlayer/MediaPlayer.h>
+
 @interface RootViewController ()
 @property (weak, nonatomic) IBOutlet UIImageView *launchImage;
 @property (strong, nonatomic) NSString *isFull;
-@property (strong, nonatomic) MPMoviePlayerController *playerController;
+@property (strong, nonatomic) AVPlayerItem *playerItem;
+@property (strong, nonatomic) AVPlayer *player;
+
 @end
 
 @implementation RootViewController
@@ -67,52 +69,45 @@
 - (void)playVideo:(NSString *)localPath
 {
     NSURL *videoUrl = [NSURL fileURLWithPath:localPath];
-    [self.playerController setContentURL:videoUrl];
-    [self.playerController prepareToPlay];
-}
+    self.playerItem = [AVPlayerItem playerItemWithURL:videoUrl];
+    self.player = [AVPlayer playerWithPlayerItem:self.playerItem];
 
-
-- (MPMoviePlayerController *)playerController
-{
-    if (!_playerController) {
-        _playerController = [[MPMoviePlayerController alloc] init];
-        _playerController.controlStyle = MPMovieControlStyleNone;
-        _playerController.movieSourceType = MPMovieSourceTypeFile;
-        [_playerController.view setFrame:CGRectMake(0.0f, 0.0f, SCREENWIDTH, SCREENHEIGHT)];
-
-        //此通知获取播放器的播放状态变化
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(videoPlayStateDidChange:) name:MPMoviePlayerPlaybackStateDidChangeNotification object:_playerController];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(videoPlayerReadyForDisplay:) name:MPMediaPlaybackIsPreparedToPlayDidChangeNotification object:_playerController];
-    }
-    return _playerController;
+    AVPlayerLayer* playerLayer = [AVPlayerLayer playerLayerWithPlayer:self.player];
+    [playerLayer setVideoGravity:AVLayerVideoGravityResizeAspectFill];
+    playerLayer.frame = CGRectMake(0.0f, 0.0f, SCREENWIDTH, SCREENHEIGHT);
+    [playerLayer addObserver:self forKeyPath:@"readyForDisplay" options:0 context:nil];
+    __weak typeof(self) weakSelf = self;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [weakSelf.view.layer addSublayer:playerLayer];
+    });
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(moviePlayDidEnd:) name:AVPlayerItemDidPlayToEndTimeNotification object:self.playerItem];
 
 }
+
 
 //当播放器的播放状态发生变化时的通知
-- (void)videoPlayStateDidChange:(NSNotification *)notif
+- (void)moviePlayDidEnd:(NSNotification *)notif
 {
-    switch (self.playerController.playbackState) {
-        case MPMoviePlaybackStatePlaying:
-            break;
-        case MPMoviePlaybackStatePaused:
-        case MPMoviePlaybackStateStopped:
-            [self.playerController.view setHidden:YES];
-            [self moveToHomePage];
-            break;
-        default:
-            break;
-    }
+    [self moveToHomePage];
 }
 
-- (void)videoPlayerReadyForDisplay:(NSNotification *)notif
-{
-    if (![self.playerController.view superview]) {
-        [self.view addSubview:self.playerController.view];
-        [self.launchImage removeFromSuperview];
-    }
-    [self.view bringSubviewToFront:self.playerController.view];
-}
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
 
+    __weak typeof(self) weakSelf = self;
+    if ([keyPath isEqualToString:@"readyForDisplay"]) {
+        AVPlayerLayer* layer = (AVPlayerLayer*) object;
+        if (layer.readyForDisplay) {
+            [layer removeObserver:weakSelf forKeyPath:@"readyForDisplay"];
+
+            dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC));
+            dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                [layer.player play];
+                //去掉最上面的的遮罩
+                [weakSelf.launchImage removeFromSuperview];
+            });
+        }
+    }
+}
 
 
 - (void)showLoginViewController

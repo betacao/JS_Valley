@@ -366,7 +366,6 @@
     [self.lblCompanyName sizeToFit];
     CGSize size = self.lblCompanyName.frame.size;
     companRect.size.width = size.width;
-    companRect.size.height = size.height;
     self.lblCompanyName.frame = companRect;
 
     CGRect positionRect = self.lblPosition.frame;
