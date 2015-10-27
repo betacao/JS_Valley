@@ -119,7 +119,7 @@ const CGFloat keyboardMargin = 64.0f;
         name = self.nameTextField.text;
     }
     if(self.departTextField.text.length == 0){
-        [Hud showMessageWithText:@"部门不能为空"];
+        [Hud showMessageWithText:@"职位不能为空"];
         return;
     } else{
         department = self.departTextField.text;

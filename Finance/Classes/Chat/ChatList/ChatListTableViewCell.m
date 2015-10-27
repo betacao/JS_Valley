@@ -44,7 +44,11 @@
     {
         self.lblName.text = obj.uid;
     }
-    self.lblCompany.text = obj.company;
+    NSString *company = obj.company;
+    if(!company || company.length == 0){
+        company = @"暂未提供公司信息";
+    }
+    self.lblCompany.text = company;
     uid = obj.uid;
     
     [self.imageHeader updateHeaderView:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,obj.headImageUrl] placeholderImage:[UIImage imageNamed:@"默认头像"]];
@@ -53,55 +57,39 @@
     self.onceImg.hidden = NO;
     NSString *relaStr;
     self.btninvite.hidden = YES;
-    if (self.type == contactTypeFriend)
-    {
+    if (self.type == contactTypeFriend){
         self.onceImg.image = [UIImage imageNamed:@"1度"];
-        switch ([obj.rela integerValue])
-        {
-            case 0:
-            {
+        switch ([obj.rela integerValue]){
+            case 0:{
                 relaStr = @"通讯录联系人  大牛圈用户";
-                if (IsStrEmpty(obj.rela))
-                {
+                if (IsStrEmpty(obj.rela)){
                     relaStr = @"";
-
                 }
             }
                 break;
-            case 1:
-            {
+            case 1:{
                 relaStr = @"大牛圈用户";
-
             }
                 break;
-            case 2:
-            {
-                relaStr = @"通讯录联系人";
+            case 2:{
+                relaStr = @"通讯录联系人  未加入大牛圈";
                 self.btninvite.hidden = NO;
-
             }
                 break;
-                
             default:
                 break;
         }
-        
-    }
-    else
-    {
+
+    } else{
         self.onceImg.image = [UIImage imageNamed:@"2度"];
-        if ([obj.commonfriendnum integerValue ] > 1)
-        {
+        if ([obj.commonfriendnum integerValue ] > 1){
             relaStr = [NSString stringWithFormat:@"%@等%@个共同好友  大牛圈用户",obj.commonfriend,obj.commonfriendnum];
-        }
-        else
-        {
+        } else{
             relaStr = [NSString stringWithFormat:@"%@共同好友  大牛圈用户",obj.commonfriend];
 
         }
     }
     self.lblRelate.text = relaStr;
-   // self.
 }
 - (void)awakeFromNib
 {

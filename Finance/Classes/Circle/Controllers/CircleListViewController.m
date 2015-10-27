@@ -56,9 +56,6 @@ const CGFloat kAdButtomMargin = 20.0f;
 
 @property (strong, nonatomic) CircleListRecommendViewController *recommendViewController;
 
-@property (nonatomic, strong) NSMutableArray *arrCityCode;
-@property (nonatomic, strong) NSString *cityCode;
-
 @property (assign, nonatomic) NSInteger totalNum;
 @property (strong, nonatomic) SHGNoticeView *newFriendNoticeView;
 @property (strong, nonatomic) SHGNoticeView *newMessageNoticeView;
@@ -167,28 +164,6 @@ const CGFloat kAdButtomMargin = 20.0f;
     return _recomandArray;
 }
 
--(NSMutableArray *)arrCityCode
-{
-    if (!_arrCityCode) {
-        _arrCityCode = [NSMutableArray array];
-        NSArray *arr = [self loadCityCode];
-        NSString *code = @"";
-        NSString *name = @"不限";
-        popObj *nObj = [[popObj alloc] init];
-        nObj.code = code;
-        nObj.name = name;
-        [_arrCityCode addObject:nObj];
-        for (NSString *str in arr) {
-            popObj *obj = [[popObj alloc] init];
-            NSArray *strArr = [str componentsSeparatedByString:@"		"];
-            obj.code = strArr[0];
-            obj.name = strArr[1];
-            [_arrCityCode addObject:obj];
-        }
-    }
-    return _arrCityCode;
-}
-
 - (SHGNoticeView *)newFriendNoticeView
 {
     if(!_newFriendNoticeView){
@@ -214,7 +189,7 @@ const CGFloat kAdButtomMargin = 20.0f;
         return;
     }
     NSString *uid = [[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID] stringValue];
-    NSDictionary *param = @{@"uid":uid, @"area":self.cityCode == nil?@"":self.cityCode};
+    NSDictionary *param = @{@"uid":uid, @"area":self.currentCity == nil?@"":self.currentCity};
     
     __weak typeof(self) weakSelf = self;
     [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/v1/recommended/friends/recommendedFriend",rBaseAddRessHttp] class:[RecmdFriendObj class] parameters:param success:^(MOCHTTPResponse *response){
@@ -257,16 +232,9 @@ const CGFloat kAdButtomMargin = 20.0f;
     __block __weak CircleListViewController *wself = self;
     [[CCLocationManager shareLocation] getCity:^{
         NSString *cityName = [SHGGloble sharedGloble].cityName;
-        NSString *provinceName = [[SHGGloble sharedGloble].provinceName stringByAppendingString:@"\r"];
         if(cityName && cityName.length > 0){
             self.currentCity = cityName;
             NSLog(@"self.cityName = %@",self.currentCity);
-            for(popObj *obj in self.arrCityCode){
-                if([obj.name isEqualToString:provinceName]){
-                    self.cityCode = obj.code;
-                    break;
-                }
-            }
             wself.hasLocated = YES;
             [wself requestAlermInfo];
         }
