@@ -815,7 +815,7 @@
                 [self.delegate detailCollectionWithRid:self.obj.rid collected:self.obj.iscollection];
             }
             [MobClick event:@"ActionCollection_Off" label:@"onClick"];
-            [Hud showMessageWithText:@"取消收藏成功"];
+            [Hud showMessageWithText:@"取消收藏"];
 
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             [Hud showMessageWithText:error.domain];

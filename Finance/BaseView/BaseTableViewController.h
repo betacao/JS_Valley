@@ -10,7 +10,12 @@
 
 @interface BaseTableViewController : BaseViewController<UITableViewDataSource,UITableViewDelegate,MWPhotoBrowserDelegate>
 
-@property (nonatomic, strong) NSMutableArray *dataArr;
+@property (strong, nonatomic) NSMutableArray *dataArr;
+
+//列表数据
+@property (strong, nonatomic) NSMutableArray *listArray;
+//推广数据
+@property (strong, nonatomic) NSMutableArray *adArray;
 
 -(void)addHeaderRefresh:(UITableView *)tableView headerRefesh:(BOOL)isHeaderFresh  andFooter:(BOOL)isFooterRefresh;
 

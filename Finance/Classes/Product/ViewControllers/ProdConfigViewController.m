@@ -327,7 +327,7 @@
                 _obj.iscollected = @"0";
                 [_btnCollet setImage:[UIImage imageNamed:@"收藏prod"] forState:UIControlStateNormal];
             }
-            [Hud showMessageWithText:@"取消收藏成功"];
+            [Hud showMessageWithText:@"取消收藏"];
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             [Hud showMessageWithText:error.domain];
         }];

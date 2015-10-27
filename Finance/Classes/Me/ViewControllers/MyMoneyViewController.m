@@ -22,17 +22,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
 	self.title = @"我的佣金";
     [CommonMethod setExtraCellLineHidden:self.tableView];
 
 	self.dataSource = [[NSMutableArray alloc] init];
-//	MyMoneyDetailObject *obj = [[MyMoneyDetailObject alloc] init];
-//	obj.name = @"哈哈";
-//	obj.productName = @"哈哈";
-//	obj.totalMoney = @"哈哈";
-//	obj.commission = @"哈哈";
-//	[self.dataSource addObject:obj];
 
 	NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
 	[MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttp,@"user",@"commission"] parameters:@{@"uid":uid}success:^(MOCHTTPResponse *response) {

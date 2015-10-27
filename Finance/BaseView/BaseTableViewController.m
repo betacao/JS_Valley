@@ -20,7 +20,7 @@
     // Do any additional setup after loading the view.
 }
 
--(NSMutableArray *)dataArr
+- (NSMutableArray *)dataArr
 {
     if (!_dataArr) {
         _dataArr = [NSMutableArray array];
@@ -28,7 +28,23 @@
     return _dataArr;
 }
 
--(void)addHeaderRefresh:(UITableView *)tableView headerRefesh:(BOOL)isHeaderFresh  andFooter:(BOOL)isFooterRefresh
+- (NSMutableArray *)listArray
+{
+    if (!_listArray) {
+        _listArray = [NSMutableArray array];
+    }
+    return _listArray;
+}
+
+- (NSMutableArray *)adArray
+{
+    if (!_adArray) {
+        _adArray = [NSMutableArray array];
+    }
+    return _adArray;
+}
+
+- (void)addHeaderRefresh:(UITableView *)tableView headerRefesh:(BOOL)isHeaderFresh  andFooter:(BOOL)isFooterRefresh
 {
     tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     if (isHeaderFresh)
