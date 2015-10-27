@@ -108,6 +108,7 @@ typedef void (^BBBasicBlock)(void);
 #define SHARE_CHAT_MESS    @"我正在使用大牛圈“"
 #define DA_NIU_QIAM    @"我正在使用大牛圈"
 
-
+//当前的版本号
+#define kShowVersion @"showVersion"
 
 #endif

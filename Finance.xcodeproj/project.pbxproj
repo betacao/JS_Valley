@@ -870,6 +870,7 @@
 		B0EAB2551B467AB8005A760F /* MLEmojiLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = B0EAB2511B467AB8005A760F /* MLEmojiLabel.m */; };
 		B0EAB2561B467AB8005A760F /* TTTAttributedLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = B0EAB2531B467AB8005A760F /* TTTAttributedLabel.m */; };
 		CEB958E5843B739F6CB8F600 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B1E0AB5E4D6E1102E811C936 /* libPods.a */; };
+		F90FEAE61BDE522400B625FE /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F90FEAE51BDE522400B625FE /* MediaPlayer.framework */; };
 		F92835DE1BA6E16C00E1CF22 /* UIButton+EnlargeEdge.m in Sources */ = {isa = PBXBuildFile; fileRef = F92835DD1BA6E16C00E1CF22 /* UIButton+EnlargeEdge.m */; };
 		F932E2551B859DEC00EF2332 /* CircleListRecommendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F932E2531B859DEC00EF2332 /* CircleListRecommendViewController.m */; };
 		F932E2561B859DEC00EF2332 /* CircleListRecommendViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F932E2541B859DEC00EF2332 /* CircleListRecommendViewController.xib */; };
@@ -894,6 +895,7 @@
 		F9EDD5F81BABFBCF00506C0C /* SDPhotoGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = F9EDD5F11BABFBCF00506C0C /* SDPhotoGroup.m */; };
 		F9EDD5F91BABFBCF00506C0C /* SDPhotoItem.m in Sources */ = {isa = PBXBuildFile; fileRef = F9EDD5F31BABFBCF00506C0C /* SDPhotoItem.m */; };
 		F9EDD5FA1BABFBCF00506C0C /* SDWaitingView.m in Sources */ = {isa = PBXBuildFile; fileRef = F9EDD5F51BABFBCF00506C0C /* SDWaitingView.m */; };
+		F9FBAF541BDF132E008D89D9 /* 15skaiji.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = F9FBAF531BDF132E008D89D9 /* 15skaiji.mp4 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -2070,6 +2072,7 @@
 		B0EAB2531B467AB8005A760F /* TTTAttributedLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTTAttributedLabel.m; sourceTree = "<group>"; };
 		B0EAB2541B467AB8005A760F /* TTTAttributedLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTTAttributedLabel.h; sourceTree = "<group>"; };
 		B1E0AB5E4D6E1102E811C936 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		F90FEAE51BDE522400B625FE /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		F91B2B871BAA788300BC166D /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F92835DC1BA6E16C00E1CF22 /* UIButton+EnlargeEdge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+EnlargeEdge.h"; sourceTree = "<group>"; };
 		F92835DD1BA6E16C00E1CF22 /* UIButton+EnlargeEdge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+EnlargeEdge.m"; sourceTree = "<group>"; };
@@ -2124,6 +2127,7 @@
 		F9EDD5F31BABFBCF00506C0C /* SDPhotoItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDPhotoItem.m; sourceTree = "<group>"; };
 		F9EDD5F41BABFBCF00506C0C /* SDWaitingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDWaitingView.h; sourceTree = "<group>"; };
 		F9EDD5F51BABFBCF00506C0C /* SDWaitingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDWaitingView.m; sourceTree = "<group>"; };
+		F9FBAF531BDF132E008D89D9 /* 15skaiji.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = 15skaiji.mp4; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -2131,6 +2135,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F90FEAE61BDE522400B625FE /* MediaPlayer.framework in Frameworks */,
 				6186DF261AFABC6F00960934 /* ShareSDKCoreService.framework in Frameworks */,
 				61ED1A4C1AD3C4A6005B73E8 /* libsqlite3.dylib in Frameworks */,
 				56B435E61B71C7D200BEF5BD /* QZoneConnection.framework in Frameworks */,
@@ -2187,6 +2192,7 @@
 		247C218AE67E65B5E9952977 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F90FEAE51BDE522400B625FE /* MediaPlayer.framework */,
 				61425B761AFA98D300758BCB /* Accounts.framework */,
 				61425B741AFA98A700758BCB /* libz.1.2.5.dylib */,
 				61425B721AFA987E00758BCB /* libicucore.dylib */,
@@ -2615,6 +2621,7 @@
 		610FF0861AD62DB60027EBA6 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				F9FBAF531BDF132E008D89D9 /* 15skaiji.mp4 */,
 				B085B54F1B74A61700DC592E /* 1.4图 */,
 				B04D6E361B60C01E00E3863E /* 1.3图 */,
 				6149CFE21B25E5B0006E45FE /* city_code.txt */,
@@ -5032,6 +5039,7 @@
 				408D8B0E1AF8618C0055810C /* VoiceSearchFeedback013@2x.png in Resources */,
 				B04D6E411B60F2D500E3863E /* 组-46@2x.png in Resources */,
 				6187D30E1AF1C693008E1D21 /* sr_refresh@2X.png in Resources */,
+				F9FBAF541BDF132E008D89D9 /* 15skaiji.mp4 in Resources */,
 				408D8B5A1AF8618C0055810C /* chatBar_colorMore_videoSelected@2x.png in Resources */,
 				6145FF1E1AE4E1210074AB49 /* CircleSomeOneViewController.xib in Resources */,
 				408D8AF41AF8618C0055810C /* chatFire_audioPlaying3@2x.png in Resources */,

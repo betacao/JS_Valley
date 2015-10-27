@@ -91,7 +91,7 @@
 - (UIView *)bgView
 {
     if(!_bgView){
-        CGRect frame = self.frame;
+        CGRect frame = self.bounds;
         frame.origin.y = -CGRectGetHeight(frame);
         _bgView = [[UIView alloc] initWithFrame:frame];
         [_bgView addSubview:self.noticeLabel];
@@ -104,16 +104,14 @@
 
 - (void)showWithText:(NSString *)string
 {
-
+    [NSObject cancelPreviousPerformRequestsWithTarget:self];
     if(self.noticeType == SHGNoticeTypeNewMessage){
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3.0f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [self hide];
-        });
+        [self performSelector:@selector(hide) withObject:nil afterDelay:3.0f];
     }
     self.noticeLabel.text = string;
     [self.superView.window addSubview:self];
     [UIView animateWithDuration:0.25f animations:^{
-        CGRect frame = self.frame;
+        CGRect frame = self.bounds;
         frame.origin.y = 0.0f;
         self.bgView.frame = frame;
     } completion:^(BOOL finished) {
@@ -124,7 +122,7 @@
 - (void)hide
 {
     [UIView animateWithDuration:0.25f animations:^{
-        CGRect frame = self.frame;
+        CGRect frame = self.bounds;
         frame.origin.y = -CGRectGetHeight(frame);
         self.bgView.frame = frame;
     } completion:^(BOOL finished) {

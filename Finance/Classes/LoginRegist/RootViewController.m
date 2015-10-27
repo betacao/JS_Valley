@@ -11,9 +11,11 @@
 #import "ApplyViewController.h"
 #import "LoginViewController.h"
 #import "ImproveMatiralViewController.h"
+#import <MediaPlayer/MediaPlayer.h>
 @interface RootViewController ()
 @property (weak, nonatomic) IBOutlet UIImageView *launchImage;
-@property (nonatomic, strong) NSString *isFull;
+@property (strong, nonatomic) NSString *isFull;
+@property (strong, nonatomic) MPMoviePlayerController *playerController;
 @end
 
 @implementation RootViewController
@@ -29,12 +31,20 @@
     } else if(SCREENHEIGHT > 667.000000){
         self.launchImage.image=[UIImage imageNamed:@"736"];
     }
-    
+//    if([[SHGGloble sharedGloble] isShowGuideView]){
+//        [self startPlayVideo];
+//    } else{
+//        [self moveToHomePage];
+//    }
+    [self startPlayVideo];
+}
+
+- (void)moveToHomePage
+{
     [[SHGGloble sharedGloble] requestHomePageData];
     NSString *flagStr = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_AUTOLOGIN];
     BOOL flag = NO;
-    if (!IsStrEmpty(flagStr))
-    {
+    if (!IsStrEmpty(flagStr)){
         flag = [flagStr boolValue];
     }
     if (flag) {
@@ -42,8 +52,68 @@
     }else{
         [self showLoginViewController];
     }
-    // Do any additional setup after loading the view from its nib.
 }
+
+- (void)startPlayVideo
+{
+    [self.launchImage removeFromSuperview];
+    NSString *videoPath = [[NSBundle mainBundle] pathForResource:@"15skaiji.mp4" ofType:nil];
+    //如果存在视频则直接播放
+    if ([[NSFileManager defaultManager] fileExistsAtPath:videoPath]) {
+        [self playVideo:videoPath];
+    }
+}
+
+
+- (void)playVideo:(NSString *)localPath
+{
+    NSURL *videoUrl = [NSURL fileURLWithPath:localPath];
+    [self.playerController setContentURL:videoUrl];
+    [self.playerController prepareToPlay];
+}
+
+
+- (MPMoviePlayerController *)playerController
+{
+    if (!_playerController) {
+        _playerController = [[MPMoviePlayerController alloc] init];
+        _playerController.controlStyle = MPMovieControlStyleNone;
+        _playerController.movieSourceType = MPMovieSourceTypeFile;
+        [_playerController.view setFrame:self.view.bounds];
+
+        //此通知获取播放器的播放状态变化
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(videoPlayStateDidChange:) name:MPMoviePlayerPlaybackStateDidChangeNotification object:_playerController];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(videoPlayerReadyForDisplay:) name:MPMediaPlaybackIsPreparedToPlayDidChangeNotification object:_playerController];
+    }
+    return _playerController;
+
+}
+
+//当播放器的播放状态发生变化时的通知
+- (void)videoPlayStateDidChange:(NSNotification *)notif
+{
+    switch (self.playerController.playbackState) {
+        case MPMoviePlaybackStatePlaying:
+            break;
+        case MPMoviePlaybackStatePaused:
+        case MPMoviePlaybackStateStopped:
+            [self.playerController.view setHidden:YES];
+            [self moveToHomePage];
+            break;
+        default:
+            break;
+    }
+}
+
+- (void)videoPlayerReadyForDisplay:(NSNotification *)notif
+{
+    if (![self.playerController.view superview]) {
+        [self.view addSubview:self.playerController.view];
+    }
+    [self.view bringSubviewToFront:self.playerController.view];
+}
+
+
 
 - (void)showLoginViewController
 {

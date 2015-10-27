@@ -81,6 +81,18 @@
     return _contactArray;
 }
 
+- (BOOL)isShowGuideView
+{
+    NSString *oldVersion = [[NSUserDefaults standardUserDefaults] objectForKey:kShowVersion];
+    NSString *newVersion = [[NSBundle mainBundle] objectForInfoDictionaryKey:(NSString *)kCFBundleVersionKey];
+    if(!oldVersion || ![oldVersion isEqualToString:newVersion]){
+        [[NSUserDefaults standardUserDefaults] setObject:newVersion forKey:kShowVersion];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        return YES;
+    }
+    return NO;
+}
+
 #pragma mark ------ 请求首页数据 ------
 - (void)requestHomePageData
 {

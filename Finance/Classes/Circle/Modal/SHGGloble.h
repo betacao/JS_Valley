@@ -80,6 +80,15 @@ typedef void (^SHHomeDataCompletionBlock)(NSArray *dataArray);
 + (instancetype)sharedGloble;
 
 /**
+ @brief  是否需要启动界面
+
+ @return 是否是第一次启动 或者是升级了应用
+
+ @since 1.5.0
+ */
+- (BOOL)isShowGuideView;
+
+/**
  @brief  程序首次启动未显示首页的情况下去请求数据
  
  @since 1.4.1
