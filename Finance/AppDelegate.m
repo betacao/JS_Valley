@@ -865,7 +865,6 @@
             }
             message.description =detail;
             [message setThumbImage:[UIImage imageNamed:@"80.png"]];
-            // UIImage *png = [UIImage imageNamed:@"80.png"];
             shareRid = @"";
             [self sendLinkContentWithMessage:message type:scene];
         }
@@ -876,13 +875,8 @@
     }
     else
     {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"友情提示 "
-                                                        message:@"安装微信后，即可与您的好友分享，现在安装？"
-                                                       delegate:self
-                                              cancelButtonTitle:@"取消"
-                                              otherButtonTitles:@"免费安装",nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"友情提示 " message:@"安装微信后，即可与您的好友分享，现在安装？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"免费安装",nil];
         alert.tag = 1201;
-        
         [alert show];
     }
     
@@ -891,7 +885,7 @@
 
 -(void)wechatShare:(CircleListObj *)obj shareType:(NSInteger)scene
 {
-    if([WXApi isWXAppInstalled ]){
+    if([WXApi isWXAppInstalled]){
         if ([WXApi isWXAppSupportApi]){
             WXMediaMessage *message = [WXMediaMessage message];
             NSString *detail = obj.detail;
@@ -920,13 +914,8 @@
     }
     else
     {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"友情提示 "
-                                                        message:@"安装微信后，即可与您的好友分享，现在安装？"
-                                                       delegate:self
-                                              cancelButtonTitle:@"取消"
-                                              otherButtonTitles:@"免费安装",nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"友情提示 " message:@"安装微信后，即可与您的好友分享，现在安装？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"免费安装",nil];
         alert.tag = 1201;
-        
         [alert show];
     }
     
