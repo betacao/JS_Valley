@@ -102,8 +102,8 @@
                             <animations/>
                             <color key="backgroundColor" red="0.93725490196078431" green="0.93333333333333335" blue="0.93725490196078431" alpha="1" colorSpace="calibratedRGB"/>
                         </view>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="kn" id="qYc-FK-xf0">
-                            <rect key="frame" x="227" y="0.0" width="93" height="18"/>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="recomendFriend" id="qYc-FK-xf0">
+                            <rect key="frame" x="217" y="0.0" width="103" height="17"/>
                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                             <animations/>
                         </imageView>
@@ -236,7 +236,7 @@
         </view>
     </objects>
     <resources>
-        <image name="kn" width="93" height="17"/>
+        <image name="recomendFriend" width="107" height="17"/>
         <image name="关注14" width="37" height="16"/>
         <image name="默认头像.png" width="48" height="48"/>
     </resources>
