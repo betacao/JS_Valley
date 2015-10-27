@@ -14,8 +14,9 @@
 #import "SDPhotoItem.h"
 #import "SHGNavigationView.h"
 
-#define PRAISE_SEPWIDTH     6
+#define PRAISE_SEPWIDTH     10
 #define PRAISE_RIGHTWIDTH     40
+#define PRAISE_WIDTH 30.0f
 #define kItemMargin 7.0f * XFACTOR
 
 @interface CircleDetailViewController ()<MLEmojiLabelDelegate, CircleListDelegate>
@@ -342,12 +343,11 @@
                 [subView removeFromSuperview];
             }
         }
-        praiseRect.size.height = 55;
         for (int i = 0; i < self.obj.heads.count; i ++ ) {
             praiseOBj *obj = self.obj.heads[i];
-            praiseWidth = (340-75-6*PRAISE_SEPWIDTH -PRAISE_RIGHTWIDTH )/6;
+            praiseWidth = PRAISE_WIDTH;
             NSLog(@"%f",SCREENWIDTH);
-            CGRect rect = CGRectMake((praiseWidth+PRAISE_SEPWIDTH) * i , (CGRectGetHeight(praiseRect) - praiseWidth) / 2.0f, praiseWidth, praiseWidth);
+            CGRect rect = CGRectMake((praiseWidth + PRAISE_SEPWIDTH) * i , (CGRectGetHeight(praiseRect) - praiseWidth) / 2.0f, praiseWidth, praiseWidth);
             UIImageView *head = [[UIImageView alloc] initWithFrame:rect];
             head.tag = i + 1000;
             [head sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,obj.ppotname]] placeholderImage:[UIImage imageNamed:@"default_head"]];
@@ -492,9 +492,9 @@
 {
     _popupView = [[BRCommentView alloc] initWithFrame:self.view.bounds superFrame:CGRectZero isController:YES type:@"comment"];
     _popupView.delegate = self;
-    _popupView.fid=@"-1";//评论
+    _popupView.fid = @"-1";//评论
     _popupView.tag = 222;
-    _popupView.detail=@"";
+    _popupView.detail = @"";
     _popupView.rid = self.obj.rid;
     [self.navigationController.view addSubview:_popupView];
     //    [popupView release];

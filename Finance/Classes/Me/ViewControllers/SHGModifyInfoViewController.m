@@ -71,12 +71,19 @@ const CGFloat keyboardMargin = 64.0f;
     self.departTextField.layer.cornerRadius = 4.0f;
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    self.nameTextField.textColor = [UIColor colorWithHexString:@"d2d1d1"];
+    self.companyTextField.textColor = [UIColor colorWithHexString:@"d2d1d1"];
+    self.departTextField.textColor = [UIColor colorWithHexString:@"d2d1d1"];
+}
+
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardDidShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
-    
 }
 
 - (void)viewDidDisappear:(BOOL)animated
@@ -163,7 +170,7 @@ const CGFloat keyboardMargin = 64.0f;
 
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
-    textField.textColor = [UIColor colorWithHexString:@"d2d1d1"];
+//    textField.textColor = [UIColor colorWithHexString:@"d2d1d1"];
 }
 
 - (void)scrollFieldToVisible
