@@ -55,7 +55,7 @@
                             <rect key="frame" x="0.0" y="5" width="320" height="56"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                             <subviews>
-                                <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="默认头像.png" id="vlx-Oe-lwD">
+                                <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default_head.png" id="vlx-Oe-lwD">
                                     <rect key="frame" x="14" y="13" width="30" height="30"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <animations/>
@@ -139,7 +139,7 @@
                                         <action selector="didClickFocusButton:" destination="-1" eventType="touchUpInside" id="yhq-md-IFQ"/>
                                     </connections>
                                 </button>
-                                <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="默认头像.png" id="B1g-th-Bwt">
+                                <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default_head.png" id="B1g-th-Bwt">
                                     <rect key="frame" x="14" y="13" width="30" height="30"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <animations/>
@@ -196,7 +196,7 @@
                             <rect key="frame" x="0.0" y="0.0" width="320" height="56"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                             <subviews>
-                                <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="默认头像.png" id="3iI-Mr-1sR">
+                                <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default_head.png" id="3iI-Mr-1sR">
                                     <rect key="frame" x="14" y="13" width="30" height="30"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <animations/>
@@ -257,8 +257,8 @@
         </view>
     </objects>
     <resources>
+        <image name="default_head.png" width="48" height="48"/>
         <image name="recomendFriend" width="107" height="17"/>
         <image name="关注14" width="37" height="16"/>
-        <image name="默认头像.png" width="48" height="48"/>
     </resources>
 </document>

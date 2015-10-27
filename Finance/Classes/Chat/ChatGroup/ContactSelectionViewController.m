@@ -161,7 +161,7 @@
             }
             
             BasePeopleObject *buddy = [weakSelf.searchController.resultsSource objectAtIndex:indexPath.row];
-            cell.imageView.image = [UIImage imageNamed:@"默认头像"];
+            cell.imageView.image = [UIImage imageNamed:@"default_head"];
             cell.textLabel.text = buddy.name;
             
             return cell;
@@ -255,8 +255,8 @@
     
     BasePeopleObject *buddy = [[_dataSource objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
     
-//    cell.imageView.image = [UIImage imageNamed:@"默认头像"];
-    [cell.imageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,buddy.headImageUrl]] placeholderImage:[UIImage imageNamed:@"默认头像"]];
+//    cell.imageView.image = [UIImage imageNamed:@"default_head"];
+    [cell.imageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,buddy.headImageUrl]] placeholderImage:[UIImage imageNamed:@"default_head"]];
     
     cell.textLabel.text = buddy.name;
     
@@ -380,8 +380,8 @@
     for (int i = 0; i < count; i++) {
         BasePeopleObject *buddy = [self.selectedContacts objectAtIndex:i];
         EMRemarkImageView *remarkView = [[EMRemarkImageView alloc] initWithFrame:CGRectMake(i * imageSize, 0, imageSize, imageSize)];
-//        remarkView.image = [UIImage imageNamed:@"默认头像"];
-        [remarkView.imageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,buddy.headImageUrl]] placeholderImage:[UIImage imageNamed:@"默认头像"]];
+//        remarkView.image = [UIImage imageNamed:@"default_head"];
+        [remarkView.imageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,buddy.headImageUrl]] placeholderImage:[UIImage imageNamed:@"default_head"]];
         
         remarkView.remark = buddy.name;
         [self.footerScrollView addSubview:remarkView];

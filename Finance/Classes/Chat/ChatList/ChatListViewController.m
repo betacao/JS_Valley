@@ -561,12 +561,12 @@ static NSString * const kCommonFNum			= @"commonnum";
                     HeadImage *hi=(HeadImage*)headUrl[0];
                     if(![hi.headimg isEqual:@""])
                     {
-                        cell.placeholderImage = [UIImage imageNamed:@"默认头像"];
+                        cell.placeholderImage = [UIImage imageNamed:@"default_head"];
                         cell.imageURL=[NSURL URLWithString:hi.headimg];
                     }else
                     {
                         cell.imageURL=nil;
-                        cell.placeholderImage = [UIImage imageNamed:@"默认头像"];
+                        cell.placeholderImage = [UIImage imageNamed:@"default_head"];
                     }
                     cell.name=hi.nickname;
                 } else{
@@ -577,7 +577,7 @@ static NSString * const kCommonFNum			= @"commonnum";
                     
                     cell.name=@"";
                     cell.imageURL=nil;
-                    cell.placeholderImage = [UIImage imageNamed:@"默认头像"];
+                    cell.placeholderImage = [UIImage imageNamed:@"default_head"];
                 }
                 
             }

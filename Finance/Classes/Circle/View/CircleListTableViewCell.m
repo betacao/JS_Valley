@@ -150,7 +150,7 @@
         [self.btnPraise setImage:[UIImage imageNamed:@"home_yizan"] forState:UIControlStateNormal];
     }
     
-    [self.imageHeader updateHeaderView:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,obj.potname] placeholderImage:[UIImage imageNamed:@"默认头像"]];
+    [self.imageHeader updateHeaderView:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,obj.potname] placeholderImage:[UIImage imageNamed:@"default_head"]];
     [self.imageHeader updateStatus:[obj.userstatus isEqualToString:@"true"] ? YES : NO];
 
     

@@ -166,7 +166,7 @@
             }
             
             EMBuddy *buddy = [weakSelf.searchController.resultsSource objectAtIndex:indexPath.row];
-            cell.imageView.image = [UIImage imageNamed:@"默认头像"];
+            cell.imageView.image = [UIImage imageNamed:@"default_head"];
             cell.textLabel.text = buddy.username;
             
             return cell;
@@ -250,7 +250,7 @@
         }
         else{
             EMBuddy *buddy = [[self.dataSource objectAtIndex:(indexPath.section - 1)] objectAtIndex:indexPath.row];
-            cell.imageView.image = [UIImage imageNamed:@"默认头像"];
+            cell.imageView.image = [UIImage imageNamed:@"default_head"];
             cell.textLabel.text = buddy.username;
         }
     }

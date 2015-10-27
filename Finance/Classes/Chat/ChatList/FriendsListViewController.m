@@ -184,7 +184,7 @@ static NSString * const kCommonFNum			= @"commonnum";
             
             BasePeopleObject *buddy = [weakSelf.searchController.resultsSource objectAtIndex:indexPath.row];
             
-            [cell.headerView updateHeaderView:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,buddy.headImageUrl] placeholderImage:[UIImage imageNamed:@"默认头像"]];
+            [cell.headerView updateHeaderView:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,buddy.headImageUrl] placeholderImage:[UIImage imageNamed:@"default_head"]];
             [cell.headerView updateStatus:[buddy.userStatus isEqualToString:@"true"]?YES:NO];
             cell.nameLabel.text = buddy.name;
             return cell;

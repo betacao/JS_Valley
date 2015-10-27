@@ -227,7 +227,7 @@
 	if (IsStrEmpty(self.identifyImageName)) {
 		
 	}else{
-			[self.identifyImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,self.identifyImageName]] placeholderImage:[UIImage imageNamed:@"默认头像"]];
+			[self.identifyImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,self.identifyImageName]] placeholderImage:[UIImage imageNamed:@"default_head"]];
 	}
 }
 

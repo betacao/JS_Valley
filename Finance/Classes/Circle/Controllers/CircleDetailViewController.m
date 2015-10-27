@@ -245,7 +245,7 @@
         self.btnDelete.hidden = YES;
     }
     
-    [self.imageHeader updateHeaderView:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,obj.potname] placeholderImage:[UIImage imageNamed:@"默认头像"]];
+    [self.imageHeader updateHeaderView:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,obj.potname] placeholderImage:[UIImage imageNamed:@"default_head"]];
     [self.imageHeader updateStatus:[obj.userstatus isEqualToString:@"true"] ? YES : NO];
     CGRect frame = self.imageHeader.frame;
     frame.origin.x *= XFACTOR;
@@ -350,7 +350,7 @@
             CGRect rect = CGRectMake((praiseWidth+PRAISE_SEPWIDTH) * i , (CGRectGetHeight(praiseRect) - praiseWidth) / 2.0f, praiseWidth, praiseWidth);
             UIImageView *head = [[UIImageView alloc] initWithFrame:rect];
             head.tag = i + 1000;
-            [head sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,obj.ppotname]] placeholderImage:[UIImage imageNamed:@"默认头像"]];
+            [head sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,obj.ppotname]] placeholderImage:[UIImage imageNamed:@"default_head"]];
             head.userInteractionEnabled = YES;
             DDTapGestureRecognizer *ges = [[DDTapGestureRecognizer alloc] initWithTarget:self action:@selector(pushSome:)];
             ges.tag = i + 1000;

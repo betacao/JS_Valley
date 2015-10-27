@@ -51,7 +51,7 @@
     self.lblCompany.text = company;
     uid = obj.uid;
     
-    [self.imageHeader updateHeaderView:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,obj.headImageUrl] placeholderImage:[UIImage imageNamed:@"默认头像"]];
+    [self.imageHeader updateHeaderView:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,obj.headImageUrl] placeholderImage:[UIImage imageNamed:@"default_head"]];
     [self.imageHeader updateStatus:[obj.userStatus isEqualToString:@"true"]?YES:NO];
     
     self.onceImg.hidden = NO;

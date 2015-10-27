@@ -97,7 +97,7 @@ const CGFloat kOtherRecommendCellHeight = 57.0f;
         }
         if(index == 0){
             view = self.topView;
-            [self.topImageView sd_setImageWithURL:[NSURL URLWithString:obj.headimg] placeholderImage:[UIImage imageNamed:@"默认头像.png"]];
+            [self.topImageView sd_setImageWithURL:[NSURL URLWithString:obj.headimg] placeholderImage:[UIImage imageNamed:@"default_head.png"]];
             self.topNameLabel.text = obj.username;
             self.topCompantyLabel.text = obj.company;
             self.topDetailLabel.text = detailString;
@@ -121,7 +121,7 @@ const CGFloat kOtherRecommendCellHeight = 57.0f;
             
         } else if (index == 1){
             view = self.middleView;
-            [self.middleImageView sd_setImageWithURL:[NSURL URLWithString:obj.headimg] placeholderImage:[UIImage imageNamed:@"默认头像.png"]];
+            [self.middleImageView sd_setImageWithURL:[NSURL URLWithString:obj.headimg] placeholderImage:[UIImage imageNamed:@"default_head.png"]];
             self.middleNameLabel.text = obj.username;
             self.middleCompantyLabel.text = obj.company;
             self.middleDetailLabel.text = detailString;
@@ -146,7 +146,7 @@ const CGFloat kOtherRecommendCellHeight = 57.0f;
             
         } else{
             view = self.bottomView;
-            [self.bottomImageView sd_setImageWithURL:[NSURL URLWithString:obj.headimg] placeholderImage:[UIImage imageNamed:@"默认头像.png"]];
+            [self.bottomImageView sd_setImageWithURL:[NSURL URLWithString:obj.headimg] placeholderImage:[UIImage imageNamed:@"default_head.png"]];
             self.bottomNameLabel.text = obj.username;
             self.bottomCompantyLabel.text = obj.company;
             self.bottomDetailLabel.text = detailString;

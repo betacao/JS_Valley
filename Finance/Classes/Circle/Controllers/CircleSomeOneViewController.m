@@ -148,7 +148,7 @@
 }
 -(void)loadUI
 {
-    [self.imageHeader sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,self.potname]] placeholderImage:[UIImage imageNamed:@"默认头像"]];
+    [self.imageHeader sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,self.potname]] placeholderImage:[UIImage imageNamed:@"default_head"]];
     self.lblCompany.text = self.titles;
     self.comPanyName.text = self.company;
     

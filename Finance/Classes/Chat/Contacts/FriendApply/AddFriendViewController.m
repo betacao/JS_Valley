@@ -133,7 +133,7 @@
         cell = [[AddFriendCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     
-    cell.imageView.image = [UIImage imageNamed:@"默认头像"];
+    cell.imageView.image = [UIImage imageNamed:@"default_head"];
     cell.textLabel.text = [self.dataSource objectAtIndex:indexPath.row];
     
     return cell;

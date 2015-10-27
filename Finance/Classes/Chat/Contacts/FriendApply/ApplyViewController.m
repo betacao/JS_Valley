@@ -131,20 +131,20 @@ static ApplyViewController *controller = nil;
             ApplyStyle applyStyle = [entity.style intValue];
             if (applyStyle == ApplyStyleGroupInvitation) {
                 cell.titleLabel.text = entity.applicantUsername;//NSLocalizedString(@"title.groupApply", @"Group Notification");
-                cell.headerImageView.image = [UIImage imageNamed:@"默认头像"];
+                cell.headerImageView.image = [UIImage imageNamed:@"default_head"];
                 
                 cell.contentLabel.text = [NSString stringWithFormat:@"邀请加入您加入群组"];
             }
             else if (applyStyle == ApplyStyleJoinGroup)
             {
                 cell.titleLabel.text = entity.applicantUsername;//NSLocalizedString(@"title.groupApply", @"Group Notification");
-                cell.headerImageView.image = [UIImage imageNamed:@"默认头像"];
+                cell.headerImageView.image = [UIImage imageNamed:@"default_head"];
                 
                 cell.contentLabel.text = [NSString stringWithFormat:@"申请加入%@",entity.groupSubject];
             }
             else if(applyStyle == ApplyStyleFriend){
                 cell.titleLabel.text = entity.applicantUsername;
-                cell.headerImageView.image = [UIImage imageNamed:@"默认头像"];
+                cell.headerImageView.image = [UIImage imageNamed:@"default_head"];
                 cell.contentLabel.text=entity.reason;
             }
         }

@@ -15,7 +15,7 @@
 }
 -(void)loadDatasWithObj:(RecmdFriendObj *)obj
 {
-    [_imageHeader sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,obj.username]] placeholderImage:[UIImage imageNamed:@"默认头像"]];
+    [_imageHeader sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,obj.username]] placeholderImage:[UIImage imageNamed:@"default_head"]];
     if ([obj.flag isEqualToString:@"attention"])
     {
         [_btnAttention setImage:[UIImage imageNamed:@"已关注按钮"] forState:UIControlStateNormal] ;

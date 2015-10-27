@@ -161,7 +161,7 @@
                 NSString *username = [_group.bans objectAtIndex:index];
                 ContactView *contactView = [[ContactView alloc] initWithFrame:CGRectMake(j * kContactSize, i * kContactSize, kContactSize, kContactSize)];
                 contactView.index = i * kColOfRow + j;
-                contactView.image = [UIImage imageNamed:@"默认头像"];
+                contactView.image = [UIImage imageNamed:@"default_head"];
                 contactView.remark = username;
                 if (![username isEqualToString:loginUsername]) {
                     contactView.editing = _isEditing;

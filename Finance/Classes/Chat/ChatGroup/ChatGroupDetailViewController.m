@@ -430,13 +430,13 @@
                 //如果是自己
                 if([userID isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID]]){
                     contactView.remark=[[NSUserDefaults standardUserDefaults] objectForKey:KEY_USER_NAME];
-                    [contactView.imageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,[[NSUserDefaults standardUserDefaults] objectForKey:KEY_HEAD_IMAGE]]] placeholderImage:[UIImage imageNamed:@"默认头像"]];
+                    [contactView.imageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,[[NSUserDefaults standardUserDefaults] objectForKey:KEY_HEAD_IMAGE]]] placeholderImage:[UIImage imageNamed:@"default_head"]];
                 } else{
                     [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttp,@"user",@"personaluser"] parameters:@{@"uid":userID} success:^(MOCHTTPResponse *response){
-                        [contactView.imageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,[response.dataDictionary valueForKey:@"head_img"]]] placeholderImage:[UIImage imageNamed:@"默认头像"]];
+                        [contactView.imageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,[response.dataDictionary valueForKey:@"head_img"]]] placeholderImage:[UIImage imageNamed:@"default_head"]];
                         contactView.remark = [response.dataDictionary valueForKey:@"name"];
                     } failed:^(MOCHTTPResponse *response){
-                        contactView.image = [UIImage imageNamed:@"默认头像"];
+                        contactView.image = [UIImage imageNamed:@"default_head"];
                         contactView.remark = userID;
                     }];
                 }

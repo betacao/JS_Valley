@@ -849,8 +849,6 @@
 		B09BF76C1B7C6C1F008260B3 /* 2度@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = B09BF7621B7C6C1F008260B3 /* 2度@3x.png */; };
 		B09BF76D1B7C6C1F008260B3 /* 4@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B09BF7631B7C6C1F008260B3 /* 4@2x.png */; };
 		B09BF76E1B7C6C1F008260B3 /* 4@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = B09BF7641B7C6C1F008260B3 /* 4@3x.png */; };
-		B09BF76F1B7C6C1F008260B3 /* 默认头像@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B09BF7651B7C6C1F008260B3 /* 默认头像@2x.png */; };
-		B09BF7701B7C6C1F008260B3 /* 默认头像@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = B09BF7661B7C6C1F008260B3 /* 默认头像@3x.png */; };
 		B09BF7711B7C6C1F008260B3 /* 邀请@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B09BF7671B7C6C1F008260B3 /* 邀请@2x.png */; };
 		B09BF7721B7C6C1F008260B3 /* 邀请@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = B09BF7681B7C6C1F008260B3 /* 邀请@3x.png */; };
 		B0BAA36B1B69EAF30036C367 /* CCLocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B0BAA36A1B69EAF30036C367 /* CCLocationManager.m */; };
@@ -2046,8 +2044,6 @@
 		B09BF7621B7C6C1F008260B3 /* 2度@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "2度@3x.png"; sourceTree = "<group>"; };
 		B09BF7631B7C6C1F008260B3 /* 4@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "4@2x.png"; sourceTree = "<group>"; };
 		B09BF7641B7C6C1F008260B3 /* 4@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "4@3x.png"; sourceTree = "<group>"; };
-		B09BF7651B7C6C1F008260B3 /* 默认头像@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "默认头像@2x.png"; sourceTree = "<group>"; };
-		B09BF7661B7C6C1F008260B3 /* 默认头像@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "默认头像@3x.png"; sourceTree = "<group>"; };
 		B09BF7671B7C6C1F008260B3 /* 邀请@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "邀请@2x.png"; sourceTree = "<group>"; };
 		B09BF7681B7C6C1F008260B3 /* 邀请@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "邀请@3x.png"; sourceTree = "<group>"; };
 		B0BAA3691B69EAF30036C367 /* CCLocationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLocationManager.h; sourceTree = "<group>"; };
@@ -4450,8 +4446,6 @@
 				B09BF7621B7C6C1F008260B3 /* 2度@3x.png */,
 				B09BF7631B7C6C1F008260B3 /* 4@2x.png */,
 				B09BF7641B7C6C1F008260B3 /* 4@3x.png */,
-				B09BF7651B7C6C1F008260B3 /* 默认头像@2x.png */,
-				B09BF7661B7C6C1F008260B3 /* 默认头像@3x.png */,
 				B09BF7671B7C6C1F008260B3 /* 邀请@2x.png */,
 				B09BF7681B7C6C1F008260B3 /* 邀请@3x.png */,
 			);
@@ -4927,7 +4921,6 @@
 				56F2D5101B5A5CB3008E2855 /* 邀请.png in Resources */,
 				408D8B481AF8618C0055810C /* chatBar_moreSelected@2x.png in Resources */,
 				B0CA7C7E1B7A021E0038BABB /* 添加图片1@3x.png in Resources */,
-				B09BF76F1B7C6C1F008260B3 /* 默认头像@2x.png in Resources */,
 				61E83D691AF7C78E00703651 /* 圈子-默认@3x.png in Resources */,
 				B09BF7691B7C6C1F008260B3 /* 1度@2x.png in Resources */,
 				610BC8221AFBC76B001F07EC /* default_image.png in Resources */,
@@ -5248,7 +5241,6 @@
 				614AD1AE1AD7AC4D00DDF43E /* LoginViewController.xib in Resources */,
 				408D8B381AF8618C0055810C /* chat_location_preview@2x.png in Resources */,
 				61E83D3F1AF7C78E00703651 /* 打新股@3x.png in Resources */,
-				B09BF7701B7C6C1F008260B3 /* 默认头像@3x.png in Resources */,
 				61E83D631AF7C78E00703651 /* 产品-选中@3x.png in Resources */,
 				61D62C0A1ADE3E85002DD395 /* fw_r2_c2@2x.png in Resources */,
 				408D8B791AF8618C0055810C /* chat_sender_audio_playing_002@2x.png in Resources */,
