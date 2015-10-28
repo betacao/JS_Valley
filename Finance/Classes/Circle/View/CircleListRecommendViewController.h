@@ -10,11 +10,12 @@
 #import "RecmdFriendObj.h"
 #import "CircleListDelegate.h"
 
+typedef void(^SHGRecommendBlock)(void);
 
 @interface CircleListRecommendViewController : UIViewController<CircleListDelegate>
 
 @property (assign ,nonatomic) id<CircleListDelegate> delegate;
-
+@property (copy, nonatomic) SHGRecommendBlock closeBlock;
 - (void)loadViewWithData:(NSArray *)dataArray cityCode:(NSString *)currentCity;
 
 - (CGFloat)heightOfView;

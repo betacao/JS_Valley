@@ -42,6 +42,8 @@ const CGFloat kOtherRecommendCellHeight = 57.0f;
 @property (weak, nonatomic) IBOutlet UIView *bottomBreakLine;
 @property (weak, nonatomic) IBOutlet UIButton *bottomFocusButton;
 
+@property (weak, nonatomic) IBOutlet UIButton *closeButton;//右上角的删除按钮，看不到而已
+
 @property (assign, nonatomic) NSInteger arrayCount;
 @property (weak, nonatomic) NSArray *dataArray;
 @property (strong, nonatomic) NSString *currentCity;
@@ -199,6 +201,13 @@ const CGFloat kOtherRecommendCellHeight = 57.0f;
         [self.delegate attentionClicked:[self.dataArray objectAtIndex:index]];
     }
     
+}
+
+- (IBAction)didClickCloseButton:(id)sender
+{
+    if(self.closeBlock){
+        self.closeBlock();
+    }
 }
 
 - (void)didTapHeaderView:(DDTapGestureRecognizer *)recognizer

@@ -14,6 +14,7 @@
                 <outlet property="bottomImageView" destination="3iI-Mr-1sR" id="TAh-UW-EEA"/>
                 <outlet property="bottomNameLabel" destination="MqX-hw-yNJ" id="GQY-hJ-Pmj"/>
                 <outlet property="bottomView" destination="Ait-oG-sDE" id="wnj-oJ-uC8"/>
+                <outlet property="closeButton" destination="brb-eU-S5a" id="nKL-Wi-8PP"/>
                 <outlet property="middleBreakLine" destination="kaw-Up-J8a" id="i1g-ym-dLi"/>
                 <outlet property="middleCompantyLabel" destination="jv6-NS-g75" id="xQR-xO-Jgt"/>
                 <outlet property="middleDetailLabel" destination="49c-Rs-cvq" id="cJJ-zc-c0o"/>
@@ -69,7 +70,7 @@
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="mvB-Vl-SMg">
-                                    <rect key="frame" x="140" y="13" width="90" height="12"/>
+                                    <rect key="frame" x="140" y="16" width="90" height="12"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <animations/>
                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
@@ -85,7 +86,7 @@
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="IcB-CZ-TWg">
-                                    <rect key="frame" x="269" y="13" width="37" height="16"/>
+                                    <rect key="frame" x="269" y="12" width="37" height="16"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                                     <animations/>
                                     <state key="normal" image="关注14">
@@ -116,6 +117,14 @@
                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                             <animations/>
                         </imageView>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="brb-eU-S5a">
+                            <rect key="frame" x="304" y="0.0" width="16" height="16"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                            <animations/>
+                            <connections>
+                                <action selector="didClickCloseButton:" destination="-1" eventType="touchUpInside" id="gY6-aa-mw3"/>
+                            </connections>
+                        </button>
                     </subviews>
                     <animations/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -129,7 +138,7 @@
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="tO1-j2-adn">
-                                    <rect key="frame" x="269" y="13" width="37" height="16"/>
+                                    <rect key="frame" x="269" y="12" width="37" height="16"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                                     <animations/>
                                     <state key="normal" image="关注14">
@@ -161,7 +170,7 @@
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="jv6-NS-g75">
-                                    <rect key="frame" x="140" y="13" width="90" height="12"/>
+                                    <rect key="frame" x="140" y="16" width="90" height="12"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <animations/>
                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
@@ -218,7 +227,7 @@
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Vvd-Ul-gs8">
-                                    <rect key="frame" x="269" y="13" width="37" height="16"/>
+                                    <rect key="frame" x="269" y="12" width="37" height="16"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                                     <animations/>
                                     <state key="normal" image="关注14">
@@ -229,7 +238,7 @@
                                     </connections>
                                 </button>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="aTA-SK-oxl">
-                                    <rect key="frame" x="140" y="13" width="90" height="12"/>
+                                    <rect key="frame" x="140" y="16" width="90" height="12"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <animations/>
                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
