@@ -279,6 +279,7 @@ const CGFloat kAdButtomMargin = 20.0f;
         }
     }
 }
+
 - (void)requestFirst
 {
     [self requestDataWithTarget:@"first" time:@""];
@@ -354,22 +355,39 @@ const CGFloat kAdButtomMargin = 20.0f;
 {
     [Hud showLoadingWithMessage:@"加载中"];
     self.isRefreshing = YES;
+    NSDictionary *userTags = [SHGGloble sharedGloble].maxUserTags;
+
     if ([target isEqualToString:@"first"]){
         [self.listTable.footer resetNoMoreData];
         hasDataFinished = NO;
+    } else if([target isEqualToString:@"load"]){
+        userTags = [SHGGloble sharedGloble].minUserTags;
     }
 
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
-    NSDictionary *userTags = [SHGGloble sharedGloble].userTags;
     NSInteger rid = [time integerValue];
     NSDictionary *param = @{@"uid":uid, @"type":self.circleType, @"target":target, @"rid":@(rid), @"num": rRequestNum, @"tagIds" : userTags};
 
     __weak typeof(self) weakSelf = self;
     [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttpCircle,circleNew] class:[CircleListObj class] parameters:param success:^(MOCHTTPResponse *response){
         weakSelf.isRefreshing = NO;
-        if([response.dataDictionary objectForKey:@"tagids"]){
-            [SHGGloble sharedGloble].userTags = [response.dataDictionary objectForKey:@"tagids"];
-            NSLog(@"XXXXXXXXXXXXX%@",[response.dataDictionary objectForKey:@"tagids"]);
+        if([target isEqualToString:@"first"]){
+            if([response.dataDictionary objectForKey:@"tagids"]){
+                //大小统一
+                [SHGGloble sharedGloble].maxUserTags = [response.dataDictionary objectForKey:@"tagids"];
+                [SHGGloble sharedGloble].minUserTags = [response.dataDictionary objectForKey:@"tagids"];
+                NSLog(@"XXXXXXXXXXXXX%@",[response.dataDictionary objectForKey:@"tagids"]);
+            }
+        } else if ([target isEqualToString:@"refresh"]){
+            if([response.dataDictionary objectForKey:@"tagids"]){
+                [SHGGloble sharedGloble].maxUserTags = [response.dataDictionary objectForKey:@"tagids"];
+                NSLog(@"XXXXXXXXXXXXX%@",[response.dataDictionary objectForKey:@"tagids"]);
+            }
+        } else{
+            if([response.dataDictionary objectForKey:@"tagids"]){
+                [SHGGloble sharedGloble].minUserTags = [response.dataDictionary objectForKey:@"tagids"];
+                NSLog(@"XXXXXXXXXXXXX%@",[response.dataDictionary objectForKey:@"tagids"]);
+            }
         }
         [weakSelf assembleDictionary:response.dataDictionary target:target];
 
@@ -421,6 +439,7 @@ const CGFloat kAdButtomMargin = 20.0f;
         if (normalArray.count > 0){
             for (NSInteger i = normalArray.count - 1; i >= 0; i--){
                 CircleListObj *obj = [normalArray objectAtIndex:i];
+                NSLog(@"%@",obj.rid);
                 [self.listArray insertObject:obj atIndex:0];
             }
             //总数据
@@ -438,6 +457,9 @@ const CGFloat kAdButtomMargin = 20.0f;
         }
     } else if ([target isEqualToString:@"load"]){
         [self.listArray addObjectsFromArray:normalArray];
+        for(CircleListObj *obj in normalArray){
+             NSLog(@"%@",obj.rid);
+        }
         [self.dataArr addObjectsFromArray:normalArray];
         if (IsArrEmpty(normalArray)){
             hasDataFinished = YES;
@@ -545,7 +567,7 @@ const CGFloat kAdButtomMargin = 20.0f;
     NSInteger i = 0;
     CircleListObj *obj = self.dataArr[i];
     while ([obj.postType isEqualToString:@"ad"]){
-        i ++;
+        i++;
         obj = self.dataArr[i];
         if(![obj isKindOfClass:[CircleListObj class]]){
             i++;

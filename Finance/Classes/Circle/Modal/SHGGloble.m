@@ -129,21 +129,22 @@
 {
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
     NSString *path = [NSString stringWithFormat:kFilePath, uid];
-    self.userTags = [NSKeyedUnarchiver unarchiveObjectWithFile:path];
+    self.maxUserTags = [NSKeyedUnarchiver unarchiveObjectWithFile:path];
     if(!uid || uid.length == 0){
         //添加一个通知 观察uid的变化
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userDefaultsDidChange:) name:NSUserDefaultsDidChangeNotification object:nil];
         return;
     }
-    NSDictionary *param = @{@"uid":uid, @"type":@"all", @"target":@"first", @"rid":@(0), @"num": rRequestNum, @"tagIds": self.userTags ? self.userTags : @{}};
+    NSDictionary *param = @{@"uid":uid, @"type":@"all", @"target":@"first", @"rid":@(0), @"num": rRequestNum, @"tagIds": self.maxUserTags ? self.maxUserTags : @{}};
     
     __weak typeof(self) weakSelf = self;
     [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttpCircle,circleNew] class:[CircleListObj class] parameters:param success:^(MOCHTTPResponse *response){
         NSLog(@"首页预加载数据成功");
 
         NSLog(@"YYYYYYYYYYYYY%@",[response.dataDictionary objectForKey:@"tagids"]);
-        weakSelf.userTags = [response.dataDictionary objectForKey:@"tagids"];
-
+        //刚进入首页最大和最小是相同的
+        weakSelf.maxUserTags = [response.dataDictionary objectForKey:@"tagids"];
+        weakSelf.minUserTags = [response.dataDictionary objectForKey:@"tagids"];
         NSArray *array = [response.dataDictionary objectForKey:@"normalpostlist"];
         array = [self parseServerJsonArrayToJSONModel:array class:[CircleListObj class]];
         [weakSelf.homeListArray removeAllObjects];

@@ -386,7 +386,7 @@
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
     [GeTuiSdk enterBackground];
-    NSDictionary *dictionary = [SHGGloble sharedGloble].userTags;
+    NSDictionary *dictionary = [SHGGloble sharedGloble].maxUserTags;
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
     if(uid && uid.length > 0 && dictionary){
         NSString *path = [NSString stringWithFormat:kFilePath, uid];
