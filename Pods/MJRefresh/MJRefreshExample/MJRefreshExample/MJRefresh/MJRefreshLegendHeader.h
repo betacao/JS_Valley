@@ -10,5 +10,5 @@
 #import "MJRefreshHeader.h"
 
 @interface MJRefreshLegendHeader : MJRefreshHeader
-
+- (instancetype)initWithFrame:(CGRect)frame title:(NSDictionary *)title;
 @end

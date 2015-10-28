@@ -17,7 +17,8 @@
 //推广数据
 @property (strong, nonatomic) NSMutableArray *adArray;
 
--(void)addHeaderRefresh:(UITableView *)tableView headerRefesh:(BOOL)isHeaderFresh  andFooter:(BOOL)isFooterRefresh;
+- (void)addHeaderRefresh:(UITableView *)tableView headerRefesh:(BOOL)isHeaderFresh  andFooter:(BOOL)isFooterRefresh;
+- (void)addHeaderRefresh:(UITableView *)tableView headerRefesh:(BOOL)isHeaderFresh headerTitle:(NSDictionary *)headerTitle andFooter:(BOOL)isFooterRefresh footerTitle:(NSDictionary *)footerTitle;
 
 
 @end

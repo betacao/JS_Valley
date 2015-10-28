@@ -18,6 +18,11 @@
 
 @implementation MJRefreshLegendHeader
 #pragma mark - 懒加载
+
+- (instancetype)initWithFrame:(CGRect)frame title:(NSDictionary *)title
+{
+    return [super initWithFrame:frame title:title];
+}
 - (UIImageView *)arrowImage
 {
     if (!_arrowImage) {

@@ -46,13 +46,16 @@
 
 - (void)addHeaderRefresh:(UITableView *)tableView headerRefesh:(BOOL)isHeaderFresh  andFooter:(BOOL)isFooterRefresh
 {
+    [self addHeaderRefresh:tableView headerRefesh:isHeaderFresh headerTitle:nil andFooter:isFooterRefresh footerTitle:nil];
+}
+
+- (void)addHeaderRefresh:(UITableView *)tableView headerRefesh:(BOOL)isHeaderFresh headerTitle:(NSDictionary *)headerTitle andFooter:(BOOL)isFooterRefresh footerTitle:(NSDictionary *)footerTitle
+{
     tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    if (isHeaderFresh)
-    {
-        [tableView addLegendHeaderWithRefreshingTarget:self refreshingAction:@selector(refreshHeader)];
+    if (isHeaderFresh){
+        [tableView addLegendHeaderWithRefreshingTarget:self refreshingAction:@selector(refreshHeader) title:headerTitle];
     }
-    if (isFooterRefresh)
-    {
+    if (isFooterRefresh){
         [tableView addLegendFooterWithRefreshingTarget:self refreshingAction:@selector(refreshFooter)];
     }
 }

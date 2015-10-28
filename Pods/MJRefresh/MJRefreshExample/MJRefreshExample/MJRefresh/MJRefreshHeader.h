@@ -9,6 +9,7 @@
 
 #import "MJRefreshComponent.h"
 
+
 // 下拉刷新控件的状态
 typedef enum {
     /** 普通闲置状态 */
@@ -44,4 +45,6 @@ typedef enum {
 #pragma mark - 交给子类重写
 /** 下拉的百分比(交给子类重写) */
 @property (assign, nonatomic) CGFloat pullingPercent;
+
+- (instancetype)initWithFrame:(CGRect)frame title:(NSDictionary *)dictionary;
 @end

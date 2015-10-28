@@ -26,17 +26,29 @@
 
 - (MJRefreshLegendHeader *)addLegendHeaderWithRefreshingTarget:(id)target refreshingAction:(SEL)action dateKey:(NSString *)dateKey
 {
-    MJRefreshLegendHeader *header = [self addLegendHeader];
+    return [self addLegendHeaderWithRefreshingTarget:target refreshingAction:action dateKey:dateKey title:nil];
+}
+
+- (MJRefreshLegendHeader *)addLegendHeaderWithRefreshingTarget:(id)target refreshingAction:(SEL)action dateKey:(NSString *)dateKey title:(NSDictionary *)title
+{
+    MJRefreshLegendHeader *header = [self addLegendHeader:title];
     header.refreshingTarget = target;
     header.refreshingAction = action;
     header.dateKey = dateKey;
     return header;
 }
 
+
 - (MJRefreshLegendHeader *)addLegendHeaderWithRefreshingTarget:(id)target refreshingAction:(SEL)action
 {
-    return [self addLegendHeaderWithRefreshingTarget:target refreshingAction:action dateKey:nil];
+    return [self addLegendHeaderWithRefreshingTarget:target refreshingAction:action title:nil];
 }
+
+- (MJRefreshLegendHeader *)addLegendHeaderWithRefreshingTarget:(id)target refreshingAction:(SEL)action title:(NSDictionary *)titles
+{
+    return [self addLegendHeaderWithRefreshingTarget:target refreshingAction:action dateKey:nil title:titles];
+}
+
 
 - (MJRefreshLegendHeader *)addLegendHeaderWithRefreshingBlock:(void (^)())block
 {
@@ -45,9 +57,13 @@
 
 - (MJRefreshLegendHeader *)addLegendHeader
 {
-    MJRefreshLegendHeader *header = [[MJRefreshLegendHeader alloc] init];
+    return [self addLegendHeader:nil];
+}
+- (MJRefreshLegendHeader *)addLegendHeader:(NSDictionary *)title
+{
+    MJRefreshLegendHeader *header = [[MJRefreshLegendHeader alloc] initWithFrame:CGRectZero title:title];
     self.header = header;
-    
+
     return header;
 }
 

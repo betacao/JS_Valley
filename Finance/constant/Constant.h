@@ -113,5 +113,7 @@ typedef void (^BBBasicBlock)(void);
 #define kPathDocument               [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0]
 #define kFilePath   [kPathDocument stringByAppendingPathComponent:@"%@"]
 
-
+#define kRefreshStateIdle       @"stateIdle"
+#define kRefreshStatePulling    @"statePulling"
+#define kRefreshStateRefreshing @"stateRefreshing"
 #endif

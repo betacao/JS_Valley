@@ -60,7 +60,7 @@ const CGFloat kAdButtomMargin = 20.0f;
 @property (assign, nonatomic) BOOL isRefreshing;
 @property (strong, nonatomic) NSString *currentCity;
 @property (strong, nonatomic) NSString *circleType;
-
+@property (assign, nonatomic) BOOL shouldDisplayRecommend;
 @end
 
 @implementation CircleListViewController
@@ -75,7 +75,7 @@ const CGFloat kAdButtomMargin = 20.0f;
 - (void)viewDidLoad {
     [super viewDidLoad];
     [CommonMethod setExtraCellLineHidden:self.listTable];
-    [self addHeaderRefresh:self.listTable headerRefesh:YES andFooter:YES];
+    [self addHeaderRefresh:self.listTable headerRefesh:YES headerTitle:@{kRefreshStateIdle:@"下拉可以刷新", kRefreshStatePulling:@"释放后查看最新动态", kRefreshStateRefreshing:@"正在努力加载中"} andFooter:YES footerTitle:nil];
     self.listTable.separatorStyle = NO;
     //处理tableView左边空白
     if ([self.listTable respondsToSelector:@selector(setSeparatorInset:)]) {
@@ -88,6 +88,7 @@ const CGFloat kAdButtomMargin = 20.0f;
     self.hasRequestedRecomand = NO;
     self.hasLocated = NO;
     self.hasRequestedFirst = NO;
+    self.shouldDisplayRecommend = YES;
     
     self.circleType = @"all";
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshTable) name:@"aaa" object:nil];
@@ -155,9 +156,16 @@ const CGFloat kAdButtomMargin = 20.0f;
 
 - (CircleListRecommendViewController *)recommendViewController
 {
+    __weak typeof(self) weakSelf = self;
     if(!_recommendViewController){
         _recommendViewController = [[CircleListRecommendViewController alloc] initWithNibName:@"CircleListRecommendViewController" bundle:nil];
         _recommendViewController.delegate = self;
+        _recommendViewController.closeBlock = ^{
+            weakSelf.shouldDisplayRecommend = NO;
+            NSInteger index = [weakSelf.dataArr indexOfObject:weakSelf.recomandArray];
+            [weakSelf.dataArr removeObject:weakSelf.recomandArray];
+            [weakSelf.listTable deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:index inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
+        };
     }
     return _recommendViewController;
 }
@@ -191,12 +199,12 @@ const CGFloat kAdButtomMargin = 20.0f;
 
 -(void)requestAlermInfo
 {
-    if(!self.hasRequestedRecomand || !self.hasLocated){
-        return;
-    }
+//    if(!self.hasRequestedRecomand || !self.hasLocated){
+//        return;
+//    }
     NSString *uid = [[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID] stringValue];
-    NSDictionary *param = @{@"uid":uid, @"area":self.currentCity == nil?@"":self.currentCity};
-    
+//    NSDictionary *param = @{@"uid":uid, @"area":self.currentCity == nil?@"":self.currentCity};
+    NSDictionary *param = @{@"uid":uid, @"area":@"南京"};
     __weak typeof(self) weakSelf = self;
     [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/v1/recommended/friends/recommendedFriend",rBaseAddRessHttp] class:[RecmdFriendObj class] parameters:param success:^(MOCHTTPResponse *response){
         [weakSelf.recomandArray removeAllObjects];
@@ -216,11 +224,7 @@ const CGFloat kAdButtomMargin = 20.0f;
             [weakSelf.recomandArray addObject:obj];
         }
         if(weakSelf.recomandArray && weakSelf.recomandArray.count > 0){
-            if(weakSelf.dataArr.count > 4){
-                [weakSelf.dataArr insertObject:weakSelf.recomandArray atIndex:3];
-            } else{
-                [weakSelf.dataArr addObject:weakSelf.recomandArray];
-            }
+            [self insertRecomandArray];
             dispatch_async(dispatch_get_main_queue(), ^(){
                 [weakSelf.listTable reloadData];
             });
@@ -233,29 +237,29 @@ const CGFloat kAdButtomMargin = 20.0f;
     }];
 }
 
-- (void)getAllInfo
+- (void)insertRecomandArray
 {
-    __block __weak CircleListViewController *wself = self;
-    [[CCLocationManager shareLocation] getCity:^{
-        NSString *cityName = [SHGGloble sharedGloble].cityName;
-        if(cityName && cityName.length > 0){
-            self.currentCity = cityName;
-            NSLog(@"self.cityName = %@",self.currentCity);
-            wself.hasLocated = YES;
-            [wself requestAlermInfo];
+    if(self.shouldDisplayRecommend){
+        if(self.dataArr.count > 4){
+            [self.dataArr insertObject:self.recomandArray atIndex:3];
+        } else{
+            [self.dataArr addObject:self.recomandArray];
         }
-    }];
-    
+    }
 }
 
-
--(NSArray *)loadCityCode
+- (void)getAllInfo
 {
-    NSError *error;
-    NSString *path = [[NSBundle mainBundle] pathForResource:@"city_code" ofType:@"txt"];
-    NSString *textFileContents = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:&error];
-    NSArray *lines = [textFileContents componentsSeparatedByString:@"\n"];
-    return lines;
+//    __block __weak CircleListViewController *wself = self;
+//    [[CCLocationManager shareLocation] getCity:^{
+//        NSString *cityName = [SHGGloble sharedGloble].cityName;
+//        if(cityName && cityName.length > 0){
+//            self.currentCity = cityName;
+//            NSLog(@"self.cityName = %@",self.currentCity);
+//            wself.hasLocated = YES;
+//            [wself requestAlermInfo];
+//        }
+//    }];
 }
 
 -(void)smsShareSuccess:(NSNotification *)noti
@@ -435,6 +439,7 @@ const CGFloat kAdButtomMargin = 20.0f;
         }else{
             [self.dataArr addObjectsFromArray:self.adArray];
         }
+        [self insertRecomandArray];
     } else if ([target isEqualToString:@"refresh"]){
         if (normalArray.count > 0){
             for (NSInteger i = normalArray.count - 1; i >= 0; i--){
@@ -453,7 +458,11 @@ const CGFloat kAdButtomMargin = 20.0f;
             }else{
                 [self.dataArr addObjectsFromArray:self.adArray];
             }
+
+            [self insertRecomandArray];
             [self.newMessageNoticeView showWithText:[NSString stringWithFormat:@"为你加载了%ld条新动态",(long)normalArray.count]];
+        } else{
+            [self.newMessageNoticeView showWithText:@"暂无新动态，休息一会儿"];
         }
     } else if ([target isEqualToString:@"load"]){
         [self.listArray addObjectsFromArray:normalArray];
@@ -750,7 +759,8 @@ const CGFloat kAdButtomMargin = 20.0f;
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.dataArr.count;
+    NSInteger count = self.dataArr.count;
+    return count;
 }
 
 #pragma mark =============  UITableView Delegate  =============
@@ -923,7 +933,6 @@ const CGFloat kAdButtomMargin = 20.0f;
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [self.listTable reloadData];
     [MobClick event:@"CircleListViewController" label:@"onClick"];
 }
 - (void)commentClicked:(CircleListObj *)obj

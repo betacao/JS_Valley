@@ -106,7 +106,7 @@
 {
     [NSObject cancelPreviousPerformRequestsWithTarget:self];
     if(self.noticeType == SHGNoticeTypeNewMessage){
-        [self performSelector:@selector(hide) withObject:nil afterDelay:3.0f];
+        [self performSelector:@selector(hide) withObject:nil afterDelay:1.0f];
     }
     self.noticeLabel.text = string;
     [self.superView.window addSubview:self];

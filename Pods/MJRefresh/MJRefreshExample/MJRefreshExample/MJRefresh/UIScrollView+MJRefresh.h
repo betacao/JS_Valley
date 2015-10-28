@@ -43,6 +43,16 @@
  * @param action 进入刷新状态就会自动调用target对象的action方法
  */
 - (MJRefreshLegendHeader *)addLegendHeaderWithRefreshingTarget:(id)target refreshingAction:(SEL)action;
+
+/**
+ @brief  添加一个传统的下拉刷新控件
+
+ @param target 进入刷新状态就会自动调用target对象的action方法
+ @param action 进入刷新状态就会自动调用target对象的action方法
+ @param titles 自定义的名称
+
+ */
+- (MJRefreshLegendHeader *)addLegendHeaderWithRefreshingTarget:(id)target refreshingAction:(SEL)action title:(NSDictionary *)titles;
 /**
  * 添加一个传统的下拉刷新控件
  *

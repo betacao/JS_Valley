@@ -13,6 +13,10 @@
 #import <objc/message.h>
 #import "UIScrollView+MJExtension.h"
 
+#define kRefreshStateIdle       @"stateIdle"
+#define kRefreshStatePulling    @"statePulling"
+#define kRefreshStateRefreshing @"stateRefreshing"
+
 @interface MJRefreshHeader()
 /** 显示上次刷新时间的标签 */
 @property (weak, nonatomic) UILabel *updatedTimeLabel;
@@ -58,17 +62,35 @@
 
 #pragma mark - 初始化方法
 - (instancetype)initWithFrame:(CGRect)frame {
+    return [self initWithFrame:frame title:nil];
+}
+
+- (instancetype)initWithFrame:(CGRect)frame title:(NSDictionary *)dictionary
+{
     if (self = [super initWithFrame:frame]) {
         // 设置默认的dateKey
         self.dateKey = MJRefreshHeaderUpdatedTimeKey;
-        
+
         // 设置为默认状态
         self.state = MJRefreshHeaderStateIdle;
-        
+        NSString *idleText = MJRefreshHeaderStateIdleText;
+        NSString *pullingText = MJRefreshHeaderStatePullingText;
+        NSString *refreshingText = MJRefreshHeaderStateRefreshingText;
+        if(dictionary){
+            if([dictionary objectForKey:kRefreshStateIdle]){
+                idleText = [dictionary objectForKey:kRefreshStateIdle];
+            }
+            if([dictionary objectForKey:kRefreshStatePulling]){
+                pullingText = [dictionary objectForKey:kRefreshStatePulling];
+            }
+            if([dictionary objectForKey:kRefreshStateRefreshing]){
+                refreshingText = [dictionary objectForKey:kRefreshStateRefreshing];
+            }
+        }
         // 初始化文字
-        [self setTitle:MJRefreshHeaderStateIdleText forState:MJRefreshHeaderStateIdle];
-        [self setTitle:MJRefreshHeaderStatePullingText forState:MJRefreshHeaderStatePulling];
-        [self setTitle:MJRefreshHeaderStateRefreshingText forState:MJRefreshHeaderStateRefreshing];
+        [self setTitle:idleText forState:MJRefreshHeaderStateIdle];
+        [self setTitle:pullingText forState:MJRefreshHeaderStatePulling];
+        [self setTitle:refreshingText forState:MJRefreshHeaderStateRefreshing];
     }
     return self;
 }
