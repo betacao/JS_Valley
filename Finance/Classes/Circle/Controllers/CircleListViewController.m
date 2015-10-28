@@ -29,7 +29,6 @@ const CGFloat kAdButtomMargin = 20.0f;
 
 @interface CircleListViewController ()<MLEmojiLabelDelegate,CLLocationManagerDelegate,CircleActionDelegate,SHGNoticeDelegate>
 {
-    NSString *_circleType;
     NSString *_target;
     NSInteger photoIndex;
     BOOL hasDataFinished;
@@ -56,11 +55,11 @@ const CGFloat kAdButtomMargin = 20.0f;
 
 @property (strong, nonatomic) CircleListRecommendViewController *recommendViewController;
 
-@property (assign, nonatomic) NSInteger totalNum;
 @property (strong, nonatomic) SHGNoticeView *newFriendNoticeView;
 @property (strong, nonatomic) SHGNoticeView *newMessageNoticeView;
 @property (assign, nonatomic) BOOL isRefreshing;
 @property (strong, nonatomic) NSString *currentCity;
+@property (strong, nonatomic) NSString *circleType;
 
 @end
 
@@ -90,7 +89,7 @@ const CGFloat kAdButtomMargin = 20.0f;
     self.hasLocated = NO;
     self.hasRequestedFirst = NO;
     
-    _circleType = @"all";
+    self.circleType = @"all";
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshTable) name:@"aaa" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshData) name:NOTIFI_SENDPOST object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(smsShareSuccess:) name:NOTIFI_CHANGE_SHARE_TO_SMSSUCCESS object:nil];
@@ -112,18 +111,25 @@ const CGFloat kAdButtomMargin = 20.0f;
     if(!self.hasRequestedFirst){
         self.hasRequestedFirst = YES;
         [Hud showLoadingWithMessage:@"加载中"];
-        
+
         __weak typeof(self) weakSelf = self;
-        [SHGGloble sharedGloble].CompletionBlock = ^(NSArray *array){
+        [SHGGloble sharedGloble].CompletionBlock = ^(NSArray *allArray, NSArray *normalArray, NSArray *adArray){
             [Hud hideHud];
-            if(array && [array count] > 0){
+            if(allArray && [allArray count] > 0){
                 if(!weakSelf.hasRequestedRecomand){
                     weakSelf.hasRequestedRecomand = YES;
                     [weakSelf requestAlermInfo];
                 }
+                //更新整体数据
                 [weakSelf.dataArr removeAllObjects];
-                [weakSelf.dataArr addObjectsFromArray:array];
-                
+                [weakSelf.dataArr addObjectsFromArray:allArray];
+                //更新normal数据
+                [weakSelf.listArray removeAllObjects];
+                [weakSelf.listArray addObjectsFromArray:normalArray];
+                //更新推广数据
+                [weakSelf.adArray removeAllObjects];
+                [weakSelf.adArray addObjectsFromArray:adArray];
+
                 [weakSelf.listTable.header endRefreshing];
                 [weakSelf.listTable.footer endRefreshing];
                 weakSelf.listTable.footer.hidden = NO;
@@ -273,7 +279,7 @@ const CGFloat kAdButtomMargin = 20.0f;
         }
     }
 }
--(void)requestFirst
+- (void)requestFirst
 {
     [self requestDataWithTarget:@"first" time:@""];
     
@@ -344,53 +350,28 @@ const CGFloat kAdButtomMargin = 20.0f;
     }];
 }
 
--(void)requestDataWithTarget:(NSString *)target time:(NSString *)time
+- (void)requestDataWithTarget:(NSString *)target time:(NSString *)time
 {
     [Hud showLoadingWithMessage:@"加载中"];
     self.isRefreshing = YES;
-    if ([target isEqualToString:@"first"])
-    {
+    if ([target isEqualToString:@"first"]){
         [self.listTable.footer resetNoMoreData];
         hasDataFinished = NO;
     }
-    self.totalNum = 0;
-    if ([_circleType isEqualToString:@"all"] && ![target isEqualToString:@"first"]){
-        for (CircleListObj *obj in self.dataArr){
-            if ([obj isKindOfClass:[CircleListObj class]] && [obj.postType isEqualToString:@"normal"]){
-                self.totalNum += 1;
-            }
-        }
-    }
 
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
-    NSInteger rid = [time intValue];
-    NSDictionary *param = @{@"uid":uid, @"type":_circleType, @"target":target, @"rid":@(rid), @"num": rRequestNum, @"total":@(self.totalNum)};
+    NSDictionary *userTags = [SHGGloble sharedGloble].userTags;
+    NSInteger rid = [time integerValue];
+    NSDictionary *param = @{@"uid":uid, @"type":self.circleType, @"target":target, @"rid":@(rid), @"num": rRequestNum, @"tagIds" : userTags};
 
     __weak typeof(self) weakSelf = self;
-    [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttpCircle,circleBak] class:[CircleListObj class] parameters:param success:^(MOCHTTPResponse *response){
+    [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttpCircle,circleNew] class:[CircleListObj class] parameters:param success:^(MOCHTTPResponse *response){
         weakSelf.isRefreshing = NO;
-        [self.newMessageNoticeView showWithText:@"为你加载了10条新动态"];
-        NSLog(@"==============%@",response.dataArray);
-        if ([target isEqualToString:@"first"]){
-            [weakSelf.dataArr removeAllObjects];
-            [weakSelf.dataArr addObjectsFromArray:response.dataArray];
-
-        } else if ([target isEqualToString:@"refresh"]){
-            if (response.dataArray.count > 0){
-                for (NSInteger i = response.dataArray.count-1; i >= 0; i --){
-                    CircleListObj *obj = response.dataArray[i];
-                    [weakSelf.dataArr insertObject:obj atIndex:0];
-                }
-            }
-        } else if ([target isEqualToString:@"load"]){
-            [weakSelf.dataArr addObjectsFromArray:response.dataArray];
-            if (IsArrEmpty(response.dataArray)){
-                hasDataFinished = YES;
-            }
-            else{
-                hasDataFinished = NO;
-            }
+        if([response.dataDictionary objectForKey:@"tagids"]){
+            [SHGGloble sharedGloble].userTags = [response.dataDictionary objectForKey:@"tagids"];
         }
+        [weakSelf assembleDictionary:response.dataDictionary target:target];
+
         [weakSelf.listTable.header endRefreshing];
         [weakSelf.listTable.footer endRefreshing];
         [Hud hideHud];
@@ -409,17 +390,72 @@ const CGFloat kAdButtomMargin = 20.0f;
 
     }];
 }
--(void)reloadTable
+
+- (void)assembleDictionary:(NSDictionary *)dictionary target:(NSString *)target
+{
+    //普通数据
+    NSArray *normalArray = [dictionary objectForKey:@"normalpostlist"];
+    normalArray = [[SHGGloble sharedGloble] parseServerJsonArrayToJSONModel:normalArray class:[CircleListObj class]];
+    //推广数据
+    NSArray *adArray = [dictionary objectForKey:@"adlist"];
+    adArray = [[SHGGloble sharedGloble] parseServerJsonArrayToJSONModel:adArray class:[CircleListObj class]];
+    if ([target isEqualToString:@"first"]){
+        [self.listArray removeAllObjects];
+        [self.listArray addObjectsFromArray:normalArray];
+
+        [self.adArray removeAllObjects];
+        [self.adArray addObjectsFromArray:adArray];
+        //总数据
+        [self.dataArr removeAllObjects];
+        [self.dataArr addObjectsFromArray:self.listArray];
+        if(self.listArray.count > 0){
+            for(CircleListObj *obj in self.adArray){
+                NSInteger index = [obj.displayPosition integerValue];
+                [self.dataArr insertObject:obj atIndex:index];
+            }
+        }else{
+            [self.dataArr addObjectsFromArray:self.adArray];
+        }
+    } else if ([target isEqualToString:@"refresh"]){
+        if (normalArray.count > 0){
+            for (NSInteger i = normalArray.count - 1; i >= 0; i--){
+                CircleListObj *obj = [normalArray objectAtIndex:i];
+                [self.listArray insertObject:obj atIndex:0];
+            }
+            //总数据
+            [self.dataArr removeAllObjects];
+            [self.dataArr addObjectsFromArray:self.listArray];
+            if(self.listArray.count > 0){
+                for(CircleListObj *obj in self.adArray){
+                    NSInteger index = [obj.displayPosition integerValue];
+                    [self.dataArr insertObject:obj atIndex:index];
+                }
+            }else{
+                [self.dataArr addObjectsFromArray:self.adArray];
+            }
+            [self.newMessageNoticeView showWithText:[NSString stringWithFormat:@"为你加载了%ld条新动态",(long)normalArray.count]];
+        }
+    } else if ([target isEqualToString:@"load"]){
+        [self.listArray addObjectsFromArray:normalArray];
+        [self.dataArr addObjectsFromArray:normalArray];
+        if (IsArrEmpty(normalArray)){
+            hasDataFinished = YES;
+        } else{
+            hasDataFinished = NO;
+        }
+    }
+}
+- (void)reloadTable
 {
     [self.listTable reloadData];
 }
 
--(void)endrefresh
+- (void)endrefresh
 {
     [self.listTable.footer endRefreshing];
 }
 
--(void)initUI
+- (void)initUI
 {
     segmentedControl = [[UISegmentedControl alloc] initWithItems: [NSArray arrayWithObjects:@"动态", @"已关注", nil]];
     segmentedControl.frame = CGRectMake(0, 50, 170, 26);
@@ -459,16 +495,13 @@ const CGFloat kAdButtomMargin = 20.0f;
 //titleView切换
 -(void)valueChange:(UISegmentedControl *)seg
 {
-    if (seg.selectedSegmentIndex == 0)
-    {
+    if (seg.selectedSegmentIndex == 0){
         NSLog(@"所有");
-        _circleType = @"all";
+        self.circleType = @"all";
         [self requestDataWithTarget:@"first" time:@""];
-    }
-    else
-    {
+    } else{
         NSLog(@"已关注");
-        _circleType = @"attention";
+        self.circleType = @"attention";
         [self requestDataWithTarget:@"first" time:@""];
     }
 }
@@ -480,11 +513,10 @@ const CGFloat kAdButtomMargin = 20.0f;
     if(self.isRefreshing){
         return;
     }
-    if (self.dataArr.count > 0)
-    {
-        int i = 0;
+    if (self.dataArr.count > 0){
+        NSInteger i = 0;
         CircleListObj *obj = self.dataArr[i];
-        while ([obj.postType isEqualToString:@"ad"]) {
+        while ([obj.postType isEqualToString:@"ad"]){
             i ++;
             obj = self.dataArr[i];
             if(![obj isKindOfClass:[CircleListObj class]]){
@@ -493,9 +525,7 @@ const CGFloat kAdButtomMargin = 20.0f;
             }
         }
         [self requestDataWithTarget:@"refresh" time:obj.rid];
-    }
-    else
-    {
+    } else{
         [self requestDataWithTarget:@"first" time:@""];
     }
     
@@ -515,21 +545,14 @@ const CGFloat kAdButtomMargin = 20.0f;
     _target = @"load";
     
     NSLog(@"refreshFooter");
-    if (self.dataArr.count > 0)
-    {
+    if (self.dataArr.count > 0){
         NSInteger i = self.dataArr.count -1;
         CircleListObj *obj = self.dataArr[i];
-        while ([obj.postType isEqualToString:@"ad"])
-        {
-            i --;
+        while (![obj.postType isEqualToString:@"normal"]){
+            i--;
             obj = self.dataArr[i];
         }
         [self requestDataWithTarget:@"load" time:obj.rid];
-    }
-    else
-    {
-        //[self requestDataWithTarget:@"first" time:@""];
-        
     }
     
 }
@@ -568,7 +591,7 @@ const CGFloat kAdButtomMargin = 20.0f;
     } else{
         CircleListObj *obj = self.dataArr[indexPath.row];
         NSLog(@"%@",obj.postType);
-        if ([obj.postType isEqualToString:@"normal"]){
+        if (![obj.postType isEqualToString:@"ad"]){
             if ([obj.status boolValue]){
                 NSString *cellIdentifier = @"circleListIdentifier";
                 CircleListTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
@@ -584,12 +607,8 @@ const CGFloat kAdButtomMargin = 20.0f;
                 mlLable.delegate = self;
                 return cell;
             }
-        }
-        
-        if ([obj.postType isEqualToString:@"ad"])
-        {
-            if ([obj.status boolValue])
-            {
+        } else{
+            if ([obj.status boolValue]){
                 NSString *cellIdentifier = @"circleListTwoIdentifier";
                 CircleListTwoTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
                 if (!cell){
@@ -685,21 +704,18 @@ const CGFloat kAdButtomMargin = 20.0f;
 {
     CircleListObj *obj =self.dataArr[indexPath.row];
     if([obj isKindOfClass:[CircleListObj class]]){
-        if ([obj.postType isEqualToString:@"normal"]){
+        if (![obj.postType isEqualToString:@"ad"]){
             if ([obj.status boolValue]){
                 obj.cellHeight = [obj fetchCellHeight];
                 return obj.cellHeight;
             }
-        }
-        if ([obj.postType isEqualToString:@"ad"]){
-            return kAdTableViewCellHeight;
         } else{
-            return 44.0f;
+            return kAdTableViewCellHeight;
         }
     } else{
         return [self.recommendViewController heightOfView];
     }
-    
+    return 44.0f;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -1165,7 +1181,7 @@ const CGFloat kAdButtomMargin = 20.0f;
             [[AFHTTPRequestOperationManager manager] DELETE:url parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject) {
                 NSString *code = [responseObject valueForKey:@"code"];
                 if ([code isEqualToString:@"000"]) {
-                    if ([_circleType isEqualToString:@"attention"]) {
+                    if ([self.circleType isEqualToString:@"attention"]) {
                         NSMutableArray *removeArr = [NSMutableArray array];
                         for (CircleListObj *cobj in self.dataArr) {
                             if ([cobj.userid isEqualToString:obj.userid] &&![cobj.userid isEqualToString:CHATID_MANAGER]) {

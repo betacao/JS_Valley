@@ -51,6 +51,7 @@
 @property (nonatomic,strong) NSString *userstatus;  //认证状态
 @property (nonatomic,strong) NSString *currcity; //城市
 @property (nonatomic,strong) NSString *feedhtml; //feed流链接
+@property (nonatomic,strong) NSString *displayPosition;//广告所在的位置
 -(CGFloat)fetchCellHeight;
 
 @end

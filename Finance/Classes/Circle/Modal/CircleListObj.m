@@ -172,7 +172,8 @@ const CGFloat kActionViewHeight = 34.0f;
               @"friendship":@"friendship",
               @"userstatus":@"userstatus",
               @"currcity":@"currcity",
-              @"feedhtml":@"feedhtml"
+              @"feedhtml":@"feedhtml",
+              @"displayPosition":@"displayPosition"
               };
 }
 

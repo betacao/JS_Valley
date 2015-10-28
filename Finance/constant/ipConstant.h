@@ -21,8 +21,9 @@
 //120.26.114.181:8080  生产
 
 #ifdef kSitTest
-#define rBaseAddRessHttp                @"http://120.26.114.154:8080/api"
+//#define rBaseAddRessHttp                @"http://120.26.114.154:8080/api"
 //#define rBaseAddRessHttp                @"http://192.168.1.116:8080/api"
+#define rBaseAddRessHttp                @"http://192.168.0.109:8080/api"
 
 #define rBaseAddressForHttp				[NSString stringWithFormat:@"%@/v1",rBaseAddRessHttp]
 #define rBaseAddressForHttpCircle		[NSString stringWithFormat:@"%@/v1/group",rBaseAddRessHttp]
@@ -73,4 +74,6 @@
 #define actionlogin             @"login"
 #define actioncircle            @"circle"
 #define circleBak               @"circleBak"
+#define circleNew               @"circleNew"
+
 #endif

@@ -1,4 +1,4 @@
-//
+ //
 //  SHGGloble.m
 //  Finance
 //
@@ -16,7 +16,22 @@
  
  @since 1.4.1
  */
+@property (strong, nonatomic) NSMutableArray *homeListArray;
+
+/**
+ @brief  返回首页的推广数据
+
+ @since 1.5.0
+ */
+@property (strong, nonatomic) NSMutableArray *homeAdArray;
+
+/**
+ @brief  返回首页总数据，即时上面数据的合并
+
+ @since 1.5.0
+ */
 @property (strong, nonatomic) NSMutableArray *homeArray;
+
 
 @end
 
@@ -47,6 +62,22 @@
     if(self.delegate && [self.delegate respondsToSelector:@selector(userlocationDidShow:)]){
         [self.delegate userlocationDidShow:cityName];
     }
+}
+
+- (NSMutableArray *)homeListArray
+{
+    if(!_homeListArray){
+        _homeListArray = [NSMutableArray array];
+    }
+    return _homeListArray;
+}
+
+- (NSMutableArray *)homeAdArray
+{
+    if(!_homeAdArray){
+        _homeAdArray = [NSMutableArray array];
+    }
+    return _homeAdArray;
 }
 
 - (NSMutableArray *)homeArray
@@ -97,26 +128,49 @@
 - (void)requestHomePageData
 {
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
+    NSString *path = [NSString stringWithFormat:kFilePath, uid];
+    self.userTags = [NSKeyedUnarchiver unarchiveObjectWithFile:path];
     if(!uid || uid.length == 0){
         //添加一个通知 观察uid的变化
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userDefaultsDidChange:) name:NSUserDefaultsDidChangeNotification object:nil];
         return;
     }
-    NSDictionary *param = @{@"uid":uid, @"type":@"all", @"target":@"first", @"rid":@(0), @"num": rRequestNum, @"total":@(0)};
+    NSDictionary *param = @{@"uid":uid, @"type":@"all", @"target":@"first", @"rid":@(0), @"num": rRequestNum, @"tagIds": self.userTags ? self.userTags : @{}};
     
     __weak typeof(self) weakSelf = self;
-    [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttpCircle,circleBak] class:[CircleListObj class] parameters:param success:^(MOCHTTPResponse *response){
+    [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttpCircle,circleNew] class:[CircleListObj class] parameters:param success:^(MOCHTTPResponse *response){
         NSLog(@"首页预加载数据成功");
+        weakSelf.userTags = [response.dataDictionary objectForKey:@"tagids"];
+
+        NSArray *array = [response.dataDictionary objectForKey:@"normalpostlist"];
+        array = [self parseServerJsonArrayToJSONModel:array class:[CircleListObj class]];
+        [weakSelf.homeListArray removeAllObjects];
+        [weakSelf.homeListArray addObjectsFromArray:array];
+
+        array = [response.dataDictionary objectForKey:@"adlist"];
+        array = [self parseServerJsonArrayToJSONModel:array class:[CircleListObj class]];
+        [weakSelf.homeAdArray removeAllObjects];
+        [weakSelf.homeAdArray addObjectsFromArray:array];
+
         [weakSelf.homeArray removeAllObjects];
-        [weakSelf.homeArray addObjectsFromArray:response.dataArray];
+        [weakSelf.homeArray addObjectsFromArray:weakSelf.homeListArray];
+        if(weakSelf.homeArray.count > 0){
+            for(CircleListObj *obj in weakSelf.homeAdArray){
+                NSInteger index = [obj.displayPosition integerValue];
+                [weakSelf.homeArray insertObject:obj atIndex:index];
+            }
+        }else{
+            [weakSelf.homeArray addObjectsFromArray:weakSelf.homeAdArray];
+        }
+
         if(weakSelf.CompletionBlock){
-            weakSelf.CompletionBlock(weakSelf.homeArray);
+            weakSelf.CompletionBlock(weakSelf.homeArray, weakSelf.homeListArray, weakSelf.homeAdArray);
         }
     } failed:^(MOCHTTPResponse *response){
         NSLog(@"首页预加载数据失败");
-        [weakSelf.homeArray removeAllObjects];
+        [weakSelf.homeListArray removeAllObjects];
         if(weakSelf.CompletionBlock){
-            weakSelf.CompletionBlock(weakSelf.homeArray);
+            weakSelf.CompletionBlock(weakSelf.homeArray, weakSelf.homeListArray, weakSelf.homeAdArray);
         }
     }];
 }
@@ -125,7 +179,7 @@
 {
     _CompletionBlock = CompletionBlock;
     if(self.homeArray && [self.homeArray count] > 0){
-        _CompletionBlock(self.homeArray);
+        _CompletionBlock(self.homeArray, self.homeListArray, self.homeAdArray);
     }
 }
 
@@ -300,6 +354,31 @@
     } failed:^(MOCHTTPResponse *response) {
         block(NO);
     }];
+}
+
+
+- (NSArray *)parseServerJsonArrayToJSONModel:(NSArray *)array class:(Class)class
+{
+    if ([class isSubclassOfClass:[MTLModel class]]) {
+        NSMutableArray *saveArray = [NSMutableArray array];
+        for(id obj in array){
+            if ([obj isKindOfClass:[NSDictionary class]]) {
+                NSError *error;
+                id model = [MTLJSONAdapter modelOfClass:class fromJSONDictionary:obj error:&error];
+                if (error) {
+                    MOCLogDebug(error.domain);
+                }else{
+                    [saveArray addObject:model];
+                }
+            }else{
+                MOCLogDebug(@"服务器返回的数据应该为字典形式");
+            }
+        }
+        return saveArray;
+    }else{
+        MOCLogDebug(@"class没有继承于JSONModel,只做单纯的返回数据,不处理");
+        return nil;
+    }
 }
 
 

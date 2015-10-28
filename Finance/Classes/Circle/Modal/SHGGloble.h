@@ -8,8 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-typedef void (^SHHomeDataCompletionBlock)(NSArray *dataArray);
-typedef void (^SHHomeDataCompletionBlock)(NSArray *dataArray);
+typedef void (^SHHomeDataCompletionBlock)(NSArray *allList, NSArray *normalList, NSArray *adList);
 
 @protocol SHGGlobleDelegate <NSObject>
 
@@ -62,6 +61,13 @@ typedef void (^SHHomeDataCompletionBlock)(NSArray *dataArray);
  @since 1.5.0
  */
 @property (strong, nonatomic) NSMutableArray *contactArray;
+
+/**
+ @brief  用户浏览的数据字典，从服务端读取 然后返回给服务端
+
+ @since 1.5.0
+ */
+@property (strong, nonatomic) NSDictionary *userTags;
 
 /**
  @brief  首页请求完成的回掉
@@ -137,5 +143,15 @@ typedef void (^SHHomeDataCompletionBlock)(NSArray *dataArray);
 - (void)uploadPhonesWithPhone:(void(^)(BOOL finish))block;
 
 
+/**
+ @brief  格式化得到的数据到object数组
 
+ @param array 字典数据
+ @param class 固定的类
+
+ @return object数据
+
+ @since 1.5.0
+ */
+- (NSArray *)parseServerJsonArrayToJSONModel:(NSArray *)array class:(Class)class;
 @end
