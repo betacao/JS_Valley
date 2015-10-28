@@ -369,6 +369,7 @@ const CGFloat kAdButtomMargin = 20.0f;
         weakSelf.isRefreshing = NO;
         if([response.dataDictionary objectForKey:@"tagids"]){
             [SHGGloble sharedGloble].userTags = [response.dataDictionary objectForKey:@"tagids"];
+            NSLog(@"XXXXXXXXXXXXX%@",[response.dataDictionary objectForKey:@"tagids"]);
         }
         [weakSelf assembleDictionary:response.dataDictionary target:target];
 
@@ -514,17 +515,7 @@ const CGFloat kAdButtomMargin = 20.0f;
         return;
     }
     if (self.dataArr.count > 0){
-        NSInteger i = 0;
-        CircleListObj *obj = self.dataArr[i];
-        while ([obj.postType isEqualToString:@"ad"]){
-            i ++;
-            obj = self.dataArr[i];
-            if(![obj isKindOfClass:[CircleListObj class]]){
-                i++;
-                obj = self.dataArr[i];
-            }
-        }
-        [self requestDataWithTarget:@"refresh" time:obj.rid];
+        [self requestDataWithTarget:@"refresh" time:[self maxRid]];
     } else{
         [self requestDataWithTarget:@"first" time:@""];
     }
@@ -537,24 +528,42 @@ const CGFloat kAdButtomMargin = 20.0f;
 
 -(void)refreshFooter
 {
-    if (hasDataFinished)
-    {
+    if (hasDataFinished){
         [self.listTable.footer noticeNoMoreData];
         return;
     }
     _target = @"load";
-    
     NSLog(@"refreshFooter");
     if (self.dataArr.count > 0){
-        NSInteger i = self.dataArr.count -1;
-        CircleListObj *obj = self.dataArr[i];
-        while (![obj.postType isEqualToString:@"normal"]){
-            i--;
-            obj = self.dataArr[i];
-        }
-        [self requestDataWithTarget:@"load" time:obj.rid];
+        [self requestDataWithTarget:@"load" time:[self minRid]];
     }
     
+}
+
+- (NSString *)maxRid
+{
+    NSInteger i = 0;
+    CircleListObj *obj = self.dataArr[i];
+    while ([obj.postType isEqualToString:@"ad"]){
+        i ++;
+        obj = self.dataArr[i];
+        if(![obj isKindOfClass:[CircleListObj class]]){
+            i++;
+            obj = self.dataArr[i];
+        }
+    }
+    return obj.rid;
+}
+
+- (NSString *)minRid
+{
+    NSInteger i = self.dataArr.count - 1;
+    CircleListObj *obj = self.dataArr[i];
+    while (![obj.postType isEqualToString:@"normal"]){
+        i--;
+        obj = self.dataArr[i];
+    }
+    return obj.rid;
 }
 
 #pragma mark ------ SHGNoticeDelegate ------
@@ -655,7 +664,6 @@ const CGFloat kAdButtomMargin = 20.0f;
     LinkViewController *vc=  [[LinkViewController alloc]init];
     switch(type){
         case MLEmojiLabelLinkTypeURL:
-            //[self openURL:[NSURL URLWithString:link]];
             vc.url = link;
             [self.navigationController pushViewController:vc animated:YES];
             NSLog(@"点击了链接%@",link);
@@ -830,8 +838,7 @@ const CGFloat kAdButtomMargin = 20.0f;
          {
              NSLog(@"%@",response.data);
              NSString *code = [response.data valueForKey:@"code"];
-             if ([code isEqualToString:@"000"])
-             {
+             if ([code isEqualToString:@"000"]){
                  obj.ispraise = @"Y";
                  obj.praisenum = [NSString stringWithFormat:@"%ld",(long)([obj.praisenum integerValue] + 1)];
                  [Hud showMessageWithText:@"赞成功"];
@@ -846,20 +853,16 @@ const CGFloat kAdButtomMargin = 20.0f;
              [Hud showMessageWithText:response.errorMessage];
          }];
         
-    }
-    else
-    {
+    } else{
         [Hud showLoadingWithMessage:@"正在取消点赞"];
         
         [[AFHTTPRequestOperationManager manager] DELETE:url parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject) {
             NSLog(@"%@",responseObject);
             NSString *code = [responseObject valueForKey:@"code"];
-            if ([code isEqualToString:@"000"])
-            {
+            if ([code isEqualToString:@"000"]) {
                 obj.ispraise = @"N";
                 obj.praisenum = [NSString stringWithFormat:@"%ld",(long)([obj.praisenum integerValue] - 1)];
                 [Hud showMessageWithText:@"取消点赞"];
-                
             }
             [MobClick event:@"ActionPraiseClicked_Off" label:@"onClick"];
             [self.listTable reloadData];

@@ -140,6 +140,8 @@
     __weak typeof(self) weakSelf = self;
     [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttpCircle,circleNew] class:[CircleListObj class] parameters:param success:^(MOCHTTPResponse *response){
         NSLog(@"首页预加载数据成功");
+
+        NSLog(@"YYYYYYYYYYYYY%@",[response.dataDictionary objectForKey:@"tagids"]);
         weakSelf.userTags = [response.dataDictionary objectForKey:@"tagids"];
 
         NSArray *array = [response.dataDictionary objectForKey:@"normalpostlist"];
