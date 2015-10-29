@@ -156,23 +156,6 @@
     
     [self.imageHeader updateHeaderView:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,obj.potname] placeholderImage:[UIImage imageNamed:@"default_head"]];
     [self.imageHeader updateStatus:[obj.userstatus isEqualToString:@"true"] ? YES : NO];
-
-    
-    NSString *name = obj.nickname;
-    if (obj.nickname.length > 4) {
-        name = [obj.nickname substringToIndex:4];
-        name = [NSString stringWithFormat:@"%@…",name];
-    }
-    [self.btnUserName setTitle:name forState:UIControlStateNormal];
-    
-    NSString *str= obj.title;
-    if (obj.title.length > 4) {
-        str= [obj.title substringToIndex:4];
-        str = [NSString stringWithFormat:@"%@…",str];
-    }
-    self.lblPosition.text = str;
-    
-    self.lblTime.text = obj.publishdate;
     
     [self.btnPraise setTitle:obj.praisenum forState:UIControlStateNormal];
     [self.btnComment setTitle:obj.cmmtnum forState:UIControlStateNormal];
@@ -350,6 +333,7 @@
     CGRect userRect = self.btnUserName.frame;
     userRect.size.width = nameSize.width;
     self.btnUserName.frame = userRect;
+    [self.btnUserName setTitle:name forState:UIControlStateNormal];
     
     //设置分割线的坐标
     CGRect frame = self.breakLine.frame;
@@ -372,9 +356,25 @@
     companRect.size.width = size.width;
     self.lblCompanyName.frame = companRect;
 
+    NSString *str = obj.title;
+    if (obj.title.length > 4) {
+        str= [obj.title substringToIndex:4];
+        str = [NSString stringWithFormat:@"%@…",str];
+    }
+    self.lblPosition.text = str;
+
     CGRect positionRect = self.lblPosition.frame;
     positionRect.origin.x = kItemMargin + CGRectGetMaxX(companRect);
     self.lblPosition.frame = positionRect;
+
+    //如果公司名和职位名字都不存在的话则隐藏分割线
+    if(self.lblCompanyName.text.length == 0 && self.lblPosition.text.length == 0){
+        self.breakLine.hidden = YES;
+    } else{
+        self.breakLine.hidden = NO;
+    }
+    self.lblTime.text = obj.publishdate;
+
     [self.btnUserName setBackgroundImage:[UIImage imageWithColor:BTN_SELECT_BACK_COLOR andSize:nameSize] forState:UIControlStateHighlighted];
 }
 

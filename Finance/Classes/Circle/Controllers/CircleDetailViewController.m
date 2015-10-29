@@ -459,6 +459,13 @@
     frame = self.btnAttention.frame;
     frame.origin.x *= XFACTOR;
     self.btnAttention.frame = frame;
+
+    //如果公司名和职位名字都不存在的话则隐藏分割线
+    if(self.lblCompanyName.text.length == 0 && self.lbldepartName.text.length == 0){
+        self.breakLineView.hidden = YES;
+    }
+
+
     [self.btnNickname setBackgroundImage:[UIImage imageWithColor:BTN_SELECT_BACK_COLOR andSize:nameSize] forState:UIControlStateHighlighted];
 }
 - (void)didReceiveMemoryWarning {
