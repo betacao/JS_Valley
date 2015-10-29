@@ -121,7 +121,7 @@
         frame.size.width = CGRectGetWidth(self.cityNameButton.frame);
         self.cityNameButton.frame = frame;
     } else{
-        [self.cityNameButton setTitle:@"查看原文" forState:UIControlStateNormal]; ;
+        [self.cityNameButton setTitle:obj.friendship forState:UIControlStateNormal]; ;
         CGRect frame = self.cityNameButton.frame;
         [self.cityNameButton sizeToFit];
         frame.size.width = CGRectGetWidth(self.cityNameButton.frame);

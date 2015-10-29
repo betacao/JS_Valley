@@ -10,6 +10,18 @@
 #import "CircleDetailViewController.h"
 #import "MLEmojiLabel.h"
 #import "LinkViewController.h"
+
+typedef NS_ENUM(NSInteger, SHGUserType) {
+    //马甲号类型
+    SHGUserTypeVest = 0,
+    //真实用户
+    SHGUserTypeRegister = 1,
+    //管理员(类似大牛圈)
+    SHGUserTypeOperator = 2,
+    //其他
+    SHGUserTypeOther
+};
+
 @interface CircleSomeOneViewController ()<MLEmojiLabelDelegate>
 {
     BOOL hasDataFinished;
@@ -21,6 +33,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *lineView2;
 
 @property (weak, nonatomic) IBOutlet UILabel *lblFriendList;
+@property (weak, nonatomic) IBOutlet UILabel *lblCircle;
 @property (weak, nonatomic) IBOutlet UIView *viewHeader;
 @property (nonatomic, strong)BRCommentView *popupView;
 
@@ -44,11 +57,12 @@
 @property (strong, nonatomic) NSString *company;
 @property (strong ,nonatomic) NSString *userStatus;
 @property (strong, nonatomic) NSString *fans;
+@property (assign, nonatomic) SHGUserType userType;
+@property (nonatomic, strong) NSString *lblCityName;
 
 - (IBAction)actionFriendList:(id)sender;
 - (IBAction)actionChat:(id)sender;
 
-@property (nonatomic, strong) NSString *lblCityName;
 @end
 
 @implementation CircleSomeOneViewController
@@ -115,10 +129,12 @@
     [self.listTable setTableHeaderView:self.viewHeader];
     [self requestDataWithTarget:@"first" time:@""];
 }
+
 -(void)reloadTable
 {
     [self.listTable reloadData];
 }
+
 -(void)requestDataWithTarget:(NSString *)target time:(NSString *)time
 {
     if ([target isEqualToString:@"first"]) {
@@ -146,8 +162,23 @@
         
     }];
 }
--(void)loadUI
+- (void)loadUI
 {
+    if(self.userType != SHGUserTypeOther){
+        self.lineView.hidden = NO;
+        self.lineView2.hidden = NO;
+        self.lblCircle.hidden = NO;
+        self.lblFriendList.hidden = NO;
+        self.btnSendNum.hidden = NO;
+        self.btnFriendsNum.hidden = NO;
+    } else{
+        self.lblCircle.hidden = NO;
+        self.btnSendNum.hidden = NO;
+        CGRect frame = self.btnFriendsNum.frame;
+        self.btnSendNum.frame = frame;
+        frame = self.lblFriendList.frame;
+        self.lblCircle.frame = frame;
+    }
     [self.imageHeader sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,self.potname]] placeholderImage:[UIImage imageNamed:@"default_head"]];
     self.lblCompany.text = self.titles;
     self.comPanyName.text = self.company;
@@ -161,7 +192,6 @@
     if ([self.rela intValue] == 0){        //未关注
         [_btnChat setImage:[UIImage imageNamed:@"加关注按钮"] forState:UIControlStateNormal];
         _btnChat.enabled = YES;
-        
     } else if ([self.rela intValue] == 1){
         //已关注
         [_btnChat setImage:[UIImage imageNamed:@"不能会话"] forState:UIControlStateNormal];
@@ -176,29 +206,35 @@
     CGRect rect = _lblPosition.frame;
     rect.origin.x = _lblCompany.left + size.width + 8;
     _lblPosition.frame = rect;
-    //self.title = [NSString stringWithFormat:@"%@的圈子",self.userName];
 
 }
--(void)parseDataWithDic:(NSDictionary *)dic
+
+- (void)parseDataWithDic:(NSDictionary *)dic
 {
     self.company = dic[@"company"];
     self.fans = [NSString stringWithFormat:@"%@",[dic objectForKey:@"fans"]];
-    
     self.nickname = dic[@"nickname"];
     self.title = [NSString stringWithFormat:@"%@的动态",self.nickname];
     self.num = dic[@"num"];
-    
     self.potname = dic[@"potname"];
     self.rela = dic[@"rela"];
     self.titles = dic[@"title"];
     self.userStatus = [dic objectForKey:@"userstatus"];
+    NSString *usertype = [dic objectForKey:@"usertype"];
+    if([usertype rangeOfString:@"vest"].location != NSNotFound){
+        self.userType = SHGUserTypeVest;
+    } else if ([usertype rangeOfString:@"register"].location != NSNotFound){
+        self.userType = SHGUserTypeRegister;
+    } else if ([usertype rangeOfString:@"operator"].location != NSNotFound){
+        self.userType = SHGUserTypeOperator;
+    } else{
+        self.userType = SHGUserTypeOther;
+    }
     
     NSArray *list = dic[@"list"];
     if (IsArrEmpty(list)) {
         hasDataFinished = YES;
-    }
-    else
-    {
+    } else{
         hasDataFinished = NO;
     }
     for (NSDictionary *dics in list) {

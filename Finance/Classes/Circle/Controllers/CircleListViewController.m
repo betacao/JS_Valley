@@ -459,7 +459,7 @@ const CGFloat kAdButtomMargin = 20.0f;
             }
 
             [self insertRecomandArray];
-            [self.newMessageNoticeView showWithText:[NSString stringWithFormat:@"为你加载了%ld条新动态",(long)normalArray.count]];
+            [self.newMessageNoticeView showWithText:[NSString stringWithFormat:@"为您加载了%ld条新动态",(long)normalArray.count]];
         } else{
             [self.newMessageNoticeView showWithText:@"暂无新动态，休息一会儿"];
         }
