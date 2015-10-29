@@ -36,13 +36,13 @@
         switch (type) {
             case SHGNoticeTypeNewFriend:
             {
-                self.frame = CGRectMake(0.0f, kNavigationBarHeight + kStatusBarHeight, SCREENWIDTH, kNoticeFriendViewHeight);
+                self.frame = CGRectMake(0.0f, 0.0f, SCREENWIDTH, kNoticeFriendViewHeight);
             }
                 break;
                 
             default:
             {
-                self.frame = CGRectMake(kNoticeLeftMargin, kNavigationBarHeight + kStatusBarHeight, SCREENWIDTH - 2 * kNoticeLeftMargin, kNoticeMessageViewHeight);
+                self.frame = CGRectMake(kNoticeLeftMargin, 0.0f, SCREENWIDTH - 2 * kNoticeLeftMargin, kNoticeMessageViewHeight);
                 self.layer.masksToBounds = YES;
                 self.layer.cornerRadius = 3.0f;
                 self.noticeType = type;
@@ -109,7 +109,7 @@
         [self performSelector:@selector(hide) withObject:nil afterDelay:1.0f];
     }
     self.noticeLabel.text = string;
-    [self.superView.window addSubview:self];
+    [self.superView addSubview:self];
     [UIView animateWithDuration:0.25f animations:^{
         CGRect frame = self.bounds;
         frame.origin.y = 0.0f;

@@ -147,13 +147,11 @@
         }
         if ([target isEqualToString:@"refresh"]) {
             if (response.dataArray.count > 0) {
-                for (NSInteger i = response.dataArray.count-1; i >= 0; i --) {
-                    BasePeopleObject *obj = response.dataArray[i];
+                for (NSInteger i = array.count-1; i >= 0; i --) {
+                    BasePeopleObject *obj = array[i];
                     [self.dataSource insertObject:obj atIndex:0];
                 }
-                
             }
-            
         }
         if ([target isEqualToString:@"load"]) {
             if (array.count == 0) {

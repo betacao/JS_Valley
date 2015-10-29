@@ -57,11 +57,13 @@
     [[SHGGloble sharedGloble] getUserAddressList:^(BOOL finished) {
         if(finished){
             [[SHGGloble sharedGloble] uploadPhonesWithPhone:^(BOOL finish) {
-                if(finished){
-                    [Hud showLoadingWithMessage:@"通讯录更新成功"];
-                } else{
-                    [Hud showLoadingWithMessage:@"上传通讯录列表失败"];
-                }
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    if(finished){
+                        [Hud showMessageWithText:@"通讯录更新成功"];
+                    } else{
+                        [Hud showMessageWithText:@"上传通讯录列表失败"];
+                    }
+                });
             }];
         } else{
             [Hud showLoadingWithMessage:@"获取通讯录列表失败，请到系统设置设置权限"];
