@@ -199,12 +199,11 @@ const CGFloat kAdButtomMargin = 20.0f;
 
 -(void)requestAlermInfo
 {
-//    if(!self.hasRequestedRecomand || !self.hasLocated){
-//        return;
-//    }
+    if(!self.hasRequestedRecomand || !self.hasLocated){
+        return;
+    }
     NSString *uid = [[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID] stringValue];
-//    NSDictionary *param = @{@"uid":uid, @"area":self.currentCity == nil?@"":self.currentCity};
-    NSDictionary *param = @{@"uid":uid, @"area":@"南京"};
+    NSDictionary *param = @{@"uid":uid, @"area":self.currentCity == nil?@"":self.currentCity};
     __weak typeof(self) weakSelf = self;
     [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/v1/recommended/friends/recommendedFriend",rBaseAddRessHttp] class:[RecmdFriendObj class] parameters:param success:^(MOCHTTPResponse *response){
         [weakSelf.recomandArray removeAllObjects];
@@ -250,16 +249,16 @@ const CGFloat kAdButtomMargin = 20.0f;
 
 - (void)getAllInfo
 {
-//    __block __weak CircleListViewController *wself = self;
-//    [[CCLocationManager shareLocation] getCity:^{
-//        NSString *cityName = [SHGGloble sharedGloble].cityName;
-//        if(cityName && cityName.length > 0){
-//            self.currentCity = cityName;
-//            NSLog(@"self.cityName = %@",self.currentCity);
-//            wself.hasLocated = YES;
-//            [wself requestAlermInfo];
-//        }
-//    }];
+    __block __weak CircleListViewController *wself = self;
+    [[CCLocationManager shareLocation] getCity:^{
+        NSString *cityName = [SHGGloble sharedGloble].cityName;
+        if(cityName && cityName.length > 0){
+            self.currentCity = cityName;
+            NSLog(@"self.cityName = %@",self.currentCity);
+            wself.hasLocated = YES;
+            [wself requestAlermInfo];
+        }
+    }];
 }
 
 -(void)smsShareSuccess:(NSNotification *)noti
