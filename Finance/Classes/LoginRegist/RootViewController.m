@@ -17,6 +17,7 @@
 @property (strong, nonatomic) NSString *isFull;
 @property (strong, nonatomic) AVPlayerItem *playerItem;
 @property (strong, nonatomic) AVPlayer *player;
+@property (assign, nonatomic) CMTime totalTime;
 
 @end
 
@@ -33,12 +34,12 @@
     } else if(SCREENHEIGHT > 667.000000){
         self.launchImage.image=[UIImage imageNamed:@"736"];
     }
-    if([[SHGGloble sharedGloble] isShowGuideView]){
-        [self startPlayVideo];
-    } else{
-        [self moveToHomePage];
-    }
-//    [self startPlayVideo];
+//    if([[SHGGloble sharedGloble] isShowGuideView]){
+//        [self startPlayVideo];
+//    } else{
+//        [self moveToHomePage];
+//    }
+    [self startPlayVideo];
 }
 
 - (void)moveToHomePage
@@ -70,17 +71,30 @@
 {
     NSURL *videoUrl = [NSURL fileURLWithPath:localPath];
     self.playerItem = [AVPlayerItem playerItemWithURL:videoUrl];
+
     self.player = [AVPlayer playerWithPlayerItem:self.playerItem];
+    //添加跳过按钮
+    UIButton *skipVideoButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    UIImage *image = [UIImage imageNamed:@"skip_video"];
+    [skipVideoButton setBackgroundImage:image forState:UIControlStateNormal];
+
+    [skipVideoButton sizeToFit];
+    CGSize size = skipVideoButton.frame.size;
+    skipVideoButton.frame = CGRectMake(SCREENWIDTH - 1.1f * size.width, size.height, size.width, size.height);
+    [skipVideoButton addTarget:self action:@selector(clickSkipVideo:) forControlEvents:UIControlEventTouchUpInside];
 
     AVPlayerLayer* playerLayer = [AVPlayerLayer playerLayerWithPlayer:self.player];
     [playerLayer setVideoGravity:AVLayerVideoGravityResizeAspectFill];
     playerLayer.frame = CGRectMake(0.0f, 0.0f, SCREENWIDTH, SCREENHEIGHT);
+
     [playerLayer addObserver:self forKeyPath:@"readyForDisplay" options:0 context:nil];
     __weak typeof(self) weakSelf = self;
     dispatch_async(dispatch_get_main_queue(), ^{
         [weakSelf.view.layer addSublayer:playerLayer];
+        [weakSelf.view addSubview:skipVideoButton];
     });
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(moviePlayDidEnd:) name:AVPlayerItemDidPlayToEndTimeNotification object:self.playerItem];
+
 
 }
 
@@ -102,6 +116,7 @@
             dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC));
             dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
                 [layer.player play];
+                weakSelf.totalTime = weakSelf.playerItem.duration;
                 //去掉最上面的的遮罩
                 [weakSelf.launchImage removeFromSuperview];
             });
@@ -109,6 +124,13 @@
     }
 }
 
+- (void)clickSkipVideo:(UIButton *)button
+{
+    [self.player pause];
+    [self moveToHomePage];
+    self.player = nil;
+    self.playerItem = nil;
+}
 
 - (void)showLoginViewController
 {

@@ -531,7 +531,7 @@ const CGFloat kAdButtomMargin = 20.0f;
     if (seg.selectedSegmentIndex == 0){
         NSLog(@"所有");
         self.circleType = @"all";
-        [self requestDataWithTarget:@"first" time:@""];
+        [self requestDataWithTarget:@"first" time:[self maxRid]];
     } else{
         NSLog(@"已关注");
         self.circleType = @"attention";
@@ -594,6 +594,10 @@ const CGFloat kAdButtomMargin = 20.0f;
     while (![obj.postType isEqualToString:@"normal"]){
         i--;
         obj = self.dataArr[i];
+        if(![obj isKindOfClass:[CircleListObj class]]){
+            i--;
+            obj = self.dataArr[i];
+        }
     }
     return obj.rid;
 }
