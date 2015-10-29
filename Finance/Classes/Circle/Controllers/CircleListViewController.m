@@ -241,7 +241,8 @@ const CGFloat kAdButtomMargin = 20.0f;
 
 - (void)insertRecomandArray
 {
-    if(self.shouldDisplayRecommend){
+    //当前允许显示推荐好友 并且是动态页面不是已关注页面
+    if(self.shouldDisplayRecommend && [self.circleType isEqualToString:@"all"]){
         if(self.dataArr.count > 4){
             [self.dataArr insertObject:self.recomandArray atIndex:3];
         } else{
@@ -575,7 +576,7 @@ const CGFloat kAdButtomMargin = 20.0f;
 {
     NSInteger i = 0;
     CircleListObj *obj = self.dataArr[i];
-    while ([obj.postType isEqualToString:@"ad"]){
+    while (![obj.postType isEqualToString:@"normal"]){
         i++;
         obj = self.dataArr[i];
         if(![obj isKindOfClass:[CircleListObj class]]){

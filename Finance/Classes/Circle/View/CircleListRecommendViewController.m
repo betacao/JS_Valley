@@ -139,7 +139,7 @@ const CGFloat kOtherRecommendCellHeight = 57.0f;
             self.middleNameLabel.frame = frame;
 
             frame = self.middleBreakLine.frame;
-            frame.origin.x = CGRectGetMaxX(self.middleBreakLine.frame) + kLabelMargin;
+            frame.origin.x = CGRectGetMaxX(self.middleNameLabel.frame) + kLabelMargin;
             self.middleBreakLine.frame = frame;
 
             frame = self.middleCompantyLabel.frame;
@@ -164,7 +164,7 @@ const CGFloat kOtherRecommendCellHeight = 57.0f;
             self.bottomNameLabel.frame = frame;
 
             frame = self.bottomBreakLine.frame;
-            frame.origin.x = CGRectGetMaxX(self.bottomBreakLine.frame) + kLabelMargin;
+            frame.origin.x = CGRectGetMaxX(self.bottomNameLabel.frame) + kLabelMargin;
 
             self.bottomBreakLine.frame = frame;
 
