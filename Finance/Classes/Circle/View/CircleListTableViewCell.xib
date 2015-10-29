@@ -125,14 +125,18 @@
                                     <action selector="actionComment:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="mnz-G7-Kvt"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="hXA-xW-fAk">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="CMx-yU-RZY">
                                 <rect key="frame" x="14" y="11" width="81" height="12"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <animations/>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                <color key="textColor" red="0.82352941176470584" green="0.81960784313725488" blue="0.81960784313725488" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                                <state key="normal">
+                                    <color key="titleColor" red="0.82352941176470584" green="0.81960784313725488" blue="0.81960784313725488" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="didClickCityName:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="Ezc-g0-jVm"/>
+                                </connections>
+                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="qOk-3H-hm4">
                                 <rect key="frame" x="256" y="0.0" width="50" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxY="YES"/>
@@ -205,8 +209,8 @@
                 <outlet property="btnPraise" destination="E7m-Zp-7F4" id="eUG-JA-ABp"/>
                 <outlet property="btnShare" destination="qOk-3H-hm4" id="MZQ-xp-i59"/>
                 <outlet property="btnUserName" destination="Rog-uu-OUD" id="889-HJ-C6a"/>
+                <outlet property="cityNameButton" destination="CMx-yU-RZY" id="svF-fn-Uql"/>
                 <outlet property="imageHeader" destination="yOZ-57-ofT" id="wuh-gY-ofQ"/>
-                <outlet property="lblCityName" destination="hXA-xW-fAk" id="CL8-5v-fgb"/>
                 <outlet property="lblCompanyName" destination="yAL-uC-6GC" id="W17-Hj-sak"/>
                 <outlet property="lblContent" destination="cgM-W5-Xpb" id="nQ0-0d-bBW"/>
                 <outlet property="lblPosition" destination="YGO-sg-H8P" id="sNJ-I3-o0T"/>

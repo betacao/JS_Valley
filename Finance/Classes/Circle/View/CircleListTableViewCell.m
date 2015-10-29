@@ -44,7 +44,7 @@
 //公司名称
 @property (weak, nonatomic) IBOutlet UILabel *lblCompanyName;
 //好友关系、定位标签
-@property (weak, nonatomic) IBOutlet UILabel *lblCityName;
+@property (weak, nonatomic) IBOutlet UIButton *cityNameButton;
 //用户头像
 @property (weak, nonatomic) IBOutlet headerView *imageHeader;
 //最下层分割线
@@ -102,26 +102,31 @@
 
     [self sizeUIWithObj:obj];
     //设置好友关系、定位标签的内容
-    self.lblCityName.textColor = RGB(210, 209, 209);
-    if ([[[NSUserDefaults standardUserDefaults]objectForKey:KEY_UID] isEqualToString:obj.userid]){
-        self.lblCityName.text = [NSString stringWithFormat:@"%@",obj.currcity];
+    if(![obj.postType isEqualToString:@"pc"]){
+        if ([[[NSUserDefaults standardUserDefaults]objectForKey:KEY_UID] isEqualToString:obj.userid]){
+            [self.cityNameButton setTitle:[NSString stringWithFormat:@"%@",obj.currcity] forState:UIControlStateNormal];
+        } else{
+            //1.4遗留问题
+            NSString *string = @"";
+            if(obj.friendship && obj.friendship.length > 0){
+                string = obj.friendship;
+            }
+            if(obj.currcity && obj.currcity.length > 0){
+                string = [string stringByAppendingFormat:@",%@",obj.currcity];
+            }
+            [self.cityNameButton setTitle:string forState:UIControlStateNormal];
+        }
+        CGRect frame = self.cityNameButton.frame;
+        [self.cityNameButton sizeToFit];
+        frame.size.width = CGRectGetWidth(self.cityNameButton.frame);
+        self.cityNameButton.frame = frame;
     } else{
-        //1.4遗留问题
-        NSString *string = @"";
-        if(obj.friendship && obj.friendship.length > 0){
-            string = obj.friendship;
-        }
-        if(obj.currcity && obj.currcity.length > 0){
-            string = [string stringByAppendingFormat:@",%@",obj.currcity];
-        }
-        self.lblCityName.text = string;
+        [self.cityNameButton setTitle:@"查看原文" forState:UIControlStateNormal]; ;
+        CGRect frame = self.cityNameButton.frame;
+        [self.cityNameButton sizeToFit];
+        frame.size.width = CGRectGetWidth(self.cityNameButton.frame);
+        self.cityNameButton.frame = frame;
     }
-    CGRect frame = self.lblCityName.frame;
-    [self.lblCityName sizeToFit];
-    frame.size.width = CGRectGetWidth(self.lblCityName.frame);
-    frame.size.height = CGRectGetHeight(self.lblCityName.frame);
-    self.lblCityName.frame = frame;
-    
     //是否显示删除按钮
     if ([obj.userid isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID]]){
         self.btnDelete.hidden = NO;
@@ -183,7 +188,7 @@
     NSLog(@"%@",obj.detail);
     self.lblContent.text = detail;
     CGSize size = [self.lblContent preferredSizeWithMaxWidth:kCellContentWidth];
-    frame = self.lblContent.frame;
+    CGRect frame = self.lblContent.frame;
     frame.size.width = kCellContentWidth;
     frame.size.height = size.height;
     self.lblContent.frame = frame;
@@ -441,12 +446,10 @@
 
 -(void)headTap:(DDTapGestureRecognizer *)ges
 {
-    
     [self.delegate headTap:self.index];
 }
 -(void)click:(id )ges
 {
-    
     NSLog(@"click");
     [self.delegate clicked:self.index];
 }
@@ -474,6 +477,11 @@
 
 - (IBAction)actionDelete:(id)sender {
     [self.delegate deleteClicked:self.dataObj];
+}
+
+- (IBAction)didClickCityName:(id)sender
+{
+    [self.delegate cityClicked:self.dataObj];
 }
 
 @end

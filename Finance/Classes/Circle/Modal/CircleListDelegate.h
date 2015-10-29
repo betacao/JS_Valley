@@ -19,7 +19,7 @@
 - (void)attentionClicked:(CircleListObj *)obj;
 
 - (void)deleteClicked:(CircleListObj *)obj;
-
+- (void)cityClicked:(CircleListObj *)obj;
 
 - (void)pullClicked:(CircleListObj *)obj;
 - (void)clicked:(NSInteger )index;

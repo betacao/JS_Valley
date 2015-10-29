@@ -433,7 +433,7 @@ const CGFloat kAdButtomMargin = 20.0f;
         [self.dataArr addObjectsFromArray:self.listArray];
         if(self.listArray.count > 0){
             for(CircleListObj *obj in self.adArray){
-                NSInteger index = [obj.displayPosition integerValue];
+                NSInteger index = [obj.displayposition integerValue];
                 [self.dataArr insertObject:obj atIndex:index];
             }
         }else{
@@ -452,7 +452,7 @@ const CGFloat kAdButtomMargin = 20.0f;
             [self.dataArr addObjectsFromArray:self.listArray];
             if(self.listArray.count > 0){
                 for(CircleListObj *obj in self.adArray){
-                    NSInteger index = [obj.displayPosition integerValue];
+                    NSInteger index = [obj.displayposition integerValue];
                     [self.dataArr insertObject:obj atIndex:index];
                 }
             }else{
@@ -835,6 +835,16 @@ const CGFloat kAdButtomMargin = 20.0f;
     };
     deleteObj = obj;
     [alert show];
+}
+
+- (void)cityClicked:(CircleListObj *)obj
+{
+    if([obj.postType isEqualToString:@"pc"]){
+        NSLog(@"1111");
+        LinkViewController *vc=  [[LinkViewController alloc] init];
+        vc.url = obj.pcurl;
+        [self.navigationController pushViewController:vc animated:YES];
+    }
 }
 
 #pragma mark -删除帖子
