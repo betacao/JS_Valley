@@ -40,8 +40,8 @@
         self.longitude = longitude;
         self.latitude = latitude;
         self.lastCoordinate = CLLocationCoordinate2DMake(longitude,latitude);
-        self.lastCityName = [standard objectForKey:CCLastCityName];
-        self.lastPrivinceName = [standard objectForKey:CCLastProvinceName];
+        self.lastCityName = [standard objectForKey:CCLastCityName] ? [standard objectForKey:CCLastCityName] : @"";
+        self.lastPrivinceName = [standard objectForKey:CCLastProvinceName] ? [standard objectForKey:CCLastProvinceName] : @"";
         self.lastAddress=[standard objectForKey:CCLastAddress];
     }
     return self;

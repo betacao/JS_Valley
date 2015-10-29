@@ -134,6 +134,9 @@ const CGFloat kAdButtomMargin = 20.0f;
                 [weakSelf.listTable.header endRefreshing];
                 [weakSelf.listTable.footer endRefreshing];
                 weakSelf.listTable.footer.hidden = NO;
+
+                [weakSelf.newMessageNoticeView showWithText:[NSString stringWithFormat:@"为您加载了%ld条新动态",(long)allArray.count]];
+
                 dispatch_async(dispatch_get_main_queue(), ^(){
                     [weakSelf.listTable reloadData];
                 });
@@ -283,11 +286,6 @@ const CGFloat kAdButtomMargin = 20.0f;
     }
 }
 
-- (void)requestFirst
-{
-    [self requestDataWithTarget:@"first" time:@""];
-    
-}
 -(void)refreshTable
 {
     [self.listTable reloadData];
@@ -331,7 +329,7 @@ const CGFloat kAdButtomMargin = 20.0f;
 {
     __weak typeof(self) weakSelf = self;
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [weakSelf requestDataWithTarget:@"first" time:@""];
+        [weakSelf refreshHeader];
     });
 }
 
@@ -439,6 +437,9 @@ const CGFloat kAdButtomMargin = 20.0f;
             [self.dataArr addObjectsFromArray:self.adArray];
         }
         [self insertRecomandArray];
+        if([self.circleType isEqualToString:@"all"]){
+            [self.newMessageNoticeView showWithText:[NSString stringWithFormat:@"为您加载了%ld条新动态",(long)self.dataArr.count]];
+        }
     } else if ([target isEqualToString:@"refresh"]){
         if (normalArray.count > 0){
             for (NSInteger i = normalArray.count - 1; i >= 0; i--){
@@ -1214,7 +1215,7 @@ const CGFloat kAdButtomMargin = 20.0f;
                         [[NSUserDefaults standardUserDefaults] setValue:@"0" forKey:KEY_UPDATE_SQL];
                     }
                 } else{
-                    [Hud showMessageWithText:@"失败"];
+                    [Hud showMessageWithText:@"关注失败"];
                 }
                 [self.listTable reloadData];
             } failed:^(MOCHTTPResponse *response) {
@@ -1247,7 +1248,7 @@ const CGFloat kAdButtomMargin = 20.0f;
                     }
                     [MobClick event:@"ActionAttentionClickedFalse" label:@"onClick"];
                     [Hud showMessageWithText:@"取消关注成功"];
-                    [self requestFirst];
+                    [self refreshTable];
                 } else{
                     [Hud showMessageWithText:@"失败"];
                 }
