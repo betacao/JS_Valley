@@ -61,6 +61,7 @@ const CGFloat kAdButtomMargin = 20.0f;
 @property (strong, nonatomic) NSString *currentCity;
 @property (strong, nonatomic) NSString *circleType;
 @property (assign, nonatomic) BOOL shouldDisplayRecommend;
+@property (assign, nonatomic) NSString *maxRid;
 @end
 
 @implementation CircleListViewController
@@ -134,7 +135,8 @@ const CGFloat kAdButtomMargin = 20.0f;
                 [weakSelf.listTable.header endRefreshing];
                 [weakSelf.listTable.footer endRefreshing];
                 weakSelf.listTable.footer.hidden = NO;
-
+                //更新最大rid 用于动态的下拉刷新
+                weakSelf.maxRid = [weakSelf refreshMaxRid];
                 [weakSelf.newMessageNoticeView showWithText:[NSString stringWithFormat:@"为您加载了%ld条新动态",(long)allArray.count]];
 
                 dispatch_async(dispatch_get_main_queue(), ^(){
@@ -392,7 +394,9 @@ const CGFloat kAdButtomMargin = 20.0f;
             }
         }
         [weakSelf assembleDictionary:response.dataDictionary target:target];
-
+        if([weakSelf.circleType isEqualToString:@"all"]){
+            weakSelf.maxRid = [weakSelf refreshMaxRid];
+        }
         [weakSelf.listTable.header endRefreshing];
         [weakSelf.listTable.footer endRefreshing];
         [Hud hideHud];
@@ -531,7 +535,7 @@ const CGFloat kAdButtomMargin = 20.0f;
     if (seg.selectedSegmentIndex == 0){
         NSLog(@"所有");
         self.circleType = @"all";
-        [self requestDataWithTarget:@"first" time:[self maxRid]];
+        [self requestDataWithTarget:@"first" time:self.maxRid];
     } else{
         NSLog(@"已关注");
         self.circleType = @"attention";
@@ -547,7 +551,7 @@ const CGFloat kAdButtomMargin = 20.0f;
         return;
     }
     if (self.dataArr.count > 0){
-        [self requestDataWithTarget:@"refresh" time:[self maxRid]];
+        [self requestDataWithTarget:@"refresh" time:self.maxRid];
     } else{
         [self requestDataWithTarget:@"first" time:@""];
     }
@@ -567,12 +571,12 @@ const CGFloat kAdButtomMargin = 20.0f;
     _target = @"load";
     NSLog(@"refreshFooter");
     if (self.dataArr.count > 0){
-        [self requestDataWithTarget:@"load" time:[self minRid]];
+        [self requestDataWithTarget:@"load" time:[self refreshMinRid]];
     }
     
 }
 
-- (NSString *)maxRid
+- (NSString *)refreshMaxRid
 {
     NSInteger i = 0;
     CircleListObj *obj = self.dataArr[i];
@@ -587,7 +591,7 @@ const CGFloat kAdButtomMargin = 20.0f;
     return obj.rid;
 }
 
-- (NSString *)minRid
+- (NSString *)refreshMinRid
 {
     NSInteger i = self.dataArr.count - 1;
     CircleListObj *obj = self.dataArr[i];
