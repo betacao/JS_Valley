@@ -11,6 +11,13 @@
 
 
 @interface SHGGloble ()
+
+/**
+ @brief  当前用户名
+
+ @since 1.5.0
+ */
+@property (strong, nonatomic) NSString *currentUserID;
 /**
  @brief  首页url返回的数据，如果没有数据也不是nil
  
@@ -52,6 +59,8 @@
     self = [super init];
     if(self){
         self.cityName = @"";
+        //添加一个通知 观察uid的变化
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userDefaultsDidChange:) name:NSUserDefaultsDidChangeNotification object:nil];
     }
     return self;
 }
@@ -128,11 +137,10 @@
 - (void)requestHomePageData
 {
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
+    self.currentUserID = uid;
     NSString *path = [NSString stringWithFormat:kFilePath, uid];
     self.maxUserTags = [NSKeyedUnarchiver unarchiveObjectWithFile:path];
     if(!uid || uid.length == 0){
-        //添加一个通知 观察uid的变化
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userDefaultsDidChange:) name:NSUserDefaultsDidChangeNotification object:nil];
         return;
     }
     NSDictionary *param = @{@"uid":uid, @"type":@"all", @"target":@"first", @"rid":@(0), @"num": rRequestNum, @"tagIds": self.maxUserTags ? self.maxUserTags : @{}};
@@ -189,9 +197,8 @@
 - (void)userDefaultsDidChange:(NSNotification *)notification
 {
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
-    if(uid && uid.length != 0){
+    if(uid && uid.length != 0 && ![self.currentUserID isEqualToString:uid]){
         [self requestHomePageData];
-        [[NSNotificationCenter defaultCenter] removeObserver:self];
     }
 }
 

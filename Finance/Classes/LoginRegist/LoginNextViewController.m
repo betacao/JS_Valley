@@ -55,14 +55,7 @@
     NSString *osv = [UIDevice currentDevice].systemVersion;
     NSString *channelId = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_BPUSH_CHANNELID];
     NSString *userId = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_BPUSH_USERID];
-    NSDictionary *param = @{@"phone":self.phone,
-                            @"pwd":[_lblPassward.text md5],
-                            @"ctype":@"iphone",
-                            @"os":@"ios",
-                            @"osv":osv,
-                            @"appv":LOCAL_Version,
-                            @"yuncid":channelId?:@"",
-                            @"yunuid":userId?:@""};
+    NSDictionary *param = @{@"phone":self.phone, @"pwd":[_lblPassward.text md5], @"ctype":@"iphone", @"os":@"ios", @"osv":osv, @"appv":LOCAL_Version, @"yuncid":channelId?:@"", @"yunuid":userId?:@""};
     [MOCHTTPRequestOperationManager postWithURL:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,actionlogin] class:nil parameters:param success:^(MOCHTTPResponse *response){
         [Hud hideHud];
         NSString *uid = response.dataDictionary[@"uid"];
@@ -97,24 +90,18 @@
 
     NSString *token = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_TOKEN];
     NSDictionary *param = @{@"uid":uid, @"t":token?:@"", @"channelid":channelId?:@"", @"channeluid":@"getui"};
-    [[AFHTTPRequestOperationManager manager] PUT:rBaseAddressForHttpUBpush parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject)
-     {
+    [[AFHTTPRequestOperationManager manager] PUT:rBaseAddressForHttpUBpush parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject){
          NSString *code = [responseObject valueForKey:@"code"];
-         if ([code isEqualToString:@"000"])
-         {
-             if ([self.isFull isEqualToString:@"1"])
-             {
+         if ([code isEqualToString:@"000"]){
+             if ([self.isFull isEqualToString:@"1"]){
                  [self chatLoagin];
                  [self loginSuccess];
-             }
-             else
-             {
+             } else{
                  ImproveMatiralViewController *vc = [[ImproveMatiralViewController alloc] init];
                  [self.navigationController pushViewController:vc animated:YES];
              }
          }
-     } failure:^(AFHTTPRequestOperation *operation, NSError *error)
-     {
+     } failure:^(AFHTTPRequestOperation *operation, NSError *error){
         [Hud showLoadingWithMessage:error.domain];
         
     }];

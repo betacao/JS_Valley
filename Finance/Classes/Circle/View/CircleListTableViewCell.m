@@ -101,7 +101,6 @@
     self.dataObj = obj;
 
     [self sizeUIWithObj:obj];
-
     //设置好友关系、定位标签的内容
     self.lblCityName.textColor = RGB(210, 209, 209);
     if ([[[NSUserDefaults standardUserDefaults]objectForKey:KEY_UID] isEqualToString:obj.userid]){
