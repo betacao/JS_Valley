@@ -113,11 +113,11 @@
     self.viewHeader.hidden = YES;
     self.listTable.backgroundColor = [UIColor whiteColor];
     [self.view bringSubviewToFront:self.viewInput];
-    if (SCREENHEIGHT == 480){
-        CGRect rect = self.listTable.frame;
-        rect.size.height = self.view.height;
-        [self.listTable setFrame:rect];
-    }
+//    if (SCREENHEIGHT == 480){
+//        CGRect rect = self.listTable.frame;
+//        rect.size.height = self.view.height;
+//        [self.listTable setFrame:rect];
+//    }
 
     self.btnSend.layer.masksToBounds = YES;
     self.btnSend.layer.cornerRadius = 8;
@@ -360,8 +360,7 @@
         [self.scrollPraise setContentSize:CGSizeMake(self.obj.heads.count *(praiseWidth+PRAISE_SEPWIDTH), CGRectGetHeight(self.scrollPraise.frame))];
         self.viewPraise.hidden = NO;
     } else{
-        praiseRect.size.height = 0;
-        self.viewPraise.hidden = YES;
+        [self.scrollPraise removeAllSubviews];
     }
     self.viewPraise.frame = praiseRect;
 

@@ -578,32 +578,55 @@ const CGFloat kAdButtomMargin = 20.0f;
 
 - (NSString *)refreshMaxRid
 {
-    NSInteger i = 0;
-    CircleListObj *obj = self.dataArr[i];
-    while (![obj.postType isEqualToString:@"normal"]){
-        i++;
-        obj = self.dataArr[i];
-        if(![obj isKindOfClass:[CircleListObj class]]){
-            i++;
-            obj = self.dataArr[i];
+    NSString *rid = self.maxRid;
+    for (NSInteger i = 0; i < self.dataArr.count; i++) {
+        CircleListObj *obj = self.dataArr[i];
+        if([obj isKindOfClass:[CircleListObj class]]){
+            if([obj.postType isEqualToString:@"normal"]){
+                rid = obj.rid;
+                break;
+            }
         }
     }
-    return obj.rid;
+    return rid;
+//    NSInteger i = 0;
+//    if([obj isKindOfClass:[CircleListObj class]]){
+//        rid = obj.rid;
+//    }
+//    while (![obj.postType isEqualToString:@"normal"] && i < self){
+//        i++;
+//        obj = self.dataArr[i];
+//        if(![obj isKindOfClass:[CircleListObj class]]){
+//            i++;
+//            obj = self.dataArr[i];
+//        }
+//    }
+//    return obj.rid;
 }
 
 - (NSString *)refreshMinRid
 {
-    NSInteger i = self.dataArr.count - 1;
-    CircleListObj *obj = self.dataArr[i];
-    while (![obj.postType isEqualToString:@"normal"]){
-        i--;
-        obj = self.dataArr[i];
-        if(![obj isKindOfClass:[CircleListObj class]]){
-            i--;
-            obj = self.dataArr[i];
+    NSString *rid = @"";
+    for(NSInteger i = self.dataArr.count - 1; i >=0; i--){
+        CircleListObj *obj = self.dataArr[i];
+        if([obj isKindOfClass:[CircleListObj class]]){
+            if([obj.postType isEqualToString:@"normal"]){
+                rid = obj.rid;
+                break;
+            }
         }
     }
-    return obj.rid;
+    return rid;
+
+//    NSInteger i = self.dataArr.count - 1;
+//    while (![obj.postType isEqualToString:@"normal"]){
+//        i--;
+//        obj = self.dataArr[i];
+//        if(![obj isKindOfClass:[CircleListObj class]]){
+//            i--;
+//            obj = self.dataArr[i];
+//        }
+//    }
 }
 
 #pragma mark ------ SHGNoticeDelegate ------

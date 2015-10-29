@@ -36,12 +36,13 @@
     if ([obj.name isEqualToString:@"大牛助手"]) {
         self.specialNameLabel.hidden = NO;
         self.lblName.hidden = YES;
+        self.lblCompany.hidden = YES;
     } else{
         self.specialNameLabel.hidden = YES;
         self.lblName.hidden = NO;
+        self.lblCompany.hidden = NO;
     }
-    if (IsStrEmpty(obj.name))
-    {
+    if (IsStrEmpty(obj.name)){
         self.lblName.text = obj.uid;
     }
     NSString *company = obj.company;
