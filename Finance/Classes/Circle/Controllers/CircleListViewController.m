@@ -246,7 +246,9 @@ const CGFloat kAdButtomMargin = 20.0f;
     //当前允许显示推荐好友 并且是动态页面不是已关注页面
     if(self.shouldDisplayRecommend && [self.circleType isEqualToString:@"all"]){
         if(self.dataArr.count > 4){
-            [self.dataArr insertObject:self.recomandArray atIndex:3];
+            if(self.recomandArray.count > 0){
+                [self.dataArr insertObject:self.recomandArray atIndex:3];
+            }
         } else{
             [self.dataArr addObject:self.recomandArray];
         }
@@ -1227,12 +1229,14 @@ const CGFloat kAdButtomMargin = 20.0f;
 #pragma mark -关注
 - (void)attentionClicked:(CircleListObj *)obj
 {
+    [Hud showLoadingWithMessage:@"请稍等..."];
     if([obj isKindOfClass:[CircleListObj class]]){
         //普通好友加关注的方法
         NSString *url = [NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"friends"];
         NSDictionary *param = @{@"uid":[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID], @"oid":obj.userid};
         if (![obj.isattention isEqualToString:@"Y"]) {
             [MOCHTTPRequestOperationManager postWithURL:url class:nil parameters:param success:^(MOCHTTPResponse *response) {
+                [Hud hideHud];
                 NSString *code = [response.data valueForKey:@"code"];
                 if ([code isEqualToString:@"000"]) {
                     for (CircleListObj *cobj in self.dataArr) {
@@ -1251,10 +1255,12 @@ const CGFloat kAdButtomMargin = 20.0f;
                 }
                 [self.listTable reloadData];
             } failed:^(MOCHTTPResponse *response) {
+                [Hud hideHud];
                 [Hud showMessageWithText:response.errorMessage];
             }];
         } else{
             [[AFHTTPRequestOperationManager manager] DELETE:url parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                [Hud hideHud];
                 NSString *code = [responseObject valueForKey:@"code"];
                 if ([code isEqualToString:@"000"]) {
                     if ([self.circleType isEqualToString:@"attention"]) {
@@ -1285,6 +1291,7 @@ const CGFloat kAdButtomMargin = 20.0f;
                     [Hud showMessageWithText:@"失败"];
                 }
             } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                [Hud hideHud];
                 [Hud showMessageWithText:error.domain];
             }];
         }

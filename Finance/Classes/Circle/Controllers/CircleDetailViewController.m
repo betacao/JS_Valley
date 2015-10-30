@@ -828,11 +828,11 @@
 - (IBAction)actionAttention:(id)sender
 {
     NSString *url = [NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"friends"];
-    NSDictionary *param = @{@"uid":[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID],
-                            @"oid":self.obj.userid};
+    NSDictionary *param = @{@"uid":[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID], @"oid":self.obj.userid};
+    [Hud showLoadingWithMessage:@"请稍等..."];
     if ([self.obj.isattention isEqualToString:@"N"]) {
         [MOCHTTPRequestOperationManager postWithURL:url class:nil parameters:param success:^(MOCHTTPResponse *response) {
-            
+            [Hud hideHud];
             NSString *code = [response.data valueForKey:@"code"];
             if ([code isEqualToString:@"000"])
             {
@@ -849,16 +849,14 @@
             [self.delegate detailAttentionWithRid:self.obj.userid attention:self.obj.isattention];
             [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_COLLECT_COLLECT_CLIC object:self.obj];
         } failed:^(MOCHTTPResponse *response) {
+            [Hud hideHud];
             [Hud showMessageWithText:response.errorMessage];
         }];
-    }
-    else
-    {
+    } else{
         [[AFHTTPRequestOperationManager manager] DELETE:url parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            [Hud hideHud];
             NSString *code = [responseObject valueForKey:@"code"];
-     
-            if ([code isEqualToString:@"000"])
-            {
+            if ([code isEqualToString:@"000"]){
                 self.obj.isattention = @"N";
                 [Hud showMessageWithText:@"取消关注成功"];
                 NSDictionary *data = [[responseObject valueForKey:@"data"] parseToArrayOrNSDictionary];
@@ -868,12 +866,10 @@
                 }
             }
             [self loadDatasWithObj:self.obj];
-
-              [self.delegate detailAttentionWithRid:self.obj.userid attention:self.obj.isattention];
+            [self.delegate detailAttentionWithRid:self.obj.userid attention:self.obj.isattention];
             [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_COLLECT_COLLECT_CLIC object:self.obj];
-
-
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            [Hud hideHud];
             [Hud showMessageWithText:error.domain];
         }];
     }

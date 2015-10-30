@@ -162,9 +162,9 @@
     [self.btnShare setTitle:obj.sharenum forState:UIControlStateNormal];
     
     if ([obj.isattention isEqualToString:@"Y"]){
-        [self.btnAttention setBackgroundImage:[UIImage imageNamed:@"已关注14"] forState:UIControlStateNormal] ;
+        [self.btnAttention setImage:[UIImage imageNamed:@"已关注14"] forState:UIControlStateNormal] ;
     } else{
-        [self.btnAttention setBackgroundImage:[UIImage imageNamed:@"关注14"] forState:UIControlStateNormal] ;
+        [self.btnAttention setImage:[UIImage imageNamed:@"关注14"] forState:UIControlStateNormal] ;
     }
 
     NSString *detail = obj.detail;

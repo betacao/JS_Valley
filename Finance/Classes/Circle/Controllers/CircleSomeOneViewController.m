@@ -845,16 +845,14 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
 
 - (void)attentionClicked:(CircleListObj *)obj
 {
-
+    [Hud showLoadingWithMessage:@"请稍等..."];
     NSString *url = [NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"friends"];
-    NSDictionary *param = @{@"uid":[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID],
-                            @"oid":obj.userid};
+    NSDictionary *param = @{@"uid":[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID], @"oid":obj.userid};
     if (![obj.isattention isEqualToString:@"Y"]) {
         [MOCHTTPRequestOperationManager postWithURL:url class:nil parameters:param success:^(MOCHTTPResponse *response) {
-            
+            [Hud hideHud];
             NSString *code = [response.data valueForKey:@"code"];
-            if ([code isEqualToString:@"000"])
-            {
+            if ([code isEqualToString:@"000"]){
                 for (CircleListObj *cobj in self.dataArr) {
                     if ([cobj.userid isEqualToString:obj.userid]) {
                         cobj.isattention = @"Y";
@@ -872,26 +870,21 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
 
             }
             [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_COLLECT_COLLECT_CLIC object:obj];
-
-            
             [self.listTable reloadData];
         } failed:^(MOCHTTPResponse *response) {
+            [Hud hideHud];
             [Hud showMessageWithText:response.errorMessage];
         }];
-    }
-    else
-    {
+    } else{
         [[AFHTTPRequestOperationManager manager] DELETE:url parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            [Hud hideHud];
             NSString *code = [responseObject valueForKey:@"code"];
-            if ([code isEqualToString:@"000"])
-            {
-                for (CircleListObj *cobj in self.dataArr)
-                {
+            if ([code isEqualToString:@"000"]) {
+                for (CircleListObj *cobj in self.dataArr) {
                     if ([cobj.userid isEqualToString:obj.userid]) {
                         cobj.isattention = @"N";
                     }
                 }
-                
                 self.rela = [NSString stringWithFormat:@"%d",[self.rela intValue] -1];
                 [self.delegate detailAttentionWithRid:obj.userid attention:obj.isattention];
                 [self loadUI];
@@ -902,14 +895,11 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
                     [[NSUserDefaults standardUserDefaults] setValue:@"0" forKey:KEY_UPDATE_SQL];
                     [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_CHANGE_SHOULD_UPDATE object:nil];
                 }
-                
                 [Hud showMessageWithText:@"取消关注成功"];
             }
-            
             [self.listTable reloadData];
-         
-            
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            [Hud hideHud];
             [Hud showMessageWithText:error.domain];
         }];
     }
