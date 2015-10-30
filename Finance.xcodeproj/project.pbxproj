@@ -5681,9 +5681,9 @@
 					"$(PROJECT_DIR)/Finance/External/GeTui",
 				);
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.danniuquan.apptest;
+				PRODUCT_BUNDLE_IDENTIFIER = com.appstore.daniu;
 				PRODUCT_NAME = "大牛圈";
-				PROVISIONING_PROFILE = "75d428bb-479b-47fc-824e-c9c157bc2e97";
+				PROVISIONING_PROFILE = "9f961634-d615-496e-a080-49a96420a738";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -5738,9 +5738,9 @@
 					"$(PROJECT_DIR)/Finance/External/GeTui",
 				);
 				ONLY_ACTIVE_ARCH = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = com.danniuquan.apptest;
+				PRODUCT_BUNDLE_IDENTIFIER = com.appstore.daniu;
 				PRODUCT_NAME = "大牛圈";
-				PROVISIONING_PROFILE = "75d428bb-479b-47fc-824e-c9c157bc2e97";
+				PROVISIONING_PROFILE = "9f961634-d615-496e-a080-49a96420a738";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -5833,9 +5833,9 @@
 					"$(PROJECT_DIR)/Finance/External/GeTui",
 				);
 				ONLY_ACTIVE_ARCH = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = com.danniuquan.apptest;
+				PRODUCT_BUNDLE_IDENTIFIER = com.appstore.daniu;
 				PRODUCT_NAME = "大牛圈";
-				PROVISIONING_PROFILE = "75d428bb-479b-47fc-824e-c9c157bc2e97";
+				PROVISIONING_PROFILE = "9f961634-d615-496e-a080-49a96420a738";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 			};

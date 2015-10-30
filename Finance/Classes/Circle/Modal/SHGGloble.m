@@ -242,8 +242,8 @@
     NSString *string = @"";
     for(NSNumber *number in array){
         NSInteger index = [number integerValue];
-        if(index < [SHGGloble sharedGloble].tagsArray.count){
-            SHGUserTagModel *model = [[SHGGloble sharedGloble].tagsArray objectAtIndex:index];
+        if(index < self.tagsArray.count){
+            SHGUserTagModel *model = [self.tagsArray objectAtIndex:index];
             string = [string stringByAppendingFormat:@",%@",model.tagId];
         }
     }

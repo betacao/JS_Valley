@@ -521,6 +521,7 @@
 
 - (void)layoutSubviews
 {
+    [self.buttonArrays removeAllObjects];
     CGFloat width = (CGRectGetWidth(self.frame) - 2 * kPersonCategoryLeftMargin - 3 * kPersonCategoryHorizontalMargin) / 4.0f;
     for(SHGUserTagModel *model in self.dataArray){
         NSInteger index = [self.dataArray indexOfObject:model];
