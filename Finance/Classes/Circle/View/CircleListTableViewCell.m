@@ -481,7 +481,9 @@
 
 - (IBAction)didClickCityName:(id)sender
 {
-    [self.delegate cityClicked:self.dataObj];
+    if(self.delegate && [self.delegate respondsToSelector:@selector(cityClicked:)]){
+        [self.delegate cityClicked:self.dataObj];
+    }
 }
 
 @end

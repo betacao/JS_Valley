@@ -249,6 +249,8 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
         obj.praisenum = dics[@"praisenum"];
         obj.publishdate = dics[@"publishdate"];
         obj.rid = dics[@"rid"];
+        obj.postType = [dics objectForKey:@"type"];
+        obj.pcurl = [dics objectForKey:@"pcurl"];
         obj.sharenum = dics[@"sharenum"];
         obj.cmmtnum = dics[@"cmmtnum"];
         obj.photos = dics[@"attach"];
@@ -258,7 +260,6 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
         obj.rid = dics[@"rid"];
         obj.type = dics[@"attachtype"];
         obj.userid = dics[@"userid"];
-//        obj.sizes = dics[@"sizes"];
         obj.friendship = dics[@"friendship"];
         obj.userstatus = dics[@"userstatus"];
         NSArray *comments = dics[@"comments"];
@@ -914,7 +915,15 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
         
     }];
 }
-// [ap setCurrentPhotoIndex:ges.tag - 9999];
+- (void)cityClicked:(CircleListObj *)obj
+{
+    if([obj.postType isEqualToString:@"pc"]){
+        NSLog(@"1111");
+        LinkViewController *vc=  [[LinkViewController alloc] init];
+        vc.url = obj.pcurl;
+        [self.navigationController pushViewController:vc animated:YES];
+    }
+}
 
 
 -(void)action{
