@@ -18,6 +18,7 @@
              @"phone":@"phone",
              @"area":@"area",
              @"company":@"company",
-             @"recomfri":@"recomfri"};
+             @"recomfri":@"recomfri",
+             @"title":@"title"};
 }
 @end

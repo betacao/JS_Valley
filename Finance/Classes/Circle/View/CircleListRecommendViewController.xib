@@ -9,6 +9,7 @@
             <connections>
                 <outlet property="bottomBreakLine" destination="oAF-xR-XMU" id="mzA-h1-08X"/>
                 <outlet property="bottomCompantyLabel" destination="aTA-SK-oxl" id="Cw7-Kw-vPn"/>
+                <outlet property="bottomDepartLabel" destination="Nb5-3P-6bW" id="Gie-gg-USi"/>
                 <outlet property="bottomDetailLabel" destination="jFp-ct-Uxj" id="UDm-WL-PAq"/>
                 <outlet property="bottomFocusButton" destination="Vvd-Ul-gs8" id="tyt-Wg-NdK"/>
                 <outlet property="bottomImageView" destination="3iI-Mr-1sR" id="TAh-UW-EEA"/>
@@ -17,6 +18,7 @@
                 <outlet property="closeButton" destination="brb-eU-S5a" id="nKL-Wi-8PP"/>
                 <outlet property="middleBreakLine" destination="kaw-Up-J8a" id="i1g-ym-dLi"/>
                 <outlet property="middleCompantyLabel" destination="jv6-NS-g75" id="xQR-xO-Jgt"/>
+                <outlet property="middleDepartLabel" destination="a6S-ha-vja" id="QuK-LW-KKT"/>
                 <outlet property="middleDetailLabel" destination="49c-Rs-cvq" id="cJJ-zc-c0o"/>
                 <outlet property="middleFocusButton" destination="tO1-j2-adn" id="9f6-Yz-hZ4"/>
                 <outlet property="middleImageView" destination="B1g-th-Bwt" id="a2B-DO-U2H"/>
@@ -25,6 +27,7 @@
                 <outlet property="middleViewLine" destination="WxQ-QS-RWg" id="fRc-Jz-xaS"/>
                 <outlet property="topBreakLine" destination="lmI-9V-5e1" id="5oe-H7-jpf"/>
                 <outlet property="topCompantyLabel" destination="mvB-Vl-SMg" id="AFi-UA-rc9"/>
+                <outlet property="topDepartLabel" destination="bmW-yc-ofp" id="LvS-2g-Xia"/>
                 <outlet property="topDetailLabel" destination="lGA-Iy-eZg" id="1e4-6B-oIZ"/>
                 <outlet property="topFocusButton" destination="IcB-CZ-TWg" id="FL4-CP-CqL"/>
                 <outlet property="topImageView" destination="vlx-Oe-lwD" id="3Nr-gR-Rb8"/>
@@ -75,6 +78,14 @@
                                     <animations/>
                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                     <color key="textColor" red="0.31372549019607843" green="0.31372549019607843" blue="0.31372549019607843" alpha="1" colorSpace="calibratedRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="bmW-yc-ofp">
+                                    <rect key="frame" x="210" y="16" width="90" height="12"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <animations/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                    <color key="textColor" red="0.31372549020000001" green="0.31372549020000001" blue="0.31372549020000001" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="lGA-Iy-eZg">
@@ -177,6 +188,14 @@
                                     <color key="textColor" red="0.31372549020000001" green="0.31372549020000001" blue="0.31372549020000001" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="a6S-ha-vja">
+                                    <rect key="frame" x="210" y="16" width="90" height="12"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <animations/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                    <color key="textColor" red="0.31372549020000001" green="0.31372549020000001" blue="0.31372549020000001" alpha="1" colorSpace="calibratedRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
                                 <view contentMode="scaleToFill" id="kaw-Up-J8a">
                                     <rect key="frame" x="0.0" y="13" width="0.5" height="15"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -251,6 +270,14 @@
                                     <animations/>
                                     <color key="backgroundColor" red="0.78039215689999997" green="0.78039215689999997" blue="0.78039215689999997" alpha="1" colorSpace="calibratedRGB"/>
                                 </view>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Nb5-3P-6bW">
+                                    <rect key="frame" x="210" y="16" width="90" height="12"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <animations/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                    <color key="textColor" red="0.31372549020000001" green="0.31372549020000001" blue="0.31372549020000001" alpha="1" colorSpace="calibratedRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
                             </subviews>
                             <animations/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>

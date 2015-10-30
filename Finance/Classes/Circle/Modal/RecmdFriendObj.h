@@ -17,5 +17,6 @@
 @property (nonatomic, strong) NSString *area;
 @property (nonatomic, strong) NSString *company;
 @property (nonatomic, strong) NSString *recomfri;
+@property (nonatomic, strong) NSString *title;
 @property (nonatomic, assign) BOOL isFocus;
 @end

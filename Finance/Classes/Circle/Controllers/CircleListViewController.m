@@ -223,6 +223,7 @@ const CGFloat kAdButtomMargin = 20.0f;
             obj.area = [dic valueForKey:@"area"];
             obj.company = [dic valueForKey:@"company"];
             obj.recomfri = [dic valueForKey:@"recomfri"];
+            obj.title = [dic valueForKey:@"title"];
             [weakSelf.recomandArray addObject:obj];
         }
         if(weakSelf.recomandArray && weakSelf.recomandArray.count > 0){
