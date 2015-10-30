@@ -80,7 +80,7 @@
 
     [skipVideoButton sizeToFit];
     CGSize size = skipVideoButton.frame.size;
-    skipVideoButton.frame = CGRectMake(SCREENWIDTH - 1.1f * size.width, size.height, size.width, size.height);
+    skipVideoButton.frame = CGRectMake(SCREENWIDTH - 1.5f * size.width, 0.5 * size.height, size.width, size.height);
     [skipVideoButton addTarget:self action:@selector(clickSkipVideo:) forControlEvents:UIControlEventTouchUpInside];
 
     AVPlayerLayer* playerLayer = [AVPlayerLayer playerLayerWithPlayer:self.player];
