@@ -250,7 +250,9 @@ const CGFloat kAdButtomMargin = 20.0f;
                 [self.dataArr insertObject:self.recomandArray atIndex:3];
             }
         } else{
-            [self.dataArr addObject:self.recomandArray];
+            if(self.recomandArray.count > 0){
+                [self.dataArr addObject:self.recomandArray];
+            }
         }
     }
 }
