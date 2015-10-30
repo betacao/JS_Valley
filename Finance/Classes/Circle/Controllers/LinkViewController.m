@@ -33,31 +33,10 @@
 }
 - (void)loadURL
 {
-    gameWebView = [[UIWebView alloc] init];
+    gameWebView = [[UIWebView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, SCREENWIDTH, SCREENHEIGHT - kNavigationBarHeight - kStatusBarHeight)];
     gameWebView.backgroundColor = [UIColor clearColor];
     gameWebView.delegate = self;
     gameWebView.scalesPageToFit= YES;
-//    gameWebView.sho
-//    //取消滚动条
-//    for (UIView *_aView in [gameWebView subviews])
-//    {
-//        if ([_aView isKindOfClass:[UIScrollView class]])
-//        {
-//            [(UIScrollView *)_aView setShowsVerticalScrollIndicator:NO];
-//            //右侧的滚动条
-//            
-//            [(UIScrollView *)_aView setShowsHorizontalScrollIndicator:NO];
-//            //下侧的滚动条
-//            
-//            for (UIView *_inScrollview in _aView.subviews)
-//            {
-//                if ([_inScrollview isKindOfClass:[UIImageView class]])
-//                {
-//                    _inScrollview.hidden = YES;  //上下滚动出边界时的黑色的图片
-//                }
-//            }
-//        }
-//    }
 
     NSString *Url = (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault,(CFStringRef)self.stringUrl,NULL,NULL,kCFStringEncodingUTF8));
     NSLog(@"Url%@",Url);
@@ -68,6 +47,7 @@
     [gameWebView loadRequest:request];
     [self.view addSubview:gameWebView];
 }
+
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType{
     [Hud showMessageWithText:@"数据加载中..."];
     return YES;
