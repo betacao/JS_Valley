@@ -1416,16 +1416,13 @@ const CGFloat kAdButtomMargin = 20.0f;
     for (id obj in self.dataArr){
         if ([obj isKindOfClass:[CircleListObj class]]){
             CircleListObj *obj1 = (CircleListObj*)obj;
-            if ([obj1.rid isEqualToString:rid]){
+            if ([obj1.userid isEqualToString:rid]){
                 obj1.isattention = atten;
-                break;
             }
-        }else{
-            
         }
     }
     [self.listTable reloadData];
-    
+
 }
 -(void)detailCommentWithRid:(NSString *)rid commentNum:(NSString*)num comments:(NSMutableArray *)comments
 {
