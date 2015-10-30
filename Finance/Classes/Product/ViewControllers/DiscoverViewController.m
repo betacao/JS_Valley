@@ -185,8 +185,7 @@
         vc.hidesBottomBarWhenPushed = YES;
         [MobClick event:@"ProductListViewController" label:@"onClick"];
         [self.navigationController pushViewController:vc animated:YES];
-    }else if (indexPath.section == 1)
-    {
+    } else if (indexPath.section == 1){
         switch (indexPath.row) {
             case 0:
             {
