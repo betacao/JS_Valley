@@ -884,8 +884,7 @@ const CGFloat kAdButtomMargin = 20.0f;
 -(void)deletepostWithObj:(CircleListObj *)obj
 {
     NSString *url = [NSString stringWithFormat:@"%@/%@",rBaseAddressForHttpCircle,@"circle"];
-    NSDictionary *dic = @{@"rid":obj.rid,
-                          @"uid":obj.userid};
+    NSDictionary *dic = @{@"rid":obj.rid, @"uid":obj.userid};
     [[AFHTTPRequestOperationManager manager] DELETE:url parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"%@",responseObject);
         NSString *code = [responseObject valueForKey:@"code"];
@@ -1365,10 +1364,11 @@ const CGFloat kAdButtomMargin = 20.0f;
 
 -(void)detailDeleteWithRid:(NSString *)rid
 {
-    for (id obj in self.dataArr){
+    for (id obj in self.listArray){
         if ([obj isKindOfClass:[CircleListObj class]]){
             CircleListObj *obj1 = (CircleListObj*)obj;
             if ([obj1.rid isEqualToString:rid]){
+                [self.listArray removeObject:obj1];
                 [self.dataArr removeObject:obj1];
                 break;
             }
