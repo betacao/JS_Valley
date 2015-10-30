@@ -226,7 +226,7 @@ const CGFloat kAdButtomMargin = 20.0f;
             [weakSelf.recomandArray addObject:obj];
         }
         if(weakSelf.recomandArray && weakSelf.recomandArray.count > 0){
-            [self insertRecomandArray];
+            [weakSelf insertRecomandArray];
             dispatch_async(dispatch_get_main_queue(), ^(){
                 [weakSelf.listTable reloadData];
             });
