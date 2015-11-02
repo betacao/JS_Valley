@@ -28,7 +28,7 @@
 #define kCommentNum     @"commentNum"
 #define kPraiseNum      @"praiseNum"
 
-@interface CircleDetailViewController : BaseTableViewController<MWPhotoBrowserDelegate,BRCommentViewDelegate,UIScrollViewDelegate,UITextFieldDelegate,ReplyDelegate,CircleActionDelegate>
+@interface CircleDetailViewController : BaseTableViewController<BRCommentViewDelegate,UIScrollViewDelegate,UITextFieldDelegate,ReplyDelegate,CircleActionDelegate>
 @property (weak, nonatomic)     id<CircleActionDelegate> delegate;
 @property (strong, nonatomic)   NSString *rid;
 @property (strong, nonatomic)   CircleListObj *obj;

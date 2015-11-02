@@ -8,7 +8,7 @@
 
 #import "BaseViewController.h"
 
-@interface BaseTableViewController : BaseViewController<UITableViewDataSource,UITableViewDelegate,MWPhotoBrowserDelegate>
+@interface BaseTableViewController : BaseViewController<UITableViewDataSource,UITableViewDelegate>
 
 @property (strong, nonatomic) NSMutableArray *dataArr;
 

@@ -12,15 +12,13 @@
 // Include any system framework and library headers here that should be included in all compilation units.
 // You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
 #import <MagicalRecord/MagicalRecord.h>
-#import "MagicalRecord.h"
+#import <MJRefresh/MJRefresh.h>
+#import <AFNetworking/AFNetworking.h>
+#import <Mantle/Mantle.h>
 #import "MobClick.h"
 #import "Constant.h"
 #import "EaseMob.h"
-#import "CocoaLumberjack.h"
-#import "DDlog.h"
-#import "AFNetworking.h"
 #import "MBProgressHUD.h"
-#import "MWPhotoBrowser.h"
 #import "UIImageView+WebCache.h"
 #import <MessageUI/MessageUI.h>
 #import "BaseNavigationController.h"
@@ -34,7 +32,6 @@
 #import "ZSYPopoverListView.h"
 #import "ZYQAssetPickerController.h"
 #import "CommonMethod.h"
-#import "Mantle.h"
 #import "NSString+Check.h"
 #import "Hud.h"
 #import "NSDictionary+Common.h"

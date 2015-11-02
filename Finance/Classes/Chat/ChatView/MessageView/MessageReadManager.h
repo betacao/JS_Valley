@@ -11,17 +11,13 @@
   */
 
 #import <Foundation/Foundation.h>
-
-#import "MWPhotoBrowser.h"
 #import "MessageModel.h"
 
 typedef void (^FinishBlock)(BOOL success);
 typedef void (^PlayBlock)(BOOL playing, MessageModel *messageModel);
 
 @class EMChatFireBubbleView;
-@interface MessageReadManager : NSObject<MWPhotoBrowserDelegate>
-
-@property (strong, nonatomic) MWPhotoBrowser *photoBrowser;
+@interface MessageReadManager : NSObject
 @property (strong, nonatomic) FinishBlock finishBlock;
 
 @property (strong, nonatomic) MessageModel *audioMessageModel;

@@ -20,48 +20,30 @@ PODS:
   - AFNetworking/UIKit (2.6.1):
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
-  - CocoaLumberjack (2.2.0):
-    - CocoaLumberjack/Default (= 2.2.0)
-    - CocoaLumberjack/Extensions (= 2.2.0)
-  - CocoaLumberjack/Core (2.2.0)
-  - CocoaLumberjack/Default (2.2.0):
-    - CocoaLumberjack/Core
-  - CocoaLumberjack/Extensions (2.2.0):
-    - CocoaLumberjack/Default
-  - DACircularProgress (2.3.1)
   - MagicalRecord (2.3.0)
   - Mantle (2.0.5):
     - Mantle/extobjc (= 2.0.5)
   - Mantle/extobjc (2.0.5)
   - MBProgressHUD (0.9.1)
   - MJRefresh (2.4.12)
-  - MWPhotoBrowser (2.1.1):
-    - DACircularProgress (~> 2.3)
-    - MBProgressHUD (~> 0.9)
-    - SDWebImage (!= 3.7.2, ~> 3.7)
   - SDWebImage (3.7.3):
     - SDWebImage/Core (= 3.7.3)
   - SDWebImage/Core (3.7.3)
 
 DEPENDENCIES:
   - AFNetworking
-  - CocoaLumberjack
   - MagicalRecord
   - Mantle
   - MBProgressHUD
   - MJRefresh
-  - MWPhotoBrowser
   - SDWebImage
 
 SPEC CHECKSUMS:
   AFNetworking: 8e4e60500beb8bec644cf575beee72990a76d399
-  CocoaLumberjack: 17fe8581f84914d5d7e6360f7c70022b173c3ae0
-  DACircularProgress: 4dd437c0fc3da5161cb289e07ac449493d41db71
   MagicalRecord: 89eb7d7ead39fb37f01c3d010665ee94d17f8dba
   Mantle: 1912395033f601de5adc8ee91e48f46e4c7051ad
   MBProgressHUD: c47f2c166c126cf2ce36498d80f33e754d4e93ad
   MJRefresh: ca8e9589895977df32d379d46e6b8a5450b3ff44
-  MWPhotoBrowser: ba0d0c09ffda3a7ea10093518738c502c1c7141c
   SDWebImage: 1d2b1a1efda1ade1b00b6f8498865f8ddedc8a84
 
 COCOAPODS: 0.39.0

@@ -10,7 +10,7 @@
 #import "CircleListTableViewCell.h"
 #import "CircleDetailViewController.h"
 #import "CircleSomeOneViewController.h"
-@interface CircleListViewController : BaseTableViewController<CircleListDelegate,BRCommentViewDelegate,CircleActionDelegate,MWPhotoBrowserDelegate>
+@interface CircleListViewController : BaseTableViewController<CircleListDelegate,BRCommentViewDelegate,CircleActionDelegate>
 
 @property (strong ,nonatomic, readonly) UIView *titleView;
 @property (strong ,nonatomic, readonly) UIBarButtonItem *rightBarButtonItem;

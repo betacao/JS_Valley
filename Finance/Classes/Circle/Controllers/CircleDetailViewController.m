@@ -467,28 +467,9 @@
 
     [self.btnNickname setBackgroundImage:[UIImage imageWithColor:BTN_SELECT_BACK_COLOR andSize:nameSize] forState:UIControlStateHighlighted];
 }
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-}
-
--(void)imageTap:(DDTapGestureRecognizer *)ges
-{
-    MWPhotoBrowser *vc = [[MWPhotoBrowser alloc] initWithDelegate:self];
-    NSInteger imageIndex=ges.tag-9999;
-    [vc setCurrentPhotoIndex:imageIndex];
-    BaseNavigationController *nav = [[BaseNavigationController alloc] initWithRootViewController:vc];
-    [ [AppDelegate currentAppdelegate].window.rootViewController presentViewController:nav animated:YES completion:^{
-        
-    }];
-}
-
-#pragma mark - MWPhotoBrowserDelegate
-- (NSUInteger)numberOfPhotosInPhotoBrowser:(MWPhotoBrowser *)photoBrowser{
-    
-    return self.obj.photoArr.count;
-}
-- (id )photoBrowser:(MWPhotoBrowser *)photoBrowser photoAtIndex:(NSUInteger)index {
-    return [[MWPhoto alloc] initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,self.obj.photoArr[index]]]];
 }
 
 - (IBAction)actionComment:(id)sender

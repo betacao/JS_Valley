@@ -1068,15 +1068,6 @@ const CGFloat kAdButtomMargin = 20.0f;
     }];
 }
 
-- (void)photosTapWIthIndex:(NSInteger)index imageIndex:(NSInteger)imageIndex
-{
-    photoIndex = index;
-    MWPhotoBrowser *vc = [[MWPhotoBrowser alloc] initWithDelegate:self];
-    BaseNavigationController *nav = [[BaseNavigationController alloc] initWithRootViewController:vc];
-    [vc setCurrentPhotoIndex:imageIndex];
-    [self presentViewController:nav animated:YES completion:nil];
-}
-
 #pragma mark -关注
 - (void)attentionClicked:(CircleListObj *)obj
 {
@@ -1302,18 +1293,6 @@ const CGFloat kAdButtomMargin = 20.0f;
 - (void)cnickCLick:(NSString * )userId name:(NSString *)name
 {
     [self gotoSomeOne:userId name:name];
-}
-
-#pragma mark - MWPhotoBrowserDelegate
-- (NSUInteger)numberOfPhotosInPhotoBrowser:(MWPhotoBrowser *)photoBrowser{
-    CircleListObj *obj =self.dataArr[photoIndex];
-    return obj.photoArr.count;
-}
-
-- (id)photoBrowser:(MWPhotoBrowser *)photoBrowser photoAtIndex:(NSUInteger)index {
-    CircleListObj *obj =self.dataArr[photoIndex];
-    
-    return [[MWPhoto alloc] initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,obj.photoArr[index]]]];
 }
 
 - (void)attentionChanged:(NSNotification *)noti

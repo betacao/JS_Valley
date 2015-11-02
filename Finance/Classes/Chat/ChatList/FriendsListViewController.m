@@ -380,11 +380,8 @@ static NSString * const kCommonFNum			= @"commonnum";
     if (hasMoreData) {
         pageNum ++;
         [self refreshDataSource];
-        
-    }
-    else
-    {
-        [self.tableView.footer noticeNoMoreData];
+    } else{
+        [self.tableView.footer endRefreshingWithNoMoreData];
     }
 }
 
@@ -432,12 +429,8 @@ static NSString * const kCommonFNum			= @"commonnum";
                 hasMoreData = moreData;
                 if (hasMoreData) {
                     [self.tableView reloadData];
-
-                }
-                else
-                {
-                    [_tableView.footer noticeNoMoreData];
-
+                } else{
+                    [_tableView.footer endRefreshingWithNoMoreData];
                 }
 
                 [self.tableView.header endRefreshing];

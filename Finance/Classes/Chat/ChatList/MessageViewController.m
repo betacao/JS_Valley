@@ -157,22 +157,15 @@
 
 -(void)refreshFooter
 {
-    if (hasDataFinished)
-    {
-        [self.tableView.footer noticeNoMoreData];
+    if (hasDataFinished){
+        [self.tableView.footer endRefreshingWithNoMoreData];
         return;
     }
     _target = @"load";
-    
     NSLog(@"refreshFooter");
-    if (self.dataArr.count > 0)
-    {
+    if (self.dataArr.count > 0){
         MessageObj *obj = [self.dataArr lastObject];
         [self requestDataWithTarget:@"load" time:obj.time];
-    }
-    else
-    {
-//        [self requestDataWithTarget:@"first" time:@"-1"];
     }
 }
 

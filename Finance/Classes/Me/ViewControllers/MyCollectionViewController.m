@@ -161,14 +161,11 @@
 
 -(void)refreshFooter
 {
-    
-    if (hasDataFinished)
-    {
-        [self.tableView.footer noticeNoMoreData];
+    if (hasDataFinished){
+        [self.tableView.footer endRefreshingWithNoMoreData];
         return;
     }
-	if (self.dataSource.count > 0)
-	{
+	if (self.dataSource.count > 0){
 		NSString *updateTime = @"";
 		if (self.selectType == 1) {
             [Hud showLoadingWithMessage:@"加载中"];
@@ -176,10 +173,7 @@
 		}else if (self.selectType == 2){
 			[self requestProductListWithTarget:@"load" time:updateTime];
 		}
-	}
-    
-    else
-    {
+	} else{
         [self.tableView.footer endRefreshing];
     }
 }
@@ -506,27 +500,6 @@
         [Hud showMessageWithText:error.domain];
         
     }];
-}
--(void)photosTapWIthIndex:(NSInteger)index imageIndex:(NSInteger)imageIndex
-{
-    photoIndex = index;
-    MWPhotoBrowser *vc = [[MWPhotoBrowser alloc] initWithDelegate:self];
-    BaseNavigationController *nav = [[BaseNavigationController alloc] initWithRootViewController:vc];
-    [vc setCurrentPhotoIndex:imageIndex];
-    [ [AppDelegate currentAppdelegate].window.rootViewController presentViewController:nav animated:YES completion:^{
-        
-    }];
-}
-
-#pragma mark - MWPhotoBrowserDelegate
-- (NSUInteger)numberOfPhotosInPhotoBrowser:(MWPhotoBrowser *)photoBrowser{
-    CircleListObj *obj=self.dataSource[photoIndex];
-    return obj.photoArr.count;
-}
-- (id )photoBrowser:(MWPhotoBrowser *)photoBrowser photoAtIndex:(NSUInteger)index {
-    CircleListObj *obj=self.dataSource[photoIndex];
- 
-    return [[MWPhoto alloc] initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,obj.photoArr[index]]]];
 }
 
 - (void)attentionClicked:(CircleListObj *)obj

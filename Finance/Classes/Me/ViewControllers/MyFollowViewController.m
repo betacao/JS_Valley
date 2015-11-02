@@ -94,7 +94,7 @@
 -(void)refreshFooter
 {
 	if (!self.hasMoreData) {
-        [self.tableView.footer noticeNoMoreData];
+        [self.tableView.footer endRefreshingWithNoMoreData];
 		return;
 	}
 	if (self.dataSource.count > 0)

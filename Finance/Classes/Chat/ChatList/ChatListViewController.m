@@ -155,7 +155,7 @@ static NSString * const kCommonFNum			= @"commonnum";
     }
     else
     {
-        [self.tableView.footer noticeNoMoreData];
+        [self.tableView.footer endRefreshingWithNoMoreData];
     }
 }
 
@@ -925,11 +925,8 @@ static NSString * const kCommonFNum			= @"commonnum";
                 {
                     _tableView.hidden=NO;
                     [self.tableView reloadData];
-                }
-                else
-                {
-                    [_tableView.footer noticeNoMoreData];
-                    
+                } else{
+                    [_tableView.footer endRefreshingWithNoMoreData];
                 }
                 [self.tableView.header endRefreshing];
                 [self.tableView.footer endRefreshing];
@@ -1002,7 +999,7 @@ static NSString * const kCommonFNum			= @"commonnum";
             }
             else
             {
-                [_tableView.footer noticeNoMoreData];
+                [_tableView.footer endRefreshingWithNoMoreData];
                 
             }
             [self.tableView reloadData];

@@ -94,15 +94,6 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
     [self.VImageView sizeToFit];
     self.VImageView.hidden = YES;
     
-    DDTapGestureRecognizer *headGes = [[DDTapGestureRecognizer alloc] initWithTarget:self action:@selector(portraitTap:)];
-    [self.imageHeader addGestureRecognizer:headGes];
-    
-    if (SCREENHEIGHT == 480) {
-        CGRect rect = self.listTable.frame;
-        rect.size.height = self.view.height;
-        self.listTable.frame = rect;
-    }
-    
     //处理tableView左边空白
     if ([self.listTable respondsToSelector:@selector(setSeparatorInset:)]){
         [self.listTable setSeparatorInset:UIEdgeInsetsZero];
@@ -306,26 +297,18 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
 
 -(void)refreshFooter
 {
-    
-    if (hasDataFinished)
-    {
-        [self.listTable.footer noticeNoMoreData];
-        
+    if (hasDataFinished){
+        [self.listTable.footer endRefreshingWithNoMoreData];
         return;
     }
     NSLog(@"refreshFooter");
-    if (self.dataArr.count > 0)
-    {
+    if (self.dataArr.count > 0){
         CircleListObj *obj = [self.dataArr lastObject];
         [self requestDataWithTarget:@"load" time:obj.rid];
         
-    }
-    else
-    {
+    } else{
         [self requestDataWithTarget:@"first" time:@""];
-
     }
-    
 }
 
 - (void)deleteClicked:(CircleListObj *)obj
@@ -906,14 +889,7 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
     [self.listTable reloadData];
     
 }
--(void)imageTap:(DDTapGestureRecognizer *)ges
-{
-    MWPhotoBrowser *vc = [[MWPhotoBrowser alloc] initWithDelegate:self];
-    BaseNavigationController *nav = [[BaseNavigationController alloc] initWithRootViewController:vc];
-    [ [AppDelegate currentAppdelegate].window.rootViewController presentViewController:nav animated:YES completion:^{
-        
-    }];
-}
+
 - (void)cityClicked:(CircleListObj *)obj
 {
     if([obj.postType isEqualToString:@"pc"]){
@@ -976,41 +952,6 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
     }
     
 }
--(void)portraitTap:(DDTapGestureRecognizer *)ges
-{
-    MWPhotoBrowser *vc = [[MWPhotoBrowser alloc] initWithDelegate:self];
-    BaseNavigationController *nav = [[BaseNavigationController alloc] initWithRootViewController:vc];
-    photoArr = @[self.potname];
-    photoIndex = 0;
-    [ [AppDelegate currentAppdelegate].window.rootViewController presentViewController:nav animated:YES completion:^{
-        
-    }];
-}
-
--(void)photosTapWIthIndex:(NSInteger)index imageIndex:(NSInteger) imageIndex
-{
-    CircleListObj *obj =self.dataArr[index];
-    photoIndex = index;
-    photoArr = obj.photoArr;
-    MWPhotoBrowser *vc = [[MWPhotoBrowser alloc] initWithDelegate:self];
-    BaseNavigationController *nav = [[BaseNavigationController alloc] initWithRootViewController:vc];
-    [vc setCurrentPhotoIndex:imageIndex];
-    [ [AppDelegate currentAppdelegate].window.rootViewController presentViewController:nav animated:YES completion:^{
-        
-    }];
-}
-#pragma mark - MWPhotoBrowserDelegate
-- (NSUInteger)numberOfPhotosInPhotoBrowser:(MWPhotoBrowser *)photoBrowser{
-   return photoArr.count;
-    
-}
-
-- (id )photoBrowser:(MWPhotoBrowser *)photoBrowser photoAtIndex:(NSUInteger)index {
-    NSString *url = photoArr[index];
-
-    return [[MWPhoto alloc] initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,url]]];
-}
-
 
 #pragma mark detailDelagte
 

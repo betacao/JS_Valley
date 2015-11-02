@@ -359,7 +359,7 @@
 -(void)refreshFooter
 {
     if (hasDataFinished) {
-        [self.listTable.footer noticeNoMoreData];
+        [self.listTable.footer endRefreshingWithNoMoreData];
         return;
     }
     NSLog(@"freshFooter");
