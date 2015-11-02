@@ -167,15 +167,15 @@
                                  redirectUri:@"https://api.weibo.com/oauth2/default.html"];
     
     //添加QQ应用  注册网址  http://open.qq.com/
-    [ShareSDK connectQZoneWithAppKey:@"1104624210"
-                             appSecret:@"PnZ1JkvJ3qd53uKY"
-                     qqApiInterfaceCls:[QQApiInterface class]
-                       tencentOAuthCls:[TencentOAuth class]];
-    
+//    [ShareSDK connectQZoneWithAppKey:@"1104624210"
+//                             appSecret:@"PnZ1JkvJ3qd53uKY"
+//                     qqApiInterfaceCls:[QQApiInterface class]
+//                       tencentOAuthCls:[TencentOAuth class]];
+
     [ShareSDK connectQQWithQZoneAppKey:@"1104624210"
                      qqApiInterfaceCls:[QQApiInterface class]
                        tencentOAuthCls:[TencentOAuth class]];
-    [ShareSDK connectQQWithAppId:@"1104624210" qqApiCls:[QQApi class]];
+//    [ShareSDK connectQQWithAppId:@"1104624210" qqApiCls:[QQApi class]];
 //    添加微信应用 注册网址 http://open.weixin.qq.com
     [ShareSDK connectWeChatSessionWithAppId:@"wx8868d86915c77c36" appSecret:@"73c0d5f3e3b4844d69c2ea59407ec404" wechatCls:[WXApi class]];
     [ShareSDK connectWeChatTimelineWithAppId:@"wx8868d86915c77c36" appSecret:@"73c0d5f3e3b4844d69c2ea59407ec404" wechatCls:[WXApi class]];

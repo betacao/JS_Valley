@@ -13,7 +13,7 @@
 #import "WXApi.h"
 #import "BindPhoneViewController.h"
 #import "ApplyViewController.h"
-//#import <QZoneConnection/ISSQZoneApp.h>
+#import <QZoneConnection/ISSQZoneApp.h>
 
 #define kButtonMargin 44.0f//第三方按钮之间的距离
 
