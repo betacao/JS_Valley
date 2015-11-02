@@ -390,7 +390,6 @@
 
 -(void)cnickClick:(UIButton *)sender
 {
-    
     NSLog(@"cnickCLick");
     commentOBj *obj = self.dataObj.comments[sender.tag];
     [self.delegate cnickCLick:obj.cid name:obj.cnickname];
@@ -398,35 +397,27 @@
 
 -(void)rnickClick:(UIButton *)sender
 {
-    
     NSLog(@"rnickCLick");
     commentOBj *obj = self.dataObj.comments[sender.tag];
     [self.delegate cnickCLick:obj.rid name:obj.rnickname];
-    
 }
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
     [super setSelected:selected animated:animated];
-    
-    // Configure the view for the selected state
 }
 
 - (IBAction)actionAttention:(id)sender
 {
-    
     if ([self.dataObj.userid isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID]])
     {
         [Hud showMessageWithText:@"不能关注自己"];
         return;
     }
     [self.delegate attentionClicked:self.dataObj];
-    
 }
 - (IBAction)actionComment:(id)sender
 {
-    
     [self.delegate clicked:self.index];
-    // [self.delegate clicked:self.inde]
 }
 - (IBAction)actionPraise:(id)sender
 {
@@ -439,31 +430,29 @@
     [self.delegate shareClicked:self.dataObj];
 }
 
-- (IBAction)actionPull:(id)sender
-{
-    [self.delegate clicked:self.index];
-}
-
--(void)headTap:(DDTapGestureRecognizer *)ges
+- (void)headTap:(DDTapGestureRecognizer *)ges
 {
     [self.delegate headTap:self.index];
 }
--(void)click:(id )ges
+
+- (void)click:(id )ges
 {
     NSLog(@"click");
     [self.delegate clicked:self.index];
 }
--(void)replyClick:(UIButton *)ges
+
+- (void)replyClick:(UIButton *)ges
 {
     [self.delegate replyClicked:self.dataObj commentIndex:ges.tag];
 }
--(void)imageTap:(DDTapGestureRecognizer *)ges
+
+- (void)imageTap:(DDTapGestureRecognizer *)ges
 {
     NSInteger imageIndex=ges.tag-9999;
     [self.delegate photosTapWIthIndex:self.index imageIndex:imageIndex];
 }
 
--(void)linkTap:(DDTapGestureRecognizer *)ges
+- (void)linkTap:(DDTapGestureRecognizer *)ges
 {
     CircleLinkViewController *vc = [[CircleLinkViewController alloc] init];
     vc.link = self.dataObj.linkObj.link;
@@ -481,8 +470,8 @@
 
 - (IBAction)didClickCityName:(id)sender
 {
-    if(self.delegate && [self.delegate respondsToSelector:@selector(cityClicked:)]){
-        [self.delegate cityClicked:self.dataObj];
+    if(self.delegate && [self.delegate respondsToSelector:@selector(moreMessageClicked:)]){
+        [self.delegate moreMessageClicked:self.dataObj];
     }
 }
 

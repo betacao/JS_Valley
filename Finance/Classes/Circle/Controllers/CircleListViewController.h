@@ -14,6 +14,5 @@
 
 @property (strong ,nonatomic, readonly) UIView *titleView;
 @property (strong ,nonatomic, readonly) UIBarButtonItem *rightBarButtonItem;
-@property (strong ,nonatomic, readonly) UIBarButtonItem *leftBarButtonItem;
 
 @end

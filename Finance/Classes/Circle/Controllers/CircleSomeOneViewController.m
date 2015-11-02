@@ -685,7 +685,6 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
     _popupView.detail=@"";
     _popupView.rid = obj.rid;
     [self.navigationController.view addSubview:_popupView];
-    //    [popupView release];
     [_popupView showWithAnimated:YES];
 }
 -(void)shareToSMS:(NSString *)text rid:(NSString *)rid

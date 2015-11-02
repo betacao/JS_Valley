@@ -42,10 +42,8 @@ const CGFloat kAdButtomMargin = 20.0f;
 @property (weak, nonatomic) IBOutlet UITableView *listTable;
 @property (strong, nonatomic) NSMutableArray *arrrr;
 @property (nonatomic, strong) UIView *titleView;
-@property (nonatomic, strong) BRCommentView *popupView;
 @property (nonatomic, strong) CircleListTableViewCell *prototypeCell;
 @property (nonatomic, strong) UIBarButtonItem *rightBarButtonItem;
-@property (nonatomic, strong) UIBarButtonItem *leftBarButtonItem;
 //判断是否已经加载过推荐列表
 @property (strong, nonatomic) NSMutableArray *recomandArray;
 
@@ -301,7 +299,7 @@ const CGFloat kAdButtomMargin = 20.0f;
 {
     if (!_titleView) {
         [self initUI];
-        self.titleView =segmentedControl;
+        self.titleView = segmentedControl;
     }
     
     return _titleView;
@@ -323,15 +321,7 @@ const CGFloat kAdButtomMargin = 20.0f;
     return _rightBarButtonItem;
 }
 
-- (UIBarButtonItem *)leftBarButtonItem
-{
-    if (!_leftBarButtonItem) {
-    }
-    
-    return _leftBarButtonItem;
-}
-
--(void)refreshData
+- (void)refreshData
 {
     __weak typeof(self) weakSelf = self;
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
@@ -520,18 +510,17 @@ const CGFloat kAdButtomMargin = 20.0f;
     segmentedControl.selectedSegmentIndex = 0;
     
     [segmentedControl addTarget:self action:@selector(valueChange:) forControlEvents:UIControlEventValueChanged];
-    
-    self.navigationItem.leftBarButtonItem = nil;
 }
 //发帖
--(void)actionPost:(UIButton *)sender
+- (void)actionPost:(UIButton *)sender
 {
     CircleSendViewController *postVC = [[CircleSendViewController alloc] initWithNibName:@"CircleSendViewController" bundle:nil];
     postVC.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:postVC animated:YES];
 }
+
 //titleView切换
--(void)valueChange:(UISegmentedControl *)seg
+- (void)valueChange:(UISegmentedControl *)seg
 {
     if (seg.selectedSegmentIndex == 0){
         NSLog(@"所有");
@@ -558,12 +547,12 @@ const CGFloat kAdButtomMargin = 20.0f;
     }
     
 }
--(void)chageValue
+- (void)chageValue
 {
     hasRequestFailed = NO;
 }
 
--(void)refreshFooter
+- (void)refreshFooter
 {
     if (hasDataFinished){
         [self.listTable.footer noticeNoMoreData];
@@ -590,19 +579,6 @@ const CGFloat kAdButtomMargin = 20.0f;
         }
     }
     return rid;
-//    NSInteger i = 0;
-//    if([obj isKindOfClass:[CircleListObj class]]){
-//        rid = obj.rid;
-//    }
-//    while (![obj.postType isEqualToString:@"normal"] && i < self){
-//        i++;
-//        obj = self.dataArr[i];
-//        if(![obj isKindOfClass:[CircleListObj class]]){
-//            i++;
-//            obj = self.dataArr[i];
-//        }
-//    }
-//    return obj.rid;
 }
 
 - (NSString *)refreshMinRid
@@ -618,16 +594,6 @@ const CGFloat kAdButtomMargin = 20.0f;
         }
     }
     return rid;
-
-//    NSInteger i = self.dataArr.count - 1;
-//    while (![obj.postType isEqualToString:@"normal"]){
-//        i--;
-//        obj = self.dataArr[i];
-//        if(![obj isKindOfClass:[CircleListObj class]]){
-//            i--;
-//            obj = self.dataArr[i];
-//        }
-//    }
 }
 
 #pragma mark ------ SHGNoticeDelegate ------
@@ -760,11 +726,11 @@ const CGFloat kAdButtomMargin = 20.0f;
     NSLog(@"str======%@",str);
     return  [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str]];
 }
+
 - (BOOL)openURL:(NSURL *)url
 {
     BOOL safariCompatible = [url.scheme isEqualToString:@"http"] || [url.scheme isEqualToString:@"https"] ;
     if (safariCompatible && [[UIApplication sharedApplication] canOpenURL:url]){
-        
         NSLog(@"%@",url);
         [[UIApplication sharedApplication] openURL:url];
         return YES;
@@ -772,6 +738,7 @@ const CGFloat kAdButtomMargin = 20.0f;
         return NO;
     }
 }
+
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     CircleListObj *obj =self.dataArr[indexPath.row];
@@ -847,6 +814,7 @@ const CGFloat kAdButtomMargin = 20.0f;
         }
     }
 }
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -976,105 +944,6 @@ const CGFloat kAdButtomMargin = 20.0f;
 {
     [super viewWillAppear:animated];
     [MobClick event:@"CircleListViewController" label:@"onClick"];
-}
-- (void)commentClicked:(CircleListObj *)obj
-{
-    _popupView = [[BRCommentView alloc] initWithFrame:self.view.bounds superFrame:CGRectZero isController:YES];
-    _popupView.delegate = self;
-    _popupView.fid=@"-1";//评论
-    _popupView.tag = 222;
-    _popupView.detail=@"";
-    _popupView.rid = obj.rid;
-    [self.navigationController.view addSubview:_popupView];
-    [_popupView showWithAnimated:YES];
-}
-
-- (void)commentViewDidComment:(NSString *)comment rid:(NSString *)rid
-{
-    [_popupView hideWithAnimated:YES];
-    NSString *nickName = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_USER_NAME];
-    CircleListObj *rObj = [[CircleListObj alloc] init];
-    for (CircleListObj *obj in self.dataArr) {
-        if ([obj.rid isEqualToString:rid]) {
-            rObj = obj;
-            break;
-        }
-    }
-    NSDictionary *param = @{@"uid":[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID], @"rid":rid, @"fid":@"-1", @"detail":comment};
-    NSString *url = [NSString stringWithFormat:@"%@/%@",rBaseAddressForHttpCircle,@"comments"];
-    [MOCHTTPRequestOperationManager postWithURL:url class:nil parameters:param success:^(MOCHTTPResponse *response)
-     {
-         NSLog(@"%@",response.data);
-         NSString *code = [response.data valueForKey:@"code"];
-         if ([code isEqualToString:@"000"]) {
-             commentOBj *obj = [[commentOBj alloc] init];
-             obj.cnickname = nickName;
-             obj.cdetail = comment;
-             obj.cid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
-             [rObj.comments addObject:obj];
-             rObj.cmmtnum = [NSString stringWithFormat:@"%ld",(long)([rObj.cmmtnum integerValue] + 1)];
-         }
-         [self.listTable reloadData];
-         
-     } failed:^(MOCHTTPResponse *response) {
-         [Hud showMessageWithText:response.errorMessage];
-     }];
-    
-}
-- (void)commentViewDidComment:(NSString *)comment reply:(NSString *) reply fid:(NSString *) fid rid:(NSString *)rid
-{
-    [_popupView hideWithAnimated:YES];
-    NSString *nickName = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_USER_NAME];
-    CircleListObj *rObj = [[CircleListObj alloc] init];
-    for (CircleListObj *obj in self.dataArr) {
-        if ([obj.rid isEqualToString:rid]) {
-            rObj = obj;
-            break;
-        }
-    }
-    commentOBj *cmntObj= [[commentOBj alloc] init];
-    for (commentOBj *cObj in rObj.comments)
-    {
-        if ([cObj.cid isEqualToString:fid]) {
-            cmntObj = cObj;
-            break;
-        }
-    }
-    NSDictionary *param = @{@"uid":[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID], @"rid":rid, @"fid":cmntObj.cid, @"detail":comment};
-    NSString *url = [NSString stringWithFormat:@"%@/%@",rBaseAddressForHttpCircle,@"comments"];
-    [MOCHTTPRequestOperationManager postWithURL:url class:nil parameters:param success:^(MOCHTTPResponse *response) {
-        NSLog(@"%@",response.data);
-        NSString *code = [response.data valueForKey:@"code"];
-        if ([code isEqualToString:@"000"]) {
-            commentOBj *obj = [[commentOBj alloc] init];
-            obj.cnickname = nickName;
-            obj.cdetail = comment;
-            obj.rnickname = cmntObj.cnickname;
-            obj.cid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
-            obj.rid = rid;
-            [rObj.comments addObject:obj];
-            rObj.cmmtnum = [NSString stringWithFormat:@"%ld",(long)([rObj.cmmtnum integerValue] + 1)];
-        }
-        [self.listTable reloadData];
-    } failed:^(MOCHTTPResponse *response) {
-        [Hud showMessageWithText:response.errorMessage];
-    }];
-    
-}
-
-
--(void)replyClicked:(CircleListObj *)obj commentIndex:(NSInteger)index;
-{
-    commentOBj *cmbObj = obj.comments[index];
-    _popupView = [[BRCommentView alloc] initWithFrame:self.view.bounds superFrame:CGRectZero isController:YES];
-    _popupView.delegate = self;
-    _popupView.fid=cmbObj.cid;//评论
-    _popupView.tag = 222;
-    _popupView.detail=@"";
-    _popupView.rid = obj.rid;
-    [self.navigationController.view addSubview:_popupView];
-    //    [popupView release];
-    [_popupView showWithAnimated:YES];
 }
 
 -(void)shareToSMS:(NSString *)text rid:(NSString *)rid
