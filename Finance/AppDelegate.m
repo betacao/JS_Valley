@@ -159,25 +159,16 @@
 {
     [ShareSDK registerApp:KEY_SHARESDK];
     [ShareSDK connectSMS];
-    [ShareSDK connectWeChatWithAppId:@"wx8868d86915c77c36"
-                           appSecret:@"73c0d5f3e3b4844d69c2ea59407ec404"
-                           wechatCls:[WXApi class]];
-    [ShareSDK connectSinaWeiboWithAppKey:@"347846106"
-                                   appSecret:@"50e6c6fa2d245ec2e008e1b8e2aefe71"
-                                 redirectUri:@"https://api.weibo.com/oauth2/default.html"];
-    
-    //添加QQ应用  注册网址  http://open.qq.com/
-//    [ShareSDK connectQZoneWithAppKey:@"1104624210"
-//                             appSecret:@"PnZ1JkvJ3qd53uKY"
-//                     qqApiInterfaceCls:[QQApiInterface class]
-//                       tencentOAuthCls:[TencentOAuth class]];
-
-    [ShareSDK connectQQWithQZoneAppKey:@"1104624210"
-                     qqApiInterfaceCls:[QQApiInterface class]
-                       tencentOAuthCls:[TencentOAuth class]];
-//    [ShareSDK connectQQWithAppId:@"1104624210" qqApiCls:[QQApi class]];
-//    添加微信应用 注册网址 http://open.weixin.qq.com
+    //连接微信
+    [ShareSDK connectWeChatWithAppId:@"wx8868d86915c77c36" appSecret:@"73c0d5f3e3b4844d69c2ea59407ec404" wechatCls:[WXApi class]];
+    //连接微博
+    [ShareSDK connectSinaWeiboWithAppKey:@"347846106" appSecret:@"50e6c6fa2d245ec2e008e1b8e2aefe71" redirectUri:@"https://api.weibo.com/oauth2/default.html"];
+    [ShareSDK connectQZoneWithAppKey:@"1104624210" appSecret:@"PnZ1JkvJ3qd53uKY" qqApiInterfaceCls:[QQApiInterface class] tencentOAuthCls:[TencentOAuth class]];
+    //连接QQ
+    [ShareSDK connectQQWithQZoneAppKey:@"1104624210" qqApiInterfaceCls:[QQApiInterface class] tencentOAuthCls:[TencentOAuth class]];
+    //连接微信好友
     [ShareSDK connectWeChatSessionWithAppId:@"wx8868d86915c77c36" appSecret:@"73c0d5f3e3b4844d69c2ea59407ec404" wechatCls:[WXApi class]];
+    //连接微信朋友圈
     [ShareSDK connectWeChatTimelineWithAppId:@"wx8868d86915c77c36" appSecret:@"73c0d5f3e3b4844d69c2ea59407ec404" wechatCls:[WXApi class]];
     
 }
