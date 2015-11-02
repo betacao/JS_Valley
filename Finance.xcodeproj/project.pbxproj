@@ -255,12 +255,6 @@
 		53F6CFAE1B06C1FD007716E5 /* load_6.png in Resources */ = {isa = PBXBuildFile; fileRef = 53F6CFAD1B06C1FD007716E5 /* load_6.png */; };
 		53F6CFB01B06C404007716E5 /* load_5s.png in Resources */ = {isa = PBXBuildFile; fileRef = 53F6CFAF1B06C404007716E5 /* load_5s.png */; };
 		5610A79F1B41482C00DE2BAF /* GameObj.m in Sources */ = {isa = PBXBuildFile; fileRef = 5610A79E1B41482C00DE2BAF /* GameObj.m */; };
-		564FC1771B5670490033BC8E /* BPBase64.m in Sources */ = {isa = PBXBuildFile; fileRef = 564FC16C1B5670490033BC8E /* BPBase64.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		564FC1781B5670490033BC8E /* BPushClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 564FC16E1B5670490033BC8E /* BPushClass.m */; };
-		564FC1791B5670490033BC8E /* GzipCompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = 564FC1701B5670490033BC8E /* GzipCompressor.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		564FC17A1B5670490033BC8E /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 564FC1721B5670490033BC8E /* JSONKit.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		564FC17B1B5670490033BC8E /* OpenUDID.m in Sources */ = {isa = PBXBuildFile; fileRef = 564FC1741B5670490033BC8E /* OpenUDID.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		564FC17C1B5670490033BC8E /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 564FC1761B5670490033BC8E /* Reachability.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		565136D51B834E2F00894B1D /* RecommendModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 565136D41B834E2F00894B1D /* RecommendModel.m */; };
 		569C6D2F1B7CA9EB00AD59C3 /* BindPhoneViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 569C6D2D1B7CA9EB00AD59C3 /* BindPhoneViewController.m */; };
 		569C6D301B7CA9EB00AD59C3 /* BindPhoneViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 569C6D2E1B7CA9EB00AD59C3 /* BindPhoneViewController.xib */; };
@@ -1200,19 +1194,6 @@
 		53F6CFAF1B06C404007716E5 /* load_5s.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = load_5s.png; sourceTree = "<group>"; };
 		5610A79D1B41482C00DE2BAF /* GameObj.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameObj.h; sourceTree = "<group>"; };
 		5610A79E1B41482C00DE2BAF /* GameObj.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameObj.m; sourceTree = "<group>"; };
-		564FC16A1B5670490033BC8E /* Base64Defines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Base64Defines.h; sourceTree = "<group>"; };
-		564FC16B1B5670490033BC8E /* BPBase64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BPBase64.h; sourceTree = "<group>"; };
-		564FC16C1B5670490033BC8E /* BPBase64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BPBase64.m; sourceTree = "<group>"; };
-		564FC16D1B5670490033BC8E /* BPushClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BPushClass.h; sourceTree = "<group>"; };
-		564FC16E1B5670490033BC8E /* BPushClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BPushClass.m; sourceTree = "<group>"; };
-		564FC16F1B5670490033BC8E /* GzipCompressor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GzipCompressor.h; sourceTree = "<group>"; };
-		564FC1701B5670490033BC8E /* GzipCompressor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GzipCompressor.m; sourceTree = "<group>"; };
-		564FC1711B5670490033BC8E /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONKit.h; sourceTree = "<group>"; };
-		564FC1721B5670490033BC8E /* JSONKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONKit.m; sourceTree = "<group>"; };
-		564FC1731B5670490033BC8E /* OpenUDID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenUDID.h; sourceTree = "<group>"; };
-		564FC1741B5670490033BC8E /* OpenUDID.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OpenUDID.m; sourceTree = "<group>"; };
-		564FC1751B5670490033BC8E /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
-		564FC1761B5670490033BC8E /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		565136D31B834E2F00894B1D /* RecommendModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecommendModel.h; sourceTree = "<group>"; };
 		565136D41B834E2F00894B1D /* RecommendModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecommendModel.m; sourceTree = "<group>"; };
 		569C6D2C1B7CA9EB00AD59C3 /* BindPhoneViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BindPhoneViewController.h; sourceTree = "<group>"; };
@@ -2576,26 +2557,6 @@
 			path = Emoji;
 			sourceTree = "<group>";
 		};
-		564FC1691B5670490033BC8E /* opensource */ = {
-			isa = PBXGroup;
-			children = (
-				564FC16A1B5670490033BC8E /* Base64Defines.h */,
-				564FC16B1B5670490033BC8E /* BPBase64.h */,
-				564FC16C1B5670490033BC8E /* BPBase64.m */,
-				564FC16D1B5670490033BC8E /* BPushClass.h */,
-				564FC16E1B5670490033BC8E /* BPushClass.m */,
-				564FC16F1B5670490033BC8E /* GzipCompressor.h */,
-				564FC1701B5670490033BC8E /* GzipCompressor.m */,
-				564FC1711B5670490033BC8E /* JSONKit.h */,
-				564FC1721B5670490033BC8E /* JSONKit.m */,
-				564FC1731B5670490033BC8E /* OpenUDID.h */,
-				564FC1741B5670490033BC8E /* OpenUDID.m */,
-				564FC1751B5670490033BC8E /* Reachability.h */,
-				564FC1761B5670490033BC8E /* Reachability.m */,
-			);
-			path = opensource;
-			sourceTree = "<group>";
-		};
 		61046C731AE0FF440065F59D /* Recommend */ = {
 			isa = PBXGroup;
 			children = (
@@ -3631,19 +3592,10 @@
 				615010DF1AD61C1800827F82 /* CPTextViewPlaceholder */,
 				615010D51AD61BD700827F82 /* ZSYPopoverListView */,
 				615010D81AD61BD700827F82 /* ZYQAssetPickerController */,
-				61D6E7411AD50FCA0016C13A /* BPush */,
 				61D6E7521AD50FCA0016C13A /* EaseMobSDK */,
 				61D6E7CF1AD50FCB0016C13A /* Mob */,
 			);
 			path = External;
-			sourceTree = "<group>";
-		};
-		61D6E7411AD50FCA0016C13A /* BPush */ = {
-			isa = PBXGroup;
-			children = (
-				564FC1691B5670490033BC8E /* opensource */,
-			);
-			path = BPush;
 			sourceTree = "<group>";
 		};
 		61D6E7521AD50FCA0016C13A /* EaseMobSDK */ = {
@@ -5335,7 +5287,6 @@
 				614AD1C01AD7AFED00DDF43E /* CircleListViewController.m in Sources */,
 				6187D2DD1AF1C693008E1D21 /* DXChatBarMoreView.m in Sources */,
 				40302B1E1AEF657300F22EB6 /* TeamDetailObject.m in Sources */,
-				564FC1781B5670490033BC8E /* BPushClass.m in Sources */,
 				4088DD881AF0EEA200393855 /* SettingsViewController.m in Sources */,
 				614BA7E11AE61C1E009480CD /* ProductListTableViewCell.m in Sources */,
 				40302B041AEF22E800F22EB6 /* BasePeopleObject.m in Sources */,
@@ -5351,10 +5302,8 @@
 				61909FD21AF90D1F0023935F /* ProdSubViewController.m in Sources */,
 				6187D2CC1AF1C693008E1D21 /* CreateGroupViewController.m in Sources */,
 				40302B221AEF673200F22EB6 /* TeamDetailTableViewCell.m in Sources */,
-				564FC17C1B5670490033BC8E /* Reachability.m in Sources */,
 				6187D2F61AF1C693008E1D21 /* EMRemarkImageView.m in Sources */,
 				610FF0761AD6227F0027EBA6 /* Toast+UIView.m in Sources */,
-				564FC1791B5670490033BC8E /* GzipCompressor.m in Sources */,
 				6187D2CA1AF1C693008E1D21 /* ContactSelectionViewController.m in Sources */,
 				6187D2CD1AF1C693008E1D21 /* GroupBansViewController.m in Sources */,
 				569C6D2F1B7CA9EB00AD59C3 /* BindPhoneViewController.m in Sources */,
@@ -5416,7 +5365,6 @@
 				538964D51AFC6BEB00041548 /* UIResponder+Router.m in Sources */,
 				F932E2551B859DEC00EF2332 /* CircleListRecommendViewController.m in Sources */,
 				6187D2E71AF1C693008E1D21 /* EMChatViewCell.m in Sources */,
-				564FC17B1B5670490033BC8E /* OpenUDID.m in Sources */,
 				5331DF1A1AFC017600E035B8 /* AddFriendCell.m in Sources */,
 				6187D2FA1AF1C693008E1D21 /* XHMessageTextView.m in Sources */,
 				4088DDCE1AF105FD00393855 /* SettingQuestionObj.m in Sources */,
@@ -5464,7 +5412,6 @@
 				61D6E7D31AD50FCB0016C13A /* BaseTableViewController.m in Sources */,
 				4088DDD21AF1065100393855 /* SettingQuestionCell.m in Sources */,
 				40D6CC0B1B064122005F61C8 /* ProtocolViewController.m in Sources */,
-				564FC17A1B5670490033BC8E /* JSONKit.m in Sources */,
 				408D8B821AF86CF20055810C /* MyMoneyDetailObject.m in Sources */,
 				615234A01B0DAEBD00011EAC /* DiscovFirstFriendViewController.m in Sources */,
 				40302B271AEF78D400F22EB6 /* VerifyIdentityViewController.m in Sources */,
@@ -5485,7 +5432,6 @@
 				6187D30F1AF1C693008E1D21 /* SRRefreshView.m in Sources */,
 				40302B151AEF5C3500F22EB6 /* AddAddressViewController.m in Sources */,
 				61D62BDF1ADCF328002DD395 /* NSDictionary+Common.m in Sources */,
-				564FC1771B5670490033BC8E /* BPBase64.m in Sources */,
 				6187D2E21AF1C693008E1D21 /* EMChatLocationBubbleView.m in Sources */,
 				6152347D1B0D8C4200011EAC /* DiscoveryTableViewCell.m in Sources */,
 				61425B421AFA7ED600758BCB /* ConfigObj.m in Sources */,
