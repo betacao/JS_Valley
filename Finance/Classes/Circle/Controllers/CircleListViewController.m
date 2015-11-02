@@ -104,6 +104,12 @@ const CGFloat kAdButtomMargin = 20.0f;
     
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [MobClick event:@"CircleListViewController" label:@"onClick"];
+}
+
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
@@ -866,18 +872,16 @@ const CGFloat kAdButtomMargin = 20.0f;
          [Hud showMessageWithText:error.domain];
      }];
 }
+
 #pragma mark -点赞
 - (void)praiseClicked:(CircleListObj *)obj
 {
     NSString *url = [NSString stringWithFormat:@"%@/%@",rBaseAddressForHttpCircle,@"praisesend"];
     NSDictionary *param = @{@"uid":[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID],@"rid":obj.rid};
-    
-    if (![obj.ispraise isEqualToString:@"Y"])
-    {
+    __weak typeof(self)weakSelf = self;
+    if (![obj.ispraise isEqualToString:@"Y"]){
         [Hud showLoadingWithMessage:@"正在点赞"];
-        
-        [MOCHTTPRequestOperationManager postWithURL:url class:nil parameters:param success:^(MOCHTTPResponse *response)
-         {
+        [MOCHTTPRequestOperationManager postWithURL:url class:nil parameters:param success:^(MOCHTTPResponse *response){
              NSLog(@"%@",response.data);
              NSString *code = [response.data valueForKey:@"code"];
              if ([code isEqualToString:@"000"]){
@@ -886,18 +890,14 @@ const CGFloat kAdButtomMargin = 20.0f;
                  [Hud showMessageWithText:@"赞成功"];
              }
              [MobClick event:@"ActionPraiseClicked_On" label:@"onClick"];
-             [self.listTable reloadData];
-             
+             [weakSelf.listTable reloadData];
              [Hud hideHud];
          } failed:^(MOCHTTPResponse *response) {
              [Hud hideHud];
-             
              [Hud showMessageWithText:response.errorMessage];
          }];
-        
     } else{
         [Hud showLoadingWithMessage:@"正在取消点赞"];
-        
         [[AFHTTPRequestOperationManager manager] DELETE:url parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject) {
             NSLog(@"%@",responseObject);
             NSString *code = [responseObject valueForKey:@"code"];
@@ -907,9 +907,8 @@ const CGFloat kAdButtomMargin = 20.0f;
                 [Hud showMessageWithText:@"取消点赞"];
             }
             [MobClick event:@"ActionPraiseClicked_Off" label:@"onClick"];
-            [self.listTable reloadData];
+            [weakSelf.listTable reloadData];
             [Hud hideHud];
-            
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             [Hud showMessageWithText:error.domain];
             [Hud hideHud];
@@ -928,29 +927,24 @@ const CGFloat kAdButtomMargin = 20.0f;
 {
     [self gotoSomeOne:uid name:userName];
 }
+
 #pragma mark -评论
 - (void)clicked:(NSInteger )index;
 {
     CircleDetailViewController *vc = [[CircleDetailViewController alloc] initWithNibName:@"CircleDetailViewController" bundle:nil];
     CircleListObj *obj = self.dataArr[index];
     vc.hidesBottomBarWhenPushed = YES;
-    // vc.obj = obj;
     vc.rid = obj.rid;
     vc.delegate = self;
-    
     [self.navigationController pushViewController:vc animated:YES];
 }
--(void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    [MobClick event:@"CircleListViewController" label:@"onClick"];
-}
 
--(void)shareToSMS:(NSString *)text rid:(NSString *)rid
+- (void)shareToSMS:(NSString *)text rid:(NSString *)rid
 {
     [[AppDelegate currentAppdelegate] sendSmsWithText:text rid:rid];
 }
--(void)shareToWeibo:(NSString *)text rid:(NSString *)rid
+
+- (void)shareToWeibo:(NSString *)text rid:(NSString *)rid
 {
     [[AppDelegate currentAppdelegate] sendmessageToShareWithObjContent:text rid:rid];
 }
@@ -973,17 +967,12 @@ const CGFloat kAdButtomMargin = 20.0f;
         shareTitle = obj.detail;
         shareContent = obj.detail;
     }
-    if (obj.detail.length > 15)
-    {
+    if (obj.detail.length > 15){
         postContent = [NSString stringWithFormat:@"%@…",[obj.detail substringToIndex:15]];
     }
-    if (obj.detail.length > 15)
-    {
-        
+    if (obj.detail.length > 15){
         shareTitle = [obj.detail substringToIndex:15];
-        
         shareContent = [NSString stringWithFormat:@"%@…",[obj.detail substringToIndex:15]];
-        
     }
     NSString *content = [NSString stringWithFormat:@"%@\"%@\"%@%@",@"Hi，我在金融大牛圈上看到了一个非常棒的帖子,关于",postContent,@"，赶快下载大牛圈查看吧！",[NSString stringWithFormat:@"%@%@",rBaseAddressForHttpShare,obj.rid]];
     id<ISSShareActionSheetItem> item1 = [ShareSDK shareActionSheetItemWithTitle:@"动态" icon:[UIImage imageNamed:@"圈子图标"] clickHandler:^{
@@ -1015,22 +1004,18 @@ const CGFloat kAdButtomMargin = 20.0f;
     
     //弹出分享菜单
     [ShareSDK showShareActionSheet:container shareList:shareList content:publishContent statusBarTips:YES authOptions:nil shareOptions:nil result:^(ShareType type, SSResponseState state, id<ISSPlatformShareInfo> statusInfo, id<ICMErrorInfo> error, BOOL end) {
-        if (state == SSResponseStateSuccess)
-        {
+        if (state == SSResponseStateSuccess){
             [self otherShareWithObj:obj];
-            
             NSLog(NSLocalizedString(@"TEXT_ShARE_SUC", @"分享成功"));
-        }
-        else if (state == SSResponseStateFail)
-        {
+        } else if (state == SSResponseStateFail){
             NSLog(NSLocalizedString(@"TEXT_ShARE_FAI", @"分享失败,错误码:%d,错误描述:%@"), [error errorCode], [error errorDescription]);
             [Hud showMessageWithText:@"请您先安装手机QQ再分享动态"];
         }
     }];
-    [self.listTable reloadData];
     
 }
--(void)shareToFriendWithObj:(CircleListObj *)obj
+
+- (void)shareToFriendWithObj:(CircleListObj *)obj
 {
     NSString *shareText = [NSString stringWithFormat:@"转自:%@的帖子：%@",obj.nickname,obj.detail];
     FriendsListViewController *vc=[[FriendsListViewController alloc] init];
@@ -1050,12 +1035,9 @@ const CGFloat kAdButtomMargin = 20.0f;
     }
     NSDictionary *param = @{@"uid":uid,@"currCity":cityName};
     
-    [MOCHTTPRequestOperationManager postWithURL:url class:nil parameters:param success:^(MOCHTTPResponse *response)
-     {
-         
+    [MOCHTTPRequestOperationManager postWithURL:url class:nil parameters:param success:^(MOCHTTPResponse *response){
          NSString *code = [response.data valueForKey:@"code"];
-         if ([code isEqualToString:@"000"])
-         {
+         if ([code isEqualToString:@"000"]){
              obj.sharenum = [NSString stringWithFormat:@"%ld",(long)([obj.sharenum integerValue] + 1)];
              [self.listTable reloadData];
              [Hud showMessageWithText:@"分享成功"];
@@ -1085,7 +1067,8 @@ const CGFloat kAdButtomMargin = 20.0f;
         
     }];
 }
--(void)photosTapWIthIndex:(NSInteger)index imageIndex:(NSInteger)imageIndex
+
+- (void)photosTapWIthIndex:(NSInteger)index imageIndex:(NSInteger)imageIndex
 {
     photoIndex = index;
     MWPhotoBrowser *vc = [[MWPhotoBrowser alloc] initWithDelegate:self];
@@ -1093,6 +1076,7 @@ const CGFloat kAdButtomMargin = 20.0f;
     [vc setCurrentPhotoIndex:imageIndex];
     [self presentViewController:nav animated:YES completion:nil];
 }
+
 #pragma mark -关注
 - (void)attentionClicked:(CircleListObj *)obj
 {
@@ -1231,7 +1215,7 @@ const CGFloat kAdButtomMargin = 20.0f;
 
 #pragma mark detailDelagte
 
--(void)detailDeleteWithRid:(NSString *)rid
+- (void)detailDeleteWithRid:(NSString *)rid
 {
     for (id obj in self.listArray){
         if ([obj isKindOfClass:[CircleListObj class]]){
@@ -1239,22 +1223,17 @@ const CGFloat kAdButtomMargin = 20.0f;
             if ([obj1.rid isEqualToString:rid]){
                 [self.listArray removeObject:obj1];
                 [self.dataArr removeObject:obj1];
+                [self.listTable reloadData];
                 break;
             }
-        }else{
-            
         }
     }
-    [self.listTable reloadData];
-    
 }
 
--(void)detailPraiseWithRid:(NSString *)rid praiseNum:(NSString *)num isPraised:(NSString *)isPrased
+- (void)detailPraiseWithRid:(NSString *)rid praiseNum:(NSString *)num isPraised:(NSString *)isPrased
 {
-    for (CircleListObj *obj in self.dataArr)
-    {
-        if ([obj isKindOfClass:[CircleListObj class]] && [obj.rid isEqualToString:rid])
-        {
+    for (CircleListObj *obj in self.dataArr){
+        if ([obj isKindOfClass:[CircleListObj class]] && [obj.rid isEqualToString:rid]){
             obj.praisenum = num;
             obj.ispraise = isPrased;
             break;
@@ -1264,7 +1243,7 @@ const CGFloat kAdButtomMargin = 20.0f;
     [self.listTable reloadData];
 }
 
--(void)detailShareWithRid:(NSString *)rid shareNum:(NSString *)num
+- (void)detailShareWithRid:(NSString *)rid shareNum:(NSString *)num
 {
     for (id obj in self.dataArr){
         if ([obj isKindOfClass:[CircleListObj class]]){
@@ -1280,7 +1259,7 @@ const CGFloat kAdButtomMargin = 20.0f;
     [self.listTable reloadData];
     
 }
--(void)detailAttentionWithRid:(NSString *)rid attention:(NSString *)atten
+- (void)detailAttentionWithRid:(NSString *)rid attention:(NSString *)atten
 {
     for (id obj in self.dataArr){
         if ([obj isKindOfClass:[CircleListObj class]]){
@@ -1327,46 +1306,44 @@ const CGFloat kAdButtomMargin = 20.0f;
 
 #pragma mark - MWPhotoBrowserDelegate
 - (NSUInteger)numberOfPhotosInPhotoBrowser:(MWPhotoBrowser *)photoBrowser{
-    
     CircleListObj *obj =self.dataArr[photoIndex];
     return obj.photoArr.count;
-    
 }
 
-- (id )photoBrowser:(MWPhotoBrowser *)photoBrowser photoAtIndex:(NSUInteger)index {
+- (id)photoBrowser:(MWPhotoBrowser *)photoBrowser photoAtIndex:(NSUInteger)index {
     CircleListObj *obj =self.dataArr[photoIndex];
     
     return [[MWPhoto alloc] initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,obj.photoArr[index]]]];
 }
 
--(void)attentionChanged:(NSNotification *)noti
+- (void)attentionChanged:(NSNotification *)noti
 {
     CircleListObj *obj = noti.object;
     [self detailAttentionWithRid:obj.userid attention:obj.isattention];
 }
 
--(void)commentsChanged:(NSNotification *)noti
+- (void)commentsChanged:(NSNotification *)noti
 {
     CircleListObj *obj = noti.object;
     [self detailCommentWithRid:obj.rid commentNum:obj.cmmtnum comments:obj.comments];
 }
 
 
--(void)praiseChanged:(NSNotification *)noti
+- (void)praiseChanged:(NSNotification *)noti
 {
     CircleListObj *obj = noti.object;
     [self detailPraiseWithRid:obj.rid praiseNum:obj.praisenum isPraised:obj.ispraise];
 }
 
--(void)shareChanged:(NSNotification *)noti
+- (void)shareChanged:(NSNotification *)noti
 {
     CircleListObj *obj = noti.object;
     [self detailShareWithRid:obj.rid shareNum:obj.sharenum];
 }
--(void)deleteChanged:(NSNotification *)noti
+
+- (void)deleteChanged:(NSNotification *)noti
 {
     CircleListObj *obj = noti.object;
-    
     [self detailDeleteWithRid:obj.rid];
 }
 
