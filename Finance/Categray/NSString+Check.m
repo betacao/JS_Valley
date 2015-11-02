@@ -221,42 +221,29 @@
 
 - (CGSize) sizeForFont:(UIFont *)font
 {
-    if ([self respondsToSelector:@selector(sizeWithAttributes:)])
-    {
-        NSDictionary* attribs = @{NSFontAttributeName:font};
-        return ([self sizeWithAttributes:attribs]);
-    }
-    return ([self sizeWithFont:font]);
+    NSDictionary* attribs = @{NSFontAttributeName:font};
+    return ([self sizeWithAttributes:attribs]);
     // return
 }
 
-- (CGSize) sizeForFont:(UIFont*)font
-     constrainedToSize:(CGSize)constraint
-         lineBreakMode:(NSLineBreakMode)lineBreakMode
+- (CGSize) sizeForFont:(UIFont*)font constrainedToSize:(CGSize)constraint lineBreakMode:(NSLineBreakMode)lineBreakMode
 {
-    CGSize size;
-    if ([self respondsToSelector:@selector(sizeWithAttributes:)])
-    {
-        NSDictionary *attributes = @{NSFontAttributeName:font};
-        
-        CGSize boundingBox = [self boundingRectWithSize:constraint options: NSStringDrawingUsesLineFragmentOrigin attributes:attributes context:nil].size;
-        
-        size = CGSizeMake(ceil(boundingBox.width), ceil(boundingBox.height));
-    }
-    else
-    {
-        size = [self sizeWithFont:font constrainedToSize:constraint lineBreakMode:lineBreakMode];
-    }
-    
+    CGSize size = CGSizeZero;
+    NSDictionary *attributes = @{NSFontAttributeName:font};
+
+    CGSize boundingBox = [self boundingRectWithSize:constraint options: NSStringDrawingUsesLineFragmentOrigin attributes:attributes context:nil].size;
+
+    size = CGSizeMake(ceil(boundingBox.width), ceil(boundingBox.height));
+
     return size;
 }
 
 - (CGSize)sizeWithSize:(CGSize)size font:(UIFont *)font;
 {
-    CGRect rect = [self boundingRectWithSize:size//限制最大的宽度和高度
-                                       options:NSStringDrawingTruncatesLastVisibleLine | NSStringDrawingUsesFontLeading  |NSStringDrawingUsesLineFragmentOrigin//采用换行模式
-                                    attributes:@{NSFontAttributeName: font}//传人的字体字典
-                                       context:nil];
+    //限制最大的宽度和高度
+    //采用换行模式
+    //传人的字体字典
+    CGRect rect = [self boundingRectWithSize:size options:NSStringDrawingTruncatesLastVisibleLine | NSStringDrawingUsesFontLeading | NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName: font} context:nil];
     return rect.size;
 }
 
@@ -265,29 +252,14 @@
     CGSize actualsize;
     if(IsStrEmpty(text))
     {
-        
-    }
-    else
-    {
-        if([self respondsToSelector:@selector(sizeWithAttributes:)])
-        {
-            //    获取当前文本的属性
-            NSDictionary * tdic = [NSDictionary dictionaryWithObjectsAndKeys:font,NSFontAttributeName,nil];
-            
-            //ios7方法，获取文本需要的size，限制宽度
-            actualsize =[text boundingRectWithSize:actualsize options:NSStringDrawingUsesLineFragmentOrigin  attributes:tdic context:nil].size;
-            NSAttributedString *attributedText = [[NSAttributedString alloc]
-                                                  initWithString:text
-                                                  attributes:@{NSFontAttributeName:font}];
-            actualsize = [attributedText boundingRectWithSize:size
-                                                      options:NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading
-                                                      context:nil].size;
-        }
-        else
-        {
-            // ios7之前使用方法获取文本需要的size，7.0已弃用下面的方法。此方法要求font，与breakmode与之前设置的完全一致
-            actualsize = [text sizeWithFont:font constrainedToSize:size lineBreakMode:NSLineBreakByWordWrapping];
-        }
+        return CGSizeZero;
+    } else{
+        //    获取当前文本的属性
+        NSDictionary * tdic = [NSDictionary dictionaryWithObjectsAndKeys:font,NSFontAttributeName,nil];
+        //ios7方法，获取文本需要的size，限制宽度
+        actualsize =[text boundingRectWithSize:actualsize options:NSStringDrawingUsesLineFragmentOrigin  attributes:tdic context:nil].size;
+        NSAttributedString *attributedText = [[NSAttributedString alloc] initWithString:text attributes:@{NSFontAttributeName:font}];
+        actualsize = [attributedText boundingRectWithSize:size options:NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading context:nil].size;
         return actualsize;
     }
     return CGSizeZero;

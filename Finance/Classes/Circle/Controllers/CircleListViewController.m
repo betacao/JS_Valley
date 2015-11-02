@@ -561,7 +561,7 @@ const CGFloat kAdButtomMargin = 20.0f;
 - (void)refreshFooter
 {
     if (hasDataFinished){
-        [self.listTable.footer noticeNoMoreData];
+        [self.listTable.footer endRefreshingWithNoMoreData];
         return;
     }
     _target = @"load";
