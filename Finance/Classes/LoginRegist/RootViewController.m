@@ -7,7 +7,7 @@
 //
 
 #import "RootViewController.h"
-#import "MagicalRecord+Setup.h"
+//#import "MagicalRecord+Setup.h"
 #import "ApplyViewController.h"
 #import "LoginViewController.h"
 #import "ImproveMatiralViewController.h"

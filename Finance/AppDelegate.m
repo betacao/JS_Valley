@@ -17,14 +17,10 @@
 #import "ProdConsulutionViewController.h"
 #import "MeViewController.h"
 #import "CircleDetailViewController.h"
-#import "MagicalRecord+Setup.h"
 #import "ApplyViewController.h"
 #import "CircleDetailViewController.h"
-#import "WXApi.h"
 #import "UncaughtExceptionHandler.h"
 #import "MessageViewController.h"
-#import <TencentOpenAPI/QQApiInterface.h>
-#import <TencentOpenAPI/TencentOAuth.h>
 #import "MeViewController.h"
 #import "CircleSomeOneViewController.h"
 #import "VerifyIdentityViewController.h"
