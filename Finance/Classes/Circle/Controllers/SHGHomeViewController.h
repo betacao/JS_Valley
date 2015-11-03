@@ -1,5 +1,5 @@
 //
-//  CircleListViewController.h
+//  SHGHomeViewController.h
 //  Finance
 //
 //  Created by HuMin on 15/4/10.
@@ -10,7 +10,7 @@
 #import "SHGHomeTableViewCell.h"
 #import "CircleDetailViewController.h"
 #import "CircleSomeOneViewController.h"
-@interface CircleListViewController : BaseTableViewController<CircleListDelegate,BRCommentViewDelegate,CircleActionDelegate>
+@interface SHGHomeViewController : BaseTableViewController<CircleListDelegate,BRCommentViewDelegate,CircleActionDelegate>
 
 @property (strong ,nonatomic, readonly) UIView *titleView;
 @property (strong ,nonatomic, readonly) UIBarButtonItem *rightBarButtonItem;

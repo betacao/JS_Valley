@@ -332,8 +332,8 @@
 		614AD1AE1AD7AC4D00DDF43E /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 614AD1A91AD7AC4D00DDF43E /* LoginViewController.xib */; };
 		614AD1AF1AD7AC4D00DDF43E /* RegistViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 614AD1AB1AD7AC4D00DDF43E /* RegistViewController.m */; };
 		614AD1B01AD7AC4D00DDF43E /* RegistViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 614AD1AC1AD7AC4D00DDF43E /* RegistViewController.xib */; };
-		614AD1C01AD7AFED00DDF43E /* CircleListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 614AD1BC1AD7AFED00DDF43E /* CircleListViewController.m */; };
-		614AD1C11AD7AFED00DDF43E /* CircleListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 614AD1BD1AD7AFED00DDF43E /* CircleListViewController.xib */; };
+		614AD1C01AD7AFED00DDF43E /* SHGHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 614AD1BC1AD7AFED00DDF43E /* SHGHomeViewController.m */; };
+		614AD1C11AD7AFED00DDF43E /* SHGHomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 614AD1BD1AD7AFED00DDF43E /* SHGHomeViewController.xib */; };
 		614AD1CD1AD7CCD900DDF43E /* edit@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 614AD1CA1AD7CCD900DDF43E /* edit@2x.png */; };
 		614AD1CE1AD7CCD900DDF43E /* edit@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 614AD1CB1AD7CCD900DDF43E /* edit@3x.png */; };
 		614BA7DC1AE5E96C009480CD /* LoginNextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 614BA7DA1AE5E96C009480CD /* LoginNextViewController.m */; };
@@ -1312,9 +1312,9 @@
 		614AD1AA1AD7AC4D00DDF43E /* RegistViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegistViewController.h; sourceTree = "<group>"; };
 		614AD1AB1AD7AC4D00DDF43E /* RegistViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegistViewController.m; sourceTree = "<group>"; };
 		614AD1AC1AD7AC4D00DDF43E /* RegistViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RegistViewController.xib; sourceTree = "<group>"; };
-		614AD1BB1AD7AFED00DDF43E /* CircleListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CircleListViewController.h; sourceTree = "<group>"; };
-		614AD1BC1AD7AFED00DDF43E /* CircleListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CircleListViewController.m; sourceTree = "<group>"; };
-		614AD1BD1AD7AFED00DDF43E /* CircleListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CircleListViewController.xib; sourceTree = "<group>"; };
+		614AD1BB1AD7AFED00DDF43E /* SHGHomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGHomeViewController.h; sourceTree = "<group>"; };
+		614AD1BC1AD7AFED00DDF43E /* SHGHomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGHomeViewController.m; sourceTree = "<group>"; };
+		614AD1BD1AD7AFED00DDF43E /* SHGHomeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGHomeViewController.xib; sourceTree = "<group>"; };
 		614AD1CA1AD7CCD900DDF43E /* edit@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "edit@2x.png"; sourceTree = "<group>"; };
 		614AD1CB1AD7CCD900DDF43E /* edit@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "edit@3x.png"; sourceTree = "<group>"; };
 		614BA7D91AE5E96C009480CD /* LoginNextViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginNextViewController.h; sourceTree = "<group>"; };
@@ -2853,9 +2853,9 @@
 		614AD1BA1AD7AFED00DDF43E /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				614AD1BB1AD7AFED00DDF43E /* CircleListViewController.h */,
-				614AD1BC1AD7AFED00DDF43E /* CircleListViewController.m */,
-				614AD1BD1AD7AFED00DDF43E /* CircleListViewController.xib */,
+				614AD1BB1AD7AFED00DDF43E /* SHGHomeViewController.h */,
+				614AD1BC1AD7AFED00DDF43E /* SHGHomeViewController.m */,
+				614AD1BD1AD7AFED00DDF43E /* SHGHomeViewController.xib */,
 				6153B9451ADFB4CA0015F6E1 /* CircleSendViewController.h */,
 				6153B9461ADFB4CA0015F6E1 /* CircleSendViewController.m */,
 				6153B9471ADFB4CA0015F6E1 /* CircleSendViewController.xib */,
@@ -5092,7 +5092,7 @@
 				61E83CE61AF7C78E00703651 /* 短信图标@2x.png in Resources */,
 				61E83D211AF7C78E00703651 /* 行业选中图标@2x.png in Resources */,
 				61E83CEC1AF7C78E00703651 /* 加关注@2x.png in Resources */,
-				614AD1C11AD7AFED00DDF43E /* CircleListViewController.xib in Resources */,
+				614AD1C11AD7AFED00DDF43E /* SHGHomeViewController.xib in Resources */,
 				408D8B621AF8618C0055810C /* chatBar_more_locationSelected@2x.png in Resources */,
 				408D8B0B1AF8618C0055810C /* VoiceSearchFeedback012.png in Resources */,
 				615010DD1AD61BD700827F82 /* ZYQAssetPicker.Bundle in Resources */,
@@ -5302,7 +5302,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6187D2F91AF1C693008E1D21 /* EMSearchDisplayController.m in Sources */,
-				614AD1C01AD7AFED00DDF43E /* CircleListViewController.m in Sources */,
+				614AD1C01AD7AFED00DDF43E /* SHGHomeViewController.m in Sources */,
 				6187D2DD1AF1C693008E1D21 /* DXChatBarMoreView.m in Sources */,
 				40302B1E1AEF657300F22EB6 /* TeamDetailObject.m in Sources */,
 				4088DD881AF0EEA200393855 /* SettingsViewController.m in Sources */,

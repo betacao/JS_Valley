@@ -7,7 +7,7 @@
 //
 
 #import "LoginNextViewController.h"
-#import "CircleListViewController.h"
+#import "SHGHomeViewController.h"
 #import "ApplyViewController.h"
 
 @interface LoginNextViewController ()

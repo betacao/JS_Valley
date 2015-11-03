@@ -7,7 +7,7 @@
 //
 
 #import "TabBarViewController.h"
-#import "CircleListViewController.h"
+#import "SHGHomeViewController.h"
 #import "ProductListViewController.h"
 #import "MeViewController.h"
 #import "ChatListViewController.h"
@@ -26,7 +26,7 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     BOOL isShowSearchbar;
 }
 
-@property (nonatomic, strong) CircleListViewController *circle;
+@property (nonatomic, strong) SHGHomeViewController *circle;
 @property (nonatomic, strong) DiscoverViewController *prod;
 @property (nonatomic, strong) MeViewController *me;
 @property (nonatomic, strong) ChatListViewController *chat;
@@ -233,7 +233,7 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
         self.navigationItem.titleView = self.circle.titleView;
         self.navigationItem.leftBarButtonItem=nil;
         self.navigationItem.rightBarButtonItems=@[self.circle.rightBarButtonItem];
-        [MobClick event:@"CircleListViewController" label:@"onClick"];
+        [MobClick event:@"SHGHomeViewController" label:@"onClick"];
     }else if (item.tag == 2000)
     {
         self.navigationItem.titleView = self.chat.titleView;
@@ -321,11 +321,11 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     }
 }
 
--(CircleListViewController *)circle
+-(SHGHomeViewController *)circle
 {
     if (!_circle)
     {
-        _circle = [[CircleListViewController alloc]initWithNibName:@"CircleListViewController" bundle:nil];
+        _circle = [[SHGHomeViewController alloc]initWithNibName:@"SHGHomeViewController" bundle:nil];
     }
     return _circle;
 }

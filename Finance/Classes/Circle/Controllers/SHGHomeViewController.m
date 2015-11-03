@@ -1,12 +1,12 @@
 //
-//  CircleListViewController.m
+//  SHGHomeViewController.m
 //  Finance
 //
 //  Created by HuMin on 15/4/10.
 //  Copyright (c) 2015年 HuMin. All rights reserved.
 //
 
-#import "CircleListViewController.h"
+#import "SHGHomeViewController.h"
 #import "CircleListObj.h"
 #import "CircleSendViewController.h"
 #import "CircleSomeOneViewController.h"
@@ -27,7 +27,7 @@
 const CGFloat kAdTableViewCellHeight = 191.0f;
 const CGFloat kAdButtomMargin = 20.0f;
 
-@interface CircleListViewController ()<MLEmojiLabelDelegate,CLLocationManagerDelegate,CircleActionDelegate,SHGNoticeDelegate>
+@interface SHGHomeViewController ()<MLEmojiLabelDelegate,CLLocationManagerDelegate,CircleActionDelegate,SHGNoticeDelegate>
 {
     NSString *_target;
     NSInteger photoIndex;
@@ -61,7 +61,7 @@ const CGFloat kAdButtomMargin = 20.0f;
 @property (assign, nonatomic) BOOL shouldDisplayRecommend;
 @end
 
-@implementation CircleListViewController
+@implementation SHGHomeViewController
 -(id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -107,7 +107,7 @@ const CGFloat kAdButtomMargin = 20.0f;
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [MobClick event:@"CircleListViewController" label:@"onClick"];
+    [MobClick event:@"SHGHomeViewController" label:@"onClick"];
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -262,7 +262,7 @@ const CGFloat kAdButtomMargin = 20.0f;
 
 - (void)getAllInfo
 {
-    __block __weak CircleListViewController *wself = self;
+    __block __weak SHGHomeViewController *wself = self;
     [[CCLocationManager shareLocation] getCity:^{
         NSString *cityName = [SHGGloble sharedGloble].cityName;
         if(cityName && cityName.length > 0){
@@ -641,7 +641,7 @@ const CGFloat kAdButtomMargin = 20.0f;
                 NSString *cellIdentifier = @"circleListIdentifier";
                 SHGHomeTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
                 if (!cell){
-                    cell = [[[NSBundle mainBundle] loadNibNamed:@"CircleListTableViewCell" owner:self options:nil] lastObject];
+                    cell = [[[NSBundle mainBundle] loadNibNamed:@"SHGHomeTableViewCell" owner:self options:nil] lastObject];
                     cell.selectionStyle = UITableViewCellSelectionStyleNone;
                 }
                 cell.index = indexPath.row;

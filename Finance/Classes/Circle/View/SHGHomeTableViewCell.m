@@ -1,5 +1,5 @@
 //
-//  CircleListTableViewCell.m
+//  SHGHomeTableViewCell.m
 //  Finance
 //
 //  Created by HuMin on 15/4/13.

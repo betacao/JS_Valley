@@ -21,7 +21,7 @@
 #import "AppDelegate.h"
 #import "CircleListObj.h"
 #import "CircleSomeOneViewController.h"
-#import "CircleListViewController.h"
+#import "SHGHomeViewController.h"
 #import "ReplyTableViewCell.h"
 
 #define kShareNum       @"shareNum"

@@ -8,7 +8,7 @@
 
 #import "AppDelegate.h"
 #import "MOCHTTPRequestOperationManager.h"
-#import "CircleListViewController.h"
+#import "SHGHomeViewController.h"
 #import "ChatListViewController.h"
 #import "ContactSelectionViewController.h"
 #import "AppDelegate+EaseMob.h"

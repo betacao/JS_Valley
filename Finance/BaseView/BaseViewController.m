@@ -7,7 +7,7 @@
 //
 
 #import "BaseViewController.h"
-#import "CircleListViewController.h"
+#import "SHGHomeViewController.h"
 #import "ProductListViewController.h"
 #import "MeViewController.h"
 #import "ChatListViewController.h"
@@ -37,24 +37,8 @@
     [tapGes setCancelsTouchesInView:NO];
     [self.view addGestureRecognizer:tapGes];
     self.view.userInteractionEnabled = YES;
-
-
-    // Do any additional setup after loading the view.
 }
-//-(void)viewWillAppear:(BOOL)animated
-//{
-//    if (![self isKindOfClass:[CircleListViewController class]]||
-//        ![self isKindOfClass:[ProductListViewController class]]||
-//        ![self isKindOfClass:[ChatListViewController class]]||
-//        ![self isKindOfClass:[MeViewController class]])
-//    {
-//        self.hidesBottomBarWhenPushed = YES;
-//    }
-//    else
-//    {
-//        self.hidesBottomBarWhenPushed = NO;
-//    }
-//}
+
 -(void)initUI
 {
     UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];

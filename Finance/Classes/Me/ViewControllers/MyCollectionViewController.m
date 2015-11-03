@@ -671,7 +671,7 @@
             static NSString *cellIdentifier = @"circleListIdentifier";
             SHGHomeTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
             if (!cell) {
-                cell = [[[NSBundle mainBundle] loadNibNamed:@"CircleListTableViewCell" owner:self options:nil] lastObject];
+                cell = [[[NSBundle mainBundle] loadNibNamed:@"SHGHomeTableViewCell" owner:self options:nil] lastObject];
             }
             cell.index = indexPath.row;
             cell.delegate = self;
