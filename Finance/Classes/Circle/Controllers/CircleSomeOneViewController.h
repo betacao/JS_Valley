@@ -7,7 +7,7 @@
 //
 
 #import "BaseTableViewController.h"
-#import "CircleListTableViewCell.h"
+#import "SHGHomeTableViewCell.h"
 #import "CircleListObj.h"
 #import "CircleDetailViewController.h"
 #import "ChatViewController.h"

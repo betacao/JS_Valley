@@ -6,14 +6,14 @@
 //  Copyright (c) 2015年 HuMin. All rights reserved.
 // 15.8   21  8.5  2.8
 
-#import "CircleListTableViewCell.h"
+#import "SHGHomeTableViewCell.h"
 #import "MLEmojiLabel.h"
 #import "SDPhotoGroup.h"
 #import "SDPhotoItem.h"
 #define kItemMargin 7.0f * XFACTOR
 
 
-@interface CircleListTableViewCell()<MLEmojiLabelDelegate>
+@interface SHGHomeTableViewCell()<MLEmojiLabelDelegate>
 
 //删除按钮
 @property (weak, nonatomic) IBOutlet UIButton *btnDelete;
@@ -68,7 +68,7 @@
 
 @end
 
-@implementation CircleListTableViewCell
+@implementation SHGHomeTableViewCell
 
 - (void)awakeFromNib
 {

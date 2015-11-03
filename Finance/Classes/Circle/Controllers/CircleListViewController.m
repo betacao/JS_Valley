@@ -42,7 +42,7 @@ const CGFloat kAdButtomMargin = 20.0f;
 @property (weak, nonatomic) IBOutlet UITableView *listTable;
 @property (strong, nonatomic) NSMutableArray *arrrr;
 @property (nonatomic, strong) UIView *titleView;
-@property (nonatomic, strong) CircleListTableViewCell *prototypeCell;
+@property (nonatomic, strong) SHGHomeTableViewCell *prototypeCell;
 @property (nonatomic, strong) UIBarButtonItem *rightBarButtonItem;
 //判断是否已经加载过推荐列表
 @property (strong, nonatomic) NSMutableArray *recomandArray;
@@ -639,7 +639,7 @@ const CGFloat kAdButtomMargin = 20.0f;
         if (![obj.postType isEqualToString:@"ad"]){
             if ([obj.status boolValue]){
                 NSString *cellIdentifier = @"circleListIdentifier";
-                CircleListTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+                SHGHomeTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
                 if (!cell){
                     cell = [[[NSBundle mainBundle] loadNibNamed:@"CircleListTableViewCell" owner:self options:nil] lastObject];
                     cell.selectionStyle = UITableViewCellSelectionStyleNone;

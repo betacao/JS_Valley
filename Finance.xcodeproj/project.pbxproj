@@ -492,8 +492,8 @@
 		61909FD61AF92BAF0023935F /* comment_btn_cancel@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 61909FD41AF92BAF0023935F /* comment_btn_cancel@2x.png */; };
 		61909FD71AF92BAF0023935F /* comment_btn_ok@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 61909FD51AF92BAF0023935F /* comment_btn_ok@2x.png */; };
 		61B992F71ADB94580025BE7B /* MeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61B992F51ADB94580025BE7B /* MeViewController.xib */; };
-		61B992FB1ADBBE540025BE7B /* CircleListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 61B992F91ADBBE540025BE7B /* CircleListTableViewCell.m */; };
-		61B992FC1ADBBE540025BE7B /* CircleListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61B992FA1ADBBE540025BE7B /* CircleListTableViewCell.xib */; };
+		61B992FB1ADBBE540025BE7B /* SHGHomeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 61B992F91ADBBE540025BE7B /* SHGHomeTableViewCell.m */; };
+		61B992FC1ADBBE540025BE7B /* SHGHomeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61B992FA1ADBBE540025BE7B /* SHGHomeTableViewCell.xib */; };
 		61BF11941B276B3E00FEC690 /* 1_1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 61BF11901B276B3E00FEC690 /* 1_1@2x.png */; };
 		61BF11951B276B3F00FEC690 /* 1_1@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 61BF11911B276B3E00FEC690 /* 1_1@3x.png */; };
 		61BF11961B276B3F00FEC690 /* 1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 61BF11921B276B3E00FEC690 /* 1@2x.png */; };
@@ -1552,9 +1552,9 @@
 		61909FD51AF92BAF0023935F /* comment_btn_ok@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "comment_btn_ok@2x.png"; sourceTree = "<group>"; };
 		61B992F31ADB94580025BE7B /* MeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MeViewController.h; sourceTree = "<group>"; };
 		61B992F51ADB94580025BE7B /* MeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MeViewController.xib; sourceTree = "<group>"; };
-		61B992F81ADBBE540025BE7B /* CircleListTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CircleListTableViewCell.h; sourceTree = "<group>"; };
-		61B992F91ADBBE540025BE7B /* CircleListTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CircleListTableViewCell.m; sourceTree = "<group>"; };
-		61B992FA1ADBBE540025BE7B /* CircleListTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CircleListTableViewCell.xib; sourceTree = "<group>"; };
+		61B992F81ADBBE540025BE7B /* SHGHomeTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGHomeTableViewCell.h; sourceTree = "<group>"; };
+		61B992F91ADBBE540025BE7B /* SHGHomeTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGHomeTableViewCell.m; sourceTree = "<group>"; };
+		61B992FA1ADBBE540025BE7B /* SHGHomeTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGHomeTableViewCell.xib; sourceTree = "<group>"; };
 		61BF11901B276B3E00FEC690 /* 1_1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "1_1@2x.png"; sourceTree = "<group>"; };
 		61BF11911B276B3E00FEC690 /* 1_1@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "1_1@3x.png"; sourceTree = "<group>"; };
 		61BF11921B276B3E00FEC690 /* 1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "1@2x.png"; sourceTree = "<group>"; };
@@ -2898,9 +2898,9 @@
 				B0EAB2511B467AB8005A760F /* MLEmojiLabel.m */,
 				B0EAB2541B467AB8005A760F /* TTTAttributedLabel.h */,
 				B0EAB2531B467AB8005A760F /* TTTAttributedLabel.m */,
-				61B992F81ADBBE540025BE7B /* CircleListTableViewCell.h */,
-				61B992F91ADBBE540025BE7B /* CircleListTableViewCell.m */,
-				61B992FA1ADBBE540025BE7B /* CircleListTableViewCell.xib */,
+				61B992F81ADBBE540025BE7B /* SHGHomeTableViewCell.h */,
+				61B992F91ADBBE540025BE7B /* SHGHomeTableViewCell.m */,
+				61B992FA1ADBBE540025BE7B /* SHGHomeTableViewCell.xib */,
 				56E9E5D81B81F89C00CE45E6 /* RecommendTableViewCell.h */,
 				56E9E5D91B81F89C00CE45E6 /* RecommendTableViewCell.m */,
 				56E9E5DA1B81F89C00CE45E6 /* RecommendTableViewCell.xib */,
@@ -4671,7 +4671,7 @@
 				B04D6E421B60F2D500E3863E /* 组-46@3x.png in Resources */,
 				B080FE8C1B81E30100426579 /* btn_publish_keyboard_a@2x.png in Resources */,
 				53F6CFAC1B06C1D6007716E5 /* load_6p.png in Resources */,
-				61B992FC1ADBBE540025BE7B /* CircleListTableViewCell.xib in Resources */,
+				61B992FC1ADBBE540025BE7B /* SHGHomeTableViewCell.xib in Resources */,
 				6146B4AC1B011B7800D62678 /* RootViewController.xib in Resources */,
 				B080FE911B81E30100426579 /* emoji_backspace_n@2x.png in Resources */,
 				408D8B301AF8618C0055810C /* chatBar_textBg@2x.png in Resources */,
@@ -5493,7 +5493,7 @@
 				4088DD8C1AF0FB2B00393855 /* SettingsObj.m in Sources */,
 				6187D2C91AF1C693008E1D21 /* ChatGroupDetailViewController.m in Sources */,
 				614EFEDF1AEF8F7300F2BDD1 /* Hud.m in Sources */,
-				61B992FB1ADBBE540025BE7B /* CircleListTableViewCell.m in Sources */,
+				61B992FB1ADBBE540025BE7B /* SHGHomeTableViewCell.m in Sources */,
 				4088DDB01AF102FE00393855 /* SettingAboutUsViewController.m in Sources */,
 				40302AFB1AEE6CE900F22EB6 /* MyFollowViewController.m in Sources */,
 				6187D2D41AF1C693008E1D21 /* ChatListViewController.m in Sources */,

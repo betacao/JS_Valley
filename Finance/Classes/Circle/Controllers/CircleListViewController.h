@@ -7,7 +7,7 @@
 //
 
 #import "BaseTableViewController.h"
-#import "CircleListTableViewCell.h"
+#import "SHGHomeTableViewCell.h"
 #import "CircleDetailViewController.h"
 #import "CircleSomeOneViewController.h"
 @interface CircleListViewController : BaseTableViewController<CircleListDelegate,BRCommentViewDelegate,CircleActionDelegate>

@@ -11,7 +11,7 @@
 #import "ProdListObj.h"
 #import "CircleListObj.h"
 #import "BasePeopleObject.h"
-#import "CircleListTableViewCell.h"
+#import "SHGHomeTableViewCell.h"
 #import "ProductListTableViewCell.h"
 @interface MyCollectionViewController ()
 {
@@ -669,7 +669,7 @@
         
         if ([obj.status boolValue]) {
             static NSString *cellIdentifier = @"circleListIdentifier";
-            CircleListTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+            SHGHomeTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
             if (!cell) {
                 cell = [[[NSBundle mainBundle] loadNibNamed:@"CircleListTableViewCell" owner:self options:nil] lastObject];
             }

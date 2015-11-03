@@ -437,7 +437,7 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
     
     if ([obj.status boolValue]) {
         static NSString *cellIdentifier = @"circleListIdentifier";
-        CircleListTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+        SHGHomeTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
         if (!cell) {
             cell = [[[NSBundle mainBundle] loadNibNamed:@"CircleListTableViewCell" owner:self options:nil] lastObject];
         }

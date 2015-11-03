@@ -11,7 +11,7 @@
 #import "CircleListDelegate.h"
 
 
-@interface CircleListTableViewCell : UITableViewCell
+@interface SHGHomeTableViewCell : UITableViewCell
 @property (nonatomic , assign ) NSInteger index;
 @property (nonatomic, weak) id<CircleListDelegate> delegate;
 -(void)loadDatasWithObj:(CircleListObj *)obj;
