@@ -52,20 +52,33 @@
 - (void)addHeaderRefresh:(UITableView *)tableView headerRefesh:(BOOL)isHeaderFresh headerTitle:(NSDictionary *)headerTitle andFooter:(BOOL)isFooterRefresh footerTitle:(NSDictionary *)footerTitle
 {
     tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-//    if (isHeaderFresh){
-//        [tableView addLegendHeaderWithRefreshingTarget:self refreshingAction:@selector(refreshHeader) title:headerTitle];
-//    }
-//    if (isFooterRefresh){
-//        [tableView addLegendFooterWithRefreshingTarget:self refreshingAction:@selector(refreshFooter)];
-//    }
+    if (isHeaderFresh){
+        MJRefreshNormalHeader *header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(refreshHeader)];
+        if(headerTitle){
+            [header setTitle:[headerTitle objectForKey:kRefreshStateIdle] forState:MJRefreshStateIdle];
+            [header setTitle:[headerTitle objectForKey:kRefreshStatePulling] forState:MJRefreshStatePulling];
+            [header setTitle:[headerTitle objectForKey:kRefreshStateRefreshing] forState:MJRefreshStateRefreshing];
+        }
+        // 设置字体
+        header.stateLabel.font = [UIFont systemFontOfSize:12.0f];
+        header.lastUpdatedTimeLabel.font = [UIFont systemFontOfSize:12.0f];
+        // 设置颜色
+        header.stateLabel.textColor = [UIColor colorWithHexString:@"606060"];
+        header.lastUpdatedTimeLabel.textColor = [UIColor colorWithHexString:@"D2D1D1"];
+        tableView.header = header;
+    }
+    if (isFooterRefresh){
+        tableView.footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(refreshFooter)];
+    }
 }
 
--(void)refreshHeader
+
+- (void)refreshHeader
 {
 //子类实现
 }
 
--(void)refreshFooter
+- (void)refreshFooter
 {
     //
 }
@@ -108,14 +121,5 @@
 {
     NSLog(@"You Click At Section: %ld Row: %ld",(long)indexPath.section,(long)indexPath.row);
 }
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end
