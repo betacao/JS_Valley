@@ -301,26 +301,6 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     
 }
 
-//配置点击后的图片
-- (void)configureSelectedImages
-{
-    NSArray *tabbarImageNames = @[
-                                  @"圈子14-选中",
-                                  @"信息14-选中",
-                                  @"发现14-选中",
-                                  @"我的14-选中"
-                                  ];
-    
-    NSArray *items = self.tabBar.items;
-    for (NSUInteger i = 0; i < [items count]; ++i)
-    {
-        UITabBarItem *tabBarItem = [items objectAtIndex:i];
-        NSString *selectedImage = tabbarImageNames[i];
-        UIImage *selected = [UIImage imageNamed:selectedImage];
-        tabBarItem.selectedImage = [selected imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    }
-}
-
 -(SHGHomeViewController *)circle
 {
     if (!_circle)
@@ -436,15 +416,9 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
 
 - (void)callControllerClose:(NSNotification *)notification
 {
-    //    [_callController dismissViewControllerAnimated:NO completion:nil];
-    //    [[EMSDKFull sharedInstance].callManager removeDelegate:_callController];
-    //    _callController = nil;
-    
     AVAudioSession *audioSession = [AVAudioSession sharedInstance];
     [audioSession setCategory:AVAudioSessionCategoryPlayback error:nil];
     [audioSession setActive:YES error:nil];
-    
-    //    [[EMSDKFull sharedInstance].callManager addDelegate:self delegateQueue:nil];
 }
 
 #pragma mark - IChatManagerDelegate 消息变化
@@ -546,14 +520,6 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
             [[NSNotificationCenter defaultCenter] postNotificationName:@"refreshFriendList" object:nil];
             
         });
-        //        dispatch_async(dispatch_get_main_queue(), ^{
-        //
-        //            if(response.dataArray.count>0)
-        //            {
-        //                [self.tableView reloadData];
-        //            }
-        //        });
-        
     } failed:^(MOCHTTPResponse *response) {
         
     }];

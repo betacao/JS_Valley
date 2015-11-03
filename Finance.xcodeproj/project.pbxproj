@@ -266,8 +266,6 @@
 		569C6D3C1B7CAB6A00AD59C3 /* 验证码@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 569C6D361B7CAB6A00AD59C3 /* 验证码@3x.png */; };
 		569C6D401B7CB5B300AD59C3 /* SetPassWordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 569C6D3E1B7CB5B300AD59C3 /* SetPassWordViewController.m */; };
 		569C6D411B7CB5B300AD59C3 /* SetPassWordViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 569C6D3F1B7CB5B300AD59C3 /* SetPassWordViewController.xib */; };
-		56E9E5DB1B81F89C00CE45E6 /* RecommendTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 56E9E5D91B81F89C00CE45E6 /* RecommendTableViewCell.m */; };
-		56E9E5DC1B81F89C00CE45E6 /* RecommendTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 56E9E5DA1B81F89C00CE45E6 /* RecommendTableViewCell.xib */; };
 		56F2D50A1B5A45E6008E2855 /* UncaughtExceptionHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 56F2D5091B5A45E6008E2855 /* UncaughtExceptionHandler.m */; };
 		56F2D50C1B5A5B77008E2855 /* 编辑1.png in Resources */ = {isa = PBXBuildFile; fileRef = 56F2D50B1B5A5B77008E2855 /* 编辑1.png */; };
 		56F2D50F1B5A5CB3008E2855 /* 认证.png in Resources */ = {isa = PBXBuildFile; fileRef = 56F2D50D1B5A5CB3008E2855 /* 认证.png */; };
@@ -1210,9 +1208,6 @@
 		569C6D3E1B7CB5B300AD59C3 /* SetPassWordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SetPassWordViewController.m; sourceTree = "<group>"; };
 		569C6D3F1B7CB5B300AD59C3 /* SetPassWordViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SetPassWordViewController.xib; sourceTree = "<group>"; };
 		56AF99DF1B4E6FD6005B7BAA /* MobClickSocialAnalytics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobClickSocialAnalytics.h; sourceTree = "<group>"; };
-		56E9E5D81B81F89C00CE45E6 /* RecommendTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecommendTableViewCell.h; sourceTree = "<group>"; };
-		56E9E5D91B81F89C00CE45E6 /* RecommendTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecommendTableViewCell.m; sourceTree = "<group>"; };
-		56E9E5DA1B81F89C00CE45E6 /* RecommendTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RecommendTableViewCell.xib; sourceTree = "<group>"; };
 		56F2D5081B5A45E6008E2855 /* UncaughtExceptionHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UncaughtExceptionHandler.h; sourceTree = "<group>"; };
 		56F2D5091B5A45E6008E2855 /* UncaughtExceptionHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UncaughtExceptionHandler.m; sourceTree = "<group>"; };
 		56F2D50B1B5A5B77008E2855 /* 编辑1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "编辑1.png"; sourceTree = "<group>"; };
@@ -2901,9 +2896,6 @@
 				61B992F81ADBBE540025BE7B /* SHGHomeTableViewCell.h */,
 				61B992F91ADBBE540025BE7B /* SHGHomeTableViewCell.m */,
 				61B992FA1ADBBE540025BE7B /* SHGHomeTableViewCell.xib */,
-				56E9E5D81B81F89C00CE45E6 /* RecommendTableViewCell.h */,
-				56E9E5D91B81F89C00CE45E6 /* RecommendTableViewCell.m */,
-				56E9E5DA1B81F89C00CE45E6 /* RecommendTableViewCell.xib */,
 				B06D06D71B4FA2180036A3E3 /* CircleListTwoTableViewCell.h */,
 				B06D06D81B4FA2180036A3E3 /* CircleListTwoTableViewCell.m */,
 				B06D06D91B4FA2180036A3E3 /* CircleListTwoTableViewCell.xib */,
@@ -4705,7 +4697,6 @@
 				F9758A631BB002D70085D32C /* ImproveMatiralViewController.xib in Resources */,
 				B080FEA01B81E30100426579 /* emoji_face_n.png in Resources */,
 				615234B21B0E146B00011EAC /* 一度跳转页面@3x.jpg in Resources */,
-				56E9E5DC1B81F89C00CE45E6 /* RecommendTableViewCell.xib in Resources */,
 				408D8AEC1AF8618C0055810C /* chatListCellHead@2x.png in Resources */,
 				616405431B29FE920071A18D /* 通讯录更新@3x.png in Resources */,
 				408D8B071AF8618C0055810C /* VoiceSearchFeedback010.png in Resources */,
@@ -5337,7 +5328,6 @@
 				F99580C81B9D7F39001F8AA6 /* DXAlertView.m in Sources */,
 				6187D2DA1AF1C693008E1D21 /* DXMessageToolBar.m in Sources */,
 				B0EAB2561B467AB8005A760F /* TTTAttributedLabel.m in Sources */,
-				56E9E5DB1B81F89C00CE45E6 /* RecommendTableViewCell.m in Sources */,
 				53AFF7961AFBF5F700D04B6B /* EmojiEmoticons.m in Sources */,
 				40302B001AEF213400F22EB6 /* BasePeopleTableViewCell.m in Sources */,
 				6146B4AB1B011B7800D62678 /* RootViewController.m in Sources */,
