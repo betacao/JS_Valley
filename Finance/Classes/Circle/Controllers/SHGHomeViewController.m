@@ -844,7 +844,7 @@ const CGFloat kAdButtomMargin = 20.0f;
     [alert show];
 }
 
-- (void)cityClicked:(CircleListObj *)obj
+- (void)moreMessageClicked:(CircleListObj *)obj
 {
     if([obj.postType isEqualToString:@"pc"]){
         NSLog(@"1111");
