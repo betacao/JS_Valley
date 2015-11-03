@@ -39,7 +39,6 @@
 #import "NSString+Check.h"
 #import "Hud.h"
 #import "NSDictionary+Common.h"
-#import "MTLModel.h"
 #import "MOWHttpManager.h"
 #import "NSDate+Customized.h"
 #import "UIView+Additions.h"
