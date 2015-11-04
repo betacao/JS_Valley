@@ -18,6 +18,7 @@
 #import "MessageViewController.h"
 #import "CircleSomeOneViewController.h"
 #import "VerifyIdentityViewController.h"
+#import "sh"
 //两次提示的默认间隔
 static const CGFloat kDefaultPlaySoundInterval = 3.0;
 
@@ -25,11 +26,11 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
 {
     BOOL isShowSearchbar;
 }
-
-@property (nonatomic, strong) SHGHomeViewController *circle;
-@property (nonatomic, strong) DiscoverViewController *prod;
-@property (nonatomic, strong) MeViewController *me;
-@property (nonatomic, strong) ChatListViewController *chat;
+@p
+@property (nonatomic, strong) SHGHomeViewController *homeViewController;
+@property (nonatomic, strong) DiscoverViewController *prodViewController;
+@property (nonatomic, strong) MeViewController *meViewController;
+@property (nonatomic, strong) ChatListViewController *chatViewController;
 @property (strong, nonatomic) NSDate *lastPlaySoundDate;
 @end
 
@@ -230,26 +231,26 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     self.navigationItem.titleView = nil;
     if (item.tag == 1000)
     {
-        self.navigationItem.titleView = self.circle.titleView;
+        self.navigationItem.titleView = self.homeViewController.titleView;
         self.navigationItem.leftBarButtonItem=nil;
-        self.navigationItem.rightBarButtonItems=@[self.circle.rightBarButtonItem];
+        self.navigationItem.rightBarButtonItems=@[self.homeViewController.rightBarButtonItem];
         [MobClick event:@"SHGHomeViewController" label:@"onClick"];
     }else if (item.tag == 2000)
     {
-        self.navigationItem.titleView = self.chat.titleView;
-        self.navigationItem.rightBarButtonItems=@[self.chat.rightBarButtonItem];
+        self.navigationItem.titleView = self.chatViewController.titleView;
+        self.navigationItem.rightBarButtonItems=@[self.chatViewController.rightBarButtonItem];
         self.navigationItem.leftBarButtonItem=nil;
         [MobClick event:@"ChatListViewController" label:@"onClick"];
     }else if (item.tag == 3000)
     {
         self.navigationItem.leftBarButtonItem=nil;
-        self.navigationItem.titleView = self.prod.titleLabel;
+        self.navigationItem.titleView = self.prodViewController.titleLabel;
         self.navigationItem.rightBarButtonItem = nil;
         [MobClick event:@"DiscoverViewController" label:@"onClick"];
     }else if (item.tag == 4000)
     {
-        self.navigationItem.titleView = self.me.titleLabel;
-        self.navigationItem.rightBarButtonItems=@[self.me.rightBarButtonItem];
+        self.navigationItem.titleView = self.meViewController.titleLabel;
+        self.navigationItem.rightBarButtonItems=@[self.meViewController.rightBarButtonItem];
         [MobClick event:@"MeViewController" label:@"onClick"];
     }
 }
@@ -261,80 +262,77 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     UIImage *selectedImage = [UIImage imageNamed:@"dynamic_selected"];
     selectedImage = [selectedImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    self.circle.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"动态" image:image selectedImage:selectedImage];
-    self.circle.tabBarItem.tag = 1000;
-    self.navigationItem.titleView= self.circle.titleView;
-    self.navigationItem.rightBarButtonItem=self.circle.rightBarButtonItem;
+    self.homeViewController.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"动态" image:image selectedImage:selectedImage];
+    self.homeViewController.tabBarItem.tag = 1000;
+    self.navigationItem.titleView= self.homeViewController.titleView;
+    self.navigationItem.rightBarButtonItem=self.homeViewController.rightBarButtonItem;
     
     //消息
     image = [UIImage imageNamed:@"信息14-默认"];
     image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     selectedImage = [UIImage imageNamed:@"信息14-选中"];
     selectedImage = [selectedImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    self.chat.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"消息" image:image selectedImage:selectedImage];
-    self.chat.tabBarItem.tag = 2000;
+    self.chatViewController.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"消息" image:image selectedImage:selectedImage];
+    self.chatViewController.tabBarItem.tag = 2000;
     
     //产品
     image = [UIImage imageNamed:@"discovery_normal"];
     image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     selectedImage = [UIImage imageNamed:@"discovery_selected"];
     selectedImage = [selectedImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    self.prod.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"发现" image:image selectedImage:selectedImage];
-    self.prod.tabBarItem.tag = 3000;
+    self.prodViewController.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"发现" image:image selectedImage:selectedImage];
+    self.prodViewController.tabBarItem.tag = 3000;
     
     //我的
     image = [UIImage imageNamed:@"mine_normal"];
     image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     selectedImage = [UIImage imageNamed:@"mine_selected"];
     selectedImage = [selectedImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    self.me.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"我的" image:image selectedImage:selectedImage];
-    self.me.tabBarItem.tag = 4000;
+    self.meViewController.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"我的" image:image selectedImage:selectedImage];
+    self.meViewController.tabBarItem.tag = 4000;
     
     [[UITabBarItem appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor blackColor],NSForegroundColorAttributeName, nil] forState:UIControlStateNormal];
     [[UITabBarItem appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor redColor],NSForegroundColorAttributeName, nil] forState:UIControlStateSelected];
-    
-    
-    
-//    [self configureSelectedImages];
-    self.viewControllers = [NSArray arrayWithObjects:self.circle,self.chat,self.prod,self.me, nil];
+
+    self.viewControllers = [NSArray arrayWithObjects:self.homeViewController,self.chatViewController,self.prodViewController ,self.meViewController ,nil];
     self.selectedIndex = 0;
     
 }
 
--(SHGHomeViewController *)circle
+-(SHGHomeViewController *)homeViewController
 {
-    if (!_circle)
+    if (!_homeViewController)
     {
-        _circle = [[SHGHomeViewController alloc]initWithNibName:@"SHGHomeViewController" bundle:nil];
+        _homeViewController = [[SHGHomeViewController alloc]initWithNibName:@"SHGHomeViewController" bundle:nil];
     }
-    return _circle;
+    return _homeViewController;
 }
 
--(DiscoverViewController *)prod
+-(DiscoverViewController *)prodViewController
 {
-    if (!_prod)
+    if (!_prodViewController)
     {
-        _prod = [[DiscoverViewController alloc] initWithNibName:@"DiscoverViewController" bundle:nil];
+        _prodViewController = [[DiscoverViewController alloc] initWithNibName:@"DiscoverViewController" bundle:nil];
     }
-    return _prod;
+    return _prodViewController;
 }
 
--(ChatListViewController *)chat
+-(ChatListViewController *)chatViewController
 {
-    if (!_chat)
+    if (!_chatViewController)
     {
-        _chat = [[ChatListViewController alloc] init];
-        _chat.chatListType = ChatListView;
+        _chatViewController = [[ChatListViewController alloc] init];
+        _chatViewController.chatListType = ChatListView;
     }
-    return _chat;
+    return _chatViewController;
 }
--(MeViewController *)me
+-(MeViewController *)meViewController
 {
-    if (!_me)
+    if (!_meViewController)
     {
-        _me= [[MeViewController alloc] initWithNibName:@"MeViewController" bundle:nil];
+        _meViewController = [[MeViewController alloc] initWithNibName:@"MeViewController" bundle:nil];
     }
-    return _me;
+    return _meViewController;
 }
 
 -(void)chageNavTitle:(NSNotification *)noti
@@ -385,11 +383,11 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
         unreadCount += conversation.unreadMessagesCount;
     }
     unreadCount = unreadCount+[[[ApplyViewController shareController] dataSource] count];
-    if (self.chat) {
+    if (self.chatViewController) {
         if (unreadCount > 0) {
-            self.chat.tabBarItem.badgeValue = [NSString stringWithFormat:@"%i",(int)unreadCount];
+            self.chatViewController.tabBarItem.badgeValue = [NSString stringWithFormat:@"%i",(int)unreadCount];
         }else{
-            self.chat.tabBarItem.badgeValue = nil;
+            self.chatViewController.tabBarItem.badgeValue = nil;
         }
     }
     UIApplication *application = [UIApplication sharedApplication];
@@ -405,11 +403,11 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     }
     
     unreadCount = unreadCount+[[[ApplyViewController shareController] dataSource] count];
-    if (self.chat) {
+    if (self.chatViewController) {
         if (unreadCount > 0) {
-            self.chat.tabBarItem.badgeValue = [NSString stringWithFormat:@"%i",(int)unreadCount];
+            self.chatViewController.tabBarItem.badgeValue = [NSString stringWithFormat:@"%i",(int)unreadCount];
         }else{
-            self.chat.tabBarItem.badgeValue = nil;
+            self.chatViewController.tabBarItem.badgeValue = nil;
         }
     }
 }
@@ -426,9 +424,9 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
 - (void)didUpdateConversationList:(NSArray *)conversationList
 {
     [self setupUnreadMessageCount];
-    if(!_chat.isResfresh)
+    if(!_chatViewController.isResfresh)
     {
-        [_chat reloadDataSource];
+        [_chatViewController reloadDataSource];
     }
 }
 
@@ -513,7 +511,7 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
         obj.company = [dic valueForKey:@"company"];
         obj.commonfriend = @"";
         obj.commonfriendnum = @"";
-        [self.chat.contactsSource addObject:obj];
+        [self.chatViewController.contactsSource addObject:obj];
         [arr addObject:obj];
         [HeadImage inertWithArr:arr];
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -629,7 +627,7 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
                                   nil];
         alertView.tag = 99;
         [alertView show];
-        [_chat isConnect:NO];
+        [_chatViewController isConnect:NO];
     }
 }
 
@@ -652,7 +650,7 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     }
 #endif
     
-    [_chat reloadApplyView];
+    [_chatViewController reloadApplyView];
 }
 
 - (void)didUpdateBuddyList:(NSArray *)buddyList
@@ -667,7 +665,7 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
             [deletedBuddies addObject:buddy.username];
         }
         [[EaseMob sharedInstance].chatManager removeConversationsByChatters:deletedBuddies deleteMessages:YES append2Chat:YES];
-        [_chat reloadDataSource];
+        [_chatViewController reloadDataSource];
     }
     //    [_chat reloadDataSource];
 }
@@ -675,13 +673,10 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
 - (void)didRemovedByBuddy:(NSString *)username
 {
     [[EaseMob sharedInstance].chatManager removeConversationByChatter:username deleteMessages:YES append2Chat:YES];
-    //    [_chatListVC refreshDataSource];
-    //    [_chat reloadDataSource];
 }
 
 - (void)didAcceptedByBuddy:(NSString *)username
 {
-    //    [_chat reloadDataSource];
 }
 
 - (void)didRejectedByBuddy:(NSString *)username
@@ -692,7 +687,6 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
 
 - (void)didAcceptBuddySucceed:(NSString *)username
 {
-    //    [_chat reloadDataSource];
 }
 
 #pragma mark - IChatManagerDelegate 群组变化
@@ -705,7 +699,7 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     [self playSoundAndVibration];
 #endif
     
-    [_chat reloadGroupView];
+    [_chatViewController reloadGroupView];
 }
 
 //接收到入群申请
@@ -720,7 +714,7 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
         [self playSoundAndVibration];
 #endif
         
-        [_chat reloadGroupView];
+        [_chatViewController reloadGroupView];
     }
 }
 
@@ -850,16 +844,16 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
 #pragma mark - public
 - (void)jumpToChatList
 {
-    if(self.chat)
+    if(self.chatViewController)
     {
         [self.navigationController popToViewController:self animated:NO];
-        [self setSelectedViewController:self.chat];
+        [self setSelectedViewController:self.chatViewController];
     }
 }
 - (void)ToMess{
-    if (self.me) {
+    if (self.meViewController) {
         [self.navigationController popToViewController:self animated:NO];
-        [self setSelectedViewController:self.me];
+        [self setSelectedViewController:self.meViewController];
     }
 }
 -(void)dealloc

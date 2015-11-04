@@ -846,7 +846,6 @@
 		F932E2551B859DEC00EF2332 /* CircleListRecommendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F932E2531B859DEC00EF2332 /* CircleListRecommendViewController.m */; };
 		F932E2561B859DEC00EF2332 /* CircleListRecommendViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F932E2541B859DEC00EF2332 /* CircleListRecommendViewController.xib */; };
 		F9758A631BB002D70085D32C /* ImproveMatiralViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9758A621BB002D70085D32C /* ImproveMatiralViewController.xib */; };
-		F984A4761BE8B8B9001CF4B3 /* SHGSegmentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F984A4751BE8B8B9001CF4B3 /* SHGSegmentViewController.m */; };
 		F98B16EF1BC7947D000A577C /* libGeTuiSdk-1.2.1.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F98B16EE1BC7947D000A577C /* libGeTuiSdk-1.2.1.a */; };
 		F99580C41B9D338B001F8AA6 /* SHGModifyInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F99580C21B9D338B001F8AA6 /* SHGModifyInfoViewController.m */; };
 		F99580C51B9D338B001F8AA6 /* SHGModifyInfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F99580C31B9D338B001F8AA6 /* SHGModifyInfoViewController.xib */; };
@@ -875,6 +874,7 @@
 		F9B18C081BA0521600EA0314 /* SHGNoticeView.m in Sources */ = {isa = PBXBuildFile; fileRef = F9B18C071BA0521600EA0314 /* SHGNoticeView.m */; };
 		F9B7CC321B8AD6C000E55EFD /* SHGGloble.m in Sources */ = {isa = PBXBuildFile; fileRef = F9B7CC311B8AD6C000E55EFD /* SHGGloble.m */; };
 		F9D9F1571BB51D5F00F94E70 /* SHGUserTagModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F9D9F1561BB51D5F00F94E70 /* SHGUserTagModel.m */; };
+		F9E2A4B01BE99A4C00ECB234 /* SHGSegmentController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9E2A4AF1BE99A4C00ECB234 /* SHGSegmentController.m */; };
 		F9EBB7CD1BB3DCD20023E84E /* SHGPersonDynamicViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9EBB7CB1BB3DCD20023E84E /* SHGPersonDynamicViewController.m */; };
 		F9EBB7CE1BB3DCD20023E84E /* SHGPersonDynamicViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9EBB7CC1BB3DCD20023E84E /* SHGPersonDynamicViewController.xib */; };
 		F9EBB7D01BB3F4470023E84E /* China_City.plist in Resources */ = {isa = PBXBuildFile; fileRef = F9EBB7CF1BB3F4470023E84E /* China_City.plist */; };
@@ -2031,8 +2031,6 @@
 		F932E2531B859DEC00EF2332 /* CircleListRecommendViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CircleListRecommendViewController.m; sourceTree = "<group>"; };
 		F932E2541B859DEC00EF2332 /* CircleListRecommendViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CircleListRecommendViewController.xib; sourceTree = "<group>"; };
 		F9758A621BB002D70085D32C /* ImproveMatiralViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ImproveMatiralViewController.xib; sourceTree = "<group>"; };
-		F984A4741BE8B8B9001CF4B3 /* SHGSegmentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGSegmentViewController.h; sourceTree = "<group>"; };
-		F984A4751BE8B8B9001CF4B3 /* SHGSegmentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGSegmentViewController.m; sourceTree = "<group>"; };
 		F98B16EC1BC7947D000A577C /* GeTuiSdk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeTuiSdk.h; sourceTree = "<group>"; };
 		F98B16ED1BC7947D000A577C /* GeTuiSdkError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeTuiSdkError.h; sourceTree = "<group>"; };
 		F98B16EE1BC7947D000A577C /* libGeTuiSdk-1.2.1.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libGeTuiSdk-1.2.1.a"; sourceTree = "<group>"; };
@@ -2087,6 +2085,8 @@
 		F9B7CC311B8AD6C000E55EFD /* SHGGloble.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGGloble.m; sourceTree = "<group>"; };
 		F9D9F1551BB51D5F00F94E70 /* SHGUserTagModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGUserTagModel.h; sourceTree = "<group>"; };
 		F9D9F1561BB51D5F00F94E70 /* SHGUserTagModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGUserTagModel.m; sourceTree = "<group>"; };
+		F9E2A4AE1BE99A4C00ECB234 /* SHGSegmentController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGSegmentController.h; sourceTree = "<group>"; };
+		F9E2A4AF1BE99A4C00ECB234 /* SHGSegmentController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGSegmentController.m; sourceTree = "<group>"; };
 		F9EBB7CA1BB3DCD20023E84E /* SHGPersonDynamicViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGPersonDynamicViewController.h; sourceTree = "<group>"; };
 		F9EBB7CB1BB3DCD20023E84E /* SHGPersonDynamicViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGPersonDynamicViewController.m; sourceTree = "<group>"; };
 		F9EBB7CC1BB3DCD20023E84E /* SHGPersonDynamicViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGPersonDynamicViewController.xib; sourceTree = "<group>"; };
@@ -2851,6 +2851,8 @@
 		614AD1BA1AD7AFED00DDF43E /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				F9E2A4AE1BE99A4C00ECB234 /* SHGSegmentController.h */,
+				F9E2A4AF1BE99A4C00ECB234 /* SHGSegmentController.m */,
 				614AD1BB1AD7AFED00DDF43E /* SHGHomeViewController.h */,
 				614AD1BC1AD7AFED00DDF43E /* SHGHomeViewController.m */,
 				614AD1BD1AD7AFED00DDF43E /* SHGHomeViewController.xib */,
@@ -2872,8 +2874,6 @@
 				B04355CB1B4BD3560033BBBF /* LinkViewController.h */,
 				B04355CC1B4BD3560033BBBF /* LinkViewController.m */,
 				B04355CD1B4BD3560033BBBF /* LinkViewController.xib */,
-				F984A4741BE8B8B9001CF4B3 /* SHGSegmentViewController.h */,
-				F984A4751BE8B8B9001CF4B3 /* SHGSegmentViewController.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -5298,7 +5298,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				6187D2F91AF1C693008E1D21 /* EMSearchDisplayController.m in Sources */,
-				F984A4761BE8B8B9001CF4B3 /* SHGSegmentViewController.m in Sources */,
 				614AD1C01AD7AFED00DDF43E /* SHGHomeViewController.m in Sources */,
 				6187D2DD1AF1C693008E1D21 /* DXChatBarMoreView.m in Sources */,
 				40302B1E1AEF657300F22EB6 /* TeamDetailObject.m in Sources */,
@@ -5400,6 +5399,7 @@
 				6187D2D21AF1C693008E1D21 /* PublicGroupListViewController.m in Sources */,
 				6187D2D11AF1C693008E1D21 /* PublicGroupDetailViewController.m in Sources */,
 				614AD1AF1AD7AC4D00DDF43E /* RegistViewController.m in Sources */,
+				F9E2A4B01BE99A4C00ECB234 /* SHGSegmentController.m in Sources */,
 				B085B5381B749E2000DC592E /* Extend_Description.m in Sources */,
 				4088DDAD1AF102FE00393855 /* DingDQRCodeShareViewController.m in Sources */,
 				6187D2CE1AF1C693008E1D21 /* GroupListViewController.m in Sources */,
