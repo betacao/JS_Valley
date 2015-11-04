@@ -18,19 +18,22 @@
 #import "MessageViewController.h"
 #import "CircleSomeOneViewController.h"
 #import "VerifyIdentityViewController.h"
-#import "sh"
+#import "SHGSegmentController.h"
+#import "SHGAttationViewController.h"
+
 //两次提示的默认间隔
 static const CGFloat kDefaultPlaySoundInterval = 3.0;
 
-@interface TabBarViewController()
+@interface TabBarViewController()<SHGSegmentControllerDelegate>
 {
     BOOL isShowSearchbar;
 }
-@p
-@property (nonatomic, strong) SHGHomeViewController *homeViewController;
-@property (nonatomic, strong) DiscoverViewController *prodViewController;
-@property (nonatomic, strong) MeViewController *meViewController;
-@property (nonatomic, strong) ChatListViewController *chatViewController;
+@property (strong, nonatomic) SHGSegmentController *segmentViewController;
+@property (strong, nonatomic) SHGHomeViewController *homeViewController;
+@property (strong, nonatomic) SHGAttationViewController *attationViewController;
+@property (strong, nonatomic) DiscoverViewController *prodViewController;
+@property (strong, nonatomic) MeViewController *meViewController;
+@property (strong, nonatomic) ChatListViewController *chatViewController;
 @property (strong, nonatomic) NSDate *lastPlaySoundDate;
 @end
 
@@ -69,9 +72,9 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(chageNavTitle:) name:NOTIFI_CHANGE_NAV_TITLEVIEW object:nil];
     
-    NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:
-                         RGB(51, 51, 51), NSForegroundColorAttributeName, nil];;
+    NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:RGB(51, 51, 51), NSForegroundColorAttributeName, nil];;
     [[UITabBarItem appearance] setTitleTextAttributes:dic forState:UIControlStateNormal];
+
     self.tabBar.tintColor = RGB(255, 57, 67);
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setupUntreatedApplyCount) name:@"setupUntreatedApplyCount" object:nil];
@@ -231,9 +234,9 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     self.navigationItem.titleView = nil;
     if (item.tag == 1000)
     {
-        self.navigationItem.titleView = self.homeViewController.titleView;
+//        self.navigationItem.titleView = self.homeViewController.titleView;
         self.navigationItem.leftBarButtonItem=nil;
-        self.navigationItem.rightBarButtonItems=@[self.homeViewController.rightBarButtonItem];
+//        self.navigationItem.rightBarButtonItems=@[self.homeViewController.rightBarButtonItem];
         [MobClick event:@"SHGHomeViewController" label:@"onClick"];
     }else if (item.tag == 2000)
     {
@@ -262,11 +265,15 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     UIImage *selectedImage = [UIImage imageNamed:@"dynamic_selected"];
     selectedImage = [selectedImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    self.homeViewController.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"动态" image:image selectedImage:selectedImage];
-    self.homeViewController.tabBarItem.tag = 1000;
-    self.navigationItem.titleView= self.homeViewController.titleView;
-    self.navigationItem.rightBarButtonItem=self.homeViewController.rightBarButtonItem;
-    
+    self.segmentViewController.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"动态" image:image selectedImage:selectedImage];
+    self.segmentViewController.tabBarItem.tag = 1000;
+    __weak typeof(self)weakSelf = self;
+    self.segmentViewController.block = ^(UIView *view){
+        weakSelf.navigationItem.titleView = view;
+    };
+//    self.navigationItem.titleView = self.segmentViewController.titleView;
+//    self.navigationItem.rightBarButtonItem = self.homeViewController.rightBarButtonItem;
+
     //消息
     image = [UIImage imageNamed:@"信息14-默认"];
     image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
@@ -294,18 +301,35 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     [[UITabBarItem appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor blackColor],NSForegroundColorAttributeName, nil] forState:UIControlStateNormal];
     [[UITabBarItem appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor redColor],NSForegroundColorAttributeName, nil] forState:UIControlStateSelected];
 
-    self.viewControllers = [NSArray arrayWithObjects:self.homeViewController,self.chatViewController,self.prodViewController ,self.meViewController ,nil];
+    self.viewControllers = [NSArray arrayWithObjects:self.segmentViewController,self.chatViewController,self.prodViewController ,self.meViewController ,nil];
     self.selectedIndex = 0;
     
 }
 
+- (SHGSegmentController *)segmentViewController
+{
+    if(!_segmentViewController){
+        _segmentViewController = [[SHGSegmentController alloc] init];
+        _segmentViewController.delegate = self;
+        _segmentViewController.viewControllers = @[self.homeViewController, self.attationViewController];
+    }
+    return _segmentViewController;
+}
+
 -(SHGHomeViewController *)homeViewController
 {
-    if (!_homeViewController)
-    {
+    if (!_homeViewController){
         _homeViewController = [[SHGHomeViewController alloc]initWithNibName:@"SHGHomeViewController" bundle:nil];
     }
     return _homeViewController;
+}
+
+- (SHGAttationViewController *)attationViewController
+{
+    if(!_attationViewController){
+        _attationViewController = [[SHGAttationViewController alloc] initWithNibName:@"SHGAttationViewController" bundle:nil];
+    }
+    return _attationViewController;
 }
 
 -(DiscoverViewController *)prodViewController

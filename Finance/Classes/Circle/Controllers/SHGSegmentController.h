@@ -23,7 +23,7 @@
  */
 
 @protocol SHGSegmentControllerDelegate;
-
+typedef void(^loadViewFinishBlock)(UIView *view);
 /*!
  * A custom tab bar container view controller. It works just like a regular
  * UITabBarController, except the tabs are at the top and look different.
@@ -34,6 +34,7 @@
 @property (nonatomic, weak) UIViewController *selectedViewController;
 @property (nonatomic, assign) NSUInteger selectedIndex;
 @property (nonatomic, weak) id <SHGSegmentControllerDelegate> delegate;
+@property (nonatomic, copy) loadViewFinishBlock block;
 
 - (void)setSelectedIndex:(NSUInteger)index animated:(BOOL)animated;
 - (void)setSelectedViewController:(UIViewController *)viewController animated:(BOOL)animated;

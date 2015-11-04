@@ -875,6 +875,8 @@
 		F9B7CC321B8AD6C000E55EFD /* SHGGloble.m in Sources */ = {isa = PBXBuildFile; fileRef = F9B7CC311B8AD6C000E55EFD /* SHGGloble.m */; };
 		F9D9F1571BB51D5F00F94E70 /* SHGUserTagModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F9D9F1561BB51D5F00F94E70 /* SHGUserTagModel.m */; };
 		F9E2A4B01BE99A4C00ECB234 /* SHGSegmentController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9E2A4AF1BE99A4C00ECB234 /* SHGSegmentController.m */; };
+		F9E2A4B41BE99E1C00ECB234 /* SHGAttationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9E2A4B21BE99E1C00ECB234 /* SHGAttationViewController.m */; };
+		F9E2A4B51BE99E1C00ECB234 /* SHGAttationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9E2A4B31BE99E1C00ECB234 /* SHGAttationViewController.xib */; };
 		F9EBB7CD1BB3DCD20023E84E /* SHGPersonDynamicViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9EBB7CB1BB3DCD20023E84E /* SHGPersonDynamicViewController.m */; };
 		F9EBB7CE1BB3DCD20023E84E /* SHGPersonDynamicViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9EBB7CC1BB3DCD20023E84E /* SHGPersonDynamicViewController.xib */; };
 		F9EBB7D01BB3F4470023E84E /* China_City.plist in Resources */ = {isa = PBXBuildFile; fileRef = F9EBB7CF1BB3F4470023E84E /* China_City.plist */; };
@@ -2087,6 +2089,9 @@
 		F9D9F1561BB51D5F00F94E70 /* SHGUserTagModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGUserTagModel.m; sourceTree = "<group>"; };
 		F9E2A4AE1BE99A4C00ECB234 /* SHGSegmentController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGSegmentController.h; sourceTree = "<group>"; };
 		F9E2A4AF1BE99A4C00ECB234 /* SHGSegmentController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGSegmentController.m; sourceTree = "<group>"; };
+		F9E2A4B11BE99E1C00ECB234 /* SHGAttationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGAttationViewController.h; sourceTree = "<group>"; };
+		F9E2A4B21BE99E1C00ECB234 /* SHGAttationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGAttationViewController.m; sourceTree = "<group>"; };
+		F9E2A4B31BE99E1C00ECB234 /* SHGAttationViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGAttationViewController.xib; sourceTree = "<group>"; };
 		F9EBB7CA1BB3DCD20023E84E /* SHGPersonDynamicViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGPersonDynamicViewController.h; sourceTree = "<group>"; };
 		F9EBB7CB1BB3DCD20023E84E /* SHGPersonDynamicViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGPersonDynamicViewController.m; sourceTree = "<group>"; };
 		F9EBB7CC1BB3DCD20023E84E /* SHGPersonDynamicViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGPersonDynamicViewController.xib; sourceTree = "<group>"; };
@@ -2856,6 +2861,9 @@
 				614AD1BB1AD7AFED00DDF43E /* SHGHomeViewController.h */,
 				614AD1BC1AD7AFED00DDF43E /* SHGHomeViewController.m */,
 				614AD1BD1AD7AFED00DDF43E /* SHGHomeViewController.xib */,
+				F9E2A4B11BE99E1C00ECB234 /* SHGAttationViewController.h */,
+				F9E2A4B21BE99E1C00ECB234 /* SHGAttationViewController.m */,
+				F9E2A4B31BE99E1C00ECB234 /* SHGAttationViewController.xib */,
 				6153B9451ADFB4CA0015F6E1 /* CircleSendViewController.h */,
 				6153B9461ADFB4CA0015F6E1 /* CircleSendViewController.m */,
 				6153B9471ADFB4CA0015F6E1 /* CircleSendViewController.xib */,
@@ -5140,6 +5148,7 @@
 				61E83D731AF7C78E00703651 /* 设置@3x.png in Resources */,
 				61E83D001AF7C78E00703651 /* 加号@2x.png in Resources */,
 				61E83CFE1AF7C78E00703651 /* 产品-默认@2x.png in Resources */,
+				F9E2A4B51BE99E1C00ECB234 /* SHGAttationViewController.xib in Resources */,
 				61E83D231AF7C78E00703651 /* 选择行业下拉框@2x.png in Resources */,
 				B080FEAC1B81E30100426579 /* emoji_touch.png in Resources */,
 				61D62BFA1ADDFF53002DD395 /* prompt@2x.png in Resources */,
@@ -5319,6 +5328,7 @@
 				6187D2F61AF1C693008E1D21 /* EMRemarkImageView.m in Sources */,
 				610FF0761AD6227F0027EBA6 /* Toast+UIView.m in Sources */,
 				6187D2CA1AF1C693008E1D21 /* ContactSelectionViewController.m in Sources */,
+				F9E2A4B41BE99E1C00ECB234 /* SHGAttationViewController.m in Sources */,
 				6187D2CD1AF1C693008E1D21 /* GroupBansViewController.m in Sources */,
 				569C6D2F1B7CA9EB00AD59C3 /* BindPhoneViewController.m in Sources */,
 				6187D2D31AF1C693008E1D21 /* ChatListCell.m in Sources */,

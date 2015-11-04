@@ -24,37 +24,28 @@
 
 #import "SHGSegmentController.h"
 
-static const float TAB_BAR_HEIGHT = 44.0f;
 static const NSInteger TAG_OFFSET = 1000;
+
+@interface SHGSegmentController ()
+@property (strong ,nonatomic) NSArray *titleArray;
+@end
 
 @implementation SHGSegmentController
 {
 	UIView *tabButtonsContainerView;
 	UIView *contentContainerView;
-	UIImageView *indicatorImageView;
 }
 
 @synthesize viewControllers = _viewControllers;
 @synthesize selectedIndex = _selectedIndex;
 @synthesize delegate = _delegate;
 
-- (void)centerIndicatorOnButton:(UIButton *)button
-{
-	CGRect rect = indicatorImageView.frame;
-	rect.origin.x = button.center.x - floorf(indicatorImageView.frame.size.width/2.0f);
-	rect.origin.y = TAB_BAR_HEIGHT - indicatorImageView.frame.size.height;
-	indicatorImageView.frame = rect;
-	indicatorImageView.hidden = NO;
-}
-
 - (void)selectTabButton:(UIButton *)button
 {
 	[button setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
-
 	UIImage *image = [[UIImage imageNamed:@"MHTabBarActiveTab"] stretchableImageWithLeftCapWidth:0 topCapHeight:0];
 	[button setBackgroundImage:image forState:UIControlStateNormal];
 	[button setBackgroundImage:image forState:UIControlStateHighlighted];
-	
 	[button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
 	[button setTitleShadowColor:[UIColor colorWithWhite:0.0f alpha:0.5f] forState:UIControlStateNormal];
 }
@@ -62,11 +53,9 @@ static const NSInteger TAG_OFFSET = 1000;
 - (void)deselectTabButton:(UIButton *)button
 {
 	[button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-
 	UIImage *image = [[UIImage imageNamed:@"MHTabBarInactiveTab"] stretchableImageWithLeftCapWidth:1 topCapHeight:0];
 	[button setBackgroundImage:image forState:UIControlStateNormal];
 	[button setBackgroundImage:image forState:UIControlStateHighlighted];
-
 	[button setTitleColor:[UIColor colorWithRed:175/255.0f green:85/255.0f blue:58/255.0f alpha:1.0f] forState:UIControlStateNormal];
 	[button setTitleShadowColor:[UIColor whiteColor] forState:UIControlStateNormal];
 }
@@ -74,25 +63,22 @@ static const NSInteger TAG_OFFSET = 1000;
 - (void)removeTabButtons
 {
 	NSArray *buttons = [tabButtonsContainerView subviews];
-	for (UIButton *button in buttons)
+    for (UIButton *button in buttons){
 		[button removeFromSuperview];
+    }
 }
 
 - (void)addTabButtons
 {
-	NSUInteger index = 0;
-	for (UIViewController *viewController in self.viewControllers)
-	{
+    for (NSInteger i = 0; i < self.viewControllers.count; i++){
 		UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-		button.tag = TAG_OFFSET + index;
-		[button setTitle:viewController.title forState:UIControlStateNormal];
+		button.tag = TAG_OFFSET + i;
+		[button setTitle:[self.titleArray objectAtIndex:i] forState:UIControlStateNormal];
 		[button addTarget:self action:@selector(tabButtonPressed:) forControlEvents:UIControlEventTouchDown];
-		button.titleLabel.font = [UIFont boldSystemFontOfSize:18];
+		button.titleLabel.font = [UIFont systemFontOfSize:15.0f];
 		button.titleLabel.shadowOffset = CGSizeMake(0, 1);
 		[self deselectTabButton:button];
 		[tabButtonsContainerView addSubview:button];
-
-		++index;
 	}
 }
 
@@ -101,7 +87,6 @@ static const NSInteger TAG_OFFSET = 1000;
 	[self removeTabButtons];
 	[self addTabButtons];
 
-	// Force redraw of the previously active tab.
 	NSUInteger lastIndex = _selectedIndex;
 	_selectedIndex = NSNotFound;
 	self.selectedIndex = lastIndex;
@@ -111,48 +96,34 @@ static const NSInteger TAG_OFFSET = 1000;
 {
 	NSUInteger index = 0;
 	NSUInteger count = [self.viewControllers count];
-
-	CGRect rect = CGRectMake(0, 0, floorf(self.view.bounds.size.width / count), TAB_BAR_HEIGHT);
-
-	indicatorImageView.hidden = YES;
-
+	CGRect rect = CGRectMake(0, 0, floorf(self.view.bounds.size.width / count), kNavigationBarHeight);
 	NSArray *buttons = [tabButtonsContainerView subviews];
-	for (UIButton *button in buttons)
-	{
-		if (index == count - 1)
+	for (UIButton *button in buttons){
+        if (index == count - 1){
 			rect.size.width = self.view.bounds.size.width - rect.origin.x;
-
+        }
 		button.frame = rect;
 		rect.origin.x += rect.size.width;
-
-		if (index == self.selectedIndex)
-			[self centerIndicatorOnButton:button];
-
 		++index;
 	}
 }
 
 - (void)viewDidLoad
 {
-	[super viewDidLoad];
-
+    [super viewDidLoad];
 	self.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    CGRect rect = CGRectMake(0, 0, self.view.bounds.size.width, kNavigationBarHeight);
+    tabButtonsContainerView = [[UIView alloc] initWithFrame:rect];
+    tabButtonsContainerView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 
-	CGRect rect = CGRectMake(0, 0, self.view.bounds.size.width, TAB_BAR_HEIGHT);
-	tabButtonsContainerView = [[UIView alloc] initWithFrame:rect];
-	tabButtonsContainerView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-	[self.view addSubview:tabButtonsContainerView];
-
-	rect.origin.y = TAB_BAR_HEIGHT;
-	rect.size.height = self.view.bounds.size.height - TAB_BAR_HEIGHT;
-	contentContainerView = [[UIView alloc] initWithFrame:rect];
+	contentContainerView = [[UIView alloc] initWithFrame:self.view.bounds];
 	contentContainerView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 	[self.view addSubview:contentContainerView];
-
-	indicatorImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"MHTabBarIndicator"]];
-	[self.view addSubview:indicatorImageView];
-
+    self.titleArray = @[@"动态", @"已关注"];
 	[self reloadTabButtons];
+    if(self.block){
+        self.block(tabButtonsContainerView);
+    }
 }
 
 - (void)viewDidUnload
@@ -160,7 +131,6 @@ static const NSInteger TAG_OFFSET = 1000;
 	[super viewDidUnload];
 	tabButtonsContainerView = nil;
 	contentContainerView = nil;
-	indicatorImageView = nil;
 }
 
 - (void)viewWillLayoutSubviews
@@ -267,7 +237,6 @@ static const NSInteger TAG_OFFSET = 1000;
 		{
 			toViewController.view.frame = contentContainerView.bounds;
 			[contentContainerView addSubview:toViewController.view];
-			[self centerIndicatorOnButton:toButton];
 
 			if ([self.delegate respondsToSelector:@selector(SHG_SegmentController:didSelectViewController:atIndex:)])
 				[self.delegate SHG_SegmentController:self didSelectViewController:toViewController atIndex:newSelectedIndex];
@@ -297,7 +266,6 @@ static const NSInteger TAG_OFFSET = 1000;
 
 					fromViewController.view.frame = rect;
 					toViewController.view.frame = contentContainerView.bounds;
-					[self centerIndicatorOnButton:toButton];
 				}
 				completion:^(BOOL finished)
 				{
@@ -313,7 +281,6 @@ static const NSInteger TAG_OFFSET = 1000;
 
 			toViewController.view.frame = contentContainerView.bounds;
 			[contentContainerView addSubview:toViewController.view];
-			[self centerIndicatorOnButton:toButton];
 
 			if ([self.delegate respondsToSelector:@selector(SHG_SegmentController:didSelectViewController:atIndex:)])
 				[self.delegate SHG_SegmentController:self didSelectViewController:toViewController atIndex:newSelectedIndex];
