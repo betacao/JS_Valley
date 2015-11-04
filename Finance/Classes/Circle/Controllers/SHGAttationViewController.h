@@ -6,8 +6,7 @@
 //  Copyright © 2015年 HuMin. All rights reserved.
 //
 
-#import "BaseNavigationController.h"
+#import "BaseTableViewController.h"
 
-@interface SHGAttationViewController : BaseNavigationController
-
+@interface SHGAttationViewController : BaseTableViewController
 @end

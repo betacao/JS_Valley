@@ -35,6 +35,7 @@ typedef void(^loadViewFinishBlock)(UIView *view);
 @property (nonatomic, assign) NSUInteger selectedIndex;
 @property (nonatomic, weak) id <SHGSegmentControllerDelegate> delegate;
 @property (nonatomic, copy) loadViewFinishBlock block;
+@property (strong ,nonatomic, readonly) UIBarButtonItem *rightBarButtonItem;
 
 - (void)setSelectedIndex:(NSUInteger)index animated:(BOOL)animated;
 - (void)setSelectedViewController:(UIViewController *)viewController animated:(BOOL)animated;

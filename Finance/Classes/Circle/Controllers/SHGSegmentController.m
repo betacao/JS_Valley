@@ -26,6 +26,7 @@
 
 @interface SHGSegmentController ()
 @property (strong ,nonatomic) NSArray *titleArray;
+@property (nonatomic, strong) UIBarButtonItem *rightBarButtonItem;
 @end
 
 @implementation SHGSegmentController
@@ -84,6 +85,29 @@
 	[self reloadTabButtons];
     if(self.block){
         self.block(tabButtonsContainerView);
+    }
+}
+
+- (UIBarButtonItem *)rightBarButtonItem
+{
+    if (!_rightBarButtonItem)
+    {
+        UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [rightButton setFrame:CGRectZero];
+        UIImage *image = [UIImage imageNamed:@"right_send"];
+        [rightButton setBackgroundImage:image forState:UIControlStateNormal];
+        [rightButton.imageView setContentMode:UIViewContentModeScaleAspectFill];
+        [rightButton addTarget:self action:@selector(actionPost:) forControlEvents:UIControlEventTouchUpInside];
+        [rightButton sizeToFit];
+        _rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:rightButton];
+    }
+    return _rightBarButtonItem;
+}
+
+- (void)actionPost:(UIButton *)button
+{
+    if([self.selectedViewController respondsToSelector:@selector(actionPost:)]){
+        [self.selectedViewController performSelector:@selector(actionPost:) withObject:button];
     }
 }
 

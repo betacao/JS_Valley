@@ -7,12 +7,6 @@
 //
 
 #import "BaseTableViewController.h"
-#import "SHGHomeTableViewCell.h"
-#import "CircleDetailViewController.h"
-#import "CircleSomeOneViewController.h"
-@interface SHGHomeViewController : BaseTableViewController<CircleListDelegate,BRCommentViewDelegate,CircleActionDelegate>
-
-@property (strong ,nonatomic, readonly) UIView *titleView;
-@property (strong ,nonatomic, readonly) UIBarButtonItem *rightBarButtonItem;
+@interface SHGHomeViewController : BaseTableViewController
 
 @end

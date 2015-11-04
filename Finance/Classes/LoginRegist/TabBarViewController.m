@@ -35,6 +35,7 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
 @property (strong, nonatomic) MeViewController *meViewController;
 @property (strong, nonatomic) ChatListViewController *chatViewController;
 @property (strong, nonatomic) NSDate *lastPlaySoundDate;
+@property (strong, nonatomic) UIView *segmentTitleView;
 @end
 
 @implementation TabBarViewController
@@ -234,9 +235,9 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     self.navigationItem.titleView = nil;
     if (item.tag == 1000)
     {
-//        self.navigationItem.titleView = self.homeViewController.titleView;
-        self.navigationItem.leftBarButtonItem=nil;
-//        self.navigationItem.rightBarButtonItems=@[self.homeViewController.rightBarButtonItem];
+        self.navigationItem.titleView = self.segmentTitleView;
+        self.navigationItem.leftBarButtonItem = nil;
+        self.navigationItem.rightBarButtonItem = self.segmentViewController.rightBarButtonItem;
         [MobClick event:@"SHGHomeViewController" label:@"onClick"];
     }else if (item.tag == 2000)
     {
@@ -269,10 +270,10 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     self.segmentViewController.tabBarItem.tag = 1000;
     __weak typeof(self)weakSelf = self;
     self.segmentViewController.block = ^(UIView *view){
-        weakSelf.navigationItem.titleView = view;
+        self.segmentTitleView = view;
+        weakSelf.navigationItem.titleView = self.segmentTitleView;
     };
-//    self.navigationItem.titleView = self.segmentViewController.titleView;
-//    self.navigationItem.rightBarButtonItem = self.homeViewController.rightBarButtonItem;
+    self.navigationItem.rightBarButtonItem = self.segmentViewController.rightBarButtonItem;
 
     //消息
     image = [UIImage imageNamed:@"信息14-默认"];

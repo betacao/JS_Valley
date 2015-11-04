@@ -14,11 +14,12 @@
 #import "CircleListTwoTableViewCell.h"
 #import "MLEmojiLabel.h"
 #import "LinkViewController.h"
-#import "CCLocationManager.h"
 #import "RecmdFriendObj.h"
 #import "CircleListRecommendViewController.h"
-#import "popObj.h"
 #import "SHGNoticeView.h"
+#import "CCLocationManager.h"
+#import "SHGHomeTableViewCell.h"
+#import "CircleDetailViewController.h"
 
 #define IS_IOS7 ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7)
 #define IS_IOS8 ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8)
@@ -27,29 +28,23 @@
 const CGFloat kAdTableViewCellHeight = 191.0f;
 const CGFloat kAdButtomMargin = 20.0f;
 
-@interface SHGHomeViewController ()<MLEmojiLabelDelegate,CLLocationManagerDelegate,CircleActionDelegate,SHGNoticeDelegate>
+@interface SHGHomeViewController ()<MLEmojiLabelDelegate,CLLocationManagerDelegate,CircleActionDelegate,SHGNoticeDelegate, CircleListDelegate>
 {
     NSString *_target;
     NSInteger photoIndex;
-    BOOL hasDataFinished;
     BOOL hasRequestFailed;
     CircleListObj *deleteObj;
-    UISegmentedControl *segmentedControl;
-    NSTimer *timer;
-    NSArray *phopoArr;
 }
 
 @property (weak, nonatomic) IBOutlet UITableView *listTable;
-@property (strong, nonatomic) NSMutableArray *arrrr;
 @property (nonatomic, strong) UIView *titleView;
-@property (nonatomic, strong) SHGHomeTableViewCell *prototypeCell;
-@property (nonatomic, strong) UIBarButtonItem *rightBarButtonItem;
 //判断是否已经加载过推荐列表
 @property (strong, nonatomic) NSMutableArray *recomandArray;
 
 @property (assign, nonatomic) BOOL hasRequestedFirst;
 @property (assign, nonatomic) BOOL hasRequestedRecomand;
 @property (assign, nonatomic) BOOL hasLocated;
+@property (assign, nonatomic) BOOL hasDataFinished;
 
 @property (strong, nonatomic) CircleListRecommendViewController *recommendViewController;
 
@@ -89,7 +84,6 @@ const CGFloat kAdButtomMargin = 20.0f;
     self.shouldDisplayRecommend = YES;
     
     self.circleType = @"all";
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshTable) name:@"aaa" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshData) name:NOTIFI_SENDPOST object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(smsShareSuccess:) name:NOTIFI_CHANGE_SHARE_TO_SMSSUCCESS object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(smsShareSuccess:) name:NOTIFI_CHANGE_SHARE_TO_FRIENDSUCCESS object:nil];
@@ -274,7 +268,7 @@ const CGFloat kAdButtomMargin = 20.0f;
     }];
 }
 
--(void)smsShareSuccess:(NSNotification *)noti
+- (void)smsShareSuccess:(NSNotification *)noti
 {
     NSInteger count = [self.navigationController viewControllers].count;
     for (NSInteger index = count - 1; index >= 0; index--){
@@ -299,32 +293,6 @@ const CGFloat kAdButtomMargin = 20.0f;
 -(void)refreshTable
 {
     [self.listTable reloadData];
-}
-
-- (UIView *)titleView
-{
-    if (!_titleView) {
-        [self initUI];
-        self.titleView = segmentedControl;
-    }
-    
-    return _titleView;
-}
-
-- (UIBarButtonItem *)rightBarButtonItem
-{
-    if (!_rightBarButtonItem)
-    {
-        UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        [rightButton setFrame:CGRectZero];
-        UIImage *image = [UIImage imageNamed:@"right_send"];
-        [rightButton setBackgroundImage:image forState:UIControlStateNormal];
-        [rightButton.imageView setContentMode:UIViewContentModeScaleAspectFill];
-        [rightButton addTarget:self action:@selector(actionPost:) forControlEvents:UIControlEventTouchUpInside];
-        [rightButton sizeToFit];
-        self.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:rightButton];
-    }
-    return _rightBarButtonItem;
 }
 
 - (void)refreshData
@@ -362,7 +330,7 @@ const CGFloat kAdButtomMargin = 20.0f;
 
     if ([target isEqualToString:@"first"]){
         [self.listTable.footer resetNoMoreData];
-        hasDataFinished = NO;
+        self.hasDataFinished = NO;
     } else if([target isEqualToString:@"load"]){
         userTags = [SHGGloble sharedGloble].minUserTags;
     }
@@ -473,9 +441,9 @@ const CGFloat kAdButtomMargin = 20.0f;
         }
         [self.dataArr addObjectsFromArray:normalArray];
         if (IsArrEmpty(normalArray)){
-            hasDataFinished = YES;
+            self.hasDataFinished = YES;
         } else{
-            hasDataFinished = NO;
+            self.hasDataFinished = NO;
         }
     }
 }
@@ -487,35 +455,6 @@ const CGFloat kAdButtomMargin = 20.0f;
 - (void)endrefresh
 {
     [self.listTable.footer endRefreshing];
-}
-
-- (void)initUI
-{
-    segmentedControl = [[UISegmentedControl alloc] initWithItems: [NSArray arrayWithObjects:@"动态", @"已关注", nil]];
-    segmentedControl.frame = CGRectMake(0, 50, 170, 26);
-    segmentedControl.enabled = YES;
-    segmentedControl.layer.masksToBounds = YES;
-    segmentedControl.layer.cornerRadius = 4;
-    NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:RGB(255, 57, 67),NSForegroundColorAttributeName,[UIFont systemFontOfSize:17],NSFontAttributeName ,nil];
-    
-    NSDictionary *dic1 = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor],NSForegroundColorAttributeName,[UIFont systemFontOfSize:17],NSFontAttributeName ,nil];
-    //设置标题的颜色 字体和大小 阴影和阴影颜色
-    [segmentedControl setTitleTextAttributes:dic1 forState:UIControlStateSelected];
-    [segmentedControl setTitleTextAttributes:dic forState:UIControlStateNormal];
-    segmentedControl.tintColor = [UIColor clearColor];
-    segmentedControl.layer.borderColor =  [RGB(255, 56, 67) CGColor];
-    segmentedControl.layer.borderWidth = 1.0;
-    UIImage *segImage = [CommonMethod imageWithColor:[UIColor whiteColor] andSize:CGSizeMake(85, 26)];
-    UIImage *selectImage = [CommonMethod imageWithColor:RGB(255, 56, 67) andSize:CGSizeMake(85, 26)];
-    [segmentedControl setBackgroundImage:segImage forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
-    [segmentedControl setBackgroundImage:selectImage forState:UIControlStateSelected barMetrics:UIBarMetricsDefault];
-    [segmentedControl setBackgroundImage:[UIImage imageWithColor:[UIColor whiteColor] andSize:CGSizeMake(85, 26)] forState:UIControlStateHighlighted barMetrics:UIBarMetricsDefault];
-    [segmentedControl setBackgroundImage:selectImage forState:UIControlStateSelected|UIControlStateHighlighted barMetrics:UIBarMetricsDefault];
-    
-    segmentedControl.selected = NO;
-    segmentedControl.selectedSegmentIndex = 0;
-    
-    [segmentedControl addTarget:self action:@selector(valueChange:) forControlEvents:UIControlEventValueChanged];
 }
 //发帖
 - (void)actionPost:(UIButton *)sender
@@ -553,14 +492,10 @@ const CGFloat kAdButtomMargin = 20.0f;
     }
     
 }
-- (void)chageValue
-{
-    hasRequestFailed = NO;
-}
 
 - (void)refreshFooter
 {
-    if (hasDataFinished){
+    if (self.hasDataFinished){
         [self.listTable.footer endRefreshingWithNoMoreData];
         return;
     }
@@ -664,9 +599,9 @@ const CGFloat kAdButtomMargin = 20.0f;
                 cell.popularizeLable.textAlignment =  NSTextAlignmentLeft;
                 cell.popularizeLable.text = obj.detail;
                 
-                phopoArr = (NSArray *)obj.photos;
-                if (phopoArr && phopoArr.count > 0){
-                    [cell.popularizeImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,phopoArr[0]]] placeholderImage:[UIImage imageNamed:@"default_image"]];
+                NSArray *array = (NSArray *)obj.photos;
+                if (array && array.count > 0){
+                    [cell.popularizeImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,array[0]]] placeholderImage:[UIImage imageNamed:@"default_image"]];
                 } else{
                     [cell.popularizeImage sd_setImageWithURL:nil placeholderImage:[UIImage imageNamed:@"default_image"]];
                 }
