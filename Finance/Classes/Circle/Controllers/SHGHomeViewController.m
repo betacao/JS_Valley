@@ -37,7 +37,6 @@ const CGFloat kAdButtomMargin = 20.0f;
 }
 
 @property (weak, nonatomic) IBOutlet UITableView *listTable;
-@property (nonatomic, strong) UIView *titleView;
 //判断是否已经加载过推荐列表
 @property (strong, nonatomic) NSMutableArray *recomandArray;
 
@@ -241,7 +240,7 @@ const CGFloat kAdButtomMargin = 20.0f;
 - (void)insertRecomandArray
 {
     //当前允许显示推荐好友 并且是动态页面不是已关注页面
-    if(self.shouldDisplayRecommend && [self.circleType isEqualToString:@"all"]){
+    if(self.shouldDisplayRecommend){
         if(self.dataArr.count > 4){
             if(self.recomandArray.count > 0){
                 [self.dataArr insertObject:self.recomandArray atIndex:3];
@@ -290,11 +289,6 @@ const CGFloat kAdButtomMargin = 20.0f;
     }
 }
 
--(void)refreshTable
-{
-    [self.listTable reloadData];
-}
-
 - (void)refreshData
 {
     __weak typeof(self) weakSelf = self;
@@ -337,7 +331,7 @@ const CGFloat kAdButtomMargin = 20.0f;
 
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
     NSInteger rid = [time integerValue];
-    NSDictionary *param = @{@"uid":uid, @"type":self.circleType, @"target":target, @"rid":@(rid), @"num": rRequestNum, @"tagIds" : userTags};
+    NSDictionary *param = @{@"uid":uid, @"type":@"all", @"target":target, @"rid":@(rid), @"num": rRequestNum, @"tagIds" : userTags};
 
     __weak typeof(self) weakSelf = self;
     [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttpCircle,circleNew] class:[CircleListObj class] parameters:param success:^(MOCHTTPResponse *response){
@@ -407,9 +401,7 @@ const CGFloat kAdButtomMargin = 20.0f;
             [self.dataArr addObjectsFromArray:self.adArray];
         }
         [self insertRecomandArray];
-        if([self.circleType isEqualToString:@"all"]){
-            [self.newMessageNoticeView showWithText:[NSString stringWithFormat:@"为您加载了%ld条新动态",(long)self.dataArr.count]];
-        }
+        [self.newMessageNoticeView showWithText:[NSString stringWithFormat:@"为您加载了%ld条新动态",(long)self.dataArr.count]];
     } else if ([target isEqualToString:@"refresh"]){
         if (normalArray.count > 0){
             for (NSInteger i = normalArray.count - 1; i >= 0; i--){
@@ -447,10 +439,6 @@ const CGFloat kAdButtomMargin = 20.0f;
         }
     }
 }
-- (void)reloadTable
-{
-    [self.listTable reloadData];
-}
 
 - (void)endrefresh
 {
@@ -462,20 +450,6 @@ const CGFloat kAdButtomMargin = 20.0f;
     CircleSendViewController *postVC = [[CircleSendViewController alloc] initWithNibName:@"CircleSendViewController" bundle:nil];
     postVC.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:postVC animated:YES];
-}
-
-//titleView切换
-- (void)valueChange:(UISegmentedControl *)seg
-{
-    if (seg.selectedSegmentIndex == 0){
-        NSLog(@"所有");
-        self.circleType = @"all";
-        [self requestDataWithTarget:@"first" time:@""];
-    } else{
-        NSLog(@"已关注");
-        self.circleType = @"attention";
-        [self requestDataWithTarget:@"first" time:@""];
-    }
 }
 
 - (void)refreshHeader
@@ -1063,7 +1037,7 @@ const CGFloat kAdButtomMargin = 20.0f;
                     }
                     [MobClick event:@"ActionAttentionClickedFalse" label:@"onClick"];
                     [Hud showMessageWithText:@"取消关注成功"];
-                    [self refreshTable];
+                    [self refreshData];
                 } else{
                     [Hud showMessageWithText:@"失败"];
                 }

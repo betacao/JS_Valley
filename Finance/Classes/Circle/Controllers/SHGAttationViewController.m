@@ -86,7 +86,7 @@
 
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
     NSInteger rid = [time integerValue];
-    NSDictionary *param = @{@"uid":uid, @"type":self.circleType, @"target":target, @"rid":@(rid), @"num": rRequestNum, @"tagIds" : userTags};
+    NSDictionary *param = @{@"uid":uid, @"type":@"attation", @"target":target, @"rid":@(rid), @"num": rRequestNum, @"tagIds" : userTags};
 
     __weak typeof(self) weakSelf = self;
     [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttpCircle,circleNew] class:[CircleListObj class] parameters:param success:^(MOCHTTPResponse *response){
@@ -271,40 +271,6 @@
             mlLable.delegate = self;
             return cell;
         }
-    } else{
-        if ([obj.status boolValue]){
-            NSString *cellIdentifier = @"circleListTwoIdentifier";
-            CircleListTwoTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-            if (!cell){
-                cell = [[[NSBundle mainBundle] loadNibNamed:@"CircleListTwoTableViewCell" owner:self options:nil] lastObject];
-                cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            }
-            cell.popularizeLable.lineBreakMode = NSLineBreakByTruncatingTail;
-            cell.popularizeLable.textAlignment =  NSTextAlignmentLeft;
-            cell.popularizeLable.text = obj.detail;
-
-            NSArray *array = (NSArray *)obj.photos;
-            if (array && array.count > 0){
-                [cell.popularizeImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,array[0]]] placeholderImage:[UIImage imageNamed:@"default_image"]];
-            } else{
-                [cell.popularizeImage sd_setImageWithURL:nil placeholderImage:[UIImage imageNamed:@"default_image"]];
-            }
-
-            //防止图片压缩
-            cell.popularizeImage.contentMode = UIViewContentModeScaleAspectFit;
-
-            cell.adLable.text = @"推广";
-            cell.adLable.textColor = [UIColor grayColor];
-
-            NSArray *arr = [obj.publishdate componentsSeparatedByString:@" "];
-            for (int i = 0; i < [arr count]; i++) {
-                NSLog(@"string:%@", [arr objectAtIndex:i]);
-            }
-            cell.lableTime.text = arr[0];
-            cell.lableTime.textAlignment = NSTextAlignmentRight;
-
-            return cell;
-        }
     }
     return nil;
 }
@@ -366,23 +332,12 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     CircleListObj *obj = self.dataArr[indexPath.row];
-    if([obj isKindOfClass:[CircleListObj class]]){
-        if (!IsStrEmpty(obj.feedhtml)){
-            NSLog(@"%@",obj.feedhtml);
-            LinkViewController *vc = [[LinkViewController alloc]init];
-            vc.url = obj.feedhtml;
-            [self.navigationController pushViewController:vc animated:YES];
-        } else{
-            CircleDetailViewController *viewController = [[CircleDetailViewController alloc] initWithNibName:@"CircleDetailViewController" bundle:nil];
-            viewController.delegate = self;
-            viewController.rid = obj.rid;
-            NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:obj.praisenum, kPraiseNum,obj.sharenum,kShareNum,obj.cmmtnum,kCommentNum, nil];
-            viewController.itemInfoDictionary = dictionary;
-            [self.navigationController pushViewController:viewController animated:YES];
-        }
-    } else{
-        return;
-    }
+    CircleDetailViewController *viewController = [[CircleDetailViewController alloc] initWithNibName:@"CircleDetailViewController" bundle:nil];
+    viewController.delegate = self;
+    viewController.rid = obj.rid;
+    NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:obj.praisenum, kPraiseNum,obj.sharenum,kShareNum,obj.cmmtnum,kCommentNum, nil];
+    viewController.itemInfoDictionary = dictionary;
+    [self.navigationController pushViewController:viewController animated:YES];
 }
 
 //处理tableView左边空白
@@ -413,29 +368,7 @@
     }
 }
 
-#pragma mark ------ 分享 ------
-- (void)smsShareSuccess:(NSNotification *)noti
-{
-    NSInteger count = [self.navigationController viewControllers].count;
-    for (NSInteger index = count - 1; index >= 0; index--){
-        UIViewController *controller = [[self.navigationController viewControllers] objectAtIndex:index];
-        if([controller respondsToSelector:@selector(smsShareSuccess:)]){
-            [controller performSelector:@selector(smsShareSuccess:) withObject:noti];
-            return;
-        }
-    }
-    id obj = noti.object;
-    if ([obj isKindOfClass:[NSString class]])
-    {
-        NSString *rid = obj;
-        for (CircleListObj *objs in self.dataArr) {
-            if ([objs isKindOfClass:[CircleListObj class]] && [objs.rid isEqualToString:rid]) {
-//                [self otherShareWithObj:objs];
-            }
-        }
-    }
-}
-
+#pragma mark ------ 代理 ------
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
