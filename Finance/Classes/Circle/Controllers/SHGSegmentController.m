@@ -24,15 +24,13 @@
 
 #import "SHGSegmentController.h"
 
-static const NSInteger TAG_OFFSET = 1000;
-
 @interface SHGSegmentController ()
 @property (strong ,nonatomic) NSArray *titleArray;
 @end
 
 @implementation SHGSegmentController
 {
-	UIView *tabButtonsContainerView;
+	UISegmentedControl *tabButtonsContainerView;
 	UIView *contentContainerView;
 }
 
@@ -40,81 +38,44 @@ static const NSInteger TAG_OFFSET = 1000;
 @synthesize selectedIndex = _selectedIndex;
 @synthesize delegate = _delegate;
 
-- (void)selectTabButton:(UIButton *)button
-{
-	[button setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
-	UIImage *image = [[UIImage imageNamed:@"MHTabBarActiveTab"] stretchableImageWithLeftCapWidth:0 topCapHeight:0];
-	[button setBackgroundImage:image forState:UIControlStateNormal];
-	[button setBackgroundImage:image forState:UIControlStateHighlighted];
-	[button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-	[button setTitleShadowColor:[UIColor colorWithWhite:0.0f alpha:0.5f] forState:UIControlStateNormal];
-}
-
-- (void)deselectTabButton:(UIButton *)button
-{
-	[button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-	UIImage *image = [[UIImage imageNamed:@"MHTabBarInactiveTab"] stretchableImageWithLeftCapWidth:1 topCapHeight:0];
-	[button setBackgroundImage:image forState:UIControlStateNormal];
-	[button setBackgroundImage:image forState:UIControlStateHighlighted];
-	[button setTitleColor:[UIColor colorWithRed:175/255.0f green:85/255.0f blue:58/255.0f alpha:1.0f] forState:UIControlStateNormal];
-	[button setTitleShadowColor:[UIColor whiteColor] forState:UIControlStateNormal];
-}
-
-- (void)removeTabButtons
-{
-	NSArray *buttons = [tabButtonsContainerView subviews];
-    for (UIButton *button in buttons){
-		[button removeFromSuperview];
-    }
-}
-
-- (void)addTabButtons
-{
-    for (NSInteger i = 0; i < self.viewControllers.count; i++){
-		UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-		button.tag = TAG_OFFSET + i;
-		[button setTitle:[self.titleArray objectAtIndex:i] forState:UIControlStateNormal];
-		[button addTarget:self action:@selector(tabButtonPressed:) forControlEvents:UIControlEventTouchDown];
-		button.titleLabel.font = [UIFont systemFontOfSize:15.0f];
-		button.titleLabel.shadowOffset = CGSizeMake(0, 1);
-		[self deselectTabButton:button];
-		[tabButtonsContainerView addSubview:button];
-	}
-}
 
 - (void)reloadTabButtons
 {
-	[self removeTabButtons];
-	[self addTabButtons];
-
 	NSUInteger lastIndex = _selectedIndex;
 	_selectedIndex = NSNotFound;
 	self.selectedIndex = lastIndex;
-}
-
-- (void)layoutTabButtons
-{
-	NSUInteger index = 0;
-	NSUInteger count = [self.viewControllers count];
-	CGRect rect = CGRectMake(0, 0, floorf(self.view.bounds.size.width / count), kNavigationBarHeight);
-	NSArray *buttons = [tabButtonsContainerView subviews];
-	for (UIButton *button in buttons){
-        if (index == count - 1){
-			rect.size.width = self.view.bounds.size.width - rect.origin.x;
-        }
-		button.frame = rect;
-		rect.origin.x += rect.size.width;
-		++index;
-	}
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 	self.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-    CGRect rect = CGRectMake(0, 0, self.view.bounds.size.width, kNavigationBarHeight);
-    tabButtonsContainerView = [[UIView alloc] initWithFrame:rect];
-    tabButtonsContainerView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+    CGRect rect = CGRectMake(0, 50, 170, 26);
+    tabButtonsContainerView = [[UISegmentedControl alloc] initWithItems: [NSArray arrayWithObjects:@"动态", @"已关注", nil]];
+    tabButtonsContainerView.frame = rect;
+    tabButtonsContainerView.enabled = YES;
+    tabButtonsContainerView.layer.masksToBounds = YES;
+    tabButtonsContainerView.layer.cornerRadius = 4;
+    NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:RGB(255, 57, 67),NSForegroundColorAttributeName,[UIFont systemFontOfSize:17],NSFontAttributeName ,nil];
+
+    NSDictionary *dic1 = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor],NSForegroundColorAttributeName,[UIFont systemFontOfSize:17],NSFontAttributeName ,nil];
+    //设置标题的颜色 字体和大小 阴影和阴影颜色
+    [tabButtonsContainerView setTitleTextAttributes:dic1 forState:UIControlStateSelected];
+    [tabButtonsContainerView setTitleTextAttributes:dic forState:UIControlStateNormal];
+    tabButtonsContainerView.tintColor = [UIColor clearColor];
+    tabButtonsContainerView.layer.borderColor =  [RGB(255, 56, 67) CGColor];
+    tabButtonsContainerView.layer.borderWidth = 1.0;
+    UIImage *segImage = [CommonMethod imageWithColor:[UIColor whiteColor] andSize:CGSizeMake(85, 26)];
+    UIImage *selectImage = [CommonMethod imageWithColor:RGB(255, 56, 67) andSize:CGSizeMake(85, 26)];
+    [tabButtonsContainerView setBackgroundImage:segImage forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+    [tabButtonsContainerView setBackgroundImage:selectImage forState:UIControlStateSelected barMetrics:UIBarMetricsDefault];
+    [tabButtonsContainerView setBackgroundImage:[UIImage imageWithColor:[UIColor whiteColor] andSize:CGSizeMake(85, 26)] forState:UIControlStateHighlighted barMetrics:UIBarMetricsDefault];
+    [tabButtonsContainerView setBackgroundImage:selectImage forState:UIControlStateSelected|UIControlStateHighlighted barMetrics:UIBarMetricsDefault];
+
+    tabButtonsContainerView.selected = NO;
+    tabButtonsContainerView.selectedSegmentIndex = 0;
+
+    [tabButtonsContainerView addTarget:self action:@selector(valueChange:) forControlEvents:UIControlEventValueChanged];
 
 	contentContainerView = [[UIView alloc] initWithFrame:self.view.bounds];
 	contentContainerView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
@@ -136,7 +97,6 @@ static const NSInteger TAG_OFFSET = 1000;
 - (void)viewWillLayoutSubviews
 {
 	[super viewWillLayoutSubviews];
-	[self layoutTabButtons];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -213,19 +173,14 @@ static const NSInteger TAG_OFFSET = 1000;
 
 		if (_selectedIndex != NSNotFound)
 		{
-			UIButton *fromButton = (UIButton *)[tabButtonsContainerView viewWithTag:TAG_OFFSET + _selectedIndex];
-			[self deselectTabButton:fromButton];
 			fromViewController = self.selectedViewController;
 		}
 
 		NSUInteger oldSelectedIndex = _selectedIndex;
 		_selectedIndex = newSelectedIndex;
 
-		UIButton *toButton;
 		if (_selectedIndex != NSNotFound)
 		{
-			toButton = (UIButton *)[tabButtonsContainerView viewWithTag:TAG_OFFSET + _selectedIndex];
-			[self selectTabButton:toButton];
 			toViewController = self.selectedViewController;
 		}
 
@@ -308,9 +263,9 @@ static const NSInteger TAG_OFFSET = 1000;
 		[self setSelectedIndex:index animated:animated];
 }
 
-- (void)tabButtonPressed:(UIButton *)sender
+- (void)valueChange:(UISegmentedControl *)seg
 {
-	[self setSelectedIndex:sender.tag - TAG_OFFSET animated:YES];
+	[self setSelectedIndex:seg.selectedSegmentIndex animated:YES];
 }
 
 @end
