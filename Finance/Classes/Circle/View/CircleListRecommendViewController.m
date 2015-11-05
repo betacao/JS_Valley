@@ -100,12 +100,24 @@ const CGFloat kOtherRecommendCellHeight = 57.0f;
         } else{
             detailString = [[NSString stringWithFormat:@"%@",obj.recomfri] stringByAppendingString:@"等人也关注了他"];
         }
+        NSString *company = obj.company;
+        if (obj.company.length > 5) {
+            company = [obj.company substringToIndex:5];
+            company = [NSString stringWithFormat:@"%@…",company];
+        }
+
+        NSString *department = obj.title;
+        if (obj.title.length > 4) {
+            department= [obj.title substringToIndex:4];
+            department = [NSString stringWithFormat:@"%@…",department];
+        }
+
         if(index == 0){
             view = self.topView;
             [self.topImageView sd_setImageWithURL:[NSURL URLWithString:obj.headimg] placeholderImage:[UIImage imageNamed:@"default_head"]];
             self.topNameLabel.text = obj.username;
-            self.topCompantyLabel.text = obj.company;
-            self.topDepartLabel.text = obj.title;
+            self.topCompantyLabel.text = company;
+            self.topDepartLabel.text = department;
             self.topDetailLabel.text = detailString;
             if(!obj.isFocus){
                 [self.topFocusButton setImage:[UIImage imageNamed:@"关注14"] forState:UIControlStateNormal];
@@ -135,8 +147,8 @@ const CGFloat kOtherRecommendCellHeight = 57.0f;
             view = self.middleView;
             [self.middleImageView sd_setImageWithURL:[NSURL URLWithString:obj.headimg] placeholderImage:[UIImage imageNamed:@"default_head"]];
             self.middleNameLabel.text = obj.username;
-            self.middleCompantyLabel.text = obj.company;
-            self.middleDepartLabel.text = obj.title;
+            self.middleCompantyLabel.text = company;
+            self.middleDepartLabel.text = department;
             self.middleDetailLabel.text = detailString;
             if(!obj.isFocus){
                 [self.middleFocusButton setImage:[UIImage imageNamed:@"关注14"] forState:UIControlStateNormal];
@@ -167,8 +179,8 @@ const CGFloat kOtherRecommendCellHeight = 57.0f;
             view = self.bottomView;
             [self.bottomImageView sd_setImageWithURL:[NSURL URLWithString:obj.headimg] placeholderImage:[UIImage imageNamed:@"default_head"]];
             self.bottomNameLabel.text = obj.username;
-            self.bottomCompantyLabel.text = obj.company;
-            self.bottomDepartLabel.text = obj.title;
+            self.bottomCompantyLabel.text = company;
+            self.bottomDepartLabel.text = department;
             self.bottomDetailLabel.text = detailString;
             if(!obj.isFocus){
                 [self.bottomFocusButton setImage:[UIImage imageNamed:@"关注14"] forState:UIControlStateNormal];
@@ -261,8 +273,6 @@ const CGFloat kOtherRecommendCellHeight = 57.0f;
         
     }
 }
-
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
