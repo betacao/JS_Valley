@@ -780,7 +780,6 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
                 [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:KEY_USER_NAME];
                 [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:KEY_TOKEN];
                 [[NSUserDefaults standardUserDefaults] setObject:@"0" forKey:KEY_AUTOLOGIN];
-                [[NSUserDefaults standardUserDefaults] setValue:@"0" forKey:KEY_UPDATE_SQL];
                 //    设置导航栏不透明
                 // [UINavigationBar appearance].translucent = NO;
                 

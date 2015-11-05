@@ -396,8 +396,6 @@ static NSString * const kCommonFNum			= @"commonnum";
             if (pageNum == 1) {
                 [self.contactsSource removeAllObjects];
             }
-            NSString *needentUpdateSql = @"1";
-            [[NSUserDefaults standardUserDefaults] setValue:needentUpdateSql forKey:KEY_UPDATE_SQL];
         }
         for (int i = 0; i<response.dataArray.count; i++){
             NSDictionary *dic = response.dataArray[i];

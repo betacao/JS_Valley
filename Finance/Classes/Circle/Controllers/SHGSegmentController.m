@@ -114,14 +114,6 @@
     return _rightBarButtonItem;
 }
 
-- (UITableView *)listTable
-{
-    if([self.selectedViewController respondsToSelector:@selector(currentTableView)]){
-        return [self.selectedViewController performSelector:@selector(currentTableView)];
-    }
-    return nil;
-}
-
 - (NSMutableArray *)dataArray
 {
     if([self.selectedViewController respondsToSelector:@selector(currentDataArray)]){
@@ -136,6 +128,14 @@
         return [self.selectedViewController performSelector:@selector(currentDataArray)];
     }
     return nil;
+}
+
+- (void)reloadData
+{
+    for (UIViewController *controller in self.viewControllers) {
+        UITableView *listTable = [controller performSelector:@selector(currentTableView)];
+        [listTable reloadData];
+    }
 }
 
 - (void)refreshHeader

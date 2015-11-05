@@ -20,8 +20,10 @@
 #import "CCLocationManager.h"
 #import "SHGHomeTableViewCell.h"
 #import "CircleDetailViewController.h"
+#import "SHGUnifiedTreatment.h"
 
-@interface SHGAttationViewController ()<MLEmojiLabelDelegate,CLLocationManagerDelegate,CircleActionDelegate,SHGNoticeDelegate, CircleListDelegate>
+
+@interface SHGAttationViewController ()<MLEmojiLabelDelegate,CLLocationManagerDelegate,SHGNoticeDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *listTable;
 @property (assign, nonatomic) BOOL isRefreshing;
 @property (strong, nonatomic) NSString *circleType;
@@ -275,7 +277,7 @@
                 cell.selectionStyle = UITableViewCellSelectionStyleNone;
             }
             cell.index = indexPath.row;
-            cell.delegate = self;
+            cell.delegate = [SHGUnifiedTreatment sharedTreatment];
             [cell loadDatasWithObj:obj];
 
             MLEmojiLabel *mlLable = (MLEmojiLabel *)[cell viewWithTag:521];
@@ -344,7 +346,7 @@
 {
     CircleListObj *obj = self.dataArr[indexPath.row];
     CircleDetailViewController *viewController = [[CircleDetailViewController alloc] initWithNibName:@"CircleDetailViewController" bundle:nil];
-    viewController.delegate = self;
+    viewController.delegate = [SHGUnifiedTreatment sharedTreatment];
     viewController.rid = obj.rid;
     NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:obj.praisenum, kPraiseNum,obj.sharenum,kShareNum,obj.cmmtnum,kCommentNum, nil];
     viewController.itemInfoDictionary = dictionary;

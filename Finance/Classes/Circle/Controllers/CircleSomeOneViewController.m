@@ -840,10 +840,6 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
                 [Hud showMessageWithText:@"关注成功"];
                 NSString *state = [response.dataDictionary valueForKey:@"state"];
                 self.rela = state;
-
-                if ([state isEqualToString:@"2"]) {
-                    [[NSUserDefaults standardUserDefaults] setValue:@"0" forKey:KEY_UPDATE_SQL];
-                }
                 [self loadUI];
 
             }
@@ -870,7 +866,6 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
                 NSDictionary *data = [[responseObject valueForKey:@"data"] parseToArrayOrNSDictionary];
                 NSString *state = [data valueForKey:@"state"];
                 if ([state isEqualToString:@"0"]) {
-                    [[NSUserDefaults standardUserDefaults] setValue:@"0" forKey:KEY_UPDATE_SQL];
                     [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_CHANGE_SHOULD_UPDATE object:nil];
                 }
                 [Hud showMessageWithText:@"取消关注成功"];

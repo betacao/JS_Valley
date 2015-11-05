@@ -518,10 +518,6 @@
                     }
                 }
                 [Hud showMessageWithText:@"关注成功"];
-                NSString *state = [response.dataDictionary valueForKey:@"state"];
-                if ([state isEqualToString:@"2"]) {
-                    [[NSUserDefaults standardUserDefaults] setValue:@"0" forKey:KEY_UPDATE_SQL];
-                }
                 [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_COLLECT_COLLECT_CLIC object:obj];
             } else{
                 [Hud showMessageWithText:@"失败"];
@@ -540,11 +536,6 @@
                     if ([cobj.userid isEqualToString:obj.userid]) {
                         cobj.isattention = @"N";
                     }
-                }
-                NSDictionary *data = [[responseObject valueForKey:@"data"] parseToArrayOrNSDictionary];
-                NSString *state = [data valueForKey:@"state"];
-                if ([state isEqualToString:@"0"]) {
-                    [[NSUserDefaults standardUserDefaults] setValue:@"0" forKey:KEY_UPDATE_SQL];
                 }
                 [Hud showMessageWithText:@"取消关注成功"];
                 [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_COLLECT_COLLECT_CLIC object:obj];

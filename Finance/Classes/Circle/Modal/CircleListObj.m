@@ -167,7 +167,6 @@ const CGFloat kActionViewHeight = 34.0f;
               @"ispraise":@"ispraise",
               @"type":@"attachtype",
               @"linkObj":@"link",
-//              @"sizes":@"sizes",
               @"postType":@"type",
               @"friendship":@"friendship",
               @"userstatus":@"userstatus",
@@ -188,6 +187,14 @@ const CGFloat kActionViewHeight = 34.0f;
 {
     return [MTLJSONAdapter dictionaryTransformerWithModelClass:[linkOBj class]];
 }
+
+//- (BOOL)isEqual:(CircleListObj *)object
+//{
+//    if ([self.rid isEqual:object.rid]){
+//        return YES;
+//    }
+//    return NO;
+//}
 
 @end
 

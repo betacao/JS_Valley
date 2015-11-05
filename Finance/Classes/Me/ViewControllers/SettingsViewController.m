@@ -318,7 +318,6 @@
                 [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:KEY_USER_NAME];
                 [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:KEY_TOKEN];
                 [[NSUserDefaults standardUserDefaults] setObject:@"0" forKey:KEY_AUTOLOGIN];
-                [[NSUserDefaults standardUserDefaults] setValue:@"0" forKey:KEY_UPDATE_SQL];
                 [[NSUserDefaults standardUserDefaults]synchronize];
                 //退出shareSDK的登录
                 

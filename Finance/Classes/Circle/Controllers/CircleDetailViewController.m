@@ -821,10 +821,6 @@
                 [Hud showMessageWithText:@"关注成功"];
 
             }
-            NSString *state = [response.dataDictionary valueForKey:@"state"];
-            if ([state isEqualToString:@"2"]) {
-                 [[NSUserDefaults standardUserDefaults] setValue:@"0" forKey:KEY_UPDATE_SQL];
-            }
             [self loadDatasWithObj:self.obj];
             
             [self.delegate detailAttentionWithRid:self.obj.userid attention:self.obj.isattention];
@@ -840,11 +836,6 @@
             if ([code isEqualToString:@"000"]){
                 self.obj.isattention = @"N";
                 [Hud showMessageWithText:@"取消关注成功"];
-                NSDictionary *data = [[responseObject valueForKey:@"data"] parseToArrayOrNSDictionary];
-                NSString *state = [data valueForKey:@"state"];
-                if ([state isEqualToString:@"0"]) {
-                    [[NSUserDefaults standardUserDefaults] setValue:@"0" forKey:KEY_UPDATE_SQL];
-                }
             }
             [self loadDatasWithObj:self.obj];
             [self.delegate detailAttentionWithRid:self.obj.userid attention:self.obj.isattention];

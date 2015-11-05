@@ -432,9 +432,6 @@
             obj.followRelation = [response.dataDictionary[@"state"] integerValue];
 			[self.tableView reloadData];
 			[Hud showMessageWithText:@"关注成功"];
-            if (obj.followRelation == 2) {
-                   [[NSUserDefaults standardUserDefaults] setValue:@"0" forKey:KEY_UPDATE_SQL];
-            }
             CircleListObj *robj = [[CircleListObj alloc] init];
             robj.userid = obj.uid;
             robj.isattention = @"Y";
@@ -488,11 +485,6 @@
 				}
 				
 				[self.tableView reloadData];
-                NSDictionary *data = [[responseObject valueForKey:@"data"] parseToArrayOrNSDictionary];
-                NSString *state = [data valueForKey:@"state"];
-                if ([state isEqualToString:@"0"]) {
-                    [[NSUserDefaults standardUserDefaults] setValue:@"0" forKey:KEY_UPDATE_SQL];
-                }
                 CircleListObj *robj = [[CircleListObj alloc] init];
                 robj.userid = obj.uid;
                 robj.isattention = @"N";

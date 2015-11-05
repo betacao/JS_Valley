@@ -35,7 +35,6 @@
 @property (nonatomic,strong) NSString *iscollection;
 @property (nonatomic,strong) NSString *publishdate;
 @property (nonatomic,strong) NSString *rid;
-//@property (nonatomic,strong) NSArray *sizes;
 @property (nonatomic,strong) NSString *sharenum;
 @property (nonatomic,strong) NSString *status;
 @property (nonatomic,strong) NSString *title;

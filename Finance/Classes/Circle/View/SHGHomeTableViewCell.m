@@ -112,7 +112,7 @@
                 string = obj.friendship;
             }
             if(obj.currcity && obj.currcity.length > 0){
-                string = [string stringByAppendingFormat:@",%@",obj.currcity];
+                string = [string stringByAppendingFormat:@" , %@",obj.currcity];
             }
             [self.cityNameButton setTitle:string forState:UIControlStateNormal];
         }

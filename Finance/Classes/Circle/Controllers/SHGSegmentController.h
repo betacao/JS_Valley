@@ -36,12 +36,12 @@ typedef void(^loadViewFinishBlock)(UIView *view);
 @property (nonatomic, weak) id <SHGSegmentControllerDelegate> delegate;
 @property (nonatomic, copy) loadViewFinishBlock block;
 @property (strong ,nonatomic, readonly) UIBarButtonItem *rightBarButtonItem;
-@property (weak, nonatomic) UITableView *listTable;
 @property (strong, nonatomic) NSMutableArray *dataArray;
 @property (strong, nonatomic) NSMutableArray *listArray;
 
 + (instancetype)sharedSegmentController;
 - (void)refreshHeader;
+- (void)reloadData;
 - (void)setSelectedIndex:(NSUInteger)index animated:(BOOL)animated;
 - (void)setSelectedViewController:(UIViewController *)viewController animated:(BOOL)animated;
 

@@ -95,7 +95,7 @@
                 [Hud showMessageWithText:@"赞成功"];
             }
             [MobClick event:@"ActionPraiseClicked_On" label:@"onClick"];
-            [[SHGSegmentController sharedSegmentController].listTable reloadData];
+            [[SHGSegmentController sharedSegmentController] reloadData];
             [Hud hideHud];
         } failed:^(MOCHTTPResponse *response) {
             [Hud hideHud];
@@ -112,7 +112,7 @@
                 [Hud showMessageWithText:@"取消点赞"];
             }
             [MobClick event:@"ActionPraiseClicked_Off" label:@"onClick"];
-            [[SHGSegmentController sharedSegmentController].listTable reloadData];
+            [[SHGSegmentController sharedSegmentController] reloadData];
             [Hud hideHud];
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             [Hud showMessageWithText:error.domain];
@@ -125,19 +125,19 @@
 #pragma mark -点击个人头像
 - (void)headTap:(NSInteger)index
 {
-//    CircleListObj *obj = self.dataArr[index];
-//    [self gotoSomeOne:obj.userid name:obj.nickname];
+    CircleListObj *obj = [[SHGSegmentController sharedSegmentController].dataArray objectAtIndex:index];
+    [self gotoSomeOne:obj.userid name:obj.nickname];
 }
 
 #pragma mark -评论
 - (void)clicked:(NSInteger )index;
 {
-//    CircleDetailViewController *vc = [[CircleDetailViewController alloc] initWithNibName:@"CircleDetailViewController" bundle:nil];
-//    CircleListObj *obj = self.dataArr[index];
-//    vc.hidesBottomBarWhenPushed = YES;
-//    vc.rid = obj.rid;
-//    vc.delegate = self;
-//    [self.navigationController pushViewController:vc animated:YES];
+    CircleDetailViewController *vc = [[CircleDetailViewController alloc] initWithNibName:@"CircleDetailViewController" bundle:nil];
+    CircleListObj *obj = [[SHGSegmentController sharedSegmentController].dataArray objectAtIndex:index];
+    vc.hidesBottomBarWhenPushed = YES;
+    vc.rid = obj.rid;
+    vc.delegate = self;
+    [[SHGSegmentController sharedSegmentController].selectedViewController.navigationController pushViewController:vc animated:YES];
 }
 
 
@@ -232,7 +232,7 @@
         NSString *code = [response.data valueForKey:@"code"];
         if ([code isEqualToString:@"000"]){
             obj.sharenum = [NSString stringWithFormat:@"%ld",(long)([obj.sharenum integerValue] + 1)];
-            [[SHGSegmentController sharedSegmentController].listTable reloadData];
+            [[SHGSegmentController sharedSegmentController] reloadData];
             [Hud showMessageWithText:@"分享成功"];
             [[SHGSegmentController sharedSegmentController] refreshHeader];
         }
@@ -250,7 +250,7 @@
         NSString *code = [responseObject valueForKey:@"code"];
         if ([code isEqualToString:@"000"]) {
             obj.sharenum = [NSString stringWithFormat:@"%ld",(long)([obj.sharenum integerValue] + 1)];
-            [[SHGSegmentController sharedSegmentController].listTable reloadData];
+            [[SHGSegmentController sharedSegmentController] reloadData];
             [MobClick event:@"ActionShareClicked" label:@"onClick"];
             [Hud showMessageWithText:@"分享成功"];
         }
@@ -314,14 +314,10 @@
                     }
                     [MobClick event:@"ActionAttentionClicked" label:@"onClick"];
                     [Hud showMessageWithText:@"关注成功"];
-                    NSString *state = [response.dataDictionary valueForKey:@"state"];
-                    if ([state isEqualToString:@"2"]) {
-                        [[NSUserDefaults standardUserDefaults] setValue:@"0" forKey:KEY_UPDATE_SQL];
-                    }
                 } else{
                     [Hud showMessageWithText:@"关注失败"];
                 }
-                [[SHGSegmentController sharedSegmentController].listTable reloadData];
+                [[SHGSegmentController sharedSegmentController] reloadData];
             } failed:^(MOCHTTPResponse *response) {
                 [Hud hideHud];
                 [Hud showMessageWithText:response.errorMessage];
@@ -331,6 +327,7 @@
                 [Hud hideHud];
                 NSString *code = [responseObject valueForKey:@"code"];
                 if ([code isEqualToString:@"000"]) {
+                    //在关注界面的时候要移除掉
                     if ([[SHGSegmentController sharedSegmentController].selectedViewController isKindOfClass:[SHGAttationViewController class]]) {
                         NSMutableArray *removeArr = [NSMutableArray array];
                         for (CircleListObj *cobj in [SHGSegmentController sharedSegmentController].dataArray) {
@@ -345,12 +342,6 @@
                                 cobj.isattention = @"N";
                             }
                         }
-                    }
-
-                    NSDictionary *data = [[responseObject valueForKey:@"data"] parseToArrayOrNSDictionary];
-                    NSString *state = [data valueForKey:@"state"];
-                    if ([state isEqualToString:@"0"]) {
-                        [[NSUserDefaults standardUserDefaults] setValue:@"0" forKey:KEY_UPDATE_SQL];
                     }
                     [MobClick event:@"ActionAttentionClickedFalse" label:@"onClick"];
                     [Hud showMessageWithText:@"取消关注成功"];
@@ -379,14 +370,10 @@
                     friend.isFocus = YES;
                     [MobClick event:@"ActionAttentionClicked" label:@"onClick"];
                     [Hud showMessageWithText:@"关注成功"];
-                    NSString *state = [response.dataDictionary valueForKey:@"state"];
-                    if ([state isEqualToString:@"2"]) {
-                        [[NSUserDefaults standardUserDefaults] setValue:@"0" forKey:KEY_UPDATE_SQL];
-                    }
                 } else{
                     [Hud showMessageWithText:@"失败"];
                 }
-                [[SHGSegmentController sharedSegmentController].listTable reloadData];
+                [[SHGSegmentController sharedSegmentController] reloadData];
             } failed:^(MOCHTTPResponse *response) {
                 [Hud showMessageWithText:response.errorMessage];
             }];
@@ -395,14 +382,9 @@
                 NSString *code = [responseObject valueForKey:@"code"];
                 if ([code isEqualToString:@"000"]) {
                     friend.isFocus = NO;
-                    NSDictionary *data = [[responseObject valueForKey:@"data"] parseToArrayOrNSDictionary];
-                    NSString *state = [data valueForKey:@"state"];
-                    if ([state isEqualToString:@"0"]) {
-                        [[NSUserDefaults standardUserDefaults] setValue:@"0" forKey:KEY_UPDATE_SQL];
-                    }
                     [MobClick event:@"ActionAttentionClickedFalse" label:@"onClick"];
                     [Hud showMessageWithText:@"取消关注成功"];
-                    [[SHGSegmentController sharedSegmentController].listTable reloadData];
+                    [[SHGSegmentController sharedSegmentController] reloadData];
                 } else{
                     [Hud showMessageWithText:@"失败"];
                 }
@@ -439,7 +421,7 @@
             if ([obj1.rid isEqualToString:rid]){
                 [[SHGSegmentController sharedSegmentController].listArray removeObject:obj1];
                 [[SHGSegmentController sharedSegmentController].dataArray removeObject:obj1];
-                [[SHGSegmentController sharedSegmentController].listTable reloadData];
+                [[SHGSegmentController sharedSegmentController] reloadData];
                 break;
             }
         }
@@ -456,7 +438,7 @@
         }
 
     }
-    [[SHGSegmentController sharedSegmentController].listTable reloadData];
+    [[SHGSegmentController sharedSegmentController] reloadData];
 }
 
 - (void)detailShareWithRid:(NSString *)rid shareNum:(NSString *)num
@@ -472,7 +454,7 @@
 
         }
     }
-    [[SHGSegmentController sharedSegmentController].listTable reloadData];
+    [[SHGSegmentController sharedSegmentController] reloadData];
 
 }
 - (void)detailAttentionWithRid:(NSString *)rid attention:(NSString *)atten
@@ -485,7 +467,7 @@
             }
         }
     }
-    [[SHGSegmentController sharedSegmentController].listTable reloadData];
+    [[SHGSegmentController sharedSegmentController] reloadData];
 
 }
 - (void)detailCommentWithRid:(NSString *)rid commentNum:(NSString*)num comments:(NSMutableArray *)comments
@@ -502,7 +484,7 @@
 
         }
     }
-    [[SHGSegmentController sharedSegmentController].listTable reloadData];
+    [[SHGSegmentController sharedSegmentController] reloadData];
 
 }
 - (void)gotoSomeOne:(NSString *)uid name:(NSString *)name

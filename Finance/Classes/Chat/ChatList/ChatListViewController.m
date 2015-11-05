@@ -884,23 +884,16 @@ static NSString * const kCommonFNum			= @"commonnum";
                             @"pagenum":[NSNumber numberWithInteger:pageNum],
                             @"pagesize":@15};
     [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"friends/level/one"] parameters:param success:^(MOCHTTPResponse *response) {
-        if(!response.dataArray.count>0)
-        {
+        if(!response.dataArray.count>0){
             hasMoreData = NO;
-        }
-        else
-        {
+        } else{
             hasMoreData = YES;
         }
         
-        if(response.dataArray.count>0)
-        {
+        if(response.dataArray.count>0){
             if (pageNum == 1) {
                 [self.contactsSource removeAllObjects];
-                // [HeadImage deleteAll];
             }
-            NSString *needentUpdateSql = @"1";
-            [[NSUserDefaults standardUserDefaults] setValue:needentUpdateSql forKey:KEY_UPDATE_SQL];
         }
         for (int i = 0; i<response.dataArray.count; i++)
         {
