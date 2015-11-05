@@ -368,18 +368,18 @@ const CGFloat kAdButtomMargin = 20.0f;
     //推广数据
     NSArray *adArray = [dictionary objectForKey:@"adlist"];
     adArray = [[SHGGloble sharedGloble] parseServerJsonArrayToJSONModel:adArray class:[CircleListObj class]];
+    [self.adArray removeAllObjects];
+    [self.adArray addObjectsFromArray:adArray];
+
     if ([target isEqualToString:@"first"]){
         [self.listArray removeAllObjects];
         [self.listArray addObjectsFromArray:normalArray];
-
-        [self.adArray removeAllObjects];
-        [self.adArray addObjectsFromArray:adArray];
         //总数据
         [self.dataArr removeAllObjects];
         [self.dataArr addObjectsFromArray:self.listArray];
         if(self.listArray.count > 0){
             for(CircleListObj *obj in self.adArray){
-                NSInteger index = [obj.displayposition integerValue];
+                NSInteger index = [obj.displayposition integerValue] - 1;
                 [self.dataArr insertObject:obj atIndex:index];
             }
         }else{
@@ -394,28 +394,26 @@ const CGFloat kAdButtomMargin = 20.0f;
                 NSLog(@"%@",obj.rid);
                 [self.listArray insertObject:obj atIndex:0];
             }
-            //总数据
-            [self.dataArr removeAllObjects];
-            [self.dataArr addObjectsFromArray:self.listArray];
-            if(self.listArray.count > 0){
-                for(CircleListObj *obj in self.adArray){
-                    NSInteger index = [obj.displayposition integerValue];
-                    [self.dataArr insertObject:obj atIndex:index];
-                }
-            }else{
-                [self.dataArr addObjectsFromArray:self.adArray];
-            }
-
-            [self insertRecomandArray];
             [self.newMessageNoticeView showWithText:[NSString stringWithFormat:@"为您加载了%ld条新动态",(long)normalArray.count]];
         } else{
             [self.newMessageNoticeView showWithText:@"暂无新动态，休息一会儿"];
         }
+        //总数据
+        [self.dataArr removeAllObjects];
+        [self.dataArr addObjectsFromArray:self.listArray];
+
+        if(self.listArray.count > 0){
+            for(CircleListObj *obj in self.adArray){
+                NSInteger index = [obj.displayposition integerValue] - 1;
+                [self.dataArr insertObject:obj atIndex:index];
+            }
+        }else{
+            [self.dataArr addObjectsFromArray:self.adArray];
+        }
+        [self insertRecomandArray];
+
     } else if ([target isEqualToString:@"load"]){
         [self.listArray addObjectsFromArray:normalArray];
-        for(CircleListObj *obj in normalArray){
-             NSLog(@"%@",obj.rid);
-        }
         [self.dataArr addObjectsFromArray:normalArray];
         if (IsArrEmpty(normalArray)){
             self.hasDataFinished = YES;

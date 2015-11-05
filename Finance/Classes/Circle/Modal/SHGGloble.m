@@ -167,7 +167,7 @@
         [weakSelf.homeArray addObjectsFromArray:weakSelf.homeListArray];
         if(weakSelf.homeArray.count > 0){
             for(CircleListObj *obj in weakSelf.homeAdArray){
-                NSInteger index = [obj.displayposition integerValue];
+                NSInteger index = [obj.displayposition integerValue] - 1;
                 [weakSelf.homeArray insertObject:obj atIndex:index];
             }
         }else{
