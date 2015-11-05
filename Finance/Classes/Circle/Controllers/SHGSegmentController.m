@@ -145,6 +145,47 @@
     }
 }
 
+- (void)removeObject:(CircleListObj *)object
+{
+    [[[self.viewControllers firstObject] performSelector:@selector(currentListArray)] removeObject:object];
+    [[[self.viewControllers firstObject] performSelector:@selector(currentDataArray)] removeObject:object];
+}
+
+- (void)removeObjects:(NSArray *)array
+{
+    [[[self.viewControllers lastObject] performSelector:@selector(currentDataArray)] removeObjectsInArray:array];
+}
+
+- (NSArray *)targetObjectsByString:(NSString *)string
+{
+    NSMutableArray *result = [NSMutableArray array];
+    NSMutableArray *array1 = [[self.viewControllers firstObject] performSelector:@selector(currentDataArray)];
+    NSMutableArray *array2 = [[self.viewControllers lastObject] performSelector:@selector(currentDataArray)];
+    [array1 enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if ([obj isKindOfClass:[CircleListObj class]]){
+            CircleListObj *object = (CircleListObj *)obj;
+            if([object.rid isEqualToString:string]){
+                [result addObject:object];
+            }
+        }
+    }];
+    [array2 enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if ([obj isKindOfClass:[CircleListObj class]]){
+            CircleListObj *object = (CircleListObj *)obj;
+            if([object.rid isEqualToString:string]){
+                [result addObject:object];
+            }
+        }
+    }];
+    return result;
+}
+
+- (CircleListObj *)targetObjectByIndex:(NSInteger)index
+{
+    return [[self.selectedViewController performSelector:@selector(currentDataArray)] objectAtIndex:index];
+}
+
+//发布
 - (void)actionPost:(UIButton *)button
 {
     if([self.selectedViewController respondsToSelector:@selector(actionPost:)]){
@@ -152,12 +193,7 @@
     }
 }
 
-- (void)viewDidUnload
-{
-	[super viewDidUnload];
-	tabButtonsContainerView = nil;
-	contentContainerView = nil;
-}
+
 
 - (void)viewWillLayoutSubviews
 {
@@ -331,6 +367,13 @@
 - (void)valueChange:(UISegmentedControl *)seg
 {
 	[self setSelectedIndex:seg.selectedSegmentIndex animated:YES];
+}
+
+- (void)viewDidUnload
+{
+    [super viewDidUnload];
+    tabButtonsContainerView = nil;
+    contentContainerView = nil;
 }
 
 @end

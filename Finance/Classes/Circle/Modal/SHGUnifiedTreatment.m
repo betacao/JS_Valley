@@ -90,8 +90,11 @@
             NSLog(@"%@",response.data);
             NSString *code = [response.data valueForKey:@"code"];
             if ([code isEqualToString:@"000"]){
-                obj.ispraise = @"Y";
-                obj.praisenum = [NSString stringWithFormat:@"%ld",(long)([obj.praisenum integerValue] + 1)];
+                NSArray *array = [[SHGSegmentController sharedSegmentController] targetObjectsByString:obj.rid];
+                for (CircleListObj *object in array) {
+                    object.ispraise = @"Y";
+                    object.praisenum = [NSString stringWithFormat:@"%ld",(long)([object.praisenum integerValue] + 1)];
+                }
                 [Hud showMessageWithText:@"赞成功"];
             }
             [MobClick event:@"ActionPraiseClicked_On" label:@"onClick"];
@@ -107,8 +110,11 @@
             NSLog(@"%@",responseObject);
             NSString *code = [responseObject valueForKey:@"code"];
             if ([code isEqualToString:@"000"]) {
-                obj.ispraise = @"N";
-                obj.praisenum = [NSString stringWithFormat:@"%ld",(long)([obj.praisenum integerValue] - 1)];
+                NSArray *array = [[SHGSegmentController sharedSegmentController] targetObjectsByString:obj.rid];
+                for (CircleListObj *object in array) {
+                    object.ispraise = @"N";
+                    object.praisenum = [NSString stringWithFormat:@"%ld",(long)([object.praisenum integerValue] - 1)];
+                }
                 [Hud showMessageWithText:@"取消点赞"];
             }
             [MobClick event:@"ActionPraiseClicked_Off" label:@"onClick"];
@@ -125,7 +131,7 @@
 #pragma mark -点击个人头像
 - (void)headTap:(NSInteger)index
 {
-    CircleListObj *obj = [[SHGSegmentController sharedSegmentController].dataArray objectAtIndex:index];
+    CircleListObj *obj = [[SHGSegmentController sharedSegmentController] targetObjectByIndex:index];
     [self gotoSomeOne:obj.userid name:obj.nickname];
 }
 
@@ -133,7 +139,7 @@
 - (void)clicked:(NSInteger )index;
 {
     CircleDetailViewController *vc = [[CircleDetailViewController alloc] initWithNibName:@"CircleDetailViewController" bundle:nil];
-    CircleListObj *obj = [[SHGSegmentController sharedSegmentController].dataArray objectAtIndex:index];
+    CircleListObj *obj = [[SHGSegmentController sharedSegmentController] targetObjectByIndex:index];
     vc.hidesBottomBarWhenPushed = YES;
     vc.rid = obj.rid;
     vc.delegate = self;
@@ -283,13 +289,11 @@
         }
     }
     id obj = noti.object;
-    if ([obj isKindOfClass:[NSString class]])
-    {
+    if ([obj isKindOfClass:[NSString class]]){
         NSString *rid = obj;
-        for (CircleListObj *objs in [SHGSegmentController sharedSegmentController].dataArray) {
-            if ([objs isKindOfClass:[CircleListObj class]] && [objs.rid isEqualToString:rid]) {
-                [self otherShareWithObj:objs];
-            }
+        NSArray *array = [[SHGSegmentController sharedSegmentController] targetObjectsByString:rid];
+        for (CircleListObj *objs in array) {
+            [self otherShareWithObj:objs];
         }
     }
 }
@@ -307,10 +311,9 @@
                 [Hud hideHud];
                 NSString *code = [response.data valueForKey:@"code"];
                 if ([code isEqualToString:@"000"]) {
-                    for (CircleListObj *cobj in [SHGSegmentController sharedSegmentController].dataArray) {
-                        if ([cobj isKindOfClass:[CircleListObj class]] && [cobj.userid isEqualToString:obj.userid]) {
+                    NSArray *array = [[SHGSegmentController sharedSegmentController] targetObjectsByString:obj.userid];
+                    for (CircleListObj *cobj in array) {
                             cobj.isattention = @"Y";
-                        }
                     }
                     [MobClick event:@"ActionAttentionClicked" label:@"onClick"];
                     [Hud showMessageWithText:@"关注成功"];
@@ -327,20 +330,18 @@
                 [Hud hideHud];
                 NSString *code = [responseObject valueForKey:@"code"];
                 if ([code isEqualToString:@"000"]) {
+                    NSArray *array = [[SHGSegmentController sharedSegmentController] targetObjectsByString:obj.userid];
                     //在关注界面的时候要移除掉
                     if ([[SHGSegmentController sharedSegmentController].selectedViewController isKindOfClass:[SHGAttationViewController class]]) {
+
                         NSMutableArray *removeArr = [NSMutableArray array];
-                        for (CircleListObj *cobj in [SHGSegmentController sharedSegmentController].dataArray) {
-                            if ([cobj.userid isEqualToString:obj.userid] &&![cobj.userid isEqualToString:CHATID_MANAGER]) {
-                                [removeArr addObject:cobj];
-                            }
+                        for (CircleListObj *cobj in array) {
+                            [removeArr addObject:cobj];
                         }
-                        [[SHGSegmentController sharedSegmentController].dataArray removeObjectsInArray:removeArr];
+                        [[SHGSegmentController sharedSegmentController] removeObjects:removeArr];
                     }else {
-                        for (CircleListObj *cobj in [SHGSegmentController sharedSegmentController].dataArray) {
-                            if ([cobj isKindOfClass:[CircleListObj class]] && [cobj.userid isEqualToString:obj.userid]) {
-                                cobj.isattention = @"N";
-                            }
+                        for (CircleListObj *cobj in array) {
+                            cobj.isattention = @"N";
                         }
                     }
                     [MobClick event:@"ActionAttentionClickedFalse" label:@"onClick"];
@@ -396,46 +397,23 @@
 
 }
 
-- (NSInteger)findIndexByObj:(CircleListObj *)obj
-{
-    NSInteger index;
-
-    for (int i = 0; index < [SHGSegmentController sharedSegmentController].dataArray.count; i ++)
-    {
-        CircleListObj *listObj = [SHGSegmentController sharedSegmentController].dataArray[i];
-        if ([obj.userid isEqualToString:listObj.userid])
-        {
-            return i;
-            break;
-        }
-    }
-    return 0;
-}
-
 #pragma mark -详情界面的代理
 - (void)detailDeleteWithRid:(NSString *)rid
 {
-    for (id obj in [SHGSegmentController sharedSegmentController].listArray){
-        if ([obj isKindOfClass:[CircleListObj class]]){
-            CircleListObj *obj1 = (CircleListObj*)obj;
-            if ([obj1.rid isEqualToString:rid]){
-                [[SHGSegmentController sharedSegmentController].listArray removeObject:obj1];
-                [[SHGSegmentController sharedSegmentController].dataArray removeObject:obj1];
-                [[SHGSegmentController sharedSegmentController] reloadData];
-                break;
-            }
-        }
+    NSArray *array = [[SHGSegmentController sharedSegmentController] targetObjectsByString:rid];
+    for (CircleListObj *obj in array){
+        [[SHGSegmentController sharedSegmentController] removeObject:obj];
+        [[SHGSegmentController sharedSegmentController] removeObject:obj];
+        [[SHGSegmentController sharedSegmentController] reloadData];
     }
 }
 
 - (void)detailPraiseWithRid:(NSString *)rid praiseNum:(NSString *)num isPraised:(NSString *)isPrased
 {
-    for (CircleListObj *obj in [SHGSegmentController sharedSegmentController].dataArray){
-        if ([obj isKindOfClass:[CircleListObj class]] && [obj.rid isEqualToString:rid]){
-            obj.praisenum = num;
-            obj.ispraise = isPrased;
-            break;
-        }
+    NSArray *array = [[SHGSegmentController sharedSegmentController] targetObjectsByString:rid];
+    for (CircleListObj *obj in array){
+        obj.praisenum = num;
+        obj.ispraise = isPrased;
 
     }
     [[SHGSegmentController sharedSegmentController] reloadData];
@@ -443,46 +421,30 @@
 
 - (void)detailShareWithRid:(NSString *)rid shareNum:(NSString *)num
 {
-    for (id obj in [SHGSegmentController sharedSegmentController].dataArray){
-        if ([obj isKindOfClass:[CircleListObj class]]){
-            CircleListObj *obj1 = (CircleListObj*)obj;
-            if ([obj1.rid isEqualToString:rid]){
-                obj1.sharenum = num;
-                break;
-            }
-        }else{
-
-        }
+    NSArray *array = [[SHGSegmentController sharedSegmentController] targetObjectsByString:rid];
+    for (CircleListObj *obj in array){
+        obj.sharenum = num;
     }
     [[SHGSegmentController sharedSegmentController] reloadData];
 
 }
+
 - (void)detailAttentionWithRid:(NSString *)rid attention:(NSString *)atten
 {
-    for (id obj in [SHGSegmentController sharedSegmentController].dataArray){
-        if ([obj isKindOfClass:[CircleListObj class]]){
-            CircleListObj *obj1 = (CircleListObj*)obj;
-            if ([obj1.userid isEqualToString:rid]){
-                obj1.isattention = atten;
-            }
-        }
+    NSArray *array = [[SHGSegmentController sharedSegmentController] targetObjectsByString:rid];
+    for (CircleListObj *obj in array){
+        obj.isattention = atten;
     }
     [[SHGSegmentController sharedSegmentController] reloadData];
 
 }
+
 - (void)detailCommentWithRid:(NSString *)rid commentNum:(NSString*)num comments:(NSMutableArray *)comments
 {
-    for (id obj in [SHGSegmentController sharedSegmentController].dataArray){
-        if ([obj isKindOfClass:[CircleListObj class]]){
-            CircleListObj *obj1 = (CircleListObj*)obj;
-            if ([obj1.rid isEqualToString:rid]){
-                obj1.cmmtnum = num;
-                obj1.comments = comments;
-                break;
-            }
-        }else{
-
-        }
+    NSArray *array = [[SHGSegmentController sharedSegmentController] targetObjectsByString:rid];
+    for (CircleListObj *obj in array){
+        obj.cmmtnum = num;
+        obj.comments = comments;
     }
     [[SHGSegmentController sharedSegmentController] reloadData];
 
