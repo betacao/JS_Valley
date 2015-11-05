@@ -9,4 +9,10 @@
 #import "BaseTableViewController.h"
 
 @interface SHGAttationViewController : BaseTableViewController
+
+- (UITableView *)currentTableView;
+
+- (NSMutableArray *)currentDataArray;
+
+- (void)refreshHeader;
 @end

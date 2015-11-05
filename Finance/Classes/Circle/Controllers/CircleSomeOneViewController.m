@@ -543,11 +543,6 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
     }
 }
 #pragma mark cellDelegate
-- (void)pullClicked:(CircleListObj *)obj
-{
-    [self.listTable reloadData];
-}
-
 
 - (void)commentClicked:(CircleListObj *)obj
 {

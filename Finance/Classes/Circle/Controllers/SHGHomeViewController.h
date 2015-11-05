@@ -9,4 +9,9 @@
 #import "BaseTableViewController.h"
 @interface SHGHomeViewController : BaseTableViewController
 
+- (UITableView *)currentTableView;
+- (NSMutableArray *) currentDataArray;
+- (NSMutableArray *) currentListArray;
+- (void)refreshHeader;
+
 @end

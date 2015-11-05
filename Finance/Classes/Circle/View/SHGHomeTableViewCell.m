@@ -89,13 +89,13 @@
 
 }
 
--(void)longtap:(UILongPressGestureRecognizer *)rec
+- (void)longtap:(UILongPressGestureRecognizer *)rec
 {
     [self setSelected:YES];
     [self.delegate clicked:self.index];
 }
 
--(void)loadDatasWithObj:(CircleListObj *)obj
+- (void)loadDatasWithObj:(CircleListObj *)obj
 {
     self.totalHeight = 0.0f;
     self.dataObj = obj;
@@ -425,7 +425,7 @@
     
 }
 - (IBAction)actionShare:(id)sender
-{
+{ 
     
     [self.delegate shareClicked:self.dataObj];
 }
@@ -444,12 +444,6 @@
 - (void)replyClick:(UIButton *)ges
 {
     [self.delegate replyClicked:self.dataObj commentIndex:ges.tag];
-}
-
-- (void)imageTap:(DDTapGestureRecognizer *)ges
-{
-    NSInteger imageIndex=ges.tag-9999;
-    [self.delegate photosTapWIthIndex:self.index imageIndex:imageIndex];
 }
 
 - (void)linkTap:(DDTapGestureRecognizer *)ges

@@ -270,8 +270,8 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     self.segmentViewController.tabBarItem.tag = 1000;
     __weak typeof(self)weakSelf = self;
     self.segmentViewController.block = ^(UIView *view){
-        self.segmentTitleView = view;
-        weakSelf.navigationItem.titleView = self.segmentTitleView;
+        weakSelf.segmentTitleView = view;
+        weakSelf.navigationItem.titleView = weakSelf.segmentTitleView;
     };
     self.navigationItem.rightBarButtonItem = self.segmentViewController.rightBarButtonItem;
 
@@ -310,7 +310,7 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
 - (SHGSegmentController *)segmentViewController
 {
     if(!_segmentViewController){
-        _segmentViewController = [[SHGSegmentController alloc] init];
+        _segmentViewController = [SHGSegmentController sharedSegmentController];
         _segmentViewController.delegate = self;
         _segmentViewController.viewControllers = @[self.homeViewController, self.attationViewController];
     }

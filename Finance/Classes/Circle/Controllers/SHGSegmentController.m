@@ -40,6 +40,16 @@
 @synthesize delegate = _delegate;
 
 
++ (instancetype)sharedSegmentController
+{
+    static SHGSegmentController *sharedGlobleInstance = nil;
+    static dispatch_once_t predicate;
+    dispatch_once(&predicate, ^{
+        sharedGlobleInstance = [[self alloc] init];
+    });
+    return sharedGlobleInstance;
+}
+
 - (void)reloadTabButtons
 {
 	NSUInteger lastIndex = _selectedIndex;
@@ -102,6 +112,37 @@
         _rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:rightButton];
     }
     return _rightBarButtonItem;
+}
+
+- (UITableView *)listTable
+{
+    if([self.selectedViewController respondsToSelector:@selector(currentTableView)]){
+        return [self.selectedViewController performSelector:@selector(currentTableView)];
+    }
+    return nil;
+}
+
+- (NSMutableArray *)dataArray
+{
+    if([self.selectedViewController respondsToSelector:@selector(currentDataArray)]){
+        return [self.selectedViewController performSelector:@selector(currentDataArray)];
+    }
+    return nil;
+}
+
+- (NSMutableArray *)listArray
+{
+    if([self.selectedViewController respondsToSelector:@selector(currentDataArray)]){
+        return [self.selectedViewController performSelector:@selector(currentDataArray)];
+    }
+    return nil;
+}
+
+- (void)refreshHeader
+{
+    if([self.selectedViewController respondsToSelector:@selector(refreshHeader)]){
+        [self.selectedViewController performSelector:@selector(refreshHeader)];
+    }
 }
 
 - (void)actionPost:(UIButton *)button

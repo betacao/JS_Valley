@@ -11,7 +11,6 @@
 @interface BaseTableViewController : BaseViewController<UITableViewDataSource,UITableViewDelegate>
 
 @property (strong, nonatomic) NSMutableArray *dataArr;
-
 //列表数据
 @property (strong, nonatomic) NSMutableArray *listArray;
 //推广数据

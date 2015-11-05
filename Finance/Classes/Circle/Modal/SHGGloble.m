@@ -44,7 +44,7 @@
 
 @implementation SHGGloble
 
-+(instancetype)sharedGloble
++ (instancetype)sharedGloble
 {
     static SHGGloble *sharedGlobleInstance = nil;
     static dispatch_once_t predicate;

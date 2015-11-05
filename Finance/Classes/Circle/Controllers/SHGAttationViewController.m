@@ -61,6 +61,17 @@
     [super viewDidAppear:animated];
 }
 
+- (UITableView *)currentTableView
+{
+    return self.listTable;
+}
+
+- (NSMutableArray *) currentDataArray
+{
+    return self.dataArr;
+}
+
+
 - (SHGNoticeView *)messageNoticeView
 {
     if(!_messageNoticeView){
