@@ -138,10 +138,17 @@
     }
 }
 
-- (void)refreshHeader
+- (void)refreshAttaionView
 {
-    if([self.selectedViewController respondsToSelector:@selector(refreshHeader)]){
-        [self.selectedViewController performSelector:@selector(refreshHeader)];
+    if([[self.viewControllers lastObject] respondsToSelector:@selector(refreshHeader)]){
+        [[self.viewControllers lastObject] performSelector:@selector(refreshHeader)];
+    }
+}
+
+- (void)refreshHomeView
+{
+    if([[self.viewControllers firstObject] respondsToSelector:@selector(refreshHeader)]){
+        [[self.viewControllers firstObject] performSelector:@selector(refreshHeader)];
     }
 }
 
@@ -156,7 +163,7 @@
     [[[self.viewControllers lastObject] performSelector:@selector(currentDataArray)] removeObjectsInArray:array];
 }
 
-- (NSArray *)targetObjectsByString:(NSString *)string
+- (NSArray *)targetObjectsByRid:(NSString *)string
 {
     NSMutableArray *result = [NSMutableArray array];
     NSMutableArray *array1 = [[self.viewControllers firstObject] performSelector:@selector(currentDataArray)];
@@ -173,6 +180,30 @@
         if ([obj isKindOfClass:[CircleListObj class]]){
             CircleListObj *object = (CircleListObj *)obj;
             if([object.rid isEqualToString:string]){
+                [result addObject:object];
+            }
+        }
+    }];
+    return result;
+}
+
+- (NSArray *)targetObjectsByUserID:(NSString *)string
+{
+    NSMutableArray *result = [NSMutableArray array];
+    NSMutableArray *array1 = [[self.viewControllers firstObject] performSelector:@selector(currentDataArray)];
+    NSMutableArray *array2 = [[self.viewControllers lastObject] performSelector:@selector(currentDataArray)];
+    [array1 enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if ([obj isKindOfClass:[CircleListObj class]]){
+            CircleListObj *object = (CircleListObj *)obj;
+            if([object.userid isEqualToString:string]){
+                [result addObject:object];
+            }
+        }
+    }];
+    [array2 enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if ([obj isKindOfClass:[CircleListObj class]]){
+            CircleListObj *object = (CircleListObj *)obj;
+            if([object.userid isEqualToString:string]){
                 [result addObject:object];
             }
         }

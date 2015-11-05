@@ -38,16 +38,20 @@ typedef void(^loadViewFinishBlock)(UIView *view);
 @property (strong ,nonatomic, readonly) UIBarButtonItem *rightBarButtonItem;
 
 + (instancetype)sharedSegmentController;
-//刷新请求数据
-- (void)refreshHeader;
+//刷新关注界面数据
+- (void)refreshAttaionView;
+//刷新动态界面
+- (void)refreshHomeView;
 //简单的tableview刷新
 - (void)reloadData;
 //删除对象（只有动态界面才会有删除 已关注界面不存在删除）
 - (void)removeObject:(CircleListObj *)object;
 //删除一组对象 主要用于取消关注时候 已关注界面删掉数组
 - (void)removeObjects:(NSArray *)array;
-//通过查找对象 返回在动态界面和已关注界面的对象数组
-- (NSArray *)targetObjectsByString:(NSString *)string;
+//通过rid查找对象 返回在动态界面和已关注界面的对象数组
+- (NSArray *)targetObjectsByRid:(NSString *)string;
+//通过userId查找对象 返回在动态界面和已关注界面的对象数组
+- (NSArray *)targetObjectsByUserID:(NSString *)string;
 //通过位置查找对象 只返回当前界面的对象
 - (CircleListObj *)targetObjectByIndex:(NSInteger)index;
 

@@ -90,7 +90,7 @@
             NSLog(@"%@",response.data);
             NSString *code = [response.data valueForKey:@"code"];
             if ([code isEqualToString:@"000"]){
-                NSArray *array = [[SHGSegmentController sharedSegmentController] targetObjectsByString:obj.rid];
+                NSArray *array = [[SHGSegmentController sharedSegmentController] targetObjectsByRid:obj.rid];
                 for (CircleListObj *object in array) {
                     object.ispraise = @"Y";
                     object.praisenum = [NSString stringWithFormat:@"%ld",(long)([object.praisenum integerValue] + 1)];
@@ -110,7 +110,7 @@
             NSLog(@"%@",responseObject);
             NSString *code = [responseObject valueForKey:@"code"];
             if ([code isEqualToString:@"000"]) {
-                NSArray *array = [[SHGSegmentController sharedSegmentController] targetObjectsByString:obj.rid];
+                NSArray *array = [[SHGSegmentController sharedSegmentController] targetObjectsByRid:obj.rid];
                 for (CircleListObj *object in array) {
                     object.ispraise = @"N";
                     object.praisenum = [NSString stringWithFormat:@"%ld",(long)([object.praisenum integerValue] - 1)];
@@ -224,7 +224,7 @@
     [[SHGSegmentController sharedSegmentController].selectedViewController.navigationController pushViewController:vc animated:YES];
 }
 //动态分享
--(void)circleShareWithObj:(CircleListObj *)obj
+- (void)circleShareWithObj:(CircleListObj *)obj
 {
     NSString *url = [NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttpCircle,@"circle",obj.rid];
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
@@ -240,7 +240,7 @@
             obj.sharenum = [NSString stringWithFormat:@"%ld",(long)([obj.sharenum integerValue] + 1)];
             [[SHGSegmentController sharedSegmentController] reloadData];
             [Hud showMessageWithText:@"分享成功"];
-            [[SHGSegmentController sharedSegmentController] refreshHeader];
+            [[SHGSegmentController sharedSegmentController] refreshHomeView];
         }
     } failed:^(MOCHTTPResponse *response) {
         [Hud showMessageWithText:response.errorMessage];
@@ -248,7 +248,7 @@
 }
 
 //圈内好友分享
--(void)otherShareWithObj:(CircleListObj *)obj
+- (void)otherShareWithObj:(CircleListObj *)obj
 {
     NSString *url = [NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttpCircle,@"circle",obj.rid];
     NSDictionary *param = @{@"uid":[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID]};
@@ -291,7 +291,7 @@
     id obj = noti.object;
     if ([obj isKindOfClass:[NSString class]]){
         NSString *rid = obj;
-        NSArray *array = [[SHGSegmentController sharedSegmentController] targetObjectsByString:rid];
+        NSArray *array = [[SHGSegmentController sharedSegmentController] targetObjectsByRid:rid];
         for (CircleListObj *objs in array) {
             [self otherShareWithObj:objs];
         }
@@ -311,10 +311,11 @@
                 [Hud hideHud];
                 NSString *code = [response.data valueForKey:@"code"];
                 if ([code isEqualToString:@"000"]) {
-                    NSArray *array = [[SHGSegmentController sharedSegmentController] targetObjectsByString:obj.userid];
+                    NSArray *array = [[SHGSegmentController sharedSegmentController] targetObjectsByUserID:obj.userid];
                     for (CircleListObj *cobj in array) {
-                            cobj.isattention = @"Y";
+                        cobj.isattention = @"Y";
                     }
+                    [[SHGSegmentController sharedSegmentController] refreshAttaionView];
                     [MobClick event:@"ActionAttentionClicked" label:@"onClick"];
                     [Hud showMessageWithText:@"关注成功"];
                 } else{
@@ -330,23 +331,21 @@
                 [Hud hideHud];
                 NSString *code = [responseObject valueForKey:@"code"];
                 if ([code isEqualToString:@"000"]) {
-                    NSArray *array = [[SHGSegmentController sharedSegmentController] targetObjectsByString:obj.userid];
-                    //在关注界面的时候要移除掉
-                    if ([[SHGSegmentController sharedSegmentController].selectedViewController isKindOfClass:[SHGAttationViewController class]]) {
-
-                        NSMutableArray *removeArr = [NSMutableArray array];
-                        for (CircleListObj *cobj in array) {
-                            [removeArr addObject:cobj];
-                        }
-                        [[SHGSegmentController sharedSegmentController] removeObjects:removeArr];
-                    }else {
-                        for (CircleListObj *cobj in array) {
-                            cobj.isattention = @"N";
-                        }
+                    NSArray *array = [[SHGSegmentController sharedSegmentController] targetObjectsByUserID:obj.userid];
+                    for (CircleListObj *cobj in array) {
+                        cobj.isattention = @"N";
                     }
+
+                    //在关注界面的时候要移除掉
+                    NSMutableArray *removeArr = [NSMutableArray array];
+                    for (CircleListObj *cobj in array) {
+                        [removeArr addObject:cobj];
+                    }
+                    [[SHGSegmentController sharedSegmentController] removeObjects:removeArr];
+
                     [MobClick event:@"ActionAttentionClickedFalse" label:@"onClick"];
                     [Hud showMessageWithText:@"取消关注成功"];
-                    [[SHGSegmentController sharedSegmentController] refreshHeader];
+                    [[SHGSegmentController sharedSegmentController] reloadData];
                 } else{
                     [Hud showMessageWithText:@"失败"];
                 }
@@ -400,7 +399,7 @@
 #pragma mark -详情界面的代理
 - (void)detailDeleteWithRid:(NSString *)rid
 {
-    NSArray *array = [[SHGSegmentController sharedSegmentController] targetObjectsByString:rid];
+    NSArray *array = [[SHGSegmentController sharedSegmentController] targetObjectsByRid:rid];
     for (CircleListObj *obj in array){
         [[SHGSegmentController sharedSegmentController] removeObject:obj];
         [[SHGSegmentController sharedSegmentController] removeObject:obj];
@@ -410,7 +409,7 @@
 
 - (void)detailPraiseWithRid:(NSString *)rid praiseNum:(NSString *)num isPraised:(NSString *)isPrased
 {
-    NSArray *array = [[SHGSegmentController sharedSegmentController] targetObjectsByString:rid];
+    NSArray *array = [[SHGSegmentController sharedSegmentController] targetObjectsByRid:rid];
     for (CircleListObj *obj in array){
         obj.praisenum = num;
         obj.ispraise = isPrased;
@@ -421,7 +420,7 @@
 
 - (void)detailShareWithRid:(NSString *)rid shareNum:(NSString *)num
 {
-    NSArray *array = [[SHGSegmentController sharedSegmentController] targetObjectsByString:rid];
+    NSArray *array = [[SHGSegmentController sharedSegmentController] targetObjectsByRid:rid];
     for (CircleListObj *obj in array){
         obj.sharenum = num;
     }
@@ -431,7 +430,7 @@
 
 - (void)detailAttentionWithRid:(NSString *)rid attention:(NSString *)atten
 {
-    NSArray *array = [[SHGSegmentController sharedSegmentController] targetObjectsByString:rid];
+    NSArray *array = [[SHGSegmentController sharedSegmentController] targetObjectsByRid:rid];
     for (CircleListObj *obj in array){
         obj.isattention = atten;
     }
@@ -441,7 +440,7 @@
 
 - (void)detailCommentWithRid:(NSString *)rid commentNum:(NSString*)num comments:(NSMutableArray *)comments
 {
-    NSArray *array = [[SHGSegmentController sharedSegmentController] targetObjectsByString:rid];
+    NSArray *array = [[SHGSegmentController sharedSegmentController] targetObjectsByRid:rid];
     for (CircleListObj *obj in array){
         obj.cmmtnum = num;
         obj.comments = comments;
