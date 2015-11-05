@@ -781,7 +781,7 @@
             [self loadDatasWithObj:self.obj];
             [Hud showMessageWithText:@"收藏成功"];
             [MobClick event:@"ActionCollection_On" label:@"onClick"];
-            if (_delegate && [_delegate respondsToSelector:@selector(detailCollectionWithRid:collected:)]){
+            if (self.delegate && [self.delegate respondsToSelector:@selector(detailCollectionWithRid:collected:)]){
                 [self.delegate detailCollectionWithRid:self.obj.rid collected:self.obj.iscollection];
             }
         } failed:^(MOCHTTPResponse *response) {
@@ -795,7 +795,7 @@
                 self.obj.iscollection = @"N";
             }
             [self loadDatasWithObj:self.obj];
-            if (_delegate && [_delegate respondsToSelector:@selector(detailCollectionWithRid:collected:)]){
+            if (self.delegate && [self.delegate respondsToSelector:@selector(detailCollectionWithRid:collected:)]){
                 [self.delegate detailCollectionWithRid:self.obj.rid collected:self.obj.iscollection];
             }
             [MobClick event:@"ActionCollection_Off" label:@"onClick"];

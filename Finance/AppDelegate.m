@@ -828,55 +828,37 @@
     [WXApi sendReq:req];
 }
 
--(void)wechatShareWithText:(NSString *)text shareUrl:(NSString *)shareUrl shareType:(NSInteger)scene
+- (void)wechatShareWithText:(NSString *)text shareUrl:(NSString *)shareUrl shareType:(NSInteger)scene
 {
-    
-    if([WXApi isWXAppInstalled ])
-    {
-        if ([WXApi isWXAppSupportApi])
-        {
+    if([WXApi isWXAppInstalled ]){
+        if ([WXApi isWXAppSupportApi]){
             WXMediaMessage *message = [WXMediaMessage message];
-            
             NSString *detail = text;
             if (text.length > 0) {
-                
-            }
-            else
-            {
+            } else{
                 detail = @"大牛圈";
             }
-            
             message.messageExt = shareUrl;
             if (scene == 0) {
-                
                 message.title = @"大牛圈";
-            }
-            else
-            {
+            } else{
                 message.title = detail;
-                
             }
             message.description =detail;
             [message setThumbImage:[UIImage imageNamed:@"80.png"]];
             shareRid = @"";
             [self sendLinkContentWithMessage:message type:scene];
-        }
-        else
-        {
+        } else{
             [Hud showMessageWithText:@"现版本微信不支持分享,请更新"];
         }
-    }
-    else
-    {
+    } else{
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"友情提示 " message:@"安装微信后，即可与您的好友分享，现在安装？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"免费安装",nil];
         alert.tag = 1201;
         [alert show];
     }
-    
-    
 }
 
--(void)wechatShare:(CircleListObj *)obj shareType:(NSInteger)scene
+- (void)wechatShare:(CircleListObj *)obj shareType:(NSInteger)scene
 {
     if([WXApi isWXAppInstalled]){
         if ([WXApi isWXAppSupportApi]){
@@ -889,13 +871,11 @@
             } else{
                 detail = @"大牛圈";
             }
-
             message.messageExt = [NSString stringWithFormat:@"%@%@",rBaseAddressForHttpShare,obj.rid];
             if (scene == 0) {
                 message.title = @"大牛圈";
             } else{
                 message.title = detail;
-
             }
             message.description =detail;
             [message setThumbImage:[UIImage imageNamed:@"80.png"]];
@@ -904,15 +884,11 @@
         } else{
             [Hud showMessageWithText:@"现版本微信不支持分享,请更新"];
         }
-    }
-    else
-    {
+    } else{
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"友情提示 " message:@"安装微信后，即可与您的好友分享，现在安装？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"免费安装",nil];
         alert.tag = 1201;
         [alert show];
     }
-    
-    
 }
 
 

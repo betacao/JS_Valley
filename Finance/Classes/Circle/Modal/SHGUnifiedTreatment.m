@@ -237,10 +237,13 @@
     [MOCHTTPRequestOperationManager postWithURL:url class:nil parameters:param success:^(MOCHTTPResponse *response){
         NSString *code = [response.data valueForKey:@"code"];
         if ([code isEqualToString:@"000"]){
-            obj.sharenum = [NSString stringWithFormat:@"%ld",(long)([obj.sharenum integerValue] + 1)];
+            NSArray *array = [[SHGSegmentController sharedSegmentController] targetObjectsByRid:obj.rid];
+            for (CircleListObj *object in array){
+                object.sharenum = [NSString stringWithFormat:@"%ld",(long)([object.sharenum integerValue] + 1)];
+            }
+            [[SHGSegmentController sharedSegmentController] refreshHomeView];
             [[SHGSegmentController sharedSegmentController] reloadData];
             [Hud showMessageWithText:@"分享成功"];
-            [[SHGSegmentController sharedSegmentController] refreshHomeView];
         }
     } failed:^(MOCHTTPResponse *response) {
         [Hud showMessageWithText:response.errorMessage];
@@ -255,7 +258,10 @@
     [[AFHTTPRequestOperationManager manager] PUT:url parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSString *code = [responseObject valueForKey:@"code"];
         if ([code isEqualToString:@"000"]) {
-            obj.sharenum = [NSString stringWithFormat:@"%ld",(long)([obj.sharenum integerValue] + 1)];
+            NSArray *array = [[SHGSegmentController sharedSegmentController] targetObjectsByRid:obj.rid];
+            for (CircleListObj *object in array){
+                object.sharenum = [NSString stringWithFormat:@"%ld",(long)([object.sharenum integerValue] + 1)];
+            }
             [[SHGSegmentController sharedSegmentController] reloadData];
             [MobClick event:@"ActionShareClicked" label:@"onClick"];
             [Hud showMessageWithText:@"分享成功"];
@@ -292,9 +298,8 @@
     if ([obj isKindOfClass:[NSString class]]){
         NSString *rid = obj;
         NSArray *array = [[SHGSegmentController sharedSegmentController] targetObjectsByRid:rid];
-        for (CircleListObj *objs in array) {
-            [self otherShareWithObj:objs];
-        }
+        //这边只调用一次 下面的方法中会分开处理
+        [self otherShareWithObj:[array firstObject]];
     }
 }
 
@@ -425,7 +430,7 @@
         obj.sharenum = num;
     }
     [[SHGSegmentController sharedSegmentController] reloadData];
-
+    [[SHGSegmentController sharedSegmentController] refreshHomeView];
 }
 
 - (void)detailAttentionWithRid:(NSString *)rid attention:(NSString *)atten
