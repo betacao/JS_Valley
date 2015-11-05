@@ -363,23 +363,6 @@
     }
 }
 
-//获得详情后如果存在数据更新则在首页进行更新
-- (void)homeListShouldRefresh:(CircleListObj *)currentObj
-{
-    for(NSInteger i = 0;i < self.dataArr.count; i ++){
-        id object = [self.dataArr objectAtIndex:i];
-        if([object isKindOfClass:[CircleListObj class]]){
-            CircleListObj *obj = (CircleListObj *)object;
-            if([obj.rid isEqualToString:currentObj.rid]){
-                obj.sharenum = currentObj.sharenum;
-                obj.cmmtnum = currentObj.cmmtnum;
-                obj.praisenum = currentObj.praisenum;
-                [self.listTable reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:i inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
-                break;
-            }
-        }
-    }
-}
 
 #pragma mark ------ 代理 ------
 

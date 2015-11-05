@@ -44,6 +44,8 @@ typedef void(^loadViewFinishBlock)(UIView *view);
 - (void)refreshHomeView;
 //简单的tableview刷新
 - (void)reloadData;
+//tableview刷新某些行
+- (void)reloadDataAtIndexPaths:(NSArray *)indexPaths;
 //删除对象（只有动态界面才会有删除 已关注界面不存在删除）
 - (void)removeObject:(CircleListObj *)object;
 //删除一组对象 主要用于取消关注时候 已关注界面删掉数组
@@ -54,6 +56,8 @@ typedef void(^loadViewFinishBlock)(UIView *view);
 - (NSArray *)targetObjectsByUserID:(NSString *)string;
 //通过位置查找对象 只返回当前界面的对象
 - (CircleListObj *)targetObjectByIndex:(NSInteger)index;
+//查找对象在数组中的位置
+- (NSArray *)indexOfObjectByRid:(NSString *)string;
 
 - (void)setSelectedIndex:(NSUInteger)index animated:(BOOL)animated;
 - (void)setSelectedViewController:(UIViewController *)viewController animated:(BOOL)animated;

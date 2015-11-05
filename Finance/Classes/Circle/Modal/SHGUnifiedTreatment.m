@@ -499,5 +499,25 @@
     [self detailDeleteWithRid:obj.rid];
 }
 
+//获得详情后如果存在数据更新则在首页进行更新
+- (void)detailHomeListShouldRefresh:(CircleListObj *)currentObj
+{
+    NSArray *array = [[SHGSegmentController sharedSegmentController] targetObjectsByRid:currentObj.rid];
+    NSArray *indexArray = [[SHGSegmentController sharedSegmentController] indexOfObjectByRid:currentObj.rid];
+    if(array.count != indexArray.count){
+        return;
+    }
+    NSMutableArray *pathArray = [NSMutableArray array];
+    for(CircleListObj *obj in array){
+        obj.sharenum = currentObj.sharenum;
+        obj.cmmtnum = currentObj.cmmtnum;
+        obj.praisenum = currentObj.praisenum;
+        NSInteger index = [array indexOfObject:obj];
+        NSIndexPath *path = [NSIndexPath indexPathForRow: [[indexArray objectAtIndex: index] integerValue] inSection:0];
+        [pathArray addObject:path];
+    }
+
+    [[SHGSegmentController sharedSegmentController] reloadDataAtIndexPaths:pathArray];
+}
 
 @end

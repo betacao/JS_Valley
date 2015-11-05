@@ -15,6 +15,6 @@
 - (void)detailAttentionWithRid:(NSString *)rid attention:(NSString *)atten;
 - (void)detailDeleteWithRid:(NSString *)rid ;
 - (void)detailCollectionWithRid:(NSString *)rid collected:(NSString *)isColle;
-- (void)homeListShouldRefresh:(CircleListObj *)currentObj;
+- (void)detailHomeListShouldRefresh:(CircleListObj *)currentObj;
 
 @end

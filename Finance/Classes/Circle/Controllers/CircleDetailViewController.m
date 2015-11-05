@@ -95,7 +95,7 @@
         if (response.dataDictionary) {
             [weakSelf parseObjWithDic:response.dataDictionary];
             [weakSelf loadDatasWithObj:weakSelf.obj];
-            [weakSelf homeListShouldRefresh:weakSelf.obj];
+            [weakSelf detailHomeListShouldRefresh:weakSelf.obj];
         }
     } failed:^(MOCHTTPResponse *response) {
         [Hud hideHud];
@@ -221,14 +221,14 @@
     }
 }
 
-- (void)homeListShouldRefresh:(CircleListObj *)obj
+- (void)detailHomeListShouldRefresh:(CircleListObj *)obj
 {
     NSString *shareNum = obj.sharenum;
     NSString *commentNum =  obj.cmmtnum;
     NSString *praiseNum = obj.praisenum;
     if(![shareNum isEqualToString:[self.itemInfoDictionary objectForKey:kShareNum]] || ![commentNum isEqualToString:[self.itemInfoDictionary objectForKey:kCommentNum]] || ![praiseNum isEqualToString:[self.itemInfoDictionary objectForKey:kPraiseNum]]){
-        if(self.delegate && [self.delegate respondsToSelector:@selector(homeListShouldRefresh:)]){
-            [self.delegate homeListShouldRefresh:obj];
+        if(self.delegate && [self.delegate respondsToSelector:@selector(detailHomeListShouldRefresh:)]){
+            [self.delegate detailHomeListShouldRefresh:obj];
         }
     }
 }

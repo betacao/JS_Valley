@@ -138,6 +138,15 @@
     }
 }
 
+- (void)reloadDataAtIndexPaths:(NSArray *)indexPaths
+{
+    for (NSInteger i = 0; i < indexPaths.count; i++) {
+        UIViewController *controller =[self.viewControllers objectAtIndex:i];
+        UITableView *listTable = [controller performSelector:@selector(currentTableView)];
+        [listTable reloadRowsAtIndexPaths:@[[indexPaths objectAtIndex:i]] withRowAnimation:UITableViewRowAnimationAutomatic];
+    }
+}
+
 - (void)refreshAttaionView
 {
     if([[self.viewControllers lastObject] respondsToSelector:@selector(refreshHeader)]){
@@ -216,19 +225,36 @@
     return [[self.selectedViewController performSelector:@selector(currentDataArray)] objectAtIndex:index];
 }
 
+- (NSArray *)indexOfObjectByRid:(NSString *)string
+{
+    NSMutableArray *result = [NSMutableArray array];
+    NSMutableArray *array1 = [[self.viewControllers firstObject] performSelector:@selector(currentDataArray)];
+    NSMutableArray *array2 = [[self.viewControllers lastObject] performSelector:@selector(currentDataArray)];
+    [array1 enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if ([obj isKindOfClass:[CircleListObj class]]){
+            CircleListObj *object = (CircleListObj *)obj;
+            if([object.rid isEqualToString:string]){
+                [result addObject:@(idx)];
+            }
+        }
+    }];
+    [array2 enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if ([obj isKindOfClass:[CircleListObj class]]){
+            CircleListObj *object = (CircleListObj *)obj;
+            if([object.rid isEqualToString:string]){
+                [result addObject:@(idx)];
+            }
+        }
+    }];
+    return result;
+}
+
 //发布
 - (void)actionPost:(UIButton *)button
 {
     if([self.selectedViewController respondsToSelector:@selector(actionPost:)]){
         [self.selectedViewController performSelector:@selector(actionPost:) withObject:button];
     }
-}
-
-
-
-- (void)viewWillLayoutSubviews
-{
-	[super viewWillLayoutSubviews];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -334,44 +360,34 @@
 			if (oldSelectedIndex < newSelectedIndex)
 				rect.origin.x = rect.size.width;
 			else
-				rect.origin.x = -rect.size.width;
+                rect.origin.x = -rect.size.width;
 
-			toViewController.view.frame = rect;
-			tabButtonsContainerView.userInteractionEnabled = NO;
+            toViewController.view.frame = rect;
+            tabButtonsContainerView.userInteractionEnabled = NO;
 
-			[self transitionFromViewController:fromViewController
-				toViewController:toViewController
-				duration:0.3
-				options:UIViewAnimationOptionLayoutSubviews | UIViewAnimationOptionCurveEaseOut
-				animations:^
-				{
-					CGRect rect = fromViewController.view.frame;
-					if (oldSelectedIndex < newSelectedIndex)
-						rect.origin.x = -rect.size.width;
-					else
-						rect.origin.x = rect.size.width;
-
-					fromViewController.view.frame = rect;
-					toViewController.view.frame = contentContainerView.bounds;
-				}
-				completion:^(BOOL finished)
-				{
-					tabButtonsContainerView.userInteractionEnabled = YES;
-
-					if ([self.delegate respondsToSelector:@selector(SHG_SegmentController:didSelectViewController:atIndex:)])
-						[self.delegate SHG_SegmentController:self didSelectViewController:toViewController atIndex:newSelectedIndex];
-				}];
-		}
-		else  // not animated
-		{
-			[fromViewController.view removeFromSuperview];
-
-			toViewController.view.frame = contentContainerView.bounds;
-			[contentContainerView addSubview:toViewController.view];
-
-			if ([self.delegate respondsToSelector:@selector(SHG_SegmentController:didSelectViewController:atIndex:)])
-				[self.delegate SHG_SegmentController:self didSelectViewController:toViewController atIndex:newSelectedIndex];
-		}
+            [self transitionFromViewController:fromViewController toViewController:toViewController duration:0.3 options:UIViewAnimationOptionLayoutSubviews | UIViewAnimationOptionCurveEaseOut animations:^{
+                CGRect rect = fromViewController.view.frame;
+                if (oldSelectedIndex < newSelectedIndex){
+                    rect.origin.x = -rect.size.width;
+                } else{
+                    rect.origin.x = rect.size.width;
+                }
+                fromViewController.view.frame = rect;
+                toViewController.view.frame = contentContainerView.bounds;
+            } completion:^(BOOL finished){
+                tabButtonsContainerView.userInteractionEnabled = YES;
+                if ([self.delegate respondsToSelector:@selector(SHG_SegmentController:didSelectViewController:atIndex:)]){
+                    [self.delegate SHG_SegmentController:self didSelectViewController:toViewController atIndex:newSelectedIndex];
+                }
+            }];
+        } else{ // not animated
+            [fromViewController.view removeFromSuperview];
+            toViewController.view.frame = contentContainerView.bounds;
+            [contentContainerView addSubview:toViewController.view];
+            if ([self.delegate respondsToSelector:@selector(SHG_SegmentController:didSelectViewController:atIndex:)]){
+                [self.delegate SHG_SegmentController:self didSelectViewController:toViewController atIndex:newSelectedIndex];
+            }
+        }
 	}
 }
 
