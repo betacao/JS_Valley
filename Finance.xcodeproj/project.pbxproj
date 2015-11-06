@@ -212,8 +212,6 @@
 		40D6CC0C1B064122005F61C8 /* ProtocolViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 40D6CC0A1B064122005F61C8 /* ProtocolViewController.xib */; };
 		532AF6AD1AFC3499007D3E4B /* FriendsListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 532AF6AC1AFC3499007D3E4B /* FriendsListViewController.m */; };
 		532AF6B01AFC432A007D3E4B /* HeadImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 532AF6AF1AFC432A007D3E4B /* HeadImage.m */; };
-		5331DF181AFC017600E035B8 /* ChineseToPinyin.m in Sources */ = {isa = PBXBuildFile; fileRef = 5331DF0A1AFC017600E035B8 /* ChineseToPinyin.m */; };
-		5331DF191AFC017600E035B8 /* ContactsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5331DF0C1AFC017600E035B8 /* ContactsViewController.m */; };
 		5331DF1A1AFC017600E035B8 /* AddFriendCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5331DF0F1AFC017600E035B8 /* AddFriendCell.m */; };
 		5331DF1B1AFC017600E035B8 /* AddFriendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5331DF111AFC017600E035B8 /* AddFriendViewController.m */; };
 		5331DF1C1AFC017600E035B8 /* ApplyFriendCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5331DF131AFC017600E035B8 /* ApplyFriendCell.m */; };
@@ -1132,10 +1130,6 @@
 		532AF6AC1AFC3499007D3E4B /* FriendsListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendsListViewController.m; sourceTree = "<group>"; };
 		532AF6AE1AFC432A007D3E4B /* HeadImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeadImage.h; sourceTree = "<group>"; };
 		532AF6AF1AFC432A007D3E4B /* HeadImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HeadImage.m; sourceTree = "<group>"; };
-		5331DF091AFC017600E035B8 /* ChineseToPinyin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChineseToPinyin.h; sourceTree = "<group>"; };
-		5331DF0A1AFC017600E035B8 /* ChineseToPinyin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChineseToPinyin.m; sourceTree = "<group>"; };
-		5331DF0B1AFC017600E035B8 /* ContactsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactsViewController.h; sourceTree = "<group>"; };
-		5331DF0C1AFC017600E035B8 /* ContactsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactsViewController.m; sourceTree = "<group>"; };
 		5331DF0E1AFC017600E035B8 /* AddFriendCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddFriendCell.h; sourceTree = "<group>"; };
 		5331DF0F1AFC017600E035B8 /* AddFriendCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddFriendCell.m; sourceTree = "<group>"; };
 		5331DF101AFC017600E035B8 /* AddFriendViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddFriendViewController.h; sourceTree = "<group>"; };
@@ -2482,10 +2476,6 @@
 		5331DF081AFC017600E035B8 /* Contacts */ = {
 			isa = PBXGroup;
 			children = (
-				5331DF091AFC017600E035B8 /* ChineseToPinyin.h */,
-				5331DF0A1AFC017600E035B8 /* ChineseToPinyin.m */,
-				5331DF0B1AFC017600E035B8 /* ContactsViewController.h */,
-				5331DF0C1AFC017600E035B8 /* ContactsViewController.m */,
 				5331DF0D1AFC017600E035B8 /* FriendApply */,
 			);
 			path = Contacts;
@@ -5372,7 +5362,6 @@
 				40302B1A1AEF61B600F22EB6 /* MyTeamViewController.m in Sources */,
 				610FF07B1AD6227F0027EBA6 /* UIImage+Rotation.m in Sources */,
 				610FF0711AD6227F0027EBA6 /* NSString+Base64.m in Sources */,
-				5331DF181AFC017600E035B8 /* ChineseToPinyin.m in Sources */,
 				5331DF1C1AFC017600E035B8 /* ApplyFriendCell.m in Sources */,
 				F9EDD5F81BABFBCF00506C0C /* SDPhotoGroup.m in Sources */,
 				B0EAB2551B467AB8005A760F /* MLEmojiLabel.m in Sources */,
@@ -5483,7 +5472,6 @@
 				614A597B1AD3AEA1005DAB04 /* AppDelegate.m in Sources */,
 				614DC8931AD66B3200F610D4 /* BRCommonPopup.m in Sources */,
 				F9EDD5F71BABFBCF00506C0C /* SDPhotoBrowser.m in Sources */,
-				5331DF191AFC017600E035B8 /* ContactsViewController.m in Sources */,
 				6187D2DB1AF1C693008E1D21 /* DXFaceView.m in Sources */,
 				6145FF251AE4FCFE0074AB49 /* ProductListViewController.m in Sources */,
 				6187D2F51AF1C693008E1D21 /* RealtimeSearchUtil.m in Sources */,

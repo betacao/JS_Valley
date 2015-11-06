@@ -20,7 +20,7 @@
 #import "BasePeopleTableViewCell.h"
 #import "ApplyViewController.h"
 #import "MessageViewController.h"
-#import "ContactsViewController.h"
+//#import "ContactsViewController.h"
 #import "ChatListViewController.h"
 #import "HeadImage.h"
 
