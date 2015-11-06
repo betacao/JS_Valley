@@ -58,7 +58,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     [self umengTrack];
-    InstallUncaughtExceptionHandler();
+//    InstallUncaughtExceptionHandler();
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     [MOCNetworkReachabilityManager startMonitor:kNetworkCheckAddress viaWWAN:^{
 

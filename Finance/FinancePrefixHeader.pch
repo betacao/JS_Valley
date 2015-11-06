@@ -54,7 +54,6 @@
 #import "MPNotificationView.h"
 #import "MessageViewController.h"
 #import "UIColor+extend.h"
-#import "Extend_Description.h"
 #import "VerifyIdentityViewController.h"
 #import "CircleDetailViewController.h"
 #import "SHGGloble.h"
