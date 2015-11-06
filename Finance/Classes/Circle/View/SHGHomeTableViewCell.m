@@ -209,7 +209,7 @@
         [self.photoView addSubview:linkImageView];
         [self.photoView addSubview:titleLabel];
         [self.photoView addSubview:detailLabel];
-        [self.photoView setFrame:CGRectMake(60, self.lblContent.bottom + 10, SCREENWIDTH-CELLRIGHT_WIDTH, 50)];
+        self.photoView.frame = CGRectMake(60, self.lblContent.bottom + 10, SCREENWIDTH-CELLRIGHT_WIDTH, 50);
         DDTapGestureRecognizer *ges = [[DDTapGestureRecognizer alloc] initWithTarget:self action:@selector(linkTap:)];
         [self.photoView addGestureRecognizer:ges];
         
@@ -225,8 +225,12 @@
         photoGroup.photoItemArray = temp;
         [self.photoView addSubview:photoGroup];
 
-        self.photoView.frame = CGRectMake(kPhotoViewLeftMargin, self.lblContent.bottom + kPhotoViewTopMargin, CGRectGetWidth(photoGroup.frame),CGRectGetHeight(photoGroup.frame));
-        
+        if (IsStrEmpty(detail)) {
+            self.photoView.frame = CGRectMake(kPhotoViewLeftMargin, self.lblContent.bottom, CGRectGetWidth(photoGroup.frame),CGRectGetHeight(photoGroup.frame));
+        } else{
+            self.photoView.frame = CGRectMake(kPhotoViewLeftMargin, self.lblContent.bottom + kPhotoViewTopMargin, CGRectGetWidth(photoGroup.frame),CGRectGetHeight(photoGroup.frame));
+        }
+
     }
     CGRect actionViewRect = self.actionView.frame;
     actionViewRect.origin.y = self.photoView.bottom;

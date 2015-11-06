@@ -758,46 +758,33 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     NSString *message = [NSString stringWithFormat:NSLocalizedString(@"group.agreedToJoin", @"agreed to join the group of \'%@\'"), groupname];
     [self showHint:message];
 }
--(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    if (alertView.tag == 100) {
-        [[EaseMob sharedInstance].chatManager asyncLogoffWithUnbindDeviceToken:YES completion:^(NSDictionary *info, EMError *error) {
-            if (error && error.errorCode != EMErrorServerNotLogin) {
-            }
-            else{
-                LoginViewController *splitViewController =[[[LoginViewController alloc] init] initWithNibName:@"LoginViewController" bundle:nil];
-                BaseNavigationController *nav = [[BaseNavigationController alloc] initWithRootViewController:splitViewController];
-                //设置导航title字体
-                [[UINavigationBar appearance] setTitleTextAttributes:
-                 
-                 @{NSFontAttributeName:[UIFont systemFontOfSize:kNavBarTitleFontSize],
-                   
-                   NSForegroundColorAttributeName:NavRTitleColor}];
-                
-                //清楚配置信息
-                [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:KEY_UID];
-                [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:KEY_PASSWORD];
-                [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:KEY_USER_NAME];
-                [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:KEY_TOKEN];
-                [[NSUserDefaults standardUserDefaults] setObject:@"0" forKey:KEY_AUTOLOGIN];
-                //    设置导航栏不透明
-                // [UINavigationBar appearance].translucent = NO;
-                
-                [AppDelegate currentAppdelegate].window.rootViewController = nav;
-                
-            }
-        } onQueue:nil];
-    }
-}
-#pragma mark - IChatManagerDelegate 登录状态变化
 
+#pragma mark - IChatManagerDelegate 登录状态变化
 - (void)didLoginFromOtherDevice
 {
     [[EaseMob sharedInstance].chatManager asyncLogoffWithUnbindDeviceToken:NO completion:^(NSDictionary *info, EMError *error) {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"prompt", @"Prompt") message:NSLocalizedString(@"loginAtOtherDevice", @"your login account has been in other places") delegate:self cancelButtonTitle:NSLocalizedString(@"ok", @"OK") otherButtonTitles:nil, nil];
-        alertView.tag = 100;
+        DXAlertView *alertView = [[DXAlertView alloc] initWithTitle:NSLocalizedString(@"prompt", @"Prompt") contentText:NSLocalizedString(@"loginAtOtherDevice", @"your login account has been in other places") leftButtonTitle:nil rightButtonTitle:NSLocalizedString(@"ok", @"OK")];
+        alertView.rightBlock = ^{
+            [[EaseMob sharedInstance].chatManager asyncLogoffWithUnbindDeviceToken:YES completion:^(NSDictionary *info, EMError *error) {
+                if (error && error.errorCode != EMErrorServerNotLogin) {
+                }
+                else{
+                    LoginViewController *splitViewController =[[[LoginViewController alloc] init] initWithNibName:@"LoginViewController" bundle:nil];
+                    BaseNavigationController *nav = [[BaseNavigationController alloc] initWithRootViewController:splitViewController];
+                    //设置导航title字体
+                    [[UINavigationBar appearance] setTitleTextAttributes: @{NSFontAttributeName:[UIFont systemFontOfSize:kNavBarTitleFontSize], NSForegroundColorAttributeName:NavRTitleColor}];
+                    //清除配置信息
+                    [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:KEY_UID];
+                    [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:KEY_PASSWORD];
+                    [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:KEY_USER_NAME];
+                    [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:KEY_TOKEN];
+                    [[NSUserDefaults standardUserDefaults] setObject:@"0" forKey:KEY_AUTOLOGIN];
+                    [AppDelegate currentAppdelegate].window.rootViewController = nav;
+                }
+            } onQueue:nil];
+        };
         [alertView show];
-        
+
     } onQueue:nil];
 }
 
@@ -810,54 +797,17 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     } onQueue:nil];
 }
 
-//- (void)didConnectionStateChanged:(EMConnectionState)connectionState
-//{
-//    [_chatListVC networkChanged:connectionState];
-//}
-
 #pragma mark - 自动登录回调
 
 - (void)willAutoReconnect{
     [self hideHud];
-    // [self showHint:NSLocalizedString(@"reconnection.ongoing", @"reconnecting...")];
 }
 
 - (void)didAutoReconnectFinishedWithError:(NSError *)error{
     [self hideHud];
-    //    if (error) {
-    //        [self showHint:NSLocalizedString(@"reconnection.fail", @"reconnection failure, later will continue to reconnection")];
-    //    }else{
-    //       // [self showHint:NSLocalizedString(@"reconnection.success", @"reconnection successful！")];
-    //    }
 }
 
 #pragma mark - ICallManagerDelegate
-
-//- (void)callSessionStatusChanged:(EMCallSession *)callSession changeReason:(EMCallStatusChangedReason)reason error:(EMError *)error
-//{
-////    if (callSession.status == eCallSessionStatusConnected)
-////    {
-////        EMError *error = nil;
-////        BOOL isShowPicker = [[[NSUserDefaults standardUserDefaults] objectForKey:@"isShowPicker"] boolValue];
-////
-////#warning 在后台不能进行视频通话
-////        if(callSession.type == eCallSessionTypeVideo && [[UIApplication sharedApplication] applicationState] == UIApplicationStateBackground){
-////            error = [EMError errorWithCode:EMErrorInitFailure andDescription:@"后台不能进行视频通话"];
-////        }
-////        else if (!isShowPicker){
-////            [[EMSDKFull sharedInstance].callManager removeDelegate:self];
-////            //            _callController = nil;
-////            CallViewController *callController = [[CallViewController alloc] initWithSession:callSession isIncoming:YES];
-////            callController.modalPresentationStyle = UIModalPresentationOverFullScreen;
-////            //            _callController = callController;
-////            [self presentViewController:callController animated:NO completion:nil];
-////        }
-////
-////        if (error || isShowPicker) {
-////            [[EMSDKFull sharedInstance].callManager asyncEndCall:callSession.sessionId reason:eCallReason_Hangup];
-////        }
-////    }
-//}
 
 - (void)back
 {

@@ -11,11 +11,9 @@
 #define kAlertHeight 167.0f * XFACTOR
 
 #define kLineViewTopMargin 44.0f * XFACTOR
-#define kContentOffset 30.0f
-#define kBetweenLabelOffset 20.0f
-#define kSingleButtonWidth 160.0f
+#define kSingleButtonWidth 155.0f * XFACTOR
 #define kCoupleButtonWidth 99.0f * XFACTOR
-#define kButtonHeight 32.0f * YFACTOR
+#define kButtonHeight 32.0f * XFACTOR
 #define kButtonBottomOffset 20.0f * XFACTOR
 #define kLineViewLeftMargin 20.0f * XFACTOR
 #define kCustomViewButtomMargin 18.0f * YFACTOR

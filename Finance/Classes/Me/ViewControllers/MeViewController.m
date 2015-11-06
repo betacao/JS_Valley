@@ -457,7 +457,7 @@
 {
     if(self.tagsView){
         __weak typeof(self) weakSelf = self;
-        DXAlertView *alert = [[DXAlertView alloc] initWithTitle:@"选择喜欢的方向" customView:self.tagsView leftButtonTitle:@"取消" rightButtonTitle:@"确定"];
+        DXAlertView *alert = [[DXAlertView alloc] initWithTitle:@"选择喜欢的标签方向" customView:self.tagsView leftButtonTitle:@"取消" rightButtonTitle:@"确定"];
         alert.rightBlock = ^{
             NSArray *array = [weakSelf.tagsView userSelectedTags];
             [[SHGGloble sharedGloble] uploadUserSelectedInfo:array completion:^(BOOL finished) {

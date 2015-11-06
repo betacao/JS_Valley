@@ -403,7 +403,7 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
     
 }
 
--(void)headTap:(NSInteger)index{
+- (void)headTap:(NSInteger)index{
     
     CircleListObj *obj = self.dataArr[index];
     [self gotoSomeOne:obj.userid name:obj.nickname];

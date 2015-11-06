@@ -23,7 +23,8 @@ const CGFloat kActionViewHeight = 34.0f;
 
 @implementation CircleListObj
 
--(id)init{
+- (id)init
+{
     self = [super init];
     if (self) {
         self.isPull = NO;
@@ -31,7 +32,7 @@ const CGFloat kActionViewHeight = 34.0f;
     return self;
 }
 
--(NSMutableArray*)heads
+- (NSMutableArray*)heads
 {
     if (!_heads) {
         _heads = [NSMutableArray array];
@@ -49,7 +50,7 @@ const CGFloat kActionViewHeight = 34.0f;
     
 }
 
--(NSArray *)photoArr
+- (NSArray *)photoArr
 {
     if (!_photoArr)
     {
@@ -59,7 +60,7 @@ const CGFloat kActionViewHeight = 34.0f;
     
 }
 
--(CGFloat)fetchCellHeight
+- (CGFloat)fetchCellHeight
 {
     self.totalHeight = 0.0f;
     if (IsStrEmpty(self.detail)){
@@ -92,7 +93,11 @@ const CGFloat kActionViewHeight = 34.0f;
                 }
             }
         }
-        self.totalHeight += (photoHeight + kPhotoViewTopMargin);
+        if (IsStrEmpty(self.detail)){
+            self.totalHeight += photoHeight;
+        } else{
+            self.totalHeight += (photoHeight + kPhotoViewTopMargin);
+        }
     }
     NSInteger num = 0;
     if ([self.cmmtnum intValue] > 3){
@@ -149,32 +154,7 @@ const CGFloat kActionViewHeight = 34.0f;
 }
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey{
-    return  @{@"cmmtnum": @"cmmtnum",
-              @"nickname":@"nickname",
-              @"comments": @"comments",
-              @"company": @"company",
-              @"detail": @"detail",
-              @"isattention": @"isattention",
-              @"potname": @"potname",
-              @"praisenum": @"praisenum",
-              @"publishdate": @"publishdate",
-              @"rid": @"rid",
-              @"photos":@"attach",
-              @"sharenum": @"sharenum",
-              @"status": @"status",
-              @"title": @"title",
-              @"userid": @"userid",
-              @"ispraise":@"ispraise",
-              @"type":@"attachtype",
-              @"linkObj":@"link",
-              @"postType":@"type",
-              @"friendship":@"friendship",
-              @"userstatus":@"userstatus",
-              @"currcity":@"currcity",
-              @"feedhtml":@"feedhtml",
-              @"displayposition":@"displayposition",
-              @"pcurl":@"pcurl"
-              };
+    return  @{@"cmmtnum": @"cmmtnum", @"nickname":@"nickname", @"comments": @"comments", @"company": @"company", @"detail": @"detail", @"isattention": @"isattention", @"potname": @"potname", @"praisenum": @"praisenum", @"publishdate": @"publishdate", @"rid": @"rid", @"photos":@"attach", @"sharenum": @"sharenum", @"status": @"status", @"title": @"title", @"userid": @"userid", @"ispraise":@"ispraise", @"type":@"attachtype", @"linkObj":@"link", @"postType":@"type", @"friendship":@"friendship", @"userstatus":@"userstatus", @"currcity":@"currcity", @"feedhtml":@"feedhtml", @"displayposition":@"displayposition", @"pcurl":@"pcurl" };
 }
 
 
@@ -188,25 +168,13 @@ const CGFloat kActionViewHeight = 34.0f;
     return [MTLJSONAdapter dictionaryTransformerWithModelClass:[linkOBj class]];
 }
 
-//- (BOOL)isEqual:(CircleListObj *)object
-//{
-//    if ([self.rid isEqual:object.rid]){
-//        return YES;
-//    }
-//    return NO;
-//}
-
 @end
 
 @implementation commentOBj
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey{
     
-    return @{@"cdetail":@"cdetail",
-             @"cid":@"cid",
-             @"cnickname":@"cnickname",
-             @"rid":@"rid",
-             @"rnickname":@"rnickname"};
+    return @{@"cdetail":@"cdetail", @"cid":@"cid", @"cnickname":@"cnickname", @"rid":@"rid", @"rnickname":@"rnickname"};
 }
 
 @end
@@ -227,7 +195,7 @@ const CGFloat kActionViewHeight = 34.0f;
 
 @implementation linkOBj
 
--(id)init
+- (id)init
 {
     self = [super init];
     if (self) {
@@ -235,12 +203,9 @@ const CGFloat kActionViewHeight = 34.0f;
     }
     return self;
 }
-+(NSDictionary *)JSONKeyPathsByPropertyKey
++ (NSDictionary *)JSONKeyPathsByPropertyKey
 {
-    return @{@"title":@"title",
-             @"desc":@"desc",
-             @"link":@"link",
-             @"thumbnail":@"thumbnail"};
+    return @{@"title":@"title", @"desc":@"desc", @"link":@"link", @"thumbnail":@"thumbnail"};
 }
 
 
