@@ -663,8 +663,8 @@
     ZYQAssetPickerController *picker = [[ZYQAssetPickerController alloc] init];
     picker.maximumNumberOfSelection = 6-self.imageArr.count;
     picker.assetsFilter = [ALAssetsFilter allPhotos];
-    picker.showEmptyGroups=NO;
-    picker.delegate=self;
+    picker.showEmptyGroups = NO;
+    picker.zyDelegate = self;
     picker.selectionFilter = [NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings)
     {
         if ([[(ALAsset*)evaluatedObject valueForProperty:ALAssetPropertyType] isEqual:ALAssetTypeVideo])
