@@ -418,7 +418,23 @@
         [[AppDelegate currentAppdelegate]wechatShare:obj shareType:0];
     }];
 
-    NSArray *shareList = [ShareSDK customShareListWithType: item3, item5, item4, item0, item1, item2,nil];
+//    NSArray *shareList = [ShareSDK customShareListWithType: item3, item5, item4, item0, item1, item2, nil];
+    NSArray *shareArray = nil;
+    if ([WXApi isWXAppSupportApi]) {
+        if ([WeiboSDK isCanShareInWeiboAPP]) {
+            shareArray = [ShareSDK customShareListWithType: item3, item5, item4, item0, item1, item2, nil];
+        } else{
+            shareArray = [ShareSDK customShareListWithType: item3, item5, item4, item1, item2, nil];
+        }
+    } else{
+        if ([WeiboSDK isCanShareInWeiboAPP]) {
+            shareArray = [ShareSDK customShareListWithType: item3, item0, item1, item2, nil];
+        } else{
+            shareArray = [ShareSDK customShareListWithType: item3, item1, item2, nil];
+        }
+        
+    }
+
     NSString *shareUrl = [NSString stringWithFormat:@"%@%@",rBaseAddressForHttpShare,obj.rid];
     //构造分享内容
     id<ISSContent> publishContent = [ShareSDK content:shareContent defaultContent:shareContent image:image title:SHARE_TITLE url:shareUrl description:shareContent mediaType:SHARE_TYPE];
@@ -429,12 +445,11 @@
     [container setIPadContainerWithView:self.view arrowDirect:UIPopoverArrowDirectionUp];
 
     //弹出分享菜单
-    [ShareSDK showShareActionSheet:container shareList:shareList content:publishContent statusBarTips:YES authOptions:nil shareOptions:nil result:^(ShareType type, SSResponseState state, id<ISSPlatformShareInfo> statusInfo, id<ICMErrorInfo> error, BOOL end) {
+    [ShareSDK showShareActionSheet:container shareList:shareArray content:publishContent statusBarTips:YES authOptions:nil shareOptions:nil result:^(ShareType type, SSResponseState state, id<ISSPlatformShareInfo> statusInfo, id<ICMErrorInfo> error, BOOL end) {
         if (state == SSResponseStateSuccess){
             [self otherShareWithObj:obj];
         } else if (state == SSResponseStateFail){
             NSLog(NSLocalizedString(@"TEXT_ShARE_FAI", @"分享失败,错误码:%d,错误描述:%@"), [error errorCode], [error errorDescription]);
-            [Hud showMessageWithText:@"请您先安装手机QQ再分享动态"];
 
         }
     }];

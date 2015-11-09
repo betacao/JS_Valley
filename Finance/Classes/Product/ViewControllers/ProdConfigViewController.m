@@ -267,7 +267,23 @@
     id<ISSShareActionSheetItem> item5 = [ShareSDK shareActionSheetItemWithTitle:@"微信好友" icon:[UIImage imageNamed:@"sns_icon_22"] clickHandler:^{
         [[AppDelegate currentAppdelegate] wechatShareWithText:detail shareUrl:shareUrl shareType:1];
     }];
-    NSArray *shareList = [ShareSDK customShareListWithType: item3, item5, item4, SHARE_TYPE_NUMBER(ShareTypeQQ), item1,nil];
+//    NSArray *shareList = [ShareSDK customShareListWithType: item3, item5, item4, SHARE_TYPE_NUMBER(ShareTypeQQ), item1,nil];
+
+    NSArray *shareArray = nil;
+    if ([WXApi isWXAppSupportApi]) {
+        if ([QQApiInterface isQQSupportApi]) {
+            shareArray = [ShareSDK customShareListWithType: item3, item5, item4, SHARE_TYPE_NUMBER(ShareTypeQQ), item1, nil];
+        } else{
+            shareArray = [ShareSDK customShareListWithType: item3, item5, item4, item1, nil];
+        }
+    } else{
+        if ([QQApiInterface isQQSupportApi]) {
+            shareArray = [ShareSDK customShareListWithType: item3, SHARE_TYPE_NUMBER(ShareTypeQQ), item1, nil];
+        } else{
+            shareArray = [ShareSDK customShareListWithType: item3, item1, nil];
+        }
+    }
+
 
     //构造分享内容
     id<ISSContent> publishContent = [ShareSDK content:detail defaultContent:detail image:image title:SHARE_TITLE url:shareUrl description:detail mediaType:SHARE_TYPE];
@@ -276,7 +292,7 @@
     [container setIPadContainerWithView:self.view arrowDirect:UIPopoverArrowDirectionUp];
 
     //弹出分享菜单
-    [ShareSDK showShareActionSheet:container shareList:shareList content:publishContent statusBarTips:YES authOptions:nil shareOptions:nil result:^(ShareType type, SSResponseState state, id<ISSPlatformShareInfo> statusInfo, id<ICMErrorInfo> error, BOOL end) {
+    [ShareSDK showShareActionSheet:container shareList:shareArray content:publishContent statusBarTips:YES authOptions:nil shareOptions:nil result:^(ShareType type, SSResponseState state, id<ISSPlatformShareInfo> statusInfo, id<ICMErrorInfo> error, BOOL end) {
 
         if (state == SSResponseStateSuccess){
             [self otherShareWithObj:_obj];
@@ -284,7 +300,6 @@
 
         } else if (state == SSResponseStateFail){
             NSLog(NSLocalizedString(@"TEXT_ShARE_FAI", @"分享失败,错误码:%d,错误描述:%@"), [error errorCode], [error errorDescription]);
-            [Hud showMessageWithText:@"请您先安装手机QQ再分享动态"];
         }
     }];
 

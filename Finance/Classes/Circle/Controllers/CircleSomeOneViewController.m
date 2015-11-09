@@ -719,34 +719,42 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
     id<ISSShareActionSheetItem> item4 = [ShareSDK shareActionSheetItemWithTitle:@"微信朋友圈" icon:[UIImage imageNamed:@"sns_icon_23"] clickHandler:^{
         [[AppDelegate currentAppdelegate]wechatShare:obj shareType:1];
     }];
-    id<ISSShareActionSheetItem> item5 = [ShareSDK shareActionSheetItemWithTitle:@"微信好友" icon:[UIImage imageNamed:@"sns_icon_22"]
-                                                                   clickHandler:^{
-                                                                       [[AppDelegate currentAppdelegate]wechatShare:obj shareType:0];
-                                                                   }];
-    NSArray *shareList = [ShareSDK customShareListWithType: item3, item5, item4, SHARE_TYPE_NUMBER(ShareTypeQQ), item1,item2,nil];
-    
+    id<ISSShareActionSheetItem> item5 = [ShareSDK shareActionSheetItemWithTitle:@"微信好友" icon:[UIImage imageNamed:@"sns_icon_22"] clickHandler:^{
+        [[AppDelegate currentAppdelegate]wechatShare:obj shareType:0];
+    }];
+
+    NSArray *shareArray = nil;
+    if ([WXApi isWXAppSupportApi]) {
+        if ([QQApiInterface isQQSupportApi]) {
+            shareArray = [ShareSDK customShareListWithType: item3, item5, item4, SHARE_TYPE_NUMBER(ShareTypeQQ), item1,item2,nil];
+        } else{
+            shareArray = [ShareSDK customShareListWithType: item3, item5, item4, item1, item2, nil];
+        }
+    } else{
+        if ([QQApiInterface isQQSupportApi]) {
+            shareArray = [ShareSDK customShareListWithType: item3, SHARE_TYPE_NUMBER(ShareTypeQQ), item1, item2, nil];
+        } else{
+            shareArray = [ShareSDK customShareListWithType: item3, item1, item2, nil];
+        }
+    }
+
     NSString *shareUrl = [NSString stringWithFormat:@"%@%@",rBaseAddressForHttpShare,obj.rid];
-    
+
     //构造分享内容
     id<ISSContent> publishContent = [ShareSDK content:shareContent defaultContent:shareContent image:image title:SHARE_TITLE url:shareUrl description:shareContent mediaType:SHARE_TYPE];
-    //创建弹出菜单容器
     
     //创建弹出菜单容器
     id<ISSContainer> container = [ShareSDK container];
     [container setIPadContainerWithView:self.view arrowDirect:UIPopoverArrowDirectionUp];
     
     //弹出分享菜单
-    [ShareSDK showShareActionSheet:container shareList:shareList content:publishContent statusBarTips:YES authOptions:nil shareOptions:nil result:^(ShareType type, SSResponseState state, id<ISSPlatformShareInfo> statusInfo, id<ICMErrorInfo> error, BOOL end) {
+    [ShareSDK showShareActionSheet:container shareList:shareArray content:publishContent statusBarTips:YES authOptions:nil shareOptions:nil result:^(ShareType type, SSResponseState state, id<ISSPlatformShareInfo> statusInfo, id<ICMErrorInfo> error, BOOL end) {
         
-        if (state == SSResponseStateSuccess)
-        {
+        if (state == SSResponseStateSuccess){
             NSLog(NSLocalizedString(@"TEXT_ShARE_SUC", @"分享成功"));
             [self otherShareWithObj:obj];
-        }
-        else if (state == SSResponseStateFail)
-        {
+        } else if (state == SSResponseStateFail){
             NSLog(NSLocalizedString(@"TEXT_ShARE_FAI", @"分享失败,错误码:%d,错误描述:%@"), [error errorCode], [error errorDescription]);
-            [Hud showMessageWithText:@"请您先安装手机QQ再分享动态"];
         }
     }];
     
