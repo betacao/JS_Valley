@@ -365,7 +365,7 @@
                     [Hud showMessageWithText:@"取消关注成功"];
                     [[SHGSegmentController sharedSegmentController] reloadData];
                 } else{
-                    [Hud showMessageWithText:@"失败"];
+                    [Hud showMessageWithText:@"取消关注失败"];
                 }
             } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                 [Hud hideHud];
@@ -389,7 +389,7 @@
                     [MobClick event:@"ActionAttentionClicked" label:@"onClick"];
                     [Hud showMessageWithText:@"关注成功"];
                 } else{
-                    [Hud showMessageWithText:@"失败"];
+                    [Hud showMessageWithText:@"关注失败"];
                 }
                 [[SHGSegmentController sharedSegmentController] reloadData];
             } failed:^(MOCHTTPResponse *response) {
@@ -404,7 +404,7 @@
                     [Hud showMessageWithText:@"取消关注成功"];
                     [[SHGSegmentController sharedSegmentController] reloadData];
                 } else{
-                    [Hud showMessageWithText:@"失败"];
+                    [Hud showMessageWithText:@"取消关注失败"];
                 }
             } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                 [Hud showMessageWithText:error.domain];
@@ -448,12 +448,11 @@
 
 - (void)detailAttentionWithRid:(NSString *)rid attention:(NSString *)atten
 {
-    NSArray *array = [[SHGSegmentController sharedSegmentController] targetObjectsByRid:rid];
+    NSArray *array = [[SHGSegmentController sharedSegmentController] targetObjectsByUserID:rid];
     for (CircleListObj *obj in array){
         obj.isattention = atten;
     }
     [[SHGSegmentController sharedSegmentController] reloadData];
-
 }
 
 - (void)detailCommentWithRid:(NSString *)rid commentNum:(NSString*)num comments:(NSMutableArray *)comments
@@ -464,8 +463,8 @@
         obj.comments = comments;
     }
     [[SHGSegmentController sharedSegmentController] reloadData];
-
 }
+
 - (void)gotoSomeOne:(NSString *)uid name:(NSString *)name
 {
     CircleSomeOneViewController *vc = [[CircleSomeOneViewController alloc] initWithNibName:@"CircleSomeOneViewController" bundle:nil];

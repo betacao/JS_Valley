@@ -15,4 +15,6 @@
 - (NSMutableArray *)currentDataArray;
 
 - (void)refreshHeader;
+
+- (void)refreshLoad;
 @end

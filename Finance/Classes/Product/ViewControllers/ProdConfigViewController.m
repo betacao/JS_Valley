@@ -284,7 +284,6 @@
         }
     }
 
-
     //构造分享内容
     id<ISSContent> publishContent = [ShareSDK content:detail defaultContent:detail image:image title:SHARE_TITLE url:shareUrl description:detail mediaType:SHARE_TYPE];
     //创建弹出菜单容器

@@ -49,6 +49,7 @@
         [self.listTable setLayoutMargins:UIEdgeInsetsZero];
     }
     self.circleType = @"attation";
+    [Hud showLoadingWithMessage:@"加载中"];
     [self requestDataWithTarget:@"first" time:@""];
 }
 
@@ -86,7 +87,6 @@
 #pragma mark ------主要逻辑------
 - (void)requestDataWithTarget:(NSString *)target time:(NSString *)time
 {
-    [Hud showLoadingWithMessage:@"加载中"];
     self.isRefreshing = YES;
     NSDictionary *userTags = [SHGGloble sharedGloble].maxUserTags;
 
@@ -187,6 +187,14 @@
     [self.navigationController pushViewController:postVC animated:YES];
 }
 
+- (void)refreshLoad
+{
+    if (self.isRefreshing) {
+        return;
+    }
+    [self requestDataWithTarget:@"first" time:@""];
+}
+
 - (void)refreshHeader
 {
     NSLog(@"refreshHeader");
@@ -194,8 +202,10 @@
         return;
     }
     if (self.dataArr.count > 0){
+        [Hud showLoadingWithMessage:@"加载中"];
         [self requestDataWithTarget:@"refresh" time:[self refreshMaxRid]];
     } else{
+        [Hud showLoadingWithMessage:@"加载中"];
         [self requestDataWithTarget:@"first" time:@""];
     }
 
@@ -209,6 +219,7 @@
     }
     NSLog(@"refreshFooter");
     if (self.dataArr.count > 0){
+        [Hud showLoadingWithMessage:@"加载中"];
         [self requestDataWithTarget:@"load" time:[self refreshMinRid]];
     }
 
@@ -220,10 +231,8 @@
     for (NSInteger i = 0; i < self.dataArr.count; i++) {
         CircleListObj *obj = self.dataArr[i];
         if([obj isKindOfClass:[CircleListObj class]]){
-            if([obj.postType isEqualToString:@"normal"]){
-                rid = obj.rid;
-                break;
-            }
+            rid = obj.rid;
+            break;
         }
     }
     return rid;
@@ -235,10 +244,8 @@
     for(NSInteger i = self.dataArr.count - 1; i >=0; i--){
         CircleListObj *obj = self.dataArr[i];
         if([obj isKindOfClass:[CircleListObj class]]){
-            if([obj.postType isEqualToString:@"normal"]){
-                rid = obj.rid;
-                break;
-            }
+            rid = obj.rid;
+            break;
         }
     }
     return rid;

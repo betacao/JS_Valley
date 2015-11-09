@@ -113,11 +113,6 @@
     self.viewHeader.hidden = YES;
     self.listTable.backgroundColor = [UIColor whiteColor];
     [self.view bringSubviewToFront:self.viewInput];
-//    if (SCREENHEIGHT == 480){
-//        CGRect rect = self.listTable.frame;
-//        rect.size.height = self.view.height;
-//        [self.listTable setFrame:rect];
-//    }
 
     self.btnSend.layer.masksToBounds = YES;
     self.btnSend.layer.cornerRadius = 8;
@@ -133,6 +128,10 @@
     CGRect frame = self.lineView.frame;
     frame.size.height = 0.5f;
     self.lineView.frame = frame;
+
+    frame = self.btnAttention.frame;
+    frame.origin.x *= XFACTOR;
+    self.btnAttention.frame = frame;
 }
 
 - (IBAction)btnBackClick:(id)sender
@@ -454,10 +453,6 @@
     frame = self.lblTime.frame;
     [self.lblTime sizeToFit];
     [self.lblTime setOrigin:frame.origin];
-
-    frame = self.btnAttention.frame;
-    frame.origin.x *= XFACTOR;
-    self.btnAttention.frame = frame;
 
     //如果公司名和职位名字都不存在的话则隐藏分割线
     if(self.lblCompanyName.text.length == 0 && self.lbldepartName.text.length == 0){

@@ -149,8 +149,8 @@
 
 - (void)refreshAttaionView
 {
-    if([[self.viewControllers lastObject] respondsToSelector:@selector(refreshHeader)]){
-        [[self.viewControllers lastObject] performSelector:@selector(refreshHeader)];
+    if([[self.viewControllers lastObject] respondsToSelector:@selector(refreshLoad)]){
+        [[self.viewControllers lastObject] performSelector:@selector(refreshLoad)];
     }
 }
 
