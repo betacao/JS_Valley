@@ -12,6 +12,12 @@
 {
     BOOL dismissed;
 }
+
+
+
+
+
+
 void HandleException(NSException *exception);
 void SignalHandler(int signal);
 void InstallUncaughtExceptionHandler(void);
