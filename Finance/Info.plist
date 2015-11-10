@@ -39,7 +39,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>1.5.02015110901</string>
+	<string>1.5.02015111001</string>
 	<key>LSApplicationCategoryType</key>
 	<string></string>
 	<key>LSApplicationQueriesSchemes</key>
@@ -47,11 +47,11 @@
 		<string>mqqOpensdkSSoLogin</string>
 		<string>mqzone</string>
 		<string>sinaweibo</string>
-        <string>sinaweibohd</string>
-        <string>sinaweibosso</string>
-        <string>sinaweibohdsso</string>
-        <string>weibosdk</string>
-        <string>weibosdk2.5</string>
+		<string>sinaweibohd</string>
+		<string>sinaweibosso</string>
+		<string>sinaweibohdsso</string>
+		<string>weibosdk</string>
+		<string>weibosdk2.5</string>
 		<string>alipayauth</string>
 		<string>alipay</string>
 		<string>safepay</string>
