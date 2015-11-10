@@ -50,23 +50,16 @@
 
 - (IBAction)showSMSPicker:(id)sender
 {
-    // The MFMessageComposeViewController class is only available in iPhone OS 4.0 or later.
-    // So, we must verify the existence of the above class and log an error message for devices
-    //     running earlier versions of the iPhone OS. Set feedbackMsg if device doesn't support
-    //     MFMessageComposeViewController API.
     Class messageClass = (NSClassFromString(@"MFMessageComposeViewController"));
     
     if (messageClass != nil) {
-        // Check whether the current device is configured for sending SMS messages
         if ([messageClass canSendText]) {
             [self displaySMSComposerSheet];
         }
         else {
-//            [UIApplication showToastViewTitle:nil message:@"设备没有短信功能"];
         }
     }
     else {
-//        [UIApplication showToastViewTitle:nil message:@"iOS版本过低,iOS4.0以上才支持程序内发送短信"];
     }
 }
 

@@ -280,7 +280,6 @@
 		610FF06F1AD6227F0027EBA6 /* NSDate+Customized.m in Sources */ = {isa = PBXBuildFile; fileRef = 610FF04D1AD6227F0027EBA6 /* NSDate+Customized.m */; };
 		610FF0711AD6227F0027EBA6 /* NSString+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 610FF0511AD6227F0027EBA6 /* NSString+Base64.m */; };
 		610FF0721AD6227F0027EBA6 /* NSString+Customized.m in Sources */ = {isa = PBXBuildFile; fileRef = 610FF0531AD6227F0027EBA6 /* NSString+Customized.m */; };
-		610FF0761AD6227F0027EBA6 /* Toast+UIView.m in Sources */ = {isa = PBXBuildFile; fileRef = 610FF05B1AD6227F0027EBA6 /* Toast+UIView.m */; };
 		610FF07A1AD6227F0027EBA6 /* UIImage+Customized.m in Sources */ = {isa = PBXBuildFile; fileRef = 610FF0631AD6227F0027EBA6 /* UIImage+Customized.m */; };
 		610FF07B1AD6227F0027EBA6 /* UIImage+Rotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 610FF0651AD6227F0027EBA6 /* UIImage+Rotation.m */; };
 		610FF07E1AD6227F0027EBA6 /* UIView+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 610FF06B1AD6227F0027EBA6 /* UIView+Additions.m */; };
@@ -1231,8 +1230,6 @@
 		610FF0511AD6227F0027EBA6 /* NSString+Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Base64.m"; sourceTree = "<group>"; };
 		610FF0521AD6227F0027EBA6 /* NSString+Customized.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Customized.h"; sourceTree = "<group>"; };
 		610FF0531AD6227F0027EBA6 /* NSString+Customized.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Customized.m"; sourceTree = "<group>"; };
-		610FF05A1AD6227F0027EBA6 /* Toast+UIView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Toast+UIView.h"; sourceTree = "<group>"; };
-		610FF05B1AD6227F0027EBA6 /* Toast+UIView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Toast+UIView.m"; sourceTree = "<group>"; };
 		610FF0621AD6227F0027EBA6 /* UIImage+Customized.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Customized.h"; sourceTree = "<group>"; };
 		610FF0631AD6227F0027EBA6 /* UIImage+Customized.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Customized.m"; sourceTree = "<group>"; };
 		610FF0641AD6227F0027EBA6 /* UIImage+Rotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Rotation.h"; sourceTree = "<group>"; };
@@ -3554,8 +3551,6 @@
 				610FF0511AD6227F0027EBA6 /* NSString+Base64.m */,
 				610FF0521AD6227F0027EBA6 /* NSString+Customized.h */,
 				610FF0531AD6227F0027EBA6 /* NSString+Customized.m */,
-				610FF05A1AD6227F0027EBA6 /* Toast+UIView.h */,
-				610FF05B1AD6227F0027EBA6 /* Toast+UIView.m */,
 				610FF0621AD6227F0027EBA6 /* UIImage+Customized.h */,
 				610FF0631AD6227F0027EBA6 /* UIImage+Customized.m */,
 				610FF0641AD6227F0027EBA6 /* UIImage+Rotation.h */,
@@ -5323,7 +5318,6 @@
 				6187D2CC1AF1C693008E1D21 /* CreateGroupViewController.m in Sources */,
 				40302B221AEF673200F22EB6 /* TeamDetailTableViewCell.m in Sources */,
 				6187D2F61AF1C693008E1D21 /* EMRemarkImageView.m in Sources */,
-				610FF0761AD6227F0027EBA6 /* Toast+UIView.m in Sources */,
 				6187D2CA1AF1C693008E1D21 /* ContactSelectionViewController.m in Sources */,
 				F9E2A4B41BE99E1C00ECB234 /* SHGAttationViewController.m in Sources */,
 				6187D2CD1AF1C693008E1D21 /* GroupBansViewController.m in Sources */,
