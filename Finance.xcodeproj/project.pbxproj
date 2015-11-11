@@ -868,6 +868,8 @@
 		F9A8D28E1BE712B700A2BFB1 /* ShareSDKFlatShareViewUI.bundle in Resources */ = {isa = PBXBuildFile; fileRef = F9A8D27B1BE712B700A2BFB1 /* ShareSDKFlatShareViewUI.bundle */; };
 		F9A8D28F1BE712B700A2BFB1 /* ShareSDKFlatShareViewUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9A8D27C1BE712B700A2BFB1 /* ShareSDKFlatShareViewUI.framework */; };
 		F9A8D2901BE712B700A2BFB1 /* ShareSDKShareActionSheet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9A8D27D1BE712B700A2BFB1 /* ShareSDKShareActionSheet.framework */; };
+		F9ADAEB71BF2DB32001366F9 /* SHGPersonalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9ADAEB51BF2DB32001366F9 /* SHGPersonalViewController.m */; };
+		F9ADAEB81BF2DB32001366F9 /* SHGPersonalViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9ADAEB61BF2DB32001366F9 /* SHGPersonalViewController.xib */; };
 		F9B0636B1BD7699400471DF4 /* SHGNavigationView.m in Sources */ = {isa = PBXBuildFile; fileRef = F9B0636A1BD7699400471DF4 /* SHGNavigationView.m */; };
 		F9B18C081BA0521600EA0314 /* SHGNoticeView.m in Sources */ = {isa = PBXBuildFile; fileRef = F9B18C071BA0521600EA0314 /* SHGNoticeView.m */; };
 		F9B7CC321B8AD6C000E55EFD /* SHGGloble.m in Sources */ = {isa = PBXBuildFile; fileRef = F9B7CC311B8AD6C000E55EFD /* SHGGloble.m */; };
@@ -2074,6 +2076,9 @@
 		F9A8D27C1BE712B700A2BFB1 /* ShareSDKFlatShareViewUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ShareSDKFlatShareViewUI.framework; sourceTree = "<group>"; };
 		F9A8D27D1BE712B700A2BFB1 /* ShareSDKShareActionSheet.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ShareSDKShareActionSheet.framework; sourceTree = "<group>"; };
 		F9AB29511B883F2F00BD2BDE /* CircleListDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CircleListDelegate.h; sourceTree = "<group>"; };
+		F9ADAEB41BF2DB32001366F9 /* SHGPersonalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGPersonalViewController.h; sourceTree = "<group>"; };
+		F9ADAEB51BF2DB32001366F9 /* SHGPersonalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGPersonalViewController.m; sourceTree = "<group>"; };
+		F9ADAEB61BF2DB32001366F9 /* SHGPersonalViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGPersonalViewController.xib; sourceTree = "<group>"; };
 		F9B063691BD7699400471DF4 /* SHGNavigationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGNavigationView.h; sourceTree = "<group>"; };
 		F9B0636A1BD7699400471DF4 /* SHGNavigationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGNavigationView.m; sourceTree = "<group>"; };
 		F9B18C061BA0521600EA0314 /* SHGNoticeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGNoticeView.h; sourceTree = "<group>"; };
@@ -2873,6 +2878,9 @@
 				B04355CB1B4BD3560033BBBF /* LinkViewController.h */,
 				B04355CC1B4BD3560033BBBF /* LinkViewController.m */,
 				B04355CD1B4BD3560033BBBF /* LinkViewController.xib */,
+				F9ADAEB41BF2DB32001366F9 /* SHGPersonalViewController.h */,
+				F9ADAEB51BF2DB32001366F9 /* SHGPersonalViewController.m */,
+				F9ADAEB61BF2DB32001366F9 /* SHGPersonalViewController.xib */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -4628,6 +4636,7 @@
 				61E83CD11AF7C78E00703651 /* 免费预约按钮@2x.png in Resources */,
 				61E83D0F1AF7C78E00703651 /* 二维码@2x.png in Resources */,
 				61D6E7DD1AD50FCB0016C13A /* EaseMob.bundle in Resources */,
+				F9ADAEB81BF2DB32001366F9 /* SHGPersonalViewController.xib in Resources */,
 				61E83D131AF7C78E00703651 /* 取消-默认@2x.png in Resources */,
 				61E83D581AF7C78E00703651 /* 发送按钮-默认@3x.png in Resources */,
 				61E83CE71AF7C78E00703651 /* 笑脸@2x.png in Resources */,
@@ -5485,6 +5494,7 @@
 				6187D2F21AF1C693008E1D21 /* BaseTableViewCell.m in Sources */,
 				619027491B2359C600D9EEA2 /* popObj.m in Sources */,
 				610FF07E1AD6227F0027EBA6 /* UIView+Additions.m in Sources */,
+				F9ADAEB71BF2DB32001366F9 /* SHGPersonalViewController.m in Sources */,
 				614EFECE1AEF594A00F2BDD1 /* ProdConfigTableViewCell.m in Sources */,
 				4088DD8C1AF0FB2B00393855 /* SettingsObj.m in Sources */,
 				6187D2C91AF1C693008E1D21 /* ChatGroupDetailViewController.m in Sources */,
