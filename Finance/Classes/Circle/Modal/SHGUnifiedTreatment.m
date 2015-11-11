@@ -11,6 +11,7 @@
 #import "SHGSegmentController.h"
 #import "RecmdFriendObj.h"
 #import "SHGAttationViewController.h"
+#import "SHGPersonalViewController.h"
 
 @implementation SHGUnifiedTreatment
 
@@ -467,12 +468,16 @@
 
 - (void)gotoSomeOne:(NSString *)uid name:(NSString *)name
 {
-    CircleSomeOneViewController *vc = [[CircleSomeOneViewController alloc] initWithNibName:@"CircleSomeOneViewController" bundle:nil];
-    vc.userId = uid;
-    vc.userName = name;
-    vc.delegate = self;
-    vc.hidesBottomBarWhenPushed = YES;
-    [[SHGSegmentController sharedSegmentController].selectedViewController.navigationController pushViewController:vc animated:YES];
+//    CircleSomeOneViewController *vc = [[CircleSomeOneViewController alloc] initWithNibName:@"CircleSomeOneViewController" bundle:nil];
+//    vc.userId = uid;
+//    vc.userName = name;
+//    vc.delegate = self;
+//    vc.hidesBottomBarWhenPushed = YES;
+//    [[SHGSegmentController sharedSegmentController].selectedViewController.navigationController pushViewController:vc animated:YES];
+
+    SHGPersonalViewController *controller = [[SHGPersonalViewController alloc] initWithNibName:@"SHGPersonalViewController" bundle:nil];
+    controller.hidesBottomBarWhenPushed = YES;
+    [[SHGSegmentController sharedSegmentController].selectedViewController.navigationController pushViewController:controller animated:YES];
 }
 
 - (void)cnickCLick:(NSString * )userId name:(NSString *)name

@@ -60,11 +60,13 @@
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
+    NSString *height= [webView stringByEvaluatingJavaScriptFromString: @"document.body.offsetHeight"];
+    NSString *width= [webView stringByEvaluatingJavaScriptFromString: @"document.body.offsetWidth"];
     CGRect frame = webView.frame;
-    CGSize fittingSize = [webView sizeThatFits:CGSizeZero];
-    frame.size = fittingSize;
+    frame.size.width = [width integerValue];
+    frame.size.height = [height integerValue] + 50.0f;
     webView.frame = frame;
-    self.height = CGRectGetMaxY(frame);
+    self.height = CGRectGetMaxY(webView.frame);
     [self updateCellHeight];
     [Hud hideHud];
 }
