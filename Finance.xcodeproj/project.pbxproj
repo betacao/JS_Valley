@@ -877,8 +877,6 @@
 		F9E2A4B01BE99A4C00ECB234 /* SHGSegmentController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9E2A4AF1BE99A4C00ECB234 /* SHGSegmentController.m */; };
 		F9E2A4B41BE99E1C00ECB234 /* SHGAttationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9E2A4B21BE99E1C00ECB234 /* SHGAttationViewController.m */; };
 		F9E2A4B51BE99E1C00ECB234 /* SHGAttationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9E2A4B31BE99E1C00ECB234 /* SHGAttationViewController.xib */; };
-		F9EBB7CD1BB3DCD20023E84E /* SHGPersonDynamicViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9EBB7CB1BB3DCD20023E84E /* SHGPersonDynamicViewController.m */; };
-		F9EBB7CE1BB3DCD20023E84E /* SHGPersonDynamicViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9EBB7CC1BB3DCD20023E84E /* SHGPersonDynamicViewController.xib */; };
 		F9EBB7D01BB3F4470023E84E /* China_City.plist in Resources */ = {isa = PBXBuildFile; fileRef = F9EBB7CF1BB3F4470023E84E /* China_City.plist */; };
 		F9EBB7D41BB3F4A00023E84E /* SHGProvincesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9EBB7D21BB3F4A00023E84E /* SHGProvincesViewController.m */; };
 		F9EBB7D51BB3F4A00023E84E /* SHGProvincesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9EBB7D31BB3F4A00023E84E /* SHGProvincesViewController.xib */; };
@@ -2092,9 +2090,6 @@
 		F9E2A4B11BE99E1C00ECB234 /* SHGAttationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGAttationViewController.h; sourceTree = "<group>"; };
 		F9E2A4B21BE99E1C00ECB234 /* SHGAttationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGAttationViewController.m; sourceTree = "<group>"; };
 		F9E2A4B31BE99E1C00ECB234 /* SHGAttationViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGAttationViewController.xib; sourceTree = "<group>"; };
-		F9EBB7CA1BB3DCD20023E84E /* SHGPersonDynamicViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGPersonDynamicViewController.h; sourceTree = "<group>"; };
-		F9EBB7CB1BB3DCD20023E84E /* SHGPersonDynamicViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGPersonDynamicViewController.m; sourceTree = "<group>"; };
-		F9EBB7CC1BB3DCD20023E84E /* SHGPersonDynamicViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGPersonDynamicViewController.xib; sourceTree = "<group>"; };
 		F9EBB7CF1BB3F4470023E84E /* China_City.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = China_City.plist; sourceTree = "<group>"; };
 		F9EBB7D11BB3F4A00023E84E /* SHGProvincesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGProvincesViewController.h; sourceTree = "<group>"; };
 		F9EBB7D21BB3F4A00023E84E /* SHGProvincesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGProvincesViewController.m; sourceTree = "<group>"; };
@@ -2869,9 +2864,6 @@
 				6145FF1A1AE4E1210074AB49 /* CircleSomeOneViewController.h */,
 				6145FF1B1AE4E1210074AB49 /* CircleSomeOneViewController.m */,
 				6145FF1C1AE4E1210074AB49 /* CircleSomeOneViewController.xib */,
-				F9EBB7CA1BB3DCD20023E84E /* SHGPersonDynamicViewController.h */,
-				F9EBB7CB1BB3DCD20023E84E /* SHGPersonDynamicViewController.m */,
-				F9EBB7CC1BB3DCD20023E84E /* SHGPersonDynamicViewController.xib */,
 				613CAC4E1AFFFFDE00EA8C23 /* CircleLinkViewController.h */,
 				613CAC4F1AFFFFDE00EA8C23 /* CircleLinkViewController.m */,
 				613CAC501AFFFFDE00EA8C23 /* CircleLinkViewController.xib */,
@@ -4660,7 +4652,6 @@
 				40302B111AEF57F600F22EB6 /* MyAddressTableViewCell.xib in Resources */,
 				408D8B4A1AF8618C0055810C /* chatBar_record@2x.png in Resources */,
 				408D8B311AF8618C0055810C /* chat_location_annotation_someone.png in Resources */,
-				F9EBB7CE1BB3DCD20023E84E /* SHGPersonDynamicViewController.xib in Resources */,
 				B04D6E291B60C01300E3863E /* 个人中心2.jpg in Resources */,
 				B09BF76C1B7C6C1F008260B3 /* 2度@3x.png in Resources */,
 				40302B461AF0C67F00F22EB6 /* MyAppointmentTableViewCell.xib in Resources */,
@@ -5416,7 +5407,6 @@
 				53AFF7841AFBF5F700D04B6B /* THProgressView.m in Sources */,
 				610FF0451AD621500027EBA6 /* PopoverListObj.m in Sources */,
 				538964D11AFC6BEB00041548 /* AppDelegate+EaseMob.m in Sources */,
-				F9EBB7CD1BB3DCD20023E84E /* SHGPersonDynamicViewController.m in Sources */,
 				6153B9481ADFB4CA0015F6E1 /* CircleSendViewController.m in Sources */,
 				6187D2D91AF1C693008E1D21 /* LocationViewController.m in Sources */,
 				B0BAA36E1B6A059E0036C367 /* TWEmojiKeyBoard.m in Sources */,
