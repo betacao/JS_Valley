@@ -21,10 +21,25 @@
 #import "SHGHomeTableViewCell.h"
 #import "CircleDetailViewController.h"
 #import "SHGUnifiedTreatment.h"
+#import "SHGUserTagModel.h"
 
 #define IS_IOS7 ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7)
 #define IS_IOS8 ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8)
+#define kTagViewHeaderHeight 40.0 * XFACTOR
+#define kTagViewHeaderViewHeight 30.0 * XFACTOR
+#define kTagViewHeaderViewTopLineHeight 1.0 * XFACTOR
+#define kTagViewHeaderViewBottomLineHeight 1.0 * XFACTOR
+#define kTagViewHeaderViewTitleLabelWidth 70.0 * XFACTOR
+#define kTagViewHeaderViewTitleLabelHeight 20.0 * XFACTOR
+#define kTagViewHeaderViewContentLabelWidth 130.0 * XFACTOR
+#define kTagViewHeaderViewContentLabelHeight 20.0 * XFACTOR
+#define kTagViewHeaderViewButtonWidth 70.0 * XFACTOR
+#define kTagViewHeaderViewButtonHeight 20.0 * XFACTOR
 
+//为标签弹出框定义的值
+#define kItemTopMargin  18.0f * XFACTOR
+#define kItemMargin 14.0f * XFACTOR
+#define kItemHeight 25.0f * XFACTOR
 
 const CGFloat kAdTableViewCellHeight = 191.0f;
 const CGFloat kAdButtomMargin = 20.0f;
@@ -52,6 +67,8 @@ const CGFloat kAdButtomMargin = 20.0f;
 @property (strong, nonatomic) NSString *currentCity;
 @property (strong, nonatomic) NSString *circleType;
 @property (assign, nonatomic) BOOL shouldDisplayRecommend;
+
+@property (strong, nonatomic) SHGHomeTagsView *tagsView;
 @end
 
 @implementation SHGHomeViewController
@@ -87,6 +104,7 @@ const CGFloat kAdButtomMargin = 20.0f;
     [self getAllInfo];
     [self loadRegisterPushFriend];
     
+    [self downloadUserSelectedInfo];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -715,4 +733,192 @@ const CGFloat kAdButtomMargin = 20.0f;
     vc.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:vc animated:YES];
 }
+
+//添加列表上方的标签
+
+-(UIView * )tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    UIView * headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0 ,self.listTable.frame.size.width ,30.0 )];
+    headerView.backgroundColor = [UIColor whiteColor];
+    
+    UIImageView  * topLine = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, headerView.frame.size.width, 1)];
+    [headerView addSubview:topLine];
+    
+    UIImageView * bottomLine = [[UIImageView alloc]initWithFrame:CGRectMake(0, headerView.frame.size.height-1, headerView.frame.size.width, 1)];
+    [headerView addSubview:bottomLine];
+    
+    UILabel * titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(14.0, 10.0, 70.0, 20.0 )];
+    titleLabel.text = @"当前标签 :";
+    titleLabel.backgroundColor = [UIColor clearColor];
+    titleLabel.textColor = [UIColor lightGrayColor];
+    titleLabel.font = [UIFont systemFontOfSize:14.0];
+    [headerView addSubview:titleLabel];
+    
+    UILabel * contentLabel = [[UILabel alloc]initWithFrame:CGRectMake(titleLabel.origin.x + titleLabel.frame.size.width + 5.0, 10.0, 130.0, 20.0)];
+    contentLabel.text = @"股票 银行 基金";
+    
+    contentLabel.backgroundColor = [UIColor clearColor];
+    contentLabel.textColor = [UIColor lightGrayColor];
+    contentLabel.font = [UIFont systemFontOfSize:14];
+
+    [headerView addSubview:contentLabel];
+    
+    UIButton * button = [UIButton buttonWithType:UIButtonTypeSystem];
+    [button setTitle:@"偏好设置" forState:UIControlStateNormal];
+    [button addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchUpInside];
+    button.frame = CGRectMake(headerView.frame.size.width-70.0-14.0, 10.0, 70.0, 20.0);
+    [button setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+    button.backgroundColor = [UIColor clearColor];
+    button.titleLabel.font = [UIFont systemFontOfSize:14.0];
+    [headerView addSubview:button];
+    [[SHGGloble sharedGloble].selectedTagsArray
+    [headerView addSubview:contentLabel];
+    return headerView;
+    
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 40.0;
+}
+//偏好设置点击事件
+-(void)buttonClick:(UIButton *)btn
+{
+    if(self.tagsView){
+        __weak typeof(self) weakSelf = self;
+        DXAlertView *alert = [[DXAlertView alloc] initWithTitle:@"选择喜欢的标签方向" customView:self.tagsView leftButtonTitle:@"取消" rightButtonTitle:@"确定"];
+        alert.rightBlock = ^{
+            NSArray *array = [weakSelf.tagsView userSelectedTags];
+            [[SHGGloble sharedGloble] uploadUserSelectedInfo:array completion:^(BOOL finished) {
+                
+            }];
+        };
+        [[SHGGloble sharedGloble] downloadUserSelectedInfo:^{
+            [weakSelf.tagsView updateSelectedArray];
+            [alert customShow];
+        }];
+    } else{
+        [Hud showMessageWithText:@"正在拉取标签列表"];
+    }
+
+}
+
+- (void)downloadUserSelectedInfo
+{
+    __weak typeof(self)weakSelf = self;
+    [[SHGGloble sharedGloble] downloadUserTagInfo:^{
+        //宽度设置和弹出框的线一样宽
+        weakSelf.tagsView = [[SHGHomeTagsView alloc] initWithFrame:CGRectMake(kLineViewLeftMargin, 0.0f, kAlertWidth - 2 * kLineViewLeftMargin, 0.0f)];
+    }];
+}
+
+
+#pragma mark ------tagsView
+
+@end
+@interface SHGHomeTagsView ()
+
+@property (strong, nonatomic) NSMutableArray *selectedArray;
+@property (strong, nonatomic) NSMutableArray *buttonArray;
+
+@end
+
+
+
+@implementation SHGHomeTagsView
+
+- (instancetype)initWithFrame:(CGRect)frame
+{
+    self = [super initWithFrame:frame];
+    if(self){
+        self.selectedArray = [NSMutableArray array];
+        self.buttonArray = [NSMutableArray array];
+        [self initUI];
+    }
+    return self;
+}
+
+- (void)initUI
+{
+    NSArray *tagsArray = [SHGGloble sharedGloble].tagsArray;
+    CGFloat width = (CGRectGetWidth(self.frame) - 2 * kItemMargin) / 3.0f;
+    for(SHGUserTagModel *model in tagsArray){
+        NSInteger index = [tagsArray indexOfObject:model];
+        NSInteger row = index / 3;
+        NSInteger col = index % 3;
+        
+        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+        button.layer.borderWidth = 0.5f;
+        button.layer.borderColor = [UIColor colorWithHexString:@"D6D6D6"].CGColor;
+        button.titleLabel.font = [UIFont systemFontOfSize:12.0f];
+        
+        [button setTitle:model.tagName forState:UIControlStateNormal];
+        [button setTitleColor:[UIColor colorWithHexString:@"8c8c8c"] forState:UIControlStateNormal];
+        [button setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
+        [button setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
+        
+        [button setBackgroundImage:[UIImage imageWithColor:[UIColor whiteColor]] forState:UIControlStateNormal];
+        [button setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithHexString:@"f95c53"]] forState:UIControlStateHighlighted];
+        [button setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithHexString:@"f95c53"]] forState:UIControlStateSelected];
+        [button addTarget:self action:@selector(didSelectCategory:) forControlEvents:UIControlEventTouchUpInside];
+        CGRect frame = CGRectMake((kItemMargin + width) * col, kItemTopMargin + (kItemMargin + kItemHeight) * row, width, kItemHeight);
+        button.frame = frame;
+        [self addSubview:button];
+        frame = self.frame;
+        frame.size.height = CGRectGetMaxY(button.frame);
+        self.frame = frame;
+        [self.buttonArray addObject:button];
+    }
+}
+
+- (void)updateSelectedArray
+{
+    NSArray *selectedArray = [SHGGloble sharedGloble].selectedTagsArray;
+    NSArray *tagsArray = [SHGGloble sharedGloble].tagsArray;
+    [self.selectedArray removeAllObjects];
+    [self clearButtonState];
+    for(SHGUserTagModel *model in selectedArray){
+        NSInteger index = [tagsArray indexOfObject:model];
+        NSLog(@"......%ld",(long)index);
+        [self.selectedArray addObject:@(index)];
+        UIButton *button = [self.buttonArray objectAtIndex:index];
+        if(button){
+            [button setSelected:YES];
+        }
+    }
+}
+
+- (void)didSelectCategory:(UIButton *)button
+{
+    BOOL isSelecetd = button.selected;
+    NSInteger index = [self.buttonArray indexOfObject:button];
+    if(!isSelecetd){
+        if(self.selectedArray.count >= 3){
+            [Hud showMessageWithText:@"最多选3项"];
+        } else{
+            button.selected = !isSelecetd;
+            [self.selectedArray addObject:@(index)];
+        }
+    } else{
+        button.selected = !isSelecetd;
+        [self.selectedArray removeObject:@(index)];
+    }
+}
+
+- (void)clearButtonState
+{
+    [self.subviews enumerateObjectsUsingBlock:^(__kindof UIView * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if([obj isKindOfClass:[UIButton class]]){
+            UIButton *button = (UIButton *)obj;
+            [button setSelected:NO];
+        }
+    }];
+}
+
+- (NSArray *)userSelectedTags
+{
+    return self.selectedArray;
+}
+
+
 @end

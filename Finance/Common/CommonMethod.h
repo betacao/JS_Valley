@@ -10,7 +10,6 @@
 
 @interface CommonMethod : NSObject
 
-
 +(UIImage *)imageWithColor:(UIColor*)color andSize:(CGSize)size;
 +(NSString *)getVersion;
 +(void)setExtraCellLineHidden:(UITableView *)tableView;

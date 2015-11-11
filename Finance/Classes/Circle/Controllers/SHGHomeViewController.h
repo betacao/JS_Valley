@@ -15,3 +15,11 @@
 - (void)refreshHeader;
 
 @end
+
+@interface SHGHomeTagsView : UIView
+
+- (void)updateSelectedArray;
+
+- (NSArray *)userSelectedTags;
+
+@end
