@@ -7,18 +7,21 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="KGk-i7-Jjw" customClass="SHGActionTableViewCell">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="270"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SHGActionTableViewCell" id="KGk-i7-Jjw" customClass="SHGActionTableViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="225"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="269"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="224"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="action_bg" translatesAutoresizingMaskIntoConstraints="NO" id="J6e-MY-IN3">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="225"/>
+                    </imageView>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="a10-v3-odu" userLabel="TopLineImage View">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="1"/>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="一起聊一聊互联网招聘第二期" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Msv-J0-yWL">
-                        <rect key="frame" x="0.0" y="2" width="320" height="30"/>
+                        <rect key="frame" x="0.0" y="1" width="320" height="40"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
@@ -26,32 +29,29 @@
                     <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yKK-lG-O25" userLabel="CenterView">
                         <rect key="frame" x="0.0" y="35" width="320" height="225"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Nuv-jv-Vs8" userLabel="HeadImage View">
-                                <rect key="frame" x="16" y="8" width="40" height="40"/>
-                            </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="李新星" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dyd-VN-aWh">
-                                <rect key="frame" x="64" y="12" width="50" height="20"/>
+                                <rect key="frame" x="54" y="14" width="50" height="15"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RK8-ww-7K2" userLabel="LineImage View">
-                                <rect key="frame" x="120" y="15" width="1" height="10"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="action_bg" translatesAutoresizingMaskIntoConstraints="NO" id="RK8-ww-7K2" userLabel="LineImage View">
+                                <rect key="frame" x="109" y="15" width="1" height="10"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="中软国际科技顾问总监" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zek-W1-wJf">
-                                <rect key="frame" x="126" y="17" width="120" height="15"/>
+                                <rect key="frame" x="115" y="15" width="120" height="15"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="11-12 发布" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gcg-h3-a3h">
-                                <rect key="frame" x="64" y="30" width="84" height="20"/>
+                                <rect key="frame" x="54" y="30" width="100" height="15"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Tk-S3-KHa">
-                                <rect key="frame" x="262" y="12" width="50" height="20"/>
+                                <rect key="frame" x="246" y="12" width="60" height="15"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <state key="normal" title="报名中"/>
                             </button>
@@ -61,13 +61,13 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Svv-cy-Lpg" userLabel="BottomLineImage View">
                                 <rect key="frame" x="0.0" y="189" width="320" height="6"/>
                             </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Yxp-cH-4A6" userLabel="TimeImage View">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="action_time" translatesAutoresizingMaskIntoConstraints="NO" id="Yxp-cH-4A6" userLabel="TimeImage View">
                                 <rect key="frame" x="16" y="77" width="20" height="20"/>
                             </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="y2i-vz-fuB" userLabel="InViteImage View">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="action_invite" translatesAutoresizingMaskIntoConstraints="NO" id="y2i-vz-fuB" userLabel="InViteImage View">
                                 <rect key="frame" x="16" y="133" width="20" height="20"/>
                             </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QBF-0x-vMF" userLabel="ApplyImage View">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="action_baoming" translatesAutoresizingMaskIntoConstraints="NO" id="QBF-0x-vMF" userLabel="ApplyImage View">
                                 <rect key="frame" x="16" y="161" width="20" height="20"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="2015-3-14 9:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="blD-Qm-ed1">
@@ -108,7 +108,7 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xYA-X4-s7Q" userLabel="AddressImage View">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="action_address" translatesAutoresizingMaskIntoConstraints="NO" id="xYA-X4-s7Q" userLabel="AddressImage View">
                                 <rect key="frame" x="16" y="105" width="20" height="20"/>
                             </imageView>
                         </subviews>
@@ -121,10 +121,10 @@
                 <outlet property="Action_addressLabel" destination="fUK-Km-6kx" id="FIh-T8-aKO"/>
                 <outlet property="Action_allNumImage" destination="y2i-vz-fuB" id="lkm-Vh-Ccc"/>
                 <outlet property="Action_allNumLabel" destination="ifn-i9-7ct" id="aeQ-RP-F3d"/>
+                <outlet property="Action_bgImage" destination="J6e-MY-IN3" id="Ccs-5G-hTE"/>
                 <outlet property="Action_bottomLine" destination="Svv-cy-Lpg" id="mDA-0b-fYa"/>
                 <outlet property="Action_centerLine" destination="5Wq-hb-oHN" id="VlG-si-JAC"/>
                 <outlet property="Action_commentButton" destination="ScY-N0-pUa" id="1xL-2q-5ch"/>
-                <outlet property="Action_headImage" destination="Nuv-jv-Vs8" id="ljP-e6-dfT"/>
                 <outlet property="Action_lineImage" destination="RK8-ww-7K2" id="JlM-6I-hGl"/>
                 <outlet property="Action_messageLabel" destination="O3g-VZ-xPH" id="1nD-Gq-QOZ"/>
                 <outlet property="Action_momentNumImage" destination="QBF-0x-vMF" id="enx-Eg-8at"/>
@@ -139,7 +139,14 @@
                 <outlet property="Action_topLine" destination="a10-v3-odu" id="voj-d2-Mvr"/>
                 <outlet property="Action_zanButton" destination="4dj-LZ-0mX" id="4kS-3C-oRe"/>
             </connections>
-            <point key="canvasLocation" x="302" y="236"/>
+            <point key="canvasLocation" x="452" y="240.5"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="action_address" width="11" height="15"/>
+        <image name="action_baoming" width="13" height="13"/>
+        <image name="action_bg" width="55" height="44"/>
+        <image name="action_invite" width="12" height="12"/>
+        <image name="action_time" width="13" height="13"/>
+    </resources>
 </document>

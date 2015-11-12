@@ -21,7 +21,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 	
-	self.title = @"我的订单";
+	self.title = @"我的预约";
 	UIView *view = [[UIView alloc] init];
 	view.backgroundColor = [UIColor clearColor];
 	[_tableView setTableFooterView:view];

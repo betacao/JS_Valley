@@ -17,7 +17,8 @@
 #import "SettingsViewController.h"
 #import "SHGModifyInfoViewController.h"
 #import "SHGUserTagModel.h"
-
+//测试我的活动
+#import "SHGActionViewController.h"
 //为标签弹出框定义的值
 #define kItemTopMargin  18.0f * XFACTOR
 #define kItemMargin 14.0f * XFACTOR
@@ -578,7 +579,7 @@
     }else if (indexPath.row == 1) {
         cell.lblName.text = @"我的佣金";
     }else if (indexPath.row == 2) {
-        cell.lblName.text = @"我的订单";
+        cell.lblName.text = @"我的预约";
     }else if (indexPath.row == 3) {
         cell.lblName.text = @"我的收藏";
     }else if (indexPath.row == 4) {
@@ -603,9 +604,13 @@
         [self.navigationController pushViewController:vc animated:YES];
 
     }else if (indexPath.row == 2) {
-        MyAppointmentViewController *vc = [[MyAppointmentViewController alloc] init];
+//        MyAppointmentViewController *vc = [[MyAppointmentViewController alloc] init];
+//        vc.hidesBottomBarWhenPushed = YES;
+//        [MobClick event:@"MyAppointmentViewController" label:@"onClick"];
+//        [self.navigationController pushViewController:vc animated:YES];
+        SHGActionViewController *vc = [[SHGActionViewController alloc] init];
         vc.hidesBottomBarWhenPushed = YES;
-        [MobClick event:@"MyAppointmentViewController" label:@"onClick"];
+        [MobClick event:@"SHGActionViewController" label:@"onClick"];
         [self.navigationController pushViewController:vc animated:YES];
     }else if (indexPath.row == 3) {
         MyCollectionViewController *vc = [[MyCollectionViewController alloc] init];
