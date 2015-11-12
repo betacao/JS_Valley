@@ -729,6 +729,7 @@
 		61ED1A661AD3C549005B73E8 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 61ED1A651AD3C549005B73E8 /* libxml2.dylib */; };
 		61ED1A681AD3C55B005B73E8 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61ED1A671AD3C55B005B73E8 /* Foundation.framework */; };
 		61ED1A6A1AD3C562005B73E8 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61ED1A691AD3C562005B73E8 /* UIKit.framework */; };
+		985088191BF424F800FE9B04 /* SHGTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 985088181BF424F800FE9B04 /* SHGTableHeaderView.m */; };
 		B007E0F81B412FDF00BB8E8D /* GameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B007E0F61B412FDF00BB8E8D /* GameViewController.m */; };
 		B007E0F91B412FDF00BB8E8D /* GameViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B007E0F71B412FDF00BB8E8D /* GameViewController.xib */; };
 		B00903551B622274000EAD7D /* UIColor+extend.m in Sources */ = {isa = PBXBuildFile; fileRef = B00903541B622274000EAD7D /* UIColor+extend.m */; };
@@ -1897,6 +1898,8 @@
 		61ED1A651AD3C549005B73E8 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		61ED1A671AD3C55B005B73E8 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		61ED1A691AD3C562005B73E8 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		985088171BF424F800FE9B04 /* SHGTableHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGTableHeaderView.h; sourceTree = "<group>"; };
+		985088181BF424F800FE9B04 /* SHGTableHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGTableHeaderView.m; sourceTree = "<group>"; };
 		B007E0F51B412FDF00BB8E8D /* GameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameViewController.h; sourceTree = "<group>"; };
 		B007E0F61B412FDF00BB8E8D /* GameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameViewController.m; sourceTree = "<group>"; };
 		B007E0F71B412FDF00BB8E8D /* GameViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GameViewController.xib; sourceTree = "<group>"; };
@@ -2913,6 +2916,8 @@
 				F99580C71B9D7F39001F8AA6 /* DXAlertView.m */,
 				F9B18C061BA0521600EA0314 /* SHGNoticeView.h */,
 				F9B18C071BA0521600EA0314 /* SHGNoticeView.m */,
+				985088171BF424F800FE9B04 /* SHGTableHeaderView.h */,
+				985088181BF424F800FE9B04 /* SHGTableHeaderView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -5415,6 +5420,7 @@
 				40302B081AEF573200F22EB6 /* MyAddressViewController.m in Sources */,
 				4088DDBC1AF102FE00393855 /* SettingQuestionViewController.m in Sources */,
 				6187D2EA1AF1C693008E1D21 /* MessageReadManager.m in Sources */,
+				985088191BF424F800FE9B04 /* SHGTableHeaderView.m in Sources */,
 				569C6D401B7CB5B300AD59C3 /* SetPassWordViewController.m in Sources */,
 				6187D2CB1AF1C693008E1D21 /* ContactView.m in Sources */,
 				613CAC511AFFFFDE00EA8C23 /* CircleLinkViewController.m in Sources */,
