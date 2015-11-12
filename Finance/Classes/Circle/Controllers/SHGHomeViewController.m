@@ -736,25 +736,25 @@ const CGFloat kAdButtomMargin = 20.0f;
 
 //添加列表上方的标签
 
--(UIView * )tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    UIView * headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0 ,self.listTable.frame.size.width ,30.0 )];
+    UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0 ,self.listTable.frame.size.width ,30.0 )];
     headerView.backgroundColor = [UIColor whiteColor];
     
-    UIImageView  * topLine = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, headerView.frame.size.width, 1)];
+    UIImageView  *topLine = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, headerView.frame.size.width, 1)];
     [headerView addSubview:topLine];
     
-    UIImageView * bottomLine = [[UIImageView alloc]initWithFrame:CGRectMake(0, headerView.frame.size.height-1, headerView.frame.size.width, 1)];
+    UIImageView *bottomLine = [[UIImageView alloc]initWithFrame:CGRectMake(0, headerView.frame.size.height-1, headerView.frame.size.width, 1)];
     [headerView addSubview:bottomLine];
     
-    UILabel * titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(14.0, 10.0, 70.0, 20.0 )];
+    UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(14.0, 10.0, 70.0, 20.0 )];
     titleLabel.text = @"当前标签 :";
     titleLabel.backgroundColor = [UIColor clearColor];
     titleLabel.textColor = [UIColor lightGrayColor];
     titleLabel.font = [UIFont systemFontOfSize:14.0];
     [headerView addSubview:titleLabel];
     
-    UILabel * contentLabel = [[UILabel alloc]initWithFrame:CGRectMake(titleLabel.origin.x + titleLabel.frame.size.width + 5.0, 10.0, 130.0, 20.0)];
+    UILabel *contentLabel = [[UILabel alloc]initWithFrame:CGRectMake(titleLabel.origin.x + titleLabel.frame.size.width + 5.0, 10.0, 130.0, 20.0)];
     contentLabel.text = @"股票 银行 基金";
     
     contentLabel.backgroundColor = [UIColor clearColor];
@@ -771,8 +771,6 @@ const CGFloat kAdButtomMargin = 20.0f;
     button.backgroundColor = [UIColor clearColor];
     button.titleLabel.font = [UIFont systemFontOfSize:14.0];
     [headerView addSubview:button];
-//    [[SHGGloble sharedGloble].selectedTagsArray
-//    [headerView addSubview:contentLabel];
     return headerView;
     
 }

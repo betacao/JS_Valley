@@ -8,6 +8,8 @@
 
 #import "BaseViewController.h"
 
-@interface SHGPersonalViewController : BaseViewController
+@interface SHGPersonalViewController : BaseTableViewController
+
+@property (nonatomic, strong) NSString *userId;
 
 @end
