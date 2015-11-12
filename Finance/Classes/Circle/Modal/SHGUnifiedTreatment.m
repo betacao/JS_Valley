@@ -477,6 +477,7 @@
 
     SHGPersonalViewController *controller = [[SHGPersonalViewController alloc] initWithNibName:@"SHGPersonalViewController" bundle:nil];
     controller.hidesBottomBarWhenPushed = YES;
+    controller.userId = uid;
     [[SHGSegmentController sharedSegmentController].selectedViewController.navigationController pushViewController:controller animated:YES];
 }
 
