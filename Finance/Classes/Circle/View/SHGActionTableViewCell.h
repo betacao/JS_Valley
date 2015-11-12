@@ -1,5 +1,5 @@
 //
-//  SHGTableHeaderView.h
+//  SHGActionTableViewCell.h
 //  Finance
 //
 //  Created by 魏虔坤 on 15/11/12.
@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SHGTableHeaderView : UIView
+@interface SHGActionTableViewCell : UITableViewCell
 
 @end
--(id)init;
