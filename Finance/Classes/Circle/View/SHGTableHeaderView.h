@@ -9,6 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface SHGTableHeaderView : UIView
-
-@end
 -(id)init;
+@end

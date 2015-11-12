@@ -39,7 +39,7 @@
                                 <rect key="frame" x="120" y="15" width="1" height="10"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="中软国际科技顾问总监" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zek-W1-wJf">
-                                <rect key="frame" x="126" y="17" width="120" height="10"/>
+                                <rect key="frame" x="126" y="17" width="120" height="15"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
@@ -63,9 +63,6 @@
                             </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Yxp-cH-4A6" userLabel="TimeImage View">
                                 <rect key="frame" x="16" y="77" width="20" height="20"/>
-                            </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xYA-X4-s7Q" userLabel="AddressImage View">
-                                <rect key="frame" x="16" y="105" width="20" height="20"/>
                             </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="y2i-vz-fuB" userLabel="InViteImage View">
                                 <rect key="frame" x="16" y="133" width="20" height="20"/>
@@ -111,11 +108,37 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xYA-X4-s7Q" userLabel="AddressImage View">
+                                <rect key="frame" x="16" y="105" width="20" height="20"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                 </subviews>
             </tableViewCellContentView>
+            <connections>
+                <outlet property="Action_addressImage" destination="xYA-X4-s7Q" id="VxV-iv-ufz"/>
+                <outlet property="Action_addressLabel" destination="fUK-Km-6kx" id="FIh-T8-aKO"/>
+                <outlet property="Action_allNumImage" destination="y2i-vz-fuB" id="lkm-Vh-Ccc"/>
+                <outlet property="Action_allNumLabel" destination="ifn-i9-7ct" id="aeQ-RP-F3d"/>
+                <outlet property="Action_bottomLine" destination="Svv-cy-Lpg" id="mDA-0b-fYa"/>
+                <outlet property="Action_centerLine" destination="5Wq-hb-oHN" id="VlG-si-JAC"/>
+                <outlet property="Action_commentButton" destination="ScY-N0-pUa" id="1xL-2q-5ch"/>
+                <outlet property="Action_headImage" destination="Nuv-jv-Vs8" id="ljP-e6-dfT"/>
+                <outlet property="Action_lineImage" destination="RK8-ww-7K2" id="JlM-6I-hGl"/>
+                <outlet property="Action_messageLabel" destination="O3g-VZ-xPH" id="1nD-Gq-QOZ"/>
+                <outlet property="Action_momentNumImage" destination="QBF-0x-vMF" id="enx-Eg-8at"/>
+                <outlet property="Action_momentNumlabel" destination="7f8-JB-YJ6" id="XeZ-ps-pEx"/>
+                <outlet property="Action_nameLble" destination="Dyd-VN-aWh" id="UWP-4Y-eht"/>
+                <outlet property="Action_positionLable" destination="Zek-W1-wJf" id="8KW-KA-Qtr"/>
+                <outlet property="Action_pubdateLabel" destination="gcg-h3-a3h" id="Gxi-c8-qLj"/>
+                <outlet property="Action_signButton" destination="9Tk-S3-KHa" id="2Or-OK-z3p"/>
+                <outlet property="Action_timeImage" destination="Yxp-cH-4A6" id="XJU-xh-fGD"/>
+                <outlet property="Action_timeLabel" destination="blD-Qm-ed1" id="WXH-59-7Ia"/>
+                <outlet property="Action_titlelabel" destination="Msv-J0-yWL" id="vMo-xs-veJ"/>
+                <outlet property="Action_topLine" destination="a10-v3-odu" id="voj-d2-Mvr"/>
+                <outlet property="Action_zanButton" destination="4dj-LZ-0mX" id="4kS-3C-oRe"/>
+            </connections>
             <point key="canvasLocation" x="302" y="236"/>
         </tableViewCell>
     </objects>

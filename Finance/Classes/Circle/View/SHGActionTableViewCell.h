@@ -10,4 +10,5 @@
 
 @interface SHGActionTableViewCell : UITableViewCell
 
+
 @end

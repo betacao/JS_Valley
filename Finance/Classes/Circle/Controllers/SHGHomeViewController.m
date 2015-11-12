@@ -771,8 +771,8 @@ const CGFloat kAdButtomMargin = 20.0f;
     button.backgroundColor = [UIColor clearColor];
     button.titleLabel.font = [UIFont systemFontOfSize:14.0];
     [headerView addSubview:button];
-    [[SHGGloble sharedGloble].selectedTagsArray
-    [headerView addSubview:contentLabel];
+//    [[SHGGloble sharedGloble].selectedTagsArray
+//    [headerView addSubview:contentLabel];
     return headerView;
     
 }
