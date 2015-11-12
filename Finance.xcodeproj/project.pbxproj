@@ -729,6 +729,8 @@
 		61ED1A661AD3C549005B73E8 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 61ED1A651AD3C549005B73E8 /* libxml2.dylib */; };
 		61ED1A681AD3C55B005B73E8 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61ED1A671AD3C55B005B73E8 /* Foundation.framework */; };
 		61ED1A6A1AD3C562005B73E8 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61ED1A691AD3C562005B73E8 /* UIKit.framework */; };
+		983B8E991BF4824800CD325C /* SHGActionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 983B8E971BF4824800CD325C /* SHGActionViewController.m */; };
+		983B8E9A1BF4824800CD325C /* SHGActionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 983B8E981BF4824800CD325C /* SHGActionViewController.xib */; };
 		985088191BF424F800FE9B04 /* SHGTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 985088181BF424F800FE9B04 /* SHGTableHeaderView.m */; };
 		9850881D1BF42EF800FE9B04 /* SHGActionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9850881B1BF42EF800FE9B04 /* SHGActionTableViewCell.m */; };
 		9850881E1BF42EF800FE9B04 /* SHGActionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9850881C1BF42EF800FE9B04 /* SHGActionTableViewCell.xib */; };
@@ -1899,6 +1901,9 @@
 		61ED1A651AD3C549005B73E8 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		61ED1A671AD3C55B005B73E8 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		61ED1A691AD3C562005B73E8 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		983B8E961BF4824800CD325C /* SHGActionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGActionViewController.h; sourceTree = "<group>"; };
+		983B8E971BF4824800CD325C /* SHGActionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGActionViewController.m; sourceTree = "<group>"; };
+		983B8E981BF4824800CD325C /* SHGActionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGActionViewController.xib; sourceTree = "<group>"; };
 		985088171BF424F800FE9B04 /* SHGTableHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGTableHeaderView.h; sourceTree = "<group>"; };
 		985088181BF424F800FE9B04 /* SHGTableHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGTableHeaderView.m; sourceTree = "<group>"; };
 		9850881A1BF42EF800FE9B04 /* SHGActionTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGActionTableViewCell.h; sourceTree = "<group>"; };
@@ -2878,6 +2883,9 @@
 				B04355CD1B4BD3560033BBBF /* LinkViewController.xib */,
 				F9ADAEB41BF2DB32001366F9 /* SHGPersonalViewController.h */,
 				F9ADAEB51BF2DB32001366F9 /* SHGPersonalViewController.m */,
+				983B8E961BF4824800CD325C /* SHGActionViewController.h */,
+				983B8E971BF4824800CD325C /* SHGActionViewController.m */,
+				983B8E981BF4824800CD325C /* SHGActionViewController.xib */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -4988,6 +4996,7 @@
 				B06D06DB1B4FA2180036A3E3 /* CircleListTwoTableViewCell.xib in Resources */,
 				569C6D3A1B7CAB6A00AD59C3 /* 手机@3x.png in Resources */,
 				61E83CCF1AF7C78E00703651 /* tab下划线@2x.png in Resources */,
+				983B8E9A1BF4824800CD325C /* SHGActionViewController.xib in Resources */,
 				61E83D181AF7C78E00703651 /* 常见问题@2x.png in Resources */,
 				61616FEF1B02F29100E5A837 /* new评论@2x.png in Resources */,
 				61E83D561AF7C78E00703651 /* 发起对话按钮@3x.png in Resources */,
@@ -5333,6 +5342,7 @@
 				6187D2CD1AF1C693008E1D21 /* GroupBansViewController.m in Sources */,
 				569C6D2F1B7CA9EB00AD59C3 /* BindPhoneViewController.m in Sources */,
 				6187D2D31AF1C693008E1D21 /* ChatListCell.m in Sources */,
+				983B8E991BF4824800CD325C /* SHGActionViewController.m in Sources */,
 				565136D51B834E2F00894B1D /* RecommendModel.m in Sources */,
 				6187D2D71AF1C693008E1D21 /* ChatViewController.m in Sources */,
 				6187D2DE1AF1C693008E1D21 /* DXRecordView.m in Sources */,
