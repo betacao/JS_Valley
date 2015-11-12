@@ -730,6 +730,8 @@
 		61ED1A681AD3C55B005B73E8 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61ED1A671AD3C55B005B73E8 /* Foundation.framework */; };
 		61ED1A6A1AD3C562005B73E8 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61ED1A691AD3C562005B73E8 /* UIKit.framework */; };
 		985088191BF424F800FE9B04 /* SHGTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 985088181BF424F800FE9B04 /* SHGTableHeaderView.m */; };
+		9850881D1BF42EF800FE9B04 /* SHGActionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9850881B1BF42EF800FE9B04 /* SHGActionTableViewCell.m */; };
+		9850881E1BF42EF800FE9B04 /* SHGActionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9850881C1BF42EF800FE9B04 /* SHGActionTableViewCell.xib */; };
 		B007E0F81B412FDF00BB8E8D /* GameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B007E0F61B412FDF00BB8E8D /* GameViewController.m */; };
 		B007E0F91B412FDF00BB8E8D /* GameViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B007E0F71B412FDF00BB8E8D /* GameViewController.xib */; };
 		B00903551B622274000EAD7D /* UIColor+extend.m in Sources */ = {isa = PBXBuildFile; fileRef = B00903541B622274000EAD7D /* UIColor+extend.m */; };
@@ -1900,6 +1902,9 @@
 		61ED1A691AD3C562005B73E8 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		985088171BF424F800FE9B04 /* SHGTableHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGTableHeaderView.h; sourceTree = "<group>"; };
 		985088181BF424F800FE9B04 /* SHGTableHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGTableHeaderView.m; sourceTree = "<group>"; };
+		9850881A1BF42EF800FE9B04 /* SHGActionTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGActionTableViewCell.h; sourceTree = "<group>"; };
+		9850881B1BF42EF800FE9B04 /* SHGActionTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGActionTableViewCell.m; sourceTree = "<group>"; };
+		9850881C1BF42EF800FE9B04 /* SHGActionTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGActionTableViewCell.xib; sourceTree = "<group>"; };
 		B007E0F51B412FDF00BB8E8D /* GameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameViewController.h; sourceTree = "<group>"; };
 		B007E0F61B412FDF00BB8E8D /* GameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameViewController.m; sourceTree = "<group>"; };
 		B007E0F71B412FDF00BB8E8D /* GameViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GameViewController.xib; sourceTree = "<group>"; };
@@ -2918,6 +2923,9 @@
 				F9B18C071BA0521600EA0314 /* SHGNoticeView.m */,
 				985088171BF424F800FE9B04 /* SHGTableHeaderView.h */,
 				985088181BF424F800FE9B04 /* SHGTableHeaderView.m */,
+				9850881A1BF42EF800FE9B04 /* SHGActionTableViewCell.h */,
+				9850881B1BF42EF800FE9B04 /* SHGActionTableViewCell.m */,
+				9850881C1BF42EF800FE9B04 /* SHGActionTableViewCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -5170,6 +5178,7 @@
 				61E83D3A1AF7C78E00703651 /* 圈子图标@3x.png in Resources */,
 				61E83D5E1AF7C78E00703651 /* 评论@3x.png in Resources */,
 				4088DDB51AF102FE00393855 /* SettingModifyPWDViewController.xib in Resources */,
+				9850881E1BF42EF800FE9B04 /* SHGActionTableViewCell.xib in Resources */,
 				408D8AF11AF8618C0055810C /* chatFire_audioPlaying2.png in Resources */,
 				408D8AFE1AF8618C0055810C /* VoiceSearchFeedback005@2x.png in Resources */,
 				408D8B641AF8618C0055810C /* chatBar_more_photo@2x.png in Resources */,
@@ -5403,6 +5412,7 @@
 				F9B18C081BA0521600EA0314 /* SHGNoticeView.m in Sources */,
 				6187D2D21AF1C693008E1D21 /* PublicGroupListViewController.m in Sources */,
 				6187D2D11AF1C693008E1D21 /* PublicGroupDetailViewController.m in Sources */,
+				9850881D1BF42EF800FE9B04 /* SHGActionTableViewCell.m in Sources */,
 				614AD1AF1AD7AC4D00DDF43E /* RegistViewController.m in Sources */,
 				F9E2A4B01BE99A4C00ECB234 /* SHGSegmentController.m in Sources */,
 				B085B5381B749E2000DC592E /* Extend_Description.m in Sources */,
