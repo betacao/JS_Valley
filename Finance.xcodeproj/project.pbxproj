@@ -864,6 +864,7 @@
 		F9A227C21BF5AF8D0054F8D7 /* SHGActionObject.m in Sources */ = {isa = PBXBuildFile; fileRef = F9A227C11BF5AF8D0054F8D7 /* SHGActionObject.m */; };
 		F9A227C61BF5C2140054F8D7 /* SHGActionMineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9A227C41BF5C2140054F8D7 /* SHGActionMineViewController.m */; };
 		F9A227C71BF5C2140054F8D7 /* SHGActionMineViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9A227C51BF5C2140054F8D7 /* SHGActionMineViewController.xib */; };
+		F9A227CA1BF5C7E10054F8D7 /* SHGActionSegmentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9A227C91BF5C7E10054F8D7 /* SHGActionSegmentViewController.m */; };
 		F9A8D27E1BE712B700A2BFB1 /* QQConnection.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9A8D2541BE712B700A2BFB1 /* QQConnection.framework */; };
 		F9A8D27F1BE712B700A2BFB1 /* QZoneConnection.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9A8D2551BE712B700A2BFB1 /* QZoneConnection.framework */; };
 		F9A8D2801BE712B700A2BFB1 /* SinaWeiboConnection.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9A8D2561BE712B700A2BFB1 /* SinaWeiboConnection.framework */; };
@@ -2075,6 +2076,8 @@
 		F9A227C31BF5C2140054F8D7 /* SHGActionMineViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGActionMineViewController.h; sourceTree = "<group>"; };
 		F9A227C41BF5C2140054F8D7 /* SHGActionMineViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGActionMineViewController.m; sourceTree = "<group>"; };
 		F9A227C51BF5C2140054F8D7 /* SHGActionMineViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGActionMineViewController.xib; sourceTree = "<group>"; };
+		F9A227C81BF5C7E10054F8D7 /* SHGActionSegmentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGActionSegmentViewController.h; sourceTree = "<group>"; };
+		F9A227C91BF5C7E10054F8D7 /* SHGActionSegmentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGActionSegmentViewController.m; sourceTree = "<group>"; };
 		F9A8D2541BE712B700A2BFB1 /* QQConnection.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = QQConnection.framework; sourceTree = "<group>"; };
 		F9A8D2551BE712B700A2BFB1 /* QZoneConnection.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = QZoneConnection.framework; sourceTree = "<group>"; };
 		F9A8D2561BE712B700A2BFB1 /* SinaWeiboConnection.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SinaWeiboConnection.framework; sourceTree = "<group>"; };
@@ -4487,6 +4490,8 @@
 				9894C9751BF5BCE700F80577 /* SHGActionSignViewController.h */,
 				9894C9761BF5BCE700F80577 /* SHGActionSignViewController.m */,
 				9894C9771BF5BCE700F80577 /* SHGActionSignViewController.xib */,
+				F9A227C81BF5C7E10054F8D7 /* SHGActionSegmentViewController.h */,
+				F9A227C91BF5C7E10054F8D7 /* SHGActionSegmentViewController.m */,
 			);
 			path = Action;
 			sourceTree = "<group>";
@@ -5504,6 +5509,7 @@
 				408D8B821AF86CF20055810C /* MyMoneyDetailObject.m in Sources */,
 				615234A01B0DAEBD00011EAC /* DiscovFirstFriendViewController.m in Sources */,
 				40302B271AEF78D400F22EB6 /* VerifyIdentityViewController.m in Sources */,
+				F9A227CA1BF5C7E10054F8D7 /* SHGActionSegmentViewController.m in Sources */,
 				610FF07A1AD6227F0027EBA6 /* UIImage+Customized.m in Sources */,
 				6190274A1B2359C600D9EEA2 /* popTableViewCell.m in Sources */,
 				4088DDB91AF102FE00393855 /* SettingQuestionDetailViewController.m in Sources */,
