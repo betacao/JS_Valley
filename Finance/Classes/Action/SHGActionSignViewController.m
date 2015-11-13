@@ -7,31 +7,56 @@
 //
 
 #import "SHGActionSignViewController.h"
-
-@interface SHGActionSignViewController ()
+#import "SGHActionSignTableViewCell.h"
+@interface SHGActionSignViewController ()<UITableViewDataSource,UITableViewDelegate>
+{
+    
+}
+@property (weak, nonatomic) IBOutlet UITableView *signListTable;
 
 @end
 
 @implementation SHGActionSignViewController
 
+-(id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        
+    }
+    return self;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
+    self.title = @"已报名";
+    self.signListTable.dataSource = self;
+    self.signListTable.delegate = self;
+    //[self.signListTable registerNib:[UINib nibWithNibName:@"SGHActionSignTableViewCell" bundle:nil] forCellReuseIdentifier:@"cell"];
+}
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 1;
+}
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return  10;
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+-(UITableViewCell * )tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    //SGHActionSignTableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
+    NSString *cellIdentifier = @"SGHActionSignTableViewCell";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    if (!cell){
+        cell = [[[NSBundle mainBundle] loadNibNamed:@"SGHActionSignTableViewCell" owner:self options:nil] lastObject];
+        
+    }
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    return  cell;
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    CGFloat rowHeght = 53.0;
+    return rowHeght;
 }
-*/
-
 @end

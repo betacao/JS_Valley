@@ -730,10 +730,10 @@
 		61ED1A681AD3C55B005B73E8 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61ED1A671AD3C55B005B73E8 /* Foundation.framework */; };
 		61ED1A6A1AD3C562005B73E8 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61ED1A691AD3C562005B73E8 /* UIKit.framework */; };
 		985088191BF424F800FE9B04 /* SHGTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 985088181BF424F800FE9B04 /* SHGTableHeaderView.m */; };
-		9894C9731BF5BB2F00F80577 /* SHGActionSignTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9894C9711BF5BB2F00F80577 /* SHGActionSignTableViewCell.m */; };
-		9894C9741BF5BB2F00F80577 /* SHGActionSignTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9894C9721BF5BB2F00F80577 /* SHGActionSignTableViewCell.xib */; };
 		9894C9781BF5BCE700F80577 /* SHGActionSignViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9894C9761BF5BCE700F80577 /* SHGActionSignViewController.m */; };
 		9894C9791BF5BCE700F80577 /* SHGActionSignViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9894C9771BF5BCE700F80577 /* SHGActionSignViewController.xib */; };
+		9894C97D1BF5D24200F80577 /* SHGActionSignTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9894C97B1BF5D24200F80577 /* SHGActionSignTableViewCell.m */; };
+		9894C97E1BF5D24200F80577 /* SHGActionSignTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9894C97C1BF5D24200F80577 /* SHGActionSignTableViewCell.xib */; };
 		B007E0F81B412FDF00BB8E8D /* GameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B007E0F61B412FDF00BB8E8D /* GameViewController.m */; };
 		B007E0F91B412FDF00BB8E8D /* GameViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B007E0F71B412FDF00BB8E8D /* GameViewController.xib */; };
 		B00903551B622274000EAD7D /* UIColor+extend.m in Sources */ = {isa = PBXBuildFile; fileRef = B00903541B622274000EAD7D /* UIColor+extend.m */; };
@@ -1914,12 +1914,12 @@
 		61ED1A691AD3C562005B73E8 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		985088171BF424F800FE9B04 /* SHGTableHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGTableHeaderView.h; sourceTree = "<group>"; };
 		985088181BF424F800FE9B04 /* SHGTableHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGTableHeaderView.m; sourceTree = "<group>"; };
-		9894C9701BF5BB2F00F80577 /* SHGActionSignTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGActionSignTableViewCell.h; sourceTree = "<group>"; };
-		9894C9711BF5BB2F00F80577 /* SHGActionSignTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGActionSignTableViewCell.m; sourceTree = "<group>"; };
-		9894C9721BF5BB2F00F80577 /* SHGActionSignTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGActionSignTableViewCell.xib; sourceTree = "<group>"; };
 		9894C9751BF5BCE700F80577 /* SHGActionSignViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGActionSignViewController.h; sourceTree = "<group>"; };
 		9894C9761BF5BCE700F80577 /* SHGActionSignViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGActionSignViewController.m; sourceTree = "<group>"; };
 		9894C9771BF5BCE700F80577 /* SHGActionSignViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGActionSignViewController.xib; sourceTree = "<group>"; };
+		9894C97A1BF5D24200F80577 /* SHGActionSignTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGActionSignTableViewCell.h; sourceTree = "<group>"; };
+		9894C97B1BF5D24200F80577 /* SHGActionSignTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGActionSignTableViewCell.m; sourceTree = "<group>"; };
+		9894C97C1BF5D24200F80577 /* SHGActionSignTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGActionSignTableViewCell.xib; sourceTree = "<group>"; };
 		B007E0F51B412FDF00BB8E8D /* GameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameViewController.h; sourceTree = "<group>"; };
 		B007E0F61B412FDF00BB8E8D /* GameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameViewController.m; sourceTree = "<group>"; };
 		B007E0F71B412FDF00BB8E8D /* GameViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GameViewController.xib; sourceTree = "<group>"; };
@@ -4484,10 +4484,10 @@
 				F9A227C31BF5C2140054F8D7 /* SHGActionMineViewController.h */,
 				F9A227C41BF5C2140054F8D7 /* SHGActionMineViewController.m */,
 				F9A227C51BF5C2140054F8D7 /* SHGActionMineViewController.xib */,
-				9894C9701BF5BB2F00F80577 /* SHGActionSignTableViewCell.h */,
-				9894C9711BF5BB2F00F80577 /* SHGActionSignTableViewCell.m */,
-				9894C9721BF5BB2F00F80577 /* SHGActionSignTableViewCell.xib */,
 				9894C9751BF5BCE700F80577 /* SHGActionSignViewController.h */,
+				9894C97A1BF5D24200F80577 /* SHGActionSignTableViewCell.h */,
+				9894C97B1BF5D24200F80577 /* SHGActionSignTableViewCell.m */,
+				9894C97C1BF5D24200F80577 /* SHGActionSignTableViewCell.xib */,
 				9894C9761BF5BCE700F80577 /* SHGActionSignViewController.m */,
 				9894C9771BF5BCE700F80577 /* SHGActionSignViewController.xib */,
 				F9A227C81BF5C7E10054F8D7 /* SHGActionSegmentViewController.h */,
@@ -5044,6 +5044,7 @@
 				61E83CE21AF7C78E00703651 /* 热门@2x.png in Resources */,
 				61E83D381AF7C78E00703651 /* 分享@3x.png in Resources */,
 				B09BF76B1B7C6C1F008260B3 /* 2度@2x.png in Resources */,
+				9894C97E1BF5D24200F80577 /* SHGActionSignTableViewCell.xib in Resources */,
 				408D8B471AF8618C0055810C /* chatBar_moreSelected.png in Resources */,
 				408D8B031AF8618C0055810C /* VoiceSearchFeedback008.png in Resources */,
 				61E83CE91AF7C78E00703651 /* 配资@2x.png in Resources */,
@@ -5157,7 +5158,6 @@
 				61E83CDF1AF7C78E00703651 /* 收起箭头@2x.png in Resources */,
 				61B992F71ADB94580025BE7B /* MeViewController.xib in Resources */,
 				408D8B251AF8618C0055810C /* callBg@2x.png in Resources */,
-				9894C9741BF5BB2F00F80577 /* SHGActionSignTableViewCell.xib in Resources */,
 				408D8B111AF8618C0055810C /* VoiceSearchFeedback015.png in Resources */,
 				408D8B5F1AF8618C0055810C /* chatBar_more_location.png in Resources */,
 				B080FE9B1B81E30100426579 /* emoji_close_s@3x.png in Resources */,
@@ -5442,6 +5442,7 @@
 				619027121B233AB100D9EEA2 /* ChatListTableViewCell.m in Sources */,
 				614EFEDA1AEF6B2F00F2BDD1 /* ProdConsulutionViewController.m in Sources */,
 				6187D2E61AF1C693008E1D21 /* EMChatViewBaseCell.m in Sources */,
+				9894C97D1BF5D24200F80577 /* SHGActionSignTableViewCell.m in Sources */,
 				6187D2E41AF1C693008E1D21 /* EMChatVideoBubbleView.m in Sources */,
 				614DC88C1AD65F9C00F610D4 /* CommonMethod.m in Sources */,
 				614EFEE21AF1126100F2BDD1 /* TabBarViewController.m in Sources */,
@@ -5480,7 +5481,6 @@
 				614AD1AF1AD7AC4D00DDF43E /* RegistViewController.m in Sources */,
 				F9E2A4B01BE99A4C00ECB234 /* SHGSegmentController.m in Sources */,
 				B085B5381B749E2000DC592E /* Extend_Description.m in Sources */,
-				9894C9731BF5BB2F00F80577 /* SHGActionSignTableViewCell.m in Sources */,
 				4088DDAD1AF102FE00393855 /* DingDQRCodeShareViewController.m in Sources */,
 				6187D2CE1AF1C693008E1D21 /* GroupListViewController.m in Sources */,
 				6187D2F31AF1C693008E1D21 /* EMSearchBar.m in Sources */,
