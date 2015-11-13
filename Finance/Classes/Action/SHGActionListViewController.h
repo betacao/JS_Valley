@@ -8,6 +8,6 @@
 
 #import "BaseTableViewController.h"
 
-@interface SHGActionViewController : BaseTableViewController
+@interface SHGActionListViewController : BaseTableViewController
 
 @end

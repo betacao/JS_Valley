@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SGHActionSignTableViewCell : UITableViewCell
+@interface SHGActionSignTableViewCell : UITableViewCell
 
 @end

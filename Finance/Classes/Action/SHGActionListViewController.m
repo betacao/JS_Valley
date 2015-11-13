@@ -6,10 +6,10 @@
 //  Copyright © 2015年 HuMin. All rights reserved.
 //
 
-#import "SHGActionViewController.h"
+#import "SHGActionListViewController.h"
 #import "SHGActionTableViewCell.h"
 //#define kActionViewCellHeight 300.0 * XFACTOR
-@interface SHGActionViewController ()<UITableViewDataSource, UITableViewDelegate>
+@interface SHGActionListViewController ()<UITableViewDataSource, UITableViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *listTable;
 

@@ -18,7 +18,7 @@
 #import "SHGModifyInfoViewController.h"
 #import "SHGUserTagModel.h"
 //测试我的活动
-#import "SHGActionViewController.h"
+#import "SHGActionListViewController.h"
 //为标签弹出框定义的值
 #define kItemTopMargin  18.0f * XFACTOR
 #define kItemMargin 14.0f * XFACTOR

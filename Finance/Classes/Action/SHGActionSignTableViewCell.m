@@ -6,9 +6,9 @@
 //  Copyright © 2015年 HuMin. All rights reserved.
 //
 
-#import "SGHActionSignTableViewCell.h"
+#import "SHGActionSignTableViewCell.h"
 
-@implementation SGHActionSignTableViewCell
+@implementation SHGActionSignTableViewCell
 
 - (void)awakeFromNib {
     // Initialization code
