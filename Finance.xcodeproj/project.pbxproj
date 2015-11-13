@@ -855,6 +855,8 @@
 		F99580C51B9D338B001F8AA6 /* SHGModifyInfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F99580C31B9D338B001F8AA6 /* SHGModifyInfoViewController.xib */; };
 		F99580C81B9D7F39001F8AA6 /* DXAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = F99580C71B9D7F39001F8AA6 /* DXAlertView.m */; };
 		F99B602C1B9E7D9500759AAC /* headerView.m in Sources */ = {isa = PBXBuildFile; fileRef = F99B602B1B9E7D9500759AAC /* headerView.m */; };
+		F9A227B31BF586090054F8D7 /* SHGPersonDynamicViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9A227B11BF586090054F8D7 /* SHGPersonDynamicViewController.m */; };
+		F9A227B41BF586090054F8D7 /* SHGPersonDynamicViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9A227B21BF586090054F8D7 /* SHGPersonDynamicViewController.xib */; };
 		F9A8D27E1BE712B700A2BFB1 /* QQConnection.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9A8D2541BE712B700A2BFB1 /* QQConnection.framework */; };
 		F9A8D27F1BE712B700A2BFB1 /* QZoneConnection.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9A8D2551BE712B700A2BFB1 /* QZoneConnection.framework */; };
 		F9A8D2801BE712B700A2BFB1 /* SinaWeiboConnection.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9A8D2561BE712B700A2BFB1 /* SinaWeiboConnection.framework */; };
@@ -2052,6 +2054,9 @@
 		F99580C71B9D7F39001F8AA6 /* DXAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DXAlertView.m; sourceTree = "<group>"; };
 		F99B602A1B9E7D9500759AAC /* headerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = headerView.h; sourceTree = "<group>"; };
 		F99B602B1B9E7D9500759AAC /* headerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = headerView.m; sourceTree = "<group>"; };
+		F9A227B01BF586090054F8D7 /* SHGPersonDynamicViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGPersonDynamicViewController.h; sourceTree = "<group>"; };
+		F9A227B11BF586090054F8D7 /* SHGPersonDynamicViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGPersonDynamicViewController.m; sourceTree = "<group>"; };
+		F9A227B21BF586090054F8D7 /* SHGPersonDynamicViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGPersonDynamicViewController.xib; sourceTree = "<group>"; };
 		F9A8D2541BE712B700A2BFB1 /* QQConnection.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = QQConnection.framework; sourceTree = "<group>"; };
 		F9A8D2551BE712B700A2BFB1 /* QZoneConnection.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = QZoneConnection.framework; sourceTree = "<group>"; };
 		F9A8D2561BE712B700A2BFB1 /* SinaWeiboConnection.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SinaWeiboConnection.framework; sourceTree = "<group>"; };
@@ -2886,6 +2891,9 @@
 				F9ADAEB41BF2DB32001366F9 /* SHGPersonalViewController.h */,
 				F9ADAEB51BF2DB32001366F9 /* SHGPersonalViewController.m */,
 				F90F7B691BF48C4C00555F49 /* SHGPersonalViewController.xib */,
+				F9A227B01BF586090054F8D7 /* SHGPersonDynamicViewController.h */,
+				F9A227B11BF586090054F8D7 /* SHGPersonDynamicViewController.m */,
+				F9A227B21BF586090054F8D7 /* SHGPersonDynamicViewController.xib */,
 				983B8E961BF4824800CD325C /* SHGActionViewController.h */,
 				983B8E971BF4824800CD325C /* SHGActionViewController.m */,
 				983B8E981BF4824800CD325C /* SHGActionViewController.xib */,
@@ -5016,6 +5024,7 @@
 				6145FF1E1AE4E1210074AB49 /* CircleSomeOneViewController.xib in Resources */,
 				408D8AF41AF8618C0055810C /* chatFire_audioPlaying3@2x.png in Resources */,
 				408D8B6A1AF8618C0055810C /* chat_receiver_audio_playing001.png in Resources */,
+				F9A227B41BF586090054F8D7 /* SHGPersonDynamicViewController.xib in Resources */,
 				569C6D3C1B7CAB6A00AD59C3 /* 验证码@3x.png in Resources */,
 				408D8B6C1AF8618C0055810C /* chat_receiver_audio_playing002.png in Resources */,
 				408D8B3B1AF8618C0055810C /* imageDownloadFail@2x.png in Resources */,
@@ -5496,6 +5505,7 @@
 				6187D2F51AF1C693008E1D21 /* RealtimeSearchUtil.m in Sources */,
 				F9EBB7D41BB3F4A00023E84E /* SHGProvincesViewController.m in Sources */,
 				614A59781AD3AEA1005DAB04 /* main.m in Sources */,
+				F9A227B31BF586090054F8D7 /* SHGPersonDynamicViewController.m in Sources */,
 				40302B451AF0C67F00F22EB6 /* MyAppointmentTableViewCell.m in Sources */,
 				538964D71AFC6BEB00041548 /* UIViewController+HUD.m in Sources */,
 				B007E0F81B412FDF00BB8E8D /* GameViewController.m in Sources */,
