@@ -8,6 +8,7 @@
 
 #import "SHGPersonalViewController.h"
 #import "SHGUserTagModel.h"
+#import "SHGPersonDynamicViewController.h"
 #define kTagViewWidth 45.0f * XFACTOR
 #define kTagViewHeight 16.0f * XFACTOR
 
@@ -23,7 +24,7 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
 };
 
 
-@interface SHGPersonalViewController ()<UITableViewDataSource, UITableViewDelegate>
+@interface SHGPersonalViewController ()<UITableViewDataSource, UITableViewDelegate, CircleActionDelegate>
 //界面
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIView *headerView;
@@ -169,6 +170,7 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
     if (!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.textLabel.font = [UIFont systemFontOfSize:14.0f];
         cell.textLabel.textColor = [UIColor colorWithHexString:@"434343"];
     }
@@ -212,6 +214,28 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
     cell.textLabel.text = [self.listArray objectAtIndex:indexPath.row];
     cell.accessoryView = view;
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    switch (indexPath.row) {
+        case 0:{
+            SHGPersonDynamicViewController *controller = [[SHGPersonDynamicViewController alloc] initWithNibName:@"SHGPersonDynamicViewController" bundle:nil];
+            controller.userId = self.userId;
+            controller.dataArr = self.dataArr;
+            controller.delegate = self;
+            [self.navigationController pushViewController:controller animated:YES];
+        }
+            break;
+        case 1:{
+
+        }
+            break;
+        default:{
+
+        }
+            break;
+    }
 }
 
 - (UIView *)viewForTags:(NSArray *)array
