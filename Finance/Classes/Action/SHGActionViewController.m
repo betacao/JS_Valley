@@ -31,6 +31,11 @@
     self.listTable.dataSource = self;
 }
 
+- (void)loadDataWithType:(NSString *)type rid:(NSString *)rid
+{
+    NSString *request = [rBaseAddressForHttp stringByAppendingString:@"meetingactivity/getMeetingActivityAll"];
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return 10;
