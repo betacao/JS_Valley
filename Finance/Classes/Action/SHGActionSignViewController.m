@@ -7,7 +7,7 @@
 //
 
 #import "SHGActionSignViewController.h"
-#import "SGHActionSignTableViewCell.h"
+#import "SHGActionSignTableViewCell.h"
 @interface SHGActionSignViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
     

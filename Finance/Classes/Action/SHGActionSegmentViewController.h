@@ -10,4 +10,10 @@
 
 @interface SHGActionSegmentViewController : BaseViewController
 
+@property (nonatomic, copy) NSArray *viewControllers;
+@property (nonatomic, weak) UIViewController *selectedViewController;
+@property (nonatomic, assign) NSUInteger selectedIndex;
+
+- (void)setSelectedIndex:(NSUInteger)index animated:(BOOL)animated;
+- (void)setSelectedViewController:(UIViewController *)viewController animated:(BOOL)animated;
 @end

@@ -20,7 +20,7 @@
 //测试我的活动
 #import "SHGActionListViewController.h"
 #import "SHGActionMineViewController.h"
-#import "SHGSegmentController.h"
+#import "SHGActionSegmentViewController.h"
 //为标签弹出框定义的值
 #define kItemTopMargin  18.0f * XFACTOR
 #define kItemMargin 14.0f * XFACTOR
@@ -610,7 +610,7 @@
 //        vc.hidesBottomBarWhenPushed = YES;
 //        [MobClick event:@"MyAppointmentViewController" label:@"onClick"];
 //        [self.navigationController pushViewController:vc animated:YES];
-        SHGSegmentController *segmentViewController = [[SHGSegmentController alloc] init];;
+        SHGActionSegmentViewController *segmentViewController = [[SHGActionSegmentViewController alloc] init];;
         SHGActionListViewController *leftController = [[SHGActionListViewController alloc] init];
         SHGActionMineViewController *rightController = [[SHGActionMineViewController alloc] init];
         segmentViewController.viewControllers = @[leftController, rightController];

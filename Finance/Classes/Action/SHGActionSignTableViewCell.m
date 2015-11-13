@@ -21,7 +21,7 @@
 
 @end
 
-@implementation SGHActionSignTableViewCell
+@implementation SHGActionSignTableViewCell
 
 - (void)awakeFromNib {
     self.action_signNameLabel.textColor = [UIColor colorWithHexString:@"333333"];
