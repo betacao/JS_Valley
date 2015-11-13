@@ -732,6 +732,8 @@
 		985088191BF424F800FE9B04 /* SHGTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 985088181BF424F800FE9B04 /* SHGTableHeaderView.m */; };
 		9894C9731BF5BB2F00F80577 /* SGHActionSignTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9894C9711BF5BB2F00F80577 /* SGHActionSignTableViewCell.m */; };
 		9894C9741BF5BB2F00F80577 /* SGHActionSignTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9894C9721BF5BB2F00F80577 /* SGHActionSignTableViewCell.xib */; };
+		9894C9781BF5BCE700F80577 /* SHGActionSignViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9894C9761BF5BCE700F80577 /* SHGActionSignViewController.m */; };
+		9894C9791BF5BCE700F80577 /* SHGActionSignViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9894C9771BF5BCE700F80577 /* SHGActionSignViewController.xib */; };
 		B007E0F81B412FDF00BB8E8D /* GameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B007E0F61B412FDF00BB8E8D /* GameViewController.m */; };
 		B007E0F91B412FDF00BB8E8D /* GameViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B007E0F71B412FDF00BB8E8D /* GameViewController.xib */; };
 		B00903551B622274000EAD7D /* UIColor+extend.m in Sources */ = {isa = PBXBuildFile; fileRef = B00903541B622274000EAD7D /* UIColor+extend.m */; };
@@ -1912,6 +1914,9 @@
 		9894C9701BF5BB2F00F80577 /* SGHActionSignTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SGHActionSignTableViewCell.h; sourceTree = "<group>"; };
 		9894C9711BF5BB2F00F80577 /* SGHActionSignTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SGHActionSignTableViewCell.m; sourceTree = "<group>"; };
 		9894C9721BF5BB2F00F80577 /* SGHActionSignTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SGHActionSignTableViewCell.xib; sourceTree = "<group>"; };
+		9894C9751BF5BCE700F80577 /* SHGActionSignViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGActionSignViewController.h; sourceTree = "<group>"; };
+		9894C9761BF5BCE700F80577 /* SHGActionSignViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGActionSignViewController.m; sourceTree = "<group>"; };
+		9894C9771BF5BCE700F80577 /* SHGActionSignViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGActionSignViewController.xib; sourceTree = "<group>"; };
 		B007E0F51B412FDF00BB8E8D /* GameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameViewController.h; sourceTree = "<group>"; };
 		B007E0F61B412FDF00BB8E8D /* GameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameViewController.m; sourceTree = "<group>"; };
 		B007E0F71B412FDF00BB8E8D /* GameViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GameViewController.xib; sourceTree = "<group>"; };
@@ -4471,6 +4476,9 @@
 				9894C9701BF5BB2F00F80577 /* SGHActionSignTableViewCell.h */,
 				9894C9711BF5BB2F00F80577 /* SGHActionSignTableViewCell.m */,
 				9894C9721BF5BB2F00F80577 /* SGHActionSignTableViewCell.xib */,
+				9894C9751BF5BCE700F80577 /* SHGActionSignViewController.h */,
+				9894C9761BF5BCE700F80577 /* SHGActionSignViewController.m */,
+				9894C9771BF5BCE700F80577 /* SHGActionSignViewController.xib */,
 			);
 			path = Action;
 			sourceTree = "<group>";
@@ -4959,6 +4967,7 @@
 				B080FEA71B81E30100426579 /* emoji_recent_n@2x.png in Resources */,
 				53C9D9911AFF44CE00827169 /* 添加群组@3x.png in Resources */,
 				408D8B871AF9F57B0055810C /* SettingsSuggestionsViewController.xib in Resources */,
+				9894C9791BF5BCE700F80577 /* SHGActionSignViewController.xib in Resources */,
 				408D8AFC1AF8618C0055810C /* VoiceSearchFeedback004@2x.png in Resources */,
 				B080FE9E1B81E30100426579 /* emoji_corner_right.png in Resources */,
 				408D8B151AF8618C0055810C /* VoiceSearchFeedback017.png in Resources */,
@@ -5544,6 +5553,7 @@
 				6187D2F21AF1C693008E1D21 /* BaseTableViewCell.m in Sources */,
 				619027491B2359C600D9EEA2 /* popObj.m in Sources */,
 				610FF07E1AD6227F0027EBA6 /* UIView+Additions.m in Sources */,
+				9894C9781BF5BCE700F80577 /* SHGActionSignViewController.m in Sources */,
 				F9ADAEB71BF2DB32001366F9 /* SHGPersonalViewController.m in Sources */,
 				614EFECE1AEF594A00F2BDD1 /* ProdConfigTableViewCell.m in Sources */,
 				4088DD8C1AF0FB2B00393855 /* SettingsObj.m in Sources */,
