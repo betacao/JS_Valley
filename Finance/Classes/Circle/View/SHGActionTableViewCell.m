@@ -49,7 +49,7 @@
 - (void)awakeFromNib {
     
     //self.contentView.backgroundColor = [UIColor grayColor];
-    self.Action_bgImage.image = [UIImage imageNamed:@"action_bg"];
+    self.Action_bgImage.image = [[UIImage imageNamed:@"action_bg"] resizableImageWithCapInsets:UIEdgeInsetsMake(20.0f, 20.0f, 20.0f, 20.0f) resizingMode:UIImageResizingModeTile];
     self.Action_titlelabel.textColor = [UIColor colorWithHexString:@"3A3A3A"];
     self.Action_titlelabel.backgroundColor = [UIColor clearColor];
     self.Action_signButton.backgroundColor = [UIColor colorWithHexString:@"F95C53"];
@@ -64,8 +64,8 @@
     self.Action_messageLabel.textColor = [UIColor colorWithHexString:@"D1D1D1"];
     //self.Action_centerLine.image =[self resizableImageWithCapInsets:img];
     UIImage * img = [UIImage imageNamed:@"action_xuxian"];
-    self.Action_centerLine.image = [img resizableImageWithCapInsets:UIEdgeInsetsMake(0 , 1, 0, 1)];
-    self.Action_bottomLine.image = [img resizableImageWithCapInsets:UIEdgeInsetsMake(0 , 1, 0, 1)];
+    self.Action_centerLine.image = [img resizableImageWithCapInsets:UIEdgeInsetsMake(0 , 1, 0, 1) resizingMode:UIImageResizingModeTile];
+    self.Action_bottomLine.image = [img resizableImageWithCapInsets:UIEdgeInsetsMake(0 , 1, 0, 1) resizingMode:UIImageResizingModeTile];
     self.twoButtonView.hidden = YES;
     //所有活动
     [self.Action_zanButton setImage:[UIImage imageNamed:@"home_weizan"] forState:UIControlStateNormal];
