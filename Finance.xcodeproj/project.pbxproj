@@ -857,6 +857,7 @@
 		F9A227BD1BF5ABC60054F8D7 /* SHGActionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9A227B81BF5ABC60054F8D7 /* SHGActionTableViewCell.xib */; };
 		F9A227BE1BF5ABC60054F8D7 /* SHGActionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9A227BA1BF5ABC60054F8D7 /* SHGActionViewController.m */; };
 		F9A227BF1BF5ABC60054F8D7 /* SHGActionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9A227BB1BF5ABC60054F8D7 /* SHGActionViewController.xib */; };
+		F9A227C21BF5AF8D0054F8D7 /* SHGActionObject.m in Sources */ = {isa = PBXBuildFile; fileRef = F9A227C11BF5AF8D0054F8D7 /* SHGActionObject.m */; };
 		F9A8D27E1BE712B700A2BFB1 /* QQConnection.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9A8D2541BE712B700A2BFB1 /* QQConnection.framework */; };
 		F9A8D27F1BE712B700A2BFB1 /* QZoneConnection.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9A8D2551BE712B700A2BFB1 /* QZoneConnection.framework */; };
 		F9A8D2801BE712B700A2BFB1 /* SinaWeiboConnection.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9A8D2561BE712B700A2BFB1 /* SinaWeiboConnection.framework */; };
@@ -2057,6 +2058,8 @@
 		F9A227B91BF5ABC60054F8D7 /* SHGActionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGActionViewController.h; sourceTree = "<group>"; };
 		F9A227BA1BF5ABC60054F8D7 /* SHGActionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGActionViewController.m; sourceTree = "<group>"; };
 		F9A227BB1BF5ABC60054F8D7 /* SHGActionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGActionViewController.xib; sourceTree = "<group>"; };
+		F9A227C01BF5AF8D0054F8D7 /* SHGActionObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGActionObject.h; sourceTree = "<group>"; };
+		F9A227C11BF5AF8D0054F8D7 /* SHGActionObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGActionObject.m; sourceTree = "<group>"; };
 		F9A8D2541BE712B700A2BFB1 /* QQConnection.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = QQConnection.framework; sourceTree = "<group>"; };
 		F9A8D2551BE712B700A2BFB1 /* QZoneConnection.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = QZoneConnection.framework; sourceTree = "<group>"; };
 		F9A8D2561BE712B700A2BFB1 /* SinaWeiboConnection.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SinaWeiboConnection.framework; sourceTree = "<group>"; };
@@ -4452,6 +4455,8 @@
 		F9A227B51BF5ABC60054F8D7 /* Action */ = {
 			isa = PBXGroup;
 			children = (
+				F9A227C01BF5AF8D0054F8D7 /* SHGActionObject.h */,
+				F9A227C11BF5AF8D0054F8D7 /* SHGActionObject.m */,
 				F9A227B61BF5ABC60054F8D7 /* SHGActionTableViewCell.h */,
 				F9A227B71BF5ABC60054F8D7 /* SHGActionTableViewCell.m */,
 				F9A227B81BF5ABC60054F8D7 /* SHGActionTableViewCell.xib */,
@@ -5421,6 +5426,7 @@
 				6187D2E71AF1C693008E1D21 /* EMChatViewCell.m in Sources */,
 				5331DF1A1AFC017600E035B8 /* AddFriendCell.m in Sources */,
 				6187D2FA1AF1C693008E1D21 /* XHMessageTextView.m in Sources */,
+				F9A227C21BF5AF8D0054F8D7 /* SHGActionObject.m in Sources */,
 				4088DDCE1AF105FD00393855 /* SettingQuestionObj.m in Sources */,
 				40302B361AF0B7F500F22EB6 /* MyCollectionTableViewCell.m in Sources */,
 				61656F8E1B15DD5B008B2AB4 /* MeTableViewCell.m in Sources */,
