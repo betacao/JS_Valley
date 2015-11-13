@@ -19,6 +19,8 @@
 #import "SHGUserTagModel.h"
 //测试我的活动
 #import "SHGActionListViewController.h"
+#import "SHGActionMineViewController.h"
+#import "SHGSegmentController.h"
 //为标签弹出框定义的值
 #define kItemTopMargin  18.0f * XFACTOR
 #define kItemMargin 14.0f * XFACTOR
@@ -608,10 +610,13 @@
 //        vc.hidesBottomBarWhenPushed = YES;
 //        [MobClick event:@"MyAppointmentViewController" label:@"onClick"];
 //        [self.navigationController pushViewController:vc animated:YES];
-        SHGActionViewController *vc = [[SHGActionViewController alloc] init];
-        vc.hidesBottomBarWhenPushed = YES;
+        SHGSegmentController *segmentViewController = [[SHGSegmentController alloc] init];;
+        SHGActionListViewController *leftController = [[SHGActionListViewController alloc] init];
+        SHGActionMineViewController *rightController = [[SHGActionMineViewController alloc] init];
+        segmentViewController.viewControllers = @[leftController, rightController];
+        segmentViewController.hidesBottomBarWhenPushed = YES;
         [MobClick event:@"SHGActionViewController" label:@"onClick"];
-        [self.navigationController pushViewController:vc animated:YES];
+        [self.navigationController pushViewController:segmentViewController animated:YES];
     }else if (indexPath.row == 3) {
         MyCollectionViewController *vc = [[MyCollectionViewController alloc] init];
         vc.hidesBottomBarWhenPushed = YES;
@@ -654,6 +659,7 @@
     }
     return _circleHeaderLabel;
 }
+
 -(void)goToMyCircle
 {
     CircleSomeOneViewController *vc = [[CircleSomeOneViewController alloc] initWithNibName:@"CircleSomeOneViewController" bundle:nil];

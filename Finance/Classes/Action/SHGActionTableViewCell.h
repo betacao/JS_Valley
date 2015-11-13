@@ -7,8 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SHGActionObject.h"
 
 @interface SHGActionTableViewCell : UITableViewCell
 
+- (void)loadDataWithObject:(SHGActionObject *)object;
 
 @end

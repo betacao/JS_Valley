@@ -86,11 +86,29 @@
     
 
 }
-//- (UIImage *)resizableImageWithCapInsets:(UIEdgeInsets)capInsets
-//{
-//    
-//   
-//}
 
+
+- (void)loadDataWithObject:(SHGActionObject *)object
+{
+    [self clearCell];
+    self.Action_titlelabel.text = object.theme;
+    self.Action_pubdateLabel.text = object.createTime;
+    self.Action_addressLabel.text = object.meetArea;
+    self.Action_allNumLabel.text = object.meetNum;
+    self.Action_momentNumlabel.text = object.attendNum;
+    [self.Action_signButton setTitle:object.meetState forState:UIControlStateNormal];
+    
+
+}
+
+- (void)clearCell
+{
+    self.Action_titlelabel.text = @"";
+    self.Action_pubdateLabel.text = @"";
+    self.Action_addressLabel.text = @"";
+    self.Action_allNumLabel.text = @"";
+    self.Action_momentNumlabel.text = @"";
+    [self.Action_signButton setTitle:@"" forState:UIControlStateNormal];
+}
 
 @end

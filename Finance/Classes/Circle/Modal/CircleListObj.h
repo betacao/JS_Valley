@@ -20,7 +20,7 @@
 
 @class linkOBj;
 
-@interface CircleListObj : MTLModel<MTLJSONSerializing,MTLTransformerErrorHandling>
+@interface CircleListObj : MTLModel<MTLJSONSerializing>
 
 @property (nonatomic,strong) NSString *cmmtnum;
 @property (nonatomic,strong) NSMutableArray *comments;
