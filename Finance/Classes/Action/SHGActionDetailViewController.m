@@ -110,6 +110,7 @@
     [self.plbutton setImage:[UIImage imageNamed:@"home_comment"] forState:UIControlStateNormal];
     [self.plbutton setTitle:@"555" forState:UIControlStateNormal];
     [self.plbutton setTitleColor:[UIColor colorWithHexString:@"D1D1D1"] forState:UIControlStateNormal];
+    [self.checkButton setBackgroundImage:[UIImage imageNamed:@"action_checkAll"] forState:UIControlStateNormal];
     
     UIImage * img = [UIImage imageNamed:@"action_xuxian"];
     self.topLineImage.image = [img resizableImageWithCapInsets:UIEdgeInsetsMake(0 , 1, 0, 1) resizingMode:UIImageResizingModeTile];
@@ -142,9 +143,8 @@
     self.yBMRedLine.frame = CGRectMake(14, self.CenterLineImage.frame.origin.y+9, 1, 15);
     self.yBMLabel.frame = CGRectMake(25, self.CenterLineImage.frame.origin.y+6, 54, 20);
     self.yBMNumLabel.frame = CGRectMake(87, self.CenterLineImage.frame.origin.y+6, 54, 20);
-    self.checkButton.frame = CGRectMake(self.replyTable.frame.size.width-14-20 , self.CenterLineImage.frame.origin.y+6, 20, 20);
+    self.checkButton.frame = CGRectMake(self.replyTable.frame.size.width-14-20 , self.CenterLineImage.frame.origin.y+11, 10, 10);
     self.checkLabel.frame = CGRectMake(self.replyTable.frame.size.width-14-20-5-60, self.CenterLineImage.frame.origin.y+6, 60, 20);
-    self.commentView.frame = CGRectMake(14, self.yBMRedLine.frame.origin.y + self.yBMRedLine.frame.size.height +5, self.replyTable.frame.size.width-28, 125.0);
     self.plbutton.frame = CGRectMake(self.replyTable.frame.size.width-14-50, self.commentView.frame.origin.y+self.commentView.frame.size.height+10, 50, 20);
     self.zanButton.frame = CGRectMake(self.replyTable.frame.size.width-14-50-50, self.commentView.frame.origin.y+self.commentView.frame.size.height+10, 50, 20);
     self.bottomLine.frame = CGRectMake(0, self.zanButton.frame.origin.y-6, self.replyTable.frame.size.width, 1);
@@ -160,7 +160,6 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    
     return _viewHeader.height;
 }
 

@@ -69,7 +69,7 @@
                 </tableView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-            <point key="canvasLocation" x="-84" y="276"/>
+            <point key="canvasLocation" x="-328" y="284"/>
         </view>
         <view contentMode="scaleToFill" id="AmF-qJ-38H">
             <rect key="frame" x="0.0" y="0.0" width="320" height="574"/>
@@ -189,9 +189,9 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="lTU-m9-bMk">
-                    <rect key="frame" x="279" y="298" width="20" height="20"/>
+                    <rect key="frame" x="279" y="305" width="10" height="10"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <state key="normal" title="Button" backgroundImage="accessoryView"/>
+                    <state key="normal" title="Button" backgroundImage="action_checkAll"/>
                 </button>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="action_bg" id="e0y-34-vdJ" userLabel="bottomLine">
                     <rect key="frame" x="15" y="455" width="320" height="1"/>
@@ -319,14 +319,14 @@
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <point key="canvasLocation" x="303" y="276"/>
+            <point key="canvasLocation" x="47" y="296"/>
         </view>
     </objects>
     <resources>
-        <image name="accessoryView" width="7" height="13"/>
         <image name="action_address" width="11" height="15"/>
         <image name="action_baoming" width="13" height="13"/>
-        <image name="action_bg" width="55" height="44"/>
+        <image name="action_bg" width="31" height="45"/>
+        <image name="action_checkAll" width="5" height="9"/>
         <image name="action_invite" width="12" height="12"/>
         <image name="action_time" width="13" height="13"/>
         <image name="default_head" width="48" height="48"/>
