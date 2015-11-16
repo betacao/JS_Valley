@@ -72,6 +72,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.title = @"活动详情";
     self.replyTable.delegate = self;
     self.replyTable.dataSource = self;
     //self.replyTable.backgroundColor = [UIColor redColor];

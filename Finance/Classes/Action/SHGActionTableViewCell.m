@@ -46,7 +46,8 @@
 
 @implementation SHGActionTableViewCell
 
-- (void)awakeFromNib {
+- (void)awakeFromNib
+{
     self.contentView.backgroundColor = [UIColor colorWithHexString:@"efeeef"];
     self.Acyion_titleBg.image = [UIImage imageNamed:@"action_bg"];
     self.Action_titlelabel.textColor = [UIColor colorWithHexString:@"3A3A3A"];
@@ -81,21 +82,43 @@
     [self.Action_thrCommentButton setTitleColor:[UIColor colorWithHexString:@"D1D1D1"] forState:UIControlStateNormal];
     [self.Action_editeButton setTitle:@"编辑" forState:UIControlStateNormal];
     [self.Action_editeButton setTitleColor:[UIColor colorWithHexString:@"D1D1D1"] forState:UIControlStateNormal];
-    
-
 }
-
 
 - (void)loadDataWithObject:(SHGActionObject *)object
 {
     [self clearCell];
+    [self.Action_headImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,object.headerImageUrl]] placeholderImage:[UIImage imageNamed:@"default_head"]];
+    NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
     self.Action_titlelabel.text = object.theme;
     self.Action_pubdateLabel.text = object.createTime;
     self.Action_addressLabel.text = object.meetArea;
-    self.Action_allNumLabel.text = object.meetNum;
-    self.Action_momentNumlabel.text = object.attendNum;
-    [self.Action_signButton setTitle:object.meetState forState:UIControlStateNormal];
-    
+    self.Action_allNumLabel.text = [NSString stringWithFormat:@"邀请%@人", object.meetNum];
+    self.Action_momentNumlabel.text = [NSString stringWithFormat:@"已报名%@人", object.attendNum];
+    self.Action_messageLabel.text = object.friendShip;
+    if ([object.isTimeOut isEqualToString:@"1"]) {
+        [self.Action_signButton setTitle:@"报名中" forState:UIControlStateNormal];
+    } else{
+        [self.Action_signButton setTitle:@"已结束" forState:UIControlStateNormal];
+    }
+    if ([object.publisher isEqualToString:uid]) {
+        self.thrButtonView.hidden = NO;
+        [self.Action_thr_zanButton setTitle:object.praiseNum forState:UIControlStateNormal];
+        [self.Action_thrCommentButton setTitle:object.commentNum forState:UIControlStateNormal];
+        if ([object.isPraise isEqualToString:@"Y"]) {
+            [self.Action_thr_zanButton setImage:[UIImage imageNamed:@"home_yizan"] forState:UIControlStateNormal];
+        } else{
+            [self.Action_thr_zanButton setImage:[UIImage imageNamed:@"home_weizan"] forState:UIControlStateNormal];
+        }
+    } else{
+        self.twoButtonView.hidden = NO;
+        [self.Action_zanButton setTitle:object.praiseNum forState:UIControlStateNormal];
+        [self.Action_commentButton setTitle:object.commentNum forState:UIControlStateNormal];
+        if ([object.isPraise isEqualToString:@"Y"]) {
+            [self.Action_zanButton setImage:[UIImage imageNamed:@"home_yizan"] forState:UIControlStateNormal];
+        } else{
+            [self.Action_zanButton setImage:[UIImage imageNamed:@"home_weizan"] forState:UIControlStateNormal];
+        }
+    }
 
 }
 
@@ -107,6 +130,16 @@
     self.Action_allNumLabel.text = @"";
     self.Action_momentNumlabel.text = @"";
     [self.Action_signButton setTitle:@"" forState:UIControlStateNormal];
+    self.twoButtonView.hidden = YES;
+    self.thrButtonView.hidden = YES;
+    [self.Action_thr_zanButton setTitle:@"" forState:UIControlStateNormal];
+    [self.Action_thrCommentButton setTitle:@"" forState:UIControlStateNormal];
+    [self.Action_zanButton setTitle:@"" forState:UIControlStateNormal];
+    [self.Action_commentButton setTitle:@"" forState:UIControlStateNormal];
+    [self.Action_thr_zanButton setImage:[UIImage imageNamed:@"home_weizan"] forState:UIControlStateNormal];
+    [self.Action_zanButton setImage:[UIImage imageNamed:@"home_weizan"] forState:UIControlStateNormal];
+
+
 }
 
 @end
