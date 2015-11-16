@@ -6,8 +6,8 @@
 //  Copyright © 2015年 HuMin. All rights reserved.
 //
 
-#import "BaseViewController.h"
+#import "BaseTableViewController.h"
 
-@interface SHGActionDetailViewController : BaseViewController
+@interface SHGActionDetailViewController : BaseTableViewController
 
 @end

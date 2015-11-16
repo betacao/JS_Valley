@@ -13,6 +13,7 @@
     //UIImage * img;
 }
 @property (weak, nonatomic) IBOutlet UILabel *Action_titlelabel;
+@property (weak, nonatomic) IBOutlet UIImageView *Acyion_titleBg;
 @property (weak, nonatomic) IBOutlet UIImageView *Action_headImage;
 @property (weak, nonatomic) IBOutlet UILabel *Action_nameLble;
 @property (weak, nonatomic) IBOutlet UILabel *Action_pubdateLabel;
@@ -21,7 +22,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *Action_positionLable;
 @property (weak, nonatomic) IBOutlet UIImageView *Action_timeImage;
 @property (weak, nonatomic) IBOutlet UILabel *Action_timeLabel;
-@property (weak, nonatomic) IBOutlet UIImageView *Action_bgImage;
 @property (weak, nonatomic) IBOutlet UIImageView *Action_addressImage;
 @property (weak, nonatomic) IBOutlet UILabel *Action_addressLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *Action_allNumImage;
@@ -47,9 +47,8 @@
 @implementation SHGActionTableViewCell
 
 - (void)awakeFromNib {
-    
-    //self.contentView.backgroundColor = [UIColor grayColor];
-    self.Action_bgImage.image = [[UIImage imageNamed:@"action_bg"] resizableImageWithCapInsets:UIEdgeInsetsMake(20.0f, 20.0f, 20.0f, 20.0f) resizingMode:UIImageResizingModeTile];
+    self.contentView.backgroundColor = [UIColor colorWithHexString:@"efeeef"];
+    self.Acyion_titleBg.image = [UIImage imageNamed:@"action_bg"];
     self.Action_titlelabel.textColor = [UIColor colorWithHexString:@"3A3A3A"];
     self.Action_titlelabel.backgroundColor = [UIColor clearColor];
     self.Action_signButton.backgroundColor = [UIColor colorWithHexString:@"F95C53"];
@@ -62,7 +61,6 @@
     self.Action_allNumLabel.textColor = [UIColor colorWithHexString:@"606060"];
     self.Action_momentNumlabel.textColor = [UIColor colorWithHexString:@"606060"];
     self.Action_messageLabel.textColor = [UIColor colorWithHexString:@"D1D1D1"];
-    //self.Action_centerLine.image =[self resizableImageWithCapInsets:img];
     UIImage * img = [UIImage imageNamed:@"action_xuxian"];
     self.Action_centerLine.image = [img resizableImageWithCapInsets:UIEdgeInsetsMake(0 , 1, 0, 1) resizingMode:UIImageResizingModeTile];
     self.Action_bottomLine.image = [img resizableImageWithCapInsets:UIEdgeInsetsMake(0 , 1, 0, 1) resizingMode:UIImageResizingModeTile];
