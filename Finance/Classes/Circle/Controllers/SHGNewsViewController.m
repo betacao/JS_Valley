@@ -1,12 +1,12 @@
 //
-//  SHGAttationViewController.m
+//  SHGNewsViewController.m
 //  Finance
 //
 //  Created by changxicao on 15/11/4.
 //  Copyright © 2015年 HuMin. All rights reserved.
 //
 
-#import "SHGAttationViewController.h"
+#import "SHGNewsViewController.h"
 #import "CircleListObj.h"
 #import "CircleSendViewController.h"
 #import "ChatViewController.h"
@@ -22,7 +22,7 @@
 #import "SHGUnifiedTreatment.h"
 
 
-@interface SHGAttationViewController ()<MLEmojiLabelDelegate,CLLocationManagerDelegate,SHGNoticeDelegate>
+@interface SHGNewsViewController ()<MLEmojiLabelDelegate,CLLocationManagerDelegate,SHGNoticeDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *listTable;
 @property (assign, nonatomic) BOOL isRefreshing;
 @property (strong, nonatomic) NSString *circleType;
@@ -31,7 +31,7 @@
 
 @end
 
-@implementation SHGAttationViewController
+@implementation SHGNewsViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -55,7 +55,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [MobClick event:@"SHGAttationViewController" label:@"onClick"];
+    [MobClick event:@"SHGNewsViewController" label:@"onClick"];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -101,7 +101,7 @@
     NSDictionary *param = @{@"uid":uid, @"type":@"attation", @"target":target, @"rid":@(rid), @"num": rRequestNum, @"tagIds" : userTags};
 
     __weak typeof(self) weakSelf = self;
-    [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttpCircle,circleNew] class:[CircleListObj class] parameters:param success:^(MOCHTTPResponse *response){
+    [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttpCircle,circleListNew] class:[CircleListObj class] parameters:param success:^(MOCHTTPResponse *response){
         weakSelf.isRefreshing = NO;
         if([target isEqualToString:@"first"]){
             if([response.dataDictionary objectForKey:@"tagids"]){

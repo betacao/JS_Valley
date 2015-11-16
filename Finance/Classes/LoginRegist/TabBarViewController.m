@@ -18,7 +18,7 @@
 #import "MessageViewController.h"
 #import "VerifyIdentityViewController.h"
 #import "SHGSegmentController.h"
-#import "SHGAttationViewController.h"
+#import "SHGNewsViewController.h"
 #import "SHGPersonalViewController.h"
 
 //两次提示的默认间隔
@@ -30,7 +30,7 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
 }
 @property (strong, nonatomic) SHGSegmentController *segmentViewController;
 @property (strong, nonatomic) SHGHomeViewController *homeViewController;
-@property (strong, nonatomic) SHGAttationViewController *attationViewController;
+@property (strong, nonatomic) SHGNewsViewController *newsViewController;
 @property (strong, nonatomic) DiscoverViewController *prodViewController;
 @property (strong, nonatomic) MeViewController *meViewController;
 @property (strong, nonatomic) ChatListViewController *chatViewController;
@@ -304,7 +304,7 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     if(!_segmentViewController){
         _segmentViewController = [SHGSegmentController sharedSegmentController];
         _segmentViewController.delegate = self;
-        _segmentViewController.viewControllers = @[self.homeViewController, self.attationViewController];
+        _segmentViewController.viewControllers = @[self.homeViewController, self.newsViewController];
     }
     return _segmentViewController;
 }
@@ -317,12 +317,12 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     return _homeViewController;
 }
 
-- (SHGAttationViewController *)attationViewController
+- (SHGNewsViewController *)newsViewController
 {
-    if(!_attationViewController){
-        _attationViewController = [[SHGAttationViewController alloc] initWithNibName:@"SHGAttationViewController" bundle:nil];
+    if(!_newsViewController){
+        _newsViewController = [[SHGNewsViewController alloc] initWithNibName:@"SHGNewsViewController" bundle:nil];
     }
-    return _attationViewController;
+    return _newsViewController;
 }
 
 -(DiscoverViewController *)prodViewController

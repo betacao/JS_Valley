@@ -75,5 +75,6 @@
 #define actioncircle            @"circle"
 #define circleBak               @"circleBak"
 #define circleNew               @"circleNew"
+#define circleListNew           @"circleListNew"
 
 #endif

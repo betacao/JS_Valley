@@ -25,7 +25,6 @@
 #import "SHGSegmentController.h"
 
 @interface SHGSegmentController ()
-@property (strong ,nonatomic) NSArray *titleArray;
 @property (nonatomic, strong) UIBarButtonItem *rightBarButtonItem;
 @end
 
@@ -62,7 +61,7 @@
     [super viewDidLoad];
 	self.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     CGRect rect = CGRectMake(0, 50, 170, 26);
-    tabButtonsContainerView = [[UISegmentedControl alloc] initWithItems: [NSArray arrayWithObjects:@"动态", @"已关注", nil]];
+    tabButtonsContainerView = [[UISegmentedControl alloc] initWithItems: [NSArray arrayWithObjects:@"动态", @"资讯", nil]];
     tabButtonsContainerView.frame = rect;
     tabButtonsContainerView.enabled = YES;
     tabButtonsContainerView.layer.masksToBounds = YES;
@@ -91,7 +90,6 @@
 	contentContainerView = [[UIView alloc] initWithFrame:self.view.bounds];
 	contentContainerView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 	[self.view addSubview:contentContainerView];
-    self.titleArray = @[@"动态", @"已关注"];
 	[self reloadTabButtons];
     if(self.block){
         self.block(tabButtonsContainerView);

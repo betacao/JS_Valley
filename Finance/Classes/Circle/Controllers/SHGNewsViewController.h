@@ -1,5 +1,5 @@
 //
-//  SHGAttationViewController.h
+//  SHGNewsViewController.h
 //  Finance
 //
 //  Created by changxicao on 15/11/4.
@@ -8,7 +8,7 @@
 
 #import "BaseTableViewController.h"
 
-@interface SHGAttationViewController : BaseTableViewController
+@interface SHGNewsViewController : BaseTableViewController
 
 - (UITableView *)currentTableView;
 
