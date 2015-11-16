@@ -22,7 +22,7 @@
 #import "UncaughtExceptionHandler.h"
 #import "MessageViewController.h"
 #import "MeViewController.h"
-#import "CircleSomeOneViewController.h"
+#import "SHGPersonalViewController.h"
 #import "VerifyIdentityViewController.h"
 #import "GeTuiSdk.h"
 #import "GeTuiSdkError.h"
@@ -481,10 +481,9 @@
         MessageViewController *detailVC=[[MessageViewController alloc] init];
         [self pushIntoViewController:TopVC newViewController:detailVC];
     }else if ([ridCode isEqualToString:@"1004"]){  //进入个人关注主页
-        CircleSomeOneViewController  *detaiVC =[[CircleSomeOneViewController alloc]init];
-        detaiVC.userId = [NSString stringWithFormat:@"%@",userInfo[@"uid"]];
-        detaiVC.userName = userInfo[@"uname"];
-        [self pushIntoViewController:TopVC newViewController:detaiVC];
+        SHGPersonalViewController *controller = [[SHGPersonalViewController alloc] initWithNibName:@"SHGPersonalViewController" bundle:nil];
+        controller.userId = [NSString stringWithFormat:@"%@",userInfo[@"uid"]];
+        [self pushIntoViewController:TopVC newViewController:controller];
     }else if ([ridCode isEqualToString:@"1005"] || [ridCode isEqualToString:@"1006"]){ //进入认证页面
         if ([ridCode isEqualToString:@"1005"]){
             [[NSUserDefaults standardUserDefaults] setObject:@"1" forKey:KEY_AUTHSTATE];

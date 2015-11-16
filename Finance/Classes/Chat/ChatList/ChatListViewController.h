@@ -14,7 +14,6 @@
 #import "BaseTableViewController.h"
 #import "MLKMenuPopover1.h"
 #import "TwainContactInfo.h"
-#import "CircleSomeOneViewController.h"
 typedef NS_ENUM(NSInteger, ChatListViewType)
 {
 	ChatListView = 0,//消息列表

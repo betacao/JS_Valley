@@ -9,7 +9,6 @@
 #import "SHGHomeViewController.h"
 #import "CircleListObj.h"
 #import "CircleSendViewController.h"
-#import "CircleSomeOneViewController.h"
 #import "ChatViewController.h"
 #import "CircleListTwoTableViewCell.h"
 #import "MLEmojiLabel.h"
@@ -22,6 +21,7 @@
 #import "CircleDetailViewController.h"
 #import "SHGUnifiedTreatment.h"
 #import "SHGUserTagModel.h"
+#import "SHGPersonalViewController.h"
 
 #define IS_IOS7 ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7)
 #define IS_IOS8 ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8)
@@ -726,12 +726,11 @@ const CGFloat kAdButtomMargin = 20.0f;
 
 - (void)gotoSomeOne:(NSString *)uid name:(NSString *)name
 {
-    CircleSomeOneViewController *vc = [[CircleSomeOneViewController alloc] initWithNibName:@"CircleSomeOneViewController" bundle:nil];
-    vc.userId = uid;
-    vc.userName = name;
-    vc.delegate = [SHGUnifiedTreatment sharedTreatment];
-    vc.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:vc animated:YES];
+    SHGPersonalViewController *controller = [[SHGPersonalViewController alloc] initWithNibName:@"SHGPersonalViewController" bundle:nil];
+    controller.hidesBottomBarWhenPushed = YES;
+    controller.userId = uid;
+    controller.delegate = [SHGUnifiedTreatment sharedTreatment];
+    [self.navigationController pushViewController:controller animated:YES];
 }
 
 //添加列表上方的标签

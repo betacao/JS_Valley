@@ -8,9 +8,11 @@
 
 #import "BaseTableViewController.h"
 
+typedef void (^SHGPersonalChangeStateBlock) (NSString *state);
+
 @interface SHGPersonDynamicViewController : BaseTableViewController
 
 @property (strong, nonatomic) NSString *userId;
-
 @property (nonatomic, weak) id<CircleActionDelegate> delegate;
+@property (copy, nonatomic) SHGPersonalChangeStateBlock block;
 @end

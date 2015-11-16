@@ -17,6 +17,7 @@
 #import "SettingsViewController.h"
 #import "SHGModifyInfoViewController.h"
 #import "SHGUserTagModel.h"
+#import "SHGPersonalViewController.h"
 //测试我的活动
 #import "SHGActionListViewController.h"
 #import "SHGActionMineViewController.h"
@@ -612,18 +613,18 @@
 //        [MobClick event:@"MyAppointmentViewController" label:@"onClick"];
 //        [self.navigationController pushViewController:vc animated:YES];
         
-//        SHGActionSegmentViewController *segmentViewController = [[SHGActionSegmentViewController alloc] init];;
-//        SHGActionListViewController *leftController = [[SHGActionListViewController alloc] init];
-//        SHGActionMineViewController *rightController = [[SHGActionMineViewController alloc] init];
-//        segmentViewController.viewControllers = @[leftController, rightController];
-//        segmentViewController.hidesBottomBarWhenPushed = YES;
-//        [MobClick event:@"SHGActionViewController" label:@"onClick"];
-//        [self.navigationController pushViewController:segmentViewController animated:YES];
-        
-        SHGActionDetailViewController *vc = [[SHGActionDetailViewController alloc] init];
-        vc.hidesBottomBarWhenPushed = YES;
-        [MobClick event:@"SHGActionDetailViewController" label:@"onClick"];
-        [self.navigationController pushViewController:vc animated:YES];
+        SHGActionSegmentViewController *segmentViewController = [[SHGActionSegmentViewController alloc] init];;
+        SHGActionListViewController *leftController = [[SHGActionListViewController alloc] init];
+        SHGActionMineViewController *rightController = [[SHGActionMineViewController alloc] init];
+        segmentViewController.viewControllers = @[leftController, rightController];
+        segmentViewController.hidesBottomBarWhenPushed = YES;
+        [MobClick event:@"SHGActionViewController" label:@"onClick"];
+        [self.navigationController pushViewController:segmentViewController animated:YES];
+
+//        SHGActionDetailViewController *vc = [[SHGActionDetailViewController alloc] init];
+//        vc.hidesBottomBarWhenPushed = YES;
+//        [MobClick event:@"SHGActionDetailViewController" label:@"onClick"];
+//        [self.navigationController pushViewController:vc animated:YES];
     }else if (indexPath.row == 3) {
         MyCollectionViewController *vc = [[MyCollectionViewController alloc] init];
         vc.hidesBottomBarWhenPushed = YES;
@@ -670,11 +671,10 @@
 
 -(void)goToMyCircle
 {
-    CircleSomeOneViewController *vc = [[CircleSomeOneViewController alloc] initWithNibName:@"CircleSomeOneViewController" bundle:nil];
-    vc.hidesBottomBarWhenPushed = YES;
-    vc.userId =[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
-    vc.userName = @"我";
-    [self.navigationController pushViewController:vc animated:YES];
+    SHGPersonalViewController *controller = [[SHGPersonalViewController alloc] initWithNibName:@"SHGPersonalViewController" bundle:nil];
+    controller.hidesBottomBarWhenPushed = YES;
+    controller.userId = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
+    [self.navigationController pushViewController:controller animated:YES];
 }
 
 

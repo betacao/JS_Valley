@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "CircleSomeOneViewController.h"
 @interface MyFollowViewController : BaseTableViewController
 
 //1为我的关注

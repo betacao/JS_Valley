@@ -16,10 +16,10 @@
 #import "DiscoverViewController.h"
 #import "headImage.h"
 #import "MessageViewController.h"
-#import "CircleSomeOneViewController.h"
 #import "VerifyIdentityViewController.h"
 #import "SHGSegmentController.h"
 #import "SHGAttationViewController.h"
+#import "SHGPersonalViewController.h"
 
 //两次提示的默认间隔
 static const CGFloat kDefaultPlaySoundInterval = 3.0;
@@ -108,33 +108,25 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
 {
 
     pushInfo = [userInfo copy];
-    if ([userInfo objectForKey:@"code"])
-    {
+    if ([userInfo objectForKey:@"code"]){
         UIViewController *TopVC = [self getCurrentRootViewController];
         NSString *ridCode = [userInfo objectForKey:@"code"];
-        if ([ridCode isEqualToString:@"1001"])
-        { //进入通知
+        if ([ridCode isEqualToString:@"1001"]){ //进入通知
             MessageViewController *detailVC=[[MessageViewController alloc] init];
             [self pushIntoViewController:TopVC newViewController:detailVC];
-        }else if ([ridCode isEqualToString:@"1004"])
-        {  //进入关注人的个人主页
-            CircleSomeOneViewController  *detaiVC =[[CircleSomeOneViewController alloc]init];
-            detaiVC.userId = [NSString stringWithFormat:@"%@",userInfo[@"uid"]];
-            detaiVC.userName = userInfo[@"uname"];
-            [self pushIntoViewController:TopVC newViewController:detaiVC];
-        }else if ([ridCode isEqualToString:@"1005"] || [ridCode isEqualToString:@"1006"])
-        { //进入认证页面
-            if ([ridCode isEqualToString:@"1005"])
-            {
+        } else if ([ridCode isEqualToString:@"1004"]){  //进入关注人的个人主页
+            SHGPersonalViewController *controller = [[SHGPersonalViewController alloc] initWithNibName:@"SHGPersonalViewController" bundle:nil];
+            controller.userId = [NSString stringWithFormat:@"%@",userInfo[@"uid"]];
+            [self pushIntoViewController:TopVC newViewController:controller];
+        } else if ([ridCode isEqualToString:@"1005"] || [ridCode isEqualToString:@"1006"]){ //进入认证页面
+            if ([ridCode isEqualToString:@"1005"]){
                 [[NSUserDefaults standardUserDefaults] setObject:@"1" forKey:KEY_AUTHSTATE];
-            }else
-            {
+            } else{
                 [[NSUserDefaults standardUserDefaults] setObject:@"0" forKey:KEY_AUTHSTATE];
             }
             VerifyIdentityViewController *meControl =[[VerifyIdentityViewController alloc]init];
             [self pushIntoViewController:TopVC newViewController:meControl];
-        }else
-        {  //进入帖子详情
+        } else{  //进入帖子详情
             CircleDetailViewController *vc = [[CircleDetailViewController alloc] init];
             NSString* rid = [userInfo objectForKey:@"rid"];
             vc.rid = rid;

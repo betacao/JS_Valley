@@ -9,7 +9,6 @@
 #import "SHGAttationViewController.h"
 #import "CircleListObj.h"
 #import "CircleSendViewController.h"
-#import "CircleSomeOneViewController.h"
 #import "ChatViewController.h"
 #import "CircleListTwoTableViewCell.h"
 #import "MLEmojiLabel.h"

@@ -9,7 +9,6 @@
 #import "BaseTableViewController.h"
 #import "AppDelegate.h"
 #import "CircleListObj.h"
-#import "CircleSomeOneViewController.h"
 #import "SHGHomeViewController.h"
 #import "ReplyTableViewCell.h"
 

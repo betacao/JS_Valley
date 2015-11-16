@@ -303,8 +303,6 @@
 		6145FF111AE49D4A0074AB49 /* BRCommentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6145FF101AE49D4A0074AB49 /* BRCommentView.m */; };
 		6145FF181AE4A3450074AB49 /* CircleDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6145FF161AE4A3450074AB49 /* CircleDetailViewController.m */; };
 		6145FF191AE4A3450074AB49 /* CircleDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6145FF171AE4A3450074AB49 /* CircleDetailViewController.xib */; };
-		6145FF1D1AE4E1210074AB49 /* CircleSomeOneViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6145FF1B1AE4E1210074AB49 /* CircleSomeOneViewController.m */; };
-		6145FF1E1AE4E1210074AB49 /* CircleSomeOneViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6145FF1C1AE4E1210074AB49 /* CircleSomeOneViewController.xib */; };
 		6145FF251AE4FCFE0074AB49 /* ProductListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6145FF231AE4FCFE0074AB49 /* ProductListViewController.m */; };
 		6145FF261AE4FCFE0074AB49 /* ProductListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6145FF241AE4FCFE0074AB49 /* ProductListViewController.xib */; };
 		6146B4AB1B011B7800D62678 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6146B4A91B011B7800D62678 /* RootViewController.m */; };
@@ -1282,9 +1280,6 @@
 		6145FF151AE4A3450074AB49 /* CircleDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CircleDetailViewController.h; sourceTree = "<group>"; };
 		6145FF161AE4A3450074AB49 /* CircleDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CircleDetailViewController.m; sourceTree = "<group>"; };
 		6145FF171AE4A3450074AB49 /* CircleDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CircleDetailViewController.xib; sourceTree = "<group>"; };
-		6145FF1A1AE4E1210074AB49 /* CircleSomeOneViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CircleSomeOneViewController.h; sourceTree = "<group>"; };
-		6145FF1B1AE4E1210074AB49 /* CircleSomeOneViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CircleSomeOneViewController.m; sourceTree = "<group>"; };
-		6145FF1C1AE4E1210074AB49 /* CircleSomeOneViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CircleSomeOneViewController.xib; sourceTree = "<group>"; };
 		6145FF221AE4FCFE0074AB49 /* ProductListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProductListViewController.h; sourceTree = "<group>"; };
 		6145FF231AE4FCFE0074AB49 /* ProductListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProductListViewController.m; sourceTree = "<group>"; };
 		6145FF241AE4FCFE0074AB49 /* ProductListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProductListViewController.xib; sourceTree = "<group>"; };
@@ -2905,9 +2900,6 @@
 				6145FF151AE4A3450074AB49 /* CircleDetailViewController.h */,
 				6145FF161AE4A3450074AB49 /* CircleDetailViewController.m */,
 				6145FF171AE4A3450074AB49 /* CircleDetailViewController.xib */,
-				6145FF1A1AE4E1210074AB49 /* CircleSomeOneViewController.h */,
-				6145FF1B1AE4E1210074AB49 /* CircleSomeOneViewController.m */,
-				6145FF1C1AE4E1210074AB49 /* CircleSomeOneViewController.xib */,
 				613CAC4E1AFFFFDE00EA8C23 /* CircleLinkViewController.h */,
 				613CAC4F1AFFFFDE00EA8C23 /* CircleLinkViewController.m */,
 				613CAC501AFFFFDE00EA8C23 /* CircleLinkViewController.xib */,
@@ -5072,7 +5064,6 @@
 				6187D30E1AF1C693008E1D21 /* sr_refresh@2X.png in Resources */,
 				F9FBAF541BDF132E008D89D9 /* 15skaiji.mp4 in Resources */,
 				408D8B5A1AF8618C0055810C /* chatBar_colorMore_videoSelected@2x.png in Resources */,
-				6145FF1E1AE4E1210074AB49 /* CircleSomeOneViewController.xib in Resources */,
 				408D8AF41AF8618C0055810C /* chatFire_audioPlaying3@2x.png in Resources */,
 				408D8B6A1AF8618C0055810C /* chat_receiver_audio_playing001.png in Resources */,
 				F9A227B41BF586090054F8D7 /* SHGPersonDynamicViewController.xib in Resources */,
@@ -5528,7 +5519,6 @@
 				61D62BF11ADD1C4D002DD395 /* MOWHttp.m in Sources */,
 				614A597E1AD3AEA1005DAB04 /* Finance.xcdatamodeld in Sources */,
 				538964D21AFC6BEB00041548 /* NSDate+Category.m in Sources */,
-				6145FF1D1AE4E1210074AB49 /* CircleSomeOneViewController.m in Sources */,
 				B06D06DA1B4FA2180036A3E3 /* CircleListTwoTableViewCell.m in Sources */,
 				40302B2C1AF07AA500F22EB6 /* MyMoneyViewController.m in Sources */,
 				40302B311AF07DB500F22EB6 /* MyMoneyDetailTableViewCell.m in Sources */,

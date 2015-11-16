@@ -42,7 +42,7 @@
                         <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sGy-XF-9Br">
                             <rect key="frame" x="0.0" y="0.0" width="160" height="40"/>
                             <animations/>
-                            <color key="backgroundColor" red="0.27058823529411763" green="0.2627450980392157" blue="0.30588235294117649" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="backgroundColor" red="0.91764705882352937" green="0.30588235294117649" blue="0.27843137254901962" alpha="1" colorSpace="calibratedRGB"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <state key="normal" title="+ 关注"/>
                             <connections>
@@ -52,7 +52,7 @@
                         <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xE2-HO-M7u">
                             <rect key="frame" x="160" y="0.0" width="160" height="40"/>
                             <animations/>
-                            <color key="backgroundColor" red="0.91764705882352937" green="0.30588235294117649" blue="0.27843137254901962" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="backgroundColor" red="0.27058823529411763" green="0.2627450980392157" blue="0.30588235294117649" alpha="1" colorSpace="calibratedRGB"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <state key="normal" title="收藏名片"/>
                             <connections>

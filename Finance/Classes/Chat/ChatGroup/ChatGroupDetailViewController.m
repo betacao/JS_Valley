@@ -19,6 +19,7 @@
 #import "GroupBansViewController.h"
 #import "GroupSubjectChangingViewController.h"
 #import "HeadImage.h"
+#import "SHGPersonalViewController.h"
 
 #pragma mark - ChatGroupDetailViewController
 
@@ -504,11 +505,11 @@
 
 - (void)didSelecedView:(ContactView *)view
 {
-    CircleSomeOneViewController *vc = [[CircleSomeOneViewController alloc] initWithNibName:@"CircleSomeOneViewController" bundle:nil];
-    vc.userId = view.userID;
-    vc.delegate = self;
-    vc.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:vc animated:YES];
+    SHGPersonalViewController *controller = [[SHGPersonalViewController alloc] initWithNibName:@"SHGPersonalViewController" bundle:nil];
+    controller.hidesBottomBarWhenPushed = YES;
+    controller.userId = view.userID;
+    controller.delegate = self;
+    [self.navigationController pushViewController:controller animated:YES];
 }
 
 - (void)deleteContactBegin:(UILongPressGestureRecognizer *)longPress

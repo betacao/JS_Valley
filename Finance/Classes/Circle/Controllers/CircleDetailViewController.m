@@ -13,6 +13,9 @@
 #import "SDPhotoGroup.h"
 #import "SDPhotoItem.h"
 #import "SHGNavigationView.h"
+#import "SHGPersonalViewController.h"
+#import "CircleListDelegate.h"
+#import "CircleLinkViewController.h"
 
 #define PRAISE_SEPWIDTH     10
 #define PRAISE_RIGHTWIDTH     40
@@ -382,12 +385,11 @@
 }
 -(void)gotoSomeOneWithId:(NSString *)uid name:(NSString *)name
 {
-    CircleSomeOneViewController *vc = [[CircleSomeOneViewController alloc] initWithNibName:@"CircleSomeOneViewController" bundle:nil];
-    vc.hidesBottomBarWhenPushed = YES;
-    vc.userId = uid;
-    vc.userName = name;
-    vc.delegate = self;
-    [self.navigationController pushViewController:vc animated:YES];
+    SHGPersonalViewController *controller = [[SHGPersonalViewController alloc] initWithNibName:@"SHGPersonalViewController" bundle:nil];
+    controller.hidesBottomBarWhenPushed = YES;
+    controller.userId = uid;
+    controller.delegate = self;
+    [self.navigationController pushViewController:controller animated:YES];
 }
 -(void)rnickClick:(NSInteger)index
 {

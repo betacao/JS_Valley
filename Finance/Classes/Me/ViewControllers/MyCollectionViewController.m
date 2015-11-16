@@ -13,6 +13,7 @@
 #import "BasePeopleObject.h"
 #import "SHGHomeTableViewCell.h"
 #import "ProductListTableViewCell.h"
+#import "SHGPersonalViewController.h"
 @interface MyCollectionViewController ()
 {
     BOOL hasDataFinished;
@@ -331,12 +332,12 @@
 
 -(void)gotoSomeOne:(NSString *)uid name:(NSString *)name
 {
-    CircleSomeOneViewController *vc = [[CircleSomeOneViewController alloc] initWithNibName:@"CircleSomeOneViewController" bundle:nil];
-    vc.userId = uid;
-    vc.userName = name;
-    vc.delegate = self;
-    vc.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:vc animated:YES];
+    SHGPersonalViewController *controller = [[SHGPersonalViewController alloc] initWithNibName:@"SHGPersonalViewController" bundle:nil];
+    controller.hidesBottomBarWhenPushed = YES;
+    controller.userId = uid;
+    controller.delegate = self;
+    [self.navigationController pushViewController:controller animated:YES];
+    
 }
 -(void)headTap:(NSInteger)index
 {

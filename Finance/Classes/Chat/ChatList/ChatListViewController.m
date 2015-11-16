@@ -32,6 +32,7 @@
 #import "TabBarViewController.h"
 #import "ChatListTableViewCell.h"
 #import "popObj.h"
+#import "SHGPersonalViewController.h"
 
 static NSString * const kUid				= @"uid";
 static NSString * const kHeadImg			= @"headimg";
@@ -129,9 +130,7 @@ static NSString * const kCommonFNum			= @"commonnum";
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshDataSource) name:NOTIFI_CHANGE_UPDATE_FRIEND_LIST
                                                    object:nil];
     }
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeState) name:NOTIFI_CHANGE_SHOULD_UPDATE
-                                               object:nil];
-    //[self.view addSubview:self.segmentControl];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeState) name:NOTIFI_CHANGE_SHOULD_UPDATE object:nil];
     [self networkStateView];
     [self searchController];
     [self refreshDataSource];
@@ -375,16 +374,13 @@ static NSString * const kCommonFNum			= @"commonnum";
                 }
             }
             [weakSBar resignFirstResponder];
-            if ([buddy.rela isEqualToString:@"2"])
-            {
+            if ([buddy.rela isEqualToString:@"2"]){
                 return;
             }
-            CircleSomeOneViewController *vc = [[CircleSomeOneViewController alloc] init];
-            vc.userId = buddy.uid;
-            vc.userName = buddy.name;
-            vc.hidesBottomBarWhenPushed = YES;
-            [weakSelf.navigationController pushViewController:vc animated:YES];
-            
+            SHGPersonalViewController *controller = [[SHGPersonalViewController alloc] initWithNibName:@"SHGPersonalViewController" bundle:nil];
+            controller.hidesBottomBarWhenPushed = YES;
+            controller.userId = buddy.uid;
+            [weakSelf.navigationController pushViewController:controller animated:YES];
         }];
     }
     
@@ -703,11 +699,10 @@ static NSString * const kCommonFNum			= @"commonnum";
         if ([buddy.rela isEqualToString:@"2"]){
             return;
         }
-        CircleSomeOneViewController *vc = [[CircleSomeOneViewController alloc] initWithNibName:@"CircleSomeOneViewController" bundle:nil];
-        vc.userId = buddy.uid;
-        vc.userName = buddy.name;
-        vc.hidesBottomBarWhenPushed = YES;
-        [self.navigationController pushViewController:vc animated:YES];
+        SHGPersonalViewController *controller = [[SHGPersonalViewController alloc] initWithNibName:@"SHGPersonalViewController" bundle:nil];
+        controller.hidesBottomBarWhenPushed = YES;
+        controller.userId = buddy.uid;
+        [self.navigationController pushViewController:controller animated:YES];
     }
 }
 

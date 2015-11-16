@@ -12,6 +12,7 @@
 #import "EMSearchDisplayController.h"
 #import "EMSearchBar.h"
 #import "RealtimeSearchUtil.h"
+#import "SHGPersonalViewController.h"
 
 @interface MyFollowViewController ()
 	<UITableViewDelegate, UITableViewDataSource, UISearchDisplayDelegate, UISearchBarDelegate,BasePeopleTableViewCellDelegate>
@@ -297,13 +298,10 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	[tableView deselectRowAtIndexPath:indexPath animated:YES];
-    CircleSomeOneViewController *vc = [[CircleSomeOneViewController alloc] init];
     BasePeopleObject *obj = self.dataSource[indexPath.row];
-    vc.userId = obj.uid;
-    vc.userName = obj.name;
-    [self.navigationController pushViewController:vc animated:YES];
-    
-    
+    SHGPersonalViewController *controller = [[SHGPersonalViewController alloc] initWithNibName:@"SHGPersonalViewController" bundle:nil];
+    controller.userId = obj.uid;
+    [self.navigationController pushViewController:controller animated:YES];
 }
 
 - (EMSearchBar *)searchBar
@@ -366,13 +364,10 @@
 		[_searchController setDidSelectRowAtIndexPathCompletion:^(UITableView *tableView, NSIndexPath *indexPath) {
             
             [tableView deselectRowAtIndexPath:indexPath animated:YES];
-            CircleSomeOneViewController *vc = [[CircleSomeOneViewController alloc] init];
             BasePeopleObject *obj = weakSelf.searchController.resultsSource[indexPath.row];
-            vc.userId = obj.uid;
-            vc.userName = obj.name;
-            [weakSelf.navigationController pushViewController:vc animated:YES];
-            
-			
+            SHGPersonalViewController *controller = [[SHGPersonalViewController alloc] initWithNibName:@"SHGPersonalViewController" bundle:nil];
+            controller.userId = obj.uid;;
+            [weakSelf.navigationController pushViewController:controller animated:YES];
 		}];
 	}
 	

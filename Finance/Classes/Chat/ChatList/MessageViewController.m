@@ -8,6 +8,7 @@
 
 #import "MessageViewController.h"
 #import "MessageTableViewCell.h"
+#import "SHGPersonalViewController.h"
 
 @interface MessageViewController ()
 {
@@ -211,23 +212,21 @@
     {
         //进入通知
         
-    }else if ([obj.code isEqualToString:@"1004"])
-    {
+    } else if ([obj.code isEqualToString:@"1004"]){
         //进入关注人个人主页
         //进入帖子详情
-        CircleSomeOneViewController *vc = [[CircleSomeOneViewController alloc] initWithNibName:@"CircleSomeOneViewController" bundle:nil];
         MessageObj *obj = self.dataArr[indexPath.row];
-        vc.userId = obj.oid;
-        [self.navigationController pushViewController:vc animated:YES];
+        SHGPersonalViewController *controller = [[SHGPersonalViewController alloc] initWithNibName:@"SHGPersonalViewController" bundle:nil];
+        controller.userId = obj.oid;
+        [self.navigationController pushViewController:controller animated:YES];
         
-    }else if ([obj.code isEqualToString:@"1005"] || [obj.code isEqualToString:@"1006"])
-    {
+    } else if ([obj.code isEqualToString:@"1005"] || [obj.code isEqualToString:@"1006"]){
         //进入认证页面
         VerifyIdentityViewController *vc = [[VerifyIdentityViewController alloc] init];
         vc.hidesBottomBarWhenPushed = YES;
         UINavigationController *nav = (UINavigationController *)[AppDelegate currentAppdelegate].window.rootViewController;
         [nav pushViewController:vc animated:YES];
-    }else if([obj.code isEqualToString:@"1009"]){
+    } else if([obj.code isEqualToString:@"1009"]){
         
     } else{
         //进入帖子详情

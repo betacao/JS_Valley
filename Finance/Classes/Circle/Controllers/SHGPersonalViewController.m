@@ -9,6 +9,9 @@
 #import "SHGPersonalViewController.h"
 #import "SHGUserTagModel.h"
 #import "SHGPersonDynamicViewController.h"
+#import "ChatViewController.h"
+#import "ChatListViewController.h"
+
 #define kTagViewWidth 45.0f * XFACTOR
 #define kTagViewHeight 16.0f * XFACTOR
 
@@ -56,7 +59,13 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"个人动态";
-    self.listArray = [NSMutableArray arrayWithArray:@[@"他的动态", @"他的好友", @"共同好友"]];
+    if ([self.userId isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID]]) {
+        self.listArray = [NSMutableArray arrayWithArray:@[@"我的动态", @"我的好友"]];
+        self.footerView.hidden = YES;
+    } else{
+        self.listArray = [NSMutableArray arrayWithArray:@[@"他的动态", @"他的好友", @"共同好友"]];
+    }
+
     [self.tableView setTableHeaderView:self.headerView];
     [self.tableView setTableFooterView:[[UIView alloc] init]];
     [self initView];
@@ -85,16 +94,12 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
         [Hud hideHud];
         NSLog(@"=data = %@",response.dataDictionary);
         [weakSelf parseDataWithDic:response.dataDictionary];
-        [weakSelf.tableView.header endRefreshing];
-        [weakSelf.tableView.footer endRefreshing];
         [weakSelf loadUI];
         [weakSelf.tableView reloadData];
     } failed:^(MOCHTTPResponse *response) {
         [Hud showMessageWithText:response.errorMessage];
         [Hud hideHud];
         NSLog(@"%@",response.errorMessage);
-        [weakSelf.tableView.header endRefreshing];
-        [weakSelf.tableView.footer endRefreshing];
 
     }];
 }
@@ -107,14 +112,22 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
     self.userNameLabel.text = self.nickName;
     [self.tagViews removeAllSubviews];
     [self.tagViews addSubview:[self viewForTags:@[@"银行", @"证券", @"二级市场"]]];
-    if ([self.relationShip integerValue] == 0){         //未关注
-    } else if ([self.relationShip intValue] == 1){      //已关注
-    } else{
-        //互相关注
-    }
+    [self refreshFriendShip];
 
 }
 
+- (void)refreshFriendShip
+{
+    if ([self.relationShip integerValue] == 0){         //未关注
+        [self.leftButton setTitle:@"+关注" forState:UIControlStateNormal];
+    } else if ([self.relationShip intValue] == 1){      //已关注
+        [self.leftButton setTitle:@"已关注" forState:UIControlStateNormal];
+    } else{
+        //互相关注
+        [self.leftButton setTitle:@"会话" forState:UIControlStateNormal];
+    }
+
+}
 - (void)parseDataWithDic:(NSDictionary *)dictionary
 {
     self.companyName = [dictionary objectForKey: @"company"];
@@ -144,7 +157,48 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
 
 - (IBAction)leftButtonClick:(id)sender
 {
+    if ([self.relationShip integerValue] == 0) {
+        [self action];
+    } else if ([self.relationShip integerValue] == 1){
+        DXAlertView *alert = [[DXAlertView alloc] initWithTitle:@"提示" contentText:@"您与对方还不是好友，对方关注您后可进行对话" leftButtonTitle:nil rightButtonTitle:@"确定"];
+        [alert show];
+    } else{
+        [self chat];
+    }
+}
 
+//关注
+- (void)action
+{
+    __weak typeof(self) weakSelf = self;
+    NSString *url = [NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"friends"];
+    NSDictionary *param = @{@"uid":[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID],@"oid":self.userId};
+    [MOCHTTPRequestOperationManager postWithURL:url class:nil parameters:param success:^(MOCHTTPResponse *response) {
+        NSString *code = [response.data valueForKey:@"code"];
+        if ([code isEqualToString:@"000"]){
+            weakSelf.relationShip = [response.dataDictionary valueForKey:@"state"];
+            for (CircleListObj *cobj in weakSelf.dataArr){
+                if ([cobj.userid isEqualToString:weakSelf.userId]) {
+                    cobj.isattention = @"Y";
+                }
+            }
+            [self.delegate detailAttentionWithRid:weakSelf.userId attention:@"Y"];
+            CircleListObj *cObj = [[CircleListObj alloc] init];
+            cObj.userid = weakSelf.userId;
+            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_COLLECT_COLLECT_CLIC object:cObj];
+            [weakSelf loadUI];
+            [weakSelf.tableView reloadData];
+
+        }
+    } failed:^(MOCHTTPResponse *response) {
+        [Hud showMessageWithText:response.errorMessage];
+    }];
+}
+
+- (void)chat{
+    ChatViewController *chatVC = [[ChatViewController alloc] initWithChatter:self.userId isGroup:NO];
+    chatVC.title = self.nickName;
+    [self.navigationController pushViewController:chatVC animated:YES];
 }
 
 - (IBAction)rightButtonClick:(id)sender
@@ -220,15 +274,22 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
 {
     switch (indexPath.row) {
         case 0:{
+            __weak typeof(self) weakSelf = self;
             SHGPersonDynamicViewController *controller = [[SHGPersonDynamicViewController alloc] initWithNibName:@"SHGPersonDynamicViewController" bundle:nil];
             controller.userId = self.userId;
             controller.dataArr = self.dataArr;
-            controller.delegate = self;
+            controller.delegate = self.delegate;
+            controller.block = ^(NSString *state){
+                weakSelf.relationShip = state;
+                [weakSelf refreshFriendShip];
+            };
             [self.navigationController pushViewController:controller animated:YES];
         }
             break;
         case 1:{
-
+            ChatListViewController *vc = [[ChatListViewController alloc] init];
+            vc.chatListType = ContactListView;
+            [self.navigationController pushViewController:vc animated:YES];
         }
             break;
         default:{

@@ -7,7 +7,6 @@
 //
 
 #import "BaseTableViewController.h"
-#import "CircleSomeOneViewController.h"
 #import "MeTableViewCell.h"
 @interface MeViewController : BaseTableViewController<UIScrollViewDelegate>
 

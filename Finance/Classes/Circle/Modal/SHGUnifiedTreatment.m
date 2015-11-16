@@ -468,13 +468,6 @@
 
 - (void)gotoSomeOne:(NSString *)uid name:(NSString *)name
 {
-//    CircleSomeOneViewController *vc = [[CircleSomeOneViewController alloc] initWithNibName:@"CircleSomeOneViewController" bundle:nil];
-//    vc.userId = uid;
-//    vc.userName = name;
-//    vc.delegate = self;
-//    vc.hidesBottomBarWhenPushed = YES;
-//    [[SHGSegmentController sharedSegmentController].selectedViewController.navigationController pushViewController:vc animated:YES];
-
     SHGPersonalViewController *controller = [[SHGPersonalViewController alloc] initWithNibName:@"SHGPersonalViewController" bundle:nil];
     controller.hidesBottomBarWhenPushed = YES;
     controller.userId = uid;

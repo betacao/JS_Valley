@@ -13,7 +13,7 @@
 
 @interface SHGPersonDynamicViewController ()<UITableViewDataSource, UITableViewDelegate, MLEmojiLabelDelegate, CircleListDelegate, CircleActionDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-
+@property (strong, nonatomic) NSString *target;
 @end
 
 @implementation SHGPersonDynamicViewController
@@ -23,6 +23,72 @@
     self.title = @"他的动态";
     [self addHeaderRefresh:self.tableView headerRefesh:NO andFooter:YES];
 }
+
+-(void)requestDataWithTarget:(NSString *)target time:(NSString *)time
+{
+    if ([target isEqualToString:@"first"]) {
+        [self.tableView.footer resetNoMoreData];
+    }
+    NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
+    [Hud showLoadingWithMessage:@"加载中"];
+
+    __weak typeof(self) weakSelf = self;
+    NSDictionary *param = @{@"uid":uid, @"target":target, @"rid":[NSNumber numberWithInt:[time intValue]], @"num":rRequestNum};
+    [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttpCircle,actioncircle,self.userId] class:[CircleListObj class] parameters:param success:^(MOCHTTPResponse *response) {
+        [Hud hideHud];
+        NSLog(@"=data = %@",response.dataDictionary);
+        [weakSelf parseDataWithDic:response.dataDictionary];
+        [weakSelf.tableView.header endRefreshing];
+        [weakSelf.tableView.footer endRefreshing];
+        [weakSelf.tableView reloadData];
+    } failed:^(MOCHTTPResponse *response) {
+        [Hud showMessageWithText:response.errorMessage];
+        [Hud hideHud];
+        NSLog(@"%@",response.errorMessage);
+        [weakSelf.tableView.header endRefreshing];
+        [weakSelf.tableView.footer endRefreshing];
+
+    }];
+}
+
+- (void)parseDataWithDic:(NSDictionary *)dictionary
+{
+    NSArray *listArray = [dictionary objectForKey: @"list"];
+    listArray = [[SHGGloble sharedGloble] parseServerJsonArrayToJSONModel:listArray class:[CircleListObj class]];
+    if ([self.target isEqualToString:@"refresh"] && listArray.count > 0) {
+        for (NSInteger i = listArray.count - 1; i >= 0; i--){
+            CircleListObj *obj = [listArray objectAtIndex:i];
+            NSLog(@"%@",obj.rid);
+            [self.dataArr insertObject:obj atIndex:0];
+        }
+    }
+    if ([self.target isEqualToString:@"load"] && listArray.count > 0) {
+        [self.dataArr addObjectsFromArray:listArray];
+    }
+}
+
+- (void)refreshHeader
+{
+    NSLog(@"refreshHeader");
+    self.target = @"refresh";
+    if (self.dataArr.count > 0){
+        CircleListObj *obj = self.dataArr[0];
+        [self requestDataWithTarget:@"refresh" time:obj.rid];
+    }
+}
+
+
+- (void)refreshFooter
+{
+    NSLog(@"refreshFooter");
+    self.target = @"load";
+    if (self.dataArr.count > 0){
+        CircleListObj *obj = [self.dataArr lastObject];
+        [self requestDataWithTarget:@"load" time:obj.rid];
+    }
+}
+
+#pragma mark ------ tableviewdelegate
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -277,31 +343,11 @@
     }];
 }
 
-- (void)cnickCLick:(NSString *)userId name:(NSString *)name
-{
-    if ([userId isEqualToString:self.userId]) {
-        return;
-    }
-    [self gotoSomeOne:userId name:name];
-}
-
-- (void)gotoSomeOne:(NSString *)uid name:(NSString *)name
-{
-    if ([uid isEqualToString:self.userId]) {
-        return;
-    }
-    CircleSomeOneViewController *vc = [[CircleSomeOneViewController alloc] initWithNibName:@"CircleSomeOneViewController" bundle:nil];
-    vc.userId = uid;
-    vc.userName = name;
-    vc.delegate = self;
-    vc.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:vc animated:YES];
-}
-
 #pragma mark ------ 关注
 - (void)attentionClicked:(CircleListObj *)obj
 {
     [Hud showLoadingWithMessage:@"请稍等..."];
+    __weak typeof (self) weakSelf = self;
     NSString *url = [NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"friends"];
     NSDictionary *param = @{@"uid":[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID], @"oid":obj.userid};
     if (![obj.isattention isEqualToString:@"Y"]) {
@@ -314,12 +360,15 @@
                         cobj.isattention = @"Y";
                     }
                 }
-                [self.delegate detailAttentionWithRid:obj.userid attention:obj.isattention];
+                [weakSelf.delegate detailAttentionWithRid:obj.userid attention:obj.isattention];
                 [Hud showMessageWithText:@"关注成功"];
-//                NSString *state = [response.dataDictionary valueForKey:@"state"];
+                NSString *state = [response.dataDictionary valueForKey:@"state"];
+                if (weakSelf.block) {
+                    weakSelf.block(state);
+                }
             }
             [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_COLLECT_COLLECT_CLIC object:obj];
-            [self.tableView reloadData];
+            [weakSelf.tableView reloadData];
         } failed:^(MOCHTTPResponse *response) {
             [Hud hideHud];
             [Hud showMessageWithText:response.errorMessage];
@@ -334,21 +383,29 @@
                         cobj.isattention = @"N";
                     }
                 }
-                [self.delegate detailAttentionWithRid:obj.userid attention:obj.isattention];
+                [weakSelf.delegate detailAttentionWithRid:obj.userid attention:obj.isattention];
                 [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_COLLECT_COLLECT_CLIC object:obj];
                 NSDictionary *data = [[responseObject valueForKey:@"data"] parseToArrayOrNSDictionary];
                 NSString *state = [data valueForKey:@"state"];
+                if (weakSelf.block) {
+                    weakSelf.block(state);
+                }
                 if ([state isEqualToString:@"0"]) {
                     [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_CHANGE_SHOULD_UPDATE object:nil];
                 }
                 [Hud showMessageWithText:@"取消关注成功"];
             }
-            [self.tableView reloadData];
+            [weakSelf.tableView reloadData];
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             [Hud hideHud];
             [Hud showMessageWithText:error.domain];
         }];
     }
+
+}
+
+- (void)headTap:(NSInteger)index
+{
 
 }
 
@@ -362,54 +419,89 @@
     }
 }
 
-- (void)action{
+#pragma mark ------删除
+- (void)deleteClicked:(CircleListObj *)obj
+{
+    //删除
+    __weak typeof(self) weakSelf = self;
+    DXAlertView *alert = [[DXAlertView alloc] initWithTitle:@"提示" contentText:@"确认删除吗?" leftButtonTitle:@"取消" rightButtonTitle:@"删除"];
+    alert.rightBlock = ^{
+        NSString *url = [NSString stringWithFormat:@"%@/%@",rBaseAddressForHttpCircle,@"circle"];
+        NSDictionary *dic = @{@"rid":obj.rid, @"uid":obj.userid};
+        [[AFHTTPRequestOperationManager manager] DELETE:url parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            NSLog(@"%@",responseObject);
+            NSString *code = [responseObject valueForKey:@"code"];
+            if ([code isEqualToString:@"000"]){
+                [weakSelf detailDeleteWithRid:obj.rid];
+                [weakSelf.delegate detailDeleteWithRid:obj.rid];
+            }
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            [Hud showMessageWithText:error.domain];
+        }];
+    };
+    [alert show];
+}
 
-    NSString *url = [NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"friends"];
-    NSDictionary *param = @{@"uid":[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID],@"oid":self.userId};
-    [MOCHTTPRequestOperationManager postWithURL:url class:nil parameters:param success:^(MOCHTTPResponse *response) {
+#pragma mark ------评论
+- (void)clicked:(NSInteger)index
+{
+    CircleListObj *obj = [self.dataArr objectAtIndex:index];
+    CircleDetailViewController *vc = [[CircleDetailViewController alloc] initWithNibName:@"CircleDetailViewController" bundle:nil];
+    vc.rid = obj.rid;
+    vc.delegate = self;
+    [self.navigationController pushViewController:vc animated:YES];
+}
 
-        NSString *code = [response.data valueForKey:@"code"];
-        if ([code isEqualToString:@"000"]){
-            for (CircleListObj *cobj in self.dataArr){
-                if ([cobj.userid isEqualToString:self.userId]) {
-                    cobj.isattention = @"Y";
-                }
+#pragma mark ------点赞
+- (void)praiseClicked:(CircleListObj *)obj
+{
+    __weak typeof(self) weakSelf = self;
+    NSString *url = [NSString stringWithFormat:@"%@/%@",rBaseAddressForHttpCircle,@"praisesend"];
+    NSDictionary *param = @{@"uid":[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID],@"rid":obj.rid};
+
+    if (![obj.ispraise isEqualToString:@"Y"]) {
+        [Hud showLoadingWithMessage:@"正在点赞"];
+        [MOCHTTPRequestOperationManager postWithURL:url class:nil parameters:param success:^(MOCHTTPResponse *response) {
+            NSLog(@"%@",response.data);
+            NSString *code = [response.data valueForKey:@"code"];
+            if ([code isEqualToString:@"000"]) {
+                obj.ispraise = @"Y";
+                obj.praisenum = [NSString stringWithFormat:@"%ld",(long)([obj.praisenum integerValue] + 1)];
+            }
+            [Hud showMessageWithText:@"赞成功"];
+            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_COLLECT_PRAISE_CLICK object:obj];
+
+            [weakSelf.tableView reloadData];
+            [weakSelf.delegate detailPraiseWithRid:obj.rid praiseNum:obj.praisenum isPraised:@"Y"];
+            [Hud hideHud];
+        } failed:^(MOCHTTPResponse *response) {
+            [Hud showMessageWithText:response.errorMessage];
+            [Hud hideHud];
+        }];
+    } else{
+        [Hud showLoadingWithMessage:@"正在取消点赞"];
+        [[AFHTTPRequestOperationManager manager] DELETE:url parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            NSLog(@"%@",responseObject);
+            NSString *code = [responseObject valueForKey:@"code"];
+            if ([code isEqualToString:@"000"]) {
+                obj.ispraise = @"N";
+                obj.praisenum = [NSString stringWithFormat:@"%ld",(long)[obj.praisenum integerValue] -1];
             }
 
-            [self.delegate detailAttentionWithRid:self.userId attention:@"Y"];
-            CircleListObj *cObj = [[CircleListObj alloc] init];
-            cObj.userid = self.userId;
-            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_COLLECT_COLLECT_CLIC object:cObj];
-            [self.tableView reloadData];
-
-        }
-    } failed:^(MOCHTTPResponse *response) {
-        [Hud showMessageWithText:response.errorMessage];
-    }];
-}
-
-- (void)chat{
-    ChatViewController *chatVC = [[ChatViewController alloc] initWithChatter:self.userId isGroup:NO];
-//    chatVC.title = self.userName;
-    [self.navigationController pushViewController:chatVC animated:YES];
-}
-
-- (IBAction)actionChat:(id)sender {
-
-//    if ([self.rela intValue] == 0) {
-//        [self action];
-//    }
-//    else if ([self.rela intValue] == 1){
-//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"您与对方还不是好友，对方关注您后可进行对话" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-//        [alert show];
-//    } else{
-//        [self chat];
-//    }
-
+            [Hud hideHud];
+            [Hud showMessageWithText:@"取消点赞"];
+            [weakSelf.tableView reloadData];
+            [weakSelf.delegate detailPraiseWithRid:obj.rid praiseNum:obj.praisenum isPraised:@"N"];
+            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_COLLECT_PRAISE_CLICK object:obj];
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error){
+            [Hud hideHud];
+            [Hud showMessageWithText:error.domain];
+        }];
+    }
+    
 }
 
 #pragma mark detailDelagte
-
 - (void)detailDeleteWithRid:(NSString *)rid
 {
     for (CircleListObj *obj in self.dataArr) {
@@ -422,20 +514,18 @@
     [self.tableView reloadData];
 }
 
--(void)detailPraiseWithRid:(NSString *)rid praiseNum:(NSString *)num isPraised:(NSString *)isPrased
+- (void)detailPraiseWithRid:(NSString *)rid praiseNum:(NSString *)num isPraised:(NSString *)isPrased
 {
     for (CircleListObj *obj in self.dataArr) {
         if ([obj.rid isEqualToString:rid]) {
             obj.praisenum = num;
             obj.ispraise = isPrased;
             [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_COLLECT_PRAISE_CLICK object:obj];
-
             break;
         }
 
     }
     [self.delegate detailPraiseWithRid:rid praiseNum:num isPraised:isPrased];
-
     [self.tableView reloadData];
 }
 
@@ -445,7 +535,6 @@
         if ([obj.rid isEqualToString:rid]) {
             obj.sharenum = num;
             [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_COLLECT_SHARE_CLIC object:obj];
-
             break;
         }
     }
@@ -487,25 +576,6 @@
 
 }
 
-- (void)gesToFriendList:(DDTapGestureRecognizer *)ge
-{
-    [self gotoFriendList];
-}
-
-- (void)gotoFriendList
-{
-    if (![self.userId isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID]]) {
-        return;
-    }
-    ChatListViewController *vc = [[ChatListViewController alloc] init];
-    vc.chatListType = ContactListView;
-    [self.navigationController pushViewController:vc animated:YES];
-}
-
-- (IBAction)actionFriendList:(id)sender {
-
-    [self gotoFriendList];
-}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }
