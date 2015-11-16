@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9060" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9059" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -11,21 +12,21 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="277"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="276"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="276.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="action_bg" translatesAutoresizingMaskIntoConstraints="NO" id="J6e-MY-IN3">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="251"/>
-                        <animations/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="251" id="XWI-sb-4rr"/>
-                        </constraints>
-                    </imageView>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="action_bg" translatesAutoresizingMaskIntoConstraints="NO" id="a10-v3-odu" userLabel="TopLineImage View">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="1"/>
                         <animations/>
                         <constraints>
                             <constraint firstAttribute="height" constant="1" id="3I8-4a-aKS"/>
+                        </constraints>
+                    </imageView>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="8iq-lf-aAa">
+                        <rect key="frame" x="0.0" y="1" width="320" height="40"/>
+                        <animations/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="40" id="DXD-m7-HvU"/>
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="一起聊一聊互联网招聘第二期" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Msv-J0-yWL">
@@ -312,17 +313,19 @@
                     <constraint firstItem="Msv-J0-yWL" firstAttribute="top" secondItem="a10-v3-odu" secondAttribute="bottom" id="6xk-sm-ECy"/>
                     <constraint firstItem="yKK-lG-O25" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="9RV-jU-fxu"/>
                     <constraint firstItem="a10-v3-odu" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="Gym-BV-1cX"/>
+                    <constraint firstItem="8iq-lf-aAa" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="-7" id="KSv-e7-E5h"/>
+                    <constraint firstItem="8iq-lf-aAa" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="-8" id="MFS-y6-b29"/>
                     <constraint firstAttribute="trailing" secondItem="yKK-lG-O25" secondAttribute="trailing" id="Owx-lG-R8S"/>
                     <constraint firstItem="yKK-lG-O25" firstAttribute="top" secondItem="Msv-J0-yWL" secondAttribute="bottom" id="Y2Q-o7-qHC"/>
+                    <constraint firstItem="Msv-J0-yWL" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="-7" id="YCa-1X-pK4"/>
                     <constraint firstItem="a10-v3-odu" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="ZQ3-u6-3di"/>
                     <constraint firstItem="yKK-lG-O25" firstAttribute="top" secondItem="a10-v3-odu" secondAttribute="bottom" id="ZT0-gJ-q8c"/>
-                    <constraint firstItem="J6e-MY-IN3" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="Zch-dp-Oam"/>
                     <constraint firstAttribute="trailing" secondItem="a10-v3-odu" secondAttribute="trailing" id="b4e-Wy-UD8"/>
                     <constraint firstAttribute="trailing" secondItem="Msv-J0-yWL" secondAttribute="trailing" id="cnm-wj-wqq"/>
                     <constraint firstItem="Msv-J0-yWL" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="eOw-vd-OYh"/>
+                    <constraint firstItem="Msv-J0-yWL" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="-8" id="fGR-yD-1T6"/>
                     <constraint firstItem="IOA-ye-xM2" firstAttribute="top" secondItem="Msv-J0-yWL" secondAttribute="bottom" id="htw-AL-L8X"/>
-                    <constraint firstItem="J6e-MY-IN3" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="jd7-fN-R4x"/>
-                    <constraint firstAttribute="trailing" secondItem="J6e-MY-IN3" secondAttribute="trailing" id="oMT-BJ-xlI"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="8iq-lf-aAa" secondAttribute="trailing" constant="-8" id="uPv-Hq-SZN"/>
                 </constraints>
                 <variation key="default">
                     <mask key="constraints">
@@ -337,7 +340,6 @@
                 <outlet property="Action_addressLabel" destination="fUK-Km-6kx" id="FIh-T8-aKO"/>
                 <outlet property="Action_allNumImage" destination="y2i-vz-fuB" id="lkm-Vh-Ccc"/>
                 <outlet property="Action_allNumLabel" destination="ifn-i9-7ct" id="aeQ-RP-F3d"/>
-                <outlet property="Action_bgImage" destination="J6e-MY-IN3" id="Ccs-5G-hTE"/>
                 <outlet property="Action_bottomLine" destination="Svv-cy-Lpg" id="mDA-0b-fYa"/>
                 <outlet property="Action_centerLine" destination="5Wq-hb-oHN" id="VlG-si-JAC"/>
                 <outlet property="Action_commentButton" destination="ScY-N0-pUa" id="IQ4-xI-BZ3"/>
@@ -358,6 +360,7 @@
                 <outlet property="Action_titlelabel" destination="Msv-J0-yWL" id="vMo-xs-veJ"/>
                 <outlet property="Action_topLine" destination="a10-v3-odu" id="voj-d2-Mvr"/>
                 <outlet property="Action_zanButton" destination="4dj-LZ-0mX" id="HTr-9G-yyf"/>
+                <outlet property="Acyion_titleBg" destination="8iq-lf-aAa" id="9Vm-cB-ldT"/>
                 <outlet property="thrButtonView" destination="sTb-GA-tLL" id="2Vy-hJ-2um"/>
                 <outlet property="twoButtonView" destination="hZy-1S-2WQ" id="6OP-Aj-omG"/>
             </connections>
@@ -367,7 +370,7 @@
     <resources>
         <image name="action_address" width="11" height="15"/>
         <image name="action_baoming" width="13" height="13"/>
-        <image name="action_bg" width="55" height="44"/>
+        <image name="action_bg" width="31" height="45"/>
         <image name="action_invite" width="12" height="12"/>
         <image name="action_time" width="13" height="13"/>
         <image name="default_head" width="48" height="48"/>

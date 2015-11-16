@@ -9,7 +9,8 @@
 #import "SHGActionListViewController.h"
 #import "SHGActionTableViewCell.h"
 #import "SHGActionObject.h"
-//#define kActionViewCellHeight 300.0 * XFACTOR
+#import "SHGActionDetailViewController.h"
+
 @interface SHGActionListViewController ()<UITableViewDataSource, UITableViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *listTable;
@@ -18,7 +19,7 @@
 
 @implementation SHGActionListViewController
 
--(id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self){
@@ -30,6 +31,7 @@
     [super viewDidLoad];
     self.listTable.delegate = self;
     self.listTable.dataSource = self;
+    [self addHeaderRefresh:self.listTable headerRefesh:YES andFooter:YES];
     [self loadDataWithType:@"first" meetID:@""];
 }
 
@@ -57,7 +59,31 @@
         [Hud hideHud];
         [Hud showMessageWithText:@"网络连接失败"];
     }];
+    [self.listTable.header endRefreshing];
+    [self.listTable.footer endRefreshing];
 }
+
+- (void)refreshHeader
+{
+    [self loadDataWithType:@"refresh" meetID:[self maxMeetID]];
+}
+
+
+- (void)refreshFooter
+{
+    [self loadDataWithType:@"load" meetID:[self minMeetID]];
+}
+
+- (NSString *)maxMeetID
+{
+    return ((SHGActionObject *)[self.dataArr firstObject]).meetId;
+}
+
+- (NSString *)minMeetID
+{
+    return ((SHGActionObject *)[self.dataArr lastObject]).meetId;
+}
+#pragma mark ------tableview
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -75,6 +101,12 @@
     SHGActionObject *object = [self.dataArr objectAtIndex:indexPath.row];
     [cell loadDataWithObject:object];
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    SHGActionDetailViewController *controller = [[SHGActionDetailViewController alloc] init];
+    [self.navigationController pushViewController:controller animated:YES];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath

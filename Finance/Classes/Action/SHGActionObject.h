@@ -8,8 +8,23 @@
 
 #import <Mantle/Mantle.h>
 
+typedef NS_ENUM(NSInteger, SHGActionState) {
+    SHGActionStateVerying = 1,//审核中
+    SHGActionStateSuccess = 2,//通过审核
+    SHGActionStateFailed = 3//驳回
+};
+
 @interface SHGActionObject : MTLModel<MTLJSONSerializing>
 
+//人员属性
+@property (strong, nonatomic) NSString *headerImageUrl;
+@property (strong, nonatomic) NSString *status;
+@property (strong, nonatomic) NSString *postion;
+@property (strong, nonatomic) NSString *department;
+@property (strong, nonatomic) NSString *company;
+@property (strong, nonatomic) NSString *realName;
+@property (strong, nonatomic) NSString *friendShip;
+//活动属性
 @property (strong, nonatomic) NSString *meetId;
 @property (strong, nonatomic) NSString *startTime;
 @property (strong, nonatomic) NSString *theme;

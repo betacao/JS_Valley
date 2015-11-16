@@ -21,6 +21,7 @@
 #import "SHGActionListViewController.h"
 #import "SHGActionMineViewController.h"
 #import "SHGActionSegmentViewController.h"
+#import "SHGActionDetailViewController.h"
 //为标签弹出框定义的值
 #define kItemTopMargin  18.0f * XFACTOR
 #define kItemMargin 14.0f * XFACTOR
@@ -610,18 +611,25 @@
 //        vc.hidesBottomBarWhenPushed = YES;
 //        [MobClick event:@"MyAppointmentViewController" label:@"onClick"];
 //        [self.navigationController pushViewController:vc animated:YES];
-        SHGActionSegmentViewController *segmentViewController = [[SHGActionSegmentViewController alloc] init];;
-        SHGActionListViewController *leftController = [[SHGActionListViewController alloc] init];
-        SHGActionMineViewController *rightController = [[SHGActionMineViewController alloc] init];
-        segmentViewController.viewControllers = @[leftController, rightController];
-        segmentViewController.hidesBottomBarWhenPushed = YES;
-        [MobClick event:@"SHGActionViewController" label:@"onClick"];
-        [self.navigationController pushViewController:segmentViewController animated:YES];
+        
+//        SHGActionSegmentViewController *segmentViewController = [[SHGActionSegmentViewController alloc] init];;
+//        SHGActionListViewController *leftController = [[SHGActionListViewController alloc] init];
+//        SHGActionMineViewController *rightController = [[SHGActionMineViewController alloc] init];
+//        segmentViewController.viewControllers = @[leftController, rightController];
+//        segmentViewController.hidesBottomBarWhenPushed = YES;
+//        [MobClick event:@"SHGActionViewController" label:@"onClick"];
+//        [self.navigationController pushViewController:segmentViewController animated:YES];
+        
+        SHGActionDetailViewController *vc = [[SHGActionDetailViewController alloc] init];
+        vc.hidesBottomBarWhenPushed = YES;
+        [MobClick event:@"SHGActionDetailViewController" label:@"onClick"];
+        [self.navigationController pushViewController:vc animated:YES];
     }else if (indexPath.row == 3) {
         MyCollectionViewController *vc = [[MyCollectionViewController alloc] init];
         vc.hidesBottomBarWhenPushed = YES;
         [MobClick event:@"MyCollectionViewController" label:@"onClick"];
         [self.navigationController pushViewController:vc animated:YES];
+       
     }else if (indexPath.row == 4) {
         MyAddressViewController *vc = [[MyAddressViewController alloc] init];
         vc.hidesBottomBarWhenPushed = YES;

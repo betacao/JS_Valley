@@ -10,4 +10,7 @@
 
 @interface SHGPersonDynamicViewController : BaseTableViewController
 
+@property (strong, nonatomic) NSString *userId;
+
+@property (nonatomic, weak) id<CircleActionDelegate> delegate;
 @end
