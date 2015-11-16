@@ -234,15 +234,22 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
     label.textColor = [UIColor colorWithHexString:@"4b88b7"];
     switch (indexPath.row) {
         case 0:{
+            if (self.dynamicNumber) {
             label.text = [NSString stringWithFormat:@"%@条",self.dynamicNumber];
+            }
         }
             break;
         case 1:{
-            label.text = [NSString stringWithFormat:@"%@人",self.friendNumber];
+            if (self.friendNumber) {
+                label.text = [NSString stringWithFormat:@"%@人",self.friendNumber];
+            }
         }
             break;
         case 2:{
-            label.text = [NSString stringWithFormat:@"%@人",self.friendNumber];
+            if (self.friendNumber) {
+                label.text = [NSString stringWithFormat:@"%@人",self.friendNumber];
+            }
+
         }
             break;
         default:
