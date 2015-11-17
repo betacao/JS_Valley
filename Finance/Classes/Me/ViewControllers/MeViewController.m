@@ -627,13 +627,7 @@
 //        vc.hidesBottomBarWhenPushed = YES;
 //        [MobClick event:@"MyCollectionViewController" label:@"onClick"];
 //        [self.navigationController pushViewController:vc animated:YES];
-        SHGAuthenticationViewController *vc = [[SHGAuthenticationViewController alloc] init];
-        vc.hidesBottomBarWhenPushed = YES;
-        [MobClick event:@"SHGAuthenticationViewController" label:@"onClick"];
-        [self.navigationController pushViewController:vc animated:YES];
         
-
-       
     }else if (indexPath.row == 4) {
         MyAddressViewController *vc = [[MyAddressViewController alloc] init];
         vc.hidesBottomBarWhenPushed = YES;

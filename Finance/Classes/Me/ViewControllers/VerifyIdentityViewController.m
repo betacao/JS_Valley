@@ -63,6 +63,10 @@
 	self.isSelectImage = NO;
     self.view.backgroundColor= [UIColor whiteColor];
     
+    self.identifyImageView.layer.cornerRadius = 5;
+    self.identifyImageView.layer.masksToBounds = YES;
+    //自适应图片宽高比例
+    //self.identifyImageView.contentMode = UIViewContentModeScaleAspectFit;
     self.titleLabel.font = [UIFont boldSystemFontOfSize:17];
     NSMutableAttributedString *noteStr = [[NSMutableAttributedString alloc] initWithString:@"认证可获实时业务资讯及优质人脉关注"];
     [noteStr addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"3588c8"] range:NSMakeRange(0, 4)];
@@ -114,9 +118,7 @@
 //	tap.cancelsTouchesInView = NO;
 	[self.selectIndustryBackgroundView addGestureRecognizer:tap];
 	self.selectIndustryBackgroundView.backgroundColor = RGBA(1, 1, 1, 0.5);
-	
-	
-//	self.selectIndustryTableView.editing = YES;
+	//	self.selectIndustryTableView.editing = YES;
 	self.selectIndustryTableView.layer.masksToBounds = YES;
 	self.selectIndustryTableView.layer.cornerRadius = 15;
 }
