@@ -10,7 +10,6 @@
 
 @interface SHGSelectTagsViewController : UIViewController
 
-+ (instancetype)shareTagsViewController;
 
 @end
 

@@ -21,16 +21,6 @@
 
 @implementation SHGSelectTagsViewController
 
-+ (instancetype)shareTagsViewController
-{
-    static SHGSelectTagsViewController *shareController = nil;
-    static dispatch_once_t predicate;
-    dispatch_once(&predicate, ^{
-        shareController = [[self alloc] init];
-    });
-    return shareController;
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
 }

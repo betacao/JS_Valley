@@ -8,12 +8,13 @@
 
 #import "SHGActionSendViewController.h"
 
-#define kTextFieldMargin 15.0f * XFACTOR
-#define kTextFieldLeftMargin 10.0f
+#define kTextViewOriginalHeight 80.0f
 #define kTextFieldMaxMargin 77.0f
 
-@interface SHGActionSendViewController ()<UITextFieldDelegate, UITextViewDelegate>
-@property (weak, nonatomic) IBOutlet UIView *bgView;
+@interface SHGActionSendViewController ()<UITextFieldDelegate, UITextViewDelegate, UITableViewDataSource, UITableViewDelegate>
+
+@property (strong, nonatomic) IBOutlet UIView *bgView;
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UITextField *actionTitleField;
 @property (weak, nonatomic) IBOutlet UITextField *startTimeField;
 @property (weak, nonatomic) IBOutlet UITextField *endTimeField;
@@ -23,10 +24,9 @@
 @property (weak, nonatomic) IBOutlet UIButton *nextButton;
 @property (weak, nonatomic) IBOutlet UIDatePicker *datePicker;
 @property (strong, nonatomic) IBOutlet UIView *pickerBgView;
-
-
+@property (strong, nonatomic) IBOutlet UIView *nextBgView;
+@property (strong, nonatomic) IBOutlet UITableViewCell *introduceCell;
 @property (strong, nonatomic) id currentContext;
-@property (strong, nonatomic) id nextContext;
 @property (assign, nonatomic) CGFloat keyBoardOrginY;
 
 @end
@@ -36,6 +36,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"发起活动";
+    [self.tableView setTableHeaderView:self.bgView];
+    [self.tableView setTableFooterView:self.nextBgView];
     [self initView];
 
 }
@@ -67,15 +69,6 @@
 - (void)textFieldDidBeginEditing:(UITextField *)textField
 {
     self.currentContext = textField;
-    if ([textField isEqual:self.actionTitleField]) {
-        self.nextContext = self.startTimeField;
-    }
-    if ([textField isEqual:self.positionField]) {
-        self.nextContext = self.invateNumber;
-    }
-    if ([textField isEqual:self.invateNumber]) {
-        self.nextContext = self.introduceView;
-    }
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
@@ -87,7 +80,6 @@
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
 {
     if ([textField isEqual:self.startTimeField] || [textField isEqual:self.endTimeField]) {
-        self.nextContext = self.positionField;
         [self selectDate:textField];
         return NO;
     }
@@ -100,31 +92,21 @@
     NSValue *value = [info objectForKey:UIKeyboardFrameEndUserInfoKey];
     CGPoint keyboardOrigin = [value CGRectValue].origin;
     self.keyBoardOrginY = keyboardOrigin.y;
-    if (self.nextContext) {
-        UIView *view = (UIView *)self.nextContext;
-        if (CGRectGetMinY(view.frame) + kTextFieldMaxMargin > keyboardOrigin.y) {
-            [UIView animateWithDuration:0.25f animations:^{
-                CGRect frame = self.bgView.frame;
-                frame.origin.y = keyboardOrigin.y - CGRectGetMinY(view.frame) - kTextFieldMaxMargin;
-                self.bgView.frame = frame;
-            }];
+    UIView *view = (UIView *)self.currentContext;
+    CGPoint point = CGPointMake(0.0f, CGRectGetMinY(view.frame));
+    if ([self.currentContext isEqual:self.introduceView]) {
+        if (CGRectGetHeight(self.introduceView.frame) > kTextViewOriginalHeight) {
+            point = CGPointMake(0.0f, CGRectGetMaxY(view.frame));
         }
-    } else if([self.currentContext isEqual:self.introduceView]){
-        [UIView animateWithDuration:0.25 animations:^{
-            CGRect frame = self.bgView.frame;
-            frame.origin.y = keyboardOrigin.y - CGRectGetMaxY(self.introduceView.frame) - kTextFieldMaxMargin;
-            self.bgView.frame = frame;
-        }];
+        point = [self.introduceCell convertPoint:point toView:self.tableView];
+        point.y -= kTextFieldMaxMargin;
     }
+    [self.tableView setContentOffset:point animated:YES];
 }
 
 - (void)keyBoardDidHide:(NSNotification *)notificaiton
 {
-    [UIView animateWithDuration:0.25f animations:^{
-        CGRect frame = self.bgView.frame;
-        frame.origin.y = 0.0f;
-        self.bgView.frame = frame;
-    }];
+
 }
 
 
@@ -132,34 +114,23 @@
 - (void)textViewDidBeginEditing:(UITextView *)textView
 {
     self.currentContext = textView;
-    self.nextContext = nil;
 }
 
-- (void)textViewDidChange:(UITextView *)textView
+- (BOOL)textViewShouldEndEditing:(UITextView *)textView
 {
     CGSize size = [textView sizeThatFits:CGSizeMake(CGRectGetWidth(textView.frame), MAXFLOAT)];
     CGRect frame = textView.frame;
     frame.size.height = size.height;
-    if (!CGRectEqualToRect(textView.frame, frame)) {
-        [UIView animateWithDuration:0.25f animations:^{
-            textView.frame = frame;
-            CGRect selfFrame = self.bgView.frame;
-            selfFrame.origin.y = self.keyBoardOrginY - CGRectGetMaxY(frame)- kTextFieldMaxMargin;
-            self.bgView.frame = selfFrame;
-            selfFrame = self.nextButton.frame;
-            selfFrame.origin.y = CGRectGetMaxY(textView.frame) + 60.0f;
-            self.nextButton.frame = selfFrame;
-            if (CGRectGetMaxY(selfFrame) > CGRectGetHeight(self.bgView.frame)) {
-                CGRect selfFrame = self.bgView.frame;
-                selfFrame.origin.y = self.keyBoardOrginY - CGRectGetMaxY(frame)- kTextFieldMaxMargin;
-                self.bgView.frame = selfFrame;
-            }
-        }];
+    if (!CGRectEqualToRect(textView.frame, frame) && CGRectGetHeight(frame) > kTextViewOriginalHeight) {
+        textView.frame = frame;
+        [self.tableView performSelector:@selector(reloadData) withObject:nil afterDelay:0.01f];
     }
+    return YES;
+
 }
 
 
-- (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
 {
     [self.currentContext resignFirstResponder];
 }
@@ -215,6 +186,22 @@
         return NO;
     }
     return YES;
+}
+
+#pragma mark tableViewDelegate
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return 1;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return CGRectGetHeight(self.introduceView.frame);
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return self.introduceCell;
 }
 
 
