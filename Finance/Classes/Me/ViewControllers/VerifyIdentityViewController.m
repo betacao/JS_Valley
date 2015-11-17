@@ -21,10 +21,12 @@
 @property (nonatomic, strong) IBOutlet UITableViewCell *statusCell;
 @property (nonatomic, strong) NSString *status;
 @property (nonatomic, strong) IBOutlet UILabel	*statusLabel;
+@property (weak, nonatomic) IBOutlet UILabel *status_statuLabel;
 
 @property (nonatomic, strong) IBOutlet UITableViewCell *industryCell;
 @property (nonatomic, strong) NSString *industryName;
 @property (nonatomic, strong) NSString *industryCode;
+@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 
 @property (nonatomic, strong) IBOutlet UITableViewCell *identifyCell;
 
@@ -38,7 +40,6 @@
 - (void)selectIdentifyImageViewTapped;
 
 @property (nonatomic, strong) IBOutlet UILabel *tipsLabel;
-
 @property (nonatomic, strong) IBOutlet UIButton *submitButton;
 - (IBAction)submitButtonClicked:(id)sender;
 
@@ -60,7 +61,19 @@
 	self.title  = @"身份认证";
 	self.isWantToChange = NO;
 	self.isSelectImage = NO;
-	
+    self.view.backgroundColor= [UIColor whiteColor];
+    
+    self.titleLabel.font = [UIFont boldSystemFontOfSize:17];
+    NSMutableAttributedString *noteStr = [[NSMutableAttributedString alloc] initWithString:@"认证可获实时业务资讯及优质人脉关注"];
+    [noteStr addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"3588c8"] range:NSMakeRange(0, 4)];
+    [self.titleLabel setAttributedText:noteStr];
+    [noteStr addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"3588c8"] range:NSMakeRange(10,1)];
+    [noteStr addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"f8514b"] range:NSMakeRange(4, 6)];
+    [noteStr addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"f8514b"] range:NSMakeRange(11, 6)];
+    [self.titleLabel setAttributedText:noteStr];
+    [self.titleLabel setAttributedText:noteStr];
+    self.titleLabel.attributedText = noteStr;
+    
 	NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
 	[MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttp,@"user",@"myidentity"] parameters:@{@"uid":uid}success:^(MOCHTTPResponse *response) {
 		
@@ -77,7 +90,16 @@
 		
 	} failed:^(MOCHTTPResponse *response) {
 	}];
+    self.identifyImageView.userInteractionEnabled = YES;
+    UITapGestureRecognizer *singleTap1 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(buttonpress)];
+    [self.identifyImageView addGestureRecognizer:singleTap1];
+    
+    //[myScrollView addSubview:self.identifyImageView];
 
+}
+-(void)buttonpress
+{
+    [self selectIdentifyImageViewTapped];
 }
 -(void)viewWillAppear:(BOOL)animated
 {
@@ -117,14 +139,15 @@
 	self.noImageView.hidden = YES;
 	self.identifyImageView.hidden = NO;
 	if ([self.status isEqualToString:@"0"]) {
-		self.statusLabel.text = @"未审核";
+		self.status_statuLabel.text = @"未认证";
 		
-		[self.submitButton setTitle:@"立即提交" forState:UIControlStateNormal];
-		[self.submitButton setTitle:@"立即提交" forState:UIControlStateHighlighted];
+		[self.submitButton setTitle:@"提交" forState:UIControlStateNormal];
+		[self.submitButton setTitle:@"提交" forState:UIControlStateHighlighted];
 		
 		[self.selectIndustryButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
 
 		self.tipsLabel.hidden = YES;
+        
 		
 		if (!self.isSelectImage) {
 			self.noImageLabel.hidden = NO;
@@ -132,7 +155,7 @@
 //			self.identifyImageView.hidden = YES;
 		}
 	}else if ([self.status isEqualToString:@"1"]){
-		self.statusLabel.text = @"审核中";
+		self.status_statuLabel.text = @"审核中";
 		
 		[self.submitButton setTitle:@"更新" forState:UIControlStateNormal];
 		[self.submitButton setTitle:@"更新" forState:UIControlStateHighlighted];
@@ -147,11 +170,12 @@
 
 		self.tipsLabel.hidden = NO;
 	}else if ([self.status isEqualToString:@"2"]){
-		self.statusLabel.text = @"已认证";
+		self.status_statuLabel.text = @"已认证";
 		
 		if (self.isWantToChange) {
-			[self.submitButton setTitle:@"立即提交" forState:UIControlStateNormal];
-			[self.submitButton setTitle:@"立即提交" forState:UIControlStateHighlighted];
+//            self.submitButton.hidden = YES;
+			[self.submitButton setTitle:@"更新" forState:UIControlStateNormal];
+			[self.submitButton setTitle:@"更新" forState:UIControlStateHighlighted];
 			[self.selectIndustryButton setBackgroundImage:[UIImage imageNamed:@"me_select_industry"] forState:UIControlStateNormal];
 			[self.selectIndustryButton setBackgroundImage:[UIImage imageNamed:@"me_select_industry"] forState:UIControlStateHighlighted];
 			[self.selectIndustryButton setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
@@ -177,7 +201,7 @@
 		
 		self.tipsLabel.hidden = YES;
 	}else if ([self.status isEqualToString:@"3"]){
-		self.statusLabel.text = @"审核被拒";
+		self.status_statuLabel.text = @"审核被拒";
 
 		if (self.isWantToChange) {
 			[self.submitButton setTitle:@"提交" forState:UIControlStateNormal];
@@ -195,8 +219,8 @@
 			
 			
 		}else{
-			[self.submitButton setTitle:@"重新提交" forState:UIControlStateNormal];
-			[self.submitButton setTitle:@"重新提交" forState:UIControlStateHighlighted];
+			[self.submitButton setTitle:@"提交" forState:UIControlStateNormal];
+			[self.submitButton setTitle:@"提交" forState:UIControlStateHighlighted];
 			[self.selectIndustryButton setBackgroundImage:nil forState:UIControlStateNormal];
 			[self.selectIndustryButton setBackgroundImage:nil forState:UIControlStateHighlighted];
 			[self.selectIndustryButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
@@ -258,10 +282,10 @@
 			
 		}
 	}
-	if (IsStrEmpty(self.industryCode)) {
-		[Hud showMessageWithText:@"请选择行业"];
-		return;
-	}
+//	if (IsStrEmpty(self.industryCode)) {
+//		[Hud showMessageWithText:@"请选择行业"];
+//		return;
+//	}
 	
 	if (self.identifyImage) {
 		[Hud showLoadingWithMessage:@"正在上传图片..."];
@@ -450,9 +474,9 @@
 	if (tableView == self.tableView)
 	{
 		if (section == 0) {
-			return 10;
+			return 0;
 		}if (section == 1) {
-			return 5;
+			return 15;
 		}else{
 			return 0;
 		}
@@ -480,9 +504,9 @@
 		if (indexPath.section == 0) {
 			return 55;
 		}else if(indexPath.section == 1){
-			return 55;
+			return 90;
 		}else if (indexPath.section == 2){
-			return 310;
+			return 410;
 		}
 	}
 	
@@ -570,7 +594,7 @@
 		}else if(indexPath.section == 1){
 			
 		}else if(indexPath.section == 2){
-			[self selectIdentifyImageViewTapped];
+			//[self selectIdentifyImageViewTapped];
 		}
 	}
 	
