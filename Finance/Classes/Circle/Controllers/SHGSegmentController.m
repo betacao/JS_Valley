@@ -250,9 +250,15 @@
 //发布
 - (void)actionPost:(UIButton *)button
 {
-    if([self.selectedViewController respondsToSelector:@selector(actionPost:)]){
-        [self.selectedViewController performSelector:@selector(actionPost:) withObject:button];
-    }
+    __weak typeof(self)weakSelf = self;
+    [[SHGGloble sharedGloble] requsetUserVerifyStatus:^(BOOL status) {
+        if (status) {
+            if([weakSelf.selectedViewController respondsToSelector:@selector(actionPost:)]){
+                [weakSelf.selectedViewController performSelector:@selector(actionPost:) withObject:button];
+            }
+        }
+    }];
+    
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation

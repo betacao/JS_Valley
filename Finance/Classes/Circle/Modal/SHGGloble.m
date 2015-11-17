@@ -388,4 +388,20 @@
 }
 
 
+- (void)requsetUserVerifyStatus:(void (^)(BOOL))block
+{
+    [Hud showLoadingWithMessage:@"正在获取用户认证状态"];
+    NSString *request = [rBaseAddressForHttp stringByAppendingString:@"/auth/isAuth"];
+    NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
+    [MOCHTTPRequestOperationManager postWithURL:request parameters:@{@"uid":uid} success:^(MOCHTTPResponse *response) {
+        [Hud hideHud];
+        if (block) {
+            block([[response.dataDictionary objectForKey:@"status"] boolValue]);
+        }
+    } failed:^(MOCHTTPResponse *response) {
+        [Hud hideHud];
+        [Hud showMessageWithText:@"获取用户认证状态失败"];
+    }];
+}
+
 @end

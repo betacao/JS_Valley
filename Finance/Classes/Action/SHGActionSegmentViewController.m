@@ -75,12 +75,14 @@
 
 - (void)addNewAction:(UIButton *)button
 {
-    for (UIViewController *controller in self.viewControllers){
-        if ([controller respondsToSelector:@selector(addNewAction:)]) {
-            [controller performSelector:@selector(addNewAction:) withObject:button];
-            break;
+    __weak typeof(self)weakSelf = self;
+    [[SHGGloble sharedGloble] requsetUserVerifyStatus:^(BOOL status) {
+        if (status) {
+            if([weakSelf.selectedViewController respondsToSelector:@selector(addNewAction:)]){
+                [weakSelf.selectedViewController performSelector:@selector(addNewAction:) withObject:button];
+            }
         }
-    }
+    }];
 }
 
 - (void)reloadTabButtons

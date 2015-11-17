@@ -163,4 +163,14 @@ typedef void (^SHHomeDataCompletionBlock)(NSArray *allList, NSArray *normalList,
  @since 1.5.0
  */
 - (NSArray *)parseServerJsonArrayToJSONModel:(NSArray *)array class:(Class)class;
+
+/**
+ @brief  获取用户认证状态
+
+ @param block 返回状态
+
+ @since 1.6.0
+ */
+- (void)requsetUserVerifyStatus:(void(^)(BOOL status))block;
+
 @end

@@ -287,37 +287,37 @@
 }
 
 
--(void)addSelect
+- (void)addSelect
 {
-    NSString *state = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_AUTHSTATE];
-    if (![state boolValue])
-    {
-        [Hud showNoAuthMessage];
-    } else{
-        __weak typeof(self)weakSelf = self;
-        DXAlertView *alert = [[DXAlertView alloc] initWithTitle:@"提示" contentText:@"是否需要发布产品?" leftButtonTitle:@"否" rightButtonTitle:@"是"];
-        alert.rightBlock = ^{
-            NSString *url = [NSString stringWithFormat:@"%@/%@",rBaseAddressForHttpProd,@"publish"];
-            [Hud showLoadingWithMessage:@"加载中"];
-            NSDictionary *param = @{@"uid":[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID]};
-            [MOCHTTPRequestOperationManager postWithURL:url class:nil parameters:param success:^(MOCHTTPResponse *response) {
-                [Hud hideHud];
-                NSString *code = [response.data valueForKey:@"code"];
-                if ([code isEqualToString:@"000"]) {
-                    
-                    ProdSubViewController *vc = [[ProdSubViewController alloc] initWithNibName:@"ProdSubViewController" bundle:nil];
-                    [MobClick event:@"ProductAddController" label:@"onClick"];
-                    [weakSelf.navigationController pushViewController:vc animated:YES];
-                }
-            } failed:^(MOCHTTPResponse *response) {
-                [Hud hideHud];
-                
-                [Hud showMessageWithText:response.errorMessage];
-            }];
-            
-        };
-        [alert show];
-    }
+    [[SHGGloble sharedGloble] requsetUserVerifyStatus:^(BOOL status) {
+        if (status) {
+            __weak typeof(self)weakSelf = self;
+            DXAlertView *alert = [[DXAlertView alloc] initWithTitle:@"提示" contentText:@"是否需要发布产品?" leftButtonTitle:@"否" rightButtonTitle:@"是"];
+            alert.rightBlock = ^{
+                NSString *url = [NSString stringWithFormat:@"%@/%@",rBaseAddressForHttpProd,@"publish"];
+                [Hud showLoadingWithMessage:@"加载中"];
+                NSDictionary *param = @{@"uid":[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID]};
+                [MOCHTTPRequestOperationManager postWithURL:url class:nil parameters:param success:^(MOCHTTPResponse *response) {
+                    [Hud hideHud];
+                    NSString *code = [response.data valueForKey:@"code"];
+                    if ([code isEqualToString:@"000"]) {
+
+                        ProdSubViewController *vc = [[ProdSubViewController alloc] initWithNibName:@"ProdSubViewController" bundle:nil];
+                        [MobClick event:@"ProductAddController" label:@"onClick"];
+                        [weakSelf.navigationController pushViewController:vc animated:YES];
+                    }
+                } failed:^(MOCHTTPResponse *response) {
+                    [Hud hideHud];
+
+                    [Hud showMessageWithText:response.errorMessage];
+                }];
+
+            };
+            [alert show];
+        } else{
+            [Hud showNoAuthMessage];
+        }
+    }];
 }
 -(void)refreshHeader
 {
