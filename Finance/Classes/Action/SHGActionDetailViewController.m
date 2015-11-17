@@ -94,10 +94,11 @@
     
     [self setImage];
     
-    [self setFram];
+    [self loadUI];
    
 }
--(void)setFram
+
+-(void)loadUI
 {
     NSInteger num = 3;
     NSInteger  plRowHeight = 54.0;
@@ -143,15 +144,8 @@
     self.bottomLine.frame = CGRectMake(0, self.zanButton.frame.origin.y-k_topSpace, self.replyTable.frame.size.width, 1.0);
     self.viewHeader.height = CGRectGetMaxY(self.zanButton.frame) +k_topSpace;
     self.viewHeader.width = self.replyTable.frame.size.width;
-    //添加下方按钮
- //   CGFloat bottomView_height = 40.0;
-//    UIView *  bottomView = [[UIView alloc]initWithFrame:CGRectMake(0, [UIScreen mainScreen].bounds.size.height-bottomView_height-45, [UIScreen mainScreen].bounds.size.width, bottomView_height)];
-//    UIButton * shareButton = [UIButton buttonWithType:UIButtonTypeCustom];
-//    shareButton.frame = CGRectMake(0, 0, bottomView.frame.size.width, bottomView_height);
-//    [shareButton setTitle:@"分享" forState:UIControlStateNormal];
-//    [shareButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-//    [bottomView addSubview:shareButton];
-    
+
+
     self.bottomButtonView.frame = CGRectMake(0, CGRectGetMaxY(self.replyTable.frame), self.replyTable.frame.size.width, 40.0);
     self.viewInput.frame = CGRectMake(0, CGRectGetMaxY(self.bottomButtonView.frame), self.replyTable.frame.size.width, 45.0);
     self.bottomButtonView.backgroundColor = [UIColor colorWithHexString:@"F7514A"];
