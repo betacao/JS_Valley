@@ -18,6 +18,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *action_signRightButton;
 
 @property (weak, nonatomic) IBOutlet UIButton *action_signLeftButton;
+@property (weak, nonatomic) IBOutlet UIImageView *action_bottomImage;
 
 @end
 

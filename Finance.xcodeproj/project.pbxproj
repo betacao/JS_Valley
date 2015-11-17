@@ -732,6 +732,8 @@
 		9894C9791BF5BCE700F80577 /* SHGActionSignViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9894C9771BF5BCE700F80577 /* SHGActionSignViewController.xib */; };
 		9894C97D1BF5D24200F80577 /* SHGActionSignTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9894C97B1BF5D24200F80577 /* SHGActionSignTableViewCell.m */; };
 		9894C97E1BF5D24200F80577 /* SHGActionSignTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9894C97C1BF5D24200F80577 /* SHGActionSignTableViewCell.xib */; };
+		98E3022B1BFB0708001D4A69 /* SHGAuthenticationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98E302291BFB0708001D4A69 /* SHGAuthenticationViewController.m */; };
+		98E3022C1BFB0708001D4A69 /* SHGAuthenticationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98E3022A1BFB0708001D4A69 /* SHGAuthenticationViewController.xib */; };
 		98FA41C31BF5E1B40058A4EF /* SHGActionDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98FA41C11BF5E1B40058A4EF /* SHGActionDetailViewController.m */; };
 		98FA41C41BF5E1B40058A4EF /* SHGActionDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98FA41C21BF5E1B40058A4EF /* SHGActionDetailViewController.xib */; };
 		B007E0F81B412FDF00BB8E8D /* GameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B007E0F61B412FDF00BB8E8D /* GameViewController.m */; };
@@ -1919,6 +1921,9 @@
 		9894C97A1BF5D24200F80577 /* SHGActionSignTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGActionSignTableViewCell.h; sourceTree = "<group>"; };
 		9894C97B1BF5D24200F80577 /* SHGActionSignTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGActionSignTableViewCell.m; sourceTree = "<group>"; };
 		9894C97C1BF5D24200F80577 /* SHGActionSignTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGActionSignTableViewCell.xib; sourceTree = "<group>"; };
+		98E302281BFB0708001D4A69 /* SHGAuthenticationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGAuthenticationViewController.h; sourceTree = "<group>"; };
+		98E302291BFB0708001D4A69 /* SHGAuthenticationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGAuthenticationViewController.m; sourceTree = "<group>"; };
+		98E3022A1BFB0708001D4A69 /* SHGAuthenticationViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGAuthenticationViewController.xib; sourceTree = "<group>"; };
 		98FA41C01BF5E1B40058A4EF /* SHGActionDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGActionDetailViewController.h; sourceTree = "<group>"; };
 		98FA41C11BF5E1B40058A4EF /* SHGActionDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGActionDetailViewController.m; sourceTree = "<group>"; };
 		98FA41C21BF5E1B40058A4EF /* SHGActionDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGActionDetailViewController.xib; sourceTree = "<group>"; };
@@ -3515,6 +3520,9 @@
 				F99580C11B9D338B001F8AA6 /* SHGModifyInfoViewController.h */,
 				F99580C21B9D338B001F8AA6 /* SHGModifyInfoViewController.m */,
 				F99580C31B9D338B001F8AA6 /* SHGModifyInfoViewController.xib */,
+				98E302281BFB0708001D4A69 /* SHGAuthenticationViewController.h */,
+				98E302291BFB0708001D4A69 /* SHGAuthenticationViewController.m */,
+				98E3022A1BFB0708001D4A69 /* SHGAuthenticationViewController.xib */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -5158,6 +5166,7 @@
 				408D8B691AF8618C0055810C /* chat_receiver_audio_playing000@2x.png in Resources */,
 				408D8B321AF8618C0055810C /* chat_location_annotation_someone@2x.png in Resources */,
 				61E83CDC1AF7C78E00703651 /* 搜索图标@2x.png in Resources */,
+				98E3022C1BFB0708001D4A69 /* SHGAuthenticationViewController.xib in Resources */,
 				61E83D531AF7C78E00703651 /* 加关注按钮@3x.png in Resources */,
 				61E83D521AF7C78E00703651 /* 加关注@3x.png in Resources */,
 				6152348B1B0D92B200011EAC /* 我的关注@2x.png in Resources */,
@@ -5526,6 +5535,7 @@
 				4088DDB91AF102FE00393855 /* SettingQuestionDetailViewController.m in Sources */,
 				F9EDD5FA1BABFBCF00506C0C /* SDWaitingView.m in Sources */,
 				B04D032E1B43F88A009BE7C2 /* ZYExceptionHandler.m in Sources */,
+				98E3022B1BFB0708001D4A69 /* SHGAuthenticationViewController.m in Sources */,
 				61D62BF11ADD1C4D002DD395 /* MOWHttp.m in Sources */,
 				614A597E1AD3AEA1005DAB04 /* Finance.xcdatamodeld in Sources */,
 				538964D21AFC6BEB00041548 /* NSDate+Category.m in Sources */,
