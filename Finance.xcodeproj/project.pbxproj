@@ -893,6 +893,8 @@
 		F9D9F1571BB51D5F00F94E70 /* SHGUserTagModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F9D9F1561BB51D5F00F94E70 /* SHGUserTagModel.m */; };
 		F9DDEFBF1BF9EB79001341CF /* SHGActionSendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9DDEFBD1BF9EB79001341CF /* SHGActionSendViewController.m */; };
 		F9DDEFC01BF9EB79001341CF /* SHGActionSendViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9DDEFBE1BF9EB79001341CF /* SHGActionSendViewController.xib */; };
+		F9E0488A1BFB151E0027CBC4 /* SHGSelectTagsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9E048881BFB151E0027CBC4 /* SHGSelectTagsViewController.m */; };
+		F9E0488B1BFB151E0027CBC4 /* SHGSelectTagsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9E048891BFB151E0027CBC4 /* SHGSelectTagsViewController.xib */; };
 		F9E2A4B01BE99A4C00ECB234 /* SHGSegmentController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9E2A4AF1BE99A4C00ECB234 /* SHGSegmentController.m */; };
 		F9E2A4B41BE99E1C00ECB234 /* SHGNewsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9E2A4B21BE99E1C00ECB234 /* SHGNewsViewController.m */; };
 		F9E2A4B51BE99E1C00ECB234 /* SHGNewsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9E2A4B31BE99E1C00ECB234 /* SHGNewsViewController.xib */; };
@@ -2134,6 +2136,9 @@
 		F9DDEFBC1BF9EB79001341CF /* SHGActionSendViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGActionSendViewController.h; sourceTree = "<group>"; };
 		F9DDEFBD1BF9EB79001341CF /* SHGActionSendViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGActionSendViewController.m; sourceTree = "<group>"; };
 		F9DDEFBE1BF9EB79001341CF /* SHGActionSendViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGActionSendViewController.xib; sourceTree = "<group>"; };
+		F9E048871BFB151E0027CBC4 /* SHGSelectTagsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGSelectTagsViewController.h; sourceTree = "<group>"; };
+		F9E048881BFB151E0027CBC4 /* SHGSelectTagsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGSelectTagsViewController.m; sourceTree = "<group>"; };
+		F9E048891BFB151E0027CBC4 /* SHGSelectTagsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGSelectTagsViewController.xib; sourceTree = "<group>"; };
 		F9E2A4AE1BE99A4C00ECB234 /* SHGSegmentController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGSegmentController.h; sourceTree = "<group>"; };
 		F9E2A4AF1BE99A4C00ECB234 /* SHGSegmentController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGSegmentController.m; sourceTree = "<group>"; };
 		F9E2A4B11BE99E1C00ECB234 /* SHGNewsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGNewsViewController.h; sourceTree = "<group>"; };
@@ -2898,6 +2903,9 @@
 			children = (
 				F9E2A4AE1BE99A4C00ECB234 /* SHGSegmentController.h */,
 				F9E2A4AF1BE99A4C00ECB234 /* SHGSegmentController.m */,
+				F9E048871BFB151E0027CBC4 /* SHGSelectTagsViewController.h */,
+				F9E048881BFB151E0027CBC4 /* SHGSelectTagsViewController.m */,
+				F9E048891BFB151E0027CBC4 /* SHGSelectTagsViewController.xib */,
 				614AD1BB1AD7AFED00DDF43E /* SHGHomeViewController.h */,
 				614AD1BC1AD7AFED00DDF43E /* SHGHomeViewController.m */,
 				614AD1BD1AD7AFED00DDF43E /* SHGHomeViewController.xib */,
@@ -4754,6 +4762,7 @@
 				B04D6E421B60F2D500E3863E /* 组-46@3x.png in Resources */,
 				B080FE8C1B81E30100426579 /* btn_publish_keyboard_a@2x.png in Resources */,
 				53F6CFAC1B06C1D6007716E5 /* load_6p.png in Resources */,
+				F9E0488B1BFB151E0027CBC4 /* SHGSelectTagsViewController.xib in Resources */,
 				61B992FC1ADBBE540025BE7B /* SHGHomeTableViewCell.xib in Resources */,
 				6146B4AC1B011B7800D62678 /* RootViewController.xib in Resources */,
 				B080FE911B81E30100426579 /* emoji_backspace_n@2x.png in Resources */,
@@ -5535,6 +5544,7 @@
 				4088DDB91AF102FE00393855 /* SettingQuestionDetailViewController.m in Sources */,
 				F9EDD5FA1BABFBCF00506C0C /* SDWaitingView.m in Sources */,
 				B04D032E1B43F88A009BE7C2 /* ZYExceptionHandler.m in Sources */,
+				F9E0488A1BFB151E0027CBC4 /* SHGSelectTagsViewController.m in Sources */,
 				98E3022B1BFB0708001D4A69 /* SHGAuthenticationViewController.m in Sources */,
 				61D62BF11ADD1C4D002DD395 /* MOWHttp.m in Sources */,
 				614A597E1AD3AEA1005DAB04 /* Finance.xcdatamodeld in Sources */,

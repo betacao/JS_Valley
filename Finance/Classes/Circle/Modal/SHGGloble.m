@@ -246,9 +246,13 @@
     if([string rangeOfString:@","].location != NSNotFound){
         string = [string substringFromIndex:1];
     }
+
+    __weak typeof(self) weakSelf = self;
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
     NSDictionary *param = [NSDictionary dictionaryWithObjectsAndKeys:uid,@"uid",string,@"tagIds",@"edit",@"flag", nil];
     [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/v1/user/tag/saveOrUpdateUserTag",rBaseAddRessHttp] parameters:param success:^(MOCHTTPResponse *response) {
+        [weakSelf.selectedTagsArray removeAllObjects];
+        [weakSelf.selectedTagsArray addObjectsFromArray:array];
         block(YES);
     } failed:^(MOCHTTPResponse *response) {
         block(NO);

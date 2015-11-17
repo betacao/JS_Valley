@@ -20,6 +20,7 @@
 #import "SHGHomeTableViewCell.h"
 #import "CircleDetailViewController.h"
 #import "SHGUnifiedTreatment.h"
+#import "SHGSelectTagsViewController.h"
 
 
 @interface SHGNewsViewController ()<MLEmojiLabelDelegate,CLLocationManagerDelegate,SHGNoticeDelegate>
@@ -28,6 +29,7 @@
 @property (strong, nonatomic) NSString *circleType;
 @property (strong, nonatomic) SHGNoticeView *messageNoticeView;
 @property (assign, nonatomic) BOOL hasDataFinished;
+@property (strong, nonatomic) SHGSelectTagsViewController *tagsController;
 
 @end
 
@@ -71,6 +73,14 @@
 - (NSMutableArray *) currentDataArray
 {
     return self.dataArr;
+}
+
+- (SHGSelectTagsViewController *)tagsController
+{
+    if(!_tagsController){
+        _tagsController = [[SHGSelectTagsViewController alloc] init];
+    }
+    return _tagsController;
 }
 
 
@@ -292,6 +302,21 @@
         }
     }
     return nil;
+}
+
+//添加列表上方的标签
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    return self.tagsController.view;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    CGFloat height = CGRectGetHeight(self.tagsController.view.frame);
+    if (height == 0) {
+        return 40.0f;
+    }
+    return height;
 }
 
 #pragma mark ------ emoji代理------
