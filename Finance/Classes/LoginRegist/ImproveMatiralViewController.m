@@ -24,6 +24,7 @@
 
 @property (weak, nonatomic) IBOutlet UITextField *nameTextField;
 @property (weak, nonatomic) IBOutlet UITextField *companyTextField;
+@property (weak, nonatomic) IBOutlet UITextField *industrycodeTextField;
 @property (weak, nonatomic) IBOutlet UITextField *titleTextField;
 @property (weak, nonatomic) IBOutlet UIButton *headImageButton;
 @property (weak, nonatomic) IBOutlet UIScrollView *bgScrollView;
@@ -64,7 +65,7 @@
 
     self.headImageButton.layer.masksToBounds = YES;
     self.headImageButton.layer.cornerRadius = CGRectGetHeight(self.headImageButton.frame) / 2.0f;
-    [self initTextFieldStyle:@[self.nameTextField, self.companyTextField, self.titleTextField]];
+    [self initTextFieldStyle:@[self.nameTextField, self.companyTextField, self.titleTextField,self.industrycodeTextField]];
 
     self.personCategoryView.superview.hidden = YES;
 
@@ -264,7 +265,7 @@
         __weak typeof(self)weakSelf = self;
         NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
 
-        NSDictionary *param = @{@"uid":uid, @"head_img":self.headImageName ? self.headImageName : @"", @"name":self.nameTextField.text, @"company":self.companyTextField.text, @"title":self.titleTextField.text, @"position":self.userLocation ? self.userLocation : @""};
+        NSDictionary *param = @{@"uid":uid, @"head_img":self.headImageName ? self.headImageName : @"", @"name":self.nameTextField.text, @"industrycode":self.industrycodeTextField.text, @"company":self.companyTextField.text, @"title":self.titleTextField.text, @"position":self.userLocation ? self.userLocation : @""};
         [Hud showLoadingWithMessage:@"完善信息中"];
         [[AFHTTPRequestOperationManager manager] PUT:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"register"] parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject) {
             NSLog(@"%@",operation);
@@ -300,6 +301,10 @@
     }
     if (IsStrEmpty(self.titleTextField.text)) {
         [Hud showMessageWithText:@"请输入职务"];
+        return NO;
+    }
+    if (IsStrEmpty(self.industrycodeTextField.text)) {
+        [Hud showMessageWithText:@"请输入行业"];
         return NO;
     }
     return YES;

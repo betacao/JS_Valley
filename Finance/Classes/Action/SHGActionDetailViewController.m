@@ -10,9 +10,9 @@
 #import "ReplyTableViewCell.h"
 #import "SHGActionSignTableViewCell.h"
 #define k_title_height 44.0
-#define k_redLineToLeft 14;
-#define k_labelToLeft 20;
-#define k_imageToLabel 
+#define k_redLineToLeft 14
+#define k_labelToLeft 20.0
+#define k_topSpace 15.0
 //#import "SHGActionTableViewCell.h"
 @interface SHGActionDetailViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
@@ -63,6 +63,12 @@
 @property (weak, nonatomic) IBOutlet UIButton *thirLeftButton;
 @property (weak, nonatomic) IBOutlet UIButton *thirRiightButton;
 
+@property (weak, nonatomic) IBOutlet UIView *viewInput;
+@property (weak, nonatomic) IBOutlet UIView *bottomButtonView;
+@property (weak, nonatomic) IBOutlet UIButton *smileImage;
+@property (weak, nonatomic) IBOutlet UIButton *speakButton;
+@property (weak, nonatomic) IBOutlet UIButton *sendButton;
+
 @end
 
 @implementation SHGActionDetailViewController
@@ -83,7 +89,7 @@
     self.title = @"活动详情";
     self.replyTable.delegate = self;
     self.replyTable.dataSource = self;
-        
+   // self.bottomButtonView.backgroundColor = [UIColor redColor];
     [self setColor];
     
     [self setImage];
@@ -95,7 +101,8 @@
 {
     NSInteger num = 3;
     NSInteger  plRowHeight = 54.0;
-    self.replyTable.frame = CGRectMake(0, 0, [[UIScreen mainScreen]bounds].size.width, [[UIScreen mainScreen]bounds].size.height);
+    NSInteger  replyTableToView = 149.0;
+   self.replyTable.frame = CGRectMake(0, 0, [[UIScreen mainScreen]bounds].size.width, [[UIScreen mainScreen]bounds].size.height-replyTableToView);
     self.titleBg.frame = CGRectMake(0,0 , self.replyTable.frame.size.width, 44);
     self.titleLabel.frame = CGRectMake(0,0 , self.replyTable.frame.size.width, 44);
     self.jjMessageLabel.numberOfLines = 0;//任意行数
@@ -105,16 +112,17 @@
     [paragraphStyle setLineSpacing:1.f];//调整行间距
     [attributedString addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, [text length])];
     self.jjMessageLabel.attributedText = attributedString;
-    CGSize size = [self.jjMessageLabel sizeThatFits:CGSizeMake(self.replyTable.frame.size.width-40.0, MAXFLOAT)];
+    CGSize size = [self.jjMessageLabel sizeThatFits:CGSizeMake(self.replyTable.frame.size.width-2*k_labelToLeft, MAXFLOAT)];
     CGRect frame = self.jjMessageLabel.frame;
     
+    NSInteger  yBMRedLineTopSpace = 17;
     frame.size.height = size.height;
-    self.jjMessageLabel.frame = CGRectMake(20, self.jjLabel.frame.origin.y+35, self.replyTable.frame.size.width-40, frame.size.height);
-    self.CenterLineImage.frame = CGRectMake(0,self.jjMessageLabel.frame.size.height+self.jjMessageLabel.frame.origin.y+15 , self.replyTable.frame.size.width, 1);
-    self.topLineImage.frame = CGRectMake(0, self.bmLabel.frame.size.height+self.bmLabel.frame.origin.y +15, [UIScreen mainScreen].bounds.size.width, 1);
-    self.yBMRedLine.frame = CGRectMake(14, self.CenterLineImage.frame.origin.y+9, 1, 15);
-    self.yBMLabel.frame = CGRectMake(25, self.CenterLineImage.frame.origin.y+6, 54, 20);
-    self.yBMNumLabel.frame = CGRectMake(87, self.CenterLineImage.frame.origin.y+6, 54, 20);
+    self.jjMessageLabel.frame = CGRectMake(20.0, CGRectGetMaxY(self.jjLabel.frame)+k_topSpace, self.replyTable.frame.size.width-k_labelToLeft, frame.size.height);
+    self.CenterLineImage.frame = CGRectMake(0,self.jjMessageLabel.frame.size.height+self.jjMessageLabel.frame.origin.y+k_topSpace , self.replyTable.frame.size.width, 1.0);
+    self.topLineImage.frame = CGRectMake(0, self.bmLabel.frame.size.height+self.bmLabel.frame.origin.y +k_topSpace, [UIScreen mainScreen].bounds.size.width, 1.0);
+    self.yBMRedLine.frame = CGRectMake(14.0, self.CenterLineImage.frame.origin.y+yBMRedLineTopSpace, 1.0, 15.0);
+    self.yBMLabel.frame = CGRectMake(25.0, self.CenterLineImage.frame.origin.y+k_topSpace, 54.0, 20.0);
+    self.yBMNumLabel.frame = CGRectMake(87.0, self.CenterLineImage.frame.origin.y+k_topSpace, 54.0, 20.0);
     
     self.commentView.hidden = YES;
     _ybmTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(self.yBMLabel.frame), self.replyTable.frame.size.width, plRowHeight *num)];
@@ -125,13 +133,36 @@
     self.ybmTableView.showsVerticalScrollIndicator = NO;
     self.ybmTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.viewHeader addSubview:self.ybmTableView];
+    NSInteger checkButtonToLabel = 5.0;
+    NSInteger checkLabelWidth = 60.0;
+    NSInteger zanButtonWidth = 50.0;
+    self.checkButton.frame = CGRectMake(self.replyTable.frame.size.width-k_redLineToLeft-k_labelToLeft , self.CenterLineImage.frame.origin.y+k_labelToLeft, 10.0, 10.0);
+    self.checkLabel.frame = CGRectMake(self.replyTable.frame.size.width-k_redLineToLeft-k_labelToLeft-checkButtonToLabel-checkLabelWidth, self.CenterLineImage.frame.origin.y+k_topSpace, checkLabelWidth, 20.0);
+    self.plbutton.frame = CGRectMake(self.replyTable.frame.size.width-k_redLineToLeft-zanButtonWidth, CGRectGetMaxY(self.ybmTableView.frame)+k_topSpace, zanButtonWidth, 20.0);
+    self.zanButton.frame = CGRectMake(self.replyTable.frame.size.width-k_redLineToLeft-2*zanButtonWidth, CGRectGetMaxY(self.ybmTableView.frame)+k_topSpace, zanButtonWidth, 20.0);
+    self.bottomLine.frame = CGRectMake(0, self.zanButton.frame.origin.y-k_topSpace, self.replyTable.frame.size.width, 1.0);
+    self.viewHeader.height = CGRectGetMaxY(self.zanButton.frame) +k_topSpace;
+    self.viewHeader.width = self.replyTable.frame.size.width;
+    //添加下方按钮
+ //   CGFloat bottomView_height = 40.0;
+//    UIView *  bottomView = [[UIView alloc]initWithFrame:CGRectMake(0, [UIScreen mainScreen].bounds.size.height-bottomView_height-45, [UIScreen mainScreen].bounds.size.width, bottomView_height)];
+//    UIButton * shareButton = [UIButton buttonWithType:UIButtonTypeCustom];
+//    shareButton.frame = CGRectMake(0, 0, bottomView.frame.size.width, bottomView_height);
+//    [shareButton setTitle:@"分享" forState:UIControlStateNormal];
+//    [shareButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+//    [bottomView addSubview:shareButton];
     
-    self.checkButton.frame = CGRectMake(self.replyTable.frame.size.width-14-20 , self.CenterLineImage.frame.origin.y+11, 10, 10);
-    self.checkLabel.frame = CGRectMake(self.replyTable.frame.size.width-14-20-5-60, self.CenterLineImage.frame.origin.y+6, 60, 20);
-    self.plbutton.frame = CGRectMake(self.replyTable.frame.size.width-14-50, CGRectGetMaxY(self.ybmTableView.frame)+10, 50, 20);
-    self.zanButton.frame = CGRectMake(self.replyTable.frame.size.width-14-50-50, CGRectGetMaxY(self.ybmTableView.frame)+10, 50, 20);
-    self.bottomLine.frame = CGRectMake(0, self.zanButton.frame.origin.y-6, self.replyTable.frame.size.width, 1);
-    self.viewHeader.height = self.zanButton.frame.origin.y + self.zanButton.frame.size.height +10;
+    self.bottomButtonView.frame = CGRectMake(0, CGRectGetMaxY(self.replyTable.frame), self.replyTable.frame.size.width, 40.0);
+    self.viewInput.frame = CGRectMake(0, CGRectGetMaxY(self.bottomButtonView.frame), self.replyTable.frame.size.width, 45.0);
+    self.bottomButtonView.backgroundColor = [UIColor colorWithHexString:@"F7514A"];
+    [self.view bringSubviewToFront:self.bottomButtonView];
+    NSInteger topSpace = 7.0;
+    NSInteger lefSpace = 8.0;
+    NSInteger sendButtonWidth = 54.0;
+    self.smileImage.frame = CGRectMake(lefSpace, topSpace, 30, 30);
+    self.sendButton.frame = CGRectMake(CGRectGetWidth(self.viewInput.frame)-lefSpace-sendButtonWidth, topSpace, sendButtonWidth, 30);
+    self.speakButton.frame = CGRectMake(40, 5,CGRectGetWidth(self.viewInput.frame)-sendButtonWidth-2*lefSpace , 34);
+//    [self.view addSubview:bottomView];
 }
 -(void)setColor
 {
