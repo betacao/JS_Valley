@@ -613,7 +613,7 @@
 //        [MobClick event:@"MyAppointmentViewController" label:@"onClick"];
 //        [self.navigationController pushViewController:vc animated:YES];
         
-        SHGActionSegmentViewController *segmentViewController = [[SHGActionSegmentViewController alloc] init];;
+        SHGActionSegmentViewController *segmentViewController = [[SHGActionSegmentViewController alloc] init];
         SHGActionListViewController *leftController = [[SHGActionListViewController alloc] init];
         SHGActionMineViewController *rightController = [[SHGActionMineViewController alloc] init];
         segmentViewController.viewControllers = @[leftController, rightController];
@@ -621,10 +621,6 @@
         [MobClick event:@"SHGActionViewController" label:@"onClick"];
         [self.navigationController pushViewController:segmentViewController animated:YES];
 
-//        SHGActionDetailViewController *vc = [[SHGActionDetailViewController alloc] init];
-//        vc.hidesBottomBarWhenPushed = YES;
-//        [MobClick event:@"SHGActionDetailViewController" label:@"onClick"];
-//        [self.navigationController pushViewController:vc animated:YES];
     }else if (indexPath.row == 3) {
         MyCollectionViewController *vc = [[MyCollectionViewController alloc] init];
         vc.hidesBottomBarWhenPushed = YES;

@@ -159,9 +159,9 @@
                 NSLog(@"%@",obj.rid);
                 [self.dataArr insertObject:obj atIndex:0];
             }
-            [self.messageNoticeView showWithText:[NSString stringWithFormat:@"为您加载了%ld条新动态",(long)normalArray.count]];
+            [self.messageNoticeView showWithText:[NSString stringWithFormat:@"为您加载了%ld条新资讯",(long)normalArray.count]];
         } else{
-            [self.messageNoticeView showWithText:@"暂无新动态，休息一会儿"];
+            [self.messageNoticeView showWithText:@"暂无新资讯，休息一会儿"];
         }
     } else if ([target isEqualToString:@"load"]){
         [self.dataArr addObjectsFromArray:normalArray];

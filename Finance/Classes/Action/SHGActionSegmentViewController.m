@@ -23,6 +23,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.navigationItem.rightBarButtonItem = [self rightBarButtonItem];
     self.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     CGRect rect = CGRectMake(0, 50, 170, 26);
     tabButtonsContainerView = [[UISegmentedControl alloc] initWithItems: [NSArray arrayWithObjects:@"所有活动", @"我的活动", nil]];
@@ -56,6 +57,30 @@
     contentContainerView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     [self.view addSubview:contentContainerView];
     [self reloadTabButtons];
+}
+
+
+- (UIBarButtonItem *)rightBarButtonItem
+{
+    UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [rightButton setFrame:CGRectZero];
+    UIImage *image = [UIImage imageNamed:@"action_send"];
+    [rightButton setBackgroundImage:image forState:UIControlStateNormal];
+    [rightButton.imageView setContentMode:UIViewContentModeScaleAspectFill];
+    [rightButton addTarget:self action:@selector(addNewAction:) forControlEvents:UIControlEventTouchUpInside];
+    [rightButton sizeToFit];
+    return  [[UIBarButtonItem alloc] initWithCustomView:rightButton];
+
+}
+
+- (void)addNewAction:(UIButton *)button
+{
+    for (UIViewController *controller in self.viewControllers){
+        if ([controller respondsToSelector:@selector(addNewAction:)]) {
+            [controller performSelector:@selector(addNewAction:) withObject:button];
+            break;
+        }
+    }
 }
 
 - (void)reloadTabButtons

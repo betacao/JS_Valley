@@ -10,6 +10,7 @@
 #import "SHGActionTableViewCell.h"
 #import "SHGActionObject.h"
 #import "SHGActionDetailViewController.h"
+#import "SHGActionSendViewController.h"
 
 @interface SHGActionListViewController ()<UITableViewDataSource, UITableViewDelegate>
 
@@ -32,7 +33,13 @@
     self.listTable.delegate = self;
     self.listTable.dataSource = self;
     [self addHeaderRefresh:self.listTable headerRefesh:YES andFooter:YES];
-    [self loadDataWithType:@"first" meetID:@""];
+    [self loadDataWithType:@"first" meetID:@"-1"];
+}
+
+- (void)addNewAction:(UIButton *)button
+{
+    SHGActionSendViewController *controller = [[SHGActionSendViewController alloc] initWithNibName:@"SHGActionSendViewController" bundle:nil];
+    [self.navigationController pushViewController:controller animated:YES];
 }
 
 - (void)loadDataWithType:(NSString *)target meetID:(NSString *)meetID
@@ -50,7 +57,10 @@
             [weakSelf.dataArr removeAllObjects];
             [weakSelf.dataArr addObjectsFromArray:response.dataArray];
         } else if([target isEqualToString:@"refresh"]){
-            [weakSelf.dataArr addObjectsFromArray:response.dataArray];
+            for (NSInteger i = response.dataArray.count - 1; i >= 0; i--){
+                CircleListObj *obj = [response.dataArray objectAtIndex:i];
+                [weakSelf.dataArr insertObject:obj atIndex:0];
+            }
         } else{
             [weakSelf.dataArr addObjectsFromArray:response.dataArray];
         }

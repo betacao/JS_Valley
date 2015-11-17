@@ -9,6 +9,7 @@
 #import "SHGActionMineViewController.h"
 #import "SHGActionTableViewCell.h"
 #import "SHGActionDetailViewController.h"
+#import "SHGActionSendViewController.h"
 
 @interface SHGActionMineViewController ()<UITableViewDataSource, UITableViewDelegate>
 
@@ -30,7 +31,13 @@
     self.listTable.delegate = self;
     self.listTable.dataSource = self;
     [self addHeaderRefresh:self.listTable headerRefesh:YES andFooter:YES];
-    [self loadDataWithType:@"first" meetID:@""];
+    [self loadDataWithType:@"first" meetID:@"-1"];
+}
+
+- (void)addNewAction:(UIButton *)button
+{
+    SHGActionSendViewController *controller = [[SHGActionSendViewController alloc] initWithNibName:@"SHGActionSendViewController" bundle:nil];
+    [self.navigationController pushViewController:controller animated:YES];
 }
 
 - (void)loadDataWithType:(NSString *)target meetID:(NSString *)meetID
@@ -77,7 +84,7 @@
     if (self.dataArr.count > 0) {
         return ((SHGActionObject *)[self.dataArr firstObject]).meetId;
     } else{
-        return @"";
+        return @"-1";
     }
 }
 
@@ -86,7 +93,7 @@
     if (self.dataArr.count > 0) {
         return ((SHGActionObject *)[self.dataArr lastObject]).meetId;
     } else{
-        return @"";
+        return @"-1";
     }
 }
 #pragma mark ------tableview

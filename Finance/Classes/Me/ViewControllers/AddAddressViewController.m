@@ -37,7 +37,6 @@
 	UIView *view = [[UIView alloc] init];
 	view.backgroundColor = [UIColor clearColor];
 	[_tableView setTableFooterView:view];
-//	self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"修改" style:UIBarButtonItemStylePlain target:self action:@selector(saveAddress)];
 	[self registerForKeyboardNotifications];
 	
 	UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];

@@ -889,6 +889,8 @@
 		F9B18C081BA0521600EA0314 /* SHGNoticeView.m in Sources */ = {isa = PBXBuildFile; fileRef = F9B18C071BA0521600EA0314 /* SHGNoticeView.m */; };
 		F9B7CC321B8AD6C000E55EFD /* SHGGloble.m in Sources */ = {isa = PBXBuildFile; fileRef = F9B7CC311B8AD6C000E55EFD /* SHGGloble.m */; };
 		F9D9F1571BB51D5F00F94E70 /* SHGUserTagModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F9D9F1561BB51D5F00F94E70 /* SHGUserTagModel.m */; };
+		F9DDEFBF1BF9EB79001341CF /* SHGActionSendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9DDEFBD1BF9EB79001341CF /* SHGActionSendViewController.m */; };
+		F9DDEFC01BF9EB79001341CF /* SHGActionSendViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9DDEFBE1BF9EB79001341CF /* SHGActionSendViewController.xib */; };
 		F9E2A4B01BE99A4C00ECB234 /* SHGSegmentController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9E2A4AF1BE99A4C00ECB234 /* SHGSegmentController.m */; };
 		F9E2A4B41BE99E1C00ECB234 /* SHGNewsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9E2A4B21BE99E1C00ECB234 /* SHGNewsViewController.m */; };
 		F9E2A4B51BE99E1C00ECB234 /* SHGNewsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9E2A4B31BE99E1C00ECB234 /* SHGNewsViewController.xib */; };
@@ -2124,6 +2126,9 @@
 		F9B7CC311B8AD6C000E55EFD /* SHGGloble.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGGloble.m; sourceTree = "<group>"; };
 		F9D9F1551BB51D5F00F94E70 /* SHGUserTagModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGUserTagModel.h; sourceTree = "<group>"; };
 		F9D9F1561BB51D5F00F94E70 /* SHGUserTagModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGUserTagModel.m; sourceTree = "<group>"; };
+		F9DDEFBC1BF9EB79001341CF /* SHGActionSendViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGActionSendViewController.h; sourceTree = "<group>"; };
+		F9DDEFBD1BF9EB79001341CF /* SHGActionSendViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGActionSendViewController.m; sourceTree = "<group>"; };
+		F9DDEFBE1BF9EB79001341CF /* SHGActionSendViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGActionSendViewController.xib; sourceTree = "<group>"; };
 		F9E2A4AE1BE99A4C00ECB234 /* SHGSegmentController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGSegmentController.h; sourceTree = "<group>"; };
 		F9E2A4AF1BE99A4C00ECB234 /* SHGSegmentController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGSegmentController.m; sourceTree = "<group>"; };
 		F9E2A4B11BE99E1C00ECB234 /* SHGNewsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGNewsViewController.h; sourceTree = "<group>"; };
@@ -4492,6 +4497,9 @@
 				98FA41C01BF5E1B40058A4EF /* SHGActionDetailViewController.h */,
 				98FA41C11BF5E1B40058A4EF /* SHGActionDetailViewController.m */,
 				98FA41C21BF5E1B40058A4EF /* SHGActionDetailViewController.xib */,
+				F9DDEFBC1BF9EB79001341CF /* SHGActionSendViewController.h */,
+				F9DDEFBD1BF9EB79001341CF /* SHGActionSendViewController.m */,
+				F9DDEFBE1BF9EB79001341CF /* SHGActionSendViewController.xib */,
 			);
 			path = Action;
 			sourceTree = "<group>";
@@ -5295,6 +5303,7 @@
 				53B40DD01AFBF01800AD2EFE /* 申请头像图标@2x.png in Resources */,
 				614AD1CE1AD7CCD900DDF43E /* edit@3x.png in Resources */,
 				B07B65071B7DC8E0005B8EE1 /* 信息14-默认@2x.png in Resources */,
+				F9DDEFC01BF9EB79001341CF /* SHGActionSendViewController.xib in Resources */,
 				614EFF0A1AF114D800F2BDD1 /* mine.png in Resources */,
 				408D8AFB1AF8618C0055810C /* VoiceSearchFeedback004.png in Resources */,
 				61E83D391AF7C78E00703651 /* 圈内好友图标@3x.png in Resources */,
@@ -5383,6 +5392,7 @@
 				614BA7E11AE61C1E009480CD /* ProductListTableViewCell.m in Sources */,
 				40302B041AEF22E800F22EB6 /* BasePeopleObject.m in Sources */,
 				408D8B861AF9F57B0055810C /* SettingsSuggestionsViewController.m in Sources */,
+				F9DDEFBF1BF9EB79001341CF /* SHGActionSendViewController.m in Sources */,
 				6147AE011B050E7F00DFBD50 /* MPNotificationView.m in Sources */,
 				61D62BF31ADD1C4D002DD395 /* WSHHTTPTestModel.m in Sources */,
 				614AD1AD1AD7AC4D00DDF43E /* LoginViewController.m in Sources */,
