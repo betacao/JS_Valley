@@ -8,7 +8,7 @@
 
 #import "MTLModel.h"
 
-@interface MessageObj : MTLModel<MTLJSONSerializing,MTLTransformerErrorHandling>
+@interface MessageObj : MTLModel<MTLJSONSerializing>
 
 @property (nonatomic,strong) NSString *title;
 @property (nonatomic,strong) NSString *content;

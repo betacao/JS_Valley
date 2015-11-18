@@ -138,13 +138,6 @@
                         <action selector="nextButtonClick:" destination="-1" eventType="touchUpInside" id="bJD-qY-gBE"/>
                     </connections>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="jdg-ft-qaZ">
-                    <rect key="frame" x="266" y="103" width="46" height="30"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <animations/>
-                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                    <state key="normal" title="Button"/>
-                </button>
             </subviews>
             <animations/>
             <color key="backgroundColor" red="0.92941176470588238" green="0.93333333333333335" blue="0.93725490196078431" alpha="1" colorSpace="calibratedRGB"/>

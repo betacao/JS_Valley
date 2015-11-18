@@ -15,11 +15,11 @@
     return @{@"headerImageUrl":@"headimageurl", @"status":@"status", @"postion":@"postion", @"department":@"department", @"company":@"company", @"realName":@"realname", @"friendShip":@"friendship", @"meetId":@"meetid", @"startTime":@"starttime", @"theme":@"theme", @"endTime":@"endtime", @"meetArea":@"meetarea", @"meetNum":@"meetnum", @"commentNum":@"commentnum", @"meetState":@"meetstate", @"publisher":@"publisher", @"attendNum":@"attendnum", @"praiseNum":@"praisenum", @"createTime":@"createtime", @"isTimeOut":@"istimeout", @"isPraise":@"ispraise"};
 }
 
-+(NSValueTransformer *)JSONTransformerForKey:(NSString *)key
++ (NSValueTransformer *)JSONTransformerForKey:(NSString *)key
 {
-    if ([key isEqualToString:@"meetstate"]) {
-        <#statements#>
-    }
+    return [MTLValueTransformer transformerUsingForwardBlock:^id(id value, BOOL *success, NSError *__autoreleasing *error) {
+        return value;
+    }];
 }
 
 @end

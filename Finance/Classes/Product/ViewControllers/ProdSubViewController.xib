@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9059" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
     </dependencies>
     <objects>
@@ -21,6 +21,7 @@
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Sfo-U4-gDZ">
                             <rect key="frame" x="15" y="10" width="285" height="38"/>
+                            <animations/>
                             <color key="backgroundColor" red="0.98823529409999999" green="0.2274509804" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="38" id="kOR-2F-3Vn"/>
@@ -35,6 +36,7 @@
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CPC-5s-ACy">
                             <rect key="frame" x="300" y="10" width="285" height="38"/>
+                            <animations/>
                             <color key="backgroundColor" red="0.97647058819999999" green="0.68627450980000004" blue="0.25098039220000001" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="38" id="BUR-FN-33r"/>
@@ -48,6 +50,7 @@
                             </connections>
                         </button>
                     </subviews>
+                    <animations/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstItem="CPC-5s-ACy" firstAttribute="leading" secondItem="Sfo-U4-gDZ" secondAttribute="trailing" id="EWM-rk-gIv"/>
@@ -75,6 +78,7 @@
                 </view>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="financesuccess.png" translatesAutoresizingMaskIntoConstraints="NO" id="uKH-jm-SlI">
                     <rect key="frame" x="275" y="150" width="50" height="50"/>
+                    <animations/>
                     <constraints>
                         <constraint firstAttribute="height" constant="50" id="X0Y-Z1-KJt"/>
                         <constraint firstAttribute="width" constant="50" id="tsb-Q4-q77"/>
@@ -82,6 +86,7 @@
                 </imageView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="您好!产品发布暂由大牛圈代为操作,大牛圈将于30分钟内与您联系！" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eIS-g3-IX1">
                     <rect key="frame" x="51" y="215" width="498" height="77"/>
+                    <animations/>
                     <constraints>
                         <constraint firstAttribute="height" constant="77" id="7QV-1L-FWZ"/>
                     </constraints>
@@ -90,6 +95,7 @@
                     <nil key="highlightedColor"/>
                 </label>
             </subviews>
+            <animations/>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="eIS-g3-IX1" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="51" id="Dan-H8-Q35"/>

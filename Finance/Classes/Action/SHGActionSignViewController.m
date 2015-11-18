@@ -37,6 +37,7 @@
 {
     return 1;
 }
+
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return  10;
@@ -54,6 +55,7 @@
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return  cell;
 }
+
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     CGFloat rowHeght = 53.0;

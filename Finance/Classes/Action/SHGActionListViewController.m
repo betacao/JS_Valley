@@ -123,7 +123,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 251.0;
+    return kActionCellHeight;
 }
 
 #pragma mark ------cell代理
