@@ -12,6 +12,8 @@
                 <outlet property="industryCell" destination="jdi-qS-FZV" id="tho-bX-VFH"/>
                 <outlet property="noImageLabel" destination="sNV-M4-UyR" id="9oK-Ob-ha0"/>
                 <outlet property="noImageView" destination="zyc-a0-S5y" id="9mf-7u-F1u"/>
+                <outlet property="nowStatus" destination="2G3-2p-bWd" id="6t3-Qs-jwy"/>
+                <outlet property="reasonTitleLabel" destination="1v0-5Z-JFA" id="h1t-GQ-Zxo"/>
                 <outlet property="statusCell" destination="7yZ-gI-WUW" id="P7K-ds-hTj"/>
                 <outlet property="status_statuLabel" destination="Ep9-El-lUO" id="8bu-S5-Yio"/>
                 <outlet property="submitButton" destination="mJO-wr-Cii" id="oHQ-Xk-q5x"/>
@@ -100,7 +102,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="  请上传您的名片、工牌或    公司邮箱后台截图等任一材料" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="sNV-M4-UyR">
-                        <rect key="frame" x="50" y="177" width="209" height="41"/>
+                        <rect key="frame" x="50" y="190" width="209" height="41"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                         <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
                         <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
@@ -124,9 +126,16 @@
                         </connections>
                     </button>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="提交成功，大牛圈顾问会在2小时内联系您确认身份，感谢您对平台的支持！" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="5gV-xt-n6l">
-                        <rect key="frame" x="20" y="184" width="280" height="51"/>
+                        <rect key="frame" x="20" y="210" width="280" height="40"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                         <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="驳回原因：" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="1v0-5Z-JFA">
+                        <rect key="frame" x="20" y="187" width="96" height="21"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>

@@ -16,6 +16,8 @@
 @property (nonatomic, strong) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) IBOutlet UITableViewCell *statusCell;
 @property (nonatomic, strong) NSString *status;
+
+@property (weak, nonatomic) IBOutlet UILabel *nowStatus;
 @property (weak, nonatomic) IBOutlet UILabel *status_statuLabel;
 
 @property (nonatomic, strong) IBOutlet UITableViewCell *industryCell;
@@ -28,6 +30,7 @@
 @property (nonatomic, strong) IBOutlet UIImageView *identifyImageView;
 - (void)selectIdentifyImageViewTapped;
 
+@property (weak, nonatomic) IBOutlet UILabel *reasonTitleLabel;
 @property (nonatomic, strong) IBOutlet UILabel *tipsLabel;
 @property (nonatomic, strong) IBOutlet UIButton *submitButton;
 - (IBAction)submitButtonClicked:(id)sender;
@@ -48,7 +51,12 @@
 	self.isWantToChange = NO;
 	self.isSelectImage = NO;
     self.view.backgroundColor= [UIColor whiteColor];
-    self.noImageLabel.text = @"请上传您的名片、工牌或公司邮箱后台截图等任一材料";
+    self.reasonTitleLabel.textColor = [UIColor colorWithHexString:@"f04241"];
+    self.nowStatus.textColor = [UIColor colorWithHexString:@"606060"];
+    //self.noImageLabel.text = @"请上传您的名片、工牌或公司邮箱后台截图等任一材料";
+    //self.noImageLabel.text = @"提交成功，大牛圈顾问将会在1个工作日内完成身份认证，感谢您对大牛圈的支持！";
+    self.noImageLabel.textColor = [UIColor colorWithHexString:@"C2C2C2"];
+    self.tipsLabel.textColor = [UIColor colorWithHexString:@"aeaeae"];
     self.identifyImageView.layer.cornerRadius = 5;
     self.identifyImageView.layer.masksToBounds = YES;
     //自适应图片宽高比例
@@ -107,15 +115,18 @@
 }
 - (void)resetView
 {
+    
 	self.noImageLabel.hidden = YES;
 	self.noImageView.hidden = YES;
 	self.identifyImageView.hidden = NO;
 	if ([self.status isEqualToString:@"0"]) {
 		self.status_statuLabel.text = @"未认证";
-		
+		self.status_statuLabel.textColor = [UIColor colorWithHexString:@"f04241"];
+        self.noImageLabel.text = @"请上传您的名片、工牌或公司邮箱后台截图等任一材料";
 		[self.submitButton setTitle:@"提交" forState:UIControlStateNormal];
 		[self.submitButton setTitle:@"提交" forState:UIControlStateHighlighted];
 		self.tipsLabel.hidden = YES;
+        self.reasonTitleLabel.hidden = YES;
 		if (!self.isSelectImage) {
 			self.noImageLabel.hidden = NO;
 			self.noImageView.hidden = NO;
@@ -123,32 +134,47 @@
 		}
 	}else if ([self.status isEqualToString:@"1"]){
 		self.status_statuLabel.text = @"审核中";
+        self.status_statuLabel.textColor = [UIColor colorWithHexString:@"f04241"];
+        self.noImageLabel.text = @"提交成功，大牛圈顾问将会在1个工作日内完成身份认证，感谢您对大牛圈的支持！";
+        self.reasonTitleLabel.hidden = YES;
+        self.tipsLabel.hidden = YES;
 		[self.submitButton setTitle:@"更新" forState:UIControlStateNormal];
 		[self.submitButton setTitle:@"更新" forState:UIControlStateHighlighted];
 		self.submitButton.hidden = YES;
 		self.tipsLabel.hidden = NO;
 	}else if ([self.status isEqualToString:@"2"]){
 		self.status_statuLabel.text = @"已认证";
+        self.status_statuLabel.textColor = [UIColor colorWithHexString:@"3588c8"];
+        self.noImageLabel.text = @"请上传您的名片、工牌或公司邮箱后台截图等任一材料";
+        self.noImageLabel.hidden = NO;
+        self.reasonTitleLabel.hidden = YES;
+        self.tipsLabel.hidden = YES;
 		if (self.isWantToChange) {
-			[self.submitButton setTitle:@"更新" forState:UIControlStateNormal];
-			[self.submitButton setTitle:@"更新" forState:UIControlStateHighlighted];
+            self.noImageLabel.hidden = NO;
+ 			[self.submitButton setTitle:@"提交" forState:UIControlStateNormal];
+			[self.submitButton setTitle:@"提交" forState:UIControlStateHighlighted];
 			if (!self.isSelectImage) {
 				self.noImageLabel.hidden = NO;
 				self.noImageView.hidden = NO;
 			}
 		}else{
-			[self.submitButton setTitle:@"提交" forState:UIControlStateNormal];
-			[self.submitButton setTitle:@"提交" forState:UIControlStateHighlighted];
+            self.noImageLabel.hidden = YES;
+			[self.submitButton setTitle:@"更新" forState:UIControlStateNormal];
+			[self.submitButton setTitle:@"更新" forState:UIControlStateHighlighted];
 		}
-        self.noImageLabel.hidden = YES;
-		self.tipsLabel.hidden = YES;
 	}else if ([self.status isEqualToString:@"3"]){
-		self.status_statuLabel.text = @"审核被拒";
-        self.noImageLabel.hidden = NO;
-        self.tipsLabel.hidden = YES;
+		self.status_statuLabel.text = @"认证失败";
+        self.status_statuLabel.textColor = [UIColor colorWithHexString:@"f04241"];
+        self.noImageLabel.hidden = YES;
+        self.tipsLabel.hidden = NO;
+        self.reasonTitleLabel.hidden = NO;
+        self.tipsLabel.text = @"会议主题不正确，请更新后上传";
 		if (self.isWantToChange) {
 			[self.submitButton setTitle:@"提交" forState:UIControlStateNormal];
 			[self.submitButton setTitle:@"提交" forState:UIControlStateHighlighted];
+            self.noImageLabel.hidden = NO;
+            self.tipsLabel.hidden = YES;
+            self.reasonTitleLabel.hidden = YES;
 			if (!self.isSelectImage) {
 				self.noImageLabel.hidden = NO;
 				self.noImageView.hidden = NO;
@@ -169,31 +195,31 @@
 - (IBAction)submitButtonClicked:(id)sender
 {
 	if ([self.status isEqualToString:@"0"]) {
-		
+		//未认证
 	}else if ([self.status isEqualToString:@"1"]){
+        //审核中
 		return;
 	}else if ([self.status isEqualToString:@"2"]){
+        //已认证
 		if (self.isWantToChange == NO) {
 			self.isWantToChange = YES;
 			self.identifyImageName = @"";
-			[self.identifyImageView setImage:nil];
+            [self.identifyImageView setImage:nil];
 			[self resetView];
 			return;
-		}else{
-			
 		}
 	}else if ([self.status isEqualToString:@"3"]){
+        //认证失败
 		if (self.isWantToChange == NO) {
 			self.isWantToChange = YES;
 			self.identifyImageName = @"";
 			[self.identifyImageView setImage:nil];
 			[self resetView];
 			return;
-		}else{
-			
 		}
 	}
 	if (self.identifyImage) {
+        __weak typeof(self) weakSelf = self;
 		[Hud showLoadingWithMessage:@"正在上传图片..."];
 		[[AFHTTPRequestOperationManager manager] POST:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"image/base"] parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
 			NSData *imageData = UIImageJPEGRepresentation(self.identifyImage, 0.1);
@@ -203,10 +229,10 @@
 			
 			NSDictionary *dic = [(NSString *)[responseObject valueForKey:@"data"] parseToArrayOrNSDictionary];
 			
-			self.identifyImageName = [(NSArray *)[dic valueForKey:@"pname"] objectAtIndex:0];
+			weakSelf.identifyImageName = [(NSArray *)[dic valueForKey:@"pname"] objectAtIndex:0];
 			
 			[Hud hideHud];
-			[self submitMaterial];
+			[weakSelf submitMaterial];
 			
 		} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 			NSLog(@"%@",error);
@@ -222,7 +248,7 @@
 
 - (void)submitMaterial
 {
-	[Hud showLoadingWithMessage:@"正在上传资料..."];
+//	[Hud showLoadingWithMessage:@"正在上传资料..."];
 	NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
 	[[AFHTTPRequestOperationManager manager] PUT:[NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttp,@"user",@"identity"] parameters:@{@"uid":uid,@"potname":self.identifyImageName} success:^(AFHTTPRequestOperation *operation, id responseObject) {
 		NSLog(@"%@",operation);
@@ -232,13 +258,13 @@
 			[Hud hideHud];
 			[Hud showMessageWithText:@"上传成功"];
             
-            [self performSelector:@selector(popBack) withObject:nil afterDelay:1.0];
+             [self performSelector:@selector(popBack) withObject:nil afterDelay:1.0];
 		}
 		
 		
 	} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 		[Hud hideHud];
-		[Hud showMessageWithText:@"上传资料失败"];
+		//[Hud showMessageWithText:@"上传资料失败"];
 
 	}];
 
