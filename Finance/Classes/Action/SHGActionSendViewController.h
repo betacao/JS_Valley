@@ -7,7 +7,10 @@
 //
 
 #import "BaseViewController.h"
+#import "SHGActionObject.h"
 
 @interface SHGActionSendViewController : BaseViewController
+
+@property (strong, nonatomic) SHGActionObject *object;
 
 @end

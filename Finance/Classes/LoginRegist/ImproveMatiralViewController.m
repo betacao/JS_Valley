@@ -567,6 +567,7 @@
     if(self.finishBlock){
         self.finishBlock();
     }
+    [self didSelectCategory:[self.buttonArrays firstObject]];
 }
 
 - (UILabel *)noticeLabel

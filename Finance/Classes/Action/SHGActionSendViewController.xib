@@ -9,14 +9,12 @@
             <connections>
                 <outlet property="actionTitleField" destination="xAY-OE-ids" id="8Rk-mD-52L"/>
                 <outlet property="bgView" destination="0Wq-eu-2pe" id="Zyu-sd-5ah"/>
-                <outlet property="datePicker" destination="d9X-eF-IgX" id="N4f-W4-jk5"/>
                 <outlet property="endTimeField" destination="zGi-iv-1Ec" id="yLD-9v-cQc"/>
                 <outlet property="introduceCell" destination="v2a-ai-oc9" id="Fjj-ox-XNB"/>
                 <outlet property="introduceView" destination="FVg-Ge-xsk" id="75b-kO-JXU"/>
                 <outlet property="invateNumber" destination="d8k-HF-MAK" id="9gn-Rk-pUi"/>
                 <outlet property="nextBgView" destination="bFc-au-9uB" id="DeQ-Fq-qZ7"/>
                 <outlet property="nextButton" destination="HQU-n7-Hk3" id="Jsk-bX-8CC"/>
-                <outlet property="pickerBgView" destination="QUT-CZ-9pp" id="jc8-8p-B37"/>
                 <outlet property="positionField" destination="t46-27-Jo3" id="8Vd-EM-lKb"/>
                 <outlet property="startTimeField" destination="iVo-Yr-HFQ" id="nYt-uB-W4D"/>
                 <outlet property="tableView" destination="XaG-lg-FHW" id="mrS-UH-X8f"/>
@@ -42,25 +40,6 @@
             <animations/>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <point key="canvasLocation" x="174" y="332"/>
-        </view>
-        <view contentMode="scaleToFill" id="QUT-CZ-9pp">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="216"/>
-            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-            <subviews>
-                <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" id="d9X-eF-IgX">
-                    <rect key="frame" x="0.0" y="0.0" width="320" height="216"/>
-                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                    <animations/>
-                    <date key="date" timeIntervalSinceReferenceDate="469429856.18983901">
-                        <!--2015-11-17 05:10:56 +0000-->
-                    </date>
-                    <locale key="locale" localeIdentifier="zh-Hans"/>
-                </datePicker>
-            </subviews>
-            <animations/>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <point key="canvasLocation" x="578" y="439"/>
         </view>
         <view contentMode="scaleToFill" id="0Wq-eu-2pe">
             <rect key="frame" x="0.0" y="0.0" width="320" height="247"/>
@@ -158,6 +137,13 @@
                     <connections>
                         <action selector="nextButtonClick:" destination="-1" eventType="touchUpInside" id="bJD-qY-gBE"/>
                     </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="jdg-ft-qaZ">
+                    <rect key="frame" x="266" y="103" width="46" height="30"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <animations/>
+                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                    <state key="normal" title="Button"/>
                 </button>
             </subviews>
             <animations/>

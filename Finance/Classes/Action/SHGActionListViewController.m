@@ -12,7 +12,7 @@
 #import "SHGActionDetailViewController.h"
 #import "SHGActionSendViewController.h"
 
-@interface SHGActionListViewController ()<UITableViewDataSource, UITableViewDelegate>
+@interface SHGActionListViewController ()<UITableViewDataSource, UITableViewDelegate, SHGActionTableViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *listTable;
 
@@ -24,6 +24,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self){
+
     }
     return  self;
 }
@@ -108,6 +109,7 @@
         cell = [[[NSBundle mainBundle] loadNibNamed:@"SHGActionTableViewCell" owner:self options:nil] lastObject];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
+    cell.delegate = self;
     SHGActionObject *object = [self.dataArr objectAtIndex:indexPath.row];
     [cell loadDataWithObject:object];
     return cell;
@@ -124,5 +126,23 @@
     return 251.0;
 }
 
+#pragma mark ------cell代理
+- (void)clickPrasiseButton:(SHGActionObject *)object
+{
+    [self.listTable reloadData];
+}
+
+- (void)clickCommentButton:(SHGActionObject *)object
+{
+    SHGActionDetailViewController *controller = [[SHGActionDetailViewController alloc] init];
+    [self.navigationController pushViewController:controller animated:YES];
+}
+
+- (void)clickEditButton:(SHGActionObject *)object
+{
+    SHGActionSendViewController *controller = [[SHGActionSendViewController alloc] initWithNibName:@"SHGActionSendViewController" bundle:nil];
+    controller.object = object;
+    [self.navigationController pushViewController:controller animated:YES];
+}
 
 @end

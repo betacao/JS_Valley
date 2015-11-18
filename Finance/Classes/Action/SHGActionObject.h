@@ -11,7 +11,8 @@
 typedef NS_ENUM(NSInteger, SHGActionState) {
     SHGActionStateVerying = 1,//审核中
     SHGActionStateSuccess = 2,//通过审核
-    SHGActionStateFailed = 3//驳回
+    SHGActionStateFailed = 3,//驳回
+    SHGActionStateOver = 4//结束
 };
 
 @interface SHGActionObject : MTLModel<MTLJSONSerializing>
@@ -19,10 +20,10 @@ typedef NS_ENUM(NSInteger, SHGActionState) {
 //人员属性
 @property (strong, nonatomic) NSString *headerImageUrl;
 @property (strong, nonatomic) NSString *status;
-@property (strong, nonatomic) NSString *postion;
 @property (strong, nonatomic) NSString *department;
 @property (strong, nonatomic) NSString *company;
 @property (strong, nonatomic) NSString *realName;
+@property (strong, nonatomic) NSString *postion;
 @property (strong, nonatomic) NSString *friendShip;
 //活动属性
 @property (strong, nonatomic) NSString *meetId;
@@ -32,12 +33,12 @@ typedef NS_ENUM(NSInteger, SHGActionState) {
 @property (strong, nonatomic) NSString *meetArea;
 @property (strong, nonatomic) NSString *meetNum;
 @property (strong, nonatomic) NSString *commentNum;
-@property (strong, nonatomic) NSString *meetState;
+@property (assign, nonatomic) SHGActionState meetState;
 @property (strong, nonatomic) NSString *publisher;
 @property (strong, nonatomic) NSString *attendNum;
 @property (strong, nonatomic) NSString *praiseNum;
 @property (strong, nonatomic) NSString *createTime;
 @property (strong, nonatomic) NSString *isTimeOut;
 @property (strong, nonatomic) NSString *isPraise;
-
+@property (strong, nonatomic) NSString *introduce;
 @end

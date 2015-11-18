@@ -9,9 +9,7 @@
 #import "SHGActionTableViewCell.h"
 
 @interface SHGActionTableViewCell ()
-{
-    //UIImage * img;
-}
+
 @property (weak, nonatomic) IBOutlet UILabel *Action_titlelabel;
 @property (weak, nonatomic) IBOutlet UIImageView *Acyion_titleBg;
 @property (weak, nonatomic) IBOutlet UIImageView *Action_headImage;
@@ -39,7 +37,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *Action_bottomLine;
 @property (weak, nonatomic) IBOutlet UIView *twoButtonView;
 @property (weak, nonatomic) IBOutlet UIView *thrButtonView;
-
+@property (strong, nonatomic) SHGActionObject *object;
 
 
 @end
@@ -86,6 +84,7 @@
 
 - (void)loadDataWithObject:(SHGActionObject *)object
 {
+    self.object = object;
     [self clearCell];
     [self.Action_headImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,object.headerImageUrl]] placeholderImage:[UIImage imageNamed:@"default_head"]];
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
@@ -95,12 +94,22 @@
     self.Action_allNumLabel.text = [NSString stringWithFormat:@"邀请%@人", object.meetNum];
     self.Action_momentNumlabel.text = [NSString stringWithFormat:@"已报名%@人", object.attendNum];
     self.Action_messageLabel.text = object.friendShip;
-    if ([object.isTimeOut isEqualToString:@"1"]) {
-        [self.Action_signButton setTitle:@"报名中" forState:UIControlStateNormal];
-    } else{
+    if (object.meetState == SHGActionStateOver) {
         [self.Action_signButton setTitle:@"已结束" forState:UIControlStateNormal];
+        [self.Action_signButton setBackgroundColor:[UIColor colorWithHexString:@"E7E7E7"]];
+    } else if (object.meetState == SHGActionStateVerying){
+        [self.Action_signButton setTitle:@"审核中" forState:UIControlStateNormal];
+        [self.Action_signButton setBackgroundColor:[UIColor colorWithHexString:@"FF837E"]];
+    } else if (object.meetState == SHGActionStateSuccess){
+        [self.Action_signButton setTitle:@"报名中" forState:UIControlStateNormal];
+        [self.Action_signButton setBackgroundColor:[UIColor colorWithHexString:@"F95C53"]];
+    } else if (object.meetState == SHGActionStateFailed){
+        [self.Action_signButton setTitle:@"被驳回" forState:UIControlStateNormal];
+        [self.Action_signButton setBackgroundColor:[UIColor colorWithHexString:@"BCBCBC"]];
     }
-    if ([object.publisher isEqualToString:uid]) {
+    
+    if ([object.publisher isEqualToString:uid] && object.meetState == SHGActionStateSuccess) {
+        //2代表通过审核了
         self.thrButtonView.hidden = NO;
         [self.Action_thr_zanButton setTitle:object.praiseNum forState:UIControlStateNormal];
         [self.Action_thrCommentButton setTitle:object.commentNum forState:UIControlStateNormal];
@@ -130,6 +139,7 @@
     self.Action_allNumLabel.text = @"";
     self.Action_momentNumlabel.text = @"";
     [self.Action_signButton setTitle:@"" forState:UIControlStateNormal];
+    [self.Action_signButton setBackgroundColor:[UIColor clearColor]];
     self.twoButtonView.hidden = YES;
     self.thrButtonView.hidden = YES;
     [self.Action_thr_zanButton setTitle:@"" forState:UIControlStateNormal];
@@ -138,8 +148,28 @@
     [self.Action_commentButton setTitle:@"" forState:UIControlStateNormal];
     [self.Action_thr_zanButton setImage:[UIImage imageNamed:@"home_weizan"] forState:UIControlStateNormal];
     [self.Action_zanButton setImage:[UIImage imageNamed:@"home_weizan"] forState:UIControlStateNormal];
-
-
 }
 
+//点赞
+- (IBAction)addLove:(UIButton *)button
+{
+
+}
+//点击评论
+- (IBAction)addComment:(UIButton *)button
+{
+//    if (self.delegate && [self.delegate respondsToSelector:@selector(clickCommentButton:)]) {
+//        [self.delegate clickCommentButton:self.object];
+//    }
+    if (self.delegate && [self.delegate respondsToSelector:@selector(clickEditButton:)]) {
+        [self.delegate clickEditButton:self.object];
+    }
+}
+//点击编辑
+- (IBAction)addEdit:(UIButton *)button
+{
+    if (self.delegate && [self.delegate respondsToSelector:@selector(clickEditButton:)]) {
+        [self.delegate clickEditButton:self.object];
+    }
+}
 @end

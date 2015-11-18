@@ -9,8 +9,18 @@
 #import <UIKit/UIKit.h>
 #import "SHGActionObject.h"
 
+@protocol SHGActionTableViewDelegate <NSObject>
+
+- (void)clickPrasiseButton:(SHGActionObject *)object;
+- (void)clickCommentButton:(SHGActionObject *)object;
+- (void)clickEditButton:(SHGActionObject *)object;
+
+@end
+
 @interface SHGActionTableViewCell : UITableViewCell
 
+@property (assign, nonatomic) id<SHGActionTableViewDelegate> delegate;
 - (void)loadDataWithObject:(SHGActionObject *)object;
+
 
 @end

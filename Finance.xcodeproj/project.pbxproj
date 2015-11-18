@@ -847,6 +847,8 @@
 		B0EAB2561B467AB8005A760F /* TTTAttributedLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = B0EAB2531B467AB8005A760F /* TTTAttributedLabel.m */; };
 		CEB958E5843B739F6CB8F600 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B1E0AB5E4D6E1102E811C936 /* libPods.a */; };
 		F90F7B6A1BF48C4C00555F49 /* SHGPersonalViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F90F7B691BF48C4C00555F49 /* SHGPersonalViewController.xib */; };
+		F91778C21BFC240900C535CB /* SHGDatePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = F91778C01BFC240900C535CB /* SHGDatePickerView.m */; };
+		F91778C31BFC240900C535CB /* SHGDatePickerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F91778C11BFC240900C535CB /* SHGDatePickerView.xib */; };
 		F92835DE1BA6E16C00E1CF22 /* UIButton+EnlargeEdge.m in Sources */ = {isa = PBXBuildFile; fileRef = F92835DD1BA6E16C00E1CF22 /* UIButton+EnlargeEdge.m */; };
 		F93242BA1BE9EE92003B7F07 /* SHGUnifiedTreatment.m in Sources */ = {isa = PBXBuildFile; fileRef = F93242B91BE9EE92003B7F07 /* SHGUnifiedTreatment.m */; };
 		F932E2551B859DEC00EF2332 /* CircleListRecommendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F932E2531B859DEC00EF2332 /* CircleListRecommendViewController.m */; };
@@ -2051,6 +2053,9 @@
 		B0EAB2541B467AB8005A760F /* TTTAttributedLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTTAttributedLabel.h; sourceTree = "<group>"; };
 		B1E0AB5E4D6E1102E811C936 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		F90F7B691BF48C4C00555F49 /* SHGPersonalViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGPersonalViewController.xib; sourceTree = "<group>"; };
+		F91778BF1BFC240900C535CB /* SHGDatePickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGDatePickerView.h; sourceTree = "<group>"; };
+		F91778C01BFC240900C535CB /* SHGDatePickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGDatePickerView.m; sourceTree = "<group>"; };
+		F91778C11BFC240900C535CB /* SHGDatePickerView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGDatePickerView.xib; sourceTree = "<group>"; };
 		F91B2B871BAA788300BC166D /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F92835DC1BA6E16C00E1CF22 /* UIButton+EnlargeEdge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+EnlargeEdge.h"; sourceTree = "<group>"; };
 		F92835DD1BA6E16C00E1CF22 /* UIButton+EnlargeEdge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+EnlargeEdge.m"; sourceTree = "<group>"; };
@@ -3044,6 +3049,9 @@
 				6149CFE81B2605FC006E45FE /* TwainContactInfo.m */,
 				F9B063691BD7699400471DF4 /* SHGNavigationView.h */,
 				F9B0636A1BD7699400471DF4 /* SHGNavigationView.m */,
+				F91778BF1BFC240900C535CB /* SHGDatePickerView.h */,
+				F91778C01BFC240900C535CB /* SHGDatePickerView.m */,
+				F91778C11BFC240900C535CB /* SHGDatePickerView.xib */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -5161,6 +5169,7 @@
 				408D8B491AF8618C0055810C /* chatBar_record.png in Resources */,
 				F9A8D2891BE712B700A2BFB1 /* TencentOpenApi_IOS_Bundle.bundle in Resources */,
 				614EFF081AF114D800F2BDD1 /* circle.png in Resources */,
+				F91778C31BFC240900C535CB /* SHGDatePickerView.xib in Resources */,
 				408D8AFA1AF8618C0055810C /* VoiceSearchFeedback003@2x.png in Resources */,
 				61E83D981AF7C78E00703651 /* 接受按钮-默认@3x.png in Resources */,
 				40302B1B1AEF61B600F22EB6 /* MyTeamViewController.xib in Resources */,
@@ -5545,6 +5554,7 @@
 				F9EDD5FA1BABFBCF00506C0C /* SDWaitingView.m in Sources */,
 				B04D032E1B43F88A009BE7C2 /* ZYExceptionHandler.m in Sources */,
 				F9E0488A1BFB151E0027CBC4 /* SHGSelectTagsViewController.m in Sources */,
+				F91778C21BFC240900C535CB /* SHGDatePickerView.m in Sources */,
 				98E3022B1BFB0708001D4A69 /* SHGAuthenticationViewController.m in Sources */,
 				61D62BF11ADD1C4D002DD395 /* MOWHttp.m in Sources */,
 				614A597E1AD3AEA1005DAB04 /* Finance.xcdatamodeld in Sources */,
