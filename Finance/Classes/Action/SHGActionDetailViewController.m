@@ -9,12 +9,14 @@
 #import "SHGActionDetailViewController.h"
 #import "ReplyTableViewCell.h"
 #import "SHGActionSignTableViewCell.h"
+#import "MLEmojiLabel.h"
+#import "CircleListDelegate.h"
 #define k_title_height 44.0
 #define k_redLineToLeft 14
 #define k_labelToLeft 20.0
 #define k_topSpace 15.0
 //#import "SHGActionTableViewCell.h"
-@interface SHGActionDetailViewController ()<UITableViewDataSource,UITableViewDelegate>
+@interface SHGActionDetailViewController ()<UITableViewDataSource,UITableViewDelegate,MLEmojiLabelDelegate, CircleListDelegate>
 {
     //UITableView * ybmTableView;
 }
@@ -68,6 +70,16 @@
 @property (weak, nonatomic) IBOutlet UIButton *smileImage;
 @property (weak, nonatomic) IBOutlet UIButton *speakButton;
 @property (weak, nonatomic) IBOutlet UIButton *sendButton;
+@property (weak, nonatomic) IBOutlet UIImageView *backImageView;
+@property (weak, nonatomic) IBOutlet UIView *viewPraise;
+
+@property (weak, nonatomic) IBOutlet UIButton *baomingButton;
+@property (weak, nonatomic) IBOutlet UIButton *my_baomingButton;
+@property (weak, nonatomic) IBOutlet UIButton *my_shareButton;
+@property (strong, nonatomic) BRCommentView *popupView;
+
+
+- (IBAction)actionComment:(id)sender;
 
 @end
 
@@ -89,13 +101,13 @@
     self.title = @"活动详情";
     self.replyTable.delegate = self;
     self.replyTable.dataSource = self;
-   // self.bottomButtonView.backgroundColor = [UIColor redColor];
+    self.replyTable.backgroundColor = [UIColor whiteColor];
     [self setColor];
     
     [self setImage];
     
     [self loadUI];
-   
+    [self.replyTable setTableHeaderView:self.viewHeader];
 }
 
 -(void)loadUI
@@ -142,7 +154,8 @@
     self.plbutton.frame = CGRectMake(self.replyTable.frame.size.width-k_redLineToLeft-zanButtonWidth, CGRectGetMaxY(self.ybmTableView.frame)+k_topSpace, zanButtonWidth, 20.0);
     self.zanButton.frame = CGRectMake(self.replyTable.frame.size.width-k_redLineToLeft-2*zanButtonWidth, CGRectGetMaxY(self.ybmTableView.frame)+k_topSpace, zanButtonWidth, 20.0);
     self.bottomLine.frame = CGRectMake(0, self.zanButton.frame.origin.y-k_topSpace, self.replyTable.frame.size.width, 1.0);
-    self.viewHeader.height = CGRectGetMaxY(self.zanButton.frame) +k_topSpace;
+     self.viewPraise.frame = CGRectMake(14.0, CGRectGetMaxY(self.zanButton.frame)+k_topSpace, self.replyTable.frame.size.width-2*k_redLineToLeft, 55);
+    self.viewHeader.height = CGRectGetMaxY(self.viewPraise.frame) ;
     self.viewHeader.width = self.replyTable.frame.size.width;
 
 
@@ -155,17 +168,18 @@
     NSInteger sendButtonWidth = 54.0;
     self.smileImage.frame = CGRectMake(lefSpace, topSpace, 30, 30);
     self.sendButton.frame = CGRectMake(CGRectGetWidth(self.viewInput.frame)-lefSpace-sendButtonWidth, topSpace, sendButtonWidth, 30);
-    self.speakButton.frame = CGRectMake(40, 5,CGRectGetWidth(self.viewInput.frame)-sendButtonWidth-2*lefSpace , 34);
-//    [self.view addSubview:bottomView];
+    self.speakButton.frame = CGRectMake(40.0, 5.0,CGRectGetWidth(self.viewInput.frame)-sendButtonWidth-2*lefSpace , 34);
+   
 }
 -(void)setColor
 {
+    [self.my_shareButton setBackgroundColor:[UIColor colorWithHexString:@"474550"]];
     self.timeLabel.backgroundColor = [UIColor clearColor];
     self.timeLabel.textColor = [UIColor colorWithHexString:@"3A3A3A3A"];
     self.JBXXLine.backgroundColor = [UIColor colorWithHexString:@"F95C53"];
     self.jjRedLine.backgroundColor = [UIColor colorWithHexString:@"F95C53"];
     self.yBMRedLine.backgroundColor = [UIColor colorWithHexString:@"F95C53"];
-    //
+    
     self.JBXXLabel.textColor = [UIColor colorWithHexString:@"333333"];
     self.jjLabel.textColor = [UIColor colorWithHexString:@"333333"];
     self.jjMessageLabel.textColor = [UIColor colorWithHexString:@"333333"];
@@ -197,36 +211,27 @@
     self.topLineImage.image = [img resizableImageWithCapInsets:UIEdgeInsetsMake(0 , 1, 0, 1) resizingMode:UIImageResizingModeTile];
     self.CenterLineImage.image = [img resizableImageWithCapInsets:UIEdgeInsetsMake(0 , 1, 0, 1) resizingMode:UIImageResizingModeTile];
     self.bottomLine.image = [img resizableImageWithCapInsets:UIEdgeInsetsMake(0 , 1, 0, 1) resizingMode:UIImageResizingModeTile];
+    
+    UIImage *image = self.backImageView.image;
+    image = [image resizableImageWithCapInsets:UIEdgeInsetsMake(15.0f, 35.0f, 9.0f, 11.0f) resizingMode:UIImageResizingModeStretch];
+    self.backImageView.image = image;
+
 
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    if ([tableView isEqual:self.replyTable]) {
-        return  self.viewHeader.height;
-    }else if ([tableView isEqual:self.ybmTableView]){
-        
-        return 0;
-    }
     return 0;
 }
 
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-   
-    if ([tableView isEqual:self.replyTable]) {
-        return  self.viewHeader;
-    }else if ([tableView isEqual:self.ybmTableView]){
-        
-        return nil;
-    }
     return nil;
-   
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if ([tableView isEqual:self.replyTable]) {
-        section = 3;
+        section = 10;
     } else if([tableView isEqual:self.ybmTableView]){
         section = 3;
     }
@@ -240,7 +245,6 @@
         if (!cell) {
             cell = [[[NSBundle mainBundle] loadNibNamed:@"ReplyTableViewCell" owner:self options:nil] lastObject];
         }
-        cell.backgroundColor = [UIColor redColor];
         return cell;
 
     }else if ([tableView isEqual:self.ybmTableView]){
@@ -263,5 +267,17 @@
         rowHeight = 54.0;
     }
     return rowHeight;
+}
+- (IBAction)actionComment:(id)sender {
+    _popupView = [[BRCommentView alloc] initWithFrame:self.view.bounds superFrame:CGRectZero isController:YES type:@"comment"];
+    _popupView.delegate = self;
+    _popupView.fid = @"-1";//评论
+    _popupView.tag = 222;
+    _popupView.detail = @"";
+    //_popupView.rid = self.obj.rid;
+    [self.navigationController.view addSubview:_popupView];
+    //[popupView release];
+    [_popupView showWithAnimated:YES];
+
 }
 @end

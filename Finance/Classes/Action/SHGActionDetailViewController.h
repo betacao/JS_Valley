@@ -7,7 +7,9 @@
 //
 
 #import "BaseTableViewController.h"
+#import "AppDelegate.h"
+#import "CircleListObj.h"
 
-@interface SHGActionDetailViewController : BaseTableViewController
+@interface SHGActionDetailViewController : BaseTableViewController<BRCommentViewDelegate,UIScrollViewDelegate,UITextFieldDelegate,ReplyDelegate,CircleActionDelegate>
 
 @end

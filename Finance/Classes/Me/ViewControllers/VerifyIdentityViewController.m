@@ -48,7 +48,7 @@
 	self.isWantToChange = NO;
 	self.isSelectImage = NO;
     self.view.backgroundColor= [UIColor whiteColor];
-    
+    self.noImageLabel.text = @"请上传您的名片、工牌或公司邮箱后台截图等任一材料";
     self.identifyImageView.layer.cornerRadius = 5;
     self.identifyImageView.layer.masksToBounds = YES;
     //自适应图片宽高比例
@@ -129,9 +129,7 @@
 		self.tipsLabel.hidden = NO;
 	}else if ([self.status isEqualToString:@"2"]){
 		self.status_statuLabel.text = @"已认证";
-		
 		if (self.isWantToChange) {
-//            self.submitButton.hidden = YES;
 			[self.submitButton setTitle:@"更新" forState:UIControlStateNormal];
 			[self.submitButton setTitle:@"更新" forState:UIControlStateHighlighted];
 			if (!self.isSelectImage) {
@@ -139,14 +137,15 @@
 				self.noImageView.hidden = NO;
 			}
 		}else{
-			[self.submitButton setTitle:@"更新" forState:UIControlStateNormal];
-			[self.submitButton setTitle:@"更新" forState:UIControlStateHighlighted];
+			[self.submitButton setTitle:@"提交" forState:UIControlStateNormal];
+			[self.submitButton setTitle:@"提交" forState:UIControlStateHighlighted];
 		}
-		
+        self.noImageLabel.hidden = YES;
 		self.tipsLabel.hidden = YES;
 	}else if ([self.status isEqualToString:@"3"]){
 		self.status_statuLabel.text = @"审核被拒";
-
+        self.noImageLabel.hidden = NO;
+        self.tipsLabel.hidden = YES;
 		if (self.isWantToChange) {
 			[self.submitButton setTitle:@"提交" forState:UIControlStateNormal];
 			[self.submitButton setTitle:@"提交" forState:UIControlStateHighlighted];
@@ -155,8 +154,8 @@
 				self.noImageView.hidden = NO;
 			}
 		}else{
-			[self.submitButton setTitle:@"提交" forState:UIControlStateNormal];
-			[self.submitButton setTitle:@"提交" forState:UIControlStateHighlighted];
+			[self.submitButton setTitle:@"更新" forState:UIControlStateNormal];
+			[self.submitButton setTitle:@"更新" forState:UIControlStateHighlighted];
 		}
 
 	}

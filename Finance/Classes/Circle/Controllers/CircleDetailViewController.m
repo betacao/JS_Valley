@@ -478,7 +478,7 @@
     _popupView.detail = @"";
     _popupView.rid = self.obj.rid;
     [self.navigationController.view addSubview:_popupView];
-    //    [popupView release];
+    //[popupView release];
     [_popupView showWithAnimated:YES];
    
 }
