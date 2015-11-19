@@ -86,7 +86,7 @@
     self.endTimeField.text = [@"  " stringByAppendingString:object.endTime];
     self.positionField.text = object.meetArea;
     self.invateNumber.text = object.meetNum;
-    self.introduceView.text = object.introduce;
+    self.introduceView.text = object.detail;
     if (object.meetState == SHGActionStateVerying) {
         //审核中
         [self.nextButton setTitle:@"审核中" forState:UIControlStateNormal];

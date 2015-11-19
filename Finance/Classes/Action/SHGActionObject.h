@@ -40,5 +40,9 @@ typedef NS_ENUM(NSInteger, SHGActionState) {
 @property (strong, nonatomic) NSString *createTime;
 @property (strong, nonatomic) NSString *isTimeOut;
 @property (strong, nonatomic) NSString *isPraise;
-@property (strong, nonatomic) NSString *introduce;
+@property (strong, nonatomic) NSString *detail;
+@property (strong, nonatomic) NSArray *attendList;
+@property (strong, nonatomic) NSArray *praiseList;
+@property (strong, nonatomic) NSArray *commentList;
+
 @end

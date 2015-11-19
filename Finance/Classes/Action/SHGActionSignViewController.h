@@ -7,7 +7,8 @@
 //
 
 #import "BaseViewController.h"
+#import "SHGActionObject.h"
 
 @interface SHGActionSignViewController : BaseViewController
-
+@property  (strong, nonatomic) SHGActionObject *object;
 @end

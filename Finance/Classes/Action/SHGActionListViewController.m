@@ -118,6 +118,8 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     SHGActionDetailViewController *controller = [[SHGActionDetailViewController alloc] init];
+    SHGActionObject *object = [self.dataArr objectAtIndex:indexPath.row];
+    controller.object = object;
     [self.navigationController pushViewController:controller animated:YES];
 }
 
@@ -135,6 +137,7 @@
 - (void)clickCommentButton:(SHGActionObject *)object
 {
     SHGActionDetailViewController *controller = [[SHGActionDetailViewController alloc] init];
+    controller.object = object;
     [self.navigationController pushViewController:controller animated:YES];
 }
 

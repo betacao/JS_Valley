@@ -8,8 +8,8 @@
 
 #import "BaseTableViewController.h"
 #import "AppDelegate.h"
-#import "CircleListObj.h"
+#import "SHGActionObject.h"
 
 @interface SHGActionDetailViewController : BaseTableViewController<BRCommentViewDelegate,UIScrollViewDelegate,UITextFieldDelegate,ReplyDelegate,CircleActionDelegate>
-
+@property (strong, nonatomic) SHGActionObject *object;
 @end

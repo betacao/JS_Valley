@@ -7,6 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SHGActionObject.h"
+#define kActionSignCellHeight 54.0f
 
 @interface SHGActionSignTableViewCell : UITableViewCell
+
+- (void)loadCellWithDictionary:(NSDictionary *)dictionary;
+
 @end

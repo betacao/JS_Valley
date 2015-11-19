@@ -8,13 +8,11 @@
 
 #import "SHGActionSignTableViewCell.h"
 @interface SHGActionSignTableViewCell()
-{
-    
-}
+
 @property (weak, nonatomic) IBOutlet UIImageView *action_signHeadImage;
 @property (weak, nonatomic) IBOutlet UILabel *action_signNameLabel;
 
-@property (weak, nonatomic) IBOutlet UILabel *action_signCommpangyLlabe;
+@property (weak, nonatomic) IBOutlet UILabel *action_signCommpanyLable;
 @property (weak, nonatomic) IBOutlet UIButton *action_signRightButton;
 
 @property (weak, nonatomic) IBOutlet UIButton *action_signLeftButton;
@@ -26,7 +24,7 @@
 
 - (void)awakeFromNib {
     self.action_signNameLabel.textColor = [UIColor colorWithHexString:@"333333"];
-    self.action_signCommpangyLlabe.textColor = [UIColor colorWithHexString:@"C1C1C1"];
+    self.action_signCommpanyLable.textColor = [UIColor colorWithHexString:@"C1C1C1"];
     [self.action_signLeftButton setBackgroundColor:[UIColor colorWithHexString:@"FFA2BC"]];
     [self.action_signLeftButton setTitle:@"同意" forState:UIControlStateNormal];
     [self.action_signLeftButton setTitleColor:[UIColor  whiteColor] forState:UIControlStateNormal];
@@ -40,10 +38,45 @@
     
 }
 
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
+- (void)loadCellWithDictionary:(NSDictionary *)dictionary
+{
 
-    // Configure the view for the selected state
+    self.action_signNameLabel.text = [dictionary objectForKey:@"realname"];
+    self.action_signCommpanyLable.text = [dictionary objectForKey:@"company"];
+    [self.action_signHeadImage sd_setImageWithURL:[NSURL URLWithString:[dictionary objectForKey:@"headimageurl"]] placeholderImage:[UIImage imageNamed:@"default_head"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+
+    }];
+    if ([[dictionary objectForKey:@"status"] isEqualToString:@"0"]) {
+        self.action_signLeftButton.hidden = NO;
+        self.action_signRightButton.hidden = NO;
+        [self.action_signLeftButton setTitle:@"同意" forState:UIControlStateNormal];
+        [self.action_signRightButton setTitle:@"驳回" forState:UIControlStateNormal];
+    } else if ([[dictionary objectForKey:@"status"] isEqualToString:@"1"]) {
+        self.action_signRightButton.hidden = NO;
+        [self.action_signRightButton setTitle:@"已同意" forState:UIControlStateNormal];
+    } else if ([[dictionary objectForKey:@"status"] isEqualToString:@"2"]) {
+        self.action_signRightButton.hidden = NO;
+        [self.action_signRightButton setTitle:@"已驳回" forState:UIControlStateNormal];
+    }
 }
 
+- (void)clearCell
+{
+    self.action_signNameLabel.text = @"";
+    self.action_signCommpanyLable.text = @"";
+    [self.action_signHeadImage setImage:nil];
+    self.action_signLeftButton.hidden = YES;
+    self.action_signRightButton.hidden = YES;
+}
+
+- (IBAction)clickLeftButton:(id)sender
+{
+
+}
+
+
+- (IBAction)clickRightButton:(id)sender
+{
+
+}
 @end
