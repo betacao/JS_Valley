@@ -206,7 +206,15 @@ const CGFloat kAdButtomMargin = 20.0f;
     return _newMessageNoticeView;
 }
 
--(void)requestAlermInfo
+- (SHGSelectTagsViewController *)tagsController
+{
+    if (!_tagsController) {
+        _tagsController = [[SHGSelectTagsViewController alloc] init];
+    }
+    return _tagsController;
+}
+
+- (void)requestAlermInfo
 {
     if(!self.hasRequestedRecomand || !self.hasLocated){
         return;
