@@ -181,6 +181,10 @@ const CGFloat kActionViewHeight = 34.0f;
 
 @implementation praiseOBj
 
++ (NSDictionary *)JSONKeyPathsByPropertyKey{
+
+    return @{@"pnickname":@"pnickname", @"puserid":@"puserid", @"ppotname":@"ppotname"};
+}
 
 @end
 

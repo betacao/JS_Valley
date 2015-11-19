@@ -21,12 +21,13 @@
 @property (weak, nonatomic) IBOutlet UIButton *speakButton;
 @property (weak, nonatomic) IBOutlet UIButton *sendButton;
 
-@property (weak, nonatomic) IBOutlet UIButton *baomingButton;
-@property (weak, nonatomic) IBOutlet UIButton *my_baomingButton;
-@property (weak, nonatomic) IBOutlet UIButton *my_shareButton;
+@property (weak, nonatomic) IBOutlet UIButton *leftButton;
+@property (weak, nonatomic) IBOutlet UIButton *middleButton;
+@property (weak, nonatomic) IBOutlet UIButton *rightButton;
 @property (strong, nonatomic) BRCommentView *popupView;
 @property (strong, nonatomic) SHGActionObject *responseObject;
 @property (strong, nonatomic) SHGActionSignViewController *signController;
+@property (strong, nonatomic) NSString *rejectReason;
 
 - (IBAction)actionComment:(id)sender;
 
@@ -50,6 +51,9 @@
     self.replyTable.delegate = self;
     self.replyTable.dataSource = self;
     self.replyTable.backgroundColor = [UIColor whiteColor];
+    self.leftButton.hidden = YES;
+    self.rightButton.hidden = YES;
+    self.middleButton.hidden = YES;
     [self loadActionDetail:self.object];
 }
 
@@ -73,6 +77,7 @@
         weakSelf.signController.object = [array firstObject];
         weakSelf.responseObject = [array firstObject];
         [weakSelf.replyTable setTableHeaderView:weakSelf.signController.view];
+        [weakSelf loadUI];
     } failed:^(MOCHTTPResponse *response) {
 
     }];
@@ -81,7 +86,46 @@
 
 - (void)loadUI
 {
-   
+    NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
+    //审核中 也只有自己能看到审核中
+    if (self.responseObject.meetState == SHGActionStateVerying) {
+        self.middleButton.hidden = NO;
+        self.middleButton.enabled = NO;
+        [self.middleButton setTitle:@"审核中" forState:UIControlStateNormal];
+    } else if (self.responseObject.meetState == SHGActionStateSuccess){
+        //成功了 如果是自己则只能分享
+        if ([self.responseObject.publisher isEqualToString:uid]) {
+            self.middleButton.hidden = NO;
+            self.middleButton.enabled = NO;
+            [self.middleButton setTitle:@"分享" forState:UIControlStateNormal];
+        } else{
+            //其他用户看到的
+            self.leftButton.hidden = NO;
+            self.rightButton.hidden = NO;
+            [self.leftButton setTitle:@"报名" forState:UIControlStateNormal];
+            [self.rightButton setTitle:@"分享" forState:UIControlStateNormal];
+            for (NSDictionary *dictionary in self.responseObject.attendList){
+                if ([[dictionary objectForKey:@"uid"] isEqualToString:uid]) {
+                    if ([[dictionary objectForKey:@"state"] isEqualToString:@"0"]) {
+                        [self.leftButton setTitle:@"审核中" forState:UIControlStateNormal];
+                    } else if ([[dictionary objectForKey:@"state"] isEqualToString:@"1"]) {
+                        [self.leftButton setTitle:@"审核通过" forState:UIControlStateNormal];
+                    } else if ([[dictionary objectForKey:@"state"] isEqualToString:@"2"]) {
+                        [self.leftButton setTitle:@"被驳回(查看原因)" forState:UIControlStateNormal];
+                        self.rejectReason = [dictionary objectForKey:@"reason"];
+                    }
+                    break;
+                }
+            }
+            
+        }
+    } else if (self.responseObject.meetState == SHGActionStateFailed){
+        //被驳回(活动被驳回 不是报名请求)
+        self.leftButton.hidden = NO;
+        self.rightButton.hidden = NO;
+        [self.leftButton setTitle:@"被驳回(查看原因)" forState:UIControlStateNormal];
+        [self.rightButton setTitle:@"重新编辑" forState:UIControlStateNormal];
+    }
 }
 
 - (void)loadOriginalColor

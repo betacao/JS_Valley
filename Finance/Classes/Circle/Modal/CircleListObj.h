@@ -71,7 +71,7 @@
 
 @end
 
-@interface praiseOBj:NSObject
+@interface praiseOBj: MTLModel<MTLJSONSerializing>
 @property(nonatomic, strong)  NSString *pnickname ;
 @property(nonatomic, strong)  NSString *puserid;
 @property(nonatomic, strong)  NSString *ppotname;

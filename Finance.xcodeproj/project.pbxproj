@@ -854,6 +854,8 @@
 		F932E2551B859DEC00EF2332 /* CircleListRecommendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F932E2531B859DEC00EF2332 /* CircleListRecommendViewController.m */; };
 		F932E2561B859DEC00EF2332 /* CircleListRecommendViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F932E2541B859DEC00EF2332 /* CircleListRecommendViewController.xib */; };
 		F9758A631BB002D70085D32C /* ImproveMatiralViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9758A621BB002D70085D32C /* ImproveMatiralViewController.xib */; };
+		F986DE361BFDCBD900E6709F /* SHGActionTotalInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F986DE341BFDCBD900E6709F /* SHGActionTotalInViewController.m */; };
+		F986DE371BFDCBD900E6709F /* SHGActionTotalInViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F986DE351BFDCBD900E6709F /* SHGActionTotalInViewController.xib */; };
 		F98B16EF1BC7947D000A577C /* libGeTuiSdk-1.2.1.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F98B16EE1BC7947D000A577C /* libGeTuiSdk-1.2.1.a */; };
 		F99580C41B9D338B001F8AA6 /* SHGModifyInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F99580C21B9D338B001F8AA6 /* SHGModifyInfoViewController.m */; };
 		F99580C51B9D338B001F8AA6 /* SHGModifyInfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F99580C31B9D338B001F8AA6 /* SHGModifyInfoViewController.xib */; };
@@ -2066,6 +2068,9 @@
 		F932E2531B859DEC00EF2332 /* CircleListRecommendViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CircleListRecommendViewController.m; sourceTree = "<group>"; };
 		F932E2541B859DEC00EF2332 /* CircleListRecommendViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CircleListRecommendViewController.xib; sourceTree = "<group>"; };
 		F9758A621BB002D70085D32C /* ImproveMatiralViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ImproveMatiralViewController.xib; sourceTree = "<group>"; };
+		F986DE331BFDCBD900E6709F /* SHGActionTotalInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGActionTotalInViewController.h; sourceTree = "<group>"; };
+		F986DE341BFDCBD900E6709F /* SHGActionTotalInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGActionTotalInViewController.m; sourceTree = "<group>"; };
+		F986DE351BFDCBD900E6709F /* SHGActionTotalInViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGActionTotalInViewController.xib; sourceTree = "<group>"; };
 		F98B16EC1BC7947D000A577C /* GeTuiSdk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeTuiSdk.h; sourceTree = "<group>"; };
 		F98B16ED1BC7947D000A577C /* GeTuiSdkError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeTuiSdkError.h; sourceTree = "<group>"; };
 		F98B16EE1BC7947D000A577C /* libGeTuiSdk-1.2.1.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libGeTuiSdk-1.2.1.a"; sourceTree = "<group>"; };
@@ -4515,6 +4520,9 @@
 				9894C9751BF5BCE700F80577 /* SHGActionSignViewController.h */,
 				9894C9761BF5BCE700F80577 /* SHGActionSignViewController.m */,
 				9894C9771BF5BCE700F80577 /* SHGActionSignViewController.xib */,
+				F986DE331BFDCBD900E6709F /* SHGActionTotalInViewController.h */,
+				F986DE341BFDCBD900E6709F /* SHGActionTotalInViewController.m */,
+				F986DE351BFDCBD900E6709F /* SHGActionTotalInViewController.xib */,
 				9894C97A1BF5D24200F80577 /* SHGActionSignTableViewCell.h */,
 				9894C97B1BF5D24200F80577 /* SHGActionSignTableViewCell.m */,
 				9894C97C1BF5D24200F80577 /* SHGActionSignTableViewCell.xib */,
@@ -4843,6 +4851,7 @@
 				408D8B231AF8618C0055810C /* call_silence_h.png in Resources */,
 				53C9D98B1AFF3FB000827169 /* 群头像@2x.png in Resources */,
 				408D8B0A1AF8618C0055810C /* VoiceSearchFeedback011@2x.png in Resources */,
+				F986DE371BFDCBD900E6709F /* SHGActionTotalInViewController.xib in Resources */,
 				408D8B631AF8618C0055810C /* chatBar_more_photo.png in Resources */,
 				408D8B221AF8618C0055810C /* call_silence@2x.png in Resources */,
 				B080FE881B81E30100426579 /* btn_publish_face_a@2x.png in Resources */,
@@ -5548,6 +5557,7 @@
 				615234A01B0DAEBD00011EAC /* DiscovFirstFriendViewController.m in Sources */,
 				40302B271AEF78D400F22EB6 /* VerifyIdentityViewController.m in Sources */,
 				F9A227CA1BF5C7E10054F8D7 /* SHGActionSegmentViewController.m in Sources */,
+				F986DE361BFDCBD900E6709F /* SHGActionTotalInViewController.m in Sources */,
 				610FF07A1AD6227F0027EBA6 /* UIImage+Customized.m in Sources */,
 				6190274A1B2359C600D9EEA2 /* popTableViewCell.m in Sources */,
 				4088DDB91AF102FE00393855 /* SettingQuestionDetailViewController.m in Sources */,

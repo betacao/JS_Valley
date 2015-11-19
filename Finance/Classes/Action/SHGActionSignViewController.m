@@ -8,8 +8,12 @@
 
 #import "SHGActionSignViewController.h"
 #import "SHGActionSignTableViewCell.h"
+#import "SHGPersonalViewController.h"
 
-#define k
+#define PRAISE_SEPWIDTH     10
+#define PRAISE_RIGHTWIDTH     40
+#define PRAISE_WIDTH 30.0f
+
 @interface SHGActionSignViewController ()<UITableViewDataSource,UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) IBOutlet UIView *headerView;
@@ -22,6 +26,9 @@
 @property (weak, nonatomic) IBOutlet UILabel *actionIntroduceLabel;
 @property (strong, nonatomic) IBOutlet UIView *footerView;
 @property (weak, nonatomic) IBOutlet UIView *bottomView;
+@property (weak, nonatomic) IBOutlet UIImageView *footerBgImageView;
+@property (weak, nonatomic) IBOutlet UIScrollView *praiseScrollView;
+@property (weak, nonatomic) IBOutlet UIView *praiseView;
 
 @end
 
@@ -64,11 +71,46 @@
     frame = self.headerView.frame;
     frame.size.height = CGRectGetMaxY(self.bottomView.frame);
     self.headerView.frame = frame;
-
+    [self loadFooterUI];
     [self.tableView setTableHeaderView:self.headerView];
     [self.tableView setTableFooterView:self.footerView];
 }
 
+- (void)loadFooterUI
+{
+    UIImage *image = self.footerBgImageView.image;
+    self.footerBgImageView.image = [image resizableImageWithCapInsets:UIEdgeInsetsMake(15.0f, 35.0f, 9.0f, 11.0f) resizingMode:UIImageResizingModeStretch];
+
+    CGRect praiseRect = self.praiseView.frame;
+    CGFloat praiseWidth = 0;
+    if ([self.object.praiseNum integerValue] > 0){
+        NSArray *array = [[SHGGloble sharedGloble] parseServerJsonArrayToJSONModel:self.object.praiseList class:[praiseOBj class]];
+        for (NSInteger i = 0; i < array.count; i++) {
+            praiseOBj *obj = [array objectAtIndex:i];
+            praiseWidth = PRAISE_WIDTH;
+            CGRect rect = CGRectMake((praiseWidth + PRAISE_SEPWIDTH) * i , (CGRectGetHeight(praiseRect) - praiseWidth) / 2.0f, praiseWidth, praiseWidth);
+            UIImageView *head = [[UIImageView alloc] initWithFrame:rect];
+            head.tag = [obj.puserid integerValue];
+            [head sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,obj.ppotname]] placeholderImage:[UIImage imageNamed:@"default_head"]];
+            head.userInteractionEnabled = YES;
+            DDTapGestureRecognizer *recognizer = [[DDTapGestureRecognizer alloc] initWithTarget:self action:@selector(moveToUserCenter:)];
+            [head addGestureRecognizer:recognizer];
+            [self.praiseScrollView addSubview:head];
+        }
+        [self.praiseScrollView setContentSize:CGSizeMake(array.count * (praiseWidth + PRAISE_SEPWIDTH), CGRectGetHeight(self.praiseScrollView.frame))];
+    } else{
+        [self.praiseScrollView removeAllSubviews];
+    }
+}
+
+- (void)moveToUserCenter:(UITapGestureRecognizer *)recognizer
+{
+    SHGPersonalViewController *controller = [[SHGPersonalViewController alloc] init];
+    controller.userId = [NSString stringWithFormat:@"%ld",(long)recognizer.view.tag];
+    [self.navigationController pushViewController:controller animated:YES];
+}
+
+#pragma mark ------tableViewDelegate
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     NSInteger count = [self.object.attendNum integerValue];
@@ -82,10 +124,9 @@
     SHGActionSignTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     if (!cell){
         cell = [[[NSBundle mainBundle] loadNibNamed:@"SHGActionSignTableViewCell" owner:self options:nil] lastObject];
-        
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     [cell loadCellWithDictionary:[self.object.attendList objectAtIndex:indexPath.row]];
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return  cell;
 }
 

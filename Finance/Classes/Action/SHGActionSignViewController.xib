@@ -13,8 +13,11 @@
                 <outlet property="actionTimeLabel" destination="iWH-zR-Hvx" id="RdC-8D-F20"/>
                 <outlet property="actionTotalLabel" destination="vVG-Ai-J6k" id="7iW-jV-MA9"/>
                 <outlet property="bottomView" destination="QXU-Gs-41s" id="zzq-st-UO9"/>
+                <outlet property="footerBgImageView" destination="RsV-j2-Ab7" id="27j-dh-Wst"/>
                 <outlet property="footerView" destination="vtI-Kw-BC1" id="ERP-6U-z88"/>
                 <outlet property="headerView" destination="TH5-Fr-hKW" id="Day-HR-gG3"/>
+                <outlet property="praiseScrollView" destination="EkI-SP-ajm" id="FoD-n0-KNF"/>
+                <outlet property="praiseView" destination="WE1-fN-VU2" id="R5U-R5-kmv"/>
                 <outlet property="tableView" destination="284-Tg-0gk" id="dt2-Hs-jko"/>
                 <outlet property="titleBgView" destination="4ma-P7-aiZ" id="mQ1-Lt-dmC"/>
                 <outlet property="titleLabel" destination="dew-FR-qdQ" id="ezh-m6-08O"/>
@@ -199,16 +202,16 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="koN-KK-Bl8" userLabel="leftButton">
-                    <rect key="frame" x="167" y="0.0" width="50" height="20"/>
+                    <rect key="frame" x="159" y="11" width="67" height="22"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <animations/>
-                    <state key="normal" title="Button"/>
+                    <state key="normal" title="Button" image="home_weizan"/>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="i3D-Dd-BDJ" userLabel="rightButton">
-                    <rect key="frame" x="242" y="0.0" width="50" height="20"/>
+                    <rect key="frame" x="234" y="11" width="66" height="22"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <animations/>
-                    <state key="normal" title="Button"/>
+                    <state key="normal" title="Button" image="home_comment"/>
                 </button>
                 <view contentMode="scaleToFill" id="WE1-fN-VU2">
                     <rect key="frame" x="14" y="44" width="292" height="55"/>
@@ -257,6 +260,7 @@
         <image name="action_invite" width="12" height="12"/>
         <image name="action_time" width="13" height="13"/>
         <image name="comment_backimage" width="46" height="24"/>
+        <image name="home_comment" width="12" height="13"/>
         <image name="home_weizan" width="13" height="13"/>
     </resources>
 </document>

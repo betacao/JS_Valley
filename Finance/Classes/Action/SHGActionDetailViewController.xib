@@ -7,11 +7,11 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SHGActionDetailViewController">
             <connections>
-                <outlet property="baomingButton" destination="z6M-ap-AMd" id="3PP-BM-5rg"/>
                 <outlet property="bottomButtonView" destination="h7H-DS-Dyz" id="X81-Ep-6cC"/>
-                <outlet property="my_baomingButton" destination="f5q-Os-sli" id="ivg-bX-Z2s"/>
-                <outlet property="my_shareButton" destination="Vy9-qE-Fs6" id="3cd-E9-wGc"/>
+                <outlet property="leftButton" destination="f5q-Os-sli" id="j7r-nM-P7v"/>
+                <outlet property="middleButton" destination="z6M-ap-AMd" id="EWh-NR-HMw"/>
                 <outlet property="replyTable" destination="n3J-sz-jUt" id="bpk-Dr-YQq"/>
+                <outlet property="rightButton" destination="Vy9-qE-Fs6" id="liJ-UK-O0M"/>
                 <outlet property="sendButton" destination="VSB-Sw-n4r" id="naE-6q-ZdQ"/>
                 <outlet property="smileImage" destination="sZa-pa-poe" id="z4a-7c-gza"/>
                 <outlet property="speakButton" destination="0tw-Xn-IgP" id="rcQ-qS-wit"/>
