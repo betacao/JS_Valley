@@ -839,6 +839,8 @@
 		B0EAB2551B467AB8005A760F /* MLEmojiLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = B0EAB2511B467AB8005A760F /* MLEmojiLabel.m */; };
 		B0EAB2561B467AB8005A760F /* TTTAttributedLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = B0EAB2531B467AB8005A760F /* TTTAttributedLabel.m */; };
 		CEB958E5843B739F6CB8F600 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B1E0AB5E4D6E1102E811C936 /* libPods.a */; };
+		F90EF47C1BFD670A0055493A /* SHGSelectTagsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F90EF47A1BFD670A0055493A /* SHGSelectTagsViewController.m */; };
+		F90EF47D1BFD670A0055493A /* SHGSelectTagsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F90EF47B1BFD670A0055493A /* SHGSelectTagsViewController.xib */; };
 		F92835DE1BA6E16C00E1CF22 /* UIButton+EnlargeEdge.m in Sources */ = {isa = PBXBuildFile; fileRef = F92835DD1BA6E16C00E1CF22 /* UIButton+EnlargeEdge.m */; };
 		F93242BA1BE9EE92003B7F07 /* SHGUnifiedTreatment.m in Sources */ = {isa = PBXBuildFile; fileRef = F93242B91BE9EE92003B7F07 /* SHGUnifiedTreatment.m */; };
 		F932E2551B859DEC00EF2332 /* CircleListRecommendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F932E2531B859DEC00EF2332 /* CircleListRecommendViewController.m */; };
@@ -2018,6 +2020,9 @@
 		B0EAB2531B467AB8005A760F /* TTTAttributedLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTTAttributedLabel.m; sourceTree = "<group>"; };
 		B0EAB2541B467AB8005A760F /* TTTAttributedLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTTAttributedLabel.h; sourceTree = "<group>"; };
 		B1E0AB5E4D6E1102E811C936 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		F90EF4791BFD670A0055493A /* SHGSelectTagsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGSelectTagsViewController.h; sourceTree = "<group>"; };
+		F90EF47A1BFD670A0055493A /* SHGSelectTagsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGSelectTagsViewController.m; sourceTree = "<group>"; };
+		F90EF47B1BFD670A0055493A /* SHGSelectTagsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGSelectTagsViewController.xib; sourceTree = "<group>"; };
 		F91B2B871BAA788300BC166D /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F92835DC1BA6E16C00E1CF22 /* UIButton+EnlargeEdge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+EnlargeEdge.h"; sourceTree = "<group>"; };
 		F92835DD1BA6E16C00E1CF22 /* UIButton+EnlargeEdge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+EnlargeEdge.m"; sourceTree = "<group>"; };
@@ -2852,6 +2857,9 @@
 				614AD1BB1AD7AFED00DDF43E /* SHGHomeViewController.h */,
 				614AD1BC1AD7AFED00DDF43E /* SHGHomeViewController.m */,
 				614AD1BD1AD7AFED00DDF43E /* SHGHomeViewController.xib */,
+				F90EF4791BFD670A0055493A /* SHGSelectTagsViewController.h */,
+				F90EF47A1BFD670A0055493A /* SHGSelectTagsViewController.m */,
+				F90EF47B1BFD670A0055493A /* SHGSelectTagsViewController.xib */,
 				F9E2A4B11BE99E1C00ECB234 /* SHGAttationViewController.h */,
 				F9E2A4B21BE99E1C00ECB234 /* SHGAttationViewController.m */,
 				F9E2A4B31BE99E1C00ECB234 /* SHGAttationViewController.xib */,
@@ -4761,6 +4769,7 @@
 				61E83D921AF7C78E00703651 /* 输入框@3x.png in Resources */,
 				61E83D3E1AF7C78E00703651 /* 微博图标@3x.png in Resources */,
 				56F2D50F1B5A5CB3008E2855 /* 认证.png in Resources */,
+				F90EF47D1BFD670A0055493A /* SHGSelectTagsViewController.xib in Resources */,
 				61E83CF01AF7C78E00703651 /* 发起对话按钮@2x.png in Resources */,
 				61E83D0C1AF7C78E00703651 /* 设置@2x.png in Resources */,
 				61E83D081AF7C78E00703651 /* 搜索@2x.png in Resources */,
@@ -5430,6 +5439,7 @@
 				615234A01B0DAEBD00011EAC /* DiscovFirstFriendViewController.m in Sources */,
 				40302B271AEF78D400F22EB6 /* VerifyIdentityViewController.m in Sources */,
 				610FF07A1AD6227F0027EBA6 /* UIImage+Customized.m in Sources */,
+				F90EF47C1BFD670A0055493A /* SHGSelectTagsViewController.m in Sources */,
 				6190274A1B2359C600D9EEA2 /* popTableViewCell.m in Sources */,
 				4088DDB91AF102FE00393855 /* SettingQuestionDetailViewController.m in Sources */,
 				F9EDD5FA1BABFBCF00506C0C /* SDWaitingView.m in Sources */,

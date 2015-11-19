@@ -21,6 +21,7 @@
 #import "SHGHomeTableViewCell.h"
 #import "CircleDetailViewController.h"
 #import "SHGUnifiedTreatment.h"
+#import "SHGSelectTagsViewController.h"
 
 #define IS_IOS7 ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7)
 #define IS_IOS8 ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8)
@@ -52,6 +53,7 @@ const CGFloat kAdButtomMargin = 20.0f;
 @property (strong, nonatomic) NSString *currentCity;
 @property (strong, nonatomic) NSString *circleType;
 @property (assign, nonatomic) BOOL shouldDisplayRecommend;
+@property (strong, nonatomic) SHGSelectTagsViewController *tagsController;
 @end
 
 @implementation SHGHomeViewController
@@ -581,6 +583,23 @@ const CGFloat kAdButtomMargin = 20.0f;
     }
     return nil;
 }
+
+//添加列表上方的标签
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    return self.tagsController.view;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    CGFloat height = CGRectGetHeight(self.tagsController.view.frame);
+    if (height == 0) {
+        return 40.0f;
+    }
+    return height;
+}
+
+
 #pragma mark -- sdc
 #pragma mark -- url点击
 - (void)mlEmojiLabel:(MLEmojiLabel*)emojiLabel didSelectLink:(NSString*)link withType:(MLEmojiLabelLinkType)type
