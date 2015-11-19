@@ -50,11 +50,12 @@
 	self.title  = @"身份认证";
 	self.isWantToChange = NO;
 	self.isSelectImage = NO;
+    self.noImageLabel.hidden = YES;
+    self.reasonTitleLabel.hidden = YES;
+    self.tipsLabel.hidden = YES;
     self.view.backgroundColor= [UIColor whiteColor];
     self.reasonTitleLabel.textColor = [UIColor colorWithHexString:@"f04241"];
     self.nowStatus.textColor = [UIColor colorWithHexString:@"606060"];
-    //self.noImageLabel.text = @"请上传您的名片、工牌或公司邮箱后台截图等任一材料";
-    //self.noImageLabel.text = @"提交成功，大牛圈顾问将会在1个工作日内完成身份认证，感谢您对大牛圈的支持！";
     self.noImageLabel.textColor = [UIColor colorWithHexString:@"C2C2C2"];
     self.tipsLabel.textColor = [UIColor colorWithHexString:@"aeaeae"];
     self.identifyImageView.layer.cornerRadius = 5;
