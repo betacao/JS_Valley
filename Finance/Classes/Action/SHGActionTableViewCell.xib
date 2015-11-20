@@ -35,7 +35,7 @@
                         <constraints>
                             <constraint firstAttribute="height" constant="40" id="AO7-iM-v34"/>
                         </constraints>
-                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
@@ -98,7 +98,7 @@
                                     <constraint firstAttribute="width" constant="60" id="7bg-9H-73j"/>
                                     <constraint firstAttribute="height" constant="18" id="cYe-Cn-9cM"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <state key="normal" title="报名中"/>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="5Wq-hb-oHN" userLabel="CenterLineImage View">
@@ -208,7 +208,7 @@
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4dj-LZ-0mX" userLabel="ZanButton">
                                         <rect key="frame" x="0.0" y="0.0" width="50" height="20"/>
                                         <animations/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                         <state key="normal" title="Button"/>
                                         <connections>
                                             <action selector="addLove:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="As1-Cs-95Q"/>
@@ -217,7 +217,7 @@
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ScY-N0-pUa" userLabel="CommentButton">
                                         <rect key="frame" x="50" y="0.0" width="50" height="20"/>
                                         <animations/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                         <state key="normal" title="Button"/>
                                         <connections>
                                             <action selector="addComment:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="hGy-6Z-Xr9"/>
@@ -237,7 +237,7 @@
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lnE-3S-8bs">
                                         <rect key="frame" x="0.0" y="0.0" width="50" height="20"/>
                                         <animations/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                         <state key="normal" title="Button"/>
                                         <connections>
                                             <action selector="addLove:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="slv-MP-DMV"/>
@@ -246,7 +246,7 @@
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YXA-WJ-y9p">
                                         <rect key="frame" x="50" y="0.0" width="50" height="20"/>
                                         <animations/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                         <state key="normal" title="Button"/>
                                         <connections>
                                             <action selector="addComment:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="i9E-KO-fwE"/>
@@ -255,7 +255,7 @@
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LB4-Pe-52L">
                                         <rect key="frame" x="100" y="0.0" width="50" height="20"/>
                                         <animations/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                         <state key="normal" title="Button"/>
                                         <connections>
                                             <action selector="addEdit:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="t0U-mi-OhI"/>

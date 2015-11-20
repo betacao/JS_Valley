@@ -14,7 +14,7 @@
                 <outlet property="headerImageView" destination="liA-2Z-sQn" id="7Wv-iI-0fy"/>
                 <outlet property="headerView" destination="isB-kz-BYg" id="tUY-fa-utK"/>
                 <outlet property="leftButton" destination="sGy-XF-9Br" id="PsB-Y5-90q"/>
-                <outlet property="phoneLabel" destination="qvC-2B-wIN" id="P52-3o-fez"/>
+                <outlet property="positionLabel" destination="qvC-2B-wIN" id="REm-RO-esr"/>
                 <outlet property="rightButton" destination="xE2-HO-M7u" id="feJ-Lx-JfE"/>
                 <outlet property="tableView" destination="o7r-Yt-0lf" id="KJz-nN-PaM"/>
                 <outlet property="tagViews" destination="uoj-nz-kgp" id="PZH-me-Jhx"/>
@@ -119,14 +119,14 @@
                             <color key="textColor" red="0.37647058820000001" green="0.37647058820000001" blue="0.37647058820000001" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="电话：" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="42" translatesAutoresizingMaskIntoConstraints="NO" id="E8t-NC-4FN">
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="地址：" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="42" translatesAutoresizingMaskIntoConstraints="NO" id="E8t-NC-4FN">
                             <rect key="frame" x="5" y="78" width="42" height="21"/>
                             <animations/>
                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                             <color key="textColor" red="0.37647058820000001" green="0.37647058820000001" blue="0.37647058820000001" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="地址：" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="42" translatesAutoresizingMaskIntoConstraints="NO" id="7es-In-qpb">
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="标签：" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="42" translatesAutoresizingMaskIntoConstraints="NO" id="7es-In-qpb">
                             <rect key="frame" x="5" y="99" width="42" height="21"/>
                             <animations/>
                             <fontDescription key="fontDescription" type="system" pointSize="12"/>

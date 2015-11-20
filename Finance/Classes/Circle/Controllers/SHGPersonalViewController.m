@@ -35,7 +35,8 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
 @property (weak, nonatomic) IBOutlet UILabel *userNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *departmentLabel;
 @property (weak, nonatomic) IBOutlet UILabel *companyLabel;
-@property (weak, nonatomic) IBOutlet UILabel *phoneLabel;
+@property (weak, nonatomic) IBOutlet UILabel *positionLabel;
+
 @property (weak, nonatomic) IBOutlet UIView *tagViews;
 @property (weak, nonatomic) IBOutlet UIImageView *headerBackImageView;
 @property (weak, nonatomic) IBOutlet UIView *footerView;
@@ -43,7 +44,8 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
 @property (weak, nonatomic) IBOutlet UIButton *rightButton;
 //数据
 @property (strong, nonatomic) NSString *department;//职称
-@property (strong, nonatomic) NSString *relationShip;
+@property (strong, nonatomic) NSString *relationShip;//关注
+@property (assign, nonatomic) BOOL isCollected;
 @property (strong, nonatomic) NSString *potName;
 @property (strong, nonatomic) NSString *dynamicNumber;
 @property (strong, nonatomic) NSString *nickName;
@@ -52,6 +54,9 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
 @property (strong, nonatomic) NSString *friendNumber;
 @property (assign, nonatomic) SHGUserType userType;
 
+@property (strong, nonatomic) NSString * position;
+@property (strong, nonatomic) NSString * tags;
+@property (strong, nonatomic) NSString * commonfriends;
 @end
 
 @implementation SHGPersonalViewController
@@ -90,9 +95,9 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
 
     __weak typeof(self) weakSelf = self;
     NSDictionary *param = @{@"uid":uid, @"target":target, @"rid":[NSNumber numberWithInt:[time intValue]], @"num":rRequestNum};
-    [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttpCircle,actioncircle,self.userId] class:[CircleListObj class] parameters:param success:^(MOCHTTPResponse *response) {
+    [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttpCircle,@"queryCircleById",self.userId] class:[CircleListObj class] parameters:param success:^(MOCHTTPResponse *response) {
         [Hud hideHud];
-        NSLog(@"=data = %@",response.dataDictionary);
+        NSLog(@"=========data = %@",response.dataDictionary);
         [weakSelf parseDataWithDic:response.dataDictionary];
         [weakSelf loadUI];
         [weakSelf.tableView reloadData];
@@ -110,9 +115,12 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
     self.departmentLabel.text = self.department;
     self.companyLabel.text = self.companyName;
     self.userNameLabel.text = self.nickName;
+    self.positionLabel.text =self.position;
+    NSArray *arry = [self.tags componentsSeparatedByString:@","];
     [self.tagViews removeAllSubviews];
-    [self.tagViews addSubview:[self viewForTags:@[@"银行", @"证券", @"二级市场"]]];
+    [self.tagViews addSubview:[self viewForTags:arry]];
     [self refreshFriendShip];
+    [self refreshCollection];
 
 }
 
@@ -128,16 +136,32 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
     }
 
 }
+-(void)refreshCollection
+{
+    if (self.isCollected) {
+        [self.rightButton setTitle:@"已收藏" forState:UIControlStateNormal];
+    } else{
+        [self.rightButton setTitle:@"收藏名片" forState:UIControlStateNormal];
+    }
+}
 - (void)parseDataWithDic:(NSDictionary *)dictionary
 {
     self.companyName = [dictionary objectForKey: @"company"];
-    self.friendNumber = [NSString stringWithFormat:@"%@",[dictionary objectForKey: @"fans"]];
     self.nickName = [dictionary objectForKey: @"nickname"];
     self.dynamicNumber = [dictionary objectForKey: @"num"];
     self.potName = [dictionary objectForKey: @"potname"];
     self.relationShip = [dictionary objectForKey: @"rela"];
     self.department = [dictionary objectForKey: @"title"];
     self.userStatus = [dictionary objectForKey:@"userstatus"];
+    self.position = [dictionary objectForKey:@"position"];
+    self.tags = [dictionary objectForKey:@"tags"];
+    self.friendNumber = [dictionary objectForKey:@"friends"];
+    self.commonfriends = [dictionary objectForKey:@"commonfriends"];
+    if ([[dictionary objectForKey:@"iscollected"] isEqualToString:@"true"]) {
+        self.isCollected = YES;
+    } else{
+        self.isCollected = NO;
+    }
     NSString *usertype = [dictionary objectForKey:@"usertype"];
     if([usertype rangeOfString:@"vest"].location != NSNotFound){
         self.userType = SHGUserTypeVest;
@@ -203,9 +227,45 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
 
 - (IBAction)rightButtonClick:(id)sender
 {
+    if (self.isCollected) {
+        [self deleteCollected];
+    } else{
+        [self addCollected];
+    }
 
 }
+-(void)addCollected
+{
+    __weak typeof(self) weakSelf = self;
+    NSString *url = [NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttp,@"userCard",@"collect"];
+    NSDictionary *param = @{@"uid":[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID],@"beCollectedId":self.userId};
+    [MOCHTTPRequestOperationManager postWithURL:url class:nil parameters:param success:^(MOCHTTPResponse *response) {
+        NSString *code = [response.data valueForKey:@"code"];
+        if ([code isEqualToString:@"000"]){
+            weakSelf.isCollected = !weakSelf.isCollected;
+            [weakSelf loadUI];
+        }
+    } failed:^(MOCHTTPResponse *response) {
+        [Hud showMessageWithText:response.errorMessage];
+    }];
 
+}
+-(void)deleteCollected
+{
+    __weak typeof(self) weakSelf = self;
+    NSString *url = [NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttp,@"userCard",@"cancleCollect"];
+    NSDictionary *param = @{@"uid":[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID],@"beCollectedId":self.userId};
+    [MOCHTTPRequestOperationManager postWithURL:url class:nil parameters:param success:^(MOCHTTPResponse *response) {
+        NSString *code = [response.data valueForKey:@"code"];
+        if ([code isEqualToString:@"000"]){
+            weakSelf.isCollected = !weakSelf.isCollected;
+            [weakSelf loadUI];
+        }
+    } failed:^(MOCHTTPResponse *response) {
+        [Hud showMessageWithText:response.errorMessage];
+    }];
+
+}
 #pragma mark TableView
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -246,8 +306,8 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
         }
             break;
         case 2:{
-            if (self.friendNumber) {
-                label.text = [NSString stringWithFormat:@"%@人",self.friendNumber];
+            if (self.commonfriends) {
+                label.text = [NSString stringWithFormat:@"%@人",self.commonfriends];
             }
 
         }
@@ -285,6 +345,7 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
             SHGPersonDynamicViewController *controller = [[SHGPersonDynamicViewController alloc] initWithNibName:@"SHGPersonDynamicViewController" bundle:nil];
             controller.userId = self.userId;
             controller.dataArr = self.dataArr;
+            NSLog(@"dddddddd%@",self.dataArr);
             controller.delegate = self.delegate;
             controller.block = ^(NSString *state){
                 weakSelf.relationShip = state;
