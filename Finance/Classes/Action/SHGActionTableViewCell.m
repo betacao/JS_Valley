@@ -46,6 +46,7 @@
 
 - (void)awakeFromNib
 {
+    self.Action_titlelabel.font = [UIFont systemFontOfSize:12];
     self.contentView.backgroundColor = [UIColor colorWithHexString:@"efeeef"];
     self.Acyion_titleBg.image = [UIImage imageNamed:@"action_bg"];
     self.Action_titlelabel.textColor = [UIColor colorWithHexString:@"3A3A3A"];
@@ -60,6 +61,7 @@
     self.Action_allNumLabel.textColor = [UIColor colorWithHexString:@"606060"];
     self.Action_momentNumlabel.textColor = [UIColor colorWithHexString:@"606060"];
     self.Action_messageLabel.textColor = [UIColor colorWithHexString:@"D1D1D1"];
+    
     UIImage * img = [UIImage imageNamed:@"action_xuxian"];
     self.Action_centerLine.image = [img resizableImageWithCapInsets:UIEdgeInsetsMake(0 , 1, 0, 1) resizingMode:UIImageResizingModeTile];
     self.Action_bottomLine.image = [img resizableImageWithCapInsets:UIEdgeInsetsMake(0 , 1, 0, 1) resizingMode:UIImageResizingModeTile];
