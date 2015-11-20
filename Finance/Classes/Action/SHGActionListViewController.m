@@ -11,6 +11,7 @@
 #import "SHGActionObject.h"
 #import "SHGActionDetailViewController.h"
 #import "SHGActionSendViewController.h"
+#import "SHGActionManager.h"
 
 @interface SHGActionListViewController ()<UITableViewDataSource, UITableViewDelegate, SHGActionTableViewDelegate>
 
@@ -131,7 +132,20 @@
 #pragma mark ------cell代理
 - (void)clickPrasiseButton:(SHGActionObject *)object
 {
-    [self.listTable reloadData];
+    __weak typeof(self)weakSelf = self;
+    if ([object.isPraise isEqualToString:@"N"]) {
+        [[SHGActionManager shareActionManager] addPraiseWithObject:object finishBlock:^(BOOL success) {
+            if (success) {
+                [weakSelf.listTable reloadData];
+            }
+        }];
+    } else{
+        [[SHGActionManager shareActionManager] deletePraiseWithObject:object finishBlock:^(BOOL success) {
+            if (success) {
+                [weakSelf.listTable reloadData];
+            }
+        }];
+    }
 }
 
 - (void)clickCommentButton:(SHGActionObject *)object

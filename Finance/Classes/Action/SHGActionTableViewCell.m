@@ -144,10 +144,10 @@
     [self.Action_signButton setBackgroundColor:[UIColor clearColor]];
     self.twoButtonView.hidden = YES;
     self.thrButtonView.hidden = YES;
-    [self.Action_thr_zanButton setTitle:@"" forState:UIControlStateNormal];
-    [self.Action_thrCommentButton setTitle:@"" forState:UIControlStateNormal];
-    [self.Action_zanButton setTitle:@"" forState:UIControlStateNormal];
-    [self.Action_commentButton setTitle:@"" forState:UIControlStateNormal];
+    [self.Action_thr_zanButton setTitle:@"0" forState:UIControlStateNormal];
+    [self.Action_thrCommentButton setTitle:@"0" forState:UIControlStateNormal];
+    [self.Action_zanButton setTitle:@"0" forState:UIControlStateNormal];
+    [self.Action_commentButton setTitle:@"0" forState:UIControlStateNormal];
     [self.Action_thr_zanButton setImage:[UIImage imageNamed:@"home_weizan"] forState:UIControlStateNormal];
     [self.Action_zanButton setImage:[UIImage imageNamed:@"home_weizan"] forState:UIControlStateNormal];
 }
@@ -155,16 +155,15 @@
 //点赞
 - (IBAction)addLove:(UIButton *)button
 {
-
+    if (self.delegate && [self.delegate respondsToSelector:@selector(clickPrasiseButton:)]) {
+        [self.delegate clickPrasiseButton:self.object];
+    }
 }
 //点击评论
 - (IBAction)addComment:(UIButton *)button
 {
-//    if (self.delegate && [self.delegate respondsToSelector:@selector(clickCommentButton:)]) {
-//        [self.delegate clickCommentButton:self.object];
-//    }
-    if (self.delegate && [self.delegate respondsToSelector:@selector(clickEditButton:)]) {
-        [self.delegate clickEditButton:self.object];
+    if (self.delegate && [self.delegate respondsToSelector:@selector(clickCommentButton:)]) {
+        [self.delegate clickCommentButton:self.object];
     }
 }
 //点击编辑

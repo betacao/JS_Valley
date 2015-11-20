@@ -46,8 +46,6 @@
 {
     self = [super initWithFrame:frame superFrame:superFrame isController:isController type:type name:name];
     if (self) {
-        // Initialization code
-        _type=@"comment";
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWasChange:) name:UIKeyboardDidChangeFrameNotification object:nil];
         self.type = type;
         self.replyName = name;

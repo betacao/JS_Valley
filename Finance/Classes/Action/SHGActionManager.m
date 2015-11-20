@@ -88,11 +88,37 @@
         [Hud hideHud];
         [Hud showMessageWithText:@"点赞成功"];
         if (block) {
+            object.praiseNum = [NSString stringWithFormat:@"%ld",(long)[object.praiseNum integerValue] + 1];
+            object.isPraise = @"Y";
             block(YES);
         }
     } failed:^(MOCHTTPResponse *response) {
         [Hud hideHud];
         [Hud showMessageWithText:@"点赞失败"];
+        if (block) {
+            block(NO);
+        }
+    }];
+}
+
+//取消点赞
+- (void)deletePraiseWithObject:(SHGActionObject *)object finishBlock:(void (^)(BOOL))block
+{
+    [Hud showLoadingWithMessage:@"请稍等..."];
+    NSString *request = [rBaseAddressForHttp stringByAppendingString:@"/meetingactivity/praise/deletePraise"];
+    NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
+    NSDictionary *param = @{@"uid":uid, @"meetId":object.meetId};
+    [MOCHTTPRequestOperationManager postWithURL:request parameters:param success:^(MOCHTTPResponse *response) {
+        [Hud hideHud];
+        [Hud showMessageWithText:@"取消点赞成功"];
+        if (block) {
+            object.praiseNum = [NSString stringWithFormat:@"%ld",(long)[object.praiseNum integerValue] - 1];
+            object.isPraise = @"N";
+            block(YES);
+        }
+    } failed:^(MOCHTTPResponse *response) {
+        [Hud hideHud];
+        [Hud showMessageWithText:@"取消点赞失败"];
         if (block) {
             block(NO);
         }

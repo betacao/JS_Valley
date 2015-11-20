@@ -18,8 +18,24 @@
 + (NSValueTransformer *)JSONTransformerForKey:(NSString *)key
 {
     return [MTLValueTransformer transformerUsingForwardBlock:^id(id value, BOOL *success, NSError *__autoreleasing *error) {
+        if ([key isEqualToString:@"isPraise"]) {
+            if ([value isEqualToString:@"true"]) {
+                return @"Y";
+            } else{
+                return @"N";
+            }
+        }
         return value;
     }];
 }
 
+
+@end
+
+@implementation SHGActionCommentObject
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey
+{
+    return @{@"commentId":@"rid", @"commentUserId":@"cid", @"commentDetail":@"cdetail", @"commentUserName":@"cnickname", @"commentOtherName":@"rnickname"};
+}
 @end

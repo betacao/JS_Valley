@@ -846,6 +846,8 @@
 		B0EAB2551B467AB8005A760F /* MLEmojiLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = B0EAB2511B467AB8005A760F /* MLEmojiLabel.m */; };
 		B0EAB2561B467AB8005A760F /* TTTAttributedLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = B0EAB2531B467AB8005A760F /* TTTAttributedLabel.m */; };
 		CEB958E5843B739F6CB8F600 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B1E0AB5E4D6E1102E811C936 /* libPods.a */; };
+		F908C1511BFECD2F00CAE018 /* SHGActionCommentTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F908C14F1BFECD2F00CAE018 /* SHGActionCommentTableViewCell.m */; };
+		F908C1521BFECD2F00CAE018 /* SHGActionCommentTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F908C1501BFECD2F00CAE018 /* SHGActionCommentTableViewCell.xib */; };
 		F90F7B6A1BF48C4C00555F49 /* SHGPersonalViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F90F7B691BF48C4C00555F49 /* SHGPersonalViewController.xib */; };
 		F91778C21BFC240900C535CB /* SHGDatePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = F91778C01BFC240900C535CB /* SHGDatePickerView.m */; };
 		F91778C31BFC240900C535CB /* SHGDatePickerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F91778C11BFC240900C535CB /* SHGDatePickerView.xib */; };
@@ -2055,6 +2057,9 @@
 		B0EAB2531B467AB8005A760F /* TTTAttributedLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTTAttributedLabel.m; sourceTree = "<group>"; };
 		B0EAB2541B467AB8005A760F /* TTTAttributedLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTTAttributedLabel.h; sourceTree = "<group>"; };
 		B1E0AB5E4D6E1102E811C936 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		F908C14E1BFECD2F00CAE018 /* SHGActionCommentTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGActionCommentTableViewCell.h; sourceTree = "<group>"; };
+		F908C14F1BFECD2F00CAE018 /* SHGActionCommentTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGActionCommentTableViewCell.m; sourceTree = "<group>"; };
+		F908C1501BFECD2F00CAE018 /* SHGActionCommentTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGActionCommentTableViewCell.xib; sourceTree = "<group>"; };
 		F90F7B691BF48C4C00555F49 /* SHGPersonalViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGPersonalViewController.xib; sourceTree = "<group>"; };
 		F91778BF1BFC240900C535CB /* SHGDatePickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGDatePickerView.h; sourceTree = "<group>"; };
 		F91778C01BFC240900C535CB /* SHGDatePickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGDatePickerView.m; sourceTree = "<group>"; };
@@ -4534,6 +4539,9 @@
 				98FA41C01BF5E1B40058A4EF /* SHGActionDetailViewController.h */,
 				98FA41C11BF5E1B40058A4EF /* SHGActionDetailViewController.m */,
 				98FA41C21BF5E1B40058A4EF /* SHGActionDetailViewController.xib */,
+				F908C14E1BFECD2F00CAE018 /* SHGActionCommentTableViewCell.h */,
+				F908C14F1BFECD2F00CAE018 /* SHGActionCommentTableViewCell.m */,
+				F908C1501BFECD2F00CAE018 /* SHGActionCommentTableViewCell.xib */,
 				F9DDEFBC1BF9EB79001341CF /* SHGActionSendViewController.h */,
 				F9DDEFBD1BF9EB79001341CF /* SHGActionSendViewController.m */,
 				F9DDEFBE1BF9EB79001341CF /* SHGActionSendViewController.xib */,
@@ -5110,6 +5118,7 @@
 				B04D6E411B60F2D500E3863E /* 组-46@2x.png in Resources */,
 				6187D30E1AF1C693008E1D21 /* sr_refresh@2X.png in Resources */,
 				F9FBAF541BDF132E008D89D9 /* 15skaiji.mp4 in Resources */,
+				F908C1521BFECD2F00CAE018 /* SHGActionCommentTableViewCell.xib in Resources */,
 				408D8B5A1AF8618C0055810C /* chatBar_colorMore_videoSelected@2x.png in Resources */,
 				408D8AF41AF8618C0055810C /* chatFire_audioPlaying3@2x.png in Resources */,
 				408D8B6A1AF8618C0055810C /* chat_receiver_audio_playing001.png in Resources */,
@@ -5568,6 +5577,7 @@
 				4088DDB91AF102FE00393855 /* SettingQuestionDetailViewController.m in Sources */,
 				F9EDD5FA1BABFBCF00506C0C /* SDWaitingView.m in Sources */,
 				B04D032E1B43F88A009BE7C2 /* ZYExceptionHandler.m in Sources */,
+				F908C1511BFECD2F00CAE018 /* SHGActionCommentTableViewCell.m in Sources */,
 				F9E0488A1BFB151E0027CBC4 /* SHGSelectTagsViewController.m in Sources */,
 				F91778C21BFC240900C535CB /* SHGDatePickerView.m in Sources */,
 				98E3022B1BFB0708001D4A69 /* SHGAuthenticationViewController.m in Sources */,

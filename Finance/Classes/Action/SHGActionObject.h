@@ -47,3 +47,13 @@ typedef NS_ENUM(NSInteger, SHGActionState) {
 @property (strong, nonatomic) NSArray *commentList;
 
 @end
+
+@interface SHGActionCommentObject : MTLModel<MTLJSONSerializing>
+
+@property (strong, nonatomic) NSString *commentId;
+@property (strong, nonatomic) NSString *commentUserId;
+@property (strong, nonatomic) NSString *commentDetail;
+@property (strong, nonatomic) NSString *commentUserName;
+@property (strong, nonatomic) NSString *commentOtherName;
+
+@end

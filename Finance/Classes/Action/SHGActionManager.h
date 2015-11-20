@@ -20,6 +20,8 @@
 - (void)modifyAction:(NSDictionary *)param finishBlock:(void (^)(BOOL))block;
 //点赞
 - (void)addPraiseWithObject:(SHGActionObject *)object finishBlock:(void (^)(BOOL))block;
+//取消点赞
+- (void)deletePraiseWithObject:(SHGActionObject *)object finishBlock:(void (^)(BOOL))block;
 //评论
 - (void)addCommentWithObject:(SHGActionObject *)object content:(NSString *)content toOther:(NSString *)otherId finishBlock:(void (^)(BOOL))block;
 //删除评论
