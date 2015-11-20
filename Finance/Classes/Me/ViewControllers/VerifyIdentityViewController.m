@@ -79,9 +79,12 @@
 		
 		self.status = [response.dataDictionary valueForKey:@"state"];
 		self.identifyImageName = [response.dataDictionary valueForKey:@"potname"];
+        self.tipsLabel.text = [response.dataDictionary valueForKey:@"reason"];
 		[self resetView];
 		NSLog(@"%@",response.data);
 		NSLog(@"%@",response.errorMessage);
+        NSLog(@"11111%@",self.tipsLabel.text);
+        
 		
 	} failed:^(MOCHTTPResponse *response) {
 	}];
@@ -169,7 +172,6 @@
         self.noImageLabel.hidden = YES;
         self.tipsLabel.hidden = NO;
         self.reasonTitleLabel.hidden = NO;
-        self.tipsLabel.text = @"会议主题不正确，请更新后上传";
 		if (self.isWantToChange) {
 			[self.submitButton setTitle:@"提交" forState:UIControlStateNormal];
 			[self.submitButton setTitle:@"提交" forState:UIControlStateHighlighted];
