@@ -623,10 +623,10 @@
         [self.navigationController pushViewController:segmentViewController animated:YES];
 
     }else if (indexPath.row == 3) {
-//        MyCollectionViewController *vc = [[MyCollectionViewController alloc] init];
-//        vc.hidesBottomBarWhenPushed = YES;
-//        [MobClick event:@"MyCollectionViewController" label:@"onClick"];
-//        [self.navigationController pushViewController:vc animated:YES];
+        MyCollectionViewController *vc = [[MyCollectionViewController alloc] init];
+        vc.hidesBottomBarWhenPushed = YES;
+        [MobClick event:@"MyCollectionViewController" label:@"onClick"];
+        [self.navigationController pushViewController:vc animated:YES];
         
     }else if (indexPath.row == 4) {
         MyAddressViewController *vc = [[MyAddressViewController alloc] init];
