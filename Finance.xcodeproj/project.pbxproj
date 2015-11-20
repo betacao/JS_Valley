@@ -856,6 +856,7 @@
 		F9758A631BB002D70085D32C /* ImproveMatiralViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9758A621BB002D70085D32C /* ImproveMatiralViewController.xib */; };
 		F986DE361BFDCBD900E6709F /* SHGActionTotalInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F986DE341BFDCBD900E6709F /* SHGActionTotalInViewController.m */; };
 		F986DE371BFDCBD900E6709F /* SHGActionTotalInViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F986DE351BFDCBD900E6709F /* SHGActionTotalInViewController.xib */; };
+		F986DE3A1BFDE65200E6709F /* SHGActionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F986DE391BFDE65200E6709F /* SHGActionManager.m */; };
 		F98B16EF1BC7947D000A577C /* libGeTuiSdk-1.2.1.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F98B16EE1BC7947D000A577C /* libGeTuiSdk-1.2.1.a */; };
 		F99580C41B9D338B001F8AA6 /* SHGModifyInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F99580C21B9D338B001F8AA6 /* SHGModifyInfoViewController.m */; };
 		F99580C51B9D338B001F8AA6 /* SHGModifyInfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F99580C31B9D338B001F8AA6 /* SHGModifyInfoViewController.xib */; };
@@ -2071,6 +2072,8 @@
 		F986DE331BFDCBD900E6709F /* SHGActionTotalInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGActionTotalInViewController.h; sourceTree = "<group>"; };
 		F986DE341BFDCBD900E6709F /* SHGActionTotalInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGActionTotalInViewController.m; sourceTree = "<group>"; };
 		F986DE351BFDCBD900E6709F /* SHGActionTotalInViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGActionTotalInViewController.xib; sourceTree = "<group>"; };
+		F986DE381BFDE65200E6709F /* SHGActionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGActionManager.h; sourceTree = "<group>"; };
+		F986DE391BFDE65200E6709F /* SHGActionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGActionManager.m; sourceTree = "<group>"; };
 		F98B16EC1BC7947D000A577C /* GeTuiSdk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeTuiSdk.h; sourceTree = "<group>"; };
 		F98B16ED1BC7947D000A577C /* GeTuiSdkError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeTuiSdkError.h; sourceTree = "<group>"; };
 		F98B16EE1BC7947D000A577C /* libGeTuiSdk-1.2.1.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libGeTuiSdk-1.2.1.a"; sourceTree = "<group>"; };
@@ -4506,6 +4509,8 @@
 			children = (
 				F9A227C01BF5AF8D0054F8D7 /* SHGActionObject.h */,
 				F9A227C11BF5AF8D0054F8D7 /* SHGActionObject.m */,
+				F986DE381BFDE65200E6709F /* SHGActionManager.h */,
+				F986DE391BFDE65200E6709F /* SHGActionManager.m */,
 				F9A227C81BF5C7E10054F8D7 /* SHGActionSegmentViewController.h */,
 				F9A227C91BF5C7E10054F8D7 /* SHGActionSegmentViewController.m */,
 				F9A227B91BF5ABC60054F8D7 /* SHGActionListViewController.h */,
@@ -5616,6 +5621,7 @@
 				F9B7CC321B8AD6C000E55EFD /* SHGGloble.m in Sources */,
 				6187D2F41AF1C693008E1D21 /* EMTextView.m in Sources */,
 				6187D2E31AF1C693008E1D21 /* EMChatTextBubbleView.m in Sources */,
+				F986DE3A1BFDE65200E6709F /* SHGActionManager.m in Sources */,
 				6187D2F21AF1C693008E1D21 /* BaseTableViewCell.m in Sources */,
 				619027491B2359C600D9EEA2 /* popObj.m in Sources */,
 				610FF07E1AD6227F0027EBA6 /* UIView+Additions.m in Sources */,

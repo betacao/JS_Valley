@@ -78,6 +78,7 @@
     __weak typeof(self)weakSelf = self;
     [[SHGGloble sharedGloble] requsetUserVerifyStatus:^(BOOL status) {
         if (status) {
+            
             if([weakSelf.selectedViewController respondsToSelector:@selector(addNewAction:)]){
                 [weakSelf.selectedViewController performSelector:@selector(addNewAction:) withObject:button];
             }

@@ -8,8 +8,15 @@
 
 #import "SHGActionSendViewController.h"
 #import "SHGDatePickerView.h"
+#import "SHGActionManager.h"
+
 #define kTextViewOriginalHeight 80.0f
 #define kTextViewTopBlank 100.0f * XFACTOR
+
+typedef NS_ENUM(NSInteger, SHGActionSendType){
+    SHGActionSendTypeNew = 0,
+    SHGActionSendTypeReSet = 1
+};
 
 @interface SHGActionSendViewController ()<UITextFieldDelegate, UITextViewDelegate, UITableViewDataSource, UITableViewDelegate, SHGDatePickerViewDelegate>
 
@@ -27,7 +34,8 @@
 @property (strong, nonatomic) id currentContext;
 @property (strong, nonatomic) SHGDatePickerView *pikerView;
 @property (assign, nonatomic) CGFloat keyBoardOrginY;
-
+@property (assign, nonatomic) SHGActionSendType sendType;
+@property (strong, nonatomic) NSString *meetId;
 @end
 
 @implementation SHGActionSendViewController
@@ -38,8 +46,10 @@
     [self.tableView setTableHeaderView:self.bgView];
     [self.tableView setTableFooterView:self.nextBgView];
     [self initView];
+    self.sendType = SHGActionSendTypeNew;
     if (self.object) {
         [self editObject:self.object];
+        self.sendType = SHGActionSendTypeReSet;
     }
 
 }
@@ -87,17 +97,7 @@
     self.positionField.text = object.meetArea;
     self.invateNumber.text = object.meetNum;
     self.introduceView.text = object.detail;
-    if (object.meetState == SHGActionStateVerying) {
-        //审核中
-        [self.nextButton setTitle:@"审核中" forState:UIControlStateNormal];
-        [self.nextButton setBackgroundColor:[UIColor colorWithHexString:@"FF837E"]];
-        self.nextButton.enabled = NO;
-    } else if (object.meetState == SHGActionStateFailed){
-        //被驳回
-        [self.nextButton setTitle:@"被驳回" forState:UIControlStateNormal];
-        [self.nextButton setBackgroundColor:[UIColor colorWithHexString:@"BCBCBC"]];
-        self.nextButton.enabled = NO;
-    }
+    self.meetId = object.meetId;
 }
 
 
@@ -183,15 +183,33 @@
 {
     if ([self checkInputMessage]){
         __weak typeof(self) weakSelf = self;
-        NSString *request = [rBaseAddressForHttp stringByAppendingString:@"/meetingactivity/saveMeetingActivity"];
-        NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
-        NSDictionary *param = @{@"uid":uid, @"theme":self.actionTitleField.text, @"startTime":[self.startTimeField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]], @"endTime":[self.endTimeField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]], @"meetArea":self.positionField.text, @"meetNum":self.invateNumber.text, @"detail":self.introduceView.text};
-        [MOCHTTPRequestOperationManager postWithURL:request parameters:param success:^(MOCHTTPResponse *response) {
-            [Hud showMessageWithLongText:@"提交成功，大牛圈会在一个工作日内完成审核"];
-            [weakSelf.navigationController performSelector:@selector(popViewControllerAnimated:) withObject:@(YES) afterDelay:1.2f];
-        } failed:^(MOCHTTPResponse *response) {
-            [Hud showMessageWithText:@"提交失败"];
-        }];
+        switch (self.sendType) {
+            case SHGActionSendTypeNew:{
+                //新建活动
+                NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
+                NSDictionary *param = @{@"uid":uid, @"theme":self.actionTitleField.text, @"startTime":[self.startTimeField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]], @"endTime":[self.endTimeField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]], @"meetArea":self.positionField.text, @"meetNum":self.invateNumber.text, @"detail":self.introduceView.text};
+                [[SHGActionManager shareActionManager] createNewAction:param finishBlock:^(BOOL finish) {
+                    if (finish) {
+                        [weakSelf.navigationController performSelector:@selector(popViewControllerAnimated:) withObject:@(YES) afterDelay:1.2f];
+                    }
+                }];
+            }
+                break;
+                
+            default:{
+                //修改活动
+                NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
+                NSDictionary *param = @{@"uid":uid, @"theme":self.actionTitleField.text, @"startTime":[self.startTimeField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]], @"endTime":[self.endTimeField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]], @"meetArea":self.positionField.text, @"meetNum":self.invateNumber.text, @"detail":self.introduceView.text, @"meetId":self.meetId};
+                [[SHGActionManager shareActionManager] modifyAction:param finishBlock:^(BOOL finish) {
+                    if (finish) {
+                        [weakSelf.navigationController performSelector:@selector(popViewControllerAnimated:) withObject:@(YES) afterDelay:1.2f];
+                    }
+                }];
+
+            }
+                break;
+        }
+
     }
 }
 

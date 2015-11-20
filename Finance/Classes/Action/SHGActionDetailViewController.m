@@ -12,6 +12,7 @@
 #import "MLEmojiLabel.h"
 #import "CircleListDelegate.h"
 #import "SHGActionSignViewController.h"
+#import "SHGActionManager.h"
 
 @interface SHGActionDetailViewController ()<UITableViewDataSource,UITableViewDelegate,MLEmojiLabelDelegate, CircleListDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *replyTable;
@@ -51,6 +52,7 @@
     self.replyTable.delegate = self;
     self.replyTable.dataSource = self;
     self.replyTable.backgroundColor = [UIColor whiteColor];
+    [self.replyTable setTableFooterView:[[UIView alloc] init]];
     self.leftButton.hidden = YES;
     self.rightButton.hidden = YES;
     self.middleButton.hidden = YES;
@@ -68,18 +70,11 @@
 - (void)loadActionDetail:(SHGActionObject *)object
 {
     __weak typeof(self) weakSelf = self;
-    NSString *request = [rBaseAddressForHttp stringByAppendingString:@"/meetingactivity/getMeetingActivityById"];
-    NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
-    NSDictionary *param = @{@"meetId":object.meetId, @"uid":uid};
-    [MOCHTTPRequestOperationManager postWithURL:request class:nil parameters:param success:^(MOCHTTPResponse *response) {
-        NSArray *array = [NSArray arrayWithObject:response.dataDictionary];
-        array = [[SHGGloble sharedGloble] parseServerJsonArrayToJSONModel:array class:[SHGActionObject class]];
+    [[SHGActionManager shareActionManager] loadActionDetail:object finishBlock:^(NSArray *array) {
         weakSelf.signController.object = [array firstObject];
         weakSelf.responseObject = [array firstObject];
         [weakSelf.replyTable setTableHeaderView:weakSelf.signController.view];
         [weakSelf loadUI];
-    } failed:^(MOCHTTPResponse *response) {
-
     }];
 }
 
@@ -126,17 +121,6 @@
         [self.leftButton setTitle:@"被驳回(查看原因)" forState:UIControlStateNormal];
         [self.rightButton setTitle:@"重新编辑" forState:UIControlStateNormal];
     }
-}
-
-- (void)loadOriginalColor
-{
-
-}
-
-- (void)loadOriginalImage
-{
-
-
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section

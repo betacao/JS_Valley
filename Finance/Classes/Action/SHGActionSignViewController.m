@@ -9,6 +9,7 @@
 #import "SHGActionSignViewController.h"
 #import "SHGActionSignTableViewCell.h"
 #import "SHGPersonalViewController.h"
+#import "SHGActionManager.h"
 
 #define PRAISE_SEPWIDTH     10
 #define PRAISE_RIGHTWIDTH     40
@@ -29,6 +30,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *footerBgImageView;
 @property (weak, nonatomic) IBOutlet UIScrollView *praiseScrollView;
 @property (weak, nonatomic) IBOutlet UIView *praiseView;
+@property (weak, nonatomic) IBOutlet UIButton *viewTotalButton;
 
 @end
 
@@ -58,8 +60,12 @@
     self.actionTotalLabel.text = self.object.meetNum;
     self.actionInLabel.text = self.object.attendNum;
     self.actionIntroduceLabel.text = self.object.detail;
+
+    CGSize size = self.viewTotalButton.imageView.image.size;
+    [self.viewTotalButton setTitleEdgeInsets:UIEdgeInsetsMake(0, -size.width * 2, 0, size.width * 2)];
+    [self.viewTotalButton setImageEdgeInsets:UIEdgeInsetsMake(0, self.viewTotalButton.titleLabel.bounds.size.width, 0, -self.viewTotalButton.titleLabel.bounds.size.width)];
     //设置详情的高度
-    CGSize size = [self.actionIntroduceLabel sizeThatFits:CGSizeMake(CGRectGetWidth(self.actionIntroduceLabel.frame), MAXFLOAT)];
+    size = [self.actionIntroduceLabel sizeThatFits:CGSizeMake(CGRectGetWidth(self.actionIntroduceLabel.frame), MAXFLOAT)];
     CGRect frame = self.actionIntroduceLabel.frame;
     frame.size.height = size.height + 2 * kObjectMargin;
     self.actionIntroduceLabel.frame = frame;
@@ -108,6 +114,20 @@
     SHGPersonalViewController *controller = [[SHGPersonalViewController alloc] init];
     controller.userId = [NSString stringWithFormat:@"%ld",(long)recognizer.view.tag];
     [self.navigationController pushViewController:controller animated:YES];
+}
+
+#pragma mark ------查看全部
+- (IBAction)viewTotalParticipant:(id)sender
+{
+
+}
+
+#pragma mark ------点赞
+- (IBAction)addPraiseClick:(id)sender
+{
+    [[SHGActionManager shareActionManager] addPraiseWithObject:self.object finishBlock:^(BOOL success) {
+
+    }];
 }
 
 #pragma mark ------tableViewDelegate
