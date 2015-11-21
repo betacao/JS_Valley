@@ -917,7 +917,8 @@
     CGFloat height = size.height;
     if(indexPath.row == 0){
         height += kCommentTopMargin;
-    } else if (indexPath.row == self.obj.comments.count - 1){
+    }
+    if (indexPath.row == self.obj.comments.count - 1){
         height += kCommentBottomMargin;
     }
     return height + kCommentMargin;

@@ -134,12 +134,27 @@
     if (!content) {
         content = @"";
     }
+    SHGActionCommentObject *targetCommentObject = nil;
+    for (SHGActionCommentObject *obj in object.commentList) {
+        if ([obj.commentUserId isEqualToString:otherId]) {
+            targetCommentObject = obj;
+            break;
+        }
+    }
     [Hud showLoadingWithMessage:@"请稍等..."];
     NSString *request = [rBaseAddressForHttp stringByAppendingString:@"/meetingactivity/comment/saveComments"];
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
-    NSDictionary *param = @{@"uid":uid, @"meetId":object.meetId, @"comment":content, @"replyId":otherId};
+    NSString *userName = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_USER_NAME];
+    NSDictionary *param = @{@"uid":uid, @"meetId":object.meetId, @"content":content, @"replyId":otherId};
     [MOCHTTPRequestOperationManager postWithURL:request parameters:param success:^(MOCHTTPResponse *response) {
         [Hud hideHud];
+        SHGActionCommentObject *newObject = [[SHGActionCommentObject alloc] init];
+        newObject.commentDetail = content;
+        newObject.commentId = [response.dataDictionary objectForKey:@"commentid"];
+        newObject.commentOtherName = targetCommentObject.commentUserName;
+        newObject.commentUserId = uid;
+        newObject.commentUserName = userName;
+        [object.commentList addObject:newObject];
         [Hud showMessageWithText:@"评论成功"];
         if (block) {
             block(YES);

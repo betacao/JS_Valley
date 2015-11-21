@@ -31,7 +31,9 @@
 @property (weak, nonatomic) IBOutlet UIScrollView *praiseScrollView;
 @property (weak, nonatomic) IBOutlet UIView *praiseView;
 @property (weak, nonatomic) IBOutlet UIButton *viewTotalButton;
-
+@property (weak, nonatomic) IBOutlet UIButton *addPrasiseButton;
+@property (weak, nonatomic) IBOutlet UIButton *addCommentButton;
+@property (assign, nonatomic) CGFloat height;
 @end
 
 @implementation SHGActionSignViewController
@@ -45,12 +47,24 @@
     return self;
 }
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    self.title = @"已报名";
-    UIImage *image = self.titleBgView.image;
-    image = [image resizableImageWithCapInsets:UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, 2.0f) resizingMode:UIImageResizingModeStretch];
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    if (self.height == 0) {
+        UIImage *image = self.titleBgView.image;
+        image = [image resizableImageWithCapInsets:UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, 2.0f) resizingMode:UIImageResizingModeStretch];
+        [self loadUI];
+    }
+}
+
+- (void)refreshUI
+{
     [self loadUI];
+}
+
+- (CGFloat)heightForView
+{
+    return CGRectGetHeight(self.tableView.frame);
 }
 
 - (void)loadUI
@@ -80,6 +94,35 @@
     [self loadFooterUI];
     [self.tableView setTableHeaderView:self.headerView];
     [self.tableView setTableFooterView:self.footerView];
+    //设置tableview和self.view的高度
+    frame = self.tableView.frame;
+    CGPoint point = CGPointMake(0.0f, CGRectGetMaxY(self.footerView.frame));
+    frame.size.height = point.y;
+    self.tableView.frame = frame;
+    self.view.frame = frame;
+    [self loadPraiseButtonState];
+    [self loadCommentButtonState];
+
+    if (self.finishBlock) {
+        self.height = CGRectGetHeight(frame);
+        self.finishBlock(self.height);
+    }
+}
+
+- (void)loadPraiseButtonState
+{
+    //设置点赞的状态
+    if ([self.object.isPraise isEqualToString:@"N"]) {
+        [self.addPrasiseButton setImage:[UIImage imageNamed:@"home_weizan"] forState:UIControlStateNormal];
+    } else{
+        [self.addPrasiseButton setImage:[UIImage imageNamed:@"home_yizan"] forState:UIControlStateNormal];
+    }
+    [self.addPrasiseButton setTitle:self.object.praiseNum forState:UIControlStateNormal];
+}
+
+- (void)loadCommentButtonState
+{
+    [self.addCommentButton setTitle:self.object.commentNum forState:UIControlStateNormal];
 }
 
 - (void)loadFooterUI
@@ -125,9 +168,16 @@
 #pragma mark ------点赞
 - (IBAction)addPraiseClick:(id)sender
 {
-    [[SHGActionManager shareActionManager] addPraiseWithObject:self.object finishBlock:^(BOOL success) {
-
-    }];
+    __weak typeof(self)weakSelf = self;
+    if ([self.object.isPraise isEqualToString:@"N"]) {
+        [[SHGActionManager shareActionManager] addPraiseWithObject:self.object finishBlock:^(BOOL success) {
+            [weakSelf loadPraiseButtonState];
+        }];
+    } else{
+        [[SHGActionManager shareActionManager] deletePraiseWithObject:self.object finishBlock:^(BOOL success) {
+            [weakSelf loadPraiseButtonState];
+        }];
+    }
 }
 
 #pragma mark ------tableViewDelegate

@@ -9,6 +9,11 @@
 #import "BaseViewController.h"
 #import "SHGActionObject.h"
 
+typedef void (^SHGActionSignViewControllerLoadFinishBlock)(CGFloat height);
 @interface SHGActionSignViewController : BaseViewController
-@property  (strong, nonatomic) SHGActionObject *object;
+
+@property (strong, nonatomic) SHGActionObject *object;
+@property (copy, nonatomic) SHGActionSignViewControllerLoadFinishBlock finishBlock;
+- (CGFloat) heightForView;
+- (void)refreshUI;
 @end

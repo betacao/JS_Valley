@@ -42,9 +42,9 @@ typedef NS_ENUM(NSInteger, SHGActionState) {
 @property (strong, nonatomic) NSString *isTimeOut;
 @property (strong, nonatomic) NSString *isPraise;
 @property (strong, nonatomic) NSString *detail;
-@property (strong, nonatomic) NSArray *attendList;
-@property (strong, nonatomic) NSArray *praiseList;
-@property (strong, nonatomic) NSArray *commentList;
+@property (strong, nonatomic) NSMutableArray *attendList;
+@property (strong, nonatomic) NSMutableArray *praiseList;
+@property (strong, nonatomic) NSMutableArray *commentList;
 
 @end
 
@@ -55,5 +55,7 @@ typedef NS_ENUM(NSInteger, SHGActionState) {
 @property (strong, nonatomic) NSString *commentDetail;
 @property (strong, nonatomic) NSString *commentUserName;
 @property (strong, nonatomic) NSString *commentOtherName;
+
+- (CGFloat)heightForCell;
 
 @end

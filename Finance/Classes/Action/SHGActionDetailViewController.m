@@ -14,20 +14,21 @@
 #import "SHGActionManager.h"
 #import "SHGPersonalViewController.h"
 
-@interface SHGActionDetailViewController ()<UITableViewDataSource,UITableViewDelegate,MLEmojiLabelDelegate, SHGActionCommentDelegate>
+@interface SHGActionDetailViewController ()<UITableViewDataSource,UITableViewDelegate,MLEmojiLabelDelegate, SHGActionCommentDelegate, BRCommentViewDelegate, CircleActionDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *replyTable;
 @property (weak, nonatomic) IBOutlet UIView *viewInput;
 @property (weak, nonatomic) IBOutlet UIView *bottomButtonView;
 @property (weak, nonatomic) IBOutlet UIButton *smileImage;
 @property (weak, nonatomic) IBOutlet UIButton *speakButton;
 @property (weak, nonatomic) IBOutlet UIButton *sendButton;
-
 @property (weak, nonatomic) IBOutlet UIButton *leftButton;
 @property (weak, nonatomic) IBOutlet UIButton *middleButton;
 @property (weak, nonatomic) IBOutlet UIButton *rightButton;
 @property (strong, nonatomic) BRCommentView *popupView;
 @property (strong, nonatomic) SHGActionObject *responseObject;
 @property (strong, nonatomic) SHGActionSignViewController *signController;
+@property (strong, nonatomic) UITableViewCell *firstTableViewCell;
+@property (assign, nonatomic) CGFloat firstCellHeight;
 @property (strong, nonatomic) NSString *rejectReason;
 @property (strong, nonatomic) NSString *copyedString;
 
@@ -64,8 +65,23 @@
 {
     if (!_signController) {
         _signController = [[SHGActionSignViewController alloc] init];
+        __weak typeof(self) weakSelf = self;
+        _signController.finishBlock = ^(CGFloat height){
+            weakSelf.firstCellHeight = height;
+            [weakSelf.replyTable reloadData];
+        };
     }
     return _signController;
+}
+
+- (UITableViewCell *)firstTableViewCell
+{
+    if (!_firstTableViewCell) {
+        _firstTableViewCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+        [_firstTableViewCell.contentView addSubview:self.signController.view];
+        _firstTableViewCell.clipsToBounds = YES;
+    }
+    return _firstTableViewCell;
 }
 
 - (BRCommentView *)popupView
@@ -83,8 +99,7 @@
     [[SHGActionManager shareActionManager] loadActionDetail:object finishBlock:^(NSArray *array) {
         weakSelf.signController.object = [array firstObject];
         weakSelf.responseObject = [array firstObject];
-        weakSelf.responseObject.commentList = [[SHGGloble sharedGloble] parseServerJsonArrayToJSONModel:weakSelf.responseObject.commentList class:[SHGActionCommentObject class]];
-        [weakSelf.replyTable setTableHeaderView:weakSelf.signController.view];
+        weakSelf.responseObject.commentList = [NSMutableArray arrayWithArray:[[SHGGloble sharedGloble] parseServerJsonArrayToJSONModel:weakSelf.responseObject.commentList class:[SHGActionCommentObject class]]];
         [weakSelf.replyTable reloadData];
         [weakSelf loadUI];
     }];
@@ -136,34 +151,81 @@
 }
 
 #pragma mark ------tableViewDelegate
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 2;
+}
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.responseObject.commentList.count;
+    switch (section) {
+        case 0:
+            if (!self.responseObject) {
+                return 0;
+            }
+            return 1;
+            break;
+
+        default:{
+            NSInteger count = self.responseObject.commentList.count;
+            return count;
+        }
+            break;
+    }
 }
 
 - (UITableViewCell * )tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSString *cellIdentifier = @"cellIdentifier";
-    SHGActionCommentTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-    if (!cell) {
-        cell = [[[NSBundle mainBundle] loadNibNamed:@"SHGActionCommentTableViewCell" owner:self options:nil] lastObject];
-        cell.delegate = self;
+    switch (indexPath.section) {
+        case 0:{
+            return self.firstTableViewCell;
+        }
+            break;
+
+        default:{
+            NSString *cellIdentifier = @"cellIdentifier";
+            SHGActionCommentTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+            if (!cell) {
+                cell = [[[NSBundle mainBundle] loadNibNamed:@"SHGActionCommentTableViewCell" owner:self options:nil] lastObject];
+                cell.delegate = self;
+            }
+            cell.index = indexPath.row;
+            SHGActionCommentType type = SHGActionCommentTypeNormal;
+            NSLog(@"index.row%ld",(long)indexPath.row);
+            if(indexPath.row == 0){
+                type = SHGActionCommentTypeFirst;
+            }else if(indexPath.row == self.responseObject.commentList.count - 1){
+                type = SHGActionCommentTypeLast;
+            }
+            SHGActionCommentObject *object = [self.responseObject.commentList objectAtIndex:indexPath.row];
+            [cell loadUIWithObj:object commentType:type];
+            return cell;
+        }
+            break;
     }
-    cell.index = indexPath.row;
-    SHGActionCommentType type = SHGActionCommentTypeNormal;
-    if(indexPath.row == 0){
-        type = SHGActionCommentTypeFirst;
-    }else if(indexPath.row == self.responseObject.attendList.count - 1){
-        type = SHGActionCommentTypeLast;
-    }
-    SHGActionCommentObject *object = [self.responseObject.commentList objectAtIndex:indexPath.row];
-    [cell loadUIWithObj:object commentType:type];
-    return cell;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 0;
+    switch (indexPath.section) {
+        case 0:{
+            return self.firstCellHeight;
+        }
+            break;
+
+        default:{
+            SHGActionCommentObject *object = [self.responseObject.commentList objectAtIndex:indexPath.row];
+            CGFloat height = [object heightForCell];
+            if(indexPath.row == 0){
+                height += kCommentTopMargin;
+            }
+            if (indexPath.row == self.responseObject.commentList.count - 1){
+                height += kCommentBottomMargin;
+            }
+            return height + kCommentMargin;
+        }
+            break;
+    }
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -171,12 +233,11 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     SHGActionCommentObject *object = [self.responseObject.commentList objectAtIndex:indexPath.row];
     self.copyedString = object.commentDetail;
-//    commentRid = obj.rid;
     if ([object.commentUserName isEqualToString:[[NSUserDefaults standardUserDefaults]objectForKey:KEY_USER_NAME]]) {
         //复制删除试图
 //        [self createPickerView];
-    }else{
-//        [self replyClick:indexPath.row];
+    } else{
+        [self replyClicked:object commentIndex:indexPath.row];
     }
 }
 
@@ -206,7 +267,7 @@
 {
     __weak typeof(self) weakSelf = self;
     [self.popupView hideWithAnimated:YES];
-    [[SHGActionManager shareActionManager] addCommentWithObject:self.object content:comment toOther:nil finishBlock:^(BOOL success) {
+    [[SHGActionManager shareActionManager] addCommentWithObject:self.responseObject content:comment toOther:nil finishBlock:^(BOOL success) {
         if (success) {
             [weakSelf.replyTable reloadData];
         }
@@ -217,7 +278,7 @@
 {
     __weak typeof(self) weakSelf = self;
     [self.popupView hideWithAnimated:YES];
-    [[SHGActionManager shareActionManager] addCommentWithObject:self.object content:comment toOther:fid finishBlock:^(BOOL success) {
+    [[SHGActionManager shareActionManager] addCommentWithObject:self.responseObject content:comment toOther:fid finishBlock:^(BOOL success) {
         if (success) {
             [weakSelf.replyTable reloadData];
         }
@@ -233,7 +294,7 @@
     [self.popupView showWithAnimated:YES];
 }
 
--(void)replyClicked:(SHGActionCommentObject *)obj commentIndex:(NSInteger)index
+- (void)replyClicked:(SHGActionCommentObject *)obj commentIndex:(NSInteger)index
 {
     self.popupView.fid = obj.commentUserId;
     self.popupView.detail = @"";

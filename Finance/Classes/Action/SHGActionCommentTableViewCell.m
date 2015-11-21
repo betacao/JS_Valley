@@ -19,7 +19,6 @@
 
 - (void)awakeFromNib
 {
-
 }
 
 - (void)loadUIWithObj:(SHGActionCommentObject *)object commentType:(SHGActionCommentType)type
@@ -27,11 +26,11 @@
     self.commentType = type;
     CGRect frame = CGRectZero;
     switch (type) {
-        case SHGCommentTypeFirst:
+        case SHGActionCommentTypeFirst:
             frame = CGRectMake(CELLRIGHT_COMMENT_WIDTH,kCommentTopMargin, SCREENWIDTH - kPhotoViewLeftMargin - kPhotoViewRightMargin - CELLRIGHT_COMMENT_WIDTH, 0.0f);
 
             break;
-        case SHGCommentTypeNormal:
+        case SHGActionCommentTypeNormal:
             frame = CGRectMake(CELLRIGHT_COMMENT_WIDTH,0.0f, SCREENWIDTH - kPhotoViewLeftMargin - kPhotoViewRightMargin - CELLRIGHT_COMMENT_WIDTH, 0.0f);
             break;
         default:
@@ -67,12 +66,11 @@
         [replyLabel addSubview:leftButton];
         str = [[NSMutableAttributedString alloc] initWithString:text];
 
-        [str addAttribute:NSForegroundColorAttributeName value:[UIColor clearColor] range:NSMakeRange(0,object.commentUserName.length + 1 + 1)];
-        [str addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"606060"] range:NSMakeRange(object.commentUserName.length + 1 + 1,str.length - object.commentUserName.length - 1 - 1)];
+        [str addAttribute:NSForegroundColorAttributeName value:[UIColor clearColor] range:NSMakeRange(0,object.commentUserName.length + 2)];
+        [str addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"606060"] range:NSMakeRange(object.commentUserName.length + 2,str.length - object.commentUserName.length - 2)];
     } else{
         text = [NSString stringWithFormat:@"%@回复%@:x%@",object.commentUserName, object.commentOtherName, object.commentDetail];
         CGSize cSize = [object.commentUserName sizeForFont:replyLabel.font constrainedToSize:CGSizeMake(200, 15) lineBreakMode:replyLabel.lineBreakMode];
-        [leftButton setBackgroundColor:[UIColor whiteColor]];
         [leftButton setFrame:CGRectMake(0, 0, cSize.width, cSize.height)];
         [leftButton.titleLabel setTextAlignment:NSTextAlignmentCenter];
         [leftButton setTitle:object.commentUserName forState:UIControlStateNormal];
@@ -84,7 +82,7 @@
         CGSize leftSize = [leftText sizeForFont:replyLabel.font constrainedToSize:CGSizeMake(200, 15) lineBreakMode:replyLabel.lineBreakMode];
         CGSize rSize = [[NSString stringWithFormat:@"%@:",object.commentOtherName] sizeForFont:replyLabel.font constrainedToSize:CGSizeMake(200, 15) lineBreakMode:replyLabel.lineBreakMode];
 
-        [rightButton setFrame:CGRectMake(leftSize.width+cSize.width, 0, rSize.width, rSize.height)];
+        [rightButton setFrame:CGRectMake(leftSize.width + cSize.width, 0, rSize.width, rSize.height)];
         [rightButton setTitle:[NSString stringWithFormat:@"%@:",object.commentOtherName] forState:UIControlStateNormal];
         [rightButton setTitleColor:RGB(255, 57, 67) forState:UIControlStateNormal];
         [rightButton.titleLabel setFont:replyLabel.font];
@@ -96,7 +94,7 @@
 
         [str addAttribute:NSForegroundColorAttributeName value:[UIColor clearColor] range:NSMakeRange(0, object.commentUserName.length)];
 
-        [str addAttribute:NSForegroundColorAttributeName value:[UIColor clearColor] range:NSMakeRange(object.commentUserName.length + 2,1 + object.commentOtherName.length + 1)];
+        [str addAttribute:NSForegroundColorAttributeName value:[UIColor clearColor] range:NSMakeRange(object.commentUserName.length + 2,object.commentOtherName.length + 2)];
 
         NSRange range = NSMakeRange(object.commentUserName.length + 2,1 + object.commentOtherName.length +1);
         [str addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"606060"] range:NSMakeRange(range.location + range.length,str.length - range.length - range.location)];

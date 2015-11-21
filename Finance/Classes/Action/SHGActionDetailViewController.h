@@ -10,6 +10,6 @@
 #import "AppDelegate.h"
 #import "SHGActionObject.h"
 
-@interface SHGActionDetailViewController : BaseTableViewController<BRCommentViewDelegate,UIScrollViewDelegate,UITextFieldDelegate,ReplyDelegate,CircleActionDelegate>
+@interface SHGActionDetailViewController : BaseTableViewController
 @property (strong, nonatomic) SHGActionObject *object;
 @end

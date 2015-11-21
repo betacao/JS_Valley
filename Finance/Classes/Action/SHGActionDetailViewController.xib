@@ -10,7 +10,7 @@
                 <outlet property="bottomButtonView" destination="h7H-DS-Dyz" id="X81-Ep-6cC"/>
                 <outlet property="leftButton" destination="f5q-Os-sli" id="j7r-nM-P7v"/>
                 <outlet property="middleButton" destination="z6M-ap-AMd" id="EWh-NR-HMw"/>
-                <outlet property="replyTable" destination="n3J-sz-jUt" id="bpk-Dr-YQq"/>
+                <outlet property="replyTable" destination="GQa-ln-hw7" id="oMc-9D-B4Z"/>
                 <outlet property="rightButton" destination="Vy9-qE-Fs6" id="liJ-UK-O0M"/>
                 <outlet property="sendButton" destination="VSB-Sw-n4r" id="naE-6q-ZdQ"/>
                 <outlet property="smileImage" destination="sZa-pa-poe" id="z4a-7c-gza"/>
@@ -96,14 +96,14 @@
                     <animations/>
                     <color key="backgroundColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
                 </view>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="grouped" separatorStyle="none" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="n3J-sz-jUt">
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="GQa-ln-hw7">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="483"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     <animations/>
-                    <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="backgroundColor" red="0.94117647059999998" green="0.90196078430000004" blue="0.54901960780000003" alpha="1" colorSpace="calibratedRGB"/>
                     <connections>
-                        <outlet property="dataSource" destination="-1" id="sOM-S0-vzR"/>
-                        <outlet property="delegate" destination="-1" id="KDn-s1-AkZ"/>
+                        <outlet property="dataSource" destination="-1" id="bip-Ly-8Pl"/>
+                        <outlet property="delegate" destination="-1" id="i20-2c-6rP"/>
                     </connections>
                 </tableView>
             </subviews>
