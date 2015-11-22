@@ -43,6 +43,23 @@
     }];
 }
 
+- (void)loadUserPermissionState:(void (^)(NSString *))block
+{
+    [Hud showLoadingWithMessage:@"请稍等..."];
+    NSString *request = [rBaseAddressForHttp stringByAppendingString:@"/meetingactivity/isCreateMeetingActivity"];
+    NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
+    NSDictionary *param = @{@"uid":uid};
+    [MOCHTTPRequestOperationManager postWithURL:request parameters:param success:^(MOCHTTPResponse *response) {
+        [Hud hideHud];
+        NSString *state = [response.dataDictionary objectForKey:@"createflag"];
+        if (block) {
+            block(state);
+        }
+    } failed:^(MOCHTTPResponse *response) {
+        [Hud hideHud];
+        [Hud showMessageWithText:@"获取用户权限失败"];
+    }];
+}
 //新建活动
 - (void)createNewAction:(NSDictionary *)param finishBlock:(void (^)(BOOL))block
 {
@@ -90,6 +107,11 @@
         if (block) {
             object.praiseNum = [NSString stringWithFormat:@"%ld",(long)[object.praiseNum integerValue] + 1];
             object.isPraise = @"Y";
+            praiseOBj *obj = [[praiseOBj alloc] init];
+            obj.pnickname = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_USER_NAME];
+            obj.ppotname = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_HEAD_IMAGE];
+            obj.puserid =[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
+            [object.praiseList addObject:obj];
             block(YES);
         }
     } failed:^(MOCHTTPResponse *response) {
@@ -114,6 +136,12 @@
         if (block) {
             object.praiseNum = [NSString stringWithFormat:@"%ld",(long)[object.praiseNum integerValue] - 1];
             object.isPraise = @"N";
+            for (praiseOBj *obj in object.praiseList) {
+                if ([obj.puserid isEqualToString:[[NSUserDefaults standardUserDefaults]objectForKey:KEY_UID]]) {
+                    [object.praiseList removeObject:obj];
+                    break;
+                }
+            }
             block(YES);
         }
     } failed:^(MOCHTTPResponse *response) {
@@ -193,7 +221,7 @@
 - (void)enterForActionObject:(SHGActionObject *)object finishBlock:(void (^)(BOOL))block
 {
     [Hud showLoadingWithMessage:@"请稍等..."];
-    NSString *request = [rBaseAddressForHttp stringByAppendingString:@"/meetingactivity/attend/saveAttends"];
+    NSString *request = [rBaseAddressForHttp stringByAppendingString:@"/meetingactivity/attend/saveAttend"];
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
     NSDictionary *param = @{@"meetId":object.meetId, @"uid":uid};
     [MOCHTTPRequestOperationManager postWithURL:request parameters:param success:^(MOCHTTPResponse *response) {
@@ -212,19 +240,23 @@
 }
 
 //用户审核其他用户参与状态
-- (void)userCheckOtherState:(SHGActionObject *)object finishBlock:(void (^)(BOOL))block
+- (void)userCheckOtherState:(NSString *)meetAttendId option:(NSString *)option reason:(NSString *)reason finishBlock:(void (^)(BOOL))block
 {
     //没写完
     NSString *request = [rBaseAddressForHttp stringByAppendingString:@"/meetingactivity/attend/auditMeeActAttend"];
-    [MOCHTTPRequestOperationManager postWithURL:request parameters:nil success:^(MOCHTTPResponse *response) {
+    NSMutableDictionary *param = [NSMutableDictionary dictionaryWithDictionary: @{@"meetAttendId":meetAttendId, @"state":option}];
+    if (reason) {
+        [param setObject:reason forKey:@"reason"];
+    }
+    [MOCHTTPRequestOperationManager postWithURL:request parameters:param success:^(MOCHTTPResponse *response) {
         [Hud hideHud];
-        [Hud showMessageWithText:@"分享成功"];
+        [Hud showMessageWithText:@"操作成功"];
         if (block) {
             block(YES);
         }
     } failed:^(MOCHTTPResponse *response) {
         [Hud hideHud];
-        [Hud showMessageWithText:@"分享失败"];
+        [Hud showMessageWithText:@"操作失败"];
         if (block) {
             block(NO);
         }
@@ -236,8 +268,8 @@
 {
     [Hud showLoadingWithMessage:@"请稍等..."];
     NSString *request = [rBaseAddressForHttp stringByAppendingString:@"/share/meetActDetail"];
-    NSDictionary *param = @{@"meetId":object.meetId};
-    [MOCHTTPRequestOperationManager postWithURL:request parameters:param success:^(MOCHTTPResponse *response) {
+    NSDictionary *param = @{@"rid":object.meetId};
+    [MOCHTTPRequestOperationManager getWithURL:request parameters:param success:^(MOCHTTPResponse *response) {
         [Hud hideHud];
         [Hud showMessageWithText:@"分享成功"];
         if (block) {

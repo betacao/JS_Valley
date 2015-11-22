@@ -13,6 +13,7 @@
 #import "SHGActionSignViewController.h"
 #import "SHGActionManager.h"
 #import "SHGPersonalViewController.h"
+#import "SHGActionSendViewController.h"
 
 @interface SHGActionDetailViewController ()<UITableViewDataSource,UITableViewDelegate,MLEmojiLabelDelegate, SHGActionCommentDelegate, BRCommentViewDelegate, CircleActionDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *replyTable;
@@ -65,6 +66,7 @@
 {
     if (!_signController) {
         _signController = [[SHGActionSignViewController alloc] init];
+        _signController.superController = self;
         __weak typeof(self) weakSelf = self;
         _signController.finishBlock = ^(CGFloat height){
             weakSelf.firstCellHeight = height;
@@ -100,6 +102,7 @@
         weakSelf.signController.object = [array firstObject];
         weakSelf.responseObject = [array firstObject];
         weakSelf.responseObject.commentList = [NSMutableArray arrayWithArray:[[SHGGloble sharedGloble] parseServerJsonArrayToJSONModel:weakSelf.responseObject.commentList class:[SHGActionCommentObject class]]];
+        weakSelf.responseObject.praiseList = [NSMutableArray arrayWithArray:[[SHGGloble sharedGloble] parseServerJsonArrayToJSONModel:weakSelf.responseObject.praiseList class:[praiseOBj class]]];
         [weakSelf.replyTable reloadData];
         [weakSelf loadUI];
     }];
@@ -145,6 +148,7 @@
         //被驳回(活动被驳回 不是报名请求)
         self.leftButton.hidden = NO;
         self.rightButton.hidden = NO;
+        self.rejectReason = self.object.reason;
         [self.leftButton setTitle:@"被驳回(查看原因)" forState:UIControlStateNormal];
         [self.rightButton setTitle:@"重新编辑" forState:UIControlStateNormal];
     }
@@ -238,6 +242,50 @@
 //        [self createPickerView];
     } else{
         [self replyClicked:object commentIndex:indexPath.row];
+    }
+}
+
+- (IBAction)leftButtonClick:(UIButton *)button
+{
+    [self buttonClick:button];
+}
+
+- (IBAction)middleButtonClick:(UIButton *)button
+{
+    [self buttonClick:button];
+}
+
+- (IBAction)rightButtonClick:(UIButton *)button
+{
+    [self buttonClick:button];
+}
+
+- (void)buttonClick:(UIButton *)button
+{
+    __weak typeof(self) weaSelf = self;
+    NSString *title = button.titleLabel.text;
+    if ([title rangeOfString:@"被驳回"].location != NSNotFound) {
+        DXAlertView *alertView = [[DXAlertView alloc] initWithTitle:@"驳回原因" contentText:self.rejectReason leftButtonTitle:nil rightButtonTitle:@"确定"];
+        [alertView show];
+    } else if([title rangeOfString:@"重新编辑"].location != NSNotFound){
+        SHGActionSendViewController *controller =[[SHGActionSendViewController alloc] init];
+        controller.object = self.object;
+        [self.navigationController pushViewController:controller animated:YES];
+    } else if([title rangeOfString:@"审核中"].location != NSNotFound){
+
+    } else if([title rangeOfString:@"分享"].location != NSNotFound){
+        [[SHGActionManager shareActionManager] shareAction:self.object finishBlock:^(BOOL success) {
+            if (success) {
+
+            }
+        }];
+    } else if([title rangeOfString:@"报名"].location != NSNotFound){
+        [[SHGActionManager shareActionManager] enterForActionObject:self.object finishBlock:^(BOOL success) {
+            if (success) {
+                [weaSelf.leftButton setTitle:@"审核中" forState:UIControlStateNormal];
+                [weaSelf.leftButton setEnabled:NO];
+            }
+        }];
     }
 }
 

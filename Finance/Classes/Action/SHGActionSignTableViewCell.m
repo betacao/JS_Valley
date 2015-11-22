@@ -7,6 +7,7 @@
 //
 
 #import "SHGActionSignTableViewCell.h"
+
 @interface SHGActionSignTableViewCell()
 
 @property (weak, nonatomic) IBOutlet UIImageView *action_signHeadImage;
@@ -18,6 +19,8 @@
 @property (weak, nonatomic) IBOutlet UIButton *action_signLeftButton;
 @property (weak, nonatomic) IBOutlet UIImageView *action_bottomImage;
 
+@property (strong, nonatomic) NSString *meetAttendId;
+@property (strong, nonatomic) NSString *rejectReson;
 @end
 
 @implementation SHGActionSignTableViewCell
@@ -40,7 +43,7 @@
 
 - (void)loadCellWithDictionary:(NSDictionary *)dictionary
 {
-
+    self.meetAttendId = [dictionary objectForKey:@"meetattendid"];
     self.action_signNameLabel.text = [dictionary objectForKey:@"realname"];
     self.action_signCommpanyLable.text = [dictionary objectForKey:@"company"];
     [self.action_signHeadImage sd_setImageWithURL:[NSURL URLWithString:[dictionary objectForKey:@"headimageurl"]] placeholderImage:[UIImage imageNamed:@"default_head"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
@@ -54,9 +57,11 @@
     } else if ([[dictionary objectForKey:@"status"] isEqualToString:@"1"]) {
         self.action_signRightButton.hidden = NO;
         [self.action_signRightButton setTitle:@"已同意" forState:UIControlStateNormal];
+        [self.action_signRightButton setEnabled:NO];
     } else if ([[dictionary objectForKey:@"status"] isEqualToString:@"2"]) {
         self.action_signRightButton.hidden = NO;
         [self.action_signRightButton setTitle:@"已驳回" forState:UIControlStateNormal];
+        [self.action_signRightButton setEnabled:NO];
     }
 }
 
@@ -69,14 +74,18 @@
     self.action_signRightButton.hidden = YES;
 }
 
-- (IBAction)clickLeftButton:(id)sender
+- (IBAction)clickLeftButton:(UIButton *)button
 {
-
+    if (self.delegate && [self.delegate respondsToSelector:@selector(meetAttend:clickCommitButton:)]) {
+        [self.delegate meetAttend:self.meetAttendId clickCommitButton:button];
+    }
 }
 
 
-- (IBAction)clickRightButton:(id)sender
+- (IBAction)clickRightButton:(UIButton *)button
 {
-
+    if (self.delegate && [self.delegate respondsToSelector:@selector(meetAttend:clickRejectButton:reason:)]) {
+        [self.delegate meetAttend:self.meetAttendId clickRejectButton:button reason:self.rejectReson];
+    }
 }
 @end

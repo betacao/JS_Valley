@@ -17,6 +17,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.title = @"查看全部";
     [self.tableView setTableFooterView:[[UIView alloc] init]];
 }
 

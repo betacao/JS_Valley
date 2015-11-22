@@ -9,10 +9,10 @@
 #import <Mantle/Mantle.h>
 
 typedef NS_ENUM(NSInteger, SHGActionState) {
-    SHGActionStateVerying = 1,//审核中
-    SHGActionStateSuccess = 2,//通过审核
-    SHGActionStateFailed = 3,//驳回
-    SHGActionStateOver = 4//结束
+    SHGActionStateVerying = 0,//审核中
+    SHGActionStateSuccess = 1,//通过审核
+    SHGActionStateFailed = 2,//驳回
+    SHGActionStateOver = 3//结束
 };
 
 @interface SHGActionObject : MTLModel<MTLJSONSerializing>
@@ -34,6 +34,7 @@ typedef NS_ENUM(NSInteger, SHGActionState) {
 @property (strong, nonatomic) NSString *meetArea;
 @property (strong, nonatomic) NSString *meetNum;
 @property (strong, nonatomic) NSString *commentNum;
+@property (strong, nonatomic) NSString *reason;//驳回原因
 @property (assign, nonatomic) SHGActionState meetState;
 @property (strong, nonatomic) NSString *publisher;
 @property (strong, nonatomic) NSString *attendNum;

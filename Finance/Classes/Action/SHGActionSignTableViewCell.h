@@ -10,8 +10,16 @@
 #import "SHGActionObject.h"
 #define kActionSignCellHeight 54.0f
 
+@protocol SHGActionSignDelegate <NSObject>
+
+- (void)meetAttend:(NSString *)attendId clickCommitButton:(UIButton *)button;
+- (void)meetAttend:(NSString *)attendId clickRejectButton:(UIButton *)button reason:(NSString *)reason ;
+
+@end
+
 @interface SHGActionSignTableViewCell : UITableViewCell
 
+@property (assign, nonatomic) id<SHGActionSignDelegate> delegate;
 - (void)loadCellWithDictionary:(NSDictionary *)dictionary;
 
 @end

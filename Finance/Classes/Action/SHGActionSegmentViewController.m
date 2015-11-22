@@ -7,6 +7,7 @@
 //
 
 #import "SHGActionSegmentViewController.h"
+#import "SHGActionManager.h"
 
 @interface SHGActionSegmentViewController ()
 
@@ -57,6 +58,26 @@
     contentContainerView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     [self.view addSubview:contentContainerView];
     [self reloadTabButtons];
+    [self loadUserPermissionStatefinishBlock:^(BOOL success) {
+
+    }];
+}
+
+- (void)loadUserPermissionStatefinishBlock:(void (^)(BOOL))block
+{
+    [[SHGActionManager shareActionManager] loadUserPermissionState:^(NSString *state) {
+        if ([state isEqualToString:@"0"]) {
+            DXAlertView *alert = [[DXAlertView alloc] initWithTitle:@"提示" contentText:@"您当前有活动正在审核中，请等待审核后再提交，谢谢。" leftButtonTitle:nil rightButtonTitle:@"确定"];
+            [alert show];
+            block(NO);
+        } else if ([state isEqualToString:@"2"]){
+            DXAlertView *alert = [[DXAlertView alloc] initWithTitle:@"提示" contentText:@"您当前有活动申请被驳回，请至我的活动查看。" leftButtonTitle:nil rightButtonTitle:@"确定"];
+            [alert show];
+            block(NO);
+        } else{
+            block(YES);
+        }
+    }];
 }
 
 
@@ -75,13 +96,17 @@
 
 - (void)addNewAction:(UIButton *)button
 {
-    __weak typeof(self)weakSelf = self;
-    [[SHGGloble sharedGloble] requsetUserVerifyStatus:^(BOOL status) {
-        if (status) {
-            
-            if([weakSelf.selectedViewController respondsToSelector:@selector(addNewAction:)]){
-                [weakSelf.selectedViewController performSelector:@selector(addNewAction:) withObject:button];
-            }
+    [self loadUserPermissionStatefinishBlock:^(BOOL success) {
+        if (success) {
+            __weak typeof(self)weakSelf = self;
+            [[SHGGloble sharedGloble] requsetUserVerifyStatus:^(BOOL status) {
+                if (status) {
+
+                    if([weakSelf.selectedViewController respondsToSelector:@selector(addNewAction:)]){
+                        [weakSelf.selectedViewController performSelector:@selector(addNewAction:) withObject:button];
+                    }
+                }
+            }];
         }
     }];
 }

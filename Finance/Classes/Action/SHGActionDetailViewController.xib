@@ -28,23 +28,32 @@
                     <rect key="frame" x="0.0" y="483" width="320" height="40"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                     <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="z6M-ap-AMd" userLabel="baomingButton">
-                            <rect key="frame" x="0.0" y="0.0" width="320" height="40"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                            <animations/>
-                            <state key="normal" title="报名"/>
-                        </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="f5q-Os-sli" userLabel="my_baomingButton">
                             <rect key="frame" x="0.0" y="0.0" width="160" height="40"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES"/>
                             <animations/>
                             <state key="normal" title="报名"/>
+                            <connections>
+                                <action selector="leftButtonClick:" destination="-1" eventType="touchUpInside" id="IG2-ru-iDg"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="z6M-ap-AMd" userLabel="baomingButton">
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="40"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <animations/>
+                            <state key="normal" title="报名"/>
+                            <connections>
+                                <action selector="middleButtonClick:" destination="-1" eventType="touchUpInside" id="fGe-qT-fsf"/>
+                            </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Vy9-qE-Fs6" userLabel="my_shareButton">
                             <rect key="frame" x="160" y="0.0" width="160" height="40"/>
                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" heightSizable="YES"/>
                             <animations/>
                             <state key="normal" title="分享"/>
+                            <connections>
+                                <action selector="rightButtonClick:" destination="-1" eventType="touchUpInside" id="jy5-Uo-AUF"/>
+                            </connections>
                         </button>
                     </subviews>
                     <animations/>

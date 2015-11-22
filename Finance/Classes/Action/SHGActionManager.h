@@ -14,6 +14,8 @@
 + (instancetype)shareActionManager;
 //获取活动详情
 - (void)loadActionDetail:(SHGActionObject *)object finishBlock:(void (^)(NSArray *))block;
+//获取用户发活动的权限
+- (void)loadUserPermissionState:(void (^)(NSString *))block;
 //新建活动
 - (void)createNewAction:(NSDictionary *)param finishBlock:(void (^)(BOOL))block;
 //修改活动
@@ -29,7 +31,7 @@
 //参加活动
 - (void)enterForActionObject:(SHGActionObject *)object finishBlock:(void (^)(BOOL))block;
 //用户审核其他用户参与状态
-- (void)userCheckOtherState:(SHGActionObject *)object finishBlock:(void (^)(BOOL))block;
+- (void)userCheckOtherState:(NSString *)meetAttendId option:(NSString *)option reason:(NSString *)reason finishBlock:(void (^)(BOOL))block;
 //分享活动
 - (void)shareAction:(SHGActionObject *)object finishBlock:(void (^)(BOOL))block;
 @end

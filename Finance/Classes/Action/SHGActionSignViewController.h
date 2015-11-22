@@ -14,6 +14,7 @@ typedef void (^SHGActionSignViewControllerLoadFinishBlock)(CGFloat height);
 
 @property (strong, nonatomic) SHGActionObject *object;
 @property (copy, nonatomic) SHGActionSignViewControllerLoadFinishBlock finishBlock;
+@property (weak, nonatomic) UIViewController *superController;
 - (CGFloat) heightForView;
 - (void)refreshUI;
 @end

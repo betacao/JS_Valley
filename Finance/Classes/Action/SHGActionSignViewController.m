@@ -10,12 +10,13 @@
 #import "SHGActionSignTableViewCell.h"
 #import "SHGPersonalViewController.h"
 #import "SHGActionManager.h"
+#import "SHGActionTotalInViewController.h"
 
 #define PRAISE_SEPWIDTH     10
 #define PRAISE_RIGHTWIDTH     40
 #define PRAISE_WIDTH 30.0f
 
-@interface SHGActionSignViewController ()<UITableViewDataSource,UITableViewDelegate>
+@interface SHGActionSignViewController ()<UITableViewDataSource,UITableViewDelegate, SHGActionSignDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) IBOutlet UIView *headerView;
 @property (weak, nonatomic) IBOutlet UIImageView *titleBgView;
@@ -129,11 +130,11 @@
 {
     UIImage *image = self.footerBgImageView.image;
     self.footerBgImageView.image = [image resizableImageWithCapInsets:UIEdgeInsetsMake(15.0f, 35.0f, 9.0f, 11.0f) resizingMode:UIImageResizingModeStretch];
-
+    [self.praiseScrollView removeAllSubviews];
     CGRect praiseRect = self.praiseView.frame;
     CGFloat praiseWidth = 0;
     if ([self.object.praiseNum integerValue] > 0){
-        NSArray *array = [[SHGGloble sharedGloble] parseServerJsonArrayToJSONModel:self.object.praiseList class:[praiseOBj class]];
+        NSArray *array = self.object.praiseList;
         for (NSInteger i = 0; i < array.count; i++) {
             praiseOBj *obj = [array objectAtIndex:i];
             praiseWidth = PRAISE_WIDTH;
@@ -147,8 +148,6 @@
             [self.praiseScrollView addSubview:head];
         }
         [self.praiseScrollView setContentSize:CGSizeMake(array.count * (praiseWidth + PRAISE_SEPWIDTH), CGRectGetHeight(self.praiseScrollView.frame))];
-    } else{
-        [self.praiseScrollView removeAllSubviews];
     }
 }
 
@@ -156,13 +155,15 @@
 {
     SHGPersonalViewController *controller = [[SHGPersonalViewController alloc] init];
     controller.userId = [NSString stringWithFormat:@"%ld",(long)recognizer.view.tag];
-    [self.navigationController pushViewController:controller animated:YES];
+    [self.superController.navigationController pushViewController:controller animated:YES];
 }
 
 #pragma mark ------查看全部
 - (IBAction)viewTotalParticipant:(id)sender
 {
-
+    SHGActionTotalInViewController *controller = [[SHGActionTotalInViewController alloc] init];
+    controller.attendList = self.object.attendList;
+    [self.superController.navigationController pushViewController:controller animated:YES];
 }
 
 #pragma mark ------点赞
@@ -172,10 +173,12 @@
     if ([self.object.isPraise isEqualToString:@"N"]) {
         [[SHGActionManager shareActionManager] addPraiseWithObject:self.object finishBlock:^(BOOL success) {
             [weakSelf loadPraiseButtonState];
+            [weakSelf loadFooterUI];
         }];
     } else{
         [[SHGActionManager shareActionManager] deletePraiseWithObject:self.object finishBlock:^(BOOL success) {
             [weakSelf loadPraiseButtonState];
+            [weakSelf loadFooterUI];
         }];
     }
 }
@@ -195,6 +198,7 @@
     if (!cell){
         cell = [[[NSBundle mainBundle] loadNibNamed:@"SHGActionSignTableViewCell" owner:self options:nil] lastObject];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell.delegate = self;
     }
     [cell loadCellWithDictionary:[self.object.attendList objectAtIndex:indexPath.row]];
     return  cell;
@@ -203,5 +207,20 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return kActionSignCellHeight;
+}
+
+#pragma mark ------signDelegate
+- (void)meetAttend:(NSString *)attendId clickCommitButton:(UIButton *)button
+{
+    [[SHGActionManager shareActionManager] userCheckOtherState:attendId option:@"1" reason:nil finishBlock:^(BOOL success) {
+
+    }];
+}
+
+- (void)meetAttend:(NSString *)attendId clickRejectButton:(UIButton *)button reason:(NSString *)reason
+{
+    [[SHGActionManager shareActionManager] userCheckOtherState:attendId option:@"1" reason:reason finishBlock:^(BOOL success) {
+
+    }];
 }
 @end
