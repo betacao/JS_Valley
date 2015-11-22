@@ -727,6 +727,10 @@
 		61ED1A661AD3C549005B73E8 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 61ED1A651AD3C549005B73E8 /* libxml2.dylib */; };
 		61ED1A681AD3C55B005B73E8 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61ED1A671AD3C55B005B73E8 /* Foundation.framework */; };
 		61ED1A6A1AD3C562005B73E8 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61ED1A691AD3C562005B73E8 /* UIKit.framework */; };
+		9842E9CF1C017FCA0008B6AF /* SHGPersonFriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9842E9CD1C017FCA0008B6AF /* SHGPersonFriendsViewController.m */; };
+		9842E9D01C017FCA0008B6AF /* SHGPersonFriendsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9842E9CE1C017FCA0008B6AF /* SHGPersonFriendsViewController.xib */; };
+		9842E9D41C0180240008B6AF /* SHGPersonFriendsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9842E9D21C0180240008B6AF /* SHGPersonFriendsTableViewCell.m */; };
+		9842E9D51C0180240008B6AF /* SHGPersonFriendsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9842E9D31C0180240008B6AF /* SHGPersonFriendsTableViewCell.xib */; };
 		985088191BF424F800FE9B04 /* SHGTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 985088181BF424F800FE9B04 /* SHGTableHeaderView.m */; };
 		9894C9781BF5BCE700F80577 /* SHGActionSignViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9894C9761BF5BCE700F80577 /* SHGActionSignViewController.m */; };
 		9894C9791BF5BCE700F80577 /* SHGActionSignViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9894C9771BF5BCE700F80577 /* SHGActionSignViewController.xib */; };
@@ -1922,6 +1926,12 @@
 		61ED1A651AD3C549005B73E8 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		61ED1A671AD3C55B005B73E8 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		61ED1A691AD3C562005B73E8 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		9842E9CC1C017FCA0008B6AF /* SHGPersonFriendsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGPersonFriendsViewController.h; sourceTree = "<group>"; };
+		9842E9CD1C017FCA0008B6AF /* SHGPersonFriendsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGPersonFriendsViewController.m; sourceTree = "<group>"; };
+		9842E9CE1C017FCA0008B6AF /* SHGPersonFriendsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGPersonFriendsViewController.xib; sourceTree = "<group>"; };
+		9842E9D11C0180240008B6AF /* SHGPersonFriendsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGPersonFriendsTableViewCell.h; sourceTree = "<group>"; };
+		9842E9D21C0180240008B6AF /* SHGPersonFriendsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGPersonFriendsTableViewCell.m; sourceTree = "<group>"; };
+		9842E9D31C0180240008B6AF /* SHGPersonFriendsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGPersonFriendsTableViewCell.xib; sourceTree = "<group>"; };
 		985088171BF424F800FE9B04 /* SHGTableHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGTableHeaderView.h; sourceTree = "<group>"; };
 		985088181BF424F800FE9B04 /* SHGTableHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGTableHeaderView.m; sourceTree = "<group>"; };
 		9894C9751BF5BCE700F80577 /* SHGActionSignViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGActionSignViewController.h; sourceTree = "<group>"; };
@@ -2948,6 +2958,12 @@
 				F9A227B01BF586090054F8D7 /* SHGPersonDynamicViewController.h */,
 				F9A227B11BF586090054F8D7 /* SHGPersonDynamicViewController.m */,
 				F9A227B21BF586090054F8D7 /* SHGPersonDynamicViewController.xib */,
+				9842E9CC1C017FCA0008B6AF /* SHGPersonFriendsViewController.h */,
+				9842E9CD1C017FCA0008B6AF /* SHGPersonFriendsViewController.m */,
+				9842E9CE1C017FCA0008B6AF /* SHGPersonFriendsViewController.xib */,
+				9842E9D11C0180240008B6AF /* SHGPersonFriendsTableViewCell.h */,
+				9842E9D21C0180240008B6AF /* SHGPersonFriendsTableViewCell.m */,
+				9842E9D31C0180240008B6AF /* SHGPersonFriendsTableViewCell.xib */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -4869,6 +4885,7 @@
 				408D8B221AF8618C0055810C /* call_silence@2x.png in Resources */,
 				B080FE881B81E30100426579 /* btn_publish_face_a@2x.png in Resources */,
 				408D8B241AF8618C0055810C /* call_silence_h@2x.png in Resources */,
+				9842E9D01C017FCA0008B6AF /* SHGPersonFriendsViewController.xib in Resources */,
 				408D8B081AF8618C0055810C /* VoiceSearchFeedback010@2x.png in Resources */,
 				408D8B2D1AF8618C0055810C /* chatBar_more_faceSelected.png in Resources */,
 				6186DF3C1AFB7F3800960934 /* 未收藏@2x副本.png in Resources */,
@@ -5292,6 +5309,7 @@
 				B04D6E271B60C01300E3863E /* 分享x@2x.png in Resources */,
 				61E83D6C1AF7C78E00703651 /* 按钮-按下@3x.png in Resources */,
 				61E83D441AF7C78E00703651 /* 收藏prod@3x.png in Resources */,
+				9842E9D51C0180240008B6AF /* SHGPersonFriendsTableViewCell.xib in Resources */,
 				61E83D291AF7C78E00703651 /* 手机图标@2x.png in Resources */,
 				B04D6E3F1B60F2D500E3863E /* 组-45@2x.png in Resources */,
 				61616FEB1B02F29100E5A837 /* 44@2x.png in Resources */,
@@ -5493,6 +5511,7 @@
 				40302B1A1AEF61B600F22EB6 /* MyTeamViewController.m in Sources */,
 				610FF07B1AD6227F0027EBA6 /* UIImage+Rotation.m in Sources */,
 				610FF0711AD6227F0027EBA6 /* NSString+Base64.m in Sources */,
+				9842E9D41C0180240008B6AF /* SHGPersonFriendsTableViewCell.m in Sources */,
 				5331DF1C1AFC017600E035B8 /* ApplyFriendCell.m in Sources */,
 				F9EDD5F81BABFBCF00506C0C /* SDPhotoGroup.m in Sources */,
 				B0EAB2551B467AB8005A760F /* MLEmojiLabel.m in Sources */,
@@ -5518,6 +5537,7 @@
 				F932E2551B859DEC00EF2332 /* CircleListRecommendViewController.m in Sources */,
 				6187D2E71AF1C693008E1D21 /* EMChatViewCell.m in Sources */,
 				5331DF1A1AFC017600E035B8 /* AddFriendCell.m in Sources */,
+				9842E9CF1C017FCA0008B6AF /* SHGPersonFriendsViewController.m in Sources */,
 				98FA41C31BF5E1B40058A4EF /* SHGActionDetailViewController.m in Sources */,
 				6187D2FA1AF1C693008E1D21 /* XHMessageTextView.m in Sources */,
 				F9A227C21BF5AF8D0054F8D7 /* SHGActionObject.m in Sources */,
