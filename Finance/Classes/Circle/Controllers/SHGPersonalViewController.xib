@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SHGPersonalViewController">
@@ -27,7 +28,7 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="o7r-Yt-0lf">
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="o7r-Yt-0lf">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="528"/>
                     <animations/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -39,7 +40,7 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RCv-wO-pch">
                     <rect key="frame" x="0.0" y="528" width="320" height="40"/>
                     <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sGy-XF-9Br">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sGy-XF-9Br">
                             <rect key="frame" x="0.0" y="0.0" width="160" height="40"/>
                             <animations/>
                             <color key="backgroundColor" red="0.91764705882352937" green="0.30588235294117649" blue="0.27843137254901962" alpha="1" colorSpace="calibratedRGB"/>
@@ -49,7 +50,7 @@
                                 <action selector="leftButtonClick:" destination="-1" eventType="touchUpInside" id="2jq-dR-ORq"/>
                             </connections>
                         </button>
-                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xE2-HO-M7u">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xE2-HO-M7u">
                             <rect key="frame" x="160" y="0.0" width="160" height="40"/>
                             <animations/>
                             <color key="backgroundColor" red="0.27058823529411763" green="0.2627450980392157" blue="0.30588235294117649" alpha="1" colorSpace="calibratedRGB"/>
@@ -63,6 +64,14 @@
                     <animations/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
+                        <constraint firstItem="sGy-XF-9Br" firstAttribute="width" secondItem="RCv-wO-pch" secondAttribute="width" multiplier="1:2" id="A4d-aZ-qV5"/>
+                        <constraint firstItem="xE2-HO-M7u" firstAttribute="top" secondItem="RCv-wO-pch" secondAttribute="top" id="Mgj-jE-aNR"/>
+                        <constraint firstItem="sGy-XF-9Br" firstAttribute="top" secondItem="RCv-wO-pch" secondAttribute="top" id="WE7-RJ-8ig"/>
+                        <constraint firstItem="xE2-HO-M7u" firstAttribute="width" secondItem="RCv-wO-pch" secondAttribute="width" multiplier="1:2" id="dCl-K9-T8v"/>
+                        <constraint firstAttribute="bottom" secondItem="xE2-HO-M7u" secondAttribute="bottom" id="hZ4-Wj-dbu"/>
+                        <constraint firstAttribute="bottom" secondItem="sGy-XF-9Br" secondAttribute="bottom" id="kgA-rI-NGV"/>
+                        <constraint firstItem="sGy-XF-9Br" firstAttribute="leading" secondItem="RCv-wO-pch" secondAttribute="leading" id="od5-Vn-6K7"/>
+                        <constraint firstAttribute="trailing" secondItem="xE2-HO-M7u" secondAttribute="trailing" id="sQa-zL-7qR"/>
                         <constraint firstAttribute="height" constant="40" id="uMt-oA-Mil"/>
                     </constraints>
                 </view>
@@ -70,9 +79,13 @@
             <animations/>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
+                <constraint firstAttribute="trailing" secondItem="o7r-Yt-0lf" secondAttribute="trailing" id="0nG-y9-Kfl"/>
                 <constraint firstAttribute="bottom" secondItem="RCv-wO-pch" secondAttribute="bottom" id="311-V2-VsR"/>
                 <constraint firstAttribute="trailing" secondItem="RCv-wO-pch" secondAttribute="trailing" id="AWT-au-4Tm"/>
+                <constraint firstItem="o7r-Yt-0lf" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="AZa-px-oH4"/>
                 <constraint firstItem="RCv-wO-pch" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="Fhz-jo-XnS"/>
+                <constraint firstItem="o7r-Yt-0lf" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="eWg-vG-vgW"/>
+                <constraint firstAttribute="bottom" secondItem="o7r-Yt-0lf" secondAttribute="bottom" constant="40" id="fBS-3F-b5E"/>
             </constraints>
             <point key="canvasLocation" x="360" y="342"/>
         </view>
