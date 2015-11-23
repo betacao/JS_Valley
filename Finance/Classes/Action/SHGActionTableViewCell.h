@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "SHGActionObject.h"
-#define kActionCellHeight 251.0f
+#define kActionCellHeight 260.0f
 
 @protocol SHGActionTableViewDelegate <NSObject>
 

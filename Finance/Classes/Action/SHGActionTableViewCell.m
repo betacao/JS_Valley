@@ -58,20 +58,8 @@
     self.twoButtonView.hidden = YES;
     //所有活动
     [self.Action_zanButton setImage:[UIImage imageNamed:@"home_weizan"] forState:UIControlStateNormal];
-    [self.Action_zanButton setTitle:@"555" forState:UIControlStateNormal];
-    [self.Action_zanButton setTitleColor:[UIColor colorWithHexString:@"D1D1D1"] forState:UIControlStateNormal];
-    [self.Action_commentButton setImage:[UIImage imageNamed:@"home_comment"] forState:UIControlStateNormal];
-    [self.Action_commentButton setTitle:@"555" forState:UIControlStateNormal];
-    [self.Action_commentButton setTitleColor:[UIColor colorWithHexString:@"D1D1D1"] forState:UIControlStateNormal];
     //我的活动
     [self.Action_thr_zanButton setImage:[UIImage imageNamed:@"home_weizan"] forState:UIControlStateNormal];
-    [self.Action_thr_zanButton setTitle:@"555" forState:UIControlStateNormal];
-    [self.Action_thr_zanButton setTitleColor:[UIColor colorWithHexString:@"D1D1D1"] forState:UIControlStateNormal];
-    [self.Action_thrCommentButton setImage:[UIImage imageNamed:@"home_comment"] forState:UIControlStateNormal];
-    [self.Action_thrCommentButton setTitle:@"555" forState:UIControlStateNormal];
-    [self.Action_thrCommentButton setTitleColor:[UIColor colorWithHexString:@"D1D1D1"] forState:UIControlStateNormal];
-    [self.Action_editeButton setTitle:@"编辑" forState:UIControlStateNormal];
-    [self.Action_editeButton setTitleColor:[UIColor colorWithHexString:@"D1D1D1"] forState:UIControlStateNormal];
 }
 
 - (void)loadDataWithObject:(SHGActionObject *)object
