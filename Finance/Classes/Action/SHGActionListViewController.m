@@ -77,13 +77,21 @@
 
 - (void)refreshHeader
 {
-    [self loadDataWithType:@"refresh" meetID:[self maxMeetID]];
+    if (self.dataArr.count > 0) {
+        [self loadDataWithType:@"refresh" meetID:[self maxMeetID]];
+    } else{
+        [self loadDataWithType:@"first" meetID:@"-1"];
+    }
 }
 
 
 - (void)refreshFooter
 {
-    [self loadDataWithType:@"load" meetID:[self minMeetID]];
+    if (self.dataArr.count > 0) {
+        [self loadDataWithType:@"load" meetID:[self minMeetID]];
+    } else{
+        [self loadDataWithType:@"first" meetID:@"-1"];
+    }
 }
 
 - (NSString *)maxMeetID

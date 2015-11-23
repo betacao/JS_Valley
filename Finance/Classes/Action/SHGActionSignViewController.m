@@ -161,8 +161,12 @@
 #pragma mark ------查看全部
 - (IBAction)viewTotalParticipant:(id)sender
 {
+    __weak typeof(self) weakSelf = self;
     SHGActionTotalInViewController *controller = [[SHGActionTotalInViewController alloc] init];
     controller.attendList = self.object.attendList;
+    controller.block = ^{
+        [weakSelf.tableView reloadData];
+    };
     [self.superController.navigationController pushViewController:controller animated:YES];
 }
 

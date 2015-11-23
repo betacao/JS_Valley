@@ -8,8 +8,9 @@
 
 #import "SHGActionTotalInViewController.h"
 #import "SHGActionSignTableViewCell.h"
+#import "SHGActionManager.h"
 
-@interface SHGActionTotalInViewController ()<UITableViewDataSource, UITableViewDelegate>
+@interface SHGActionTotalInViewController ()<UITableViewDataSource, UITableViewDelegate, SHGActionSignDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @end
 
@@ -37,10 +38,35 @@
     if (!cell){
         cell = [[[NSBundle mainBundle] loadNibNamed:@"SHGActionSignTableViewCell" owner:self options:nil] lastObject];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell.delegate = self;
     }
     [cell loadCellWithObject:[self.attendList objectAtIndex:indexPath.row]];
     return  cell;
 }
+
+#pragma mark ------signDelegate
+- (void)meetAttend:(SHGActionAttendObject *)object clickCommitButton:(UIButton *)button
+{
+    __weak typeof(self) weakSelf = self;
+    [[SHGActionManager shareActionManager] userCheckOtherState:object option:@"1" reason:nil finishBlock:^(BOOL success) {
+        [weakSelf.tableView reloadData];
+        if (weakSelf.block) {
+            weakSelf.block();
+        }
+    }];
+}
+
+- (void)meetAttend:(SHGActionAttendObject *)object clickRejectButton:(UIButton *)button reason:(NSString *)reason
+{
+    __weak typeof(self) weakSelf = self;
+    [[SHGActionManager shareActionManager] userCheckOtherState:object option:@"0" reason:reason finishBlock:^(BOOL success) {
+        [weakSelf.tableView reloadData];
+        if (weakSelf.block) {
+            weakSelf.block();
+        }
+    }];
+}
+
 
 
 @end

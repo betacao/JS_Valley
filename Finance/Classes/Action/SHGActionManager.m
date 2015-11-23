@@ -248,9 +248,6 @@
     if (reason) {
         [param setObject:reason forKey:@"reason"];
     }
-    object.state = @"1";
-    block(YES);
-    return;
     [MOCHTTPRequestOperationManager postWithURL:request parameters:param success:^(MOCHTTPResponse *response) {
         [Hud hideHud];
         [Hud showMessageWithText:@"操作成功"];

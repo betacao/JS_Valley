@@ -8,7 +8,9 @@
 
 #import "BaseViewController.h"
 #import "SHGActionObject.h"
-
+typedef void (^OperationBlock)(void);
 @interface SHGActionTotalInViewController : BaseViewController
+
 @property (strong, nonatomic) NSArray *attendList;
+@property (copy, nonatomic) OperationBlock block;
 @end
