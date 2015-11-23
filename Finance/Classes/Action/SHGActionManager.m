@@ -240,18 +240,22 @@
 }
 
 //用户审核其他用户参与状态
-- (void)userCheckOtherState:(NSString *)meetAttendId option:(NSString *)option reason:(NSString *)reason finishBlock:(void (^)(BOOL))block
+- (void)userCheckOtherState:(SHGActionAttendObject *)object option:(NSString *)option reason:(NSString *)reason finishBlock:(void (^)(BOOL))block
 {
     //没写完
     NSString *request = [rBaseAddressForHttp stringByAppendingString:@"/meetingactivity/attend/auditMeeActAttend"];
-    NSMutableDictionary *param = [NSMutableDictionary dictionaryWithDictionary: @{@"meetAttendId":meetAttendId, @"state":option}];
+    NSMutableDictionary *param = [NSMutableDictionary dictionaryWithDictionary: @{@"meetAttendId":object.meetattendid, @"state":option}];
     if (reason) {
         [param setObject:reason forKey:@"reason"];
     }
+    object.state = @"1";
+    block(YES);
+    return;
     [MOCHTTPRequestOperationManager postWithURL:request parameters:param success:^(MOCHTTPResponse *response) {
         [Hud hideHud];
         [Hud showMessageWithText:@"操作成功"];
         if (block) {
+            object.state = @"1";
             block(YES);
         }
     } failed:^(MOCHTTPResponse *response) {

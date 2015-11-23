@@ -60,3 +60,19 @@ typedef NS_ENUM(NSInteger, SHGActionState) {
 - (CGFloat)heightForCell;
 
 @end
+
+@interface SHGActionAttendObject : MTLModel<MTLJSONSerializing>
+
+@property (strong, nonatomic) NSString *status;
+@property (strong, nonatomic) NSString *uid;
+@property (strong, nonatomic) NSString *position;
+@property (strong, nonatomic) NSString *reason;
+@property (strong, nonatomic) NSString *meetid;
+@property (strong, nonatomic) NSString *company;
+@property (strong, nonatomic) NSString *title;
+@property (strong, nonatomic) NSString *realname;
+@property (strong, nonatomic) NSString *headimageurl;
+@property (strong, nonatomic) NSString *meetattendid;
+@property (strong, nonatomic) NSString *state;
+
+@end

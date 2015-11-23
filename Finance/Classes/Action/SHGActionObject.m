@@ -69,4 +69,18 @@
     CGFloat height = size.height;
     return height;
 }
+
+@end
+
+@interface SHGActionAttendObject()
+
+@end
+
+@implementation SHGActionAttendObject
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey
+{
+    return @{@"status":@"status",@"uid":@"uid",@"position":@"position",@"reason":@"reason",@"meetid":@"meetid",@"company":@"company",@"title":@"title",@"realname":@"realname",@"headimageurl":@"headimageurl",@"meetattendid":@"meetattendid",@"state":@"state",};
+}
+
 @end

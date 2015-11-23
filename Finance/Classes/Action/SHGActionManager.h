@@ -31,7 +31,7 @@
 //参加活动
 - (void)enterForActionObject:(SHGActionObject *)object finishBlock:(void (^)(BOOL))block;
 //用户审核其他用户参与状态
-- (void)userCheckOtherState:(NSString *)meetAttendId option:(NSString *)option reason:(NSString *)reason finishBlock:(void (^)(BOOL))block;
+- (void)userCheckOtherState:(SHGActionAttendObject *)object option:(NSString *)option reason:(NSString *)reason finishBlock:(void (^)(BOOL))block;
 //分享活动
 - (void)shareAction:(SHGActionObject *)object finishBlock:(void (^)(BOOL))block;
 @end

@@ -18,8 +18,7 @@
 
 @property (weak, nonatomic) IBOutlet UIButton *action_signLeftButton;
 @property (weak, nonatomic) IBOutlet UIImageView *action_bottomImage;
-
-@property (strong, nonatomic) NSString *meetAttendId;
+@property (strong, nonatomic) SHGActionAttendObject *object;
 @property (strong, nonatomic) NSString *rejectReson;
 @end
 
@@ -41,24 +40,25 @@
     
 }
 
-- (void)loadCellWithDictionary:(NSDictionary *)dictionary
+- (void)loadCellWithObject:(SHGActionAttendObject *)object
 {
-    self.meetAttendId = [dictionary objectForKey:@"meetattendid"];
-    self.action_signNameLabel.text = [dictionary objectForKey:@"realname"];
-    self.action_signCommpanyLable.text = [dictionary objectForKey:@"company"];
-    [self.action_signHeadImage sd_setImageWithURL:[NSURL URLWithString:[dictionary objectForKey:@"headimageurl"]] placeholderImage:[UIImage imageNamed:@"default_head"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+    [self clearCell];
+    self.object = object;
+    self.action_signNameLabel.text = object.realname;
+    self.action_signCommpanyLable.text = object.company;
+    [self.action_signHeadImage sd_setImageWithURL:[NSURL URLWithString:object.headimageurl] placeholderImage:[UIImage imageNamed:@"default_head"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
 
     }];
-    if ([[dictionary objectForKey:@"status"] isEqualToString:@"0"]) {
+    if ([object.state isEqualToString:@"0"]) {
         self.action_signLeftButton.hidden = NO;
         self.action_signRightButton.hidden = NO;
         [self.action_signLeftButton setTitle:@"同意" forState:UIControlStateNormal];
         [self.action_signRightButton setTitle:@"驳回" forState:UIControlStateNormal];
-    } else if ([[dictionary objectForKey:@"status"] isEqualToString:@"1"]) {
+    } else if ([object.state isEqualToString:@"1"]) {
         self.action_signRightButton.hidden = NO;
         [self.action_signRightButton setTitle:@"已同意" forState:UIControlStateNormal];
         [self.action_signRightButton setEnabled:NO];
-    } else if ([[dictionary objectForKey:@"status"] isEqualToString:@"2"]) {
+    } else if ([object.state isEqualToString:@"2"]) {
         self.action_signRightButton.hidden = NO;
         [self.action_signRightButton setTitle:@"已驳回" forState:UIControlStateNormal];
         [self.action_signRightButton setEnabled:NO];
@@ -77,7 +77,7 @@
 - (IBAction)clickLeftButton:(UIButton *)button
 {
     if (self.delegate && [self.delegate respondsToSelector:@selector(meetAttend:clickCommitButton:)]) {
-        [self.delegate meetAttend:self.meetAttendId clickCommitButton:button];
+        [self.delegate meetAttend:self.object clickCommitButton:button];
     }
 }
 
@@ -85,7 +85,7 @@
 - (IBAction)clickRightButton:(UIButton *)button
 {
     if (self.delegate && [self.delegate respondsToSelector:@selector(meetAttend:clickRejectButton:reason:)]) {
-        [self.delegate meetAttend:self.meetAttendId clickRejectButton:button reason:self.rejectReson];
+        [self.delegate meetAttend:self.object clickRejectButton:button reason:self.rejectReson];
     }
 }
 @end

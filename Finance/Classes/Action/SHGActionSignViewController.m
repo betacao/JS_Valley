@@ -82,7 +82,7 @@
     //设置详情的高度
     size = [self.actionIntroduceLabel sizeThatFits:CGSizeMake(CGRectGetWidth(self.actionIntroduceLabel.frame), MAXFLOAT)];
     CGRect frame = self.actionIntroduceLabel.frame;
-    frame.size.height = size.height + 2 * kObjectMargin;
+    frame.size.height = size.height + kObjectMargin;
     self.actionIntroduceLabel.frame = frame;
     //设置查看全部的高度
     frame = self.bottomView.frame;
@@ -200,7 +200,7 @@
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.delegate = self;
     }
-    [cell loadCellWithDictionary:[self.object.attendList objectAtIndex:indexPath.row]];
+    [cell loadCellWithObject:[self.object.attendList objectAtIndex:indexPath.row]];
     return  cell;
 }
 
@@ -210,17 +210,19 @@
 }
 
 #pragma mark ------signDelegate
-- (void)meetAttend:(NSString *)attendId clickCommitButton:(UIButton *)button
+- (void)meetAttend:(SHGActionAttendObject *)object clickCommitButton:(UIButton *)button
 {
-    [[SHGActionManager shareActionManager] userCheckOtherState:attendId option:@"1" reason:nil finishBlock:^(BOOL success) {
-
+    __weak typeof(self) weakSelf = self;
+    [[SHGActionManager shareActionManager] userCheckOtherState:object option:@"1" reason:nil finishBlock:^(BOOL success) {
+        [weakSelf.tableView reloadData];
     }];
 }
 
-- (void)meetAttend:(NSString *)attendId clickRejectButton:(UIButton *)button reason:(NSString *)reason
+- (void)meetAttend:(SHGActionAttendObject *)object clickRejectButton:(UIButton *)button reason:(NSString *)reason
 {
-    [[SHGActionManager shareActionManager] userCheckOtherState:attendId option:@"1" reason:reason finishBlock:^(BOOL success) {
-
+    __weak typeof(self) weakSelf = self;
+    [[SHGActionManager shareActionManager] userCheckOtherState:object option:@"0" reason:reason finishBlock:^(BOOL success) {
+        [weakSelf.tableView reloadData];
     }];
 }
 @end

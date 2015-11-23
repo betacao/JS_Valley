@@ -91,10 +91,12 @@
 {
     __weak typeof(self) weakSelf = self;
     [[SHGActionManager shareActionManager] loadActionDetail:object finishBlock:^(NSArray *array) {
-        weakSelf.signController.object = [array firstObject];
+
         weakSelf.responseObject = [array firstObject];
         weakSelf.responseObject.commentList = [NSMutableArray arrayWithArray:[[SHGGloble sharedGloble] parseServerJsonArrayToJSONModel:weakSelf.responseObject.commentList class:[SHGActionCommentObject class]]];
         weakSelf.responseObject.praiseList = [NSMutableArray arrayWithArray:[[SHGGloble sharedGloble] parseServerJsonArrayToJSONModel:weakSelf.responseObject.praiseList class:[praiseOBj class]]];
+        weakSelf.responseObject.attendList = [NSMutableArray arrayWithArray:[[SHGGloble sharedGloble] parseServerJsonArrayToJSONModel:weakSelf.responseObject.attendList class:[SHGActionAttendObject class]]];
+        weakSelf.signController.object = weakSelf.responseObject;
         [weakSelf.replyTable reloadData];
         [weakSelf loadUI];
     }];
@@ -121,15 +123,15 @@
             self.rightButton.hidden = NO;
             [self.leftButton setTitle:@"报名" forState:UIControlStateNormal];
             [self.rightButton setTitle:@"分享" forState:UIControlStateNormal];
-            for (NSDictionary *dictionary in self.responseObject.attendList){
-                if ([[dictionary objectForKey:@"uid"] isEqualToString:uid]) {
-                    if ([[dictionary objectForKey:@"state"] isEqualToString:@"0"]) {
+            for (SHGActionAttendObject *object in self.responseObject.attendList){
+                if ([object.uid isEqualToString:uid]) {
+                    if ([object.state isEqualToString:@"0"]) {
                         [self.leftButton setTitle:@"审核中" forState:UIControlStateNormal];
-                    } else if ([[dictionary objectForKey:@"state"] isEqualToString:@"1"]) {
+                    } else if ([object.state isEqualToString:@"1"]) {
                         [self.leftButton setTitle:@"审核通过" forState:UIControlStateNormal];
-                    } else if ([[dictionary objectForKey:@"state"] isEqualToString:@"2"]) {
+                    } else if ([object.state isEqualToString:@"2"]) {
                         [self.leftButton setTitle:@"被驳回(查看原因)" forState:UIControlStateNormal];
-                        self.rejectReason = [dictionary objectForKey:@"reason"];
+                        self.rejectReason = object.reason;
                     }
                     break;
                 }
@@ -158,11 +160,12 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     switch (section) {
-        case 0:
+        case 0:{
             if (!self.responseObject) {
                 return 0;
             }
             return 1;
+        }
             break;
 
         default:{
@@ -175,6 +178,7 @@
 
 - (UITableViewCell * )tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    NSLog(@"indexpath.section = %ld",indexPath.section);
     switch (indexPath.section) {
         case 0:{
             return self.firstTableViewCell;

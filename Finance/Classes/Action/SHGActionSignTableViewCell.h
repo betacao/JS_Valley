@@ -12,14 +12,14 @@
 
 @protocol SHGActionSignDelegate <NSObject>
 
-- (void)meetAttend:(NSString *)attendId clickCommitButton:(UIButton *)button;
-- (void)meetAttend:(NSString *)attendId clickRejectButton:(UIButton *)button reason:(NSString *)reason ;
+- (void)meetAttend:(SHGActionAttendObject *)object clickCommitButton:(UIButton *)button;
+- (void)meetAttend:(SHGActionAttendObject *)object clickRejectButton:(UIButton *)button reason:(NSString *)reason ;
 
 @end
 
 @interface SHGActionSignTableViewCell : UITableViewCell
 
 @property (assign, nonatomic) id<SHGActionSignDelegate> delegate;
-- (void)loadCellWithDictionary:(NSDictionary *)dictionary;
+- (void)loadCellWithObject:(SHGActionAttendObject *)object;
 
 @end

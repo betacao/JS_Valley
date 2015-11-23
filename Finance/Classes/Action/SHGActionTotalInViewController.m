@@ -38,7 +38,7 @@
         cell = [[[NSBundle mainBundle] loadNibNamed:@"SHGActionSignTableViewCell" owner:self options:nil] lastObject];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
-    [cell loadCellWithDictionary:[self.attendList objectAtIndex:indexPath.row]];
+    [cell loadCellWithObject:[self.attendList objectAtIndex:indexPath.row]];
     return  cell;
 }
 
