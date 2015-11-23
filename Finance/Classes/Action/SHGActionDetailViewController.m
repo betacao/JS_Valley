@@ -82,17 +82,9 @@
         _firstTableViewCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
         [_firstTableViewCell.contentView addSubview:self.signController.view];
         _firstTableViewCell.clipsToBounds = YES;
+        _firstTableViewCell.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin;
     }
     return _firstTableViewCell;
-}
-
-- (BRCommentView *)popupView
-{
-    if (!_popupView) {
-        _popupView = [[BRCommentView alloc] initWithFrame:self.view.bounds superFrame:CGRectZero isController:YES type:@"" name:@""];
-        _popupView.delegate = self;
-    }
-    return _popupView;
 }
 
 - (void)loadActionDetail:(SHGActionObject *)object
@@ -151,6 +143,9 @@
         self.rejectReason = self.object.reason;
         [self.leftButton setTitle:@"被驳回(查看原因)" forState:UIControlStateNormal];
         [self.rightButton setTitle:@"重新编辑" forState:UIControlStateNormal];
+    } else{
+        self.middleButton.hidden = NO;
+        [self.middleButton setTitle:@"已结束" forState:UIControlStateNormal];
     }
 }
 
@@ -333,8 +328,10 @@
     }];
 }
 
-- (IBAction)actionComment:(id)sender {
-
+- (IBAction)actionComment:(id)sender
+{
+    self.popupView = [[BRCommentView alloc] initWithFrame:self.view.bounds superFrame:CGRectZero isController:YES type:@"" name:@""];
+    self.popupView.delegate = self;
     self.popupView.type = @"comment";
     self.popupView.fid = @"-1";
     self.popupView.detail = @"";
@@ -344,6 +341,8 @@
 
 - (void)replyClicked:(SHGActionCommentObject *)obj commentIndex:(NSInteger)index
 {
+    self.popupView = [[BRCommentView alloc] initWithFrame:self.view.bounds superFrame:CGRectZero isController:YES type:@"" name:@""];
+    self.popupView.delegate = self;
     self.popupView.fid = obj.commentUserId;
     self.popupView.detail = @"";
     self.popupView.rid = obj.commentId;
