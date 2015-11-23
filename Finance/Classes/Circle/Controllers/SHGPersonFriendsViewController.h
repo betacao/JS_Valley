@@ -10,4 +10,9 @@
 
 @interface SHGPersonFriendsViewController : BaseTableViewController
 
+
+@property (strong, nonatomic) NSString *userId;
+
+@property (strong, nonatomic) NSMutableArray *contactsSource;
+-(void)friendStatus: (NSString *)status;
 @end
