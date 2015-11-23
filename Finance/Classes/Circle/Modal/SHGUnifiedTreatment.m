@@ -193,7 +193,6 @@
     id<ISSShareActionSheetItem> item5 = [ShareSDK shareActionSheetItemWithTitle:@"微信好友" icon:[UIImage imageNamed:@"sns_icon_22"] clickHandler:^{
         [[AppDelegate currentAppdelegate]wechatShare:obj shareType:0];
     }];
-//    NSArray *shareList = [ShareSDK customShareListWithType: item3, item5, item4, SHARE_TYPE_NUMBER(ShareTypeQQ), item1,item2,nil];
     NSArray *shareArray = nil;
     if ([WXApi isWXAppSupportApi]) {
         if ([QQApiInterface isQQSupportApi]) {

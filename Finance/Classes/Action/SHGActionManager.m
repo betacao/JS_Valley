@@ -268,7 +268,7 @@
 }
 
 //分享活动
-- (void)shareAction:(SHGActionObject *)object finishBlock:(void (^)(BOOL))block
+- (void)shareAction:(SHGActionObject *)object baseController:(UIViewController *)controller finishBlock:(void (^)(BOOL))block
 {
     [Hud showLoadingWithMessage:@"请稍等..."];
     NSString *request = [rBaseAddressForHttp stringByAppendingString:@"/share/meetActDetail"];
@@ -284,6 +284,52 @@
         [Hud showMessageWithText:@"分享失败"];
         if (block) {
             block(NO);
+        }
+    }];
+    NSString *postContent = @"";
+    NSString *shareContent = @"";
+    UIImage *png = [UIImage imageNamed:@"80.png"];
+    id<ISSCAttachment> image  = [ShareSDK pngImageWithImage:png];
+    NSString *content = [NSString stringWithFormat:@"%@\"%@\"%@%@",@"Hi，我在金融大牛圈上看到了一个非常棒的帖子,关于",postContent,@"，赶快下载大牛圈查看吧！",request];
+
+    id<ISSShareActionSheetItem> item0 = [ShareSDK shareActionSheetItemWithTitle:@"短信" icon:[UIImage imageNamed:@"sns_icon_19"] clickHandler:^{
+        [[AppDelegate currentAppdelegate] shareActionToSMS:content];
+    }];
+
+    id<ISSShareActionSheetItem> item1 = [ShareSDK shareActionSheetItemWithTitle:@"朋友圈" icon:[UIImage imageNamed:@"sns_icon_23"] clickHandler:^{
+        [[AppDelegate currentAppdelegate] shareActionToWeChat:1 content:content];
+    }];
+    id<ISSShareActionSheetItem> item2 = [ShareSDK shareActionSheetItemWithTitle:@"微信好友" icon:[UIImage imageNamed:@"sns_icon_22"] clickHandler:^{
+        [[AppDelegate currentAppdelegate] shareActionToWeChat:0 content:content];
+    }];
+    NSArray *shareArray = nil;
+    if ([WXApi isWXAppSupportApi]) {
+        if ([QQApiInterface isQQSupportApi]) {
+            shareArray = [ShareSDK customShareListWithType: item0, item1, item2, SHARE_TYPE_NUMBER(ShareTypeQQ), nil];
+        } else{
+            shareArray = [ShareSDK customShareListWithType: item0, item1, item2, nil];
+        }
+    } else{
+        if ([QQApiInterface isQQSupportApi]) {
+            shareArray = [ShareSDK customShareListWithType: item0, SHARE_TYPE_NUMBER(ShareTypeQQ), nil];
+        } else{
+            shareArray = [ShareSDK customShareListWithType: item0, nil];
+        }
+    }
+    NSString *shareUrl = request;
+
+    //构造分享内容
+    id<ISSContent> publishContent = [ShareSDK content:shareContent defaultContent:shareContent image:image title:SHARE_TITLE url:shareUrl description:shareContent mediaType:SHARE_TYPE];
+    //创建弹出菜单容器
+    id<ISSContainer> container = [ShareSDK container];
+    [container setIPadContainerWithView:controller.view arrowDirect:UIPopoverArrowDirectionUp];
+
+    //弹出分享菜单
+    [ShareSDK showShareActionSheet:container shareList:shareArray content:publishContent statusBarTips:YES authOptions:nil shareOptions:nil result:^(ShareType type, SSResponseState state, id<ISSPlatformShareInfo> statusInfo, id<ICMErrorInfo> error, BOOL end) {
+        if (state == SSResponseStateSuccess){
+            NSLog(NSLocalizedString(@"TEXT_ShARE_SUC", @"分享成功"));
+        } else if (state == SSResponseStateFail){
+            NSLog(NSLocalizedString(@"TEXT_ShARE_FAI", @"分享失败,错误码:%d,错误描述:%@"), [error errorCode], [error errorDescription]);
         }
     }];
 }

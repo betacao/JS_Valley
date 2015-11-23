@@ -576,7 +576,7 @@
         NSString *shareBody = text;
         smsPicker.body = shareBody;
         
-        if (rid.length  >9) {
+        if (rid.length  > 9) {
             smsPicker.recipients = [NSArray arrayWithObject:rid];
         }
         
@@ -628,9 +628,11 @@
                 
             case MessageComposeResultSent:
                 text = @"分享成功";
-                [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_CHANGE_SHARE_TO_SMSSUCCESS object:shareRid];
+                if (shareRid.length > 0) {
+                    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_CHANGE_SHARE_TO_SMSSUCCESS object:shareRid];
+                }
                 break;
-                
+
             case MessageComposeResultFailed:
                 text = @"分享失败";
                 [Hud showMessageWithText:text];
@@ -688,8 +690,9 @@
         switch (stateCode) {
             case 0:
                 messages = @"分享成功";
-                [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_CHANGE_SHARE_TO_SMSSUCCESS object:shareRid];
-                
+                if (shareRid.length > 0) {
+                    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_CHANGE_SHARE_TO_SMSSUCCESS object:shareRid];
+                }
                 break;
             case -1:
                 messages = @"取消分享";
@@ -795,7 +798,9 @@
         NSString *message = @"";
         if (resp.errCode == 0) {
             message = @"分享成功";
-            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_CHANGE_SHARE_TO_SMSSUCCESS object:shareRid];
+            if (shareRid.length > 0) {
+                [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_CHANGE_SHARE_TO_SMSSUCCESS object:shareRid];
+            }
             
         } else if(resp.errCode == -1){
             message = @"分享失败";
@@ -914,6 +919,44 @@
 - (void)didReceiveWeiboRequest:(WBBaseRequest *)request
 {
 
+}
+
+#pragma mark ------活动的分享
+- (void)shareActionToSMS:(NSString *)content
+{
+    // 判断是否可以发送短信
+    BOOL canSendSMS = [MFMessageComposeViewController canSendText];
+    if (canSendSMS){
+        MFMessageComposeViewController *smsPicker = [[MFMessageComposeViewController alloc] init];
+        smsPicker.messageComposeDelegate = self;
+        NSString *shareBody = content;
+        smsPicker.body = shareBody;
+
+        shareRid = @"";
+        [[AppDelegate currentAppdelegate].window.rootViewController presentViewController:smsPicker animated:YES completion:nil];
+    } else{
+        [Hud showMessageWithText:@"设备不支持短信"];
+    }
+}
+
+- (void)shareActionToWeChat:(NSInteger)type content:(NSString *)content
+{
+    if ([WXApi isWXAppSupportApi]){
+        WXMediaMessage *message = [WXMediaMessage message];
+        NSString *detail = content;
+        message.messageExt = content;
+        if (type == 0) {
+            message.title = @"大牛圈";
+        } else{
+            message.title = detail;
+        }
+        message.description = detail;
+        [message setThumbImage:[UIImage imageNamed:@"80.png"]];
+        shareRid = @"";
+        [self sendLinkContentWithMessage:message type:type];
+    } else{
+        [Hud showMessageWithText:@"现版本微信不支持分享,请更新"];
+    }
 }
 
 @end

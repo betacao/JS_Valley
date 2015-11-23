@@ -34,7 +34,8 @@
 - (void)sendSmsWithText:(NSString *)text rid:(NSString *)rid;
 - (void)sendmessageToShareWithObjContent:(NSString *)content rid:(NSString *)rid;
 - (void)wechatShare:(CircleListObj *)obj shareType:(NSInteger)scene;
-- (void)wechatShareWithText:(NSString *)text shareUrl:(NSString *)shareUrl shareType:(NSInteger)scene
-;
+- (void)wechatShareWithText:(NSString *)text shareUrl:(NSString *)shareUrl shareType:(NSInteger)scene;
+- (void)shareActionToSMS:(NSString *)content;
+- (void)shareActionToWeChat:(NSInteger)type content:(NSString *)content;
 @end
 

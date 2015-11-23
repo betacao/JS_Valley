@@ -146,6 +146,7 @@
         [self showLoginViewController];
         return;
     }
+    __weak typeof(self)weakSelf = self;
     NSDictionary *param = @{@"uid":key_Uid,@"t":key_Token};
     [MOCHTTPRequestOperationManager postWithURL:[NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttp,@"login",@"auto"] class:nil parameters:param success:^(MOCHTTPResponse *response){
         NSString *code =[response.data valueForKey:@"code"];
@@ -165,18 +166,11 @@
             [[NSUserDefaults standardUserDefaults] synchronize];
             NSString *isfull = response.dataDictionary[@"isfull"];
             self.isFull = isfull;
-            {
-                if ([self.isFull isEqualToString:@"1"])
-                {
-                    [self chatLoagin];
-                    [self loginSuccess];
-                }
-                else
-                {
-                    ImproveMatiralViewController *vc = [[ImproveMatiralViewController alloc] init];
-                    BaseNavigationController *nav = [[BaseNavigationController alloc] initWithRootViewController:vc];
-                    [AppDelegate currentAppdelegate].window.rootViewController = nav;
-                }
+            if ([self.isFull isEqualToString:@"1"]){
+                [self chatLoagin];
+                [self loginSuccess];
+            } else{
+                [weakSelf showLoginViewController];
             }
         }
     }failed:^(MOCHTTPResponse *response){
