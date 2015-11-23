@@ -111,26 +111,34 @@
         self.middleButton.hidden = NO;
         self.middleButton.enabled = NO;
         [self.middleButton setTitle:@"审核中" forState:UIControlStateNormal];
+        [self.middleButton setBackgroundColor:[UIColor colorWithHexString:@"FD8D8C"]];
     } else if (self.responseObject.meetState == SHGActionStateSuccess){
         //成功了 如果是自己则只能分享
         if ([self.responseObject.publisher isEqualToString:uid]) {
             self.middleButton.hidden = NO;
             self.middleButton.enabled = NO;
             [self.middleButton setTitle:@"分享" forState:UIControlStateNormal];
+            [self.middleButton setBackgroundColor:[UIColor colorWithHexString:@"F7514A"]];
         } else{
             //其他用户看到的
+            self.middleButton.hidden = YES;
             self.leftButton.hidden = NO;
             self.rightButton.hidden = NO;
             [self.leftButton setTitle:@"报名" forState:UIControlStateNormal];
+            [self.leftButton setBackgroundColor:[UIColor colorWithHexString:@"F7514A"] ];
             [self.rightButton setTitle:@"分享" forState:UIControlStateNormal];
+            [self.rightButton setBackgroundColor:[UIColor colorWithHexString:@"474550"]];
             for (SHGActionAttendObject *object in self.responseObject.attendList){
                 if ([object.uid isEqualToString:uid]) {
                     if ([object.state isEqualToString:@"0"]) {
                         [self.leftButton setTitle:@"审核中" forState:UIControlStateNormal];
+                        [self.leftButton setBackgroundColor:[UIColor colorWithHexString:@"FD8D8C"]];
                     } else if ([object.state isEqualToString:@"1"]) {
                         [self.leftButton setTitle:@"审核通过" forState:UIControlStateNormal];
+                        [self.leftButton setBackgroundColor:[UIColor colorWithHexString:@"FD8D8C"] ];
                     } else if ([object.state isEqualToString:@"2"]) {
                         [self.leftButton setTitle:@"被驳回(查看原因)" forState:UIControlStateNormal];
+                        [self.leftButton setBackgroundColor:[UIColor colorWithHexString:@"F7514A"]];
                         self.rejectReason = object.reason;
                     }
                     break;
@@ -140,14 +148,18 @@
         }
     } else if (self.responseObject.meetState == SHGActionStateFailed){
         //被驳回(活动被驳回 不是报名请求)
+        self.middleButton.hidden = YES;
         self.leftButton.hidden = NO;
         self.rightButton.hidden = NO;
         self.rejectReason = self.object.reason;
         [self.leftButton setTitle:@"被驳回(查看原因)" forState:UIControlStateNormal];
+        [self.leftButton setBackgroundColor:[UIColor colorWithHexString:@"474550"]];
         [self.rightButton setTitle:@"重新编辑" forState:UIControlStateNormal];
+        [self.rightButton setBackgroundColor:[UIColor colorWithHexString:@"F7514A"]];
     } else{
         self.middleButton.hidden = NO;
         [self.middleButton setTitle:@"已结束" forState:UIControlStateNormal];
+        [self.middleButton setBackgroundColor:[UIColor colorWithHexString:@"B7B7B7"] ];
     }
 }
 

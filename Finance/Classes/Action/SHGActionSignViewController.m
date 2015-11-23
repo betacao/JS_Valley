@@ -35,6 +35,9 @@
 @property (weak, nonatomic) IBOutlet UIButton *addPrasiseButton;
 @property (weak, nonatomic) IBOutlet UIButton *addCommentButton;
 @property (assign, nonatomic) CGFloat height;
+@property (weak, nonatomic) IBOutlet UIImageView *firstLineImageView;
+@property (weak, nonatomic) IBOutlet UIImageView *secondLineImageView;
+
 @end
 
 @implementation SHGActionSignViewController
@@ -91,7 +94,7 @@
     self.actionIntroduceLabel.frame = frame;
     //设置查看全部的高度
     frame = self.bottomView.frame;
-    frame.origin.y = CGRectGetMaxY(self.actionIntroduceLabel.frame);
+    frame.origin.y = CGRectGetMaxY(self.actionIntroduceLabel.frame) + kObjectMargin;
     self.bottomView.frame = frame;
     //设置headerview的高度
     frame = self.headerView.frame;
@@ -113,6 +116,11 @@
         self.height = CGRectGetHeight(frame);
         self.finishBlock(self.height);
     }
+    
+    UIImage * img = [UIImage imageNamed:@"action_xuxian"];
+    self.firstLineImageView.image = [img resizableImageWithCapInsets:UIEdgeInsetsMake(0 , 1, 0, 1) resizingMode:UIImageResizingModeTile];
+    self.secondLineImageView.image = [img resizableImageWithCapInsets:UIEdgeInsetsMake(0 , 1, 0, 1) resizingMode:UIImageResizingModeTile];
+
 }
 
 - (void)loadPraiseButtonState
@@ -210,6 +218,13 @@
         cell.delegate = self;
     }
     [cell loadCellWithObject:[self.object.attendList objectAtIndex:indexPath.row]];
+    NSInteger count = [self.object.attendNum integerValue];
+    count = count > 3 ? 3: count;
+    //count = 0 ;
+    if (indexPath.row ==  count-1 )
+    {
+        [cell loadLastCellLineImage];
+    }
     return  cell;
 }
 

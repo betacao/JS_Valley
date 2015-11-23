@@ -21,5 +21,5 @@
 
 @property (assign, nonatomic) id<SHGActionSignDelegate> delegate;
 - (void)loadCellWithObject:(SHGActionAttendObject *)object;
-
+-(void)loadLastCellLineImage;
 @end

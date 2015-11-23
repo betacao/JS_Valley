@@ -15,9 +15,11 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *action_signCommpanyLable;
 @property (weak, nonatomic) IBOutlet UIButton *action_signRightButton;
+@property (weak, nonatomic) IBOutlet UIImageView *action_bottomXuXian;
 
 @property (weak, nonatomic) IBOutlet UIButton *action_signLeftButton;
-@property (weak, nonatomic) IBOutlet UIImageView *action_bottomImage;
+@property (weak, nonatomic) IBOutlet UIView *action_bottomView;
+
 @property (strong, nonatomic) SHGActionAttendObject *object;
 @property (strong, nonatomic) NSString *rejectReson;
 @end
@@ -36,10 +38,19 @@
     [self.action_signRightButton setTitle:@"驳回" forState:UIControlStateNormal];
     [self.action_signRightButton setTitleColor:[UIColor  whiteColor] forState:UIControlStateNormal];
      self.action_signRightButton.titleLabel.font = [UIFont systemFontOfSize:14];
-    
-    
+    self.action_bottomXuXian.hidden = YES;
+    CGRect frame = self.action_bottomView.frame;
+    frame.size.height = 0.5f;
+    self.action_bottomView.frame = frame;
 }
+-(void)loadLastCellLineImage
+{
+    self.action_bottomXuXian.hidden = NO;
+    self.action_bottomView.hidden = YES;
+    UIImage * img = [UIImage imageNamed:@"action_xuxian"];
+    self.action_bottomXuXian.image = [img resizableImageWithCapInsets:UIEdgeInsetsMake(0 , 1, 0, 1) resizingMode:UIImageResizingModeTile];
 
+}
 - (void)loadCellWithObject:(SHGActionAttendObject *)object
 {
     [self clearCell];
@@ -53,14 +64,19 @@
         self.action_signLeftButton.hidden = NO;
         self.action_signRightButton.hidden = NO;
         [self.action_signLeftButton setTitle:@"同意" forState:UIControlStateNormal];
+        //[self.action_signLeftButton setTitleColor:[UIColor colorWithHexString:@"FFA2BC"] forState:UIControlStateNormal];
         [self.action_signRightButton setTitle:@"驳回" forState:UIControlStateNormal];
+        //[self.action_signRightButton setTitleColor:[UIColor colorWithHexString:@"95DAFB"] forState:UIControlStateNormal];
     } else if ([object.state isEqualToString:@"1"]) {
         self.action_signRightButton.hidden = NO;
         [self.action_signRightButton setTitle:@"已同意" forState:UIControlStateNormal];
+         //[self.action_signRightButton setTitleColor:[UIColor colorWithHexString:@"8BD8CF"] forState:UIControlStateNormal];
         [self.action_signRightButton setEnabled:NO];
     } else if ([object.state isEqualToString:@"2"]) {
         self.action_signRightButton.hidden = NO;
         [self.action_signRightButton setTitle:@"已驳回" forState:UIControlStateNormal];
+        //[self.action_signRightButton setTitleColor:[UIColor colorWithHexString:@"CACACA"] forState:UIControlStateNormal];
+
         [self.action_signRightButton setEnabled:NO];
     }
 }
