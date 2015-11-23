@@ -16,21 +16,21 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="default_head" translatesAutoresizingMaskIntoConstraints="NO" id="BTo-At-c3z" userLabel="headImage View">
-                        <rect key="frame" x="14" y="11" width="30" height="30"/>
+                        <rect key="frame" x="14" y="10" width="30" height="30"/>
                         <animations/>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="李新星" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vfa-WB-MwF" userLabel="nameLabel">
-                        <rect key="frame" x="54" y="11" width="146" height="15"/>
+                        <rect key="frame" x="54" y="10" width="139" height="15"/>
                         <animations/>
-                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="华为科技有限公司" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="khf-CB-8Cw" userLabel="commpanyLabel">
-                        <rect key="frame" x="54" y="26" width="146" height="15"/>
+                        <rect key="frame" x="54" y="27" width="139" height="15"/>
                         <animations/>
                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="textColor" red="0.37647058823529411" green="0.37647058823529411" blue="0.37647058823529411" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XUH-Op-Tqp" userLabel="rightButton">
@@ -40,6 +40,7 @@
                             <constraint firstAttribute="width" constant="50" id="9Zo-hs-7XK"/>
                             <constraint firstAttribute="height" constant="15" id="Pff-71-i2k"/>
                         </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
                         <state key="normal" title="Button"/>
                         <connections>
                             <action selector="clickRightButton:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="7PD-Lt-2Ew"/>
@@ -52,26 +53,30 @@
                             <constraint firstAttribute="height" constant="15" id="HPY-ib-Pbg"/>
                             <constraint firstAttribute="width" constant="50" id="lk3-OB-GpB"/>
                         </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
                         <state key="normal" title="Button"/>
                         <connections>
                             <action selector="clickLeftButton:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="mqI-7C-d9K"/>
                         </connections>
                     </button>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="action_bg" translatesAutoresizingMaskIntoConstraints="NO" id="xqw-Ju-kEj">
-                        <rect key="frame" x="14" y="52" width="292" height="1"/>
-                        <animations/>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="b9E-LR-B2g">
+                        <rect key="frame" x="0.0" y="52" width="320" height="1"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="1" id="qCE-iY-NIC"/>
+                            <constraint firstAttribute="height" constant="1" id="s1R-BU-dv7"/>
                         </constraints>
                     </imageView>
+                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="l3a-nD-3to">
+                        <rect key="frame" x="14" y="52" width="306" height="1"/>
+                        <color key="backgroundColor" red="0.90588235294117647" green="0.90588235294117647" blue="0.90588235294117647" alpha="1" colorSpace="calibratedRGB"/>
+                    </view>
                 </subviews>
                 <animations/>
                 <constraints>
-                    <constraint firstAttribute="trailingMargin" secondItem="xqw-Ju-kEj" secondAttribute="trailing" constant="6" id="Igl-XU-G9x"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="xqw-Ju-kEj" secondAttribute="bottom" constant="-8" id="J2x-Uj-lSq"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="b9E-LR-B2g" secondAttribute="bottom" constant="-8" id="UZZ-PB-mTA"/>
+                    <constraint firstItem="b9E-LR-B2g" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="-8" id="ggl-8a-ir3"/>
                     <constraint firstItem="k9s-ZY-UQ3" firstAttribute="trailing" secondItem="XUH-Op-Tqp" secondAttribute="leading" constant="-5" id="qUF-3R-5vO"/>
                     <constraint firstAttribute="trailingMargin" secondItem="XUH-Op-Tqp" secondAttribute="trailing" constant="6" id="srV-pC-InZ"/>
-                    <constraint firstItem="xqw-Ju-kEj" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="6" id="tWL-rW-kfh"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="b9E-LR-B2g" secondAttribute="trailing" constant="-8" id="thz-UP-BN1"/>
                 </constraints>
             </tableViewCellContentView>
             <animations/>
@@ -80,7 +85,8 @@
                 <constraint firstItem="k9s-ZY-UQ3" firstAttribute="top" secondItem="KGk-i7-Jjw" secondAttribute="top" constant="19" id="Kcu-Dh-PNf"/>
             </constraints>
             <connections>
-                <outlet property="action_bottomImage" destination="xqw-Ju-kEj" id="F35-Qf-CRJ"/>
+                <outlet property="action_bottomView" destination="l3a-nD-3to" id="LKY-Yh-l9S"/>
+                <outlet property="action_bottomXuXian" destination="b9E-LR-B2g" id="Q9z-8p-u7A"/>
                 <outlet property="action_signCommpanyLable" destination="khf-CB-8Cw" id="TKe-ws-lNI"/>
                 <outlet property="action_signHeadImage" destination="BTo-At-c3z" id="VJD-Z1-p9g"/>
                 <outlet property="action_signLeftButton" destination="k9s-ZY-UQ3" id="O4M-tq-5Yj"/>
@@ -90,7 +96,6 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="action_bg" width="31" height="45"/>
         <image name="default_head" width="48" height="48"/>
     </resources>
 </document>
