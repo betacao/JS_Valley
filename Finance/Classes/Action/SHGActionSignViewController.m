@@ -37,6 +37,7 @@
 @property (assign, nonatomic) CGFloat height;
 @property (weak, nonatomic) IBOutlet UIImageView *firstLineImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *secondLineImageView;
+@property (weak, nonatomic) IBOutlet UILabel *hadApply;
 
 @end
 
@@ -78,11 +79,17 @@
 
 - (void)loadUI
 {
+    
     self.titleLabel.text = self.object.theme;
     self.actionPositionLabel.text = self.object.meetArea;
     self.actionTotalLabel.text = self.object.meetNum;
     self.actionInLabel.text = self.object.attendNum;
     self.actionIntroduceLabel.text = self.object.detail;
+    NSMutableAttributedString *noteStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"已报名 %@人",self.actionInLabel.text]] ;
+    [noteStr addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"F7514A"] range:NSMakeRange(3, noteStr.length-4 )];
+    [self.hadApply setAttributedText:noteStr];
+    self.hadApply.attributedText = noteStr;
+
 
     CGSize size = self.viewTotalButton.imageView.image.size;
     [self.viewTotalButton setTitleEdgeInsets:UIEdgeInsetsMake(0, -size.width * 2, 0, size.width * 2)];

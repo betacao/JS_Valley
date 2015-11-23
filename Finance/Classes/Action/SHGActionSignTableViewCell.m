@@ -39,11 +39,16 @@
     [self.action_signRightButton setTitleColor:[UIColor  whiteColor] forState:UIControlStateNormal];
      self.action_signRightButton.titleLabel.font = [UIFont systemFontOfSize:14];
     self.action_bottomXuXian.hidden = YES;
+}
+
+- (void)layoutSubviews
+{
+    [super layoutSubviews];
     CGRect frame = self.action_bottomView.frame;
     frame.size.height = 0.5f;
     self.action_bottomView.frame = frame;
 }
--(void)loadLastCellLineImage
+- (void)loadLastCellLineImage
 {
     self.action_bottomXuXian.hidden = NO;
     self.action_bottomView.hidden = YES;

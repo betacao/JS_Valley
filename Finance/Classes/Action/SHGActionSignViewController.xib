@@ -18,6 +18,7 @@
                 <outlet property="firstLineImageView" destination="2UB-kW-4v7" id="hg4-0t-tOu"/>
                 <outlet property="footerBgImageView" destination="RsV-j2-Ab7" id="27j-dh-Wst"/>
                 <outlet property="footerView" destination="vtI-Kw-BC1" id="ERP-6U-z88"/>
+                <outlet property="hadApply" destination="RZN-tt-YXI" id="ydZ-4n-zZU"/>
                 <outlet property="headerView" destination="TH5-Fr-hKW" id="Day-HR-gG3"/>
                 <outlet property="praiseScrollView" destination="EkI-SP-ajm" id="FoD-n0-KNF"/>
                 <outlet property="praiseView" destination="WE1-fN-VU2" id="R5U-R5-kmv"/>
@@ -177,7 +178,7 @@
                             <color key="backgroundColor" red="0.96862745098039216" green="0.31764705882352939" blue="0.29019607843137252" alpha="1" colorSpace="calibratedRGB"/>
                         </view>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="已报名" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="RZN-tt-YXI">
-                            <rect key="frame" x="23" y="15" width="54" height="14"/>
+                            <rect key="frame" x="23" y="15" width="153" height="14"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <animations/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>

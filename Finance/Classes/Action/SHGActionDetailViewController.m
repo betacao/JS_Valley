@@ -190,7 +190,7 @@
 
 - (UITableViewCell * )tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"indexpath.section = %ld",indexPath.section);
+   // NSLog(@"indexpath.section = %ld",indexPath.section);
     switch (indexPath.section) {
         case 0:{
             return self.firstTableViewCell;
