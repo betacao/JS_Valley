@@ -10,6 +10,13 @@
 #import "MyFollowViewController.h"
 #import "GameObj.h"
 #import "GameViewController.h"
+
+#import "SHGActionListViewController.h"
+#import "SHGActionMineViewController.h"
+#import "SHGActionSegmentViewController.h"
+#import "SHGActionDetailViewController.h"
+#import "SHGAuthenticationViewController.h"
+
 @interface DiscoverViewController ()
 {
      BOOL hasDataFinished;
@@ -106,31 +113,25 @@
     if (!cell) {
         cell = [[[NSBundle mainBundle] loadNibNamed:@"DiscoveryTableViewCell" owner:self options:nil] lastObject];
     }
-    if (indexPath.section == 0)
-    {
+    if (indexPath.section == 0){
         [cell loadDataWithImage:@"合作" title:@"产品合作" rightItem:nil rightItemColor:nil];
         cell.numberLable.text = nil;
-    }
-    else if (indexPath.section == 1)
-    {
-        if (indexPath.row == 0)
-        {
+    } else if (indexPath.section == 1){
+        if (indexPath.row == 0){
             [cell loadDataWithImage:@"我好友的好友" title:@"我好友的好友" rightItem:@"二度" rightItemColor:RGB(255, 116, 80)];
             cell.numberLable.text = nil;
-        }
-        else if (indexPath.row == 1)
-        {
-            [cell loadDataWithImage:@"我的好友" title:@"我的好友" rightItem:@"一度" rightItemColor:RGB(254, 144, 0)];\
+        } else if (indexPath.row == 1){
+            [cell loadDataWithImage:@"我的好友" title:@"我的好友" rightItem:@"一度" rightItemColor:RGB(254, 144, 0)];
+            cell.numberLable.text = nil;
+        } else if (indexPath.row == 2){
+            [cell loadDataWithImage:@"action_Icon" title:@"会议活动" rightItem:nil rightItemColor:nil];
             cell.numberLable.text = nil;
         }
         
-    }
-    else
-    {
+    } else{
         GameObj *obj = self.gameArray[indexPath.row]; 
         [cell loadDataWithImage:obj.imageurl title:obj.name rightItem:nil rightItemColor:nil];
         cell.numberLable.text = nil;
-       
     }
     return cell;
 }
@@ -144,12 +145,9 @@
 {
     if (section == 0) {
         return 0.1;
-    }
-    else if (section == 1)
-    {
+    } else if (section == 1){
         return 10;
-    }else
-    {
+    } else{
         return 10;
     }
 }
@@ -161,7 +159,7 @@
             break;
             
         case 1:
-            return 2;
+            return 3;
             break;
         
         case 2:
@@ -187,8 +185,7 @@
         [self.navigationController pushViewController:vc animated:YES];
     } else if (indexPath.section == 1){
         switch (indexPath.row) {
-            case 0:
-            {
+            case 0:{
                 ChatListViewController *vc = [[ChatListViewController alloc] init];
                 vc.chatListType = ContactTwainListView;
                 vc.hidesBottomBarWhenPushed = YES;
@@ -196,8 +193,7 @@
                 [self.navigationController pushViewController:vc animated:YES];
             }
                 break;
-            case 1:
-            {
+            case 1:{
                 ChatListViewController *vc = [[ChatListViewController alloc] init];
                 vc.chatListType = ContactListView;
                 vc.hidesBottomBarWhenPushed = YES;
@@ -206,6 +202,15 @@
                 
             }
                 break;
+            case 2:{
+                SHGActionSegmentViewController *segmentViewController = [[SHGActionSegmentViewController alloc] init];
+                SHGActionListViewController *leftController = [[SHGActionListViewController alloc] init];
+                SHGActionMineViewController *rightController = [[SHGActionMineViewController alloc] init];
+                segmentViewController.viewControllers = @[leftController, rightController];
+                segmentViewController.hidesBottomBarWhenPushed = YES;
+                [MobClick event:@"SHGActionViewController" label:@"onClick"];
+                [self.navigationController pushViewController:segmentViewController animated:YES];
+            }
             default:
                 break;
         }
@@ -261,14 +266,5 @@
     }
     return _titleLabel;
 }
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

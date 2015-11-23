@@ -13,11 +13,11 @@
 @property (weak, nonatomic) IBOutlet UILabel *Action_titlelabel;
 @property (weak, nonatomic) IBOutlet UIImageView *Acyion_titleBg;
 @property (weak, nonatomic) IBOutlet UIImageView *Action_headImage;
-@property (weak, nonatomic) IBOutlet UILabel *Action_nameLble;
+@property (weak, nonatomic) IBOutlet UILabel *Action_nameLable;
 @property (weak, nonatomic) IBOutlet UILabel *Action_pubdateLabel;
 @property (weak, nonatomic) IBOutlet UIButton *Action_signButton;
 @property (weak, nonatomic) IBOutlet UIImageView *Action_lineImage;
-@property (weak, nonatomic) IBOutlet UILabel *Action_positionLable;
+@property (weak, nonatomic) IBOutlet UILabel *Action_departmentLable;
 @property (weak, nonatomic) IBOutlet UIImageView *Action_timeImage;
 @property (weak, nonatomic) IBOutlet UILabel *Action_timeLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *Action_addressImage;
@@ -69,7 +69,10 @@
     [self.Action_headImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,object.headerImageUrl]] placeholderImage:[UIImage imageNamed:@"default_head"]];
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
     self.Action_titlelabel.text = object.theme;
+    self.Action_nameLable.text = object.realName;
+    self.Action_departmentLable.text = object.department;
     self.Action_pubdateLabel.text = object.createTime;
+    self.Action_timeLabel.text = [object.startTime stringByAppendingFormat:@"-%@",object.endTime];
     self.Action_addressLabel.text = object.meetArea;
     self.Action_allNumLabel.text = [NSString stringWithFormat:@"邀请%@人", object.meetNum];
     self.Action_momentNumlabel.text = [NSString stringWithFormat:@"已报名%@人", object.attendNum];
@@ -118,6 +121,8 @@
     self.Action_addressLabel.text = @"";
     self.Action_allNumLabel.text = @"";
     self.Action_momentNumlabel.text = @"";
+    self.Action_nameLable.text = @"";
+    self.Action_timeLabel.text = @"";
     [self.Action_signButton setTitle:@"" forState:UIControlStateNormal];
     [self.Action_signButton setBackgroundColor:[UIColor clearColor]];
     self.twoButtonView.hidden = YES;

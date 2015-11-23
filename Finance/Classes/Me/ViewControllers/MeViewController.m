@@ -18,12 +18,6 @@
 #import "SHGModifyInfoViewController.h"
 #import "SHGUserTagModel.h"
 #import "SHGPersonalViewController.h"
-//测试我的活动
-#import "SHGActionListViewController.h"
-#import "SHGActionMineViewController.h"
-#import "SHGActionSegmentViewController.h"
-#import "SHGActionDetailViewController.h"
-#import "SHGAuthenticationViewController.h"
 //为标签弹出框定义的值
 #define kItemTopMargin  18.0f * XFACTOR
 #define kItemMargin 14.0f * XFACTOR
@@ -609,19 +603,10 @@
         [self.navigationController pushViewController:vc animated:YES];
 
     }else if (indexPath.row == 2) {
-//        MyAppointmentViewController *vc = [[MyAppointmentViewController alloc] init];
-//        vc.hidesBottomBarWhenPushed = YES;
-//        [MobClick event:@"MyAppointmentViewController" label:@"onClick"];
-//        [self.navigationController pushViewController:vc animated:YES];
-        
-        SHGActionSegmentViewController *segmentViewController = [[SHGActionSegmentViewController alloc] init];
-        SHGActionListViewController *leftController = [[SHGActionListViewController alloc] init];
-        SHGActionMineViewController *rightController = [[SHGActionMineViewController alloc] init];
-        segmentViewController.viewControllers = @[leftController, rightController];
-        segmentViewController.hidesBottomBarWhenPushed = YES;
-        [MobClick event:@"SHGActionViewController" label:@"onClick"];
-        [self.navigationController pushViewController:segmentViewController animated:YES];
-
+        MyAppointmentViewController *vc = [[MyAppointmentViewController alloc] init];
+        vc.hidesBottomBarWhenPushed = YES;
+        [MobClick event:@"MyAppointmentViewController" label:@"onClick"];
+        [self.navigationController pushViewController:vc animated:YES];
     }else if (indexPath.row == 3) {
         MyCollectionViewController *vc = [[MyCollectionViewController alloc] init];
         vc.hidesBottomBarWhenPushed = YES;

@@ -376,14 +376,14 @@
                 <outlet property="Action_bottomLine" destination="Svv-cy-Lpg" id="mDA-0b-fYa"/>
                 <outlet property="Action_centerLine" destination="5Wq-hb-oHN" id="VlG-si-JAC"/>
                 <outlet property="Action_commentButton" destination="xla-Wk-QKP" id="aiO-Re-fGZ"/>
+                <outlet property="Action_departmentLable" destination="Zek-W1-wJf" id="3dq-ie-3hY"/>
                 <outlet property="Action_editeButton" destination="LB4-Pe-52L" id="ZCY-xN-IGF"/>
                 <outlet property="Action_headImage" destination="IOA-ye-xM2" id="Hm0-zO-N1U"/>
                 <outlet property="Action_lineImage" destination="RK8-ww-7K2" id="JlM-6I-hGl"/>
                 <outlet property="Action_messageLabel" destination="O3g-VZ-xPH" id="1nD-Gq-QOZ"/>
                 <outlet property="Action_momentNumImage" destination="QBF-0x-vMF" id="enx-Eg-8at"/>
                 <outlet property="Action_momentNumlabel" destination="7f8-JB-YJ6" id="XeZ-ps-pEx"/>
-                <outlet property="Action_nameLble" destination="Dyd-VN-aWh" id="UWP-4Y-eht"/>
-                <outlet property="Action_positionLable" destination="Zek-W1-wJf" id="8KW-KA-Qtr"/>
+                <outlet property="Action_nameLable" destination="Dyd-VN-aWh" id="xEI-eH-6Ah"/>
                 <outlet property="Action_pubdateLabel" destination="gcg-h3-a3h" id="Gxi-c8-qLj"/>
                 <outlet property="Action_signButton" destination="9Tk-S3-KHa" id="2Or-OK-z3p"/>
                 <outlet property="Action_thrCommentButton" destination="8SJ-8S-g4K" id="XqI-kL-cNk"/>
