@@ -13,7 +13,8 @@
 @property (weak, nonatomic) IBOutlet headerView *headeimage;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *companyLabel;
-@property (weak, nonatomic) IBOutlet UIImageView *lineImage;
+@property (weak, nonatomic) IBOutlet UIView *lineView;
+
 //@property (nonatomic, strong) BasePeopleObject *obj;
 //@property (nonatomic, weak) id<BasePeopleTableViewCellDelegate> delegate;
 @end

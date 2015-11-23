@@ -129,11 +129,15 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
 {
     if ([self.relationShip integerValue] == 0){         //未关注
         [self.leftButton setTitle:@"+关注" forState:UIControlStateNormal];
+        [self.leftButton setBackgroundColor:[UIColor colorWithHexString:@"F7514A"]];
     } else if ([self.relationShip intValue] == 1){      //已关注
-        [self.leftButton setTitle:@"已关注" forState:UIControlStateNormal];
+        [self.leftButton setTitle:@"发消息" forState:UIControlStateNormal];
+        self.leftButton.enabled = NO;
+         [self.leftButton setBackgroundColor:[UIColor colorWithHexString:@"B7B7B7"]];
     } else{
         //互相关注
-        [self.leftButton setTitle:@"会话" forState:UIControlStateNormal];
+        [self.leftButton setTitle:@"发消息" forState:UIControlStateNormal];
+         [self.leftButton setBackgroundColor:[UIColor colorWithHexString:@"F7514A"]];
     }
 
 }
@@ -141,8 +145,10 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
 {
     if (self.isCollected) {
         [self.rightButton setTitle:@"已收藏" forState:UIControlStateNormal];
+        [self.rightButton setBackgroundColor:[UIColor colorWithHexString:@"B7B7B7"]];
     } else{
         [self.rightButton setTitle:@"收藏名片" forState:UIControlStateNormal];
+        [self.rightButton setBackgroundColor:[UIColor colorWithHexString:@"474550"]];
     }
 }
 - (void)parseDataWithDic:(NSDictionary *)dictionary

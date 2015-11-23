@@ -180,7 +180,7 @@
     [cell.headeimage updateHeaderView:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,obj.headImageUrl] placeholderImage:[UIImage imageNamed:@"default_head"]];
     cell.nameLabel.text = obj.name;
     cell.companyLabel.text = obj.company;
-    cell.lineImage.image = [UIImage imageNamed:@"action_bg"];
+
     return cell;
 }
 - (void)didReceiveMemoryWarning {

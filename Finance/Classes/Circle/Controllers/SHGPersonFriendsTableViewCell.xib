@@ -21,39 +21,37 @@
                         <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KNO-Wl-QLm" customClass="headerView">
-                        <rect key="frame" x="14" y="10" width="30" height="30"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7rn-Ro-kGW">
-                        <rect key="frame" x="54" y="25" width="200" height="15"/>
+                        <rect key="frame" x="54" y="27" width="200" height="15"/>
                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                         <color key="textColor" red="0.37647058823529411" green="0.37647058823529411" blue="0.37647058823529411" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="action_bg" translatesAutoresizingMaskIntoConstraints="NO" id="Mb7-ox-tHT">
-                        <rect key="frame" x="14" y="48" width="292" height="2"/>
+                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KNO-Wl-QLm" customClass="headerView">
+                        <rect key="frame" x="14" y="10" width="30" height="30"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="j86-ln-GYo">
+                        <rect key="frame" x="14" y="49" width="306" height="1"/>
+                        <color key="backgroundColor" red="0.90588235294117647" green="0.90588235294117647" blue="0.90588235294117647" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="2" id="nUe-Hv-QZZ"/>
+                            <constraint firstAttribute="height" constant="1" id="Dtx-t8-kb0"/>
                         </constraints>
-                    </imageView>
+                    </view>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="trailingMargin" secondItem="Mb7-ox-tHT" secondAttribute="trailing" constant="6" id="TfF-H3-ytJ"/>
-                    <constraint firstItem="Mb7-ox-tHT" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="6" id="gRB-bb-iSL"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="Mb7-ox-tHT" secondAttribute="bottom" constant="-9" id="qwM-EG-Ey2"/>
+                    <constraint firstItem="j86-ln-GYo" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="6" id="HhE-Q2-zQF"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="j86-ln-GYo" secondAttribute="trailing" constant="-8" id="Syu-cz-Eof"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="j86-ln-GYo" secondAttribute="bottom" constant="-9" id="ztw-Dc-Ggp"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
                 <outlet property="companyLabel" destination="7rn-Ro-kGW" id="D9I-NI-6aA"/>
                 <outlet property="headeimage" destination="KNO-Wl-QLm" id="0EN-EV-XCL"/>
-                <outlet property="lineImage" destination="Mb7-ox-tHT" id="rsh-Iu-kWK"/>
+                <outlet property="lineView" destination="j86-ln-GYo" id="WFc-34-kD1"/>
                 <outlet property="nameLabel" destination="Vdp-2Z-0of" id="WbK-et-fd8"/>
             </connections>
             <point key="canvasLocation" x="257" y="188"/>
         </tableViewCell>
     </objects>
-    <resources>
-        <image name="action_bg" width="31" height="45"/>
-    </resources>
 </document>
