@@ -11,6 +11,7 @@
 #import "SHGPersonDynamicViewController.h"
 #import "ChatViewController.h"
 #import "ChatListViewController.h"
+#import "SHGPersonFriendsViewController.h"
 
 #define kTagViewWidth 45.0f * XFACTOR
 #define kTagViewHeight 16.0f * XFACTOR
@@ -92,7 +93,7 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
     }
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
     [Hud showLoadingWithMessage:@"加载中"];
-
+   // NSString * sid = self.userId;
     __weak typeof(self) weakSelf = self;
     NSDictionary *param = @{@"uid":uid, @"target":target, @"rid":[NSNumber numberWithInt:[time intValue]], @"num":rRequestNum};
     [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttpCircle,@"queryCircleById",self.userId] class:[CircleListObj class] parameters:param success:^(MOCHTTPResponse *response) {
@@ -355,11 +356,20 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
         }
             break;
         case 1:{
-            ChatListViewController *vc = [[ChatListViewController alloc] init];
-            vc.chatListType = ContactListView;
+            SHGPersonFriendsViewController *vc = [[SHGPersonFriendsViewController alloc] init];
+            vc.userId = self.userId;
+            [vc friendStatus:@"his"];
             [self.navigationController pushViewController:vc animated:YES];
         }
             break;
+        case 2:{
+            SHGPersonFriendsViewController *vc = [[SHGPersonFriendsViewController alloc] init];
+            vc.userId = self.userId;
+            [vc friendStatus:@"all"];
+            [self.navigationController pushViewController:vc animated:YES];
+        }
+            break;
+
         default:{
 
         }
