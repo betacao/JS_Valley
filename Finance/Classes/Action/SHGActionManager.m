@@ -228,6 +228,13 @@
         [Hud hideHud];
         [Hud showMessageWithText:@"报名成功"];
         if (block) {
+            SHGActionAttendObject *obj = [[SHGActionAttendObject alloc] init];
+            obj.headimageurl = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_HEAD_IMAGE];
+            obj.uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
+            obj.realname = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_USER_NAME];
+            obj.state = @"0";
+            [object.attendList addObject:obj];
+            object.attendNum = [NSString stringWithFormat:@"%ld",(long)[object.attendNum integerValue] + 1];
             block(YES);
         }
     } failed:^(MOCHTTPResponse *response) {

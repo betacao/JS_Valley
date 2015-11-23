@@ -273,16 +273,17 @@
     } else if([title rangeOfString:@"审核中"].location != NSNotFound){
 
     } else if([title rangeOfString:@"分享"].location != NSNotFound){
-        [[SHGActionManager shareActionManager] shareAction:self.object finishBlock:^(BOOL success) {
+        [[SHGActionManager shareActionManager] shareAction:self.responseObject finishBlock:^(BOOL success) {
             if (success) {
 
             }
         }];
     } else if([title rangeOfString:@"报名"].location != NSNotFound){
-        [[SHGActionManager shareActionManager] enterForActionObject:self.object finishBlock:^(BOOL success) {
+        [[SHGActionManager shareActionManager] enterForActionObject:self.responseObject finishBlock:^(BOOL success) {
             if (success) {
                 [weaSelf.leftButton setTitle:@"审核中" forState:UIControlStateNormal];
                 [weaSelf.leftButton setEnabled:NO];
+                [weaSelf.signController reloadData];
             }
         }];
     }

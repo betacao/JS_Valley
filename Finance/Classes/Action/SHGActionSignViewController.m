@@ -63,6 +63,11 @@
     [self loadUI];
 }
 
+- (void)reloadData
+{
+    [self.tableView reloadData];
+}
+
 - (CGFloat)heightForView
 {
     return CGRectGetHeight(self.tableView.frame);
