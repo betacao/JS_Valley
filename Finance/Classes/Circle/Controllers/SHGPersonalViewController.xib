@@ -93,7 +93,7 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="160"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="userInfoBackImage" translatesAutoresizingMaskIntoConstraints="NO" id="CD2-7h-hIT">
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="person_headerBg" translatesAutoresizingMaskIntoConstraints="NO" id="CD2-7h-hIT">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="152"/>
                     <animations/>
                 </imageView>
@@ -181,6 +181,6 @@
     </objects>
     <resources>
         <image name="default_head" width="48" height="48"/>
-        <image name="userInfoBackImage" width="30" height="30"/>
+        <image name="person_headerBg" width="320" height="144"/>
     </resources>
 </document>
