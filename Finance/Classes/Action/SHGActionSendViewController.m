@@ -52,18 +52,16 @@ typedef NS_ENUM(NSInteger, SHGActionSendType){
         self.sendType = SHGActionSendTypeReSet;
     }
     //self.actionTitleField.placeholder
-    [self.actionTitleField setValue:[UIColor colorWithHexString:@"AEAEAEAE"] forKey:@"_placeholderLabel.textColor"];
-     [self.actionTitleField setValue:[UIFont boldSystemFontOfSize:14] forKey:@"_placeholderLabel.textColor"];
-    [self.startTimeField setValue:[UIColor colorWithHexString:@"AEAEAEAE"] forKey:@"_placeholderLabel.textColor"];
-    [self.startTimeField setValue:[UIFont boldSystemFontOfSize:14] forKey:@"_placeholderLabel.textColor"];
-    [self.endTimeField setValue:[UIColor colorWithHexString:@"AEAEAEAE"] forKey:@"_placeholderLabel.textColor"];
-    [self.endTimeField setValue:[UIFont boldSystemFontOfSize:14] forKey:@"_placeholderLabel.textColor"];
-    [self.positionField setValue:[UIColor colorWithHexString:@"AEAEAEAE"] forKey:@"_placeholderLabel.textColor"];
-    [self.positionField setValue:[UIFont boldSystemFontOfSize:14] forKey:@"_placeholderLabel.textColor"];
-    [self.invateNumber setValue:[UIColor colorWithHexString:@"AEAEAEAE"] forKey:@"_placeholderLabel.textColor"];
-    [self.invateNumber setValue:[UIFont boldSystemFontOfSize:14] forKey:@"_placeholderLabel.textColor"];
-
-
+    //self.actionTitleField.placeholder = @"  会议主题";
+    [self.actionTitleField setValue:[UIColor colorWithHexString:@"D3D3D3"] forKeyPath:@"_placeholderLabel.textColor"];
+    //self.startTimeField.placeholder = @"  开始时间";
+    [self.startTimeField setValue:[UIColor colorWithHexString:@"D3D3D3"] forKeyPath:@"_placeholderLabel.textColor"];
+    //self.endTimeField.placeholder = @"  结束时间";
+    [self.endTimeField setValue:[UIColor colorWithHexString:@"D3D3D3"] forKeyPath:@"_placeholderLabel.textColor"];
+    //self.positionField.placeholder = @"  会议地点";
+    [self.positionField setValue:[UIColor colorWithHexString:@"D3D3D3"] forKeyPath:@"_placeholderLabel.textColor"];
+    //self.invateNumber.placeholder = @"  邀请人数";
+    [self.invateNumber setValue:[UIColor colorWithHexString:@"D3D3D3"] forKeyPath:@"_placeholderLabel.textColor"];
 }
 
 - (void)viewDidAppear:(BOOL)animated
