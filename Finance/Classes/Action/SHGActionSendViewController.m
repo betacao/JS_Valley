@@ -51,10 +51,25 @@ typedef NS_ENUM(NSInteger, SHGActionSendType){
         [self editObject:self.object];
         self.sendType = SHGActionSendTypeReSet;
     }
+    //设置textField文字与左边存在一点间距
+    self.actionTitleField.leftView = [[UIView alloc]initWithFrame:CGRectMake(0.0f, 0.0f, 5.0f, 0.0f)];
+    self.actionTitleField.leftViewMode = UITextFieldViewModeAlways;
     [self.actionTitleField setValue:[UIColor colorWithHexString:@"D3D3D3"] forKeyPath:@"_placeholderLabel.textColor"];
+    
+    self.startTimeField.leftView = [[UIView alloc]initWithFrame:CGRectMake(0.0f, 0.0f, 5.0f, 0.0f)];
+    self.startTimeField.leftViewMode = UITextFieldViewModeAlways;
     [self.startTimeField setValue:[UIColor colorWithHexString:@"D3D3D3"] forKeyPath:@"_placeholderLabel.textColor"];
+    
+    self.endTimeField.leftView = [[UIView alloc]initWithFrame:CGRectMake(0.0f, 0.0f, 5.0f, 0.0f)];
+    self.endTimeField.leftViewMode = UITextFieldViewModeAlways;
     [self.endTimeField setValue:[UIColor colorWithHexString:@"D3D3D3"] forKeyPath:@"_placeholderLabel.textColor"];
+    
+    self.positionField.leftView = [[UIView alloc]initWithFrame:CGRectMake(0.0f, 0.0f, 5.0f, 0.0f)];
+    self.positionField.leftViewMode = UITextFieldViewModeAlways;
     [self.positionField setValue:[UIColor colorWithHexString:@"D3D3D3"] forKeyPath:@"_placeholderLabel.textColor"];
+    
+    self.invateNumber.leftView = [[UIView alloc]initWithFrame:CGRectMake(0.0f, 0.0f, 5.0f, 0.0f)];
+    self.invateNumber.leftViewMode = UITextFieldViewModeAlways;
     [self.invateNumber setValue:[UIColor colorWithHexString:@"D3D3D3"] forKeyPath:@"_placeholderLabel.textColor"];
 }
 
@@ -96,8 +111,8 @@ typedef NS_ENUM(NSInteger, SHGActionSendType){
 - (void)editObject:(SHGActionObject *)object
 {
     self.actionTitleField.text = object.theme;
-    self.startTimeField.text = [@"  " stringByAppendingString:object.startTime];
-    self.endTimeField.text = [@"  " stringByAppendingString:object.endTime];
+    self.startTimeField.text = object.startTime;
+    self.endTimeField.text = object.endTime;
     self.positionField.text = object.meetArea;
     self.invateNumber.text = object.meetNum;
     self.introduceView.text = object.detail;
@@ -281,7 +296,7 @@ typedef NS_ENUM(NSInteger, SHGActionSendType){
                     return;
                 }
             }
-            self.startTimeField.text = [NSString stringWithFormat:@"  %@", date];
+            self.startTimeField.text = date;
         }
             break;
 
@@ -293,7 +308,7 @@ typedef NS_ENUM(NSInteger, SHGActionSendType){
                     return;
                 }
             }
-            self.endTimeField.text = [NSString stringWithFormat:@"  %@", date];
+            self.endTimeField.text = date;
         }
             break;
         default:
