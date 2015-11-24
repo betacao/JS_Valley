@@ -29,9 +29,9 @@
 //删除评论
 - (void)deleteCommentWithID:(NSString *)commentId finishBlock:(void (^)(BOOL))block;
 //参加活动
-- (void)enterForActionObject:(SHGActionObject *)object finishBlock:(void (^)(BOOL))block;
+- (void)enterForActionObject:(SHGActionObject *)object reason:(NSString *)reason finishBlock:(void (^)(BOOL))block;
 //用户审核其他用户参与状态
 - (void)userCheckOtherState:(SHGActionAttendObject *)object option:(NSString *)option reason:(NSString *)reason finishBlock:(void (^)(BOOL))block;
 //分享活动
-- (void)shareAction:(SHGActionObject *)object finishBlock:(void (^)(BOOL))block;
+- (void)shareAction:(SHGActionObject *)object baseController:(UIViewController *)controller finishBlock:(void (^)(BOOL))block;
 @end

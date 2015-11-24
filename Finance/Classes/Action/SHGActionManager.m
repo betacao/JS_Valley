@@ -223,7 +223,7 @@
 }
 
 //参加活动
-- (void)enterForActionObject:(SHGActionObject *)object finishBlock:(void (^)(BOOL))block
+- (void)enterForActionObject:(SHGActionObject *)object reason:(NSString *)reason finishBlock:(void (^)(BOOL))block
 {
     [Hud showLoadingWithMessage:@"请稍等..."];
     NSString *request = [rBaseAddressForHttp stringByAppendingString:@"/meetingactivity/attend/saveAttend"];

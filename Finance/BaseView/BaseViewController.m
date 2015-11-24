@@ -123,15 +123,15 @@
     return NO;
 }
 #endif
--(void)btnBackClick:(id)sender
+- (void)btnBackClick:(id)sender
 {
     [self.navigationController popViewControllerAnimated:YES];
 }
--(void)rightItemClick:(id)sender
+- (void)rightItemClick:(id)sender
 {
     
 }
--(void)dealloc
+- (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }

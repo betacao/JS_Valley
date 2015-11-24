@@ -35,15 +35,21 @@ CGFloat const UI_PLACEHOLDER_TEXT_CHANGED_ANIMATION_DURATION = 0.25;
     if (!self.placeholderColor){
         [self setPlaceholderColor:[UIColor lightGrayColor]];
     }
-    
 }
 
 - (id)initWithFrame:(CGRect)frame
 {
-    if( (self = [super initWithFrame:frame]) )
-    {
-        [self setPlaceholder:@""];
-        [self setPlaceholderColor:[UIColor lightGrayColor]];
+    if( (self = [super initWithFrame:frame]) ){
+        
+        self.backgroundColor = [UIColor whiteColor];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textChanged:) name:UITextViewTextDidChangeNotification object:nil];
+        if (!self.placeholder){
+            [self setPlaceholder:@""];
+        }
+
+        if (!self.placeholderColor){
+            [self setPlaceholderColor:[UIColor lightGrayColor]];
+        }
     }
     return self;
 }
