@@ -29,7 +29,14 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        self.title = @"他的好友";
+//         if ([self.friend_status isEqualToString:@"his"])
+//         {
+//            self.title = @"他的好友";
+//         }else if ([self.friend_status isEqualToString:@"all"])
+//         {
+//             self.title = @"共同好友";
+//         }
+        
     }
     return self;
 }
@@ -38,9 +45,8 @@
     [super viewDidLoad];
     self.tableView.dataSource =self;
     self.tableView.delegate = self;
-    self.dataSource = [NSMutableArray array];
-    
-    _contactsSource = [NSMutableArray array];
+    //self.dataSource = [NSMutableArray array];
+    //_contactsSource = [NSMutableArray array];
     self.pageNum = 1;
 }
 -(void)friendStatus:(NSString *)status
@@ -65,11 +71,21 @@
     }
     return _dataSource;
 }
+- (NSMutableArray *)contactsSource
+{
+    if ((!_contactsSource)) {
+        self.contactsSource = [NSMutableArray array];
+        
+    }
+    return _contactsSource;
+}
+
 
 -(void)requestContact
 {
     
     if ([self.friend_status isEqualToString:@"his"]) {
+        self.title = @"他的好友";
         NSString * uid = self.userId;
         NSDictionary *param = @{@"uid":uid,
                                 @"pagenum":[NSNumber numberWithInteger:self.pageNum],                          @"pagesize":@15};
@@ -114,7 +130,7 @@
         }];
 
     }else if([self.friend_status isEqualToString:@"all"])
-    {
+    {     self.title = @"共同好友";
          NSString *url = [NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttp,@"friends",@"getCommonFriends"];
          NSDictionary *param = @{@"uid":[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID],@"ownerId":self.userId};
         [MOCHTTPRequestOperationManager postWithURL:url class:[BasePeopleObject class] parameters:param success:^(MOCHTTPResponse *response) {
