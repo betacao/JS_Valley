@@ -10,8 +10,6 @@
 #define kTagViewWidth 45.0f * XFACTOR
 #define kTagViewHeight 16.0f * XFACTOR
 @interface SHGCardTableViewCell ()
-@property (weak, nonatomic) IBOutlet UIView *bgView;
-@property (weak, nonatomic) IBOutlet UIImageView *headerBackImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *headerImageView;
 @property (weak, nonatomic) IBOutlet UIView *headerView;
 @property (weak, nonatomic) IBOutlet UILabel *userNameLabel;
@@ -19,6 +17,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *companyLabel;
 @property (weak, nonatomic) IBOutlet UILabel *positionLabel;
 @property (weak, nonatomic) IBOutlet UIView *tagViews;
+@property (weak, nonatomic) IBOutlet UIImageView *friendImage;
 @property (strong, nonatomic) SHGCollectCardClass *obj;
 @end
 @implementation SHGCardTableViewCell
@@ -28,13 +27,19 @@
 }
 -(void)loadCardDatasWithObj:(SHGCollectCardClass *)obj
 {
-   // [self clearCell];
+     [self clearCell];
     self.obj = obj;
     self.userNameLabel.text = obj.name;
     self.companyLabel.text = obj.companyName;
     self.positionLabel.text = obj.position;
     self.departmentLabel.text = obj.titles;
     self.positionLabel.text = obj.position;
+    if ([obj.friendShip isEqualToString:@"一度"]) {
+        self.friendImage.image = [UIImage imageNamed:@"first_friend.png"];
+    }else if ([obj.friendShip isEqualToString:@"二度"])
+    {
+         self.friendImage.image = [UIImage imageNamed:@"second_friend.png"];
+    }
     NSArray *arry = [obj.tags componentsSeparatedByString:@","];
     [self.tagViews removeAllSubviews];
     [self.tagViews addSubview:[self viewForTags:arry]];
@@ -42,6 +47,10 @@
     [self initView];
     [self.headerImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,self.obj.headerImageUrl]] placeholderImage:[UIImage imageNamed:@"default_head"]];
   
+}
+-(void)clearCell
+{
+    self.obj = nil;
 }
 - (UIView *)viewForTags:(NSArray *)array
 {
