@@ -150,7 +150,7 @@
 	}else if ([self.status isEqualToString:@"2"]){
 		self.status_statuLabel.text = @"已认证";
         self.status_statuLabel.textColor = [UIColor colorWithHexString:@"3588c8"];
-        self.noImageLabel.text = @"请上传您的名片、工牌或公司邮箱后台截图等任一材料";
+        self.noImageLabel.text = @"请上传您的名片、工牌或\n公司邮箱后台截图等任一材料";
         self.noImageLabel.hidden = NO;
         self.reasonTitleLabel.hidden = YES;
         self.tipsLabel.hidden = YES;

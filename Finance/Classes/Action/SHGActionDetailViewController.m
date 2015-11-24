@@ -55,7 +55,7 @@
     self.title = @"活动详情";
     self.replyTable.delegate = self;
     self.replyTable.dataSource = self;
-    self.replyTable.backgroundColor = [UIColor whiteColor];
+    self.replyTable.header.backgroundColor = [UIColor colorWithHexString:@"efefef"];
     [self.replyTable setTableFooterView:[[UIView alloc] init]];
     self.leftButton.hidden = YES;
     self.rightButton.hidden = YES;

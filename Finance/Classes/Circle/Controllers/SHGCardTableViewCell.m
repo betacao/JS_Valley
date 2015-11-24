@@ -27,13 +27,14 @@
 }
 -(void)loadCardDatasWithObj:(SHGCollectCardClass *)obj
 {
-     [self clearCell];
+    [self clearCell];
     self.obj = obj;
     self.userNameLabel.text = obj.name;
     self.companyLabel.text = obj.companyName;
     self.positionLabel.text = obj.position;
     self.departmentLabel.text = obj.titles;
     self.positionLabel.text = obj.position;
+    //判断好友是一度好友还是二度好友
     if ([obj.friendShip isEqualToString:@"一度"]) {
         self.friendImage.image = [UIImage imageNamed:@"first_friend.png"];
     }else if ([obj.friendShip isEqualToString:@"二度"])

@@ -794,13 +794,11 @@
         if (!cell) {
             cell = [[[NSBundle mainBundle] loadNibNamed:@"SHGCardTableViewCell" owner:self options:nil] lastObject];
         }
-        
         SHGCollectCardClass *obj = self.dataSource[indexPath.row];
         [cell loadCardDatasWithObj:obj];
         return cell;
         
     }
-		
 		return nil;
 		
 }

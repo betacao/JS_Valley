@@ -23,7 +23,6 @@
     _webViewForCUD.delegate = self;
     
     [self.view addSubview:_webViewForCUD];
-   // self.webView.delegate = self;
     [_webViewForCUD loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.link] ]];
     // Do any additional setup after loading the view from its nib.
 }
