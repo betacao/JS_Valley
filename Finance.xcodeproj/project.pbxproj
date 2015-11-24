@@ -737,6 +737,7 @@
 		985CBDBB1C03FD0B002B3D9D /* SHGCardTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 985CBDB91C03FD0B002B3D9D /* SHGCardTableViewCell.xib */; };
 		985CBDBF1C03FD49002B3D9D /* SHGCollectCardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 985CBDBD1C03FD49002B3D9D /* SHGCollectCardViewController.m */; };
 		985CBDC01C03FD49002B3D9D /* SHGCollectCardViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 985CBDBE1C03FD49002B3D9D /* SHGCollectCardViewController.xib */; };
+		985CBDC31C04042C002B3D9D /* SHGCollectCardClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 985CBDC21C04042C002B3D9D /* SHGCollectCardClass.m */; };
 		9894C9781BF5BCE700F80577 /* SHGActionSignViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9894C9761BF5BCE700F80577 /* SHGActionSignViewController.m */; };
 		9894C9791BF5BCE700F80577 /* SHGActionSignViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9894C9771BF5BCE700F80577 /* SHGActionSignViewController.xib */; };
 		9894C97D1BF5D24200F80577 /* SHGActionSignTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9894C97B1BF5D24200F80577 /* SHGActionSignTableViewCell.m */; };
@@ -1940,6 +1941,8 @@
 		985CBDBC1C03FD49002B3D9D /* SHGCollectCardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGCollectCardViewController.h; sourceTree = "<group>"; };
 		985CBDBD1C03FD49002B3D9D /* SHGCollectCardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGCollectCardViewController.m; sourceTree = "<group>"; };
 		985CBDBE1C03FD49002B3D9D /* SHGCollectCardViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGCollectCardViewController.xib; sourceTree = "<group>"; };
+		985CBDC11C04042C002B3D9D /* SHGCollectCardClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGCollectCardClass.h; sourceTree = "<group>"; };
+		985CBDC21C04042C002B3D9D /* SHGCollectCardClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGCollectCardClass.m; sourceTree = "<group>"; };
 		9894C9751BF5BCE700F80577 /* SHGActionSignViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGActionSignViewController.h; sourceTree = "<group>"; };
 		9894C9761BF5BCE700F80577 /* SHGActionSignViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGActionSignViewController.m; sourceTree = "<group>"; };
 		9894C9771BF5BCE700F80577 /* SHGActionSignViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGActionSignViewController.xib; sourceTree = "<group>"; };
@@ -3618,6 +3621,8 @@
 				F93242BB1BE9F73E003B7F07 /* CircleActionDelegate.h */,
 				F93242B81BE9EE92003B7F07 /* SHGUnifiedTreatment.h */,
 				F93242B91BE9EE92003B7F07 /* SHGUnifiedTreatment.m */,
+				985CBDC11C04042C002B3D9D /* SHGCollectCardClass.h */,
+				985CBDC21C04042C002B3D9D /* SHGCollectCardClass.m */,
 			);
 			name = Modal;
 			sourceTree = "<group>";
@@ -5570,6 +5575,7 @@
 				4088DDBC1AF102FE00393855 /* SettingQuestionViewController.m in Sources */,
 				6187D2EA1AF1C693008E1D21 /* MessageReadManager.m in Sources */,
 				985CBDBF1C03FD49002B3D9D /* SHGCollectCardViewController.m in Sources */,
+				985CBDC31C04042C002B3D9D /* SHGCollectCardClass.m in Sources */,
 				985088191BF424F800FE9B04 /* SHGTableHeaderView.m in Sources */,
 				569C6D401B7CB5B300AD59C3 /* SetPassWordViewController.m in Sources */,
 				6187D2CB1AF1C693008E1D21 /* ContactView.m in Sources */,
