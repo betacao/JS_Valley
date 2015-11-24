@@ -860,6 +860,7 @@
 		F90F7B6A1BF48C4C00555F49 /* SHGPersonalViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F90F7B691BF48C4C00555F49 /* SHGPersonalViewController.xib */; };
 		F91778C21BFC240900C535CB /* SHGDatePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = F91778C01BFC240900C535CB /* SHGDatePickerView.m */; };
 		F91778C31BFC240900C535CB /* SHGDatePickerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F91778C11BFC240900C535CB /* SHGDatePickerView.xib */; };
+		F928141C1C045F8900C7782D /* SHGIndustryChoiceView.m in Sources */ = {isa = PBXBuildFile; fileRef = F928141B1C045F8900C7782D /* SHGIndustryChoiceView.m */; };
 		F92835DE1BA6E16C00E1CF22 /* UIButton+EnlargeEdge.m in Sources */ = {isa = PBXBuildFile; fileRef = F92835DD1BA6E16C00E1CF22 /* UIButton+EnlargeEdge.m */; };
 		F93242BA1BE9EE92003B7F07 /* SHGUnifiedTreatment.m in Sources */ = {isa = PBXBuildFile; fileRef = F93242B91BE9EE92003B7F07 /* SHGUnifiedTreatment.m */; };
 		F932E2551B859DEC00EF2332 /* CircleListRecommendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F932E2531B859DEC00EF2332 /* CircleListRecommendViewController.m */; };
@@ -2090,6 +2091,8 @@
 		F91778C01BFC240900C535CB /* SHGDatePickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGDatePickerView.m; sourceTree = "<group>"; };
 		F91778C11BFC240900C535CB /* SHGDatePickerView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGDatePickerView.xib; sourceTree = "<group>"; };
 		F91B2B871BAA788300BC166D /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F928141A1C045F8900C7782D /* SHGIndustryChoiceView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGIndustryChoiceView.h; sourceTree = "<group>"; };
+		F928141B1C045F8900C7782D /* SHGIndustryChoiceView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGIndustryChoiceView.m; sourceTree = "<group>"; };
 		F92835DC1BA6E16C00E1CF22 /* UIButton+EnlargeEdge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+EnlargeEdge.h"; sourceTree = "<group>"; };
 		F92835DD1BA6E16C00E1CF22 /* UIButton+EnlargeEdge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+EnlargeEdge.m"; sourceTree = "<group>"; };
 		F93242B81BE9EE92003B7F07 /* SHGUnifiedTreatment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGUnifiedTreatment.h; sourceTree = "<group>"; };
@@ -2908,6 +2911,8 @@
 				40D6CC081B064122005F61C8 /* ProtocolViewController.h */,
 				40D6CC091B064122005F61C8 /* ProtocolViewController.m */,
 				40D6CC0A1B064122005F61C8 /* ProtocolViewController.xib */,
+				F928141A1C045F8900C7782D /* SHGIndustryChoiceView.h */,
+				F928141B1C045F8900C7782D /* SHGIndustryChoiceView.m */,
 			);
 			path = LoginRegist;
 			sourceTree = "<group>";
@@ -5692,6 +5697,7 @@
 				614EFECE1AEF594A00F2BDD1 /* ProdConfigTableViewCell.m in Sources */,
 				4088DD8C1AF0FB2B00393855 /* SettingsObj.m in Sources */,
 				6187D2C91AF1C693008E1D21 /* ChatGroupDetailViewController.m in Sources */,
+				F928141C1C045F8900C7782D /* SHGIndustryChoiceView.m in Sources */,
 				614EFEDF1AEF8F7300F2BDD1 /* Hud.m in Sources */,
 				61B992FB1ADBBE540025BE7B /* SHGHomeTableViewCell.m in Sources */,
 				4088DDB01AF102FE00393855 /* SettingAboutUsViewController.m in Sources */,

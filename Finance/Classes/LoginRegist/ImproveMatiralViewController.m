@@ -13,6 +13,7 @@
 #import "CCLocationManager.h"
 #import "SHGProvincesViewController.h"
 #import "SHGUserTagModel.h"
+#import "SHGIndustryChoiceView.h"
 
 #define kPersonCategoryLeftMargin 13.0f * XFACTOR
 #define kPersonCategoryTopMargin 10.0f * XFACTOR
@@ -20,7 +21,7 @@
 #define kPersonCategoryVerticalMargin 9.0f * XFACTOR
 #define kPersonCategoryHeight 22.0f * XFACTOR
 
-@interface ImproveMatiralViewController ()<UIScrollViewDelegate,SHGGlobleDelegate,SHGAreaDelegate>
+@interface ImproveMatiralViewController ()<UIScrollViewDelegate, SHGGlobleDelegate, SHGAreaDelegate, SHGIndustryChoiceDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextField *nameTextField;
 @property (weak, nonatomic) IBOutlet UITextField *companyTextField;
@@ -130,6 +131,7 @@
 
 -(void)btnBackClick:(id)sender
 {
+    [self.currentField resignFirstResponder];
     DXAlertView *alert = [[DXAlertView alloc] initWithTitle:@"提示" contentText:@"因大牛圈需要真实用户信息，完善信息后才可正常使用。" leftButtonTitle:@"完善信息" rightButtonTitle:@"退出应用"];
     alert.rightBlock = ^{
         [[AppDelegate currentAppdelegate] exitApplication];
@@ -398,6 +400,15 @@
     
 }
 
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
+{
+    if ([textField isEqual:self.industrycodeTextField]) {
+        [self showIndustryChoiceView];
+        return NO;
+    }
+    return YES;
+}
+
 - (void)textFieldDidBeginEditing:(UITextField *)textField
 {
     self.currentField = textField;
@@ -477,6 +488,19 @@
         frame.origin.x = CGRectGetMaxX(self.locationLabel.frame);
         self.manualButton.frame = frame;
     }
+}
+
+- (void)showIndustryChoiceView
+{
+    SHGIndustryChoiceView *view = [[SHGIndustryChoiceView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, SCREENWIDTH, SCREENHEIGHT)];
+    view.delegate = self;
+    [self.view.window addSubview:view];
+}
+
+#pragma mark ------ 选择行业代理
+- (void)didSelectIndustry:(NSString *)industry
+{
+    self.industrycodeTextField.text = industry;
 }
 
 - (void)didReceiveMemoryWarning {
