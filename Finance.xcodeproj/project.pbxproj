@@ -732,11 +732,8 @@
 		9842E9D41C0180240008B6AF /* SHGPersonFriendsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9842E9D21C0180240008B6AF /* SHGPersonFriendsTableViewCell.m */; };
 		9842E9D51C0180240008B6AF /* SHGPersonFriendsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9842E9D31C0180240008B6AF /* SHGPersonFriendsTableViewCell.xib */; };
 		985088191BF424F800FE9B04 /* SHGTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 985088181BF424F800FE9B04 /* SHGTableHeaderView.m */; };
-		985CBDB61C03FCD7002B3D9D /* SHGCardClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 985CBDB51C03FCD7002B3D9D /* SHGCardClass.m */; };
 		985CBDBA1C03FD0B002B3D9D /* SHGCardTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 985CBDB81C03FD0B002B3D9D /* SHGCardTableViewCell.m */; };
 		985CBDBB1C03FD0B002B3D9D /* SHGCardTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 985CBDB91C03FD0B002B3D9D /* SHGCardTableViewCell.xib */; };
-		985CBDBF1C03FD49002B3D9D /* SHGCollectCardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 985CBDBD1C03FD49002B3D9D /* SHGCollectCardViewController.m */; };
-		985CBDC01C03FD49002B3D9D /* SHGCollectCardViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 985CBDBE1C03FD49002B3D9D /* SHGCollectCardViewController.xib */; };
 		985CBDC31C04042C002B3D9D /* SHGCollectCardClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 985CBDC21C04042C002B3D9D /* SHGCollectCardClass.m */; };
 		9894C9781BF5BCE700F80577 /* SHGActionSignViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9894C9761BF5BCE700F80577 /* SHGActionSignViewController.m */; };
 		9894C9791BF5BCE700F80577 /* SHGActionSignViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9894C9771BF5BCE700F80577 /* SHGActionSignViewController.xib */; };
@@ -1941,14 +1938,9 @@
 		9842E9D31C0180240008B6AF /* SHGPersonFriendsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGPersonFriendsTableViewCell.xib; sourceTree = "<group>"; };
 		985088171BF424F800FE9B04 /* SHGTableHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGTableHeaderView.h; sourceTree = "<group>"; };
 		985088181BF424F800FE9B04 /* SHGTableHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGTableHeaderView.m; sourceTree = "<group>"; };
-		985CBDB41C03FCD7002B3D9D /* SHGCardClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGCardClass.h; sourceTree = "<group>"; };
-		985CBDB51C03FCD7002B3D9D /* SHGCardClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGCardClass.m; sourceTree = "<group>"; };
 		985CBDB71C03FD0B002B3D9D /* SHGCardTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGCardTableViewCell.h; sourceTree = "<group>"; };
 		985CBDB81C03FD0B002B3D9D /* SHGCardTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGCardTableViewCell.m; sourceTree = "<group>"; };
 		985CBDB91C03FD0B002B3D9D /* SHGCardTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGCardTableViewCell.xib; sourceTree = "<group>"; };
-		985CBDBC1C03FD49002B3D9D /* SHGCollectCardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGCollectCardViewController.h; sourceTree = "<group>"; };
-		985CBDBD1C03FD49002B3D9D /* SHGCollectCardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGCollectCardViewController.m; sourceTree = "<group>"; };
-		985CBDBE1C03FD49002B3D9D /* SHGCollectCardViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGCollectCardViewController.xib; sourceTree = "<group>"; };
 		985CBDC11C04042C002B3D9D /* SHGCollectCardClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGCollectCardClass.h; sourceTree = "<group>"; };
 		985CBDC21C04042C002B3D9D /* SHGCollectCardClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGCollectCardClass.m; sourceTree = "<group>"; };
 		9894C9751BF5BCE700F80577 /* SHGActionSignViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGActionSignViewController.h; sourceTree = "<group>"; };
@@ -2988,9 +2980,6 @@
 				985CBDB71C03FD0B002B3D9D /* SHGCardTableViewCell.h */,
 				985CBDB81C03FD0B002B3D9D /* SHGCardTableViewCell.m */,
 				985CBDB91C03FD0B002B3D9D /* SHGCardTableViewCell.xib */,
-				985CBDBC1C03FD49002B3D9D /* SHGCollectCardViewController.h */,
-				985CBDBD1C03FD49002B3D9D /* SHGCollectCardViewController.m */,
-				985CBDBE1C03FD49002B3D9D /* SHGCollectCardViewController.xib */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -3004,8 +2993,6 @@
 				B0BAA36D1B6A059E0036C367 /* TWEmojiKeyBoard.m */,
 				B0BAA3D91B6A08AB0036C367 /* resources */,
 				61D62BFB1ADE0349002DD395 /* Modal */,
-				985CBDB41C03FCD7002B3D9D /* SHGCardClass.h */,
-				985CBDB51C03FCD7002B3D9D /* SHGCardClass.m */,
 			);
 			path = Modal;
 			sourceTree = "<group>";
@@ -4834,7 +4821,6 @@
 				B04D6E231B60C01300E3863E /* 大牛说m@2x.png in Resources */,
 				61E83CDE1AF7C78E00703651 /* 收藏prod@2x.png in Resources */,
 				61E83D6E1AF7C78E00703651 /* 按钮@3x.png in Resources */,
-				985CBDC01C03FD49002B3D9D /* SHGCollectCardViewController.xib in Resources */,
 				B080FE8E1B81E30100426579 /* btn_publish_keyboard_b@2x.png in Resources */,
 				B04D6E421B60F2D500E3863E /* 组-46@3x.png in Resources */,
 				B080FE8C1B81E30100426579 /* btn_publish_keyboard_a@2x.png in Resources */,
@@ -5533,7 +5519,6 @@
 				532AF6AD1AFC3499007D3E4B /* FriendsListViewController.m in Sources */,
 				53AFF7951AFBF5F700D04B6B /* Emoji.m in Sources */,
 				6187D2D01AF1C693008E1D21 /* GroupSubjectChangingViewController.m in Sources */,
-				985CBDB61C03FCD7002B3D9D /* SHGCardClass.m in Sources */,
 				4088DDB31AF102FE00393855 /* SettingModifyPWDViewController.m in Sources */,
 				615010DE1AD61BD700827F82 /* ZYQAssetPickerController.m in Sources */,
 				40302B0C1AEF578700F22EB6 /* AddressObject.m in Sources */,
@@ -5611,7 +5596,6 @@
 				40302B081AEF573200F22EB6 /* MyAddressViewController.m in Sources */,
 				4088DDBC1AF102FE00393855 /* SettingQuestionViewController.m in Sources */,
 				6187D2EA1AF1C693008E1D21 /* MessageReadManager.m in Sources */,
-				985CBDBF1C03FD49002B3D9D /* SHGCollectCardViewController.m in Sources */,
 				985CBDC31C04042C002B3D9D /* SHGCollectCardClass.m in Sources */,
 				985088191BF424F800FE9B04 /* SHGTableHeaderView.m in Sources */,
 				569C6D401B7CB5B300AD59C3 /* SetPassWordViewController.m in Sources */,
