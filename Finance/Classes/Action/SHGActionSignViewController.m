@@ -85,9 +85,9 @@
     self.actionInLabel.text = [NSString stringWithFormat:@"已报名%@人", self.object.attendNum];
     self.actionIntroduceLabel.text = self.object.detail;
     self.actionTimeLabel.text = [self.object.startTime stringByAppendingFormat:@"-%@",self.object.endTime];
-    NSMutableAttributedString *noteStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"已报名 %@人",self.actionInLabel.text]] ;
-    [noteStr addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"F7514A"] range:NSMakeRange(3, noteStr.length-4 )];
-    [noteStr addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"B4B4B4"] range:NSMakeRange(noteStr.length-1 , 1 )];
+    NSMutableAttributedString *noteStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"已报名 %@人",self.object.attendNum]];
+    [noteStr addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"B4B4B4"] range:NSMakeRange(0, noteStr.length)];
+    [noteStr addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"F7514A"] range:NSMakeRange(3, noteStr.length - 4)];
     [self.hadApply setAttributedText:noteStr];
     self.hadApply.attributedText = noteStr;
 

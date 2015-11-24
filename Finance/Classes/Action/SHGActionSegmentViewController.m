@@ -94,9 +94,8 @@
 {
     UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [rightButton setFrame:CGRectZero];
-    UIImage *image = [UIImage imageNamed:@"action_send"];
+    UIImage *image = [UIImage imageNamed:@"right_add"];
     [rightButton setBackgroundImage:image forState:UIControlStateNormal];
-    [rightButton.imageView setContentMode:UIViewContentModeScaleAspectFill];
     [rightButton addTarget:self action:@selector(addNewAction:) forControlEvents:UIControlEventTouchUpInside];
     [rightButton sizeToFit];
     return  [[UIBarButtonItem alloc] initWithCustomView:rightButton];

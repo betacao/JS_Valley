@@ -1185,7 +1185,7 @@ static NSString * const kCommonFNum			= @"commonnum";
         
         UIButton *customButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [customButton setFrame:CGRectMake(0, 0, 24, 24)];
-        [customButton setBackgroundImage:[UIImage imageNamed:@"加号"] forState:UIControlStateNormal];
+        [customButton setBackgroundImage:[UIImage imageNamed:@"right_add"] forState:UIControlStateNormal];
         [customButton addTarget:self action:@selector(rightBarButtonItemClicked:) forControlEvents:UIControlEventTouchUpInside];
         customButton.hidden = YES;
         self.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:customButton];

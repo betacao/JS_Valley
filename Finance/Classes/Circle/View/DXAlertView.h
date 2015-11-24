@@ -16,13 +16,14 @@
 #define kButtonHeight 32.0f * XFACTOR
 #define kButtonBottomOffset 20.0f * XFACTOR
 #define kLineViewLeftMargin 20.0f * XFACTOR
-#define kCustomViewButtomMargin 18.0f * YFACTOR
+#define kCustomViewButtomMargin 18.0f * XFACTOR
+#define kCustomViewTopMargin 15.0f * XFACTOR
 
 @interface DXAlertView : UIView
 
 - (instancetype)initWithTitle:(NSString *)title contentText:(NSString *)content leftButtonTitle:(NSString *)leftTitle rightButtonTitle:(NSString *)rigthTitle;
 - (instancetype)initWithTitle:(NSString *)title customView:(UIView *)customView leftButtonTitle:(NSString *)leftTitle rightButtonTitle:(NSString *)rigthTitle;
-
+- (instancetype)initWithCustomView:(UIView *)customView leftButtonTitle:(NSString *)leftTitle rightButtonTitle:(NSString *)rigthTitle;
 - (void)show;
 - (void)customShow;
 

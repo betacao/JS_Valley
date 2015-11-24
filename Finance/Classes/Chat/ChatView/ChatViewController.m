@@ -161,15 +161,6 @@
         UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:rightButton];
         self.navigationItem.rightBarButtonItem=rightItem;
     }
-    else{
-        
-//        UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
-//        [rightButton setFrame:CGRectMake(0, 0, 24, 24)];
-//        [rightButton setBackgroundImage:[UIImage imageNamed:@"加号"] forState:UIControlStateNormal];
-//        [rightButton addTarget:self action:@selector(removeAllMessages:) forControlEvents:UIControlEventTouchUpInside];
-//        UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:rightButton];
-//        self.navigationItem.rightBarButtonItem=rightItem;
-    }
 }
 
 - (void)didReceiveMemoryWarning

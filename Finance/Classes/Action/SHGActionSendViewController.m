@@ -48,6 +48,7 @@ typedef NS_ENUM(NSInteger, SHGActionSendType){
     [self initView];
     self.sendType = SHGActionSendTypeNew;
     if (self.object) {
+        self.title = @"编辑活动";
         [self editObject:self.object];
         self.sendType = SHGActionSendTypeReSet;
     }

@@ -15,6 +15,7 @@
 #import "SHGPersonalViewController.h"
 #import "SHGActionSendViewController.h"
 #import "SHGActionSegmentViewController.h"
+#import "CPTextViewPlaceholder.h"
 
 @interface SHGActionDetailViewController ()<UITableViewDataSource,UITableViewDelegate,MLEmojiLabelDelegate, SHGActionCommentDelegate, BRCommentViewDelegate, CircleActionDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *replyTable;
@@ -33,7 +34,7 @@
 @property (assign, nonatomic) CGFloat firstCellHeight;
 @property (strong, nonatomic) NSString *rejectReason;
 @property (strong, nonatomic) NSString *copyedString;
-
+@property (strong, nonatomic) CPTextViewPlaceholder *cpTextView;
 - (IBAction)actionComment:(id)sender;
 
 @end
@@ -88,11 +89,22 @@
     return _firstTableViewCell;
 }
 
+- (CPTextViewPlaceholder *)cpTextView
+{
+    if (!_cpTextView) {
+        _cpTextView = [[CPTextViewPlaceholder alloc] initWithFrame:CGRectMake(kLineViewLeftMargin, 0.0f, kAlertWidth - 2 * kLineViewLeftMargin, 85.0f)];
+        _cpTextView.layer.borderWidth = 0.5f;
+        _cpTextView.layer.borderColor = [UIColor lightGrayColor].CGColor;
+        _cpTextView.font = [UIFont systemFontOfSize:13.0f];
+        _cpTextView.placeholder = @"对发布者说点什么吧～";
+    }
+    return _cpTextView;
+}
+
 - (void)loadActionDetail:(SHGActionObject *)object
 {
     __weak typeof(self) weakSelf = self;
     [[SHGActionManager shareActionManager] loadActionDetail:object finishBlock:^(NSArray *array) {
-
         weakSelf.responseObject = [array firstObject];
         weakSelf.responseObject.commentList = [NSMutableArray arrayWithArray:[[SHGGloble sharedGloble] parseServerJsonArrayToJSONModel:weakSelf.responseObject.commentList class:[SHGActionCommentObject class]]];
         weakSelf.responseObject.praiseList = [NSMutableArray arrayWithArray:[[SHGGloble sharedGloble] parseServerJsonArrayToJSONModel:weakSelf.responseObject.praiseList class:[praiseOBj class]]];
@@ -152,7 +164,7 @@
         self.middleButton.hidden = YES;
         self.leftButton.hidden = NO;
         self.rightButton.hidden = NO;
-        self.rejectReason = self.object.reason;
+        self.rejectReason = self.responseObject.reason;
         [self.leftButton setTitle:@"被驳回(查看原因)" forState:UIControlStateNormal];
         [self.leftButton setBackgroundColor:[UIColor colorWithHexString:@"474550"]];
         [self.rightButton setTitle:@"重新编辑" forState:UIControlStateNormal];
@@ -287,19 +299,24 @@
     } else if([title rangeOfString:@"审核中"].location != NSNotFound){
 
     } else if([title rangeOfString:@"分享"].location != NSNotFound){
-        [[SHGActionManager shareActionManager] shareAction:self.responseObject finishBlock:^(BOOL success) {
+        [[SHGActionManager shareActionManager] shareAction:self.responseObject baseController:self finishBlock:^(BOOL success) {
             if (success) {
 
             }
         }];
     } else if([title rangeOfString:@"报名"].location != NSNotFound){
-        [[SHGActionManager shareActionManager] enterForActionObject:self.responseObject finishBlock:^(BOOL success) {
-            if (success) {
-                [weaSelf.leftButton setTitle:@"审核中" forState:UIControlStateNormal];
-                [weaSelf.leftButton setEnabled:NO];
-                [weaSelf.signController reloadData];
-            }
-        }];
+        DXAlertView *alert = [[DXAlertView alloc] initWithCustomView:self.cpTextView leftButtonTitle:@"取消" rightButtonTitle:@"确定"];
+        alert.rightBlock = ^{
+            [[SHGActionManager shareActionManager] enterForActionObject:weaSelf.responseObject reason:weaSelf.cpTextView.text finishBlock:^(BOOL success) {
+                if (success) {
+                    [weaSelf.leftButton setTitle:@"审核中" forState:UIControlStateNormal];
+                    [weaSelf.leftButton setEnabled:NO];
+                    [weaSelf.signController reloadData];
+                }
+            }];
+        };
+        [alert show];
+
     }
 }
 

@@ -182,6 +182,55 @@
     return self;
 }
 
+- (instancetype)initWithCustomView:(UIView *)customView leftButtonTitle:(NSString *)leftTitle rightButtonTitle:(NSString *)rigthTitle
+{
+    self = [super init];
+    if(self){
+        self.layer.cornerRadius = 8.0f;
+        self.backgroundColor = [UIColor whiteColor];
+
+        CGRect frame = customView.frame;
+        frame.origin.y = kCustomViewTopMargin;
+        customView.frame = frame;
+        [self addSubview:customView];
+        self.customView = customView;
+
+        CGRect leftBtnFrame = CGRectZero;
+        CGRect rightBtnFrame = CGRectZero;
+        if (!leftTitle) {
+            rightBtnFrame = CGRectMake((kAlertWidth - kSingleButtonWidth) * 0.5, kAlertHeight - kButtonBottomOffset - kButtonHeight, kSingleButtonWidth, kButtonHeight);
+            self.rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+            self.rightBtn.frame = rightBtnFrame;
+
+        }else {
+            leftBtnFrame = CGRectMake(kLineViewLeftMargin, CGRectGetMaxY(customView.frame) + kCustomViewButtomMargin, kCoupleButtonWidth, kButtonHeight);
+            rightBtnFrame = CGRectMake(kAlertWidth - kLineViewLeftMargin - kCoupleButtonWidth, CGRectGetMaxY(customView.frame) + kCustomViewButtomMargin, kCoupleButtonWidth, kButtonHeight);
+            self.leftBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+            self.rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+            self.leftBtn.frame = leftBtnFrame;
+            self.rightBtn.frame = rightBtnFrame;
+        }
+
+        [self.rightBtn setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithHexString:@"F85C53"]] forState:UIControlStateNormal];
+        [self.leftBtn setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithHexString:@"C5C5C5"]] forState:UIControlStateNormal];
+        [self.rightBtn setTitle:rigthTitle forState:UIControlStateNormal];
+        [self.leftBtn setTitle:leftTitle forState:UIControlStateNormal];
+        self.leftBtn.titleLabel.font = self.rightBtn.titleLabel.font = [UIFont systemFontOfSize:15.0f];;
+        [self.leftBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [self.rightBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+
+        [self.leftBtn addTarget:self action:@selector(leftBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+        [self.rightBtn addTarget:self action:@selector(rightBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+        self.leftBtn.layer.masksToBounds = self.rightBtn.layer.masksToBounds = YES;
+        self.leftBtn.layer.cornerRadius = self.rightBtn.layer.cornerRadius = 3.0;
+        [self addSubview:self.leftBtn];
+        [self addSubview:self.rightBtn];
+
+        self.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin;
+    }
+    return self;
+}
+
 - (void)leftBtnClicked:(id)sender
 {
     _leftLeave = YES;

@@ -85,7 +85,7 @@
     if (!_rightBarButtonItem) {
         
         addBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        [addBtn setImage:[UIImage imageNamed:@"加号"] forState:UIControlStateNormal];
+        [addBtn setImage:[UIImage imageNamed:@"right_add"] forState:UIControlStateNormal];
         [addBtn addTarget:self action:@selector(addSelect) forControlEvents:UIControlEventTouchUpInside];
         addItem = [[UIBarButtonItem alloc]initWithCustomView:addBtn];
         [addBtn setFrame:CGRectMake(0, 0, 24, 24)];
@@ -240,7 +240,7 @@
     
     
     addBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [addBtn setImage:[UIImage imageNamed:@"加号"] forState:UIControlStateNormal];
+    [addBtn setImage:[UIImage imageNamed:@"right_add"] forState:UIControlStateNormal];
     [addBtn addTarget:self action:@selector(addSelect) forControlEvents:UIControlEventTouchUpInside];
     addItem = [[UIBarButtonItem alloc]initWithCustomView:addBtn];
     [addBtn setFrame:CGRectMake(0, 0, 24, 24)];

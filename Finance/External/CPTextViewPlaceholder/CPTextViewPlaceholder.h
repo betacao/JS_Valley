@@ -14,7 +14,6 @@
 
 @property (nonatomic, strong) UIColor *placeholderColor;
 
--(void)textChanged:(NSNotification*)notification;
-
+- (void)textChanged:(NSNotification*)notification;
 
 @end

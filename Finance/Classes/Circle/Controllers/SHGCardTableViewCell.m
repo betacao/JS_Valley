@@ -49,10 +49,12 @@
     [self.headerImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,self.obj.headerImageUrl]] placeholderImage:[UIImage imageNamed:@"default_head"]];
   
 }
+
 -(void)clearCell
 {
     self.obj = nil;
 }
+
 - (UIView *)viewForTags:(NSArray *)array
 {
     UIView *view = [[UIView alloc] init];
