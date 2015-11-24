@@ -69,12 +69,12 @@
 {
 	if (!_segmentControl) {
 		
-		_segmentControl = [[UISegmentedControl alloc] initWithFrame:CGRectMake(50, 0, 160, 30)];
+		_segmentControl = [[UISegmentedControl alloc] initWithFrame:CGRectMake(58, 0, 208, 30)];
 		
 		[_segmentControl insertSegmentWithTitle:@"帖子" atIndex:0 animated:YES];
 		
 		[_segmentControl insertSegmentWithTitle:@"产品" atIndex:1 animated:YES];
-		
+		[_segmentControl insertSegmentWithTitle:@"名片" atIndex:2 animated:YES];
 		_segmentControl.selectedSegmentIndex = 0;
 		
 		[_segmentControl addTarget:self action:@selector(selected:) forControlEvents:UIControlEventValueChanged];
