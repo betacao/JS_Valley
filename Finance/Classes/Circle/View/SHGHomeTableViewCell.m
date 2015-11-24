@@ -49,12 +49,10 @@
 @property (weak, nonatomic) IBOutlet headerView *imageHeader;
 //最下层分割线
 @property (weak, nonatomic) IBOutlet UIView *bottomView;
-
 @property (weak, nonatomic) IBOutlet UIView *bottomLineView;
-
 @property (weak, nonatomic) IBOutlet UIView *breakLine;
 @property (assign, nonatomic) CGFloat totalHeight;
-
+@property (assign, nonatomic) NSString *cellType;//判断是不是资讯 资讯不现实时间
 //内容数据
 @property (strong, nonatomic) CircleListObj *dataObj;
 @property (weak ,nonatomic) NSArray *photoArr;
@@ -95,11 +93,11 @@
     [self.delegate clicked:self.index];
 }
 
-- (void)loadDatasWithObj:(CircleListObj *)obj
+- (void)loadDatasWithObj:(CircleListObj *)obj type:(NSString *)type
 {
     self.totalHeight = 0.0f;
     self.dataObj = obj;
-
+    self.cellType = type;
     [self sizeUIWithObj:obj];
     //设置好友关系、定位标签的内容
     if(![obj.postType isEqualToString:@"pc"]){
@@ -326,7 +324,7 @@
     [self addGraylineToBottom];
 }
 
--(void)sizeUIWithObj:(CircleListObj *)obj
+- (void)sizeUIWithObj:(CircleListObj *)obj
 {
     NSString *name = obj.nickname;
     if (obj.nickname.length > 4){
@@ -377,7 +375,12 @@
     } else{
         self.breakLine.hidden = NO;
     }
-    self.lblTime.text = obj.publishdate;
+
+    if ([self.cellType isEqualToString:@"news"]) {
+        self.lblTime.text = [obj.publishdate substringToIndex:10];
+    } else{
+        self.lblTime.text = obj.publishdate;
+    }
 
     [self.btnUserName setBackgroundImage:[UIImage imageWithColor:BTN_SELECT_BACK_COLOR andSize:nameSize] forState:UIControlStateHighlighted];
 }

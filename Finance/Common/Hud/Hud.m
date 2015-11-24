@@ -11,35 +11,6 @@
 #import "VerifyIdentityViewController.h"
 @implementation Hud
 
-+(void)showNoAuthMessage
-{
-    UIView *view = [AppDelegate currentAppdelegate].window;
-    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:view animated:YES];
-    hud.mode = MBProgressHUDModeText;
-    hud.labelText = @"您还未认证，请先身份认证";
-    hud.color = [UIColor whiteColor];
-    hud.size = CGSizeMake(SCREENWIDTH - 40, 80);
-    // hud.frame =
-    hud.margin = 10.f;
-    hud.backgroundColor = RGBA(200, 200, 200,0.6);
-    hud.yOffset = -50;
-    hud.labelFont = [UIFont systemFontOfSize:16.0f];
-   // hud.dimBackground = YES;
-    hud.labelColor = TEXT_COLOR;
-    hud.removeFromSuperViewOnHide = YES;
-    hud.minSize = CGSizeMake(SCREENWIDTH - 40,80);
-    [hud hide:YES afterDelay:1.2];
- 
-    [self performSelector:@selector(delayMethod) withObject:nil afterDelay:1.0f];
-}
-+(void)delayMethod
-{
-    VerifyIdentityViewController *vc = [[VerifyIdentityViewController alloc] init];
-    vc.hidesBottomBarWhenPushed = YES;
-    UINavigationController *nav = (UINavigationController *)[AppDelegate currentAppdelegate].window.rootViewController;
-    [nav pushViewController:vc animated:YES];
-}
-
 +(void)showMessageWithText:(NSString *)text
 {
     UIView *view = [AppDelegate currentAppdelegate].window;
@@ -120,7 +91,7 @@
         [HUD show:YES];
     }
 }
-+(void)hideHud
++ (void)hideHud
 {
     if ([NSThread currentThread].isMainThread) {
         [self hidesHud];
@@ -133,8 +104,7 @@
 }
 + (void)hidesHud
 {
-    if ([[AppDelegate currentAppdelegate].window.rootViewController isKindOfClass:[UINavigationController class]])
-    {
+    if ([[AppDelegate currentAppdelegate].window.rootViewController isKindOfClass:[UINavigationController class]]){
         UINavigationController *nav = (UINavigationController *)[AppDelegate currentAppdelegate].window.rootViewController;
         UIViewController *topView = [nav.viewControllers lastObject];
         for (UIView *subView in topView.view.subviews) {
@@ -142,10 +112,7 @@
                 [subView removeFromSuperview];
             }
         }
-        
-        
     }
-   
 }
 
 @end

@@ -112,7 +112,7 @@
         }
         cell.index = indexPath.row;
         cell.delegate = self;
-        [cell loadDatasWithObj:obj];
+        [cell loadDatasWithObj:obj type:@"normal"];
 
         MLEmojiLabel *mlLable = (MLEmojiLabel *)[cell viewWithTag:521];
         mlLable.delegate = self;

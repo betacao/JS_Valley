@@ -384,7 +384,7 @@
 
 -(void)loginSuccess
 {
-    TabBarViewController *vc = [[TabBarViewController alloc] init];
+    TabBarViewController *vc = [TabBarViewController tabBar];
     vc.rid = self.rid;
     BaseNavigationController *nav = [[BaseNavigationController alloc] initWithRootViewController:vc];
     [AppDelegate currentAppdelegate].window.rootViewController = nav;

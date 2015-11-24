@@ -86,11 +86,6 @@
          ImproveMatiralViewController *vc = [[ImproveMatiralViewController alloc] init];
           vc.rid = self.rid;
          [self.navigationController pushViewController:vc animated:YES];
-//         TabBarViewController *vc = [TabBarViewController tabBar];
-//         vc.rid = self.rid;
-//         BaseNavigationController *nav = [[BaseNavigationController alloc] initWithRootViewController:vc];
-//         [AppDelegate currentAppdelegate].window.rootViewController =nav;
-//         }
      } failed:^(MOCHTTPResponse *response) {
          [Hud showMessageWithText:response.errorMessage];
          [Hud hideHud];

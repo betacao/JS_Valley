@@ -46,6 +46,7 @@
     [super layoutSubviews];
     CGRect frame = self.action_bottomView.frame;
     frame.size.height = 0.5f;
+    frame.size.width = SCREENWIDTH - CGRectGetMinX(frame);
     self.action_bottomView.frame = frame;
 }
 
@@ -64,7 +65,7 @@
     self.object = object;
     self.action_signNameLabel.text = object.realname;
     self.action_signCommpanyLable.text = object.company;
-    [self.action_signHeadImage sd_setImageWithURL:[NSURL URLWithString:object.headimageurl] placeholderImage:[UIImage imageNamed:@"default_head"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+    [self.action_signHeadImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,object.headimageurl]] placeholderImage:[UIImage imageNamed:@"default_head"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
 
     }];
     if ([object.uid isEqualToString:publisher]) {

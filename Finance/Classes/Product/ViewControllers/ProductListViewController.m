@@ -11,6 +11,7 @@
 #import "ProdListObj.h"
 #import "ProductListTableViewCell.h"
 #import "AppDelegate.h"
+#import "VerifyIdentityViewController.h"
 @interface ProductListViewController ()
 {
     NSMutableArray *itemArr;
@@ -315,7 +316,8 @@
             };
             [alert show];
         } else{
-            [Hud showNoAuthMessage];
+            VerifyIdentityViewController *controller = [[VerifyIdentityViewController alloc] init];
+            [self.navigationController pushViewController:controller animated:YES];
         }
     }];
 }
@@ -558,34 +560,30 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"You Click At Section: %ld Row: %ld",(long)indexPath.section,(long)indexPath.row);
-    NSString *state = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_AUTHSTATE];
-    if (![state boolValue])
-    {
-        [Hud showNoAuthMessage];
-        return;
-        
-    }
-    ProdListObj *obj = self.dataArr[indexPath.row];
-    ProdConfigViewController *vc = [[ProdConfigViewController alloc] initWithNibName:@"ProdConfigViewController" bundle:nil];
-    vc.obj = obj;
-    NSString *type ;
-    if ([obj.type isEqualToString:@"pz"])
-    {
-        type = @"配资";
-    }else if ([obj.type isEqualToString:@"xg"])
-    {
-        type = @"打新股";
-    }else if ([obj.type isEqualToString:@"sb"])
-    {
-        type = @"新三板";
-    }else if ([obj.type isEqualToString:@"dx"])
-    {
-        type = @"定增";
+    __weak typeof(self) weakSelf = self;
+    [[SHGGloble sharedGloble] requsetUserVerifyStatus:^(BOOL status) {
+        if (status) {
+            ProdListObj *obj = self.dataArr[indexPath.row];
+            ProdConfigViewController *vc = [[ProdConfigViewController alloc] initWithNibName:@"ProdConfigViewController" bundle:nil];
+            vc.obj = obj;
+            NSString *type ;
+            if ([obj.type isEqualToString:@"pz"]){
+                type = @"配资";
+            } else if ([obj.type isEqualToString:@"xg"]){
+                type = @"打新股";
+            } else if ([obj.type isEqualToString:@"sb"]){
+                type = @"新三板";
+            } else if ([obj.type isEqualToString:@"dx"]){
+                type = @"定增";
+            }
+            vc.type= type;
+            [weakSelf.navigationController pushViewController:vc animated:YES];
+        } else{
+            VerifyIdentityViewController *controller = [[VerifyIdentityViewController alloc] init];
+            [weakSelf.navigationController pushViewController:controller animated:YES];
+        }
+    }];
 
-    }
-    vc.type= type;
-    [self.navigationController pushViewController:vc animated:YES];
 }
 
 #pragma mark - textfieldDelegate

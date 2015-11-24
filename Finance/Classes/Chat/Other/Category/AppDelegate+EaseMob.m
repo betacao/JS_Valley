@@ -240,14 +240,6 @@
     if (!username) {
         return;
     }
-//    if (!message) {
-//        message = [NSString stringWithFormat:NSLocalizedString(@"friend.somebodyAddWithName", @"%@ add you as a friend"), username];
-//    }
-//    NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:@{@"title":username, @"username":username, @"applyMessage":message, @"applyStyle":[NSNumber numberWithInteger:ApplyStyleFriend]}];
-//    [[ApplyViewController shareController] addNewApply:dic];
-//    if ([TabBarViewController tabBar]) {
-//        [[TabBarViewController tabBar] setupUntreatedApplyCount];
-//    }
 }
 
 // 离开群组回调
@@ -316,17 +308,6 @@
         }
     }
 }
-//- (void)didUpdateBuddyList:(NSArray *)buddyList
-//            changedBuddies:(NSArray *)changedBuddies
-//                     isAdd:(BOOL)isAdd
-//{
-//
-//}
-//
-// -(void)didRemovedByBuddy:(NSString *)username
-//{
-//    
-//}
 
 // 已经同意并且加入群组后的回调
 - (void)didAcceptInvitationFromGroup:(EMGroup *)group

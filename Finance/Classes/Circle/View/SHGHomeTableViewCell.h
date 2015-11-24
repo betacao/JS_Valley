@@ -14,7 +14,8 @@
 @interface SHGHomeTableViewCell : UITableViewCell
 @property (nonatomic , assign ) NSInteger index;
 @property (nonatomic, weak) id<CircleListDelegate> delegate;
--(void)loadDatasWithObj:(CircleListObj *)obj;
+//资讯类型的不显示时间
+-(void)loadDatasWithObj:(CircleListObj *)obj type:(NSString *)type;
 
 @end
 

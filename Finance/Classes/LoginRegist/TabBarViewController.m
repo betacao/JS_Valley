@@ -49,7 +49,7 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     return self;
 }
 
-+(TabBarViewController *)tabBar
++ (TabBarViewController *)tabBar
 {
     static TabBarViewController *tabBar = nil;
     static dispatch_once_t onceToken;

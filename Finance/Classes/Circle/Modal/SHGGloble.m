@@ -399,8 +399,19 @@
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
     [MOCHTTPRequestOperationManager postWithURL:request parameters:@{@"uid":uid} success:^(MOCHTTPResponse *response) {
         [Hud hideHud];
-        if (block) {
-            block([[response.dataDictionary objectForKey:@"status"] boolValue]);
+        //未认证
+        if ([[response.dataDictionary objectForKey:@"status"] isEqualToString:@"0"]) {
+            DXAlertView *alert = [[DXAlertView alloc] initWithTitle:@"提示" contentText:@"您当前还未认证，认证后即可操作~赶快认证吧！" leftButtonTitle:@"取消" rightButtonTitle:@"去认证"];
+            alert.rightBlock = ^{
+                if (block) {
+                    block(NO);
+                }
+            };
+            [alert show];
+        } else{
+            if (block) {
+                block(YES);
+            }
         }
     } failed:^(MOCHTTPResponse *response) {
         [Hud hideHud];

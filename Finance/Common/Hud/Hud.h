@@ -12,8 +12,5 @@
 + (void)showLoadingWithMessage:(NSString *)message;
 + (void)showMessageWithText:(NSString *)text;
 + (void)showMessageWithLongText:(NSString *)text;
-
 + (void)hideHud;
-+ (void)showNoAuthMessage;
-+ (void)delayMethod;
 @end

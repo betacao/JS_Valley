@@ -471,15 +471,21 @@
 
 - (IBAction)actionComment:(id)sender
 {
-    _popupView = [[BRCommentView alloc] initWithFrame:self.view.bounds superFrame:CGRectZero isController:YES type:@"comment"];
-    _popupView.delegate = self;
-    _popupView.fid = @"-1";//评论
-    _popupView.tag = 222;
-    _popupView.detail = @"";
-    _popupView.rid = self.obj.rid;
-    [self.navigationController.view addSubview:_popupView];
-    //[popupView release];
-    [_popupView showWithAnimated:YES];
+    [[SHGGloble  sharedGloble] requsetUserVerifyStatus:^(BOOL status) {
+        if (status) {
+            _popupView = [[BRCommentView alloc] initWithFrame:self.view.bounds superFrame:CGRectZero isController:YES type:@"comment"];
+            _popupView.delegate = self;
+            _popupView.fid = @"-1";//评论
+            _popupView.tag = 222;
+            _popupView.detail = @"";
+            _popupView.rid = self.obj.rid;
+            [self.navigationController.view addSubview:_popupView];
+            [_popupView showWithAnimated:YES];
+        } else{
+            VerifyIdentityViewController *controller = [[VerifyIdentityViewController alloc] init];
+            [self.navigationController pushViewController:controller animated:YES];
+        }
+    }];
    
 }
 
@@ -555,20 +561,25 @@
     
 }
 
--(void)replyClicked:(CircleListObj *)obj commentIndex:(NSInteger)index;
+- (void)replyClicked:(CircleListObj *)obj commentIndex:(NSInteger)index;
 {
-
-    commentOBj *cmbObj = obj.comments[index];
-    _popupView = [[BRCommentView alloc] initWithFrame:self.view.bounds superFrame:CGRectZero isController:YES type:@"reply" name:cmbObj.cnickname];
-    _popupView.delegate = self;
-    _popupView.fid=cmbObj.cid;//评论
-    _popupView.tag = 222;
-    _popupView.detail=@"";
-    _popupView.rid = obj.rid;
-
-    [self.navigationController.view addSubview:_popupView];
-    [_popupView showWithAnimated:YES];
-
+    [[SHGGloble sharedGloble] requsetUserVerifyStatus:^(BOOL status) {
+        if (status) {
+            commentOBj *cmbObj = obj.comments[index];
+            _popupView = [[BRCommentView alloc] initWithFrame:self.view.bounds superFrame:CGRectZero isController:YES type:@"reply" name:cmbObj.cnickname];
+            _popupView.delegate = self;
+            _popupView.fid=cmbObj.cid;//评论
+            _popupView.tag = 222;
+            _popupView.detail=@"";
+            _popupView.rid = obj.rid;
+            [self.navigationController.view addSubview:_popupView];
+            [_popupView showWithAnimated:YES];
+        } else{
+            VerifyIdentityViewController *controller = [[VerifyIdentityViewController alloc] init];
+            [self.navigationController pushViewController:controller animated:YES];
+        }
+    }];
+    
 }
 
 - (IBAction)actionPraise:(id)sender

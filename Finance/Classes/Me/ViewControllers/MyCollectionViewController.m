@@ -761,7 +761,7 @@
             }
             cell.index = indexPath.row;
             cell.delegate = self;
-            [cell loadDatasWithObj:obj];
+            [cell loadDatasWithObj:obj type:@"normal"];
             return cell;
         }
         

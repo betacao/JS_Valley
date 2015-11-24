@@ -261,6 +261,9 @@
             if([weakSelf.selectedViewController respondsToSelector:@selector(actionPost:)]){
                 [weakSelf.selectedViewController performSelector:@selector(actionPost:) withObject:button];
             }
+        } else{
+            VerifyIdentityViewController *controller = [[VerifyIdentityViewController alloc] init];
+            [self.navigationController pushViewController:controller animated:YES];
         }
     }];
     

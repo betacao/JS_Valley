@@ -318,17 +318,21 @@
         [Hud showMessageWithText:error.domain];
     }];
 }
--(void)shareToFriendWithText:(NSString *)text
+- (void)shareToFriendWithText:(NSString *)text
 {
-    NSString *state = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_AUTHSTATE];
-    if (![state boolValue]) {
-        [Hud showNoAuthMessage];
-        return;
-    }
-    FriendsListViewController *vc=[[FriendsListViewController alloc] init];
-    vc.isShare = YES;
-    vc.shareContent = text;
-    [self.navigationController pushViewController:vc animated:YES];
+    __weak typeof(self) weakSelf = self;
+    [[SHGGloble sharedGloble] requsetUserVerifyStatus:^(BOOL status) {
+        if (status) {
+            FriendsListViewController *vc=[[FriendsListViewController alloc] init];
+            vc.isShare = YES;
+            vc.shareContent = text;
+            [weakSelf.navigationController pushViewController:vc animated:YES];
+        } else{
+            VerifyIdentityViewController *controller = [[VerifyIdentityViewController alloc] init];
+            [weakSelf.navigationController pushViewController:controller animated:YES];
+        }
+    }];
+
 }
 
 - (IBAction)actionCollet:(id)sender {

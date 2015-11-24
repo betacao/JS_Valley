@@ -8,6 +8,7 @@
 
 #import "SHGActionSegmentViewController.h"
 #import "SHGActionManager.h"
+#import "VerifyIdentityViewController.h"
 
 @interface SHGActionSegmentViewController ()
 
@@ -115,6 +116,9 @@
                     if([weakSelf.selectedViewController respondsToSelector:@selector(addNewAction:)]){
                         [weakSelf.selectedViewController performSelector:@selector(addNewAction:) withObject:button];
                     }
+                } else{
+                    VerifyIdentityViewController *controller = [[VerifyIdentityViewController alloc] init];
+                    [self.navigationController pushViewController:controller animated:YES];
                 }
             }];
         }
