@@ -22,24 +22,23 @@
     [super viewDidLoad];
     self.title = @"他的动态";
     [self addHeaderRefresh:self.tableView headerRefesh:NO andFooter:YES];
+    self.target = @"first";
+    [self requestDataWithTarget:@"first" time:@"-1"];
 }
 
--(void)requestDataWithTarget:(NSString *)target time:(NSString *)time
+- (void)requestDataWithTarget:(NSString *)target time:(NSString *)time
 {
-    if ([target isEqualToString:@"first"]) {
-        [self.tableView.footer resetNoMoreData];
-    }
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
     [Hud showLoadingWithMessage:@"加载中"];
 
     __weak typeof(self) weakSelf = self;
     NSDictionary *param = @{@"uid":uid, @"target":target, @"rid":[NSNumber numberWithInt:[time intValue]], @"num":rRequestNum};
-    [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttpCircle,actioncircle,self.userId] class:[CircleListObj class] parameters:param success:^(MOCHTTPResponse *response) {
+    [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttpCircle,@"queryCircleListById",self.userId] class:[CircleListObj class] parameters:param success:^(MOCHTTPResponse *response) {
         [Hud hideHud];
-        NSLog(@"=data = %@",response.dataDictionary);
-        [weakSelf parseDataWithDic:response.dataDictionary];
         [weakSelf.tableView.header endRefreshing];
         [weakSelf.tableView.footer endRefreshing];
+        NSLog(@"=data = %@",response.dataDictionary);
+        [weakSelf parseDataWithDic:response.dataDictionary];
         [weakSelf.tableView reloadData];
     } failed:^(MOCHTTPResponse *response) {
         [Hud showMessageWithText:response.errorMessage];
@@ -55,6 +54,9 @@
 {
     NSArray *listArray = [dictionary objectForKey: @"list"];
     listArray = [[SHGGloble sharedGloble] parseServerJsonArrayToJSONModel:listArray class:[CircleListObj class]];
+    if ([self.target isEqualToString:@"first"] && listArray.count > 0) {
+        [self.dataArr addObjectsFromArray:listArray];
+    }
     if ([self.target isEqualToString:@"refresh"] && listArray.count > 0) {
         for (NSInteger i = listArray.count - 1; i >= 0; i--){
             CircleListObj *obj = [listArray objectAtIndex:i];
@@ -64,6 +66,9 @@
     }
     if ([self.target isEqualToString:@"load"] && listArray.count > 0) {
         [self.dataArr addObjectsFromArray:listArray];
+    }
+    if (listArray.count < 10) {
+        [self.tableView.footer endRefreshingWithNoMoreData];
     }
 }
 

@@ -68,7 +68,7 @@
         tableView.header = header;
     }
     if (isFooterRefresh){
-        tableView.footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(refreshFooter)];
+        tableView.footer = [MJRefreshAutoStateFooter footerWithRefreshingTarget:self refreshingAction:@selector(refreshFooter)];
     }
 }
 
