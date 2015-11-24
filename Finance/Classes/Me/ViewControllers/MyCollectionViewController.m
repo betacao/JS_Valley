@@ -47,12 +47,12 @@
 	self.selectType = 1;
 	self.navigationItem.titleView = self.segmentControl;
     [self addHeaderRefresh:self.tableView headerRefesh:YES andFooter:YES];
-
+    self.tableView.header.backgroundColor = [UIColor colorWithHexString:@"efefef"];
+    self.tableView.backgroundColor = [UIColor colorWithHexString:@"efefef"];
     [CommonMethod setExtraCellLineHidden:self.tableView];
     self.tableView.separatorStyle = 1;
     [Hud showLoadingWithMessage:@"加载中"];
 	[self requestPostListWithTarget:@"first" time:@"-1"];
-    //[self requestCardListWithTarget:@"first" time:@""];
 
 }
 

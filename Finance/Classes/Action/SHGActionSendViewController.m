@@ -51,6 +51,19 @@ typedef NS_ENUM(NSInteger, SHGActionSendType){
         [self editObject:self.object];
         self.sendType = SHGActionSendTypeReSet;
     }
+    //self.actionTitleField.placeholder
+    [self.actionTitleField setValue:[UIColor colorWithHexString:@"AEAEAEAE"] forKey:@"_placeholderLabel.textColor"];
+     [self.actionTitleField setValue:[UIFont boldSystemFontOfSize:14] forKey:@"_placeholderLabel.textColor"];
+    [self.startTimeField setValue:[UIColor colorWithHexString:@"AEAEAEAE"] forKey:@"_placeholderLabel.textColor"];
+    [self.startTimeField setValue:[UIFont boldSystemFontOfSize:14] forKey:@"_placeholderLabel.textColor"];
+    [self.endTimeField setValue:[UIColor colorWithHexString:@"AEAEAEAE"] forKey:@"_placeholderLabel.textColor"];
+    [self.endTimeField setValue:[UIFont boldSystemFontOfSize:14] forKey:@"_placeholderLabel.textColor"];
+    [self.positionField setValue:[UIColor colorWithHexString:@"AEAEAEAE"] forKey:@"_placeholderLabel.textColor"];
+    [self.positionField setValue:[UIFont boldSystemFontOfSize:14] forKey:@"_placeholderLabel.textColor"];
+    [self.invateNumber setValue:[UIColor colorWithHexString:@"AEAEAEAE"] forKey:@"_placeholderLabel.textColor"];
+    [self.invateNumber setValue:[UIFont boldSystemFontOfSize:14] forKey:@"_placeholderLabel.textColor"];
+
+
 }
 
 - (void)viewDidAppear:(BOOL)animated

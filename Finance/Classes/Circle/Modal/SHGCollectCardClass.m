@@ -28,6 +28,7 @@
               @"tags":@"tags",
               @"titles":@"titles",
               @"time":@"time",
+              @"friendShip":@"friendship",
               };
 }
 

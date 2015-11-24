@@ -126,7 +126,7 @@
 	if ([self.status isEqualToString:@"0"]) {
 		self.status_statuLabel.text = @"未认证";
 		self.status_statuLabel.textColor = [UIColor colorWithHexString:@"f04241"];
-        self.noImageLabel.text = @"请上传您的名片、工牌或公司邮箱后台截图等任一材料";
+        self.noImageLabel.text = @"请上传您的名片、工牌或\n公司邮箱后台截图等任一材料";
 		[self.submitButton setTitle:@"提交" forState:UIControlStateNormal];
 		[self.submitButton setTitle:@"提交" forState:UIControlStateHighlighted];
 		self.tipsLabel.hidden = YES;
@@ -139,7 +139,8 @@
 	}else if ([self.status isEqualToString:@"1"]){
 		self.status_statuLabel.text = @"审核中";
         self.status_statuLabel.textColor = [UIColor colorWithHexString:@"f04241"];
-        self.noImageLabel.text = @"提交成功，大牛圈顾问将会在1个工作日内完成身份认证，感谢您对大牛圈的支持！";
+        self.noImageLabel.hidden = NO;
+        self.noImageLabel.text = @"提交成功，大牛圈顾问将会在1个\n工作日内完成身份认证，感谢您对大牛圈的支持！";
         self.reasonTitleLabel.hidden = YES;
         self.tipsLabel.hidden = YES;
 		[self.submitButton setTitle:@"更新" forState:UIControlStateNormal];
