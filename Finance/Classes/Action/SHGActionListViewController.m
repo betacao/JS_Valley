@@ -38,6 +38,10 @@
     [self addHeaderRefresh:self.listTable headerRefesh:YES andFooter:YES];
     [self loadDataWithType:@"first" meetID:@"-1"];
 }
+- (void)refreshData
+{
+    [self loadDataWithType:@"first" meetID:@"-1"];
+}
 
 - (void)addNewAction:(UIButton *)button
 {

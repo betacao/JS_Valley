@@ -185,6 +185,7 @@
     __weak typeof(self) weakSelf = self;
     SHGActionTotalInViewController *controller = [[SHGActionTotalInViewController alloc] init];
     controller.attendList = self.object.attendList;
+    controller.publisher = self.object.publisher;
     controller.block = ^{
         [weakSelf.tableView reloadData];
     };
@@ -225,7 +226,7 @@
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.delegate = self;
     }
-    [cell loadCellWithObject:[self.object.attendList objectAtIndex:indexPath.row]];
+    [cell loadCellWithObject:[self.object.attendList objectAtIndex:indexPath.row] publisher:self.object.publisher];
     NSInteger count = [self.object.attendNum integerValue];
     count = count > 3 ? 3: count;
     //count = 0 ;

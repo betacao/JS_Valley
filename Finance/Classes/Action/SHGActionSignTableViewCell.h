@@ -20,6 +20,6 @@
 @interface SHGActionSignTableViewCell : UITableViewCell
 
 @property (assign, nonatomic) id<SHGActionSignDelegate> delegate;
-- (void)loadCellWithObject:(SHGActionAttendObject *)object;
--(void)loadLastCellLineImage;
+- (void)loadCellWithObject:(SHGActionAttendObject *)object publisher:(NSString *)publisher;
+- (void)loadLastCellLineImage;
 @end

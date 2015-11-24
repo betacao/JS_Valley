@@ -180,6 +180,7 @@ typedef NS_ENUM(NSInteger, SHGActionSendType){
 
 - (IBAction)nextButtonClick:(id)sender
 {
+    [self.currentContext resignFirstResponder];
     if ([self checkInputMessage]){
         __weak typeof(self) weakSelf = self;
         switch (self.sendType) {

@@ -12,5 +12,6 @@ typedef void (^OperationBlock)(void);
 @interface SHGActionTotalInViewController : BaseViewController
 
 @property (strong, nonatomic) NSArray *attendList;
+@property (strong, nonatomic) NSString *publisher;
 @property (copy, nonatomic) OperationBlock block;
 @end

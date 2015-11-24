@@ -185,10 +185,8 @@
         cell.accessoryView =self.switchView;
     } else if (indexPath.row == 2 && indexPath.section == 0){
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 150, cell.height)];
-        NSString *cache = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
-        NSString *imageCache = [cache stringByAppendingPathComponent:@"com.hackemist.SDWebImageCache.default"];
         label.textAlignment = NSTextAlignmentRight;
-        label.text = [NSString stringWithFormat:@"%0.1fM",[self folderSizeAtPath:imageCache]];
+        label.text = [NSString stringWithFormat:@"%0.1fM",[self folderSizeAtPath]];
         cell.accessoryView =  label;
     } else{
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
@@ -249,13 +247,14 @@
                 DXAlertView *alert = [[DXAlertView alloc] initWithTitle:@"提示" contentText:@"是否确认清除本地缓存？" leftButtonTitle:@"取消" rightButtonTitle:@"确定"];
                 __weak typeof(self) weakSelf = self;
                 alert.rightBlock = ^{
+                    [Hud showLoadingWithMessage:@"正在清除缓存..."];
                     [[SDImageCache sharedImageCache] clearDiskOnCompletion:^{
+                        [Hud hideHud];
+                        [Hud showMessageWithText:@"清除缓存成功"];
                         [weakSelf.tableView reloadData];
                     }];
                 };
                 [alert show];
-            } else if(indexPath.row==3){
-                
             }
         }
             break;
@@ -385,17 +384,8 @@
     return 0;
 }
 
-- (float ) folderSizeAtPath:(NSString*) folderPath{
-    NSFileManager* manager = [NSFileManager defaultManager];
-    if (![manager fileExistsAtPath:folderPath]) return 0;
-    NSEnumerator *childFilesEnumerator = [[manager subpathsAtPath:folderPath] objectEnumerator];
-    NSString* fileName;
-    long long folderSize = 0;
-    while ((fileName = [childFilesEnumerator nextObject]) != nil){
-        NSString* fileAbsolutePath = [folderPath stringByAppendingPathComponent:fileName];
-        folderSize += [self fileSizeAtPath:fileAbsolutePath];
-    }
-    
-    return folderSize/(1024.0*1024.0);
+- (CGFloat) folderSizeAtPath{
+    CGFloat cacheSize = [[SDImageCache sharedImageCache] getSize] / (1024.0f * 1024.0f);
+    return cacheSize;
 }
 @end

@@ -40,7 +40,7 @@
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.delegate = self;
     }
-    [cell loadCellWithObject:[self.attendList objectAtIndex:indexPath.row]];
+    [cell loadCellWithObject:[self.attendList objectAtIndex:indexPath.row] publisher:self.publisher];
     return  cell;
 }
 

@@ -48,6 +48,7 @@
     frame.size.height = 0.5f;
     self.action_bottomView.frame = frame;
 }
+
 - (void)loadLastCellLineImage
 {
     self.action_bottomXuXian.hidden = NO;
@@ -56,7 +57,8 @@
     self.action_bottomXuXian.image = [img resizableImageWithCapInsets:UIEdgeInsetsMake(0 , 1, 0, 1) resizingMode:UIImageResizingModeTile];
 
 }
-- (void)loadCellWithObject:(SHGActionAttendObject *)object
+
+- (void)loadCellWithObject:(SHGActionAttendObject *)object publisher:(NSString *)publisher
 {
     [self clearCell];
     self.object = object;
@@ -65,24 +67,25 @@
     [self.action_signHeadImage sd_setImageWithURL:[NSURL URLWithString:object.headimageurl] placeholderImage:[UIImage imageNamed:@"default_head"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
 
     }];
-    if ([object.state isEqualToString:@"0"]) {
-        self.action_signLeftButton.hidden = NO;
-        self.action_signRightButton.hidden = NO;
-        [self.action_signLeftButton setTitle:@"同意" forState:UIControlStateNormal];
-        //[self.action_signLeftButton setTitleColor:[UIColor colorWithHexString:@"FFA2BC"] forState:UIControlStateNormal];
-        [self.action_signRightButton setTitle:@"驳回" forState:UIControlStateNormal];
-        //[self.action_signRightButton setTitleColor:[UIColor colorWithHexString:@"95DAFB"] forState:UIControlStateNormal];
-    } else if ([object.state isEqualToString:@"1"]) {
-        self.action_signRightButton.hidden = NO;
-        [self.action_signRightButton setTitle:@"已同意" forState:UIControlStateNormal];
-         //[self.action_signRightButton setTitleColor:[UIColor colorWithHexString:@"8BD8CF"] forState:UIControlStateNormal];
-        [self.action_signRightButton setEnabled:NO];
-    } else if ([object.state isEqualToString:@"2"]) {
-        self.action_signRightButton.hidden = NO;
-        [self.action_signRightButton setTitle:@"已驳回" forState:UIControlStateNormal];
-        //[self.action_signRightButton setTitleColor:[UIColor colorWithHexString:@"CACACA"] forState:UIControlStateNormal];
+    if ([object.uid isEqualToString:publisher]) {
+        if ([object.state isEqualToString:@"0"]) {
+            self.action_signLeftButton.hidden = NO;
+            self.action_signRightButton.hidden = NO;
+            [self.action_signLeftButton setTitle:@"同意" forState:UIControlStateNormal];
+            [self.action_signRightButton setTitle:@"驳回" forState:UIControlStateNormal];
+        } else if ([object.state isEqualToString:@"1"]) {
+            self.action_signRightButton.hidden = NO;
+            [self.action_signRightButton setTitle:@"已同意" forState:UIControlStateNormal];
+            [self.action_signRightButton setEnabled:NO];
+        } else if ([object.state isEqualToString:@"2"]) {
+            self.action_signRightButton.hidden = NO;
+            [self.action_signRightButton setTitle:@"已驳回" forState:UIControlStateNormal];
 
-        [self.action_signRightButton setEnabled:NO];
+            [self.action_signRightButton setEnabled:NO];
+        }
+    } else{
+        self.action_signLeftButton.hidden = YES;
+        self.action_signRightButton.hidden = YES;
     }
 }
 

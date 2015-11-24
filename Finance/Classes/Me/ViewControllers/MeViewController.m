@@ -159,6 +159,7 @@
 
 - (void)getMyselfMaterial
 {
+    [self.btnUserPic setImage:[UIImage imageNamed:@"default_head"]];
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
     [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttp,@"user",@"personaluser"] parameters:@{@"uid":uid}success:^(MOCHTTPResponse *response) {
         

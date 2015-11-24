@@ -239,8 +239,10 @@
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LB4-Pe-52L">
                                         <rect key="frame" x="100" y="0.0" width="50" height="34"/>
                                         <animations/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                        <state key="normal" title="Button"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                        <state key="normal" title="编辑">
+                                            <color key="titleColor" red="0.76470588235294112" green="0.76470588235294112" blue="0.80784313725490198" alpha="0.59999999999999998" colorSpace="calibratedRGB"/>
+                                        </state>
                                         <connections>
                                             <action selector="addEdit:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="t0U-mi-OhI"/>
                                         </connections>
