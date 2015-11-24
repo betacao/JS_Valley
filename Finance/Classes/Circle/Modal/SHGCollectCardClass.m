@@ -9,5 +9,26 @@
 #import "SHGCollectCardClass.h"
 
 @implementation SHGCollectCardClass
+-(id )init
+{
+    self = [super init];
+    if(self)
+    {
+        
+    }
+    return self;
+}
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey{
+    return  @{
+              @"name":@"name",
+              @"headerImageUrl":@"head_img",
+              @"companyName":@"companyname",
+              @"position":@"position",
+              @"tags":@"tags",
+              @"titles":@"titles",
+              @"time":@"time",
+              };
+}
 
 @end

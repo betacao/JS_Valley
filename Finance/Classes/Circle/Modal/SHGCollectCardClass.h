@@ -8,6 +8,21 @@
 
 #import <Mantle/Mantle.h>
 
-@interface SHGCollectCardClass : MTLModel
+@interface SHGCollectCardClass : MTLModel<MTLJSONSerializing>
+@property (nonatomic, strong)NSString *name;
+
+@property (nonatomic, strong)NSString *headerImageUrl;
+
+@property (nonatomic, strong)NSString *companyName;
+
+@property (nonatomic, strong)NSString *position;
+
+@property (nonatomic, strong)NSString *tags;
+
+@property (nonatomic, strong)NSString *titles;
+@property (nonatomic, strong)NSString *time;
+
+
+
 
 @end

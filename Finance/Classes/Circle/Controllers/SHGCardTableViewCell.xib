@@ -3,22 +3,21 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="KGk-i7-Jjw" customClass="SHGCardTableViewCell">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="145"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cardCellIdentifier" id="KGk-i7-Jjw" customClass="SHGCardTableViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="144"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="144"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="143"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SsG-BN-jTe">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="144"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="person_headerBg" translatesAutoresizingMaskIntoConstraints="NO" id="vdA-5c-Dh9">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="action_bg" translatesAutoresizingMaskIntoConstraints="NO" id="vdA-5c-Dh9">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="144"/>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sUq-Vw-7w2">
@@ -29,7 +28,7 @@
                                         <color key="backgroundColor" red="0.93725490199999995" green="0.93333333330000001" blue="0.93725490199999995" alpha="1" colorSpace="calibratedRGB"/>
                                     </view>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="default_head" translatesAutoresizingMaskIntoConstraints="NO" id="wis-PN-8NJ">
-                                        <rect key="frame" x="10" y="14" width="54" height="54"/>
+                                        <rect key="frame" x="5" y="16" width="54" height="54"/>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="150" translatesAutoresizingMaskIntoConstraints="NO" id="Bra-7v-T1b">
                                         <rect key="frame" x="72" y="14" width="150" height="15"/>
@@ -91,18 +90,29 @@
                     </view>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="trailingMargin" secondItem="SsG-BN-jTe" secondAttribute="trailing" constant="-8" id="2WX-c0-3q5"/>
-                    <constraint firstItem="SsG-BN-jTe" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="-8" id="91n-Sn-Mew"/>
-                    <constraint firstItem="SsG-BN-jTe" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="-8" id="TZF-Aa-pMn"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="SsG-BN-jTe" secondAttribute="bottom" constant="-8" id="ht7-Lv-PQf"/>
+                    <constraint firstAttribute="trailing" secondItem="SsG-BN-jTe" secondAttribute="trailing" id="2WX-c0-3q5"/>
+                    <constraint firstItem="SsG-BN-jTe" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="91n-Sn-Mew"/>
+                    <constraint firstItem="SsG-BN-jTe" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="TZF-Aa-pMn"/>
+                    <constraint firstAttribute="bottom" secondItem="SsG-BN-jTe" secondAttribute="bottom" constant="-1" id="ht7-Lv-PQf"/>
                     <constraint firstItem="SsG-BN-jTe" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="rUe-4p-MrM"/>
                     <constraint firstItem="SsG-BN-jTe" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="s9W-Qg-wW3"/>
                 </constraints>
             </tableViewCellContentView>
+            <connections>
+                <outlet property="bgView" destination="SsG-BN-jTe" id="WSK-cE-csf"/>
+                <outlet property="companyLabel" destination="5s6-io-g5O" id="rLY-4m-pZB"/>
+                <outlet property="departmentLabel" destination="wuQ-2v-EOI" id="QuG-4x-rdU"/>
+                <outlet property="headerBackImageView" destination="vdA-5c-Dh9" id="Qwu-0e-vJM"/>
+                <outlet property="headerImageView" destination="wis-PN-8NJ" id="wiv-Co-Rps"/>
+                <outlet property="headerView" destination="Pq2-6u-BlY" id="sYL-JP-RMf"/>
+                <outlet property="positionLabel" destination="vt1-tK-SoV" id="QCw-xh-ghy"/>
+                <outlet property="tagViews" destination="qsf-oP-Tdc" id="wUs-Wu-D9A"/>
+                <outlet property="userNameLabel" destination="Bra-7v-T1b" id="DMv-Tt-agc"/>
+            </connections>
         </tableViewCell>
     </objects>
     <resources>
+        <image name="action_bg" width="31" height="45"/>
         <image name="default_head" width="48" height="48"/>
-        <image name="person_headerBg" width="320" height="144"/>
     </resources>
 </document>

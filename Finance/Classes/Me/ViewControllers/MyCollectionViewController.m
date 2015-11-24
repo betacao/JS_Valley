@@ -10,10 +10,12 @@
 #import "MyCollectionTableViewCell.h"
 #import "ProdListObj.h"
 #import "CircleListObj.h"
+#import "SHGCollectCardClass.h"
 #import "BasePeopleObject.h"
 #import "SHGHomeTableViewCell.h"
 #import "ProductListTableViewCell.h"
 #import "SHGPersonalViewController.h"
+#import "SHGCardTableViewCell.h"
 @interface MyCollectionViewController ()
 {
     BOOL hasDataFinished;
@@ -30,6 +32,8 @@
 @property (nonatomic, strong) NSMutableArray *productList;
 
 @property (nonatomic, assign) NSInteger	selectType;
+
+@property (nonatomic, strong) NSMutableArray * cardList;
 
 @property (nonatomic, strong) IBOutlet UITableView *tableView;
 @end
@@ -48,8 +52,9 @@
     self.tableView.separatorStyle = 1;
     [Hud showLoadingWithMessage:@"加载中"];
 	[self requestPostListWithTarget:@"first" time:@"-1"];
-}
+    //[self requestCardListWithTarget:@"first" time:@""];
 
+}
 
 -(void)smsShareSuccess:(NSNotification *)noti
 {
@@ -110,10 +115,19 @@
 			self.selectType = 2;
             [Hud showLoadingWithMessage:@"加载中"];
             [self requestProductListWithTarget:@"first" time:@""];
-
-
+            
 		}
 			break;
+        case 2:
+        {
+            self.tableView.separatorStyle = 0;
+            self.selectType = 3;
+            [Hud showLoadingWithMessage:@"加载中"];
+            [self requestCardListWithTarget:@"first" time:@""];
+            
+            
+        }
+            break;
 		default:
 			break;
 	}
@@ -125,7 +139,9 @@
 		self.dataSource = self.postList;
 	}else if (self.selectType == 2){
 		self.dataSource = self.productList;
-	}
+    }else if (self.selectType == 3){
+        self.dataSource = self.cardList;
+    }
 	
 	[self.tableView reloadData];
 	
@@ -153,8 +169,13 @@
             updateTime = obj.time;
 			[self requestProductListWithTarget:target time:updateTime];
 		}
-	}
-    else
+        else if (self.selectType == 3){
+            SHGCollectCardClass *obj = self.dataSource[0];
+            updateTime = obj.time;
+            [self requestCardListWithTarget:target time:updateTime];
+        }
+
+    } else
     {
         [self.tableView.header endRefreshing];
     }
@@ -173,7 +194,10 @@
 			[self requestPostListWithTarget:@"load" time:updateTime];
 		}else if (self.selectType == 2){
 			[self requestProductListWithTarget:@"load" time:updateTime];
-		}
+        }else if (self.selectType == 3){
+            [self requestCardListWithTarget:@"load" time:updateTime];
+        }
+
 	} else{
         [self.tableView.footer endRefreshing];
     }
@@ -567,7 +591,57 @@
     }
 }
 
+- (void)requestCardListWithTarget:(NSString *)target time:(NSString *)time
+{
+    NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
+    [Hud showLoadingWithMessage:@"加载中"];
+    NSDictionary *param = @{@"uid":uid,
+                           @"target":target,
+                           @"num":@"10"};
+    [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttp,@"userCard",@"myCardlist"] class:[SHGCollectCardClass class] parameters:param success:^(MOCHTTPResponse *response) {
+        NSLog(@"=========%@",response.dataArray);
+        
+        if ([target isEqualToString:@"first"]) {
+           [self.cardList removeAllObjects];
+           [self.cardList addObjectsFromArray:response.dataArray];
+            
+        }
+        if ([target isEqualToString:@"refresh"]) {
+            if (response.dataArray.count > 0) {
+                for (NSInteger i = response.dataArray.count-1; i >= 0; i --) {
+                    SHGCollectCardClass *obj = response.dataArray[i];
+                    [self.cardList insertObject:obj atIndex:0];
+                }
+                
+            }
+            
+        }
+        if ([target isEqualToString:@"load"]) {
+            [self.cardList addObjectsFromArray:response.dataArray];
+            
+        }
+        if (IsArrEmpty(response.dataArray)) {
+            hasDataFinished = YES;
+        }
+        else
+        {
+            hasDataFinished = NO;
+        }
+        [self refreshDataSource];
+        [self.tableView.header endRefreshing];
+        [self.tableView.footer endRefreshing];
+        [Hud hideHud];
+        
+    } failed:^(MOCHTTPResponse *response) {
+        NSLog(@"%@",response.errorMessage);
+        [self.tableView.header endRefreshing];
+        [self.tableView.footer endRefreshing];
+        [Hud hideHud];
+        
+    }];
 
+
+}
 
 - (void)requestProductListWithTarget:(NSString *)target time:(NSString *)time
 {
@@ -587,7 +661,7 @@
 				  @"num":@"100"};
 	}
 	[MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttp,@"prod",@"collection"] class:[ProdListObj class] parameters:param success:^(MOCHTTPResponse *response) {
-		
+		 NSLog(@"++++++++++%@",response.dataArray);
         if ([target isEqualToString:@"first"]) {
             [self.productList removeAllObjects];
             [self.productList addObjectsFromArray:response.dataArray];
@@ -663,6 +737,11 @@
     {
         return 100;
         
+    }
+    else if (self.selectType == 3)
+    {
+        return 144;
+        
     }else
     {
         return 0;
@@ -675,7 +754,7 @@
         CircleListObj *obj = self.dataSource[indexPath.row];
         
         if ([obj.status boolValue]) {
-            static NSString *cellIdentifier = @"circleListIdentifier";
+            NSString *cellIdentifier = @"circleListIdentifier";
             SHGHomeTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
             if (!cell) {
                 cell = [[[NSBundle mainBundle] loadNibNamed:@"SHGHomeTableViewCell" owner:self options:nil] lastObject];
@@ -688,7 +767,7 @@
         
         else
         {
-            static NSString *cellIdentifier = @"noListIdentifier";
+            NSString *cellIdentifier = @"noListIdentifier";
             UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
             if (!cell) {
                 cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
@@ -701,7 +780,7 @@
 
     }else if (self.selectType == 2)
     {
-        static NSString *prodCellIdentifier = @"circleCellIdentifier";
+        NSString *prodCellIdentifier = @"circleCellIdentifier";
         ProductListTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:prodCellIdentifier];
         if (!cell) {
             cell = [[[NSBundle mainBundle] loadNibNamed:@"ProductListTableViewCell" owner:self options:nil] lastObject];
@@ -709,6 +788,17 @@
         ProdListObj *obj = self.dataSource[indexPath.row];
         [cell loadDatasWithObj:obj];
         return cell;
+    }if (self.selectType == 3) {
+        NSString *cardCellIdentifier = @"cardCellIdentifier";
+        SHGCardTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cardCellIdentifier];
+        if (!cell) {
+            cell = [[[NSBundle mainBundle] loadNibNamed:@"SHGCardTableViewCell" owner:self options:nil] lastObject];
+        }
+        
+        SHGCollectCardClass *obj = self.dataSource[indexPath.row];
+        [cell loadCardDatasWithObj:obj];
+        return cell;
+        
     }
 		
 		return nil;
@@ -765,6 +855,13 @@
     }
     return _postList;
 }
+-(NSMutableArray *)cardList{
+    if (!_cardList) {
+        _cardList = [NSMutableArray array];
+    }
+    return _cardList;
+}
+
 
 #pragma mark detailDelagte
 
