@@ -24,7 +24,7 @@
             } else{
                 return @"N";
             }
-        } else if ([key isEqualToString:@"praiseNum"] || [key isEqualToString:@"commentNum"]){
+        } else if ([key isEqualToString:@"praiseNum"] || [key isEqualToString:@"commentNum"] ||[key isEqualToString:@"attendNum"]){
             if (IsStrEmpty(value)) {
                 return @"0";
             }

@@ -21,6 +21,17 @@
 @synthesize viewControllers = _viewControllers;
 @synthesize selectedIndex = _selectedIndex;
 
+
++ (instancetype)sharedSegmentController
+{
+    static SHGActionSegmentViewController *sharedGlobleInstance = nil;
+    static dispatch_once_t predicate;
+    dispatch_once(&predicate, ^{
+        sharedGlobleInstance = [[self alloc] init];
+    });
+    return sharedGlobleInstance;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -123,15 +134,6 @@
 
     UIViewController *oldSelectedViewController = self.selectedViewController;
 
-    // Remove the old child view controllers.
-    for (UIViewController *viewController in _viewControllers)
-    {
-        [viewController willMoveToParentViewController:nil];
-        [viewController removeFromParentViewController];
-    }
-
-    _viewControllers = [newViewControllers copy];
-
     // This follows the same rules as UITabBarController for trying to
     // re-select the previously selected view controller.
     NSUInteger newIndex = [_viewControllers indexOfObject:oldSelectedViewController];
@@ -141,6 +143,15 @@
         _selectedIndex = newIndex;
     else
         _selectedIndex = 0;
+
+    // Remove the old child view controllers.
+    for (UIViewController *viewController in _viewControllers)
+    {
+        [viewController willMoveToParentViewController:nil];
+        [viewController removeFromParentViewController];
+    }
+
+    _viewControllers = [newViewControllers copy];
 
     // Add the new child view controllers.
     for (UIViewController *viewController in _viewControllers)
@@ -182,8 +193,10 @@
         if (toViewController == nil){  // don't animate
             [fromViewController.view removeFromSuperview];
         } else if (fromViewController == nil){  // don't animate
-            toViewController.view.frame = contentContainerView.bounds;
-            [contentContainerView addSubview:toViewController.view];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                toViewController.view.frame = contentContainerView.bounds;
+                [contentContainerView addSubview:toViewController.view];
+            });
         } else if (animated){
             CGRect rect = contentContainerView.bounds;
             if (oldSelectedIndex < newSelectedIndex)
@@ -249,6 +262,20 @@
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
+}
+
+#pragma mark ------创建活动的代理
+
+- (void)didCreateNewAction
+{
+    UIViewController *controller = [self.viewControllers lastObject];
+    if ([controller respondsToSelector:@selector(refreshData)]) {
+        [controller performSelector:@selector(refreshData)];
+    }
+}
+- (void)refreshData
+{
+
 }
 
 

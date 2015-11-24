@@ -14,6 +14,7 @@
 #import "SHGActionManager.h"
 #import "SHGPersonalViewController.h"
 #import "SHGActionSendViewController.h"
+#import "SHGActionSegmentViewController.h"
 
 @interface SHGActionDetailViewController ()<UITableViewDataSource,UITableViewDelegate,MLEmojiLabelDelegate, SHGActionCommentDelegate, BRCommentViewDelegate, CircleActionDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *replyTable;
@@ -281,6 +282,7 @@
     } else if([title rangeOfString:@"重新编辑"].location != NSNotFound){
         SHGActionSendViewController *controller =[[SHGActionSendViewController alloc] init];
         controller.object = self.object;
+        controller.delegate = [SHGActionSegmentViewController sharedSegmentController];
         [self.navigationController pushViewController:controller animated:YES];
     } else if([title rangeOfString:@"审核中"].location != NSNotFound){
 

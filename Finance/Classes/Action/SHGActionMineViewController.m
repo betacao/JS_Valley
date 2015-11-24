@@ -10,6 +10,7 @@
 #import "SHGActionTableViewCell.h"
 #import "SHGActionDetailViewController.h"
 #import "SHGActionSendViewController.h"
+#import "SHGActionSegmentViewController.h"
 
 @interface SHGActionMineViewController ()<UITableViewDataSource, UITableViewDelegate, SHGActionTableViewDelegate>
 
@@ -34,9 +35,15 @@
     [self loadDataWithType:@"first" meetID:@"-1"];
 }
 
+- (void)refreshData
+{
+    [self loadDataWithType:@"first" meetID:@"-1"];
+}
+
 - (void)addNewAction:(UIButton *)button
 {
     SHGActionSendViewController *controller = [[SHGActionSendViewController alloc] initWithNibName:@"SHGActionSendViewController" bundle:nil];
+    controller.delegate = [SHGActionSegmentViewController sharedSegmentController];
     [self.navigationController pushViewController:controller animated:YES];
 }
 
@@ -60,12 +67,17 @@
             [weakSelf.dataArr addObjectsFromArray:response.dataArray];
         }
         [weakSelf.listTable reloadData];
+        [weakSelf.listTable.header endRefreshing];
+        [weakSelf.listTable.footer endRefreshing];
+        if (response.dataArray.count < 10) {
+            [weakSelf.listTable.footer endRefreshingWithNoMoreData];
+        }
     } failed:^(MOCHTTPResponse *response) {
         [Hud hideHud];
         [Hud showMessageWithText:@"网络连接失败"];
+        [weakSelf.listTable.header endRefreshing];
+        [weakSelf.listTable.footer endRefreshing];
     }];
-    [self.listTable.header endRefreshing];
-    [self.listTable.footer endRefreshing];
 }
 
 - (void)refreshHeader
@@ -147,6 +159,7 @@
 {
     SHGActionSendViewController *controller = [[SHGActionSendViewController alloc] initWithNibName:@"SHGActionSendViewController" bundle:nil];
     controller.object = object;
+    controller.delegate = [SHGActionSegmentViewController sharedSegmentController];
     [self.navigationController pushViewController:controller animated:YES];
 }
 

@@ -9,5 +9,5 @@
 #import "BaseTableViewController.h"
 
 @interface SHGActionMineViewController : BaseTableViewController
-
+- (void)refreshData;
 @end

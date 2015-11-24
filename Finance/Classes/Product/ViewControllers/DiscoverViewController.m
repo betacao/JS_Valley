@@ -203,7 +203,7 @@
             }
                 break;
             case 2:{
-                SHGActionSegmentViewController *segmentViewController = [[SHGActionSegmentViewController alloc] init];
+                SHGActionSegmentViewController *segmentViewController = [SHGActionSegmentViewController sharedSegmentController];
                 SHGActionListViewController *leftController = [[SHGActionListViewController alloc] init];
                 SHGActionMineViewController *rightController = [[SHGActionMineViewController alloc] init];
                 segmentViewController.viewControllers = @[leftController, rightController];

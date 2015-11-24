@@ -152,6 +152,11 @@
     }
 }
 
+- (void)refreshLoad
+{
+
+}
+
 - (void)refreshHomeView
 {
     if([[self.viewControllers firstObject] respondsToSelector:@selector(refreshHeader)]){
@@ -352,11 +357,13 @@
 		}
 		else if (fromViewController == nil)  // don't animate
 		{
-			toViewController.view.frame = contentContainerView.bounds;
-			[contentContainerView addSubview:toViewController.view];
-
-			if ([self.delegate respondsToSelector:@selector(SHG_SegmentController:didSelectViewController:atIndex:)])
-				[self.delegate SHG_SegmentController:self didSelectViewController:toViewController atIndex:newSelectedIndex];
+            __weak typeof(self) weakSelf = self;
+            dispatch_async(dispatch_get_main_queue(), ^{
+                toViewController.view.frame = contentContainerView.bounds;
+                [contentContainerView addSubview:toViewController.view];
+                if ([weakSelf.delegate respondsToSelector:@selector(SHG_SegmentController:didSelectViewController:atIndex:)])
+                    [weakSelf.delegate SHG_SegmentController:weakSelf didSelectViewController:toViewController atIndex:newSelectedIndex];
+            });
 		}
 		else if (animated)
 		{

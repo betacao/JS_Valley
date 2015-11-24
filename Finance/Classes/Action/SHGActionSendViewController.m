@@ -51,7 +51,6 @@ typedef NS_ENUM(NSInteger, SHGActionSendType){
         [self editObject:self.object];
         self.sendType = SHGActionSendTypeReSet;
     }
-
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -190,6 +189,9 @@ typedef NS_ENUM(NSInteger, SHGActionSendType){
                 NSDictionary *param = @{@"uid":uid, @"theme":self.actionTitleField.text, @"startTime":[self.startTimeField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]], @"endTime":[self.endTimeField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]], @"meetArea":self.positionField.text, @"meetNum":self.invateNumber.text, @"detail":self.introduceView.text};
                 [[SHGActionManager shareActionManager] createNewAction:param finishBlock:^(BOOL finish) {
                     if (finish) {
+                        if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(didCreateNewAction)]) {
+                            [weakSelf.delegate didCreateNewAction];
+                        }
                         [weakSelf.navigationController performSelector:@selector(popViewControllerAnimated:) withObject:@(YES) afterDelay:1.2f];
                     }
                 }];
@@ -202,6 +204,9 @@ typedef NS_ENUM(NSInteger, SHGActionSendType){
                 NSDictionary *param = @{@"uid":uid, @"theme":self.actionTitleField.text, @"startTime":[self.startTimeField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]], @"endTime":[self.endTimeField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]], @"meetArea":self.positionField.text, @"meetNum":self.invateNumber.text, @"detail":self.introduceView.text, @"meetId":self.meetId};
                 [[SHGActionManager shareActionManager] modifyAction:param finishBlock:^(BOOL finish) {
                     if (finish) {
+                        if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(didCreateNewAction)]) {
+                            [weakSelf.delegate didCreateNewAction];
+                        }
                         [weakSelf.navigationController performSelector:@selector(popViewControllerAnimated:) withObject:@(YES) afterDelay:1.2f];
                     }
                 }];

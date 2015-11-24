@@ -9,8 +9,15 @@
 #import "BaseViewController.h"
 #import "SHGActionObject.h"
 
+@protocol SHGActionSendDelegate <NSObject>
+
+- (void)didCreateNewAction;
+
+@end
+
 @interface SHGActionSendViewController : BaseViewController
 
 @property (strong, nonatomic) SHGActionObject *object;
+@property (assign, nonatomic) id<SHGActionSendDelegate> delegate;
 
 @end
