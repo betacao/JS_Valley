@@ -81,7 +81,8 @@
     if (self.isRefreshingTitleHidden && state == MJRefreshStateRefreshing) {
         self.stateLabel.text = nil;
     } else {
-        self.stateLabel.text = self.stateTitles[@(state)];
+        NSString *string = self.stateTitles[@(state)];
+        self.stateLabel.text = string;
     }
 }
 @end

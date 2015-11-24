@@ -351,8 +351,6 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
             __weak typeof(self) weakSelf = self;
             SHGPersonDynamicViewController *controller = [[SHGPersonDynamicViewController alloc] initWithNibName:@"SHGPersonDynamicViewController" bundle:nil];
             controller.userId = self.userId;
-            controller.dataArr = self.dataArr;
-            NSLog(@"dddddddd%@",self.dataArr);
             controller.delegate = self.delegate;
             controller.block = ^(NSString *state){
                 weakSelf.relationShip = state;

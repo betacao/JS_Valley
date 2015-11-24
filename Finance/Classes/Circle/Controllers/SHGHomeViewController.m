@@ -53,7 +53,6 @@ const CGFloat kAdButtomMargin = 20.0f;
 @property (strong, nonatomic) NSString *currentCity;
 @property (strong, nonatomic) NSString *circleType;
 @property (assign, nonatomic) BOOL shouldDisplayRecommend;
-@property (strong, nonatomic) SHGSelectTagsViewController *tagsController;
 @end
 
 @implementation SHGHomeViewController
@@ -184,14 +183,6 @@ const CGFloat kAdButtomMargin = 20.0f;
         _recomandArray = [NSMutableArray array];
     }
     return _recomandArray;
-}
-
-- (SHGSelectTagsViewController *)tagsController
-{
-    if (!_tagsController) {
-        _tagsController = [[SHGSelectTagsViewController alloc] init];
-    }
-    return _tagsController;
 }
 
 - (SHGNoticeView *)newFriendNoticeView
@@ -722,21 +713,6 @@ const CGFloat kAdButtomMargin = 20.0f;
     controller.userId = uid;
     controller.delegate = [SHGUnifiedTreatment sharedTreatment];
     [self.navigationController pushViewController:controller animated:YES];
-}
-
-//添加列表上方的标签
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-{
-    return self.tagsController.view;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-{
-    CGFloat height = CGRectGetHeight(self.tagsController.view.frame);
-    if (height == 0) {
-        return 40.0f;
-    }
-    return height;
 }
 
 @end

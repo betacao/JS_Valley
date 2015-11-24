@@ -394,7 +394,7 @@
 
 - (void)requsetUserVerifyStatus:(void (^)(BOOL))block
 {
-    [Hud showLoadingWithMessage:@"正在获取用户认证状态"];
+    [Hud showLoadingWithMessage:@"请稍等..."];
     NSString *request = [rBaseAddressForHttp stringByAppendingString:@"/auth/isAuth"];
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
     [MOCHTTPRequestOperationManager postWithURL:request parameters:@{@"uid":uid} success:^(MOCHTTPResponse *response) {

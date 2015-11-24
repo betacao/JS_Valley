@@ -123,6 +123,7 @@
     self.Action_momentNumlabel.text = @"";
     self.Action_nameLable.text = @"";
     self.Action_timeLabel.text = @"";
+    self.Action_messageLabel.text = @"";
     [self.Action_signButton setTitle:@"" forState:UIControlStateNormal];
     [self.Action_signButton setBackgroundColor:[UIColor clearColor]];
     self.twoButtonView.hidden = YES;
