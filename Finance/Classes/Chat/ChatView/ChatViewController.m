@@ -140,9 +140,12 @@
     if (self.isShare && arr.count >= 3)
     {
         UIViewController *vc =arr[arr.count -3];
-        if (shared)
-        {
-            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_CHANGE_SHARE_TO_FRIENDSUCCESS object:self.shareRid];
+        if (shared){
+            if (self.shareRid && self.shareRid.length > 0) {
+                [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_CHANGE_SHARE_TO_FRIENDSUCCESS object:self.shareRid];
+            } else{
+                [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_ACTION_SHARE_TO_FRIENDSUCCESS object:nil];
+            }
         }
         [self.navigationController popToViewController:vc animated:YES];
     }

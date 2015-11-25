@@ -54,6 +54,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"活动详情";
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shareToFriendSuccess:) name:NOTIFI_ACTION_SHARE_TO_FRIENDSUCCESS object:nil];
     self.replyTable.delegate = self;
     self.replyTable.dataSource = self;
     self.replyTable.header.backgroundColor = [UIColor colorWithHexString:@"efefef"];
@@ -301,7 +302,7 @@
     } else if([title rangeOfString:@"分享"].location != NSNotFound){
         [[SHGActionManager shareActionManager] shareAction:self.responseObject baseController:self finishBlock:^(BOOL success) {
             if (success) {
-
+//[Hud show]
             }
         }];
     } else if([title rangeOfString:@"报名"].location != NSNotFound){
@@ -318,6 +319,19 @@
         [alert show];
 
     }
+}
+
+#pragma mark ------分享到圈内好友的通知
+- (void)shareToFriendSuccess:(NSNotification *)notification
+{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [Hud showMessageWithText:@"分享成功"];
+    });
+}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 #pragma mark 评论代理

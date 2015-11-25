@@ -76,7 +76,10 @@
     self.Action_addressLabel.text = object.meetArea;
     self.Action_allNumLabel.text = [NSString stringWithFormat:@"邀请%@人", object.meetNum];
     self.Action_momentNumlabel.text = [NSString stringWithFormat:@"已报名%@人", object.attendNum];
-    self.Action_messageLabel.text = object.friendShip;
+    if (![object.publisher isEqualToString:uid]) {
+        self.Action_messageLabel.text = object.friendShip;
+    }
+
     if (object.meetState == SHGActionStateOver) {
         [self.Action_signButton setTitle:@"已结束" forState:UIControlStateNormal];
         [self.Action_signButton setBackgroundColor:[UIColor colorWithHexString:@"E7E7E7"]];

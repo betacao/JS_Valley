@@ -30,6 +30,7 @@
 
 #define NOTIFI_CHANGE_SHARE_TO_FRIENDSUCCESS    @"notificationShareToFriendSuccess"
 #define NOTIFI_CHANGE_SHARE_TO_SMSSUCCESS    @"notificationShareToSMSSuccess"
+#define NOTIFI_ACTION_SHARE_TO_FRIENDSUCCESS @"actionShareToFriendSuccess"
 
 //环信
 #define KNOTIFICATION_LOGINCHANGE @"loginStateChange"

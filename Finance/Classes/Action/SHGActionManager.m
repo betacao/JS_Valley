@@ -228,7 +228,7 @@
     [Hud showLoadingWithMessage:@"请稍等..."];
     NSString *request = [rBaseAddressForHttp stringByAppendingString:@"/meetingactivity/attend/saveAttend"];
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
-    NSDictionary *param = @{@"meetId":object.meetId, @"uid":uid};
+    NSDictionary *param = @{@"meetId":object.meetId, @"uid":uid, @"detail":reason};
     [MOCHTTPRequestOperationManager postWithURL:request parameters:param success:^(MOCHTTPResponse *response) {
         [Hud hideHud];
         [Hud showMessageWithText:@"报名成功"];
@@ -275,50 +275,41 @@
 //分享活动
 - (void)shareAction:(SHGActionObject *)object baseController:(UIViewController *)controller finishBlock:(void (^)(BOOL))block
 {
-    [Hud showLoadingWithMessage:@"请稍等..."];
-    NSString *request = [rBaseAddressForHttp stringByAppendingString:@"/share/meetActDetail"];
-    NSDictionary *param = @{@"rid":object.meetId};
-    [MOCHTTPRequestOperationManager getWithURL:request parameters:param success:^(MOCHTTPResponse *response) {
-        [Hud hideHud];
-        [Hud showMessageWithText:@"分享成功"];
-        if (block) {
-            block(YES);
-        }
-    } failed:^(MOCHTTPResponse *response) {
-        [Hud hideHud];
-        [Hud showMessageWithText:@"分享失败"];
-        if (block) {
-            block(NO);
-        }
-    }];
-    NSString *postContent = @"";
-    NSString *shareContent = @"";
+    NSString *request = [rBaseAddressForHttp stringByAppendingFormat:@"/share/meetActDetail?rid=%@",object.meetId];
     UIImage *png = [UIImage imageNamed:@"80.png"];
     id<ISSCAttachment> image  = [ShareSDK pngImageWithImage:png];
-    NSString *content = [NSString stringWithFormat:@"%@\"%@\"%@%@",@"Hi，我在金融大牛圈上看到了一个非常棒的帖子,关于",postContent,@"，赶快下载大牛圈查看吧！",request];
+    NSString *theme = object.theme;
+    if (theme.length > 15) {
+        theme = [NSString stringWithFormat:@"%@…",[object.theme substringToIndex:15]];
+    }
+    NSString *postContent = [NSString stringWithFormat:@"【活动】%@", theme];
+    NSString *shareContent = [NSString stringWithFormat:@"【活动】%@", theme];
+    NSString *content = [NSString stringWithFormat:@"%@\"%@\"%@%@",@"Hi，我在金融大牛圈上看到了一个非常棒的活动,关于",postContent,@"，赶快下载大牛圈查看吧！",[NSString stringWithFormat:@"%@%@",rBaseAddressForHttpShare,object.meetId]];
 
-    id<ISSShareActionSheetItem> item0 = [ShareSDK shareActionSheetItemWithTitle:@"短信" icon:[UIImage imageNamed:@"sns_icon_19"] clickHandler:^{
+    id<ISSShareActionSheetItem> item0 = [ShareSDK shareActionSheetItemWithTitle:@"微信好友" icon:[UIImage imageNamed:@"sns_icon_22"] clickHandler:^{
+        [[AppDelegate currentAppdelegate] shareActionToWeChat:0 content:postContent];
+    }];
+    id<ISSShareActionSheetItem> item1 = [ShareSDK shareActionSheetItemWithTitle:@"朋友圈" icon:[UIImage imageNamed:@"sns_icon_23"] clickHandler:^{
+        [[AppDelegate currentAppdelegate] shareActionToWeChat:1 content:postContent];
+    }];
+    id<ISSShareActionSheetItem> item2 = [ShareSDK shareActionSheetItemWithTitle:@"短信" icon:[UIImage imageNamed:@"sns_icon_19"] clickHandler:^{
         [[AppDelegate currentAppdelegate] shareActionToSMS:content];
     }];
-
-    id<ISSShareActionSheetItem> item1 = [ShareSDK shareActionSheetItemWithTitle:@"朋友圈" icon:[UIImage imageNamed:@"sns_icon_23"] clickHandler:^{
-        [[AppDelegate currentAppdelegate] shareActionToWeChat:1 content:content];
-    }];
-    id<ISSShareActionSheetItem> item2 = [ShareSDK shareActionSheetItemWithTitle:@"微信好友" icon:[UIImage imageNamed:@"sns_icon_22"] clickHandler:^{
-        [[AppDelegate currentAppdelegate] shareActionToWeChat:0 content:content];
+    id<ISSShareActionSheetItem> item3 = [ShareSDK shareActionSheetItemWithTitle:@"圈内好友" icon:[UIImage imageNamed:@"圈内好友图标"] clickHandler:^{
+        [self shareToFriendController:controller content:content];
     }];
     NSArray *shareArray = nil;
     if ([WXApi isWXAppSupportApi]) {
         if ([QQApiInterface isQQSupportApi]) {
-            shareArray = [ShareSDK customShareListWithType: item0, item1, item2, SHARE_TYPE_NUMBER(ShareTypeQQ), nil];
+            shareArray = [ShareSDK customShareListWithType: item0, item1, SHARE_TYPE_NUMBER(ShareTypeQQ), item2, item3, nil];
         } else{
-            shareArray = [ShareSDK customShareListWithType: item0, item1, item2, nil];
+            shareArray = [ShareSDK customShareListWithType: item0, item1, item2, item3, nil];
         }
     } else{
         if ([QQApiInterface isQQSupportApi]) {
-            shareArray = [ShareSDK customShareListWithType: item0, SHARE_TYPE_NUMBER(ShareTypeQQ), nil];
+            shareArray = [ShareSDK customShareListWithType: SHARE_TYPE_NUMBER(ShareTypeQQ), item2, item3, nil];
         } else{
-            shareArray = [ShareSDK customShareListWithType: item0, nil];
+            shareArray = [ShareSDK customShareListWithType: item2, item3, nil];
         }
     }
     NSString *shareUrl = request;
@@ -332,11 +323,22 @@
     //弹出分享菜单
     [ShareSDK showShareActionSheet:container shareList:shareArray content:publishContent statusBarTips:YES authOptions:nil shareOptions:nil result:^(ShareType type, SSResponseState state, id<ISSPlatformShareInfo> statusInfo, id<ICMErrorInfo> error, BOOL end) {
         if (state == SSResponseStateSuccess){
-            NSLog(NSLocalizedString(@"TEXT_ShARE_SUC", @"分享成功"));
+            [Hud showMessageWithText:@"分享成功"];
+        } else if (state == SSResponseStateCancel){
+            [Hud showMessageWithText:@"分享取消"];
         } else if (state == SSResponseStateFail){
-            NSLog(NSLocalizedString(@"TEXT_ShARE_FAI", @"分享失败,错误码:%d,错误描述:%@"), [error errorCode], [error errorDescription]);
+            [Hud showMessageWithText:@"分享失败"];
         }
     }];
+}
+
+//分享给好友
+- (void)shareToFriendController:(UIViewController *)controller content:(NSString *)content
+{
+    FriendsListViewController *vc = [[FriendsListViewController alloc] init];
+    vc.isShare = YES;
+    vc.shareContent = content;
+    [controller.navigationController pushViewController:vc animated:YES];
 }
 
 @end
