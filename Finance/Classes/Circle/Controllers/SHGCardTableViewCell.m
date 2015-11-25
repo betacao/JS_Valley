@@ -52,7 +52,13 @@
 
 -(void)clearCell
 {
-    self.obj = nil;
+    self.userNameLabel.text = @"";
+    self.companyLabel.text = @"";
+    self.positionLabel.text = @"";
+    self.departmentLabel.text = @"";
+    self.positionLabel.text = @"";
+    self.friendImage.image = nil;
+    self.tagViews = nil;
 }
 
 - (UIView *)viewForTags:(NSArray *)array

@@ -29,6 +29,7 @@
               @"titles":@"titles",
               @"time":@"time",
               @"friendShip":@"friendship",
+              @"collectTime":@"collecttime",
               };
 }
 

@@ -111,8 +111,7 @@
 		case 1:
 		{
             self.tableView.separatorStyle = 0;
-
-			self.selectType = 2;
+             self.selectType = 2;
             [Hud showLoadingWithMessage:@"加载中"];
             [self requestProductListWithTarget:@"first" time:@""];
             
@@ -123,7 +122,7 @@
             self.tableView.separatorStyle = 0;
             self.selectType = 3;
             [Hud showLoadingWithMessage:@"加载中"];
-            [self requestCardListWithTarget:@"first" time:@""];
+            [self requestCardListWithTarget:@"first" time:@"-1" ];
             
             
         }
@@ -171,7 +170,7 @@
 		}
         else if (self.selectType == 3){
             SHGCollectCardClass *obj = self.dataSource[0];
-            updateTime = obj.time;
+            updateTime = obj.collectTime;
             [self requestCardListWithTarget:target time:updateTime];
         }
 
@@ -195,6 +194,7 @@
 		}else if (self.selectType == 2){
 			[self requestProductListWithTarget:@"load" time:updateTime];
         }else if (self.selectType == 3){
+             [Hud showLoadingWithMessage:@"加载中"];
             [self requestCardListWithTarget:@"load" time:updateTime];
         }
 
@@ -593,11 +593,19 @@
 
 - (void)requestCardListWithTarget:(NSString *)target time:(NSString *)time
 {
+    if ([target isEqualToString:@"first"])
+    {
+        [self.tableView.footer resetNoMoreData];
+        hasDataFinished = NO;
+        
+    }
+
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
     [Hud showLoadingWithMessage:@"加载中"];
     NSDictionary *param = @{@"uid":uid,
                            @"target":target,
-                           @"num":@"10"};
+                            @"time":time,
+                           @"num":@"100"};
     [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttp,@"userCard",@"myCardlist"] class:[SHGCollectCardClass class] parameters:param success:^(MOCHTTPResponse *response) {
         NSLog(@"=========%@",response.dataArray);
         
@@ -789,7 +797,7 @@
         [cell loadDatasWithObj:obj];
         return cell;
     }if (self.selectType == 3) {
-        NSString *cardCellIdentifier = @"cardCellIdentifier";
+        NSString *cardCellIdentifier = @"SHGCardTableViewCell";
         SHGCardTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cardCellIdentifier];
         if (!cell) {
             cell = [[[NSBundle mainBundle] loadNibNamed:@"SHGCardTableViewCell" owner:self options:nil] lastObject];

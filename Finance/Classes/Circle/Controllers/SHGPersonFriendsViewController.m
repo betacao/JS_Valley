@@ -187,7 +187,7 @@
 -(UITableViewCell * )tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     BasePeopleObject * obj = self.contactsSource[indexPath.row];
-    NSString *cellIdentifier = @"circleListIdentifier";
+    NSString *cellIdentifier = @"SHGPersonFriendsTableViewCell";
     SHGPersonFriendsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     if (!cell) {
         cell = [[[NSBundle mainBundle] loadNibNamed:@"SHGPersonFriendsTableViewCell" owner:self options:nil] lastObject];
