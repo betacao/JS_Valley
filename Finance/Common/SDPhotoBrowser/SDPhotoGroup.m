@@ -68,7 +68,7 @@
         UIImageView *imageView = (UIImageView *)[self.subviews firstObject];
         imageView.contentMode = UIViewContentModeScaleAspectFill;
         imageView.clipsToBounds = YES;
-        imageView.frame = CGRectMake(0.0f, 0.0f, kCellContentWidth, 2 * height + CELL_PHOTO_SEP);
+        imageView.frame = CGRectMake(0.0f, 0.0f, 2 * width + CELL_PHOTO_SEP, 2 * height + CELL_PHOTO_SEP);
         totalHeight = 2 * width + CELL_PHOTO_SEP;
     }
 

@@ -279,5 +279,28 @@
 
 }
 
+#pragma mark ------ 点赞状态改变
+
+- (void)didChangePraiseState:(SHGActionObject *)object isPraise:(BOOL)isPraise
+{
+    for (UIViewController *controller in self.viewControllers){
+        if ([controller respondsToSelector:@selector(currentDataArray)]) {
+            NSMutableArray *array = [controller performSelector:@selector(currentDataArray)];
+            for (SHGActionObject * obj in array){
+                if ([object.meetId isEqualToString:obj.meetId]) {
+                    obj.isPraise = isPraise ? @"Y" : @"N";
+                    if (isPraise) {
+                        obj.praiseNum = [NSString stringWithFormat:@"%ld",(long)[obj.praiseNum integerValue] + 1];
+                    } else{
+                        obj.praiseNum = [NSString stringWithFormat:@"%ld",(long)[obj.praiseNum integerValue] + 1];
+                    }
+                    break;
+                }
+            }
+        }
+        [controller performSelector:@selector(reloadData)];
+    }
+
+}
 
 @end

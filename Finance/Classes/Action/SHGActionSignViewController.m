@@ -16,7 +16,7 @@
 #define PRAISE_RIGHTWIDTH     40
 #define PRAISE_WIDTH 30.0f
 
-@interface SHGActionSignViewController ()<UITableViewDataSource,UITableViewDelegate, SHGActionSignDelegate>
+@interface SHGActionSignViewController ()<UITableViewDataSource,UITableViewDelegate, SHGActionSignCellDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) IBOutlet UIView *headerView;
 @property (weak, nonatomic) IBOutlet UIImageView *titleBgView;
@@ -200,21 +200,43 @@
         [[SHGActionManager shareActionManager] addPraiseWithObject:self.object finishBlock:^(BOOL success) {
             [weakSelf loadPraiseButtonState];
             [weakSelf loadFooterUI];
+            [weakSelf didChangePraiseState:weakSelf.object isPraise:YES];
         }];
     } else{
         [[SHGActionManager shareActionManager] deletePraiseWithObject:self.object finishBlock:^(BOOL success) {
             [weakSelf loadPraiseButtonState];
             [weakSelf loadFooterUI];
+            [weakSelf didChangePraiseState:weakSelf.object isPraise:NO];
         }];
     }
+}
+
+- (void)didChangePraiseState:(SHGActionObject *)object isPraise:(BOOL)isPraise
+{
+    if (self.delegate && [self.delegate respondsToSelector:@selector(didChangePraiseState:isPraise:)]) {
+        [self.delegate didChangePraiseState:object isPraise:isPraise];
+    }
+}
+
+- (NSInteger)numberOfAttend
+{
+    NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
+    NSInteger count = self.object.attendList.count;
+    for (SHGActionAttendObject *object in self.object.attendList){
+        if ([object.uid isEqualToString:uid]) {
+            count--;
+            [self.object.attendList removeObject:object];
+            break;
+        }
+    }
+    count = count > 3 ? 3: count;
+    return count;
 }
 
 #pragma mark ------tableViewDelegate
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    NSInteger count = [self.object.attendNum integerValue];
-    count = count > 3 ? 3: count;
-    return count;
+    return [self numberOfAttend];
 }
 
 - (UITableViewCell * )tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -227,10 +249,8 @@
         cell.delegate = self;
     }
     [cell loadCellWithObject:[self.object.attendList objectAtIndex:indexPath.row] publisher:self.object.publisher];
-    NSInteger count = [self.object.attendNum integerValue];
-    count = count > 3 ? 3: count;
-    //count = 0 ;
-    if (indexPath.row ==  count-1 )
+    NSInteger count = [self numberOfAttend];
+    if (indexPath.row ==  count - 1)
     {
         [cell loadLastCellLineImage];
     }

@@ -9,12 +9,18 @@
 #import "BaseViewController.h"
 #import "SHGActionObject.h"
 
+@protocol SHGActionSignControllerDelegate <NSObject>
+
+- (void)didChangePraiseState:(SHGActionObject *)object isPraise:(BOOL)isPraise;
+
+@end
 typedef void (^SHGActionSignViewControllerLoadFinishBlock)(CGFloat height);
 @interface SHGActionSignViewController : BaseViewController
 
 @property (strong, nonatomic) SHGActionObject *object;
 @property (copy, nonatomic) SHGActionSignViewControllerLoadFinishBlock finishBlock;
 @property (weak, nonatomic) UIViewController *superController;
+@property (assign, nonatomic) id<SHGActionSignControllerDelegate> delegate;
 - (CGFloat) heightForView;
 - (void)refreshUI;
 - (void)reloadData;

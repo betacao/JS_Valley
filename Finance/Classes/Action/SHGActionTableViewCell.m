@@ -70,7 +70,11 @@
     [self clearCell];
     [self.Action_headImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,object.headerImageUrl]] placeholderImage:[UIImage imageNamed:@"default_head"]];
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
-    self.Action_titlelabel.text = object.theme;
+    NSString *theme = object.theme;
+    if (theme.length > 15) {
+        theme = [[theme substringToIndex:15] stringByAppendingString:@"..."];
+    }
+    self.Action_titlelabel.text = theme;
     self.Action_nameLable.text = object.realName;
     if (object.createTime.length > 0) {
         self.Action_pubdateLabel.text = [[object.createTime substringWithRange:NSMakeRange(5, 5)] stringByAppendingString:@"发布"];

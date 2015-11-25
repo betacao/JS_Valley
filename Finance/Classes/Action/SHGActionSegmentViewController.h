@@ -8,8 +8,9 @@
 
 #import "BaseViewController.h"
 #import "SHGActionSendViewController.h"
+#import "SHGActionSignViewController.h"
 
-@interface SHGActionSegmentViewController : BaseViewController<SHGActionSendDelegate>
+@interface SHGActionSegmentViewController : BaseViewController<SHGActionSendDelegate, SHGActionSignControllerDelegate>
 
 @property (nonatomic, copy) NSArray *viewControllers;
 @property (nonatomic, weak) UIViewController *selectedViewController;

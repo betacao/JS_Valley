@@ -43,6 +43,16 @@
     [self loadDataWithType:@"first" meetID:@"-1"];
 }
 
+- (void)reloadData
+{
+    [self.listTable reloadData];
+}
+
+- (NSMutableArray *)currentDataArray
+{
+    return self.dataArr;
+}
+
 - (void)addNewAction:(UIButton *)button
 {
     SHGActionSendViewController *controller = [[SHGActionSendViewController alloc] initWithNibName:@"SHGActionSendViewController" bundle:nil];

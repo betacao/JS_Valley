@@ -10,7 +10,7 @@
 #import "SHGActionSignTableViewCell.h"
 #import "SHGActionManager.h"
 
-@interface SHGActionTotalInViewController ()<UITableViewDataSource, UITableViewDelegate, SHGActionSignDelegate>
+@interface SHGActionTotalInViewController ()<UITableViewDataSource, UITableViewDelegate, SHGActionSignCellDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @end
 

@@ -9,5 +9,7 @@
 #import "BaseTableViewController.h"
 
 @interface SHGActionMineViewController : BaseTableViewController
+- (NSMutableArray *) currentDataArray;
 - (void)refreshData;
+- (void)reloadData;
 @end
