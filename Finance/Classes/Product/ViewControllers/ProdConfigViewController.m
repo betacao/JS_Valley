@@ -331,7 +331,7 @@
             VerifyIdentityViewController *controller = [[VerifyIdentityViewController alloc] init];
             [weakSelf.navigationController pushViewController:controller animated:YES];
         }
-    }];
+    } failString:@"认证后才能进行操作哦～"];
 
 }
 

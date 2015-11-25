@@ -392,7 +392,7 @@
 }
 
 
-- (void)requsetUserVerifyStatus:(void (^)(BOOL))block
+- (void)requsetUserVerifyStatus:(void (^)(BOOL))block failString:(NSString *)string
 {
     [Hud showLoadingWithMessage:@"请稍等..."];
     NSString *request = [rBaseAddressForHttp stringByAppendingString:@"/auth/isAuth"];
@@ -401,7 +401,7 @@
         [Hud hideHud];
         //未认证
         if ([[response.dataDictionary objectForKey:@"status"] isEqualToString:@"0"]) {
-            DXAlertView *alert = [[DXAlertView alloc] initWithTitle:@"提示" contentText:@"您当前还未认证，认证后即可操作~赶快认证吧！" leftButtonTitle:@"取消" rightButtonTitle:@"去认证"];
+            DXAlertView *alert = [[DXAlertView alloc] initWithTitle:@"提示" contentText:string leftButtonTitle:@"取消" rightButtonTitle:@"去认证"];
             alert.rightBlock = ^{
                 if (block) {
                     block(NO);

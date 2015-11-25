@@ -319,7 +319,7 @@
             VerifyIdentityViewController *controller = [[VerifyIdentityViewController alloc] init];
             [self.navigationController pushViewController:controller animated:YES];
         }
-    }];
+    } failString:@"认证后才能发布产品哦～"];
 }
 -(void)refreshHeader
 {
@@ -582,7 +582,7 @@
             VerifyIdentityViewController *controller = [[VerifyIdentityViewController alloc] init];
             [weakSelf.navigationController pushViewController:controller animated:YES];
         }
-    }];
+    } failString:@"认证后才能进行操作哦～"];
 
 }
 

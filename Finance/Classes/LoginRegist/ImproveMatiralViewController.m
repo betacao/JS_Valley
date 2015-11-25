@@ -554,6 +554,10 @@
 
 - (void)layoutSubviews
 {
+    [super layoutSubviews];
+    if (self.buttonArrays.count > 0) {
+        return;
+    }
     [self.buttonArrays removeAllObjects];
     CGFloat width = (CGRectGetWidth(self.frame) - 2 * kPersonCategoryLeftMargin - 3 * kPersonCategoryHorizontalMargin) / 4.0f;
     for(SHGUserTagModel *model in self.dataArray){
