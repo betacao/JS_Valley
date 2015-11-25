@@ -20,7 +20,13 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"他的动态";
+    if ([self.userId isEqualToString: [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID]]) {
+        self.title = @"我的动态";
+    }else
+    {
+        self.title = @"他的动态";
+    }
+    
     [self addHeaderRefresh:self.tableView headerRefesh:NO andFooter:YES];
     self.target = @"first";
     [self requestDataWithTarget:@"first" time:@"-1"];

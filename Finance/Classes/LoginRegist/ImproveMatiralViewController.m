@@ -66,7 +66,7 @@
 
     self.headImageButton.layer.masksToBounds = YES;
     self.headImageButton.layer.cornerRadius = CGRectGetHeight(self.headImageButton.frame) / 2.0f;
-    [self initTextFieldStyle:@[self.nameTextField, self.companyTextField, self.titleTextField,self.industrycodeTextField]];
+    [self initTextFieldStyle:@[self.nameTextField,self.industrycodeTextField, self.companyTextField, self.titleTextField]];
 
     self.personCategoryView.superview.hidden = YES;
 
@@ -280,6 +280,7 @@
                 [weakSelf chatLoagin];
                 [weakSelf dealFriendPush];
                 [weakSelf uploadUserSelectedInfo];
+                NSLog(@"**********");
             }
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             [Hud hideHud];
@@ -297,16 +298,16 @@
         [Hud showMessageWithText:@"名字过长，最大长度为12个字"];
         return NO;
     }
+    if (IsStrEmpty(self.industrycodeTextField.text)) {
+        [Hud showMessageWithText:@"请输入行业"];
+        return NO;
+    }
     if (IsStrEmpty(self.companyTextField.text)) {
         [Hud showMessageWithText:@"请输入公司名"];
         return NO;
     }
     if (IsStrEmpty(self.titleTextField.text)) {
         [Hud showMessageWithText:@"请输入职务"];
-        return NO;
-    }
-    if (IsStrEmpty(self.industrycodeTextField.text)) {
-        [Hud showMessageWithText:@"请输入行业"];
         return NO;
     }
     if ([self.personCategoryView userSelectedTags].count == 0) {
