@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9059" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9059" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -15,77 +14,62 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="53.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="default_head" translatesAutoresizingMaskIntoConstraints="NO" id="BTo-At-c3z" userLabel="headImage View">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default_head" id="BTo-At-c3z" userLabel="headImage View">
                         <rect key="frame" x="14" y="10" width="30" height="30"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <animations/>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="李新星" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vfa-WB-MwF" userLabel="nameLabel">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="李新星" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="vfa-WB-MwF" userLabel="nameLabel">
                         <rect key="frame" x="54" y="10" width="139" height="15"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <animations/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="华为科技有限公司" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="khf-CB-8Cw" userLabel="commpanyLabel">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="华为科技有限公司" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="khf-CB-8Cw" userLabel="commpanyLabel">
                         <rect key="frame" x="54" y="27" width="139" height="15"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <animations/>
                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                         <color key="textColor" red="0.37647058823529411" green="0.37647058823529411" blue="0.37647058823529411" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XUH-Op-Tqp" userLabel="rightButton">
+                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="XUH-Op-Tqp" userLabel="rightButton">
                         <rect key="frame" x="256" y="19" width="50" height="15"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                         <animations/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="50" id="9Zo-hs-7XK"/>
-                            <constraint firstAttribute="height" constant="15" id="Pff-71-i2k"/>
-                        </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                         <state key="normal" title="Button"/>
                         <connections>
                             <action selector="clickRightButton:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="7PD-Lt-2Ew"/>
                         </connections>
                     </button>
-                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k9s-ZY-UQ3" userLabel="leftButton">
+                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="k9s-ZY-UQ3" userLabel="leftButton">
                         <rect key="frame" x="201" y="19" width="50" height="15"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                         <animations/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="15" id="HPY-ib-Pbg"/>
-                            <constraint firstAttribute="width" constant="50" id="lk3-OB-GpB"/>
-                        </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                         <state key="normal" title="Button"/>
                         <connections>
                             <action selector="clickLeftButton:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="mqI-7C-d9K"/>
                         </connections>
                     </button>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="b9E-LR-B2g">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="b9E-LR-B2g">
                         <rect key="frame" x="0.0" y="52" width="320" height="1"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                         <animations/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="1" id="s1R-BU-dv7"/>
-                        </constraints>
                     </imageView>
-                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="l3a-nD-3to">
+                    <view contentMode="scaleToFill" id="l3a-nD-3to">
                         <rect key="frame" x="14" y="52" width="306" height="1"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                         <animations/>
                         <color key="backgroundColor" red="0.90588235294117647" green="0.90588235294117647" blue="0.90588235294117647" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
                 </subviews>
                 <animations/>
-                <constraints>
-                    <constraint firstAttribute="bottomMargin" secondItem="b9E-LR-B2g" secondAttribute="bottom" constant="-8" id="UZZ-PB-mTA"/>
-                    <constraint firstItem="b9E-LR-B2g" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="-8" id="ggl-8a-ir3"/>
-                    <constraint firstItem="k9s-ZY-UQ3" firstAttribute="trailing" secondItem="XUH-Op-Tqp" secondAttribute="leading" constant="-5" id="qUF-3R-5vO"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="XUH-Op-Tqp" secondAttribute="trailing" constant="6" id="srV-pC-InZ"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="b9E-LR-B2g" secondAttribute="trailing" constant="-8" id="thz-UP-BN1"/>
-                </constraints>
             </tableViewCellContentView>
             <animations/>
-            <constraints>
-                <constraint firstItem="XUH-Op-Tqp" firstAttribute="top" secondItem="KGk-i7-Jjw" secondAttribute="top" constant="19" id="F5g-H6-cKq"/>
-                <constraint firstItem="k9s-ZY-UQ3" firstAttribute="top" secondItem="KGk-i7-Jjw" secondAttribute="top" constant="19" id="Kcu-Dh-PNf"/>
-            </constraints>
             <connections>
                 <outlet property="action_bottomView" destination="l3a-nD-3to" id="LKY-Yh-l9S"/>
                 <outlet property="action_bottomXuXian" destination="b9E-LR-B2g" id="Q9z-8p-u7A"/>
@@ -95,6 +79,7 @@
                 <outlet property="action_signNameLabel" destination="vfa-WB-MwF" id="SCJ-He-62h"/>
                 <outlet property="action_signRightButton" destination="XUH-Op-Tqp" id="NBi-hG-7DD"/>
             </connections>
+            <point key="canvasLocation" x="241" y="246"/>
         </tableViewCell>
     </objects>
     <resources>
