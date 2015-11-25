@@ -62,6 +62,7 @@
     self.leftButton.hidden = YES;
     self.rightButton.hidden = YES;
     self.middleButton.hidden = YES;
+    self.firstCellHeight = 1.0f;
     [self loadActionDetail:self.object];
 }
 

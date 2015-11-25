@@ -408,6 +408,7 @@
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
 {
     if ([textField isEqual:self.industrycodeTextField]) {
+        [self.currentField resignFirstResponder];
         [self showIndustryChoiceView];
         return NO;
     }
@@ -425,7 +426,7 @@
     if(!self.currentField ||CGRectGetHeight(self.keyboaradRect) == 0){
         return;
     }
-    if(CGRectGetMaxY(self.currentField.frame)+64.0f > CGRectGetMinY(self.keyboaradRect)){
+    if(CGRectGetMaxY(self.currentField.frame) + 64.0f > CGRectGetMinY(self.keyboaradRect)){
         [self.bgScrollView setContentOffset:CGPointMake(0.0f, CGRectGetMaxY(self.currentField.frame) - CGRectGetMinY(self.keyboaradRect) + 2 * 64.0f) animated:YES];
     }
 }

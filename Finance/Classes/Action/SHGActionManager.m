@@ -284,7 +284,7 @@
     }
     NSString *postContent = [NSString stringWithFormat:@"【活动】%@", theme];
     NSString *shareContent = [NSString stringWithFormat:@"【活动】%@", theme];
-    NSString *content = [NSString stringWithFormat:@"%@\"%@\"%@%@",@"Hi，我在金融大牛圈上看到了一个非常棒的活动,关于",postContent,@"，赶快下载大牛圈查看吧！",[NSString stringWithFormat:@"%@%@",rBaseAddressForHttpShare,object.meetId]];
+    NSString *content = [NSString stringWithFormat:@"%@\"%@\"%@%@",@"Hi，我在金融大牛圈上看到了一个非常棒的活动,关于",theme,@"，赶快下载大牛圈查看吧！",[NSString stringWithFormat:@"%@%@",rBaseAddressForHttpShare,object.meetId]];
 
     id<ISSShareActionSheetItem> item0 = [ShareSDK shareActionSheetItemWithTitle:@"微信好友" icon:[UIImage imageNamed:@"sns_icon_22"] clickHandler:^{
         [[AppDelegate currentAppdelegate] shareActionToWeChat:0 content:postContent];
