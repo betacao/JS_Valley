@@ -7,6 +7,7 @@
 //
 
 #import "SHGActionTableViewCell.h"
+#define kItemMargin 7.0f * XFACTOR
 
 @interface SHGActionTableViewCell ()
 
@@ -16,7 +17,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *Action_nameLable;
 @property (weak, nonatomic) IBOutlet UILabel *Action_pubdateLabel;
 @property (weak, nonatomic) IBOutlet UIButton *Action_signButton;
-@property (weak, nonatomic) IBOutlet UIImageView *Action_lineImage;
+@property (weak, nonatomic) IBOutlet UIView *Action_lineView;
+@property (weak, nonatomic) IBOutlet UILabel *Action_companyLable;
 @property (weak, nonatomic) IBOutlet UILabel *Action_departmentLable;
 @property (weak, nonatomic) IBOutlet UIImageView *Action_timeImage;
 @property (weak, nonatomic) IBOutlet UILabel *Action_timeLabel;
@@ -70,7 +72,9 @@
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
     self.Action_titlelabel.text = object.theme;
     self.Action_nameLable.text = object.realName;
-    self.Action_departmentLable.text = object.department;
+    if (object.createTime.length > 0) {
+        self.Action_pubdateLabel.text = [[object.createTime substringWithRange:NSMakeRange(5, 5)] stringByAppendingString:@"发布"];
+    }
     self.Action_pubdateLabel.text = object.createTime;
     self.Action_timeLabel.text = [object.startTime stringByAppendingFormat:@"-%@",object.endTime];
     self.Action_addressLabel.text = object.meetArea;
@@ -114,6 +118,41 @@
             [self.Action_zanButton setImage:[UIImage imageNamed:@"home_weizan"] forState:UIControlStateNormal];
         }
     }
+    [self layoutSubviewsFrame];
+}
+
+- (void)layoutSubviewsFrame
+{
+    CGSize size = [self.Action_nameLable sizeThatFits:CGSizeMake(CGFLOAT_MAX, CGRectGetHeight(self.Action_nameLable.frame))];
+    CGRect frame = self.Action_nameLable.frame;
+    frame.size.width = size.width;
+    self.Action_nameLable.frame = frame;
+
+    frame = self.Action_lineView.frame;
+    frame.origin.x = CGRectGetMaxX(self.Action_nameLable.frame) + kItemMargin;
+    self.Action_lineView.frame = frame;
+
+    NSString *company = self.object.company;
+    if (self.object.company.length > 5) {
+        company = [[company substringToIndex:5] stringByAppendingString:@"..."];
+    }
+    self.Action_companyLable.text = company;
+    frame = self.Action_companyLable.frame;
+    size = [self.Action_companyLable sizeThatFits:CGSizeMake(CGFLOAT_MAX, CGRectGetHeight(self.Action_companyLable.frame))];
+    frame.size.width = size.width;
+    frame.origin.x = CGRectGetMaxX(self.Action_lineView.frame) + kItemMargin;
+    self.Action_companyLable.frame = frame;
+
+    NSString *department = self.object.department;
+    if (self.object.department.length > 5) {
+        department = [[department substringToIndex:5] stringByAppendingString:@"..."];
+    }
+    self.Action_departmentLable.text = department;
+    frame = self.Action_departmentLable.frame;
+    size = [self.Action_departmentLable sizeThatFits:CGSizeMake(CGFLOAT_MAX, CGRectGetHeight(self.Action_departmentLable.frame))];
+    frame.size.width = size.width;
+    frame.origin.x = CGRectGetMaxX(self.Action_companyLable.frame) + kItemMargin;
+    self.Action_departmentLable.frame = frame;
 
 }
 
