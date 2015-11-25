@@ -11,8 +11,9 @@
 #import "HeadImage.h"
 #import "SHGUserTagModel.h"
 #import "SHGPersonFriendsTableViewCell.h"
+#import "SHGPersonalViewController.h"
 #define kRowHeight 50;
-@interface SHGPersonFriendsViewController ()<UITableViewDataSource,UITableViewDelegate>
+@interface SHGPersonFriendsViewController ()<UITableViewDataSource,UITableViewDelegate,SHGPersonFriendsDelegate>
 {
 //    NSInteger pageNum;
     
@@ -45,9 +46,8 @@
     [super viewDidLoad];
     self.tableView.dataSource =self;
     self.tableView.delegate = self;
-    //self.dataSource = [NSMutableArray array];
-    //_contactsSource = [NSMutableArray array];
     self.pageNum = 1;
+    
 }
 -(void)friendStatus:(NSString *)status
 {
@@ -62,7 +62,12 @@
     
     
 }
-
+- (void)tapUserHeaderImageView:(NSString *)uid
+{
+    SHGPersonalViewController * vc = [[SHGPersonalViewController alloc]init ];
+    vc.userId = uid;
+    [self.navigationController pushViewController:vc animated:YES];
+}
 - (NSMutableArray *)dataSource
 {
     if ((!_dataSource)) {
@@ -125,8 +130,8 @@
         } failed:^(MOCHTTPResponse *response) {
             [Hud hideHud];
             [Hud showMessageWithText:response.errorMessage];
-            //        [self.tableView.header endRefreshing];
-            //        [self.tableView.footer endRefreshing];
+            [self.tableView.header endRefreshing];
+            [self.tableView.footer endRefreshing];
         }];
 
     }else if([self.friend_status isEqualToString:@"all"])
@@ -168,8 +173,8 @@
         } failed:^(MOCHTTPResponse *response) {
             [Hud hideHud];
             [Hud showMessageWithText:response.errorMessage];
-            //        [self.tableView.header endRefreshing];
-            //        [self.tableView.footer endRefreshing];
+            [self.tableView.header endRefreshing];
+            [self.tableView.footer endRefreshing];
         }];
 
     }
@@ -192,10 +197,10 @@
     if (!cell) {
         cell = [[[NSBundle mainBundle] loadNibNamed:@"SHGPersonFriendsTableViewCell" owner:self options:nil] lastObject];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        
     }
-    [cell.headeimage updateHeaderView:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,obj.headImageUrl] placeholderImage:[UIImage imageNamed:@"default_head"]];
-    cell.nameLabel.text = obj.name;
-    cell.companyLabel.text = obj.company;
+    [cell loadDatasWithObj:obj];
+    cell.delegate = self;
 
     return cell;
 }

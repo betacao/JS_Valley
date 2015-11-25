@@ -7,14 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "BasePeopleObject.h"
+@protocol SHGPersonFriendsDelegate<NSObject>
+- (void)tapUserHeaderImageView:(NSString *)uid;
+@end
 @interface SHGPersonFriendsTableViewCell : UITableViewCell
 
-@property (weak, nonatomic) IBOutlet headerView *headeimage;
-@property (weak, nonatomic) IBOutlet UILabel *nameLabel;
-@property (weak, nonatomic) IBOutlet UILabel *companyLabel;
-@property (weak, nonatomic) IBOutlet UIView *lineView;
-
-//@property (nonatomic, strong) BasePeopleObject *obj;
-//@property (nonatomic, weak) id<BasePeopleTableViewCellDelegate> delegate;
+@property (strong, nonatomic) NSString *uid;
+@property (assign, nonatomic) id<SHGPersonFriendsDelegate> delegate;
+- (void)loadDatasWithObj:(BasePeopleObject *)obj;
 @end
