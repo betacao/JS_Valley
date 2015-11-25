@@ -233,9 +233,9 @@
         [Hud hideHud];
         [Hud showMessageWithText:@"报名成功"];
         if (block) {
-            SHGActionAttendObject *obj = [[[SHGGloble sharedGloble] parseServerJsonArrayToJSONModel:@[response.dataDictionary] class:[SHGActionAttendObject class]] firstObject];
-            [object.attendList addObject:obj];
-            object.attendNum = [NSString stringWithFormat:@"%ld",(long)[object.attendNum integerValue] + 1];
+//            SHGActionAttendObject *obj = [[[SHGGloble sharedGloble] parseServerJsonArrayToJSONModel:@[response.dataDictionary] class:[SHGActionAttendObject class]] firstObject];
+//            [object.attendList addObject:obj];
+//            object.attendNum = [NSString stringWithFormat:@"%ld",(long)[object.attendNum integerValue] + 1];
             block(YES);
         }
     } failed:^(MOCHTTPResponse *response) {
@@ -324,8 +324,6 @@
     [ShareSDK showShareActionSheet:container shareList:shareArray content:publishContent statusBarTips:YES authOptions:nil shareOptions:nil result:^(ShareType type, SSResponseState state, id<ISSPlatformShareInfo> statusInfo, id<ICMErrorInfo> error, BOOL end) {
         if (state == SSResponseStateSuccess){
             [Hud showMessageWithText:@"分享成功"];
-        } else if (state == SSResponseStateCancel){
-            [Hud showMessageWithText:@"分享取消"];
         } else if (state == SSResponseStateFail){
             [Hud showMessageWithText:@"分享失败"];
         }

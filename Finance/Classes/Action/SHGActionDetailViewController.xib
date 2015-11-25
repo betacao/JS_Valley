@@ -8,10 +8,10 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SHGActionDetailViewController">
             <connections>
                 <outlet property="bottomButtonView" destination="h7H-DS-Dyz" id="X81-Ep-6cC"/>
-                <outlet property="leftButton" destination="f5q-Os-sli" id="j7r-nM-P7v"/>
-                <outlet property="middleButton" destination="z6M-ap-AMd" id="EWh-NR-HMw"/>
+                <outlet property="leftButton" destination="GKp-7m-lst" id="HS7-J2-pmT"/>
+                <outlet property="middleButton" destination="VWe-CB-MMS" id="ISg-mT-lGx"/>
                 <outlet property="replyTable" destination="GQa-ln-hw7" id="oMc-9D-B4Z"/>
-                <outlet property="rightButton" destination="Vy9-qE-Fs6" id="liJ-UK-O0M"/>
+                <outlet property="rightButton" destination="Mbz-lW-i6d" id="u2Q-dy-EQ9"/>
                 <outlet property="sendButton" destination="VSB-Sw-n4r" id="naE-6q-ZdQ"/>
                 <outlet property="smileImage" destination="sZa-pa-poe" id="z4a-7c-gza"/>
                 <outlet property="speakButton" destination="0tw-Xn-IgP" id="rcQ-qS-wit"/>
@@ -28,31 +28,31 @@
                     <rect key="frame" x="0.0" y="483" width="320" height="40"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                     <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="f5q-Os-sli" userLabel="my_baomingButton">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="GKp-7m-lst">
                             <rect key="frame" x="0.0" y="0.0" width="160" height="40"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES"/>
                             <animations/>
-                            <state key="normal" title="报名"/>
+                            <state key="normal" title="Button"/>
                             <connections>
-                                <action selector="leftButtonClick:" destination="-1" eventType="touchUpInside" id="IG2-ru-iDg"/>
+                                <action selector="leftButtonClick:" destination="-1" eventType="touchUpInside" id="9mv-Ic-bfi"/>
                             </connections>
                         </button>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="z6M-ap-AMd" userLabel="baomingButton">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="VWe-CB-MMS">
                             <rect key="frame" x="0.0" y="0.0" width="320" height="40"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <animations/>
-                            <state key="normal" title="报名"/>
+                            <state key="normal" title="Button"/>
                             <connections>
-                                <action selector="middleButtonClick:" destination="-1" eventType="touchUpInside" id="fGe-qT-fsf"/>
+                                <action selector="middleButtonClick:" destination="-1" eventType="touchUpInside" id="ZLk-Ws-q43"/>
                             </connections>
                         </button>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Vy9-qE-Fs6" userLabel="my_shareButton">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Mbz-lW-i6d">
                             <rect key="frame" x="162" y="0.0" width="156" height="40"/>
                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" heightSizable="YES"/>
                             <animations/>
-                            <state key="normal" title="分享"/>
+                            <state key="normal" title="Button"/>
                             <connections>
-                                <action selector="rightButtonClick:" destination="-1" eventType="touchUpInside" id="jy5-Uo-AUF"/>
+                                <action selector="rightButtonClick:" destination="-1" eventType="touchUpInside" id="RgP-7I-90h"/>
                             </connections>
                         </button>
                     </subviews>

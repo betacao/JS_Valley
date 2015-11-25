@@ -229,7 +229,7 @@ typedef NS_ENUM(NSInteger, SHGActionSendType){
                         if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(didCreateNewAction)]) {
                             [weakSelf.delegate didCreateNewAction];
                         }
-                        UIViewController *controller = [weakSelf.navigationController.viewControllers firstObject];
+                        UIViewController *controller = [weakSelf.navigationController.viewControllers objectAtIndex:1];
                         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.2f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                             [weakSelf.navigationController popToViewController:controller animated:YES];
                         });

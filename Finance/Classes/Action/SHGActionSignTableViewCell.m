@@ -82,7 +82,8 @@
     [self.action_signHeadImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,object.headimageurl]] placeholderImage:[UIImage imageNamed:@"default_head"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
 
     }];
-    if ([object.uid isEqualToString:publisher]) {
+    NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
+    if ([uid isEqualToString:publisher]) {
         if ([object.state isEqualToString:@"0"]) {
             self.action_signLeftButton.hidden = NO;
             self.action_signRightButton.hidden = NO;
@@ -126,6 +127,7 @@
     __weak typeof(self)weakSelf = self;
     DXAlertView *alert = [[DXAlertView alloc] initWithCustomView:self.textView leftButtonTitle:@"取消" rightButtonTitle:@"确定"];
     alert.rightBlock = ^{
+        [weakSelf.textView resignFirstResponder];
         if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(meetAttend:clickRejectButton:reason:)]) {
             [weakSelf.delegate meetAttend:weakSelf.object clickRejectButton:button reason:weakSelf.textView.text];
         }

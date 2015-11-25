@@ -130,7 +130,6 @@
         //成功了 如果是自己则只能分享
         if ([self.responseObject.publisher isEqualToString:uid]) {
             self.middleButton.hidden = NO;
-            self.middleButton.enabled = NO;
             [self.middleButton setTitle:@"分享" forState:UIControlStateNormal];
             [self.middleButton setBackgroundColor:[UIColor colorWithHexString:@"F7514A"]];
         } else{
@@ -287,7 +286,7 @@
 
 - (void)buttonClick:(UIButton *)button
 {
-    __weak typeof(self) weaSelf = self;
+    __weak typeof(self) weakSelf = self;
     NSString *title = button.titleLabel.text;
     if ([title rangeOfString:@"被驳回"].location != NSNotFound) {
         DXAlertView *alertView = [[DXAlertView alloc] initWithTitle:@"驳回原因" contentText:self.rejectReason leftButtonTitle:nil rightButtonTitle:@"确定"];
@@ -308,11 +307,11 @@
     } else if([title rangeOfString:@"报名"].location != NSNotFound){
         DXAlertView *alert = [[DXAlertView alloc] initWithCustomView:self.cpTextView leftButtonTitle:@"取消" rightButtonTitle:@"确定"];
         alert.rightBlock = ^{
-            [[SHGActionManager shareActionManager] enterForActionObject:weaSelf.responseObject reason:weaSelf.cpTextView.text finishBlock:^(BOOL success) {
+            [[SHGActionManager shareActionManager] enterForActionObject:weakSelf.responseObject reason:weakSelf.cpTextView.text finishBlock:^(BOOL success) {
                 if (success) {
-                    [weaSelf.leftButton setTitle:@"审核中" forState:UIControlStateNormal];
-                    [weaSelf.leftButton setEnabled:NO];
-                    [weaSelf.signController reloadData];
+                    [weakSelf.cpTextView resignFirstResponder];
+                    [weakSelf.leftButton setTitle:@"审核中" forState:UIControlStateNormal];
+                    [weakSelf.leftButton setEnabled:NO];
                 }
             }];
         };

@@ -309,6 +309,10 @@
         [Hud showMessageWithText:@"请输入行业"];
         return NO;
     }
+    if ([self.personCategoryView userSelectedTags].count == 0) {
+        [Hud showMessageWithText:@"标签至少选择一项"];
+        return NO;
+    }
     return YES;
 }
 
