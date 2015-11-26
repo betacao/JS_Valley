@@ -357,22 +357,20 @@
 		if (toViewController == nil)  // don't animate
 		{
 			[fromViewController.view removeFromSuperview];
-		}
-		else if (fromViewController == nil)  // don't animate
-		{
+        }
+        else if (fromViewController == nil)  // don't animate
+        {
             __weak typeof(self) weakSelf = self;
-            dispatch_async(dispatch_get_main_queue(), ^{
-                toViewController.view.frame = contentContainerView.bounds;
-                [contentContainerView addSubview:toViewController.view];
-                if ([weakSelf.delegate respondsToSelector:@selector(SHG_SegmentController:didSelectViewController:atIndex:)])
-                    [weakSelf.delegate SHG_SegmentController:weakSelf didSelectViewController:toViewController atIndex:newSelectedIndex];
-            });
-		}
-		else if (animated)
-		{
-			CGRect rect = contentContainerView.bounds;
-			if (oldSelectedIndex < newSelectedIndex)
-				rect.origin.x = rect.size.width;
+            toViewController.view.frame = contentContainerView.bounds;
+            [contentContainerView addSubview:toViewController.view];
+            if ([weakSelf.delegate respondsToSelector:@selector(SHG_SegmentController:didSelectViewController:atIndex:)])
+                [weakSelf.delegate SHG_SegmentController:weakSelf didSelectViewController:toViewController atIndex:newSelectedIndex];
+        }
+        else if (animated)
+        {
+            CGRect rect = contentContainerView.bounds;
+            if (oldSelectedIndex < newSelectedIndex)
+                rect.origin.x = rect.size.width;
 			else
                 rect.origin.x = -rect.size.width;
 
