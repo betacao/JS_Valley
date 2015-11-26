@@ -37,7 +37,7 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
 @property (weak, nonatomic) IBOutlet UILabel *departmentLabel;
 @property (weak, nonatomic) IBOutlet UILabel *companyLabel;
 @property (weak, nonatomic) IBOutlet UILabel *positionLabel;
-
+@property (weak, nonatomic) IBOutlet UIImageView *friendImage;
 @property (weak, nonatomic) IBOutlet UIView *tagViews;
 @property (weak, nonatomic) IBOutlet UIImageView *headerBackImageView;
 @property (weak, nonatomic) IBOutlet UIView *footerView;
@@ -53,8 +53,8 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
 @property (strong, nonatomic) NSString *companyName;
 @property (strong, nonatomic) NSString *userStatus;
 @property (strong, nonatomic) NSString *friendNumber;
+@property (strong, nonatomic) NSString *friendShip;
 @property (assign, nonatomic) SHGUserType userType;
-
 @property (strong, nonatomic) NSString * position;
 @property (strong, nonatomic) NSString * tags;
 @property (strong, nonatomic) NSString * commonfriends;
@@ -116,9 +116,23 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
     self.companyLabel.text = self.companyName;
     self.userNameLabel.text = self.nickName;
     self.positionLabel.text =self.position;
-    NSArray *arry = [self.tags componentsSeparatedByString:@","];
-    [self.tagViews removeAllSubviews];
-    [self.tagViews addSubview:[self viewForTags:arry]];
+    
+    if (![self.tags isEqualToString:@""]) {
+        NSArray *arry = [self.tags componentsSeparatedByString:@","];
+        [self.tagViews removeAllSubviews];
+        [self.tagViews addSubview:[self viewForTags:arry]];
+    }
+    //判断好友是一度好友还是二度好友
+    if ([self.friendShip isEqualToString:@"一度"]) {
+        self.friendImage.image = [UIImage imageNamed:@"first_friend.png"];
+    }else if ([self.friendShip isEqualToString:@"二度"])
+    {
+        self.friendImage.image = [UIImage imageNamed:@"second_friend.png"];
+    }else
+    {
+        self.friendImage.image = nil;
+    }
+
     [self refreshFriendShip];
     [self refreshCollection];
 
@@ -163,6 +177,7 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
     self.tags = [dictionary objectForKey:@"tags"];
     self.friendNumber = [dictionary objectForKey:@"friends"];
     self.commonfriends = [dictionary objectForKey:@"commonfriends"];
+    self.friendShip = [dictionary objectForKey:@"friendship"];
     if ([[dictionary objectForKey:@"iscollected"] isEqualToString:@"true"]) {
         self.isCollected = YES;
     } else{

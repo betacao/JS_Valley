@@ -40,11 +40,15 @@
     }else if ([obj.friendShip isEqualToString:@"二度"])
     {
          self.friendImage.image = [UIImage imageNamed:@"second_friend.png"];
+    }else
+    {
+        self.friendImage.image = nil;
     }
-    NSArray *arry = [obj.tags componentsSeparatedByString:@","];
-    [self.tagViews removeAllSubviews];
-    [self.tagViews addSubview:[self viewForTags:arry]];
-
+    if (![obj.tags isEqualToString:@"" ]) {
+        NSArray *arry = [obj.tags componentsSeparatedByString:@","];
+        [self.tagViews removeAllSubviews];
+        [self.tagViews addSubview:[self viewForTags:arry]];
+    }
     [self initView];
     [self.headerImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,self.obj.headerImageUrl]] placeholderImage:[UIImage imageNamed:@"default_head"]];
   
@@ -59,6 +63,8 @@
     self.positionLabel.text = @"";
     self.friendImage.image = nil;
     self.tagViews = nil;
+    //[self.headerImageView sd_setImageWithURL:[NSURL URLWithString:ni placeholderImage:[UIImage imageNamed:@"default_head"]];
+    self.headerImageView.image = [UIImage imageNamed:@"default_head"];
 }
 
 - (UIView *)viewForTags:(NSArray *)array
