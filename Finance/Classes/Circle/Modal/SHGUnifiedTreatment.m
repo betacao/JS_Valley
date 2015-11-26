@@ -383,6 +383,7 @@
         NSDictionary *param = @{@"uid":[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID], @"oid":friend.uid};
         if(!friend.isFocus){
             [MOCHTTPRequestOperationManager postWithURL:url class:nil parameters:param success:^(MOCHTTPResponse *response) {
+                [Hud hideHud];
                 NSString *code = [response.data valueForKey:@"code"];
                 if ([code isEqualToString:@"000"]) {
                     friend.isFocus = YES;
@@ -393,10 +394,12 @@
                 }
                 [[SHGSegmentController sharedSegmentController] reloadData];
             } failed:^(MOCHTTPResponse *response) {
+                [Hud hideHud];
                 [Hud showMessageWithText:response.errorMessage];
             }];
         } else{
             [[AFHTTPRequestOperationManager manager] DELETE:url parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                [Hud hideHud];
                 NSString *code = [responseObject valueForKey:@"code"];
                 if ([code isEqualToString:@"000"]) {
                     friend.isFocus = NO;
@@ -404,6 +407,7 @@
                     [Hud showMessageWithText:@"取消关注成功"];
                     [[SHGSegmentController sharedSegmentController] reloadData];
                 } else{
+                    [Hud hideHud];
                     [Hud showMessageWithText:@"取消关注失败"];
                 }
             } failure:^(AFHTTPRequestOperation *operation, NSError *error) {

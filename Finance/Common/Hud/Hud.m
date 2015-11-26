@@ -38,7 +38,7 @@
     [hud hide:YES afterDelay:1.2];
 }
 
-+(void)showLoadingWithMessage:(NSString *)message{
++ (void)showLoadingWithMessage:(NSString *)message{
     
     BOOL hasShow = NO;
     UIView *superView = [AppDelegate currentAppdelegate].window;

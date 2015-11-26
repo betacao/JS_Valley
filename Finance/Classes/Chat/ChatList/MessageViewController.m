@@ -9,6 +9,7 @@
 #import "MessageViewController.h"
 #import "MessageTableViewCell.h"
 #import "SHGPersonalViewController.h"
+#import "SHGActionDetailViewController.h"
 
 @interface MessageViewController ()
 {
@@ -226,8 +227,12 @@
         vc.hidesBottomBarWhenPushed = YES;
         UINavigationController *nav = (UINavigationController *)[AppDelegate currentAppdelegate].window.rootViewController;
         [nav pushViewController:vc animated:YES];
-    } else if([obj.code isEqualToString:@"1009"]){
-        
+    } else if ([obj.code isEqualToString:@"1010"] || [obj.code isEqualToString:@"1011"]){
+        SHGActionDetailViewController *controller = [[SHGActionDetailViewController alloc] init];
+        SHGActionObject *object = [[SHGActionObject alloc] init];
+        object.meetId = obj.oid;
+        controller.object = object;
+        [self.navigationController pushViewController:controller animated:YES];
     } else{
         //进入帖子详情
         CircleDetailViewController *vc = [[CircleDetailViewController alloc] initWithNibName:@"CircleDetailViewController" bundle:nil];

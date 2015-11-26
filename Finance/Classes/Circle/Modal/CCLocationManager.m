@@ -105,7 +105,7 @@
             self.lastAddress = [NSString stringWithFormat:@"%@%@%@%@%@%@",placemark.country,placemark.administrativeArea,placemark.locality,placemark.subLocality,placemark.thoroughfare,placemark.subThoroughfare];//详细地址
             NSLog(@"______%@",self.lastAddress);
             
-        }else{
+        } else{
             [SHGGloble sharedGloble].provinceName = self.lastPrivinceName;
             [SHGGloble sharedGloble].cityName = self.lastCityName;
         }
