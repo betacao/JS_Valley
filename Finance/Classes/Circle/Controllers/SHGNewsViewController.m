@@ -30,6 +30,8 @@
 @property (strong, nonatomic) SHGNoticeView *messageNoticeView;
 @property (assign, nonatomic) BOOL hasDataFinished;
 @property (strong, nonatomic) SHGSelectTagsViewController *tagsController;
+@property (weak, nonatomic) IBOutlet UIView *emptyBgView;
+@property (weak, nonatomic) IBOutlet UIView *emptyBgImage;
 
 @end
 
@@ -52,6 +54,15 @@
     self.circleType = @"attation";
     [Hud showLoadingWithMessage:@"加载中"];
     [self requestDataWithTarget:@"first" time:@""];
+}
+-(void)emptyBg
+{
+    if (self.dataArr.count == 0) {
+        self.emptyBgView.hidden = NO;
+    }else
+    {
+        self.emptyBgView.hidden = YES;
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -140,6 +151,7 @@
         dispatch_async(dispatch_get_main_queue(), ^(){
             [weakSelf.listTable reloadData];
         });
+        [self emptyBg];
     } failed:^(MOCHTTPResponse *response){
         weakSelf.isRefreshing = NO;
         weakSelf.listTable.footer.hidden = NO;
@@ -148,7 +160,7 @@
         [weakSelf.listTable.header endRefreshing];
         [weakSelf performSelector:@selector(endrefresh) withObject:nil afterDelay:1.0];
         [Hud hideHud];
-
+        self.emptyBgView.hidden = NO;
     }];
 }
 

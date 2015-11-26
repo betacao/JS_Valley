@@ -30,13 +30,6 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-//         if ([self.friend_status isEqualToString:@"his"])
-//         {
-//            self.title = @"他的好友";
-//         }else if ([self.friend_status isEqualToString:@"all"])
-//         {
-//             self.title = @"共同好友";
-//         }
         
     }
     return self;

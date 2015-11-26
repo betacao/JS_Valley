@@ -59,6 +59,7 @@
         UIImage *image = self.titleBgView.image;
         image = [image resizableImageWithCapInsets:UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, 2.0f) resizingMode:UIImageResizingModeStretch];
         [self loadUI];
+        
     }
 }
 
@@ -246,8 +247,9 @@
     if (!cell){
         cell = [[[NSBundle mainBundle] loadNibNamed:@"SHGActionSignTableViewCell" owner:self options:nil] lastObject];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        cell.delegate = self;
+        
     }
+    cell.delegate = self;
     [cell loadCellWithObject:[self.object.attendList objectAtIndex:indexPath.row] publisher:self.object.publisher];
     NSInteger count = [self numberOfAttend];
     if (indexPath.row ==  count - 1)
@@ -278,4 +280,12 @@
         [weakSelf.tableView reloadData];
     }];
 }
+- (void)tapUserHeaderImageView:(NSString *)uid
+{
+    __weak typeof(self) weakSelf = self;
+    SHGPersonalViewController * vc = [[SHGPersonalViewController alloc]init ];
+    vc.userId = uid;
+    [weakSelf.navigationController pushViewController:vc animated:YES];
+}
+
 @end

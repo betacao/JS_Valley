@@ -9,6 +9,7 @@
 #import "SHGActionTotalInViewController.h"
 #import "SHGActionSignTableViewCell.h"
 #import "SHGActionManager.h"
+#import "SHGPersonalViewController.h"
 
 @interface SHGActionTotalInViewController ()<UITableViewDataSource, UITableViewDelegate, SHGActionSignCellDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -70,6 +71,13 @@
             weakSelf.block();
         }
     }];
+}
+- (void)tapUserHeaderImageView:(NSString *)uid
+{
+    __weak typeof(self) weakSelf = self;
+    SHGPersonalViewController * vc = [[SHGPersonalViewController alloc]init ];
+    vc.userId = uid;
+    [weakSelf.navigationController pushViewController:vc animated:YES];
 }
 
 
