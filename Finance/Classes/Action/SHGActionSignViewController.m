@@ -117,6 +117,7 @@
     //设置详情的高度
     size = [self.actionIntroduceLabel sizeThatFits:CGSizeMake(CGRectGetWidth(self.actionIntroduceLabel.frame), MAXFLOAT)];
     frame = self.actionIntroduceLabel.frame;
+    frame.origin.y = CGRectGetMaxY(self.middleView.frame);
     frame.size.height = size.height + kObjectMargin;
     self.actionIntroduceLabel.frame = frame;
     //设置查看全部的高度
