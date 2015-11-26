@@ -242,6 +242,13 @@
 
     return cell;
 }
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    BasePeopleObject * obj = self.contactsSource[indexPath.row];
+    SHGPersonalViewController * vc = [[SHGPersonalViewController alloc]init];
+    vc.userId = obj.uid;
+    [self.navigationController pushViewController:vc animated:YES];
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
