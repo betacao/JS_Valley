@@ -17,7 +17,7 @@
 #import "SHGActionSegmentViewController.h"
 #import "CPTextViewPlaceholder.h"
 
-@interface SHGActionDetailViewController ()<UITableViewDataSource,UITableViewDelegate,MLEmojiLabelDelegate, SHGActionCommentDelegate, BRCommentViewDelegate, CircleActionDelegate>
+@interface SHGActionDetailViewController ()<UITableViewDataSource,UITableViewDelegate,MLEmojiLabelDelegate, SHGActionCommentDelegate, BRCommentViewDelegate, CircleActionDelegate, UITextViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *replyTable;
 @property (weak, nonatomic) IBOutlet UIView *viewInput;
 @property (weak, nonatomic) IBOutlet UIView *bottomButtonView;
@@ -100,6 +100,8 @@
         _cpTextView.layer.borderColor = [UIColor lightGrayColor].CGColor;
         _cpTextView.font = [UIFont systemFontOfSize:13.0f];
         _cpTextView.placeholder = @"对发布者说点什么吧～";
+        _cpTextView.delegate = self;
+        _cpTextView.returnKeyType = UIReturnKeyDone;
     }
     return _cpTextView;
 }
@@ -406,6 +408,15 @@
     self.popupView.type = @"repley";
     [self.navigationController.view addSubview:self.popupView];
     [self.popupView showWithAnimated:YES];
+}
+
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
+{
+    if ([text isEqualToString:@"\n"]){
+        [textView resignFirstResponder];
+        return NO;
+    }
+    return YES;
 }
 
 - (void)tapUserHeaderImageView:(NSString *)uid

@@ -9,7 +9,7 @@
 #import "SHGActionSignTableViewCell.h"
 #import "CPTextViewPlaceholder.h"
 
-@interface SHGActionSignTableViewCell()
+@interface SHGActionSignTableViewCell()<UITextViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIImageView *action_signHeadImage;
 @property (weak, nonatomic) IBOutlet UILabel *action_signNameLabel;
@@ -54,6 +54,8 @@
         _textView.layer.borderColor = [UIColor lightGrayColor].CGColor;
         _textView.font = [UIFont systemFontOfSize:13.0f];
         _textView.placeholder = @"请输入驳回理由～";
+        _textView.delegate = self;
+        _textView.returnKeyType = UIReturnKeyDone;
     }
     return _textView;
 }
@@ -139,6 +141,16 @@
     [alert show];
 
 }
+
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
+{
+    if ([text isEqualToString:@"\n"]){
+        [textView resignFirstResponder];
+        return NO;
+    }
+    return YES;
+}
+
 - (void)tapUserHeaderImageView:(UIGestureRecognizer *)recognizer
 {
     if (self.delegate && [self.delegate respondsToSelector:@selector(tapUserHeaderImageView:)]) {
