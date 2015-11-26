@@ -24,6 +24,7 @@
 #import "MeViewController.h"
 #import "SHGPersonalViewController.h"
 #import "VerifyIdentityViewController.h"
+#import "SHGActionDetailViewController.h"
 #import "GeTuiSdk.h"
 #import "GeTuiSdkError.h"
 
@@ -188,7 +189,6 @@
 {
     if ([userInfo objectForKey:@"code"]){
         NSString *code = [userInfo objectForKey:@"code"];
-//        UIApplication *application = [UIApplication sharedApplication];
         if (self.pushInfo){
             [self pushToNoticeViewController:userInfo];
             self.pushInfo = nil;
@@ -473,18 +473,18 @@
 /*
  统一处理收到推送的时候消息处理
  */
--(void)pushToNoticeViewController:(NSDictionary*)userInfo;
+- (void)pushToNoticeViewController:(NSDictionary*)userInfo;
 {
     UIViewController *TopVC = [self getCurrentRootViewController];
     NSString *ridCode = [userInfo objectForKey:@"code"];
     if ([ridCode isEqualToString:@"1001"]){ //进入通知
         MessageViewController *detailVC=[[MessageViewController alloc] init];
         [self pushIntoViewController:TopVC newViewController:detailVC];
-    }else if ([ridCode isEqualToString:@"1004"]){  //进入个人关注主页
+    } else if ([ridCode isEqualToString:@"1004"]){  //进入个人关注主页
         SHGPersonalViewController *controller = [[SHGPersonalViewController alloc] initWithNibName:@"SHGPersonalViewController" bundle:nil];
         controller.userId = [NSString stringWithFormat:@"%@",userInfo[@"uid"]];
         [self pushIntoViewController:TopVC newViewController:controller];
-    }else if ([ridCode isEqualToString:@"1005"] || [ridCode isEqualToString:@"1006"]){ //进入认证页面
+    } else if ([ridCode isEqualToString:@"1005"] || [ridCode isEqualToString:@"1006"]){ //进入认证页面
         if ([ridCode isEqualToString:@"1005"]){
             [[NSUserDefaults standardUserDefaults] setObject:@"1" forKey:KEY_AUTHSTATE];
         }else{
@@ -493,7 +493,13 @@
 
         VerifyIdentityViewController *meControl =[[VerifyIdentityViewController alloc]init];
         [self pushIntoViewController:TopVC newViewController:meControl];
-    }else{  //进入帖子详情
+    } else if ([ridCode isEqualToString:@"1010"] || [ridCode isEqualToString:@"1011"]){
+        SHGActionDetailViewController *controller = [[SHGActionDetailViewController alloc] init];
+        SHGActionObject *object = [[SHGActionObject alloc] init];
+        object.meetId = [userInfo objectForKey:@"rid"];
+        controller.object = object;
+        [self pushIntoViewController:TopVC newViewController:controller];
+    } else{  //进入帖子详情
         CircleDetailViewController *vc = [[CircleDetailViewController alloc] init];
         NSString* rid = [userInfo objectForKey:@"rid"];
         vc.rid = rid;

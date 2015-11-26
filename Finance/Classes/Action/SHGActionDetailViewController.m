@@ -295,7 +295,7 @@
         [alertView show];
     } else if([title rangeOfString:@"重新编辑"].location != NSNotFound){
         SHGActionSendViewController *controller =[[SHGActionSendViewController alloc] init];
-        controller.object = self.object;
+        controller.object = self.responseObject;
         controller.delegate = [SHGActionSegmentViewController sharedSegmentController];
         [self.navigationController pushViewController:controller animated:YES];
     } else if([title rangeOfString:@"审核中"].location != NSNotFound){

@@ -255,8 +255,7 @@
     }
     [cell loadCellWithObject:[self.object.attendList objectAtIndex:indexPath.row] publisher:self.object.publisher];
     NSInteger count = [self numberOfAttend];
-    if (indexPath.row ==  count - 1)
-    {
+    if (indexPath.row ==  count - 1){
         [cell loadLastCellLineImage];
     }
     return  cell;

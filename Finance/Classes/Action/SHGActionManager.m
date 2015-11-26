@@ -66,11 +66,13 @@
     [Hud showLoadingWithMessage:@"请稍等..."];
     NSString *request = [rBaseAddressForHttp stringByAppendingString:@"/meetingactivity/saveMeetingActivity"];
     [MOCHTTPRequestOperationManager postWithURL:request parameters:param success:^(MOCHTTPResponse *response) {
+        [Hud hideHud];
         [Hud showMessageWithLongText:@"提交成功，大牛圈会在一个工作日内完成审核！"];
         if (block) {
             block(YES);
         }
     } failed:^(MOCHTTPResponse *response) {
+        [Hud hideHud];
         [Hud showMessageWithText:@"提交失败"];
         if (block) {
             block(NO);
@@ -261,7 +263,13 @@
         [Hud hideHud];
         [Hud showMessageWithText:@"操作成功"];
         if (block) {
-            object.state = @"1";
+            if ([option isEqualToString:@"0"]) {
+                //驳回
+                object.state = @"2";
+            } else{
+                //同意
+                object.state = @"1";
+            }
             block(YES);
         }
     } failed:^(MOCHTTPResponse *response) {
@@ -276,7 +284,8 @@
 //分享活动
 - (void)shareAction:(SHGActionObject *)object baseController:(UIViewController *)controller finishBlock:(void (^)(BOOL))block
 {
-    NSString *request = [rBaseAddressForHttp stringByAppendingFormat:@"/share/meetActDetail?rid=%@",object.meetId];
+    NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
+    NSString *request = [rBaseAddressForHttp stringByAppendingFormat:@"/share/meetActDetail?rid=%@&uid=%@",object.meetId, uid];
     UIImage *png = [UIImage imageNamed:@"80.png"];
     id<ISSCAttachment> image  = [ShareSDK pngImageWithImage:png];
     NSString *theme = object.theme;
@@ -285,7 +294,7 @@
     }
     NSString *postContent = [NSString stringWithFormat:@"【活动】%@", theme];
     NSString *shareContent = [NSString stringWithFormat:@"【活动】%@", theme];
-    NSString *friendContent = [NSString stringWithFormat:@"%@\"%@\"%@%@",@"Hi，我在金融大牛圈上看到了一个非常棒的活动,关于",theme,@"，赶快去活动版块查看吧！",[NSString stringWithFormat:@"%@%@",rBaseAddressForHttpShare,object.meetId]];
+    NSString *friendContent = [NSString stringWithFormat:@"%@\"%@\"%@%@",@"Hi，我看到了一个非常棒的活动,关于",theme,@"，赶快去活动版块查看吧！",request];
 
     NSString *messageContent = [NSString stringWithFormat:@"%@\"%@\"%@%@",@"Hi，我在金融大牛圈上看到了一个非常棒的活动,关于",theme,@"，赶快下载大牛圈查看吧！",@"https://itunes.apple.com/cn/app/da-niu-quan-jin-rong-zheng/id984379568?mt=8"];
     id<ISSShareActionSheetItem> item0 = [ShareSDK shareActionSheetItemWithTitle:@"微信好友" icon:[UIImage imageNamed:@"sns_icon_22"] clickHandler:^{

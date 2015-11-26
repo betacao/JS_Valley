@@ -84,7 +84,6 @@
     if (object.createTime.length > 0) {
         self.Action_pubdateLabel.text = [[object.createTime substringWithRange:NSMakeRange(5, 5)] stringByAppendingString:@"发布"];
     }
-    self.Action_pubdateLabel.text = object.createTime;
     self.Action_timeLabel.text = [object.startTime stringByAppendingFormat:@"-%@",object.endTime];
     self.Action_addressLabel.text = object.meetArea;
     self.Action_allNumLabel.text = [NSString stringWithFormat:@"邀请%@人", object.meetNum];
