@@ -125,11 +125,12 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
     //判断好友是一度好友还是二度好友
     if ([self.friendShip isEqualToString:@"一度"]) {
         self.friendImage.image = [UIImage imageNamed:@"first_friend.png"];
-    }else if ([self.friendShip isEqualToString:@"二度"])
+    }
+    if ([self.friendShip isEqualToString:@"二度"])
     {
         self.friendImage.image = [UIImage imageNamed:@"second_friend.png"];
-    }else
-    {
+    }
+    if ([self.friendShip isEqualToString:@""]) {
         self.friendImage.image = nil;
     }
 

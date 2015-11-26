@@ -37,13 +37,15 @@
     //判断好友是一度好友还是二度好友
     if ([obj.friendShip isEqualToString:@"一度"]) {
         self.friendImage.image = [UIImage imageNamed:@"first_friend.png"];
-    }else if ([obj.friendShip isEqualToString:@"二度"])
+    }
+    if ([obj.friendShip isEqualToString:@"二度"])
     {
          self.friendImage.image = [UIImage imageNamed:@"second_friend.png"];
-    }else
-    {
-        self.friendImage.image = nil;
     }
+    if ([obj.friendShip isEqualToString:@""]) {
+         self.friendImage.image = nil;
+    }
+   
     if (![obj.tags isEqualToString:@"" ]) {
         NSArray *arry = [obj.tags componentsSeparatedByString:@","];
         [self.tagViews removeAllSubviews];

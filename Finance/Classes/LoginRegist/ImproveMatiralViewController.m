@@ -260,11 +260,30 @@
     }];
     
 }
+-(void)changeIndustrycodeTextFieldText
+{
+    if ([self.industrycodeTextField.text isEqualToString:@"银行机构"]) {
+        self.industrycodeTextField.text = @"bank";
+    }
+    if ([self.industrycodeTextField.text isEqualToString:@"证劵公司"]) {
+        self.industrycodeTextField.text = @"bond";
+    }
+    if ([self.industrycodeTextField.text isEqualToString:@"三方理财"]) {
+        self.industrycodeTextField.text = @"manage";
+    }
+    if ([self.industrycodeTextField.text isEqualToString:@"基金公司"]) {
+        self.industrycodeTextField.text = @"fund";
+    }
+    if ([self.industrycodeTextField.text isEqualToString:@"其他"]) {
+        self.industrycodeTextField.text = @"other";
+    }
 
+}
 - (void)uploadMaterial
 {
     if([self checkInputMessageValid]){
         __weak typeof(self)weakSelf = self;
+        [self changeIndustrycodeTextFieldText];
         NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
 
         NSDictionary *param = @{@"uid":uid, @"head_img":self.headImageName ? self.headImageName : @"", @"name":self.nameTextField.text, @"industrycode":self.industrycodeTextField.text, @"company":self.companyTextField.text, @"title":self.titleTextField.text, @"position":self.userLocation ? self.userLocation : @""};
@@ -507,6 +526,8 @@
 - (void)didSelectIndustry:(NSString *)industry
 {
     self.industrycodeTextField.text = industry;
+    
+    
 }
 
 - (void)didReceiveMemoryWarning {
