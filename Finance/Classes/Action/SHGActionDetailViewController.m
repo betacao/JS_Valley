@@ -205,7 +205,6 @@
 
 - (UITableViewCell * )tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-   // NSLog(@"indexpath.section = %ld",indexPath.section);
     switch (indexPath.section) {
         case 0:{
             return self.firstTableViewCell;
@@ -303,7 +302,6 @@
     } else if([title rangeOfString:@"分享"].location != NSNotFound){
         [[SHGActionManager shareActionManager] shareAction:self.responseObject baseController:self finishBlock:^(BOOL success) {
             if (success) {
-//[Hud show]
             }
         }];
     } else if([title rangeOfString:@"报名"].location != NSNotFound){
@@ -364,9 +362,10 @@
     [[SHGActionManager shareActionManager] addCommentWithObject:self.responseObject content:comment toOther:nil finishBlock:^(BOOL success) {
         if (success) {
             [weakSelf.replyTable reloadData];
-        }
-        if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(didCommentAction:)]) {
-            [weakSelf.delegate didCommentAction:weakSelf.responseObject];
+            [weakSelf.signController refreshUI];
+            if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(didCommentAction:)]) {
+                [weakSelf.delegate didCommentAction:weakSelf.responseObject];
+            }
         }
     }];
 }
@@ -378,16 +377,17 @@
     [[SHGActionManager shareActionManager] addCommentWithObject:self.responseObject content:comment toOther:fid finishBlock:^(BOOL success) {
         if (success) {
             [weakSelf.replyTable reloadData];
-        }
-        if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(didCommentAction:)]) {
-            [weakSelf.delegate didCommentAction:weakSelf.responseObject];
+            [weakSelf.signController refreshUI];
+            if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(didCommentAction:)]) {
+                [weakSelf.delegate didCommentAction:weakSelf.responseObject];
+            }
         }
     }];
 }
 
 - (IBAction)actionComment:(id)sender
 {
-    self.popupView = [[BRCommentView alloc] initWithFrame:self.view.bounds superFrame:CGRectZero isController:YES type:@"" name:@""];
+    self.popupView = [[BRCommentView alloc] initWithFrame:self.view.bounds superFrame:CGRectZero isController:YES type:@"comment"];
     self.popupView.delegate = self;
     self.popupView.type = @"comment";
     self.popupView.fid = @"-1";
@@ -398,7 +398,7 @@
 
 - (void)replyClicked:(SHGActionCommentObject *)obj commentIndex:(NSInteger)index
 {
-    self.popupView = [[BRCommentView alloc] initWithFrame:self.view.bounds superFrame:CGRectZero isController:YES type:@"" name:@""];
+    self.popupView = [[BRCommentView alloc] initWithFrame:self.view.bounds superFrame:CGRectZero isController:YES type:@"reply" name:obj.commentUserName];
     self.popupView.delegate = self;
     self.popupView.fid = obj.commentUserId;
     self.popupView.detail = @"";
@@ -407,6 +407,7 @@
     [self.navigationController.view addSubview:self.popupView];
     [self.popupView showWithAnimated:YES];
 }
+
 - (void)tapUserHeaderImageView:(NSString *)uid
 {
     SHGPersonalViewController * vc = [[SHGPersonalViewController alloc]init ];

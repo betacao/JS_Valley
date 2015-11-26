@@ -191,6 +191,7 @@
         newObject.commentUserId = uid;
         newObject.commentUserName = userName;
         [object.commentList addObject:newObject];
+        object.commentNum = [NSString stringWithFormat:@"%ld",(long)[object.commentNum integerValue] + 1];
         [Hud showMessageWithText:@"评论成功"];
         if (block) {
             block(YES);
