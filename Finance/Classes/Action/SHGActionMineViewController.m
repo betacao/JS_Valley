@@ -210,4 +210,12 @@
     }];
 }
 
+- (void)dealloc
+{
+    self.listTable.delegate = nil;
+    self.listTable.dataSource = nil;
+    [self.listTable removeFromSuperview];
+    self.listTable = nil;
+}
+
 @end

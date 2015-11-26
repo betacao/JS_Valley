@@ -44,8 +44,7 @@
 {
     if (self.dataArr.count == 0) {
         self.emptyBgView.hidden = NO;
-    }else
-    {
+    } else{
         self.emptyBgView.hidden = YES;
     }
 }
@@ -229,4 +228,11 @@
     }];
 }
 
+- (void)dealloc
+{
+    self.listTable.delegate = nil;
+    self.listTable.dataSource = nil;
+    [self.listTable removeFromSuperview];
+    self.listTable = nil;
+}
 @end

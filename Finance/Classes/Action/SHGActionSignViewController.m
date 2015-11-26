@@ -70,7 +70,7 @@
 
 - (void)refreshUI
 {
-    [self loadUI];
+    [self loadCommentButtonState];
 }
 
 - (void)reloadData
@@ -92,8 +92,8 @@
     self.actionIntroduceLabel.text = self.object.detail;
     self.actionTimeLabel.text = [self.object.startTime stringByAppendingFormat:@"-%@",self.object.endTime];
     NSMutableAttributedString *noteStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@",self.actionInLabel.text]] ;
-    [noteStr addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"F7514A"] range:NSMakeRange(3, noteStr.length-4 )];
-    [noteStr addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"B4B4B4"] range:NSMakeRange(noteStr.length-1 , 1 )];
+    [noteStr addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"F7514A"] range:NSMakeRange(3, noteStr.length - 4)];
+    [noteStr addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"B4B4B4"] range:NSMakeRange(noteStr.length - 1 , 1)];
     [self.hadApply setAttributedText:noteStr];
     self.hadApply.attributedText = noteStr;
 
