@@ -838,6 +838,15 @@
         }
         vc.type = type;
         [self.navigationController pushViewController:vc animated:YES];
+    }else if (self.selectType == 3)
+    {
+       
+        SHGCollectCardClass * obj = self.dataSource[indexPath.row];
+        SHGPersonalViewController * vc = [[SHGPersonalViewController alloc]init];
+        vc.userId = obj.uid;
+        [self.navigationController pushViewController:vc animated:YES];
+    
+
     }
 	[tableView deselectRowAtIndexPath:indexPath animated:YES];
     

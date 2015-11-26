@@ -30,6 +30,7 @@
               @"time":@"time",
               @"friendShip":@"friendship",
               @"collectTime":@"collecttime",
+              @"uid":@"uid",
               };
 }
 

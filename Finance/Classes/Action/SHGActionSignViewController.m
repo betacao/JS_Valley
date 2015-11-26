@@ -40,7 +40,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *secondLineImageView;
 @property (weak, nonatomic) IBOutlet UILabel *hadApply;
 @property (weak, nonatomic) IBOutlet UIView *middleView;
-
+@property (strong,nonatomic) NSString * cell_uid;
 @end
 
 @implementation SHGActionSignViewController
@@ -268,6 +268,8 @@
         
     }
     cell.delegate = self;
+    NSArray * arr = self.object.attendList;
+    NSLog(@"%@",arr);
     [cell loadCellWithObject:[self.object.attendList objectAtIndex:indexPath.row] publisher:self.object.publisher];
     NSInteger count = [self numberOfAttend];
     if (indexPath.row ==  count - 1){
@@ -279,6 +281,12 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return kActionSignCellHeight;
+}
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    SHGPersonalViewController * vc = [[SHGPersonalViewController alloc]init];
+    vc.userId =[[self.object.attendList objectAtIndex:indexPath.row] valueForKey:@"uid"];
+    [self.superController.navigationController pushViewController:vc animated:YES];
 }
 
 #pragma mark ------signDelegate
@@ -301,7 +309,7 @@
 - (void)tapUserHeaderImageView:(NSString *)uid
 {
     __weak typeof(self) weakSelf = self;
-    SHGPersonalViewController * vc = [[SHGPersonalViewController alloc]init ];
+        SHGPersonalViewController * vc = [[SHGPersonalViewController alloc]init ];
     vc.userId = uid;
     [weakSelf.superController.navigationController pushViewController:vc animated:YES];
 }
