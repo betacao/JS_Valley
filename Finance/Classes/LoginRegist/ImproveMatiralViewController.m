@@ -261,7 +261,8 @@
     }];
     
 }
--(NSString *)changeIndustrycodeTextFieldText: (NSString *)hangyeCode
+
+- (NSString *)changeIndustrycodeTextFieldText: (NSString *)hangyeCode
 {
     if ([self.industrycodeTextField.text isEqualToString:@"银行机构"]) {
        self.hangyeCode = @"bank";
@@ -280,6 +281,7 @@
     }
     return self.hangyeCode;
 }
+
 - (void)uploadMaterial
 {
     if([self checkInputMessageValid]){

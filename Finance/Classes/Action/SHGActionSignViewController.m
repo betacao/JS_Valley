@@ -15,6 +15,7 @@
 #define PRAISE_SEPWIDTH     10
 #define PRAISE_RIGHTWIDTH     40
 #define PRAISE_WIDTH 30.0f
+#define kMiddleViewTopMargin 12.0f
 
 @interface SHGActionSignViewController ()<UITableViewDataSource,UITableViewDelegate, SHGActionSignCellDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -38,6 +39,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *firstLineImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *secondLineImageView;
 @property (weak, nonatomic) IBOutlet UILabel *hadApply;
+@property (weak, nonatomic) IBOutlet UIView *middleView;
 
 @end
 
@@ -85,7 +87,18 @@
 
 - (void)loadUI
 {
-    self.titleLabel.text = self.object.theme;
+    NSString *theme = self.object.theme;
+    self.titleLabel.text = theme;
+    CGSize size = [self.titleLabel sizeThatFits:CGSizeMake(CGRectGetWidth(self.titleLabel.frame), CGFLOAT_MAX)];
+    CGRect frame = self.titleLabel.frame;
+    frame.size.height = size.height > CGRectGetHeight(frame) ? size.height : CGRectGetHeight(frame);
+    self.titleLabel.frame = frame;
+    self.titleBgView.frame = frame;
+
+    frame = self.middleView.frame;
+    frame.origin.y = CGRectGetMaxY(self.titleBgView.frame) + kMiddleViewTopMargin;
+    self.middleView.frame = frame;
+
     self.actionPositionLabel.text = self.object.meetArea;
     self.actionTotalLabel.text = [NSString stringWithFormat:@"邀请%@人", self.object.meetNum];
     self.actionInLabel.text = [NSString stringWithFormat:@"已报名 %@人", self.object.attendNum];
@@ -98,12 +111,12 @@
     self.hadApply.attributedText = noteStr;
 
 
-    CGSize size = self.viewTotalButton.imageView.image.size;
+    size = self.viewTotalButton.imageView.image.size;
     [self.viewTotalButton setTitleEdgeInsets:UIEdgeInsetsMake(0, -size.width * 2, 0, size.width * 2)];
     [self.viewTotalButton setImageEdgeInsets:UIEdgeInsetsMake(0, self.viewTotalButton.titleLabel.bounds.size.width, 0, -self.viewTotalButton.titleLabel.bounds.size.width)];
     //设置详情的高度
     size = [self.actionIntroduceLabel sizeThatFits:CGSizeMake(CGRectGetWidth(self.actionIntroduceLabel.frame), MAXFLOAT)];
-    CGRect frame = self.actionIntroduceLabel.frame;
+    frame = self.actionIntroduceLabel.frame;
     frame.size.height = size.height + kObjectMargin;
     self.actionIntroduceLabel.frame = frame;
     //设置查看全部的高度
