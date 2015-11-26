@@ -43,7 +43,8 @@
     self.nameLabel.text = @"";
     self.companyLabel.text = @"";
     self.uid = @"";
-    [self.headeimage updateHeaderView:nil placeholderImage:[UIImage imageNamed:@"default_head"]];
+    //[self.headeimage updateHeaderView:nil placeholderImage:[UIImage imageNamed:@"default_head"]];
+    
 }
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
