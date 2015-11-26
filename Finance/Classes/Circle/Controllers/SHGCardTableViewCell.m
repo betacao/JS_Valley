@@ -46,7 +46,7 @@
          self.friendImage.image = nil;
     }
    
-    if (![obj.tags isEqualToString:@"" ]) {
+    if (![obj.tags isEqualToString:@""]) {
         NSArray *arry = [obj.tags componentsSeparatedByString:@","];
         [self.tagViews removeAllSubviews];
         [self.tagViews addSubview:[self viewForTags:arry]];
@@ -64,30 +64,32 @@
     self.departmentLabel.text = @"";
     self.positionLabel.text = @"";
     self.friendImage.image = nil;
-    self.tagViews = nil;
+    //self.tagViews = nil;
     //[self.headerImageView sd_setImageWithURL:[NSURL URLWithString:ni placeholderImage:[UIImage imageNamed:@"default_head"]];
     self.headerImageView.image = [UIImage imageNamed:@"default_head"];
 }
 
 - (UIView *)viewForTags:(NSArray *)array
 {
-    UIView *view = [[UIView alloc] init];
-    for (NSString *model in array){
-        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-        [button setTitle:model forState:UIControlStateNormal];
-        [button setBackgroundColor:[UIColor colorWithHexString:@"f7514b"]];
-        button.titleLabel.font = [UIFont systemFontOfSize:11.0f];
-        CGRect frame = CGRectMake(0.0f, (CGRectGetHeight(self.tagViews.frame) - kTagViewHeight) / 2.0f, kTagViewWidth, kTagViewHeight);
-        frame.origin.x = CGRectGetMaxX(view.frame) + kObjectMargin / 2.0f;
-        button.frame = frame;
-        frame = view.frame;
-        frame.size.width = CGRectGetMaxX(button.frame);
-        frame.size.height = CGRectGetMaxY(button.frame);
-        view.frame = frame;
-        [view addSubview:button];
-    }
-    return view;
-}
+    
+        UIView *view = [[UIView alloc] init];
+        for (NSString *model in array){
+            UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+            [button setTitle:model forState:UIControlStateNormal];
+            [button setBackgroundColor:[UIColor colorWithHexString:@"f7514b"]];
+            button.titleLabel.font = [UIFont systemFontOfSize:11.0f];
+            CGRect frame = CGRectMake(0.0f, (CGRectGetHeight(self.tagViews.frame) - kTagViewHeight) / 2.0f, kTagViewWidth, kTagViewHeight);
+            frame.origin.x = CGRectGetMaxX(view.frame) + kObjectMargin / 2.0f;
+            button.frame = frame;
+            frame = view.frame;
+            frame.size.width = CGRectGetMaxX(button.frame);
+            frame.size.height = CGRectGetMaxY(button.frame);
+            view.frame = frame;
+            [view addSubview:button];
+        }
+        return view;
+  
+   }
 
 - (void)initView
 {

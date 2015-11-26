@@ -261,7 +261,7 @@
     }
     [MOCHTTPRequestOperationManager postWithURL:request parameters:param success:^(MOCHTTPResponse *response) {
         [Hud hideHud];
-        [Hud showMessageWithText:@"操作成功"];
+        [Hud showMessageWithText:@"已同意"];
         if (block) {
             if ([option isEqualToString:@"0"]) {
                 //驳回
@@ -274,7 +274,7 @@
         }
     } failed:^(MOCHTTPResponse *response) {
         [Hud hideHud];
-        [Hud showMessageWithText:@"操作失败"];
+        [Hud showMessageWithText:@"已驳回"];
         if (block) {
             block(NO);
         }

@@ -14,11 +14,11 @@
 
 - (void)meetAttend:(SHGActionAttendObject *)object clickCommitButton:(UIButton *)button;
 - (void)meetAttend:(SHGActionAttendObject *)object clickRejectButton:(UIButton *)button reason:(NSString *)reason ;
+- (void)tapUserHeaderImageView:(NSString *)uid;
 
 @end
 
 @interface SHGActionSignTableViewCell : UITableViewCell
-
 @property (assign, nonatomic) id<SHGActionSignCellDelegate> delegate;
 - (void)loadCellWithObject:(SHGActionAttendObject *)object publisher:(NSString *)publisher;
 - (void)loadLastCellLineImage;

@@ -99,6 +99,16 @@
     self.dataObj = obj;
     self.cellType = type;
     [self sizeUIWithObj:obj];
+    //判断好友是一度好友还是二度好友
+    if ([obj.friendship isEqualToString:@"一度"]) {
+        obj.friendship = @"可能感兴趣";
+    }
+    if ([obj.friendship isEqualToString:@"二度"])
+    {
+        obj.friendship = @"好友的好友";
+
+    }
+    
     //设置好友关系、定位标签的内容
     if(![obj.postType isEqualToString:@"pc"]){
         if ([[[NSUserDefaults standardUserDefaults]objectForKey:KEY_UID] isEqualToString:obj.userid]){

@@ -407,4 +407,11 @@
     [self.navigationController.view addSubview:self.popupView];
     [self.popupView showWithAnimated:YES];
 }
+- (void)tapUserHeaderImageView:(NSString *)uid
+{
+    SHGPersonalViewController * vc = [[SHGPersonalViewController alloc]init ];
+    vc.userId = uid;
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
 @end

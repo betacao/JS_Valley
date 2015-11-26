@@ -22,7 +22,7 @@
 @property (weak, nonatomic) IBOutlet UIView *action_bottomView;
 
 @property (strong, nonatomic) SHGActionAttendObject *object;
-@property (strong, nonatomic) CPTextViewPlaceholder *textView;
+@property (strong, nonatomic) CPTextViewPlaceholder *textView;@property (strong, nonatomic) NSString *uid;
 @end
 
 @implementation SHGActionSignTableViewCell
@@ -40,7 +40,11 @@
     [self.action_signRightButton setTitleColor:[UIColor  whiteColor] forState:UIControlStateNormal];
      self.action_signRightButton.titleLabel.font = [UIFont systemFontOfSize:14];
     self.action_bottomXuXian.hidden = YES;
+    self.uid = self.object.uid;
+    UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapUserHeaderImageView:)];
+    [self.action_signHeadImage addGestureRecognizer:recognizer];
 }
+
 
 - (CPTextViewPlaceholder *)textView
 {
@@ -134,5 +138,11 @@
     };
     [alert show];
 
+}
+- (void)tapUserHeaderImageView:(UIGestureRecognizer *)recognizer
+{
+    if (self.delegate && [self.delegate respondsToSelector:@selector(tapUserHeaderImageView:)]) {
+        [self.delegate tapUserHeaderImageView:self.uid];
+    }
 }
 @end
