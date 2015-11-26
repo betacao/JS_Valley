@@ -7,7 +7,7 @@
 //
 
 #import "SHGActionTableViewCell.h"
-#define kItemMargin 7.0f * XFACTOR
+#define kItemMargin 7.0f
 
 @interface SHGActionTableViewCell ()
 
@@ -89,8 +89,18 @@
     self.Action_addressLabel.text = object.meetArea;
     self.Action_allNumLabel.text = [NSString stringWithFormat:@"邀请%@人", object.meetNum];
     self.Action_momentNumlabel.text = [NSString stringWithFormat:@"已报名%@人", object.attendNum];
-    if (![object.publisher isEqualToString:uid]) {
-        self.Action_messageLabel.text = object.friendShip;
+    //左下角
+    if ([object.publisher isEqualToString:uid]){
+        self.Action_messageLabel.text = object.position;
+    } else{
+        NSString *string = @"";
+        if(object.friendShip && object.friendShip.length > 0){
+            string = object.friendShip;
+        }
+        if(object.position && object.position.length > 0){
+            string = [string stringByAppendingFormat:@" , %@",object.position];
+        }
+        self.Action_messageLabel.text = string;
     }
 
     if (object.meetState == SHGActionStateOver) {
@@ -162,6 +172,12 @@
     frame.size.width = size.width;
     frame.origin.x = CGRectGetMaxX(self.Action_companyLable.frame) + kItemMargin;
     self.Action_departmentLable.frame = frame;
+
+    if (company.length == 0 && department.length ==0) {
+        self.Action_lineView.hidden = YES;
+    } else{
+        self.Action_lineView.hidden = NO;
+    }
 
 }
 

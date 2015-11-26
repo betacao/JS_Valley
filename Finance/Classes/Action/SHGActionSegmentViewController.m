@@ -292,7 +292,7 @@
                     if (isPraise) {
                         obj.praiseNum = [NSString stringWithFormat:@"%ld",(long)[obj.praiseNum integerValue] + 1];
                     } else{
-                        obj.praiseNum = [NSString stringWithFormat:@"%ld",(long)[obj.praiseNum integerValue] + 1];
+                        obj.praiseNum = [NSString stringWithFormat:@"%ld",(long)[obj.praiseNum integerValue] - 1];
                     }
                     break;
                 }
@@ -301,6 +301,22 @@
         [controller performSelector:@selector(reloadData)];
     }
 
+}
+
+- (void)didCommentAction:(SHGActionObject *)object
+{
+    for (UIViewController *controller in self.viewControllers){
+        if ([controller respondsToSelector:@selector(currentDataArray)]) {
+            NSMutableArray *array = [controller performSelector:@selector(currentDataArray)];
+            for (SHGActionObject * obj in array){
+                if ([object.meetId isEqualToString:obj.meetId]) {
+                    obj.commentNum = [NSString stringWithFormat:@"%ld",(long)[obj.commentNum integerValue] + 1];
+                    break;
+                }
+            }
+        }
+        [controller performSelector:@selector(reloadData)];
+    }
 }
 
 @end

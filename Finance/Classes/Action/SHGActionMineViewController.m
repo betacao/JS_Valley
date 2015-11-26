@@ -145,6 +145,7 @@
     SHGActionDetailViewController *controller = [[SHGActionDetailViewController alloc] init];
     SHGActionObject *object = [self.dataArr objectAtIndex:indexPath.row];
     controller.object = object;
+    controller.delegate = [SHGActionSegmentViewController sharedSegmentController];
     [self.navigationController pushViewController:controller animated:YES];
 }
 
@@ -163,6 +164,7 @@
 {
     SHGActionDetailViewController *controller = [[SHGActionDetailViewController alloc] init];
     controller.object = object;
+    controller.delegate = [SHGActionSegmentViewController sharedSegmentController];
     [self.navigationController pushViewController:controller animated:YES];
 }
 

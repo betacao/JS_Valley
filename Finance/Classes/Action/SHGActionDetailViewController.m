@@ -309,9 +309,9 @@
     } else if([title rangeOfString:@"报名"].location != NSNotFound){
         DXAlertView *alert = [[DXAlertView alloc] initWithCustomView:self.cpTextView leftButtonTitle:@"取消" rightButtonTitle:@"确定"];
         alert.rightBlock = ^{
+            [weakSelf.cpTextView resignFirstResponder];
             [[SHGActionManager shareActionManager] enterForActionObject:weakSelf.responseObject reason:weakSelf.cpTextView.text finishBlock:^(BOOL success) {
                 if (success) {
-                    [weakSelf.cpTextView resignFirstResponder];
                     [weakSelf.leftButton setTitle:@"审核中" forState:UIControlStateNormal];
                     [weakSelf.leftButton setEnabled:NO];
                 }
@@ -365,6 +365,9 @@
         if (success) {
             [weakSelf.replyTable reloadData];
         }
+        if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(didCommentAction:)]) {
+            [weakSelf.delegate didCommentAction:weakSelf.responseObject];
+        }
     }];
 }
 
@@ -375,6 +378,9 @@
     [[SHGActionManager shareActionManager] addCommentWithObject:self.responseObject content:comment toOther:fid finishBlock:^(BOOL success) {
         if (success) {
             [weakSelf.replyTable reloadData];
+        }
+        if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(didCommentAction:)]) {
+            [weakSelf.delegate didCommentAction:weakSelf.responseObject];
         }
     }];
 }

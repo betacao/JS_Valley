@@ -23,7 +23,7 @@ typedef NS_ENUM(NSInteger, SHGActionState) {
 @property (strong, nonatomic) NSString *department;
 @property (strong, nonatomic) NSString *company;
 @property (strong, nonatomic) NSString *realName;
-@property (strong, nonatomic) NSString *postion;
+@property (strong, nonatomic) NSString *position;
 @property (strong, nonatomic) NSString *friendShip;
 @property (strong, nonatomic) NSString *createFlag;
 //活动属性

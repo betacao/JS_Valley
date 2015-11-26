@@ -12,7 +12,7 @@
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey
 {
-    return @{@"headerImageUrl":@"headimageurl", @"status":@"status", @"postion":@"postion", @"department":@"department", @"company":@"company", @"realName":@"realname", @"friendShip":@"friendship", @"meetId":@"meetid", @"startTime":@"starttime", @"theme":@"theme", @"endTime":@"endtime", @"meetArea":@"meetarea", @"meetNum":@"meetnum", @"commentNum":@"commentnum", @"meetState":@"meetstate", @"publisher":@"publisher", @"attendNum":@"attendnum", @"praiseNum":@"praisenum", @"createTime":@"createtime", @"isTimeOut":@"istimeout", @"isPraise":@"ispraise", @"detail":@"detail", @"praiseList":@"praiselist", @"attendList":@"attendlist", @"commentList":@"commentlist", @"createFlag":@"createflag", @"reason":@"reason"};
+    return @{@"headerImageUrl":@"headimageurl", @"status":@"status", @"position":@"position", @"department":@"title", @"company":@"company", @"realName":@"realname", @"friendShip":@"friendship", @"meetId":@"meetid", @"startTime":@"starttime", @"theme":@"theme", @"endTime":@"endtime", @"meetArea":@"meetarea", @"meetNum":@"meetnum", @"commentNum":@"commentnum", @"meetState":@"meetstate", @"publisher":@"publisher", @"attendNum":@"attendnum", @"praiseNum":@"praisenum", @"createTime":@"createtime", @"isTimeOut":@"istimeout", @"isPraise":@"ispraise", @"detail":@"detail", @"praiseList":@"praiselist", @"attendList":@"attendlist", @"commentList":@"commentlist", @"createFlag":@"createflag", @"reason":@"reason"};
 }
 
 + (NSValueTransformer *)JSONTransformerForKey:(NSString *)key
