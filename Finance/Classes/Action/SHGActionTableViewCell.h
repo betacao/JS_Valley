@@ -15,7 +15,7 @@
 - (void)clickPrasiseButton:(SHGActionObject *)object;
 - (void)clickCommentButton:(SHGActionObject *)object;
 - (void)clickEditButton:(SHGActionObject *)object;
-
+- (void)tapUserHeaderImageView:(NSString *)uid;
 @end
 
 @interface SHGActionTableViewCell : UITableViewCell

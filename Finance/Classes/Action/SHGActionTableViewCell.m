@@ -62,6 +62,10 @@
     [self.Action_zanButton setImage:[UIImage imageNamed:@"home_weizan"] forState:UIControlStateNormal];
     //我的活动
     [self.Action_thr_zanButton setImage:[UIImage imageNamed:@"home_weizan"] forState:UIControlStateNormal];
+    //self.Action_headImage.hidden = YES;
+    self.Action_headImage.userInteractionEnabled = YES;
+    UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapUserHeaderImageView:)];
+    [self.Action_headImage addGestureRecognizer:recognizer];
 }
 
 - (void)loadDataWithObject:(SHGActionObject *)object index:(NSInteger)index
@@ -223,4 +227,11 @@
         [self.delegate clickEditButton:self.object];
     }
 }
+- (void)tapUserHeaderImageView:(UIGestureRecognizer *)recognizer
+{
+    if (self.delegate && [self.delegate respondsToSelector:@selector(tapUserHeaderImageView:)]) {
+        [self.delegate tapUserHeaderImageView:self.object.publisher];
+    }
+}
+
 @end

@@ -33,6 +33,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *nextButton;
 @property (weak, nonatomic) IBOutlet UILabel *locationLabel;
 @property (weak, nonatomic) IBOutlet UIButton *manualButton;
+@property (strong,nonatomic) NSString * hangyeCode;
 
 @property (strong, nonatomic) UIImage *headImage;
 @property (strong, nonatomic) NSString *headImageName;
@@ -260,33 +261,33 @@
     }];
     
 }
--(void)changeIndustrycodeTextFieldText
+-(NSString *)changeIndustrycodeTextFieldText: (NSString *)hangyeCode
 {
     if ([self.industrycodeTextField.text isEqualToString:@"银行机构"]) {
-        self.industrycodeTextField.text = @"bank";
+       self.hangyeCode = @"bank";
     }
     if ([self.industrycodeTextField.text isEqualToString:@"证劵公司"]) {
-        self.industrycodeTextField.text = @"bond";
+        self.hangyeCode = @"bond";
     }
     if ([self.industrycodeTextField.text isEqualToString:@"三方理财"]) {
-        self.industrycodeTextField.text = @"manage";
+        self.hangyeCode = @"manage";
     }
     if ([self.industrycodeTextField.text isEqualToString:@"基金公司"]) {
-        self.industrycodeTextField.text = @"fund";
+        self.hangyeCode = @"fund";
     }
     if ([self.industrycodeTextField.text isEqualToString:@"其他"]) {
-        self.industrycodeTextField.text = @"other";
+        self.hangyeCode = @"other";
     }
-
+    return self.hangyeCode;
 }
 - (void)uploadMaterial
 {
     if([self checkInputMessageValid]){
         __weak typeof(self)weakSelf = self;
-        [self changeIndustrycodeTextFieldText];
+        [self changeIndustrycodeTextFieldText:self.hangyeCode];
         NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
 
-        NSDictionary *param = @{@"uid":uid, @"head_img":self.headImageName ? self.headImageName : @"", @"name":self.nameTextField.text, @"industrycode":self.industrycodeTextField.text, @"company":self.companyTextField.text, @"title":self.titleTextField.text, @"position":self.userLocation ? self.userLocation : @""};
+        NSDictionary *param = @{@"uid":uid, @"head_img":self.headImageName ? self.headImageName : @"", @"name":self.nameTextField.text, @"industrycode":self.hangyeCode, @"company":self.companyTextField.text, @"title":self.titleTextField.text, @"position":self.userLocation ? self.userLocation : @""};
         [Hud showLoadingWithMessage:@"完善信息中"];
         [[AFHTTPRequestOperationManager manager] PUT:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"register"] parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject) {
             NSLog(@"%@",operation);

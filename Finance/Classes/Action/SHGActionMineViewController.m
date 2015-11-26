@@ -12,11 +12,13 @@
 #import "SHGActionSendViewController.h"
 #import "SHGActionSegmentViewController.h"
 #import "SHGActionManager.h"
+#import "SHGPersonalViewController.h"
 
 @interface SHGActionMineViewController ()<UITableViewDataSource, UITableViewDelegate, SHGActionTableViewDelegate>
 
-@property (weak, nonatomic) IBOutlet UIView *emptyBgImage;
-@property (weak, nonatomic) IBOutlet UIImageView *emptyBgView;
+;
+@property (weak, nonatomic) IBOutlet UIView *emptyBgView;
+@property (weak, nonatomic) IBOutlet UIImageView *emptyBgImage;
 @property (weak, nonatomic) IBOutlet UITableView *listTable;
 @end
 
@@ -37,15 +39,16 @@
     [self addHeaderRefresh:self.listTable headerRefesh:YES andFooter:YES];
     [self loadDataWithType:@"first" meetID:@"-1"];
 }
--(void)emptyBg
+
+- (void)emptyBg
 {
     if (self.dataArr.count == 0) {
         self.emptyBgView.hidden = NO;
-    }else
-    {
+    } else{
         self.emptyBgView.hidden = YES;
     }
 }
+
 - (void)refreshData
 {
     [self loadDataWithType:@"first" meetID:@"-1"];
@@ -93,13 +96,13 @@
         if (response.dataArray.count < 10) {
             [weakSelf.listTable.footer endRefreshingWithNoMoreData];
         }
-        [self emptyBg];
+        [weakSelf emptyBg];
     } failed:^(MOCHTTPResponse *response) {
         [Hud hideHud];
         [Hud showMessageWithText:@"网络连接失败"];
         [weakSelf.listTable.header endRefreshing];
         [weakSelf.listTable.footer endRefreshing];
-        self.emptyBgView.hidden = NO;
+        weakSelf.emptyBgView.hidden = NO;
     }];
 }
 
@@ -208,6 +211,13 @@
             block(YES);
         }
     }];
+}
+- (void)tapUserHeaderImageView:(NSString *)uid
+{
+    __weak typeof(self) weakSelf = self;
+    SHGPersonalViewController * vc = [[SHGPersonalViewController alloc]init ];
+    vc.userId = uid;
+    [weakSelf.navigationController pushViewController:vc animated:YES];
 }
 
 @end

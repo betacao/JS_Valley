@@ -7,8 +7,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SHGActionMineViewController">
             <connections>
-                <outlet property="emptyBgImage" destination="sFG-yO-6It" id="q3y-6g-g01"/>
-                <outlet property="emptyBgView" destination="J7t-0I-wWx" id="02n-4d-A8d"/>
+                <outlet property="emptyBgImage" destination="J7t-0I-wWx" id="Tfu-Ct-5em"/>
+                <outlet property="emptyBgView" destination="sFG-yO-6It" id="Jne-nH-fTW"/>
                 <outlet property="listTable" destination="3E6-t8-qrC" id="NY2-SP-fK7"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>

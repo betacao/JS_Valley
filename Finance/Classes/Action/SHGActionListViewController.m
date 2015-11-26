@@ -13,6 +13,7 @@
 #import "SHGActionSendViewController.h"
 #import "SHGActionManager.h"
 #import "SHGActionSegmentViewController.h"
+#import "SHGPersonalViewController.h"
 
 @interface SHGActionListViewController ()<UITableViewDataSource, UITableViewDelegate, SHGActionTableViewDelegate>
 
@@ -227,6 +228,13 @@
             block(YES);
         }
     }];
+}
+- (void)tapUserHeaderImageView:(NSString *)uid
+{
+    __weak typeof(self) weakSelf = self;
+    SHGPersonalViewController * vc = [[SHGPersonalViewController alloc]init ];
+    vc.userId = uid;
+    [weakSelf.navigationController pushViewController:vc animated:YES];
 }
 
 @end
