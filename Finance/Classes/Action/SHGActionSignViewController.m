@@ -284,12 +284,13 @@
         [weakSelf.tableView reloadData];
     }];
 }
+
 - (void)tapUserHeaderImageView:(NSString *)uid
 {
     __weak typeof(self) weakSelf = self;
     SHGPersonalViewController * vc = [[SHGPersonalViewController alloc]init ];
     vc.userId = uid;
-    [weakSelf.navigationController pushViewController:vc animated:YES];
+    [weakSelf.superController.navigationController pushViewController:vc animated:YES];
 }
 
 @end

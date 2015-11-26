@@ -82,7 +82,52 @@
 -(void)requestContact
 {
     
-    if ([self.friend_status isEqualToString:@"his"]) {
+    if ([self.friend_status isEqualToString:@"me"]) {
+        self.title = @"我的好友";
+        NSString * uid = self.userId;
+        NSDictionary *param = @{@"uid":uid,
+                                @"pagenum":[NSNumber numberWithInteger:self.pageNum],                          @"pagesize":@15};
+        NSString *url = [NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttp,@"friends",@"getHisFriends"];
+        [MOCHTTPRequestOperationManager postWithURL:url class:[BasePeopleObject class] parameters:param success:^(MOCHTTPResponse *response) {
+            if(response.dataArray.count>0){
+                if (self.pageNum == 1) {
+                    [self.contactsSource removeAllObjects];
+                }
+            }
+            for (int i = 0; i<response.dataArray.count; i++)
+            {
+                NSDictionary *dic = response.dataArray[i];
+                BasePeopleObject *obj = [[BasePeopleObject alloc] init];
+                obj.name = [dic valueForKey:@"nick"];
+                obj.headImageUrl = [dic valueForKey:@"avatar"];
+                obj.uid = [dic valueForKey:@"username"];
+                obj.company = [dic valueForKey:@"company"];
+                [self.contactsSource addObject:obj];
+            }
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                [HeadImage inertWithArr:self.contactsSource];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [Hud hideHud];
+                    if(response.dataArray.count>0)
+                    {
+                        _tableView.hidden=NO;
+                        [self.tableView reloadData];
+                    } else{
+                        [_tableView.footer endRefreshingWithNoMoreData];
+                    }
+                    [self.tableView.header endRefreshing];
+                    [self.tableView.footer endRefreshing];
+                });
+            });
+            
+        } failed:^(MOCHTTPResponse *response) {
+            [Hud hideHud];
+            [Hud showMessageWithText:response.errorMessage];
+            [self.tableView.header endRefreshing];
+            [self.tableView.footer endRefreshing];
+        }];
+        
+    }else if ([self.friend_status isEqualToString:@"his"]) {
         self.title = @"他的好友";
         NSString * uid = self.userId;
         NSDictionary *param = @{@"uid":uid,

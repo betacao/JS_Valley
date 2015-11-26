@@ -68,7 +68,9 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
     if ([self.userId isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID]]) {
         self.listArray = [NSMutableArray arrayWithArray:@[@"我的动态", @"我的好友"]];
         self.footerView.hidden = YES;
+        self.friendImage.hidden = YES;
     } else{
+        self.friendImage.hidden = NO;
         self.listArray = [NSMutableArray arrayWithArray:@[@"他的动态", @"他的好友", @"共同好友"]];
     }
 
@@ -377,7 +379,13 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
         case 1:{
             SHGPersonFriendsViewController *vc = [[SHGPersonFriendsViewController alloc] init];
             vc.userId = self.userId;
-            [vc friendStatus:@"his"];
+            if ([self.userId isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID]] ) {
+                [vc friendStatus:@"me"];
+            }else
+            {
+                [vc friendStatus:@"his"];
+            }
+
             [self.navigationController pushViewController:vc animated:YES];
         }
             break;
