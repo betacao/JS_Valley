@@ -141,7 +141,7 @@
     }
     cell.delegate = self;
     SHGActionObject *object = [self.dataArr objectAtIndex:indexPath.row];
-    [cell loadDataWithObject:object];
+    [cell loadDataWithObject:object index:indexPath.row];
     return cell;
 }
 

@@ -64,10 +64,15 @@
     [self.Action_thr_zanButton setImage:[UIImage imageNamed:@"home_weizan"] forState:UIControlStateNormal];
 }
 
-- (void)loadDataWithObject:(SHGActionObject *)object
+- (void)loadDataWithObject:(SHGActionObject *)object index:(NSInteger)index
 {
     self.object = object;
     [self clearCell];
+    if (index == 0) {
+        self.Acyion_titleBg.hidden = YES;
+    } else{
+        self.Acyion_titleBg.hidden = NO;
+    }
     [self.Action_headImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,object.headerImageUrl]] placeholderImage:[UIImage imageNamed:@"default_head"]];
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
     NSString *theme = object.theme;

@@ -939,12 +939,12 @@
     }
 }
 
-- (void)shareActionToWeChat:(NSInteger)type content:(NSString *)content
+- (void)shareActionToWeChat:(NSInteger)type content:(NSString *)content url:(NSString *)url
 {
     if ([WXApi isWXAppSupportApi]){
         WXMediaMessage *message = [WXMediaMessage message];
         NSString *detail = content;
-        message.messageExt = content;
+        message.messageExt = url;
         if (type == 0) {
             message.title = @"大牛圈";
         } else{

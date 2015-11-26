@@ -21,7 +21,7 @@
 @interface SHGActionTableViewCell : UITableViewCell
 
 @property (assign, nonatomic) id<SHGActionTableViewDelegate> delegate;
-- (void)loadDataWithObject:(SHGActionObject *)object;
+- (void)loadDataWithObject:(SHGActionObject *)object index:(NSInteger)index;
 
 
 @end

@@ -63,6 +63,7 @@
 //新建活动
 - (void)createNewAction:(NSDictionary *)param finishBlock:(void (^)(BOOL))block
 {
+    [Hud showLoadingWithMessage:@"请稍等..."];
     NSString *request = [rBaseAddressForHttp stringByAppendingString:@"/meetingactivity/saveMeetingActivity"];
     [MOCHTTPRequestOperationManager postWithURL:request parameters:param success:^(MOCHTTPResponse *response) {
         [Hud showMessageWithLongText:@"提交成功，大牛圈会在一个工作日内完成审核！"];
@@ -284,19 +285,20 @@
     }
     NSString *postContent = [NSString stringWithFormat:@"【活动】%@", theme];
     NSString *shareContent = [NSString stringWithFormat:@"【活动】%@", theme];
-    NSString *content = [NSString stringWithFormat:@"%@\"%@\"%@%@",@"Hi，我在金融大牛圈上看到了一个非常棒的活动,关于",theme,@"，赶快下载大牛圈查看吧！",[NSString stringWithFormat:@"%@%@",rBaseAddressForHttpShare,object.meetId]];
+    NSString *friendContent = [NSString stringWithFormat:@"%@\"%@\"%@%@",@"Hi，我在金融大牛圈上看到了一个非常棒的活动,关于",theme,@"，赶快去活动版块查看吧！",[NSString stringWithFormat:@"%@%@",rBaseAddressForHttpShare,object.meetId]];
 
+    NSString *messageContent = [NSString stringWithFormat:@"%@\"%@\"%@%@",@"Hi，我在金融大牛圈上看到了一个非常棒的活动,关于",theme,@"，赶快下载大牛圈查看吧！",@"https://itunes.apple.com/cn/app/da-niu-quan-jin-rong-zheng/id984379568?mt=8"];
     id<ISSShareActionSheetItem> item0 = [ShareSDK shareActionSheetItemWithTitle:@"微信好友" icon:[UIImage imageNamed:@"sns_icon_22"] clickHandler:^{
-        [[AppDelegate currentAppdelegate] shareActionToWeChat:0 content:postContent];
+        [[AppDelegate currentAppdelegate] shareActionToWeChat:0 content:postContent url:request];
     }];
     id<ISSShareActionSheetItem> item1 = [ShareSDK shareActionSheetItemWithTitle:@"朋友圈" icon:[UIImage imageNamed:@"sns_icon_23"] clickHandler:^{
-        [[AppDelegate currentAppdelegate] shareActionToWeChat:1 content:postContent];
+        [[AppDelegate currentAppdelegate] shareActionToWeChat:1 content:postContent url:request];
     }];
     id<ISSShareActionSheetItem> item2 = [ShareSDK shareActionSheetItemWithTitle:@"短信" icon:[UIImage imageNamed:@"sns_icon_19"] clickHandler:^{
-        [[AppDelegate currentAppdelegate] shareActionToSMS:content];
+        [[AppDelegate currentAppdelegate] shareActionToSMS:messageContent];
     }];
     id<ISSShareActionSheetItem> item3 = [ShareSDK shareActionSheetItemWithTitle:@"圈内好友" icon:[UIImage imageNamed:@"圈内好友图标"] clickHandler:^{
-        [self shareToFriendController:controller content:content];
+        [self shareToFriendController:controller content:friendContent];
     }];
     NSArray *shareArray = nil;
     if ([WXApi isWXAppSupportApi]) {
