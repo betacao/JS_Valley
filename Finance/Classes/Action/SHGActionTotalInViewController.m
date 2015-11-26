@@ -65,7 +65,7 @@
 - (void)meetAttend:(SHGActionAttendObject *)object clickRejectButton:(UIButton *)button reason:(NSString *)reason
 {
     __weak typeof(self) weakSelf = self;
-    [[SHGActionManager shareActionManager] userCheckOtherState:object option:@"0" reason:reason finishBlock:^(BOOL success) {
+    [[SHGActionManager shareActionManager] userCheckOtherState:object option:@"2" reason:reason finishBlock:^(BOOL success) {
         [weakSelf.tableView reloadData];
         if (weakSelf.block) {
             weakSelf.block();

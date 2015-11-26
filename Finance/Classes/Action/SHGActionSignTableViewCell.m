@@ -91,18 +91,20 @@
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
     if ([uid isEqualToString:publisher]) {
         if ([object.state isEqualToString:@"0"]) {
+            //审核中
             self.action_signLeftButton.hidden = NO;
             self.action_signRightButton.hidden = NO;
             [self.action_signLeftButton setTitle:@"同意" forState:UIControlStateNormal];
             [self.action_signRightButton setTitle:@"驳回" forState:UIControlStateNormal];
         } else if ([object.state isEqualToString:@"1"]) {
+            //已同意
             self.action_signRightButton.hidden = NO;
             [self.action_signRightButton setTitle:@"已同意" forState:UIControlStateNormal];
             [self.action_signRightButton setEnabled:NO];
         } else if ([object.state isEqualToString:@"2"]) {
+            //已驳回
             self.action_signRightButton.hidden = NO;
             [self.action_signRightButton setTitle:@"已驳回" forState:UIControlStateNormal];
-
             [self.action_signRightButton setEnabled:NO];
         }
     } else{

@@ -262,20 +262,18 @@
     }
     [MOCHTTPRequestOperationManager postWithURL:request parameters:param success:^(MOCHTTPResponse *response) {
         [Hud hideHud];
-        [Hud showMessageWithText:@"已同意"];
         if (block) {
-            if ([option isEqualToString:@"0"]) {
-                //驳回
-                object.state = @"2";
-            } else{
-                //同意
-                object.state = @"1";
+            object.state = option;
+            if ([option isEqualToString:@"1"]) {
+                [Hud showMessageWithText:@"已同意"];
+            } else if ([option isEqualToString:@"2"]){
+                [Hud showMessageWithText:@"已驳回"];
             }
             block(YES);
         }
     } failed:^(MOCHTTPResponse *response) {
         [Hud hideHud];
-        [Hud showMessageWithText:@"已驳回"];
+        [Hud showMessageWithText:@"操作失败"];
         if (block) {
             block(NO);
         }

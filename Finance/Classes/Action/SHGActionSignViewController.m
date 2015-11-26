@@ -242,7 +242,8 @@
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
     NSInteger count = self.object.attendList.count;
     for (SHGActionAttendObject *object in self.object.attendList){
-        if ([object.uid isEqualToString:uid]) {
+        if ([object.uid isEqualToString:uid] && ![object.state isEqualToString:@"1"]) {
+            //是自己并且没有被通过 则不显示自己
             count--;
             [self.object.attendList removeObject:object];
             break;
@@ -293,7 +294,7 @@
 - (void)meetAttend:(SHGActionAttendObject *)object clickRejectButton:(UIButton *)button reason:(NSString *)reason
 {
     __weak typeof(self) weakSelf = self;
-    [[SHGActionManager shareActionManager] userCheckOtherState:object option:@"0" reason:reason finishBlock:^(BOOL success) {
+    [[SHGActionManager shareActionManager] userCheckOtherState:object option:@"2" reason:reason finishBlock:^(BOOL success) {
         [weakSelf.tableView reloadData];
     }];
 }

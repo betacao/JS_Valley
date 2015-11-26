@@ -68,7 +68,10 @@
         tableView.header = header;
     }
     if (isFooterRefresh){
-        tableView.footer = [MJRefreshAutoStateFooter footerWithRefreshingTarget:self refreshingAction:@selector(refreshFooter)];
+        MJRefreshAutoStateFooter *footer = [MJRefreshAutoStateFooter footerWithRefreshingTarget:self refreshingAction:@selector(refreshFooter)];
+        footer.stateLabel.textColor = [UIColor colorWithHexString:@"606060"];
+        footer.stateLabel.font = [UIFont systemFontOfSize:12.0f];
+        tableView.footer = footer;
     }
 }
 

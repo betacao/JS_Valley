@@ -193,10 +193,8 @@
         if (toViewController == nil){  // don't animate
             [fromViewController.view removeFromSuperview];
         } else if (fromViewController == nil){  // don't animate
-            dispatch_async(dispatch_get_main_queue(), ^{
-                toViewController.view.frame = contentContainerView.bounds;
-                [contentContainerView addSubview:toViewController.view];
-            });
+            toViewController.view.frame = contentContainerView.bounds;
+            [contentContainerView addSubview:toViewController.view];
         } else if (animated){
             CGRect rect = contentContainerView.bounds;
             if (oldSelectedIndex < newSelectedIndex)
