@@ -5821,7 +5821,7 @@
 					"$(PROJECT_DIR)/Finance/External/ShareSDK/Extend/WeChatSDK",
 				);
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.appstore.daniu;
+				PRODUCT_BUNDLE_IDENTIFIER = com.danniuquan.apptest;
 				PRODUCT_NAME = "大牛圈";
 				PROVISIONING_PROFILE = "d07b6120-d4cc-4a38-ac57-406730f9b218";
 				SDKROOT = iphoneos;
@@ -5859,7 +5859,7 @@
 					"$(PROJECT_DIR)/Finance/External/ShareSDK/Extend/WeChatSDK",
 				);
 				ONLY_ACTIVE_ARCH = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = com.appstore.daniu;
+				PRODUCT_BUNDLE_IDENTIFIER = com.danniuquan.apptest;
 				PRODUCT_NAME = "大牛圈";
 				PROVISIONING_PROFILE = "d07b6120-d4cc-4a38-ac57-406730f9b218";
 				SDKROOT = iphoneos;
@@ -5935,7 +5935,7 @@
 					"$(PROJECT_DIR)/Finance/External/ShareSDK/Extend/WeChatSDK",
 				);
 				ONLY_ACTIVE_ARCH = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = com.appstore.daniu;
+				PRODUCT_BUNDLE_IDENTIFIER = com.danniuquan.apptest;
 				PRODUCT_NAME = "大牛圈";
 				PROVISIONING_PROFILE = "d07b6120-d4cc-4a38-ac57-406730f9b218";
 				SDKROOT = iphoneos;
