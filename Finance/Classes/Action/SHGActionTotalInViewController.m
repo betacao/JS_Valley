@@ -50,6 +50,16 @@
     return  cell;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    __weak typeof(self) weakSelf = self;
+    SHGActionAttendObject *object = [self.attendList objectAtIndex:indexPath.row];
+    SHGPersonalViewController * vc = [[SHGPersonalViewController alloc]init ];
+    vc.userId = object.uid;
+    [weakSelf.navigationController pushViewController:vc animated:YES];
+
+}
+
 #pragma mark ------signDelegate
 - (void)meetAttend:(SHGActionAttendObject *)object clickCommitButton:(UIButton *)button
 {
