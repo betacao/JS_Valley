@@ -81,6 +81,7 @@
 
 -(void)requestContact
 {
+     [Hud showLoadingWithMessage:@"加载中"];
     
     if ([self.friend_status isEqualToString:@"me"]) {
         self.title = @"我的好友";
@@ -89,6 +90,7 @@
                                 @"pagenum":[NSNumber numberWithInteger:self.pageNum],                          @"pagesize":@15};
         NSString *url = [NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttp,@"friends",@"getHisFriends"];
         [MOCHTTPRequestOperationManager postWithURL:url class:[BasePeopleObject class] parameters:param success:^(MOCHTTPResponse *response) {
+            [Hud hideHud];
             if(response.dataArray.count>0){
                 if (self.pageNum == 1) {
                     [self.contactsSource removeAllObjects];
@@ -134,6 +136,7 @@
                                 @"pagenum":[NSNumber numberWithInteger:self.pageNum],                          @"pagesize":@15};
         NSString *url = [NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttp,@"friends",@"getHisFriends"];
         [MOCHTTPRequestOperationManager postWithURL:url class:[BasePeopleObject class] parameters:param success:^(MOCHTTPResponse *response) {
+            [Hud hideHud];
             if(response.dataArray.count>0){
                 if (self.pageNum == 1) {
                     [self.contactsSource removeAllObjects];
@@ -177,6 +180,7 @@
          NSString *url = [NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttp,@"friends",@"getCommonFriends"];
          NSDictionary *param = @{@"uid":[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID],@"ownerId":self.userId};
         [MOCHTTPRequestOperationManager postWithURL:url class:[BasePeopleObject class] parameters:param success:^(MOCHTTPResponse *response) {
+            [Hud hideHud];
             if(response.dataArray.count>0){
                 if (self.pageNum == 1) {
                     [self.contactsSource removeAllObjects];
