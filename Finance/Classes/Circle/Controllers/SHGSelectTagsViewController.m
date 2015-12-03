@@ -76,6 +76,8 @@
     }
     if (tags.length > 0) {
         self.tagsLabel.text = [@"当前标签：" stringByAppendingString:[tags substringToIndex:tags.length - 1]];
+    } else{
+        self.tagsLabel.text = @"还未选择";
     }
 }
 

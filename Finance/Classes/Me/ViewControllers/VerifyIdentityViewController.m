@@ -230,14 +230,10 @@
 			[formData appendPartWithFileData:imageData name:@"haha.jpg" fileName:@"haha.jpg" mimeType:@"image/jpeg"];
 		} success:^(AFHTTPRequestOperation *operation, id responseObject) {
 			NSLog(@"%@",responseObject);
-			
 			NSDictionary *dic = [(NSString *)[responseObject valueForKey:@"data"] parseToArrayOrNSDictionary];
-			
 			weakSelf.identifyImageName = [(NSArray *)[dic valueForKey:@"pname"] objectAtIndex:0];
-			
 			[Hud hideHud];
 			[weakSelf submitMaterial];
-			
 		} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 			NSLog(@"%@",error);
 			[Hud hideHud];

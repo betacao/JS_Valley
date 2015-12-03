@@ -102,7 +102,7 @@
     self.actionPositionLabel.text = self.object.meetArea;
     self.actionTotalLabel.text = [NSString stringWithFormat:@"邀请%@人", self.object.meetNum];
     self.actionInLabel.text = [NSString stringWithFormat:@"已报名 %@人", self.object.attendNum];
-    self.actionIntroduceLabel.text = self.object.detail;
+    self.actionIntroduceLabel.text = [self.object.detail stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
     self.actionTimeLabel.text = [self.object.startTime stringByAppendingFormat:@"-%@",self.object.endTime];
     NSMutableAttributedString *noteStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@",self.actionInLabel.text]] ;
     [noteStr addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"F7514A"] range:NSMakeRange(3, noteStr.length - 4)];
@@ -118,7 +118,7 @@
     size = [self.actionIntroduceLabel sizeThatFits:CGSizeMake(CGRectGetWidth(self.actionIntroduceLabel.frame), MAXFLOAT)];
     frame = self.actionIntroduceLabel.frame;
     frame.origin.y = CGRectGetMaxY(self.middleView.frame);
-    frame.size.height = size.height + kObjectMargin;
+    frame.size.height = size.height;
     self.actionIntroduceLabel.frame = frame;
     //设置查看全部的高度
     frame = self.bottomView.frame;

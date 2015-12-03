@@ -245,27 +245,27 @@ typedef NS_ENUM(NSInteger, SHGActionSendType){
 
 - (BOOL)checkInputMessage
 {
-    if (self.actionTitleField.text == 0) {
+    if (self.actionTitleField.text.length == 0) {
         [Hud showMessageWithText:@"请输入活动标题"];
         return NO;
     }
-    if (self.startTimeField.text == 0) {
+    if (self.startTimeField.text.length == 0) {
         [Hud showMessageWithText:@"请输入活动开始时间"];
         return NO;
     }
-    if (self.endTimeField.text == 0) {
+    if (self.endTimeField.text.length == 0) {
         [Hud showMessageWithText:@"请输入活动结束时间"];
         return NO;
     }
-    if (self.positionField.text == 0) {
+    if (self.positionField.text.length == 0) {
         [Hud showMessageWithText:@"请输入活动地点"];
         return NO;
     }
-    if (self.invateNumber.text == 0) {
+    if (self.invateNumber.text.length == 0) {
         [Hud showMessageWithText:@"请输入活动邀请人数"];
         return NO;
     }
-    if (self.introduceView.text == 0) {
+    if (self.introduceView.text.length == 0) {
         [Hud showMessageWithText:@"请输入活动简介"];
         return NO;
     }
