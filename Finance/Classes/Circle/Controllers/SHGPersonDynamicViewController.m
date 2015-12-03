@@ -72,11 +72,11 @@
     }
     if ([self.target isEqualToString:@"load"] && listArray.count > 0) {
         [self.dataArr addObjectsFromArray:listArray];
-    }
-    if (listArray.count < 10) {
-        [self.tableView.footer endRefreshingWithNoMoreData];
-    }
-}
+        if (listArray.count < 10) {
+            [self.tableView.footer endRefreshingWithNoMoreData];
+        }
+
+    }}
 
 - (void)refreshHeader
 {

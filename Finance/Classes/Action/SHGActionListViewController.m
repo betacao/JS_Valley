@@ -82,6 +82,8 @@
     [Hud showLoadingWithMessage:@"请稍等..."];
     [MOCHTTPRequestOperationManager postWithURL:request class:[SHGActionObject class] parameters:dictionary success:^(MOCHTTPResponse *response) {
         [Hud hideHud];
+        [weakSelf.listTable.header endRefreshing];
+        [weakSelf.listTable.footer endRefreshing];
         if ([target isEqualToString:@"first"]) {
             [weakSelf.dataArr removeAllObjects];
             [weakSelf.dataArr addObjectsFromArray:response.dataArray];
@@ -92,14 +94,12 @@
             }
         } else{
             [weakSelf.dataArr addObjectsFromArray:response.dataArray];
+            if (response.dataArray.count < 10) {
+                [weakSelf.listTable.footer endRefreshingWithNoMoreData];
+            }
         }
         [weakSelf.listTable reloadData];
-        [weakSelf.listTable.header endRefreshing];
-        [weakSelf.listTable.footer endRefreshing];
-        if (response.dataArray.count < 10) {
-            [weakSelf.listTable.footer endRefreshingWithNoMoreData];
-        }
-        [self emptyBg];
+        [weakSelf emptyBg];
     } failed:^(MOCHTTPResponse *response) {
         [Hud hideHud];
         [Hud showMessageWithText:@"网络连接失败"];

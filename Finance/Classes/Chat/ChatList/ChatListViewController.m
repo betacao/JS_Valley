@@ -151,9 +151,7 @@ static NSString * const kCommonFNum			= @"commonnum";
     if (hasMoreData) {
         pageNum ++;
         [self refreshDataSource];
-    }
-    else
-    {
+    } else{
         [self.tableView.footer endRefreshingWithNoMoreData];
     }
 }

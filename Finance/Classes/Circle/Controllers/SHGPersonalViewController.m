@@ -86,6 +86,13 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
     self.headerImageView.userInteractionEnabled = YES;
     self.headerImageView.layer.masksToBounds = YES;
     self.headerImageView.layer.cornerRadius = CGRectGetHeight(self.headerImageView.frame) / 2.0f;
+    UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapHeaderView:)];
+    [self.headerImageView addGestureRecognizer:recognizer];
+}
+
+- (void)tapHeaderView:(UITapGestureRecognizer *)recognizer
+{
+//SDpho
 }
 
 - (void)requestDataWithTarget:(NSString *)target time:(NSString *)time
@@ -381,11 +388,9 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
             vc.userId = self.userId;
             if ([self.userId isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID]] ) {
                 [vc friendStatus:@"me"];
-            }else
-            {
+            } else{
                 [vc friendStatus:@"his"];
             }
-
             [self.navigationController pushViewController:vc animated:YES];
         }
             break;

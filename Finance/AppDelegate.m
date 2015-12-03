@@ -678,17 +678,15 @@
 
 - (void)didReceiveWeiboResponse:(WBBaseResponse *)response
 {
-    if ([response isKindOfClass:WBSendMessageToWeiboResponse.class])
-    {
+    if ([response isKindOfClass:WBSendMessageToWeiboResponse.class]){
         NSString *message = [NSString stringWithFormat:@"%@: %d\n%@: %@\n%@: %@", NSLocalizedString(@"响应状态", nil), (int)response.statusCode, NSLocalizedString(@"响应UserInfo数据", nil), response.userInfo, NSLocalizedString(@"原请求UserInfo数据", nil),response.requestUserInfo];
         WBSendMessageToWeiboResponse* sendMessageToWeiboResponse = (WBSendMessageToWeiboResponse*)response;
         NSString* accessToken = [sendMessageToWeiboResponse.authResponse accessToken];
-        if (accessToken)
-        {
+        if (accessToken){
             self.wbtoken = accessToken;
         }
         NSString* userID = [sendMessageToWeiboResponse.authResponse userID];
-        if (userID) {
+        if (userID){
             self.wbCurrentUserID = userID;
         }
         int stateCode = response.statusCode;
