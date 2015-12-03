@@ -29,6 +29,7 @@
         [self.delegate tapUserHeaderImageView:self.uid];
     }
 }
+
 - (void)loadDatasWithObj:(BasePeopleObject *)obj
 {
     [self clearCell];

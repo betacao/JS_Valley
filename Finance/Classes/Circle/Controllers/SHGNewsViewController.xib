@@ -7,7 +7,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SHGNewsViewController">
             <connections>
-                <outlet property="emptyBgImage" destination="d26-Xz-WMY" id="BFp-jX-zpx"/>
+                <outlet property="emptyBgImage" destination="zMZ-4R-KcG" id="MTd-NX-ovw"/>
                 <outlet property="emptyBgView" destination="d26-Xz-WMY" id="rCX-RX-zWr"/>
                 <outlet property="listTable" destination="wBX-7P-gdw" id="lCM-P3-qio"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -28,7 +28,7 @@
                     <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     <subviews>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="zMZ-4R-KcG">
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="emptyBg" id="zMZ-4R-KcG">
                             <rect key="frame" x="98" y="158" width="124" height="124"/>
                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                         </imageView>
@@ -41,4 +41,7 @@
             <point key="canvasLocation" x="210" y="220"/>
         </view>
     </objects>
+    <resources>
+        <image name="emptyBg" width="124" height="124"/>
+    </resources>
 </document>
