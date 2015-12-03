@@ -23,6 +23,5 @@
 
 @property (assign, nonatomic) id<SHGActionTableViewDelegate> delegate;
 - (void)loadDataWithObject:(SHGActionObject *)object index:(NSInteger)index;
-
-
+- (void)loadDateWithAllEdit:(SHGActionObject *)object;
 @end

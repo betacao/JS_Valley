@@ -122,7 +122,9 @@
     
     if ([object.publisher isEqualToString:uid] && object.meetState == SHGActionStateSuccess) {
         //2代表通过审核了
+       
         self.thrButtonView.hidden = NO;
+        
         [self.Action_thr_zanButton setTitle:object.praiseNum forState:UIControlStateNormal];
         [self.Action_thrCommentButton setTitle:object.commentNum forState:UIControlStateNormal];
         if ([object.isPraise isEqualToString:@"Y"]) {
@@ -142,6 +144,25 @@
     }
     [self layoutSubviewsFrame];
 }
+
+- (void)loadDateWithAllEdit:(SHGActionObject *)object
+{
+    self.object = object;
+    if ([self.object.publisher isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID]]) {
+        self.thrButtonView.hidden = YES;
+        self.twoButtonView.hidden = NO;
+        [self.Action_zanButton setTitle:object.praiseNum forState:UIControlStateNormal];
+        [self.Action_commentButton setTitle:object.commentNum forState:UIControlStateNormal];
+        if ([object.isPraise isEqualToString:@"Y"]) {
+            [self.Action_zanButton setImage:[UIImage imageNamed:@"home_yizan"] forState:UIControlStateNormal];
+        } else{
+            [self.Action_zanButton setImage:[UIImage imageNamed:@"home_weizan"] forState:UIControlStateNormal];
+        }
+
+    }
+     [self layoutSubviewsFrame];
+}
+
 
 - (void)layoutSubviewsFrame
 {
