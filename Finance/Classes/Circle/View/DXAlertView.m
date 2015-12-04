@@ -36,18 +36,10 @@
     return kAlertHeight;
 }
 
-- (id)initWithFrame:(CGRect)frame
-{
-    self = [super initWithFrame:frame];
-    if (self) {
-        // Initialization code
-    }
-    return self;
-}
-
 - (instancetype)initWithTitle:(NSString *)title contentText:(NSString *)content leftButtonTitle:(NSString *)leftTitle rightButtonTitle:(NSString *)rigthTitle
 {
     if (self = [super init]){
+        self.shouldDismiss = YES;
         self.layer.cornerRadius = 8.0f;
         self.backgroundColor = [UIColor whiteColor];
         self.alertTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, 0.0f, kAlertWidth, kLineViewTopMargin)];
@@ -124,6 +116,7 @@
 {
     self = [super init];
     if(self){
+        self.shouldDismiss = YES;
         self.layer.cornerRadius = 8.0f;
         self.backgroundColor = [UIColor whiteColor];
         self.alertTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, 0.0f, kAlertWidth, kLineViewTopMargin)];
@@ -186,6 +179,7 @@
 {
     self = [super init];
     if(self){
+        self.shouldDismiss = YES;
         self.layer.cornerRadius = 8.0f;
         self.backgroundColor = [UIColor whiteColor];
 
@@ -243,10 +237,13 @@
 - (void)rightBtnClicked:(id)sender
 {
     _leftLeave = NO;
+
     if (self.rightBlock) {
         self.rightBlock();
     }
-    [self dismissAlert];
+    if (self.shouldDismiss) {
+        [self dismissAlert];
+    }
 }
 
 - (void)show

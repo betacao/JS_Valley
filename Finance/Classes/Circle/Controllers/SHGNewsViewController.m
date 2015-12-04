@@ -32,6 +32,7 @@
 @property (strong, nonatomic) SHGSelectTagsViewController *tagsController;
 @property (weak, nonatomic) IBOutlet UIView *emptyBgView;
 @property (weak, nonatomic) IBOutlet UIView *emptyBgImage;
+@property (strong, nonatomic) UITableViewCell *emptyCell;
 
 @end
 
@@ -55,16 +56,23 @@
     [Hud showLoadingWithMessage:@"加载中"];
     [self requestDataWithTarget:@"first" time:@""];
 }
--(void)emptyBg
+
+- (void)emptyBg
 {
     if (self.dataArr.count == 0) {
         self.emptyBgView.hidden = NO;
-    }else
-    {
+    } else{
         self.emptyBgView.hidden = YES;
     }
 }
 
+- (UITableViewCell *)emptyCell
+{
+    if (!_emptyCell) {
+        _emptyCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+    }
+    return _emptyCell;
+}
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
@@ -151,16 +159,17 @@
         dispatch_async(dispatch_get_main_queue(), ^(){
             [weakSelf.listTable reloadData];
         });
-        [self emptyBg];
+        [weakSelf emptyBg];
     } failed:^(MOCHTTPResponse *response){
+        [Hud hideHud];
         weakSelf.isRefreshing = NO;
         weakSelf.listTable.footer.hidden = NO;
         [Hud showMessageWithText:response.errorMessage];
         NSLog(@"%@",response.errorMessage);
         [weakSelf.listTable.header endRefreshing];
+        weakSelf.emptyBgView.hidden = NO;
         [weakSelf performSelector:@selector(endrefresh) withObject:nil afterDelay:1.0];
-        [Hud hideHud];
-        self.emptyBgView.hidden = NO;
+
     }];
 }
 
@@ -281,20 +290,26 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    CircleListObj *obj =self.dataArr[indexPath.row];
+    if (indexPath.row == 0) {
+        return 1.0f;
+    }
+    CircleListObj *obj = self.dataArr[indexPath.row];
     obj.cellHeight = [obj fetchCellHeight];
     return obj.cellHeight;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    NSInteger count = self.dataArr.count;
+    NSInteger count = self.dataArr.count + 1;
     return count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    CircleListObj *obj = self.dataArr[indexPath.row];
+    if (indexPath.row == 0) {
+        return self.emptyCell;
+    }
+    CircleListObj *obj = [self.dataArr objectAtIndex:indexPath.row - 1];
     NSLog(@"%@",obj.postType);
     if (![obj.postType isEqualToString:@"ad"]){
         if ([obj.status boolValue]){
@@ -304,7 +319,7 @@
                 cell = [[[NSBundle mainBundle] loadNibNamed:@"SHGHomeTableViewCell" owner:self options:nil] lastObject];
                 cell.selectionStyle = UITableViewCellSelectionStyleNone;
             }
-            cell.index = indexPath.row;
+            cell.index = indexPath.row - 1;
             cell.delegate = [SHGUnifiedTreatment sharedTreatment];
             [cell loadDatasWithObj:obj type:@"news"];
 
@@ -326,7 +341,7 @@
 {
     CGFloat height = CGRectGetHeight(self.tagsController.view.frame);
     if (height == 0) {
-        return 40.0f;
+        return 26.0f;
     }
     return height;
 }
@@ -387,7 +402,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    CircleListObj *obj = self.dataArr[indexPath.row];
+    CircleListObj *obj = [self.dataArr objectAtIndex:indexPath.row - 1];
     CircleDetailViewController *viewController = [[CircleDetailViewController alloc] initWithNibName:@"CircleDetailViewController" bundle:nil];
     viewController.delegate = [SHGUnifiedTreatment sharedTreatment];
     viewController.rid = obj.rid;
@@ -405,6 +420,7 @@
         [cell setLayoutMargins:UIEdgeInsetsZero];
     }
 }
+
 
 
 #pragma mark ------ 代理 ------

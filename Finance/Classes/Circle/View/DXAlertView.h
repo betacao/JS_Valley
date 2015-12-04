@@ -19,6 +19,7 @@
 #define kCustomViewButtomMargin 18.0f * XFACTOR
 #define kCustomViewTopMargin 15.0f * XFACTOR
 
+
 @interface DXAlertView : UIView
 
 - (instancetype)initWithTitle:(NSString *)title contentText:(NSString *)content leftButtonTitle:(NSString *)leftTitle rightButtonTitle:(NSString *)rigthTitle;
@@ -30,6 +31,7 @@
 @property (nonatomic, copy) dispatch_block_t leftBlock;
 @property (nonatomic, copy) dispatch_block_t rightBlock;
 @property (nonatomic, copy) dispatch_block_t dismissBlock;
+@property (nonatomic, assign) BOOL shouldDismiss;
 
 @end
 

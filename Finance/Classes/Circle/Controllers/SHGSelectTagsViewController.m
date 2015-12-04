@@ -38,8 +38,15 @@
     if(self.tagsView){
         __weak typeof(self) weakSelf = self;
         DXAlertView *alert = [[DXAlertView alloc] initWithTitle:@"选择喜欢的标签方向" customView:self.tagsView leftButtonTitle:@"取消" rightButtonTitle:@"确定"];
+        __weak typeof(DXAlertView *)weakAlert = alert;
+        alert.shouldDismiss = NO;
         alert.rightBlock = ^{
             NSArray *array = [weakSelf.tagsView userSelectedTags];
+            if (!array || array.count == 0) {
+                [Hud showMessageWithText:@"请至少选择一个标签"];
+                return;
+            }
+            weakAlert.shouldDismiss = YES;
             [[SHGGloble sharedGloble] uploadUserSelectedInfo:array completion:^(BOOL finished) {
                 [[SHGGloble sharedGloble] downloadUserSelectedInfo:^{
                     [weakSelf loadUserTags];

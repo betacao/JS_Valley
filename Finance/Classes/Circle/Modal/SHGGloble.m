@@ -235,10 +235,6 @@
 
 - (void)uploadUserSelectedInfo:(NSArray *)array completion:(void(^)(BOOL finished))block
 {
-    if (!array || array.count == 0) {
-        [Hud showMessageWithText:@"请至少选择一个标签"];
-        return;
-    }
     NSString *string = @"";
     for(NSNumber *number in array){
         NSInteger index = [number integerValue];

@@ -7,9 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
 @interface SHGSelectTagsViewController : UIViewController
-
 
 @end
 
