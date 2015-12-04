@@ -12,6 +12,7 @@
 #import "ChatViewController.h"
 #import "ChatListViewController.h"
 #import "SHGPersonFriendsViewController.h"
+#import "SDPhotoBrowser.h"
 
 #define kTagViewWidth 45.0f * XFACTOR
 #define kTagViewHeight 16.0f * XFACTOR
@@ -28,7 +29,7 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
 };
 
 
-@interface SHGPersonalViewController ()<UITableViewDataSource, UITableViewDelegate, CircleActionDelegate>
+@interface SHGPersonalViewController ()<UITableViewDataSource, UITableViewDelegate, CircleActionDelegate, SDPhotoBrowserDelegate>
 //界面
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIView *headerView;
@@ -92,7 +93,11 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
 
 - (void)tapHeaderView:(UITapGestureRecognizer *)recognizer
 {
-//SDpho
+    SDPhotoBrowser *browser = [[SDPhotoBrowser alloc] initWithFrame:CGRectMake(0.0f, 0.0f, CGRectGetWidth([UIScreen mainScreen].bounds), CGRectGetHeight([UIScreen mainScreen].bounds))];
+    browser.imageCount = 1;
+    browser.currentImageIndex = recognizer.view.tag;
+    browser.delegate = self;
+    [browser show];
 }
 
 - (void)requestDataWithTarget:(NSString *)target time:(NSString *)time
@@ -427,6 +432,12 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
         [view addSubview:button];
     }
     return view;
+}
+
+#pragma mark ------图片浏览器代理
+- (UIImage *)photoBrowser:(SDPhotoBrowser *)browser placeholderImageForIndex:(NSInteger)index
+{
+    return self.headerImageView.image;
 }
 
 - (void)didReceiveMemoryWarning {

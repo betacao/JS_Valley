@@ -79,7 +79,6 @@
 - (void)imageViewDidTap:(UITapGestureRecognizer *)recognizer
 {
     SDPhotoBrowser *browser = [[SDPhotoBrowser alloc] initWithFrame:CGRectMake(0.0f, 0.0f, CGRectGetWidth([UIScreen mainScreen].bounds), CGRectGetHeight([UIScreen mainScreen].bounds))];
-    browser.sourceImagesContainerView = self;
     browser.imageCount = self.photoItemArray.count;
     browser.currentImageIndex = recognizer.view.tag;
     browser.delegate = self;
