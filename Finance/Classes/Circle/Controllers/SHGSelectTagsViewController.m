@@ -23,17 +23,42 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self downloadUserSelectedInfoBlock:^{
+
+    }];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [self downloadUserSelectedInfo];
 }
-
 
 //偏好设置点击事件
 - (IBAction)selectTags:(id)sender
+{
+    __weak typeof(self)weakSelf = self;
+    [self downloadUserSelectedInfoBlock:^{
+        [weakSelf showUserTagsDialog];
+    }];
+}
+
+- (void)downloadUserSelectedInfoBlock:(void(^)())block
+{
+    __weak typeof(self)weakSelf = self;
+    [[SHGGloble sharedGloble] downloadUserTagInfo:^{
+        //宽度设置和弹出框的线一样宽
+        if (!weakSelf.tagsView) {
+            weakSelf.tagsView = [[SHGHomeTagsView alloc] initWithFrame:CGRectMake(kLineViewLeftMargin, 0.0f, kAlertWidth - 2 * kLineViewLeftMargin, 0.0f)];
+        }
+        [[SHGGloble sharedGloble] downloadUserSelectedInfo:^{
+            [weakSelf.tagsView updateSelectedArray];
+            [weakSelf loadUserTags];
+            block();
+        }];
+    }];
+}
+
+- (void)showUserTagsDialog
 {
     if(self.tagsView){
         __weak typeof(self) weakSelf = self;
@@ -57,22 +82,6 @@
     } else{
         [Hud showMessageWithText:@"正在拉取标签列表"];
     }
-
-}
-
-- (void)downloadUserSelectedInfo
-{
-    __weak typeof(self)weakSelf = self;
-    [[SHGGloble sharedGloble] downloadUserTagInfo:^{
-        //宽度设置和弹出框的线一样宽
-        if (!weakSelf.tagsView) {
-            weakSelf.tagsView = [[SHGHomeTagsView alloc] initWithFrame:CGRectMake(kLineViewLeftMargin, 0.0f, kAlertWidth - 2 * kLineViewLeftMargin, 0.0f)];
-        }
-        [[SHGGloble sharedGloble] downloadUserSelectedInfo:^{
-            [weakSelf.tagsView updateSelectedArray];
-            [weakSelf loadUserTags];
-        }];
-    }];
 }
 
 - (void)loadUserTags

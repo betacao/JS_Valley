@@ -84,7 +84,9 @@
     if ([self.tableView respondsToSelector:@selector(setLayoutMargins:)]) {
         [self.tableView setLayoutMargins:UIEdgeInsetsZero];
     }
-    [self downloadUserSelectedInfo];
+    [self downloadUserSelectedInfoBlock:^{
+
+    }];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshData) name:NOTIFI_CHANGE_UPDATE_AUTO_STATUE object:nil];
 }
 
@@ -148,12 +150,18 @@
     [self getMyselfMaterial];
 }
 
-- (void)downloadUserSelectedInfo
+- (void)downloadUserSelectedInfoBlock:(void(^)())block
 {
     __weak typeof(self)weakSelf = self;
     [[SHGGloble sharedGloble] downloadUserTagInfo:^{
         //宽度设置和弹出框的线一样宽
-        weakSelf.tagsView = [[SHGTagsView alloc] initWithFrame:CGRectMake(kLineViewLeftMargin, 0.0f, kAlertWidth - 2 * kLineViewLeftMargin, 0.0f)];
+        if (!weakSelf.tagsView) {
+            weakSelf.tagsView = [[SHGTagsView alloc] initWithFrame:CGRectMake(kLineViewLeftMargin, 0.0f, kAlertWidth - 2 * kLineViewLeftMargin, 0.0f)];
+        }
+        [[SHGGloble sharedGloble] downloadUserSelectedInfo:^{
+            [weakSelf.tagsView updateSelectedArray];
+            block();
+        }];
     }];
 }
 
@@ -456,13 +464,29 @@
 
 - (IBAction)changeTags:(id)sender
 {
+    __weak typeof(self)weakSelf = self;
+    [self downloadUserSelectedInfoBlock:^{
+        [weakSelf showUserTagsDialog];
+    }];
+
+}
+
+- (void)showUserTagsDialog
+{
     if(self.tagsView){
         __weak typeof(self) weakSelf = self;
         DXAlertView *alert = [[DXAlertView alloc] initWithTitle:@"选择喜欢的标签方向" customView:self.tagsView leftButtonTitle:@"取消" rightButtonTitle:@"确定"];
+        __weak typeof(DXAlertView *)weakAlert = alert;
+        alert.shouldDismiss = NO;
         alert.rightBlock = ^{
             NSArray *array = [weakSelf.tagsView userSelectedTags];
+            if (!array || array.count == 0) {
+                [Hud showMessageWithText:@"请至少选择一个标签"];
+                return;
+            }
+            weakAlert.shouldDismiss = YES;
             [[SHGGloble sharedGloble] uploadUserSelectedInfo:array completion:^(BOOL finished) {
-               
+
             }];
         };
         [[SHGGloble sharedGloble] downloadUserSelectedInfo:^{
