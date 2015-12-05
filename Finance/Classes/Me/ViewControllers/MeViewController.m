@@ -18,6 +18,7 @@
 #import "SHGModifyInfoViewController.h"
 #import "SHGUserTagModel.h"
 #import "SHGPersonalViewController.h"
+#import "SHGSelectTagsViewController.h"
 //为标签弹出框定义的值
 #define kItemTopMargin  18.0f * XFACTOR
 #define kItemMargin 14.0f * XFACTOR
@@ -47,7 +48,6 @@
 @property (strong, nonatomic) NSString *nickName;
 @property (strong, nonatomic) NSString *department;
 @property (strong, nonatomic) NSString *company;
-@property (strong, nonatomic) SHGTagsView *tagsView;
 
 @property (strong, nonatomic) UIBarButtonItem *rightBarButtonItem;
 @property (strong ,nonatomic) SHGModifyInfoViewController *modifyInfoController;
@@ -84,9 +84,6 @@
     if ([self.tableView respondsToSelector:@selector(setLayoutMargins:)]) {
         [self.tableView setLayoutMargins:UIEdgeInsetsZero];
     }
-    [self downloadUserSelectedInfoBlock:^{
-
-    }];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshData) name:NOTIFI_CHANGE_UPDATE_AUTO_STATUE object:nil];
 }
 
@@ -148,21 +145,6 @@
 -(void)refreshHeader
 {
     [self getMyselfMaterial];
-}
-
-- (void)downloadUserSelectedInfoBlock:(void(^)())block
-{
-    __weak typeof(self)weakSelf = self;
-    [[SHGGloble sharedGloble] downloadUserTagInfo:^{
-        //宽度设置和弹出框的线一样宽
-        if (!weakSelf.tagsView) {
-            weakSelf.tagsView = [[SHGTagsView alloc] initWithFrame:CGRectMake(kLineViewLeftMargin, 0.0f, kAlertWidth - 2 * kLineViewLeftMargin, 0.0f)];
-        }
-        [[SHGGloble sharedGloble] downloadUserSelectedInfo:^{
-            [weakSelf.tagsView updateSelectedArray];
-            block();
-        }];
-    }];
 }
 
 - (void)getMyselfMaterial
@@ -464,38 +446,8 @@
 
 - (IBAction)changeTags:(id)sender
 {
-    __weak typeof(self)weakSelf = self;
-    [self downloadUserSelectedInfoBlock:^{
-        [weakSelf showUserTagsDialog];
-    }];
-
-}
-
-- (void)showUserTagsDialog
-{
-    if(self.tagsView){
-        __weak typeof(self) weakSelf = self;
-        DXAlertView *alert = [[DXAlertView alloc] initWithTitle:@"选择喜欢的标签方向" customView:self.tagsView leftButtonTitle:@"取消" rightButtonTitle:@"确定"];
-        __weak typeof(DXAlertView *)weakAlert = alert;
-        alert.shouldDismiss = NO;
-        alert.rightBlock = ^{
-            NSArray *array = [weakSelf.tagsView userSelectedTags];
-            if (!array || array.count == 0) {
-                [Hud showMessageWithText:@"请至少选择一个标签"];
-                return;
-            }
-            weakAlert.shouldDismiss = YES;
-            [[SHGGloble sharedGloble] uploadUserSelectedInfo:array completion:^(BOOL finished) {
-
-            }];
-        };
-        [[SHGGloble sharedGloble] downloadUserSelectedInfo:^{
-            [weakSelf.tagsView updateSelectedArray];
-            [alert customShow];
-        }];
-    } else{
-        [Hud showMessageWithText:@"正在拉取标签列表"];
-    }
+//    __weak typeof(self)weakSelf = self;
+    [[SHGSelectTagsViewController shareTagsView] changeUserTags];
 }
 #pragma mark -邀请好友
 
@@ -770,115 +722,6 @@
 - (void)delayPostNotification
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_SENDPOST object:nil];
-}
-
-@end
-
-
-#pragma mark ------tagsView
-
-@interface SHGTagsView ()
-
-@property (strong, nonatomic) NSMutableArray *selectedArray;
-@property (strong, nonatomic) NSMutableArray *buttonArray;
-
-@end
-
-
-
-@implementation SHGTagsView
-
-- (instancetype)initWithFrame:(CGRect)frame
-{
-    self = [super initWithFrame:frame];
-    if(self){
-        self.selectedArray = [NSMutableArray array];
-        self.buttonArray = [NSMutableArray array];
-        [self initUI];
-    }
-    return self;
-}
-
-- (void)initUI
-{
-    NSArray *tagsArray = [SHGGloble sharedGloble].tagsArray;
-    CGFloat width = (CGRectGetWidth(self.frame) - 2 * kItemMargin) / 3.0f;
-    for(SHGUserTagModel *model in tagsArray){
-        NSInteger index = [tagsArray indexOfObject:model];
-        NSInteger row = index / 3;
-        NSInteger col = index % 3;
-
-        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-        button.layer.borderWidth = 0.5f;
-        button.layer.borderColor = [UIColor colorWithHexString:@"D6D6D6"].CGColor;
-        button.titleLabel.font = [UIFont systemFontOfSize:12.0f];
-
-        [button setTitle:model.tagName forState:UIControlStateNormal];
-        [button setTitleColor:[UIColor colorWithHexString:@"8c8c8c"] forState:UIControlStateNormal];
-        [button setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
-        [button setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
-
-        [button setBackgroundImage:[UIImage imageWithColor:[UIColor whiteColor]] forState:UIControlStateNormal];
-        [button setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithHexString:@"f95c53"]] forState:UIControlStateHighlighted];
-        [button setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithHexString:@"f95c53"]] forState:UIControlStateSelected];
-        [button addTarget:self action:@selector(didSelectCategory:) forControlEvents:UIControlEventTouchUpInside];
-        CGRect frame = CGRectMake((kItemMargin + width) * col, kItemTopMargin + (kItemMargin + kItemHeight) * row, width, kItemHeight);
-        button.frame = frame;
-        [self addSubview:button];
-        frame = self.frame;
-        frame.size.height = CGRectGetMaxY(button.frame);
-        self.frame = frame;
-        [self.buttonArray addObject:button];
-    }
-}
-
-- (void)updateSelectedArray
-{
-    NSArray *selectedArray = [SHGGloble sharedGloble].selectedTagsArray;
-    NSArray *tagsArray = [SHGGloble sharedGloble].tagsArray;
-    [self.selectedArray removeAllObjects];
-    [self clearButtonState];
-    for(SHGUserTagModel *model in selectedArray){
-        NSInteger index = [tagsArray indexOfObject:model];
-        NSLog(@"......%ld",(long)index);
-        [self.selectedArray addObject:@(index)];
-        UIButton *button = [self.buttonArray objectAtIndex:index];
-        if(button){
-            [button setSelected:YES];
-        }
-    }
-}
-
-- (void)didSelectCategory:(UIButton *)button
-{
-    BOOL isSelecetd = button.selected;
-    NSInteger index = [self.buttonArray indexOfObject:button];
-    if(!isSelecetd){
-        if(self.selectedArray.count >= 3){
-            [Hud showMessageWithText:@"最多选3项"];
-        } else{
-            button.selected = !isSelecetd;
-            [self.selectedArray addObject:@(index)];
-        }
-    } else{
-        button.selected = !isSelecetd;
-        [self.selectedArray removeObject:@(index)];
-    }
-}
-
-- (void)clearButtonState
-{
-    [self.subviews enumerateObjectsUsingBlock:^(__kindof UIView * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        if([obj isKindOfClass:[UIButton class]]){
-            UIButton *button = (UIButton *)obj;
-            [button setSelected:NO];
-        }
-    }];
-}
-
-- (NSArray *)userSelectedTags
-{
-    return self.selectedArray;
 }
 
 @end

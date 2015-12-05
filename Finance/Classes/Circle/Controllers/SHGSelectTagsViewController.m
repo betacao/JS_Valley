@@ -21,6 +21,16 @@
 
 @implementation SHGSelectTagsViewController
 
++ (instancetype)shareTagsView
+{
+    static SHGSelectTagsViewController *sharedEngine = nil;
+    static dispatch_once_t predicate;
+    dispatch_once(&predicate, ^{
+        sharedEngine = [[self alloc] init];
+    });
+    return sharedEngine;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self downloadUserSelectedInfoBlock:^{
@@ -31,6 +41,11 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+}
+
+- (void)changeUserTags
+{
+    [self selectTags:nil];
 }
 
 //偏好设置点击事件

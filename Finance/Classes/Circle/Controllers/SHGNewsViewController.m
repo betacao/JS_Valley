@@ -82,7 +82,7 @@
 - (SHGSelectTagsViewController *)tagsController
 {
     if(!_tagsController){
-        _tagsController = [[SHGSelectTagsViewController alloc] init];
+        _tagsController = [SHGSelectTagsViewController shareTagsView];
     }
     return _tagsController;
 }

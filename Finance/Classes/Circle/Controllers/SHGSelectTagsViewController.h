@@ -8,7 +8,9 @@
 
 #import <UIKit/UIKit.h>
 @interface SHGSelectTagsViewController : UIViewController
++ (instancetype)shareTagsView;
 
+- (void)changeUserTags;
 @end
 
 @interface SHGHomeTagsView : UIView

@@ -14,11 +14,3 @@
 @property (nonatomic ,strong)    UILabel *titleLabel;
 
 @end
-
-@interface SHGTagsView : UIView
-
-- (void)updateSelectedArray;
-
-- (NSArray *)userSelectedTags;
-
-@end
