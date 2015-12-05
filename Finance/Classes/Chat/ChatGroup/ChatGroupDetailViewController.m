@@ -24,7 +24,7 @@
 #pragma mark - ChatGroupDetailViewController
 
 #define kColOfRow 5
-#define kContactSize 60
+#define kContactSize 60 * XFACTOR
 
 @interface ChatGroupDetailViewController ()<IChatManagerDelegate, EMChooseViewDelegate, ChatListContactViewDelegate,CircleActionDelegate, UIActionSheetDelegate,UIAlertViewDelegate>
 
@@ -223,23 +223,19 @@
     return _footerView;
 }
 
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    // Return the number of sections.
     return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    // Return the number of rows in the section.
-    if (self.occupantType == GroupOccupantTypeOwner)
-    {
+    if (self.occupantType == GroupOccupantTypeOwner){
         return 4;
-    }
-    else
-    {
+    } else{
         return 5;
     }
 }
@@ -248,7 +244,6 @@
 {
     static NSString *CellIdentifier = @"Cell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    // Configure the cell...
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier];
         cell.textLabel.font = [UIFont systemFontOfSize:16.0f];
@@ -258,18 +253,13 @@
     if (indexPath.row == 0) {
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         [cell.contentView addSubview:self.scrollView];
-    }
-    else if (indexPath.row == 1)
-    {
+    } else if (indexPath.row == 1){
         cell.textLabel.text = NSLocalizedString(@"title.groupSetting", @"Group Setting");
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    }
-    else if (indexPath.row == 2)
-    {
+    } else if (indexPath.row == 2){
         cell.textLabel.text = NSLocalizedString(@"title.groupSubjectChanging", @"Change group name");
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    }else if(indexPath.row==3)
-    {
+    } else if(indexPath.row==3){
         cell.textLabel.text = @"清空聊天记录";
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
@@ -404,79 +394,81 @@
         [self.scrollView addSubview:self.addButton];
         showAddButton = YES;
     }
-    
-    int tmp = ([self.dataSource count] + 1) % kColOfRow;
-    int row = (int)([self.dataSource count] + 1) / kColOfRow;
-    row += tmp == 0 ? 0 : 1;
-    self.scrollView.tag = row;
-    self.scrollView.frame = CGRectMake(10, 20, self.tableView.frame.size.width - 20, row * kContactSize);
-    self.scrollView.contentSize = CGSizeMake(self.scrollView.frame.size.width, row * kContactSize);
-    
-    NSDictionary *loginInfo = [[[EaseMob sharedInstance] chatManager] loginInfo];
-    NSString *loginUsername = [loginInfo objectForKey:kSDKUsername];
-    
-    int i = 0;
-    int j = 0;
-    BOOL isEditing = self.addButton.hidden ? YES : NO;
-    BOOL isEnd = NO;
-    for (i = 0; i < row; i++) {
-        for (j = 0; j < kColOfRow; j++) {
-            NSInteger index = i * kColOfRow + j;
-            if (index < [self.dataSource count]){
-                NSString *userID = [self.dataSource objectAtIndex:index];
-                ContactView *contactView = [[ContactView alloc] initWithFrame:CGRectMake(j * kContactSize, i * kContactSize, kContactSize, kContactSize)];
-                contactView.delegate = self;
-                contactView.userID = userID;
-                contactView.index = i * kColOfRow + j;
-                //如果是自己
-                if([userID isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID]]){
-                    contactView.remark=[[NSUserDefaults standardUserDefaults] objectForKey:KEY_USER_NAME];
-                    [contactView.imageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,[[NSUserDefaults standardUserDefaults] objectForKey:KEY_HEAD_IMAGE]]] placeholderImage:[UIImage imageNamed:@"default_head"]];
-                } else{
-                    [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttp,@"user",@"personaluser"] parameters:@{@"uid":userID} success:^(MOCHTTPResponse *response){
-                        [contactView.imageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,[response.dataDictionary valueForKey:@"head_img"]]] placeholderImage:[UIImage imageNamed:@"default_head"]];
-                        contactView.remark = [response.dataDictionary valueForKey:@"name"];
-                    } failed:^(MOCHTTPResponse *response){
-                        contactView.image = [UIImage imageNamed:@"default_head"];
-                        contactView.remark = userID;
+
+    [self configUser:showAddButton];
+}
+
+- (void)configUser:(BOOL)showAddButton
+{
+    __block NSString *param = @"";
+    __weak typeof(self)weakSelf = self;
+    [self.dataSource enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        param = [param stringByAppendingFormat:@"%@,",obj];
+    }];
+    param = [param substringToIndex:param.length - 1];
+    [MOCHTTPRequestOperationManager postWithURL:[NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttp,@"user",@"groupUserInfo"] parameters:@{@"userIDArray":param} success:^(MOCHTTPResponse *response) {
+        NSArray *array = response.dataArray;
+        NSInteger tmp = (array.count + 1) % kColOfRow;
+        NSInteger row = (NSInteger)(array.count + 1) / kColOfRow;
+        row += tmp == 0 ? 0 : 1;
+        weakSelf.scrollView.tag = row;
+        weakSelf.scrollView.frame = CGRectMake(10, 20, weakSelf.tableView.frame.size.width - 20, row * kContactSize);
+        weakSelf.scrollView.contentSize = CGSizeMake(weakSelf.scrollView.frame.size.width, row * kContactSize);
+
+        NSDictionary *loginInfo = [[[EaseMob sharedInstance] chatManager] loginInfo];
+        NSString *loginUsername = [loginInfo objectForKey:kSDKUsername];
+
+        NSInteger i = 0;
+        NSInteger j = 0;
+        BOOL isEditing = weakSelf.addButton.hidden ? YES : NO;
+        BOOL isEnd = NO;
+        for (i = 0; i < row; i++) {
+            for (j = 0; j < kColOfRow; j++) {
+                NSInteger index = i * kColOfRow + j;
+                if (index < array.count){
+                    NSDictionary *dictionary = [array objectAtIndex:index];
+                    ContactView *contactView = [[ContactView alloc] initWithFrame:CGRectMake(j * kContactSize, i * kContactSize, kContactSize, kContactSize)];
+                    contactView.delegate = weakSelf;
+                    contactView.userID = [dictionary objectForKey:@"userid"];
+                    contactView.index = i * kColOfRow + j;
+                    //如果是自己
+                    contactView.remark = [dictionary objectForKey:@"realname"];
+                    [contactView.imageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,[dictionary valueForKey:@"headimageurl"]]] placeholderImage:[UIImage imageNamed:@"default_head"]];
+                    if (![[dictionary objectForKey:@"userid"] isEqualToString:loginUsername]) {
+                        contactView.editing = isEditing;
+                    }
+                    [contactView setDeleteContact:^(NSInteger index) {
+                        [weakSelf showHudInView:weakSelf.view hint:NSLocalizedString(@"group.removingOccupant", @"deleting member...")];
+                        NSArray *occupants = [NSArray arrayWithObject:[weakSelf.dataSource objectAtIndex:index]];
+                        [[EaseMob sharedInstance].chatManager asyncRemoveOccupants:occupants fromGroup:weakSelf.chatGroup.groupId completion:^(EMGroup *group, EMError *error) {
+                            [weakSelf hideHud];
+                            if (!error) {
+                                weakSelf.chatGroup = group;
+                                [weakSelf.dataSource removeObjectAtIndex:index];
+                                [weakSelf refreshScrollView];
+                            } else{
+                                [weakSelf showHint:error.description];
+                            }
+                        } onQueue:nil];
                     }];
+
+                    [weakSelf.scrollView addSubview:contactView];
+                } else{
+                    if(showAddButton && index == self.dataSource.count){
+                        weakSelf.addButton.frame = CGRectMake(j * kContactSize + 5, i * kContactSize + 10, kContactSize - 10, kContactSize - 10);
+                    }
+                    isEnd = YES;
+                    break;
                 }
-                if (![userID isEqualToString:loginUsername]) {
-                    contactView.editing = isEditing;
-                }
-                __weak typeof(self) weakSelf = self;
-                [contactView setDeleteContact:^(NSInteger index) {
-                    [weakSelf showHudInView:weakSelf.view hint:NSLocalizedString(@"group.removingOccupant", @"deleting member...")];
-                    NSArray *occupants = [NSArray arrayWithObject:[weakSelf.dataSource objectAtIndex:index]];
-                    [[EaseMob sharedInstance].chatManager asyncRemoveOccupants:occupants fromGroup:weakSelf.chatGroup.groupId completion:^(EMGroup *group, EMError *error) {
-                        [weakSelf hideHud];
-                        if (!error) {
-                            weakSelf.chatGroup = group;
-                            [weakSelf.dataSource removeObjectAtIndex:index];
-                            [weakSelf refreshScrollView];
-                        }
-                        else{
-                            [weakSelf showHint:error.description];
-                        }
-                    } onQueue:nil];
-                }];
-                
-                [self.scrollView addSubview:contactView];
             }
-            else{
-                if(showAddButton && index == self.dataSource.count){
-                    self.addButton.frame = CGRectMake(j * kContactSize + 5, i * kContactSize + 10, kContactSize - 10, kContactSize - 10);
-                }
-                isEnd = YES;
+            if (isEnd) {
                 break;
             }
         }
-        if (isEnd) {
-            break;
-        }
-    }
-    
-    [self.tableView reloadData];
+        [weakSelf.tableView reloadData];
+    } failed:^(MOCHTTPResponse *response) {
+
+    }];
 }
 
 - (void)refreshFooterView
