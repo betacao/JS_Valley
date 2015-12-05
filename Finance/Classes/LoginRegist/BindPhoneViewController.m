@@ -192,10 +192,7 @@ typedef NS_ENUM(NSInteger, RegistType)
              [self.navigationController pushViewController:detaiVC animated:YES];
         }else{ //跳转至大牛圈
             [self chatLoagin];
-            TabBarViewController *vc = [TabBarViewController tabBar];
-            vc.rid = self.rid;
-            BaseNavigationController *nav = [[BaseNavigationController alloc] initWithRootViewController:vc];
-            [AppDelegate currentAppdelegate].window.rootViewController =nav;
+            [self loginSuccess];
         }
      } failed:^(MOCHTTPResponse *response) {
          [Hud showMessageWithText:response.errorMessage];
@@ -208,10 +205,7 @@ typedef NS_ENUM(NSInteger, RegistType)
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
     NSString *password = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_PASSWORD];
     
-    [[EaseMob sharedInstance].chatManager asyncLoginWithUsername:uid
-                                                        password:password
-                                                      completion:
-     ^(NSDictionary *loginInfo, EMError *error) {
+    [[EaseMob sharedInstance].chatManager asyncLoginWithUsername:uid password:password completion:^(NSDictionary *loginInfo, EMError *error) {
          if (loginInfo && !error) {
              [[EaseMob sharedInstance].chatManager setIsAutoLoginEnabled:NO];
              //发送自动登陆状态通知
@@ -224,10 +218,8 @@ typedef NS_ENUM(NSInteger, RegistType)
              
              [[ApplyViewController shareController] loadDataSourceFromLocalDB];
              
-         }else
-         {
-             switch (error.errorCode)
-             {
+         } else{
+             switch (error.errorCode){
                  case EMErrorServerNotReachable:
                      NSLog(NSLocalizedString(@"error.connectServerFail", @"Connect to the server failed!"));
                      break;
@@ -238,11 +230,18 @@ typedef NS_ENUM(NSInteger, RegistType)
                      NSLog(NSLocalizedString(@"error.connectServerTimeout", @"Connect to the server timed out!"));
                      break;
                  default:
-                     //					 TTAlertNoTitle(NSLocalizedString(@"login.fail", @"Logon failure"));
                      break;
              }
          }
      } onQueue:nil];
+}
+
+- (void)loginSuccess
+{
+    TabBarViewController *vc = [TabBarViewController tabBar];
+    vc.rid = self.rid;
+    BaseNavigationController *nav = [[BaseNavigationController alloc] initWithRootViewController:vc];
+    [AppDelegate currentAppdelegate].window.rootViewController =nav;
 }
 
 - (void)didReceiveMemoryWarning {

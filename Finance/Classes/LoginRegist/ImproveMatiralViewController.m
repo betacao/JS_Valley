@@ -389,7 +389,7 @@
     } onQueue:nil];
 }
 
--(void)loginSuccess
+- (void)loginSuccess
 {
     TabBarViewController *vc = [TabBarViewController tabBar];
     vc.rid = self.rid;

@@ -189,12 +189,9 @@
                 if ([isthirdlogin isEqualToString:@"false"]){
                     BindPhoneViewController *bindViewCon =[[BindPhoneViewController alloc]init];
                     [self.navigationController pushViewController:bindViewCon animated:YES];
-                }else{
+                } else{
                     [self chatLoagin];
-                    TabBarViewController *vc = [TabBarViewController tabBar];
-                    vc.rid = self.rid;
-                    BaseNavigationController *nav = [[BaseNavigationController alloc] initWithRootViewController:vc];
-                    [AppDelegate currentAppdelegate].window.rootViewController =nav;
+                    [self loginSuccess];
                 }
                 
             } failed:^(MOCHTTPResponse *response) {
@@ -202,10 +199,10 @@
                 [Hud hideHud];
             }];
             
-        }else{
+        } else{
             if  ([error errorCode] == -6004){ //跳转网页版
                 [Hud showMessageWithText:@"请先安装客户端"];
-            }else if ([error errorCode] == -22003){
+            } else if ([error errorCode] == -22003){
                 [Hud showMessageWithLongText:@"当前您未安装微信，请使用手机号，QQ或微博登录"];
             }
             NSLog(@"登陆失败,错误码:%ld,错误描述:%@", (long)[error errorCode], [error errorDescription]);
@@ -213,33 +210,27 @@
     }];
 }
 
--(void)login
+- (void)login
 {
-    
-    [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttp,@"login",@"validate"] class:[LoginObj class] parameters:@{@"phone":self.textUser.text}success:^(MOCHTTPResponse *response)
-    {
+    [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttp,@"login",@"validate"] class:[LoginObj class] parameters:@{@"phone":self.textUser.text}success:^(MOCHTTPResponse *response){
         
         [[NSUserDefaults standardUserDefaults] setObject:self.textUser.text forKey:KEY_PHONE];
         [Hud hideHud];
         NSLog(@"%@",response.dataDictionary);
         NSLog(@"%@",response);
         NSString *state = response.dataDictionary[@"state"];
-        if ([state boolValue])
-        {
+        if ([state boolValue]){
             LoginNextViewController *vc = [[LoginNextViewController alloc] initWithNibName:@"LoginNextViewController" bundle:nil];
             vc.phone = self.textUser.text;
             vc.rid = self.rid;
             [self.navigationController pushViewController:vc animated:YES];
-        }
-        else
-        {
+        } else{
             //未注册;
             RegistViewController *vc = [[RegistViewController alloc] initWithNibName:@"RegistViewController" bundle:nil];
             vc.phoneNumber = self.textUser.text;
             [self.navigationController pushViewController:vc animated:YES];
         }
-    } failed:^(MOCHTTPResponse *response)
-    {
+    } failed:^(MOCHTTPResponse *response){
         [Hud hideHud];
         [Hud showMessageWithText:response.errorMessage];
         NSLog(@"%@",response.data);
@@ -247,6 +238,7 @@
         
     }];
 }
+
 - (IBAction)actionFogetPwd:(id)sender {
     
     NSLog(@"goget");
@@ -270,10 +262,8 @@
             
             [[ApplyViewController shareController] loadDataSourceFromLocalDB];
             
-        }else
-        {
-            switch (error.errorCode)
-            {
+        } else{
+            switch (error.errorCode){
                 case EMErrorServerNotReachable:
                     NSLog(NSLocalizedString(@"error.connectServerFail", @"Connect to the server failed!"));
                     break;
@@ -287,5 +277,13 @@
             }
         }
     } onQueue:nil];
+}
+
+- (void)loginSuccess
+{
+    TabBarViewController *vc = [TabBarViewController tabBar];
+    vc.rid = self.rid;
+    BaseNavigationController *nav = [[BaseNavigationController alloc] initWithRootViewController:vc];
+    [AppDelegate currentAppdelegate].window.rootViewController =nav;
 }
 @end

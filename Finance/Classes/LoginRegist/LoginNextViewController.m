@@ -146,7 +146,7 @@
      } onQueue:nil];
 }
 
--(void)loginSuccess
+- (void)loginSuccess
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_CHANGE_UPDATE_AUTO_STATUE object:nil];
 
