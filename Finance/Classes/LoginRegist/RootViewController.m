@@ -165,17 +165,15 @@
             [[NSUserDefaults standardUserDefaults] setObject:@"1" forKey:KEY_AUTOLOGIN];
             [[NSUserDefaults standardUserDefaults] synchronize];
             NSString *isfull = response.dataDictionary[@"isfull"];
-            self.isFull = isfull;
-            if ([self.isFull isEqualToString:@"1"]){
-                [self chatLoagin];
-                [self loginSuccess];
+            weakSelf.isFull = isfull;
+            if ([weakSelf.isFull isEqualToString:@"1"]){
+                [weakSelf chatLoagin];
+                [weakSelf loginSuccess];
             } else{
                 [weakSelf showLoginViewController];
             }
         }
     }failed:^(MOCHTTPResponse *response){
-        [Hud hideHud];
-        [Hud showMessageWithText:@"失败"];
         [Hud showMessageWithText:response.errorMessage];
         [AppDelegate currentAppdelegate].window.rootViewController = [[BaseNavigationController alloc] initWithRootViewController:[[LoginViewController alloc] init]];
     }];
@@ -184,8 +182,6 @@
 #ifdef __IPHONE_7_0
 - (BOOL)prefersStatusBarHidden
 {
-    // iOS7后,[[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
-    // 已经不起作用了
     return YES;
 }
 #endif
@@ -271,7 +267,6 @@
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 /*
@@ -279,9 +274,14 @@
 */
 -(void)loginSuccess
 {
-    TabBarViewController *vc = [TabBarViewController tabBar];
-    vc.rid = self.rid;
-    BaseNavigationController *nav = [[BaseNavigationController alloc] initWithRootViewController:vc];
-    [AppDelegate currentAppdelegate].window.rootViewController =nav;
+    __weak typeof(self) weakSelf = self;
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.2f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        TabBarViewController *vc = [TabBarViewController tabBar];
+        vc.rid = weakSelf.rid;
+        BaseNavigationController *nav = [[BaseNavigationController alloc] initWithRootViewController:vc];
+        [AppDelegate currentAppdelegate].window.rootViewController = nav;
+    });
+
 }
+
 @end
