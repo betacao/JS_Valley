@@ -22,6 +22,7 @@
         self.imageView = [[UIImageView alloc] init];
         self.imageView.image = [UIImage imageNamed:@"emptyBg"];
         [self.imageView sizeToFit];
+        [self addSubview:self.imageView];
     }
     return self;
 }

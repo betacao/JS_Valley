@@ -23,6 +23,7 @@
 #define kStatusBarHeight CGRectGetHeight([UIApplication sharedApplication].statusBarFrame)
 
 #define kNavigationBarHeight  44.0f
+#define kTabBarHeight  49.0f
 
 #define CURRENT_VERSION [[UIDevice currentDevice].systemVersion floatValue]
 

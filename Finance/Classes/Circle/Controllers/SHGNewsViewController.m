@@ -21,6 +21,7 @@
 #import "CircleDetailViewController.h"
 #import "SHGUnifiedTreatment.h"
 #import "SHGSelectTagsViewController.h"
+#import "SHGEmptyDataView.h"
 
 
 @interface SHGNewsViewController ()<MLEmojiLabelDelegate,CLLocationManagerDelegate,SHGNoticeDelegate>
@@ -31,6 +32,7 @@
 @property (assign, nonatomic) BOOL hasDataFinished;
 @property (strong, nonatomic) SHGSelectTagsViewController *tagsController;
 @property (strong, nonatomic) UITableViewCell *emptyCell;
+@property (strong, nonatomic) SHGEmptyDataView *emptyView;
 
 @end
 
@@ -56,13 +58,6 @@
 }
 
 
-- (UITableViewCell *)emptyCell
-{
-    if (!_emptyCell) {
-        _emptyCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
-    }
-    return _emptyCell;
-}
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
@@ -90,6 +85,25 @@
         _tagsController = [[SHGSelectTagsViewController alloc] init];
     }
     return _tagsController;
+}
+
+
+- (UITableViewCell *)emptyCell
+{
+    if (!_emptyCell) {
+        _emptyCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+        [_emptyCell.contentView addSubview:self.emptyView];
+    }
+    return _emptyCell;
+}
+
+
+- (SHGEmptyDataView *)emptyView
+{
+    if (!_emptyView) {
+        _emptyView = [[SHGEmptyDataView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, SCREENWIDTH, SCREENHEIGHT)];
+    }
+    return _emptyView;
 }
 
 
@@ -145,14 +159,12 @@
         [weakSelf.listTable.header endRefreshing];
         [weakSelf.listTable.footer endRefreshing];
         [Hud hideHud];
-        weakSelf.listTable.footer.hidden = NO;
         dispatch_async(dispatch_get_main_queue(), ^(){
             [weakSelf.listTable reloadData];
         });
     } failed:^(MOCHTTPResponse *response){
         [Hud hideHud];
         weakSelf.isRefreshing = NO;
-        weakSelf.listTable.footer.hidden = NO;
         [Hud showMessageWithText:response.errorMessage];
         NSLog(@"%@",response.errorMessage);
         [weakSelf.listTable.header endRefreshing];
@@ -278,43 +290,49 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row == 0) {
-        return 1.0f;
+    if (self.dataArr.count > 0) {
+        CircleListObj *obj = self.dataArr[indexPath.row];
+        obj.cellHeight = [obj fetchCellHeight];
+        return obj.cellHeight;
+    } else{
+        return CGRectGetHeight(self.view.frame) - kTabBarHeight;
     }
-    CircleListObj *obj = self.dataArr[indexPath.row];
-    obj.cellHeight = [obj fetchCellHeight];
-    return obj.cellHeight;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    NSInteger count = self.dataArr.count + 1;
-    return count;
+    if (self.dataArr.count > 0) {
+        NSInteger count = self.dataArr.count;
+        return count;
+    } else{
+        return 1;
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row == 0) {
-        return self.emptyCell;
-    }
-    CircleListObj *obj = [self.dataArr objectAtIndex:indexPath.row - 1];
-    NSLog(@"%@",obj.postType);
-    if (![obj.postType isEqualToString:@"ad"]){
-        if ([obj.status boolValue]){
-            NSString *cellIdentifier = @"circleListIdentifier";
-            SHGHomeTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-            if (!cell){
-                cell = [[[NSBundle mainBundle] loadNibNamed:@"SHGHomeTableViewCell" owner:self options:nil] lastObject];
-                cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            }
-            cell.index = indexPath.row - 1;
-            cell.delegate = [SHGUnifiedTreatment sharedTreatment];
-            [cell loadDatasWithObj:obj type:@"news"];
+    if (self.dataArr.count > 0) {
+        CircleListObj *obj = [self.dataArr objectAtIndex:indexPath.row];
+        NSLog(@"%@",obj.postType);
+        if (![obj.postType isEqualToString:@"ad"]){
+            if ([obj.status boolValue]){
+                NSString *cellIdentifier = @"circleListIdentifier";
+                SHGHomeTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+                if (!cell){
+                    cell = [[[NSBundle mainBundle] loadNibNamed:@"SHGHomeTableViewCell" owner:self options:nil] lastObject];
+                    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                }
+                cell.index = indexPath.row;
+                cell.delegate = [SHGUnifiedTreatment sharedTreatment];
+                [cell loadDatasWithObj:obj type:@"news"];
 
-            MLEmojiLabel *mlLable = (MLEmojiLabel *)[cell viewWithTag:521];
-            mlLable.delegate = self;
-            return cell;
+                MLEmojiLabel *mlLable = (MLEmojiLabel *)[cell viewWithTag:521];
+                mlLable.delegate = self;
+                return cell;
+            }
         }
+    } else{
+        return self.emptyCell;
     }
     return nil;
 }
@@ -390,13 +408,15 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    CircleListObj *obj = [self.dataArr objectAtIndex:indexPath.row - 1];
-    CircleDetailViewController *viewController = [[CircleDetailViewController alloc] initWithNibName:@"CircleDetailViewController" bundle:nil];
-    viewController.delegate = [SHGUnifiedTreatment sharedTreatment];
-    viewController.rid = obj.rid;
-    NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:obj.praisenum, kPraiseNum,obj.sharenum,kShareNum,obj.cmmtnum,kCommentNum, nil];
-    viewController.itemInfoDictionary = dictionary;
-    [self.navigationController pushViewController:viewController animated:YES];
+    if (self.dataArr.count > 0) {
+        CircleListObj *obj = [self.dataArr objectAtIndex:indexPath.row];
+        CircleDetailViewController *viewController = [[CircleDetailViewController alloc] initWithNibName:@"CircleDetailViewController" bundle:nil];
+        viewController.delegate = [SHGUnifiedTreatment sharedTreatment];
+        viewController.rid = obj.rid;
+        NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:obj.praisenum, kPraiseNum,obj.sharenum,kShareNum,obj.cmmtnum,kCommentNum, nil];
+        viewController.itemInfoDictionary = dictionary;
+        [self.navigationController pushViewController:viewController animated:YES];
+    }
 }
 
 //处理tableView左边空白

@@ -23,6 +23,7 @@
 #import "SHGUserTagModel.h"
 #import "SHGPersonalViewController.h"
 #import "SHGSelectTagsViewController.h"
+#import "SHGEmptyDataView.h"
 
 #define IS_IOS7 ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7)
 #define IS_IOS8 ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8)
@@ -53,6 +54,9 @@ const CGFloat kAdButtomMargin = 20.0f;
 @property (strong, nonatomic) NSString *currentCity;
 @property (strong, nonatomic) NSString *circleType;
 @property (assign, nonatomic) BOOL shouldDisplayRecommend;
+@property (strong, nonatomic) UITableViewCell *emptyCell;
+@property (strong, nonatomic) SHGEmptyDataView *emptyView;
+
 @end
 
 @implementation SHGHomeViewController
@@ -204,6 +208,24 @@ const CGFloat kAdButtomMargin = 20.0f;
     return _newMessageNoticeView;
 }
 
+- (UITableViewCell *)emptyCell
+{
+    if (!_emptyCell) {
+        _emptyCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+        [_emptyCell.contentView addSubview:self.emptyView];
+    }
+    return _emptyCell;
+}
+
+
+- (SHGEmptyDataView *)emptyView
+{
+    if (!_emptyView) {
+        _emptyView = [[SHGEmptyDataView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, SCREENWIDTH, SCREENHEIGHT)];
+    }
+    return _emptyView;
+}
+
 -(void)requestAlermInfo
 {
     if(!self.hasRequestedRecomand || !self.hasLocated){
@@ -344,14 +366,12 @@ const CGFloat kAdButtomMargin = 20.0f;
         [weakSelf.listTable.header endRefreshing];
         [weakSelf.listTable.footer endRefreshing];
         [Hud hideHud];
-        weakSelf.listTable.footer.hidden = NO;
         dispatch_async(dispatch_get_main_queue(), ^(){
             [weakSelf.listTable reloadData];
         });
       
     } failed:^(MOCHTTPResponse *response){
         weakSelf.isRefreshing = NO;
-        weakSelf.listTable.footer.hidden = NO;
         [Hud showMessageWithText:response.errorMessage];
         NSLog(@"%@",response.errorMessage);
         [weakSelf.listTable.header endRefreshing];
@@ -507,79 +527,83 @@ const CGFloat kAdButtomMargin = 20.0f;
     return 1;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    NSObject *obj = self.dataArr[indexPath.row];
-    if(![obj isKindOfClass:[CircleListObj class]]){
-        NSString *cellIdentifier = @"circleListThreeIdentifier";
-        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-        if (!cell){
-            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"circleListThreeIdentifier"];
-            cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            
-        }
-        NSMutableArray *array = self.dataArr[indexPath.row];
-        if(self.recommendViewController.view.superview){
-            [self.recommendViewController.view removeFromSuperview];
-        }
-        [self.recommendViewController loadViewWithData:array cityCode:self.currentCity];
-        [cell addSubview:self.recommendViewController.view];
-        return cell;
-        
-    } else{
-        CircleListObj *obj = self.dataArr[indexPath.row];
-        NSLog(@"%@",obj.postType);
-        if (![obj.postType isEqualToString:@"ad"]){
-            if ([obj.status boolValue]){
-                NSString *cellIdentifier = @"circleListIdentifier";
-                SHGHomeTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-                if (!cell){
-                    cell = [[[NSBundle mainBundle] loadNibNamed:@"SHGHomeTableViewCell" owner:self options:nil] lastObject];
-                    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-                }
-                cell.index = indexPath.row;
-                cell.delegate = [SHGUnifiedTreatment sharedTreatment];
-                [cell loadDatasWithObj:obj type:@"normal"];
-                
-                MLEmojiLabel *mlLable = (MLEmojiLabel *)[cell viewWithTag:521];
-                mlLable.delegate = self;
-                return cell;
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (self.dataArr.count > 0) {
+        NSObject *obj = self.dataArr[indexPath.row];
+        if(![obj isKindOfClass:[CircleListObj class]]){
+            NSString *cellIdentifier = @"circleListThreeIdentifier";
+            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+            if (!cell){
+                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"circleListThreeIdentifier"];
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;
+
             }
+            NSMutableArray *array = self.dataArr[indexPath.row];
+            if(self.recommendViewController.view.superview){
+                [self.recommendViewController.view removeFromSuperview];
+            }
+            [self.recommendViewController loadViewWithData:array cityCode:self.currentCity];
+            [cell addSubview:self.recommendViewController.view];
+            return cell;
+
         } else{
-            if ([obj.status boolValue]){
-                NSString *cellIdentifier = @"circleListTwoIdentifier";
-                CircleListTwoTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-                if (!cell){
-                    cell = [[[NSBundle mainBundle] loadNibNamed:@"CircleListTwoTableViewCell" owner:self options:nil] lastObject];
-                    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            CircleListObj *obj = self.dataArr[indexPath.row];
+            NSLog(@"%@",obj.postType);
+            if (![obj.postType isEqualToString:@"ad"]){
+                if ([obj.status boolValue]){
+                    NSString *cellIdentifier = @"circleListIdentifier";
+                    SHGHomeTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+                    if (!cell){
+                        cell = [[[NSBundle mainBundle] loadNibNamed:@"SHGHomeTableViewCell" owner:self options:nil] lastObject];
+                        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                    }
+                    cell.index = indexPath.row;
+                    cell.delegate = [SHGUnifiedTreatment sharedTreatment];
+                    [cell loadDatasWithObj:obj type:@"normal"];
+
+                    MLEmojiLabel *mlLable = (MLEmojiLabel *)[cell viewWithTag:521];
+                    mlLable.delegate = self;
+                    return cell;
                 }
-                cell.popularizeLable.lineBreakMode = NSLineBreakByTruncatingTail;
-                cell.popularizeLable.textAlignment =  NSTextAlignmentLeft;
-                cell.popularizeLable.text = obj.detail;
-                
-                NSArray *array = (NSArray *)obj.photos;
-                if (array && array.count > 0){
-                    [cell.popularizeImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,array[0]]] placeholderImage:[UIImage imageNamed:@"default_image"]];
-                } else{
-                    [cell.popularizeImage sd_setImageWithURL:nil placeholderImage:[UIImage imageNamed:@"default_image"]];
+            } else{
+                if ([obj.status boolValue]){
+                    NSString *cellIdentifier = @"circleListTwoIdentifier";
+                    CircleListTwoTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+                    if (!cell){
+                        cell = [[[NSBundle mainBundle] loadNibNamed:@"CircleListTwoTableViewCell" owner:self options:nil] lastObject];
+                        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                    }
+                    cell.popularizeLable.lineBreakMode = NSLineBreakByTruncatingTail;
+                    cell.popularizeLable.textAlignment =  NSTextAlignmentLeft;
+                    cell.popularizeLable.text = obj.detail;
+
+                    NSArray *array = (NSArray *)obj.photos;
+                    if (array && array.count > 0){
+                        [cell.popularizeImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,array[0]]] placeholderImage:[UIImage imageNamed:@"default_image"]];
+                    } else{
+                        [cell.popularizeImage sd_setImageWithURL:nil placeholderImage:[UIImage imageNamed:@"default_image"]];
+                    }
+
+                    //防止图片压缩
+                    cell.popularizeImage.contentMode = UIViewContentModeScaleAspectFit;
+
+                    cell.adLable.text = @"推广";
+                    cell.adLable.textColor = [UIColor grayColor];
+
+                    NSArray *arr = [obj.publishdate componentsSeparatedByString:@" "];
+                    for (int i = 0; i < [arr count]; i++) {
+                        NSLog(@"string:%@", [arr objectAtIndex:i]);
+                    }
+                    cell.lableTime.text = arr[0];
+                    cell.lableTime.textAlignment = NSTextAlignmentRight;
+                    
+                    return cell;
                 }
-               
-                //防止图片压缩
-                cell.popularizeImage.contentMode = UIViewContentModeScaleAspectFit;
-                
-                cell.adLable.text = @"推广";
-                cell.adLable.textColor = [UIColor grayColor];
-                
-                NSArray *arr = [obj.publishdate componentsSeparatedByString:@" "];
-                for (int i = 0; i < [arr count]; i++) {
-                    NSLog(@"string:%@", [arr objectAtIndex:i]);
-                }
-                cell.lableTime.text = arr[0];
-                cell.lableTime.textAlignment = NSTextAlignmentRight;
-                
-                return cell;
             }
         }
-        return nil;
+    } else{
+        return self.emptyCell;
     }
     return nil;
 }
@@ -639,49 +663,58 @@ const CGFloat kAdButtomMargin = 20.0f;
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    CircleListObj *obj =self.dataArr[indexPath.row];
-    if([obj isKindOfClass:[CircleListObj class]]){
-        if (![obj.postType isEqualToString:@"ad"]){
-            if ([obj.status boolValue]){
-                obj.cellHeight = [obj fetchCellHeight];
-                return obj.cellHeight;
+    if (self.dataArr.count > 0) {
+        CircleListObj *obj = self.dataArr[indexPath.row];
+        if([obj isKindOfClass:[CircleListObj class]]){
+            if (![obj.postType isEqualToString:@"ad"]){
+                if ([obj.status boolValue]){
+                    obj.cellHeight = [obj fetchCellHeight];
+                    return obj.cellHeight;
+                }
+            } else{
+                return kAdTableViewCellHeight;
             }
         } else{
-            return kAdTableViewCellHeight;
+            return [self.recommendViewController heightOfView];
         }
+        return 44.0f;
     } else{
-        return [self.recommendViewController heightOfView];
+        return CGRectGetHeight(self.view.frame) - kTabBarHeight;
     }
-    return 44.0f;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    NSInteger count = self.dataArr.count;
-    return count;
+    if (self.dataArr.count > 0) {
+        NSInteger count = self.dataArr.count;
+        return count;
+    } else{
+        return 1;
+    }
+
 }
 
 #pragma mark =============  UITableView Delegate  =============
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    CircleListObj *obj = self.dataArr[indexPath.row];
-    if([obj isKindOfClass:[CircleListObj class]]){
-        if (!IsStrEmpty(obj.feedhtml)){
-            NSLog(@"%@",obj.feedhtml);
-            LinkViewController *vc = [[LinkViewController alloc]init];
-            vc.url = obj.feedhtml;
-            [self.navigationController pushViewController:vc animated:YES];
-        } else{
-            CircleDetailViewController *viewController = [[CircleDetailViewController alloc] initWithNibName:@"CircleDetailViewController" bundle:nil];
-            viewController.delegate = [SHGUnifiedTreatment sharedTreatment];
-            viewController.rid = obj.rid;
-            NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:obj.praisenum, kPraiseNum,obj.sharenum,kShareNum,obj.cmmtnum,kCommentNum, nil];
-            viewController.itemInfoDictionary = dictionary;
-            [self.navigationController pushViewController:viewController animated:YES];
+    if (self.dataArr.count > 0) {
+        CircleListObj *obj = self.dataArr[indexPath.row];
+        if([obj isKindOfClass:[CircleListObj class]]){
+            if (!IsStrEmpty(obj.feedhtml)){
+                NSLog(@"%@",obj.feedhtml);
+                LinkViewController *vc = [[LinkViewController alloc]init];
+                vc.url = obj.feedhtml;
+                [self.navigationController pushViewController:vc animated:YES];
+            } else{
+                CircleDetailViewController *viewController = [[CircleDetailViewController alloc] initWithNibName:@"CircleDetailViewController" bundle:nil];
+                viewController.delegate = [SHGUnifiedTreatment sharedTreatment];
+                viewController.rid = obj.rid;
+                NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:obj.praisenum, kPraiseNum,obj.sharenum,kShareNum,obj.cmmtnum,kCommentNum, nil];
+                viewController.itemInfoDictionary = dictionary;
+                [self.navigationController pushViewController:viewController animated:YES];
+            }
         }
-    } else{
-        return;
     }
 }
 
