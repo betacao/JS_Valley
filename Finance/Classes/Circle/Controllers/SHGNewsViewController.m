@@ -30,8 +30,6 @@
 @property (strong, nonatomic) SHGNoticeView *messageNoticeView;
 @property (assign, nonatomic) BOOL hasDataFinished;
 @property (strong, nonatomic) SHGSelectTagsViewController *tagsController;
-@property (weak, nonatomic) IBOutlet UIView *emptyBgView;
-@property (weak, nonatomic) IBOutlet UIView *emptyBgImage;
 @property (strong, nonatomic) UITableViewCell *emptyCell;
 
 @end
@@ -57,14 +55,6 @@
     [self requestDataWithTarget:@"first" time:@""];
 }
 
-- (void)emptyBg
-{
-    if (self.dataArr.count == 0) {
-        self.emptyBgView.hidden = NO;
-    } else{
-        self.emptyBgView.hidden = YES;
-    }
-}
 
 - (UITableViewCell *)emptyCell
 {
@@ -159,7 +149,6 @@
         dispatch_async(dispatch_get_main_queue(), ^(){
             [weakSelf.listTable reloadData];
         });
-        [weakSelf emptyBg];
     } failed:^(MOCHTTPResponse *response){
         [Hud hideHud];
         weakSelf.isRefreshing = NO;
@@ -167,7 +156,6 @@
         [Hud showMessageWithText:response.errorMessage];
         NSLog(@"%@",response.errorMessage);
         [weakSelf.listTable.header endRefreshing];
-        weakSelf.emptyBgView.hidden = NO;
         [weakSelf performSelector:@selector(endrefresh) withObject:nil afterDelay:1.0];
 
     }];

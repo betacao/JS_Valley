@@ -7,8 +7,6 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SHGNewsViewController">
             <connections>
-                <outlet property="emptyBgImage" destination="zMZ-4R-KcG" id="MTd-NX-ovw"/>
-                <outlet property="emptyBgView" destination="d26-Xz-WMY" id="rCX-RX-zWr"/>
                 <outlet property="listTable" destination="wBX-7P-gdw" id="lCM-P3-qio"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -24,26 +22,10 @@
                     <animations/>
                     <color key="backgroundColor" red="0.93725490196078431" green="0.93333333333333335" blue="0.93725490196078431" alpha="1" colorSpace="calibratedRGB"/>
                 </tableView>
-                <view contentMode="scaleToFill" id="d26-Xz-WMY">
-                    <rect key="frame" x="0.0" y="26" width="320" height="542"/>
-                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                    <subviews>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="emptyBg" id="zMZ-4R-KcG">
-                            <rect key="frame" x="98" y="148.5" width="124" height="124"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                            <animations/>
-                        </imageView>
-                    </subviews>
-                    <animations/>
-                    <color key="backgroundColor" red="0.93725490199999995" green="0.93333333330000001" blue="0.93725490199999995" alpha="1" colorSpace="calibratedRGB"/>
-                </view>
             </subviews>
             <animations/>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <point key="canvasLocation" x="210" y="220"/>
         </view>
     </objects>
-    <resources>
-        <image name="emptyBg" width="124" height="124"/>
-    </resources>
 </document>

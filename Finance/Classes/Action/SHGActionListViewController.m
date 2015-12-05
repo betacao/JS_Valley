@@ -18,8 +18,6 @@
 @interface SHGActionListViewController ()<UITableViewDataSource, UITableViewDelegate, SHGActionTableViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *listTable;
-@property (weak, nonatomic) IBOutlet UIImageView *emptyBgImage;
-@property (weak, nonatomic) IBOutlet UIView *emptyBgView;
 
 @end
 
@@ -41,14 +39,7 @@
     [self addHeaderRefresh:self.listTable headerRefesh:YES andFooter:YES];
     [self loadDataWithType:@"first" meetID:@"-1"];
 }
--(void)emptyBg
-{
-    if (self.dataArr.count == 0) {
-        self.emptyBgView.hidden = NO;
-    } else{
-        self.emptyBgView.hidden = YES;
-    }
-}
+
 - (void)refreshData
 {
     [self loadDataWithType:@"first" meetID:@"-1"];
@@ -99,13 +90,11 @@
             }
         }
         [weakSelf.listTable reloadData];
-        [weakSelf emptyBg];
     } failed:^(MOCHTTPResponse *response) {
         [Hud hideHud];
         [Hud showMessageWithText:@"网络连接失败"];
         [weakSelf.listTable.header endRefreshing];
         [weakSelf.listTable.footer endRefreshing];
-        self.emptyBgView.hidden = NO;
     }];
 }
 

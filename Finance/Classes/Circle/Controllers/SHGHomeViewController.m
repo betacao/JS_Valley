@@ -35,8 +35,6 @@ const CGFloat kAdButtomMargin = 20.0f;
     NSInteger photoIndex;
     BOOL hasRequestFailed;
 }
-@property (weak, nonatomic) IBOutlet UIView *emptyBgView;
-@property (weak, nonatomic) IBOutlet UIImageView *emptyBgImage;
 
 @property (weak, nonatomic) IBOutlet UITableView *listTable;
 //判断是否已经加载过推荐列表
@@ -68,7 +66,6 @@ const CGFloat kAdButtomMargin = 20.0f;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.emptyBgView.hidden = YES;
     [CommonMethod setExtraCellLineHidden:self.listTable];
     [self addHeaderRefresh:self.listTable headerRefesh:YES headerTitle:@{kRefreshStateIdle:@"下拉可以刷新", kRefreshStatePulling:@"释放后查看最新动态", kRefreshStateRefreshing:@"正在努力加载中"} andFooter:YES footerTitle:nil];
     self.listTable.separatorStyle = NO;
@@ -91,15 +88,7 @@ const CGFloat kAdButtomMargin = 20.0f;
     [self getAllInfo];
     [self loadRegisterPushFriend];
 }
--(void)emptyBg
-{
-    if (self.dataArr.count == 0) {
-        self.emptyBgView.hidden = NO;
-    }else
-    {
-        self.emptyBgView.hidden = YES;
-    }
-}
+
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
@@ -140,13 +129,11 @@ const CGFloat kAdButtomMargin = 20.0f;
                 dispatch_async(dispatch_get_main_queue(), ^(){
                     [weakSelf.listTable reloadData];
                 });
-                [self emptyBg];
             } else{
                 weakSelf.listTable.footer.hidden = NO;
                 [weakSelf.listTable.header endRefreshing];
                 [Hud showMessageWithText:@"获取首页数据失败"];
                 [weakSelf performSelector:@selector(endrefresh) withObject:nil afterDelay:1.0];
-                self.emptyBgView.hidden = NO;
             }
         };
     }
