@@ -21,9 +21,11 @@
     BOOL _editing;
 }
 @property (nonatomic,strong) UIImageView *imageView;;
+@property (strong, nonatomic) UIImageView *VImageView;
 @property (nonatomic) NSInteger index;
 @property (nonatomic) BOOL editing;
 @property (strong, nonatomic) NSString *remark;
 @property (strong, nonatomic) UIImage *image;
+@property (strong, nonatomic) UIImage *userstatus;
 
 @end

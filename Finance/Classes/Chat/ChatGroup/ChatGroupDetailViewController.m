@@ -422,6 +422,7 @@
         NSInteger j = 0;
         BOOL isEditing = weakSelf.addButton.hidden ? YES : NO;
         BOOL isEnd = NO;
+        BOOL isStatus = YES;
         for (i = 0; i < row; i++) {
             for (j = 0; j < kColOfRow; j++) {
                 NSInteger index = i * kColOfRow + j;
@@ -432,6 +433,14 @@
                     contactView.userID = [dictionary objectForKey:@"userid"];
                     contactView.index = i * kColOfRow + j;
                     //如果是自己
+                    
+                    isStatus= [[dictionary objectForKey:@"userstatus"] integerValue];
+                    //contactView.userstatus = [dictionary objectForKey:@"userstatus"];
+                   
+                    if (isStatus == YES) {
+                        contactView.VImageView.hidden=NO;
+                    }
+                    
                     contactView.remark = [dictionary objectForKey:@"realname"];
                     [contactView.imageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,[dictionary valueForKey:@"headimageurl"]]] placeholderImage:[UIImage imageNamed:@"default_head"]];
                     if (![[dictionary objectForKey:@"userid"] isEqualToString:loginUsername]) {

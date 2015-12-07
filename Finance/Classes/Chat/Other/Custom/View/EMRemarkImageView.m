@@ -38,6 +38,15 @@
         _remarkLabel.backgroundColor = [UIColor colorWithWhite:0.3 alpha:0.5];
         _remarkLabel.textColor = [UIColor whiteColor];
         [_imageView addSubview:_remarkLabel];
+        CGRect frame = _imageView.bounds;
+        _VImageView = [[UIImageView alloc] initWithFrame:CGRectZero];
+        _VImageView.contentMode = UIViewContentModeScaleAspectFit;
+        _VImageView.image = [UIImage imageNamed:@"V"];
+        [_VImageView sizeToFit];
+        _VImageView.center = CGPointMake(CGRectGetMaxX(frame)+5 , CGRectGetMaxY(frame)+rHeight/2.0 );
+        [self addSubview:_VImageView];
+        _VImageView.hidden = YES;
+        
     }
     return self;
 }
