@@ -53,7 +53,7 @@
     uid = obj.uid;
     
     [self.imageHeader updateHeaderView:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,obj.headImageUrl] placeholderImage:[UIImage imageNamed:@"default_head"]];
-    [self.imageHeader updateStatus:[obj.userStatus isEqualToString:@"true"]?YES:NO];
+    [self.imageHeader updateStatus:[obj.userstatus isEqualToString:@"true"]?YES:NO];
     
     self.onceImg.hidden = NO;
     NSString *relaStr;

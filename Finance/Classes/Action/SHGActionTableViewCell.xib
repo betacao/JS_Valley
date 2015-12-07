@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9059" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9060" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -11,7 +11,7 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="260"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="259.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="259"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="action_bg" id="a10-v3-odu" userLabel="TopLineImage View">
@@ -36,11 +36,11 @@
                         <rect key="frame" x="0.0" y="41" width="320" height="207"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default_head" id="IOA-ye-xM2" userLabel="headImage View">
+                            <view contentMode="scaleToFill" id="Bi6-1V-nS9" customClass="headerView">
                                 <rect key="frame" x="14" y="14" width="30" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <animations/>
-                            </imageView>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="I9n-ZH-aBj">
                                 <rect key="frame" x="50" y="14" width="50" height="15"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -263,7 +263,7 @@
                 <outlet property="Action_companyLable" destination="klV-DY-sx2" id="hn3-Qt-hlg"/>
                 <outlet property="Action_departmentLable" destination="hR7-kW-vBX" id="9Eu-1p-xxw"/>
                 <outlet property="Action_editeButton" destination="LB4-Pe-52L" id="ZCY-xN-IGF"/>
-                <outlet property="Action_headImage" destination="IOA-ye-xM2" id="Hm0-zO-N1U"/>
+                <outlet property="Action_headImage" destination="Bi6-1V-nS9" id="IhU-y0-nMw"/>
                 <outlet property="Action_lineView" destination="6T2-qT-2p4" id="cU0-1o-D5d"/>
                 <outlet property="Action_messageLabel" destination="O3g-VZ-xPH" id="1nD-Gq-QOZ"/>
                 <outlet property="Action_momentNumImage" destination="QBF-0x-vMF" id="enx-Eg-8at"/>
@@ -291,7 +291,6 @@
         <image name="action_bg" width="31" height="45"/>
         <image name="action_invite" width="12" height="12"/>
         <image name="action_time" width="13" height="13"/>
-        <image name="default_head" width="48" height="48"/>
         <image name="home_comment" width="12" height="13"/>
         <image name="home_weizan" width="13" height="13"/>
     </resources>

@@ -34,7 +34,9 @@
 {
     [self clearCell];
     self.obj = obj;
+    //[self.headeimage updateHeaderView:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,obj.headImageUrl] placeholderImage:[UIImage imageNamed:@"default_head"]];
     [self.headeimage updateHeaderView:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,obj.headImageUrl] placeholderImage:[UIImage imageNamed:@"default_head"]];
+    [self.headeimage updateStatus:[obj.userstatus isEqualToString:@"true"] ? YES : NO];
     self.nameLabel.text = obj.name;
     self.companyLabel.text = obj.company;
     self.uid = obj.uid;

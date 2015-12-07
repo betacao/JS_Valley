@@ -900,7 +900,7 @@ static NSString * const kCommonFNum			= @"commonnum";
             obj.commonfriend = @"";
             obj.commonfriendnum = @"";
             obj.position = [dic valueForKey:@"position"];
-            obj.userStatus = [dic objectForKey:@"userstatus"];
+            obj.userstatus = [dic objectForKey:@"userstatus"];
             [self.contactsSource addObject:obj];
         }
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -972,7 +972,7 @@ static NSString * const kCommonFNum			= @"commonnum";
             obj.commonfriendnum = [dic valueForKey:@"commonfriendnum"];
             obj.poststring = [dic valueForKey:@"poststring"];
             obj.position = [dic valueForKey:@"position"];
-            obj.userStatus = [dic valueForKey:@"userstatus"];
+            obj.userstatus = [dic valueForKey:@"userstatus"];
             [TwainContactInfo insertAll:obj];
             [self.contactsSource addObject:obj];
         }

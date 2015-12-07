@@ -104,6 +104,7 @@
                 obj.headImageUrl = [dic valueForKey:@"avatar"];
                 obj.uid = [dic valueForKey:@"username"];
                 obj.company = [dic valueForKey:@"company"];
+                obj.userstatus = [dic valueForKey:@"userstatus"];
                 [self.contactsSource addObject:obj];
             }
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -150,6 +151,7 @@
                 obj.headImageUrl = [dic valueForKey:@"avatar"];
                 obj.uid = [dic valueForKey:@"username"];
                 obj.company = [dic valueForKey:@"company"];
+                obj.userstatus = [dic valueForKey:@"userstatus"];
                 [self.contactsSource addObject:obj];
             }
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -194,6 +196,7 @@
                 obj.headImageUrl = [dic valueForKey:@"avatar"];
                 obj.uid = [dic valueForKey:@"username"];
                 obj.company = [dic valueForKey:@"company"];
+                obj.userstatus = [dic valueForKey:@"userstatus"];
                 [self.contactsSource addObject:obj];
             }
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -241,6 +244,7 @@
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
     }
+    
     [cell loadDatasWithObj:obj];
     cell.delegate = self;
 

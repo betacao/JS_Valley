@@ -17,7 +17,8 @@
 // 0为关注 1为粉丝 2为互相关注
 @property (nonatomic, assign) NSInteger followRelation;
 
-@property (nonatomic, strong) NSString *userStatus;
+//@property (nonatomic, strong) NSString *userStatus;
+@property (nonatomic, strong) NSString *userstatus;
 @property (nonatomic, strong) NSString *company;
 @property (nonatomic, strong) NSString *rela;
 

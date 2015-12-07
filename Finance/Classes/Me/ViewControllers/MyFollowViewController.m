@@ -135,7 +135,7 @@
 			obj.uid = [dic valueForKey:@"uid"];
 			obj.updateTime = [dic valueForKey:@"time"];
 			obj.followRelation = [[dic valueForKey:@"state"] integerValue];
-            obj.userStatus = [dic objectForKey:@"userstatus"];
+            obj.userstatus = [dic objectForKey:@"userstatus"];
             if (![obj.uid isEqualToString:uid]) {
                 [array addObject:obj];
             }
@@ -194,7 +194,7 @@
 			obj.uid = [dic valueForKey:@"uid"];
 			obj.updateTime = [dic valueForKey:@"time"];
             obj.followRelation = [[dic valueForKey:@"state"] integerValue];
-            obj.userStatus = [dic objectForKey:@"userstatus"];
+            obj.userstatus = [dic objectForKey:@"userstatus"];
             if (![obj.uid isEqualToString:uid]) {
                 [array addObject:obj];
                 
@@ -276,7 +276,7 @@
 	cell.obj = obj;
     UIImage *placeHolder = [UIImage imageNamed:@"default_head"];
     [cell.headerView updateHeaderView:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,obj.headImageUrl] placeholderImage:placeHolder];
-    [cell.headerView updateStatus:[obj.userStatus isEqualToString:@"true"]?YES:NO];
+    [cell.headerView updateStatus:[obj.userstatus isEqualToString:@"true"]?YES:NO];
     
     if (obj.followRelation == 0) {
         cell.followButton.hidden = NO;
@@ -338,7 +338,7 @@
 			cell.describtionLabel.text = obj.simpleDescription;
             
             [cell.headerView updateHeaderView:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,obj.headImageUrl] placeholderImage:[UIImage imageNamed:@"default_head"]];
-            [cell.headerView updateStatus:[obj.userStatus isEqualToString:@"true"]?YES:NO];
+            [cell.headerView updateStatus:[obj.userstatus isEqualToString:@"true"]?YES:NO];
 			cell.obj = obj;
 			if (obj.followRelation == 0) {
 				cell.followButton.hidden = NO;

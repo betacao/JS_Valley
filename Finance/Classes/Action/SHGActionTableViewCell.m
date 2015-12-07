@@ -13,7 +13,7 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *Action_titlelabel;
 @property (weak, nonatomic) IBOutlet UIImageView *Acyion_titleBg;
-@property (weak, nonatomic) IBOutlet UIImageView *Action_headImage;
+@property (weak, nonatomic) IBOutlet headerView *Action_headImage;
 @property (weak, nonatomic) IBOutlet UILabel *Action_nameLable;
 @property (weak, nonatomic) IBOutlet UILabel *Action_pubdateLabel;
 @property (weak, nonatomic) IBOutlet UIButton *Action_signButton;
@@ -62,8 +62,8 @@
     [self.Action_zanButton setImage:[UIImage imageNamed:@"home_weizan"] forState:UIControlStateNormal];
     //我的活动
     [self.Action_thr_zanButton setImage:[UIImage imageNamed:@"home_weizan"] forState:UIControlStateNormal];
-    //self.Action_headImage.hidden = YES;
-    self.Action_headImage.userInteractionEnabled = YES;
+    
+   // self.Action_headImage.userInteractionEnabled = YES;
     UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapUserHeaderImageView:)];
     [self.Action_headImage addGestureRecognizer:recognizer];
 }
@@ -77,7 +77,9 @@
     } else{
         self.Acyion_titleBg.hidden = NO;
     }
-    [self.Action_headImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,object.headerImageUrl]] placeholderImage:[UIImage imageNamed:@"default_head"]];
+    [self.Action_headImage updateStatus:[object.status isEqualToString:@"1"] ? YES : NO];
+//    [self.Action_headImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,object.headerImageUrl]] placeholderImage:[UIImage imageNamed:@"default_head"]];
+    [self.Action_headImage updateHeaderView:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,object.headerImageUrl] placeholderImage:[UIImage imageNamed:@"default_head"]];
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
     NSString *theme = object.theme;
     if (theme.length > 15) {
