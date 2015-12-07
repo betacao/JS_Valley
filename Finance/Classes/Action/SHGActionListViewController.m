@@ -64,29 +64,49 @@
 
 - (void)loadDataWithType:(NSString *)target meetID:(NSString *)meetID
 {
-    NSString *request = [rBaseAddressForHttp stringByAppendingString:@"/meetingactivity/getMeetingActivityAll"];
+    NSString *request = [rBaseAddressForHttp stringByAppendingString:@"/meetingactivity/getMeetingActivityAllNew"];
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
     NSString *pageSize = @"10";
     NSString *type = @"all";
     NSDictionary *dictionary = @{@"uid":uid, @"meetId":meetID, @"pageSize":pageSize, @"target":target, @"type":type};
     __weak typeof(self) weakSelf = self;
     [Hud showLoadingWithMessage:@"请稍等..."];
-    [MOCHTTPRequestOperationManager postWithURL:request class:[SHGActionObject class] parameters:dictionary success:^(MOCHTTPResponse *response) {
+    [MOCHTTPRequestOperationManager postWithURL:request class:nil parameters:dictionary success:^(MOCHTTPResponse *response) {
         [Hud hideHud];
         [weakSelf.listTable.header endRefreshing];
         [weakSelf.listTable.footer endRefreshing];
+        NSArray *normalArray = [response.dataDictionary objectForKey:@"normallist"];
+        normalArray = [[SHGGloble sharedGloble] parseServerJsonArrayToJSONModel:normalArray class:[SHGActionObject class]];
+    
+        NSArray *stickArray = [response.dataDictionary objectForKey:@"sticklist"];
+        stickArray = [[SHGGloble sharedGloble] parseServerJsonArrayToJSONModel:stickArray class:[SHGActionObject class]];
+        if (stickArray.count > 0) {
+            weakSelf.adArray = [NSMutableArray arrayWithArray:stickArray];
+        }
+       
         if ([target isEqualToString:@"first"]) {
             [weakSelf.dataArr removeAllObjects];
-            [weakSelf.dataArr addObjectsFromArray:response.dataArray];
+            [weakSelf.dataArr addObjectsFromArray:weakSelf.adArray];
+            [weakSelf.listArray addObjectsFromArray:normalArray];
+            [weakSelf.dataArr addObjectsFromArray:weakSelf.listArray];
         } else if([target isEqualToString:@"refresh"]){
-            for (NSInteger i = response.dataArray.count - 1; i >= 0; i--){
-                CircleListObj *obj = [response.dataArray objectAtIndex:i];
-                [weakSelf.dataArr insertObject:obj atIndex:0];
+            [weakSelf.dataArr removeAllObjects];
+            for (NSInteger i = normalArray.count - 1; i >= 0 ; i --) {
+                SHGActionObject * obj = [normalArray objectAtIndex:i];
+                [weakSelf.listArray insertObject:obj atIndex:0];
             }
+            [weakSelf.dataArr addObjectsFromArray:weakSelf.adArray];
+            [weakSelf.dataArr addObjectsFromArray:weakSelf.listArray];
+            
         } else{
-            [weakSelf.dataArr addObjectsFromArray:response.dataArray];
-            if (response.dataArray.count < 10) {
-                [weakSelf.listTable.footer endRefreshingWithNoMoreData];
+           [weakSelf.dataArr removeAllObjects];
+            if (weakSelf.listArray.count > 0) {
+                [weakSelf.listArray addObjectsFromArray:normalArray];
+            }
+            [weakSelf.dataArr addObjectsFromArray:weakSelf.adArray];
+            [weakSelf.dataArr addObjectsFromArray:weakSelf.listArray];
+            if (weakSelf.listArray.count < 10) {
+            [weakSelf.listTable.footer endRefreshingWithNoMoreData];
             }
         }
         [weakSelf.listTable reloadData];
@@ -119,12 +139,12 @@
 
 - (NSString *)maxMeetID
 {
-    return ((SHGActionObject *)[self.dataArr firstObject]).meetId;
+    return ((SHGActionObject *)[self.listArray firstObject]).meetId;
 }
 
 - (NSString *)minMeetID
 {
-    return ((SHGActionObject *)[self.dataArr lastObject]).meetId;
+    return ((SHGActionObject *)[self.listArray lastObject]).meetId;
 }
 #pragma mark ------tableview
 
