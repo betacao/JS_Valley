@@ -107,7 +107,7 @@
 
     self.lblContent.numberOfLines = 0;
     self.lblContent.lineBreakMode = NSLineBreakByWordWrapping;
-    self.lblContent.font = [UIFont systemFontOfSize:14.0f];
+    self.lblContent.font = [UIFont systemFontOfSize:15.0f];
     self.lblContent.delegate = self;
     self.lblContent.textColor = [UIColor colorWithHexString:@"606060"];
     self.lblContent.backgroundColor = [UIColor clearColor];

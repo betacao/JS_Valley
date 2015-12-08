@@ -412,7 +412,7 @@
         NSInteger row = (NSInteger)(array.count + 1) / kColOfRow;
         row += tmp == 0 ? 0 : 1;
         weakSelf.scrollView.tag = row;
-        weakSelf.scrollView.frame = CGRectMake(10, 20, weakSelf.tableView.frame.size.width - 20, row * kContactSize);
+        weakSelf.scrollView.frame = CGRectMake(8, 20, weakSelf.tableView.frame.size.width - 16, row * kContactSize+10);
         weakSelf.scrollView.contentSize = CGSizeMake(weakSelf.scrollView.frame.size.width, row * kContactSize);
 
         NSDictionary *loginInfo = [[[EaseMob sharedInstance] chatManager] loginInfo];
@@ -433,7 +433,6 @@
                     contactView.userID = [dictionary objectForKey:@"userid"];
                     contactView.index = i * kColOfRow + j;
                     //如果是自己
-                    
                     isStatus= [[dictionary objectForKey:@"userstatus"] boolValue];
                     if (isStatus == YES) {
                         contactView.VImageView.hidden=NO;
