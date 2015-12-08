@@ -101,13 +101,13 @@
         [weakSelf.listTable.footer endRefreshing];
         NSArray *normalArray = [response.dataDictionary objectForKey:@"normallist"];
         normalArray = [[SHGGloble sharedGloble] parseServerJsonArrayToJSONModel:normalArray class:[SHGActionObject class]];
-    
+
         NSArray *stickArray = [response.dataDictionary objectForKey:@"sticklist"];
         stickArray = [[SHGGloble sharedGloble] parseServerJsonArrayToJSONModel:stickArray class:[SHGActionObject class]];
         if (stickArray.count > 0) {
             weakSelf.adArray = [NSMutableArray arrayWithArray:stickArray];
         }
-       
+
         if ([target isEqualToString:@"first"]) {
             [weakSelf.dataArr removeAllObjects];
             [weakSelf.dataArr addObjectsFromArray:weakSelf.adArray];
@@ -121,16 +121,16 @@
             }
             [weakSelf.dataArr addObjectsFromArray:weakSelf.adArray];
             [weakSelf.dataArr addObjectsFromArray:weakSelf.listArray];
-            
+
         } else{
-           [weakSelf.dataArr removeAllObjects];
+            [weakSelf.dataArr removeAllObjects];
             if (weakSelf.listArray.count > 0) {
                 [weakSelf.listArray addObjectsFromArray:normalArray];
             }
             [weakSelf.dataArr addObjectsFromArray:weakSelf.adArray];
             [weakSelf.dataArr addObjectsFromArray:weakSelf.listArray];
             if (weakSelf.listArray.count < 10) {
-            [weakSelf.listTable.footer endRefreshingWithNoMoreData];
+                [weakSelf.listTable.footer endRefreshingWithNoMoreData];
             }
         }
         [weakSelf.listTable reloadData];

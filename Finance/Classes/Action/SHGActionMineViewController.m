@@ -13,11 +13,14 @@
 #import "SHGActionSegmentViewController.h"
 #import "SHGActionManager.h"
 #import "SHGPersonalViewController.h"
+#import "SHGEmptyDataView.h"
 
 @interface SHGActionMineViewController ()<UITableViewDataSource, UITableViewDelegate, SHGActionTableViewDelegate>
 
 ;
 @property (weak, nonatomic) IBOutlet UITableView *listTable;
+@property (strong, nonatomic) UITableViewCell *emptyCell;
+@property (strong, nonatomic) SHGEmptyDataView *emptyView;
 @end
 
 @implementation SHGActionMineViewController
@@ -26,6 +29,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self){
+
     }
     return  self;
 }
@@ -36,6 +40,24 @@
     self.listTable.dataSource = self;
     [self addHeaderRefresh:self.listTable headerRefesh:YES andFooter:YES];
     [self loadDataWithType:@"first" meetID:@"-1"];
+}
+
+- (UITableViewCell *)emptyCell
+{
+    if (!_emptyCell) {
+        _emptyCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+        [_emptyCell.contentView addSubview:self.emptyView];
+    }
+    return _emptyCell;
+}
+
+
+- (SHGEmptyDataView *)emptyView
+{
+    if (!_emptyView) {
+        _emptyView = [[SHGEmptyDataView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, SCREENWIDTH, SCREENHEIGHT)];
+    }
+    return _emptyView;
 }
 
 - (void)refreshData
@@ -76,15 +98,17 @@
         if ([target isEqualToString:@"first"]) {
             [weakSelf.dataArr removeAllObjects];
             [weakSelf.dataArr addObjectsFromArray:response.dataArray];
+            [weakSelf.listTable reloadData];
         } else if([target isEqualToString:@"refresh"]){
             [weakSelf.dataArr addObjectsFromArray:response.dataArray];
-        } else{
+            [weakSelf.listTable reloadData];
+        } else if([target isEqualToString:@"load"]){
             [weakSelf.dataArr addObjectsFromArray:response.dataArray];
             if (response.dataArray.count < 10) {
                 [weakSelf.listTable.footer endRefreshingWithNoMoreData];
             }
+            [weakSelf.listTable reloadData];
         }
-        [weakSelf.listTable reloadData];
     } failed:^(MOCHTTPResponse *response) {
         [Hud hideHud];
         [Hud showMessageWithText:@"网络连接失败"];
@@ -125,35 +149,50 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.dataArr.count;
+    if (self.dataArr.count > 0) {
+        NSInteger count = self.dataArr.count;
+        return count;
+    } else{
+        return 1;
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSString *cellIdentifier = @"SHGActionTableViewCell";
-    SHGActionTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-    if (!cell){
-        cell = [[[NSBundle mainBundle] loadNibNamed:@"SHGActionTableViewCell" owner:self options:nil] lastObject];
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    if (self.dataArr.count > 0) {
+        NSString *cellIdentifier = @"SHGActionTableViewCell";
+        SHGActionTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+        if (!cell){
+            cell = [[[NSBundle mainBundle] loadNibNamed:@"SHGActionTableViewCell" owner:self options:nil] lastObject];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        }
+        cell.delegate = self;
+        SHGActionObject *object = [self.dataArr objectAtIndex:indexPath.row];
+        [cell loadDataWithObject:object index:indexPath.row];
+        return cell;
+    } else{
+        return self.emptyCell;
     }
-    cell.delegate = self;
-    SHGActionObject *object = [self.dataArr objectAtIndex:indexPath.row];
-    [cell loadDataWithObject:object index:indexPath.row];
-    return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    SHGActionDetailViewController *controller = [[SHGActionDetailViewController alloc] init];
-    SHGActionObject *object = [self.dataArr objectAtIndex:indexPath.row];
-    controller.object = object;
-    controller.delegate = [SHGActionSegmentViewController sharedSegmentController];
-    [self.navigationController pushViewController:controller animated:YES];
+    if (self.dataArr.count > 0) {
+        SHGActionDetailViewController *controller = [[SHGActionDetailViewController alloc] init];
+        SHGActionObject *object = [self.dataArr objectAtIndex:indexPath.row];
+        controller.object = object;
+        controller.delegate = [SHGActionSegmentViewController sharedSegmentController];
+        [self.navigationController pushViewController:controller animated:YES];
+    }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return kActionCellHeight;
+    if (self.dataArr.count > 0) {
+        return kActionCellHeight;
+    } else{
+        return CGRectGetHeight(self.view.frame);
+    }
 }
 
 #pragma mark ------cell代理
