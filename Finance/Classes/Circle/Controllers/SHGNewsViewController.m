@@ -92,6 +92,7 @@
 {
     if (!_emptyCell) {
         _emptyCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+        _emptyCell.selectionStyle = UITableViewCellSelectionStyleNone;
         [_emptyCell.contentView addSubview:self.emptyView];
     }
     return _emptyCell;
