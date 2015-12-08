@@ -11,7 +11,7 @@
 
 @interface SHGActionSignTableViewCell()<UITextViewDelegate>
 
-@property (weak, nonatomic) IBOutlet UIImageView *action_signHeadImage;
+@property (weak, nonatomic) IBOutlet headerView *action_signHeadImage;
 @property (weak, nonatomic) IBOutlet UILabel *action_signNameLabel;
 
 @property (weak, nonatomic) IBOutlet UILabel *action_signCommpanyLable;
@@ -85,9 +85,11 @@
     self.object = object;
     self.action_signNameLabel.text = object.realname;
     self.action_signCommpanyLable.text = object.company;
-    [self.action_signHeadImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,object.headimageurl]] placeholderImage:[UIImage imageNamed:@"default_head"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-
-    }];
+//    [self.action_signHeadImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,object.headimageurl]] placeholderImage:[UIImage imageNamed:@"default_head"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+//
+//    }];
+    [self.action_signHeadImage updateStatus:[object.status isEqualToString:@"1"] ? YES : NO];
+    [self.action_signHeadImage updateHeaderView:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,object.headimageurl] placeholderImage:[UIImage imageNamed:@"default_head"]];
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
     if ([uid isEqualToString:publisher]) {
         if ([object.state isEqualToString:@"0"]) {
@@ -117,7 +119,7 @@
 {
     self.action_signNameLabel.text = @"";
     self.action_signCommpanyLable.text = @"";
-    [self.action_signHeadImage setImage:nil];
+   // [self.action_signHeadImage setImage:nil];
     self.action_signLeftButton.hidden = YES;
     self.action_signRightButton.hidden = YES;
 }
