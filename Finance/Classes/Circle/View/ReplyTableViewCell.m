@@ -67,12 +67,9 @@
 
         [str addAttribute:NSForegroundColorAttributeName value:[UIColor clearColor] range:NSMakeRange(0,comobj.cnickname.length + 1 + 1)];
         [str addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"606060"] range:NSMakeRange(comobj.cnickname.length + 1 + 1,str.length - comobj.cnickname.length - 1 - 1)];
-    }
-    else
-    {
+    } else{
         text = [NSString stringWithFormat:@"%@回复%@:x%@",comobj.cnickname,comobj.rnickname,comobj.cdetail];
         CGSize cSize = [comobj.cnickname sizeForFont:replyLabel.font constrainedToSize:CGSizeMake(200, 15) lineBreakMode:replyLabel.lineBreakMode];
-        [cnickButton setBackgroundColor:[UIColor whiteColor]];
         [cnickButton setFrame:CGRectMake(0, 0, cSize.width, cSize.height)];
         [cnickButton.titleLabel setTextAlignment:NSTextAlignmentCenter];
         [cnickButton setTitle:comobj.cnickname forState:UIControlStateNormal];

@@ -434,9 +434,7 @@
                     contactView.index = i * kColOfRow + j;
                     //如果是自己
                     
-                    isStatus= [[dictionary objectForKey:@"userstatus"] integerValue];
-                    //contactView.userstatus = [dictionary objectForKey:@"userstatus"];
-                   
+                    isStatus= [[dictionary objectForKey:@"userstatus"] boolValue];
                     if (isStatus == YES) {
                         contactView.VImageView.hidden=NO;
                     }

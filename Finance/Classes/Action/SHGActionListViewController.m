@@ -14,16 +14,21 @@
 #import "SHGActionManager.h"
 #import "SHGActionSegmentViewController.h"
 #import "SHGPersonalViewController.h"
+#import "SHGEmptyDataView.h"
+
 
 @interface SHGActionListViewController ()<UITableViewDataSource, UITableViewDelegate, SHGActionTableViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *listTable;
+@property (strong, nonatomic) UITableViewCell *emptyCell;
+@property (strong, nonatomic) SHGEmptyDataView *emptyView;
+
 
 @end
 
 @implementation SHGActionListViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self){
@@ -54,6 +59,25 @@
 {
     return self.dataArr;
 }
+
+- (UITableViewCell *)emptyCell
+{
+    if (!_emptyCell) {
+        _emptyCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+        [_emptyCell.contentView addSubview:self.emptyView];
+    }
+    return _emptyCell;
+}
+
+
+- (SHGEmptyDataView *)emptyView
+{
+    if (!_emptyView) {
+        _emptyView = [[SHGEmptyDataView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, SCREENWIDTH, SCREENHEIGHT)];
+    }
+    return _emptyView;
+}
+
 
 - (void)addNewAction:(UIButton *)button
 {
@@ -146,40 +170,55 @@
 {
     return ((SHGActionObject *)[self.listArray lastObject]).meetId;
 }
-#pragma mark ------tableview
 
+#pragma mark ------tableview
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.dataArr.count;
+    if (self.dataArr.count > 0) {
+        NSInteger count = self.dataArr.count;
+        return count;
+    } else{
+        return 1;
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSString *cellIdentifier = @"SHGActionTableViewCell";
-    SHGActionTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-    if (!cell){
-        cell = [[[NSBundle mainBundle] loadNibNamed:@"SHGActionTableViewCell" owner:self options:nil] lastObject];
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    if (self.dataArr.count > 0) {
+        NSString *cellIdentifier = @"SHGActionTableViewCell";
+        SHGActionTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+        if (!cell){
+            cell = [[[NSBundle mainBundle] loadNibNamed:@"SHGActionTableViewCell" owner:self options:nil] lastObject];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        }
+        cell.delegate = self;
+        SHGActionObject *object = [self.dataArr objectAtIndex:indexPath.row];
+        [cell loadDataWithObject:object index:indexPath.row];
+        [cell loadDateWithAllEdit:object];
+        return cell;
+    } else{
+        return self.emptyCell;
     }
-    cell.delegate = self;
-    SHGActionObject *object = [self.dataArr objectAtIndex:indexPath.row];
-    [cell loadDataWithObject:object index:indexPath.row];
-    [cell loadDateWithAllEdit:object];
-    return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    SHGActionDetailViewController *controller = [[SHGActionDetailViewController alloc] init];
-    SHGActionObject *object = [self.dataArr objectAtIndex:indexPath.row];
-    controller.object = object;
-    controller.delegate = [SHGActionSegmentViewController sharedSegmentController];
-    [self.navigationController pushViewController:controller animated:YES];
+    if (self.dataArr.count > 0) {
+        SHGActionDetailViewController *controller = [[SHGActionDetailViewController alloc] init];
+        SHGActionObject *object = [self.dataArr objectAtIndex:indexPath.row];
+        controller.object = object;
+        controller.delegate = [SHGActionSegmentViewController sharedSegmentController];
+        [self.navigationController pushViewController:controller animated:YES];
+    }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return kActionCellHeight;
+    if (self.dataArr.count > 0) {
+        return kActionCellHeight;
+    } else{
+        return CGRectGetHeight(self.view.frame);
+    }
 }
 
 #pragma mark ------cell代理
