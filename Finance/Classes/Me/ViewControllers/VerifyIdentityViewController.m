@@ -146,7 +146,7 @@
 		[self.submitButton setTitle:@"更新" forState:UIControlStateNormal];
 		[self.submitButton setTitle:@"更新" forState:UIControlStateHighlighted];
 		self.submitButton.hidden = YES;
-		self.tipsLabel.hidden = NO;
+		
 	}else if ([self.status isEqualToString:@"2"]){
 		self.status_statuLabel.text = @"已认证";
         self.status_statuLabel.textColor = [UIColor colorWithHexString:@"3588c8"];
