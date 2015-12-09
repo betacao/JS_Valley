@@ -113,13 +113,6 @@
         [Hud hideHud];
         [Hud showMessageWithText:@"点赞成功"];
         if (block) {
-            object.praiseNum = [NSString stringWithFormat:@"%ld",(long)[object.praiseNum integerValue] + 1];
-            object.isPraise = @"Y";
-            praiseOBj *obj = [[praiseOBj alloc] init];
-            obj.pnickname = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_USER_NAME];
-            obj.ppotname = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_HEAD_IMAGE];
-            obj.puserid =[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
-            [object.praiseList addObject:obj];
             block(YES);
         }
     } failed:^(MOCHTTPResponse *response) {
@@ -142,14 +135,6 @@
         [Hud hideHud];
         [Hud showMessageWithText:@"取消点赞成功"];
         if (block) {
-            object.praiseNum = [NSString stringWithFormat:@"%ld",(long)[object.praiseNum integerValue] - 1];
-            object.isPraise = @"N";
-            for (praiseOBj *obj in object.praiseList) {
-                if ([obj.puserid isEqualToString:[[NSUserDefaults standardUserDefaults]objectForKey:KEY_UID]]) {
-                    [object.praiseList removeObject:obj];
-                    break;
-                }
-            }
             block(YES);
         }
     } failed:^(MOCHTTPResponse *response) {

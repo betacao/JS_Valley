@@ -279,6 +279,27 @@
 
 }
 
+#pragma mark ------ 点赞和取消点赞
+- (void)addOrDeletePraise:(SHGActionObject *)object block:(void (^)(BOOL success))block
+{
+    __weak typeof(self)weakSelf = self;
+    if ([object.isPraise isEqualToString:@"N"]) {
+        [[SHGActionManager shareActionManager] addPraiseWithObject:object finishBlock:^(BOOL success) {
+            [weakSelf didChangePraiseState:object isPraise:YES];
+            if (block) {
+                block(success);
+            }
+        }];
+    } else{
+        [[SHGActionManager shareActionManager] deletePraiseWithObject:object finishBlock:^(BOOL success) {
+            [weakSelf didChangePraiseState:object isPraise:NO];
+            if (block) {
+                block(success);
+            }
+        }];
+    }
+}
+
 #pragma mark ------ 点赞状态改变
 
 - (void)didChangePraiseState:(SHGActionObject *)object isPraise:(BOOL)isPraise
@@ -290,9 +311,12 @@
                 if ([object.meetId isEqualToString:obj.meetId]) {
                     obj.isPraise = isPraise ? @"Y" : @"N";
                     if (isPraise) {
+
                         obj.praiseNum = [NSString stringWithFormat:@"%ld",(long)[obj.praiseNum integerValue] + 1];
+                        
                     } else{
                         obj.praiseNum = [NSString stringWithFormat:@"%ld",(long)[obj.praiseNum integerValue] - 1];
+
                     }
                     break;
                 }

@@ -11,7 +11,7 @@
 #import "SHGActionSignViewController.h"
 #import "SHGActionDetailViewController.h"
 
-@interface SHGActionSegmentViewController : BaseViewController<SHGActionSendDelegate, SHGActionSignControllerDelegate, SHGActionAddCommentDelegate>
+@interface SHGActionSegmentViewController : BaseViewController<SHGActionSendDelegate, SHGActionAddCommentDelegate>
 
 @property (nonatomic, copy) NSArray *viewControllers;
 @property (nonatomic, weak) UIViewController *selectedViewController;
@@ -19,4 +19,5 @@
 + (instancetype)sharedSegmentController;
 - (void)setSelectedIndex:(NSUInteger)index animated:(BOOL)animated;
 - (void)setSelectedViewController:(UIViewController *)viewController animated:(BOOL)animated;
+- (void)addOrDeletePraise:(SHGActionObject *)object block:(void(^)(BOOL success))block;
 @end

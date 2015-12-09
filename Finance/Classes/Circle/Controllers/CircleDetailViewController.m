@@ -460,6 +460,8 @@
     //如果公司名和职位名字都不存在的话则隐藏分割线
     if(self.lblCompanyName.text.length == 0 && self.lbldepartName.text.length == 0){
         self.breakLineView.hidden = YES;
+    } else{
+        self.breakLineView.hidden = NO;
     }
 
 

@@ -70,7 +70,6 @@
 {
     if (!_signController) {
         _signController = [[SHGActionSignViewController alloc] init];
-        _signController.delegate = [SHGActionSegmentViewController sharedSegmentController];
         _signController.superController = self;
         __weak typeof(self) weakSelf = self;
         _signController.finishBlock = ^(CGFloat height){

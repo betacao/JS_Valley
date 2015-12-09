@@ -11,6 +11,7 @@
 #import "SHGPersonalViewController.h"
 #import "SHGActionManager.h"
 #import "SHGActionTotalInViewController.h"
+#import "SHGActionSegmentViewController.h"
 
 #define PRAISE_SEPWIDTH     10
 #define PRAISE_RIGHTWIDTH     40
@@ -216,26 +217,31 @@
 - (IBAction)addPraiseClick:(id)sender
 {
     __weak typeof(self)weakSelf = self;
-    if ([self.object.isPraise isEqualToString:@"N"]) {
-        [[SHGActionManager shareActionManager] addPraiseWithObject:self.object finishBlock:^(BOOL success) {
+    [[SHGActionSegmentViewController sharedSegmentController] addOrDeletePraise:self.object block:^(BOOL success) {
+        if ([weakSelf.object.isPraise isEqualToString:@"N"]) {
+            weakSelf.object.praiseNum = [NSString stringWithFormat:@"%ld",(long)[weakSelf.object.praiseNum integerValue] + 1];
+            weakSelf.object.isPraise = @"Y";
+            praiseOBj *obj = [[praiseOBj alloc] init];
+            obj.pnickname = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_USER_NAME];
+            obj.ppotname = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_HEAD_IMAGE];
+            obj.puserid =[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
+            [weakSelf.object.praiseList addObject:obj];
+            
             [weakSelf loadPraiseButtonState];
             [weakSelf loadFooterUI];
-            [weakSelf didChangePraiseState:weakSelf.object isPraise:YES];
-        }];
-    } else{
-        [[SHGActionManager shareActionManager] deletePraiseWithObject:self.object finishBlock:^(BOOL success) {
+        } else{
+            weakSelf.object.praiseNum = [NSString stringWithFormat:@"%ld",(long)[weakSelf.object.praiseNum integerValue] - 1];
+            weakSelf.object.isPraise = @"N";
+            for (praiseOBj *obj in weakSelf.object.praiseList) {
+                if ([obj.puserid isEqualToString:[[NSUserDefaults standardUserDefaults]objectForKey:KEY_UID]]) {
+                    [weakSelf.object.praiseList removeObject:obj];
+                    break;
+                }
+            }
             [weakSelf loadPraiseButtonState];
             [weakSelf loadFooterUI];
-            [weakSelf didChangePraiseState:weakSelf.object isPraise:NO];
-        }];
-    }
-}
-
-- (void)didChangePraiseState:(SHGActionObject *)object isPraise:(BOOL)isPraise
-{
-    if (self.delegate && [self.delegate respondsToSelector:@selector(didChangePraiseState:isPraise:)]) {
-        [self.delegate didChangePraiseState:object isPraise:isPraise];
-    }
+        }
+    }];
 }
 
 - (NSInteger)numberOfAttend
