@@ -23,9 +23,21 @@
  */
 
 #import "SHGSegmentController.h"
+#import "ChatListViewController.h"
+#import "ApplyViewController.h"
+#import "HeadImage.h"
+#import "UIButton+EnlargeEdge.h"
 
-@interface SHGSegmentController ()
+//两次提示的默认间隔
+static const CGFloat kDefaultPlaySoundInterval = 3.0;
+
+@interface SHGSegmentController ()<IChatManagerDelegate>
+
 @property (nonatomic, strong) UIBarButtonItem *rightBarButtonItem;
+@property (nonatomic, strong) UIBarButtonItem *leftBarButtonItem;
+@property (strong, nonatomic) ChatListViewController *chatViewController;
+@property (strong, nonatomic) NSDate *lastPlaySoundDate;
+
 @end
 
 @implementation SHGSegmentController
@@ -94,6 +106,16 @@
     if(self.block){
         self.block(tabButtonsContainerView);
     }
+
+    [self initMessageObject];
+}
+
+- (void)initMessageObject
+{
+    [self registerEaseMobNotification];
+
+    [self setupUnreadMessageCount];
+    [self setupUntreatedApplyCount];
 }
 
 - (UIBarButtonItem *)rightBarButtonItem
@@ -111,6 +133,33 @@
     }
     return _rightBarButtonItem;
 }
+
+- (UIBarButtonItem *)leftBarButtonItem
+{
+    if (!_leftBarButtonItem)
+    {
+        UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [leftButton setFrame:CGRectZero];
+        UIImage *image = [UIImage imageNamed:@"message_selected"];
+        [leftButton setBackgroundImage:image forState:UIControlStateNormal];
+        [leftButton.imageView setContentMode:UIViewContentModeScaleAspectFill];
+        [leftButton addTarget:self action:@selector(jumpToMessageViewController:) forControlEvents:UIControlEventTouchUpInside];
+        [leftButton sizeToFit];
+        _leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:leftButton];
+    }
+    return _leftBarButtonItem;
+}
+
+- (ChatListViewController *)chatViewController
+{
+    if (!_chatViewController)
+    {
+        _chatViewController = [[ChatListViewController alloc] init];
+        _chatViewController.chatListType = ChatListView;
+    }
+    return _chatViewController;
+}
+
 
 - (NSMutableArray *)dataArray
 {
@@ -263,11 +312,17 @@
             }
         } else{
             VerifyIdentityViewController *controller = [[VerifyIdentityViewController alloc] init];
-            [self.navigationController pushViewController:controller animated:YES];
+            [self.selectedViewController.navigationController pushViewController:controller animated:YES];
         }
     } failString:@"认证后才能发起动态哦～"];
     
 }
+//进入消息界面
+- (void)jumpToMessageViewController:(UIButton *)button
+{
+    [self.selectedViewController.navigationController pushViewController:self.chatViewController animated:YES];
+}
+
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
@@ -295,8 +350,6 @@
 
 	_viewControllers = [newViewControllers copy];
 
-	// This follows the same rules as UITabBarController for trying to
-	// re-select the previously selected view controller.
 	NSUInteger newIndex = [_viewControllers indexOfObject:oldSelectedViewController];
 	if (newIndex != NSNotFound)
 		_selectedIndex = newIndex;
@@ -305,7 +358,6 @@
 	else
 		_selectedIndex = 0;
 
-	// Add the new child view controllers.
 	for (UIViewController *viewController in _viewControllers)
 	{
 		[self addChildViewController:viewController];
@@ -435,4 +487,429 @@
     contentContainerView = nil;
 }
 
+#pragma mark ------消息界面东西
+// 统计未读消息数
+-(void)setupUnreadMessageCount
+{
+    NSArray *conversations = [[[EaseMob sharedInstance] chatManager] conversations];
+    NSInteger unreadCount = 0;
+    for (EMConversation *conversation in conversations) {
+        unreadCount += conversation.unreadMessagesCount;
+    }
+    unreadCount = unreadCount + [[[ApplyViewController shareController] dataSource] count];
+    UIButton *leftButton = (UIButton *)self.leftBarButtonItem.customView;
+    if (unreadCount > 0) {
+        [leftButton setBadgeNumber:[NSString stringWithFormat:@"%i",(int)unreadCount]];
+    } else{
+        [leftButton removeBadgeNumber];
+    }
+
+    UIApplication *application = [UIApplication sharedApplication];
+    [application setApplicationIconBadgeNumber:unreadCount];
+}
+
+- (void)setupUntreatedApplyCount
+{
+    NSArray *conversations = [[[EaseMob sharedInstance] chatManager] conversations];
+    NSInteger unreadCount = 0;
+    for (EMConversation *conversation in conversations) {
+        unreadCount += conversation.unreadMessagesCount;
+    }
+
+    unreadCount = unreadCount+[[[ApplyViewController shareController] dataSource] count];
+    UIButton *leftButton = (UIButton *)self.leftBarButtonItem.customView;
+    if (unreadCount > 0) {
+        [leftButton setBadgeNumber:[NSString stringWithFormat:@"%i",(int)unreadCount]];
+    } else{
+        [leftButton removeBadgeNumber];
+    }
+}
+
+#pragma mark - registerEaseMobNotification
+- (void)registerEaseMobNotification
+{
+    [self unRegisterEaseMobNotification];
+    // 将self 添加到SDK回调中，以便本类可以收到SDK回调
+    [[EaseMob sharedInstance].chatManager addDelegate:self delegateQueue:nil];
+}
+
+- (void)unRegisterEaseMobNotification
+{
+    [[EaseMob sharedInstance].chatManager removeDelegate:self];
+}
+
+#pragma mark - IChatManagerDelegate 消息变化
+
+- (void)didUpdateConversationList:(NSArray *)conversationList
+{
+    [self setupUnreadMessageCount];
+    if(!_chatViewController.isResfresh)
+    {
+        [_chatViewController reloadDataSource];
+    }
+}
+
+// 未读消息数量变化回调
+- (void)didUnreadMessagesCountChanged
+{
+    [self setupUnreadMessageCount];
+}
+
+- (void)didFinishedReceiveOfflineMessages:(NSArray *)offlineMessages
+{
+    [self setupUnreadMessageCount];
+}
+
+- (void)didFinishedReceiveOfflineCmdMessages:(NSArray *)offlineCmdMessages
+{
+
+}
+
+- (BOOL)needShowNotification:(NSString *)fromChatter
+{
+    BOOL ret = YES;
+    NSArray *igGroupIds = [[EaseMob sharedInstance].chatManager ignoredGroupIds];
+    for (NSString *str in igGroupIds)
+    {
+        if ([str isEqualToString:fromChatter])
+        {
+            ret = NO;
+            break;
+        }
+    }
+
+    return ret;
+}
+
+// 收到消息回调
+-(void)didReceiveMessage:(EMMessage *)message
+{
+    NSArray *user = [HeadImage queryAll];
+    BOOL hasExsist = NO;
+    NSString *uid  = message.conversationChatter;
+    for (NSManagedObject *obj in user)
+    {
+        uid  =  [obj valueForKey:@"uid"];
+        if ([uid isEqualToString:message.conversationChatter])
+        {
+            hasExsist = YES;
+            break;
+        }
+    }
+    if (!hasExsist)
+    {
+        //
+        [self refreshFriendListWithUid:uid];
+    }
+    BOOL needShowNotification = message.isGroup ? [self needShowNotification:message.conversationChatter] : YES;
+    if (needShowNotification)
+    {
+#if !TARGET_IPHONE_SIMULATOR
+
+        BOOL isAppActivity = [[UIApplication sharedApplication] applicationState] == UIApplicationStateActive;
+        if (!isAppActivity)
+        {
+            [self showNotificationWithMessage:message];
+        }else {
+            [self playSoundAndVibration];
+        }
+#endif
+    }
+}
+-(void)refreshFriendListWithUid:(NSString *)userId
+{
+    [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/user/%@",rBaseAddressForHttp,userId] parameters:nil success:^(MOCHTTPResponse *response) {
+        NSMutableArray *arr = [NSMutableArray array];
+        NSDictionary *dic = response.dataDictionary;
+        BasePeopleObject *obj = [[BasePeopleObject alloc] init];
+        obj.name = [dic valueForKey:@"nick"];
+        obj.headImageUrl = [dic valueForKey:@"avatar"];
+        obj.uid = [dic valueForKey:@"username"];
+        obj.rela = [dic valueForKey:@"rela"];
+        obj.company = [dic valueForKey:@"company"];
+        obj.commonfriend = @"";
+        obj.commonfriendnum = @"";
+        [self.chatViewController.contactsSource addObject:obj];
+        [arr addObject:obj];
+        [HeadImage inertWithArr:arr];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"refreshFriendList" object:nil];
+
+        });
+    } failed:^(MOCHTTPResponse *response) {
+
+    }];
+}
+-(void)didReceiveCmdMessage:(EMMessage *)message
+{
+    [self showHint:NSLocalizedString(@"receiveCmd", @"receive cmd message")];
+}
+
+- (void)playSoundAndVibration{
+    NSTimeInterval timeInterval = [[NSDate date]
+                                   timeIntervalSinceDate:self.lastPlaySoundDate];
+    if (timeInterval < kDefaultPlaySoundInterval) {
+        //如果距离上次响铃和震动时间太短, 则跳过响铃
+        NSLog(@"skip ringing & vibration %@, %@", [NSDate date], self.lastPlaySoundDate);
+        return;
+    }
+
+    //保存最后一次响铃时间
+    self.lastPlaySoundDate = [NSDate date];
+
+    // 收到消息时，播放音频
+    [[EaseMob sharedInstance].deviceManager asyncPlayNewMessageSound];
+    // 收到消息时，震动
+    [[EaseMob sharedInstance].deviceManager asyncPlayVibration];
+}
+
+- (void)showNotificationWithMessage:(EMMessage *)message
+{
+    EMPushNotificationOptions *options = [[EaseMob sharedInstance].chatManager pushNotificationOptions];
+    //发送本地推送
+    UILocalNotification *notification = [[UILocalNotification alloc] init];
+    notification.fireDate = [NSDate date]; //触发通知的时间
+
+    if (options.displayStyle == ePushNotificationDisplayStyle_messageSummary) {
+        id<IEMMessageBody> messageBody = [message.messageBodies firstObject];
+        NSString *messageStr = nil;
+        switch (messageBody.messageBodyType) {
+            case eMessageBodyType_Text:
+            {
+                messageStr = ((EMTextMessageBody *)messageBody).text;
+            }
+                break;
+            case eMessageBodyType_Image:
+            {
+                messageStr = NSLocalizedString(@"message.image", @"Image");
+            }
+                break;
+            case eMessageBodyType_Location:
+            {
+                messageStr = NSLocalizedString(@"message.location", @"Location");
+            }
+                break;
+            case eMessageBodyType_Voice:
+            {
+                messageStr = NSLocalizedString(@"message.voice", @"Voice");
+            }
+                break;
+            case eMessageBodyType_Video:{
+                messageStr = NSLocalizedString(@"message.vidio", @"Vidio");
+            }
+                break;
+            default:
+                break;
+        }
+
+        NSString *title = message.from;
+        if (message.isGroup) {
+            NSArray *groupArray = [[EaseMob sharedInstance].chatManager groupList];
+            for (EMGroup *group in groupArray) {
+                if ([group.groupId isEqualToString:message.conversationChatter]) {
+                    title = [NSString stringWithFormat:@"%@(%@)", message.groupSenderName, group.groupSubject];
+                    break;
+                }
+            }
+        }
+
+        notification.alertBody = [NSString stringWithFormat:@"%@:%@", title, messageStr];
+    }
+    else{
+        notification.alertBody = NSLocalizedString(@"receiveMessage", @"you have a new message");
+    }
+
+    notification.alertAction = NSLocalizedString(@"open", @"Open");
+    notification.timeZone = [NSTimeZone defaultTimeZone];
+    notification.soundName = UILocalNotificationDefaultSoundName;
+    //发送通知
+    [[UIApplication sharedApplication] scheduleLocalNotification:notification];
+    UIApplication *application = [UIApplication sharedApplication];
+    application.applicationIconBadgeNumber += 1;
+}
+
+#pragma mark - IChatManagerDelegate 登陆回调（主要用于监听自动登录是否成功）
+
+- (void)didLoginWithInfo:(NSDictionary *)loginInfo error:(EMError *)error
+{
+    if (error) {
+        NSString *hintText = NSLocalizedString(@"reconnection.retry", @"Fail to log in your account, is try again... \nclick 'logout' button to jump to the login page \nclick 'continue to wait for' button for reconnection successful");
+        UIAlertView *alertView = [[UIAlertView alloc]  initWithTitle:NSLocalizedString(@"prompt", @"Prompt") message:hintText delegate:self cancelButtonTitle:NSLocalizedString(@"reconnection.wait", @"continue to wait") otherButtonTitles:NSLocalizedString(@"logout", @"Logout"), nil];
+        alertView.tag = 99;
+        [alertView show];
+        [_chatViewController isConnect:NO];
+    }
+}
+
+#pragma mark - IChatManagerDelegate 好友变化
+
+- (void)didReceiveBuddyRequest:(NSString *)username
+                       message:(NSString *)message
+{
+#if !TARGET_IPHONE_SIMULATOR
+    [self playSoundAndVibration];
+
+    BOOL isAppActivity = [[UIApplication sharedApplication] applicationState] == UIApplicationStateActive;
+    if (!isAppActivity) {
+        //发送本地推送
+        UILocalNotification *notification = [[UILocalNotification alloc] init];
+        notification.fireDate = [NSDate date]; //触发通知的时间
+        notification.alertBody = [NSString stringWithFormat:NSLocalizedString(@"friend.somebodyAddWithName", @"%@ add you as a friend"), username];
+        notification.alertAction = NSLocalizedString(@"open", @"Open");
+        notification.timeZone = [NSTimeZone defaultTimeZone];
+    }
+#endif
+
+    [_chatViewController reloadApplyView];
+}
+
+- (void)didUpdateBuddyList:(NSArray *)buddyList changedBuddies:(NSArray *)changedBuddies isAdd:(BOOL)isAdd
+{
+    if (!isAdd)
+    {
+        NSMutableArray *deletedBuddies = [NSMutableArray array];
+        for (EMBuddy *buddy in changedBuddies)
+        {
+            [deletedBuddies addObject:buddy.username];
+        }
+        [[EaseMob sharedInstance].chatManager removeConversationsByChatters:deletedBuddies deleteMessages:YES append2Chat:YES];
+        [_chatViewController reloadDataSource];
+    }
+    //    [_chat reloadDataSource];
+}
+
+- (void)didRemovedByBuddy:(NSString *)username
+{
+    [[EaseMob sharedInstance].chatManager removeConversationByChatter:username deleteMessages:YES append2Chat:YES];
+}
+
+- (void)didAcceptedByBuddy:(NSString *)username
+{
+}
+
+- (void)didRejectedByBuddy:(NSString *)username
+{
+    NSString *message = [NSString stringWithFormat:NSLocalizedString(@"friend.beRefusedToAdd", @"you are shameless refused by '%@'"), username];
+    [self showHint:message];
+}
+
+- (void)didAcceptBuddySucceed:(NSString *)username
+{
+}
+
+#pragma mark - IChatManagerDelegate 群组变化
+
+- (void)didReceiveGroupInvitationFrom:(NSString *)groupId
+                              inviter:(NSString *)username
+                              message:(NSString *)message
+{
+#if !TARGET_IPHONE_SIMULATOR
+    [self playSoundAndVibration];
+#endif
+
+    [_chatViewController reloadGroupView];
+}
+
+//接收到入群申请
+- (void)didReceiveApplyToJoinGroup:(NSString *)groupId
+                         groupname:(NSString *)groupname
+                     applyUsername:(NSString *)username
+                            reason:(NSString *)reason
+                             error:(EMError *)error
+{
+    if (!error) {
+#if !TARGET_IPHONE_SIMULATOR
+        [self playSoundAndVibration];
+#endif
+
+        [_chatViewController reloadGroupView];
+    }
+}
+
+- (void)didReceiveGroupRejectFrom:(NSString *)groupId
+                          invitee:(NSString *)username
+                           reason:(NSString *)reason
+{
+    NSString *message = [NSString stringWithFormat:NSLocalizedString(@"friend.beRefusedToAdd", @"you are shameless refused by '%@'"), username];
+    [self showHint:message];
+}
+
+
+- (void)didReceiveAcceptApplyToJoinGroup:(NSString *)groupId
+                               groupname:(NSString *)groupname
+{
+    NSString *message = [NSString stringWithFormat:NSLocalizedString(@"group.agreedToJoin", @"agreed to join the group of \'%@\'"), groupname];
+    [self showHint:message];
+}
+
+#pragma mark - IChatManagerDelegate 登录状态变化
+- (void)didLoginFromOtherDevice
+{
+    [[EaseMob sharedInstance].chatManager asyncLogoffWithUnbindDeviceToken:NO completion:^(NSDictionary *info, EMError *error) {
+        DXAlertView *alertView = [[DXAlertView alloc] initWithTitle:NSLocalizedString(@"prompt", @"Prompt") contentText:NSLocalizedString(@"loginAtOtherDevice", @"your login account has been in other places") leftButtonTitle:nil rightButtonTitle:NSLocalizedString(@"ok", @"OK")];
+        alertView.rightBlock = ^{
+            [[EaseMob sharedInstance].chatManager asyncLogoffWithUnbindDeviceToken:YES completion:^(NSDictionary *info, EMError *error) {
+                if (error && error.errorCode != EMErrorServerNotLogin) {
+                }
+                else{
+                    LoginViewController *splitViewController =[[[LoginViewController alloc] init] initWithNibName:@"LoginViewController" bundle:nil];
+                    BaseNavigationController *nav = [[BaseNavigationController alloc] initWithRootViewController:splitViewController];
+                    //设置导航title字体
+                    [[UINavigationBar appearance] setTitleTextAttributes: @{NSFontAttributeName:[UIFont systemFontOfSize:kNavBarTitleFontSize], NSForegroundColorAttributeName:NavRTitleColor}];
+                    //清除配置信息
+                    [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:KEY_UID];
+                    [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:KEY_PASSWORD];
+                    [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:KEY_USER_NAME];
+                    [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:KEY_TOKEN];
+                    [[NSUserDefaults standardUserDefaults] setObject:@"0" forKey:KEY_AUTOLOGIN];
+                    [AppDelegate currentAppdelegate].window.rootViewController = nav;
+                }
+            } onQueue:nil];
+        };
+        [alertView show];
+
+    } onQueue:nil];
+}
+
+- (void)didRemovedFromServer
+{
+    [[EaseMob sharedInstance].chatManager asyncLogoffWithUnbindDeviceToken:NO completion:^(NSDictionary *info, EMError *error) {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"prompt", @"Prompt") message:NSLocalizedString(@"loginUserRemoveFromServer", @"your account has been removed from the server side") delegate:self cancelButtonTitle:NSLocalizedString(@"ok", @"OK") otherButtonTitles:nil, nil];
+        alertView.tag = 101;
+        [alertView show];
+    } onQueue:nil];
+}
+
+#pragma mark - 自动登录回调
+
+- (void)willAutoReconnect{
+    [self hideHud];
+}
+
+- (void)didAutoReconnectFinishedWithError:(NSError *)error{
+    [self hideHud];
+}
+
+#pragma mark - ICallManagerDelegate
+
+- (void)back
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"setupUntreatedApplyCount" object:nil];
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+#pragma mark - public
+- (void)jumpToChatList
+{
+    if(self.chatViewController)
+    {
+        [self.navigationController popToViewController:self animated:NO];
+        [self setSelectedViewController:self.chatViewController];
+    }
+}
+
+-(void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
 @end

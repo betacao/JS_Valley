@@ -239,7 +239,7 @@ typedef NS_ENUM(NSInteger, RegistType)
 - (void)loginSuccess
 {
     TabBarViewController *vc = [TabBarViewController tabBar];
-    vc.rid = self.rid;
+    vc.dictionary = self.rid;
     BaseNavigationController *nav = [[BaseNavigationController alloc] initWithRootViewController:vc];
     [AppDelegate currentAppdelegate].window.rootViewController =nav;
 }

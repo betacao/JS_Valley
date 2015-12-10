@@ -505,7 +505,6 @@
                     _titleLabel.text = obj.tname;
                     self.navigationItem.titleView = _titleLabel;
                 }
-                [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_CHANGE_NAV_TITLEVIEW object:@"1"];
                 self.navigationItem.rightBarButtonItems = @[addItem,searchItem];
                 [UIView setAnimationDuration:0.4];
                 [UIView commitAnimations];
@@ -520,7 +519,6 @@
                 self.listTable.tableHeaderView = backScrollView;
                     self.navigationItem.titleView = backView;
                 self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects:addItem, nil];
-                  [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_CHANGE_NAV_TITLEVIEW object:@"0"];
                 [UIView setAnimationDuration:0.4];
                 [UIView commitAnimations];
             }

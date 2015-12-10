@@ -277,7 +277,7 @@
     __weak typeof(self) weakSelf = self;
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.2f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         TabBarViewController *vc = [TabBarViewController tabBar];
-        vc.rid = weakSelf.rid;
+        vc.dictionary = weakSelf.rid;
         BaseNavigationController *nav = [[BaseNavigationController alloc] initWithRootViewController:vc];
         [AppDelegate currentAppdelegate].window.rootViewController = nav;
     });

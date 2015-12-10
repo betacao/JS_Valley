@@ -21,7 +21,6 @@
 #define NOTIFI_COLLECT_SHARE_CLIC     @"notificationCircleSHareCLick"
 #define NOTIFI_COLLECT_COMMENT_CLIC     @"notificationCircleCOmmentCLick"
 
-#define NOTIFI_CHANGE_NAV_TITLEVIEW     @"notificationProductChangeNavTitle"
 #define NOTIFI_CHANGE_UPDATE_AUTO_STATUE     @"notificationUpdateAuthState"
 #define NOTIFI_CHANGE_UPDATE_FRIEND_LIST     @"notificationUpdateFriendList"
 #define NOTIFI_CHANGE_SHOULD_UPDATE     @"notificationShouldUpdate"

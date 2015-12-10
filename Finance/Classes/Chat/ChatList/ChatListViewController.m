@@ -651,10 +651,10 @@ static NSString * const kCommonFNum			= @"commonnum";
     if (self.chatListType == ChatListView){
         if(indexPath.row==0){
             ApplyViewController *vc=[ApplyViewController shareController];
-            [self.tabBarController.navigationController pushViewController:vc animated:YES];
+            [self.navigationController pushViewController:vc animated:YES];
         } else if(indexPath.row==1){
             MessageViewController *mViewController=[[MessageViewController alloc] init];
-            [self.tabBarController.navigationController pushViewController:mViewController animated:YES];
+            [self.navigationController pushViewController:mViewController animated:YES];
         } else{
             EMConversation *conversation = [self.dataSource objectAtIndex:indexPath.row];
             ChatViewController *chatController;
@@ -681,7 +681,7 @@ static NSString * const kCommonFNum			= @"commonnum";
             } else{
                 chatController.title=titleName;
             }
-            [self.tabBarController.navigationController pushViewController:chatController animated:YES];
+            [self.navigationController pushViewController:chatController animated:YES];
         }
     } else if (self.chatListType == ContactListView || self.chatListType == ContactTwainListView){
         BasePeopleObject *buddy = [self.contactsSource  objectAtIndex:indexPath.row];
@@ -1148,10 +1148,8 @@ static NSString * const kCommonFNum			= @"commonnum";
 - (UIView *)titleView
 {
     if (!_titleView) {
-        //self.titleView =self.titleLabel;
         self.titleView = self.segmentControl;
     }
-    
     return _titleView;
 }
 -(UILabel *)titleLabel
@@ -1285,7 +1283,6 @@ static NSString * const kCommonFNum			= @"commonnum";
         [self.view sendSubviewToBack:self.tableView];
         
         _searchBar.hidden=NO;
-        //_tableView.hidden=YES;
         _tableView.frame =CGRectMake(0, self.searchBar.frame.size.height, self.view.frame.size.width, self.view.frame.size.height - self.searchBar.frame.size.height);
         [self.view sendSubviewToBack:self.tableView];
         [self addHeaderRefresh:self.tableView headerRefesh:YES andFooter:YES];
@@ -1301,7 +1298,8 @@ static NSString * const kCommonFNum			= @"commonnum";
             UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:rightButton];
             self.navigationItem.rightBarButtonItem = rightItem;
         }
-        //self.tableView
+    } else{
+        self.navigationItem.titleView = self.titleView;
     }
 }
 

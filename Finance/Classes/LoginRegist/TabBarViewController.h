@@ -15,9 +15,8 @@
 +(TabBarViewController *)tabBar;
 
 - (void)jumpToChatList;
-- (void)ToMess;
 - (void)setupUntreatedApplyCount;
 
-@property (nonatomic, strong) NSDictionary *rid;
+@property (nonatomic, strong) NSDictionary *dictionary;
 @end
 

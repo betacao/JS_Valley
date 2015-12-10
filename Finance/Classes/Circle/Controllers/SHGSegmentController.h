@@ -36,6 +36,7 @@ typedef void(^loadViewFinishBlock)(UIView *view);
 @property (nonatomic, weak) id <SHGSegmentControllerDelegate> delegate;
 @property (nonatomic, copy) loadViewFinishBlock block;
 @property (strong ,nonatomic, readonly) UIBarButtonItem *rightBarButtonItem;
+@property (strong ,nonatomic, readonly) UIBarButtonItem *leftBarButtonItem;
 
 + (instancetype)sharedSegmentController;
 //刷新关注界面数据
@@ -62,6 +63,9 @@ typedef void(^loadViewFinishBlock)(UIView *view);
 - (void)setSelectedIndex:(NSUInteger)index animated:(BOOL)animated;
 - (void)setSelectedViewController:(UIViewController *)viewController animated:(BOOL)animated;
 
+//消息界面的函数
+- (void)jumpToChatList;
+- (void)setupUntreatedApplyCount;
 @end
 
 /*!

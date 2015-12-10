@@ -151,7 +151,7 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_CHANGE_UPDATE_AUTO_STATUE object:nil];
 
     TabBarViewController *vc = [TabBarViewController tabBar];
-    vc.rid = self.rid;
+    vc.dictionary = self.rid;
     BaseNavigationController *nav = [[BaseNavigationController alloc] initWithRootViewController:vc];
     [AppDelegate currentAppdelegate].window.rootViewController = nav;
     //重新登录时刷新我的页面数据

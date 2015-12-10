@@ -71,3 +71,41 @@ static char leftNameKey;
 //}
 
 @end
+
+
+//加badge
+@implementation UIButton (Badge)
+
+- (void)setBadgeNumber:(NSString *)number
+{
+    SHGBadgeView *badgeView = nil;
+    for (UIView *view in self.subviews) {
+        if ([view isKindOfClass:[SHGBadgeView class]]) {
+            badgeView = (SHGBadgeView *)view;
+            break;
+        }
+    }
+    if (!badgeView) {
+        badgeView = [SHGBadgeView customBadgeWithString:number];
+        CGPoint point = CGPointMake(CGRectGetMaxX(self.bounds), CGRectGetMinY(self.bounds));
+        badgeView.center = point;
+        [self addSubview:badgeView];
+    } else{
+        [badgeView autoBadgeSizeWithString:number];
+    }
+}
+
+- (void)removeBadgeNumber
+{
+    SHGBadgeView *badgeView = nil;
+    for (UIView *view in self.subviews) {
+        if ([view isKindOfClass:[SHGBadgeView class]]) {
+            badgeView = (SHGBadgeView *)view;
+            break;
+        }
+    }
+    if (badgeView) {
+        [badgeView removeFromSuperview];
+    }
+}
+@end

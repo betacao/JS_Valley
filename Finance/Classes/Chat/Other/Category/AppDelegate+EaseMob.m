@@ -310,11 +310,9 @@
 }
 
 // 已经同意并且加入群组后的回调
-- (void)didAcceptInvitationFromGroup:(EMGroup *)group
-                               error:(EMError *)error
+- (void)didAcceptInvitationFromGroup:(EMGroup *)group error:(EMError *)error
 {
-    if(error)
-    {
+    if(error){
         return;
     }
     
