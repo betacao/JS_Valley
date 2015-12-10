@@ -737,6 +737,8 @@
 		9894C9791BF5BCE700F80577 /* SHGActionSignViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9894C9771BF5BCE700F80577 /* SHGActionSignViewController.xib */; };
 		9894C97D1BF5D24200F80577 /* SHGActionSignTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9894C97B1BF5D24200F80577 /* SHGActionSignTableViewCell.m */; };
 		9894C97E1BF5D24200F80577 /* SHGActionSignTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9894C97C1BF5D24200F80577 /* SHGActionSignTableViewCell.xib */; };
+		98D73C2D1C194E7E0055AF75 /* SHGNewsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 98D73C2B1C194E7E0055AF75 /* SHGNewsTableViewCell.m */; };
+		98D73C2E1C194E7E0055AF75 /* SHGNewsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98D73C2C1C194E7E0055AF75 /* SHGNewsTableViewCell.xib */; };
 		98E3022B1BFB0708001D4A69 /* SHGAuthenticationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98E302291BFB0708001D4A69 /* SHGAuthenticationViewController.m */; };
 		98E3022C1BFB0708001D4A69 /* SHGAuthenticationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98E3022A1BFB0708001D4A69 /* SHGAuthenticationViewController.xib */; };
 		98FA41C31BF5E1B40058A4EF /* SHGActionDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98FA41C11BF5E1B40058A4EF /* SHGActionDetailViewController.m */; };
@@ -1947,6 +1949,9 @@
 		9894C97A1BF5D24200F80577 /* SHGActionSignTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGActionSignTableViewCell.h; sourceTree = "<group>"; };
 		9894C97B1BF5D24200F80577 /* SHGActionSignTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGActionSignTableViewCell.m; sourceTree = "<group>"; };
 		9894C97C1BF5D24200F80577 /* SHGActionSignTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGActionSignTableViewCell.xib; sourceTree = "<group>"; };
+		98D73C2A1C194E7E0055AF75 /* SHGNewsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGNewsTableViewCell.h; sourceTree = "<group>"; };
+		98D73C2B1C194E7E0055AF75 /* SHGNewsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGNewsTableViewCell.m; sourceTree = "<group>"; };
+		98D73C2C1C194E7E0055AF75 /* SHGNewsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGNewsTableViewCell.xib; sourceTree = "<group>"; };
 		98E302281BFB0708001D4A69 /* SHGAuthenticationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGAuthenticationViewController.h; sourceTree = "<group>"; };
 		98E302291BFB0708001D4A69 /* SHGAuthenticationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGAuthenticationViewController.m; sourceTree = "<group>"; };
 		98E3022A1BFB0708001D4A69 /* SHGAuthenticationViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGAuthenticationViewController.xib; sourceTree = "<group>"; };
@@ -3026,6 +3031,9 @@
 				F9B18C071BA0521600EA0314 /* SHGNoticeView.m */,
 				985088171BF424F800FE9B04 /* SHGTableHeaderView.h */,
 				985088181BF424F800FE9B04 /* SHGTableHeaderView.m */,
+				98D73C2A1C194E7E0055AF75 /* SHGNewsTableViewCell.h */,
+				98D73C2B1C194E7E0055AF75 /* SHGNewsTableViewCell.m */,
+				98D73C2C1C194E7E0055AF75 /* SHGNewsTableViewCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -5023,6 +5031,7 @@
 				615234A61B0DAF1400011EAC /* DiscovSecondFriendViewController.xib in Resources */,
 				61E83D051AF7C78E00703651 /* 我的-默认@2x.png in Resources */,
 				614EFEC51AEF278A00F2BDD1 /* SubDetailViewController.xib in Resources */,
+				98D73C2E1C194E7E0055AF75 /* SHGNewsTableViewCell.xib in Resources */,
 				B0CA7C7D1B7A021E0038BABB /* 添加图片1@2x.png in Resources */,
 				61909FD61AF92BAF0023935F /* comment_btn_cancel@2x.png in Resources */,
 				61E83D821AF7C78E00703651 /* 推送消息@3x.png in Resources */,
@@ -5687,6 +5696,7 @@
 				538964D71AFC6BEB00041548 /* UIViewController+HUD.m in Sources */,
 				F9F349B71C1945920090F111 /* SHGBadgeStyle.m in Sources */,
 				B007E0F81B412FDF00BB8E8D /* GameViewController.m in Sources */,
+				98D73C2D1C194E7E0055AF75 /* SHGNewsTableViewCell.m in Sources */,
 				5331DF261AFC02B400E035B8 /* EMAlertView.m in Sources */,
 				5331DF1D1AFC017600E035B8 /* ApplyViewController.m in Sources */,
 				610FF06E1AD6227F0027EBA6 /* DDTapGestureRecognizer.m in Sources */,
