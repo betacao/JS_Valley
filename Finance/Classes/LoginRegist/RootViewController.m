@@ -39,7 +39,6 @@
     } else{
         [self moveToHomePage];
     }
-//    [self startPlayVideo];
 }
 
 - (void)moveToHomePage
@@ -240,22 +239,11 @@
     
     if (isAutoLogin || loginSuccess)
     {//登陆成功加载主窗口控制器
-    }else
-    {//登陆失败加载登陆页面控制器
-        //		_mainController = nil;
+    } else{
+        //登陆失败加载登陆页面控制器
         LoginViewController *loginController = [[LoginViewController alloc] init];
         nav = [[BaseNavigationController alloc] initWithRootViewController:loginController];
         loginController.title = NSLocalizedString(@"AppName", @"EaseMobDemo");
-    }
-    
-    //设置7.0以下的导航栏
-    if ([UIDevice currentDevice].systemVersion.floatValue < 7.0)
-    {
-        nav.navigationBar.barStyle = UIBarStyleDefault;
-        [nav.navigationBar setBackgroundImage:[UIImage imageNamed:@"titleBar"]
-                                forBarMetrics:UIBarMetricsDefault];
-        
-        [nav.navigationBar.layer setMasksToBounds:YES];
     }
     
     [AppDelegate currentAppdelegate].window.rootViewController = nav;

@@ -20,22 +20,14 @@
     
     //设置导航title字体
     [[UINavigationBar appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:kNavBarTitleFontSize],NSForegroundColorAttributeName:NavRTitleColor}];
-    
-//    [[UINavigationBar appearance] setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithHexString:@"2f2727"]] forBarMetrics:UIBarMetricsDefault];
-   
-    //    设置导航栏不透明
+    //设置导航栏不透明
     if ([[UIDevice currentDevice].systemVersion floatValue] < 8.0) {
         self.navigationBar.translucent = NO;
-
-    }
-    else
-    {
+    } else{
         [UINavigationBar appearance].translucent = NO;
     }
-   // [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"bg_navbar.png"] forBarPosition:UIBarPositionTopAttached barMetrics:UIBarMetricsDefault];
-
-    // Do any additional setup after loading the view.
 }
+
 - (instancetype)initWithRootViewController:(UIViewController *)rootViewController{
     BaseNavigationController *nav = [super initWithRootViewController:rootViewController];
     nav.interactivePopGestureRecognizer.delegate = self;
@@ -65,19 +57,17 @@
         return NO;
     }
 }
+
+- (UIStatusBarStyle)preferredStatusBarStyle
+{
+    return UIStatusBarStyleDefault;
+}
+
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

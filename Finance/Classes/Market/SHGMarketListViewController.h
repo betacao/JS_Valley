@@ -8,6 +8,6 @@
 
 #import "BaseViewController.h"
 
-@interface SHGMarketListViewController : BaseViewController
+@interface SHGMarketListViewController : BaseTableViewController
 
 @end

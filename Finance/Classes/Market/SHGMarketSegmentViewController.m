@@ -35,6 +35,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+
     self.navigationItem.rightBarButtonItem = [self rightBarButtonItem];
     self.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 
@@ -43,27 +44,28 @@
     tabButtonsContainerView.enabled = YES;
     tabButtonsContainerView.layer.masksToBounds = YES;
     tabButtonsContainerView.layer.cornerRadius = 4;
-    NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:RGB(255, 57, 67),NSForegroundColorAttributeName,[UIFont systemFontOfSize:17],NSFontAttributeName ,nil];
+    NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor colorWithHexString:@"d53432"],NSForegroundColorAttributeName,[UIFont systemFontOfSize:17],NSFontAttributeName ,nil];
 
     NSDictionary *dic1 = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor],NSForegroundColorAttributeName,[UIFont systemFontOfSize:17],NSFontAttributeName ,nil];
     //设置标题的颜色 字体和大小 阴影和阴影颜色
-    [tabButtonsContainerView setTitleTextAttributes:dic1 forState:UIControlStateSelected];
-    [tabButtonsContainerView setTitleTextAttributes:dic forState:UIControlStateNormal];
+    [tabButtonsContainerView setTitleTextAttributes:dic1 forState:UIControlStateNormal];
+    [tabButtonsContainerView setTitleTextAttributes:dic forState:UIControlStateSelected];
     tabButtonsContainerView.tintColor = [UIColor clearColor];
-    tabButtonsContainerView.layer.borderColor =  [RGB(255, 56, 67) CGColor];
+    tabButtonsContainerView.layer.borderColor =  [UIColor whiteColor].CGColor;
     tabButtonsContainerView.layer.borderWidth = 1.0;
-    UIImage *segImage = [CommonMethod imageWithColor:[UIColor whiteColor] andSize:CGSizeMake(85, 26)];
-    UIImage *selectImage = [CommonMethod imageWithColor:RGB(255, 56, 67) andSize:CGSizeMake(85, 26)];
+    UIImage *segImage = [CommonMethod imageWithColor:[UIColor colorWithHexString:@"d53432"] andSize:CGSizeMake(85, 26)];
+    UIImage *selectImage = [CommonMethod imageWithColor:[UIColor whiteColor] andSize:CGSizeMake(85, 26)];
     [tabButtonsContainerView setBackgroundImage:segImage forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+
     [tabButtonsContainerView setBackgroundImage:selectImage forState:UIControlStateSelected barMetrics:UIBarMetricsDefault];
-    [tabButtonsContainerView setBackgroundImage:[UIImage imageWithColor:[UIColor whiteColor] andSize:CGSizeMake(85, 26)] forState:UIControlStateHighlighted barMetrics:UIBarMetricsDefault];
-    [tabButtonsContainerView setBackgroundImage:selectImage forState:UIControlStateSelected|UIControlStateHighlighted barMetrics:UIBarMetricsDefault];
+
+    [tabButtonsContainerView setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithHexString:@"d53432"] andSize:CGSizeMake(85, 26)] forState:UIControlStateHighlighted barMetrics:UIBarMetricsDefault];
+
 
     tabButtonsContainerView.selected = NO;
     tabButtonsContainerView.selectedSegmentIndex = 0;
 
     [tabButtonsContainerView addTarget:self action:@selector(valueChange:) forControlEvents:UIControlEventValueChanged];
-    self.navigationItem.titleView = tabButtonsContainerView;
 
     contentContainerView = [[UIView alloc] initWithFrame:self.view.bounds];
     contentContainerView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;

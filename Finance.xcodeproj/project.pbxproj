@@ -928,6 +928,11 @@
 		F9F349BD1C1952B00090F111 /* SHGMarketListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9F349BB1C1952B00090F111 /* SHGMarketListViewController.xib */; };
 		F9F349C11C1952CC0090F111 /* SHGMarketMineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9F349BF1C1952CC0090F111 /* SHGMarketMineViewController.m */; };
 		F9F349C21C1952CC0090F111 /* SHGMarketMineViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9F349C01C1952CC0090F111 /* SHGMarketMineViewController.xib */; };
+		F9F349C51C195DBC0090F111 /* UINavigationBar+Awesome.m in Sources */ = {isa = PBXBuildFile; fileRef = F9F349C41C195DBC0090F111 /* UINavigationBar+Awesome.m */; };
+		F9F349C91C1968310090F111 /* SHGMarketTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F9F349C71C1968310090F111 /* SHGMarketTableViewCell.m */; };
+		F9F349CA1C1968310090F111 /* SHGMarketTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9F349C81C1968310090F111 /* SHGMarketTableViewCell.xib */; };
+		F9F349CD1C19757E0090F111 /* SHGMarketObject.m in Sources */ = {isa = PBXBuildFile; fileRef = F9F349CC1C19757E0090F111 /* SHGMarketObject.m */; };
+		F9F349D01C1975910090F111 /* SHGMarketManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F9F349CF1C1975910090F111 /* SHGMarketManager.m */; };
 		F9FBAF541BDF132E008D89D9 /* 15skaiji.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = F9FBAF531BDF132E008D89D9 /* 15skaiji.mp4 */; };
 /* End PBXBuildFile section */
 
@@ -2218,6 +2223,15 @@
 		F9F349BE1C1952CC0090F111 /* SHGMarketMineViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGMarketMineViewController.h; sourceTree = "<group>"; };
 		F9F349BF1C1952CC0090F111 /* SHGMarketMineViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGMarketMineViewController.m; sourceTree = "<group>"; };
 		F9F349C01C1952CC0090F111 /* SHGMarketMineViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGMarketMineViewController.xib; sourceTree = "<group>"; };
+		F9F349C31C195DBC0090F111 /* UINavigationBar+Awesome.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationBar+Awesome.h"; sourceTree = "<group>"; };
+		F9F349C41C195DBC0090F111 /* UINavigationBar+Awesome.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationBar+Awesome.m"; sourceTree = "<group>"; };
+		F9F349C61C1968310090F111 /* SHGMarketTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGMarketTableViewCell.h; sourceTree = "<group>"; };
+		F9F349C71C1968310090F111 /* SHGMarketTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGMarketTableViewCell.m; sourceTree = "<group>"; };
+		F9F349C81C1968310090F111 /* SHGMarketTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGMarketTableViewCell.xib; sourceTree = "<group>"; };
+		F9F349CB1C19757E0090F111 /* SHGMarketObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGMarketObject.h; sourceTree = "<group>"; };
+		F9F349CC1C19757E0090F111 /* SHGMarketObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGMarketObject.m; sourceTree = "<group>"; };
+		F9F349CE1C1975910090F111 /* SHGMarketManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGMarketManager.h; sourceTree = "<group>"; };
+		F9F349CF1C1975910090F111 /* SHGMarketManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGMarketManager.m; sourceTree = "<group>"; };
 		F9FBAF531BDF132E008D89D9 /* 15skaiji.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = 15skaiji.mp4; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -3681,6 +3695,8 @@
 		61D6E73B1AD50FCA0016C13A /* Categray */ = {
 			isa = PBXGroup;
 			children = (
+				F9F349C31C195DBC0090F111 /* UINavigationBar+Awesome.h */,
+				F9F349C41C195DBC0090F111 /* UINavigationBar+Awesome.m */,
 				F92835DC1BA6E16C00E1CF22 /* UIButton+EnlargeEdge.h */,
 				F92835DD1BA6E16C00E1CF22 /* UIButton+EnlargeEdge.m */,
 				61D62BDB1ADCF328002DD395 /* NSDictionary+Common.h */,
@@ -4730,6 +4746,10 @@
 		F9F349AE1C19216D0090F111 /* Market */ = {
 			isa = PBXGroup;
 			children = (
+				F9F349CB1C19757E0090F111 /* SHGMarketObject.h */,
+				F9F349CC1C19757E0090F111 /* SHGMarketObject.m */,
+				F9F349CE1C1975910090F111 /* SHGMarketManager.h */,
+				F9F349CF1C1975910090F111 /* SHGMarketManager.m */,
 				F9F349AF1C1921900090F111 /* SHGMarketSegmentViewController.h */,
 				F9F349B01C1921900090F111 /* SHGMarketSegmentViewController.m */,
 				F9F349B91C1952B00090F111 /* SHGMarketListViewController.h */,
@@ -4738,6 +4758,9 @@
 				F9F349BE1C1952CC0090F111 /* SHGMarketMineViewController.h */,
 				F9F349BF1C1952CC0090F111 /* SHGMarketMineViewController.m */,
 				F9F349C01C1952CC0090F111 /* SHGMarketMineViewController.xib */,
+				F9F349C61C1968310090F111 /* SHGMarketTableViewCell.h */,
+				F9F349C71C1968310090F111 /* SHGMarketTableViewCell.m */,
+				F9F349C81C1968310090F111 /* SHGMarketTableViewCell.xib */,
 			);
 			path = Market;
 			sourceTree = "<group>";
@@ -5045,6 +5068,7 @@
 				B04D6E2D1B60C01300E3863E /* 删除x@2x.png in Resources */,
 				B080FE891B81E30100426579 /* btn_publish_face_a@3x.png in Resources */,
 				615234A61B0DAF1400011EAC /* DiscovSecondFriendViewController.xib in Resources */,
+				F9F349CA1C1968310090F111 /* SHGMarketTableViewCell.xib in Resources */,
 				61E83D051AF7C78E00703651 /* 我的-默认@2x.png in Resources */,
 				614EFEC51AEF278A00F2BDD1 /* SubDetailViewController.xib in Resources */,
 				98D73C2E1C194E7E0055AF75 /* SHGNewsTableViewCell.xib in Resources */,
@@ -5679,6 +5703,7 @@
 				F9DB81631C1278BB007C63B7 /* SHGEmptyDataView.m in Sources */,
 				40302B2C1AF07AA500F22EB6 /* MyMoneyViewController.m in Sources */,
 				40302B311AF07DB500F22EB6 /* MyMoneyDetailTableViewCell.m in Sources */,
+				F9F349CD1C19757E0090F111 /* SHGMarketObject.m in Sources */,
 				5331DF221AFC029300E035B8 /* InvitationManager.m in Sources */,
 				61D62BF21ADD1C4D002DD395 /* MOWHttpManager.m in Sources */,
 				F9A227C61BF5C2140054F8D7 /* SHGActionMineViewController.m in Sources */,
@@ -5710,6 +5735,7 @@
 				6145FF251AE4FCFE0074AB49 /* ProductListViewController.m in Sources */,
 				6187D2F51AF1C693008E1D21 /* RealtimeSearchUtil.m in Sources */,
 				F9EBB7D41BB3F4A00023E84E /* SHGProvincesViewController.m in Sources */,
+				F9F349D01C1975910090F111 /* SHGMarketManager.m in Sources */,
 				614A59781AD3AEA1005DAB04 /* main.m in Sources */,
 				F9A227B31BF586090054F8D7 /* SHGPersonDynamicViewController.m in Sources */,
 				40302B451AF0C67F00F22EB6 /* MyAppointmentTableViewCell.m in Sources */,
@@ -5737,6 +5763,8 @@
 				F928141C1C045F8900C7782D /* SHGIndustryChoiceView.m in Sources */,
 				614EFEDF1AEF8F7300F2BDD1 /* Hud.m in Sources */,
 				61B992FB1ADBBE540025BE7B /* SHGHomeTableViewCell.m in Sources */,
+				F9F349C51C195DBC0090F111 /* UINavigationBar+Awesome.m in Sources */,
+				F9F349C91C1968310090F111 /* SHGMarketTableViewCell.m in Sources */,
 				4088DDB01AF102FE00393855 /* SettingAboutUsViewController.m in Sources */,
 				40302AFB1AEE6CE900F22EB6 /* MyFollowViewController.m in Sources */,
 				F9F349B81C1945920090F111 /* SHGBadgeView.m in Sources */,

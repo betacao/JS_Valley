@@ -22,6 +22,7 @@
 #import "SHGMarketSegmentViewController.h"
 #import "SHGMarketListViewController.h"
 #import "SHGMarketMineViewController.h"
+#import "UINavigationBar+Awesome.h"
 
 @interface TabBarViewController()<SHGSegmentControllerDelegate>
 @property (strong, nonatomic) SHGSegmentController *homeSegmentViewController;
@@ -60,8 +61,7 @@
 
 - (instancetype)init
 {
-    if (self=[super init])
-    {
+    if (self=[super init]){
         
     }
     return self;
@@ -217,6 +217,7 @@
 #pragma mark - UITabBarDelegate
 - (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item
 {
+    [self.navigationController.navigationBar lt_setBackgroundColor:[UIColor clearColor]];
     self.navigationItem.titleView = nil;
     if (item.tag == 1000){
         self.navigationItem.titleView = self.homeSegmentTitleView;
@@ -224,6 +225,7 @@
         self.navigationItem.leftBarButtonItem = self.homeSegmentViewController.leftBarButtonItem;
         [MobClick event:@"SHGHomeViewController" label:@"onClick"];
     } else if (item.tag == 2000){
+        [self.navigationController.navigationBar lt_setBackgroundColor:[UIColor colorWithHexString:@"d53432"]];
         self.navigationItem.titleView = self.marketSegmentTitleView;
         self.navigationItem.rightBarButtonItem = self.marketSegmentViewController.rightBarButtonItem;
         self.navigationItem.leftBarButtonItem = self.marketSegmentViewController.leftBarButtonItem;
@@ -401,5 +403,7 @@
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
+
+
 
 @end
