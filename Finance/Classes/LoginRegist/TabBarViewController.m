@@ -20,6 +20,8 @@
 #import "SHGNewsViewController.h"
 #import "SHGPersonalViewController.h"
 #import "SHGMarketSegmentViewController.h"
+#import "SHGMarketListViewController.h"
+#import "SHGMarketMineViewController.h"
 
 @interface TabBarViewController()<SHGSegmentControllerDelegate>
 @property (strong, nonatomic) SHGSegmentController *homeSegmentViewController;
@@ -28,8 +30,11 @@
 @property (strong, nonatomic) DiscoverViewController *prodViewController;
 @property (strong, nonatomic) MeViewController *meViewController;
 @property (strong, nonatomic) SHGMarketSegmentViewController *marketSegmentViewController;
+@property (strong, nonatomic) SHGMarketListViewController *marketListViewController;
+@property (strong, nonatomic) SHGMarketMineViewController *marketMineViewController;
 @property (strong, nonatomic) NSDate *lastPlaySoundDate;
-@property (strong, nonatomic) UIView *segmentTitleView;
+@property (strong, nonatomic) UIView *homeSegmentTitleView;
+@property (strong, nonatomic) UIView *marketSegmentTitleView;
 @end
 
 @implementation TabBarViewController
@@ -80,7 +85,6 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-   
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -91,6 +95,7 @@
         self.dictionary = nil;
     }
 }
+
 - (void)pushCircle:(NSDictionary*)userInfo
 {
     pushInfo = [userInfo copy];
@@ -214,15 +219,14 @@
 {
     self.navigationItem.titleView = nil;
     if (item.tag == 1000){
-        self.navigationItem.titleView = self.segmentTitleView;
-        self.navigationItem.leftBarButtonItem = nil;
+        self.navigationItem.titleView = self.homeSegmentTitleView;
         self.navigationItem.rightBarButtonItem = self.homeSegmentViewController.rightBarButtonItem;
         self.navigationItem.leftBarButtonItem = self.homeSegmentViewController.leftBarButtonItem;
         [MobClick event:@"SHGHomeViewController" label:@"onClick"];
     } else if (item.tag == 2000){
-//        self.navigationItem.titleView = self.marketSegmentViewController.titleView;
-//        self.navigationItem.rightBarButtonItem = self.marketSegmentViewController.rightBarButtonItem;
-        self.navigationItem.leftBarButtonItem=nil;
+        self.navigationItem.titleView = self.marketSegmentTitleView;
+        self.navigationItem.rightBarButtonItem = self.marketSegmentViewController.rightBarButtonItem;
+        self.navigationItem.leftBarButtonItem = self.marketSegmentViewController.leftBarButtonItem;
         [MobClick event:@"ChatListViewController" label:@"onClick"];
 
     } else if (item.tag == 3000){
@@ -249,8 +253,8 @@
     self.homeSegmentViewController.tabBarItem.tag = 1000;
     __weak typeof(self)weakSelf = self;
     self.homeSegmentViewController.block = ^(UIView *view){
-        weakSelf.segmentTitleView = view;
-        weakSelf.navigationItem.titleView = weakSelf.segmentTitleView;
+        weakSelf.homeSegmentTitleView = view;
+        weakSelf.navigationItem.titleView = weakSelf.homeSegmentTitleView;
     };
     self.navigationItem.rightBarButtonItem = self.homeSegmentViewController.rightBarButtonItem;
     self.navigationItem.leftBarButtonItem = self.homeSegmentViewController.leftBarButtonItem;
@@ -261,7 +265,10 @@
     selectedImage = [selectedImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     self.marketSegmentViewController.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"消息" image:image selectedImage:selectedImage];
     self.marketSegmentViewController.tabBarItem.tag = 2000;
-    
+    self.marketSegmentViewController.block = ^(UIView *view){
+        weakSelf.marketSegmentTitleView = view;
+        weakSelf.navigationItem.titleView = weakSelf.marketSegmentTitleView;
+    };
     //产品
     image = [UIImage imageNamed:@"discovery_normal"];
     image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
@@ -296,7 +303,7 @@
     return _homeSegmentViewController;
 }
 
--(SHGHomeViewController *)homeViewController
+- (SHGHomeViewController *)homeViewController
 {
     if (!_homeViewController){
         _homeViewController = [[SHGHomeViewController alloc]initWithNibName:@"SHGHomeViewController" bundle:nil];
@@ -312,22 +319,39 @@
     return _newsViewController;
 }
 
--(DiscoverViewController *)prodViewController
+- (SHGMarketSegmentViewController *)marketSegmentViewController
+{
+    if(!_marketSegmentViewController){
+        _marketSegmentViewController = [SHGMarketSegmentViewController sharedSegmentController];
+        _marketSegmentViewController.viewControllers = @[self.marketListViewController, self.marketMineViewController];
+    }
+    return _marketSegmentViewController;
+}
+
+- (SHGMarketListViewController *)marketListViewController
+{
+    if (!_marketListViewController){
+        _marketListViewController = [[SHGMarketListViewController alloc] init];
+    }
+    return _marketListViewController;
+}
+
+- (SHGMarketMineViewController *)marketMineViewController
+{
+    if(!_marketMineViewController){
+        _marketMineViewController = [[SHGMarketMineViewController alloc] init];
+    }
+    return _marketMineViewController;
+}
+
+
+- (DiscoverViewController *)prodViewController
 {
     if (!_prodViewController)
     {
         _prodViewController = [[DiscoverViewController alloc] initWithNibName:@"DiscoverViewController" bundle:nil];
     }
     return _prodViewController;
-}
-
--(SHGMarketSegmentViewController *)marketSegmentViewController
-{
-    if (!_marketSegmentViewController)
-    {
-        _marketSegmentViewController = [[SHGMarketSegmentViewController alloc] init];
-    }
-    return _marketSegmentViewController;
 }
 
 - (MeViewController *)meViewController
@@ -367,10 +391,12 @@
 {
     [self.homeSegmentViewController jumpToChatList];
 }
+
 - (void)setupUntreatedApplyCount
 {
     [self.homeSegmentViewController setupUntreatedApplyCount];
 }
+
 -(void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];

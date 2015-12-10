@@ -924,6 +924,10 @@
 		F9F349B11C1921900090F111 /* SHGMarketSegmentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9F349B01C1921900090F111 /* SHGMarketSegmentViewController.m */; };
 		F9F349B71C1945920090F111 /* SHGBadgeStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = F9F349B41C1945920090F111 /* SHGBadgeStyle.m */; };
 		F9F349B81C1945920090F111 /* SHGBadgeView.m in Sources */ = {isa = PBXBuildFile; fileRef = F9F349B61C1945920090F111 /* SHGBadgeView.m */; };
+		F9F349BC1C1952B00090F111 /* SHGMarketListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9F349BA1C1952B00090F111 /* SHGMarketListViewController.m */; };
+		F9F349BD1C1952B00090F111 /* SHGMarketListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9F349BB1C1952B00090F111 /* SHGMarketListViewController.xib */; };
+		F9F349C11C1952CC0090F111 /* SHGMarketMineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9F349BF1C1952CC0090F111 /* SHGMarketMineViewController.m */; };
+		F9F349C21C1952CC0090F111 /* SHGMarketMineViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9F349C01C1952CC0090F111 /* SHGMarketMineViewController.xib */; };
 		F9FBAF541BDF132E008D89D9 /* 15skaiji.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = F9FBAF531BDF132E008D89D9 /* 15skaiji.mp4 */; };
 /* End PBXBuildFile section */
 
@@ -2208,6 +2212,12 @@
 		F9F349B41C1945920090F111 /* SHGBadgeStyle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGBadgeStyle.m; sourceTree = "<group>"; };
 		F9F349B51C1945920090F111 /* SHGBadgeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGBadgeView.h; sourceTree = "<group>"; };
 		F9F349B61C1945920090F111 /* SHGBadgeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGBadgeView.m; sourceTree = "<group>"; };
+		F9F349B91C1952B00090F111 /* SHGMarketListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGMarketListViewController.h; sourceTree = "<group>"; };
+		F9F349BA1C1952B00090F111 /* SHGMarketListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGMarketListViewController.m; sourceTree = "<group>"; };
+		F9F349BB1C1952B00090F111 /* SHGMarketListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGMarketListViewController.xib; sourceTree = "<group>"; };
+		F9F349BE1C1952CC0090F111 /* SHGMarketMineViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGMarketMineViewController.h; sourceTree = "<group>"; };
+		F9F349BF1C1952CC0090F111 /* SHGMarketMineViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGMarketMineViewController.m; sourceTree = "<group>"; };
+		F9F349C01C1952CC0090F111 /* SHGMarketMineViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGMarketMineViewController.xib; sourceTree = "<group>"; };
 		F9FBAF531BDF132E008D89D9 /* 15skaiji.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = 15skaiji.mp4; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -4722,6 +4732,12 @@
 			children = (
 				F9F349AF1C1921900090F111 /* SHGMarketSegmentViewController.h */,
 				F9F349B01C1921900090F111 /* SHGMarketSegmentViewController.m */,
+				F9F349B91C1952B00090F111 /* SHGMarketListViewController.h */,
+				F9F349BA1C1952B00090F111 /* SHGMarketListViewController.m */,
+				F9F349BB1C1952B00090F111 /* SHGMarketListViewController.xib */,
+				F9F349BE1C1952CC0090F111 /* SHGMarketMineViewController.h */,
+				F9F349BF1C1952CC0090F111 /* SHGMarketMineViewController.m */,
+				F9F349C01C1952CC0090F111 /* SHGMarketMineViewController.xib */,
 			);
 			path = Market;
 			sourceTree = "<group>";
@@ -5038,6 +5054,7 @@
 				61E83D141AF7C78E00703651 /* 头像图标@2x.png in Resources */,
 				614BA7DD1AE5E96C009480CD /* LoginNextViewController.xib in Resources */,
 				408D8B341AF8618C0055810C /* chat_location_detail_disclosure@2x.png in Resources */,
+				F9F349BD1C1952B00090F111 /* SHGMarketListViewController.xib in Resources */,
 				408D8B131AF8618C0055810C /* VoiceSearchFeedback016.png in Resources */,
 				61E83D651AF7C78E00703651 /* 列表向右箭头@3x.png in Resources */,
 				61E83D3B1AF7C78E00703651 /* 定增@3x.png in Resources */,
@@ -5099,6 +5116,7 @@
 				408D8B021AF8618C0055810C /* VoiceSearchFeedback007@2x.png in Resources */,
 				408D8B091AF8618C0055810C /* VoiceSearchFeedback011.png in Resources */,
 				40302B161AEF5C3500F22EB6 /* AddAddressViewController.xib in Resources */,
+				F9F349C21C1952CC0090F111 /* SHGMarketMineViewController.xib in Resources */,
 				B080FEA71B81E30100426579 /* emoji_recent_n@2x.png in Resources */,
 				53C9D9911AFF44CE00827169 /* 添加群组@3x.png in Resources */,
 				408D8B871AF9F57B0055810C /* SettingsSuggestionsViewController.xib in Resources */,
@@ -5590,6 +5608,7 @@
 				9842E9CF1C017FCA0008B6AF /* SHGPersonFriendsViewController.m in Sources */,
 				98FA41C31BF5E1B40058A4EF /* SHGActionDetailViewController.m in Sources */,
 				6187D2FA1AF1C693008E1D21 /* XHMessageTextView.m in Sources */,
+				F9F349C11C1952CC0090F111 /* SHGMarketMineViewController.m in Sources */,
 				F9A227C21BF5AF8D0054F8D7 /* SHGActionObject.m in Sources */,
 				4088DDCE1AF105FD00393855 /* SettingQuestionObj.m in Sources */,
 				40302B361AF0B7F500F22EB6 /* MyCollectionTableViewCell.m in Sources */,
@@ -5645,6 +5664,7 @@
 				F986DE361BFDCBD900E6709F /* SHGActionTotalInViewController.m in Sources */,
 				610FF07A1AD6227F0027EBA6 /* UIImage+Customized.m in Sources */,
 				6190274A1B2359C600D9EEA2 /* popTableViewCell.m in Sources */,
+				F9F349BC1C1952B00090F111 /* SHGMarketListViewController.m in Sources */,
 				4088DDB91AF102FE00393855 /* SettingQuestionDetailViewController.m in Sources */,
 				F9EDD5FA1BABFBCF00506C0C /* SDWaitingView.m in Sources */,
 				B04D032E1B43F88A009BE7C2 /* ZYExceptionHandler.m in Sources */,
