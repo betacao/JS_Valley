@@ -125,7 +125,7 @@
     NSInteger orginY = 0.0f;
     if (self.imageArr.count == 0){
         addbtnTakePic.hidden = NO;
-        UIImage *crossImage = [UIImage imageNamed:@"添加图片1"];
+        UIImage *crossImage = [UIImage imageNamed:@"addImageButton"];
         CGSize crossImageSize = crossImage.size;
         btnTakePic1.frame = CGRectMake(self.imageMargin, self.imageMargin + self.imageWidth, crossImageSize.width, crossImageSize.height);
         return;
@@ -194,7 +194,7 @@
     self.textEdit.inputAccessoryView = customView;
     
     //添加图片
-    UIImage *crossImage = [UIImage imageNamed:@"添加图片1"];
+    UIImage *crossImage = [UIImage imageNamed:@"addImageButton"];
     CGSize crossImageSize = crossImage.size;
     self.imageWidth = crossImageSize.width;
     self.imageMargin = (SCREENWIDTH - 4.0f * self.imageWidth) / 5.0f;
@@ -488,13 +488,10 @@
     rightButton.userInteractionEnabled = NO;
     [Hud showLoadingWithMessage:@"正在发帖……"];
     
-    if (self.imageArr.count == 0)
-    {
+    if (self.imageArr.count == 0){
         //无图片
         [self sendPostWithPohots:nil];
-    }
-    else
-    {
+    } else{
         [[AFHTTPRequestOperationManager manager] POST:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"image/base"] parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
             
             for (int i = 0; i < self.imageArr.count; i++)

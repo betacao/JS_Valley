@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 typedef void(^loadViewFinishBlock)(UIView *view);
 
-@interface SHGMarketSegmentViewController : BaseViewController
+@interface SHGMarketSegmentViewController : UIViewController
 
 @property (nonatomic, copy) NSArray *viewControllers;
 @property (nonatomic, weak) UIViewController *selectedViewController;

@@ -838,8 +838,6 @@
 		B0BAA36E1B6A059E0036C367 /* TWEmojiKeyBoard.m in Sources */ = {isa = PBXBuildFile; fileRef = B0BAA36D1B6A059E0036C367 /* TWEmojiKeyBoard.m */; };
 		B0CA7C7B1B7A021E0038BABB /* 表情@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B0CA7C751B7A021E0038BABB /* 表情@2x.png */; };
 		B0CA7C7C1B7A021E0038BABB /* 表情@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = B0CA7C761B7A021E0038BABB /* 表情@3x.png */; };
-		B0CA7C7D1B7A021E0038BABB /* 添加图片1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B0CA7C771B7A021E0038BABB /* 添加图片1@2x.png */; };
-		B0CA7C7E1B7A021E0038BABB /* 添加图片1@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = B0CA7C781B7A021E0038BABB /* 添加图片1@3x.png */; };
 		B0CA7C7F1B7A021E0038BABB /* url@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B0CA7C791B7A021E0038BABB /* url@2x.png */; };
 		B0CA7C801B7A021E0038BABB /* url@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = B0CA7C7A1B7A021E0038BABB /* url@3x.png */; };
 		B0CA7C881B7A022F0038BABB /* qq@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B0CA7C821B7A022E0038BABB /* qq@2x.png */; };
@@ -933,6 +931,9 @@
 		F9F349CA1C1968310090F111 /* SHGMarketTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9F349C81C1968310090F111 /* SHGMarketTableViewCell.xib */; };
 		F9F349CD1C19757E0090F111 /* SHGMarketObject.m in Sources */ = {isa = PBXBuildFile; fileRef = F9F349CC1C19757E0090F111 /* SHGMarketObject.m */; };
 		F9F349D01C1975910090F111 /* SHGMarketManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F9F349CF1C1975910090F111 /* SHGMarketManager.m */; };
+		F9F349D41C1993F90090F111 /* SHGMarketSendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9F349D21C1993F90090F111 /* SHGMarketSendViewController.m */; };
+		F9F349D51C1993F90090F111 /* SHGMarketSendViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9F349D31C1993F90090F111 /* SHGMarketSendViewController.xib */; };
+		F9F349DB1C199E730090F111 /* SHGComBoxView.m in Sources */ = {isa = PBXBuildFile; fileRef = F9F349D81C199E730090F111 /* SHGComBoxView.m */; };
 		F9FBAF541BDF132E008D89D9 /* 15skaiji.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = F9FBAF531BDF132E008D89D9 /* 15skaiji.mp4 */; };
 /* End PBXBuildFile section */
 
@@ -2071,8 +2072,6 @@
 		B0BAA36D1B6A059E0036C367 /* TWEmojiKeyBoard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TWEmojiKeyBoard.m; sourceTree = "<group>"; };
 		B0CA7C751B7A021E0038BABB /* 表情@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "表情@2x.png"; sourceTree = "<group>"; };
 		B0CA7C761B7A021E0038BABB /* 表情@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "表情@3x.png"; sourceTree = "<group>"; };
-		B0CA7C771B7A021E0038BABB /* 添加图片1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "添加图片1@2x.png"; sourceTree = "<group>"; };
-		B0CA7C781B7A021E0038BABB /* 添加图片1@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "添加图片1@3x.png"; sourceTree = "<group>"; };
 		B0CA7C791B7A021E0038BABB /* url@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "url@2x.png"; sourceTree = "<group>"; };
 		B0CA7C7A1B7A021E0038BABB /* url@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "url@3x.png"; sourceTree = "<group>"; };
 		B0CA7C821B7A022E0038BABB /* qq@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "qq@2x.png"; sourceTree = "<group>"; };
@@ -2232,6 +2231,11 @@
 		F9F349CC1C19757E0090F111 /* SHGMarketObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGMarketObject.m; sourceTree = "<group>"; };
 		F9F349CE1C1975910090F111 /* SHGMarketManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGMarketManager.h; sourceTree = "<group>"; };
 		F9F349CF1C1975910090F111 /* SHGMarketManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGMarketManager.m; sourceTree = "<group>"; };
+		F9F349D11C1993F90090F111 /* SHGMarketSendViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGMarketSendViewController.h; sourceTree = "<group>"; };
+		F9F349D21C1993F90090F111 /* SHGMarketSendViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGMarketSendViewController.m; sourceTree = "<group>"; };
+		F9F349D31C1993F90090F111 /* SHGMarketSendViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGMarketSendViewController.xib; sourceTree = "<group>"; };
+		F9F349D71C199E730090F111 /* SHGComBoxView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGComBoxView.h; sourceTree = "<group>"; };
+		F9F349D81C199E730090F111 /* SHGComBoxView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGComBoxView.m; sourceTree = "<group>"; };
 		F9FBAF531BDF132E008D89D9 /* 15skaiji.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = 15skaiji.mp4; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -3119,6 +3123,7 @@
 		614DC8891AD65F6900F610D4 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				F9F349D61C199E730090F111 /* SHGComBox */,
 				F9F349B21C1945920090F111 /* SHGBadgeView */,
 				F9EDD5EA1BABFBCF00506C0C /* SDPhotoBrowser */,
 				F99B60291B9E7D9500759AAC /* HeaderView */,
@@ -4527,8 +4532,6 @@
 			children = (
 				B0CA7C751B7A021E0038BABB /* 表情@2x.png */,
 				B0CA7C761B7A021E0038BABB /* 表情@3x.png */,
-				B0CA7C771B7A021E0038BABB /* 添加图片1@2x.png */,
-				B0CA7C781B7A021E0038BABB /* 添加图片1@3x.png */,
 				B0CA7C791B7A021E0038BABB /* url@2x.png */,
 				B0CA7C7A1B7A021E0038BABB /* url@3x.png */,
 			);
@@ -4761,6 +4764,9 @@
 				F9F349C61C1968310090F111 /* SHGMarketTableViewCell.h */,
 				F9F349C71C1968310090F111 /* SHGMarketTableViewCell.m */,
 				F9F349C81C1968310090F111 /* SHGMarketTableViewCell.xib */,
+				F9F349D11C1993F90090F111 /* SHGMarketSendViewController.h */,
+				F9F349D21C1993F90090F111 /* SHGMarketSendViewController.m */,
+				F9F349D31C1993F90090F111 /* SHGMarketSendViewController.xib */,
 			);
 			path = Market;
 			sourceTree = "<group>";
@@ -4774,6 +4780,15 @@
 				F9F349B61C1945920090F111 /* SHGBadgeView.m */,
 			);
 			path = SHGBadgeView;
+			sourceTree = "<group>";
+		};
+		F9F349D61C199E730090F111 /* SHGComBox */ = {
+			isa = PBXGroup;
+			children = (
+				F9F349D71C199E730090F111 /* SHGComBoxView.h */,
+				F9F349D81C199E730090F111 /* SHGComBoxView.m */,
+			);
+			path = SHGComBox;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -5072,7 +5087,6 @@
 				61E83D051AF7C78E00703651 /* 我的-默认@2x.png in Resources */,
 				614EFEC51AEF278A00F2BDD1 /* SubDetailViewController.xib in Resources */,
 				98D73C2E1C194E7E0055AF75 /* SHGNewsTableViewCell.xib in Resources */,
-				B0CA7C7D1B7A021E0038BABB /* 添加图片1@2x.png in Resources */,
 				61909FD61AF92BAF0023935F /* comment_btn_cancel@2x.png in Resources */,
 				61E83D821AF7C78E00703651 /* 推送消息@3x.png in Resources */,
 				61E83D141AF7C78E00703651 /* 头像图标@2x.png in Resources */,
@@ -5116,7 +5130,6 @@
 				4088DDB21AF102FE00393855 /* SettingAboutUsViewController.xib in Resources */,
 				56F2D5101B5A5CB3008E2855 /* 邀请.png in Resources */,
 				408D8B481AF8618C0055810C /* chatBar_moreSelected@2x.png in Resources */,
-				B0CA7C7E1B7A021E0038BABB /* 添加图片1@3x.png in Resources */,
 				61E83D691AF7C78E00703651 /* 圈子-默认@3x.png in Resources */,
 				B09BF7691B7C6C1F008260B3 /* 1度@2x.png in Resources */,
 				610BC8221AFBC76B001F07EC /* default_image.png in Resources */,
@@ -5475,6 +5488,7 @@
 				408D8AF01AF8618C0055810C /* chatFire_audioPlaying1@2x.png in Resources */,
 				408D8B581AF8618C0055810C /* chatBar_colorMore_photoSelected@2x.png in Resources */,
 				408D8B591AF8618C0055810C /* chatBar_colorMore_video@2x.png in Resources */,
+				F9F349D51C1993F90090F111 /* SHGMarketSendViewController.xib in Resources */,
 				408D8B511AF8618C0055810C /* chatBar_colorMore_audioCall@2x.png in Resources */,
 				408D8B181AF8618C0055810C /* VoiceSearchFeedback018@2x.png in Resources */,
 				61E83CF61AF7C78E00703651 /* 收藏@2x.png in Resources */,
@@ -5676,6 +5690,7 @@
 				613CAC511AFFFFDE00EA8C23 /* CircleLinkViewController.m in Sources */,
 				615234781B0D8A6400011EAC /* DiscoverViewController.m in Sources */,
 				5331DF311AFC21BF00E035B8 /* MessageTableViewCell.m in Sources */,
+				F9F349DB1C199E730090F111 /* SHGComBoxView.m in Sources */,
 				6145FF181AE4A3450074AB49 /* CircleDetailViewController.m in Sources */,
 				5331DF1B1AFC017600E035B8 /* AddFriendViewController.m in Sources */,
 				61D6E7D31AD50FCB0016C13A /* BaseTableViewController.m in Sources */,
@@ -5733,6 +5748,7 @@
 				F9EDD5F71BABFBCF00506C0C /* SDPhotoBrowser.m in Sources */,
 				6187D2DB1AF1C693008E1D21 /* DXFaceView.m in Sources */,
 				6145FF251AE4FCFE0074AB49 /* ProductListViewController.m in Sources */,
+				F9F349D41C1993F90090F111 /* SHGMarketSendViewController.m in Sources */,
 				6187D2F51AF1C693008E1D21 /* RealtimeSearchUtil.m in Sources */,
 				F9EBB7D41BB3F4A00023E84E /* SHGProvincesViewController.m in Sources */,
 				F9F349D01C1975910090F111 /* SHGMarketManager.m in Sources */,

@@ -8,6 +8,7 @@
 
 #import "SHGMarketListViewController.h"
 #import "SHGMarketTableViewCell.h"
+#import "SHGMarketManager.h"
 
 @interface SHGMarketListViewController ()<UITabBarDelegate, UITableViewDataSource>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -21,6 +22,11 @@
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     [self addHeaderRefresh:self.tableView headerRefesh:YES andFooter:YES];
+    __weak typeof(self) weakSelf = self;
+    [[SHGMarketManager shareManager] loadMarketCategoryBlock:^(NSArray *array) {
+        weakSelf.dataArr = [NSMutableArray arrayWithArray:array];
+        [weakSelf.tableView reloadData];
+    }];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView

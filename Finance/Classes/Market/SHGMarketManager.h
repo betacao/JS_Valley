@@ -10,4 +10,13 @@
 
 @interface SHGMarketManager : NSObject
 
++ (instancetype)shareManager;
+
+- (void)loadMarketCategoryBlock:(void (^)(NSArray *array))block;
+
++ (void)loadMarketListBlock:(void(^)(NSArray *array))block;
+
++ (void)createNewMarket:(NSDictionary *)param success:(void (^)(BOOL success))block;
+
++ (void)modifyMarket:(NSDictionary *)param success:(void (^)(BOOL success))block;
 @end

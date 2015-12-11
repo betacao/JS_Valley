@@ -217,7 +217,7 @@
 #pragma mark - UITabBarDelegate
 - (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item
 {
-    [self.navigationController.navigationBar lt_setBackgroundColor:[UIColor clearColor]];
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageWithColor:[UIColor whiteColor]] forBarMetrics:UIBarMetricsDefault];
     self.navigationItem.titleView = nil;
     if (item.tag == 1000){
         self.navigationItem.titleView = self.homeSegmentTitleView;
@@ -225,7 +225,7 @@
         self.navigationItem.leftBarButtonItem = self.homeSegmentViewController.leftBarButtonItem;
         [MobClick event:@"SHGHomeViewController" label:@"onClick"];
     } else if (item.tag == 2000){
-        [self.navigationController.navigationBar lt_setBackgroundColor:[UIColor colorWithHexString:@"d53432"]];
+        [self.navigationController.navigationBar setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithHexString:@"d53432"]] forBarMetrics:UIBarMetricsDefault];
         self.navigationItem.titleView = self.marketSegmentTitleView;
         self.navigationItem.rightBarButtonItem = self.marketSegmentViewController.rightBarButtonItem;
         self.navigationItem.leftBarButtonItem = self.marketSegmentViewController.leftBarButtonItem;

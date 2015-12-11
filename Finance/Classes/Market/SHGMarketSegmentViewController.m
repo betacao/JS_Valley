@@ -7,6 +7,7 @@
 //
 
 #import "SHGMarketSegmentViewController.h"
+#import "SHGMarketSendViewController.h"
 
 @interface SHGMarketSegmentViewController ()
 @property (nonatomic, strong) UIBarButtonItem *rightBarButtonItem;
@@ -104,7 +105,8 @@
 
 - (void)addNewMarket:(UIButton *)button
 {
-
+    SHGMarketSendViewController *controller = [[SHGMarketSendViewController alloc] init];
+    [self.navigationController pushViewController:controller animated:YES];
 }
 
 - (void)reloadTabButtons
