@@ -128,8 +128,12 @@
             <connections>
                 <outlet property="amountLabel" destination="Zkx-XR-VWp" id="Cro-NZ-zuS"/>
                 <outlet property="backgroundImageView" destination="96a-zh-aua" id="ZvJ-im-WHP"/>
+                <outlet property="commentButton" destination="fnf-Jr-U8G" id="Tzo-JL-rL2"/>
                 <outlet property="contactLabel" destination="No8-Zf-DKw" id="XL2-K5-Ohc"/>
+                <outlet property="deleteButton" destination="idh-fp-Kn0" id="DSA-EW-on9"/>
+                <outlet property="editButton" destination="G5b-RH-j0T" id="a7T-dd-4MD"/>
                 <outlet property="leftView" destination="0Uq-tF-LGz" id="d4L-Jy-I5W"/>
+                <outlet property="praiseButton" destination="UUY-jo-Dej" id="wxm-Xl-ttD"/>
                 <outlet property="relationLabel" destination="Gwc-wc-Y6n" id="3L2-An-my2"/>
                 <outlet property="rightView" destination="LzS-E2-eSa" id="GX2-OC-a4C"/>
                 <outlet property="titleView" destination="InF-Ut-R2E" id="aSR-97-Ku2"/>

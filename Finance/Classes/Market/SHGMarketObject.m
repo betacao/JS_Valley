@@ -12,8 +12,27 @@
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey
 {
-    return @{@"firstCatalogId":@"firstcatalogid", @"firstCatalogName":@"firstcatalogname", @"secondCatalogId":@"secondcatalogid", @"secondCatalogName":@"secondcatalogname", @"price":@"price", @"marketName":@"marketname", @"contactInfo":@"contactinfo", @"detail":@"detail", @"marketId":@"marketid"};
+    return @{ @"price":@"price", @"marketName":@"marketname", @"contactInfo":@"contactinfo", @"detail":@"detail", @"marketId":@"marketid", @"commentNum":@"commentnum", @"createBy":@"createby", @"praiseNum":@"praisenum", @"createTime":@"createtime", @"shareNum":@"sharenum", @"friendShip":@"friendship", @"catalog":@"catalog", @"firstcatalog":@"firstcatalog", @"secondcatalog":@"secondcatalog", @"firstcatalogid":@"firstcatalogid", @"secondcatalogid":@"secondcatalogid", @"isPraise":@"ispraise", @"position":@"position"};
 }
+
++ (NSValueTransformer *)JSONTransformerForKey:(NSString *)key
+{
+    return [MTLValueTransformer transformerUsingForwardBlock:^id(id value, BOOL *success, NSError *__autoreleasing *error) {
+        if ([key isEqualToString:@"isPraise"]) {
+            if ([value isEqualToString:@"true"]) {
+                return @"Y";
+            } else{
+                return @"N";
+            }
+        } else if ([key isEqualToString:@"praiseNum"] || [key isEqualToString:@"commentNum"]){
+            if (IsStrEmpty(value)) {
+                return @"0";
+            }
+        }
+        return value;
+    }];
+}
+
 @end
 
 

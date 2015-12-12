@@ -20,6 +20,8 @@
 
 #define NavBarRightItmFontSize  17
 
+#define UID [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID]
+
 #define kStatusBarHeight CGRectGetHeight([UIApplication sharedApplication].statusBarFrame)
 
 #define kNavigationBarHeight  44.0f

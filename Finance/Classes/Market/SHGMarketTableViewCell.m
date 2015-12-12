@@ -17,6 +17,10 @@
 @property (weak, nonatomic) IBOutlet UILabel *amountLabel;
 @property (weak, nonatomic) IBOutlet UILabel *contactLabel;
 @property (weak, nonatomic) IBOutlet UILabel *relationLabel;
+@property (weak, nonatomic) IBOutlet UIButton *praiseButton;
+@property (weak, nonatomic) IBOutlet UIButton *commentButton;
+@property (weak, nonatomic) IBOutlet UIButton *editButton;
+@property (weak, nonatomic) IBOutlet UIButton *deleteButton;
 
 @end
 
@@ -24,6 +28,57 @@
 
 - (void)awakeFromNib {
     
+}
+
+- (void)loadDataWithObject:(SHGMarketObject *)object
+{
+    [self clearCell];
+    self.titleView.text = object.marketName;
+    if ([UID isEqualToString:object.createBy]) {
+        self.leftView.hidden = NO;
+        self.rightView.hidden = NO;
+        CGRect frame = self.leftView.frame;
+        frame.origin.x = SCREENWIDTH - 2.0f * CGRectGetWidth(frame);
+        self.leftView.frame = frame;
+    } else{
+        self.leftView.hidden = NO;
+        CGRect frame = self.leftView.frame;
+        frame.origin.x = SCREENWIDTH - CGRectGetWidth(frame);
+        self.leftView.frame = frame;
+    }
+    self.typeLabel.text = [@"类型：" stringByAppendingString:object.catalog];
+    self.amountLabel.text = [@"金额：" stringByAppendingString: object.price];
+    self.contactLabel.text = [@"联系方式：" stringByAppendingString: object.contactInfo];
+
+    if ([object.createBy isEqualToString:UID]){
+        self.relationLabel.text = object.position;
+    } else{
+        NSString *string = @"";
+        if(object.friendShip && object.friendShip.length > 0){
+            string = object.friendShip;
+        }
+        if(object.position && object.position.length > 0){
+            string = [string stringByAppendingFormat:@" , %@",object.position];
+        }
+        self.relationLabel.text = string;
+    }
+
+    [self.praiseButton setTitle:object.praiseNum forState:UIControlStateNormal];
+    [self.commentButton setTitle:object.commentNum forState:UIControlStateNormal];
+
+}
+
+- (void)clearCell
+{
+    self.titleView.text = @"";
+    self.leftView.hidden = YES;
+    self.rightView.hidden = YES;
+    self.typeLabel.text = @"";
+    self.amountLabel.text = @"";
+    self.contactLabel.text = @"";
+    self.relationLabel.text = @"";
+    [self.praiseButton setTitle:@"0" forState:UIControlStateNormal];
+    [self.commentButton setTitle:@"0" forState:UIControlStateNormal];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

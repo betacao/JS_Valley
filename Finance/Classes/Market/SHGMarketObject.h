@@ -9,15 +9,25 @@
 #import <Foundation/Foundation.h>
 
 @interface SHGMarketObject : MTLModel<MTLJSONSerializing>
-@property (strong, nonatomic) NSString *firstCatalogId;
-@property (strong, nonatomic) NSString *firstCatalogName;
-@property (strong, nonatomic) NSString *secondCatalogId;
-@property (strong, nonatomic) NSString *secondCatalogName;
+
 @property (strong, nonatomic) NSString *price;
 @property (strong, nonatomic) NSString *marketName;
 @property (strong, nonatomic) NSString *marketId;
 @property (strong, nonatomic) NSString *contactInfo;
 @property (strong, nonatomic) NSString *detail;
+@property (strong, nonatomic) NSString *commentNum;
+@property (strong, nonatomic) NSString *createBy;
+@property (strong, nonatomic) NSString *praiseNum;
+@property (strong, nonatomic) NSString *createTime;
+@property (strong, nonatomic) NSString *shareNum;
+@property (strong, nonatomic) NSString *friendShip;
+@property (strong, nonatomic) NSString *catalog;
+@property (strong, nonatomic) NSString *firstcatalog;
+@property (strong, nonatomic) NSString *secondcatalog;
+@property (strong, nonatomic) NSString *firstcatalogid;
+@property (strong, nonatomic) NSString *secondcatalogid;
+@property (strong, nonatomic) NSString *isPraise;
+@property (strong, nonatomic) NSString *position;
 @end
 
 

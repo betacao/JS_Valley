@@ -34,7 +34,6 @@ typedef NS_ENUM(NSInteger, SHGMarketSendType){
 @property (strong, nonatomic) id currentContext;
 @property (assign, nonatomic) CGFloat keyBoardOrginY;
 @property (assign, nonatomic) SHGMarketSendType sendType;
-@property (strong, nonatomic) NSString *categoryId;
 @property (weak, nonatomic) IBOutlet UIView *addImageBgView;
 @property (weak, nonatomic) IBOutlet UIButton *addImageButton;
 @property (strong, nonatomic) NSArray *categoryArray;
@@ -122,7 +121,6 @@ typedef NS_ENUM(NSInteger, SHGMarketSendType){
     self.acountField.text = object.price;
     self.contactField.text = object.contactInfo;
     self.introduceView.text = object.detail;
-    self.categoryId = object.firstCatalogId;
 }
 
 
@@ -276,7 +274,7 @@ typedef NS_ENUM(NSInteger, SHGMarketSendType){
     [Hud showLoadingWithMessage:@"请稍等..."];
     if (self.hasImage) {
         __weak typeof(self) weakSelf = self;
-        [[AFHTTPRequestOperationManager manager] POST:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"image/base"] parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+        [[AFHTTPRequestOperationManager manager] POST:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"image/uploadPhotoCompress"] parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
             NSData *imageData = UIImageJPEGRepresentation(self.addImageButton.imageView.image, 0.1);
             [formData appendPartWithFileData:imageData name:@"market.jpg" fileName:@"market.jpg" mimeType:@"image/jpeg"];
         } success:^(AFHTTPRequestOperation *operation, id responseObject) {
