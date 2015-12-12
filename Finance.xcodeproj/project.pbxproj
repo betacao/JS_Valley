@@ -853,6 +853,7 @@
 		F90F7B6A1BF48C4C00555F49 /* SHGPersonalViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F90F7B691BF48C4C00555F49 /* SHGPersonalViewController.xib */; };
 		F91778C21BFC240900C535CB /* SHGDatePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = F91778C01BFC240900C535CB /* SHGDatePickerView.m */; };
 		F91778C31BFC240900C535CB /* SHGDatePickerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F91778C11BFC240900C535CB /* SHGDatePickerView.xib */; };
+		F918EF371C1ACF0E008C0335 /* SHGCategoryScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = F918EF361C1ACF0E008C0335 /* SHGCategoryScrollView.m */; };
 		F928141C1C045F8900C7782D /* SHGIndustryChoiceView.m in Sources */ = {isa = PBXBuildFile; fileRef = F928141B1C045F8900C7782D /* SHGIndustryChoiceView.m */; };
 		F92835DE1BA6E16C00E1CF22 /* UIButton+EnlargeEdge.m in Sources */ = {isa = PBXBuildFile; fileRef = F92835DD1BA6E16C00E1CF22 /* UIButton+EnlargeEdge.m */; };
 		F93242BA1BE9EE92003B7F07 /* SHGUnifiedTreatment.m in Sources */ = {isa = PBXBuildFile; fileRef = F93242B91BE9EE92003B7F07 /* SHGUnifiedTreatment.m */; };
@@ -2091,6 +2092,8 @@
 		F91778BF1BFC240900C535CB /* SHGDatePickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGDatePickerView.h; sourceTree = "<group>"; };
 		F91778C01BFC240900C535CB /* SHGDatePickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGDatePickerView.m; sourceTree = "<group>"; };
 		F91778C11BFC240900C535CB /* SHGDatePickerView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGDatePickerView.xib; sourceTree = "<group>"; };
+		F918EF351C1ACF0E008C0335 /* SHGCategoryScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGCategoryScrollView.h; sourceTree = "<group>"; };
+		F918EF361C1ACF0E008C0335 /* SHGCategoryScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGCategoryScrollView.m; sourceTree = "<group>"; };
 		F91B2B871BAA788300BC166D /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F928141A1C045F8900C7782D /* SHGIndustryChoiceView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGIndustryChoiceView.h; sourceTree = "<group>"; };
 		F928141B1C045F8900C7782D /* SHGIndustryChoiceView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGIndustryChoiceView.m; sourceTree = "<group>"; };
@@ -3123,6 +3126,7 @@
 		614DC8891AD65F6900F610D4 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				F918EF341C1ACEDA008C0335 /* SHGCategoryScrollView */,
 				F9F349D61C199E730090F111 /* SHGComBox */,
 				F9F349B21C1945920090F111 /* SHGBadgeView */,
 				F9EDD5EA1BABFBCF00506C0C /* SDPhotoBrowser */,
@@ -4557,6 +4561,15 @@
 			name = "登录";
 			sourceTree = "<group>";
 		};
+		F918EF341C1ACEDA008C0335 /* SHGCategoryScrollView */ = {
+			isa = PBXGroup;
+			children = (
+				F918EF351C1ACF0E008C0335 /* SHGCategoryScrollView.h */,
+				F918EF361C1ACF0E008C0335 /* SHGCategoryScrollView.m */,
+			);
+			path = SHGCategoryScrollView;
+			sourceTree = "<group>";
+		};
 		F98B16EA1BC7947D000A577C /* GeTui */ = {
 			isa = PBXGroup;
 			children = (
@@ -5694,6 +5707,7 @@
 				6145FF181AE4A3450074AB49 /* CircleDetailViewController.m in Sources */,
 				5331DF1B1AFC017600E035B8 /* AddFriendViewController.m in Sources */,
 				61D6E7D31AD50FCB0016C13A /* BaseTableViewController.m in Sources */,
+				F918EF371C1ACF0E008C0335 /* SHGCategoryScrollView.m in Sources */,
 				4088DDD21AF1065100393855 /* SettingQuestionCell.m in Sources */,
 				40D6CC0B1B064122005F61C8 /* ProtocolViewController.m in Sources */,
 				408D8B821AF86CF20055810C /* MyMoneyDetailObject.m in Sources */,

@@ -459,16 +459,16 @@
     index =ges.tag;
     CGRect rect = imageBttomLine.frame;
     rect.origin.x = (width/2-20) +( ges.tag* width);
-    
+
     CirclleItemObj *obj = itemArr[ges.tag];
     if (ges.tag == 0) {
-         [self requestDataWithtcode:obj.tcode isHot:@"1" target:@"first" name:@"" time:@""];
+        [self requestDataWithtcode:obj.tcode isHot:@"1" target:@"first" name:@"" time:@""];
     }else
     {
-     [self requestDataWithtcode:obj.tcode isHot:@"" target:@"first" name:@"" time:@""];
+        [self requestDataWithtcode:obj.tcode isHot:@"" target:@"first" name:@"" time:@""];
     }
     [UIView beginAnimations:nil context:nil];
-     [imageBttomLine setFrame:rect];
+    [imageBttomLine setFrame:rect];
     [UIView setAnimationDuration:0.3];
     [UIView commitAnimations];
 }

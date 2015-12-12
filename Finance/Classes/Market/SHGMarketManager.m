@@ -43,10 +43,18 @@
     }
 }
 
-+ (void)loadMarketListBlock:(void (^)(NSArray *))block
++ (void)loadMarketList:(NSDictionary *)param block:(void (^)(NSArray *array))block
 {
-//    SHGMarketManager *manager = [self shareManager];
-//    [MOCHTTPRequestOperationManager ]
+    [Hud showLoadingWithMessage:@"请稍等..."];
+    NSString *request = [rBaseAddressForHttp stringByAppendingString:@"/market/getMarketList"];
+    [MOCHTTPRequestOperationManager postWithURL:request class:[SHGMarketObject class] parameters:param success:^(MOCHTTPResponse *response) {
+        [Hud hideHud];
+        block(response.dataArray);
+    } failed:^(MOCHTTPResponse *response) {
+        [Hud hideHud];
+        block(nil);
+        [Hud showMessageWithText:@"获取列表数据失败"];
+    }];
 }
 
 + (void)createNewMarket:(NSDictionary *)param success:(void (^)(BOOL success))block
@@ -67,11 +75,11 @@
     NSString *request = [rBaseAddressForHttp stringByAppendingString:@"/market/saveMarket"];
     [MOCHTTPRequestOperationManager postWithURL:request class:[SHGMarketFirstCategoryObject class] parameters:param success:^(MOCHTTPResponse *response) {
         [Hud hideHud];
-        [Hud showMessageWithText:@"创建业务成功"];
+        [Hud showMessageWithText:@"修改业务成功"];
         block(YES);
     } failed:^(MOCHTTPResponse *response) {
         [Hud hideHud];
-        [Hud showMessageWithText:@"获取业务失败"];
+        [Hud showMessageWithText:@"修改业务失败"];
     }];
 }
 

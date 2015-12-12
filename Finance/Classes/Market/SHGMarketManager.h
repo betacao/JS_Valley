@@ -14,7 +14,7 @@
 
 - (void)loadMarketCategoryBlock:(void (^)(NSArray *array))block;
 
-+ (void)loadMarketListBlock:(void(^)(NSArray *array))block;
++ (void)loadMarketList:(NSDictionary *)param block:(void (^)(NSArray *array))block;
 
 + (void)createNewMarket:(NSDictionary *)param success:(void (^)(BOOL success))block;
 

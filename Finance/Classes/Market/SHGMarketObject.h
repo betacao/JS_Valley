@@ -15,6 +15,7 @@
 @property (strong, nonatomic) NSString *secondCatalogName;
 @property (strong, nonatomic) NSString *price;
 @property (strong, nonatomic) NSString *marketName;
+@property (strong, nonatomic) NSString *marketId;
 @property (strong, nonatomic) NSString *contactInfo;
 @property (strong, nonatomic) NSString *detail;
 @end

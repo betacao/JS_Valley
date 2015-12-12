@@ -12,7 +12,7 @@
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey
 {
-    return @{@"firstCatalogId":@"firstcatalogid", @"firstCatalogName":@"firstcatalogname", @"secondCatalogId":@"secondcatalogid", @"secondCatalogName":@"secondcatalogname", @"price":@"price", @"marketName":@"marketname", @"contactInfo":@"contactinfo", @"detail":@"detail"};
+    return @{@"firstCatalogId":@"firstcatalogid", @"firstCatalogName":@"firstcatalogname", @"secondCatalogId":@"secondcatalogid", @"secondCatalogName":@"secondcatalogname", @"price":@"price", @"marketName":@"marketname", @"contactInfo":@"contactinfo", @"detail":@"detail", @"marketId":@"marketid"};
 }
 @end
 
