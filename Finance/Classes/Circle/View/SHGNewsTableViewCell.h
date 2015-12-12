@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "CircleListObj.h"
 @interface SHGNewsTableViewCell : UITableViewCell
-
+-(void)loadUi:(CircleListObj * )obj;
 @end

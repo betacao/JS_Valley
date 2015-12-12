@@ -22,9 +22,17 @@
 #import "SHGUnifiedTreatment.h"
 #import "SHGSelectTagsViewController.h"
 #import "SHGEmptyDataView.h"
-
+//添加分类
+#import "CirclleItemObj.h"
+#import "SHGNewsTableViewCell.h"
 
 @interface SHGNewsViewController ()<MLEmojiLabelDelegate,CLLocationManagerDelegate,SHGNoticeDelegate>
+{
+     UIImageView *imageBttomLine;
+     NSInteger width;
+     NSInteger index;
+    UILabel * tname;
+}
 @property (weak, nonatomic) IBOutlet UITableView *listTable;
 @property (assign, nonatomic) BOOL isRefreshing;
 @property (strong, nonatomic) NSString *circleType;
@@ -33,6 +41,9 @@
 @property (strong, nonatomic) SHGSelectTagsViewController *tagsController;
 @property (strong, nonatomic) UITableViewCell *emptyCell;
 @property (strong, nonatomic) SHGEmptyDataView *emptyView;
+@property (strong, nonatomic) UIScrollView *backScrollView;
+@property (strong, nonatomic) NSMutableArray *itemArr;
+@property (assign, nonatomic) NSString * currentTagId;
 
 @end
 
@@ -52,10 +63,12 @@
     if ([self.listTable respondsToSelector:@selector(setLayoutMargins:)]) {
         [self.listTable setLayoutMargins:UIEdgeInsetsZero];
     }
+    [self requestType];
     self.circleType = @"attation";
     [Hud showLoadingWithMessage:@"加载中"];
-    [self requestDataWithTarget:@"first" time:@""];
-}
+    //[self requestDataWithTarget:@"first" time:0 tagId:self.currentTagId];
+   
+   }
 
 
 - (void)viewWillAppear:(BOOL)animated
@@ -78,7 +91,15 @@
 {
     return self.dataArr;
 }
-
+//资讯类别
+- (NSMutableArray * ) itemArr;
+{
+    if (!_itemArr) {
+        _itemArr = [NSMutableArray array];
+    }
+    return _itemArr;
+}
+/*
 - (SHGSelectTagsViewController *)tagsController
 {
     if(!_tagsController){
@@ -86,7 +107,7 @@
     }
     return _tagsController;
 }
-
+*/
 
 - (UITableViewCell *)emptyCell
 {
@@ -118,24 +139,25 @@
 }
 
 #pragma mark ------主要逻辑------
-- (void)requestDataWithTarget:(NSString *)target time:(NSString *)time
+- (void)requestDataWithTarget:(NSString *)target time:(NSString *)time tagId:(NSString * )tagId
 {
     self.isRefreshing = YES;
-    NSDictionary *userTags = [SHGGloble sharedGloble].maxUserTags;
-
+   // NSDictionary *userTags = [SHGGloble sharedGloble].maxUserTags;
+    
     if ([target isEqualToString:@"first"]){
         [self.listTable.footer resetNoMoreData];
         self.hasDataFinished = NO;
     } else if([target isEqualToString:@"load"]){
-        userTags = [SHGGloble sharedGloble].minUserTags;
+       // userTags = [SHGGloble sharedGloble].minUserTags;
     }
 
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
     NSInteger rid = [time integerValue];
-    NSDictionary *param = @{@"uid":uid, @"type":@"attation", @"target":target, @"rid":@(rid), @"num": rRequestNum, @"tagIds" : userTags};
+    NSDictionary *param = @{@"uid":uid, @"type":@"attation", @"target":target, @"rid":@(rid), @"num": rRequestNum, @"tagId" :tagId };
 
     __weak typeof(self) weakSelf = self;
-    [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttpCircle,circleListNew] class:[CircleListObj class] parameters:param success:^(MOCHTTPResponse *response){
+
+    [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttp,@"dynamic",@"dynamicAndNews"] class:[CircleListObj class] parameters:param success:^(MOCHTTPResponse *response){
         weakSelf.isRefreshing = NO;
         if([target isEqualToString:@"first"]){
             if([response.dataDictionary objectForKey:@"tagids"]){
@@ -223,7 +245,7 @@
     if (self.isRefreshing) {
         return;
     }
-    [self requestDataWithTarget:@"first" time:@""];
+   [self requestDataWithTarget:@"load" time:[self refreshMinRid] tagId:self.currentTagId];
 }
 
 - (void)refreshHeader
@@ -234,10 +256,11 @@
     }
     if (self.dataArr.count > 0){
         [Hud showLoadingWithMessage:@"加载中"];
-        [self requestDataWithTarget:@"refresh" time:[self refreshMaxRid]];
+        //[self requestDataWithTarget:@"refresh" time:[self refreshMaxRid]];
+        [self requestDataWithTarget:@"refresh" time:[self refreshMaxRid] tagId:self.currentTagId];
     } else{
         [Hud showLoadingWithMessage:@"加载中"];
-        [self requestDataWithTarget:@"first" time:@""];
+        //[self requestDataWithTarget:@"first" time:@""];
     }
 
 }
@@ -251,35 +274,36 @@
     NSLog(@"refreshFooter");
     if (self.dataArr.count > 0){
         [Hud showLoadingWithMessage:@"加载中"];
-        [self requestDataWithTarget:@"load" time:[self refreshMinRid]];
+        //[self requestDataWithTarget:@"load" time:[self refreshMinRid]];
+        [self requestDataWithTarget:@"load" time:[self refreshMinRid] tagId:self.currentTagId];
     }
 
 }
 
 - (NSString *)refreshMaxRid
 {
-    NSString *rid = @"";
-    for (NSInteger i = 0; i < self.dataArr.count; i++) {
-        CircleListObj *obj = self.dataArr[i];
-        if([obj isKindOfClass:[CircleListObj class]]){
-            rid = obj.rid;
-            break;
-        }
-    }
-    return rid;
+//    NSString *rid = @"";
+//    for (NSInteger i = 0; i < self.dataArr.count; i++) {
+//        CircleListObj *obj = self.dataArr[i];
+//        if([obj isKindOfClass:[CircleListObj class]]){
+//            rid = obj.rid;
+//            break;
+//        }
+//    }
+    return ((CircleListObj *)[self.dataArr firstObject]).rid;
 }
 
 - (NSString *)refreshMinRid
 {
-    NSString *rid = @"";
-    for(NSInteger i = self.dataArr.count - 1; i >=0; i--){
-        CircleListObj *obj = self.dataArr[i];
-        if([obj isKindOfClass:[CircleListObj class]]){
-            rid = obj.rid;
-            break;
-        }
-    }
-    return rid;
+//    NSString *rid = @"";
+//    for(NSInteger i = self.dataArr.count - 1; i >=0; i--){
+//        CircleListObj *obj = self.dataArr[i];
+//        if([obj isKindOfClass:[CircleListObj class]]){
+//            rid = obj.rid;
+//            break;
+//        }
+//    }
+    return ((CircleListObj *)[self.dataArr lastObject]).rid;
 }
 
 #pragma mark ------ UITableView DataSource ------
@@ -292,9 +316,10 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (self.dataArr.count > 0) {
-        CircleListObj *obj = self.dataArr[indexPath.row];
-        obj.cellHeight = [obj fetchCellHeight];
-        return obj.cellHeight;
+//        CircleListObj *obj = self.dataArr[indexPath.row];
+//        obj.cellHeight = [obj fetchCellHeight];
+//        return obj.cellHeight;
+        return 100.0f;
     } else{
         return CGRectGetHeight(self.view.frame) - kTabBarHeight;
     }
@@ -308,49 +333,165 @@
     } else{
         return 1;
     }
+    
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (self.dataArr.count > 0) {
+//        CircleListObj *obj = [self.dataArr objectAtIndex:indexPath.row];
+//        NSLog(@"%@",obj.postType);
+//        if (![obj.postType isEqualToString:@"ad"]){
+//            if ([obj.status boolValue]){
+//                NSString *cellIdentifier = @"circleListIdentifier";
+//                SHGHomeTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+//                if (!cell){
+//                    cell = [[[NSBundle mainBundle] loadNibNamed:@"SHGHomeTableViewCell" owner:self options:nil] lastObject];
+//                    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+//                }
+//                cell.index = indexPath.row;
+//                cell.delegate = [SHGUnifiedTreatment sharedTreatment];
+//               [cell loadDatasWithObj:obj type:@"news"];
+//
+//                MLEmojiLabel *mlLable = (MLEmojiLabel *)[cell viewWithTag:521];
+//                mlLable.delegate = self;
+//                return cell;
+//            }
+//        }
         CircleListObj *obj = [self.dataArr objectAtIndex:indexPath.row];
-        NSLog(@"%@",obj.postType);
-        if (![obj.postType isEqualToString:@"ad"]){
-            if ([obj.status boolValue]){
-                NSString *cellIdentifier = @"circleListIdentifier";
-                SHGHomeTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-                if (!cell){
-                    cell = [[[NSBundle mainBundle] loadNibNamed:@"SHGHomeTableViewCell" owner:self options:nil] lastObject];
-                    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-                }
-                cell.index = indexPath.row;
-                cell.delegate = [SHGUnifiedTreatment sharedTreatment];
-                [cell loadDatasWithObj:obj type:@"news"];
-
-                MLEmojiLabel *mlLable = (MLEmojiLabel *)[cell viewWithTag:521];
-                mlLable.delegate = self;
-                return cell;
-            }
+        NSString * cellIdentifier = @"SHGNewsTableViewCell";
+        SHGNewsTableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+        if (!cell) {
+            cell = [[[NSBundle mainBundle]loadNibNamed:@"SHGNewsTableViewCell" owner:self options:nil] lastObject];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        
         }
+        [cell loadUi:obj];
+        return cell;
     } else{
         return self.emptyCell;
     }
     return nil;
 }
 
-//添加列表上方的标签
+//添加列表上方的类别
+-(void)initHeader
+{
+    CGFloat scrollViewHeight = 42.0f;
+    self.backScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0.0, 0.0, SCREENWIDTH, scrollViewHeight)];
+    self.backScrollView.backgroundColor = [UIColor whiteColor];
+    self.backScrollView.showsHorizontalScrollIndicator = NO;
+    self.backScrollView.showsVerticalScrollIndicator = NO;
+    self.backScrollView.bounces = NO;
+    NSInteger itemWidth = SCREENWIDTH/5;
+    NSInteger contentWidth = SCREENWIDTH ;
+    NSInteger itemHeight = 40.0f;
+    self.backScrollView.tag = 1001;
+    if (IsArrEmpty(self.itemArr)) {
+        return;
+    }
+    if (self.itemArr.count < 5)
+    {
+        itemWidth = SCREENWIDTH/self.itemArr.count;
+    }
+    width = itemWidth;
+    for (int i = 0; i < self.itemArr.count ;i ++)
+    {
+        CirclleItemObj *obj = self.itemArr[i];
+        UILabel *item = [[UILabel alloc] init];
+        item.userInteractionEnabled = YES;
+        [item setFrame:CGRectMake(itemWidth *i, 0.0, itemWidth, itemHeight)];
+        item.tag = i+ 1000;
+        
+        tname = [[UILabel alloc] initWithFrame:CGRectMake(0.0, 0.0, itemWidth, itemHeight)];
+        tname.tag = i;
+        [tname setFont:[UIFont systemFontOfSize:14.0f]];
+        [tname setTextColor:TEXT_COLOR];
+        [tname setTextAlignment:NSTextAlignmentCenter];
+        [tname setText:obj.tagname];
+        [item addSubview:tname];
+        
+        DDTapGestureRecognizer *itemGes = [[DDTapGestureRecognizer alloc] initWithTarget:self action:@selector(itemTap:)];
+        itemGes.tag = i;
+        [item addGestureRecognizer:itemGes];
+        
+        [self.backScrollView addSubview:item];
+        if (i == 0 ) {
+            [tname setTextColor:[UIColor redColor]];
+        }
+    }
+    
+    if (self.itemArr.count > 5)
+    {
+        contentWidth = (SCREENWIDTH/5) * self.itemArr.count;
+    }
+    UIView *backsView = [[UIView alloc] initWithFrame:CGRectMake(0, itemHeight, SCREENHEIGHT, 8.0f)];
+    backsView.backgroundColor = [UIColor whiteColor];
+    imageBttomLine = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, itemWidth, 2.0f)];
+    [imageBttomLine setImage:[UIImage imageNamed:@"tab下划线"]];
+    [backsView addSubview:imageBttomLine];
+    
+    [self.backScrollView addSubview:backsView];
+    
+    [self.backScrollView setContentSize:CGSizeMake(contentWidth, scrollViewHeight)];
+    CirclleItemObj *obj = self.itemArr[0];
+    self.currentTagId  = obj.tagid;
+    //[self requestDataWithtcode:@"" isHot:@"1" target:@"first" name:@"" time:@""];
+     [self requestDataWithTarget:@"first" time:0 tagId:self.currentTagId];
+    
+}
+
+-(void)itemTap:(DDTapGestureRecognizer *)ges
+{
+    CGRect rect = imageBttomLine.frame;
+     rect.origin.x = ( ges.tag* width);
+    CirclleItemObj *obj = self.itemArr[ges.tag];
+    self.currentTagId= obj.tagid;
+    if (ges.tag == 0) {
+        //[self requestDataWithtcode:obj.tcode isHot:@"1" target:@"first" name:@"" time:@""];
+        
+    }else
+    {
+       // [self requestDataWithtcode:obj.tcode isHot:@"" target:@"first" name:@"" time:@""];
+    }
+    [self requestDataWithTarget:@"first" time:0 tagId:self.currentTagId];
+    [UIView beginAnimations:nil context:nil];
+    [imageBttomLine setFrame:rect];
+    [UIView setAnimationDuration:0.3];
+    [UIView commitAnimations];
+    
+}
+
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    return self.tagsController.view;
+    return self.backScrollView;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    CGFloat height = CGRectGetHeight(self.tagsController.view.frame);
-    if (height == 0) {
-        return 26.0f;
+    CGFloat height = CGRectGetHeight(self.backScrollView.frame);
+     if (self.itemArr.count == 0) {
+        height = 0 ;
     }
     return height;
+}
+
+#pragma mark ------数据请求-----
+-(void)requestType
+{
+    NSString *url = [NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttpUser,@"tag",@"newsTag"];
+    [MOCHTTPRequestOperationManager getWithURL:url class:[CirclleItemObj class] parameters:@{@"uid":[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID]} success:^(MOCHTTPResponse *response) {
+        NSLog(@"%@",response.dataArray);
+        if (response.dataArray.count > 0)
+        {
+            [self.itemArr addObjectsFromArray:response.dataArray];
+            
+        }
+        [self initHeader];
+        
+    } failed:^(MOCHTTPResponse *response) {
+        NSLog(@"%@",response.errorMessage);
+    }];
 }
 
 #pragma mark ------ emoji代理------

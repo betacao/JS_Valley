@@ -20,7 +20,7 @@
 }
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey{
-    return @{@"tname":@"tname",
+    return @{@"tagid":@"tagid",@"tagname":@"tagname",@"tname":@"tname",
              @"tcode":@"tcode",
              @"timg":@"timg"};
 }
