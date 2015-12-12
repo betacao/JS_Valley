@@ -10,10 +10,8 @@
 
 @interface CirclleItemObj : MTLModel<MTLJSONSerializing>
 @property (nonatomic, strong) NSString *tname;
-
 @property (nonatomic, strong) NSString *tcode;
-
-
 @property (nonatomic, strong) NSString *timg;
-
+@property (nonatomic, strong) NSString *tagid;
+@property (nonatomic, strong) NSString *tagname;
 @end
