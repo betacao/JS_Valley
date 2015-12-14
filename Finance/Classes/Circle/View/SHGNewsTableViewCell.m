@@ -42,7 +42,6 @@
     }else
     {
         NSString * str = [arr objectAtIndex:0];
-        //[self.headerImage ];
         [self.headerImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,str]]];
     }
    
@@ -56,9 +55,9 @@
     NSInteger bottomLabelHeight = 20.0;
     NSInteger bottomLabelWidth = 100;
     self.headerImage.hidden = YES;
-    self.titleLabel.frame = CGRectMake(toLeftSpace, toTopSpace, SCREENWIDTH - 2*toLeftSpace, 2*bottomLabelHeight);
+    self.titleLabel.frame = CGRectMake(toLeftSpace, toTopSpace, self.contentView.width - 2*toLeftSpace, 2*bottomLabelHeight);
     self.originLabel.frame = CGRectMake(toLeftSpace, self.contentView.height-toBottomSpace-bottomLabelHeight, bottomLabelWidth, bottomLabelHeight);
-    self.timeLabel.frame = CGRectMake(SCREENWIDTH-bottomLabelWidth-toLeftSpace, self.contentView.height-toBottomSpace-bottomLabelHeight, bottomLabelWidth, bottomLabelHeight);
+    self.timeLabel.frame = CGRectMake(self.contentView.width-bottomLabelWidth-toLeftSpace, self.contentView.height-toBottomSpace-bottomLabelHeight, bottomLabelWidth, bottomLabelHeight);
 }
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];

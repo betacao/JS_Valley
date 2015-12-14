@@ -45,6 +45,7 @@
 @property (strong, nonatomic) NSMutableArray *itemArr;
 @property (assign, nonatomic) NSString * currentTagId;
 
+
 @end
 
 @implementation SHGNewsViewController
@@ -459,7 +460,7 @@
     [imageBttomLine setFrame:rect];
     [UIView setAnimationDuration:0.3];
     [UIView commitAnimations];
-    
+    [self.listTable reloadData];
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section

@@ -339,10 +339,10 @@ const CGFloat kAdButtomMargin = 20.0f;
 
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
     NSInteger rid = [time integerValue];
-    NSDictionary *param = @{@"uid":uid, @"type":@"all", @"target":target, @"rid":@(rid), @"num": rRequestNum, @"tagIds" : userTags};
+    NSDictionary *param = @{@"uid":uid, @"type":@"all", @"target":target, @"rid":@(rid), @"num": rRequestNum, @"tagId" : @"-1"};
 
     __weak typeof(self) weakSelf = self;
-    [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttpCircle,circleListNew] class:[CircleListObj class] parameters:param success:^(MOCHTTPResponse *response){
+    [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttp,@"dynamic",@"dynamicAndNews"] class:[CircleListObj class] parameters:param success:^(MOCHTTPResponse *response){
         weakSelf.isRefreshing = NO;
         if([target isEqualToString:@"first"]){
             if([response.dataDictionary objectForKey:@"tagids"]){
