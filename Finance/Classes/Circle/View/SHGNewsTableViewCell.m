@@ -44,18 +44,20 @@
         NSString * str = [arr objectAtIndex:0];
         [self.headerImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,str]]];
     }
-   
-    
+   //图片加边框
+    CALayer * layer = [self.headerImage layer];
+    layer.borderColor = [[UIColor colorWithHexString:@"ebebeb"] CGColor];
+    layer.borderWidth = 1.0f;
 }
 -(void)loadNoTitleUi
 {
     NSInteger toLeftSpace = 10.0f;
     NSInteger toTopSpace = 10.0f;
     NSInteger toBottomSpace = 10.0f;
-    NSInteger bottomLabelHeight = 20.0;
+    NSInteger bottomLabelHeight = 14.0;
     NSInteger bottomLabelWidth = 100;
     self.headerImage.hidden = YES;
-    self.titleLabel.frame = CGRectMake(toLeftSpace, toTopSpace, self.contentView.width - 2*toLeftSpace, 2*bottomLabelHeight);
+    self.titleLabel.frame = CGRectMake(toLeftSpace, toTopSpace, self.contentView.width - 2*toLeftSpace, 35.0);
     self.originLabel.frame = CGRectMake(toLeftSpace, self.contentView.height-toBottomSpace-bottomLabelHeight, bottomLabelWidth, bottomLabelHeight);
     self.timeLabel.frame = CGRectMake(self.contentView.width-bottomLabelWidth-toLeftSpace, self.contentView.height-toBottomSpace-bottomLabelHeight, bottomLabelWidth, bottomLabelHeight);
 }

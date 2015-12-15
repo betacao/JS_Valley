@@ -320,7 +320,7 @@
 //        CircleListObj *obj = self.dataArr[indexPath.row];
 //        obj.cellHeight = [obj fetchCellHeight];
 //        return obj.cellHeight;
-        return 100.0f;
+        return 83.0f;
     } else{
         return CGRectGetHeight(self.view.frame) - kTabBarHeight;
     }
@@ -402,12 +402,14 @@
         UILabel *item = [[UILabel alloc] init];
         item.userInteractionEnabled = YES;
         [item setFrame:CGRectMake(itemWidth *i, 0.0, itemWidth, itemHeight)];
+        //item.backgroundColor = [UIColor colorWithHexString:@"F6F6F6"];
         item.tag = i+ 1000;
         
         tname = [[UILabel alloc] initWithFrame:CGRectMake(0.0, 0.0, itemWidth, itemHeight)];
         tname.tag = i;
+        tname.backgroundColor = [UIColor colorWithHexString:@"F6F6F6"];
         [tname setFont:[UIFont systemFontOfSize:14.0f]];
-        [tname setTextColor:TEXT_COLOR];
+        [tname setTextColor:[UIColor colorWithHexString:@"333333"]];
         [tname setTextAlignment:NSTextAlignmentCenter];
         [tname setText:obj.tagname];
         [item addSubview:tname];
@@ -427,8 +429,8 @@
         contentWidth = (SCREENWIDTH/5) * self.itemArr.count;
     }
     UIView *backsView = [[UIView alloc] initWithFrame:CGRectMake(0, itemHeight, SCREENHEIGHT, 8.0f)];
-    backsView.backgroundColor = [UIColor whiteColor];
-    imageBttomLine = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, itemWidth, 2.0f)];
+    backsView.backgroundColor = [UIColor colorWithHexString:@"F6F6F6"];
+    imageBttomLine = [[UIImageView alloc] initWithFrame:CGRectMake(itemWidth/2-20, 0, 40.0f, 2.0f)];
     [imageBttomLine setImage:[UIImage imageNamed:@"tab下划线"]];
     [backsView addSubview:imageBttomLine];
     
@@ -445,7 +447,7 @@
 -(void)itemTap:(DDTapGestureRecognizer *)ges
 {
     CGRect rect = imageBttomLine.frame;
-     rect.origin.x = ( ges.tag* width);
+     rect.origin.x = (width/2-20)+( ges.tag* width);
     CirclleItemObj *obj = self.itemArr[ges.tag];
     self.currentTagId= obj.tagid;
     if (ges.tag == 0) {

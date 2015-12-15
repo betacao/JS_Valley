@@ -100,10 +100,9 @@
     self.commentNumLabel.bounds = CGRectMake(0, 0, 15, 15);
     self.commentNumLabel.layer.masksToBounds = YES;
     self.commentNumLabel.layer.cornerRadius = 7.5;
-    self.commentNumLabel.text = @"10";
     self.commentNumLabel.font = [UIFont systemFontOfSize:10];
-    self.commentNumLabel.center = CGPointMake(CGRectGetMaxX(self.btnComment.frame)-5.0, self.btnComment.frame.origin.y+5.0);
-    [self.viewInput addSubview:self.commentNumLabel];
+    self.commentNumLabel.center = CGPointMake(self.btnComment.frame.size.width-5.0, 5.0);
+    [self.btnComment addSubview:self.commentNumLabel];
     self.navigationItem.hidesBackButton = YES;
     self.navigationItem.titleView = self.navigationView;
     [CommonMethod setExtraCellLineHidden:self.listTable];
@@ -139,8 +138,8 @@
     self.btnSend.layer.cornerRadius = 4;
     
     DDTapGestureRecognizer *hdGes = [[DDTapGestureRecognizer alloc] initWithTarget:self action:@selector(didTapHeaderView:)];
-    [self.imageHeader addGestureRecognizer:hdGes];
-    self.imageHeader.userInteractionEnabled = YES;
+    [self.viewHeader addGestureRecognizer:hdGes];
+    self.viewHeader.userInteractionEnabled = YES;
     
     UIImage *image = self.backImageView.image;
     image = [image resizableImageWithCapInsets:UIEdgeInsetsMake(15.0f, 35.0f, 9.0f, 11.0f) resizingMode:UIImageResizingModeStretch];
@@ -792,12 +791,14 @@
 - (IBAction)btnCommentClick:(id)sender
 {
     [self.listTable scrollToNearestSelectedRowAtScrollPosition:UITableViewScrollPositionBottom animated:YES];
-    if (self.obj.comments.count > 0 || self.obj.comments.count == 0) {
+    if (self.obj.comments.count > 0 ) {
         NSIndexPath *indexPath = [NSIndexPath indexPathForItem:0 inSection:0];
         [self.listTable scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+    }else
+    {
+        [self actionComment:sender];
     }
-    
-    }
+}
 -(void)shareToSMS:(NSString *)text rid:(NSString *)rid
 {
     [[AppDelegate currentAppdelegate] sendSmsWithText:text rid:rid];
@@ -956,7 +957,8 @@
 
 - (void)didTapHeaderView:(DDTapGestureRecognizer *)ges
 {
-    [self gotoSomeOneWithId:self.obj.userid name:self.obj.nickname];
+    //[self gotoSomeOneWithId:self.obj.userid name:self.obj.nickname];
+    [self.listTable scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:YES];
 }
 
 -(void)refreshFooter
