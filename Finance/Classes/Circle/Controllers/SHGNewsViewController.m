@@ -31,7 +31,8 @@
      UIImageView *imageBttomLine;
      NSInteger width;
      NSInteger index;
-    UILabel * tname;
+    NSInteger currentSelect;
+    //UILabel * tname;
 }
 @property (weak, nonatomic) IBOutlet UITableView *listTable;
 @property (assign, nonatomic) BOOL isRefreshing;
@@ -44,7 +45,7 @@
 @property (strong, nonatomic) UIScrollView *backScrollView;
 @property (strong, nonatomic) NSMutableArray *itemArr;
 @property (assign, nonatomic) NSString * currentTagId;
-
+@property (strong, nonatomic) NSMutableArray *currentArry;
 
 @end
 
@@ -90,7 +91,7 @@
 
 - (NSMutableArray *) currentDataArray
 {
-    return self.dataArr;
+    return self.currentArry;
 }
 //资讯类别
 - (NSMutableArray * ) itemArr;
@@ -100,6 +101,15 @@
     }
     return _itemArr;
 }
+
+- (NSMutableArray * ) currentArry;
+{
+    if (!_currentArry) {
+        _currentArry = [NSMutableArray array];
+    }
+    return _currentArry;
+}
+
 /*
 - (SHGSelectTagsViewController *)tagsController
 {
@@ -204,22 +214,23 @@
     normalArray = [[SHGGloble sharedGloble] parseServerJsonArrayToJSONModel:normalArray class:[CircleListObj class]];
     if ([target isEqualToString:@"first"]){
         //总数据
-        [self.dataArr removeAllObjects];
-        [self.dataArr addObjectsFromArray:normalArray];
-        [self.messageNoticeView showWithText:[NSString stringWithFormat:@"为您加载了%ld条新动态",(long)self.dataArr.count]];
+        self.currentArry = [self.dataArr objectAtIndex:index];
+        [self.currentArry removeAllObjects];
+        [self.currentArry addObjectsFromArray:normalArray];
+        [self.messageNoticeView showWithText:[NSString stringWithFormat:@"为您加载了%ld条新动态",(long)self.currentArry.count]];
     } else if ([target isEqualToString:@"refresh"]){
         if (normalArray.count > 0){
             for (NSInteger i = normalArray.count - 1; i >= 0; i--){
                 CircleListObj *obj = [normalArray objectAtIndex:i];
                 NSLog(@"%@",obj.rid);
-                [self.dataArr insertObject:obj atIndex:0];
+                [self.currentArry insertObject:obj atIndex:0];
             }
             [self.messageNoticeView showWithText:[NSString stringWithFormat:@"为您加载了%ld条新资讯",(long)normalArray.count]];
         } else{
             [self.messageNoticeView showWithText:@"暂无新资讯，休息一会儿"];
         }
     } else if ([target isEqualToString:@"load"]){
-        [self.dataArr addObjectsFromArray:normalArray];
+        [self.currentArry addObjectsFromArray:normalArray];
         if (IsArrEmpty(normalArray)){
             self.hasDataFinished = YES;
         } else{
@@ -255,13 +266,14 @@
     if(self.isRefreshing){
         return;
     }
-    if (self.dataArr.count > 0){
+    if (self.currentArry.count > 0){
         [Hud showLoadingWithMessage:@"加载中"];
         //[self requestDataWithTarget:@"refresh" time:[self refreshMaxRid]];
         [self requestDataWithTarget:@"refresh" time:[self refreshMaxRid] tagId:self.currentTagId];
     } else{
         [Hud showLoadingWithMessage:@"加载中"];
         //[self requestDataWithTarget:@"first" time:@""];
+        [self requestDataWithTarget:@"first" time:0 tagId:self.currentTagId];
     }
 
 }
@@ -273,7 +285,7 @@
         return;
     }
     NSLog(@"refreshFooter");
-    if (self.dataArr.count > 0){
+    if (self.currentArry.count > 0){
         [Hud showLoadingWithMessage:@"加载中"];
         //[self requestDataWithTarget:@"load" time:[self refreshMinRid]];
         [self requestDataWithTarget:@"load" time:[self refreshMinRid] tagId:self.currentTagId];
@@ -291,7 +303,7 @@
 //            break;
 //        }
 //    }
-    return ((CircleListObj *)[self.dataArr firstObject]).rid;
+    return ((CircleListObj *)[self.currentArry firstObject]).rid;
 }
 
 - (NSString *)refreshMinRid
@@ -304,7 +316,7 @@
 //            break;
 //        }
 //    }
-    return ((CircleListObj *)[self.dataArr lastObject]).rid;
+    return ((CircleListObj *)[self.currentArry lastObject]).rid;
 }
 
 #pragma mark ------ UITableView DataSource ------
@@ -316,7 +328,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (self.dataArr.count > 0) {
+    if (self.currentArry.count > 0) {
 //        CircleListObj *obj = self.dataArr[indexPath.row];
 //        obj.cellHeight = [obj fetchCellHeight];
 //        return obj.cellHeight;
@@ -328,8 +340,8 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (self.dataArr.count > 0) {
-        NSInteger count = self.dataArr.count;
+    if (self.currentArry.count > 0) {
+        NSInteger count = self.currentArry.count;
         return count;
     } else{
         return 1;
@@ -339,7 +351,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (self.dataArr.count > 0) {
+    if (self.currentArry.count > 0) {
 //        CircleListObj *obj = [self.dataArr objectAtIndex:indexPath.row];
 //        NSLog(@"%@",obj.postType);
 //        if (![obj.postType isEqualToString:@"ad"]){
@@ -359,7 +371,7 @@
 //                return cell;
 //            }
 //        }
-        CircleListObj *obj = [self.dataArr objectAtIndex:indexPath.row];
+        CircleListObj *obj = [self.currentArry objectAtIndex:indexPath.row];
         NSString * cellIdentifier = @"SHGNewsTableViewCell";
         SHGNewsTableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
         if (!cell) {
@@ -405,8 +417,8 @@
         //item.backgroundColor = [UIColor colorWithHexString:@"F6F6F6"];
         item.tag = i+ 1000;
         
-        tname = [[UILabel alloc] initWithFrame:CGRectMake(0.0, 0.0, itemWidth, itemHeight)];
-        tname.tag = i;
+        UILabel * tname = [[UILabel alloc] initWithFrame:CGRectMake(0.0, 0.0, itemWidth, itemHeight)];
+        tname.tag = i +10;
         tname.backgroundColor = [UIColor colorWithHexString:@"F6F6F6"];
         [tname setFont:[UIFont systemFontOfSize:14.0f]];
         [tname setTextColor:[UIColor colorWithHexString:@"333333"]];
@@ -421,6 +433,7 @@
         [self.backScrollView addSubview:item];
         if (i == 0 ) {
             [tname setTextColor:[UIColor redColor]];
+            currentSelect = 0 + 10;
         }
     }
     
@@ -439,6 +452,7 @@
     [self.backScrollView setContentSize:CGSizeMake(contentWidth, scrollViewHeight)];
     CirclleItemObj *obj = self.itemArr[0];
     self.currentTagId  = obj.tagid;
+    index = 0;
     //[self requestDataWithtcode:@"" isHot:@"1" target:@"first" name:@"" time:@""];
      [self requestDataWithTarget:@"first" time:0 tagId:self.currentTagId];
     
@@ -446,18 +460,34 @@
 
 -(void)itemTap:(DDTapGestureRecognizer *)ges
 {
+    index = ges.tag;
+    self.currentArry = [self.dataArr objectAtIndex:index];
+    if (currentSelect == ges.tag +10) {
+        
+    }else
+    {
+        UILabel * label1 = [self.view viewWithTag:ges.tag +10];
+        if (label1.tag == ges.tag +10) {
+            [label1 setTextColor:[UIColor redColor]];
+        }
+        UILabel * label2 = [self.view viewWithTag:currentSelect ];
+        [label2 setTextColor:[UIColor colorWithHexString:@"333333"]];
+        currentSelect = ges.tag +10;
+    }
+    
     CGRect rect = imageBttomLine.frame;
-     rect.origin.x = (width/2-20)+( ges.tag* width);
+    rect.origin.x = (width/2-20)+( ges.tag* width);
     CirclleItemObj *obj = self.itemArr[ges.tag];
     self.currentTagId= obj.tagid;
-    if (ges.tag == 0) {
+        if (ges.tag == 0) {
         //[self requestDataWithtcode:obj.tcode isHot:@"1" target:@"first" name:@"" time:@""];
         
     }else
     {
        // [self requestDataWithtcode:obj.tcode isHot:@"" target:@"first" name:@"" time:@""];
     }
-    [self requestDataWithTarget:@"first" time:0 tagId:self.currentTagId];
+    //[self requestDataWithTarget:@"first" time:0 tagId:self.currentTagId];
+    [self refreshHeader];
     [UIView beginAnimations:nil context:nil];
     [imageBttomLine setFrame:rect];
     [UIView setAnimationDuration:0.3];
@@ -488,6 +518,11 @@
         if (response.dataArray.count > 0)
         {
             [self.itemArr addObjectsFromArray:response.dataArray];
+            for (NSInteger i = 0; i < self.itemArr.count; i ++) {
+                //index = i;
+                NSMutableArray * arry = [NSMutableArray array];
+                [self.dataArr addObject:arry];
+            }
             
         }
         [self initHeader];
@@ -553,9 +588,10 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (self.dataArr.count > 0) {
-        CircleListObj *obj = [self.dataArr objectAtIndex:indexPath.row];
-       // CircleDetailViewController *viewController = [[CircleDetailViewController alloc] initWithNibName:@"CircleDetailViewController" bundle:nil];
+    
+    if (self.currentArry.count > 0) {
+        
+        CircleListObj *obj = [self.currentArry objectAtIndex:indexPath.row];
         CircleNewDetailViewController *  viewController =[[CircleNewDetailViewController alloc] initWithNibName:@"CircleNewDetailViewController" bundle:nil];
         viewController.delegate = [SHGUnifiedTreatment sharedTreatment];
         viewController.rid = obj.rid;
