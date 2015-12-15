@@ -7,7 +7,18 @@
 //
 
 #import "BaseTableViewController.h"
+#import "AppDelegate.h"
+#import "CircleListObj.h"
+#import "SHGHomeViewController.h"
+#import "ReplyTableViewCell.h"
 
-@interface CircleNewDetailViewController : BaseTableViewController
+#define kShareNum       @"shareNum"
+#define kCommentNum     @"commentNum"
+#define kPraiseNum      @"praiseNum"
+@interface CircleNewDetailViewController : BaseTableViewController<BRCommentViewDelegate,UIScrollViewDelegate,UITextFieldDelegate,ReplyDelegate,CircleActionDelegate>
+@property (weak, nonatomic)     id<CircleActionDelegate> delegate;
+@property (strong, nonatomic)   NSString *rid;
+@property (strong, nonatomic)   CircleListObj *obj;
+@property (strong, nonatomic)   NSDictionary *itemInfoDictionary;
 
 @end

@@ -25,7 +25,7 @@
 //添加分类
 #import "CirclleItemObj.h"
 #import "SHGNewsTableViewCell.h"
-
+#import "CircleNewDetailViewController.h"
 @interface SHGNewsViewController ()<MLEmojiLabelDelegate,CLLocationManagerDelegate,SHGNoticeDelegate>
 {
      UIImageView *imageBttomLine;
@@ -553,7 +553,8 @@
 {
     if (self.dataArr.count > 0) {
         CircleListObj *obj = [self.dataArr objectAtIndex:indexPath.row];
-        CircleDetailViewController *viewController = [[CircleDetailViewController alloc] initWithNibName:@"CircleDetailViewController" bundle:nil];
+       // CircleDetailViewController *viewController = [[CircleDetailViewController alloc] initWithNibName:@"CircleDetailViewController" bundle:nil];
+        CircleNewDetailViewController *  viewController =[[CircleNewDetailViewController alloc] initWithNibName:@"CircleNewDetailViewController" bundle:nil];
         viewController.delegate = [SHGUnifiedTreatment sharedTreatment];
         viewController.rid = obj.rid;
         NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:obj.praisenum, kPraiseNum,obj.sharenum,kShareNum,obj.cmmtnum,kCommentNum, nil];
