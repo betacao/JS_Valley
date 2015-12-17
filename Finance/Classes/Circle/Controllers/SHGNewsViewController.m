@@ -68,8 +68,6 @@
     [self requestType];
     self.circleType = @"attation";
     [Hud showLoadingWithMessage:@"加载中"];
-    //[self requestDataWithTarget:@"first" time:0 tagId:self.currentTagId];
-   
    }
 
 

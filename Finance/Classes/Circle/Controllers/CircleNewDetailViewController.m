@@ -92,7 +92,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    //[self.navigationItem.leftBarButtonItem setBackgroundImage:[UIImage imageNamed:@"newBack"] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
     self.commentNumLabel = [[UILabel alloc]init];
     self.commentNumLabel.backgroundColor = [UIColor redColor];
     self.commentNumLabel.textAlignment = NSTextAlignmentCenter;
@@ -461,71 +460,6 @@
     [self replyClicked:self.obj commentIndex:index];
 }
 
-//-(void)sizeUIWithObj:(CircleListObj *)obj
-//{
-//    NSString *name = obj.nickname;
-//    if (obj.nickname.length > 4) {
-//        name = [obj.nickname substringToIndex:4];
-//        name = [NSString stringWithFormat:@"%@…",name];
-//    }
-//    CGRect userRect = self.btnNickname.frame;
-//    [self.btnNickname sizeToFit];
-//    CGSize nameSize = self.btnNickname.frame.size;
-//    userRect.size.width = nameSize.width;
-//    self.btnNickname.frame = userRect;
-//    
-//    //设置分割线的坐标
-//    CGRect frame = self.breakLineView.frame;
-//    frame.origin.x = kItemMargin + CGRectGetMaxX(userRect);
-//    frame.size.width = 0.5f;
-//    frame.size.height = CGRectGetHeight(userRect);
-//    self.breakLineView.frame = frame;
-//    
-//    //设置公司名称
-//    NSString *comp = obj.company;
-//    if (obj.company.length > 5) {
-//        NSString *str = [obj.company substringToIndex:5];
-//        comp = [NSString stringWithFormat:@"%@…",str];
-//    }
-//    self.lblCompanyName.text = comp;
-//    CGRect companRect = self.lblCompanyName.frame;
-//    companRect.origin.x = kItemMargin + CGRectGetMaxX(frame);
-//    [self.lblCompanyName sizeToFit];
-//    CGSize size = self.lblCompanyName.frame.size;
-//    companRect.size.width = size.width;
-//    companRect.size.height = size.height;
-//    self.lblCompanyName.frame = companRect;
-//    
-//    //设置职位名称
-//    NSString *str = obj.title;
-//    if (obj.title.length > 4){
-//        str= [obj.title substringToIndex:4];
-//        str = [NSString stringWithFormat:@"%@…",str];
-//    }
-//    self.lbldepartName.text = str;
-//    
-//    CGRect positionRect = self.lbldepartName.frame;
-//    positionRect.origin.x = kItemMargin + CGRectGetMaxX(companRect);
-//    [self.lbldepartName sizeToFit];
-//    size = self.lbldepartName.frame.size;
-//    positionRect.size.width = size.width;
-//    positionRect.size.height = size.height;
-//    self.lbldepartName.frame = positionRect;
-//    
-//    frame = self.lblTime.frame;
-//    [self.lblTime sizeToFit];
-//    [self.lblTime setOrigin:frame.origin];
-//    
-//    //如果公司名和职位名字都不存在的话则隐藏分割线
-//    if(self.lblCompanyName.text.length == 0 && self.lbldepartName.text.length == 0){
-//        self.breakLineView.hidden = YES;
-//    } else{
-//        self.breakLineView.hidden = NO;
-//    }
-//    
-//    
-//    [self.btnNickname setBackgroundImage:[UIImage imageWithColor:BTN_SELECT_BACK_COLOR andSize:nameSize] forState:UIControlStateHighlighted];
-//}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
