@@ -30,7 +30,7 @@
     [self clearCell];
     self.obj = obj;
     self.userNameLabel.text = obj.name;
-    self.companyLabel.text = obj.companyName;
+    self.companyLabel.text = obj.companyname;
     self.positionLabel.text = obj.position;
     self.departmentLabel.text = obj.titles;
     self.positionLabel.text = obj.position;

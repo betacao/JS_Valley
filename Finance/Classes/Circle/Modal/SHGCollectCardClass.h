@@ -13,7 +13,7 @@
 @property (nonatomic,strong)NSString * uid;
 @property (nonatomic, strong)NSString *headerImageUrl;
 
-@property (nonatomic, strong)NSString *companyName;
+@property (nonatomic, strong)NSString *companyname;
 
 @property (nonatomic, strong)NSString *position;
 

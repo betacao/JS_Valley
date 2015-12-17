@@ -31,7 +31,7 @@
      UIImageView *imageBttomLine;
      NSInteger width;
      NSInteger index;
-    NSInteger currentSelect;
+     NSInteger currentSelect;
     //UILabel * tname;
 }
 @property (weak, nonatomic) IBOutlet UITableView *listTable;

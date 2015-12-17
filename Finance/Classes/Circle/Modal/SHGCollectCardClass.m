@@ -23,7 +23,7 @@
     return  @{
               @"name":@"name",
               @"headerImageUrl":@"head_img",
-              @"companyName":@"companyname",
+              @"companyname":@"companyname",
               @"position":@"position",
               @"tags":@"tags",
               @"titles":@"titles",

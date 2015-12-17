@@ -16,14 +16,22 @@
 #import "ProductListTableViewCell.h"
 #import "SHGPersonalViewController.h"
 #import "SHGCardTableViewCell.h"
+#import "SHGNewsTableViewCell.h"
+#import "CircleNewDetailViewController.h"
+#import "SHGEmptyDataView.h"
+#define KButtonWidth 80.f * XFACTOR
 @interface MyCollectionViewController ()
 {
+    UIImageView *imageBttomLine;
     BOOL hasDataFinished;
     NSInteger photoIndex;
     CircleListObj *deleteObj;
+    NSInteger   clickIndex;
 }
 
 @property (nonatomic, strong) UISegmentedControl *segmentControl;
+
+@property (nonatomic, strong) UIView * categoryView;
 
 @property (nonatomic, strong) NSMutableArray *dataSource;
 
@@ -35,7 +43,12 @@
 
 @property (nonatomic, strong) NSMutableArray * cardList;
 
+@property (nonatomic, strong) NSMutableArray * newsList;
+
 @property (nonatomic, strong) IBOutlet UITableView *tableView;
+
+@property (strong, nonatomic) UITableViewCell *emptyCell;
+@property (strong, nonatomic) SHGEmptyDataView *emptyView;
 @end
 
 @implementation MyCollectionViewController
@@ -45,14 +58,17 @@
     
     // Do any additional setup after loading the view from its nib.
 	self.selectType = 1;
-	self.navigationItem.titleView = self.segmentControl;
+	//self.navigationItem.titleView = self.segmentControl;
+    self.categoryView.userInteractionEnabled = YES;
+    //self.tableView.tableHeaderView = self.categoryView;
+    self.title = @"我的收藏";
     [self addHeaderRefresh:self.tableView headerRefesh:YES andFooter:YES];
-    self.tableView.header.backgroundColor = [UIColor colorWithHexString:@"efefef"];
     self.tableView.backgroundColor = [UIColor colorWithHexString:@"efefef"];
+    //self.tableView.backgroundColor = [UIColor whiteColor];
     [CommonMethod setExtraCellLineHidden:self.tableView];
-    self.tableView.separatorStyle = 1;
+    //self.tableView.separatorStyle = 1;
     [Hud showLoadingWithMessage:@"加载中"];
-	[self requestPostListWithTarget:@"first" time:@"-1"];
+	[self requestPostListWithTarget:@"first" time:@"0"];
 
 }
 
@@ -70,67 +86,188 @@
     }
 }
 
-- (UISegmentedControl *)segmentControl
+//- (UISegmentedControl *)segmentControl
+//{
+//	if (!_segmentControl) {
+//		
+//		_segmentControl = [[UISegmentedControl alloc] initWithFrame:CGRectMake(58, 0, 208, 30)];
+//		
+//		[_segmentControl insertSegmentWithTitle:@"帖子" atIndex:0 animated:YES];
+//		
+//		[_segmentControl insertSegmentWithTitle:@"产品" atIndex:1 animated:YES];
+//		[_segmentControl insertSegmentWithTitle:@"名片" atIndex:2 animated:YES];
+//		_segmentControl.selectedSegmentIndex = 0;
+//		
+//		[_segmentControl addTarget:self action:@selector(selected:) forControlEvents:UIControlEventValueChanged];
+//		
+//		[_segmentControl setTintColor:RGB(248, 92, 83)];
+//		
+//		NSDictionary *titleArributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:17],NSFontAttributeName, nil];
+//		
+//		[_segmentControl setTitleTextAttributes:titleArributes forState:UIControlStateNormal];
+//		[_segmentControl setTitleTextAttributes:titleArributes forState:UIControlStateHighlighted];
+//		
+//	}
+//	return _segmentControl;
+//}
+
+-(UIView * )categoryView
 {
-	if (!_segmentControl) {
-		
-		_segmentControl = [[UISegmentedControl alloc] initWithFrame:CGRectMake(58, 0, 208, 30)];
-		
-		[_segmentControl insertSegmentWithTitle:@"帖子" atIndex:0 animated:YES];
-		
-		[_segmentControl insertSegmentWithTitle:@"产品" atIndex:1 animated:YES];
-		[_segmentControl insertSegmentWithTitle:@"名片" atIndex:2 animated:YES];
-		_segmentControl.selectedSegmentIndex = 0;
-		
-		[_segmentControl addTarget:self action:@selector(selected:) forControlEvents:UIControlEventValueChanged];
-		
-		[_segmentControl setTintColor:RGB(248, 92, 83)];
-		
-		NSDictionary *titleArributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:17],NSFontAttributeName, nil];
-		
-		[_segmentControl setTitleTextAttributes:titleArributes forState:UIControlStateNormal];
-		[_segmentControl setTitleTextAttributes:titleArributes forState:UIControlStateHighlighted];
-		
-	}
-	return _segmentControl;
+    if (!_categoryView) {
+        _categoryView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.tableView.width, 42.0)];
+        _categoryView.backgroundColor = [UIColor colorWithHexString:@"F6F6F6"];
+        NSArray * cartegoryArry = [NSArray arrayWithObjects:@"动态",@"产品",@"名片",@"资讯", nil];
+        NSInteger buttonWidth = self.tableView.width/4.0;
+        for (NSInteger i = 0; i< 4; i ++) {
+            UIButton * button = [UIButton buttonWithType:UIButtonTypeCustom];
+            button.frame = CGRectMake(i*KButtonWidth, 0, KButtonWidth, 40.0);
+            button.tag = 20+i;
+            [button setTitleColor:[UIColor colorWithHexString:@"333333"] forState:UIControlStateNormal];
+            button.titleLabel.font = [UIFont systemFontOfSize:14];
+            if (i == 0) {
+                [button setTitleColor:[UIColor colorWithHexString:@"D82626"] forState:UIControlStateNormal];
+            }
+            [button setTitle:[cartegoryArry objectAtIndex:i] forState:UIControlStateNormal];
+            button.titleLabel.textAlignment = NSTextAlignmentCenter;
+            [button addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchUpInside];
+            [_categoryView addSubview:button];
+        }
+        clickIndex = 20;
+        imageBttomLine = [[UIImageView alloc] initWithFrame:CGRectMake((buttonWidth-40.0)/2, 40.0, 40.0f, 2.0f)];
+        [imageBttomLine setImage:[UIImage imageNamed:@"tab下划线"]];
+        [_categoryView addSubview:imageBttomLine];
+    }
+    return _categoryView;
+}
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return _categoryView.height;
 }
 
-- (void)selected:(id)sender
+-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-  
-	UISegmentedControl* control = (UISegmentedControl*)sender;
-	switch (control.selectedSegmentIndex) {
-		case 0:
-		{
-			self.selectType = 1;
+    return _categoryView;
+}
+
+-(void)buttonClick:(UIButton *) btn
+{
+    UIButton * button = [self.view viewWithTag:clickIndex];
+    [button setTitleColor:[UIColor colorWithHexString:@"333333"] forState:UIControlStateNormal];
+    clickIndex = btn.tag;
+    switch (btn.tag) {
+        case 20:
+        {
+            self.selectType = 1;
+            [self refreshDataSource];
             self.tableView.separatorStyle = 1;
+            CGRect rect = imageBttomLine.frame;
+            rect.origin.x =(self.tableView.width/4-40.0)/2+ (btn.tag-20)*self.tableView.width/4 ;
+            [UIView beginAnimations:nil context:nil];
+            [imageBttomLine setFrame:rect];
+            [UIView setAnimationDuration:0.3];
+            [UIView commitAnimations];
+            [btn setTitleColor:[UIColor colorWithHexString:@"D82626"] forState:UIControlStateNormal];
+            [self.tableView reloadData];
             [Hud showLoadingWithMessage:@"加载中"];
-			[self requestPostListWithTarget:@"first" time:@"-1"];
-		}
-			break;
-		case 1:
-		{
+            [self requestPostListWithTarget:@"first" time:@"-1"];
+        }
+            break;
+        case 21:
+        {
             self.tableView.separatorStyle = 0;
-             self.selectType = 2;
+            self.selectType = 2;
+            [self refreshDataSource];
+            CGRect rect = imageBttomLine.frame;
+            rect.origin.x =(self.tableView.width/4-40.0)/2+ (btn.tag-20)*self.tableView.width/4 ;
+            [UIView beginAnimations:nil context:nil];
+            [imageBttomLine setFrame:rect];
+            [UIView setAnimationDuration:0.3];
+            [UIView commitAnimations];
+            [btn setTitleColor:[UIColor colorWithHexString:@"D82626"] forState:UIControlStateNormal];
+            [self.tableView reloadData];
             [Hud showLoadingWithMessage:@"加载中"];
             [self requestProductListWithTarget:@"first" time:@""];
             
-		}
-			break;
-        case 2:
+        }
+            break;
+        case 22:
         {
             self.tableView.separatorStyle = 0;
             self.selectType = 3;
+             [self refreshDataSource];
+            CGRect rect = imageBttomLine.frame;
+            rect.origin.x =(self.tableView.width/4-40.0)/2+ (btn.tag-20)*self.tableView.width/4 ;
+            [UIView beginAnimations:nil context:nil];
+            [imageBttomLine setFrame:rect];
+            [UIView setAnimationDuration:0.3];
+            [UIView commitAnimations];
+            [btn setTitleColor:[UIColor colorWithHexString:@"D82626"] forState:UIControlStateNormal];
+            [self.tableView reloadData];
             [Hud showLoadingWithMessage:@"加载中"];
             [self requestCardListWithTarget:@"first" time:@"-1" ];
             
             
         }
             break;
-		default:
-			break;
-	}
+        case 23:
+        {
+            self.tableView.separatorStyle = 0;
+            self.selectType = 4;
+             [self refreshDataSource];
+            CGRect rect = imageBttomLine.frame;
+            rect.origin.x =(self.tableView.width/4-40.0)/2+ (btn.tag-20.0)*self.tableView.width/4 ;
+            [UIView beginAnimations:nil context:nil];
+            [imageBttomLine setFrame:rect];
+            [UIView setAnimationDuration:0.3];
+            [UIView commitAnimations];
+            [btn setTitleColor:[UIColor colorWithHexString:@"D82626"] forState:UIControlStateNormal];
+            [self.tableView reloadData];
+            [Hud showLoadingWithMessage:@"加载中"];
+            [self requestNewsListWithTarget:@"first" time:@"" ];
+            }
+            break;
+
+        default:
+            break;
+    }
+
 }
+//- (void)selected:(id)sender
+//{
+//  
+//	UISegmentedControl* control = (UISegmentedControl*)sender;
+//	switch (control.selectedSegmentIndex) {
+//		case 0:
+//		{
+//			self.selectType = 1;
+//            self.tableView.separatorStyle = 1;
+//            [Hud showLoadingWithMessage:@"加载中"];
+//			[self requestPostListWithTarget:@"first" time:@"-1"];
+//		}
+//			break;
+//		case 1:
+//		{
+//            self.tableView.separatorStyle = 0;
+//             self.selectType = 2;
+//            [Hud showLoadingWithMessage:@"加载中"];
+//            [self requestProductListWithTarget:@"first" time:@""];
+//            
+//		}
+//			break;
+//        case 2:
+//        {
+//            self.tableView.separatorStyle = 0;
+//            self.selectType = 3;
+//            [Hud showLoadingWithMessage:@"加载中"];
+//            [self requestCardListWithTarget:@"first" time:@"-1" ];
+//            
+//            
+//        }
+//            break;
+//		default:
+//			break;
+//	}
+//}
 
 - (void)refreshDataSource
 {
@@ -140,6 +277,8 @@
 		self.dataSource = self.productList;
     }else if (self.selectType == 3){
         self.dataSource = self.cardList;
+    }else if (self.selectType == 4){
+        self.dataSource = self.newsList;
     }
 	
 	[self.tableView reloadData];
@@ -173,6 +312,11 @@
             updateTime = obj.collectTime;
             [self requestCardListWithTarget:target time:updateTime];
         }
+        else if (self.selectType == 4){
+            CircleListObj *obj = self.dataSource[0];
+            updateTime = obj.publishdate;
+            [self requestCardListWithTarget:target time:updateTime];
+        }
 
     } else
     {
@@ -196,6 +340,10 @@
         }else if (self.selectType == 3){
              [Hud showLoadingWithMessage:@"加载中"];
             [self requestCardListWithTarget:@"load" time:updateTime];
+        }
+        else if (self.selectType == 4){
+            [Hud showLoadingWithMessage:@"加载中"];
+            [self requestNewsListWithTarget:@"load" time:updateTime];
         }
 
 	} else{
@@ -228,7 +376,7 @@
             if (response.dataArray.count > 0) {
                 for (NSInteger i = response.dataArray.count-1; i >= 0; i --) {
                     CircleListObj *obj = response.dataArray[i];
-                    [self.dataSource insertObject:obj atIndex:0];
+                    [self.postList insertObject:obj atIndex:0];
                 }
                 
             }
@@ -650,6 +798,69 @@
 
 
 }
+- (void)requestNewsListWithTarget:(NSString *)target time:(NSString *)time
+{
+    if ([target isEqualToString:@"first"])
+    {
+        [self.tableView.footer resetNoMoreData];
+        hasDataFinished = NO;
+        
+    }
+    
+    NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
+    [Hud showLoadingWithMessage:@"加载中"];
+    NSDictionary *param = @{@"uid":uid,
+                            @"target":target,
+                            @"time":time,
+                            @"num":@"100"};
+    [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttp,@"collection",@"myNewsList"] class:[CircleListObj class] parameters:param success:^(MOCHTTPResponse *response) {
+        NSLog(@"=========%@",response.dataArray);
+//        NSArray *normalArray = [response.dataDictionary objectForKey:@"normalpostlist"];
+//        normalArray = [[SHGGloble sharedGloble] parseServerJsonArrayToJSONModel:normalArray class:[CircleListObj class]];
+
+        
+        if ([target isEqualToString:@"first"]) {
+            [self.newsList removeAllObjects];
+            [self.newsList addObjectsFromArray:response.dataArray];
+            
+        }
+        if ([target isEqualToString:@"refresh"]) {
+            if (response.dataArray.count > 0) {
+                for (NSInteger i = response.dataArray.count-1; i >= 0; i --) {
+                    CircleListObj *obj = [response.dataArray objectAtIndex:i];
+                    [self.newsList insertObject:obj atIndex:0];
+                }
+                
+            }
+            
+        }
+        if ([target isEqualToString:@"load"]) {
+            [self.newsList addObjectsFromArray:response.dataArray];
+            
+        }
+        if (IsArrEmpty(response.dataArray)) {
+            hasDataFinished = YES;
+        }
+        else
+        {
+            hasDataFinished = NO;
+        }
+        [self refreshDataSource];
+        [self.tableView.header endRefreshing];
+        [self.tableView.footer endRefreshing];
+        [Hud hideHud];
+        
+    } failed:^(MOCHTTPResponse *response) {
+        NSLog(@"%@",response.errorMessage);
+        [Hud showMessageWithText:response.errorMessage];
+        [self.tableView.header endRefreshing];
+        [self.tableView.footer endRefreshing];
+        [Hud hideHud];
+        
+    }];
+    
+    
+}
 
 - (void)requestProductListWithTarget:(NSString *)target time:(NSString *)time
 {
@@ -726,6 +937,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
 	// Return the number of rows in the section.
+    
 	return self.dataSource.count;
 }
 
@@ -739,16 +951,20 @@
             return [obj fetchCellHeight];
         }
         else{
-            return 44;
+            return 44.0f;
         }
     }else if (self.selectType == 2)
     {
-        return 100;
+        return 100.0f;
         
     }
     else if (self.selectType == 3)
     {
-        return 144;
+        return 144.0f;
+        
+    }else if (self.selectType == 4)
+    {
+        return 83.0f;
         
     }else
     {
@@ -758,55 +974,76 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (self.selectType == 1) {
-        CircleListObj *obj = self.dataSource[indexPath.row];
-        
-        if ([obj.status boolValue]) {
-            NSString *cellIdentifier = @"circleListIdentifier";
-            SHGHomeTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-            if (!cell) {
-                cell = [[[NSBundle mainBundle] loadNibNamed:@"SHGHomeTableViewCell" owner:self options:nil] lastObject];
-            }
-            cell.index = indexPath.row;
-            cell.delegate = self;
-            [cell loadDatasWithObj:obj type:@"normal"];
-            return cell;
-        }
-        
-        else
-        {
-            NSString *cellIdentifier = @"noListIdentifier";
-            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-            if (!cell) {
-                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
-            }
-            cell.textLabel.text = @"原帖已删除";
-            cell.textLabel.font = [UIFont systemFontOfSize:16.0f];
+    
+        if (self.selectType == 1) {
+            CircleListObj *obj = self.dataSource[indexPath.row];
             
+            if ([obj.status boolValue]) {
+                NSString *cellIdentifier = @"circleListIdentifier";
+                SHGHomeTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+                if (!cell) {
+                    cell = [[[NSBundle mainBundle] loadNibNamed:@"SHGHomeTableViewCell" owner:self options:nil] lastObject];
+                }
+                cell.index = indexPath.row;
+                cell.delegate = self;
+                [cell loadDatasWithObj:obj type:@"normal"];
+                return cell;
+            }
+            
+            else
+            {
+                NSString *cellIdentifier = @"noListIdentifier";
+                UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+                if (!cell) {
+                    cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+                }
+                cell.textLabel.text = @"原帖已删除";
+                cell.textLabel.font = [UIFont systemFontOfSize:16.0f];
+                
+                return cell;
+            }
+            
+        }else if (self.selectType == 2)
+        {
+            NSString *prodCellIdentifier = @"circleCellIdentifier";
+            ProductListTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:prodCellIdentifier];
+            if (!cell) {
+                cell = [[[NSBundle mainBundle] loadNibNamed:@"ProductListTableViewCell" owner:self options:nil] lastObject];
+            }
+            ProdListObj *obj = self.dataSource[indexPath.row];
+            [cell loadDatasWithObj:obj];
             return cell;
+        }if (self.selectType == 3) {
+            NSString *cardCellIdentifier = @"circleCellIdentifier";
+            SHGCardTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cardCellIdentifier];
+            if (!cell) {
+                cell = [[[NSBundle mainBundle] loadNibNamed:@"SHGCardTableViewCell" owner:self options:nil] lastObject];
+            }
+            SHGCollectCardClass *obj = self.dataSource[indexPath.row];
+            [cell loadCardDatasWithObj:obj];
+            return cell;
+            
         }
-
-    }else if (self.selectType == 2)
-    {
-        NSString *prodCellIdentifier = @"circleCellIdentifier";
-        ProductListTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:prodCellIdentifier];
-        if (!cell) {
-            cell = [[[NSBundle mainBundle] loadNibNamed:@"ProductListTableViewCell" owner:self options:nil] lastObject];
-        }
-        ProdListObj *obj = self.dataSource[indexPath.row];
-        [cell loadDatasWithObj:obj];
-        return cell;
-    }if (self.selectType == 3) {
-        NSString *cardCellIdentifier = @"SHGCardTableViewCell";
-        SHGCardTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cardCellIdentifier];
-        if (!cell) {
-            cell = [[[NSBundle mainBundle] loadNibNamed:@"SHGCardTableViewCell" owner:self options:nil] lastObject];
-        }
-        SHGCollectCardClass *obj = self.dataSource[indexPath.row];
-        [cell loadCardDatasWithObj:obj];
-        return cell;
-        
-    }
+        if (self.selectType == 4) {
+            //        NSString *cardCellIdentifier = @"circleCellIdentifier";
+            //        SHGCardTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cardCellIdentifier];
+            //        if (!cell) {
+            //            cell = [[[NSBundle mainBundle] loadNibNamed:@"SHGCardTableViewCell" owner:self options:nil] lastObject];
+            //        }
+            //        SHGCollectCardClass *obj = self.dataSource[indexPath.row];
+            //        [cell loadCardDatasWithObj:obj];
+            CircleListObj *obj = [self.dataSource objectAtIndex:indexPath.row];
+            NSString * cellIdentifier = @"SHGNewsTableViewCell";
+            SHGNewsTableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+            if (!cell) {
+                cell = [[[NSBundle mainBundle]loadNibNamed:@"SHGNewsTableViewCell" owner:self options:nil] lastObject];
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                
+            }
+            [cell loadUi:obj];
+            return cell;
+            }
+       
 		return nil;
 		
 }
@@ -839,13 +1076,26 @@
         vc.type = type;
         [self.navigationController pushViewController:vc animated:YES];
     }else if (self.selectType == 3)
-    {
+    { 
        
         SHGCollectCardClass * obj = self.dataSource[indexPath.row];
         SHGPersonalViewController * vc = [[SHGPersonalViewController alloc]init];
         vc.userId = obj.uid;
         [self.navigationController pushViewController:vc animated:YES];
     
+
+    }else if (self.selectType == 4)
+    {
+        if (self.newsList.count > 0) {
+            
+            CircleListObj *obj = [self.newsList objectAtIndex:indexPath.row];
+            CircleNewDetailViewController *  viewController =[[CircleNewDetailViewController alloc] initWithNibName:@"CircleNewDetailViewController" bundle:nil];
+           // viewController.delegate = [SHGUnifiedTreatment sharedTreatment];
+            viewController.rid = obj.rid;
+            NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:obj.praisenum, kPraiseNum,obj.sharenum,kShareNum,obj.cmmtnum,kCommentNum, nil];
+            viewController.itemInfoDictionary = dictionary;
+            [self.navigationController pushViewController:viewController animated:YES];
+        }
 
     }
 	[tableView deselectRowAtIndexPath:indexPath animated:YES];
@@ -855,8 +1105,8 @@
 -(NSMutableArray *)dataSource{
     if (!_dataSource) {
         _dataSource = [NSMutableArray array];
-    }
-    return _dataSource;
+
+    }    return _dataSource;
 }
 -(NSMutableArray *)productList{
     if (!_productList) {
@@ -876,6 +1126,32 @@
     }
     return _cardList;
 }
+-(NSMutableArray *)newsList{
+    if (!_newsList) {
+        _newsList = [NSMutableArray array];
+    }
+    return _newsList;
+}
+
+- (UITableViewCell *)emptyCell
+{
+    if (!_emptyCell) {
+        _emptyCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+        _emptyCell.selectionStyle = UITableViewCellSelectionStyleNone;
+        [_emptyCell.contentView addSubview:self.emptyView];
+    }
+    return _emptyCell;
+}
+
+
+- (SHGEmptyDataView *)emptyView
+{
+    if (!_emptyView) {
+        _emptyView = [[SHGEmptyDataView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, SCREENWIDTH, SCREENHEIGHT)];
+    }
+    return _emptyView;
+}
+
 
 
 #pragma mark detailDelagte
