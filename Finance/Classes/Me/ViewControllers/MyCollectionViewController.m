@@ -58,12 +58,15 @@
     
     // Do any additional setup after loading the view from its nib.
 	self.selectType = 1;
+	//self.navigationItem.titleView = self.segmentControl;
     self.categoryView.userInteractionEnabled = YES;
+    //self.tableView.tableHeaderView = self.categoryView;
     self.title = @"我的收藏";
     [self addHeaderRefresh:self.tableView headerRefesh:YES andFooter:YES];
     self.tableView.backgroundColor = [UIColor colorWithHexString:@"efefef"];
+    //self.tableView.backgroundColor = [UIColor whiteColor];
     [CommonMethod setExtraCellLineHidden:self.tableView];
-    self.tableView.separatorStyle = 1;
+    //self.tableView.separatorStyle = 1;
     [Hud showLoadingWithMessage:@"加载中"];
 	[self requestPostListWithTarget:@"first" time:@"0"];
 
@@ -83,6 +86,30 @@
     }
 }
 
+//- (UISegmentedControl *)segmentControl
+//{
+//	if (!_segmentControl) {
+//		
+//		_segmentControl = [[UISegmentedControl alloc] initWithFrame:CGRectMake(58, 0, 208, 30)];
+//		
+//		[_segmentControl insertSegmentWithTitle:@"帖子" atIndex:0 animated:YES];
+//		
+//		[_segmentControl insertSegmentWithTitle:@"产品" atIndex:1 animated:YES];
+//		[_segmentControl insertSegmentWithTitle:@"名片" atIndex:2 animated:YES];
+//		_segmentControl.selectedSegmentIndex = 0;
+//		
+//		[_segmentControl addTarget:self action:@selector(selected:) forControlEvents:UIControlEventValueChanged];
+//		
+//		[_segmentControl setTintColor:RGB(248, 92, 83)];
+//		
+//		NSDictionary *titleArributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:17],NSFontAttributeName, nil];
+//		
+//		[_segmentControl setTitleTextAttributes:titleArributes forState:UIControlStateNormal];
+//		[_segmentControl setTitleTextAttributes:titleArributes forState:UIControlStateHighlighted];
+//		
+//	}
+//	return _segmentControl;
+//}
 
 -(UIView * )categoryView
 {
@@ -132,6 +159,7 @@
         {
             self.selectType = 1;
             [self refreshDataSource];
+            self.tableView.separatorStyle = 1;
             CGRect rect = imageBttomLine.frame;
             rect.origin.x =(self.tableView.width/4-40.0)/2+ (btn.tag-20)*self.tableView.width/4 ;
             [UIView beginAnimations:nil context:nil];
@@ -146,6 +174,7 @@
             break;
         case 21:
         {
+            self.tableView.separatorStyle = 0;
             self.selectType = 2;
             [self refreshDataSource];
             CGRect rect = imageBttomLine.frame;
@@ -163,8 +192,9 @@
             break;
         case 22:
         {
+            self.tableView.separatorStyle = 0;
             self.selectType = 3;
-            [self refreshDataSource];
+             [self refreshDataSource];
             CGRect rect = imageBttomLine.frame;
             rect.origin.x =(self.tableView.width/4-40.0)/2+ (btn.tag-20)*self.tableView.width/4 ;
             [UIView beginAnimations:nil context:nil];
@@ -181,6 +211,7 @@
             break;
         case 23:
         {
+            self.tableView.separatorStyle = 0;
             self.selectType = 4;
              [self refreshDataSource];
             CGRect rect = imageBttomLine.frame;
@@ -201,6 +232,42 @@
     }
 
 }
+//- (void)selected:(id)sender
+//{
+//  
+//	UISegmentedControl* control = (UISegmentedControl*)sender;
+//	switch (control.selectedSegmentIndex) {
+//		case 0:
+//		{
+//			self.selectType = 1;
+//            self.tableView.separatorStyle = 1;
+//            [Hud showLoadingWithMessage:@"加载中"];
+//			[self requestPostListWithTarget:@"first" time:@"-1"];
+//		}
+//			break;
+//		case 1:
+//		{
+//            self.tableView.separatorStyle = 0;
+//             self.selectType = 2;
+//            [Hud showLoadingWithMessage:@"加载中"];
+//            [self requestProductListWithTarget:@"first" time:@""];
+//            
+//		}
+//			break;
+//        case 2:
+//        {
+//            self.tableView.separatorStyle = 0;
+//            self.selectType = 3;
+//            [Hud showLoadingWithMessage:@"加载中"];
+//            [self requestCardListWithTarget:@"first" time:@"-1" ];
+//            
+//            
+//        }
+//            break;
+//		default:
+//			break;
+//	}
+//}
 
 - (void)refreshDataSource
 {
@@ -748,6 +815,10 @@
                             @"num":@"100"};
     [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttp,@"collection",@"myNewsList"] class:[CircleListObj class] parameters:param success:^(MOCHTTPResponse *response) {
         NSLog(@"=========%@",response.dataArray);
+//        NSArray *normalArray = [response.dataDictionary objectForKey:@"normalpostlist"];
+//        normalArray = [[SHGGloble sharedGloble] parseServerJsonArrayToJSONModel:normalArray class:[CircleListObj class]];
+
+        
         if ([target isEqualToString:@"first"]) {
             [self.newsList removeAllObjects];
             [self.newsList addObjectsFromArray:response.dataArray];
@@ -954,7 +1025,14 @@
             
         }
         if (self.selectType == 4) {
-             CircleListObj *obj = [self.dataSource objectAtIndex:indexPath.row];
+            //        NSString *cardCellIdentifier = @"circleCellIdentifier";
+            //        SHGCardTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cardCellIdentifier];
+            //        if (!cell) {
+            //            cell = [[[NSBundle mainBundle] loadNibNamed:@"SHGCardTableViewCell" owner:self options:nil] lastObject];
+            //        }
+            //        SHGCollectCardClass *obj = self.dataSource[indexPath.row];
+            //        [cell loadCardDatasWithObj:obj];
+            CircleListObj *obj = [self.dataSource objectAtIndex:indexPath.row];
             NSString * cellIdentifier = @"SHGNewsTableViewCell";
             SHGNewsTableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
             if (!cell) {
@@ -1012,6 +1090,7 @@
             
             CircleListObj *obj = [self.newsList objectAtIndex:indexPath.row];
             CircleNewDetailViewController *  viewController =[[CircleNewDetailViewController alloc] initWithNibName:@"CircleNewDetailViewController" bundle:nil];
+           // viewController.delegate = [SHGUnifiedTreatment sharedTreatment];
             viewController.rid = obj.rid;
             NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:obj.praisenum, kPraiseNum,obj.sharenum,kShareNum,obj.cmmtnum,kCommentNum, nil];
             viewController.itemInfoDictionary = dictionary;
