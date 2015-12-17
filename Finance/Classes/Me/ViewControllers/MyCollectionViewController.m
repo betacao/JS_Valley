@@ -58,9 +58,7 @@
     
     // Do any additional setup after loading the view from its nib.
 	self.selectType = 1;
-	//self.navigationItem.titleView = self.segmentControl;
     self.categoryView.userInteractionEnabled = YES;
-    //self.tableView.tableHeaderView = self.categoryView;
     self.title = @"我的收藏";
     [self addHeaderRefresh:self.tableView headerRefesh:YES andFooter:YES];
     self.tableView.backgroundColor = [UIColor colorWithHexString:@"efefef"];

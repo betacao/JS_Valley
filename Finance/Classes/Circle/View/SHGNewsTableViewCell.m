@@ -61,6 +61,10 @@
     self.originLabel.frame = CGRectMake(toLeftSpace, self.contentView.height-toBottomSpace-bottomLabelHeight, bottomLabelWidth, bottomLabelHeight);
     self.timeLabel.frame = CGRectMake(self.contentView.width-bottomLabelWidth-toLeftSpace, self.contentView.height-toBottomSpace-bottomLabelHeight, bottomLabelWidth, bottomLabelHeight);
 }
+-(void)loadTitleLabelChange
+{
+    self.titleLabel.textColor = [UIColor colorWithHexString:@"898989"];
+}
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
 

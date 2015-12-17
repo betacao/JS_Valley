@@ -10,4 +10,5 @@
 #import "CircleListObj.h"
 @interface SHGNewsTableViewCell : UITableViewCell
 -(void)loadUi:(CircleListObj * )obj;
+-(void)loadTitleLabelChange;
 @end

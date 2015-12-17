@@ -590,7 +590,8 @@
 {
     
     if (self.currentArry.count > 0) {
-        
+       SHGNewsTableViewCell * cell = [tableView cellForRowAtIndexPath:indexPath];
+        [cell loadTitleLabelChange];
         CircleListObj *obj = [self.currentArry objectAtIndex:indexPath.row];
         CircleNewDetailViewController *  viewController =[[CircleNewDetailViewController alloc] initWithNibName:@"CircleNewDetailViewController" bundle:nil];
         viewController.delegate = [SHGUnifiedTreatment sharedTreatment];
