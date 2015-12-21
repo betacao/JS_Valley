@@ -112,18 +112,19 @@
 -(UIView * )categoryView
 {
     if (!_categoryView) {
-        _categoryView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.tableView.width, 42.0)];
+        _categoryView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.tableView.width, 37.0)];
         _categoryView.backgroundColor = [UIColor colorWithHexString:@"F6F6F6"];
         NSArray * cartegoryArry = [NSArray arrayWithObjects:@"动态",@"产品",@"名片",@"资讯", nil];
         NSInteger buttonWidth = self.tableView.width/4.0;
         for (NSInteger i = 0; i< 4; i ++) {
             UIButton * button = [UIButton buttonWithType:UIButtonTypeCustom];
-            button.frame = CGRectMake(i*KButtonWidth, 0, KButtonWidth, 40.0);
+            button.frame = CGRectMake(i*KButtonWidth, 0, KButtonWidth, 35.0);
             button.tag = 20+i;
             [button setTitleColor:[UIColor colorWithHexString:@"333333"] forState:UIControlStateNormal];
             button.titleLabel.font = [UIFont systemFontOfSize:14];
             if (i == 0) {
                 [button setTitleColor:[UIColor colorWithHexString:@"D82626"] forState:UIControlStateNormal];
+                 button.titleLabel.font = [UIFont systemFontOfSize:14];
             }
             [button setTitle:[cartegoryArry objectAtIndex:i] forState:UIControlStateNormal];
             button.titleLabel.textAlignment = NSTextAlignmentCenter;
@@ -131,8 +132,11 @@
             [_categoryView addSubview:button];
         }
         clickIndex = 20;
-        imageBttomLine = [[UIImageView alloc] initWithFrame:CGRectMake((buttonWidth-40.0)/2, 40.0, 40.0f, 2.0f)];
+        imageBttomLine = [[UIImageView alloc] initWithFrame:CGRectMake((buttonWidth-40.0)/2, 34.0, 40.0f, 2.0f)];
         [imageBttomLine setImage:[UIImage imageNamed:@"tab下划线"]];
+        UIView * lineView = [[UIView alloc]initWithFrame:CGRectMake(0, 36, SCREENWIDTH, 0.5)];
+        lineView.backgroundColor = [UIColor colorWithHexString:@"e3e3e3"];
+        [self.categoryView addSubview:lineView];
         [_categoryView addSubview:imageBttomLine];
     }
     return _categoryView;
@@ -151,13 +155,14 @@
 {
     UIButton * button = [self.view viewWithTag:clickIndex];
     [button setTitleColor:[UIColor colorWithHexString:@"333333"] forState:UIControlStateNormal];
+    button.titleLabel.font = [UIFont systemFontOfSize:14];
     clickIndex = btn.tag;
     switch (btn.tag) {
         case 20:
         {
             self.selectType = 1;
             [self refreshDataSource];
-            self.tableView.separatorStyle = 1;
+            self.tableView.separatorStyle = 0;
             CGRect rect = imageBttomLine.frame;
             rect.origin.x =(self.tableView.width/4-40.0)/2+ (btn.tag-20)*self.tableView.width/4 ;
             [UIView beginAnimations:nil context:nil];
@@ -165,6 +170,7 @@
             [UIView setAnimationDuration:0.3];
             [UIView commitAnimations];
             [btn setTitleColor:[UIColor colorWithHexString:@"D82626"] forState:UIControlStateNormal];
+             btn.titleLabel.font = [UIFont systemFontOfSize:14];
             [self.tableView reloadData];
             [Hud showLoadingWithMessage:@"加载中"];
             [self requestPostListWithTarget:@"first" time:@"-1"];
@@ -182,6 +188,7 @@
             [UIView setAnimationDuration:0.3];
             [UIView commitAnimations];
             [btn setTitleColor:[UIColor colorWithHexString:@"D82626"] forState:UIControlStateNormal];
+             btn.titleLabel.font = [UIFont systemFontOfSize:14];
             [self.tableView reloadData];
             [Hud showLoadingWithMessage:@"加载中"];
             [self requestProductListWithTarget:@"first" time:@""];
@@ -200,6 +207,7 @@
             [UIView setAnimationDuration:0.3];
             [UIView commitAnimations];
             [btn setTitleColor:[UIColor colorWithHexString:@"D82626"] forState:UIControlStateNormal];
+             btn.titleLabel.font = [UIFont systemFontOfSize:14];
             [self.tableView reloadData];
             [Hud showLoadingWithMessage:@"加载中"];
             [self requestCardListWithTarget:@"first" time:@"-1" ];
@@ -219,6 +227,7 @@
             [UIView setAnimationDuration:0.3];
             [UIView commitAnimations];
             [btn setTitleColor:[UIColor colorWithHexString:@"D82626"] forState:UIControlStateNormal];
+             btn.titleLabel.font = [UIFont systemFontOfSize:14];
             [self.tableView reloadData];
             [Hud showLoadingWithMessage:@"加载中"];
             [self requestNewsListWithTarget:@"first" time:@"" ];

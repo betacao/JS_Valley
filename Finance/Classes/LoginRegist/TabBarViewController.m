@@ -246,12 +246,12 @@
 #pragma mark - 子页面初始化
 -(void)initSubpage
 {
-    //圈子
-    UIImage *image = [UIImage imageNamed:@"dynamic_normal"];
+    //首页
+    UIImage *image = [UIImage imageNamed:@"home"];
     image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    UIImage *selectedImage = [UIImage imageNamed:@"dynamic_selected"];
+    UIImage *selectedImage = [UIImage imageNamed:@"home_height"];
     selectedImage = [selectedImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    self.homeSegmentViewController.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"大牛圈" image:image selectedImage:selectedImage];
+    self.homeSegmentViewController.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"首页" image:image selectedImage:selectedImage];
     self.homeSegmentViewController.tabBarItem.tag = 1000;
     __weak typeof(self)weakSelf = self;
     self.homeSegmentViewController.block = ^(UIView *view){
@@ -260,29 +260,29 @@
     };
     self.navigationItem.rightBarButtonItem = self.homeSegmentViewController.rightBarButtonItem;
     self.navigationItem.leftBarButtonItem = self.homeSegmentViewController.leftBarButtonItem;
-    //消息
-    image = [UIImage imageNamed:@"message_normal"];
+    //业务
+    image = [UIImage imageNamed:@"business"];
     image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    selectedImage = [UIImage imageNamed:@"message_selected"];
+    selectedImage = [UIImage imageNamed:@"business_height"];
     selectedImage = [selectedImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    self.marketSegmentViewController.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"消息" image:image selectedImage:selectedImage];
+    self.marketSegmentViewController.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"业务" image:image selectedImage:selectedImage];
     self.marketSegmentViewController.tabBarItem.tag = 2000;
     self.marketSegmentViewController.block = ^(UIView *view){
         weakSelf.marketSegmentTitleView = view;
         weakSelf.navigationItem.titleView = weakSelf.marketSegmentTitleView;
     };
     //产品
-    image = [UIImage imageNamed:@"discovery_normal"];
+    image = [UIImage imageNamed:@"find"];
     image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    selectedImage = [UIImage imageNamed:@"discovery_selected"];
+    selectedImage = [UIImage imageNamed:@"find_height"];
     selectedImage = [selectedImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     self.prodViewController.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"发现" image:image selectedImage:selectedImage];
     self.prodViewController.tabBarItem.tag = 3000;
     
     //我的
-    image = [UIImage imageNamed:@"mine_normal"];
+    image = [UIImage imageNamed:@"my"];
     image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    selectedImage = [UIImage imageNamed:@"mine_selected"];
+    selectedImage = [UIImage imageNamed:@"my_height"];
     selectedImage = [selectedImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     self.meViewController.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"我的" image:image selectedImage:selectedImage];
     self.meViewController.tabBarItem.tag = 4000;

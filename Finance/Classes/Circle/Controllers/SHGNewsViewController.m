@@ -53,6 +53,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.navigationItem.rightBarButtonItem = nil;
     [CommonMethod setExtraCellLineHidden:self.listTable];
     [self addHeaderRefresh:self.listTable headerRefesh:YES headerTitle:@{kRefreshStateIdle:@"下拉可以刷新", kRefreshStatePulling:@"释放后查看最新动态", kRefreshStateRefreshing:@"正在努力加载中"} andFooter:YES footerTitle:nil];
     self.listTable.separatorStyle = NO;
@@ -390,7 +391,7 @@
 //添加列表上方的类别
 -(void)initHeader
 {
-    CGFloat scrollViewHeight = 42.0f;
+    CGFloat scrollViewHeight = 37.0f;
     self.backScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0.0, 0.0, SCREENWIDTH, scrollViewHeight)];
     self.backScrollView.backgroundColor = [UIColor whiteColor];
     self.backScrollView.showsHorizontalScrollIndicator = NO;
@@ -398,8 +399,9 @@
     self.backScrollView.bounces = NO;
     NSInteger itemWidth = SCREENWIDTH/5;
     NSInteger contentWidth = SCREENWIDTH ;
-    NSInteger itemHeight = 40.0f;
+    NSInteger itemHeight = 34.0f;
     self.backScrollView.tag = 1001;
+    
     if (IsArrEmpty(self.itemArr)) {
         return;
     }
@@ -432,7 +434,8 @@
         
         [self.backScrollView addSubview:item];
         if (i == 0 ) {
-            [tname setTextColor:[UIColor redColor]];
+            [tname setTextColor:[UIColor colorWithHexString:@"D82626"]];
+            [tname setFont:[UIFont systemFontOfSize:15]];
             currentSelect = 0 + 10;
         }
     }
@@ -441,11 +444,15 @@
     {
         contentWidth = (SCREENWIDTH/5) * self.itemArr.count;
     }
-    UIView *backsView = [[UIView alloc] initWithFrame:CGRectMake(0, itemHeight, SCREENHEIGHT, 8.0f)];
+    UIView *backsView = [[UIView alloc] initWithFrame:CGRectMake(0, itemHeight, SCREENHEIGHT, 3.0f)];
     backsView.backgroundColor = [UIColor colorWithHexString:@"F6F6F6"];
     imageBttomLine = [[UIImageView alloc] initWithFrame:CGRectMake(itemWidth/2-20, 0, 40.0f, 2.0f)];
     [imageBttomLine setImage:[UIImage imageNamed:@"tab下划线"]];
     [backsView addSubview:imageBttomLine];
+    
+    UIView * lineView = [[UIView alloc]initWithFrame:CGRectMake(0, 2.0f, SCREENWIDTH, 0.50f)];
+    lineView.backgroundColor = [UIColor colorWithHexString:@"e3e3e3"];
+    [backsView addSubview:lineView];
     
     [self.backScrollView addSubview:backsView];
     
@@ -468,10 +475,12 @@
     {
         UILabel * label1 = [self.view viewWithTag:ges.tag +10];
         if (label1.tag == ges.tag +10) {
-            [label1 setTextColor:[UIColor redColor]];
+            [label1 setTextColor:[UIColor colorWithHexString:@"D82626"]];
+            [label1 setFont:[UIFont systemFontOfSize:15]];
         }
         UILabel * label2 = [self.view viewWithTag:currentSelect ];
         [label2 setTextColor:[UIColor colorWithHexString:@"333333"]];
+        [label2 setFont:[UIFont systemFontOfSize:14]];
         currentSelect = ges.tag +10;
     }
     
@@ -588,7 +597,17 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
+    NSString *documentPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+    NSString *filePath = [documentPath stringByAppendingPathComponent:@"file.archiver"];
+    NSMutableData *archiverData = [NSMutableData data];
+    NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:archiverData];
+    NSArray * arr = [[NSArray alloc]init];
+   
+    [archiver encodeObject:arr forKey:@"language"];
+    [archiver finishEncoding];
+    if ([archiverData writeToFile:filePath atomically:YES]) {
+        NSLog(@"archiver success");
+    }
     if (self.currentArry.count > 0) {
        SHGNewsTableViewCell * cell = [tableView cellForRowAtIndexPath:indexPath];
         [cell loadTitleLabelChange];

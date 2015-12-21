@@ -117,7 +117,7 @@
          self.textVComment.placeholder = [NSString stringWithFormat:@"回复 %@",self.replyName];
     }else
     {
-        self.textVComment.placeholder = @"说点什么吧";
+        self.textVComment.placeholder = @"写评论";
 
     }
 }

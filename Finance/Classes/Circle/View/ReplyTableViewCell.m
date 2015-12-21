@@ -9,6 +9,8 @@
 #import "ReplyTableViewCell.h"
 @interface ReplyTableViewCell()
 @property (weak, nonatomic) IBOutlet UIView *bgView;
+@property (weak, nonatomic) IBOutlet UIImageView *imageBgView;
+
 @property (assign, nonatomic) SHGCommentType commentType;
 @end
 
@@ -113,6 +115,17 @@
     replyRect.size = size;
     replyLabel.frame = replyRect;
     [self.bgView addSubview:replyLabel];
+
+}
+-(void)makeFirstCell
+{
+    self.bgView.backgroundColor = [UIColor clearColor];
+    self.imageBgView.image = [UIImage imageNamed:@"comment_backimage"];
+    UIImage *image = self.imageBgView.image;;
+    image = [image resizableImageWithCapInsets:UIEdgeInsetsMake(15.0f, 35.0f, 9.0f, 11.0f) resizingMode:UIImageResizingModeStretch];
+    self.imageBgView.image = image;
+   
+    
 
 }
 -(void)cnickClick:(UIButton *)sender

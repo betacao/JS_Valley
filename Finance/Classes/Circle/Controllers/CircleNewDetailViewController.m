@@ -145,6 +145,7 @@
     image = [image resizableImageWithCapInsets:UIEdgeInsetsMake(15.0f, 35.0f, 9.0f, 11.0f) resizingMode:UIImageResizingModeStretch];
     self.backImageView.image = image;
     
+    
     CGRect frame = self.lineView.frame;
     frame.size.height = 0.5f;
     self.lineView.frame = frame;
@@ -261,7 +262,7 @@
     self.title = obj.nickname;
     self.titleLabel.text = obj.title;
     self.titleLabel.numberOfLines = 0;
-    UIFont * tfont = [UIFont systemFontOfSize:17];
+    UIFont * tfont = [UIFont boldSystemFontOfSize:17];
     self.titleLabel.font = tfont;
     self.titleLabel.lineBreakMode =NSLineBreakByTruncatingTail ;
     self.titleLabel.text = obj.title ;
@@ -284,7 +285,7 @@
     }
 
     self.orignLabel.text = [NSString stringWithFormat:@"来源： %@  %@",obj.nickname,time];
-    self.orignLabel.frame = CGRectMake(self.orignLabel.frame.origin.x, CGRectGetMaxY(self.titleLabel.frame)+12.0f, self.orignLabel.frame.size.width, self.orignLabel.frame.size.height);
+    self.orignLabel.frame = CGRectMake(self.orignLabel.frame.origin.x, self.titleLabel.frame.origin.y+actualsize.height+5.0, self.orignLabel.frame.size.width, self.orignLabel.frame.size.height);
     self.obj.photoArr = (NSArray *)obj.photos;
     if ([obj.userid isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID]] || [obj.userid isEqualToString:CHATID_MANAGER]) {
         self.btnAttention.hidden = YES;
@@ -301,6 +302,7 @@
     self.imageHeader.frame = frame;
     
     [self.shareFriend setImage:[UIImage imageNamed:@"newFreindRing"] forState:UIControlStateNormal];
+     self.shareFriend.imageEdgeInsets = UIEdgeInsetsMake(0, 5, 0, 2);
     if (![obj.ispraise isEqualToString:@"Y"]) {
         [self.btnPraise setImage:[UIImage imageNamed:@"newDetialNoZan"] forState:UIControlStateNormal];
     } else{
@@ -325,7 +327,7 @@
     [self.btnPraise setTitle:[NSString stringWithFormat:@"%@人推荐",obj.praisenum] forState:UIControlStateNormal];
     [self.btnSend setImage:[UIImage imageNamed:@"newWriteComment"] forState:UIControlStateNormal];
     self.btnSend.imageEdgeInsets = UIEdgeInsetsMake(0, 5, 0, 0);
-    [self.btnSend setTitle:@"  写评论" forState:UIControlStateNormal];
+    [self.btnSend setTitle:@"   写评论" forState:UIControlStateNormal];
     
     if ([obj.isattention isEqualToString:@"Y"]){
         [self.btnAttention setImage:[UIImage imageNamed:@"detail_addationed"] forState:UIControlStateNormal] ;
@@ -338,18 +340,19 @@
     frame = self.lblContent.frame;
     frame.size.width = kCellContentWidth;
     frame.size.height = size.height;
-    self.lblContent.frame = CGRectMake(self.lblContent.frame.origin.x, CGRectGetMaxY(self.orignLabel.frame)+18.0f, self.lblContent.frame.size.width, size.height);
+    self.lblContent.frame = CGRectMake(self.lblContent.frame.origin.x, CGRectGetMaxY(self.orignLabel.frame), self.lblContent.frame.size.width, size.height);
     //[self sizeUIWithObj:obj];1.6原来顶部头的view
     
     self.checkAll.frame = CGRectMake(self.checkAll.frame.origin.x, CGRectGetMaxY(self.lblContent.frame)+15.0f, self.checkAll.frame.size.width, self.checkAll.frame.size.height);
     self.checkAll.backgroundColor = [UIColor colorWithHexString:@"F7F7F7"];
     self.btnPraise.frame = CGRectMake(self.btnPraise.frame.origin.x, CGRectGetMaxY(self.checkAll.frame)+14.0f, self.btnPraise.frame.size.width, self.btnPraise.frame.size.height);
     [self.btnPraise.layer setBorderColor:[UIColor colorWithHexString:@"D8D8D8"].CGColor];
-    [self.btnPraise.layer setBorderWidth:1];
+    //加边框
+    [self.btnPraise.layer setBorderWidth:0.5];
     [self.btnPraise.layer setMasksToBounds:YES];
     self.shareFriend.frame = CGRectMake(self.shareFriend.frame.origin.x, CGRectGetMaxY(self.checkAll.frame)+14.0f, self.shareFriend.frame.size.width, self.shareFriend.frame.size.height);
     [self.shareFriend.layer setBorderColor:[UIColor colorWithHexString:@"D8D8D8"].CGColor];
-    [self.shareFriend.layer setBorderWidth:1];
+    [self.shareFriend.layer setBorderWidth:0.5];
     [self.shareFriend.layer setMasksToBounds:YES];
 //    UIView *photoView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, CGRectGetMaxY(frame), 0.0f, 0.0f)];
 //    if ([self.obj.type isEqualToString:@"link"]){
@@ -636,6 +639,7 @@
             _popupView.rid = obj.rid;
             [self.navigationController.view addSubview:_popupView];
             [_popupView showWithAnimated:YES];
+           
         } else{
             VerifyIdentityViewController *controller = [[VerifyIdentityViewController alloc] init];
             [self.navigationController pushViewController:controller animated:YES];
@@ -985,6 +989,8 @@
     SHGCommentType type = SHGCommentTypeNormal;
     if(indexPath.row == 0){
         type = SHGCommentTypeFirst;
+        [cell makeFirstCell];
+        
     }else if(indexPath.row == self.obj.comments.count - 1){
         type = SHGCommentTypeLast;
     }

@@ -148,7 +148,6 @@
     __weak typeof(self) weakSelf = self;
     [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttpCircle,circleListNew] class:[CircleListObj class] parameters:param success:^(MOCHTTPResponse *response){
         NSLog(@"首页预加载数据成功");
-
         NSLog(@"YYYYYYYYYYYYY%@",[response.dataDictionary objectForKey:@"tagids"]);
         //刚进入首页最大和最小是相同的
         weakSelf.maxUserTags = [response.dataDictionary objectForKey:@"tagids"];

@@ -27,5 +27,5 @@ typedef NS_ENUM(NSInteger, SHGCommentType)
 
 @property (nonatomic,weak)id<ReplyDelegate> delegate;
 - (void)loadUIWithObj:(commentOBj *)comobj commentType:(SHGCommentType)type;
-
+-(void)makeFirstCell;
 @end

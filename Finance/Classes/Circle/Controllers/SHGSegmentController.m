@@ -120,11 +120,12 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
 
 - (UIBarButtonItem *)rightBarButtonItem
 {
+    
     if (!_rightBarButtonItem)
     {
         UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [rightButton setFrame:CGRectZero];
-        UIImage *image = [UIImage imageNamed:@"right_send"];
+        UIImage *image = [UIImage imageNamed:@"sendCard"];
         [rightButton setBackgroundImage:image forState:UIControlStateNormal];
         [rightButton.imageView setContentMode:UIViewContentModeScaleAspectFill];
         [rightButton addTarget:self action:@selector(actionPost:) forControlEvents:UIControlEventTouchUpInside];
@@ -140,7 +141,7 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     {
         UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [leftButton setFrame:CGRectZero];
-        UIImage *image = [UIImage imageNamed:@"message_selected"];
+        UIImage *image = [UIImage imageNamed:@"newNews"];
         [leftButton setBackgroundImage:image forState:UIControlStateNormal];
         [leftButton.imageView setContentMode:UIViewContentModeScaleAspectFill];
         [leftButton addTarget:self action:@selector(jumpToMessageViewController:) forControlEvents:UIControlEventTouchUpInside];
@@ -477,6 +478,10 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
 
 - (void)valueChange:(UISegmentedControl *)seg
 {
+    if (seg.selectedSegmentIndex == 1) {
+        self.rightBarButtonItem = nil;
+    }
+
 	[self setSelectedIndex:seg.selectedSegmentIndex animated:YES];
 }
 
