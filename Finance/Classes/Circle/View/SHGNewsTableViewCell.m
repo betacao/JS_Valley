@@ -25,16 +25,7 @@
 -(void)loadUi:(CircleListObj * )obj
 {
     self.obj = obj;
-    NSDate * today = [[NSDate alloc]init];
-    NSString * todayString = [[today description]substringToIndex:10];
-    NSString * timeString = [[obj.publishdate description]substringToIndex:10];
-    
-    if ([todayString isEqualToString:timeString]) {
-        self.timeLabel.text = [obj.publishdate substringWithRange:NSMakeRange(11, 8)];
-    }else
-    {
-        self.timeLabel.text =timeString;
-    }
+    self.timeLabel.text = obj.publishdate;
     self.lineView.height = 0.5;
      self.titleLabel.numberOfLines =2;
     self.titleLabel.text = obj.title;

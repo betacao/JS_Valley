@@ -272,19 +272,8 @@
     CGSize  actualsize =[obj.title boundingRectWithSize:tsize options:NSStringDrawingUsesLineFragmentOrigin  attributes:tdic context:nil].size;
     
     self.titleLabel.frame =CGRectMake(self.titleLabel.frame.origin.x,self.titleLabel.frame.origin.y, self.titleLabel.frame.size.width, actualsize.height);
-    //来源时间的截取
-    NSDate * today = [[NSDate alloc]init];
-    NSString * todayString = [[today description]substringToIndex:10];
-    NSString * timeString = [[obj.publishdate description]substringToIndex:10];
-    NSString * time = [[NSString alloc]init];
-    if ([todayString isEqualToString:timeString]) {
-        time = [obj.publishdate substringWithRange:NSMakeRange(11, 8)];
-    }else
-    {
-        time =timeString;
-    }
-
-    self.orignLabel.text = [NSString stringWithFormat:@"来源： %@  %@",obj.nickname,time];
+   
+    self.orignLabel.text = [NSString stringWithFormat:@"来源： %@  %@",obj.nickname,obj.publishdate];
     self.orignLabel.frame = CGRectMake(self.orignLabel.frame.origin.x, self.titleLabel.frame.origin.y+actualsize.height+5.0, self.orignLabel.frame.size.width, self.orignLabel.frame.size.height);
     self.obj.photoArr = (NSArray *)obj.photos;
     if ([obj.userid isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID]] || [obj.userid isEqualToString:CHATID_MANAGER]) {
