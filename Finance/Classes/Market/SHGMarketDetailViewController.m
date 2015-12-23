@@ -9,6 +9,9 @@
 #import "SHGMarketDetailViewController.h"
 #import "SHGMarketTableViewCell.h"
 #import "CircleLinkViewController.h"
+#define k_FirstToTop 5.0f * XFACTOR
+#define k_SecondToTop 10.0f * XFACTOR
+#define k_ThirdToTop 15.0f * XFACTOR
 @interface SHGMarketDetailViewController ()
 @property (weak, nonatomic) IBOutlet UITableView *detailTable;
 @property (strong, nonatomic) IBOutlet UIView *viewHeader;
@@ -62,24 +65,24 @@
     CGSize  actualsize =[title boundingRectWithSize:tsize options:NSStringDrawingUsesLineFragmentOrigin  attributes:tdic context:nil].size;
     self.titleLabel.height = actualsize.height;
     //控件位置
-    self.typeLabel.frame = CGRectMake(self.typeLabel.origin.x, CGRectGetMaxY(self.titleLabel.frame)+10.0, self.typeLabel.width, self.typeLabel.height);
-    self.capitalLabel.frame = CGRectMake(self.capitalLabel.origin.x, CGRectGetMaxY(self.titleLabel.frame)+10.0, self.capitalLabel.width, self.capitalLabel.height);
-    self.phoneNumLabel.frame =CGRectMake(self.phoneNumLabel.origin.x, CGRectGetMaxY(self.typeLabel.frame)+5.0, self.phoneNumLabel.width, self.phoneNumLabel.height);
-    self.secondHorizontalLine.frame = CGRectMake(self.secondHorizontalLine.origin.x, CGRectGetMaxY(self.phoneNumLabel.frame)+15.0, self.secondHorizontalLine.width, self.secondHorizontalLine.height);
-    self.marketDetialLabel.frame = CGRectMake(self.detailContentLabel.origin.x, CGRectGetMaxY(self.secondHorizontalLine.frame)+15.0, self.marketDetialLabel.width, self.marketDetialLabel.height);
-    self.thirdHorizontalLine.frame = CGRectMake(self.thirdHorizontalLine.origin.x, CGRectGetMaxY(self.marketDetialLabel.frame)+15.0, self.thirdHorizontalLine.width, self.thirdHorizontalLine.height);
+    self.typeLabel.frame = CGRectMake(self.typeLabel.origin.x, CGRectGetMaxY(self.titleLabel.frame)+k_SecondToTop, self.typeLabel.width, self.typeLabel.height);
+    self.capitalLabel.frame = CGRectMake(self.capitalLabel.origin.x, CGRectGetMaxY(self.titleLabel.frame)+k_SecondToTop, self.capitalLabel.width, self.capitalLabel.height);
+    self.phoneNumLabel.frame =CGRectMake(self.phoneNumLabel.origin.x, CGRectGetMaxY(self.typeLabel.frame)+k_FirstToTop, self.phoneNumLabel.width, self.phoneNumLabel.height);
+    self.secondHorizontalLine.frame = CGRectMake(self.secondHorizontalLine.origin.x, CGRectGetMaxY(self.phoneNumLabel.frame)+k_ThirdToTop, self.secondHorizontalLine.width, self.secondHorizontalLine.height);
+    self.marketDetialLabel.frame = CGRectMake(self.detailContentLabel.origin.x, CGRectGetMaxY(self.secondHorizontalLine.frame)+k_ThirdToTop, self.marketDetialLabel.width, self.marketDetialLabel.height);
+    self.thirdHorizontalLine.frame = CGRectMake(self.thirdHorizontalLine.origin.x, CGRectGetMaxY(self.marketDetialLabel.frame)+k_ThirdToTop, self.thirdHorizontalLine.width, self.thirdHorizontalLine.height);
     //内容详情
     NSString *detail = @"还是领导是卡卡还撒谎时刻会拉丝看哈飒飒的很快会拉的啥都说了是打开后骄傲的上课讲两句话；给付额爱回家啊撒了点就好的撒了解到撒垃圾的撒";
     self.detailContentLabel.text = detail;
     CGSize dsize =CGSizeMake(self.detailContentLabel.frame.size.width,MAXFLOAT);
     NSDictionary * ddic = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:14.0],NSFontAttributeName,nil];
     CGSize  dActualsize =[title boundingRectWithSize:dsize options:NSStringDrawingUsesLineFragmentOrigin  attributes:ddic context:nil].size;
-     self.detailContentLabel.frame = CGRectMake(self.detailContentLabel.origin.x, CGRectGetMaxY(self.thirdHorizontalLine.frame)+15.0, self.detailContentLabel.width, dActualsize.height);
+     self.detailContentLabel.frame = CGRectMake(self.detailContentLabel.origin.x, CGRectGetMaxY(self.thirdHorizontalLine.frame)+ k_ThirdToTop, self.detailContentLabel.width, dActualsize.height);
    
-    self.photoImageView.frame  = CGRectMake(self.photoImageView.origin.x, CGRectGetMaxY(self.detailContentLabel.frame)+5.0, self.photoImageView.width, self.photoImageView.height);
+    self.photoImageView.frame  = CGRectMake(self.photoImageView.origin.x, CGRectGetMaxY(self.detailContentLabel.frame)+k_FirstToTop, self.photoImageView.width, self.photoImageView.height);
    //图片
     
-    self.actionView.frame = CGRectMake(self.actionView.origin.x, CGRectGetMaxY(self.photoImageView.frame)+5.0, self.actionView.width, self.actionView.height);
+    self.actionView.frame = CGRectMake(self.actionView.origin.x, CGRectGetMaxY(self.photoImageView.frame)+k_FirstToTop, self.actionView.width, self.actionView.height);
     [self.btnZan setImage:[UIImage imageNamed:@"home_weizan"] forState:UIControlStateNormal];
     [self.btnZan setTitle:@"111" forState:UIControlStateNormal];
     
@@ -88,7 +91,7 @@
     [self.btnShare setImage:[UIImage imageNamed:@"shareImage"] forState:UIControlStateNormal];
     [self.btnShare setTitle:@"333" forState:UIControlStateNormal];
     
-    self.praiseView.frame = CGRectMake(self.praiseView.origin.x, CGRectGetMaxY(self.actionView.frame)+5.0, self.praiseView.width, self.praiseView.height);
+    self.praiseView.frame = CGRectMake(self.praiseView.origin.x, CGRectGetMaxY(self.actionView.frame)+k_FirstToTop, self.praiseView.width, self.praiseView.height);
     //image处理边帽
     UIImage *image = self.backImageView.image;
     image = [image resizableImageWithCapInsets:UIEdgeInsetsMake(15.0f, 35.0f, 9.0f, 11.0f) resizingMode:UIImageResizingModeStretch];

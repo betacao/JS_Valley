@@ -40,7 +40,7 @@
     self.navigationItem.rightBarButtonItem = [self rightBarButtonItem];
     self.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 
-    tabButtonsContainerView = [[UISegmentedControl alloc] initWithItems: [NSArray arrayWithObjects:@"所有活动", @"我的活动", nil]];
+    tabButtonsContainerView = [[UISegmentedControl alloc] initWithItems: [NSArray arrayWithObjects:@"所有业务", @"我的业务", nil]];
     tabButtonsContainerView.frame = CGRectMake(0.0f, 50.0f, 170.0f, 26.0f);;
     tabButtonsContainerView.enabled = YES;
     tabButtonsContainerView.layer.masksToBounds = YES;
@@ -83,7 +83,7 @@
 {
     UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [rightButton setFrame:CGRectZero];
-    UIImage *image = [UIImage imageNamed:@"right_add"];
+    UIImage *image = [UIImage imageNamed:@"sendMarket"];
     [rightButton setBackgroundImage:image forState:UIControlStateNormal];
     [rightButton addTarget:self action:@selector(addNewMarket:) forControlEvents:UIControlEventTouchUpInside];
     [rightButton sizeToFit];
@@ -95,12 +95,16 @@
 {
     UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [leftButton setFrame:CGRectZero];
-    UIImage *image = [UIImage imageNamed:@"right_add"];
+    UIImage *image = [UIImage imageNamed:@"marketSearch"];
     [leftButton setBackgroundImage:image forState:UIControlStateNormal];
-    [leftButton addTarget:self action:@selector(addNewMarket:) forControlEvents:UIControlEventTouchUpInside];
+    [leftButton addTarget:self action:@selector(searchMarket:) forControlEvents:UIControlEventTouchUpInside];
     [leftButton sizeToFit];
     return  [[UIBarButtonItem alloc] initWithCustomView:leftButton];
 
+}
+- (void)searchMarket:(UIButton *)button
+{
+    
 }
 
 - (void)addNewMarket:(UIButton *)button

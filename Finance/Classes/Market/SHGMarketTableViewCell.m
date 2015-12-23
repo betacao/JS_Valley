@@ -9,7 +9,6 @@
 #import "SHGMarketTableViewCell.h"
 
 @interface SHGMarketTableViewCell ()
-@property (weak, nonatomic) IBOutlet UIImageView *backgroundImageView;
 @property (weak, nonatomic) IBOutlet UILabel *titleView;
 @property (weak, nonatomic) IBOutlet UIView *leftView;
 @property (weak, nonatomic) IBOutlet UIView *rightView;
@@ -21,6 +20,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *commentButton;
 @property (weak, nonatomic) IBOutlet UIButton *editButton;
 @property (weak, nonatomic) IBOutlet UIButton *deleteButton;
+@property (weak, nonatomic) IBOutlet UIImageView *xuXian;
 
 @end
 
@@ -33,6 +33,8 @@
 - (void)loadDataWithObject:(SHGMarketObject *)object
 {
     [self clearCell];
+    UIImage * img = [UIImage imageNamed:@"action_xuxian"];
+    self.xuXian.image = [img resizableImageWithCapInsets:UIEdgeInsetsMake(0 , 1, 0, 1) resizingMode:UIImageResizingModeTile];
     self.titleView.text = object.marketName;
     if ([UID isEqualToString:object.createBy]) {
         self.leftView.hidden = NO;

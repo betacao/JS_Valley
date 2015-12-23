@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "SHGMarketObject.h"
-#define kMarketCellHeight 200.0f
+#define kMarketCellHeight 166.0f
 
 @interface SHGMarketTableViewCell : UITableViewCell
 
