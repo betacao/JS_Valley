@@ -7,6 +7,11 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SHGMarketDetailViewController">
             <connections>
+                <outlet property="actionView" destination="7yJ-Zy-NDR" id="oUp-wh-LoR"/>
+                <outlet property="backImageView" destination="gaX-wG-JzJ" id="Dm4-0E-wxw"/>
+                <outlet property="btnComment" destination="4r7-iL-6bI" id="mnw-lk-rUv"/>
+                <outlet property="btnShare" destination="LHm-Ws-2WH" id="pmw-iZ-47v"/>
+                <outlet property="btnZan" destination="p95-ud-2Wh" id="JVU-xJ-CI3"/>
                 <outlet property="capitalLabel" destination="ukB-Yh-XHs" id="HU4-Lz-2fA"/>
                 <outlet property="companyLabel" destination="M93-w2-4yW" id="0Zh-cB-8Ua"/>
                 <outlet property="detailContentLabel" destination="kXI-U4-4OP" id="vST-07-WAv"/>
@@ -16,7 +21,10 @@
                 <outlet property="marketDetialLabel" destination="lXG-WT-o6S" id="TlI-ck-Vxz"/>
                 <outlet property="nameLabel" destination="svp-nP-fl2" id="kpc-6J-uiA"/>
                 <outlet property="phoneNumLabel" destination="icy-M0-m4C" id="5u6-mb-lj6"/>
+                <outlet property="photoImageView" destination="CdC-cg-u10" id="5pA-OU-aZX"/>
                 <outlet property="positionLabel" destination="TWe-U9-AIN" id="2Vn-AI-4Hm"/>
+                <outlet property="praiseView" destination="Oij-Yo-R6Y" id="Hei-Ri-rY4"/>
+                <outlet property="scrollPraise" destination="bPc-R4-YXt" id="mH3-Mx-8pF"/>
                 <outlet property="secondHorizontalLine" destination="Vhv-nl-DcY" id="q6A-dM-hp8"/>
                 <outlet property="thirdHorizontalLine" destination="30I-iT-VSh" id="9YA-Zd-WMp"/>
                 <outlet property="timeLabel" destination="6c0-uN-hqn" id="bFi-6e-Lrz"/>
@@ -42,7 +50,7 @@
             <point key="canvasLocation" x="-40" y="220"/>
         </view>
         <view contentMode="scaleToFill" id="1SQ-GV-jBt">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="400"/>
+            <rect key="frame" x="0.0" y="0.0" width="320" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="80.png" id="dyO-jm-DxX">
@@ -132,7 +140,7 @@
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" red="0.94509803920000002" green="0.94509803920000002" blue="0.94117647059999998" alpha="1" colorSpace="calibratedRGB"/>
                 </view>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="粉色发发发发发" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="kXI-U4-4OP">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="粉色发发发发发" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="kXI-U4-4OP">
                     <rect key="frame" x="15" y="220" width="290" height="21"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -140,11 +148,11 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <view contentMode="scaleToFill" id="7yJ-Zy-NDR">
-                    <rect key="frame" x="15" y="249" width="290" height="34"/>
+                    <rect key="frame" x="15" y="449" width="290" height="34"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="p95-ud-2Wh">
-                            <rect key="frame" x="140.00000357627857" y="1" width="50" height="34"/>
+                            <rect key="frame" x="140" y="1" width="50" height="34"/>
                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <inset key="titleEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
@@ -152,6 +160,9 @@
                                 <color key="titleColor" red="0.50196078430000002" green="0.50196078430000002" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
+                            <connections>
+                                <action selector="zan:" destination="-1" eventType="touchUpInside" id="GJp-cN-fsY"/>
+                            </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="4r7-iL-6bI">
                             <rect key="frame" x="240" y="0.0" width="50" height="34"/>
@@ -162,6 +173,9 @@
                                 <color key="titleColor" red="0.50196078430000002" green="0.50196078430000002" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
+                            <connections>
+                                <action selector="comment:" destination="-1" eventType="touchUpInside" id="4Ud-Z3-FnK"/>
+                            </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="LHm-Ws-2WH">
                             <rect key="frame" x="190" y="0.0" width="50" height="34"/>
@@ -172,12 +186,15 @@
                                 <color key="titleColor" red="0.50196078430000002" green="0.50196078430000002" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
+                            <connections>
+                                <action selector="share:" destination="-1" eventType="touchUpInside" id="Yxt-bE-Z5t"/>
+                            </connections>
                         </button>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
                 <view contentMode="scaleToFill" id="Oij-Yo-R6Y">
-                    <rect key="frame" x="15" y="302" width="290" height="55"/>
+                    <rect key="frame" x="15" y="502" width="290" height="55"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
                     <subviews>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="comment_backimage" id="gaX-wG-JzJ">
@@ -204,6 +221,10 @@
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
+                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="80.png" id="CdC-cg-u10">
+                    <rect key="frame" x="15" y="268" width="290" height="128"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                </imageView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>

@@ -327,9 +327,11 @@
     self.lblContent.text = obj.detail;
     CGSize size = [self.lblContent preferredSizeWithMaxWidth:kCellContentWidth];
     frame = self.lblContent.frame;
+    frame.origin.y = frame.origin.y +10;
     frame.size.width = kCellContentWidth;
     frame.size.height = size.height;
-    self.lblContent.frame = CGRectMake(self.lblContent.frame.origin.x, CGRectGetMaxY(self.orignLabel.frame), self.lblContent.frame.size.width, size.height);
+    //self.lblContent.frame = CGRectMake(self.lblContent.frame.origin.x, CGRectGetMaxY(self.orignLabel.frame), self.lblContent.frame.size.width, size.height);
+    self.lblContent.frame = frame;
     //[self sizeUIWithObj:obj];1.6原来顶部头的view
     
     self.checkAll.frame = CGRectMake(self.checkAll.frame.origin.x, CGRectGetMaxY(self.lblContent.frame)+15.0f, self.checkAll.frame.size.width, self.checkAll.frame.size.height);
