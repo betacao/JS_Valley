@@ -29,10 +29,7 @@
     self.lineView.height = 0.5;
      self.titleLabel.numberOfLines =2;
     self.titleLabel.text = obj.title;
-    if (obj.title.length > 40) {
-        obj.title = [obj.title substringToIndex:40];
-    }
-    self.originLabel.text = obj.nickname;
+        self.originLabel.text = obj.nickname;
     NSArray * arr = obj.photos;
     if (arr.count == 0) {
         [self loadNoTitleUi:obj];

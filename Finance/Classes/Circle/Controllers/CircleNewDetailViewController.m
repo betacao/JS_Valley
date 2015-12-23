@@ -43,7 +43,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *btnShare;
 @property (weak, nonatomic) IBOutlet UITableView *listTable;
 @property (weak, nonatomic) IBOutlet UIView *actionView;
-@property (weak, nonatomic) IBOutlet MLEmojiLabel *lblContent;
+@property (weak, nonatomic) IBOutlet UILabel *lblContent;
 @property (weak, nonatomic) IBOutlet UIButton *btnAttention;
 @property (weak, nonatomic) IBOutlet UILabel *lblTime;
 @property (weak, nonatomic) IBOutlet UILabel *lbldepartName;
@@ -92,7 +92,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    //[self.navigationItem.leftBarButtonItem setBackgroundImage:[UIImage imageNamed:@"newBack"] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
     self.commentNumLabel = [[UILabel alloc]init];
     self.commentNumLabel.backgroundColor = [UIColor redColor];
     self.commentNumLabel.textAlignment = NSTextAlignmentCenter;
@@ -123,9 +122,9 @@
     }];
     
     self.lblContent.numberOfLines = 0;
-    self.lblContent.lineBreakMode = NSLineBreakByWordWrapping;
+    //self.lblContent.lineBreakMode = NSLineBreakByWordWrapping;
     self.lblContent.font = [UIFont systemFontOfSize:15.0f];
-    self.lblContent.delegate = self;
+    //self.lblContent.delegate = self;
     self.lblContent.textColor = [UIColor colorWithHexString:@"606060"];
     self.lblContent.backgroundColor = [UIColor clearColor];
     
@@ -312,7 +311,6 @@
     [self.btnNickname setBackgroundImage:[UIImage imageWithColor:BTN_SELECT_BACK_COLOR andSize:self.btnNickname.size] forState:UIControlStateHighlighted];
     
    
-    self.lblTime.text = [obj.publishdate substringToIndex:10];
     [self.btnPraise setTitle:[NSString stringWithFormat:@"%@人推荐",obj.praisenum] forState:UIControlStateNormal];
     [self.btnSend setImage:[UIImage imageNamed:@"newWriteComment"] forState:UIControlStateNormal];
     self.btnSend.imageEdgeInsets = UIEdgeInsetsMake(0, 5, 0, 0);
@@ -325,13 +323,12 @@
     }
     
     self.lblContent.text = obj.detail;
-    CGSize size = [self.lblContent preferredSizeWithMaxWidth:kCellContentWidth];
-    frame = self.lblContent.frame;
-    frame.origin.y = frame.origin.y +10;
-    frame.size.width = kCellContentWidth;
-    frame.size.height = size.height;
-    //self.lblContent.frame = CGRectMake(self.lblContent.frame.origin.x, CGRectGetMaxY(self.orignLabel.frame), self.lblContent.frame.size.width, size.height);
-    self.lblContent.frame = frame;
+    CGSize lsize =CGSizeMake(self.lblContent.frame.size.width,MAXFLOAT);
+    
+    NSDictionary * ldic = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:15.0],NSFontAttributeName,nil];
+    
+    CGSize  lactualsize =[obj.detail boundingRectWithSize:lsize options:NSStringDrawingUsesLineFragmentOrigin  attributes:ldic context:nil].size;
+    self.lblContent.frame = CGRectMake(self.lblContent.frame.origin.x, CGRectGetMaxY(self.orignLabel.frame) +10.0, self.lblContent.frame.size.width, lactualsize.height);
     //[self sizeUIWithObj:obj];1.6原来顶部头的view
     
     self.checkAll.frame = CGRectMake(self.checkAll.frame.origin.x, CGRectGetMaxY(self.lblContent.frame)+15.0f, self.checkAll.frame.size.width, self.checkAll.frame.size.height);
