@@ -446,7 +446,7 @@
     }
     UIView *backsView = [[UIView alloc] initWithFrame:CGRectMake(0, itemHeight, SCREENHEIGHT, 3.0f)];
     backsView.backgroundColor = [UIColor colorWithHexString:@"F6F6F6"];
-    imageBttomLine = [[UIImageView alloc] initWithFrame:CGRectMake(itemWidth/2-20, 0, 40.0f, 2.0f)];
+    imageBttomLine = [[UIImageView alloc] initWithFrame:CGRectMake(itemWidth/2-16, 0, 32.0f, 2.0f)];
     [imageBttomLine setImage:[UIImage imageNamed:@"tab下划线"]];
     [backsView addSubview:imageBttomLine];
     
@@ -483,12 +483,14 @@
         [label2 setFont:[UIFont systemFontOfSize:14]];
         currentSelect = ges.tag +10;
     }
-    
-    CGRect rect = imageBttomLine.frame;
-    rect.origin.x = (width/2-20)+( ges.tag* width);
     CirclleItemObj *obj = self.itemArr[ges.tag];
     self.currentTagId= obj.tagid;
-        if (ges.tag == 0) {
+    CGRect rect = imageBttomLine.frame;
+    rect.size.width = obj.tagname.length * 16.0;
+    rect.origin.x = (width-rect.size.width)/2.0+(ges.tag* width);
+    
+   
+    if (ges.tag == 0) {
         //[self requestDataWithtcode:obj.tcode isHot:@"1" target:@"first" name:@"" time:@""];
         
     }else
