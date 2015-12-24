@@ -63,6 +63,7 @@
     [[EaseMob sharedInstance].chatManager removeDelegate:self];
     [[EaseMob sharedInstance].chatManager addDelegate:self delegateQueue:nil];
     self.tableView.frame=CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT-64-50);
+    [self.tableView setContentSize:CGSizeMake(SCREENWIDTH, SCREENHEIGHT-64-50)];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     self.tableView.backgroundColor = [UIColor whiteColor];
     self.tableView.tableFooterView = [[UIView alloc] init];
@@ -137,7 +138,8 @@
         _searchBar = [[EMSearchBar alloc] initWithFrame: CGRectMake(0, 0, self.view.frame.size.width, 44)];
         _searchBar.delegate = self;
         _searchBar.placeholder = NSLocalizedString(@"search", @"Search");
-        _searchBar.backgroundColor = [UIColor colorWithRed:0.747 green:0.756 blue:0.751 alpha:1.000];
+       _searchBar.backgroundColor = [UIColor colorWithRed:0.747 green:0.756 blue:0.751 alpha:1.000];
+        
     }
     
     return _searchBar;
@@ -179,9 +181,10 @@
             [weakSelf.searchController.searchBar endEditing:YES];
             
             EMGroup *group = [weakSelf.searchController.resultsSource objectAtIndex:indexPath.row];
-            ChatViewController *chatVC = [[ChatViewController alloc] initWithChatter:group.groupId isGroup:YES];
-            chatVC.title = group.groupSubject;
-            [weakSelf.navigationController pushViewController:chatVC animated:YES];
+            PublicGroupDetailViewController *detailController = [[PublicGroupDetailViewController alloc] initWithGroupId:group.groupId];
+            detailController.title = group.groupSubject;
+            BaseViewController *viewController =(BaseViewController*)weakSelf.parnetVC;
+            [viewController.navigationController pushViewController:detailController animated:YES];
         }];
     }
     
@@ -439,7 +442,18 @@
     }
 }
 #pragma mark - UISearchBarDelegate
+- (void)searchDisplayControllerWillBeginSearch:(UISearchDisplayController *)controller
+{
+    for(UIView * v in controller.searchResultsTableView.superview.subviews)
+    {
+        NSLog(@"%@",[v class]);
+        if([v isKindOfClass:NSClassFromString(@"_EMSearchDisplayControllerDimmingView")])
+    {
+        v.frame = CGRectMake(0,44,SCREENWIDTH,SCREENHEIGHT);
+    }
+    }
 
+}
 - (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar
 {
     [searchBar setShowsCancelButton:YES animated:YES];

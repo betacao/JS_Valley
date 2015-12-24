@@ -26,6 +26,8 @@
 #import "CirclleItemObj.h"
 #import "SHGNewsTableViewCell.h"
 #import "CircleNewDetailViewController.h"
+
+#define ImageBttomLineWidth 32
 @interface SHGNewsViewController ()<MLEmojiLabelDelegate,CLLocationManagerDelegate,SHGNoticeDelegate>
 {
      UIImageView *imageBttomLine;
@@ -446,7 +448,7 @@
     }
     UIView *backsView = [[UIView alloc] initWithFrame:CGRectMake(0, itemHeight, SCREENHEIGHT, 3.0f)];
     backsView.backgroundColor = [UIColor colorWithHexString:@"F6F6F6"];
-    imageBttomLine = [[UIImageView alloc] initWithFrame:CGRectMake(itemWidth/2-16, 0, 32.0f, 2.0f)];
+    imageBttomLine = [[UIImageView alloc] initWithFrame:CGRectMake(itemWidth/2-ImageBttomLineWidth/2.0, 0, ImageBttomLineWidth, 2.0f)];
     [imageBttomLine setImage:[UIImage imageNamed:@"tab下划线"]];
     [backsView addSubview:imageBttomLine];
     
@@ -460,8 +462,7 @@
     CirclleItemObj *obj = self.itemArr[0];
     self.currentTagId  = obj.tagid;
     index = 0;
-    //[self requestDataWithtcode:@"" isHot:@"1" target:@"first" name:@"" time:@""];
-     [self requestDataWithTarget:@"first" time:0 tagId:self.currentTagId];
+    [self requestDataWithTarget:@"first" time:0 tagId:self.currentTagId];
     
 }
 
@@ -486,18 +487,8 @@
     CirclleItemObj *obj = self.itemArr[ges.tag];
     self.currentTagId= obj.tagid;
     CGRect rect = imageBttomLine.frame;
-    rect.size.width = obj.tagname.length * 16.0;
+    rect.size.width = obj.tagname.length * ImageBttomLineWidth/2.0;
     rect.origin.x = (width-rect.size.width)/2.0+(ges.tag* width);
-    
-   
-    if (ges.tag == 0) {
-        //[self requestDataWithtcode:obj.tcode isHot:@"1" target:@"first" name:@"" time:@""];
-        
-    }else
-    {
-       // [self requestDataWithtcode:obj.tcode isHot:@"" target:@"first" name:@"" time:@""];
-    }
-    //[self requestDataWithTarget:@"first" time:0 tagId:self.currentTagId];
     [self refreshHeader];
     [UIView beginAnimations:nil context:nil];
     [imageBttomLine setFrame:rect];

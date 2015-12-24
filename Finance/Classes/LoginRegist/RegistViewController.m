@@ -227,6 +227,7 @@ typedef NS_ENUM(NSInteger, RegistType)
 		[[NSUserDefaults standardUserDefaults] setObject:name forKey:KEY_USER_NAME];
 		[[NSUserDefaults standardUserDefaults] setObject:head_img forKey:KEY_HEAD_IMAGE];
 		[[NSUserDefaults standardUserDefaults] setObject:token forKey:KEY_TOKEN];
+        [[NSUserDefaults standardUserDefaults] setObject:@"1" forKey:KEY_AUTOLOGIN];
         [[NSUserDefaults standardUserDefaults] synchronize];
         ImproveMatiralViewController *vc = [[ImproveMatiralViewController alloc] init];
         [self.navigationController pushViewController:vc animated:YES];
