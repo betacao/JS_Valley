@@ -260,14 +260,14 @@ const CGFloat kOtherRecommendCellHeight = 57.0f;
     } else if([recognizer.view isEqual:self.middleImageView]){
         uid = ((RecmdFriendObj *)[self.dataArray objectAtIndex:1]).uid;
         name = ((RecmdFriendObj *)[self.dataArray objectAtIndex:1]).username;
-        if(self.delegate && [self.delegate respondsToSelector:@selector(attentionClicked:)]){
+        if(self.delegate && [self.delegate respondsToSelector:@selector(didSelectPerson:name:)]){
             [self.delegate didSelectPerson:uid name:name];
         }
         
     } else{
         uid = ((RecmdFriendObj *)[self.dataArray lastObject]).uid;
         name = ((RecmdFriendObj *)[self.dataArray lastObject]).username;
-        if(self.delegate && [self.delegate respondsToSelector:@selector(attentionClicked:)]){
+        if(self.delegate && [self.delegate respondsToSelector:@selector(didSelectPerson:name:)]){
             [self.delegate didSelectPerson:uid name:name];
         }
         

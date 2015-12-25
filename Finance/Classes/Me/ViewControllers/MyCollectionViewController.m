@@ -944,8 +944,14 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
 	// Return the number of rows in the section.
-    
-	return self.dataSource.count;
+    NSInteger count ;
+    if (self.dataSource > 0) {
+        count = self.dataSource.count;
+    }else
+    {
+        count = 1;
+    }
+	return count;
 }
 
 
@@ -983,6 +989,7 @@
 {
     
         if (self.selectType == 1) {
+            if (self.dataSource.count > 0) {
             CircleListObj *obj = self.dataSource[indexPath.row];
             
             if ([obj.status boolValue]) {
@@ -1009,9 +1016,15 @@
                 
                 return cell;
             }
-            
+              }else
+              {
+                  return self.emptyCell;
+              }
         }else if (self.selectType == 2)
         {
+            if (self.dataSource.count > 0 ) {
+                
+            
             NSString *prodCellIdentifier = @"circleCellIdentifier";
             ProductListTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:prodCellIdentifier];
             if (!cell) {
@@ -1020,7 +1033,14 @@
             ProdListObj *obj = self.dataSource[indexPath.row];
             [cell loadDatasWithObj:obj];
             return cell;
+            }
+            else
+            {
+                return self.emptyCell;
+            }
         }if (self.selectType == 3) {
+            if (self.dataSource > 0) {
+                
             NSString *cardCellIdentifier = @"circleCellIdentifier";
             SHGCardTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cardCellIdentifier];
             if (!cell) {
@@ -1029,6 +1049,11 @@
             SHGCollectCardClass *obj = self.dataSource[indexPath.row];
             [cell loadCardDatasWithObj:obj];
             return cell;
+            }
+            else
+            {
+                return self.emptyCell;
+            }
             
         }
         if (self.selectType == 4) {
@@ -1039,6 +1064,8 @@
             //        }
             //        SHGCollectCardClass *obj = self.dataSource[indexPath.row];
             //        [cell loadCardDatasWithObj:obj];
+            if (self.dataSource.count > 0) {
+                
             CircleListObj *obj = [self.dataSource objectAtIndex:indexPath.row];
             NSString * cellIdentifier = @"SHGNewsTableViewCell";
             SHGNewsTableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
@@ -1049,6 +1076,11 @@
             }
             [cell loadUi:obj];
             return cell;
+            }
+            else
+            {
+                return self.emptyCell;
+            }
             }
        
 		return nil;

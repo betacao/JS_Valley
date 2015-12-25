@@ -31,7 +31,7 @@
 const CGFloat kAdTableViewCellHeight = 191.0f;
 const CGFloat kAdButtomMargin = 20.0f;
 
-@interface SHGHomeViewController ()<MLEmojiLabelDelegate,CLLocationManagerDelegate,SHGNoticeDelegate>
+@interface SHGHomeViewController ()<MLEmojiLabelDelegate,CLLocationManagerDelegate,SHGNoticeDelegate,CircleListDelegate>
 {
     NSInteger photoIndex;
     BOOL hasRequestFailed;
@@ -91,6 +91,8 @@ const CGFloat kAdButtomMargin = 20.0f;
     
     [self getAllInfo];
     [self loadRegisterPushFriend];
+    
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -530,6 +532,7 @@ const CGFloat kAdButtomMargin = 20.0f;
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    
     if (self.dataArr.count > 0) {
         NSObject *obj = self.dataArr[indexPath.row];
         if(![obj isKindOfClass:[CircleListObj class]]){
@@ -544,6 +547,7 @@ const CGFloat kAdButtomMargin = 20.0f;
             if(self.recommendViewController.view.superview){
                 [self.recommendViewController.view removeFromSuperview];
             }
+            self.recommendViewController.delegate = self;
             [self.recommendViewController loadViewWithData:array cityCode:self.currentCity];
             [cell addSubview:self.recommendViewController.view];
             return cell;
