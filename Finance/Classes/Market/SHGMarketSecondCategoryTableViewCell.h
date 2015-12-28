@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface SHGMarketSecondCategoryTableViewCell : UITableViewCell
-
+@property (nonatomic , strong)UIView * bgView;
 @end

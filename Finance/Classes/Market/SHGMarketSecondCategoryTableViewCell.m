@@ -7,17 +7,39 @@
 //
 
 #import "SHGMarketSecondCategoryTableViewCell.h"
+#import "SHGMarketObject.h"
+//@interface SHGMarketSecondCategoryTableViewCell()
+////@property (nonatomic , strong)SHGMarketFirstCategoryObject *obj;
+//@property (nonatomic , strong)UIView * bgView;
+//@end
 
 @implementation SHGMarketSecondCategoryTableViewCell
 
+
+- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
+{
+    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
+    if (self) {
+        self.backgroundColor = [UIColor whiteColor];
+         _bgView = [[UIView alloc]init];
+        [self.contentView addSubview:_bgView];
+    }
+    return self;
+}
+- (void)layoutSubviews
+{
+    [super layoutSubviews];
+  
+    
+}
 - (void)awakeFromNib {
-    // Initialization code
+    
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
 
-    // Configure the view for the selected state
+    
 }
 
 @end
