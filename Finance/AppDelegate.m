@@ -101,11 +101,12 @@
         NSLog(@"从消息启动______:%@",userInfo);
         rootVC.rid =userInfo;
         self.pushInfo = userInfo;
-//        [BPush handleNotification:userInfo];
     }
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pushCircle:) name:kMPNotificationViewTapReceivedNotification object:userInfo];
     self.window.rootViewController = rootVC;
-    
+
+//    [[UINavigationBar appearance] setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithHexString:@"d53432"]] forBarMetrics:UIBarMetricsDefault];
+
     [self.window makeKeyAndVisible];
     return YES;
 }

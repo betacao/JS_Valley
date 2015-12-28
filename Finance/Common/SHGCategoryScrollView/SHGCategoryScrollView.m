@@ -24,7 +24,6 @@
 - (instancetype)initWithFrame:(CGRect)frame
 {
     frame.size.height = kCategoryScrollViewHeight;
-    frame.size.width = SCREENWIDTH;
     self = [super initWithFrame:frame];
     if (self) {
     }
@@ -118,10 +117,10 @@
             CGRect frame = button.frame;
             frame.size.width = size.width;
             frame.size.height = CGRectGetHeight(self.frame);
-            frame.origin.x = self.categoryWidth;
+            frame.origin.x = self.categoryWidth + kCategoryObjectMargin;
             frame.origin.y = 0.0f;
             button.frame = frame;
-            self.categoryWidth = CGRectGetMaxX(frame) + kCategoryObjectMargin;
+            self.categoryWidth = CGRectGetMaxX(frame);
             self.contentSize = CGSizeMake(self.categoryWidth, CGRectGetHeight(self.frame));
             [self addSubview:button];
             [self.buttonArrays addObject:button];
@@ -147,7 +146,7 @@
         }];
     }
     self.selectedIndex = 0;
-
+    
 }
 
 - (void)clickButton:(UIButton *)button

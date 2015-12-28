@@ -15,7 +15,8 @@
 #import "SHGMarketDetailViewController.h"
 @interface SHGMarketListViewController ()<UITabBarDelegate, UITableViewDataSource, SHGCategoryScrollViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property (strong, nonatomic) SHGCategoryScrollView *sectionHeaderView;
+@property (strong, nonatomic) UIView *headerView;
+@property (strong, nonatomic) SHGCategoryScrollView *scrollView;
 @property (strong, nonatomic) UITableViewCell *emptyCell;
 @property (strong, nonatomic) SHGEmptyDataView *emptyView;
 @property (strong, nonatomic) NSMutableArray *currentArray;
@@ -31,13 +32,13 @@
     [self addHeaderRefresh:self.tableView headerRefesh:YES andFooter:YES];
     __weak typeof(self) weakSelf = self;
     [[SHGMarketManager shareManager] loadMarketCategoryBlock:^(NSArray *array) {
-        weakSelf.sectionHeaderView.categoryArray = array;
+        weakSelf.scrollView.categoryArray = array;
         for (NSInteger i = 0; i < array.count; i++) {
             NSMutableArray *subArray = [NSMutableArray array];
             [weakSelf.dataArr addObject:subArray];
         }
         weakSelf.currentArray = [weakSelf.dataArr firstObject];
-        [weakSelf loadMarketList:@"first" firstId:[weakSelf.sectionHeaderView marketFirstId] second:[weakSelf.sectionHeaderView marketSecondId] marketId:@"-1"];
+        [weakSelf loadMarketList:@"first" firstId:[weakSelf.scrollView marketFirstId] second:[weakSelf.scrollView marketSecondId] marketId:@"-1"];
     }];
 }
 
@@ -67,13 +68,14 @@
 }
 
 
-- (SHGCategoryScrollView *)sectionHeaderView
+- (SHGCategoryScrollView *)scrollView
 {
-    if (!_sectionHeaderView) {
-        _sectionHeaderView = [[SHGCategoryScrollView alloc] initWithFrame:CGRectZero];
-        _sectionHeaderView.categoryDelegate = self;
+    if (!_scrollView) {
+        UIImage *image = [UIImage imageNamed:@"more_CategoryButton"];
+        _scrollView = [[SHGCategoryScrollView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, SCREENWIDTH - image.size.width, kCategoryScrollViewHeight)];
+        _scrollView.categoryDelegate = self;
     }
-    return _sectionHeaderView;
+    return _scrollView;
 }
 
 - (UITableViewCell *)emptyCell
@@ -99,9 +101,9 @@
 - (void)refreshHeader
 {
     if (self.currentArray.count > 0) {
-        [self loadMarketList:@"refresh" firstId:[self.sectionHeaderView marketFirstId] second:[self.sectionHeaderView marketSecondId] marketId:[self maxMarketID]];
+        [self loadMarketList:@"refresh" firstId:[self.scrollView marketFirstId] second:[self.scrollView marketSecondId] marketId:[self maxMarketID]];
     } else{
-        [self loadMarketList:@"first" firstId:[self.sectionHeaderView marketFirstId] second:[self.sectionHeaderView marketSecondId] marketId:@"-1"];
+        [self loadMarketList:@"first" firstId:[self.scrollView marketFirstId] second:[self.scrollView marketSecondId] marketId:@"-1"];
     }
 }
 
@@ -109,9 +111,9 @@
 - (void)refreshFooter
 {
     if (self.currentArray.count > 0) {
-        [self loadMarketList:@"load" firstId:[self.sectionHeaderView marketFirstId] second:[self.sectionHeaderView marketSecondId] marketId:[self minMarketID]];
+        [self loadMarketList:@"load" firstId:[self.scrollView marketFirstId] second:[self.scrollView marketSecondId] marketId:[self minMarketID]];
     } else{
-        [self loadMarketList:@"first" firstId:[self.sectionHeaderView marketFirstId] second:[self.sectionHeaderView marketSecondId] marketId:@"-1"];
+        [self loadMarketList:@"first" firstId:[self.scrollView marketFirstId] second:[self.scrollView marketSecondId] marketId:@"-1"];
     }
 }
 
@@ -180,7 +182,19 @@
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    return self.sectionHeaderView;
+    if (!self.headerView) {
+        self.headerView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, SCREENWIDTH, CGRectGetHeight(self.scrollView.frame))];
+        [self.headerView addSubview:self.scrollView];
+        //添加右面...按钮
+        UIButton *moreButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [moreButton setBackgroundImage:[UIImage imageNamed:@"more_CategoryButton"] forState:UIControlStateNormal];
+        [moreButton sizeToFit];
+        CGRect frame = moreButton.frame;
+        frame.origin.x = SCREENWIDTH - CGRectGetWidth(frame);
+        moreButton.frame = frame;
+        [self.headerView addSubview:moreButton];
+    }
+    return self.headerView;
 }
 
 #pragma mark ------切换分类代理
