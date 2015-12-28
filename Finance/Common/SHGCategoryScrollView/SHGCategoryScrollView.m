@@ -89,15 +89,15 @@
     } completion:^(BOOL finished) {
 
     }];
-    if (self.delegate && [self.delegate respondsToSelector:@selector(didChangeToIndex:firstId:secondId:)] && isChanged) {
-        [self.delegate didChangeToIndex:selectedIndex firstId:[self marketFirstId] secondId:[self marketSecondId]];
+    if (self.categoryDelegate && [self.categoryDelegate respondsToSelector:@selector(didChangeToIndex:firstId:secondId:)] && isChanged) {
+        [self.categoryDelegate didChangeToIndex:selectedIndex firstId:[self marketFirstId] secondId:[self marketSecondId]];
     }
 }
 
 - (void)layoutSubviews
 {
     [super layoutSubviews];
-    if (self.categoryArray.count == 0) {
+    if (self.categoryArray.count == 0 || self.buttonArrays.count != 0) {
         return;
     }
     [self removeAllSubviews];
@@ -121,7 +121,7 @@
             frame.origin.x = self.categoryWidth;
             frame.origin.y = 0.0f;
             button.frame = frame;
-            self.categoryWidth = CGRectGetMaxX(frame);
+            self.categoryWidth = CGRectGetMaxX(frame) + kCategoryObjectMargin;
             self.contentSize = CGSizeMake(self.categoryWidth, CGRectGetHeight(self.frame));
             [self addSubview:button];
             [self.buttonArrays addObject:button];

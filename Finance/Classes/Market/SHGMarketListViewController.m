@@ -71,7 +71,7 @@
 {
     if (!_sectionHeaderView) {
         _sectionHeaderView = [[SHGCategoryScrollView alloc] initWithFrame:CGRectZero];
-        _sectionHeaderView.delegate = self;
+        _sectionHeaderView.categoryDelegate = self;
     }
     return _sectionHeaderView;
 }
@@ -174,7 +174,7 @@
 {
     if (self.currentArray.count > 0) {
         SHGMarketDetailViewController * view = [[SHGMarketDetailViewController alloc]init];
-        [self.navigationController pushViewController:view animated:NO];
+        [self.navigationController pushViewController:view animated:YES];
     }
 }
 

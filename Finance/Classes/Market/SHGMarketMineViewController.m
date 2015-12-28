@@ -12,6 +12,7 @@
 #import "SHGMarketObject.h"
 #import "SHGCategoryScrollView.h"
 #import "SHGEmptyDataView.h"
+#import "SHGMarketDetailViewController.h"
 
 @interface SHGMarketMineViewController ()<UITabBarDelegate, UITableViewDataSource>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -147,7 +148,8 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (self.dataArr.count > 0) {
-
+        SHGMarketDetailViewController * view = [[SHGMarketDetailViewController alloc]init];
+        [self.navigationController pushViewController:view animated:YES];
     }
 }
 
