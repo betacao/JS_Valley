@@ -9,5 +9,9 @@
 #import "BaseViewController.h"
 
 @interface SHGMarketSecondCategoryViewController : BaseViewController
+{
+    
+}
+-(void)getArr:(NSArray * )arry;
 
 @end
