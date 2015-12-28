@@ -48,7 +48,8 @@
     self.titleLabel.font = [UIFont systemFontOfSize:14.0f];
     self.titleLabel.backgroundColor = [UIColor clearColor];
     self.titleLabel.textAlignment = NSTextAlignmentLeft;
-    self.titleLabel.textColor = kTextColor;
+    //self.titleLabel.textColor = kTextColor;
+    self.titleLabel.textColor = [UIColor colorWithHexString:@"606060"];
     [btn addSubview:self.titleLabel];
     
     self.arrowView = [[UIImageView alloc]initWithFrame:CGRectMake(CGRectGetWidth(self.frame) - 2 * imgW, (CGRectGetHeight(self.frame) - imgH)/2.0, imgW, imgH)];
