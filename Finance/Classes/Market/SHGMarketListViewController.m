@@ -13,6 +13,8 @@
 #import "SHGCategoryScrollView.h"
 #import "SHGEmptyDataView.h"
 #import "SHGMarketDetailViewController.h"
+#import "SHGMarketSecondCategoryViewController.h"
+
 @interface SHGMarketListViewController ()<UITabBarDelegate, UITableViewDataSource, SHGCategoryScrollViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) UIView *headerView;
@@ -188,6 +190,7 @@
         //添加右面...按钮
         UIButton *moreButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [moreButton setBackgroundImage:[UIImage imageNamed:@"more_CategoryButton"] forState:UIControlStateNormal];
+        [moreButton addTarget:self action:@selector(clickMoreButton:) forControlEvents:UIControlEventTouchUpInside];
         [moreButton sizeToFit];
         CGRect frame = moreButton.frame;
         frame.origin.x = SCREENWIDTH - CGRectGetWidth(frame);
@@ -208,6 +211,14 @@
         self.currentArray = subArray;
         [self.tableView reloadData];
     }
+}
+
+#pragma mark ------点击更多按钮
+
+- (void)clickMoreButton:(UIButton *)button
+{
+    SHGMarketSecondCategoryViewController *controller = [[SHGMarketSecondCategoryViewController alloc] init];
+    [self.navigationController pushViewController:controller animated:YES];
 }
 
 - (void)didReceiveMemoryWarning
