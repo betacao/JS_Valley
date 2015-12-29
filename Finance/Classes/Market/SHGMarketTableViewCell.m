@@ -49,7 +49,19 @@
         self.leftView.frame = frame;
     }
     self.typeLabel.text = [@"类型：" stringByAppendingString:object.catalog];
-    self.amountLabel.text = [@"金额：" stringByAppendingString: object.price];
+    if (object.price.length == 0) {
+        self.amountLabel.text = @"金额：暂未说明";
+    }else{
+         self.amountLabel.text = [@"金额：" stringByAppendingString: object.price];
+    }
+   
+    CGSize capitalSize =CGSizeMake(MAXFLOAT,CGRectGetHeight(self.amountLabel.frame));
+    NSDictionary * capitalDic = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:12.0],NSFontAttributeName,nil];
+    CGSize  capitalActualsize =[self.amountLabel.text boundingRectWithSize:capitalSize options:NSStringDrawingUsesLineFragmentOrigin  attributes:capitalDic context:nil].size;
+    if (capitalActualsize.width > 120.f) {
+        capitalActualsize.width = 120.f;
+    }
+    self.amountLabel.frame =CGRectMake(SCREENWIDTH-capitalActualsize.width-15,self.amountLabel.origin.y, capitalActualsize.width, CGRectGetHeight(self.amountLabel.frame));
     self.contactLabel.text = [@"联系方式：" stringByAppendingString: object.contactInfo];
 
     if ([object.createBy isEqualToString:UID]){

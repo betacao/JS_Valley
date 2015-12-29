@@ -11,7 +11,13 @@
 @interface SHGMarketObject : MTLModel<MTLJSONSerializing>
 
 @property (strong, nonatomic) NSString *price;
+@property (strong, nonatomic) NSString *url;
+@property (strong, nonatomic) NSString *company;
+@property (strong, nonatomic) NSString *title;
+@property (strong, nonatomic) NSString *status;
+@property (strong, nonatomic) NSString *headimageurl;
 @property (strong, nonatomic) NSString *marketName;
+@property (strong, nonatomic) NSString *realname;
 @property (strong, nonatomic) NSString *marketId;
 @property (strong, nonatomic) NSString *contactInfo;
 @property (strong, nonatomic) NSString *detail;
