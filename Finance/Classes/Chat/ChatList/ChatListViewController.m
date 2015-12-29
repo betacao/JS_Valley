@@ -1214,7 +1214,6 @@ static NSString * const kCommonFNum			= @"commonnum";
         NSDictionary *dic1 = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor],NSForegroundColorAttributeName,[UIFont systemFontOfSize:17],NSFontAttributeName ,nil];
         //设置标题的颜色 字体和大小 阴影和阴影颜色
         [_segmentControl setTitleTextAttributes:dic1 forState:UIControlStateSelected];
-        //        [_segmentControl setTitleTextAttributes:dic1 forState:UIControlStateHighlighted];
         [_segmentControl setTitleTextAttributes:dic forState:UIControlStateNormal];
         _segmentControl.tintColor = [UIColor clearColor];
         _segmentControl.layer.borderColor =  [RGB(255, 56, 67) CGColor];

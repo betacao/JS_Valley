@@ -17,7 +17,7 @@
 
 - (void)awakeFromNib {
     // Initialization code
-    self.lineView.backgroundColor = [UIColor colorWithHexString:@"e8e8e8"];
+    self.lineView.backgroundColor = [UIColor colorWithHexString:@"e6e7e8"];
     CGRect frame = self.lineView.frame;
     frame.size.height = 0.5f;
     self.lineView.frame = frame;

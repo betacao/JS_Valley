@@ -30,38 +30,34 @@
 @property (weak, nonatomic) IBOutlet UIView		*headerView;
 @property (weak, nonatomic) IBOutlet UIView     *labelView;
 @property (weak, nonatomic) IBOutlet UILabel    *moneyLabel;  //职位
-@property (weak, nonatomic) IBOutlet UIButton   *btnEdit;
 @property (weak, nonatomic) IBOutlet UILabel    *txtNickName;
 @property (weak, nonatomic) IBOutlet UILabel    *companyName; //公司名称
 @property (weak, nonatomic) IBOutlet UIImageView *btnUserPic;
-@property (weak, nonatomic) IBOutlet UIImageView *lineImageView;
-@property (weak, nonatomic) IBOutlet UIButton *verifyButton;
-@property (weak, nonatomic) IBOutlet UIButton *tagButton;
-@property (weak, nonatomic) IBOutlet UIButton *invateButton;
-@property (weak, nonatomic) IBOutlet UILabel *locationLabel;
-@property (weak, nonatomic) IBOutlet UILabel *phoneLabel;
+
+//@property (weak, nonatomic) IBOutlet UILabel *locationLabel;
+//@property (weak, nonatomic) IBOutlet UILabel *phoneLabel;
 
 @property (strong, nonatomic) SettingsViewController *vc;
 @property (strong, nonatomic) UILabel	*circleHeaderLabel;  //动态lable
 @property (strong, nonatomic) UILabel	*followHeaderLabel;  //关注label
 @property (strong, nonatomic) UILabel	*fansHeaderLabel;  //粉丝label
+@property (strong, nonatomic) UIButton *authButton;
 @property (strong, nonatomic) NSString *nickName;
 @property (strong, nonatomic) NSString *department;
 @property (strong, nonatomic) NSString *company;
 
 @property (strong, nonatomic) UIBarButtonItem *rightBarButtonItem;
-@property (strong ,nonatomic) SHGModifyInfoViewController *modifyInfoController;
+@property (strong, nonatomic) SHGModifyInfoViewController *modifyInfoController;
 @property (assign, nonatomic) BOOL shouldRefresh;
+@property (strong, nonatomic) NSString *auditState;
 
-- (IBAction)actionInvite:(id)sender;
-- (IBAction)actionAuth:(id)sender;
 - (IBAction)actionEdit:(id)sender;
 - (void)changeUserHeadImage;
 
 @end
 
 #define spaceWidth  0
-#define labelWidth  (SCREENWIDTH - spaceWidth*2)/3
+#define labelWidth  (SCREENWIDTH - spaceWidth * 3.0f ) / 4.0f
 
 @implementation MeViewController
 
@@ -109,7 +105,8 @@
         _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 60, 30)];
         _titleLabel.font = [UIFont systemFontOfSize:17.0f];
         _titleLabel.textColor = TEXT_COLOR;
-        _titleLabel.text = @"个人中心";
+        _titleLabel.textAlignment = NSTextAlignmentCenter;
+        _titleLabel.text = @"我";
     }
     return _titleLabel;
 }
@@ -117,11 +114,11 @@
 {
     if (!_rightBarButtonItem) {
 
-        UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 24, 24)];
-        [button addTarget:self action:@selector(goToSettings) forControlEvents:UIControlEventTouchUpInside];
-        [button setBackgroundImage:[UIImage imageNamed:@"me_settings"] forState:UIControlStateNormal];
-        [button setBackgroundImage:[UIImage imageNamed:@"me_settings"] forState:UIControlStateHighlighted];
-
+        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+        [button addTarget:self action:@selector(actionInvite:) forControlEvents:UIControlEventTouchUpInside];
+        [button setTitle:@"邀请" forState:UIControlStateNormal];
+        button.titleLabel.font = [UIFont systemFontOfSize:14.0f];
+        [button sizeToFit];
         self.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:button];
 
     }
@@ -151,62 +148,82 @@
 {
     [self.btnUserPic setImage:[UIImage imageNamed:@"default_head"]];
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
+    __weak typeof(self) weakSelf = self;
     [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttp,@"user",@"personaluser"] parameters:@{@"uid":uid}success:^(MOCHTTPResponse *response) {
         
         NSString *circleCount = [response.dataDictionary valueForKey:@"circles"];
         NSString *followCount = [response.dataDictionary valueForKey:@"attention"];
         NSString *fansCount = [response.dataDictionary valueForKey:@"fans"];
         
-        NSString *circleString = [NSString stringWithFormat:@"动态 %@",circleCount];
-        NSString *followString = [NSString stringWithFormat:@"关注 %@",followCount];
-        NSString *fansString = [NSString stringWithFormat:@"粉丝 %@",fansCount];
-        
-        self.circleHeaderLabel.text = circleString;
-        self.followHeaderLabel.text = followString;
-        self.fansHeaderLabel.text = fansString;
+        NSString *circleString = [NSString stringWithFormat:@"动态 \n%@",circleCount];
+        NSString *followString = [NSString stringWithFormat:@"关注 \n%@",followCount];
+        NSString *fansString = [NSString stringWithFormat:@"粉丝 \n%@",fansCount];
 
-        self.txtNickName.text = [response.dataDictionary valueForKey:@"name"];
-        self.nickName = [response.dataDictionary valueForKey:@"name"];
+        NSMutableAttributedString *aCircleString = [[NSMutableAttributedString alloc] initWithString:circleString];
+        [aCircleString addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"161616"] range:NSMakeRange(2, circleString.length - 2)];
+
+        NSMutableAttributedString *aFollowString = [[NSMutableAttributedString alloc] initWithString:followString];
+        [aFollowString addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"161616"] range:NSMakeRange(2, circleString.length - 2)];
+
+        NSMutableAttributedString *aFansString = [[NSMutableAttributedString alloc] initWithString:fansString];
+        [aFansString addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"161616"] range:NSMakeRange(2, circleString.length - 2)];
+
+        weakSelf.circleHeaderLabel.attributedText = aCircleString;
+        weakSelf.followHeaderLabel.attributedText = aFollowString;
+        weakSelf.fansHeaderLabel.attributedText = aFansString;
+
+        weakSelf.txtNickName.text = [response.dataDictionary valueForKey:@"name"];
+        weakSelf.nickName = [response.dataDictionary valueForKey:@"name"];
         if([response.dataDictionary valueForKey:@"titles"]){
-            self.moneyLabel.text = [response.dataDictionary valueForKey:@"titles"];
-            self.department = self.moneyLabel.text;
+            weakSelf.moneyLabel.text = [response.dataDictionary valueForKey:@"titles"];
+            weakSelf.department = self.moneyLabel.text;
         } else{
-            self.moneyLabel.text = @"暂无职称";
+            weakSelf.moneyLabel.text = @"暂无职称";
         }
         if([response.dataDictionary valueForKey:@"companyname"]){
-            self.companyName.text = [response.dataDictionary valueForKey:@"companyname"];
-            self.company = self.companyName.text;
+            weakSelf.companyName.text = [response.dataDictionary valueForKey:@"companyname"];
+            weakSelf.company = self.companyName.text;
         } else{
-            self.companyName.text = @"暂无公司名";
-        }
-        if([response.dataDictionary valueForKey:@"phone"]){
-            self.phoneLabel.text = [response.dataDictionary valueForKey:@"phone"];
-        } else{
-            self.phoneLabel.text = @"";
+            weakSelf.companyName.text = @"暂无公司名";
         }
 
-        if([response.dataDictionary valueForKey:@"position"]){
-            self.locationLabel.text = [response.dataDictionary valueForKey:@"position"];
-        } else{
-            self.locationLabel.text = @"";
-        }
+        //更改合适的位置
+        CGSize size = [weakSelf.txtNickName sizeThatFits:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX)];
+        CGRect frame = weakSelf.txtNickName.frame;
+        frame.size.width = size.width;
+        weakSelf.txtNickName.frame = frame;
+
+        size = [weakSelf.moneyLabel sizeThatFits:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX)];
+        frame = weakSelf.moneyLabel.frame;
+        frame.origin.x = CGRectGetMaxX(weakSelf.txtNickName.frame) + kObjectMargin;
+        frame.size.width = size.width;
+        weakSelf.moneyLabel.frame = frame;
+
 
         NSString *headImageUrl = [response.dataDictionary valueForKey:@"head_img"];
         if (!IsStrEmpty(headImageUrl)) {
-            UIImage *placeImage = self.btnUserPic.image;
+            UIImage *placeImage = weakSelf.btnUserPic.image;
             if(!placeImage){
                 placeImage = [UIImage imageNamed:@"default_head"];
             }
-            [self.btnUserPic sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,headImageUrl]] placeholderImage:placeImage];
+            [weakSelf.btnUserPic sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,headImageUrl]] placeholderImage:placeImage];
         }
-        
-        [self.tableView.header endRefreshing];
-        NSLog(@"%@",response.dataDictionary);
-        NSLog(@"%@",response.data);
-        NSLog(@"%@",response.errorMessage);
+
+        if ([response.dataDictionary objectForKey:@"auditstate"]) {
+            self.auditState = [response.dataDictionary objectForKey:@""];
+            if ([self.auditState isEqualToString:@"0"]) {
+                [self.authButton setImage:[UIImage imageNamed:@"me_unAuth"] forState:UIControlStateNormal];
+            } else if ([self.auditState isEqualToString:@"1"]){
+                [self.authButton setImage:[UIImage imageNamed:@"me_authed"] forState:UIControlStateNormal];
+            } else{
+                [self.authButton setImage:[UIImage imageNamed:@"me_authering"] forState:UIControlStateNormal];
+            }
+        }
+
+        [weakSelf.tableView.header endRefreshing];
         
     } failed:^(MOCHTTPResponse *response) {
-        [self.tableView.header endRefreshing];
+        [weakSelf.tableView.header endRefreshing];
         
     }];
 }
@@ -225,10 +242,8 @@
     [self.navigationController	pushViewController:self.vc animated:YES];
 }
 
--(void)initUI
+- (void)initUI
 {
-    self.btnUserPic.layer.masksToBounds = YES;
-    self.btnUserPic.layer.cornerRadius = CGRectGetHeight(self.btnUserPic.frame) / 2.0f;
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(changeUserHeadImage)];
     tap.cancelsTouchesInView = YES;
     [self.btnUserPic addGestureRecognizer:tap];
@@ -237,41 +252,24 @@
     NSString *headImage = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_HEAD_IMAGE];
     [self.btnUserPic sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,headImage]] placeholderImage:[UIImage imageNamed:@"default_head"]];
 
-    self.circleHeaderLabel.text = @"动态 0";
-    self.followHeaderLabel.text = @"关注 0";
-    self.fansHeaderLabel.text	= @"粉丝 0";
+    self.circleHeaderLabel.text = @"动态 \n0";
+    self.followHeaderLabel.text = @"关注 \n0";
+    self.fansHeaderLabel.text	= @"粉丝 \n0";
 
-    UIView *spaceView1 = [[UIView alloc] initWithFrame:CGRectMake(SCREENWIDTH / 3.0f, 10.0f, 0.5f, 30)];
-    UIView *spaceView2 = [[UIView alloc] initWithFrame:CGRectMake(SCREENWIDTH / 3.0f * 2.0f,10.0f, 0.5f, 30)];
-    spaceView1.backgroundColor = [UIColor colorWithHexString:@"e8e8e8"];
-    spaceView2.backgroundColor = [UIColor colorWithHexString:@"e8e8e8"];
+    UIView *spaceView1 = [[UIView alloc] initWithFrame:CGRectMake(SCREENWIDTH / 4.0f, 10.0f, 0.5f, 22.0f)];
+    UIView *spaceView2 = [[UIView alloc] initWithFrame:CGRectMake(SCREENWIDTH / 4.0f * 2.0f,10.0f, 0.5f, 22.0f)];
+    UIView *spaceView3 = [[UIView alloc] initWithFrame:CGRectMake(SCREENWIDTH / 4.0f * 3.0f,10.0f, 0.5f, 22.0f)];
+    spaceView1.backgroundColor = [UIColor colorWithHexString:@"e6e7e8"];
+    spaceView2.backgroundColor = [UIColor colorWithHexString:@"e6e7e8"];
+    spaceView3.backgroundColor = [UIColor colorWithHexString:@"e6e7e8"];
 
-    UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, CGRectGetHeight(self.labelView.frame) - 1.0f, SCREENHEIGHT, 0.5f)];
-    lineView.backgroundColor = [UIColor colorWithHexString:@"e8e8e8"];
-    [self.labelView addSubview:lineView];
     [self.labelView addSubview:spaceView1];
     [self.labelView addSubview:spaceView2];
+    [self.labelView addSubview:spaceView3];
 
-    UIImage *image = [[UIImage imageNamed:@"me_line"] resizableImageWithCapInsets:UIEdgeInsetsMake(40.0f, 100.0f, 40.0f, 100.0f) resizingMode:UIImageResizingModeStretch];
-    self.lineImageView.image = image;
-
-    CGRect frame = self.verifyButton.frame;
-    CGFloat margin = (SCREENWIDTH - CGRectGetWidth(frame) * 4.0f) / 8.0f;
-    frame.origin.x = margin;
-    self.verifyButton.frame = frame;
-
-    frame = self.btnEdit.frame;
-    frame.origin.x = 3.0f * margin + CGRectGetWidth(frame);
-    self.btnEdit.frame = frame;
-
-    frame = self.tagButton.frame;
-    frame.origin.x = 5.0f * margin + 2.0f * CGRectGetWidth(frame);
-    self.tagButton.frame = frame;
-
-    frame = self.invateButton.frame;
-    frame.origin.x = 7.0f * margin + 3.0f * CGRectGetWidth(frame);
-    self.invateButton.frame = frame;
-
+    UIView *topLine = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, SCREENHEIGHT, 0.5f)];
+    topLine.backgroundColor = [UIColor colorWithHexString:@"e6e7e8"];
+    [self.labelView addSubview:topLine];
 }
 
 
@@ -322,7 +320,6 @@
 -(void)photosClick
 {
     UIImagePickerController *pickerImage = [[UIImagePickerController alloc] init];
-    
     if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]) {
         pickerImage.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
         pickerImage.mediaTypes = [UIImagePickerController availableMediaTypesForSourceType:pickerImage.sourceType];
@@ -436,7 +433,10 @@
 
 
 #pragma mark -身份认证
-- (IBAction)actionAuth:(id)sender {
+- (void)actionAuth:(id)sender {
+    if (![self.auditState isEqualToString:@"0"]) {
+        return;
+    }
     VerifyIdentityViewController *vc = [[VerifyIdentityViewController alloc] init];
     vc.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:vc animated:YES];
@@ -446,12 +446,12 @@
 
 - (IBAction)changeTags:(id)sender
 {
-//    __weak typeof(self)weakSelf = self;
     [[SHGSelectTagsViewController shareTagsView] changeUserTags];
 }
 #pragma mark -邀请好友
 
-- (IBAction)actionInvite:(id)sender {
+- (void)actionInvite:(id)sender
+{
 
     id<ISSCAttachment> image  = [ShareSDK pngImageWithImage:[UIImage imageNamed:@"80"]];
 
@@ -532,8 +532,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    // Return the number of rows in the section.
-    return 5;
+    return 6;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -559,6 +558,8 @@
         cell.lblName.text = @"我的收藏";
     }else if (indexPath.row == 4) {
         cell.lblName.text = @"我的地址";
+    }else if (indexPath.row == 5) {
+        cell.lblName.text = @"设置";
     }
     return cell;
 }
@@ -571,29 +572,30 @@
         vc.hidesBottomBarWhenPushed = YES;
         [MobClick event:@"MyTeamViewController" label:@"onClick"];
         [self.navigationController pushViewController:vc animated:YES];
-    }
-    else if (indexPath.row == 1) {
+    } else if (indexPath.row == 1) {
         MyMoneyViewController *vc = [[MyMoneyViewController alloc] init];
         vc.hidesBottomBarWhenPushed = YES;
         [MobClick event:@"MyMoneyViewController" label:@"onClick"];
         [self.navigationController pushViewController:vc animated:YES];
 
-    }else if (indexPath.row == 2) {
+    } else if (indexPath.row == 2) {
         MyAppointmentViewController *vc = [[MyAppointmentViewController alloc] init];
         vc.hidesBottomBarWhenPushed = YES;
         [MobClick event:@"MyAppointmentViewController" label:@"onClick"];
         [self.navigationController pushViewController:vc animated:YES];
-    }else if (indexPath.row == 3) {
+    } else if (indexPath.row == 3) {
         MyCollectionViewController *vc = [[MyCollectionViewController alloc] init];
         vc.hidesBottomBarWhenPushed = YES;
         [MobClick event:@"MyCollectionViewController" label:@"onClick"];
         [self.navigationController pushViewController:vc animated:YES];
         
-    }else if (indexPath.row == 4) {
+    } else if (indexPath.row == 4) {
         MyAddressViewController *vc = [[MyAddressViewController alloc] init];
         vc.hidesBottomBarWhenPushed = YES;
         [MobClick event:@"MyAddressViewController" label:@"onClick"];
         [self.navigationController pushViewController:vc animated:YES];
+    } else if (indexPath.row == 5) {
+        [self goToSettings];
     }
 }
 //处理tableView左边空白
@@ -617,8 +619,8 @@
         _circleHeaderLabel = [[UILabel alloc] initWithFrame:CGRectMake(spaceWidth, 0, labelWidth, self.labelView.height)];
         _circleHeaderLabel.textAlignment = NSTextAlignmentCenter;
         _circleHeaderLabel.numberOfLines = 0;
-        _circleHeaderLabel.font = [UIFont systemFontOfSize:13.0f] ;
-        _circleHeaderLabel.textColor = [UIColor colorWithHexString:@"434343"];
+        _circleHeaderLabel.font = [UIFont systemFontOfSize:10.0f] ;
+        _circleHeaderLabel.textColor = [UIColor colorWithHexString:@"989898"];
         _circleHeaderLabel.userInteractionEnabled = YES;
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(goToMyCircle)];
         [_circleHeaderLabel addGestureRecognizer:tap];
@@ -627,32 +629,22 @@
     return _circleHeaderLabel;
 }
 
--(void)goToMyCircle
-{
-    SHGPersonalViewController *controller = [[SHGPersonalViewController alloc] initWithNibName:@"SHGPersonalViewController" bundle:nil];
-    controller.hidesBottomBarWhenPushed = YES;
-    controller.userId = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
-    [self.navigationController pushViewController:controller animated:YES];
-}
-
-
 - (UILabel *)followHeaderLabel
 {
     if (!_followHeaderLabel) {
         _followHeaderLabel = [[UILabel alloc] initWithFrame:CGRectMake(spaceWidth + labelWidth, 0, labelWidth, self.labelView.height)];
         _followHeaderLabel.textAlignment = NSTextAlignmentCenter;
         _followHeaderLabel.numberOfLines = 0;
-        _followHeaderLabel.font = [UIFont systemFontOfSize:13.0f];
-        _followHeaderLabel.textColor = [UIColor colorWithHexString:@"434343"];
-        
+        _followHeaderLabel.font = [UIFont systemFontOfSize:10.0f];
+        _followHeaderLabel.textColor = [UIColor colorWithHexString:@"989898"];
+
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(goToFollowList)];
         [_followHeaderLabel addGestureRecognizer:tap];
         _followHeaderLabel.userInteractionEnabled = YES;
-        
-        
+
         [self.labelView addSubview:_followHeaderLabel];
     }
-    
+
     return _followHeaderLabel;
 }
 
@@ -662,17 +654,40 @@
     if (!_fansHeaderLabel) {
         _fansHeaderLabel = [[UILabel alloc] initWithFrame:CGRectMake(spaceWidth + labelWidth*2, 0, labelWidth, self.labelView.height)];
         _fansHeaderLabel.textAlignment = NSTextAlignmentCenter;
-        _fansHeaderLabel.textColor = [UIColor colorWithHexString:@"434343"];
+        _fansHeaderLabel.textColor = [UIColor colorWithHexString:@"989898"];
         _fansHeaderLabel.numberOfLines = 0;
-        _fansHeaderLabel.font = [UIFont systemFontOfSize:13.0f];
+        _fansHeaderLabel.font = [UIFont systemFontOfSize:10.0f];
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(goToFansList)];
         [_fansHeaderLabel addGestureRecognizer:tap];
         _fansHeaderLabel.userInteractionEnabled = YES;
         [self.labelView addSubview:_fansHeaderLabel];
     }
-    
+
     return _fansHeaderLabel;
 }
+
+- (UIButton *)authButton
+{
+    if (!_authButton) {
+        _authButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        _authButton.frame = CGRectMake(spaceWidth + labelWidth * 3.0f, 0, labelWidth, self.labelView.height);
+        [_authButton setImage:[UIImage imageNamed:@"me_unAuth"] forState:UIControlStateNormal];
+        [_authButton addTarget:self action:@selector(actionAuth:) forControlEvents:UIControlEventTouchUpInside];
+        [self.labelView addSubview:_authButton];
+    }
+
+    return _authButton;
+}
+
+
+- (void)goToMyCircle
+{
+    SHGPersonalViewController *controller = [[SHGPersonalViewController alloc] initWithNibName:@"SHGPersonalViewController" bundle:nil];
+    controller.hidesBottomBarWhenPushed = YES;
+    controller.userId = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
+    [self.navigationController pushViewController:controller animated:YES];
+}
+
 - (void)goToFollowList
 {
     MyFollowViewController *vc = [[MyFollowViewController alloc] init];
@@ -680,6 +695,7 @@
     vc.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:vc animated:YES];
 }
+
 - (void)goToFansList
 {
     MyFollowViewController *vc = [[MyFollowViewController alloc] init];

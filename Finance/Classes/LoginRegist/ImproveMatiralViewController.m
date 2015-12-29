@@ -328,7 +328,7 @@
             frame.origin.y = point.y;
             weakSelf.nextButton.frame = frame;
             weakSelf.bgScrollView.contentSize = CGSizeMake(SCREENWIDTH, CGRectGetMaxY(self.nextButton.frame) + 2 * kPersonCategoryTopMargin);
-//            weakSelf.personCategoryView.superview.hidden = NO;
+            weakSelf.personCategoryView.superview.hidden = NO;
         }];
     }];
 }

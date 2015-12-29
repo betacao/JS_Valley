@@ -50,11 +50,11 @@
 #define RGBA(r,g,b,a) [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:a]
 
 //Navigation背景颜色
-#define NavRTitleColor  [UIColor colorWithRed:51/255.0 green:51/255.0 blue:51/255.0 alpha:1.0]
+#define NavRTitleColor  [UIColor whiteColor]
 //主题色
 #define COMMON_COLOR [UIColor colorWithRed:62.0/255.0 green:148.0/255.0 blue:218.0/255.0 alpha:1.0]
 
-#define TEXT_COLOR [UIColor colorWithRed:51/255.0 green:51/255.0 blue:51/255.0 alpha:1.0]
+#define TEXT_COLOR [UIColor whiteColor]
 
 #define CELL_PHOTO_SEP  6 * XFACTOR
 

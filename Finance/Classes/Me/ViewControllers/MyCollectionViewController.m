@@ -84,31 +84,6 @@
     }
 }
 
-//- (UISegmentedControl *)segmentControl
-//{
-//	if (!_segmentControl) {
-//		
-//		_segmentControl = [[UISegmentedControl alloc] initWithFrame:CGRectMake(58, 0, 208, 30)];
-//		
-//		[_segmentControl insertSegmentWithTitle:@"帖子" atIndex:0 animated:YES];
-//		
-//		[_segmentControl insertSegmentWithTitle:@"产品" atIndex:1 animated:YES];
-//		[_segmentControl insertSegmentWithTitle:@"名片" atIndex:2 animated:YES];
-//		_segmentControl.selectedSegmentIndex = 0;
-//		
-//		[_segmentControl addTarget:self action:@selector(selected:) forControlEvents:UIControlEventValueChanged];
-//		
-//		[_segmentControl setTintColor:RGB(248, 92, 83)];
-//		
-//		NSDictionary *titleArributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:17],NSFontAttributeName, nil];
-//		
-//		[_segmentControl setTitleTextAttributes:titleArributes forState:UIControlStateNormal];
-//		[_segmentControl setTitleTextAttributes:titleArributes forState:UIControlStateHighlighted];
-//		
-//	}
-//	return _segmentControl;
-//}
-
 -(UIView * )categoryView
 {
     if (!_categoryView) {
