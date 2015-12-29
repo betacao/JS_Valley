@@ -23,4 +23,5 @@
 - (NSString *)marketFirstId;
 - (NSString *)marketSecondId;
 - (NSInteger)currentIndex;
+- (void)moveToIndex:(NSInteger)index;
 @end

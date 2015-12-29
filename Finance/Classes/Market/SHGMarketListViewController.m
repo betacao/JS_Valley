@@ -207,7 +207,7 @@
 #pragma mark -----二级分类返回代理
 - (void)backFromSecondChangeToIndex:(NSInteger)index
 {
-    
+    [self.scrollView moveToIndex:index];
 }
 
 #pragma mark ------切换分类代理

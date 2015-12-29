@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "SHGMarketObject.h"
 
 @interface SHGMarketManager : NSObject
 
@@ -22,5 +23,5 @@
 
 + (void)modifyMarket:(NSDictionary *)param success:(void (^)(BOOL success))block;
 
-+ (void)loadMarketDetail:(NSDictionary *)param block:(void (^)(NSArray *))block;
++ (void)loadMarketDetail:(NSDictionary *)param block:(void (^)(SHGMarketObject *object))block;
 @end

@@ -71,6 +71,11 @@
     return _underLineView;
 }
 
+- (void)moveToIndex:(NSInteger)index
+{
+    self.selectedIndex = index;
+}
+
 - (void)setSelectedIndex:(NSInteger)selectedIndex
 {
     BOOL isChanged = _selectedIndex == selectedIndex ? NO : YES;

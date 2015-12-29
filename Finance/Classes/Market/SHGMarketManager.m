@@ -57,13 +57,14 @@
     }];
 }
 //详情
-+ (void)loadMarketDetail:(NSDictionary *)param block:(void (^)(NSArray *))block
++ (void)loadMarketDetail:(NSDictionary *)param block:(void (^)(SHGMarketObject *))block
 {
     [Hud showLoadingWithMessage:@"请稍等..."];
     NSString *request = [rBaseAddressForHttp stringByAppendingString:@"/market/getMarketById"];
-    [MOCHTTPRequestOperationManager postWithURL:request class:[SHGMarketObject class] parameters:param success:^(MOCHTTPResponse *response) {
+    [MOCHTTPRequestOperationManager postWithURL:request class:nil parameters:param success:^(MOCHTTPResponse *response) {
         [Hud hideHud];
-        block(response.dataArray);
+        NSArray *array = [[SHGGloble sharedGloble] parseServerJsonArrayToJSONModel:@[response.dataDictionary] class:[SHGMarketObject class]];
+        block([array firstObject]);
     } failed:^(MOCHTTPResponse *response) {
         [Hud hideHud];
         block(nil);
@@ -118,7 +119,7 @@
 + (void)addPraiseWithObject:(SHGMarketObject *)object finishBlock:(void (^)(BOOL))block
 {
     [Hud showLoadingWithMessage:@"请稍等..."];
-    NSString *request = [rBaseAddressForHttp stringByAppendingString:@"/meetingactivity/praise/savePraise"];
+    NSString *request = [rBaseAddressForHttp stringByAppendingString:@"/market/praise/savePraise"];
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
     NSDictionary *param = @{@"uid":uid, @"meetId":object.marketId};
     [MOCHTTPRequestOperationManager postWithURL:request parameters:param success:^(MOCHTTPResponse *response) {
@@ -140,7 +141,7 @@
 - (void)deletePraiseWithObject:(SHGMarketObject *)object finishBlock:(void (^)(BOOL))block
 {
     [Hud showLoadingWithMessage:@"请稍等..."];
-    NSString *request = [rBaseAddressForHttp stringByAppendingString:@"/meetingactivity/praise/deletePraise"];
+    NSString *request = [rBaseAddressForHttp stringByAppendingString:@"/market/praise/deletePraise"];
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
     NSDictionary *param = @{@"uid":uid, @"meetId":object.marketId};
     [MOCHTTPRequestOperationManager postWithURL:request parameters:param success:^(MOCHTTPResponse *response) {
@@ -175,7 +176,7 @@
         }
     }
     [Hud showLoadingWithMessage:@"请稍等..."];
-    NSString *request = [rBaseAddressForHttp stringByAppendingString:@"/meetingactivity/comment/saveComments"];
+    NSString *request = [rBaseAddressForHttp stringByAppendingString:@"/market/comment/saveComments"];
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
     NSString *userName = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_USER_NAME];
     NSDictionary *param = @{@"uid":uid, @"meetId":object.marketId, @"content":content, @"replyId":otherId};
@@ -206,7 +207,7 @@
 - (void)deleteCommentWithID:(NSString *)commentId finishBlock:(void (^)(BOOL))block
 {
     [Hud showLoadingWithMessage:@"请稍等..."];
-    NSString *request = [rBaseAddressForHttp stringByAppendingString:@"/meetingactivity/comment/deleteComments"];
+    NSString *request = [rBaseAddressForHttp stringByAppendingString:@"/market/comment/deleteComments"];
     NSDictionary *param = @{@"commentId":commentId};
     [MOCHTTPRequestOperationManager postWithURL:request parameters:param success:^(MOCHTTPResponse *response) {
         [Hud hideHud];
@@ -227,7 +228,7 @@
 - (void)shareAction:(SHGMarketObject *)object baseController:(UIViewController *)controller finishBlock:(void (^)(BOOL))block
 {
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
-    NSString *request = [rBaseAddressForHttp stringByAppendingFormat:@"/share/meetActDetail?rid=%@&uid=%@",object.marketId, uid];
+    NSString *request = [rBaseAddressForHttp stringByAppendingFormat:@"/share/marketDetail?rid=%@&uid=%@",object.marketId, uid];
     UIImage *png = [UIImage imageNamed:@"80.png"];
     id<ISSCAttachment> image  = [ShareSDK pngImageWithImage:png];
     NSString *theme = object.marketName;

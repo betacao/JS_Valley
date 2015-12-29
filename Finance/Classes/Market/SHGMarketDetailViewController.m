@@ -15,6 +15,7 @@
 #define k_ThirdToTop 15.0f * XFACTOR
 
 @interface SHGMarketDetailViewController ()
+//界面
 @property (weak, nonatomic) IBOutlet UITableView *detailTable;
 @property (strong, nonatomic) IBOutlet UIView *viewHeader;
 @property (weak, nonatomic) IBOutlet UIImageView *headImageView;
@@ -40,6 +41,8 @@
 @property (weak, nonatomic) IBOutlet UIButton *btnComment;
 @property (weak, nonatomic) IBOutlet UIButton *btnShare;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollPraise;
+//数据
+@property (strong, nonatomic) SHGMarketObject *responseObject;
 
 - (IBAction)zan:(id)sender;
 - (IBAction)comment:(id)sender;
@@ -58,7 +61,8 @@
     self.detailTable.delegate = self;
     __weak typeof(self) weakSelf = self;
     NSDictionary *param = @{@"marketId":self.object.marketId ,@"uid":UID};
-    [SHGMarketManager loadMarketDetail:param block:^(NSArray *array) {
+    [SHGMarketManager loadMarketDetail:param block:^(SHGMarketObject *object) {
+        weakSelf.responseObject = object;
         [weakSelf loadUi];
     }];
 }

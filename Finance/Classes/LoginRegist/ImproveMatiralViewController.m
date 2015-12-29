@@ -76,7 +76,7 @@
             [[NSUserDefaults standardUserDefaults] synchronize];
         }
     }];
-    [self downloadUserSelectedInfo];
+//    [self downloadUserSelectedInfo];
     [self adjustLocationFrame];
     [[CCLocationManager shareLocation] getCity:^{
 
@@ -279,7 +279,7 @@
                 [[NSUserDefaults standardUserDefaults] synchronize];
                 [weakSelf chatLoagin];
                 [weakSelf dealFriendPush];
-                [weakSelf uploadUserSelectedInfo];
+                [weakSelf didUploadAllUserInfo];
                 NSLog(@"**********");
             }
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -328,7 +328,7 @@
             frame.origin.y = point.y;
             weakSelf.nextButton.frame = frame;
             weakSelf.bgScrollView.contentSize = CGSizeMake(SCREENWIDTH, CGRectGetMaxY(self.nextButton.frame) + 2 * kPersonCategoryTopMargin);
-            weakSelf.personCategoryView.superview.hidden = NO;
+//            weakSelf.personCategoryView.superview.hidden = NO;
         }];
     }];
 }
@@ -346,7 +346,7 @@
     }];
 }
 
-//上传个人信息和标签是在两个地方分别上传的 要等两个请求全部完成才能去跳转到下一页
+
 - (void)didUploadAllUserInfo
 {
     __weak typeof(self) weakSelf = self;
