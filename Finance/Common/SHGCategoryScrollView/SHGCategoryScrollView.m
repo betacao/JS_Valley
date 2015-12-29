@@ -26,6 +26,7 @@
     frame.size.height = kCategoryScrollViewHeight;
     self = [super initWithFrame:frame];
     if (self) {
+        self.backgroundColor = [UIColor colorWithHexString:@"f5f6f7"];
     }
     return self;
 }
@@ -101,6 +102,7 @@
     }
     [self removeAllSubviews];
     [self.buttonArrays removeAllObjects];
+
     __block NSString *string = @"";
     [self.categoryArray enumerateObjectsUsingBlock:^(SHGMarketFirstCategoryObject *obj, NSUInteger idx, BOOL * _Nonnull stop) {
         string = [string stringByAppendingString:obj.firstCatalogName];

@@ -12,7 +12,7 @@
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey
 {
-    return @{ @"price":@"price", @"marketName":@"marketname", @"contactInfo":@"contactinfo", @"detail":@"detail", @"marketId":@"marketid", @"commentNum":@"commentnum", @"createBy":@"createby", @"praiseNum":@"praisenum", @"createTime":@"createtime", @"shareNum":@"sharenum", @"friendShip":@"friendship", @"catalog":@"catalog", @"firstcatalog":@"firstcatalog", @"secondcatalog":@"secondcatalog", @"firstcatalogid":@"firstcatalogid", @"secondcatalogid":@"secondcatalogid", @"isPraise":@"ispraise", @"position":@"position"};
+    return @{ @"price":@"price", @"marketName":@"marketname", @"contactInfo":@"contactinfo", @"detail":@"detail", @"marketId":@"marketid", @"commentNum":@"commentnum", @"createBy":@"createby", @"praiseNum":@"praisenum", @"createTime":@"createtime", @"shareNum":@"sharenum", @"friendShip":@"friendship", @"catalog":@"catalog", @"firstcatalog":@"firstcatalog", @"secondcatalog":@"secondcatalog", @"firstcatalogid":@"firstcatalogid", @"secondcatalogid":@"secondcatalogid", @"isPraise":@"ispraise", @"position":@"position", @"praiseList":@"praiselist", @"commentList":@"commentlist"};
 }
 
 + (NSValueTransformer *)JSONTransformerForKey:(NSString *)key
@@ -78,6 +78,42 @@
     return [MTLValueTransformer transformerUsingForwardBlock:^id(id value, BOOL *success, NSError *__autoreleasing *error) {
         return value;
     }];
+}
+
+@end
+
+@implementation SHGMarketCommentObject
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey
+{
+    return @{@"commentId":@"rid", @"commentUserId":@"cid", @"commentDetail":@"cdetail", @"commentUserName":@"cnickname", @"commentOtherName":@"rnickname"};
+}
+
+- (CGFloat)heightForCell
+{
+
+    UIFont *font = [UIFont systemFontOfSize:14.0f];
+    NSString *text = @"";
+    if (IsStrEmpty(self.commentOtherName))
+    {
+        text = [NSString stringWithFormat:@"%@:x%@",self.commentUserName,self.commentDetail];
+    } else{
+        text = [NSString stringWithFormat:@"%@回复%@:x%@",self.commentUserName, self.commentOtherName, self.commentDetail];
+    }
+    NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:text];
+    [string addAttribute:NSFontAttributeName value:font range:NSMakeRange(0, text.length)];
+    NSMutableParagraphStyle * paragraphStyle1 = [[NSMutableParagraphStyle alloc] init];
+    [paragraphStyle1 setLineSpacing:3];
+    [string addAttribute:NSParagraphStyleAttributeName value:paragraphStyle1 range:NSMakeRange(0, [string length])];
+    UILabel *replyLabel = [[UILabel alloc] init];
+    replyLabel.numberOfLines = 0;
+    replyLabel.lineBreakMode = NSLineBreakByWordWrapping;
+    replyLabel.font = [UIFont systemFontOfSize:14.0f];
+    replyLabel.attributedText = string;
+    CGSize size = [replyLabel sizeThatFits:CGSizeMake(SCREENWIDTH - kPhotoViewRightMargin - kPhotoViewLeftMargin - CELLRIGHT_COMMENT_WIDTH, MAXFLOAT)];
+    NSLog(@"%f",size.height);
+    CGFloat height = size.height;
+    return height;
 }
 
 @end

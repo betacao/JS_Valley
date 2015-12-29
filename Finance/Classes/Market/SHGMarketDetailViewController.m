@@ -9,6 +9,7 @@
 #import "SHGMarketDetailViewController.h"
 #import "SHGMarketTableViewCell.h"
 #import "CircleLinkViewController.h"
+#import "SHGMarketManager.h"
 #define k_FirstToTop 5.0f * XFACTOR
 #define k_SecondToTop 10.0f * XFACTOR
 #define k_ThirdToTop 15.0f * XFACTOR
@@ -55,9 +56,15 @@
     [super viewDidLoad];
     self.title = @"业务详情";
     self.detailTable.delegate = self;
-    [self loadUi];
+    __weak typeof(self) weakSelf = self;
+    NSDictionary *param = @{@"marketId":self.object.marketId ,@"uid":UID};
+    [SHGMarketManager loadMarketDetail:param block:^(NSArray *array) {
+        [weakSelf loadUi];
+    }];
 }
--(void)loadUi
+
+
+- (void)loadUi
 {
     NSString *title = @"还是领导是卡卡还撒谎时刻会拉丝看哈飒飒的很快会拉的啥都说了是打开后骄傲的上课讲两句话；给付额爱回家啊撒了点就好的撒了解到撒垃圾的撒";
     self.titleLabel.text = title;
@@ -106,22 +113,24 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return _viewHeader.height;
+    return self.viewHeader.height;
 }
 
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    return _viewHeader;
+    return self.viewHeader;
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return 1;
 }
+
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return 2;
 }
+
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
    NSString * identifier = @"SHGMarketTableViewCell";

@@ -21,4 +21,6 @@
 + (void)createNewMarket:(NSDictionary *)param success:(void (^)(BOOL success))block;
 
 + (void)modifyMarket:(NSDictionary *)param success:(void (^)(BOOL success))block;
+
++ (void)loadMarketDetail:(NSDictionary *)param block:(void (^)(NSArray *))block;
 @end

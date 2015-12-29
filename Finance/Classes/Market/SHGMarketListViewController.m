@@ -178,6 +178,7 @@
 {
     if (self.currentArray.count > 0) {
         SHGMarketDetailViewController *controller = [[SHGMarketDetailViewController alloc]init];
+        controller.object = [self.currentArray objectAtIndex:indexPath.row];
         [self.navigationController pushViewController:controller animated:YES];
     }
 }
@@ -196,6 +197,10 @@
         frame.origin.x = SCREENWIDTH - CGRectGetWidth(frame);
         moreButton.frame = frame;
         [self.headerView addSubview:moreButton];
+
+        UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, kCategoryScrollViewHeight, SCREENWIDTH, 0.5f)];
+        lineView.backgroundColor = [UIColor colorWithHexString:@"d9dadb"];
+        [self.headerView addSubview:lineView];
     }
     return self.headerView;
 }

@@ -28,6 +28,8 @@
 @property (strong, nonatomic) NSString *secondcatalogid;
 @property (strong, nonatomic) NSString *isPraise;
 @property (strong, nonatomic) NSString *position;
+@property (strong, nonatomic) NSMutableArray *praiseList;
+@property (strong, nonatomic) NSMutableArray *commentList;
 @end
 
 
@@ -42,4 +44,17 @@
 @property (strong, nonatomic) NSString *firstCatalogId;
 @property (strong, nonatomic) NSString *firstCatalogName;
 @property (strong, nonatomic) NSArray *secondCataLogs;
+@end
+
+
+@interface SHGMarketCommentObject : MTLModel<MTLJSONSerializing>
+
+@property (strong, nonatomic) NSString *commentId;
+@property (strong, nonatomic) NSString *commentUserId;
+@property (strong, nonatomic) NSString *commentDetail;
+@property (strong, nonatomic) NSString *commentUserName;
+@property (strong, nonatomic) NSString *commentOtherName;
+
+- (CGFloat)heightForCell;
+
 @end
