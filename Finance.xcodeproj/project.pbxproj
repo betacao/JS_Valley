@@ -739,6 +739,7 @@
 		9894C97E1BF5D24200F80577 /* SHGActionSignTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9894C97C1BF5D24200F80577 /* SHGActionSignTableViewCell.xib */; };
 		98CB3AA61C3224DF0006A3F3 /* SHGMarketSecondCategoryListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98CB3AA41C3224DF0006A3F3 /* SHGMarketSecondCategoryListTableViewController.m */; };
 		98CB3AA71C3224DF0006A3F3 /* SHGMarketSecondCategoryListTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98CB3AA51C3224DF0006A3F3 /* SHGMarketSecondCategoryListTableViewController.xib */; };
+		98CB422F1C3262C00023A124 /* SecondCategoryButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 98CB422E1C3262C00023A124 /* SecondCategoryButton.m */; };
 		98D65B021C1E607300B65119 /* CircleNewDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98D65B001C1E607300B65119 /* CircleNewDetailViewController.m */; };
 		98D65B031C1E607300B65119 /* CircleNewDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98D65B011C1E607300B65119 /* CircleNewDetailViewController.xib */; };
 		98D73C2D1C194E7E0055AF75 /* SHGNewsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 98D73C2B1C194E7E0055AF75 /* SHGNewsTableViewCell.m */; };
@@ -1976,6 +1977,8 @@
 		98CB3AA31C3224DF0006A3F3 /* SHGMarketSecondCategoryListTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGMarketSecondCategoryListTableViewController.h; sourceTree = "<group>"; };
 		98CB3AA41C3224DF0006A3F3 /* SHGMarketSecondCategoryListTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGMarketSecondCategoryListTableViewController.m; sourceTree = "<group>"; };
 		98CB3AA51C3224DF0006A3F3 /* SHGMarketSecondCategoryListTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGMarketSecondCategoryListTableViewController.xib; sourceTree = "<group>"; };
+		98CB422D1C3262C00023A124 /* SecondCategoryButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SecondCategoryButton.h; sourceTree = "<group>"; };
+		98CB422E1C3262C00023A124 /* SecondCategoryButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SecondCategoryButton.m; sourceTree = "<group>"; };
 		98D65AFF1C1E607300B65119 /* CircleNewDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CircleNewDetailViewController.h; sourceTree = "<group>"; };
 		98D65B001C1E607300B65119 /* CircleNewDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CircleNewDetailViewController.m; sourceTree = "<group>"; };
 		98D65B011C1E607300B65119 /* CircleNewDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CircleNewDetailViewController.xib; sourceTree = "<group>"; };
@@ -4833,6 +4836,8 @@
 				98CB3AA31C3224DF0006A3F3 /* SHGMarketSecondCategoryListTableViewController.h */,
 				98CB3AA41C3224DF0006A3F3 /* SHGMarketSecondCategoryListTableViewController.m */,
 				98CB3AA51C3224DF0006A3F3 /* SHGMarketSecondCategoryListTableViewController.xib */,
+				98CB422D1C3262C00023A124 /* SecondCategoryButton.h */,
+				98CB422E1C3262C00023A124 /* SecondCategoryButton.m */,
 			);
 			path = Market;
 			sourceTree = "<group>";
@@ -5867,6 +5872,7 @@
 				6187D2D41AF1C693008E1D21 /* ChatListViewController.m in Sources */,
 				40302B101AEF57F600F22EB6 /* MyAddressTableViewCell.m in Sources */,
 				6187D2E11AF1C693008E1D21 /* EMChatImageBubbleView.m in Sources */,
+				98CB422F1C3262C00023A124 /* SecondCategoryButton.m in Sources */,
 				610FF06F1AD6227F0027EBA6 /* NSDate+Customized.m in Sources */,
 				F99B602C1B9E7D9500759AAC /* headerView.m in Sources */,
 				611B8CD71AFD5C09009CB21F /* ReplyTableViewCell.m in Sources */,
