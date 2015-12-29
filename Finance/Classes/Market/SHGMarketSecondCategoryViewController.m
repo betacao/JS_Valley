@@ -11,6 +11,7 @@
 #import "SHGMarketSecondCategoryTableViewCell.h"
 #import "SHGMarketSecondCategoryListTableViewController.h"
 #import "SHGMarketListViewController.h"
+#import "SecondCategoryButton.h"
 #define k_ToleftOne 11.0f * XFACTOR
 #define k_ToleftTwo 21.0f * XFACTOR
 #define k_SectionHeight 40
@@ -86,7 +87,6 @@
     NSString * identifier = @"SHGMarketSecondCategoryTableViewCell";
     SHGMarketSecondCategoryTableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:identifier];
     SHGMarketFirstCategoryObject * objf = [self.categoryArray objectAtIndex:indexPath.section +1];
-    self.firstCategoryIndex = indexPath.section +1;
     NSArray * arry = objf.secondCataLogs;
     if (!cell) {
         cell = [[SHGMarketSecondCategoryTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
@@ -96,13 +96,16 @@
         NSInteger buttonHeight = 30.0f;
         if (!arry.count == 0) {
                 for (NSInteger i = 0; i<arry.count; i ++) {
-                    UIButton * button = [UIButton buttonWithType:UIButtonTypeCustom];
+                    SecondCategoryButton * button = [SecondCategoryButton buttonWithType:UIButtonTypeCustom];
                     button.frame = CGRectMake(i%3 * buttonToButton + i%3*(SCREENWIDTH-k_ToleftTwo*2-buttonToButton*2)/3, i/3*(buttonHeight + buttonToTop) + buttonToTop, (SCREENWIDTH-k_ToleftTwo*2-buttonToButton*2)/3, buttonHeight);
                     button.backgroundColor = [UIColor colorWithHexString:@"F5F5F5"];
                     [button setTitleColor:[UIColor colorWithHexString:@"898989"] forState:UIControlStateNormal];
                     button.titleLabel.font = [UIFont systemFontOfSize:13];
                     [button addTarget:self action:@selector(secondCategoryClick:) forControlEvents:UIControlEventTouchUpInside];
                     SHGMarketSecondCategoryObject * objs = [arry objectAtIndex:i];
+                    button.firstCategory = objf.firstCatalogId;
+                    button.secondId = objs.rowId;
+                    button.seocndName = objs.catalogName;
                     [button setTitle:objs.catalogName forState:UIControlStateNormal];
                     button.tag = i ;
                     [cell.bgView addSubview:button];
@@ -122,14 +125,11 @@
     return cell;
 }
 
-- (void)secondCategoryClick: (UIButton * )btn
+- (void)secondCategoryClick: (SecondCategoryButton * )btn
 {
-//    SHGMarketFirstCategoryObject * objf = [self.categoryArray objectAtIndex:self.firstCategoryIndex];
-//     NSArray * arry = objf.secondCataLogs;
-//    SHGMarketSecondCategoryObject * objs = [arry objectAtIndex:btn.tag];
     SHGMarketSecondCategoryListTableViewController * VC = [[SHGMarketSecondCategoryListTableViewController alloc]init];
-//    [VC fromSecondCategore:objf.firstCatalogId seocndName:objs.catalogName secondId:objs.parentId];
-    [self.navigationController pushViewController:VC animated:NO];
+    [VC fromSecondCategore:btn.firstCategory seocndName:btn.seocndName secondId:btn.secondId];
+    [self.navigationController pushViewController:VC animated:YES];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section

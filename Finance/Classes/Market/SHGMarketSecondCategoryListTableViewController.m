@@ -18,6 +18,9 @@
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) UITableViewCell *emptyCell;
 @property (strong, nonatomic) SHGEmptyDataView *emptyView;
+@property (strong, nonatomic) NSString * firstCategory;
+@property (strong, nonatomic) NSString * seocndName;
+@property (strong, nonatomic) NSString * secondId;
 @end
 
 @implementation SHGMarketSecondCategoryListTableViewController
@@ -28,18 +31,21 @@
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     [self addHeaderRefresh:self.tableView headerRefesh:YES andFooter:YES];
-    [self loadMarketList:@"first" firstId:@"" second:@"" marketId:@"-1"];
+    [self loadMarketList:@"first" firstId:self.firstCategory second:self.secondId marketId:@"-1"];
 
 }
 - (void)fromSecondCategore: (NSString *)firstCategory seocndName:(NSString *)name secondId:(NSString * )secondId
 {
-    
+    self.title = name;
+    self.firstCategory = firstCategory;
+    self.seocndName = name;
+    self.secondId = secondId;
 }
 - (void)loadMarketList:(NSString *)target firstId:(NSString *)firstId second:(NSString *)secondId marketId:(NSString *)marketId
 {
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
     __weak typeof(self) weakSelf = self;
-    NSDictionary *param = @{@"marketId":marketId ,@"uid":uid ,@"type":@"my" ,@"target":target ,@"pageSize":@"10" ,@"firstCatalog":firstId ,@"secondCatalog":secondId};
+    NSDictionary *param = @{@"marketId":marketId ,@"uid":uid ,@"type":@"all" ,@"target":target ,@"pageSize":@"10" ,@"firstCatalog":firstId ,@"secondCatalog":secondId};
     [SHGMarketManager loadMarketList:param block:^(NSArray *array) {
         [weakSelf.tableView.header endRefreshing];
         [weakSelf.tableView.footer endRefreshing];
