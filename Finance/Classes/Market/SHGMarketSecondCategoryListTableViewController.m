@@ -7,9 +7,17 @@
 //
 
 #import "SHGMarketSecondCategoryListTableViewController.h"
+#import "SHGMarketTableViewCell.h"
+#import "SHGMarketManager.h"
+#import "SHGMarketObject.h"
+#import "SHGCategoryScrollView.h"
+#import "SHGEmptyDataView.h"
+#import "SHGMarketDetailViewController.h"
 
-@interface SHGMarketSecondCategoryListTableViewController ()
-
+@interface SHGMarketSecondCategoryListTableViewController ()<UITabBarDelegate, UITableViewDataSource>
+@property (strong, nonatomic) IBOutlet UITableView *tableView;
+@property (strong, nonatomic) UITableViewCell *emptyCell;
+@property (strong, nonatomic) SHGEmptyDataView *emptyView;
 @end
 
 @implementation SHGMarketSecondCategoryListTableViewController
@@ -17,98 +25,143 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
+    [self addHeaderRefresh:self.tableView headerRefesh:YES andFooter:YES];
+    [self loadMarketList:@"first" firstId:@"" second:@"" marketId:@"-1"];
+
+}
+- (void)fromSecondCategore: (NSString *)firstCategory seocndName:(NSString *)name secondId:(NSString * )secondId
+{
     
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+}
+- (void)loadMarketList:(NSString *)target firstId:(NSString *)firstId second:(NSString *)secondId marketId:(NSString *)marketId
+{
+    NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
+    __weak typeof(self) weakSelf = self;
+    NSDictionary *param = @{@"marketId":marketId ,@"uid":uid ,@"type":@"my" ,@"target":target ,@"pageSize":@"10" ,@"firstCatalog":firstId ,@"secondCatalog":secondId};
+    [SHGMarketManager loadMarketList:param block:^(NSArray *array) {
+        [weakSelf.tableView.header endRefreshing];
+        [weakSelf.tableView.footer endRefreshing];
+        if ([target isEqualToString:@"first"]) {
+            [weakSelf.dataArr removeAllObjects];
+            [weakSelf.dataArr addObjectsFromArray:array];
+            [weakSelf.tableView reloadData];
+        } else if([target isEqualToString:@"refresh"]){
+            [weakSelf.dataArr addObjectsFromArray:array];
+            [weakSelf.tableView reloadData];
+        } else if([target isEqualToString:@"load"]){
+            [weakSelf.dataArr addObjectsFromArray:array];
+            if (array.count < 10) {
+                [weakSelf.tableView.footer endRefreshingWithNoMoreData];
+            }
+            [weakSelf.tableView reloadData];
+        }
+    }];
+}
+
+- (UITableViewCell *)emptyCell
+{
+    if (!_emptyCell) {
+        _emptyCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+        _emptyCell.selectionStyle = UITableViewCellSelectionStyleNone;
+        [_emptyCell.contentView addSubview:self.emptyView];
+    }
+    return _emptyCell;
+}
+
+
+- (SHGEmptyDataView *)emptyView
+{
+    if (!_emptyView) {
+        _emptyView = [[SHGEmptyDataView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, SCREENWIDTH, SCREENHEIGHT)];
+    }
+    return _emptyView;
+}
+
+
+- (void)refreshHeader
+{
+    if (self.dataArr.count > 0) {
+        [self loadMarketList:@"refresh" firstId:@"" second:@"" marketId:[self maxMarketID]];
+    } else{
+        [self loadMarketList:@"first" firstId:@"" second:@"" marketId:@"-1"];
+    }
+}
+
+
+- (void)refreshFooter
+{
+    if (self.dataArr.count > 0) {
+        [self loadMarketList:@"load" firstId:@"" second:@"" marketId:[self minMarketID]];
+    } else{
+        [self loadMarketList:@"first" firstId:@"" second:@"" marketId:@"-1"];
+    }
+}
+
+- (NSString *)maxMarketID
+{
+    return ((SHGMarketObject *)[self.dataArr firstObject]).marketId;
+}
+
+- (NSString *)minMarketID
+{
+    return ((SHGMarketObject *)[self.dataArr lastObject]).marketId;
+}
+
+#pragma mark ------tableview代理
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    if (self.dataArr.count > 0) {
+        NSInteger count = self.dataArr.count;
+        return count;
+    } else{
+        return 1;
+    }
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (self.dataArr.count > 0) {
+        return kMarketCellHeight;
+    } else{
+        return CGRectGetHeight(self.view.frame);
+    }
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSString *identifier = @"SHGMarketTableViewCell";
+    if (self.dataArr.count > 0) {
+        SHGMarketTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+        if (!cell) {
+            cell = [[[NSBundle mainBundle] loadNibNamed:@"SHGMarketTableViewCell" owner:self options:nil] lastObject];
+        }
+        [cell loadDataWithObject:[self.dataArr objectAtIndex:indexPath.row]];
+        return cell;
+    } else{
+        return self.emptyCell;
+    }
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (self.dataArr.count > 0) {
+        SHGMarketDetailViewController *controller = [[SHGMarketDetailViewController alloc] init];
+        controller.object = [self.dataArr objectAtIndex:indexPath.row];
+        [self.navigationController pushViewController:controller animated:YES];
+    }
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-#pragma mark - Table view data source
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-#warning Incomplete implementation, return the number of sections
-    return 0;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-#warning Incomplete implementation, return the number of rows
-    return 0;
-}
-
-/*
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
     
-    // Configure the cell...
-    
-    return cell;
 }
-*/
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
-#pragma mark - Table view delegate
-
-// In a xib-based application, navigation from a table can be handled in -tableView:didSelectRowAtIndexPath:
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Navigation logic may go here, for example:
-    // Create the next view controller.
-    <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:<#@"Nib name"#> bundle:nil];
-    
-    // Pass the selected object to the new view controller.
-    
-    // Push the view controller.
-    [self.navigationController pushViewController:detailViewController animated:YES];
-}
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

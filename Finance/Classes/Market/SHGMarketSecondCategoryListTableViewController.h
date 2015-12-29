@@ -9,5 +9,8 @@
 #import <UIKit/UIKit.h>
 
 @interface SHGMarketSecondCategoryListTableViewController : BaseTableViewController
-
+{
+    
+}
+- (void)fromSecondCategore: (NSString *)firstCategory seocndName:(NSString *)name secondId:(NSString * )secondId;
 @end

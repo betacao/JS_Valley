@@ -19,6 +19,7 @@
 @property (nonatomic , strong)NSArray * categoryArray;
 @property (nonatomic , strong)NSMutableArray * categoryNameArray;
 @property (nonatomic , assign)NSInteger RowHeight;
+@property (nonatomic , assign)NSInteger firstCategoryIndex;
 @end
 
 @implementation SHGMarketSecondCategoryViewController
@@ -85,6 +86,7 @@
     NSString * identifier = @"SHGMarketSecondCategoryTableViewCell";
     SHGMarketSecondCategoryTableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:identifier];
     SHGMarketFirstCategoryObject * objf = [self.categoryArray objectAtIndex:indexPath.section +1];
+    self.firstCategoryIndex = indexPath.section +1;
     NSArray * arry = objf.secondCataLogs;
     if (!cell) {
         cell = [[SHGMarketSecondCategoryTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
@@ -102,6 +104,7 @@
                     [button addTarget:self action:@selector(secondCategoryClick:) forControlEvents:UIControlEventTouchUpInside];
                     SHGMarketSecondCategoryObject * objs = [arry objectAtIndex:i];
                     [button setTitle:objs.catalogName forState:UIControlStateNormal];
+                    button.tag = i ;
                     [cell.bgView addSubview:button];
                 }
             if (arry.count%3 > 0) {
@@ -121,7 +124,11 @@
 
 - (void)secondCategoryClick: (UIButton * )btn
 {
+//    SHGMarketFirstCategoryObject * objf = [self.categoryArray objectAtIndex:self.firstCategoryIndex];
+//     NSArray * arry = objf.secondCataLogs;
+//    SHGMarketSecondCategoryObject * objs = [arry objectAtIndex:btn.tag];
     SHGMarketSecondCategoryListTableViewController * VC = [[SHGMarketSecondCategoryListTableViewController alloc]init];
+//    [VC fromSecondCategore:objf.firstCatalogId seocndName:objs.catalogName secondId:objs.parentId];
     [self.navigationController pushViewController:VC animated:NO];
 }
 
