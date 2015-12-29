@@ -57,6 +57,21 @@
     }];
 }
 
++ (void)searchMarketList:(NSDictionary *)param block:(void (^)(NSArray *array))block
+{
+    [Hud showLoadingWithMessage:@"请稍等..."];
+    NSString *request = [rBaseAddressForHttp stringByAppendingString:@"/market/getMarketList"];
+    [MOCHTTPRequestOperationManager postWithURL:request class:[SHGMarketObject class] parameters:param success:^(MOCHTTPResponse *response) {
+        [Hud hideHud];
+        block(response.dataArray);
+    } failed:^(MOCHTTPResponse *response) {
+        [Hud hideHud];
+        block(nil);
+        [Hud showMessageWithText:@"搜索数据失败"];
+    }];
+}
+
+
 + (void)createNewMarket:(NSDictionary *)param success:(void (^)(BOOL success))block
 {
     NSString *request = [rBaseAddressForHttp stringByAppendingString:@"/market/saveMarket"];

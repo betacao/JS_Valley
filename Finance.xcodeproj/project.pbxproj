@@ -863,6 +863,8 @@
 		F91778C21BFC240900C535CB /* SHGDatePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = F91778C01BFC240900C535CB /* SHGDatePickerView.m */; };
 		F91778C31BFC240900C535CB /* SHGDatePickerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F91778C11BFC240900C535CB /* SHGDatePickerView.xib */; };
 		F918EF371C1ACF0E008C0335 /* SHGCategoryScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = F918EF361C1ACF0E008C0335 /* SHGCategoryScrollView.m */; };
+		F91F51BB1C3136E800D848E3 /* SHGMarketSearchTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F91F51B91C3136E800D848E3 /* SHGMarketSearchTableViewCell.m */; };
+		F91F51BC1C3136E800D848E3 /* SHGMarketSearchTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F91F51BA1C3136E800D848E3 /* SHGMarketSearchTableViewCell.xib */; };
 		F928141C1C045F8900C7782D /* SHGIndustryChoiceView.m in Sources */ = {isa = PBXBuildFile; fileRef = F928141B1C045F8900C7782D /* SHGIndustryChoiceView.m */; };
 		F92835DE1BA6E16C00E1CF22 /* UIButton+EnlargeEdge.m in Sources */ = {isa = PBXBuildFile; fileRef = F92835DD1BA6E16C00E1CF22 /* UIButton+EnlargeEdge.m */; };
 		F93242BA1BE9EE92003B7F07 /* SHGUnifiedTreatment.m in Sources */ = {isa = PBXBuildFile; fileRef = F93242B91BE9EE92003B7F07 /* SHGUnifiedTreatment.m */; };
@@ -2118,6 +2120,9 @@
 		F918EF351C1ACF0E008C0335 /* SHGCategoryScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGCategoryScrollView.h; sourceTree = "<group>"; };
 		F918EF361C1ACF0E008C0335 /* SHGCategoryScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGCategoryScrollView.m; sourceTree = "<group>"; };
 		F91B2B871BAA788300BC166D /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F91F51B81C3136E800D848E3 /* SHGMarketSearchTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGMarketSearchTableViewCell.h; sourceTree = "<group>"; };
+		F91F51B91C3136E800D848E3 /* SHGMarketSearchTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGMarketSearchTableViewCell.m; sourceTree = "<group>"; };
+		F91F51BA1C3136E800D848E3 /* SHGMarketSearchTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGMarketSearchTableViewCell.xib; sourceTree = "<group>"; };
 		F928141A1C045F8900C7782D /* SHGIndustryChoiceView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGIndustryChoiceView.h; sourceTree = "<group>"; };
 		F928141B1C045F8900C7782D /* SHGIndustryChoiceView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGIndustryChoiceView.m; sourceTree = "<group>"; };
 		F92835DC1BA6E16C00E1CF22 /* UIButton+EnlargeEdge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+EnlargeEdge.h"; sourceTree = "<group>"; };
@@ -4812,6 +4817,9 @@
 				F908C83A1C30DE16004DD99A /* SHGMarketSearchViewController.h */,
 				F908C83B1C30DE16004DD99A /* SHGMarketSearchViewController.m */,
 				F908C83C1C30DE16004DD99A /* SHGMarketSearchViewController.xib */,
+				F91F51B81C3136E800D848E3 /* SHGMarketSearchTableViewCell.h */,
+				F91F51B91C3136E800D848E3 /* SHGMarketSearchTableViewCell.m */,
+				F91F51BA1C3136E800D848E3 /* SHGMarketSearchTableViewCell.xib */,
 				F908C83F1C30FA83004DD99A /* SHGMarketSecondCategoryViewController.h */,
 				F908C8401C30FA83004DD99A /* SHGMarketSecondCategoryViewController.m */,
 				F908C8411C30FA83004DD99A /* SHGMarketSecondCategoryViewController.xib */,
@@ -5215,6 +5223,7 @@
 				408D8B151AF8618C0055810C /* VoiceSearchFeedback017.png in Resources */,
 				569C6D371B7CAB6A00AD59C3 /* 密码@2x.png in Resources */,
 				408D8B4B1AF8618C0055810C /* chatBar_recordBg.png in Resources */,
+				F91F51BC1C3136E800D848E3 /* SHGMarketSearchTableViewCell.xib in Resources */,
 				B0CA7C7C1B7A021E0038BABB /* 表情@3x.png in Resources */,
 				408D8B781AF8618C0055810C /* chat_sender_audio_playing_002.png in Resources */,
 				619027131B233AB100D9EEA2 /* ChatListTableViewCell.xib in Resources */,
@@ -5706,6 +5715,7 @@
 				F9A227C21BF5AF8D0054F8D7 /* SHGActionObject.m in Sources */,
 				4088DDCE1AF105FD00393855 /* SettingQuestionObj.m in Sources */,
 				40302B361AF0B7F500F22EB6 /* MyCollectionTableViewCell.m in Sources */,
+				F91F51BB1C3136E800D848E3 /* SHGMarketSearchTableViewCell.m in Sources */,
 				61656F8E1B15DD5B008B2AB4 /* MeTableViewCell.m in Sources */,
 				5610A79F1B41482C00DE2BAF /* GameObj.m in Sources */,
 				61D62BF01ADD1C4D002DD395 /* MOCNetworkReachabilityManager.m in Sources */,

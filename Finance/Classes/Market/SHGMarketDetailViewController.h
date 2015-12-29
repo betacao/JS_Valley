@@ -7,7 +7,8 @@
 //
 
 #import "BaseTableViewController.h"
+#import "SHGMarketObject.h"
 
 @interface SHGMarketDetailViewController : BaseTableViewController
-
+@property (strong, nonatomic) SHGMarketObject *object;
 @end

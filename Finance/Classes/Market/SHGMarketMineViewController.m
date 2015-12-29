@@ -148,8 +148,8 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (self.dataArr.count > 0) {
-        SHGMarketDetailViewController * view = [[SHGMarketDetailViewController alloc]init];
-        [self.navigationController pushViewController:view animated:YES];
+        SHGMarketDetailViewController *controller = [[SHGMarketDetailViewController alloc]init];
+        [self.navigationController pushViewController:controller animated:YES];
     }
 }
 

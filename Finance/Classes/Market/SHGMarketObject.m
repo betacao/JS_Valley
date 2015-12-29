@@ -33,6 +33,15 @@
     }];
 }
 
+- (BOOL)isEqual:(SHGMarketObject *)object
+{
+    if ([self.marketId isEqualToString:object.marketId]) {
+        return YES;
+    } else{
+        return NO;
+    }
+}
+
 @end
 
 

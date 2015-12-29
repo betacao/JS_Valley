@@ -8,6 +8,7 @@
 
 #import "SHGMarketSegmentViewController.h"
 #import "SHGMarketSendViewController.h"
+#import "SHGMarketSearchViewController.h"
 
 @interface SHGMarketSegmentViewController ()
 @property (nonatomic, strong) UIBarButtonItem *rightBarButtonItem;
@@ -104,7 +105,9 @@
 }
 - (void)searchMarket:(UIButton *)button
 {
-    
+    SHGMarketSearchViewController *controller = [[SHGMarketSearchViewController alloc] init];
+    controller.dataArr = ((BaseTableViewController *)[self.viewControllers firstObject]).dataArr;
+    [self.navigationController pushViewController:controller animated:YES];
 }
 
 - (void)addNewMarket:(UIButton *)button

@@ -16,6 +16,8 @@
 
 + (void)loadMarketList:(NSDictionary *)param block:(void (^)(NSArray *array))block;
 
++ (void)searchMarketList:(NSDictionary *)param block:(void (^)(NSArray *array))block;
+
 + (void)createNewMarket:(NSDictionary *)param success:(void (^)(BOOL success))block;
 
 + (void)modifyMarket:(NSDictionary *)param success:(void (^)(BOOL success))block;
