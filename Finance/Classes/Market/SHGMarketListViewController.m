@@ -15,7 +15,7 @@
 #import "SHGMarketDetailViewController.h"
 #import "SHGMarketSecondCategoryViewController.h"
 
-@interface SHGMarketListViewController ()<UITabBarDelegate, UITableViewDataSource, SHGCategoryScrollViewDelegate>
+@interface SHGMarketListViewController ()<UITabBarDelegate, UITableViewDataSource, SHGCategoryScrollViewDelegate,SHGMarketSecondCategoryViewControllerDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) UIView *headerView;
 @property (strong, nonatomic) SHGCategoryScrollView *scrollView;
@@ -204,6 +204,11 @@
     }
     return self.headerView;
 }
+#pragma mark -----二级分类返回代理
+- (void)backFromSecondChangeToIndex:(NSInteger)index
+{
+    
+}
 
 #pragma mark ------切换分类代理
 - (void)didChangeToIndex:(NSInteger)index firstId:(NSString *)firstId secondId:(NSString *)secondId
@@ -224,6 +229,7 @@
 {
     SHGMarketSecondCategoryViewController *controller = [[SHGMarketSecondCategoryViewController alloc] init];
     [controller getArr:self.scrollView.categoryArray];
+    controller.secondCategoryDelegate = self;
     [self.navigationController pushViewController:controller animated:YES];
 }
 
