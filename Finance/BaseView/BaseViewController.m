@@ -42,23 +42,21 @@
 -(void)initUI
 {
     UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [leftButton setFrame:CGRectMake(0, 0, 24, 24)];
     NSString *imageName ;
     if (IsStrEmpty(self.leftItemtitleName)){
         if (!IsStrEmpty(self.leftItemImageName)){
             imageName = self.leftItemImageName;
         } else{
-            imageName = @"返回";
+            imageName = @"common_backImage";
         }
         [leftButton setBackgroundImage:[UIImage imageNamed:imageName] forState:UIControlStateNormal];
-    }
-    else
-    {
+    } else{
         [leftButton setTitle:self.leftItemtitleName forState:UIControlStateNormal];
         [leftButton setTitleColor:RGB(255, 0, 40) forState:UIControlStateNormal];
         [leftButton.titleLabel setFont:[UIFont systemFontOfSize:14.0f]];
     }
 
+    [leftButton sizeToFit];
     [leftButton addTarget:self action:@selector(btnBackClick:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:leftButton];
     self.navigationItem.leftBarButtonItem = leftItem;

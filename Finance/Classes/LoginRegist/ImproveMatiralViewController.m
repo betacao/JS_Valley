@@ -57,7 +57,7 @@
 
     UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [leftButton setFrame:CGRectZero];
-    NSString *imageName = @"返回";
+    NSString *imageName = @"common_backImage";
     [leftButton setImage:[UIImage imageNamed:imageName] forState:UIControlStateNormal];
     [leftButton addTarget:self action:@selector(btnBackClick:) forControlEvents:UIControlEventTouchUpInside];
     [leftButton sizeToFit];

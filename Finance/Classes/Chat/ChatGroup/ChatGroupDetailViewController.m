@@ -111,8 +111,8 @@
     self.title=@"群组管理";
     
     UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [leftButton setFrame:CGRectMake(0, 0, 24, 24)];
-    [leftButton setBackgroundImage:[UIImage imageNamed:@"返回"] forState:UIControlStateNormal];
+    [leftButton setBackgroundImage:[UIImage imageNamed:@"common_backImage"] forState:UIControlStateNormal];
+    [leftButton sizeToFit];
     [leftButton addTarget:self action:@selector(returnClick) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:leftButton];
     self.navigationItem.leftBarButtonItem=rightItem;

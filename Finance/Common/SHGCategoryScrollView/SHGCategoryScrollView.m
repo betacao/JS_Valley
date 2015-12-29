@@ -97,6 +97,8 @@
     if (self.categoryDelegate && [self.categoryDelegate respondsToSelector:@selector(didChangeToIndex:firstId:secondId:)] && isChanged) {
         [self.categoryDelegate didChangeToIndex:selectedIndex firstId:[self marketFirstId] secondId:[self marketSecondId]];
     }
+    //移动scrollview到相应的位置
+    [self scrollRectToVisible:button.frame animated:YES];
 }
 
 - (void)layoutSubviews

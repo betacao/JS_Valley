@@ -569,7 +569,6 @@
 		61E83D081AF7C78E00703651 /* 搜索@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 61E83C2D1AF7C78E00703651 /* 搜索@2x.png */; };
 		61E83D0A1AF7C78E00703651 /* 消息-默认@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 61E83C2F1AF7C78E00703651 /* 消息-默认@2x.png */; };
 		61E83D0C1AF7C78E00703651 /* 设置@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 61E83C311AF7C78E00703651 /* 设置@2x.png */; };
-		61E83D0D1AF7C78E00703651 /* 返回@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 61E83C321AF7C78E00703651 /* 返回@2x.png */; };
 		61E83D0E1AF7C78E00703651 /* 上传照片选择框@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 61E83C341AF7C78E00703651 /* 上传照片选择框@2x.png */; };
 		61E83D0F1AF7C78E00703651 /* 二维码@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 61E83C351AF7C78E00703651 /* 二维码@2x.png */; };
 		61E83D101AF7C78E00703651 /* 关于我们@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 61E83C361AF7C78E00703651 /* 关于我们@2x.png */; };
@@ -663,7 +662,6 @@
 		61E83D701AF7C78E00703651 /* 消息-选中@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 61E83C9C1AF7C78E00703651 /* 消息-选中@3x.png */; };
 		61E83D711AF7C78E00703651 /* 消息-默认@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 61E83C9D1AF7C78E00703651 /* 消息-默认@3x.png */; };
 		61E83D731AF7C78E00703651 /* 设置@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 61E83C9F1AF7C78E00703651 /* 设置@3x.png */; };
-		61E83D741AF7C78E00703651 /* 返回@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 61E83CA01AF7C78E00703651 /* 返回@3x.png */; };
 		61E83D751AF7C78E00703651 /* 上传照片选择框@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 61E83CA21AF7C78E00703651 /* 上传照片选择框@3x.png */; };
 		61E83D761AF7C78E00703651 /* 二维码@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 61E83CA31AF7C78E00703651 /* 二维码@3x.png */; };
 		61E83D771AF7C78E00703651 /* 关于我们@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 61E83CA41AF7C78E00703651 /* 关于我们@3x.png */; };
@@ -1798,7 +1796,6 @@
 		61E83C2D1AF7C78E00703651 /* 搜索@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "搜索@2x.png"; sourceTree = "<group>"; };
 		61E83C2F1AF7C78E00703651 /* 消息-默认@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "消息-默认@2x.png"; sourceTree = "<group>"; };
 		61E83C311AF7C78E00703651 /* 设置@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "设置@2x.png"; sourceTree = "<group>"; };
-		61E83C321AF7C78E00703651 /* 返回@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "返回@2x.png"; sourceTree = "<group>"; };
 		61E83C341AF7C78E00703651 /* 上传照片选择框@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "上传照片选择框@2x.png"; sourceTree = "<group>"; };
 		61E83C351AF7C78E00703651 /* 二维码@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "二维码@2x.png"; sourceTree = "<group>"; };
 		61E83C361AF7C78E00703651 /* 关于我们@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "关于我们@2x.png"; sourceTree = "<group>"; };
@@ -1892,7 +1889,6 @@
 		61E83C9C1AF7C78E00703651 /* 消息-选中@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "消息-选中@3x.png"; sourceTree = "<group>"; };
 		61E83C9D1AF7C78E00703651 /* 消息-默认@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "消息-默认@3x.png"; sourceTree = "<group>"; };
 		61E83C9F1AF7C78E00703651 /* 设置@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "设置@3x.png"; sourceTree = "<group>"; };
-		61E83CA01AF7C78E00703651 /* 返回@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "返回@3x.png"; sourceTree = "<group>"; };
 		61E83CA21AF7C78E00703651 /* 上传照片选择框@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "上传照片选择框@3x.png"; sourceTree = "<group>"; };
 		61E83CA31AF7C78E00703651 /* 二维码@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "二维码@3x.png"; sourceTree = "<group>"; };
 		61E83CA41AF7C78E00703651 /* 关于我们@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "关于我们@3x.png"; sourceTree = "<group>"; };
@@ -4213,7 +4209,6 @@
 				61E83C2D1AF7C78E00703651 /* 搜索@2x.png */,
 				61E83C2F1AF7C78E00703651 /* 消息-默认@2x.png */,
 				61E83C311AF7C78E00703651 /* 设置@2x.png */,
-				61E83C321AF7C78E00703651 /* 返回@2x.png */,
 			);
 			path = "头部、底部、一些通用图标";
 			sourceTree = "<group>";
@@ -4370,7 +4365,6 @@
 				61E83C9C1AF7C78E00703651 /* 消息-选中@3x.png */,
 				61E83C9D1AF7C78E00703651 /* 消息-默认@3x.png */,
 				61E83C9F1AF7C78E00703651 /* 设置@3x.png */,
-				61E83CA01AF7C78E00703651 /* 返回@3x.png */,
 			);
 			path = "头部、底部、一些通用图标";
 			sourceTree = "<group>";
@@ -5198,7 +5192,6 @@
 				53F6CFAA1B06C1D6007716E5 /* load_5.png in Resources */,
 				408D8B121AF8618C0055810C /* VoiceSearchFeedback015@2x.png in Resources */,
 				408D8B441AF8618C0055810C /* chatBar_keyboardSelected@2x.png in Resources */,
-				61E83D741AF7C78E00703651 /* 返回@3x.png in Resources */,
 				6149CFDC1B259E40006E45FE /* DefaultLine.png in Resources */,
 				61E83D2C1AF7C78E00703651 /* 拒绝按钮-按下@2x.png in Resources */,
 				4088DDB21AF102FE00393855 /* SettingAboutUsViewController.xib in Resources */,
@@ -5470,7 +5463,6 @@
 				61D62C0B1ADE3E85002DD395 /* mao@2x.jpg in Resources */,
 				408D8B4E1AF8618C0055810C /* chatBar_recordSelected@2x.png in Resources */,
 				61E83CF21AF7C78E00703651 /* 发送按钮-默认@2x.png in Resources */,
-				61E83D0D1AF7C78E00703651 /* 返回@2x.png in Resources */,
 				61E83D731AF7C78E00703651 /* 设置@3x.png in Resources */,
 				61E83CFE1AF7C78E00703651 /* 产品-默认@2x.png in Resources */,
 				F9E2A4B51BE99E1C00ECB234 /* SHGNewsViewController.xib in Resources */,
