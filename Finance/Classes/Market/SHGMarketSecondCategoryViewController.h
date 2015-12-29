@@ -8,10 +8,15 @@
 
 #import "BaseViewController.h"
 
+@protocol SHGMarketSecondCategoryViewControllerDelegate <NSObject>
+
+- (void)backFromSecondChangeToIndex:(NSInteger)index ;
+
+@end
 @interface SHGMarketSecondCategoryViewController : BaseViewController
 {
     
 }
 -(void)getArr:(NSArray * )arry;
-
+@property (nonatomic , assign)id<SHGMarketSecondCategoryViewControllerDelegate>secondCategoryDelegate;
 @end

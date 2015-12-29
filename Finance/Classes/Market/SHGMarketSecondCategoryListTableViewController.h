@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SHGMarketSecondCategoryListTableViewController : UITableViewController
+@interface SHGMarketSecondCategoryListTableViewController : BaseTableViewController
 
 @end

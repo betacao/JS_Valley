@@ -9,7 +9,8 @@
 #import "SHGMarketSecondCategoryViewController.h"
 #import "SHGMarketObject.h"
 #import "SHGMarketSecondCategoryTableViewCell.h"
-
+#import "SHGMarketSecondCategoryListTableViewController.h"
+#import "SHGMarketListViewController.h"
 @interface SHGMarketSecondCategoryViewController ()<UITableViewDataSource,UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic , strong)NSArray * categoryArray;
@@ -115,7 +116,8 @@
 
 - (void)secondCategoryClick: (UIButton * )btn
 {
-    
+    SHGMarketSecondCategoryListTableViewController * VC = [[SHGMarketSecondCategoryListTableViewController alloc]init];
+    [self.navigationController pushViewController:VC animated:NO];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
@@ -137,10 +139,24 @@
     title.textAlignment = NSTextAlignmentLeft;
     title.font = [UIFont systemFontOfSize:14];
     title.textColor = [UIColor colorWithHexString:@"3A3A3A"];
+    DDTapGestureRecognizer *itemGes = [[DDTapGestureRecognizer alloc] initWithTarget:self action:@selector(itemTap:)];
+    itemGes.tag = section;
+    [view addGestureRecognizer:itemGes];
     [view addSubview: title];
     UIView * redLine = [[UIView alloc]initWithFrame:CGRectMake(11, 25, 1.5, 10)];
     redLine.backgroundColor = [UIColor colorWithHexString:@"F5BF9A"];
     [view addSubview:redLine];
     return view;
 }
+
+- (void)itemTap: (DDTapGestureRecognizer * )Gesture
+{
+    if (self.secondCategoryDelegate && [self.secondCategoryDelegate respondsToSelector:@selector(backFromSecondChangeToIndex:)] ) {
+        [self.secondCategoryDelegate backFromSecondChangeToIndex:Gesture.tag +1 ];
+    }
+
+    [self.navigationController popViewControllerAnimated:YES];
+    
+}
+
 @end
