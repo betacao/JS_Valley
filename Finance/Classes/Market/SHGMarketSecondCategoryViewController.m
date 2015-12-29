@@ -93,6 +93,7 @@
                     button.backgroundColor = [UIColor colorWithHexString:@"F5F5F5"];
                     [button setTitleColor:[UIColor colorWithHexString:@"898989"] forState:UIControlStateNormal];
                     button.titleLabel.font = [UIFont systemFontOfSize:13];
+                    [button addTarget:self action:@selector(secondCategoryClick:) forControlEvents:UIControlEventTouchUpInside];
                     SHGMarketSecondCategoryObject * objs = [arry objectAtIndex:i];
                     [button setTitle:objs.catalogName forState:UIControlStateNormal];
                     [cell.bgView addSubview:button];
@@ -111,6 +112,12 @@
     
     return cell;
 }
+
+- (void)secondCategoryClick: (UIButton * )btn
+{
+    
+}
+
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
     return 40.0;
