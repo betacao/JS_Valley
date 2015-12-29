@@ -11,6 +11,9 @@
 #import "SHGMarketSecondCategoryTableViewCell.h"
 #import "SHGMarketSecondCategoryListTableViewController.h"
 #import "SHGMarketListViewController.h"
+#define k_ToleftOne 11.0f * XFACTOR
+#define k_ToleftTwo 21.0f * XFACTOR
+#define k_SectionHeight 40
 @interface SHGMarketSecondCategoryViewController ()<UITableViewDataSource,UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic , strong)NSArray * categoryArray;
@@ -69,28 +72,30 @@
     SHGMarketFirstCategoryObject * obj = [self.categoryArray objectAtIndex:section + 1];
     if (obj.secondCataLogs.count == 0) {
         num = 0;
-    }else
-    {
+    }else{
          num = 1;
     }
     
     return  num;
     
 }
+
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSString * identifier = @"SHGMarketSecondCategoryTableViewCell";
     SHGMarketSecondCategoryTableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:identifier];
     SHGMarketFirstCategoryObject * objf = [self.categoryArray objectAtIndex:indexPath.section +1];
-    
     NSArray * arry = objf.secondCataLogs;
     if (!cell) {
         cell = [[SHGMarketSecondCategoryTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
         NSInteger hangNum = 0 ;
+        NSInteger buttonToButton = 8.0f;
+        NSInteger buttonToTop = 10.0f;
+        NSInteger buttonHeight = 30.0f;
         if (!arry.count == 0) {
                 for (NSInteger i = 0; i<arry.count; i ++) {
                     UIButton * button = [UIButton buttonWithType:UIButtonTypeCustom];
-                    button.frame = CGRectMake(i%3 * 8 + i%3*(SCREENWIDTH-42-16)/3, i/3*35 + 5, (SCREENWIDTH-42-16)/3, 30);
+                    button.frame = CGRectMake(i%3 * buttonToButton + i%3*(SCREENWIDTH-k_ToleftTwo*2-buttonToButton*2)/3, i/3*(buttonHeight + buttonToTop) + buttonToTop, (SCREENWIDTH-k_ToleftTwo*2-buttonToButton*2)/3, buttonHeight);
                     button.backgroundColor = [UIColor colorWithHexString:@"F5F5F5"];
                     [button setTitleColor:[UIColor colorWithHexString:@"898989"] forState:UIControlStateNormal];
                     button.titleLabel.font = [UIFont systemFontOfSize:13];
@@ -105,7 +110,7 @@
             {
                 hangNum = arry.count/3 ;
             }
-            cell.bgView.frame =CGRectMake(21, 0, SCREENWIDTH-42, 40 +( hangNum-1) * 35);
+            cell.bgView.frame =CGRectMake(k_ToleftTwo, 0, SCREENWIDTH-k_ToleftTwo*2, k_SectionHeight +(hangNum-1) * (buttonHeight+buttonToButton));
             self.RowHeight = cell.bgView.height;
         }
         
@@ -122,7 +127,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return 40.0;
+    return k_SectionHeight;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -132,9 +137,12 @@
 }
 - (UIView * )tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    UIView * view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 50)];
+    NSInteger sectionHeight = 50.0f;
+    NSInteger titleToTop = 20.0f;
+    NSInteger redLineToTop = 25.0f;
+    UIView * view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREENWIDTH, sectionHeight)];
     view.backgroundColor = [UIColor clearColor];
-    UILabel * title = [[UILabel alloc]initWithFrame:CGRectMake(21, 20, 100, 20)];
+    UILabel * title = [[UILabel alloc]initWithFrame:CGRectMake(k_ToleftTwo, titleToTop, 100.0, 20.0)];
     title.text = [self.categoryNameArray objectAtIndex:section];
     title.textAlignment = NSTextAlignmentLeft;
     title.font = [UIFont systemFontOfSize:14];
@@ -143,7 +151,7 @@
     itemGes.tag = section;
     [view addGestureRecognizer:itemGes];
     [view addSubview: title];
-    UIView * redLine = [[UIView alloc]initWithFrame:CGRectMake(11, 25, 1.5, 10)];
+    UIView * redLine = [[UIView alloc]initWithFrame:CGRectMake(k_ToleftOne, redLineToTop, 1.5, 10.0)];
     redLine.backgroundColor = [UIColor colorWithHexString:@"F5BF9A"];
     [view addSubview:redLine];
     return view;
