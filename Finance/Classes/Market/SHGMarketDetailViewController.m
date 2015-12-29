@@ -18,7 +18,7 @@
 //界面
 @property (weak, nonatomic) IBOutlet UITableView *detailTable;
 @property (strong, nonatomic) IBOutlet UIView *viewHeader;
-@property (weak, nonatomic) IBOutlet UIImageView *headImageView;
+@property (weak, nonatomic) IBOutlet headerView *headImageView;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *companyLabel;
 @property (weak, nonatomic) IBOutlet UILabel *positionLabel;
@@ -41,6 +41,12 @@
 @property (weak, nonatomic) IBOutlet UIButton *btnComment;
 @property (weak, nonatomic) IBOutlet UIButton *btnShare;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollPraise;
+
+@property (weak, nonatomic) IBOutlet UIView *viewInput;
+@property (weak, nonatomic) IBOutlet UIButton *smileImage;
+@property (weak, nonatomic) IBOutlet UIButton *speakButton;
+@property (weak, nonatomic) IBOutlet UIButton *sendButton;
+
 //数据
 @property (strong, nonatomic) SHGMarketObject *responseObject;
 
@@ -63,14 +69,75 @@
     NSDictionary *param = @{@"marketId":self.object.marketId ,@"uid":UID};
     [SHGMarketManager loadMarketDetail:param block:^(SHGMarketObject *object) {
         weakSelf.responseObject = object;
-        [weakSelf loadUi];
+       [weakSelf loadDate];
+       [weakSelf loadUi];
     }];
 }
 
+- (void)loadDate
+{
+    self.timeLabel.text = self.responseObject.createTime;
+    if (!self.responseObject.price.length == 0) {
+        NSString * zjStr = self.responseObject.price;
+        self.capitalLabel.text = [NSString stringWithFormat:@"金额：%@",zjStr];
+    }else {
+         self.capitalLabel.text = [NSString stringWithFormat:@"金额：暂未说明"];
+    }
+    NSString * typeStr = self.responseObject.catalog;
+    self.typeLabel.text = [NSString stringWithFormat:@"类型： %@",typeStr];
+    NSString * pNumStr = self.responseObject.contactInfo;
+    self.phoneNumLabel.text = [NSString stringWithFormat:@"电话： %@",pNumStr];
+    self.nameLabel.text = self.responseObject.realname;
+    self.companyLabel.text = self.responseObject.company;
+    self.positionLabel.text = self.responseObject.title;
+    [self.headImageView updateStatus:[self.responseObject.status isEqualToString:@"1"] ? YES : NO];
+    [self.headImageView updateHeaderView:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,self.responseObject.headimageurl] placeholderImage:[UIImage imageNamed:@"default_head"]];
+    self.detailContentLabel.text = self.responseObject.detail;
+   
+    [self.photoImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,self.responseObject.url]]];
+   
+    
+}
 
 - (void)loadUi
 {
-    NSString *title = @"还是领导是卡卡还撒谎时刻会拉丝看哈飒飒的很快会拉的啥都说了是打开后骄傲的上课讲两句话；给付额爱回家啊撒了点就好的撒了解到撒垃圾的撒";
+    CGSize nameSize =CGSizeMake(MAXFLOAT,CGRectGetHeight(self.nameLabel.frame));
+    NSDictionary * nameDic = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont boldSystemFontOfSize:15.0],NSFontAttributeName,nil];
+    CGSize  nameActualsize =[self.nameLabel.text boundingRectWithSize:nameSize options:NSStringDrawingUsesLineFragmentOrigin  attributes:nameDic context:nil].size;
+    if (nameActualsize.width > 50.f) {
+        nameActualsize.width = 50.f;
+    }
+    self.nameLabel.frame =CGRectMake(self.nameLabel.origin.x,self.nameLabel.origin.y, nameActualsize.width, CGRectGetHeight(self.nameLabel.frame));
+    
+    self.verticalLine.frame = CGRectMake(CGRectGetMaxX(self.nameLabel.frame)+5.0,self.verticalLine.origin.y, self.verticalLine.frame.size.width, CGRectGetHeight(self.verticalLine.frame));
+    
+    CGSize companySize =CGSizeMake(MAXFLOAT,CGRectGetHeight(self.companyLabel.frame));
+    NSDictionary * companyDic = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:12.0],NSFontAttributeName,nil];
+    CGSize  companyActualsize =[self.companyLabel.text boundingRectWithSize:companySize options:NSStringDrawingUsesLineFragmentOrigin  attributes:companyDic context:nil].size;
+    if (companyActualsize.width > 90.f) {
+        companyActualsize.width = 90.f;
+    }
+    self.companyLabel.frame =CGRectMake(CGRectGetMaxX(self.verticalLine.frame) + 5.0f,self.companyLabel.origin.y, companyActualsize.width, CGRectGetHeight(self.companyLabel.frame));
+    
+    CGSize positionSize =CGSizeMake(MAXFLOAT,CGRectGetHeight(self.positionLabel.frame));
+    NSDictionary * positionDic = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:12.0],NSFontAttributeName,nil];
+    CGSize  positionActualsize =[self.positionLabel.text boundingRectWithSize:positionSize options:NSStringDrawingUsesLineFragmentOrigin  attributes:positionDic context:nil].size;
+    if (positionActualsize.width > 90.f) {
+        positionActualsize.width = 90.f;
+    }
+    self.positionLabel.frame =CGRectMake(CGRectGetMaxX(self.companyLabel.frame) + 5.0f,self.positionLabel.origin.y, companyActualsize.width, CGRectGetHeight(self.positionLabel.frame));
+    
+    CGSize capitalSize =CGSizeMake(MAXFLOAT,CGRectGetHeight(self.capitalLabel.frame));
+    NSDictionary * capitalDic = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:12.0],NSFontAttributeName,nil];
+    CGSize  capitalActualsize =[self.capitalLabel.text boundingRectWithSize:capitalSize options:NSStringDrawingUsesLineFragmentOrigin  attributes:capitalDic context:nil].size;
+    if (capitalActualsize.width > 120.f) {
+        capitalActualsize.width = 120.f;
+    }
+    self.capitalLabel.frame =CGRectMake(SCREENWIDTH-capitalActualsize.width-15,self.capitalLabel.origin.y, capitalActualsize.width, CGRectGetHeight(self.positionLabel.frame));
+
+    
+    
+    NSString *title = self.responseObject.marketName;
     self.titleLabel.text = title;
     CGSize tsize =CGSizeMake(self.titleLabel.frame.size.width,MAXFLOAT);
     NSDictionary * tdic = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont boldSystemFontOfSize:14.0],NSFontAttributeName,nil];
@@ -84,24 +151,26 @@
     self.marketDetialLabel.frame = CGRectMake(self.detailContentLabel.origin.x, CGRectGetMaxY(self.secondHorizontalLine.frame)+k_ThirdToTop, self.marketDetialLabel.width, self.marketDetialLabel.height);
     self.thirdHorizontalLine.frame = CGRectMake(self.thirdHorizontalLine.origin.x, CGRectGetMaxY(self.marketDetialLabel.frame)+k_ThirdToTop, self.thirdHorizontalLine.width, self.thirdHorizontalLine.height);
     //内容详情
-    NSString *detail = @"还是领导是卡卡还撒谎时刻会拉丝看哈飒飒的很快会拉的啥都说了是打开后骄傲的上课讲两句话；给付额爱回家啊撒了点就好的撒了解到撒垃圾的撒";
-    self.detailContentLabel.text = detail;
+    
+    self.detailContentLabel.numberOfLines = 0;
     CGSize dsize =CGSizeMake(self.detailContentLabel.frame.size.width,MAXFLOAT);
     NSDictionary * ddic = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:14.0],NSFontAttributeName,nil];
-    CGSize  dActualsize =[title boundingRectWithSize:dsize options:NSStringDrawingUsesLineFragmentOrigin  attributes:ddic context:nil].size;
+    CGSize  dActualsize =[self.detailContentLabel.text boundingRectWithSize:dsize options:NSStringDrawingUsesLineFragmentOrigin  attributes:ddic context:nil].size;
      self.detailContentLabel.frame = CGRectMake(self.detailContentLabel.origin.x, CGRectGetMaxY(self.thirdHorizontalLine.frame)+ k_ThirdToTop, self.detailContentLabel.width, dActualsize.height);
-   
-    self.photoImageView.frame  = CGRectMake(self.photoImageView.origin.x, CGRectGetMaxY(self.detailContentLabel.frame)+k_FirstToTop, self.photoImageView.width, self.photoImageView.height);
-   //图片
-    
-    self.actionView.frame = CGRectMake(self.actionView.origin.x, CGRectGetMaxY(self.photoImageView.frame)+k_FirstToTop, self.actionView.width, self.actionView.height);
+    if (!self.responseObject.url.length == 0) {
+        self.photoImageView.frame  = CGRectMake(self.photoImageView.origin.x, CGRectGetMaxY(self.detailContentLabel.frame)+k_FirstToTop*2, self.photoImageView.width, self.photoImageView.height);
+         self.actionView.frame = CGRectMake(self.actionView.origin.x, CGRectGetMaxY(self.photoImageView.frame)+k_FirstToTop, self.actionView.width, self.actionView.height);
+    }else{
+        self.photoImageView.hidden = YES;
+         self.actionView.frame = CGRectMake(self.actionView.origin.x, CGRectGetMaxY(self.detailContentLabel.frame)+k_FirstToTop, self.actionView.width, self.actionView.height);
+    }
     [self.btnZan setImage:[UIImage imageNamed:@"home_weizan"] forState:UIControlStateNormal];
-    [self.btnZan setTitle:@"111" forState:UIControlStateNormal];
+    [self.btnZan setTitle:[NSString stringWithFormat:@"%@",self.responseObject.praiseNum] forState:UIControlStateNormal];
     
     [self.btnComment setImage:[UIImage imageNamed:@"home_comment"] forState:UIControlStateNormal];
-    [self.btnComment setTitle:@"222" forState:UIControlStateNormal];
+    [self.btnComment setTitle:[NSString stringWithFormat:@"%@",self.responseObject.commentNum] forState:UIControlStateNormal];
     [self.btnShare setImage:[UIImage imageNamed:@"shareImage"] forState:UIControlStateNormal];
-    [self.btnShare setTitle:@"333" forState:UIControlStateNormal];
+    [self.btnShare setTitle:[NSString stringWithFormat:@"%@",self.responseObject.shareNum] forState:UIControlStateNormal];
     
     self.praiseView.frame = CGRectMake(self.praiseView.origin.x, CGRectGetMaxY(self.actionView.frame)+k_FirstToTop, self.praiseView.width, self.praiseView.height);
     //image处理边帽
@@ -156,6 +225,14 @@
 }
 
 - (IBAction)comment:(id)sender {
+//    self.popupView = [[BRCommentView alloc] initWithFrame:self.view.bounds superFrame:CGRectZero isController:YES type:@"comment"];
+//    self.popupView.delegate = self;
+//    self.popupView.type = @"comment";
+//    self.popupView.fid = @"-1";
+//    self.popupView.detail = @"";
+//    [self.navigationController.view addSubview:self.popupView];
+//    [self.popupView showWithAnimated:YES];
+
 }
 
 - (IBAction)share:(id)sender {

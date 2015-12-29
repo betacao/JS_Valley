@@ -31,8 +31,6 @@
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.title = @"业务";
-    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor],NSFontAttributeName:[UIFont systemFontOfSize:17]}];
-    
 }
 -(NSArray * )categoryArray
 {
@@ -149,7 +147,7 @@
     NSInteger redLineToTop = 25.0f;
     UIView * view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREENWIDTH, sectionHeight)];
     view.backgroundColor = [UIColor clearColor];
-    UILabel * title = [[UILabel alloc]initWithFrame:CGRectMake(k_ToleftTwo, titleToTop, 100.0, 20.0)];
+    UILabel * title = [[UILabel alloc]initWithFrame:CGRectMake(k_ToleftTwo, titleToTop, 100.0f, 20.0f)];
     title.text = [self.categoryNameArray objectAtIndex:section];
     title.textAlignment = NSTextAlignmentLeft;
     title.font = [UIFont systemFontOfSize:14];
@@ -158,7 +156,7 @@
     itemGes.tag = section;
     [view addGestureRecognizer:itemGes];
     [view addSubview: title];
-    UIView * redLine = [[UIView alloc]initWithFrame:CGRectMake(k_ToleftOne, redLineToTop, 1.5, 10.0)];
+    UIView * redLine = [[UIView alloc]initWithFrame:CGRectMake(k_ToleftOne, redLineToTop, 1.5f, 10.0f)];
     redLine.backgroundColor = [UIColor colorWithHexString:@"F5BF9A"];
     [view addSubview:redLine];
     return view;
