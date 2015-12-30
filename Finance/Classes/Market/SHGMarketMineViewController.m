@@ -13,8 +13,9 @@
 #import "SHGCategoryScrollView.h"
 #import "SHGEmptyDataView.h"
 #import "SHGMarketDetailViewController.h"
+#import "SHGPersonalViewController.h"
 
-@interface SHGMarketMineViewController ()<UITabBarDelegate, UITableViewDataSource>
+@interface SHGMarketMineViewController ()<UITabBarDelegate, UITableViewDataSource, SHGMarketTableViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) UITableViewCell *emptyCell;
 @property (strong, nonatomic) SHGEmptyDataView *emptyView;
@@ -30,6 +31,12 @@
     [self addHeaderRefresh:self.tableView headerRefesh:YES andFooter:YES];
     [self loadMarketList:@"first" firstId:@"" second:@"" marketId:@"-1"];
 }
+
+- (NSMutableArray *)currentDataArray
+{
+    return self.dataArr;
+}
+
 
 - (void)loadMarketList:(NSString *)target firstId:(NSString *)firstId second:(NSString *)secondId marketId:(NSString *)marketId
 {
@@ -138,6 +145,7 @@
         if (!cell) {
             cell = [[[NSBundle mainBundle] loadNibNamed:@"SHGMarketTableViewCell" owner:self options:nil] lastObject];
         }
+        cell.delegate = self;
         [cell loadDataWithObject:[self.dataArr objectAtIndex:indexPath.row]];
         return cell;
     } else{
@@ -153,6 +161,31 @@
         [self.navigationController pushViewController:controller animated:YES];
     }
 }
+
+#pragma mark ------SHGMarketTableViewDelegate
+- (void)clickPrasiseButton:(SHGMarketObject *)object
+{
+
+}
+
+- (void)clickCommentButton:(SHGMarketObject *)object
+{
+
+}
+
+- (void)clickEditButton:(SHGMarketObject *)object
+{
+
+}
+
+- (void)tapUserHeaderImageView:(NSString *)uid
+{
+    __weak typeof(self) weakSelf = self;
+    SHGPersonalViewController * vc = [[SHGPersonalViewController alloc]init ];
+    vc.userId = uid;
+    [weakSelf.navigationController pushViewController:vc animated:YES];
+}
+
 
 - (void)didReceiveMemoryWarning
 {

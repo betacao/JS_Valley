@@ -9,5 +9,5 @@
 #import "BaseViewController.h"
 
 @interface SHGMarketMineViewController : BaseTableViewController
-
+- (NSMutableArray *) currentDataArray;
 @end

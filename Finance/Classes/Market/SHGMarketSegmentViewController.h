@@ -23,4 +23,5 @@ typedef void(^loadViewFinishBlock)(UIView *view);
 - (void)setSelectedIndex:(NSUInteger)index animated:(BOOL)animated;
 - (void)setSelectedViewController:(UIViewController *)viewController animated:(BOOL)animated;
 
+- (void)addOrDeletePraise:(SHGMarketObject *)object block:(void(^)(BOOL success))block;
 @end

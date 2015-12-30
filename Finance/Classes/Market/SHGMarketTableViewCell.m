@@ -7,6 +7,7 @@
 //
 
 #import "SHGMarketTableViewCell.h"
+#import "SHGMarketSegmentViewController.h"
 
 @interface SHGMarketTableViewCell ()
 @property (weak, nonatomic) IBOutlet UILabel *titleView;
@@ -21,6 +22,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *editButton;
 @property (weak, nonatomic) IBOutlet UIButton *deleteButton;
 @property (weak, nonatomic) IBOutlet UIImageView *xuXian;
+@property (strong ,nonatomic) SHGMarketObject *object;
 
 @end
 
@@ -33,6 +35,7 @@
 - (void)loadDataWithObject:(SHGMarketObject *)object
 {
     [self clearCell];
+    self.object = object;
     UIImage * img = [UIImage imageNamed:@"action_xuxian"];
     self.xuXian.image = [img resizableImageWithCapInsets:UIEdgeInsetsMake(0 , 1, 0, 1) resizingMode:UIImageResizingModeTile];
     self.titleView.text = object.marketName;
@@ -93,6 +96,38 @@
     self.relationLabel.text = @"";
     [self.praiseButton setTitle:@"0" forState:UIControlStateNormal];
     [self.commentButton setTitle:@"0" forState:UIControlStateNormal];
+}
+
+//点赞
+- (IBAction)clickPraiseButton:(UIButton *)sender
+{
+    if (self.delegate && [self.delegate respondsToSelector:@selector(clickPrasiseButton:)]) {
+        [self.delegate clickPrasiseButton:self.object];
+    }
+}
+
+//评论数
+- (IBAction)clickCommentButton:(UIButton *)sender
+{
+    if (self.delegate && [self.delegate respondsToSelector:@selector(clickCommentButton:)]) {
+        [self.delegate clickCommentButton:self.object];
+    }
+}
+
+//修改
+- (IBAction)clickEditButton:(UIButton *)sender
+{
+    if (self.delegate && [self.delegate respondsToSelector:@selector(clickEditButton:)]) {
+        [self.delegate clickEditButton:self.object];
+    }
+}
+
+//删除
+- (IBAction)clickDeleteButton:(UIButton *)sender
+{
+    if (self.delegate && [self.delegate respondsToSelector:@selector(tapUserHeaderImageView:)]) {
+//        [self.delegate tapUserHeaderImageView:self.object.publisher];
+    }
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

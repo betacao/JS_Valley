@@ -138,7 +138,7 @@
 }
 
 //取消点赞
-- (void)deletePraiseWithObject:(SHGMarketObject *)object finishBlock:(void (^)(BOOL))block
++ (void)deletePraiseWithObject:(SHGMarketObject *)object finishBlock:(void (^)(BOOL))block
 {
     [Hud showLoadingWithMessage:@"请稍等..."];
     NSString *request = [rBaseAddressForHttp stringByAppendingString:@"/market/praise/deletePraise"];
@@ -160,7 +160,7 @@
 }
 
 //评论
-- (void)addCommentWithObject:(SHGMarketObject *)object content:(NSString *)content toOther:(NSString *)otherId finishBlock:(void (^)(BOOL))block
++ (void)addCommentWithObject:(SHGMarketObject *)object content:(NSString *)content toOther:(NSString *)otherId finishBlock:(void (^)(BOOL))block
 {
     if (!otherId) {
         otherId = @"-1";
@@ -204,7 +204,7 @@
 }
 
 //删除评论
-- (void)deleteCommentWithID:(NSString *)commentId finishBlock:(void (^)(BOOL))block
++ (void)deleteCommentWithID:(NSString *)commentId finishBlock:(void (^)(BOOL))block
 {
     [Hud showLoadingWithMessage:@"请稍等..."];
     NSString *request = [rBaseAddressForHttp stringByAppendingString:@"/market/comment/deleteComments"];

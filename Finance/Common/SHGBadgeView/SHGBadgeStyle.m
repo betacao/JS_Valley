@@ -58,8 +58,8 @@
     
     id instance = [[super alloc] init];
     [instance setBadgeFontType:BadgeStyleFontTypeHelveticaNeueLight];
-    [instance setBadgeTextColor:[UIColor whiteColor]];
-    [instance setBadgeInsetColor:[UIColor redColor]];
+    [instance setBadgeTextColor:[UIColor colorWithHexString:@"d43c33"]];
+    [instance setBadgeInsetColor:[UIColor whiteColor]];
     [instance setBadgeFrameColor:nil];
     [instance setBadgeFrame:NO];
     [instance setBadgeShadow:NO];

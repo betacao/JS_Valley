@@ -9,6 +9,7 @@
 #import "SHGMarketSegmentViewController.h"
 #import "SHGMarketSendViewController.h"
 #import "SHGMarketSearchViewController.h"
+#import "SHGMarketManager.h"
 
 @interface SHGMarketSegmentViewController ()
 @property (nonatomic, strong) UIBarButtonItem *rightBarButtonItem;
@@ -245,6 +246,71 @@
 - (void)valueChange:(UISegmentedControl *)seg
 {
     [self setSelectedIndex:seg.selectedSegmentIndex animated:YES];
+}
+
+
+#pragma mark ------ 点赞和取消点赞
+- (void)addOrDeletePraise:(SHGMarketObject *)object block:(void (^)(BOOL success))block
+{
+    __weak typeof(self)weakSelf = self;
+    if ([object.isPraise isEqualToString:@"N"]) {
+        [SHGMarketManager addPraiseWithObject:object finishBlock:^(BOOL success) {
+            [weakSelf didChangePraiseState:object isPraise:YES];
+            if (block) {
+                block(success);
+            }
+        }];
+    } else{
+        [SHGMarketManager deletePraiseWithObject:object finishBlock:^(BOOL success) {
+            [weakSelf didChangePraiseState:object isPraise:NO];
+            if (block) {
+                block(success);
+            }
+        }];
+    }
+}
+
+#pragma mark ------ 点赞状态改变
+
+- (void)didChangePraiseState:(SHGMarketObject *)object isPraise:(BOOL)isPraise
+{
+    for (UIViewController *controller in self.viewControllers){
+        if ([controller respondsToSelector:@selector(currentDataArray)]) {
+            NSMutableArray *array = [controller performSelector:@selector(currentDataArray)];
+            for (SHGMarketObject * obj in array){
+                if ([object.marketId isEqualToString:obj.marketId]) {
+                    obj.isPraise = isPraise ? @"Y" : @"N";
+                    if (isPraise) {
+
+                        obj.praiseNum = [NSString stringWithFormat:@"%ld",(long)[obj.praiseNum integerValue] + 1];
+
+                    } else{
+                        obj.praiseNum = [NSString stringWithFormat:@"%ld",(long)[obj.praiseNum integerValue] - 1];
+
+                    }
+                    break;
+                }
+            }
+        }
+        [controller performSelector:@selector(reloadData)];
+    }
+
+}
+
+- (void)didCommentAction:(SHGMarketObject *)object
+{
+    for (UIViewController *controller in self.viewControllers){
+        if ([controller respondsToSelector:@selector(currentDataArray)]) {
+            NSMutableArray *array = [controller performSelector:@selector(currentDataArray)];
+            for (SHGMarketObject * obj in array){
+                if ([object.marketId isEqualToString:obj.marketId]) {
+                    obj.commentNum = [NSString stringWithFormat:@"%ld",(long)[obj.commentNum integerValue] + 1];
+                    break;
+                }
+            }
+        }
+        [controller performSelector:@selector(reloadData)];
+    }
 }
 
 - (void)viewDidUnload

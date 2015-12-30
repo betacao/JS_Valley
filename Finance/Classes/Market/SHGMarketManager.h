@@ -24,4 +24,14 @@
 + (void)modifyMarket:(NSDictionary *)param success:(void (^)(BOOL success))block;
 
 + (void)loadMarketDetail:(NSDictionary *)param block:(void (^)(SHGMarketObject *object))block;
+
++ (void)addPraiseWithObject:(SHGMarketObject *)object finishBlock:(void (^)(BOOL))block;
+
++ (void)deletePraiseWithObject:(SHGMarketObject *)object finishBlock:(void (^)(BOOL))block;
+
++ (void)addCommentWithObject:(SHGMarketObject *)object content:(NSString *)content toOther:(NSString *)otherId finishBlock:(void (^)(BOOL))block;
+
++ (void)deleteCommentWithID:(NSString *)commentId finishBlock:(void (^)(BOOL))block;
+
+- (void)shareAction:(SHGMarketObject *)object baseController:(UIViewController *)controller finishBlock:(void (^)(BOOL))block;
 @end
