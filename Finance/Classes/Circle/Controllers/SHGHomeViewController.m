@@ -42,8 +42,6 @@ const CGFloat kAdButtomMargin = 20.0f;
 @property (strong, nonatomic) NSMutableArray *recomandArray;
 
 @property (assign, nonatomic) BOOL hasRequestedFirst;
-@property (assign, nonatomic) BOOL hasRequestedRecomand;
-@property (assign, nonatomic) BOOL hasLocated;
 @property (assign, nonatomic) BOOL hasDataFinished;
 
 @property (strong, nonatomic) CircleListRecommendViewController *recommendViewController;
@@ -51,7 +49,6 @@ const CGFloat kAdButtomMargin = 20.0f;
 @property (strong, nonatomic) SHGNoticeView *newFriendNoticeView;
 @property (strong, nonatomic) SHGNoticeView *newMessageNoticeView;
 @property (assign, nonatomic) BOOL isRefreshing;
-@property (strong, nonatomic) NSString *currentCity;
 @property (strong, nonatomic) NSString *circleType;
 @property (assign, nonatomic) BOOL shouldDisplayRecommend;
 @property (strong, nonatomic) UITableViewCell *emptyCell;
@@ -81,18 +78,13 @@ const CGFloat kAdButtomMargin = 20.0f;
         [self.listTable setLayoutMargins:UIEdgeInsetsZero];
     }
 
-    self.hasRequestedRecomand = NO;
-    self.hasLocated = NO;
     self.hasRequestedFirst = NO;
     self.shouldDisplayRecommend = YES;
     
     self.circleType = @"all";
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshData) name:NOTIFI_SENDPOST object:nil];
-    
-    [self getAllInfo];
     [self loadRegisterPushFriend];
-    
-    
+
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -101,7 +93,7 @@ const CGFloat kAdButtomMargin = 20.0f;
     [MobClick event:@"SHGHomeViewController" label:@"onClick"];
 }
 
--(void)viewDidAppear:(BOOL)animated
+- (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
     if(!self.hasRequestedFirst){
@@ -112,10 +104,7 @@ const CGFloat kAdButtomMargin = 20.0f;
         [SHGGloble sharedGloble].CompletionBlock = ^(NSArray *allArray, NSArray *normalArray, NSArray *adArray){
             [Hud hideHud];
             if(allArray && [allArray count] > 0){
-                if(!weakSelf.hasRequestedRecomand){
-                    weakSelf.hasRequestedRecomand = YES;
-                    [weakSelf requestAlermInfo];
-                }
+                [weakSelf requestAlermInfo];
                 //更新整体数据
                 [weakSelf.dataArr removeAllObjects];
                 [weakSelf.dataArr addObjectsFromArray:allArray];
@@ -229,13 +218,10 @@ const CGFloat kAdButtomMargin = 20.0f;
     return _emptyView;
 }
 
--(void)requestAlermInfo
+- (void)requestAlermInfo
 {
-    if(!self.hasRequestedRecomand || !self.hasLocated){
-        return;
-    }
     NSString *uid = [[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID] stringValue];
-    NSDictionary *param = @{@"uid":uid, @"area":self.currentCity == nil?@"":self.currentCity};
+    NSDictionary *param = @{@"uid":uid, @"area":@""};
     __weak typeof(self) weakSelf = self;
     [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/v1/recommended/friends/recommendedFriend",rBaseAddRessHttp] class:[RecmdFriendObj class] parameters:param success:^(MOCHTTPResponse *response){
         [weakSelf.recomandArray removeAllObjects];
@@ -262,7 +248,6 @@ const CGFloat kAdButtomMargin = 20.0f;
             });
         }
         
-        
     } failed:^(MOCHTTPResponse *response){
         NSLog(@"%@",response.error);
         
@@ -283,20 +268,6 @@ const CGFloat kAdButtomMargin = 20.0f;
             }
         }
     }
-}
-
-- (void)getAllInfo
-{
-    __block __weak SHGHomeViewController *wself = self;
-    [[CCLocationManager shareLocation] getCity:^{
-        NSString *cityName = [SHGGloble sharedGloble].cityName;
-        if(cityName && cityName.length > 0){
-            self.currentCity = cityName;
-            NSLog(@"self.cityName = %@",self.currentCity);
-            wself.hasLocated = YES;
-            [wself requestAlermInfo];
-        }
-    }];
 }
 
 - (void)refreshData
@@ -548,7 +519,7 @@ const CGFloat kAdButtomMargin = 20.0f;
                 [self.recommendViewController.view removeFromSuperview];
             }
             self.recommendViewController.delegate = self;
-            [self.recommendViewController loadViewWithData:array cityCode:self.currentCity];
+            [self.recommendViewController loadViewWithData:array];
             [cell addSubview:self.recommendViewController.view];
             return cell;
 
