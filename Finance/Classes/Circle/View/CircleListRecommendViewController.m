@@ -9,8 +9,8 @@
 #import "CircleListRecommendViewController.h"
 #import "popObj.h"
 
-const CGFloat kFirstRecommendCellHeight = 62.0f;
-const CGFloat kOtherRecommendCellHeight = 57.0f;
+const CGFloat kFirstRecommendCellHeight = 73.0f;
+const CGFloat kOtherRecommendCellHeight = 58.0f;
 #define kLabelMargin  7.0f * XFACTOR
 
 @interface CircleListRecommendViewController ()
@@ -44,23 +44,21 @@ const CGFloat kOtherRecommendCellHeight = 57.0f;
 @property (weak, nonatomic) IBOutlet UILabel *bottomDetailLabel;
 @property (weak, nonatomic) IBOutlet UIView *bottomBreakLine;
 @property (weak, nonatomic) IBOutlet UIButton *bottomFocusButton;
+@property (weak, nonatomic) IBOutlet UIImageView *markView;
 
-@property (weak, nonatomic) IBOutlet UIButton *closeButton;//右上角的删除按钮，看不到而已
 
 @property (assign, nonatomic) NSInteger arrayCount;
 @property (weak, nonatomic) NSArray *dataArray;
-@property (strong, nonatomic) NSString *currentCity;
 
 
 @end
 
 @implementation CircleListRecommendViewController
 
-- (void)loadViewWithData:(NSArray *)dataArray cityCode:(NSString *)currentCity
+- (void)loadViewWithData:(NSArray *)dataArray
 {
     self.dataArray = dataArray;
     self.arrayCount = self.dataArray.count;
-    self.currentCity = currentCity;
 }
 
 - (void)viewDidLoad {
@@ -72,7 +70,12 @@ const CGFloat kOtherRecommendCellHeight = 57.0f;
     [self.middleImageView addGestureRecognizer:middleRecognizer];
     DDTapGestureRecognizer *bottomRecognizer = [[DDTapGestureRecognizer alloc]initWithTarget:self action:@selector(didTapHeaderView:)];
     [self.bottomImageView addGestureRecognizer:bottomRecognizer];
-    
+
+    [self.markView sizeToFit];
+    CGRect frame = self.markView.frame;
+    frame.origin.x = 0.0f;
+    frame.origin.y = 0.0f;
+    self.markView.frame = frame;
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -82,10 +85,12 @@ const CGFloat kOtherRecommendCellHeight = 57.0f;
     CGRect frame = self.topViewLine.frame;
     frame.size.height = 0.5f;
     self.topViewLine.frame = frame;
+    self.topViewLine.hidden = YES;
     
     frame = self.middleViewLine.frame;
     frame.size.height = 0.5f;
     self.middleViewLine.frame = frame;
+    self.middleViewLine.hidden = YES;
     
     for(RecmdFriendObj *obj in self.dataArray){
         NSInteger index = [self.dataArray indexOfObject:obj];
@@ -94,7 +99,7 @@ const CGFloat kOtherRecommendCellHeight = 57.0f;
         NSString *flag = obj.flag;
         NSString *detailString = @"";
         if([flag isEqualToString: @"city"]){
-            detailString = [@"你们都在：" stringByAppendingString:self.currentCity];
+            detailString = [@"你们都在：" stringByAppendingString:obj.area];
         } else if ([flag isEqualToString:@"company"]){
             detailString = [@"你们都在：" stringByAppendingFormat:@"%@",obj.company];
         } else{
@@ -174,7 +179,9 @@ const CGFloat kOtherRecommendCellHeight = 57.0f;
             frame = self.middleDepartLabel.frame;
             frame.origin.x = CGRectGetMaxX(self.middleCompantyLabel.frame) + kLabelMargin;
             self.middleDepartLabel.frame = frame;
-            
+
+
+            self.topViewLine.hidden = NO;
         } else{
             view = self.bottomView;
             [self.bottomImageView sd_setImageWithURL:[NSURL URLWithString:obj.headimg] placeholderImage:[UIImage imageNamed:@"default_head"]];
@@ -207,7 +214,8 @@ const CGFloat kOtherRecommendCellHeight = 57.0f;
             frame = self.bottomDepartLabel.frame;
             frame.origin.x = CGRectGetMaxX(self.bottomCompantyLabel.frame) + kLabelMargin;
             self.bottomDepartLabel.frame = frame;
-            
+
+            self.middleViewLine.hidden = NO;
         }
     }
     UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, [self heightOfView] - kLabelMargin, SCREENWIDTH , kLabelMargin)];

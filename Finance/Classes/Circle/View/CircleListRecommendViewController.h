@@ -16,7 +16,7 @@ typedef void(^SHGRecommendBlock)(void);
 
 @property (assign ,nonatomic) id<CircleListDelegate> delegate;
 @property (copy, nonatomic) SHGRecommendBlock closeBlock;
-- (void)loadViewWithData:(NSArray *)dataArray cityCode:(NSString *)currentCity;
+- (void)loadViewWithData:(NSArray *)dataArray;
 
 - (CGFloat)heightOfView;
 
