@@ -81,6 +81,9 @@ const CGFloat kOtherRecommendCellHeight = 58.0f;
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+    self.topBreakLine.hidden = YES;
+    self.middleBreakLine.hidden = YES;
+    self.bottomBreakLine.hidden = YES;
     
     CGRect frame = self.topViewLine.frame;
     frame.size.height = 0.5f;

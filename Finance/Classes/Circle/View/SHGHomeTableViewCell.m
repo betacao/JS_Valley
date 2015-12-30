@@ -339,6 +339,7 @@
 
 - (void)sizeUIWithObj:(CircleListObj *)obj
 {
+    self.breakLine.hidden = YES;
     NSString *name = obj.nickname;
     if (obj.nickname.length > 4){
         name = [obj.nickname substringToIndex:4];
@@ -383,11 +384,11 @@
     self.lblPosition.frame = positionRect;
 
     //如果公司名和职位名字都不存在的话则隐藏分割线(1.72 不需要分割线)
-    if(self.lblCompanyName.text.length == 0 && self.lblPosition.text.length == 0){
-        self.breakLine.hidden = YES;
-    } else{
-        self.breakLine.hidden = YES;
-    }
+//    if(self.lblCompanyName.text.length == 0 && self.lblPosition.text.length == 0){
+//        self.breakLine.hidden = YES;
+//    } else{
+//        self.breakLine.hidden = YES;
+//    }
 
     if ([self.cellType isEqualToString:@"news"]) {
         self.lblTime.text = [obj.publishdate substringToIndex:10];

@@ -416,6 +416,7 @@
     self.btnNickname.frame = userRect;
 
     //设置分割线的坐标
+    self.breakLineView.hidden = YES;
     CGRect frame = self.breakLineView.frame;
     frame.origin.x = kItemMargin + CGRectGetMaxX(userRect);
     frame.size.width = 0.5f;
@@ -457,12 +458,12 @@
     [self.lblTime sizeToFit];
     [self.lblTime setOrigin:frame.origin];
 
-    //如果公司名和职位名字都不存在的话则隐藏分割线
-    if(self.lblCompanyName.text.length == 0 && self.lbldepartName.text.length == 0){
-        self.breakLineView.hidden = YES;
-    } else{
-        self.breakLineView.hidden = NO;
-    }
+    //如果公司名和职位名字都不存在的话则隐藏分割线(1.72不休要分割线了)
+//    if(self.lblCompanyName.text.length == 0 && self.lbldepartName.text.length == 0){
+//        self.breakLineView.hidden = YES;
+//    } else{
+//        self.breakLineView.hidden = NO;
+//    }
 
 
     [self.btnNickname setBackgroundImage:[UIImage imageWithColor:BTN_SELECT_BACK_COLOR andSize:nameSize] forState:UIControlStateHighlighted];

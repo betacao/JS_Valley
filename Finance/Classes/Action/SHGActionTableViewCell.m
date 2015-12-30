@@ -170,7 +170,7 @@
     CGRect frame = self.Action_nameLable.frame;
     frame.size.width = size.width;
     self.Action_nameLable.frame = frame;
-
+    //1.72版本不需要分割线
     frame = self.Action_lineView.frame;
     frame.origin.x = CGRectGetMaxX(self.Action_nameLable.frame) + kItemMargin;
     self.Action_lineView.frame = frame;
@@ -197,11 +197,11 @@
     frame.origin.x = CGRectGetMaxX(self.Action_companyLable.frame) + kItemMargin;
     self.Action_departmentLable.frame = frame;
 
-    if (company.length == 0 && department.length ==0) {
-        self.Action_lineView.hidden = YES;
-    } else{
-        self.Action_lineView.hidden = NO;
-    }
+//    if (company.length == 0 && department.length ==0) {
+//        self.Action_lineView.hidden = YES;
+//    } else{
+//        self.Action_lineView.hidden = NO;
+//    }
 
 }
 

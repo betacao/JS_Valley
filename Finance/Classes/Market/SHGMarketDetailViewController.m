@@ -117,7 +117,8 @@
     NSDictionary * nameDic = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont boldSystemFontOfSize:15.0],NSFontAttributeName,nil];
     CGSize  nameActualsize =[self.nameLabel.text boundingRectWithSize:nameSize options:NSStringDrawingUsesLineFragmentOrigin  attributes:nameDic context:nil].size;
     self.nameLabel.frame =CGRectMake(self.nameLabel.origin.x,self.nameLabel.origin.y, nameActualsize.width, CGRectGetHeight(self.nameLabel.frame));
-    
+    //1.72版本不需要分割线
+    self.verticalLine.hidden = YES;
     self.verticalLine.frame = CGRectMake(CGRectGetMaxX(self.nameLabel.frame)+k_FirstToTop,self.verticalLine.origin.y, self.verticalLine.frame.size.width, CGRectGetHeight(self.verticalLine.frame));
     
     CGSize companySize =CGSizeMake(MAXFLOAT,CGRectGetHeight(self.companyLabel.frame));
