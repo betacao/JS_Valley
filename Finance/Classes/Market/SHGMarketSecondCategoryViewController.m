@@ -68,15 +68,15 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    NSInteger  num;
-    SHGMarketFirstCategoryObject * obj = [self.categoryArray objectAtIndex:section + 1];
-    if (obj.secondCataLogs.count == 0) {
-        num = 0;
-    }else{
-         num = 1;
-    }
+//    NSInteger  num;
+//    SHGMarketFirstCategoryObject * obj = [self.categoryArray objectAtIndex:section + 1];
+//    if (obj.secondCataLogs.count == 0) {
+//        num = 0;
+//    }else{
+//         num = 1;
+//    }
     
-    return  num;
+    return  1;
     
 }
 
@@ -115,9 +115,16 @@
                 hangNum = arry.count/3 ;
             }
             cell.bgView.frame =CGRectMake(k_ToleftTwo, 0, SCREENWIDTH-k_ToleftTwo*2, k_SectionHeight +(hangNum-1) * (buttonHeight+buttonToButton));
-            self.RowHeight = cell.bgView.height;
+            cell.lineView.frame = CGRectMake(0, cell.bgView.bottom + buttonToTop, SCREENWIDTH, 0.5f);
+        }else{
+            cell.bgView.frame =CGRectMake(0, 0, SCREENWIDTH, 5.0f);
+            cell.lineView.frame = CGRectMake(0, cell.bgView.bottom - 1.0f , SCREENWIDTH, 0.5f);
         }
-        
+        if (indexPath.section + 1 == self.categoryNameArray.count) {
+            cell.lineView.hidden = YES;
+        }
+        self.RowHeight = cell.bgView.height;
+
       }
     
     return cell;

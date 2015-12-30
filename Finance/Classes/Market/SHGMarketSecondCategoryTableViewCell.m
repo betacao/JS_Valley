@@ -23,6 +23,9 @@
         self.backgroundColor = [UIColor whiteColor];
          _bgView = [[UIView alloc]init];
         [self.contentView addSubview:_bgView];
+        _lineView = [[UIView alloc]init];
+        _lineView.backgroundColor = [UIColor colorWithHexString:@"EFEFEF"];
+        [self.contentView addSubview:_lineView];
     }
     return self;
 }

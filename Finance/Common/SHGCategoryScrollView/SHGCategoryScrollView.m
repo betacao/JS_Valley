@@ -9,8 +9,8 @@
 #import "SHGCategoryScrollView.h"
 #import "SHGMarketObject.h"
 #define kCategoryObjectMargin 10.0f * XFACTOR
-#define kCategoryFont [UIFont systemFontOfSize:14.0f]
-
+#define kCategoryNormalFont [UIFont systemFontOfSize:14.0f]
+#define kCategorySelectFont [UIFont systemFontOfSize:15.0f]
 @interface SHGCategoryScrollView ()
 @property (assign, nonatomic) CGFloat categoryWidth;
 @property (assign, nonatomic) NSInteger selectedIndex;
@@ -26,7 +26,7 @@
     frame.size.height = kCategoryScrollViewHeight;
     self = [super initWithFrame:frame];
     if (self) {
-        self.backgroundColor = [UIColor colorWithHexString:@"f5f6f7"];
+        self.backgroundColor = [UIColor colorWithHexString:@"f6f6f6"];
     }
     return self;
 }
@@ -64,8 +64,8 @@
 - (UIView *)underLineView
 {
     if (!_underLineView) {
-        _underLineView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, kCategoryScrollViewHeight - 1.0f, 0.0f, 1.0f)];
-        _underLineView.backgroundColor = [UIColor redColor];
+        _underLineView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, kCategoryScrollViewHeight - 1.0f, 0.0f, 1.50f)];
+        _underLineView.backgroundColor = [UIColor colorWithHexString:@"D82626"];
         [self addSubview:_underLineView];
     }
     return _underLineView;
@@ -81,9 +81,11 @@
     BOOL isChanged = _selectedIndex == selectedIndex ? NO : YES;
     _selectedIndex = selectedIndex;
     UIButton *button = [self.buttonArrays objectAtIndex:selectedIndex];
-    [button setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+    [button setTitleColor:[UIColor colorWithHexString:@"DB2626"] forState:UIControlStateNormal];
+    button.titleLabel.font =kCategoryNormalFont ;
     if (self.selectedButton && ![button isEqual:self.selectedButton]) {
-        [self.selectedButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [self.selectedButton setTitleColor:[UIColor colorWithHexString:@"333333"] forState:UIControlStateNormal];
+        button.titleLabel.font = kCategorySelectFont;
     }
     self.selectedButton = button;
     [UIView animateWithDuration:0.25f animations:^{
@@ -114,17 +116,17 @@
     [self.categoryArray enumerateObjectsUsingBlock:^(SHGMarketFirstCategoryObject *obj, NSUInteger idx, BOOL * _Nonnull stop) {
         string = [string stringByAppendingString:obj.firstCatalogName];
     }];
-    CGFloat width = [string sizeWithAttributes:@{NSFontAttributeName:kCategoryFont}].width + self.categoryArray.count * 2.0f * kCategoryObjectMargin;
+    CGFloat width = [string sizeWithAttributes:@{NSFontAttributeName:kCategoryNormalFont}].width + self.categoryArray.count * 2.0f * kCategoryObjectMargin;
     if (width > SCREENWIDTH) {
         [self.categoryArray enumerateObjectsUsingBlock:^(SHGMarketFirstCategoryObject *object, NSUInteger idx, BOOL * _Nonnull stop) {
             UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
             [button setTitle:object.firstCatalogName forState:UIControlStateNormal];
-            [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+            [button setTitleColor:[UIColor colorWithHexString:@"333333"] forState:UIControlStateNormal];
             [button addTarget:self action:@selector(clickButton:) forControlEvents:UIControlEventTouchUpInside];
-            button.titleLabel.font = kCategoryFont;
+            button.titleLabel.font = kCategoryNormalFont;
             CGSize size = [button sizeThatFits:CGSizeMake(CGFLOAT_MAX, CGRectGetHeight(self.frame))];
             CGRect frame = button.frame;
-            frame.size.width = size.width;
+            frame.size.width = size.width + kCategoryObjectMargin / 2.0f;
             frame.size.height = CGRectGetHeight(self.frame);
             frame.origin.x = self.categoryWidth + kCategoryObjectMargin;
             frame.origin.y = 0.0f;
@@ -139,9 +141,9 @@
         [self.categoryArray enumerateObjectsUsingBlock:^(SHGMarketFirstCategoryObject *object, NSUInteger idx, BOOL * _Nonnull stop) {
             UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
             [button setTitle:object.firstCatalogName forState:UIControlStateNormal];
-            [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+            [button setTitleColor:[UIColor colorWithHexString:@"333333"] forState:UIControlStateNormal];
             [button addTarget:self action:@selector(clickButton:) forControlEvents:UIControlEventTouchUpInside];
-            button.titleLabel.font = kCategoryFont;
+            button.titleLabel.font = kCategoryNormalFont;
             CGRect frame = button.frame;
             frame.size.width = width;
             frame.size.height = CGRectGetHeight(self.frame);
