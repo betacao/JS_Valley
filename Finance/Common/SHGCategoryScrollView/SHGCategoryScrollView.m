@@ -81,13 +81,14 @@
     BOOL isChanged = _selectedIndex == selectedIndex ? NO : YES;
     _selectedIndex = selectedIndex;
     UIButton *button = [self.buttonArrays objectAtIndex:selectedIndex];
-    [button setTitleColor:[UIColor colorWithHexString:@"DB2626"] forState:UIControlStateNormal];
-    button.titleLabel.font =kCategoryNormalFont ;
     if (self.selectedButton && ![button isEqual:self.selectedButton]) {
         [self.selectedButton setTitleColor:[UIColor colorWithHexString:@"333333"] forState:UIControlStateNormal];
-        button.titleLabel.font = kCategorySelectFont;
+        self.selectedButton.titleLabel.font = kCategoryNormalFont;
     }
     self.selectedButton = button;
+    [button setTitleColor:[UIColor colorWithHexString:@"DB2626"] forState:UIControlStateNormal];
+    button.titleLabel.font = kCategorySelectFont;
+
     [UIView animateWithDuration:0.25f animations:^{
         CGRect frame = self.underLineView.frame;
         frame.origin.x = CGRectGetMinX(button.frame);
