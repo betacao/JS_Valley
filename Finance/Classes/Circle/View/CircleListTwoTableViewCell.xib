@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9060" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="14F1509" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
@@ -17,7 +17,6 @@
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iPw-mJ-gKv">
                         <rect key="frame" x="15" y="8" width="290" height="20"/>
-                        <animations/>
                         <constraints>
                             <constraint firstAttribute="height" constant="20" id="FuB-1Z-hsC"/>
                         </constraints>
@@ -27,7 +26,6 @@
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="R4L-xx-QkE">
                         <rect key="frame" x="15" y="158" width="88" height="21"/>
-                        <animations/>
                         <constraints>
                             <constraint firstAttribute="width" constant="88" id="IW0-td-fz1"/>
                             <constraint firstAttribute="height" constant="21" id="YG5-G9-4qc"/>
@@ -38,7 +36,6 @@
                     </label>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="right" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2014-12-11 12:11:11" lineBreakMode="tailTruncation" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q5h-6g-vBP">
                         <rect key="frame" x="237" y="158" width="68" height="21"/>
-                        <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="68" id="kQr-To-xmZ"/>
@@ -50,21 +47,18 @@
                     </label>
                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="AGf-r7-RZq">
                         <rect key="frame" x="15" y="28" width="290" height="130"/>
-                        <animations/>
                         <constraints>
                             <constraint firstAttribute="height" constant="130" id="UrZ-6f-dHc"/>
                         </constraints>
                     </imageView>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1sb-Rf-dci">
                         <rect key="frame" x="0.0" y="181" width="320" height="10"/>
-                        <animations/>
                         <color key="backgroundColor" red="0.93725490196078431" green="0.93333333333333335" blue="0.93725490196078431" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="10" id="TMS-x5-Qn5"/>
                         </constraints>
                     </view>
                 </subviews>
-                <animations/>
                 <constraints>
                     <constraint firstItem="R4L-xx-QkE" firstAttribute="top" secondItem="AGf-r7-RZq" secondAttribute="bottom" id="4GD-jP-21X"/>
                     <constraint firstItem="AGf-r7-RZq" firstAttribute="top" secondItem="iPw-mJ-gKv" secondAttribute="bottom" id="4pf-Kb-IQf"/>
@@ -81,7 +75,6 @@
                     <constraint firstItem="Q5h-6g-vBP" firstAttribute="top" secondItem="AGf-r7-RZq" secondAttribute="bottom" id="xyf-jk-ML6"/>
                 </constraints>
             </tableViewCellContentView>
-            <animations/>
             <connections>
                 <outlet property="adLable" destination="R4L-xx-QkE" id="j28-vn-PAy"/>
                 <outlet property="lableTime" destination="Q5h-6g-vBP" id="xUM-kP-O6s"/>

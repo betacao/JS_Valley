@@ -10,6 +10,8 @@
 #import "SHGMarketTableViewCell.h"
 #import "CircleLinkViewController.h"
 #import "SHGMarketManager.h"
+#import "SDPhotoGroup.h"
+#import "SDPhotoItem.h"
 #define k_FirstToTop 5.0f * XFACTOR
 #define k_SecondToTop 10.0f * XFACTOR
 #define k_ThirdToTop 15.0f * XFACTOR
@@ -33,7 +35,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *phoneNumLabel;
 @property (weak, nonatomic) IBOutlet UILabel *marketDetialLabel;
 @property (weak, nonatomic) IBOutlet UILabel *detailContentLabel;
-@property (weak, nonatomic) IBOutlet UIImageView *photoImageView;
+@property (weak, nonatomic) IBOutlet UIView *photoImageView;
 @property (weak, nonatomic) IBOutlet UIView *actionView;
 @property (weak, nonatomic) IBOutlet UIView *praiseView;
 @property (weak, nonatomic) IBOutlet UIImageView *backImageView;
@@ -94,13 +96,14 @@
     [self.headImageView updateHeaderView:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,self.responseObject.headimageurl] placeholderImage:[UIImage imageNamed:@"default_head"]];
     self.detailContentLabel.text = self.responseObject.detail;
    
-    [self.photoImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,self.responseObject.url]]];
+    //[self.photoImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,self.responseObject.url]]];
    
     
 }
 
 - (void)loadUi
 {
+    self.photoImageView.hidden = YES;
     NSInteger maxNameWidth = 50.0f;
     NSInteger maxCompanyWidth = 90.0f;
     NSInteger maxPositionWidth = 90.0f;
@@ -162,10 +165,21 @@
     CGSize  dActualsize =[self.detailContentLabel.text boundingRectWithSize:dsize options:NSStringDrawingUsesLineFragmentOrigin  attributes:ddic context:nil].size;
      self.detailContentLabel.frame = CGRectMake(self.detailContentLabel.origin.x, CGRectGetMaxY(self.thirdHorizontalLine.frame)+ k_ThirdToTop, self.detailContentLabel.width, dActualsize.height);
     if (!self.responseObject.url.length == 0) {
-        self.photoImageView.frame  = CGRectMake(self.photoImageView.origin.x, CGRectGetMaxY(self.detailContentLabel.frame)+k_FirstToTop*2, self.photoImageView.width, self.photoImageView.height);
-         self.actionView.frame = CGRectMake(self.actionView.origin.x, CGRectGetMaxY(self.photoImageView.frame)+k_FirstToTop, self.actionView.width, self.actionView.height);
+       // self.photoImageView.frame  = CGRectMake(self.photoImageView.origin.x, CGRectGetMaxY(self.detailContentLabel.frame)+k_FirstToTop*2, self.photoImageView.width, self.photoImageView.height);
+        
+        UIView *photoView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, CGRectGetMaxY(self.detailContentLabel.frame)+k_FirstToTop*2, 0.0f, 0.0f)];
+        SDPhotoGroup *photoGroup = [[SDPhotoGroup alloc] init];
+        NSMutableArray *temp = [NSMutableArray array];
+        SDPhotoItem *item = [[SDPhotoItem alloc] init];
+        item.thumbnail_pic = [NSString stringWithFormat:@"%@%@",rBaseAddressForImage,self.responseObject.url];
+        [temp addObject:item];
+        photoGroup.photoItemArray = temp;
+        [photoView addSubview:photoGroup];
+        photoView.frame = CGRectMake(15.0, self.detailContentLabel.bottom + k_FirstToTop*2, CGRectGetWidth(photoGroup.frame),CGRectGetHeight(photoGroup.frame));
+        [self.viewHeader addSubview:photoView];
+        self.actionView.frame = CGRectMake(self.actionView.origin.x, CGRectGetMaxY(photoView.frame)+k_FirstToTop, self.actionView.width, self.actionView.height);
     }else{
-        self.photoImageView.hidden = YES;
+        //self.photoImageView.hidden = YES;
          self.actionView.frame = CGRectMake(self.actionView.origin.x, CGRectGetMaxY(self.detailContentLabel.frame)+k_FirstToTop, self.actionView.width, self.actionView.height);
     }
     [self.btnZan setImage:[UIImage imageNamed:@"home_weizan"] forState:UIControlStateNormal];

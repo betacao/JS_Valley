@@ -21,7 +21,7 @@
                 <outlet property="marketDetialLabel" destination="lXG-WT-o6S" id="TlI-ck-Vxz"/>
                 <outlet property="nameLabel" destination="svp-nP-fl2" id="kpc-6J-uiA"/>
                 <outlet property="phoneNumLabel" destination="icy-M0-m4C" id="5u6-mb-lj6"/>
-                <outlet property="photoImageView" destination="CdC-cg-u10" id="5pA-OU-aZX"/>
+                <outlet property="photoImageView" destination="Ski-cD-hoU" id="BPM-UV-qY9"/>
                 <outlet property="positionLabel" destination="TWe-U9-AIN" id="2Vn-AI-4Hm"/>
                 <outlet property="praiseView" destination="Oij-Yo-R6Y" id="Hei-Ri-rY4"/>
                 <outlet property="scrollPraise" destination="bPc-R4-YXt" id="mH3-Mx-8pF"/>
@@ -207,7 +207,7 @@
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="LHm-Ws-2WH">
-                            <rect key="frame" x="190.00000024835265" y="0.0" width="50" height="34"/>
+                            <rect key="frame" x="189.99999988574052" y="0.0" width="50" height="34"/>
                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                             <inset key="titleEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
@@ -220,7 +220,7 @@
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="p95-ud-2Wh">
-                            <rect key="frame" x="139.99999811774819" y="1" width="50" height="34"/>
+                            <rect key="frame" x="140" y="1" width="50.000002502716953" height="34"/>
                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                             <inset key="titleEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
@@ -263,13 +263,14 @@
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="80.png" id="CdC-cg-u10">
-                    <rect key="frame" x="15" y="268" width="290" height="128"/>
-                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                </imageView>
                 <view contentMode="scaleToFill" id="P9m-ya-r22" customClass="headerView">
                     <rect key="frame" x="14" y="15" width="35" height="35"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </view>
+                <view contentMode="scaleToFill" id="Ski-cD-hoU">
+                    <rect key="frame" x="15" y="268" width="290" height="128"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
             </subviews>
@@ -279,7 +280,6 @@
         </view>
     </objects>
     <resources>
-        <image name="80.png" width="80" height="80"/>
         <image name="comment_backimage" width="46" height="24"/>
         <image name="home_comment" width="12" height="13"/>
         <image name="home_weizan" width="13" height="13"/>
