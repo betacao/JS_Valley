@@ -147,6 +147,17 @@
     return self.selectIndex;
 }
 
+- (void)moveToIndex:(NSInteger)index
+{
+    self.titleLabel.text = [self.titlesList objectAtIndex:index];
+    self.isOpen = YES;
+    [self tapAction];
+    self.selectIndex = index;
+    if([self.delegate respondsToSelector:@selector(selectAtIndex:inCombox:)]){
+        [self.delegate selectAtIndex:index inCombox:self];
+    }
+}
+
 #pragma mark -tableview
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -189,4 +200,5 @@
         [self.delegate selectAtIndex:indexPath.row inCombox:self];
     }
 }
+
 @end

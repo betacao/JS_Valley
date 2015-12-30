@@ -121,7 +121,7 @@
     [Hud showLoadingWithMessage:@"请稍等..."];
     NSString *request = [rBaseAddressForHttp stringByAppendingString:@"/market/praise/savePraise"];
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
-    NSDictionary *param = @{@"uid":uid, @"meetId":object.marketId};
+    NSDictionary *param = @{@"uid":uid, @"marketId":object.marketId};
     [MOCHTTPRequestOperationManager postWithURL:request parameters:param success:^(MOCHTTPResponse *response) {
         [Hud hideHud];
         [Hud showMessageWithText:@"点赞成功"];
@@ -143,7 +143,7 @@
     [Hud showLoadingWithMessage:@"请稍等..."];
     NSString *request = [rBaseAddressForHttp stringByAppendingString:@"/market/praise/deletePraise"];
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
-    NSDictionary *param = @{@"uid":uid, @"meetId":object.marketId};
+    NSDictionary *param = @{@"uid":uid, @"marketId":object.marketId};
     [MOCHTTPRequestOperationManager postWithURL:request parameters:param success:^(MOCHTTPResponse *response) {
         [Hud hideHud];
         [Hud showMessageWithText:@"取消点赞成功"];
@@ -179,7 +179,7 @@
     NSString *request = [rBaseAddressForHttp stringByAppendingString:@"/market/comment/saveComments"];
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
     NSString *userName = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_USER_NAME];
-    NSDictionary *param = @{@"uid":uid, @"meetId":object.marketId, @"content":content, @"replyId":otherId};
+    NSDictionary *param = @{@"uid":uid, @"marketId":object.marketId, @"content":content, @"replyId":otherId};
     [MOCHTTPRequestOperationManager postWithURL:request parameters:param success:^(MOCHTTPResponse *response) {
         [Hud hideHud];
         SHGMarketCommentObject *newObject = [[SHGMarketCommentObject alloc] init];

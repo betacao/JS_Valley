@@ -33,7 +33,7 @@
 - (void)closeOtherCombox;
 - (void)tapAction;
 - (NSInteger)currentIndex;
-
+- (void)moveToIndex:(NSInteger)index;
 @end
 
 

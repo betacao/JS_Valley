@@ -14,6 +14,7 @@
 #import "SHGEmptyDataView.h"
 #import "SHGMarketDetailViewController.h"
 #import "SHGPersonalViewController.h"
+#import "SHGMarketSegmentViewController.h"
 
 @interface SHGMarketMineViewController ()<UITabBarDelegate, UITableViewDataSource, SHGMarketTableViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -35,6 +36,11 @@
 - (NSMutableArray *)currentDataArray
 {
     return self.dataArr;
+}
+
+- (void)reloadData
+{
+    [self.tableView reloadData];
 }
 
 
@@ -165,18 +171,27 @@
 #pragma mark ------SHGMarketTableViewDelegate
 - (void)clickPrasiseButton:(SHGMarketObject *)object
 {
+    [[SHGMarketSegmentViewController sharedSegmentController] addOrDeletePraise:object block:^(BOOL success) {
 
+    }];
 }
 
 - (void)clickCommentButton:(SHGMarketObject *)object
 {
-
+    SHGMarketDetailViewController *controller = [[SHGMarketDetailViewController alloc] init];
+    controller.object = object;
+    controller.delegate = [SHGMarketSegmentViewController sharedSegmentController];
+    [self.navigationController pushViewController:controller animated:YES];
 }
 
 - (void)clickEditButton:(SHGMarketObject *)object
 {
-
+    SHGMarketSendViewController *controller = [[SHGMarketSendViewController alloc] init];
+    controller.object = object;
+    controller.delegate = [SHGMarketSegmentViewController sharedSegmentController];
+    [self.navigationController pushViewController:controller animated:YES];
 }
+
 
 - (void)tapUserHeaderImageView:(NSString *)uid
 {

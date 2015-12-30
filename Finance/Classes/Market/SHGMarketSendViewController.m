@@ -9,6 +9,7 @@
 #import "SHGMarketSendViewController.h"
 #import "SHGComBoxView.h"
 #import "SHGMarketManager.h"
+#import "UIButton+WebCache.h"
 
 #define kTextViewOriginalHeight 80.0f
 #define kTextViewTopBlank 100.0f * XFACTOR
@@ -39,7 +40,7 @@ typedef NS_ENUM(NSInteger, SHGMarketSendType){
 @property (strong, nonatomic) NSArray *categoryArray;
 @property (strong, nonatomic) NSString *imageName;
 @property (assign, nonatomic) BOOL hasImage;
-
+@property (strong, nonatomic) NSMutableArray *titleArray;
 @end
 
 @implementation SHGMarketSendViewController
@@ -51,11 +52,6 @@ typedef NS_ENUM(NSInteger, SHGMarketSendType){
     [self.tableView setTableFooterView:self.nextBgView];
     [self initView];
     self.sendType = SHGMarketSendTypeNew;
-    if (self.object) {
-        self.title = @"编辑业务信息";
-        [self editObject:self.object];
-        self.sendType = SHGMarketSendTypeReSet;
-    }
     //设置textField文字与左边存在一点间距
     self.marketNameField.leftView = [[UIView alloc]initWithFrame:CGRectMake(0.0f, 0.0f, 5.0f, 0.0f)];
     self.marketNameField.leftViewMode = UITextFieldViewModeAlways;
@@ -72,14 +68,21 @@ typedef NS_ENUM(NSInteger, SHGMarketSendType){
     __weak typeof(self)weakSelf = self;
     [[SHGMarketManager shareManager] loadMarketCategoryBlock:^(NSArray *array) {
         weakSelf.categoryArray = [NSArray arrayWithArray:array];
-        NSMutableArray *titleArray = [NSMutableArray array];
+        self.titleArray = [NSMutableArray array];
         [array enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             SHGMarketFirstCategoryObject *object = (SHGMarketFirstCategoryObject *)obj;
-            [titleArray addObject:object.firstCatalogName];
+            [self.titleArray addObject:object.firstCatalogName];
         }];
-        weakSelf.firstCategoryBox.titlesList = titleArray;
+        weakSelf.firstCategoryBox.titlesList = self.titleArray;
         [weakSelf.firstCategoryBox reloadData];
     }];
+
+    if (self.object) {
+        self.title = @"编辑业务信息";
+        [self editObject:self.object];
+        self.sendType = SHGMarketSendTypeReSet;
+    }
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -117,10 +120,19 @@ typedef NS_ENUM(NSInteger, SHGMarketSendType){
 
 - (void)editObject:(SHGMarketObject *)object
 {
+    NSInteger firstIndex = [self.titleArray indexOfObject:object.firstcatalog];
+    SHGMarketFirstCategoryObject *firstObject = [self.categoryArray objectAtIndex:firstIndex];
+    
+    NSArray *secondArray = firstObject.secondCataLogs;
+    NSInteger secondIndex = [secondArray indexOfObject:object.secondcatalog];
+    [self.firstCategoryBox moveToIndex:firstIndex];
+    [self.secondCategoryBox moveToIndex:secondIndex];
+
     self.marketNameField.text = object.marketName;
     self.acountField.text = object.price;
     self.contactField.text = object.contactInfo;
     self.introduceView.text = object.detail;
+    [self.addImageButton sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,object.url]] forState:UIControlStateNormal];
 }
 
 

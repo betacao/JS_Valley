@@ -7,7 +7,6 @@
 //
 
 #import "SHGMarketTableViewCell.h"
-#import "SHGMarketSegmentViewController.h"
 
 @interface SHGMarketTableViewCell ()
 @property (weak, nonatomic) IBOutlet UILabel *titleView;
@@ -39,6 +38,7 @@
     UIImage * img = [UIImage imageNamed:@"action_xuxian"];
     self.xuXian.image = [img resizableImageWithCapInsets:UIEdgeInsetsMake(0 , 1, 0, 1) resizingMode:UIImageResizingModeTile];
     self.titleView.text = object.marketName;
+
     if ([UID isEqualToString:object.createBy]) {
         self.leftView.hidden = NO;
         self.rightView.hidden = NO;
@@ -55,9 +55,9 @@
     if (object.price.length == 0) {
         self.amountLabel.text = @"金额：暂未说明";
     }else{
-         self.amountLabel.text = [@"金额：" stringByAppendingString: object.price];
+        self.amountLabel.text = [@"金额：" stringByAppendingString: object.price];
     }
-   
+
     CGSize capitalSize =CGSizeMake(MAXFLOAT,CGRectGetHeight(self.amountLabel.frame));
     NSDictionary * capitalDic = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:12.0],NSFontAttributeName,nil];
     CGSize  capitalActualsize =[self.amountLabel.text boundingRectWithSize:capitalSize options:NSStringDrawingUsesLineFragmentOrigin  attributes:capitalDic context:nil].size;
@@ -81,6 +81,13 @@
     }
 
     [self.praiseButton setTitle:object.praiseNum forState:UIControlStateNormal];
+
+    if ([object.isPraise isEqualToString:@"Y"]) {
+        [self.praiseButton setImage:[UIImage imageNamed:@"home_yizan"] forState:UIControlStateNormal];
+    } else{
+        [self.praiseButton setImage:[UIImage imageNamed:@"home_weizan"] forState:UIControlStateNormal];
+    }
+
     [self.commentButton setTitle:object.commentNum forState:UIControlStateNormal];
 
 }
@@ -95,6 +102,7 @@
     self.contactLabel.text = @"";
     self.relationLabel.text = @"";
     [self.praiseButton setTitle:@"0" forState:UIControlStateNormal];
+    [self.praiseButton setImage:[UIImage imageNamed:@"home_weizan"] forState:UIControlStateNormal];
     [self.commentButton setTitle:@"0" forState:UIControlStateNormal];
 }
 

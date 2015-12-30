@@ -7,9 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SHGMarketObject.h"
+#import "SHGMarketDetailViewController.h"
+#import "SHGMarketSendViewController.h"
+
 typedef void(^loadViewFinishBlock)(UIView *view);
 
-@interface SHGMarketSegmentViewController : UIViewController
+@interface SHGMarketSegmentViewController : UIViewController<SHGMarketAddCommentDelegate, SHGMarketSendDelegate>
 
 @property (nonatomic, copy) NSArray *viewControllers;
 @property (nonatomic, weak) UIViewController *selectedViewController;

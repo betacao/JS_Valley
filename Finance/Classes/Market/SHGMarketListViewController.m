@@ -15,6 +15,8 @@
 #import "SHGMarketDetailViewController.h"
 #import "SHGMarketSecondCategoryViewController.h"
 #import "SHGPersonalViewController.h"
+#import "SHGMarketSegmentViewController.h"
+#import "SHGMarketSendViewController.h"
 
 @interface SHGMarketListViewController ()<UITabBarDelegate, UITableViewDataSource, SHGCategoryScrollViewDelegate,SHGMarketSecondCategoryViewControllerDelegate, SHGMarketTableViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -47,8 +49,20 @@
 
 - (NSMutableArray *)currentDataArray
 {
-    return self.dataArr;
+    NSMutableArray *array = [NSMutableArray array];
+    [self.dataArr enumerateObjectsUsingBlock:^(NSArray *subArray, NSUInteger idx, BOOL * _Nonnull stop) {
+        [subArray enumerateObjectsUsingBlock:^(SHGMarketObject *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            [array addObject:obj];
+        }];
+    }];
+    return array;
 }
+
+- (void)reloadData
+{
+    [self.tableView reloadData];
+}
+
 
 
 - (void)loadMarketList:(NSString *)target firstId:(NSString *)firstId second:(NSString *)secondId marketId:(NSString *)marketId
@@ -244,17 +258,25 @@
 #pragma mark ------SHGMarketTableViewDelegate
 - (void)clickPrasiseButton:(SHGMarketObject *)object
 {
+    [[SHGMarketSegmentViewController sharedSegmentController] addOrDeletePraise:object block:^(BOOL success) {
 
+    }];
 }
 
 - (void)clickCommentButton:(SHGMarketObject *)object
 {
-
+    SHGMarketDetailViewController *controller = [[SHGMarketDetailViewController alloc] init];
+    controller.object = object;
+    controller.delegate = [SHGMarketSegmentViewController sharedSegmentController];
+    [self.navigationController pushViewController:controller animated:YES];
 }
 
 - (void)clickEditButton:(SHGMarketObject *)object
 {
-
+    SHGMarketSendViewController *controller = [[SHGMarketSendViewController alloc] init];
+    controller.object = object;
+    controller.delegate = [SHGMarketSegmentViewController sharedSegmentController];
+    [self.navigationController pushViewController:controller animated:YES];
 }
 
 - (void)tapUserHeaderImageView:(NSString *)uid

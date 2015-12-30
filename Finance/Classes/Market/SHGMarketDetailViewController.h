@@ -8,7 +8,13 @@
 
 #import "BaseTableViewController.h"
 #import "SHGMarketObject.h"
+@protocol SHGMarketAddCommentDelegate <NSObject>
+
+- (void)didCommentAction:(SHGMarketObject *)object;
+
+@end
 
 @interface SHGMarketDetailViewController : BaseTableViewController
 @property (strong, nonatomic) SHGMarketObject *object;
+@property (weak, nonatomic) id<SHGMarketAddCommentDelegate> delegate;
 @end

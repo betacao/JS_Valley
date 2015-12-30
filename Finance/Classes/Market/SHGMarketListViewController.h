@@ -10,5 +10,5 @@
 
 @interface SHGMarketListViewController : BaseTableViewController
 - (NSMutableArray *) currentDataArray;
-
+- (void)reloadData;
 @end
