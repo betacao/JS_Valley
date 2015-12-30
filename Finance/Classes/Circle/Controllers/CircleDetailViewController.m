@@ -280,9 +280,9 @@
     [self.btnPraise setTitle:obj.praisenum forState:UIControlStateNormal];
     
     if ([obj.isattention isEqualToString:@"Y"]){
-        [self.btnAttention setImage:[UIImage imageNamed:@"detail_addationed"] forState:UIControlStateNormal] ;
+        [self.btnAttention setImage:[UIImage imageNamed:@"已关注14"] forState:UIControlStateNormal] ;
     } else{
-        [self.btnAttention setImage:[UIImage imageNamed:@"detail_addAttation"] forState:UIControlStateNormal];
+        [self.btnAttention setImage:[UIImage imageNamed:@"关注14"] forState:UIControlStateNormal];
     }
     
     self.lblContent.text = obj.detail;

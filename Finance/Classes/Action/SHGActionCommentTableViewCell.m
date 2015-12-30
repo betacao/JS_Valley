@@ -61,20 +61,20 @@
         [leftButton setFrame:CGRectMake(0, 0, cSize.width, cSize.height)];
         [leftButton.titleLabel setTextAlignment:NSTextAlignmentCenter];
         [leftButton setTitle:[NSString stringWithFormat:@"%@:",object.commentUserName] forState:UIControlStateNormal];
-        [leftButton setTitleColor:RGB(255, 57, 67) forState:UIControlStateNormal];
+        [leftButton setTitleColor:[UIColor colorWithHexString:@"4277B2"] forState:UIControlStateNormal];
         [leftButton.titleLabel setFont:replyLabel.font];
         [replyLabel addSubview:leftButton];
         str = [[NSMutableAttributedString alloc] initWithString:text];
 
         [str addAttribute:NSForegroundColorAttributeName value:[UIColor clearColor] range:NSMakeRange(0,object.commentUserName.length + 2)];
-        [str addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"606060"] range:NSMakeRange(object.commentUserName.length + 2,str.length - object.commentUserName.length - 2)];
+        [str addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"3C3C3C"] range:NSMakeRange(object.commentUserName.length + 2,str.length - object.commentUserName.length - 2)];
     } else{
         text = [NSString stringWithFormat:@"%@回复%@:x%@",object.commentUserName, object.commentOtherName, object.commentDetail];
         CGSize cSize = [object.commentUserName sizeForFont:replyLabel.font constrainedToSize:CGSizeMake(200, 15) lineBreakMode:replyLabel.lineBreakMode];
         [leftButton setFrame:CGRectMake(0, 0, cSize.width, cSize.height)];
         [leftButton.titleLabel setTextAlignment:NSTextAlignmentCenter];
         [leftButton setTitle:object.commentUserName forState:UIControlStateNormal];
-        [leftButton setTitleColor:RGB(255, 57, 67) forState:UIControlStateNormal];
+        [leftButton setTitleColor:[UIColor colorWithHexString:@"4277B2"] forState:UIControlStateNormal];
         [leftButton.titleLabel setFont:replyLabel.font];
         [replyLabel addSubview:leftButton];
 
@@ -84,7 +84,7 @@
 
         [rightButton setFrame:CGRectMake(leftSize.width + cSize.width, 0, rSize.width, rSize.height)];
         [rightButton setTitle:[NSString stringWithFormat:@"%@:",object.commentOtherName] forState:UIControlStateNormal];
-        [rightButton setTitleColor:RGB(255, 57, 67) forState:UIControlStateNormal];
+        [rightButton setTitleColor:[UIColor colorWithHexString:@"4277B2"] forState:UIControlStateNormal];
         [rightButton.titleLabel setFont:replyLabel.font];
         [rightButton.titleLabel setTextAlignment:NSTextAlignmentLeft];
         [replyLabel addSubview:rightButton];
@@ -97,7 +97,7 @@
         [str addAttribute:NSForegroundColorAttributeName value:[UIColor clearColor] range:NSMakeRange(object.commentUserName.length + 2,object.commentOtherName.length + 2)];
 
         NSRange range = NSMakeRange(object.commentUserName.length + 2,1 + object.commentOtherName.length +1);
-        [str addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"606060"] range:NSMakeRange(range.location + range.length,str.length - range.length - range.location)];
+        [str addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"3C3C3C"] range:NSMakeRange(range.location + range.length,str.length - range.length - range.location)];
     }
     [leftButton addTarget:self action:@selector(leftUserClick:) forControlEvents:UIControlEventTouchUpInside];
     [rightButton addTarget:self action:@selector(rightUserClick:) forControlEvents:UIControlEventTouchUpInside];

@@ -90,13 +90,22 @@
     NSString * pNumStr = self.responseObject.contactInfo;
     self.phoneNumLabel.text = [NSString stringWithFormat:@"电话： %@",pNumStr];
     self.nameLabel.text = self.responseObject.realname;
-    self.companyLabel.text = self.responseObject.company;
-    self.positionLabel.text = self.responseObject.title;
+    if (self.responseObject.company.length > 5) {
+        NSString *str = [self.responseObject.company substringToIndex:5];
+        self.companyLabel.text = [NSString stringWithFormat:@"%@…",str];
+    }else{
+        self.companyLabel.text = self.responseObject.company;
+    }
+    if (self.responseObject.company.length > 5) {
+        NSString *str = [self.responseObject.title substringToIndex:5];
+        self.positionLabel.text = [NSString stringWithFormat:@"%@…",str];
+    }else{
+        self.positionLabel.text = self.responseObject.title;
+    }
+
     [self.headImageView updateStatus:[self.responseObject.status isEqualToString:@"1"] ? YES : NO];
     [self.headImageView updateHeaderView:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,self.responseObject.headimageurl] placeholderImage:[UIImage imageNamed:@"default_head"]];
     self.detailContentLabel.text = self.responseObject.detail;
-   
-    //[self.photoImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,self.responseObject.url]]];
    
     
 }
@@ -104,16 +113,9 @@
 - (void)loadUi
 {
     self.photoImageView.hidden = YES;
-    NSInteger maxNameWidth = 50.0f;
-    NSInteger maxCompanyWidth = 90.0f;
-    NSInteger maxPositionWidth = 90.0f;
-    NSInteger maxCapitalWidth = 120.0f;
     CGSize nameSize =CGSizeMake(MAXFLOAT,CGRectGetHeight(self.nameLabel.frame));
     NSDictionary * nameDic = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont boldSystemFontOfSize:15.0],NSFontAttributeName,nil];
     CGSize  nameActualsize =[self.nameLabel.text boundingRectWithSize:nameSize options:NSStringDrawingUsesLineFragmentOrigin  attributes:nameDic context:nil].size;
-    if (nameActualsize.width > maxNameWidth) {
-        nameActualsize.width = maxNameWidth;
-    }
     self.nameLabel.frame =CGRectMake(self.nameLabel.origin.x,self.nameLabel.origin.y, nameActualsize.width, CGRectGetHeight(self.nameLabel.frame));
     
     self.verticalLine.frame = CGRectMake(CGRectGetMaxX(self.nameLabel.frame)+k_FirstToTop,self.verticalLine.origin.y, self.verticalLine.frame.size.width, CGRectGetHeight(self.verticalLine.frame));
@@ -121,25 +123,16 @@
     CGSize companySize =CGSizeMake(MAXFLOAT,CGRectGetHeight(self.companyLabel.frame));
     NSDictionary * companyDic = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:12.0],NSFontAttributeName,nil];
     CGSize  companyActualsize =[self.companyLabel.text boundingRectWithSize:companySize options:NSStringDrawingUsesLineFragmentOrigin  attributes:companyDic context:nil].size;
-    if (companyActualsize.width > maxCompanyWidth) {
-        companyActualsize.width = maxCompanyWidth;
-    }
     self.companyLabel.frame =CGRectMake(CGRectGetMaxX(self.verticalLine.frame) + k_FirstToTop,self.companyLabel.origin.y, companyActualsize.width, CGRectGetHeight(self.companyLabel.frame));
     
     CGSize positionSize =CGSizeMake(MAXFLOAT,CGRectGetHeight(self.positionLabel.frame));
     NSDictionary * positionDic = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:12.0],NSFontAttributeName,nil];
     CGSize  positionActualsize =[self.positionLabel.text boundingRectWithSize:positionSize options:NSStringDrawingUsesLineFragmentOrigin  attributes:positionDic context:nil].size;
-    if (positionActualsize.width > maxPositionWidth) {
-        positionActualsize.width = maxPositionWidth;
-    }
-    self.positionLabel.frame =CGRectMake(CGRectGetMaxX(self.companyLabel.frame) + k_FirstToTop,self.positionLabel.origin.y, companyActualsize.width, CGRectGetHeight(self.positionLabel.frame));
+    self.positionLabel.frame =CGRectMake(CGRectGetMaxX(self.companyLabel.frame) + k_FirstToTop,self.positionLabel.origin.y, positionActualsize.width, CGRectGetHeight(self.positionLabel.frame));
     
     CGSize capitalSize =CGSizeMake(MAXFLOAT,CGRectGetHeight(self.capitalLabel.frame));
     NSDictionary * capitalDic = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:12.0],NSFontAttributeName,nil];
     CGSize  capitalActualsize =[self.capitalLabel.text boundingRectWithSize:capitalSize options:NSStringDrawingUsesLineFragmentOrigin  attributes:capitalDic context:nil].size;
-    if (capitalActualsize.width > maxCapitalWidth) {
-        capitalActualsize.width = maxCapitalWidth;
-    }
     self.capitalLabel.frame =CGRectMake(SCREENWIDTH-capitalActualsize.width-k_ThirdToTop,self.capitalLabel.origin.y, capitalActualsize.width, CGRectGetHeight(self.positionLabel.frame));
 
     

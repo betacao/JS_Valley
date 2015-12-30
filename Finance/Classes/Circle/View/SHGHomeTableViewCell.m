@@ -267,7 +267,7 @@
             replyLabel.font = [UIFont systemFontOfSize:14.0f];
             replyLabel.userInteractionEnabled = YES;
             replyLabel.tag = i + 1000;
-            replyLabel.textColor = TEXT_COLOR;
+            //replyLabel.textColor = TEXT_COLOR;
             
             NSString *text = @"";
             commentOBj *comobj = obj.comments[i];
@@ -276,17 +276,17 @@
             if (IsStrEmpty(comobj.rnickname)){
                 text = [NSString stringWithFormat:@"%@:  %@",comobj.cnickname,comobj.cdetail];
                 str = [[NSMutableAttributedString alloc] initWithString:text];
-                [str addAttribute:NSForegroundColorAttributeName value:RGB(248, 85, 86) range:NSMakeRange(0,comobj.cnickname.length + 1 + 2)];
-                [str addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"606060"] range:NSMakeRange(comobj.cnickname.length + 1 + 2,str.length - comobj.cnickname.length - 1 - 2)];
+                [str addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"4277B2"] range:NSMakeRange(0,comobj.cnickname.length + 1 + 2)];
+                [str addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"3C3C3C"] range:NSMakeRange(comobj.cnickname.length + 1 + 2,str.length - comobj.cnickname.length - 1 - 2)];
             } else{
                 text = [NSString stringWithFormat:@"%@回复%@:  %@",comobj.cnickname,comobj.rnickname,comobj.cdetail];
                 str = [[NSMutableAttributedString alloc] initWithString:text];
-                [str addAttribute:NSForegroundColorAttributeName value:RGB(248, 85, 86) range:NSMakeRange(0,comobj.cnickname.length)];
+                [str addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"4277B2"] range:NSMakeRange(0,comobj.cnickname.length)];
                 NSInteger cnicklen = comobj.cnickname.length;
                 NSInteger rnicklen = comobj.rnickname.length;
                 NSRange range = NSMakeRange(cnicklen + 2, rnicklen+1+2 );
-                [str addAttribute:NSForegroundColorAttributeName value:RGB(248, 85, 86) range:range];
-                [str addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"606060"] range:NSMakeRange(range.location + range.length,str.length - range.location - range.length)];
+                [str addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"4277B2"] range:range];
+                [str addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"3C3C3C"] range:NSMakeRange(range.location + range.length,str.length - range.location - range.length)];
             }
             [str addAttribute:NSFontAttributeName value:replyLabel.font range:NSMakeRange(0,text.length)];
 
@@ -319,10 +319,10 @@
             replyLabel.text = [NSString stringWithFormat:@"查看全部%@条评论",obj.cmmtnum];
             replyLabel.font = [UIFont systemFontOfSize:14.0f];
             replyLabel.userInteractionEnabled = YES;
-            replyLabel.textColor = [UIColor colorWithHexString:@"606060"];
-            NSMutableAttributedString * attributedStr = [[NSMutableAttributedString alloc]initWithString:replyLabel.text];
-            [attributedStr addAttribute:NSForegroundColorAttributeName value:RGB(248, 85, 86) range:NSMakeRange(4, obj.cmmtnum.length)];
-            replyLabel.attributedText = attributedStr;
+            replyLabel.textColor = [UIColor colorWithHexString:@"4277B2"];
+//            NSMutableAttributedString * attributedStr = [[NSMutableAttributedString alloc]initWithString:replyLabel.text];
+//            [attributedStr addAttribute:NSForegroundColorAttributeName value:RGB(248, 85, 86) range:NSMakeRange(4, obj.cmmtnum.length)];
+//            replyLabel.attributedText = attributedStr;
             [self.viewComment addSubview:replyLabel];
             commentRect.size.height = CGRectGetMaxY(replyLabel.frame) + kCommentBottomMargin;
         } else{
@@ -382,11 +382,11 @@
     positionRect.origin.x = kItemMargin + CGRectGetMaxX(companRect);
     self.lblPosition.frame = positionRect;
 
-    //如果公司名和职位名字都不存在的话则隐藏分割线
+    //如果公司名和职位名字都不存在的话则隐藏分割线(1.72 不需要分割线)
     if(self.lblCompanyName.text.length == 0 && self.lblPosition.text.length == 0){
         self.breakLine.hidden = YES;
     } else{
-        self.breakLine.hidden = NO;
+        self.breakLine.hidden = YES;
     }
 
     if ([self.cellType isEqualToString:@"news"]) {

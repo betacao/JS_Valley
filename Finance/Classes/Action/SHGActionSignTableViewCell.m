@@ -28,8 +28,6 @@
 @implementation SHGActionSignTableViewCell
 
 - (void)awakeFromNib {
-    self.action_signNameLabel.textColor = [UIColor colorWithHexString:@"333333"];
-    self.action_signCommpanyLable.textColor = [UIColor colorWithHexString:@"C1C1C1"];
     [self.action_signLeftButton setBackgroundColor:[UIColor colorWithHexString:@"FFA2BC"]];
     [self.action_signLeftButton setTitle:@"同意" forState:UIControlStateNormal];
     [self.action_signLeftButton setTitleColor:[UIColor  whiteColor] forState:UIControlStateNormal];
