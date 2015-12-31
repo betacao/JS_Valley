@@ -208,7 +208,7 @@
 {
     switch (indexPath.section) {
         case 0:{
-            return self.firstTableViewCell;  
+            return self.firstTableViewCell;
         }
             break;
 

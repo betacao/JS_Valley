@@ -14,6 +14,7 @@
 #import "SDPhotoItem.h"
 #import "SHGMarketSegmentViewController.h"
 #import "SHGPersonalViewController.h"
+#import "SHGMarketCommentTableViewCell.h"
 
 #define k_FirstToTop 5.0f * XFACTOR
 #define k_SecondToTop 10.0f * XFACTOR
@@ -22,7 +23,7 @@
 #define PRAISE_SEPWIDTH     10.0f
 #define PRAISE_RIGHTWIDTH     40.0f
 
-@interface SHGMarketDetailViewController ()<BRCommentViewDelegate, CircleActionDelegate>
+@interface SHGMarketDetailViewController ()<BRCommentViewDelegate, CircleActionDelegate, SHGMarketCommentDelegate>
 //界面
 @property (weak, nonatomic) IBOutlet UITableView *detailTable;
 @property (strong, nonatomic) IBOutlet UIView *viewHeader;
@@ -56,15 +57,12 @@
 @property (weak, nonatomic) IBOutlet UIButton *sendButton;
 
 @property (strong, nonatomic) BRCommentView *popupView;
-
 //数据
 @property (strong, nonatomic) SHGMarketObject *responseObject;
 
 - (IBAction)zan:(id)sender;
 - (IBAction)comment:(id)sender;
 - (IBAction)share:(id)sender;
-
-
 
 @end
 
@@ -75,6 +73,8 @@
     [super viewDidLoad];
     self.title = @"业务详情";
     self.detailTable.delegate = self;
+    self.detailTable.dataSource = self;
+    [self.detailTable setTableFooterView:[[UIView alloc] init]];
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shareToFriendSuccess:) name:NOTIFI_ACTION_SHARE_TO_FRIENDSUCCESS object:nil];
 
@@ -84,12 +84,13 @@
         weakSelf.responseObject = object;
         weakSelf.responseObject.commentList = [NSMutableArray arrayWithArray:[[SHGGloble sharedGloble] parseServerJsonArrayToJSONModel:weakSelf.responseObject.commentList class:[SHGMarketCommentObject class]]];
         weakSelf.responseObject.praiseList = [NSMutableArray arrayWithArray:[[SHGGloble sharedGloble] parseServerJsonArrayToJSONModel:weakSelf.responseObject.praiseList class:[praiseOBj class]]];
-       [weakSelf loadDate];
-       [weakSelf loadUi];
+        [weakSelf loadData];
+        [weakSelf loadUI];
+        [weakSelf.detailTable reloadData];
     }];
 }
 
-- (void)loadDate
+- (void)loadData
 {
     self.timeLabel.text = self.responseObject.createTime;
     if (!self.responseObject.price.length == 0) {
@@ -123,13 +124,13 @@
     
 }
 
-- (void)loadUi
+- (void)loadUI
 {
     self.photoImageView.hidden = YES;
     CGSize nameSize =CGSizeMake(MAXFLOAT,CGRectGetHeight(self.nameLabel.frame));
     NSDictionary * nameDic = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont boldSystemFontOfSize:15.0],NSFontAttributeName,nil];
     CGSize  nameActualsize =[self.nameLabel.text boundingRectWithSize:nameSize options:NSStringDrawingUsesLineFragmentOrigin  attributes:nameDic context:nil].size;
-    self.nameLabel.frame =CGRectMake(self.nameLabel.origin.x,self.nameLabel.origin.y, nameActualsize.width, CGRectGetHeight(self.nameLabel.frame));
+    self.nameLabel.frame = CGRectMake(self.nameLabel.origin.x,self.nameLabel.origin.y, nameActualsize.width, CGRectGetHeight(self.nameLabel.frame));
     //1.72版本不需要分割线
     self.verticalLine.hidden = YES;
     self.verticalLine.frame = CGRectMake(CGRectGetMaxX(self.nameLabel.frame)+k_FirstToTop,self.verticalLine.origin.y, self.verticalLine.frame.size.width, CGRectGetHeight(self.verticalLine.frame));
@@ -164,15 +165,14 @@
     self.secondHorizontalLine.frame = CGRectMake(self.secondHorizontalLine.origin.x, CGRectGetMaxY(self.phoneNumLabel.frame)+k_ThirdToTop, self.secondHorizontalLine.width, self.secondHorizontalLine.height);
     self.marketDetialLabel.frame = CGRectMake(self.detailContentLabel.origin.x, CGRectGetMaxY(self.secondHorizontalLine.frame)+k_ThirdToTop, self.marketDetialLabel.width, self.marketDetialLabel.height);
     self.thirdHorizontalLine.frame = CGRectMake(self.thirdHorizontalLine.origin.x, CGRectGetMaxY(self.marketDetialLabel.frame)+k_ThirdToTop, self.thirdHorizontalLine.width, self.thirdHorizontalLine.height);
+
     //内容详情
-    
     self.detailContentLabel.numberOfLines = 0;
     CGSize dsize =CGSizeMake(self.detailContentLabel.frame.size.width,MAXFLOAT);
     NSDictionary * ddic = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:14.0],NSFontAttributeName,nil];
     CGSize  dActualsize =[self.detailContentLabel.text boundingRectWithSize:dsize options:NSStringDrawingUsesLineFragmentOrigin  attributes:ddic context:nil].size;
      self.detailContentLabel.frame = CGRectMake(self.detailContentLabel.origin.x, CGRectGetMaxY(self.thirdHorizontalLine.frame)+ k_ThirdToTop, self.detailContentLabel.width, dActualsize.height);
     if (!self.responseObject.url.length == 0) {
-       // self.photoImageView.frame  = CGRectMake(self.photoImageView.origin.x, CGRectGetMaxY(self.detailContentLabel.frame)+k_FirstToTop*2, self.photoImageView.width, self.photoImageView.height);
         
         UIView *photoView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, CGRectGetMaxY(self.detailContentLabel.frame)+k_FirstToTop*2, 0.0f, 0.0f)];
         SDPhotoGroup *photoGroup = [[SDPhotoGroup alloc] init];
@@ -186,7 +186,6 @@
         [self.viewHeader addSubview:photoView];
         self.actionView.frame = CGRectMake(self.actionView.origin.x, CGRectGetMaxY(photoView.frame)+k_FirstToTop, self.actionView.width, self.actionView.height);
     }else{
-        //self.photoImageView.hidden = YES;
          self.actionView.frame = CGRectMake(self.actionView.origin.x, CGRectGetMaxY(self.detailContentLabel.frame)+k_FirstToTop, self.actionView.width, self.actionView.height);
     }
     [self loadFooterUI];
@@ -203,39 +202,59 @@
     image = [image resizableImageWithCapInsets:UIEdgeInsetsMake(15.0f, 35.0f, 9.0f, 11.0f) resizingMode:UIImageResizingModeStretch];
     self.backImageView.image = image;
     
-    
+    [self addTableHeaderView];
+}
+
+- (void)addTableHeaderView
+{
+    CGRect frame = self.viewHeader.frame;
+    frame.size.height = CGRectGetMaxY(self.praiseView.frame);
+    self.viewHeader.frame = frame;
+    [self.detailTable setTableHeaderView: self.viewHeader];
 }
 #pragma mark ----tableView----
-
--(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-{
-    return self.viewHeader.height;
-}
-
--(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-{
-    return self.viewHeader;
-}
-
--(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return 1;
 }
 
--(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 2;
+    return self.responseObject.commentList.count;
 }
 
--(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-   NSString * identifier = @"SHGMarketTableViewCell";
-    SHGMarketTableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:identifier];
-    if (!cell) {
-        cell = [[[NSBundle mainBundle]loadNibNamed:@"SHGMarketTableViewCell" owner:self options:nil] lastObject];
+     NSString *cellIdentifier = @"SHGMarketCommentTableViewCell";
+     SHGMarketCommentTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+     if (!cell) {
+         cell = [[[NSBundle mainBundle] loadNibNamed:@"SHGMarketCommentTableViewCell" owner:self options:nil] lastObject];
+         cell.delegate = self;
+     }
+     cell.index = indexPath.row;
+     SHGMarketCommentType type = SHGMarketCommentTypeNormal;
+     NSLog(@"index.row%ld",(long)indexPath.row);
+     if(indexPath.row == 0){
+         type = SHGMarketCommentTypeFirst;
+     }else if(indexPath.row == self.responseObject.commentList.count - 1){
+         type = SHGMarketCommentTypeLast;
+     }
+     SHGMarketCommentObject *object = [self.responseObject.commentList objectAtIndex:indexPath.row];
+     [cell loadUIWithObj:object commentType:type];
+     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    SHGMarketCommentObject *object = [self.responseObject.commentList objectAtIndex:indexPath.row];
+//    self.copyedString = object.commentDetail;
+    if ([object.commentUserName isEqualToString:[[NSUserDefaults standardUserDefaults]objectForKey:KEY_USER_NAME]]) {
+        //复制删除试图
+        //        [self createPickerView];
+    } else{
+        [self replyClicked:object commentIndex:indexPath.row];
     }
-//    [cell loadDataWithObject:self.responseObject];
-    return cell;
 }
 
 - (void)didReceiveMemoryWarning
