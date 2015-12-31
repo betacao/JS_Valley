@@ -63,7 +63,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="4hE-Lk-BOL">
-                                <rect key="frame" x="121.99999802734673" y="0.0" width="34" height="34"/>
+                                <rect key="frame" x="121.99999739105559" y="0.0" width="34" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <inset key="titleEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
@@ -157,7 +157,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <inset key="titleEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                <state key="normal" image="关注14">
+                                <state key="normal" image="newAddAttention">
                                     <color key="titleColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -206,7 +206,7 @@
         <image name="home_comment" width="12" height="13"/>
         <image name="home_delete" width="13" height="13"/>
         <image name="home_weizan" width="13" height="13"/>
+        <image name="newAddAttention" width="46" height="20"/>
         <image name="shareImage" width="12" height="11"/>
-        <image name="关注14" width="46" height="20"/>
     </resources>
 </document>

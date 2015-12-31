@@ -170,9 +170,9 @@
     [self.btnShare setTitle:obj.sharenum forState:UIControlStateNormal];
     
     if ([obj.isattention isEqualToString:@"Y"]){
-        [self.btnAttention setImage:[UIImage imageNamed:@"已关注14"] forState:UIControlStateNormal] ;
+        [self.btnAttention setImage:[UIImage imageNamed:@"newAttention"] forState:UIControlStateNormal] ;
     } else{
-        [self.btnAttention setImage:[UIImage imageNamed:@"关注14"] forState:UIControlStateNormal] ;
+        [self.btnAttention setImage:[UIImage imageNamed:@"newAddAttention"] forState:UIControlStateNormal] ;
     }
 
     NSString *detail = obj.detail;

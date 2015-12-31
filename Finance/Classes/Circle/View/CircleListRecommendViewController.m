@@ -128,9 +128,9 @@ const CGFloat kOtherRecommendCellHeight = 58.0f;
             self.topDepartLabel.text = department;
             self.topDetailLabel.text = detailString;
             if(!obj.isFocus){
-                [self.topFocusButton setImage:[UIImage imageNamed:@"关注14"] forState:UIControlStateNormal];
+                [self.topFocusButton setImage:[UIImage imageNamed:@"newAddAttention"] forState:UIControlStateNormal];
             } else{
-                [self.topFocusButton setImage:[UIImage imageNamed:@"已关注14"] forState:UIControlStateNormal];
+                [self.topFocusButton setImage:[UIImage imageNamed:@"newAttention"] forState:UIControlStateNormal];
             }
             CGRect frame = self.topNameLabel.frame;
             CGSize size = [self.topNameLabel sizeThatFits:CGSizeMake(MAXFLOAT, CGRectGetHeight(frame))];
@@ -159,9 +159,9 @@ const CGFloat kOtherRecommendCellHeight = 58.0f;
             self.middleDepartLabel.text = department;
             self.middleDetailLabel.text = detailString;
             if(!obj.isFocus){
-                [self.middleFocusButton setImage:[UIImage imageNamed:@"关注14"] forState:UIControlStateNormal];
+                [self.middleFocusButton setImage:[UIImage imageNamed:@"newAddAttention"] forState:UIControlStateNormal];
             } else{
-                [self.middleFocusButton setImage:[UIImage imageNamed:@"已关注14"] forState:UIControlStateNormal];
+                [self.middleFocusButton setImage:[UIImage imageNamed:@"newAttention"] forState:UIControlStateNormal];
             }
             
             CGRect frame = self.middleNameLabel.frame;
@@ -193,9 +193,9 @@ const CGFloat kOtherRecommendCellHeight = 58.0f;
             self.bottomDepartLabel.text = department;
             self.bottomDetailLabel.text = detailString;
             if(!obj.isFocus){
-                [self.bottomFocusButton setImage:[UIImage imageNamed:@"关注14"] forState:UIControlStateNormal];
+                [self.bottomFocusButton setImage:[UIImage imageNamed:@"newAddAttention"] forState:UIControlStateNormal];
             } else{
-                [self.bottomFocusButton setImage:[UIImage imageNamed:@"已关注14"] forState:UIControlStateNormal];
+                [self.bottomFocusButton setImage:[UIImage imageNamed:@"newAttention"] forState:UIControlStateNormal];
             }
             
             CGRect frame = self.bottomNameLabel.frame;

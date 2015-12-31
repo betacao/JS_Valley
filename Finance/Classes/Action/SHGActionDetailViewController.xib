@@ -45,7 +45,7 @@
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Mbz-lW-i6d">
-                            <rect key="frame" x="162.00000002980232" y="0.0" width="156" height="40"/>
+                            <rect key="frame" x="162.00000005979209" y="0.0" width="156" height="40"/>
                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" heightSizable="YES"/>
                             <state key="normal" title="Button"/>
                             <connections>

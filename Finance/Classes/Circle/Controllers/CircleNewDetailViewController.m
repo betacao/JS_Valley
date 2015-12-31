@@ -292,14 +292,14 @@
     [self.shareFriend setImage:[UIImage imageNamed:@"newFreindRing"] forState:UIControlStateNormal];
      self.shareFriend.imageEdgeInsets = UIEdgeInsetsMake(0, 5, 0, 2);
     if (![obj.ispraise isEqualToString:@"Y"]) {
-        [self.btnPraise setImage:[UIImage imageNamed:@"newDetialNoZan"] forState:UIControlStateNormal];
+        [self.btnPraise setImage:[UIImage imageNamed:@"home_weizan"] forState:UIControlStateNormal];
     } else{
-        [self.btnPraise setImage:[UIImage imageNamed:@"newDetialZan"] forState:UIControlStateNormal];
+        [self.btnPraise setImage:[UIImage imageNamed:@"home_yizan"] forState:UIControlStateNormal];
     }
     if (![obj.iscollection isEqualToString:@"Y"]) {
-        [self.btnCollet setImage:[UIImage imageNamed:@"newNoDetialCollect"] forState:UIControlStateNormal];
+        [self.btnCollet setImage:[UIImage imageNamed:@"uncollected"] forState:UIControlStateNormal];
     } else{
-        [self.btnCollet setImage:[UIImage imageNamed:@"newDetialCollect"] forState:UIControlStateNormal];
+        [self.btnCollet setImage:[UIImage imageNamed:@"collected"] forState:UIControlStateNormal];
     }
     NSString *name = obj.nickname;
     if (obj.nickname.length > 4){
