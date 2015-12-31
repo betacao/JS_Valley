@@ -6,8 +6,8 @@
 //  Copyright © 2015年 HuMin. All rights reserved.
 //
 
-#import "SecondCategoryButton.h"
+#import "SHGSecondCategoryButton.h"
 
-@implementation SecondCategoryButton
+@implementation SHGSecondCategoryButton
 
 @end

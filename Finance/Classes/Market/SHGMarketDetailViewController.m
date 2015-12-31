@@ -12,11 +12,17 @@
 #import "SHGMarketManager.h"
 #import "SDPhotoGroup.h"
 #import "SDPhotoItem.h"
+#import "SHGMarketSegmentViewController.h"
+#import "SHGPersonalViewController.h"
+
 #define k_FirstToTop 5.0f * XFACTOR
 #define k_SecondToTop 10.0f * XFACTOR
 #define k_ThirdToTop 15.0f * XFACTOR
+#define PRAISE_WIDTH 30.0f
+#define PRAISE_SEPWIDTH     10.0f
+#define PRAISE_RIGHTWIDTH     40.0f
 
-@interface SHGMarketDetailViewController ()
+@interface SHGMarketDetailViewController ()<BRCommentViewDelegate, CircleActionDelegate>
 //界面
 @property (weak, nonatomic) IBOutlet UITableView *detailTable;
 @property (strong, nonatomic) IBOutlet UIView *viewHeader;
@@ -49,6 +55,8 @@
 @property (weak, nonatomic) IBOutlet UIButton *speakButton;
 @property (weak, nonatomic) IBOutlet UIButton *sendButton;
 
+@property (strong, nonatomic) BRCommentView *popupView;
+
 //数据
 @property (strong, nonatomic) SHGMarketObject *responseObject;
 
@@ -67,10 +75,15 @@
     [super viewDidLoad];
     self.title = @"业务详情";
     self.detailTable.delegate = self;
+
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shareToFriendSuccess:) name:NOTIFI_ACTION_SHARE_TO_FRIENDSUCCESS object:nil];
+
     __weak typeof(self) weakSelf = self;
     NSDictionary *param = @{@"marketId":self.object.marketId ,@"uid":UID};
     [SHGMarketManager loadMarketDetail:param block:^(SHGMarketObject *object) {
         weakSelf.responseObject = object;
+        weakSelf.responseObject.commentList = [NSMutableArray arrayWithArray:[[SHGGloble sharedGloble] parseServerJsonArrayToJSONModel:weakSelf.responseObject.commentList class:[SHGMarketCommentObject class]]];
+        weakSelf.responseObject.praiseList = [NSMutableArray arrayWithArray:[[SHGGloble sharedGloble] parseServerJsonArrayToJSONModel:weakSelf.responseObject.praiseList class:[praiseOBj class]]];
        [weakSelf loadDate];
        [weakSelf loadUi];
     }];
@@ -176,8 +189,8 @@
         //self.photoImageView.hidden = YES;
          self.actionView.frame = CGRectMake(self.actionView.origin.x, CGRectGetMaxY(self.detailContentLabel.frame)+k_FirstToTop, self.actionView.width, self.actionView.height);
     }
-    [self.btnZan setImage:[UIImage imageNamed:@"home_weizan"] forState:UIControlStateNormal];
-    [self.btnZan setTitle:[NSString stringWithFormat:@"%@",self.responseObject.praiseNum] forState:UIControlStateNormal];
+    [self loadFooterUI];
+    [self loadPraiseButtonState];
     
     [self.btnComment setImage:[UIImage imageNamed:@"home_comment"] forState:UIControlStateNormal];
     [self.btnComment setTitle:[NSString stringWithFormat:@"%@",self.responseObject.commentNum] forState:UIControlStateNormal];
@@ -189,8 +202,6 @@
     UIImage *image = self.backImageView.image;
     image = [image resizableImageWithCapInsets:UIEdgeInsetsMake(15.0f, 35.0f, 9.0f, 11.0f) resizingMode:UIImageResizingModeStretch];
     self.backImageView.image = image;
-    
-    
     
     
 }
@@ -221,8 +232,9 @@
    NSString * identifier = @"SHGMarketTableViewCell";
     SHGMarketTableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:identifier];
     if (!cell) {
-        cell = [[[NSBundle mainBundle]loadNibNamed:@"SHGMarketTableViewCell" owner:self options:nil]lastObject];
+        cell = [[[NSBundle mainBundle]loadNibNamed:@"SHGMarketTableViewCell" owner:self options:nil] lastObject];
     }
+//    [cell loadDataWithObject:self.responseObject];
     return cell;
 }
 
@@ -233,20 +245,175 @@
 
 #pragma  mark ----btnClick---
 
-- (IBAction)zan:(id)sender {
+- (IBAction)zan:(id)sender
+{
+    __weak typeof(self)weakSelf = self;
+    [[SHGMarketSegmentViewController sharedSegmentController] addOrDeletePraise:self.responseObject block:^(BOOL success) {
+        if ([weakSelf.responseObject.isPraise isEqualToString:@"N"]) {
+            weakSelf.responseObject.praiseNum = [NSString stringWithFormat:@"%ld",(long)[weakSelf.responseObject.praiseNum integerValue] + 1];
+            weakSelf.responseObject.isPraise = @"Y";
+            praiseOBj *obj = [[praiseOBj alloc] init];
+            obj.pnickname = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_USER_NAME];
+            obj.ppotname = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_HEAD_IMAGE];
+            obj.puserid =[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
+            [weakSelf.responseObject.praiseList addObject:obj];
+
+            [weakSelf loadPraiseButtonState];
+            [weakSelf loadFooterUI];
+        } else{
+            weakSelf.responseObject.praiseNum = [NSString stringWithFormat:@"%ld",(long)[weakSelf.responseObject.praiseNum integerValue] - 1];
+            weakSelf.responseObject.isPraise = @"N";
+            for (praiseOBj *obj in weakSelf.responseObject.praiseList) {
+                NSString *uid = UID;
+                if ([obj.puserid isEqualToString:uid]) {
+                    [weakSelf.responseObject.praiseList removeObject:obj];
+                    break;
+                }
+            }
+            [weakSelf loadPraiseButtonState];
+            [weakSelf loadFooterUI];
+        }
+    }];
 }
 
-- (IBAction)comment:(id)sender {
-//    self.popupView = [[BRCommentView alloc] initWithFrame:self.view.bounds superFrame:CGRectZero isController:YES type:@"comment"];
-//    self.popupView.delegate = self;
-//    self.popupView.type = @"comment";
-//    self.popupView.fid = @"-1";
-//    self.popupView.detail = @"";
-//    [self.navigationController.view addSubview:self.popupView];
-//    [self.popupView showWithAnimated:YES];
+- (void)loadPraiseButtonState
+{
+    //设置点赞的状态
+    if ([self.responseObject.isPraise isEqualToString:@"N"]) {
+        [self.btnZan setImage:[UIImage imageNamed:@"home_weizan"] forState:UIControlStateNormal];
+    } else{
+        [self.btnZan setImage:[UIImage imageNamed:@"home_yizan"] forState:UIControlStateNormal];
+    }
+    [self.btnZan setTitle:self.responseObject.praiseNum forState:UIControlStateNormal];
+}
+
+- (void)loadFooterUI
+{
+    UIImage *image = self.backImageView.image;
+    self.backImageView.image = [image resizableImageWithCapInsets:UIEdgeInsetsMake(15.0f, 35.0f, 9.0f, 11.0f) resizingMode:UIImageResizingModeStretch];
+    [self.scrollPraise removeAllSubviews];
+    CGRect praiseRect = self.praiseView.frame;
+    CGFloat praiseWidth = 0;
+    if ([self.responseObject.praiseNum integerValue] > 0){
+        NSArray *array = self.responseObject.praiseList;
+        for (NSInteger i = 0; i < array.count; i++) {
+            praiseOBj *obj = [array objectAtIndex:i];
+            praiseWidth = PRAISE_WIDTH;
+            CGRect rect = CGRectMake((praiseWidth + PRAISE_SEPWIDTH) * i , (CGRectGetHeight(praiseRect) - praiseWidth) / 2.0f, praiseWidth, praiseWidth);
+            UIImageView *head = [[UIImageView alloc] initWithFrame:rect];
+            head.tag = [obj.puserid integerValue];
+            [head sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,obj.ppotname]] placeholderImage:[UIImage imageNamed:@"default_head"]];
+            head.userInteractionEnabled = YES;
+            DDTapGestureRecognizer *recognizer = [[DDTapGestureRecognizer alloc] initWithTarget:self action:@selector(moveToUserCenter:)];
+            [head addGestureRecognizer:recognizer];
+            [self.scrollPraise addSubview:head];
+        }
+        [self.scrollPraise setContentSize:CGSizeMake(array.count * (praiseWidth + PRAISE_SEPWIDTH), CGRectGetHeight(self.scrollPraise.frame))];
+    }
+}
+
+- (void)moveToUserCenter:(UITapGestureRecognizer *)recognizer
+{
+    SHGPersonalViewController *controller = [[SHGPersonalViewController alloc] init];
+    controller.userId = [NSString stringWithFormat:@"%ld",(long)recognizer.view.tag];
+    [self.navigationController pushViewController:controller animated:YES];
+}
+
+- (IBAction)comment:(id)sender
+{
+    self.popupView = [[BRCommentView alloc] initWithFrame:self.view.bounds superFrame:CGRectZero isController:YES type:@"comment"];
+    self.popupView.delegate = self;
+    self.popupView.type = @"comment";
+    self.popupView.fid = @"-1";
+    self.popupView.detail = @"";
+    [self.navigationController.view addSubview:self.popupView];
+    [self.popupView showWithAnimated:YES];
 
 }
 
-- (IBAction)share:(id)sender {
+- (void)replyClicked:(SHGMarketCommentObject *)obj commentIndex:(NSInteger)index
+{
+    self.popupView = [[BRCommentView alloc] initWithFrame:self.view.bounds superFrame:CGRectZero isController:YES type:@"reply" name:obj.commentUserName];
+    self.popupView.delegate = self;
+    self.popupView.fid = obj.commentUserId;
+    self.popupView.detail = @"";
+    self.popupView.rid = obj.commentId;
+    self.popupView.type = @"repley";
+    [self.navigationController.view addSubview:self.popupView];
+    [self.popupView showWithAnimated:YES];
 }
+
+- (void)rightUserClick:(NSInteger)index
+{
+    SHGMarketCommentObject *obj = self.responseObject.commentList[index];
+    [self gotoSomeOneWithId:obj.commentUserId name:obj.commentOtherName];
+}
+
+- (void)leftUserClick:(NSInteger)index
+{
+    SHGMarketCommentObject *obj = self.responseObject.commentList[index];
+    [self gotoSomeOneWithId:obj.commentUserId name:obj.commentOtherName];
+}
+
+-(void)gotoSomeOneWithId:(NSString *)uid name:(NSString *)name
+{
+    SHGPersonalViewController *controller = [[SHGPersonalViewController alloc] initWithNibName:@"SHGPersonalViewController" bundle:nil];
+    controller.hidesBottomBarWhenPushed = YES;
+    controller.userId = uid;
+    controller.delegate = self;
+    [self.navigationController pushViewController:controller animated:YES];
+}
+
+- (void)commentViewDidComment:(NSString *)comment rid:(NSString *)rid
+{
+    __weak typeof(self) weakSelf = self;
+    [self.popupView hideWithAnimated:YES];
+    [SHGMarketManager addCommentWithObject:self.responseObject content:comment toOther:nil finishBlock:^(BOOL success) {
+        if (success) {
+            [weakSelf.detailTable reloadData];
+//            [weakSelf.signController refreshUI];
+            if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(didCommentAction:)]) {
+                [weakSelf.delegate didCommentAction:weakSelf.responseObject];
+            }
+        }
+    }];
+}
+
+- (void)commentViewDidComment:(NSString *)comment reply:(NSString *)reply fid:(NSString *)fid rid:(NSString *)rid
+{
+    __weak typeof(self) weakSelf = self;
+    [self.popupView hideWithAnimated:YES];
+    [SHGMarketManager addCommentWithObject:self.responseObject content:comment toOther:fid finishBlock:^(BOOL success) {
+        if (success) {
+            [weakSelf.detailTable reloadData];
+//            [weakSelf.signController refreshUI];
+            if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(didCommentAction:)]) {
+                [weakSelf.delegate didCommentAction:weakSelf.responseObject];
+            }
+        }
+    }];
+}
+
+
+
+- (IBAction)share:(id)sender
+{
+    [[SHGMarketManager shareManager] shareAction:self.responseObject baseController:self finishBlock:^(BOOL success) {
+
+    }];
+}
+
+#pragma mark ------分享到圈内好友的通知
+- (void)shareToFriendSuccess:(NSNotification *)notification
+{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [Hud showMessageWithText:@"分享成功"];
+    });
+}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 @end

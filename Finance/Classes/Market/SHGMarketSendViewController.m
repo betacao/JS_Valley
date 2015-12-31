@@ -40,7 +40,6 @@ typedef NS_ENUM(NSInteger, SHGMarketSendType){
 @property (strong, nonatomic) NSArray *categoryArray;
 @property (strong, nonatomic) NSString *imageName;
 @property (assign, nonatomic) BOOL hasImage;
-@property (strong, nonatomic) NSMutableArray *titleArray;
 @end
 
 @implementation SHGMarketSendViewController
@@ -68,20 +67,14 @@ typedef NS_ENUM(NSInteger, SHGMarketSendType){
     __weak typeof(self)weakSelf = self;
     [[SHGMarketManager shareManager] loadMarketCategoryBlock:^(NSArray *array) {
         weakSelf.categoryArray = [NSArray arrayWithArray:array];
-        self.titleArray = [NSMutableArray array];
+        NSMutableArray *titleArray = [NSMutableArray array];
         [array enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             SHGMarketFirstCategoryObject *object = (SHGMarketFirstCategoryObject *)obj;
-            [self.titleArray addObject:object.firstCatalogName];
+            [titleArray addObject:object.firstCatalogName];
         }];
-        weakSelf.firstCategoryBox.titlesList = self.titleArray;
+        weakSelf.firstCategoryBox.titlesList = titleArray;
         [weakSelf.firstCategoryBox reloadData];
     }];
-
-    if (self.object) {
-        self.title = @"编辑业务信息";
-        [self editObject:self.object];
-        self.sendType = SHGMarketSendTypeReSet;
-    }
     
 }
 
@@ -92,6 +85,12 @@ typedef NS_ENUM(NSInteger, SHGMarketSendType){
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardDidHide:) name:UIKeyboardWillHideNotification object:nil];
 
     [self initBoxView];
+
+    if (self.object) {
+        self.title = @"编辑业务信息";
+        [self editObject:self.object];
+        self.sendType = SHGMarketSendTypeReSet;
+    }
 }
 
 - (void)initView
@@ -120,19 +119,22 @@ typedef NS_ENUM(NSInteger, SHGMarketSendType){
 
 - (void)editObject:(SHGMarketObject *)object
 {
-    NSInteger firstIndex = [self.titleArray indexOfObject:object.firstcatalog];
-    SHGMarketFirstCategoryObject *firstObject = [self.categoryArray objectAtIndex:firstIndex];
-    
-    NSArray *secondArray = firstObject.secondCataLogs;
-    NSInteger secondIndex = [secondArray indexOfObject:object.secondcatalog];
-    [self.firstCategoryBox moveToIndex:firstIndex];
-    [self.secondCategoryBox moveToIndex:secondIndex];
+    NSInteger firstIndex = 0;
+    SHGMarketFirstCategoryObject *firstObject = nil;
+    for (SHGMarketFirstCategoryObject *obj in self.categoryArray) {
+        if ([object.firstcatalogid isEqualToString:obj.firstCatalogId]) {
+            firstIndex = [self.categoryArray indexOfObject:obj];
+            firstObject = obj;
+            break;
+        }
+    }
 
+    self.firstCategoryBox.defaultIndex = firstIndex;
     self.marketNameField.text = object.marketName;
     self.acountField.text = object.price;
     self.contactField.text = object.contactInfo;
     self.introduceView.text = object.detail;
-    [self.addImageButton sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,object.url]] forState:UIControlStateNormal];
+    [self.addImageButton sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,object.url]] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"addImageButton"]];
 }
 
 
@@ -381,6 +383,11 @@ typedef NS_ENUM(NSInteger, SHGMarketSendType){
         }];
         self.secondCategoryBox.titlesList = titleArray;
         [self.secondCategoryBox reloadData];
+
+        if (self.object) {
+            NSInteger secondIndex = [titleArray indexOfObject:self.object.secondcatalog];
+            self.secondCategoryBox.defaultIndex = secondIndex;
+        }
     }
 }
 - (void)didReceiveMemoryWarning

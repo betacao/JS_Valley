@@ -13,8 +13,8 @@
 #import "SHGActionTotalInViewController.h"
 #import "SHGActionSegmentViewController.h"
 
-#define PRAISE_SEPWIDTH     10
-#define PRAISE_RIGHTWIDTH     40
+#define PRAISE_SEPWIDTH     10.0f
+#define PRAISE_RIGHTWIDTH     40.0f
 #define PRAISE_WIDTH 30.0f
 #define kMiddleViewTopMargin 12.0f
 

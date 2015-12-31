@@ -8,8 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SecondCategoryButton : UIButton
+@interface SHGSecondCategoryButton : UIButton
+
 @property (nonatomic , assign)NSString * firstCategory;
 @property (nonatomic , assign)NSString * seocndName;
 @property (nonatomic , assign)NSString * secondId;
+
 @end

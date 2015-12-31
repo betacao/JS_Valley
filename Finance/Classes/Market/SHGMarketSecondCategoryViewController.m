@@ -11,7 +11,7 @@
 #import "SHGMarketSecondCategoryTableViewCell.h"
 #import "SHGMarketSecondCategoryListTableViewController.h"
 #import "SHGMarketListViewController.h"
-#import "SecondCategoryButton.h"
+#import "SHGSecondCategoryButton.h"
 #define k_ToleftOne 11.0f * XFACTOR
 #define k_ToleftTwo 21.0f * XFACTOR
 #define k_SectionHeight 40
@@ -94,7 +94,7 @@
         NSInteger buttonHeight = 30.0f;
         if (!arry.count == 0) {
                 for (NSInteger i = 0; i<arry.count; i ++) {
-                    SecondCategoryButton * button = [SecondCategoryButton buttonWithType:UIButtonTypeCustom];
+                    SHGSecondCategoryButton * button = [SHGSecondCategoryButton buttonWithType:UIButtonTypeCustom];
                     button.frame = CGRectMake(i%3 * buttonToButton + i%3*(SCREENWIDTH-k_ToleftTwo*2-buttonToButton*2)/3, i/3*(buttonHeight + buttonToTop) + buttonToTop, (SCREENWIDTH-k_ToleftTwo*2-buttonToButton*2)/3, buttonHeight);
                     button.backgroundColor = [UIColor colorWithHexString:@"F5F5F5"];
                     [button setTitleColor:[UIColor colorWithHexString:@"898989"] forState:UIControlStateNormal];
@@ -130,7 +130,7 @@
     return cell;
 }
 
-- (void)secondCategoryClick: (SecondCategoryButton * )btn
+- (void)secondCategoryClick: (SHGSecondCategoryButton * )btn
 {
     SHGMarketSecondCategoryListTableViewController * VC = [[SHGMarketSecondCategoryListTableViewController alloc]init];
     [VC fromSecondCategore:btn.firstCategory seocndName:btn.seocndName secondId:btn.secondId];

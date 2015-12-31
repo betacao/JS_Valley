@@ -24,16 +24,16 @@
 
 @interface SHGComBoxView : UIView<UITableViewDataSource,UITableViewDelegate>
 
-@property(assign,nonatomic) id<SHGComBoxViewDelegate>delegate;
-@property(strong,nonatomic) UIView *parentView;
-@property(strong,nonatomic) UIImageView *arrowView;
-@property(strong,nonatomic) NSArray *titlesList;
+@property (assign, nonatomic) id<SHGComBoxViewDelegate>delegate;
+@property (strong, nonatomic) UIView *parentView;
+@property (strong, nonatomic) UIImageView *arrowView;
+@property (strong, nonatomic) NSArray *titlesList;
+@property (assign, nonatomic) NSInteger defaultIndex;
 
 - (void)reloadData;
 - (void)closeOtherCombox;
 - (void)tapAction;
 - (NSInteger)currentIndex;
-- (void)moveToIndex:(NSInteger)index;
 @end
 
 

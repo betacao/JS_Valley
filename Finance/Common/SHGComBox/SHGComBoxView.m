@@ -32,9 +32,10 @@
     self.layer.masksToBounds = YES;
     self.layer.cornerRadius = 3.0f;
     self.backgroundColor = [UIColor clearColor];
+    [self initSubViews];
 }
 
-- (void)layoutSubviews
+- (void)initSubViews
 {
     [super layoutSubviews];
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -43,19 +44,19 @@
     btn.layer.cornerRadius = 3.0f;
     [btn addTarget:self action:@selector(tapAction) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:btn];
-    
+
     self.titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(imgW, 0.0f, CGRectGetWidth(self.frame) - 3 * imgW, CGRectGetHeight(self.frame))];
     self.titleLabel.font = [UIFont systemFontOfSize:14.0f];
     self.titleLabel.backgroundColor = [UIColor clearColor];
     self.titleLabel.textAlignment = NSTextAlignmentLeft;
-    //self.titleLabel.textColor = kTextColor;
+
     self.titleLabel.textColor = [UIColor colorWithHexString:@"606060"];
     [btn addSubview:self.titleLabel];
-    
+
     self.arrowView = [[UIImageView alloc]initWithFrame:CGRectMake(CGRectGetWidth(self.frame) - 2 * imgW, (CGRectGetHeight(self.frame) - imgH)/2.0, imgW, imgH)];
     self.arrowView.image = [UIImage imageNamed:@"down_dark0.png"];
     [btn addSubview:self.arrowView];
-    
+
     //默认不展开
     self.isOpen = NO;
     self.listTable = [[UITableView alloc] initWithFrame:CGRectMake(CGRectGetMinX(self.frame), CGRectGetMaxY(self.frame), CGRectGetWidth(self.frame), 0.0f) style:UITableViewStylePlain];
@@ -66,15 +67,30 @@
     self.listTable.layer.cornerRadius = 3.0f;
     self.listTable.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     [self.parentView addSubview:self.listTable];
-    self.titleLabel.text = [self.titlesList firstObject];
-    self.selectIndex = 0;
+
+    [self moveToIndex:self.defaultIndex];
+}
+
+- (void)moveToIndex:(NSInteger)index
+{
+    self.selectIndex = index;
+    self.titleLabel.text = [self.titlesList objectAtIndex:index];
     if([self.delegate respondsToSelector:@selector(selectAtIndex:inCombox:)]){
-        [self.delegate selectAtIndex:0 inCombox:self];
+        [self.delegate selectAtIndex:index inCombox:self];
     }
 }
 
+- (void)setDefaultIndex:(NSInteger)defaultIndex
+{
+    if (defaultIndex == NSNotFound) {
+        return;
+    }
+    _defaultIndex = defaultIndex;
+    [self moveToIndex:defaultIndex];
+}
+
 //刷新视图
--(void)reloadData
+- (void)reloadData
 {
     [self.listTable reloadData];
     if (self.titlesList.count > 0) {
@@ -147,29 +163,18 @@
     return self.selectIndex;
 }
 
-- (void)moveToIndex:(NSInteger)index
-{
-    self.titleLabel.text = [self.titlesList objectAtIndex:index];
-    self.isOpen = YES;
-    [self tapAction];
-    self.selectIndex = index;
-    if([self.delegate respondsToSelector:@selector(selectAtIndex:inCombox:)]){
-        [self.delegate selectAtIndex:index inCombox:self];
-    }
-}
-
 #pragma mark -tableview
--(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return 1;
 }
 
--(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return self.titlesList.count;
 }
 
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *) indexPath
 {
     return CGRectGetHeight(self.frame);
 }
