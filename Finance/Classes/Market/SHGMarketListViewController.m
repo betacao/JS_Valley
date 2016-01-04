@@ -20,6 +20,9 @@
 #import "VerifyIdentityViewController.h"
 
 @interface SHGMarketListViewController ()<UITabBarDelegate, UITableViewDataSource, SHGCategoryScrollViewDelegate,SHGMarketSecondCategoryViewControllerDelegate, SHGMarketTableViewDelegate>
+{
+    NSInteger  secondCount;
+}
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) UIView *headerView;
 @property (strong, nonatomic) SHGCategoryScrollView *scrollView;
@@ -191,6 +194,16 @@
         }
         cell.delegate = self;
         [cell loadDataWithObject:[self.currentArray objectAtIndex:indexPath.row]];
+//        if (![category isEqualToString:@"热门"]) {
+//            SHGMarketFirstCategoryObject * obj = [self.currentArray objectAtIndex:indexPath.row];
+//            
+//            if (obj.secondCataLogs.count == 0) {
+//                [cell loadNewUi];
+//            }
+//        }
+        if (secondCount == 0) {
+            [cell loadNewUi];
+        }
         return cell;
     } else{
         return self.emptyCell;
@@ -238,6 +251,13 @@
 - (void)didChangeToIndex:(NSInteger)index firstId:(NSString *)firstId secondId:(NSString *)secondId
 {
     NSMutableArray *subArray = [self.dataArr objectAtIndex:index];
+    if (!index == 0) {
+        SHGMarketFirstCategoryObject  *obj  = [self.scrollView.categoryArray objectAtIndex:index];
+        secondCount = obj.secondCataLogs.count;
+    }else{
+        secondCount = 10000;
+    }
+    
     if (!subArray || subArray.count == 0) {
         self.currentArray = subArray;
         [self loadMarketList:@"first" firstId:firstId second:secondId marketId:@"-1"];
