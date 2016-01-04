@@ -17,8 +17,8 @@ typedef NS_ENUM(NSInteger, contactType)
     
 };
 @interface ChatListTableViewCell : UITableViewCell
--(void)loadDataWithobj:(BasePeopleObject *)obj
-;
-
 @property (nonatomic, assign) contactType type;
+
+- (void)loadDataWithobj:(BasePeopleObject *)obj;
+
 @end

@@ -871,6 +871,8 @@
 		F936DD4C1C3A437500584F53 /* SHGFriendGroupingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F936DD4A1C3A437500584F53 /* SHGFriendGroupingViewController.xib */; };
 		F936DD501C3A553800584F53 /* SHGFriendGropingTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F936DD4E1C3A553800584F53 /* SHGFriendGropingTableViewCell.m */; };
 		F936DD511C3A553800584F53 /* SHGFriendGropingTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F936DD4F1C3A553800584F53 /* SHGFriendGropingTableViewCell.xib */; };
+		F936DD551C3A6C9700584F53 /* SHGGropingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F936DD531C3A6C9700584F53 /* SHGGropingViewController.m */; };
+		F936DD561C3A6C9700584F53 /* SHGGropingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F936DD541C3A6C9700584F53 /* SHGGropingViewController.xib */; };
 		F9758A631BB002D70085D32C /* ImproveMatiralViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9758A621BB002D70085D32C /* ImproveMatiralViewController.xib */; };
 		F986DE361BFDCBD900E6709F /* SHGActionTotalInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F986DE341BFDCBD900E6709F /* SHGActionTotalInViewController.m */; };
 		F986DE371BFDCBD900E6709F /* SHGActionTotalInViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F986DE351BFDCBD900E6709F /* SHGActionTotalInViewController.xib */; };
@@ -2141,6 +2143,9 @@
 		F936DD4D1C3A553800584F53 /* SHGFriendGropingTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGFriendGropingTableViewCell.h; sourceTree = "<group>"; };
 		F936DD4E1C3A553800584F53 /* SHGFriendGropingTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGFriendGropingTableViewCell.m; sourceTree = "<group>"; };
 		F936DD4F1C3A553800584F53 /* SHGFriendGropingTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGFriendGropingTableViewCell.xib; sourceTree = "<group>"; };
+		F936DD521C3A6C9700584F53 /* SHGGropingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGGropingViewController.h; sourceTree = "<group>"; };
+		F936DD531C3A6C9700584F53 /* SHGGropingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGGropingViewController.m; sourceTree = "<group>"; };
+		F936DD541C3A6C9700584F53 /* SHGGropingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGGropingViewController.xib; sourceTree = "<group>"; };
 		F9758A621BB002D70085D32C /* ImproveMatiralViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ImproveMatiralViewController.xib; sourceTree = "<group>"; };
 		F986DE331BFDCBD900E6709F /* SHGActionTotalInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGActionTotalInViewController.h; sourceTree = "<group>"; };
 		F986DE341BFDCBD900E6709F /* SHGActionTotalInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGActionTotalInViewController.m; sourceTree = "<group>"; };
@@ -3386,6 +3391,9 @@
 				F936DD4D1C3A553800584F53 /* SHGFriendGropingTableViewCell.h */,
 				F936DD4E1C3A553800584F53 /* SHGFriendGropingTableViewCell.m */,
 				F936DD4F1C3A553800584F53 /* SHGFriendGropingTableViewCell.xib */,
+				F936DD521C3A6C9700584F53 /* SHGGropingViewController.h */,
+				F936DD531C3A6C9700584F53 /* SHGGropingViewController.m */,
+				F936DD541C3A6C9700584F53 /* SHGGropingViewController.xib */,
 			);
 			path = ChatList;
 			sourceTree = "<group>";
@@ -4950,6 +4958,7 @@
 				61E83D0F1AF7C78E00703651 /* 二维码@2x.png in Resources */,
 				61D6E7DD1AD50FCB0016C13A /* EaseMob.bundle in Resources */,
 				61E83D131AF7C78E00703651 /* 取消-默认@2x.png in Resources */,
+				F936DD561C3A6C9700584F53 /* SHGGropingViewController.xib in Resources */,
 				61E83D581AF7C78E00703651 /* 发送按钮-默认@3x.png in Resources */,
 				61E83CE71AF7C78E00703651 /* 笑脸@2x.png in Resources */,
 				B03AACB81B65D0E200E7B452 /* arrowDown.png in Resources */,
@@ -5876,6 +5885,7 @@
 				40302AFB1AEE6CE900F22EB6 /* MyFollowViewController.m in Sources */,
 				F9F349B81C1945920090F111 /* SHGBadgeView.m in Sources */,
 				6187D2D41AF1C693008E1D21 /* ChatListViewController.m in Sources */,
+				F936DD551C3A6C9700584F53 /* SHGGropingViewController.m in Sources */,
 				40302B101AEF57F600F22EB6 /* MyAddressTableViewCell.m in Sources */,
 				6187D2E11AF1C693008E1D21 /* EMChatImageBubbleView.m in Sources */,
 				98CB422F1C3262C00023A124 /* SHGSecondCategoryButton.m in Sources */,

@@ -166,7 +166,7 @@ static NSString * const kCommonFNum			= @"commonnum";
     [self.tableView reloadData];
 }
 
--(void)searchTwainFriend
+- (void)searchTwainFriend
 {
 //    if(self.menuPopover1.isshow)
 //    {
@@ -177,6 +177,16 @@ static NSString * const kCommonFNum			= @"commonnum";
 //        [self.menuPopover1 showInView:self.view];
 //    }
     SHGFriendGroupingViewController *controller = [[SHGFriendGroupingViewController alloc] init];
+    switch (self.chatListType) {
+        case ContactListView:
+            controller.type = @"once";
+            break;
+        case ContactTwainListView:
+            controller.type = @"twice";
+            break;
+        default:
+            break;
+    }
     [self.navigationController pushViewController:controller animated:YES];
 }
 
@@ -560,12 +570,11 @@ static NSString * const kCommonFNum			= @"commonnum";
                     cell.name=hi.nickname;
                 } else{
                     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-                        //  [self getMyselfMaterial];
                         [self refreshFriendListWithUid:conversation.chatter];
                     });
                     
-                    cell.name=@"";
-                    cell.imageURL=nil;
+                    cell.name = @"";
+                    cell.imageURL = nil;
                     cell.placeholderImage = [UIImage imageNamed:@"default_head"];
                 }
                 
@@ -595,6 +604,7 @@ static NSString * const kCommonFNum			= @"commonnum";
         return cell;
     }
 }
+
 -(void)refreshFriendListWithUid:(NSString *)userId
 {
     [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/user/%@",rBaseAddressForHttp,userId] parameters:nil success:^(MOCHTTPResponse *response) {
@@ -634,7 +644,7 @@ static NSString * const kCommonFNum			= @"commonnum";
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (self.chatListType == ContactListView || self.chatListType == ContactTwainListView) {
-        return 72;
+        return 72.0f;
     }
     return [ChatListCell tableView:tableView heightForRowAtIndexPath:indexPath];
 }
@@ -762,7 +772,6 @@ static NSString * const kCommonFNum			= @"commonnum";
 
 - (BOOL)searchBarShouldEndEditing:(UISearchBar *)searchBar
 {
-    //    [self.navigationController setNavigationBarHidden:NO animated:YES];
     return YES;
 }
 
@@ -797,7 +806,6 @@ static NSString * const kCommonFNum			= @"commonnum";
 {
     if (self.chatListType == ChatListView) {
         [self refreshDataSource];
-        
     }
     [_slimeView endRefresh];
     
@@ -937,23 +945,18 @@ static NSString * const kCommonFNum			= @"commonnum";
     }
     
     // [Hud showLoadingWithMessage:@"正在加载"];
-    [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"friends/level/two"] parameters:param success:^(MOCHTTPResponse *response)
-    {
+    [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"friends/level/two"] parameters:param success:^(MOCHTTPResponse *response){
         NSLog(@"%@",response.dataArray);
-        if(!response.dataArray.count>0)
-        {
+        if(!response.dataArray.count > 0){
             hasMoreData = NO;
-        }
-        else
-        {
+        } else{
             hasMoreData = YES;
         }
         if (pageNum == 1) {
             [self.contactsSource removeAllObjects];
             [TwainContactInfo deleteAll];
         }
-        for (int i = 0; i<response.dataArray.count; i++)
-        {
+        for (int i = 0; i<response.dataArray.count; i++){
             NSLog(@"%@",response.dataArray);
             NSDictionary *dic = response.dataArray[i];
             BasePeopleObject *obj = [[BasePeopleObject alloc] init];
@@ -971,16 +974,11 @@ static NSString * const kCommonFNum			= @"commonnum";
             [self.contactsSource addObject:obj];
         }
         dispatch_async(dispatch_get_main_queue(), ^{
-            
             [Hud hideHud];
-            if(response.dataArray.count>0)
-            {
+            if(response.dataArray.count > 0){
                 _tableView.hidden=NO;
-            }
-            else
-            {
+            } else{
                 [_tableView.footer endRefreshingWithNoMoreData];
-                
             }
             [self.tableView reloadData];
             

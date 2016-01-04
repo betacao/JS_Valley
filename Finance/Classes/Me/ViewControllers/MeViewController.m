@@ -160,13 +160,13 @@
         NSString *fansString = [NSString stringWithFormat:@"粉丝 \n%@",fansCount];
 
         NSMutableAttributedString *aCircleString = [[NSMutableAttributedString alloc] initWithString:circleString];
-        [aCircleString addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"161616"] range:NSMakeRange(2, circleString.length - 2)];
+        [aCircleString addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"161616"] range:NSMakeRange(5, circleString.length - 5)];
 
         NSMutableAttributedString *aFollowString = [[NSMutableAttributedString alloc] initWithString:followString];
-        [aFollowString addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"161616"] range:NSMakeRange(2, circleString.length - 2)];
+        [aFollowString addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"161616"] range:NSMakeRange(5, circleString.length - 5)];
 
         NSMutableAttributedString *aFansString = [[NSMutableAttributedString alloc] initWithString:fansString];
-        [aFansString addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"161616"] range:NSMakeRange(2, circleString.length - 2)];
+        [aFansString addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"161616"] range:NSMakeRange(5, circleString.length - 5)];
 
         weakSelf.circleHeaderLabel.attributedText = aCircleString;
         weakSelf.followHeaderLabel.attributedText = aFollowString;

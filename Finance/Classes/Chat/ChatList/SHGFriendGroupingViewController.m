@@ -9,6 +9,7 @@
 #import "SHGFriendGroupingViewController.h"
 #import "MessageObj.h"
 #import "SHGFriendGropingTableViewCell.h"
+#import "SHGGropingViewController.h"
 #define kBGViewWidth 85.0f * XFACTOR
 #define kBGViewHeight 135.0f
 
@@ -22,6 +23,8 @@
 @property (weak, nonatomic) IBOutlet UIView *lineView2;
 @property (weak, nonatomic) IBOutlet UIView *lineView3;
 @property (weak, nonatomic) IBOutlet UIView *bgView;
+@property (assign, nonatomic) NSInteger currentPage;
+@property (strong, nonatomic) NSString *module;
 
 @end
 
@@ -30,6 +33,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.title = @"人脉分组";
+
     CGRect frame = self.bgView.frame;
     frame.size.width = kBGViewWidth;
     self.bgView.frame = frame;
@@ -52,6 +57,7 @@
     self.lineView3.frame = frame;
 
     [self.tableView setTableFooterView:[[UIView alloc] init]];
+    [self addHeaderRefresh:self.tableView headerRefesh:NO andFooter:YES];
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
 
@@ -68,10 +74,16 @@
     [self.locationButton setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithHexString:@"f4f4f4"]] forState:UIControlStateHighlighted];
     //默认选中公司
     self.companyButton.selected = YES;
-
-    [self loadDataWithPage:@"1" module:@"company" type:@"twice"];
+    self.module = @"company";
+    self.currentPage = 1;
+    [self loadDataWithPage:@"1" module:self.module type:self.type];
 }
 
+- (void)refreshFooter
+{
+    self.currentPage++;
+    [self loadDataWithPage:[NSString stringWithFormat:@"%ld",(long)self.currentPage] module:self.module type:self.type];
+}
 #pragma mark ------tableview的代理
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -95,11 +107,27 @@
     return cell;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    SHGGropingViewController *controller = [[SHGGropingViewController alloc] init];
+    SHGFriendGropingObject *object = [self.dataArr objectAtIndex:indexPath.row];
+    controller.condition = object.module;
+    controller.module = self.module;
+    controller.type = self.type;
+    [self.navigationController pushViewController:controller animated:YES];
+}
+
 - (IBAction)clickCompanyButton:(UIButton *)button
 {
     button.selected = YES;
     self.departmentButton.selected = NO;
     self.locationButton.selected = NO;
+    if (![self.module isEqualToString:@"company"]) {
+        self.module = @"company";
+        self.currentPage = 1;
+        [self.dataArr removeAllObjects];
+        [self loadDataWithPage:[NSString stringWithFormat:@"%ld", (long)self.currentPage] module:self.module type:self.type];
+    }
 }
 
 - (IBAction)clickDepartmentButton:(UIButton *)button
@@ -107,6 +135,12 @@
     button.selected = YES;
     self.companyButton.selected = NO;
     self.locationButton.selected = NO;
+    if (![self.module isEqualToString:@"position"]) {
+        self.module = @"position";
+        self.currentPage = 1;
+        [self.dataArr removeAllObjects];
+        [self loadDataWithPage:[NSString stringWithFormat:@"%ld", (long)self.currentPage] module:self.module type:self.type];
+    }
 }
 
 - (IBAction)clickLocationButton:(UIButton *)button
@@ -114,6 +148,12 @@
     button.selected = YES;
     self.departmentButton.selected = NO;
     self.companyButton.selected = NO;
+    if (![self.module isEqualToString:@"area"]) {
+        self.module = @"area";
+        self.currentPage = 1;
+        [self.dataArr removeAllObjects];
+        [self loadDataWithPage:[NSString stringWithFormat:@"%ld", (long)self.currentPage] module:self.module type:self.type];
+    }
 }
 
 
@@ -124,10 +164,18 @@
     NSDictionary *param = @{@"pagenum":page, @"uid":UID, @"pagesize":@"20", @"module":module, @"type":type};
     [MOCHTTPRequestOperationManager getWithURL:[rBaseAddressForHttp stringByAppendingString:@"/friends/searchModuleCategroy"] class:[SHGFriendGropingObject class] parameters:param success:^(MOCHTTPResponse *response) {
         [Hud hideHud];
+        [weakSelf.tableView.header endRefreshing];
+        [weakSelf.tableView.footer endRefreshing];
+
+        if (response.dataArray.count < 10) {
+            [weakSelf.tableView.footer endRefreshingWithNoMoreData];
+        }
         [weakSelf.dataArr addObjectsFromArray:response.dataArray];
         [weakSelf.tableView reloadData];
     } failed:^(MOCHTTPResponse *response) {
         [Hud hideHud];
+        [weakSelf.tableView.header endRefreshing];
+        [weakSelf.tableView.footer endRefreshing];
         [Hud showMessageWithText:@"获取数据失败"];
     }];
 }

@@ -11,14 +11,16 @@
 @interface SHGFriendGropingTableViewCell()
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *detailLabel;
-
+@property (weak, nonatomic) IBOutlet UIView *lineView;
 @end
 
 @implementation SHGFriendGropingTableViewCell
 
 - (void)awakeFromNib
 {
-    
+    CGRect frame = self.lineView.frame;
+    frame.size.height = 0.5f;
+    self.lineView.frame = frame;
 }
 
 

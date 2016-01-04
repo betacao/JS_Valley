@@ -23,6 +23,8 @@
 }
 @property (weak, nonatomic) IBOutlet UITableView *listTable;
 @property (nonatomic,strong) NSMutableArray *gameArray;
+@property (assign, nonatomic) NSInteger firstFriendNumber;
+@property (assign, nonatomic) NSInteger secondFriendNumber;
 
 @end
 
@@ -31,22 +33,32 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
     //处理tableView左边空白
     if ([self.listTable respondsToSelector:@selector(setSeparatorInset:)]) {
-        
         [self.listTable setSeparatorInset:UIEdgeInsetsZero];
-        
     }
     if ([self.listTable respondsToSelector:@selector(setLayoutMargins:)]) {
-        
         [self.listTable setLayoutMargins:UIEdgeInsetsZero];
-        
     }
-    self.gameArray = [[NSMutableArray alloc]initWithCapacity:0];
+    self.gameArray = [[NSMutableArray alloc] initWithCapacity:0];
     [self httpURL];
+    self.firstFriendNumber = 0;
+    self.secondFriendNumber = 0;
+    [self loadFriendNumber];
     self.listTable.backgroundColor = RGB(236, 236, 236);
     [CommonMethod setExtraCellLineHidden:self.listTable];
+}
+
+- (void)loadFriendNumber
+{
+    __weak typeof(self) weakSelf = self;
+    [MOCHTTPRequestOperationManager getWithURL:[rBaseAddressForHttp stringByAppendingString:@"/friends/getFriendsNum"] class:nil parameters:@{@"uid":UID} success:^(MOCHTTPResponse *response){
+        weakSelf.firstFriendNumber = [[response.dataDictionary objectForKey:@"once"] integerValue];
+        weakSelf.secondFriendNumber = [[response.dataDictionary objectForKey:@"twice"] integerValue];
+        [weakSelf.listTable reloadData];
+    } failed:^(MOCHTTPResponse *response){
+        NSLog(@"%@",response.errorMessage);
+    }];
 }
 
 - (void)httpURL{
@@ -66,8 +78,7 @@
         }
         [self.listTable reloadData];
         
-    } failed:^(MOCHTTPResponse *response)
-    {
+    } failed:^(MOCHTTPResponse *response){
         NSLog(@"%@",response.errorMessage);
     }];
 }
@@ -90,7 +101,6 @@
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 -(void)viewWillDisappear:(BOOL)animated
 {
@@ -108,6 +118,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *indentifier = @"discoveryCellIdentifer";
+    __weak typeof(self)weakSelf = self;
     DiscoveryTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:indentifier];
     if (!cell) {
         cell = [[[NSBundle mainBundle] loadNibNamed:@"DiscoveryTableViewCell" owner:self options:nil] lastObject];
@@ -118,10 +129,10 @@
     } else if (indexPath.section == 1){
         if (indexPath.row == 0){
             [cell loadDataWithImage:@"erdurenmai" title:@"二度人脉" rightItem:nil rightItemColor: nil];
-            cell.numberLable.text = nil;
+            cell.numberLable.text = [NSString stringWithFormat:@"%ld人", (long)weakSelf.secondFriendNumber];
         } else if (indexPath.row == 1){
             [cell loadDataWithImage:@"yidurenmai" title:@"一度人脉" rightItem:nil rightItemColor:nil];
-            cell.numberLable.text = nil;
+            cell.numberLable.text = [NSString stringWithFormat:@"%ld人", (long)weakSelf.firstFriendNumber];
         } else if (indexPath.row == 2){
             [cell loadDataWithImage:@"action_Icon" title:@"会议活动" rightItem:nil rightItemColor:nil];
             cell.numberLable.text = nil;

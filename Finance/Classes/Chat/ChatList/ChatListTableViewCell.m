@@ -30,6 +30,7 @@
 {
     
 }
+
 -(void)loadDataWithobj:(BasePeopleObject *)obj
 {
     self.lblName.text = obj.name;
