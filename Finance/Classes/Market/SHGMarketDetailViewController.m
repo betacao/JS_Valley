@@ -144,14 +144,6 @@
     NSDictionary * positionDic = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:12.0],NSFontAttributeName,nil];
     CGSize  positionActualsize =[self.positionLabel.text boundingRectWithSize:positionSize options:NSStringDrawingUsesLineFragmentOrigin  attributes:positionDic context:nil].size;
     self.positionLabel.frame =CGRectMake(CGRectGetMaxX(self.companyLabel.frame) + k_FirstToTop,self.positionLabel.origin.y, positionActualsize.width, CGRectGetHeight(self.positionLabel.frame));
-    
-    CGSize capitalSize =CGSizeMake(MAXFLOAT,CGRectGetHeight(self.capitalLabel.frame));
-    NSDictionary * capitalDic = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:12.0],NSFontAttributeName,nil];
-    CGSize  capitalActualsize =[self.capitalLabel.text boundingRectWithSize:capitalSize options:NSStringDrawingUsesLineFragmentOrigin  attributes:capitalDic context:nil].size;
-    self.capitalLabel.frame =CGRectMake(SCREENWIDTH-capitalActualsize.width-k_ThirdToTop,self.capitalLabel.origin.y, capitalActualsize.width, CGRectGetHeight(self.positionLabel.frame));
-
-    
-    
     NSString *title = self.responseObject.marketName;
     self.titleLabel.text = title;
     CGSize tsize =CGSizeMake(self.titleLabel.frame.size.width,MAXFLOAT);
@@ -160,8 +152,8 @@
     self.titleLabel.height = actualsize.height;
     //控件位置
     self.typeLabel.frame = CGRectMake(self.typeLabel.origin.x, CGRectGetMaxY(self.titleLabel.frame)+k_SecondToTop, self.typeLabel.width, self.typeLabel.height);
-    self.capitalLabel.frame = CGRectMake(self.capitalLabel.origin.x, CGRectGetMaxY(self.titleLabel.frame)+k_SecondToTop, self.capitalLabel.width, self.capitalLabel.height);
-    self.phoneNumLabel.frame =CGRectMake(self.phoneNumLabel.origin.x, CGRectGetMaxY(self.typeLabel.frame)+k_FirstToTop, self.phoneNumLabel.width, self.phoneNumLabel.height);
+    self.capitalLabel.frame =CGRectMake(k_ThirdToTop,CGRectGetMaxY(self.typeLabel.frame)+k_FirstToTop, SCREENWIDTH - 2 * k_ThirdToTop, CGRectGetHeight(self.positionLabel.frame));//修改金额位置
+    self.phoneNumLabel.frame =CGRectMake(self.phoneNumLabel.origin.x, CGRectGetMaxY(self.capitalLabel.frame)+k_FirstToTop, self.phoneNumLabel.width, self.phoneNumLabel.height);
     self.secondHorizontalLine.frame = CGRectMake(self.secondHorizontalLine.origin.x, CGRectGetMaxY(self.phoneNumLabel.frame)+k_ThirdToTop, self.secondHorizontalLine.width, self.secondHorizontalLine.height);
     self.marketDetialLabel.frame = CGRectMake(self.detailContentLabel.origin.x, CGRectGetMaxY(self.secondHorizontalLine.frame)+k_ThirdToTop, self.marketDetialLabel.width, self.marketDetialLabel.height);
     self.thirdHorizontalLine.frame = CGRectMake(self.thirdHorizontalLine.origin.x, CGRectGetMaxY(self.marketDetialLabel.frame)+k_ThirdToTop, self.thirdHorizontalLine.width, self.thirdHorizontalLine.height);

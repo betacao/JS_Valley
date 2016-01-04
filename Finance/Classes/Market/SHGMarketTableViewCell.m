@@ -55,7 +55,14 @@
     if (object.price.length == 0) {
         self.amountLabel.text = @"金额：暂未说明";
     }else{
-        self.amountLabel.text = [@"金额：" stringByAppendingString: object.price];
+        if (object.price.length > 13) {
+            NSString * str = [object.price substringToIndex:13];
+            self.amountLabel.text = [@"金额：" stringByAppendingString: str];;
+        }else
+        {
+            self.amountLabel.text = [@"金额：" stringByAppendingString: object.price];
+        }
+       
     }
 
     CGSize capitalSize =CGSizeMake(MAXFLOAT,CGRectGetHeight(self.amountLabel.frame));
@@ -65,21 +72,31 @@
         capitalActualsize.width = 120.f;
     }
     self.amountLabel.frame =CGRectMake(SCREENWIDTH-capitalActualsize.width-15,self.amountLabel.origin.y, capitalActualsize.width, CGRectGetHeight(self.amountLabel.frame));
-    self.contactLabel.text = [@"联系方式：" stringByAppendingString: object.contactInfo];
-
-    if ([object.createBy isEqualToString:UID]){
-        self.relationLabel.text = object.position;
-    } else{
-        NSString *string = @"";
-        if(object.friendShip && object.friendShip.length > 0){
-            string = object.friendShip;
-        }
-        if(object.position && object.position.length > 0){
-            string = [string stringByAppendingFormat:@" , %@",object.position];
-        }
-        self.relationLabel.text = string;
-    }
-
+//    if ([object.status isEqualToString:@"0" ]) {
+//        NSString * contactString = @"联系方式： 认证可见";
+//        NSMutableAttributedString * str = [[NSMutableAttributedString alloc]initWithString:contactString];
+//        [str addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:14] range:NSMakeRange(6, 4)];
+//        [str addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"4277B2"] range:NSMakeRange(6, 4)];
+//        self.contactLabel.attributedText = str;
+//        self.contactLabel.userInteractionEnabled = YES;
+//    }else
+//    {
+//        self.contactLabel.text = [@"联系方式：" stringByAppendingString: object.contactInfo];
+//    }
+    self.contactLabel.text = [@"地区：" stringByAppendingString: object.position];
+//    if ([object.createBy isEqualToString:UID]){
+//        self.relationLabel.text = object.position;
+//    } else{
+//        NSString *string = @"";
+//        if(object.friendShip && object.friendShip.length > 0){
+//            string = object.friendShip;
+//        }
+//        if(object.position && object.position.length > 0){
+//            string = [string stringByAppendingFormat:@" , %@",object.position];
+//        }
+//        self.relationLabel.text = string;
+//    }
+     self.relationLabel.text = object.createTime;
     [self.praiseButton setTitle:object.praiseNum forState:UIControlStateNormal];
 
     if ([object.isPraise isEqualToString:@"Y"]) {
@@ -89,7 +106,10 @@
     }
 
     [self.commentButton setTitle:object.commentNum forState:UIControlStateNormal];
+    UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapContactLabelToIdentification)];
+    [self.contactLabel addGestureRecognizer:recognizer];
 
+    
 }
 
 - (void)clearCell
@@ -137,6 +157,16 @@
 //        [self.delegate tapUserHeaderImageView:self.object.publisher];
     }
 }
+
+- (void)tapContactLabelToIdentification
+{
+    if (self.delegate && [self.delegate respondsToSelector:@selector(tapContactLabelToIdentification)]) {
+        [self.delegate tapContactLabelToIdentification];
+    }
+
+}
+
+
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];

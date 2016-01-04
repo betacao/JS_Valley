@@ -17,6 +17,7 @@
 #import "SHGPersonalViewController.h"
 #import "SHGMarketSegmentViewController.h"
 #import "SHGMarketSendViewController.h"
+#import "VerifyIdentityViewController.h"
 
 @interface SHGMarketListViewController ()<UITabBarDelegate, UITableViewDataSource, SHGCategoryScrollViewDelegate,SHGMarketSecondCategoryViewControllerDelegate, SHGMarketTableViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -285,6 +286,13 @@
     SHGPersonalViewController * vc = [[SHGPersonalViewController alloc]init ];
     vc.userId = uid;
     [weakSelf.navigationController pushViewController:vc animated:YES];
+}
+- (void)tapContactLabelToIdentification
+{
+    __weak typeof(self) weakSelf = self;
+    VerifyIdentityViewController * vc = [[VerifyIdentityViewController alloc]init];
+    [weakSelf.navigationController pushViewController:vc animated:YES];
+    
 }
 
 - (void)didReceiveMemoryWarning
