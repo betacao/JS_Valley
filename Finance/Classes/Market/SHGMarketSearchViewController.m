@@ -13,6 +13,7 @@
 #import "SHGEmptyDataView.h"
 #import "SHGMarketSearchTableViewCell.h"
 #import "SHGMarketDetailViewController.h"
+#import "SHGMarketSegmentViewController.h"
 
 @interface SHGMarketSearchViewController ()<UISearchBarDelegate>
 
@@ -209,6 +210,7 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     SHGMarketDetailViewController *controller = [[SHGMarketDetailViewController alloc] init];
+    controller.delegate = [SHGMarketSegmentViewController sharedSegmentController];
     controller.object = [self.resultArray objectAtIndex:indexPath.row];
     [self.navigationController pushViewController:controller animated:YES];
 }

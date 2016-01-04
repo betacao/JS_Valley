@@ -16,8 +16,8 @@ typedef NS_ENUM(NSInteger, SHGActionCommentType)
 };
 
 @protocol SHGActionCommentDelegate<NSObject>
--(void)leftUserClick:(NSInteger)index;
--(void)rightUserClick:(NSInteger)index;
+- (void)leftUserClick:(NSInteger)index;
+- (void)rightUserClick:(NSInteger)index;
 @end
 
 @interface SHGActionCommentTableViewCell : UITableViewCell

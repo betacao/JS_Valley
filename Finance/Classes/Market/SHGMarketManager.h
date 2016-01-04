@@ -34,4 +34,7 @@
 + (void)deleteCommentWithID:(NSString *)commentId finishBlock:(void (^)(BOOL))block;
 
 - (void)shareAction:(SHGMarketObject *)object baseController:(UIViewController *)controller finishBlock:(void (^)(BOOL))block;
+
++ (void)shareSuccessCallBack:(SHGMarketObject *)object finishBlock:(void (^)(BOOL))block;
+
 @end

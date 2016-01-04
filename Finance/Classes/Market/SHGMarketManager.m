@@ -224,7 +224,7 @@
     }];
 }
 
-//分享活动
+//分享业务
 - (void)shareAction:(SHGMarketObject *)object baseController:(UIViewController *)controller finishBlock:(void (^)(BOOL))block
 {
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
@@ -235,11 +235,11 @@
     if (theme.length > 15) {
         theme = [NSString stringWithFormat:@"%@…",[object.marketName substringToIndex:15]];
     }
-    NSString *postContent = [NSString stringWithFormat:@"【活动】%@", theme];
-    NSString *shareContent = [NSString stringWithFormat:@"【活动】%@", theme];
-    NSString *friendContent = [NSString stringWithFormat:@"%@\"%@\"%@%@",@"Hi，我看到了一个非常棒的活动,关于",theme,@"，赶快去活动版块查看吧！",request];
+    NSString *postContent = [NSString stringWithFormat:@"【业务】%@", theme];
+    NSString *shareContent = [NSString stringWithFormat:@"【业务】%@", theme];
+    NSString *friendContent = [NSString stringWithFormat:@"%@\"%@\"%@%@",@"Hi，我看到了一个非常棒的业务,关于",theme,@"，赶快去业务版块查看吧！",request];
 
-    NSString *messageContent = [NSString stringWithFormat:@"%@\"%@\"%@%@",@"Hi，我在金融大牛圈上看到了一个非常棒的活动,关于",theme,@"，赶快下载大牛圈查看吧！",@"https://itunes.apple.com/cn/app/da-niu-quan-jin-rong-zheng/id984379568?mt=8"];
+    NSString *messageContent = [NSString stringWithFormat:@"%@\"%@\"%@%@",@"Hi，我在金融大牛圈上看到了一个非常棒的业务,关于",theme,@"，赶快下载大牛圈查看吧！",@"https://itunes.apple.com/cn/app/da-niu-quan-jin-rong-zheng/id984379568?mt=8"];
     id<ISSShareActionSheetItem> item0 = [ShareSDK shareActionSheetItemWithTitle:@"微信好友" icon:[UIImage imageNamed:@"sns_icon_22"] clickHandler:^{
         [[AppDelegate currentAppdelegate] shareActionToWeChat:0 content:postContent url:request];
     }];
@@ -291,6 +291,23 @@
     vc.isShare = YES;
     vc.shareContent = content;
     [controller.navigationController pushViewController:vc animated:YES];
+}
+
+//分享成功后通知服务端+1
++ (void)shareSuccessCallBack:(SHGMarketObject *)object finishBlock:(void (^)(BOOL))block
+{
+    NSString *request = [rBaseAddressForHttp stringByAppendingString:@"/market/shareMarket"];
+    NSDictionary *param = @{@"marketId":object.marketId};
+    [MOCHTTPRequestOperationManager postWithURL:request parameters:param success:^(MOCHTTPResponse *response) {
+        object.shareNum = [NSString stringWithFormat:@"%ld",(long)[object.shareNum integerValue] + 1];
+        if (block) {
+            block(YES);
+        }
+    } failed:^(MOCHTTPResponse *response) {
+        if (block) {
+            block(NO);
+        }
+    }];
 }
 
 

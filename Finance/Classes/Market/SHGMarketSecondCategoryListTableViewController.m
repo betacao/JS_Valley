@@ -13,6 +13,7 @@
 #import "SHGCategoryScrollView.h"
 #import "SHGEmptyDataView.h"
 #import "SHGMarketDetailViewController.h"
+#import "SHGMarketSegmentViewController.h"
 
 @interface SHGMarketSecondCategoryListTableViewController ()<UITabBarDelegate, UITableViewDataSource>
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
@@ -160,6 +161,7 @@
     if (self.dataArr.count > 0) {
         SHGMarketDetailViewController *controller = [[SHGMarketDetailViewController alloc] init];
         controller.object = [self.dataArr objectAtIndex:indexPath.row];
+        controller.delegate = [SHGMarketSegmentViewController sharedSegmentController];
         [self.navigationController pushViewController:controller animated:YES];
     }
 }

@@ -19,6 +19,7 @@
 
 - (void)awakeFromNib
 {
+
 }
 
 - (void)loadUIWithObj:(SHGActionCommentObject *)object commentType:(SHGActionCommentType)type

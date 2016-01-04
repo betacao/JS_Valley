@@ -201,6 +201,7 @@
     if (self.currentArray.count > 0) {
         SHGMarketDetailViewController *controller = [[SHGMarketDetailViewController alloc]init];
         controller.object = [self.currentArray objectAtIndex:indexPath.row];
+        controller.delegate = [SHGMarketSegmentViewController sharedSegmentController];
         [self.navigationController pushViewController:controller animated:YES];
     }
 }
