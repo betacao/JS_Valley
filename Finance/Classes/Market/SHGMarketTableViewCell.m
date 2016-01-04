@@ -22,7 +22,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *deleteButton;
 @property (weak, nonatomic) IBOutlet UIImageView *xuXian;
 @property (strong ,nonatomic) SHGMarketObject *object;
-
+@property (strong ,nonatomic) SHGMarketFirstCategoryObject *obj;
 @end
 
 @implementation SHGMarketTableViewCell
@@ -64,7 +64,7 @@
         }
        
     }
-
+    
     CGSize capitalSize =CGSizeMake(MAXFLOAT,CGRectGetHeight(self.amountLabel.frame));
     NSDictionary * capitalDic = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:12.0],NSFontAttributeName,nil];
     CGSize  capitalActualsize =[self.amountLabel.text boundingRectWithSize:capitalSize options:NSStringDrawingUsesLineFragmentOrigin  attributes:capitalDic context:nil].size;
@@ -110,6 +110,11 @@
     [self.contactLabel addGestureRecognizer:recognizer];
 
     
+}
+- (void)loadNewUi
+{
+    self.typeLabel.hidden = YES;
+    self.amountLabel.frame = self.typeLabel.frame;
 }
 
 - (void)clearCell

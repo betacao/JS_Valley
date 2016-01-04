@@ -22,5 +22,5 @@
 @interface SHGMarketTableViewCell : UITableViewCell
 @property (assign, nonatomic) id<SHGMarketTableViewDelegate> delegate;
 - (void)loadDataWithObject:(SHGMarketObject *)object;
-
+- (void)loadNewUi;
 @end

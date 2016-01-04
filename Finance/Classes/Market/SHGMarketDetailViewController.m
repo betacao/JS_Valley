@@ -15,7 +15,7 @@
 #import "SHGMarketSegmentViewController.h"
 #import "SHGPersonalViewController.h"
 #import "SHGMarketCommentTableViewCell.h"
-
+#import "VerifyIdentityViewController.h"
 #define k_FirstToTop 5.0f * XFACTOR
 #define k_SecondToTop 10.0f * XFACTOR
 #define k_ThirdToTop 15.0f * XFACTOR
@@ -39,6 +39,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *typeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *capitalLabel;
+@property (weak, nonatomic) IBOutlet UILabel *addressLabel;
 @property (weak, nonatomic) IBOutlet UILabel *phoneNumLabel;
 @property (weak, nonatomic) IBOutlet UILabel *marketDetialLabel;
 @property (weak, nonatomic) IBOutlet UILabel *detailContentLabel;
@@ -97,26 +98,42 @@
         NSString * zjStr = self.responseObject.price;
         self.capitalLabel.text = [NSString stringWithFormat:@"金额：%@",zjStr];
     }else {
-        self.capitalLabel.text = [NSString stringWithFormat:@"金额：暂未说明"];
+        self.capitalLabel.text = [NSString stringWithFormat:@"金额： 暂未说明"];
     }
     NSString * typeStr = self.responseObject.catalog;
     self.typeLabel.text = [NSString stringWithFormat:@"类型： %@",typeStr];
-    NSString * pNumStr = self.responseObject.contactInfo;
-    self.phoneNumLabel.text = [NSString stringWithFormat:@"电话： %@",pNumStr];
+    if ([self.responseObject.status isEqualToString:@"true" ]) {
+        NSString * contactString = @"电话： 认证可见";
+        NSMutableAttributedString * str = [[NSMutableAttributedString alloc]initWithString:contactString];
+        [str addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:14] range:NSMakeRange(4, 4)];
+        [str addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"4277B2"] range:NSMakeRange(4, 4)];
+        self.phoneNumLabel.attributedText = str;
+        self.phoneNumLabel.userInteractionEnabled = YES;
+        UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapContactLabelToIdentification)];
+        [self.phoneNumLabel addGestureRecognizer:recognizer];
+        }else
+        {
+        self.phoneNumLabel.text = [@"电话：" stringByAppendingString: self.responseObject.contactInfo];
+        }
     self.nameLabel.text = self.responseObject.realname;
-    if (self.responseObject.company.length > 5) {
-        NSString *str = [self.responseObject.company substringToIndex:5];
-        self.companyLabel.text = [NSString stringWithFormat:@"%@…",str];
-    }else{
+    //1.7.2界面修改
+    
+//    if (self.responseObject.company.length > 5) {
+//        NSString *str = [self.responseObject.company substringToIndex:5];
+//        self.companyLabel.text = [NSString stringWithFormat:@"%@…",str];
+//    }else{
+//    }
         self.companyLabel.text = self.responseObject.company;
-    }
+    
     if (self.responseObject.company.length > 5) {
         NSString *str = [self.responseObject.title substringToIndex:5];
         self.positionLabel.text = [NSString stringWithFormat:@"%@…",str];
     }else{
         self.positionLabel.text = self.responseObject.title;
     }
-
+    
+    NSString * aStr = self.responseObject.position;
+    self.addressLabel.text = [NSString stringWithFormat:@"地区： %@",aStr];
     [self.headImageView updateStatus:[self.responseObject.status isEqualToString:@"1"] ? YES : NO];
     [self.headImageView updateHeaderView:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,self.responseObject.headimageurl] placeholderImage:[UIImage imageNamed:@"default_head"]];
     self.detailContentLabel.text = self.responseObject.detail;
@@ -126,7 +143,10 @@
 
 - (void)loadUI
 {
+    //1.7.2界面修改
     self.photoImageView.hidden = YES;
+    self.timeLabel.hidden = YES;
+    
     CGSize nameSize =CGSizeMake(MAXFLOAT,CGRectGetHeight(self.nameLabel.frame));
     NSDictionary * nameDic = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont boldSystemFontOfSize:15.0],NSFontAttributeName,nil];
     CGSize  nameActualsize =[self.nameLabel.text boundingRectWithSize:nameSize options:NSStringDrawingUsesLineFragmentOrigin  attributes:nameDic context:nil].size;
@@ -135,21 +155,21 @@
     self.verticalLine.hidden = YES;
     self.verticalLine.frame = CGRectMake(CGRectGetMaxX(self.nameLabel.frame)+k_FirstToTop,self.verticalLine.origin.y, self.verticalLine.frame.size.width, CGRectGetHeight(self.verticalLine.frame));
 
-    CGSize companySize =CGSizeMake(MAXFLOAT,CGRectGetHeight(self.companyLabel.frame));
-    NSDictionary * companyDic = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:12.0],NSFontAttributeName,nil];
-    CGSize  companyActualsize =[self.companyLabel.text boundingRectWithSize:companySize options:NSStringDrawingUsesLineFragmentOrigin  attributes:companyDic context:nil].size;
-    self.companyLabel.frame =CGRectMake(CGRectGetMaxX(self.verticalLine.frame) + k_FirstToTop,self.companyLabel.origin.y, companyActualsize.width, CGRectGetHeight(self.companyLabel.frame));
+//    CGSize companySize =CGSizeMake(MAXFLOAT,CGRectGetHeight(self.companyLabel.frame));
+//    NSDictionary * companyDic = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:12.0],NSFontAttributeName,nil];
+//    CGSize  companyActualsize =[self.companyLabel.text boundingRectWithSize:companySize options:NSStringDrawingUsesLineFragmentOrigin  attributes:companyDic context:nil].size;
+    self.companyLabel.frame =CGRectMake(self.companyLabel.origin.x,self.companyLabel.origin.y, self.companyLabel.width, CGRectGetHeight(self.companyLabel.frame));
 
     CGSize positionSize =CGSizeMake(MAXFLOAT,CGRectGetHeight(self.positionLabel.frame));
     NSDictionary * positionDic = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:12.0],NSFontAttributeName,nil];
     CGSize  positionActualsize =[self.positionLabel.text boundingRectWithSize:positionSize options:NSStringDrawingUsesLineFragmentOrigin  attributes:positionDic context:nil].size;
-    self.positionLabel.frame =CGRectMake(CGRectGetMaxX(self.companyLabel.frame) + k_FirstToTop,self.positionLabel.origin.y, positionActualsize.width, CGRectGetHeight(self.positionLabel.frame));
+    self.positionLabel.frame =CGRectMake(CGRectGetMaxX(self.nameLabel.frame) + k_FirstToTop,self.positionLabel.origin.y, positionActualsize.width, CGRectGetHeight(self.positionLabel.frame));
 
-    CGSize capitalSize =CGSizeMake(MAXFLOAT,CGRectGetHeight(self.capitalLabel.frame));
-    NSDictionary * capitalDic = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:12.0],NSFontAttributeName,nil];
-    CGSize  capitalActualsize =[self.capitalLabel.text boundingRectWithSize:capitalSize options:NSStringDrawingUsesLineFragmentOrigin  attributes:capitalDic context:nil].size;
-    self.capitalLabel.frame =CGRectMake(SCREENWIDTH-capitalActualsize.width-k_ThirdToTop,self.capitalLabel.origin.y, capitalActualsize.width, CGRectGetHeight(self.positionLabel.frame));
-
+//    CGSize capitalSize =CGSizeMake(MAXFLOAT,CGRectGetHeight(self.capitalLabel.frame));
+//    NSDictionary * capitalDic = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:12.0],NSFontAttributeName,nil];
+//    CGSize  capitalActualsize =[self.capitalLabel.text boundingRectWithSize:capitalSize options:NSStringDrawingUsesLineFragmentOrigin  attributes:capitalDic context:nil].size;
+//    self.capitalLabel.frame =CGRectMake(SCREENWIDTH-capitalActualsize.width-k_ThirdToTop,self.capitalLabel.origin.y, capitalActualsize.width, CGRectGetHeight(self.positionLabel.frame));
+    
 
 
     NSString *title = self.responseObject.marketName;
@@ -160,9 +180,11 @@
     self.titleLabel.height = actualsize.height;
     //控件位置
     self.typeLabel.frame = CGRectMake(self.typeLabel.origin.x, CGRectGetMaxY(self.titleLabel.frame)+k_SecondToTop, self.typeLabel.width, self.typeLabel.height);
-    self.capitalLabel.frame = CGRectMake(self.capitalLabel.origin.x, CGRectGetMaxY(self.titleLabel.frame)+k_SecondToTop, self.capitalLabel.width, self.capitalLabel.height);
-    self.phoneNumLabel.frame =CGRectMake(self.phoneNumLabel.origin.x, CGRectGetMaxY(self.typeLabel.frame)+k_FirstToTop, self.phoneNumLabel.width, self.phoneNumLabel.height);
-    self.secondHorizontalLine.frame = CGRectMake(self.secondHorizontalLine.origin.x, CGRectGetMaxY(self.phoneNumLabel.frame)+k_ThirdToTop, self.secondHorizontalLine.width, self.secondHorizontalLine.height);
+    //self.capitalLabel.frame = CGRectMake(self.capitalLabel.origin.x, CGRectGetMaxY(self.typeLabel.frame)+k_SecondToTop, self.capitalLabel.width, self.capitalLabel.height);
+    self.capitalLabel.frame =CGRectMake(k_ThirdToTop,CGRectGetMaxY(self.typeLabel.frame)+k_FirstToTop, self.capitalLabel.width, CGRectGetHeight(self.capitalLabel.frame));
+    self.phoneNumLabel.frame =CGRectMake(self.phoneNumLabel.origin.x, CGRectGetMaxY(self.capitalLabel.frame)+k_FirstToTop, self.phoneNumLabel.width, self.phoneNumLabel.height);
+    self.addressLabel.frame =CGRectMake(self.addressLabel.origin.x, CGRectGetMaxY(self.phoneNumLabel.frame)+k_FirstToTop, self.addressLabel.width, self.phoneNumLabel.height);
+    self.secondHorizontalLine.frame = CGRectMake(self.secondHorizontalLine.origin.x, CGRectGetMaxY(self.addressLabel.frame)+k_ThirdToTop, self.secondHorizontalLine.width, self.secondHorizontalLine.height);
     self.marketDetialLabel.frame = CGRectMake(self.detailContentLabel.origin.x, CGRectGetMaxY(self.secondHorizontalLine.frame)+k_ThirdToTop, self.marketDetialLabel.width, self.marketDetialLabel.height);
     self.thirdHorizontalLine.frame = CGRectMake(self.thirdHorizontalLine.origin.x, CGRectGetMaxY(self.marketDetialLabel.frame)+k_ThirdToTop, self.thirdHorizontalLine.width, self.thirdHorizontalLine.height);
 
@@ -202,6 +224,12 @@
     self.backImageView.image = image;
 
     [self addTableHeaderView];
+}
+
+- (void)tapContactLabelToIdentification
+{
+    VerifyIdentityViewController * vc = [[VerifyIdentityViewController alloc]init];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (void)addTableHeaderView
