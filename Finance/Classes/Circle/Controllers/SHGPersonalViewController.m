@@ -41,7 +41,8 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
 @property (weak, nonatomic) IBOutlet UIImageView *friendImage;
 @property (weak, nonatomic) IBOutlet UIView *tagViews;
 @property (weak, nonatomic) IBOutlet UIImageView *headerBackImageView;
-@property (weak, nonatomic) IBOutlet UIView *footerView;
+@property (weak, nonatomic) IBOutlet UIView *fView;
+//@property (weak, nonatomic) IBOutlet UIView *footerView;
 @property (weak, nonatomic) IBOutlet UIButton *leftButton;
 @property (weak, nonatomic) IBOutlet UIButton *rightButton;
 //数据
@@ -68,7 +69,7 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
     self.title = @"个人动态";
     if ([self.userId isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID]]) {
         self.listArray = [NSMutableArray arrayWithArray:@[@"我的动态", @"我的好友"]];
-        self.footerView.hidden = YES;
+        //self.fView.hidden = YES;
         self.friendImage.hidden = YES;
     } else{
         self.friendImage.hidden = NO;
@@ -76,7 +77,7 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
     }
 
     [self.tableView setTableHeaderView:self.headerView];
-    [self.tableView setTableFooterView:[[UIView alloc] init]];
+    //[self.tableView setTableFooterView:[[UIView alloc] init]];
     [self initView];
 
     [self requestDataWithTarget:@"first" time:@""];
@@ -84,9 +85,11 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
 
 - (void)initView
 {
-    self.headerImageView.userInteractionEnabled = YES;
-    self.headerImageView.layer.masksToBounds = YES;
-    self.headerImageView.layer.cornerRadius = CGRectGetHeight(self.headerImageView.frame) / 2.0f;
+      //1.7.2修改
+//    self.headerImageView.userInteractionEnabled = YES;
+//    self.headerImageView.layer.masksToBounds = YES;
+//    self.headerImageView.layer.cornerRadius = CGRectGetHeight(self.headerImageView.frame) / 2.0f;
+    self.headerImageView.hidden = YES;
     UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapHeaderView:)];
     [self.headerImageView addGestureRecognizer:recognizer];
 }
@@ -130,6 +133,9 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
     self.companyLabel.text = self.companyName;
     self.userNameLabel.text = self.nickName;
     self.positionLabel.text =self.position;
+    //1.7.2修改
+    self.positionLabel.hidden = YES;
+    self.tagViews.hidden = YES;
     
     if (![self.tags isEqualToString:@""]) {
         NSArray *arry = [self.tags componentsSeparatedByString:@","];
