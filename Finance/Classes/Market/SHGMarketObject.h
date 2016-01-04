@@ -33,7 +33,7 @@
 @property (strong, nonatomic) NSString *firstcatalogid;
 @property (strong, nonatomic) NSString *secondcatalogid;
 @property (strong, nonatomic) NSString *isPraise;
-@property (strong, nonatomic) NSString *position;
+@property (strong, nonatomic) NSString *position;//新增的业务地区
 @property (strong, nonatomic) NSMutableArray *praiseList;
 @property (strong, nonatomic) NSMutableArray *commentList;
 @end

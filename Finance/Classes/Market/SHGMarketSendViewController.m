@@ -28,6 +28,7 @@ typedef NS_ENUM(NSInteger, SHGMarketSendType){
 @property (weak, nonatomic) IBOutlet SHGComBoxView *secondCategoryBox;
 @property (weak, nonatomic) IBOutlet UITextField *acountField;
 @property (weak, nonatomic) IBOutlet UITextField *contactField;
+@property (weak, nonatomic) IBOutlet UITextField *locationField;
 @property (weak, nonatomic) IBOutlet UITextView *introduceView;
 @property (weak, nonatomic) IBOutlet UIButton *nextButton;
 @property (strong, nonatomic) IBOutlet UIView *nextBgView;
@@ -63,6 +64,10 @@ typedef NS_ENUM(NSInteger, SHGMarketSendType){
     self.contactField.leftView = [[UIView alloc]initWithFrame:CGRectMake(0.0f, 0.0f, 5.0f, 0.0f)];
     self.contactField.leftViewMode = UITextFieldViewModeAlways;
     [self.contactField setValue:[UIColor colorWithHexString:@"D3D3D3"] forKeyPath:@"_placeholderLabel.textColor"];
+
+    self.locationField.leftView = [[UIView alloc]initWithFrame:CGRectMake(0.0f, 0.0f, 5.0f, 0.0f)];
+    self.locationField.leftViewMode = UITextFieldViewModeAlways;
+    [self.locationField setValue:[UIColor colorWithHexString:@"D3D3D3"] forKeyPath:@"_placeholderLabel.textColor"];
 
     __weak typeof(self)weakSelf = self;
     [[SHGMarketManager shareManager] loadMarketCategoryBlock:^(NSArray *array) {
@@ -103,6 +108,8 @@ typedef NS_ENUM(NSInteger, SHGMarketSendType){
     self.contactField.layer.cornerRadius = 3.0f;
     self.introduceView.layer.masksToBounds = YES;
     self.introduceView.layer.cornerRadius = 3.0f;
+    self.locationField.layer.masksToBounds = YES;
+    self.locationField.layer.cornerRadius = 3.0f;
 }
 
 - (void)initBoxView
@@ -133,6 +140,7 @@ typedef NS_ENUM(NSInteger, SHGMarketSendType){
     self.marketNameField.text = object.marketName;
     self.acountField.text = object.price;
     self.contactField.text = object.contactInfo;
+    self.locationField.text = object.position;
     self.introduceView.text = object.detail;
     [self.addImageButton sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,object.url]] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"addImageButton"]];
 }
@@ -224,6 +232,7 @@ typedef NS_ENUM(NSInteger, SHGMarketSendType){
                         NSString *marketName = self.marketNameField.text;
                         NSString *price = self.acountField.text;
                         NSString *contactInfo = self.contactField.text;
+                        NSString *city = self.locationField.text;
                         NSString *detail = self.introduceView.text;
                         SHGMarketFirstCategoryObject *firstObject = [self.categoryArray objectAtIndex:self.firstCategoryBox.currentIndex];
                         NSString *firstId = firstObject.firstCatalogId;
@@ -234,7 +243,7 @@ typedef NS_ENUM(NSInteger, SHGMarketSendType){
                             secondId = secondObject.rowId;
                         }
 
-                        NSDictionary *param = @{@"uid":uid, @"marketName": marketName, @"firstCatalogId": firstId, @"secondCatalogId": secondId, @"price": price, @"contactInfo": contactInfo, @"detail": detail, @"photo":self.imageName};
+                        NSDictionary *param = @{@"uid":uid, @"marketName": marketName, @"firstCatalogId": firstId, @"secondCatalogId": secondId, @"price": price, @"contactInfo": contactInfo, @"detail": detail, @"photo":self.imageName, @"city":city};
                         [SHGMarketManager createNewMarket:param success:^(BOOL success) {
                             [weakSelf.navigationController popViewControllerAnimated:YES];
                         }];
@@ -247,6 +256,7 @@ typedef NS_ENUM(NSInteger, SHGMarketSendType){
                         NSString *marketName = self.marketNameField.text;
                         NSString *price = self.acountField.text;
                         NSString *contactInfo = self.contactField.text;
+                        NSString *city = self.locationField.text;
                         NSString *detail = self.introduceView.text;
                         SHGMarketFirstCategoryObject *firstObject = [self.categoryArray objectAtIndex:self.firstCategoryBox.currentIndex];
                         NSString *firstId = firstObject.firstCatalogId;
@@ -257,7 +267,7 @@ typedef NS_ENUM(NSInteger, SHGMarketSendType){
                             secondId = secondObject.rowId;
                         }
 
-                        NSDictionary *param = @{@"uid":uid, @"marketName": marketName, @"firstCatalogId": firstId, @"secondCatalogId": secondId, @"price": price, @"contactInfo": contactInfo, @"detail": detail, @"photo":self.imageName};
+                        NSDictionary *param = @{@"uid":uid, @"marketName": marketName, @"firstCatalogId": firstId, @"secondCatalogId": secondId, @"price": price, @"contactInfo": contactInfo, @"detail": detail, @"photo":self.imageName, @"city":city};
                         [SHGMarketManager modifyMarket:param success:^(BOOL success) {
                             [weakSelf.navigationController popViewControllerAnimated:YES];
                         }];
@@ -278,6 +288,10 @@ typedef NS_ENUM(NSInteger, SHGMarketSendType){
     }
     if (self.contactField.text.length == 0) {
         [Hud showMessageWithText:@"请输入联系方式"];
+        return NO;
+    }
+    if (self.locationField.text.length == 0) {
+        [Hud showMessageWithText:@"请输入业务地区"];
         return NO;
     }
     return YES;

@@ -182,7 +182,7 @@
     cell.textLabel.text = obj.content;
     cell.imageView.image = [UIImage imageNamed:obj.imageInfo];
     if (indexPath.row == 3 && indexPath.section == 0){
-        cell.accessoryView =self.switchView;
+        cell.accessoryView = self.switchView;
     } else if (indexPath.row == 2 && indexPath.section == 0){
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 150, cell.height)];
         label.textAlignment = NSTextAlignmentRight;

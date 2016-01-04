@@ -55,7 +55,7 @@
     [self.imageHeader updateHeaderView:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,obj.headImageUrl] placeholderImage:[UIImage imageNamed:@"default_head"]];
     [self.imageHeader updateStatus:[obj.userstatus isEqualToString:@"true"]?YES:NO];
     
-    self.onceImg.hidden = NO;
+//    self.onceImg.hidden = NO;
     NSString *relaStr;
     self.btninvite.hidden = YES;
     if (self.type == contactTypeFriend){
@@ -98,13 +98,11 @@
     UIColor *borderColor = RGBA(180.0f, 180.0f, 180.0f, 0.2f);
     self.btninvite.layer.borderColor = [borderColor CGColor];
     self.btninvite.layer.borderWidth = 0.5;
-    // Initialization code
 }
 
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
+- (void)setSelected:(BOOL)selected animated:(BOOL)animated
+{
     [super setSelected:selected animated:animated];
-
-    // Configure the view for the selected state
 }
 
 - (IBAction)actionInvite:(id)sender {

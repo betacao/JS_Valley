@@ -33,6 +33,7 @@
 #import "ChatListTableViewCell.h"
 #import "popObj.h"
 #import "SHGPersonalViewController.h"
+#import "SHGFriendGroupingViewController.h"
 
 static NSString * const kUid				= @"uid";
 static NSString * const kHeadImg			= @"headimg";
@@ -167,14 +168,16 @@ static NSString * const kCommonFNum			= @"commonnum";
 
 -(void)searchTwainFriend
 {
-    if(self.menuPopover1.isshow)
-    {
-        [self.menuPopover1 dismissMenuPopover];
-    } else{
-        self.menuPopover1 = [[MLKMenuPopover1 alloc] initWithFrame:CGRectMake(SCREENWIDTH-150, 0, 150, 280) menuItems:self.arrCityCode];
-        self.menuPopover1.menuPopoverDelegate = self;
-        [self.menuPopover1 showInView:self.view];
-    }
+//    if(self.menuPopover1.isshow)
+//    {
+//        [self.menuPopover1 dismissMenuPopover];
+//    } else{
+//        self.menuPopover1 = [[MLKMenuPopover1 alloc] initWithFrame:CGRectMake(SCREENWIDTH-150, 0, 150, 280) menuItems:self.arrCityCode];
+//        self.menuPopover1.menuPopoverDelegate = self;
+//        [self.menuPopover1 showInView:self.view];
+//    }
+    SHGFriendGroupingViewController *controller = [[SHGFriendGroupingViewController alloc] init];
+    [self.navigationController pushViewController:controller animated:YES];
 }
 
 - (void)rightBarButtonItemClicked:(UIButton *)sender
@@ -182,8 +185,7 @@ static NSString * const kCommonFNum			= @"commonnum";
     if(self.menuPopover.isshow)
     {
         [self.menuPopover dismissMenuPopover];
-    }else
-    {
+    } else{
         self.menuItems = [NSArray arrayWithObjects:@"发起对话", @"发起群聊", nil];
         self.menuPopover = [[MLKMenuPopover alloc] initWithFrame:CGRectMake(SCREENWIDTH-120, 0, 110, 88) menuItems:self.menuItems];
         self.menuPopover.menuPopoverDelegate = self;
@@ -295,11 +297,10 @@ static NSString * const kCommonFNum			= @"commonnum";
     if (!_searchBar) {
         _searchBar = [[EMSearchBar alloc] init];
         _searchBar.delegate = self;
-        if (self.chatListType == ContactListView)
-        {
-            _searchBar.placeholder = @"请输入姓名/公司/职位";
-        }else{
-            _searchBar.placeholder = @"请输入姓名/公司/职位";
+        if (self.chatListType == ContactListView){
+            _searchBar.placeholder = @"请输入姓名/公司名/职位";
+        } else{
+            _searchBar.placeholder = @"请输入姓名/公司名/职位";
         }
         _searchBar.hidden=YES;
     }
@@ -339,7 +340,6 @@ static NSString * const kCommonFNum			= @"commonnum";
             // Configure the cell...
             if (cell == nil) {
                 cell = [[[NSBundle mainBundle] loadNibNamed:CellIdentifier owner:self options:nil]objectAtIndex:0];
-                //			cell.delegate = self;
             }
             
             BasePeopleObject *buddy = [weakSelf.searchController.resultsSource objectAtIndex:indexPath.row];
@@ -487,11 +487,6 @@ static NSString * const kCommonFNum			= @"commonnum";
 - (void)getMyselfMaterialWithUid:(NSString *)uid
 {
     [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttp,@"user",@"personaluser"] parameters:@{@"uid":uid}success:^(MOCHTTPResponse *response) {
-        //        NSString *nickName = [response.dataDictionary valueForKey:@"name"];
-        //        NSString *headImageUrl = [response.dataDictionary valueForKey:@"head_img"];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            
-        });
         
         
         
@@ -512,8 +507,8 @@ static NSString * const kCommonFNum			= @"commonnum";
         if (!cell){
             cell = [[ChatListCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:identify];
         }
-        if(indexPath.row==0){
-            cell.placeholderImage=[UIImage imageNamed:@"申请头像图标"];
+        if(indexPath.row == 0){
+            cell.placeholderImage = [UIImage imageNamed:@"申请头像图标"];
             cell.name=@"群申请与通知";
             cell.imageURL=nil;
             cell.detailMsg=@"";
@@ -584,7 +579,6 @@ static NSString * const kCommonFNum			= @"commonnum";
     }else{
         static NSString *CellIdentifier = @"ChatListTableViewCell";
         ChatListTableViewCell *cell = (ChatListTableViewCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-        // Configure the cell...
         if (cell == nil) {
             cell = [[[NSBundle mainBundle] loadNibNamed:CellIdentifier owner:self options:nil]objectAtIndex:0];
         }
@@ -1152,6 +1146,7 @@ static NSString * const kCommonFNum			= @"commonnum";
     }
     return _titleView;
 }
+
 -(UILabel *)titleLabel
 {
     if (!_titleLabel)
@@ -1161,14 +1156,10 @@ static NSString * const kCommonFNum			= @"commonnum";
         _titleLabel.textColor = TEXT_COLOR;
         if (self.chatListType == ChatListView) {
             _titleLabel.text = @"我的消息";
-        }
-        else if(self.chatListType == ContactListView)
-        {
-            _titleLabel.text = @"我的好友";
-            
-        }else
-        {
-            _titleLabel.text = @"我好友的好友";
+        } else if(self.chatListType == ContactListView){
+            _titleLabel.text = @"一度人脉";
+        } else{
+            _titleLabel.text = @"二度人脉";
         }
     }
     return _titleLabel;
@@ -1282,36 +1273,34 @@ static NSString * const kCommonFNum			= @"commonnum";
         [self.view sendSubviewToBack:self.tableView];
         
         _searchBar.hidden=NO;
-        _tableView.frame =CGRectMake(0, self.searchBar.frame.size.height, self.view.frame.size.width, self.view.frame.size.height - self.searchBar.frame.size.height);
+        _tableView.frame = CGRectMake(0, self.searchBar.frame.size.height, self.view.frame.size.width, self.view.frame.size.height - self.searchBar.frame.size.height);
         [self.view sendSubviewToBack:self.tableView];
         [self addHeaderRefresh:self.tableView headerRefesh:YES andFooter:YES];
-        
-        if (self.chatListType == ContactTwainListView) {
-            rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
-            [rightButton setFrame:CGRectMake(0, 0, 60, 40)];
-            [rightButton.titleLabel setTextAlignment:NSTextAlignmentRight];
-            [rightButton setTitle:@"地域" forState:UIControlStateNormal];
-            [rightButton setTitleColor:RGB(255, 57, 67) forState:UIControlStateNormal];
-            [rightButton.titleLabel setFont:[UIFont systemFontOfSize:17] ];
-            [rightButton addTarget:self action:@selector(searchTwainFriend) forControlEvents:UIControlEventTouchUpInside];
-            UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:rightButton];
-            self.navigationItem.rightBarButtonItem = rightItem;
-        }
+        rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [rightButton setTitle:@"分组" forState:UIControlStateNormal];
+        [rightButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [rightButton.titleLabel setFont:[UIFont systemFontOfSize:15.0f]];
+        [rightButton sizeToFit];
+        [rightButton addTarget:self action:@selector(searchTwainFriend) forControlEvents:UIControlEventTouchUpInside];
+        UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:rightButton];
+        self.navigationItem.rightBarButtonItem = rightItem;
     } else{
         self.navigationItem.titleView = self.titleView;
     }
 }
 
--(void)actionInvite:(NSNotification *)noti
+- (void)actionInvite:(NSNotification *)noti
 {
     NSString *uid = noti.object;
     NSString *content =[NSString stringWithFormat:@"%@%@",@"诚邀您加入大牛圈APP！金融从业人员的家！这里有干货资讯、人脉嫁接、业务互助！赶快加入吧！",[NSString stringWithFormat:@"%@?uid=%@",SHARE_YAOQING_URL,[[NSUserDefaults standardUserDefaults]objectForKey:KEY_UID]]];
     [self shareToSMS:content rid:uid];
 }
--(void)shareToSMS:(NSString *)text rid:(NSString *)rid
+
+- (void)shareToSMS:(NSString *)text rid:(NSString *)rid
 {
     [[AppDelegate currentAppdelegate] sendSmsWithText:text rid:rid];
 }
+
 - (void)reloadGroupView
 {
     [self reloadApplyView];

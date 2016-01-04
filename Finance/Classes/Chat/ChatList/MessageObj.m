@@ -32,3 +32,14 @@ const CGFloat kMargin = 128.0f;
 }
 
 @end
+
+@implementation SHGFriendGropingObject
++ (NSDictionary *)JSONKeyPathsByPropertyKey{
+    return  @{@"module": @"module",
+              @"counts":@"counts"
+              };
+}
+
+
+
+@end

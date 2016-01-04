@@ -16,36 +16,31 @@
 
 @implementation DiscoveryTableViewCell
 
-- (void)awakeFromNib {
-    // Initialization code
-}
--(void)loadDataWithImage:(NSString *)imageName title:(NSString *)title rightItem:(NSString *)itemName rightItemColor:(UIColor *)color
+- (void)awakeFromNib
 {
-    if ([imageName hasPrefix:@"http://"])
-    {
+
+}
+
+- (void)loadDataWithImage:(NSString *)imageName title:(NSString *)title rightItem:(NSString *)itemName rightItemColor:(UIColor *)color
+{
+    if ([imageName hasPrefix:@"http://"]){
         [self.imageTitle sd_setImageWithURL:[NSURL URLWithString:imageName] placeholderImage:nil];
-    }else{
+    } else{
         [self.imageTitle setImage:[UIImage imageNamed:imageName]];
     }
     self.lblTitle.text = title;
-    if (itemName && color)
-    {
+    if (itemName && color){
         self.lblRight.text = itemName;
         self.lblRight.backgroundColor = color;
-    }
-    else
-    {
+    } else{
         self.lblRight.text = nil;
         self.lblRight.backgroundColor = [UIColor clearColor];
     }
 }
 
-
-
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
+- (void)setSelected:(BOOL)selected animated:(BOOL)animated
+{
     [super setSelected:selected animated:animated];
-
-    // Configure the view for the selected state
 }
 
 @end

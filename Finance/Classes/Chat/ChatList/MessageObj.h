@@ -18,3 +18,11 @@
 
 - (CGFloat)heightForCell;
 @end
+
+
+@interface SHGFriendGropingObject : MTLModel<MTLJSONSerializing>
+
+@property (nonatomic,strong) NSString *module;
+@property (nonatomic,strong) NSString *counts;
+
+@end

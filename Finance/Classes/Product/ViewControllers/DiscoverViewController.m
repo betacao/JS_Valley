@@ -47,12 +47,11 @@
     [self httpURL];
     self.listTable.backgroundColor = RGB(236, 236, 236);
     [CommonMethod setExtraCellLineHidden:self.listTable];
-   // [self requestDataWithTarget:@"first" time:@""];
 }
 
 - (void)httpURL{
     NSString *str = @" ";
-    NSMutableDictionary *dic=[[NSMutableDictionary alloc]init];
+    NSMutableDictionary *dic = [[NSMutableDictionary alloc]init];
     [dic setObject:str forKey:@"phone"];
     [dic setObject:[[NSUserDefaults standardUserDefaults] objectForKey:KEY_USER_NAME] forKey:@"name"];
     [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@",rBaseAddressForHttpProduct] class:[GameObj class] parameters:dic success:^(MOCHTTPResponse *response){
@@ -118,10 +117,10 @@
         cell.numberLable.text = nil;
     } else if (indexPath.section == 1){
         if (indexPath.row == 0){
-            [cell loadDataWithImage:@"我好友的好友" title:@"我好友的好友" rightItem:@"二度" rightItemColor:RGB(255, 116, 80)];
+            [cell loadDataWithImage:@"erdurenmai" title:@"二度人脉" rightItem:nil rightItemColor: nil];
             cell.numberLable.text = nil;
         } else if (indexPath.row == 1){
-            [cell loadDataWithImage:@"我的好友" title:@"我的好友" rightItem:@"一度" rightItemColor:RGB(254, 144, 0)];
+            [cell loadDataWithImage:@"yidurenmai" title:@"一度人脉" rightItem:nil rightItemColor:nil];
             cell.numberLable.text = nil;
         } else if (indexPath.row == 2){
             [cell loadDataWithImage:@"action_Icon" title:@"会议活动" rightItem:nil rightItemColor:nil];
@@ -159,7 +158,7 @@
             break;
             
         case 1:
-            return 3;
+            return 2;
             break;
         
         case 2:

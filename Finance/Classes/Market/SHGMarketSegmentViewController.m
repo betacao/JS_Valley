@@ -313,6 +313,11 @@
     }
 }
 
+- (void)didCreateNewMarket
+{
+
+}
+
 - (void)viewDidUnload
 {
     [super viewDidUnload];
