@@ -22,6 +22,7 @@
 
 @property (nonatomic, strong) IBOutlet UITableViewCell *myMoneyCell;
 @property (nonatomic, strong) IBOutlet UILabel	*myMoneyLabel;
+@property (weak, nonatomic) IBOutlet UILabel *totalLabel;
 
 @property (nonatomic, strong) IBOutlet UITableViewCell *teamEncourageDescriptionCell;
 
@@ -36,7 +37,7 @@
 	self.title = @"我的合伙人";
 	self.dataSource = [[NSMutableArray alloc] init];
 	UIView *view = [[UIView alloc] init];
-	view.backgroundColor = [UIColor clearColor];
+	view.backgroundColor = [UIColor whiteColor];
     [_tableView setTableFooterView:view];
 	
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
@@ -63,7 +64,7 @@
         
     }];
     
-    
+    self.totalLabel.text = [NSString stringWithFormat:@"%ld人",(long)self.dataSource.count];
     [self.tableView reloadData];
 }
 
@@ -78,48 +79,48 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-	if (section == 0) {
-		return 2;
-	}else if(section == 1){
-		return self.dataSource.count;
-	}else if (section == 2){
-		return 1;
-	}
+//	if (section == 0) {
+//		return 2;
+//	}else if(section == 1){
+//		return self.dataSource.count;
+//	}else if (section == 2){
+//		return 1;
+//	}
 	
-	return 0;
+	return 1;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-	return 50;
+	return 0;
 }
 
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-{
-	UIView *sectionView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 50)];
-	sectionView.backgroundColor = RGB(240, 240, 240);
-	UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(16, 0, 300, 50)];
-	if (section == 0) {
-		label.text = [NSString stringWithFormat:@"总计%ld位",(long)self.dataSource.count];;
-	}else if(section == 1){
-		label.text = @"合伙人明细";
-	}else if (section == 2){
-		label.text =@"合伙人激励机制说明";
-	}
-	label.font = [UIFont systemFontOfSize:17.0f];
-	[sectionView addSubview:label];
-	return sectionView;
-}
+//- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+//{
+//	UIView *sectionView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 50)];
+//	sectionView.backgroundColor = RGB(240, 240, 240);
+//	UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(16, 0, 300, 50)];
+//	if (section == 0) {
+//		label.text = [NSString stringWithFormat:@"总计%ld位",(long)self.dataSource.count];;
+//	}else if(section == 1){
+//		label.text = @"合伙人明细";
+//	}else if (section == 2){
+//		label.text =@"合伙人激励机制说明";
+//	}
+//	label.font = [UIFont systemFontOfSize:17.0f];
+//	[sectionView addSubview:label];
+//	return sectionView;
+//}
 
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	if (indexPath.section == 0) {
-		return 65;
+		return 94.0f;
 	}else if(indexPath.section == 1){
-		return 100;
+		return 73.0f;
 	}else if (indexPath.section == 2){
-		return 200;
+		return 250.0f;
 	}
 	return 0;
 }
@@ -127,24 +128,24 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	if (indexPath.section == 0) {
-		if (indexPath.row == 0) {
+		//if (indexPath.row == 0) {
 			return self.teamMoneyCell;
-		}else if( indexPath.row == 1){
-			return self.myMoneyCell;
-		}
+//		}else if( indexPath.row == 1){
+//			return self.myMoneyCell;
+//		}
 	}else if (indexPath.section == 1){
-		static NSString *CellIdentifier = @"TeamDetailTableViewCell";
-		TeamDetailTableViewCell *cell = (TeamDetailTableViewCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-		
-		// Configure the cell...
-		if (cell == nil) {
-			cell = [[[NSBundle mainBundle] loadNibNamed:CellIdentifier owner:self options:nil]objectAtIndex:0];
-		}
-		
-		TeamDetailObject *obj = self.dataSource[indexPath.row];
-		cell.nameLabel.text = obj.name;
-		cell.moneyLabel.text = obj.money;
-		return cell;
+//		static NSString *CellIdentifier = @"TeamDetailTableViewCell";
+//		TeamDetailTableViewCell *cell = (TeamDetailTableViewCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+//		
+//		// Configure the cell...
+//		if (cell == nil) {
+//			cell = [[[NSBundle mainBundle] loadNibNamed:CellIdentifier owner:self options:nil]objectAtIndex:0];
+//		}
+//		
+//		TeamDetailObject *obj = self.dataSource[indexPath.row];
+//		cell.nameLabel.text = obj.name;
+//		cell.moneyLabel.text = obj.money;
+		return self.myMoneyCell;
 
 	}else if (indexPath.section == 2){
 		return self.teamEncourageDescriptionCell;
@@ -157,7 +158,10 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	[tableView deselectRowAtIndexPath:indexPath animated:YES];
+	//[tableView deselectRowAtIndexPath:indexPath animated:YES];
+    if(indexPath.section == 1){
+        
+    }
 }
 
 - (IBAction)inviteButtonClicked:(id *)sender
