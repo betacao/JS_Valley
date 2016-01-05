@@ -82,7 +82,12 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-	return 50;
+    if (section == 0) {
+        return 40.0f;
+    }else{
+        return 50.0f;
+    }
+	return 0;
 }
 
 //- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
@@ -98,14 +103,16 @@
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
 	UIView *sectionView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 50)];
-	sectionView.backgroundColor = RGB(240, 240, 240);
 	UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(16, 0, 300, 50)];
+     label.textColor = [UIColor colorWithHexString:@"989898"];
+    label.font = [UIFont systemFontOfSize:12];
 	if (section == 0) {
+        sectionView.backgroundColor = [UIColor whiteColor];
 		label.text = @"佣金总计";
 	}else if(section == 1){
+        sectionView.backgroundColor = RGB(240, 240, 240);
 		label.text = @"佣金明细";
 	}
-	label.font = [UIFont systemFontOfSize:17.0f];
 	[sectionView addSubview:label];
 	return sectionView;
 }
@@ -113,10 +120,10 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	if (indexPath.section == 0) {
-		return 55;
+		return 70.0f;
 	}else if(indexPath.section == 1){
         
-		return 205;
+		return 125.0f;
 	}
 	return 0;
 }
@@ -125,7 +132,9 @@
 {
 	if (indexPath.section == 0) {
 		UITableViewCell  *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"empty"];
-		cell.textLabel.text = [NSString stringWithFormat:@"%@元",self.totalMoney];
+        cell.textLabel.textColor = [UIColor colorWithHexString:@"D43C33"];
+        cell.textLabel.font = [UIFont boldSystemFontOfSize:20];
+		cell.textLabel.text = [NSString stringWithFormat:@"%@",self.totalMoney];
 		return cell;
 		
 	}else if(indexPath.section == 1){

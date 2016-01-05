@@ -64,7 +64,6 @@
         
     }];
     
-    self.totalLabel.text = [NSString stringWithFormat:@"%ld人",(long)self.dataSource.count];
     [self.tableView reloadData];
 }
 
@@ -145,6 +144,7 @@
 //		TeamDetailObject *obj = self.dataSource[indexPath.row];
 //		cell.nameLabel.text = obj.name;
 //		cell.moneyLabel.text = obj.money;
+        self.totalLabel.text = [NSString stringWithFormat:@"%ld人",(long)self.dataSource.count];
 		return self.myMoneyCell;
 
 	}else if (indexPath.section == 2){
