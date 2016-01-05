@@ -8,6 +8,8 @@
 
 #import "BaseViewController.h"
 #import "HeadImage.h"
-@interface SettingsViewController : BaseViewController
+#import "SHGModifyUserInfoViewController.h"
 
+@interface SettingsViewController : BaseViewController
+@property (strong, nonatomic) NSDictionary *userInfo;
 @end

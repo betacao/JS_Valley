@@ -75,58 +75,6 @@
 
 - (void)initArrContents
 {
-    
-//    SettingsObj *obj0 = [[SettingsObj alloc] init];
-//    obj0.imageInfo = @"通讯录更新";
-//    obj0.isShowSwith = @"NO";
-//    obj0.content = @"更新好友";
-//    [twoArray addObject:obj0];
-//    
-//    SettingsObj *obj1 = [[SettingsObj alloc] init];
-//    obj1.imageInfo = @"settings_change_password";
-//    obj1.isShowSwith = @"NO";
-//    obj1.content = @"密码修改";
-//    [twoArray addObject:obj1];
-//    
-//    SettingsObj *obj3 = [[SettingsObj alloc] init];
-//    obj3.imageInfo = @"tag_level.png";
-//    obj3.isShowSwith = @"NO";
-//    obj3.content = @"检查更新";
-//    
-//    SettingsObj *obj2 = [[SettingsObj alloc] init];
-//    obj2.imageInfo = @"setting_clear_cache";
-//    obj2.isShowSwith = @"NO";
-//    obj2.content = @"清除缓存";
-//    [twoArray addObject:obj2];
-//    
-//    SettingsObj *obj7 = [[SettingsObj alloc] init];
-//    obj7.imageInfo = @"settings_message_push";
-//    obj7.isShowSwith = @"YES";
-//    obj7.isOn = @"YES";
-//    obj7.content = @"消息推送";
-//    [twoArray addObject:obj7];
-//    
-//    SettingsObj *obj10 = [[SettingsObj alloc] init];
-//    obj10.imageInfo = @"settings_message_setting";
-//    obj10.isShowSwith = @"NO";;
-//    obj10.content = @"对话设置";
-//    
-//    NSMutableArray *threeArray = [NSMutableArray array];
-//
-//    
-//    SettingsObj *obj5 = [[SettingsObj alloc] init];
-//    obj5.imageInfo = @"settings_suggestions";
-//    obj5.isShowSwith = @"NO";
-//    obj5.content = @"意见反馈";
-//    [threeArray addObject:obj5];
-//    
-//    SettingsObj *obj6 = [[SettingsObj alloc] init];
-//    obj6.imageInfo = @"settings_about_us";
-//    obj6.isShowSwith = @"NO";
-//    obj6.content = @"关于我们";
-//    [threeArray addObject:obj6];
-
-
     NSMutableArray *array0 = [NSMutableArray array];
     SettingsObj *obj00 = [[SettingsObj alloc] init];
     obj00.imageInfo = nil;
@@ -174,9 +122,9 @@
     
 }
 
-- (void)didReceiveMemoryWarning {
+- (void)didReceiveMemoryWarning
+{
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -267,67 +215,53 @@
 {
     self.curIndexPath = indexPath;
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    switch (indexPath.section) {
-        case 0:{
-            if (indexPath.row == 0){
-                if (hasUpdatedContacts){
-                    [Hud showMessageWithText:@"您刚刚更新过好友"];
-                } else{
-                    DXAlertView *alert = [[DXAlertView alloc] initWithTitle:@"提示" contentText:@"更新好友将会更新您的一度人脉中的手机通讯录，确认要更新吗？" leftButtonTitle:@"取消" rightButtonTitle:@"确定"];
-                    __weak typeof(self) weakSelf = self;
-                    alert.rightBlock = ^{
-                        [weakSelf uploadContact];
-                    };
-                    alert.leftBlock = ^{
-                        hasUpdatedContacts = NO;
-                    };
-                    [alert show];
-                    hasUpdatedContacts = YES;
-                    [self performSelector:@selector(changeUpdateState) withObject:nil afterDelay:60.0f];
-                }
-            }
-            
-            if(indexPath.row==1)//修改密码
-            {
-                SettingModifyPWDViewController *detailVC = [[SettingModifyPWDViewController alloc] initWithNibName:@"SettingModifyPWDViewController" bundle:nil];
-                [self.navigationController pushViewController:detailVC animated:YES];
-            } else if(indexPath.row==2){//清除缓存
+    SettingsObj *object = [[self.arrValues objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
+    if ([object.content isEqualToString:@"更新好友"]) {
+        if (hasUpdatedContacts){
+            [Hud showMessageWithText:@"您刚刚更新过好友"];
+        } else{
+            DXAlertView *alert = [[DXAlertView alloc] initWithTitle:@"提示" contentText:@"更新好友将会更新您的一度人脉中的手机通讯录，确认要更新吗？" leftButtonTitle:@"取消" rightButtonTitle:@"确定"];
+            __weak typeof(self) weakSelf = self;
+            alert.rightBlock = ^{
+                [weakSelf uploadContact];
+            };
+            alert.leftBlock = ^{
+                hasUpdatedContacts = NO;
+            };
+            [alert show];
+            hasUpdatedContacts = YES;
+            [self performSelector:@selector(changeUpdateState) withObject:nil afterDelay:60.0f];
+        }
+    } else if ([object.content isEqualToString:@"密码修改"]){
+        SettingModifyPWDViewController *detailVC = [[SettingModifyPWDViewController alloc] initWithNibName:@"SettingModifyPWDViewController" bundle:nil];
+        [self.navigationController pushViewController:detailVC animated:YES];
+    } else if ([object.content isEqualToString:@"清除缓存"]){
+        DXAlertView *alert = [[DXAlertView alloc] initWithTitle:@"提示" contentText:@"是否确认清除本地缓存？" leftButtonTitle:@"取消" rightButtonTitle:@"确定"];
+        __weak typeof(self) weakSelf = self;
+        alert.rightBlock = ^{
+            [Hud showLoadingWithMessage:@"正在清除缓存..."];
+            [[SDImageCache sharedImageCache] clearDiskOnCompletion:^{
+                [Hud hideHud];
+                [Hud showMessageWithText:@"清除缓存成功"];
+                [weakSelf.tableView reloadData];
+            }];
+        };
+        [alert show];
+    } else if([object.content isEqualToString:@"意见反馈"]){
+        SettingsSuggestionsViewController *vc = [[SettingsSuggestionsViewController alloc] init];
+        [self.navigationController pushViewController:vc animated:YES];
 
-                DXAlertView *alert = [[DXAlertView alloc] initWithTitle:@"提示" contentText:@"是否确认清除本地缓存？" leftButtonTitle:@"取消" rightButtonTitle:@"确定"];
-                __weak typeof(self) weakSelf = self;
-                alert.rightBlock = ^{
-                    [Hud showLoadingWithMessage:@"正在清除缓存..."];
-                    [[SDImageCache sharedImageCache] clearDiskOnCompletion:^{
-                        [Hud hideHud];
-                        [Hud showMessageWithText:@"清除缓存成功"];
-                        [weakSelf.tableView reloadData];
-                    }];
-                };
-                [alert show];
-            }
-        }
-            break;
-        case 1:
-        {
-            if(indexPath.row==2)//常见问题(1.4.1版本去掉该功能)
-            {
-                SettingQuestionViewController *detailVC = [[SettingQuestionViewController alloc] initWithNibName:@"SettingQuestionViewController" bundle:nil];
-                [self.navigationController pushViewController:detailVC animated:YES];
-                
-            }else if(indexPath.row==0)//问题反馈
-            {
-                SettingsSuggestionsViewController *vc = [[SettingsSuggestionsViewController alloc] init];
-                [self.navigationController pushViewController:vc animated:YES];
-                
-            }else if(indexPath.row==1)//关于我们
-            {
-                SettingAboutUsViewController *detailVC = [[SettingAboutUsViewController alloc] initWithNibName:@"SettingAboutUsViewController" bundle:nil];
-                [self.navigationController pushViewController:detailVC animated:YES];
-            }
-        }
-            break;
-        default:
-            break;
+    } else if([object.content isEqualToString:@"关于我们"]){
+        SettingAboutUsViewController *detailVC = [[SettingAboutUsViewController alloc] initWithNibName:@"SettingAboutUsViewController" bundle:nil];
+        [self.navigationController pushViewController:detailVC animated:YES];
+    } else if([object.content isEqualToString:@"个人信息"]){
+        SHGModifyUserInfoViewController *controller = [[SHGModifyUserInfoViewController alloc] init];
+        controller.userInfo = self.userInfo;
+        __weak typeof(self)weakSelf = self;
+        controller.block = ^(NSDictionary *info){
+            weakSelf.userInfo = info;
+        };
+        [self.navigationController pushViewController:controller animated:YES];
     }
 }
 

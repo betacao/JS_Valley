@@ -15,7 +15,6 @@
 #import "MyCollectionViewController.h"
 #import "MyAppointmentViewController.h"
 #import "SettingsViewController.h"
-#import "SHGModifyInfoViewController.h"
 #import "SHGUserTagModel.h"
 #import "SHGPersonalViewController.h"
 #import "SHGSelectTagsViewController.h"
@@ -24,7 +23,7 @@
 #define kItemMargin 14.0f * XFACTOR
 #define kItemHeight 25.0f * XFACTOR
 
-@interface MeViewController ()<UITextFieldDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UIActionSheetDelegate,UITableViewDataSource,UITableViewDelegate,ModifyInfoDelegate>
+@interface MeViewController ()<UITextFieldDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UIActionSheetDelegate,UITableViewDataSource,UITableViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView	*tableView;
 @property (weak, nonatomic) IBOutlet UIView		*headerView;
@@ -34,10 +33,7 @@
 @property (weak, nonatomic) IBOutlet UILabel    *companyName; //公司名称
 @property (weak, nonatomic) IBOutlet UIImageView *btnUserPic;
 
-//@property (weak, nonatomic) IBOutlet UILabel *locationLabel;
-//@property (weak, nonatomic) IBOutlet UILabel *phoneLabel;
-
-@property (strong, nonatomic) SettingsViewController *vc;
+@property (strong, nonatomic) SettingsViewController *settingController;
 @property (strong, nonatomic) UILabel	*circleHeaderLabel;  //动态lable
 @property (strong, nonatomic) UILabel	*followHeaderLabel;  //关注label
 @property (strong, nonatomic) UILabel	*fansHeaderLabel;  //粉丝label
@@ -45,13 +41,13 @@
 @property (strong, nonatomic) NSString *nickName;
 @property (strong, nonatomic) NSString *department;
 @property (strong, nonatomic) NSString *company;
+@property (strong, nonatomic) NSString *industry;
+@property (strong, nonatomic) NSString *location;
+@property (strong, nonatomic) NSString *head_img;
 
 @property (strong, nonatomic) UIBarButtonItem *rightBarButtonItem;
-@property (strong, nonatomic) SHGModifyInfoViewController *modifyInfoController;
 @property (assign, nonatomic) BOOL shouldRefresh;
 @property (strong, nonatomic) NSString *auditState;
-
-- (IBAction)actionEdit:(id)sender;
 - (void)changeUserHeadImage;
 
 @end
@@ -68,6 +64,9 @@
     self.nickName = @"";
     self.department = @"";
     self.company = @"";
+    self.industry = @"";
+    self.location = @"";
+    self.head_img = nil;
     [self initUI];
 
     [self addHeaderRefresh:self.tableView headerRefesh:YES andFooter:NO];
@@ -125,15 +124,6 @@
     return _rightBarButtonItem;
 }
 
-- (SHGModifyInfoViewController *)modifyInfoController
-{
-    if(!_modifyInfoController){
-        _modifyInfoController = [[SHGModifyInfoViewController alloc] initWithNibName:@"SHGModifyInfoViewController" bundle:nil];
-        _modifyInfoController.delegate = self;
-    }
-    return _modifyInfoController;
-}
-
 -(void)refreshData
 {
     [self getMyselfMaterial];
@@ -160,13 +150,13 @@
         NSString *fansString = [NSString stringWithFormat:@"粉丝 \n%@",fansCount];
 
         NSMutableAttributedString *aCircleString = [[NSMutableAttributedString alloc] initWithString:circleString];
-        [aCircleString addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"161616"] range:NSMakeRange(5, circleString.length - 5)];
+        [aCircleString addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"161616"] range:NSMakeRange(4, aCircleString.length - 4)];
 
         NSMutableAttributedString *aFollowString = [[NSMutableAttributedString alloc] initWithString:followString];
-        [aFollowString addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"161616"] range:NSMakeRange(5, circleString.length - 5)];
+        [aFollowString addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"161616"] range:NSMakeRange(4, aFollowString.length - 4)];
 
         NSMutableAttributedString *aFansString = [[NSMutableAttributedString alloc] initWithString:fansString];
-        [aFansString addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"161616"] range:NSMakeRange(5, circleString.length - 5)];
+        [aFansString addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"161616"] range:NSMakeRange(4, aFansString.length - 4)];
 
         weakSelf.circleHeaderLabel.attributedText = aCircleString;
         weakSelf.followHeaderLabel.attributedText = aFollowString;
@@ -187,6 +177,18 @@
             weakSelf.companyName.text = @"暂无公司名";
         }
 
+        if([response.dataDictionary valueForKey:@"industrycode"]){
+            weakSelf.industry = [response.dataDictionary valueForKey:@"industrycode"];
+        }
+
+        if([response.dataDictionary valueForKey:@"head_img"]){
+            weakSelf.head_img = [response.dataDictionary valueForKey:@"head_img"];
+        }
+
+        if([response.dataDictionary valueForKey:@"position"]){
+            weakSelf.location = [response.dataDictionary valueForKey:@"position"];
+        }
+
         //更改合适的位置
         CGSize size = [weakSelf.txtNickName sizeThatFits:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX)];
         CGRect frame = weakSelf.txtNickName.frame;
@@ -198,7 +200,6 @@
         frame.origin.x = CGRectGetMaxX(weakSelf.txtNickName.frame) + kObjectMargin;
         frame.size.width = size.width;
         weakSelf.moneyLabel.frame = frame;
-
 
         NSString *headImageUrl = [response.dataDictionary valueForKey:@"head_img"];
         if (!IsStrEmpty(headImageUrl)) {
@@ -227,26 +228,29 @@
         
     }];
 }
--(SettingsViewController *)vc
+
+- (SettingsViewController *)settingController
 {
-    if (!_vc) {
-        _vc = [[SettingsViewController alloc] init];
-        _vc.hidesBottomBarWhenPushed = YES;
-        
+    if (!_settingController) {
+        _settingController = [[SettingsViewController alloc] init];
+        _settingController.hidesBottomBarWhenPushed = YES;
     }
-    return _vc;
+    return _settingController;
 }
 #pragma mark -设置
 - (void)goToSettings
 {
-    [self.navigationController	pushViewController:self.vc animated:YES];
+    if (self.nickName.length > 0) {
+        self.settingController.userInfo = @{kNickName:self.nickName, kDepartment:self.department, kCompany:self.company, kLocation:self.location, kIndustry:self.industry, kHeaderImage:self.head_img};
+        [self.navigationController	pushViewController:self.settingController animated:YES];
+    }
 }
 
 - (void)initUI
 {
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(changeUserHeadImage)];
     tap.cancelsTouchesInView = YES;
-    [self.btnUserPic addGestureRecognizer:tap];
+//    [self.btnUserPic addGestureRecognizer:tap];
     self.btnUserPic.userInteractionEnabled = YES;
 
     NSString *headImage = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_HEAD_IMAGE];
@@ -386,51 +390,6 @@
     
 }
 
-#pragma mark －修改名字
-- (IBAction)actionEdit:(id)sender {
-    if(!self.modifyInfoController.view.superview){
-        [self.modifyInfoController loadInitInfo:@{kNickName:self.nickName, kDepartment:self.department, kCompany:self.company}];
-        [self.view.window addSubview:self.modifyInfoController.view];
-    }
-}
-
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    if (alertView.tag == 101){
-        if (buttonIndex == 1) {
-            
-            NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
-            NSString *newNicName = [alertView textFieldAtIndex:0].text;
-            if (IsStrEmpty(newNicName)) {
-                [Hud showMessageWithText:@"名字不能不为空"];
-                return;
-            }
-            if (newNicName.length > 12) {
-                [Hud showMessageWithText:@"名字过长，最大长度为12个字"];
-                return;
-            }
-            [[AFHTTPRequestOperationManager manager] PUT:[NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttp,@"user",@"modifyuser"] parameters:@{@"uid":uid,@"type":@"name",@"value":newNicName} success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                NSLog(@"%@",operation);
-                NSLog(@"%@",responseObject);
-                NSString *code = [responseObject valueForKey:@"code"];
-                if ([code isEqualToString:@"000"]) {
-                    self.txtNickName.text = newNicName;
-                    [MobClick event:@"ActionEditName" label:@"onClick"];
-                    self.nickName = self.txtNickName.text;
-                    [[NSUserDefaults standardUserDefaults] setObject:self.nickName forKey:KEY_USER_NAME];
-                    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_SENDPOST object:nil];
-                    
-                }else{
-                    [Hud showMessageWithText:@"修改失败"];
-                }
-            } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                [Hud showMessageWithText:@"修改失败"];
-            }];
-        }
-        
-    }
-}
-
 
 #pragma mark -身份认证
 - (void)actionAuth:(id)sender {
@@ -442,12 +401,6 @@
     [self.navigationController pushViewController:vc animated:YES];
 }
 
-#pragma mark ------标签
-
-- (IBAction)changeTags:(id)sender
-{
-    [[SHGSelectTagsViewController shareTagsView] changeUserTags];
-}
 #pragma mark -邀请好友
 
 - (void)actionInvite:(id)sender
@@ -702,41 +655,6 @@
     vc.relationShip = 2;
     vc.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:vc animated:YES];
-}
-
-- (void)didModifyUserInfo:(NSDictionary *)dictionary
-{
-    NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
-    NSString *newNicName = [dictionary objectForKey:kNickName];
-    NSString *department = [dictionary objectForKey:kDepartment];
-    NSString *company = [dictionary objectForKey:kCompany];
-    
-    [[AFHTTPRequestOperationManager manager] PUT:[NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttp,@"user",@"modifyuser"] parameters:@{@"uid":uid,@"type":@"name",@"value":newNicName, @"title":department, @"company":company} success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"%@",operation);
-        NSLog(@"%@",responseObject);
-        NSString *code = [responseObject valueForKey:@"code"];
-        if ([code isEqualToString:@"000"]) {
-            self.txtNickName.text = newNicName;
-            self.moneyLabel.text = department;
-            self.companyName.text = company;
-            [MobClick event:@"ActionEditName" label:@"onClick"];
-            self.nickName = newNicName;
-            self.department = department;
-            self.company = company;
-            [[NSUserDefaults standardUserDefaults] setObject:self.nickName forKey:KEY_USER_NAME];
-            [Hud showMessageWithText:@"修改个人信息成功"];
-            [self performSelector:@selector(delayPostNotification) withObject:nil afterDelay:1.2f];
-        }else{
-            [Hud showMessageWithText:@"修改个人信息失败"];
-        }
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [Hud showMessageWithText:@"修改个人信息失败"];
-    }];
-}
-
-- (void)delayPostNotification
-{
-    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_SENDPOST object:nil];
 }
 
 @end
