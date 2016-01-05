@@ -16,14 +16,14 @@
 #import "DingDQRCodeShareViewController.h"
 #import "EaseMob.h"
 #import "SettingsSuggestionsViewController.h"
+#import "SHGSettingTableViewCell.h"
 
 @interface SettingsViewController ()
 <UIAlertViewDelegate>
 {
     BOOL  hasUpdatedContacts;
 }
-@property (nonatomic, strong) NSArray *arrTitles;
-@property (nonatomic, strong) NSDictionary *arrValues;
+@property (nonatomic, strong) NSArray *arrValues;
 @property (nonatomic, strong) NSIndexPath *curIndexPath;
 
 @property (nonatomic, weak) IBOutlet UISwitch *switchView;
@@ -75,68 +75,102 @@
 
 - (void)initArrContents
 {
-    self.arrTitles=@[@"偏好设置",@"关于我们"];
     
-    NSMutableArray *twoArray = [NSMutableArray array];
-    
-    SettingsObj *obj0 = [[SettingsObj alloc] init];
-    obj0.imageInfo = @"通讯录更新";
-    obj0.isShowSwith = @"NO";
-    obj0.content = @"更新好友";
-    [twoArray addObject:obj0];
-    
-    SettingsObj *obj1 = [[SettingsObj alloc] init];
-    obj1.imageInfo = @"settings_change_password";
-    obj1.isShowSwith = @"NO";
-    obj1.content = @"密码修改";
-    [twoArray addObject:obj1];
-    
-    SettingsObj *obj3 = [[SettingsObj alloc] init];
-    obj3.imageInfo = @"tag_level.png";
-    obj3.isShowSwith = @"NO";
-    obj3.content = @"检查更新";
-    // [twoArray addObject:obj3];
-    
-    SettingsObj *obj2 = [[SettingsObj alloc] init];
-    obj2.imageInfo = @"setting_clear_cache";
-    obj2.isShowSwith = @"NO";
-    obj2.content = @"清除缓存";
-    [twoArray addObject:obj2];
-    
-    SettingsObj *obj7 = [[SettingsObj alloc] init];
-    obj7.imageInfo = @"settings_message_push";
-    obj7.isShowSwith = @"YES";
-    obj7.isOn = @"YES";
-    obj7.content = @"消息推送";
-    [twoArray addObject:obj7];
-    
+//    SettingsObj *obj0 = [[SettingsObj alloc] init];
+//    obj0.imageInfo = @"通讯录更新";
+//    obj0.isShowSwith = @"NO";
+//    obj0.content = @"更新好友";
+//    [twoArray addObject:obj0];
+//    
+//    SettingsObj *obj1 = [[SettingsObj alloc] init];
+//    obj1.imageInfo = @"settings_change_password";
+//    obj1.isShowSwith = @"NO";
+//    obj1.content = @"密码修改";
+//    [twoArray addObject:obj1];
+//    
+//    SettingsObj *obj3 = [[SettingsObj alloc] init];
+//    obj3.imageInfo = @"tag_level.png";
+//    obj3.isShowSwith = @"NO";
+//    obj3.content = @"检查更新";
+//    
+//    SettingsObj *obj2 = [[SettingsObj alloc] init];
+//    obj2.imageInfo = @"setting_clear_cache";
+//    obj2.isShowSwith = @"NO";
+//    obj2.content = @"清除缓存";
+//    [twoArray addObject:obj2];
+//    
+//    SettingsObj *obj7 = [[SettingsObj alloc] init];
+//    obj7.imageInfo = @"settings_message_push";
+//    obj7.isShowSwith = @"YES";
+//    obj7.isOn = @"YES";
+//    obj7.content = @"消息推送";
+//    [twoArray addObject:obj7];
+//    
+//    SettingsObj *obj10 = [[SettingsObj alloc] init];
+//    obj10.imageInfo = @"settings_message_setting";
+//    obj10.isShowSwith = @"NO";;
+//    obj10.content = @"对话设置";
+//    
+//    NSMutableArray *threeArray = [NSMutableArray array];
+//
+//    
+//    SettingsObj *obj5 = [[SettingsObj alloc] init];
+//    obj5.imageInfo = @"settings_suggestions";
+//    obj5.isShowSwith = @"NO";
+//    obj5.content = @"意见反馈";
+//    [threeArray addObject:obj5];
+//    
+//    SettingsObj *obj6 = [[SettingsObj alloc] init];
+//    obj6.imageInfo = @"settings_about_us";
+//    obj6.isShowSwith = @"NO";
+//    obj6.content = @"关于我们";
+//    [threeArray addObject:obj6];
+
+
+    NSMutableArray *array0 = [NSMutableArray array];
+    SettingsObj *obj00 = [[SettingsObj alloc] init];
+    obj00.imageInfo = nil;
+    obj00.isShowSwith = NO;
+    obj00.content = @"个人信息";
+    SettingsObj *obj01 = [[SettingsObj alloc] init];
+    obj01.imageInfo = nil;
+    obj01.isShowSwith = NO;
+    obj01.content = @"密码修改";
+    [array0 addObject:obj00];
+    [array0 addObject:obj01];
+
+    NSMutableArray *array1 = [NSMutableArray array];
     SettingsObj *obj10 = [[SettingsObj alloc] init];
-    obj10.imageInfo = @"settings_message_setting";
-    obj10.isShowSwith = @"NO";;
-    obj10.content = @"对话设置";
-    //	[twoArray addObject:obj10];
-    
-    NSMutableArray *threeArray = [NSMutableArray array];
-    
-//    SettingsObj *obj4 = [[SettingsObj alloc] init];
-//    obj4.imageInfo = @"settings_normal_question";
-//    obj4.isShowSwith = @"NO";
-//    obj4.content = @"常见问题";
-//    [threeArray addObject:obj4];
-    
-    SettingsObj *obj5 = [[SettingsObj alloc] init];
-    obj5.imageInfo = @"settings_suggestions";
-    obj5.isShowSwith = @"NO";
-    obj5.content = @"意见反馈";
-    [threeArray addObject:obj5];
-    
-    SettingsObj *obj6 = [[SettingsObj alloc] init];
-    obj6.imageInfo = @"settings_about_us";
-    obj6.isShowSwith = @"NO";
-    obj6.content = @"关于我们";
-    [threeArray addObject:obj6];
-    
-    self.arrValues = @{@"偏好设置": twoArray,@"关于我们": threeArray};
+    obj10.imageInfo = nil;
+    obj10.isShowSwith = NO;
+    obj10.content = @"更新好友";
+    [array1 addObject:obj10];
+
+    NSMutableArray *array2 = [NSMutableArray array];
+    SettingsObj *obj20 = [[SettingsObj alloc] init];
+    obj20.imageInfo = nil;
+    obj20.isShowSwith = NO;
+    obj20.content = @"清除缓存";
+    SettingsObj *obj21 = [[SettingsObj alloc] init];
+    obj21.imageInfo = nil;
+    obj21.isShowSwith = YES;
+    obj21.content = @"消息推送";
+    [array2 addObject:obj20];
+    [array2 addObject:obj21];
+
+    NSMutableArray *array3 = [NSMutableArray array];
+    SettingsObj *obj30 = [[SettingsObj alloc] init];
+    obj30.imageInfo = nil;
+    obj30.isShowSwith = NO;
+    obj30.content = @"意见反馈";
+    SettingsObj *obj31 = [[SettingsObj alloc] init];
+    obj31.imageInfo = nil;
+    obj31.isShowSwith = NO;
+    obj31.content = @"关于我们";
+    [array3 addObject:obj30];
+    [array3 addObject:obj31];
+
+    self.arrValues = @[array0, array1, array2, array3];
     
 }
 
@@ -147,49 +181,65 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return [_arrTitles count];
+    return self.arrValues.count;
 }
 
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [(NSArray *)[_arrValues objectForKey:[_arrTitles objectAtIndex:section]] count];
+    return [(NSArray *)[self.arrValues objectAtIndex:section] count];
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     UIView *sectionView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 50)];
     sectionView.backgroundColor = RGB(240, 240, 240);
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(16, 0, 300, 50)];
-    label.text = [_arrTitles objectAtIndex:section];;
-    label.font = [UIFont systemFontOfSize:17.0f];
-    label.textColor = TEXT_COLOR;
-    [sectionView addSubview:label];
     return sectionView;
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *cellIndentity = @"SettingsCell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIndentity];
+    NSString *cellIndentity = @"SHGSettingTableViewCell";
+    SHGSettingTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIndentity];
     if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIndentity];
+        cell = [[[NSBundle mainBundle] loadNibNamed:@"SHGSettingTableViewCell" owner:self options:nil] lastObject];
+        cell.textLabel.font = [UIFont systemFontOfSize:14.0f];
+        cell.textLabel.textColor = [UIColor colorWithHexString:@"161616"];
+        cell.textLabel.backgroundColor = [UIColor clearColor];
     }
-    
-    SettingsObj *obj = [(NSArray *)[_arrValues objectForKey:[_arrTitles objectAtIndex:[indexPath section]]] objectAtIndex:[indexPath row]];
-    
+    SettingsObj *obj = [[self.arrValues objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
     cell.textLabel.text = obj.content;
     cell.imageView.image = [UIImage imageNamed:obj.imageInfo];
-    if (indexPath.row == 3 && indexPath.section == 0){
-        cell.accessoryView = self.switchView;
-    } else if (indexPath.row == 2 && indexPath.section == 0){
-        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 150, cell.height)];
+    cell.rightArrowView.hidden = NO;
+    cell.rightView.hidden = YES;
+
+    if (indexPath.row == ((NSArray *)[self.arrValues objectAtIndex:indexPath.section]).count - 1) {
+        cell.lineView.hidden = YES;
+    } else{
+        cell.lineView.hidden = NO;
+    }
+    if (obj.isShowSwith){
+        [cell.rightView removeAllSubviews];
+        [cell.rightView addSubview:self.switchView];
+        CGRect frame = self.switchView.frame;
+        frame.origin.x = (cell.rightView.width - CGRectGetWidth(frame)) / 2.0f;
+        frame.origin.y = (cell.rightView.height - CGRectGetHeight(frame)) / 2.0f;
+        self.switchView.frame = frame;
+        cell.rightArrowView.hidden = YES;
+        cell.rightView.hidden = NO;
+    } else if ([obj.content isEqualToString:@"清除缓存"]){
+        [cell.rightView removeAllSubviews];
+        UILabel *label = [[UILabel alloc] init];
         label.textAlignment = NSTextAlignmentRight;
         label.text = [NSString stringWithFormat:@"%0.1fM",[self folderSizeAtPath]];
-        cell.accessoryView =  label;
-    } else{
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        label.font = [UIFont systemFontOfSize:12.0f];
+        label.textColor = [UIColor colorWithHexString:@"919291"];
+        [label sizeToFit];
+        label.frame = cell.rightView.bounds;
+        [cell.rightView addSubview:label];
+        cell.rightArrowView.hidden = YES;
+        cell.rightView.hidden = NO;
     }
     
     return cell;
@@ -197,23 +247,22 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 50;
+    return 45.0f;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return 40;
+    if (section == 0) {
+        return 0.0f;
+    }
+    return 10.0f;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
-{
-    return 1;
-}
-
--(void)changeUpdateState
+- (void)changeUpdateState
 {
     hasUpdatedContacts = NO;
 }
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     self.curIndexPath = indexPath;

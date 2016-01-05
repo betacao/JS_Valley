@@ -930,6 +930,8 @@
 		F9EBB7D01BB3F4470023E84E /* China_City.plist in Resources */ = {isa = PBXBuildFile; fileRef = F9EBB7CF1BB3F4470023E84E /* China_City.plist */; };
 		F9EBB7D41BB3F4A00023E84E /* SHGProvincesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9EBB7D21BB3F4A00023E84E /* SHGProvincesViewController.m */; };
 		F9EBB7D51BB3F4A00023E84E /* SHGProvincesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9EBB7D31BB3F4A00023E84E /* SHGProvincesViewController.xib */; };
+		F9ED07EA1C3B59EC0079A1A9 /* SHGSettingTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F9ED07E81C3B59EC0079A1A9 /* SHGSettingTableViewCell.m */; };
+		F9ED07EB1C3B59EC0079A1A9 /* SHGSettingTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9ED07E91C3B59EC0079A1A9 /* SHGSettingTableViewCell.xib */; };
 		F9EDD5E91BABF3E100506C0C /* expressionImage.plist in Resources */ = {isa = PBXBuildFile; fileRef = F9EDD5E81BABF3E100506C0C /* expressionImage.plist */; };
 		F9EDD5F61BABFBCF00506C0C /* SDBrowserImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = F9EDD5EC1BABFBCF00506C0C /* SDBrowserImageView.m */; };
 		F9EDD5F71BABFBCF00506C0C /* SDPhotoBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = F9EDD5EE1BABFBCF00506C0C /* SDPhotoBrowser.m */; };
@@ -2245,6 +2247,9 @@
 		F9EBB7D11BB3F4A00023E84E /* SHGProvincesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGProvincesViewController.h; sourceTree = "<group>"; };
 		F9EBB7D21BB3F4A00023E84E /* SHGProvincesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGProvincesViewController.m; sourceTree = "<group>"; };
 		F9EBB7D31BB3F4A00023E84E /* SHGProvincesViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGProvincesViewController.xib; sourceTree = "<group>"; };
+		F9ED07E71C3B59EC0079A1A9 /* SHGSettingTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGSettingTableViewCell.h; sourceTree = "<group>"; };
+		F9ED07E81C3B59EC0079A1A9 /* SHGSettingTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGSettingTableViewCell.m; sourceTree = "<group>"; };
+		F9ED07E91C3B59EC0079A1A9 /* SHGSettingTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGSettingTableViewCell.xib; sourceTree = "<group>"; };
 		F9EDD5E81BABF3E100506C0C /* expressionImage.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = expressionImage.plist; sourceTree = "<group>"; };
 		F9EDD5EB1BABFBCF00506C0C /* SDBrowserImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDBrowserImageView.h; sourceTree = "<group>"; };
 		F9EDD5EC1BABFBCF00506C0C /* SDBrowserImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDBrowserImageView.m; sourceTree = "<group>"; };
@@ -2405,6 +2410,9 @@
 				4088DD851AF0EEA200393855 /* SettingsViewController.h */,
 				4088DD861AF0EEA200393855 /* SettingsViewController.m */,
 				4088DD871AF0EEA200393855 /* SettingsViewController.xib */,
+				F9ED07E71C3B59EC0079A1A9 /* SHGSettingTableViewCell.h */,
+				F9ED07E81C3B59EC0079A1A9 /* SHGSettingTableViewCell.m */,
+				F9ED07E91C3B59EC0079A1A9 /* SHGSettingTableViewCell.xib */,
 				408D8B831AF9F57B0055810C /* SettingsSuggestionsViewController.h */,
 				408D8B841AF9F57B0055810C /* SettingsSuggestionsViewController.m */,
 				408D8B851AF9F57B0055810C /* SettingsSuggestionsViewController.xib */,
@@ -5395,6 +5403,7 @@
 				61E83D9E1AF7C78E00703651 /* 选择好友@3x.png in Resources */,
 				98FA41C41BF5E1B40058A4EF /* SHGActionDetailViewController.xib in Resources */,
 				61E83D4E1AF7C78E00703651 /* 身份验证弹出对话框@3x.png in Resources */,
+				F9ED07EB1C3B59EC0079A1A9 /* SHGSettingTableViewCell.xib in Resources */,
 				61E83CD21AF7C78E00703651 /* 分享@2x.png in Resources */,
 				B04D6E311B60C01300E3863E /* 消息x@2x.png in Resources */,
 				61E83D1F1AF7C78E00703651 /* 相互关注图标@2x.png in Resources */,
@@ -5691,6 +5700,7 @@
 				40302B001AEF213400F22EB6 /* BasePeopleTableViewCell.m in Sources */,
 				6146B4AB1B011B7800D62678 /* RootViewController.m in Sources */,
 				615010E21AD61C1800827F82 /* CPTextViewPlaceholder.m in Sources */,
+				F9ED07EA1C3B59EC0079A1A9 /* SHGSettingTableViewCell.m in Sources */,
 				B0BAA36B1B69EAF30036C367 /* CCLocationManager.m in Sources */,
 				6187D3101AF1C693008E1D21 /* SRSlimeView.m in Sources */,
 				61647AF61AE8F33000B52544 /* LoginObj.m in Sources */,

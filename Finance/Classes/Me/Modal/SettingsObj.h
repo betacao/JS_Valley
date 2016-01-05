@@ -12,7 +12,7 @@
 
 @property (nonatomic, strong)  NSString *imageInfo;
 @property (nonatomic, strong)  NSString *content;
-@property (nonatomic, strong)  NSString *isShowSwith;//是否显示开关
+@property (nonatomic, assign)  BOOL isShowSwith;//是否显示开关
 @property (nonatomic, strong)  NSString *isOn;//开关状态
 
 @end
