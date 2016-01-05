@@ -9,7 +9,7 @@
 #import "MyTeamViewController.h"
 #import "TeamDetailObject.h"
 #import "TeamDetailTableViewCell.h"
-
+#import "SHGMyTeamListTableViewController.h"
 @interface MyTeamViewController ()
 	<UITableViewDelegate, UITableViewDataSource>
 
@@ -158,9 +158,11 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	//[tableView deselectRowAtIndexPath:indexPath animated:YES];
-    if(indexPath.section == 1){
-        
+	[tableView deselectRowAtIndexPath:indexPath animated:YES];
+    if (indexPath.section == 1) {
+        SHGMyTeamListTableViewController * vc = [[SHGMyTeamListTableViewController alloc]init];
+        [vc makeDate:self.dataSource];
+        [self.navigationController pushViewController:vc animated:YES];
     }
 }
 

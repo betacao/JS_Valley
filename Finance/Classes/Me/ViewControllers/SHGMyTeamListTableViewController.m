@@ -7,9 +7,10 @@
 //
 
 #import "SHGMyTeamListTableViewController.h"
-
+#import "TeamDetailTableViewCell.h"
+#import "TeamDetailObject.h"
 @interface SHGMyTeamListTableViewController ()
-
+//@property (nonatomic , strong)NSArray * dateArry;
 @end
 
 @implementation SHGMyTeamListTableViewController
@@ -22,34 +23,47 @@
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    self.title = @"我的合伙人";
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
+- (void)makeDate:(NSArray * )arry
+{
+    [self.dataArr addObjectsFromArray:arry];
+}
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-#warning Incomplete implementation, return the number of sections
-    return 0;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-#warning Incomplete implementation, return the number of rows
-    return 0;
+
+    return self.dataArr.count;
 }
 
-/*
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
+    		static NSString *CellIdentifier = @"TeamDetailTableViewCell";
+    		TeamDetailTableViewCell *cell = (TeamDetailTableViewCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
-    // Configure the cell...
+    		// Configure the cell...
+    		if (cell == nil) {
+    			cell = [[[NSBundle mainBundle] loadNibNamed:CellIdentifier owner:self options:nil]objectAtIndex:0];
+    		}
     
+    		TeamDetailObject *obj = self.dataArr[indexPath.row];
+    		cell.nameLabel.text = obj.name;
+    		cell.moneyLabel.text = obj.money;
     return cell;
 }
-*/
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 67.0f;
+}
 
 /*
 // Override to support conditional editing of the table view.

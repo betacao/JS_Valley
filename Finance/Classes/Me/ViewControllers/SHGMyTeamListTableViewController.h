@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SHGMyTeamListTableViewController : UITableViewController
-
+@interface SHGMyTeamListTableViewController : BaseTableViewController
+- (void)makeDate:(NSArray * )arry;
 @end

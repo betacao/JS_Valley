@@ -78,6 +78,7 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
 
     [self.tableView setTableHeaderView:self.headerView];
     //[self.tableView setTableFooterView:[[UIView alloc] init]];
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     [self initView];
 
     [self requestDataWithTarget:@"first" time:@""];
@@ -86,10 +87,10 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
 - (void)initView
 {
       //1.7.2修改
-//    self.headerImageView.userInteractionEnabled = YES;
+    self.headerImageView.userInteractionEnabled = YES;
 //    self.headerImageView.layer.masksToBounds = YES;
 //    self.headerImageView.layer.cornerRadius = CGRectGetHeight(self.headerImageView.frame) / 2.0f;
-    self.headerImageView.hidden = YES;
+    //self.headerImageView.hidden = YES;
     UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapHeaderView:)];
     [self.headerImageView addGestureRecognizer:recognizer];
 }
@@ -128,8 +129,22 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
 
 - (void)loadUI
 {
+    CGSize tsize =CGSizeMake(MAXFLOAT,self.userNameLabel.frame.size.height);
+    
+    NSDictionary * tdic = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:14 ],NSFontAttributeName,nil];
+    
+    CGSize  actualsize =[self.nickName boundingRectWithSize:tsize options:NSStringDrawingUsesLineFragmentOrigin  attributes:tdic context:nil].size;
+    self.userNameLabel.frame =CGRectMake(self.userNameLabel.frame.origin.x,self.userNameLabel.frame.origin.y,actualsize.width ,self.userNameLabel.frame.size.height );
+    
+    self.departmentLabel.frame = CGRectMake(CGRectGetMaxX(self.userNameLabel.frame) + 5.0, self.departmentLabel.frame.origin.y, self.departmentLabel.frame.size.width, self.departmentLabel.frame.size.height);
+    
     [self.headerImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,self.potName]] placeholderImage:[UIImage imageNamed:@"default_head"]];
-    self.departmentLabel.text = self.department;
+    if (self.department.length > 5) {
+        NSString * str = [self.department substringToIndex:5];
+        self.departmentLabel.text = [NSString stringWithFormat:@"%@...",str];
+    }else{
+        self.departmentLabel.text = self.department;
+    }
     self.companyLabel.text = self.companyName;
     self.userNameLabel.text = self.nickName;
     self.positionLabel.text =self.position;
@@ -163,15 +178,18 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
 {
     if ([self.relationShip integerValue] == 0){         //未关注
         [self.leftButton setTitle:@"+关注" forState:UIControlStateNormal];
-        [self.leftButton setBackgroundColor:[UIColor colorWithHexString:@"F7514A"]];
+        [self.leftButton setTitleColor:[UIColor colorWithHexString:@"F7514A"] forState:UIControlStateNormal];
+        //[self.leftButton setBackgroundColor:[UIColor colorWithHexString:@"F7514A"]];
     } else if ([self.relationShip intValue] == 1){      //已关注
-        [self.leftButton setTitle:@"发消息" forState:UIControlStateNormal];
+        [self.leftButton setTitle:@"已关注" forState:UIControlStateNormal];
         self.leftButton.enabled = NO;
-         [self.leftButton setBackgroundColor:[UIColor colorWithHexString:@"B7B7B7"]];
+        [self.leftButton setTitleColor:[UIColor colorWithHexString:@"919291"] forState:UIControlStateNormal];
+         //[self.leftButton setBackgroundColor:[UIColor colorWithHexString:@"B7B7B7"]];
     } else{
         //互相关注
         [self.leftButton setTitle:@"发消息" forState:UIControlStateNormal];
-         [self.leftButton setBackgroundColor:[UIColor colorWithHexString:@"F7514A"]];
+         //[self.leftButton setBackgroundColor:[UIColor colorWithHexString:@"F7514A"]];
+        [self.leftButton setTitleColor:[UIColor colorWithHexString:@"1D5798"] forState:UIControlStateNormal];
     }
 
 }
@@ -179,10 +197,12 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
 {
     if (self.isCollected) {
         [self.rightButton setTitle:@"已收藏" forState:UIControlStateNormal];
-        [self.rightButton setBackgroundColor:[UIColor colorWithHexString:@"B7B7B7"]];
+        //[self.rightButton setBackgroundColor:[UIColor colorWithHexString:@"B7B7B7"]];
+        [self.rightButton setTitleColor:[UIColor colorWithHexString:@"1D5798"] forState:UIControlStateNormal];
     } else{
         [self.rightButton setTitle:@"收藏名片" forState:UIControlStateNormal];
-        [self.rightButton setBackgroundColor:[UIColor colorWithHexString:@"474550"]];
+        //[self.rightButton setBackgroundColor:[UIColor colorWithHexString:@"474550"]];
+        [self.rightButton setTitleColor:[UIColor colorWithHexString:@"1D5798"] forState:UIControlStateNormal];
     }
 }
 - (void)parseDataWithDic:(NSDictionary *)dictionary
@@ -326,6 +346,7 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
     if (!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
+        
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.textLabel.font = [UIFont systemFontOfSize:14.0f];
         cell.textLabel.textColor = [UIColor colorWithHexString:@"434343"];
@@ -333,7 +354,7 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
 
     UILabel *label = [[UILabel alloc] init];
     label.font = [UIFont systemFontOfSize:11.0f];
-    label.textColor = [UIColor colorWithHexString:@"4b88b7"];
+    label.textColor = [UIColor colorWithHexString:@"919291"];
     switch (indexPath.row) {
         case 0:{
             if (self.dynamicNumber) {
