@@ -122,6 +122,7 @@ static BOOL isFetchingPublicGroupList = NO;
         _searchBar.delegate = self;
         _searchBar.placeholder = NSLocalizedString(@"search", @"Search");
         _searchBar.backgroundColor = [UIColor colorWithRed:0.747 green:0.756 blue:0.751 alpha:1.000];
+      
     }
     
     return _searchBar;
