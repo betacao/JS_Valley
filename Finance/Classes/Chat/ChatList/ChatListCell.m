@@ -124,6 +124,8 @@
 {
     _name = name;
     self.textLabel.text = name;
+    self.textLabel.textColor = [UIColor colorWithHexString:@"161616"];
+    self.textLabel.font = [UIFont systemFontOfSize:13];
 }
 
 +(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath

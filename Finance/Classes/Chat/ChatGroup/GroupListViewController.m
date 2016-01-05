@@ -49,12 +49,12 @@
     //处理tableView左边空白
     if ([self.tableView respondsToSelector:@selector(setSeparatorInset:)]) {
         
-        [self.tableView setSeparatorInset:UIEdgeInsetsZero];
+        [self.tableView setSeparatorInset:UIEdgeInsetsMake(0,15,0,0)];
         
     }
     if ([self.tableView respondsToSelector:@selector(setLayoutMargins:)]) {
         
-        [self.tableView setLayoutMargins:UIEdgeInsetsZero];
+        [self.tableView setLayoutMargins:UIEdgeInsetsMake(0,15,0,0)];
         
     }
     _dataSource = [NSMutableArray array];
@@ -64,13 +64,13 @@
     [[EaseMob sharedInstance].chatManager addDelegate:self delegateQueue:nil];
     self.tableView.frame=CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT-64-50);
     [self.tableView setContentSize:CGSizeMake(SCREENWIDTH, SCREENHEIGHT-64-50)];
-    self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.backgroundColor = [UIColor whiteColor];
     self.tableView.tableFooterView = [[UIView alloc] init];
     self.tableView.tableHeaderView = self.searchBar;
     //self.tableView.sectionHeaderHeight = 50;
     [self.tableView addSubview:self.slimeView];
-    self.tableView.separatorInset=UIEdgeInsetsMake(0, 0, 0, 0);
+    self.tableView.separatorInset=UIEdgeInsetsMake(0, 15, 0, 0);
     
     [self searchController];
     //公共群组
@@ -230,17 +230,26 @@
 {
     static NSString *CellIdentifier = @"GroupCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    //cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     if (!cell)
     {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         cell.imageView.contentMode = UIViewContentModeScaleAspectFit;
+        cell.textLabel.textColor = [UIColor colorWithHexString:@"161616"];
+        cell.textLabel.font = [UIFont systemFontOfSize:13];
     }
     
     if (indexPath.section == 0)
     {
-        cell.imageView.image=[UIImage imageNamed:@"添加群组"];
-        cell.textLabel.text =@"新建群组";
+        //cell.imageView.image=[UIImage imageNamed:@"添加群组"];
+        //cell.textLabel.text =@"新建群组";
+        cell.textLabel.hidden = YES;
+        UILabel * xlabel = [[UILabel alloc]initWithFrame:CGRectMake(30, 1, 200, 48)];
+        xlabel.textColor = [UIColor colorWithHexString:@"161616"];
+        xlabel.font = [UIFont systemFontOfSize:13];
+        xlabel.text = @"新建群组";
+        [cell addSubview:xlabel];
+        cell.separatorInset = UIEdgeInsetsMake(0, 15, 0, 0);
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
        
     }
@@ -303,18 +312,18 @@
     headerView.backgroundColor = [[UIColor alloc]initWithRed:1 green:1 blue:1 alpha:1];
     
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-    button.frame = CGRectMake(20, 1, 320, 48);
+    button.frame = CGRectMake(30, 1, 320, 48);
     button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     button.titleEdgeInsets = UIEdgeInsetsMake(0,0, 0, 0);
     button.backgroundColor = [UIColor clearColor];
-    button.titleLabel.font = [UIFont systemFontOfSize: 16.0f];
-    [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    button.titleLabel.font = [UIFont systemFontOfSize: 13.0f];
+    [button setTitleColor:[UIColor colorWithHexString:@"161616"] forState:UIControlStateNormal];
     button.tag = section;
     [button addTarget:self action:@selector(sectionBurronClick:) forControlEvents:UIControlEventTouchUpInside];
     //设置每组的的标题
     
     UIButton *imageBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    imageBtn.frame = CGRectMake(5, 20, 8, 11);
+    imageBtn.frame = CGRectMake(15, 20, 8, 11);
     imageBtn.tag = section;
     [imageBtn setImage:[UIImage imageNamed:@"arrowRight"] forState:UIControlStateNormal];
     [imageBtn addTarget:self action:@selector(sectionBurronClick:) forControlEvents:UIControlEventTouchUpInside];
@@ -327,7 +336,7 @@
         
     }
     else if (section == 1){
-        UIView *upVIew = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.height, 1)];
+        UIView *upVIew = [[UIView alloc]initWithFrame:CGRectMake(15, 0, self.view.bounds.size.height, 0.5)];
         upVIew.backgroundColor = [[UIColor alloc]initWithHue:0 saturation:0 brightness:0 alpha:0.1];
         [headerView addSubview:upVIew];
         [button setTitle:[NSString stringWithFormat:@"推荐群组 (%lu)",(unsigned long)self.dataSource.count] forState:UIControlStateNormal];
@@ -341,7 +350,7 @@
     
     [headerView addSubview:button];
     
-    UIView *lineVIew = [[UIView alloc]initWithFrame:CGRectMake(0, 50, self.view.bounds.size.height, 1)];
+    UIView *lineVIew = [[UIView alloc]initWithFrame:CGRectMake(15, 50, self.view.bounds.size.height, 0.5)];
     lineVIew.backgroundColor = [[UIColor alloc]initWithHue:0 saturation:0 brightness:0 alpha:0.1];
     [headerView addSubview:lineVIew];
     
@@ -428,16 +437,27 @@
     
 }
 //处理tableView左边空白
+-(void)viewDidLayoutSubviews
+{
+    if ([self.tableView respondsToSelector:@selector(setSeparatorInset:)]) {
+        [self.tableView setSeparatorInset:UIEdgeInsetsMake(0,15,0,0)];
+    }
+    
+    if ([self.tableView respondsToSelector:@selector(setLayoutMargins:)]) {
+        [self.tableView setLayoutMargins:UIEdgeInsetsMake(0,15,0,0)];
+    }
+}
+
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
     if ([cell respondsToSelector:@selector(setSeparatorInset:)]) {
         
-        [cell setSeparatorInset:UIEdgeInsetsZero];
+        [cell setSeparatorInset:UIEdgeInsetsMake(0,15,0,0)];
         
     }
     
     if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
         
-        [cell setLayoutMargins:UIEdgeInsetsZero];
+        [cell setLayoutMargins:UIEdgeInsetsMake(0,15,0,0)];
         
     }
 }

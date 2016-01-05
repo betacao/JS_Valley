@@ -517,7 +517,9 @@ static NSString * const kCommonFNum			= @"commonnum";
         if (!cell){
             cell = [[ChatListCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:identify];
         }
+        cell.separatorInset = UIEdgeInsetsMake(0, 15, 0, 0);
         if(indexPath.row == 0){
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             cell.placeholderImage = [UIImage imageNamed:@"申请头像图标"];
             cell.name=@"群申请与通知";
             cell.imageURL=nil;
@@ -525,6 +527,7 @@ static NSString * const kCommonFNum			= @"commonnum";
             cell.time=@"";
             [cell addSubview:self.unapplyCountLabel];
         } else if(indexPath.row==1){
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             cell.placeholderImage=[UIImage imageNamed:@"消息通知"];
             cell.imageURL=nil;
             cell.name =@"通知";
@@ -731,16 +734,26 @@ static NSString * const kCommonFNum			= @"commonnum";
     }
 }
 //处理tableView左边空白
+-(void)viewDidLayoutSubviews
+{
+    if ([self.tableView respondsToSelector:@selector(setSeparatorInset:)]) {
+        [self.tableView setSeparatorInset:UIEdgeInsetsMake(0,15,0,0)];
+    }
+    
+    if ([self.tableView respondsToSelector:@selector(setLayoutMargins:)]) {
+        [self.tableView setLayoutMargins:UIEdgeInsetsMake(0,15,0,0)];
+    }
+}
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
     if ([cell respondsToSelector:@selector(setSeparatorInset:)]) {
         
-        [cell setSeparatorInset:UIEdgeInsetsZero];
+        [cell setSeparatorInset:UIEdgeInsetsMake(0,15,0,0)];
         
     }
     
     if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
         
-        [cell setLayoutMargins:UIEdgeInsetsZero];
+        [cell setLayoutMargins:UIEdgeInsetsMake(0,15,0,0)];
         
     }
 }
