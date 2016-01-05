@@ -734,6 +734,8 @@
 		98CB3AA61C3224DF0006A3F3 /* SHGMarketSecondCategoryListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98CB3AA41C3224DF0006A3F3 /* SHGMarketSecondCategoryListTableViewController.m */; };
 		98CB3AA71C3224DF0006A3F3 /* SHGMarketSecondCategoryListTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98CB3AA51C3224DF0006A3F3 /* SHGMarketSecondCategoryListTableViewController.xib */; };
 		98CB422F1C3262C00023A124 /* SHGSecondCategoryButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 98CB422E1C3262C00023A124 /* SHGSecondCategoryButton.m */; };
+		98D13FD71C3B69E6007CDFCD /* SHGMyTeamListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98D13FD51C3B69E6007CDFCD /* SHGMyTeamListTableViewController.m */; };
+		98D13FD81C3B69E6007CDFCD /* SHGMyTeamListTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98D13FD61C3B69E6007CDFCD /* SHGMyTeamListTableViewController.xib */; };
 		98D65B021C1E607300B65119 /* CircleNewDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98D65B001C1E607300B65119 /* CircleNewDetailViewController.m */; };
 		98D65B031C1E607300B65119 /* CircleNewDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98D65B011C1E607300B65119 /* CircleNewDetailViewController.xib */; };
 		98D73C2D1C194E7E0055AF75 /* SHGNewsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 98D73C2B1C194E7E0055AF75 /* SHGNewsTableViewCell.m */; };
@@ -1977,6 +1979,9 @@
 		98CB3AA51C3224DF0006A3F3 /* SHGMarketSecondCategoryListTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGMarketSecondCategoryListTableViewController.xib; sourceTree = "<group>"; };
 		98CB422D1C3262C00023A124 /* SHGSecondCategoryButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGSecondCategoryButton.h; sourceTree = "<group>"; };
 		98CB422E1C3262C00023A124 /* SHGSecondCategoryButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGSecondCategoryButton.m; sourceTree = "<group>"; };
+		98D13FD41C3B69E6007CDFCD /* SHGMyTeamListTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGMyTeamListTableViewController.h; sourceTree = "<group>"; };
+		98D13FD51C3B69E6007CDFCD /* SHGMyTeamListTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGMyTeamListTableViewController.m; sourceTree = "<group>"; };
+		98D13FD61C3B69E6007CDFCD /* SHGMyTeamListTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGMyTeamListTableViewController.xib; sourceTree = "<group>"; };
 		98D65AFF1C1E607300B65119 /* CircleNewDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CircleNewDetailViewController.h; sourceTree = "<group>"; };
 		98D65B001C1E607300B65119 /* CircleNewDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CircleNewDetailViewController.m; sourceTree = "<group>"; };
 		98D65B011C1E607300B65119 /* CircleNewDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CircleNewDetailViewController.xib; sourceTree = "<group>"; };
@@ -3692,6 +3697,9 @@
 				98E302281BFB0708001D4A69 /* SHGAuthenticationViewController.h */,
 				98E302291BFB0708001D4A69 /* SHGAuthenticationViewController.m */,
 				98E3022A1BFB0708001D4A69 /* SHGAuthenticationViewController.xib */,
+				98D13FD41C3B69E6007CDFCD /* SHGMyTeamListTableViewController.h */,
+				98D13FD51C3B69E6007CDFCD /* SHGMyTeamListTableViewController.m */,
+				98D13FD61C3B69E6007CDFCD /* SHGMyTeamListTableViewController.xib */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -5351,6 +5359,7 @@
 				408D8B671AF8618C0055810C /* messageToolbarBg@2x.png in Resources */,
 				53B40DD11AFBF01800AD2EFE /* 消息通知@2x.png in Resources */,
 				B04D6E2B1B60C01300E3863E /* 圈子.png in Resources */,
+				98D13FD81C3B69E6007CDFCD /* SHGMyTeamListTableViewController.xib in Resources */,
 				408D8AFF1AF8618C0055810C /* VoiceSearchFeedback006.png in Resources */,
 				408D8B201AF8618C0055810C /* call_out_h@2x.png in Resources */,
 				61656F8F1B15DD5B008B2AB4 /* MeTableViewCell.xib in Resources */,
@@ -5733,6 +5742,7 @@
 				6187D2E41AF1C693008E1D21 /* EMChatVideoBubbleView.m in Sources */,
 				614DC88C1AD65F9C00F610D4 /* CommonMethod.m in Sources */,
 				614EFEE21AF1126100F2BDD1 /* TabBarViewController.m in Sources */,
+				98D13FD71C3B69E6007CDFCD /* SHGMyTeamListTableViewController.m in Sources */,
 				6187D2D61AF1C693008E1D21 /* ChatViewController+Category.m in Sources */,
 				614BA7F11AE77AFA009480CD /* ProdListObj.m in Sources */,
 				610FF0721AD6227F0027EBA6 /* NSString+Customized.m in Sources */,
