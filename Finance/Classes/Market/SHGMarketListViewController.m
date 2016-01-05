@@ -98,8 +98,8 @@
 - (SHGCategoryScrollView *)scrollView
 {
     if (!_scrollView) {
-        UIImage *image = [UIImage imageNamed:@"more_CategoryButton"];
-        _scrollView = [[SHGCategoryScrollView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, SCREENWIDTH - image.size.width, kCategoryScrollViewHeight)];
+//        UIImage *image = [UIImage imageNamed:@"more_CategoryButton"];
+        _scrollView = [[SHGCategoryScrollView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, SCREENWIDTH, kCategoryScrollViewHeight)];
         _scrollView.categoryDelegate = self;
     }
     return _scrollView;
@@ -194,13 +194,6 @@
         }
         cell.delegate = self;
         [cell loadDataWithObject:[self.currentArray objectAtIndex:indexPath.row]];
-//        if (![category isEqualToString:@"热门"]) {
-//            SHGMarketFirstCategoryObject * obj = [self.currentArray objectAtIndex:indexPath.row];
-//            
-//            if (obj.secondCataLogs.count == 0) {
-//                [cell loadNewUi];
-//            }
-//        }
         if (secondCount == 0) {
             [cell loadNewUi];
         }
@@ -233,7 +226,7 @@
         CGRect frame = moreButton.frame;
         frame.origin.x = SCREENWIDTH - CGRectGetWidth(frame);
         moreButton.frame = frame;
-        [self.headerView addSubview:moreButton];
+//        [self.headerView addSubview:moreButton];
 
         UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, kCategoryScrollViewHeight, SCREENWIDTH, 0.5f)];
         lineView.backgroundColor = [UIColor colorWithHexString:@"d9dadb"];

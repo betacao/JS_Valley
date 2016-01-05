@@ -40,7 +40,7 @@
     self.searchBar.tintColor = [UIColor whiteColor];
     self.searchBar.barTintColor = [UIColor whiteColor];
     self.searchBar.searchBarStyle = UISearchBarStyleDefault;
-    self.searchBar.placeholder = @"请输入关键字";
+    self.searchBar.placeholder = @"请输入业务名称/类型/地区关键字";
     [self.searchBar setImage:[UIImage imageNamed:@"market_search"] forSearchBarIcon:UISearchBarIconSearch state:UIControlStateNormal];
     UIView *view = [self.searchBar.subviews firstObject];
     for (id object in view.subviews) {
@@ -209,10 +209,12 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    SHGMarketDetailViewController *controller = [[SHGMarketDetailViewController alloc] init];
-    controller.delegate = [SHGMarketSegmentViewController sharedSegmentController];
-    controller.object = [self.resultArray objectAtIndex:indexPath.row];
-    [self.navigationController pushViewController:controller animated:YES];
+    if (self.resultArray.count > 0) {
+        SHGMarketDetailViewController *controller = [[SHGMarketDetailViewController alloc] init];
+        controller.delegate = [SHGMarketSegmentViewController sharedSegmentController];
+        controller.object = [self.resultArray objectAtIndex:indexPath.row];
+        [self.navigationController pushViewController:controller animated:YES];
+    }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(nonnull NSIndexPath *)indexPath

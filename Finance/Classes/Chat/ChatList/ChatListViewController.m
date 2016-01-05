@@ -1212,20 +1212,22 @@ static NSString * const kCommonFNum			= @"commonnum";
         _segmentControl.enabled = YES;
         _segmentControl.layer.masksToBounds = YES;
         _segmentControl.layer.cornerRadius = 4;
-        NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:RGB(255, 57, 67),NSForegroundColorAttributeName,[UIFont systemFontOfSize:17],NSFontAttributeName ,nil];
-        NSDictionary *dic1 = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor],NSForegroundColorAttributeName,[UIFont systemFontOfSize:17],NSFontAttributeName ,nil];
+        NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor colorWithHexString:@"d53432"],NSForegroundColorAttributeName,[UIFont systemFontOfSize:17.0f],NSFontAttributeName ,nil];
+
+        NSDictionary *dic1 = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor],NSForegroundColorAttributeName,[UIFont systemFontOfSize:17.0f],NSFontAttributeName ,nil];
         //设置标题的颜色 字体和大小 阴影和阴影颜色
-        [_segmentControl setTitleTextAttributes:dic1 forState:UIControlStateSelected];
-        [_segmentControl setTitleTextAttributes:dic forState:UIControlStateNormal];
+        [_segmentControl setTitleTextAttributes:dic1 forState:UIControlStateNormal];
+        [_segmentControl setTitleTextAttributes:dic forState:UIControlStateSelected];
         _segmentControl.tintColor = [UIColor clearColor];
-        _segmentControl.layer.borderColor =  [RGB(255, 56, 67) CGColor];
+        _segmentControl.layer.borderColor =  [UIColor whiteColor].CGColor;
         _segmentControl.layer.borderWidth = 1.0;
-        UIImage *segImage = [CommonMethod imageWithColor:[UIColor whiteColor] andSize:CGSizeMake(85, 26)];
-        UIImage *selectImage = [CommonMethod imageWithColor:RGB(255, 56, 67) andSize:CGSizeMake(85, 26)];
+        UIImage *segImage = [CommonMethod imageWithColor:[UIColor colorWithHexString:@"d53432"] andSize:CGSizeMake(85, 26)];
+        UIImage *selectImage = [CommonMethod imageWithColor:[UIColor whiteColor] andSize:CGSizeMake(85, 26)];
         [_segmentControl setBackgroundImage:segImage forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+
         [_segmentControl setBackgroundImage:selectImage forState:UIControlStateSelected barMetrics:UIBarMetricsDefault];
-        [_segmentControl setBackgroundImage:[UIImage imageWithColor:[UIColor whiteColor] andSize:CGSizeMake(85, 26)] forState:UIControlStateHighlighted barMetrics:UIBarMetricsDefault];
-        [_segmentControl setBackgroundImage:selectImage forState:UIControlStateSelected|UIControlStateHighlighted barMetrics:UIBarMetricsDefault];
+
+        [_segmentControl setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithHexString:@"d53432"] andSize:CGSizeMake(85, 26)] forState:UIControlStateHighlighted barMetrics:UIBarMetricsDefault];
         
         [_segmentControl addTarget:self action:@selector(selected:) forControlEvents:UIControlEventValueChanged];
         _segmentControl.selected = NO;

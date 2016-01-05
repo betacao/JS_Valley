@@ -508,7 +508,7 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
 
 #pragma mark ------消息界面东西
 // 统计未读消息数
--(void)setupUnreadMessageCount
+- (void)setupUnreadMessageCount
 {
     NSArray *conversations = [[[EaseMob sharedInstance] chatManager] conversations];
     NSInteger unreadCount = 0;
