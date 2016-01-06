@@ -8,6 +8,7 @@
 
 #import "BasePeopleTableViewCell.h"
 @interface BasePeopleTableViewCell()
+@property (weak, nonatomic) IBOutlet UILabel *lineLabel;
 
 - (IBAction)followButtonClicked:(id)sender;
 @end
@@ -16,6 +17,7 @@
 
 - (void)awakeFromNib {
     // Initialization code
+    self.lineLabel.frame = CGRectMake(self.lineLabel.origin.x, self.lineLabel.origin.y, self.lineLabel.width, 0.5);
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -26,7 +28,7 @@
 
 +(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 60;
+    return 56;
 }
 
 - (IBAction)followButtonClicked:(id)sender

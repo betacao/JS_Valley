@@ -78,6 +78,7 @@
         [replyLabel addSubview:cnickButton];
 
         NSString *leftText = [NSString stringWithFormat:@"回复"];
+        
         CGSize leftSize = [leftText sizeForFont:replyLabel.font constrainedToSize:CGSizeMake(200, 15) lineBreakMode:replyLabel.lineBreakMode];
         CGSize rSize = [[NSString stringWithFormat:@"%@:",comobj.rnickname] sizeForFont:replyLabel.font constrainedToSize:CGSizeMake(200, 15) lineBreakMode:replyLabel.lineBreakMode];
 
@@ -97,6 +98,7 @@
 
         NSRange range = NSMakeRange(comobj.cnickname.length + 2,1 + comobj.rnickname.length +1);
         [str addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"3C3C3C"] range:NSMakeRange(range.location + range.length,str.length - range.length - range.location)];
+        [str addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"3C3C3C"] range:NSMakeRange(comobj.cnickname.length, 2)];
     }
     [cnickButton addTarget:self action:@selector(cnickClick:) forControlEvents:UIControlEventTouchUpInside];
     [rnickButton addTarget:self action:@selector(rnickClick:) forControlEvents:UIControlEventTouchUpInside];

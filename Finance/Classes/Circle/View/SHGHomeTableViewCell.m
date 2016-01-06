@@ -287,6 +287,7 @@
                 NSRange range = NSMakeRange(cnicklen + 2, rnicklen+1+2 );
                 [str addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"4277B2"] range:range];
                 [str addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"3C3C3C"] range:NSMakeRange(range.location + range.length,str.length - range.location - range.length)];
+                [str addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"3C3C3C"] range:NSMakeRange(cnicklen, 2)];
             }
             [str addAttribute:NSFontAttributeName value:replyLabel.font range:NSMakeRange(0,text.length)];
 
@@ -373,8 +374,8 @@
     self.lblCompanyName.frame = companRect;
 
     NSString *str = obj.title;
-    if (obj.title.length > 4) {
-        str= [obj.title substringToIndex:4];
+    if (obj.title.length > 5) {
+        str= [obj.title substringToIndex:5];
         str = [NSString stringWithFormat:@"%@…",str];
     }
     self.lblPosition.text = str;

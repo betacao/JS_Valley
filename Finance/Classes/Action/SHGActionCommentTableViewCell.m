@@ -99,6 +99,7 @@
 
         NSRange range = NSMakeRange(object.commentUserName.length + 2,1 + object.commentOtherName.length +1);
         [str addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"3C3C3C"] range:NSMakeRange(range.location + range.length,str.length - range.length - range.location)];
+        [str addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"3C3C3C"] range:NSMakeRange(object.commentUserName.length, 2)];
     }
     [leftButton addTarget:self action:@selector(leftUserClick:) forControlEvents:UIControlEventTouchUpInside];
     [rightButton addTarget:self action:@selector(rightUserClick:) forControlEvents:UIControlEventTouchUpInside];

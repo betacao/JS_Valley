@@ -242,6 +242,8 @@
     if (indexPath.section == 0)
     {
         //cell.imageView.image=[UIImage imageNamed:@"添加群组"];
+        cell.textLabel.textColor = [UIColor colorWithHexString:@"161616"];
+        cell.textLabel.font = [UIFont systemFontOfSize:13];
         cell.textLabel.text =@"     新建群组";
 //        cell.textLabel.hidden = YES;
 //        UILabel * xlabel = [[UILabel alloc]initWithFrame:CGRectMake(30, 1, 200, 50)];
