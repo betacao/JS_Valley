@@ -42,37 +42,16 @@
 
 - (void)viewDidLoad
 {
-    
     [super viewDidLoad];
     self.title = @"群组";
-    
-    //处理tableView左边空白
-    if ([self.tableView respondsToSelector:@selector(setSeparatorInset:)]) {
-        
-        [self.tableView setSeparatorInset:UIEdgeInsetsMake(0,15,0,0)];
-        
-    }
-    if ([self.tableView respondsToSelector:@selector(setLayoutMargins:)]) {
-        
-        [self.tableView setLayoutMargins:UIEdgeInsetsMake(0,15,0,0)];
-        
-    }
     _dataSource = [NSMutableArray array];
     _commonArr = [NSMutableArray array];
     _joinArr = [NSMutableArray array];
     [[EaseMob sharedInstance].chatManager removeDelegate:self];
     [[EaseMob sharedInstance].chatManager addDelegate:self delegateQueue:nil];
-    self.tableView.frame=CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT-64-50);
-    [self.tableView setContentSize:CGSizeMake(SCREENWIDTH, SCREENHEIGHT-64-50)];
-    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    self.tableView.backgroundColor = [UIColor whiteColor];
-    self.tableView.tableFooterView = [[UIView alloc] init];
-    self.tableView.tableHeaderView = self.searchBar;
-    //self.tableView.sectionHeaderHeight = 50;
     [self.tableView addSubview:self.slimeView];
-    self.tableView.separatorInset=UIEdgeInsetsMake(0, 15, 0, 0);
-    
-    [self searchController];
+    self.tableView.separatorInset = UIEdgeInsetsMake(0, 15, 0, 0);
+
     //公共群组
     UIButton *publicButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [publicButton setFrame:CGRectMake(0, 0, 24, 24)];
@@ -91,9 +70,18 @@
     
     [self reloadDataSource];
 }
+
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    self.view.frame = CGRectMake(0.0f, 0.0f, SCREENWIDTH, SCREENHEIGHT);
+
+    self.tableView.backgroundColor = [UIColor whiteColor];
+    self.tableView.tableFooterView = [[UIView alloc] init];
+    [self.tableView setTableHeaderView:self.searchBar];
+
+    [self searchController];
+
     [MobClick event:@"GroupListViewController" label:@"onClick"];
 }
 - (void) returnClick
