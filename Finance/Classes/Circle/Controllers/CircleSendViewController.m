@@ -286,19 +286,19 @@
     
     //左侧导航按钮
     leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [leftButton setFrame:CGRectMake(0, 0, 44, 44)];
     [leftButton setTitle:@"取消" forState:UIControlStateNormal];
-    [leftButton setTitleColor:RGB(255, 0, 40) forState:UIControlStateNormal];
-    [leftButton.titleLabel setFont:[UIFont systemFontOfSize:17.0f]];
+    [leftButton sizeToFit];
+    [leftButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [leftButton.titleLabel setFont:[UIFont systemFontOfSize:15.0f]];
     [leftButton addTarget:self action:@selector(btnBackClick:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:leftButton];
     self.navigationItem.leftBarButtonItem = leftItem;
     //右侧导航按钮
     rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [rightButton setFrame:CGRectMake(0, 0, 44, 44)];
     [rightButton setTitle:@"发送" forState:UIControlStateNormal];
-    [rightButton setTitleColor:RGB(255, 0, 40) forState:UIControlStateNormal];
-    [rightButton.titleLabel setFont:[UIFont systemFontOfSize:17.0f]];
+    [rightButton sizeToFit];
+    [rightButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [rightButton.titleLabel setFont:[UIFont systemFontOfSize:15.0f]];
     [rightButton addTarget:self action:@selector(rightItemClick:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:rightButton];
     self.navigationItem.rightBarButtonItem = rightItem;
