@@ -19,7 +19,7 @@
 #import "SHGNewsTableViewCell.h"
 #import "CircleNewDetailViewController.h"
 #import "SHGEmptyDataView.h"
-#define KButtonWidth 80.f * XFACTOR
+#define KButtonWidth 320.f/3.0 * XFACTOR
 @interface MyCollectionViewController ()
 {
     UIImageView *imageBttomLine;
@@ -89,9 +89,9 @@
     if (!_categoryView) {
         _categoryView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.tableView.width, 37.0)];
         _categoryView.backgroundColor = [UIColor colorWithHexString:@"F6F6F6"];
-        NSArray * cartegoryArry = [NSArray arrayWithObjects:@"动态",@"产品",@"名片",@"资讯", nil];
-        NSInteger buttonWidth = self.tableView.width/4.0;
-        for (NSInteger i = 0; i< 4; i ++) {
+        NSArray * cartegoryArry = [NSArray arrayWithObjects:@"动态",@"产品",@"名片", nil];
+        NSInteger buttonWidth = self.tableView.width/3.0;
+        for (NSInteger i = 0; i< 3; i ++) {
             UIButton * button = [UIButton buttonWithType:UIButtonTypeCustom];
             button.frame = CGRectMake(i*KButtonWidth, 0, KButtonWidth, 35.0);
             button.tag = 20+i;
@@ -139,7 +139,7 @@
             [self refreshDataSource];
             self.tableView.separatorStyle = 0;
             CGRect rect = imageBttomLine.frame;
-            rect.origin.x =(self.tableView.width/4-40.0)/2+ (btn.tag-20)*self.tableView.width/4 ;
+            rect.origin.x =(self.tableView.width/3-40.0)/2+ (btn.tag-20)*self.tableView.width/3 ;
             [UIView beginAnimations:nil context:nil];
             [imageBttomLine setFrame:rect];
             [UIView setAnimationDuration:0.3];
@@ -157,7 +157,7 @@
             self.selectType = 2;
             [self refreshDataSource];
             CGRect rect = imageBttomLine.frame;
-            rect.origin.x =(self.tableView.width/4-40.0)/2+ (btn.tag-20)*self.tableView.width/4 ;
+            rect.origin.x =(self.tableView.width/3-40.0)/2+ (btn.tag-20)*self.tableView.width/3 ;
             [UIView beginAnimations:nil context:nil];
             [imageBttomLine setFrame:rect];
             [UIView setAnimationDuration:0.3];
@@ -176,7 +176,7 @@
             self.selectType = 3;
              [self refreshDataSource];
             CGRect rect = imageBttomLine.frame;
-            rect.origin.x =(self.tableView.width/4-40.0)/2+ (btn.tag-20)*self.tableView.width/4 ;
+            rect.origin.x =(self.tableView.width/3-40.0)/2+ (btn.tag-20)*self.tableView.width/3 ;
             [UIView beginAnimations:nil context:nil];
             [imageBttomLine setFrame:rect];
             [UIView setAnimationDuration:0.3];
@@ -190,27 +190,28 @@
             
         }
             break;
-        case 23:
-        {
-            self.tableView.separatorStyle = 0;
-            self.selectType = 4;
-             [self refreshDataSource];
-            CGRect rect = imageBttomLine.frame;
-            rect.origin.x =(self.tableView.width/4-40.0)/2+ (btn.tag-20.0)*self.tableView.width/4 ;
-            [UIView beginAnimations:nil context:nil];
-            [imageBttomLine setFrame:rect];
-            [UIView setAnimationDuration:0.3];
-            [UIView commitAnimations];
-            [btn setTitleColor:[UIColor colorWithHexString:@"D82626"] forState:UIControlStateNormal];
-             btn.titleLabel.font = [UIFont systemFontOfSize:14];
-            [self.tableView reloadData];
-            [Hud showLoadingWithMessage:@"加载中"];
-            [self requestNewsListWithTarget:@"first" time:@"" ];
-            }
-            break;
-
-        default:
-            break;
+            //1.7.2资讯收藏隐藏
+//        case 23:
+//        {
+//            self.tableView.separatorStyle = 0;
+//            self.selectType = 4;
+//             [self refreshDataSource];
+//            CGRect rect = imageBttomLine.frame;
+//            rect.origin.x =(self.tableView.width/4-40.0)/2+ (btn.tag-20.0)*self.tableView.width/4 ;
+//            [UIView beginAnimations:nil context:nil];
+//            [imageBttomLine setFrame:rect];
+//            [UIView setAnimationDuration:0.3];
+//            [UIView commitAnimations];
+//            [btn setTitleColor:[UIColor colorWithHexString:@"D82626"] forState:UIControlStateNormal];
+//             btn.titleLabel.font = [UIFont systemFontOfSize:14];
+//            [self.tableView reloadData];
+//            [Hud showLoadingWithMessage:@"加载中"];
+//            [self requestNewsListWithTarget:@"first" time:@"" ];
+//            }
+//            break;
+//
+//        default:
+//            break;
     }
 
 }
@@ -259,9 +260,11 @@
 		self.dataSource = self.productList;
     }else if (self.selectType == 3){
         self.dataSource = self.cardList;
-    }else if (self.selectType == 4){
-        self.dataSource = self.newsList;
     }
+    //1.7.2 资讯隐藏
+//    else if (self.selectType == 4){
+//        self.dataSource = self.newsList;
+//    }
 	
 	[self.tableView reloadData];
 	
@@ -294,11 +297,12 @@
             updateTime = obj.collectTime;
             [self requestCardListWithTarget:target time:updateTime];
         }
-        else if (self.selectType == 4){
-            CircleListObj *obj = self.dataSource[0];
-            updateTime = obj.publishdate;
-            [self requestCardListWithTarget:target time:updateTime];
-        }
+        //1.7.2 资讯隐藏
+//        else if (self.selectType == 4){
+//            CircleListObj *obj = self.dataSource[0];
+//            updateTime = obj.publishdate;
+//            [self requestCardListWithTarget:target time:updateTime];
+//        }
 
     } else
     {
@@ -323,10 +327,11 @@
              [Hud showLoadingWithMessage:@"加载中"];
             [self requestCardListWithTarget:@"load" time:updateTime];
         }
-        else if (self.selectType == 4){
-            [Hud showLoadingWithMessage:@"加载中"];
-            [self requestNewsListWithTarget:@"load" time:updateTime];
-        }
+        //1.7.2 资讯隐藏
+//        else if (self.selectType == 4){
+//            [Hud showLoadingWithMessage:@"加载中"];
+//            [self requestNewsListWithTarget:@"load" time:updateTime];
+//        }
 
 	} else{
         [self.tableView.footer endRefreshing];
@@ -948,7 +953,7 @@
     }
     else if (self.selectType == 3)
     {
-        return 144.0f;
+        return 86.0f;
         
     }else if (self.selectType == 4)
     {

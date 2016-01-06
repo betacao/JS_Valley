@@ -13,7 +13,7 @@
 /**
  *  各环境接口定义
  */
-#define kSitTest
+//#define kSitTest
 #define kReleaseH
 //#define kDevelopT
 //192.168.1.90:8080   本地

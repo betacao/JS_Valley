@@ -33,7 +33,23 @@
     self.companyLabel.text = obj.companyname;
     self.positionLabel.text = obj.position;
     self.departmentLabel.text = obj.titles;
-    self.positionLabel.text = obj.position;
+    
+    CGSize nSize = CGSizeMake(MAXFLOAT, self.userNameLabel.frame.size.height);
+    NSDictionary * nDic = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:14],NSFontAttributeName, nil];
+    CGSize nActualsize = [obj.name boundingRectWithSize:nSize options:NSStringDrawingUsesLineFragmentOrigin attributes:nDic context:nil].size;
+    self.userNameLabel.frame = CGRectMake(self.userNameLabel.origin.x, self.userNameLabel.origin.y, nActualsize.width, self.userNameLabel.frame.size.height);
+    
+    CGSize dSize = CGSizeMake(MAXFLOAT, self.departmentLabel.frame.size.height);
+    NSDictionary * dDic = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:12],NSFontAttributeName, nil];
+    CGSize dActualsize = [obj.titles boundingRectWithSize:dSize options:NSStringDrawingUsesLineFragmentOrigin  attributes:dDic context:nil].size;
+    self.departmentLabel.frame = CGRectMake(CGRectGetMaxX(self.userNameLabel.frame) + 10.0f, self.departmentLabel.origin.y, dActualsize.width, self.departmentLabel.height);
+    
+    if (obj.titles.length > 5) {
+        NSString * str = [obj.titles substringToIndex:5];
+        self.departmentLabel.text = [NSString stringWithFormat:@"%@...",str];
+    }else {
+        self.departmentLabel.text = obj.titles;
+    }
     //判断好友是一度好友还是二度好友
     if ([obj.friendShip isEqualToString:@"一度"]) {
         self.friendImage.image = [UIImage imageNamed:@"first_friend.png"];
@@ -46,12 +62,12 @@
          self.friendImage.image = nil;
     }
    
-    if (![obj.tags isEqualToString:@""]) {
-        NSArray *arry = [obj.tags componentsSeparatedByString:@","];
-        [self.tagViews removeAllSubviews];
-        [self.tagViews addSubview:[self viewForTags:arry]];
-    }
-    [self initView];
+//    if (![obj.tags isEqualToString:@""]) {
+//        NSArray *arry = [obj.tags componentsSeparatedByString:@","];
+//        [self.tagViews removeAllSubviews];
+//        [self.tagViews addSubview:[self viewForTags:arry]];
+//    }
+    //[self initView];
     [self.headerImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,self.obj.headerImageUrl]] placeholderImage:[UIImage imageNamed:@"default_head"]];
   
 }
