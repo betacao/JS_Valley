@@ -84,10 +84,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.navigationItem.leftBarButtonItem = nil;
-    self.navigationItem.hidesBackButton = YES;
-    self.navigationItem.titleView = self.navigationView;
-
+    //self.navigationItem.leftBarButtonItem = nil;
+    //self.navigationItem.hidesBackButton = YES;
+   // self.navigationItem.titleView = self.navigationView;
+      self.title = @"动态详情";
     [CommonMethod setExtraCellLineHidden:self.listTable];
     [self addHeaderRefresh:self.listTable headerRefesh:NO andFooter:NO];
     [Hud showLoadingWithMessage:@"加载中"];
@@ -132,11 +132,12 @@
     frame.size.height = 0.5f;
     self.lineView.frame = frame;
 
-    frame = self.btnAttention.frame;
-    frame.origin.x *= XFACTOR;
-    self.btnAttention.frame = frame;
+//    frame = self.btnAttention.frame;
+//    frame.origin.x *= XFACTOR;
+//    self.btnAttention.frame = frame;
+    self.btnAttention.frame = CGRectMake(SCREENWIDTH-14.0-self.btnAttention.frame.size.width, self.btnAttention.frame.origin.y, self.btnAttention.frame.size.width, self.btnAttention.frame.size.height);
 }
-
+//1.7.2修改隐藏掉
 - (IBAction)btnBackClick:(id)sender
 {
     [self.navigationController popViewControllerAnimated:YES];
@@ -467,6 +468,14 @@
 
 
     [self.btnNickname setBackgroundImage:[UIImage imageWithColor:BTN_SELECT_BACK_COLOR andSize:nameSize] forState:UIControlStateHighlighted];
+      [self addTableHeaderView];
+}
+- (void)addTableHeaderView
+{
+    CGRect frame = self.viewHeader.frame;
+    frame.size.height = CGRectGetMaxY(self.viewPraise.frame)-10.0f;
+    self.viewHeader.frame = frame;
+    [self.listTable setTableHeaderView: self.viewHeader];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -939,15 +948,15 @@
     return height + kCommentMargin;
 }
 
--(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-{
-    return _viewHeader.height;
-}
-
--(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-{
-    return _viewHeader;
-}
+//-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+//{
+//    return _viewHeader.height;
+//}
+//
+//-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+//{
+//    return _viewHeader;
+//}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
