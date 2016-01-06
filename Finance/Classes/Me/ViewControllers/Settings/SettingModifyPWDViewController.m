@@ -17,6 +17,13 @@
 @property (nonatomic, strong) IBOutlet UITextField *changedPassword;
 
 @property (nonatomic, strong) IBOutlet UITextField *confirmPassword;
+@property (weak, nonatomic) IBOutlet UIButton *changeButton;
+@property (weak, nonatomic) IBOutlet UIButton *oldButton;
+@property (weak, nonatomic) IBOutlet UIButton *confirmButton;
+
+- (IBAction)oldButtonClick:(id)sender;
+- (IBAction)changeButtonClick:(id)sender;
+- (IBAction)confirmNumButtonClick:(id)sender;
 
 - (IBAction)confirmButtonClicked:(id)sender;
 @end
@@ -28,13 +35,50 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    self.title = @"修改密码";
+    self.title = @"密码修改";
+    UIView *paddingView1 = [[UIView alloc] initWithFrame:CGRectMake(0, 0,20, 30)];
+    self.oldPassword.leftView = paddingView1;
+    self.oldPassword.leftViewMode = UITextFieldViewModeAlways;
+    UIView *paddingView2 = [[UIView alloc] initWithFrame:CGRectMake(0, 0,20, 30)];
+    self.changedPassword.leftView = paddingView2;
+    self.changedPassword.leftViewMode = UITextFieldViewModeAlways;
+    UIView *paddingView3 = [[UIView alloc] initWithFrame:CGRectMake(0, 0,20, 30)];
+    self.confirmPassword.leftView = paddingView3;
+    self.confirmPassword.leftViewMode = UITextFieldViewModeAlways;
+
+    self.oldPassword.placeholder = @"请输入旧密码";
+    [self.oldPassword setValue:[UIColor colorWithHexString:@"AFAFAF"] forKeyPath:@"_placeholderLabel.textColor"];
+    [self.oldPassword setValue:[UIFont boldSystemFontOfSize:14] forKeyPath:@"_placeholderLabel.font"];
+    
+    self.changedPassword.placeholder = @"请输入新密码";
+    [self.changedPassword setValue:[UIColor colorWithHexString:@"AFAFAF"] forKeyPath:@"_placeholderLabel.textColor"];
+    [self.changedPassword setValue:[UIFont boldSystemFontOfSize:14] forKeyPath:@"_placeholderLabel.font"];
+    
+    self.confirmPassword.placeholder = @"请确认新密码";
+    [self.confirmPassword setValue:[UIColor colorWithHexString:@"AFAFAF"] forKeyPath:@"_placeholderLabel.textColor"];
+    [self.confirmPassword setValue:[UIFont boldSystemFontOfSize:14] forKeyPath:@"_placeholderLabel.font"];
+   
 }
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     [MobClick event:@"SettingModifyPWDViewController" label:@"onClick"];
 }
+- (IBAction)oldButtonClick:(id)sender {
+    self.oldPassword.text = @"";
+    [self.oldPassword becomeFirstResponder];
+}
+
+- (IBAction)changeButtonClick:(id)sender {
+    self.changedPassword.text = @"";
+    [self.changedPassword becomeFirstResponder];
+}
+
+- (IBAction)confirmNumButtonClick:(id)sender {
+    self.confirmPassword.text = @"";
+    [self.confirmPassword becomeFirstResponder];
+}
+
 - (IBAction)confirmButtonClicked:(id)sender
 {
 	if (IsStrEmpty(self.oldPassword.text)) {
