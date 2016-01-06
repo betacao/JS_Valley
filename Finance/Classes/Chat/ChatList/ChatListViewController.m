@@ -1256,8 +1256,6 @@ static NSString * const kCommonFNum			= @"commonnum";
         {
             self.searchBar.hidden = NO;
             self.tableView.hidden = YES;
-            
-            //groupVC.hidesBottomBarWhenPushed = YES;
             [self.view addSubview:self.groupVC.view];
         }
             break;

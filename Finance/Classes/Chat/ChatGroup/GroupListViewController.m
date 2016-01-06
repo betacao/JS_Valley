@@ -230,77 +230,48 @@
 {
     static NSString *CellIdentifier = @"GroupCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    //cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    if (!cell)
-    {
+    if (!cell){
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         cell.imageView.contentMode = UIViewContentModeScaleAspectFit;
         cell.textLabel.textColor = [UIColor colorWithHexString:@"161616"];
         cell.textLabel.font = [UIFont systemFontOfSize:13];
     }
-    
-    if (indexPath.section == 0)
-    {
-        //cell.imageView.image=[UIImage imageNamed:@"添加群组"];
+
+    if (indexPath.section == 0){
         cell.textLabel.textColor = [UIColor colorWithHexString:@"161616"];
         cell.textLabel.font = [UIFont systemFontOfSize:13];
-        cell.textLabel.text =@"     新建群组";
-//        cell.textLabel.hidden = YES;
-//        UILabel * xlabel = [[UILabel alloc]initWithFrame:CGRectMake(30, 1, 200, 50)];
-//        xlabel.textColor = [UIColor colorWithHexString:@"161616"];
-//        xlabel.backgroundColor = [UIColor clearColor];
-//        xlabel.text = @"新建群组";
-//        [xlabel setFont:[UIFont systemFontOfSize:13]];
-//        cell.backgroundColor = [UIColor clearColor];
-//        [cell addSubview:xlabel];
-        
+        cell.textLabel.text = @"     新建群组";
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-       
-    }
-    else if (indexPath.section == 1)
-    {
-       
+
+    } else if (indexPath.section == 1){
         cell.accessoryType = UITableViewCellAccessoryNone;
         EMGroup *group = [self.dataSource objectAtIndex:indexPath.row];
         NSString *imageName = group.isPublic ? @"群头像图标" : @"群头像图标";
         cell.imageView.image = [UIImage imageNamed:imageName];
-        if (group.groupSubject && group.groupSubject.length > 0)
-        {
+        if (group.groupSubject && group.groupSubject.length > 0){
             cell.textLabel.text = group.groupSubject;
-        }
-        else
-        {
+        } else {
             cell.textLabel.text = group.groupId;
         }
         
-    }
-    else if (indexPath.section == 2)
-    {
+    } else if (indexPath.section == 2){
         cell.accessoryType = UITableViewCellAccessoryNone;
         EMGroup *group = [self.commonArr objectAtIndex:indexPath.row];
         NSString *imageName = group.isPublic ? @"群头像图标" : @"群头像图标";
         cell.imageView.image = [UIImage imageNamed:imageName];
-        if (group.groupSubject && group.groupSubject.length > 0)
-        {
+        if (group.groupSubject && group.groupSubject.length > 0){
             cell.textLabel.text = group.groupSubject;
-        }
-        else
-        {
+        } else {
             cell.textLabel.text = group.groupId;
         }
-    }
-    if (indexPath.section == 3)
-    {
+    } else if (indexPath.section == 3){
         cell.accessoryType = UITableViewCellAccessoryNone;
         EMGroup *group = [self.joinArr objectAtIndex:indexPath.row];
         NSString *imageName = group.isPublic ? @"群头像图标" : @"群头像图标";
         cell.imageView.image = [UIImage imageNamed:imageName];
-        if (group.groupSubject && group.groupSubject.length > 0)
-        {
+        if (group.groupSubject && group.groupSubject.length > 0){
             cell.textLabel.text = group.groupSubject;
-        }
-        else
-        {
+        } else{
             cell.textLabel.text = group.groupId;
         }
     }

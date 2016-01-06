@@ -18,25 +18,44 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        for (UIView *subView in self.subviews) {
-            if ([subView isKindOfClass:NSClassFromString(@"UISearchBarBackground")]) {
-                [subView removeFromSuperview];
-            }
-            
-            if ([subView isKindOfClass:NSClassFromString(@"UISearchBarTextField")]) {
-                UITextField *textField = (UITextField *)subView;
-                [textField setBorderStyle:UITextBorderStyleNone];
-                textField.background = nil;
-                textField.frame = CGRectMake(8, 8, self.bounds.size.width - 2* 8,
-                                             self.bounds.size.height - 2* 8);
-                textField.layer.cornerRadius = 6;
-                
-                textField.clipsToBounds = YES;
-                textField.backgroundColor = [UIColor whiteColor];
+
+        self.searchBarStyle = UISearchBarStyleDefault;
+        self.barTintColor = [UIColor colorWithHexString:@"F8F9F9"];
+        UIView *view = [self.subviews firstObject];
+        for (id object in view.subviews) {
+            if ([object isKindOfClass:NSClassFromString(@"UISearchBarBackground")]) {
+            } else if ([object isKindOfClass:NSClassFromString(@"UISearchBarTextField")]) {
+                UITextField *textField = (UITextField *)object;
+                textField.backgroundColor = [UIColor colorWithHexString:@"e8e8e8"];
+            } else{
+                UIButton *button = (UIButton *)object;
+                [button setTitle:@"取消" forState:UIControlStateNormal];
+                button.titleLabel.font = [UIFont systemFontOfSize:14.0f];
+                button.enabled = YES;
             }
         }
     }
     return self;
+}
+
+- (void)layoutSubviews
+{
+    [super layoutSubviews];
+    UIView *view = [self.subviews firstObject];
+    for (id object in view.subviews) {
+        if ([object isKindOfClass:NSClassFromString(@"UISearchBarBackground")]) {
+        } else if ([object isKindOfClass:NSClassFromString(@"UISearchBarTextField")]) {
+            UITextField *textField = (UITextField *)object;
+            textField.backgroundColor = [UIColor colorWithHexString:@"e8e8e8"];
+        } else{
+            UIButton *button = (UIButton *)object;
+            [button setTitle:@"取消" forState:UIControlStateNormal];
+            [button setTitleColor:[UIColor colorWithHexString:@"BEBEBE"] forState:UIControlStateNormal];
+            button.titleLabel.font = [UIFont systemFontOfSize:14.0f];
+            button.enabled = YES;
+        }
+    }
+
 }
 
 /**
