@@ -242,14 +242,16 @@
     if (indexPath.section == 0)
     {
         //cell.imageView.image=[UIImage imageNamed:@"添加群组"];
-        //cell.textLabel.text =@"新建群组";
-        cell.textLabel.hidden = YES;
-        UILabel * xlabel = [[UILabel alloc]initWithFrame:CGRectMake(30, 1, 200, 48)];
-        xlabel.textColor = [UIColor colorWithHexString:@"161616"];
-        xlabel.font = [UIFont systemFontOfSize:13];
-        xlabel.text = @"新建群组";
-        [cell addSubview:xlabel];
-        cell.separatorInset = UIEdgeInsetsMake(0, 15, 0, 0);
+        cell.textLabel.text =@"     新建群组";
+//        cell.textLabel.hidden = YES;
+//        UILabel * xlabel = [[UILabel alloc]initWithFrame:CGRectMake(30, 1, 200, 50)];
+//        xlabel.textColor = [UIColor colorWithHexString:@"161616"];
+//        xlabel.backgroundColor = [UIColor clearColor];
+//        xlabel.text = @"新建群组";
+//        [xlabel setFont:[UIFont systemFontOfSize:13]];
+//        cell.backgroundColor = [UIColor clearColor];
+//        [cell addSubview:xlabel];
+        
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
        
     }
