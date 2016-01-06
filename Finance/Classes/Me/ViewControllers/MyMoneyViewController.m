@@ -120,7 +120,7 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	if (indexPath.section == 0) {
-		return 70.0f;
+		return 60.0f;
 	}else if(indexPath.section == 1){
         
 		return 125.0f;
@@ -166,11 +166,11 @@
 
         
 		
-		cell.nameLabel.textColor = TEXT_COLOR;
-		cell.productLabel.textColor = TEXT_COLOR;
-		cell.totalMoney.textColor = TEXT_COLOR;
-		cell.commissionMoney.textColor = TEXT_COLOR;
-        cell.moneyType.textColor = TEXT_COLOR;
+//		cell.nameLabel.textColor = TEXT_COLOR;
+//		cell.productLabel.textColor = TEXT_COLOR;
+//		cell.totalMoney.textColor = TEXT_COLOR;
+//		cell.commissionMoney.textColor = TEXT_COLOR;
+//        cell.moneyType.textColor = TEXT_COLOR;
 		
 		return cell;
 
