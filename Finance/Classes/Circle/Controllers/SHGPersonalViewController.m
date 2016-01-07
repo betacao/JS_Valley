@@ -77,7 +77,7 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
     }
 
     [self.tableView setTableHeaderView:self.headerView];
-    //[self.tableView setTableFooterView:[[UIView alloc] init]];
+    [self.tableView setTableFooterView:[[UIView alloc] init]];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     [self initView];
 

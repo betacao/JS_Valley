@@ -195,26 +195,6 @@
 
 - (void)initSearch
 {
-//    backView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 219, 27)];
-//    backView.backgroundColor = [UIColor clearColor];
-//
-//    UIImageView *bgImageView = [[UIImageView alloc] initWithFrame:backView.bounds];
-//    bgImageView.image = [[UIImage imageNamed:@"market_searchBorder"] resizableImageWithCapInsets:UIEdgeInsetsMake(0.0f, 10.0f, 0.0f, 10.0f) resizingMode:UIImageResizingModeStretch];
-//    [backView addSubview:bgImageView];
-//
-//    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(12, 6.8, 13.5, 13.5)];
-//    imageView.image = [UIImage imageNamed:@"搜索图标"];
-//    [backView addSubview:imageView];
-//    
-//    searchTextField = [[UITextField alloc] initWithFrame:CGRectMake(28.5, 0, 190, 27)];
-//    searchTextField.font = [UIFont systemFontOfSize:14.0f];
-//    [searchTextField setReturnKeyType:UIReturnKeySearch];
-//    searchTextField.delegate = self;
-//    searchTextField.backgroundColor = [UIColor clearColor];
-//    searchTextField.placeholder = @"搜索产品";
-//    [searchTextField setValue:RGB(180, 180, 180)forKeyPath:@"_placeholderLabel.textColor"];
-//
-//    [backView addSubview:searchTextField];
 
     UIButton *addBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [addBtn setTitle:@"发布" forState:UIControlStateNormal];

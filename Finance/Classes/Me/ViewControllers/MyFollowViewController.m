@@ -279,15 +279,15 @@
     
     if (obj.followRelation == 0) {
         cell.followButton.hidden = NO;
-        [cell.followButton setBackgroundImage:[UIImage imageNamed:@"me_follow"] forState:UIControlStateNormal];
+        [cell.followButton setImage:[UIImage imageNamed:@"me_follow"] forState:UIControlStateNormal];
     }else if (obj.followRelation == 1){
         cell.followButton.hidden = NO;
-        [cell.followButton setBackgroundImage:[UIImage imageNamed:@"me_followed"] forState:UIControlStateNormal];
+        [cell.followButton setImage:[UIImage imageNamed:@"me_followed"] forState:UIControlStateNormal];
 
 
 	}else if (obj.followRelation == 2){
 		cell.followButton.hidden = NO;
-		[cell.followButton setBackgroundImage:[UIImage imageNamed:@"me_follow_each"] forState:UIControlStateNormal];
+		[cell.followButton setImage:[UIImage imageNamed:@"me_follow_each"] forState:UIControlStateNormal];
 
 	}
 	
