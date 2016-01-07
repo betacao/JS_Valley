@@ -13,7 +13,7 @@
 #define kCloseButtonMargin 25.0f
 #define kCloseButtonEnlargeEdge 20.0f
 #define kNoticeMessageViewHeight 25.0f * XFACTOR
-#define kNoticeLeftMargin 14.0f
+#define kNoticeLeftMargin 0.0f
 
 @interface SHGNoticeView()
 
@@ -43,14 +43,12 @@
             default:
             {
                 self.frame = CGRectMake(kNoticeLeftMargin, 0.0f, SCREENWIDTH - 2 * kNoticeLeftMargin, kNoticeMessageViewHeight);
-                self.layer.masksToBounds = YES;
-                self.layer.cornerRadius = 3.0f;
                 self.noticeType = type;
             }
                 break;
         }
         self.clipsToBounds = YES;
-        self.bgView.backgroundColor = [UIColor colorWithWhite:0.0f alpha:0.6f];
+        self.bgView.backgroundColor = [UIColor colorWithHexString:@"E0EBFD"];
     }
     return self;
 }
@@ -59,11 +57,9 @@
 {
     if(!_noticeLabel){
         _noticeLabel = [[UILabel alloc] initWithFrame:self.bounds];
-        _noticeLabel.textColor = [UIColor whiteColor];
+        _noticeLabel.textColor = [UIColor colorWithHexString:@"161616"];
         _noticeLabel.textAlignment = NSTextAlignmentCenter;
-        _noticeLabel.font = [UIFont systemFontOfSize:14.0f];
-        _noticeLabel.shadowOffset = CGSizeMake(0.5f, 0.5f);
-        _noticeLabel.shadowColor = [UIColor colorWithWhite:0.0f alpha:0.6f];
+        _noticeLabel.font = [UIFont systemFontOfSize:12.0f];
     }
     return _noticeLabel;
 }

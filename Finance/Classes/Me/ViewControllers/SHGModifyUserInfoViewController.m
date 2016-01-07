@@ -10,8 +10,6 @@
 #import "SHGIndustryChoiceView.h"
 
 @interface SHGModifyUserInfoViewController ()<UIActionSheetDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, SHGIndustryChoiceDelegate>
-@property (strong, nonatomic) UIBarButtonItem *leftBarButtonItem;
-@property (strong, nonatomic) UIBarButtonItem *rightBarButtonItem;
 
 @property (weak, nonatomic) IBOutlet UIScrollView *bgScrollView;
 @property (weak, nonatomic) IBOutlet UIView *topView;
@@ -26,6 +24,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *companyButton;
 @property (weak, nonatomic) IBOutlet UIButton *departmentButton;
 @property (weak, nonatomic) IBOutlet UIButton *locationButton;
+@property (weak, nonatomic) IBOutlet UIButton *nextButton;
 
 @property (strong, nonatomic) NSString *nickName;
 @property (strong, nonatomic) NSString *department;
@@ -46,8 +45,6 @@
 {
     [super viewDidLoad];
     self.title = @"个人信息";
-    self.navigationItem.leftBarButtonItem = self.leftBarButtonItem;
-    self.navigationItem.rightBarButtonItem = self.rightBarButtonItem;
 
     self.nickName = [self.userInfo objectForKey:kNickName];
     self.department = [self.userInfo objectForKey:kDepartment];
@@ -60,38 +57,11 @@
     [self.topView addGestureRecognizer:recognizer];
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardDidShowNotification object:nil];
-    [self initUI];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textFieldDidChange:) name:UITextFieldTextDidChangeNotification object:nil];
+    [self initObject];
 }
 
-- (UIBarButtonItem *)leftBarButtonItem
-{
-    if (!_leftBarButtonItem) {
-        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-        [button setTitle:@"取消" forState:UIControlStateNormal];
-        [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        button.titleLabel.font = [UIFont systemFontOfSize:15.0f];
-        [button sizeToFit];
-        [button addTarget:self action:@selector(leftButtonClick:) forControlEvents:UIControlEventTouchUpInside];
-        _leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView: button];
-    }
-    return _leftBarButtonItem;
-}
-
-- (UIBarButtonItem *)rightBarButtonItem
-{
-    if (!_rightBarButtonItem) {
-        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-        [button setTitle:@"完成" forState:UIControlStateNormal];
-        [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        button.titleLabel.font = [UIFont systemFontOfSize:15.0f];
-        [button sizeToFit];
-        [button addTarget:self action:@selector(rightButtonClick:) forControlEvents:UIControlEventTouchUpInside];
-        _rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView: button];
-    }
-    return _rightBarButtonItem;
-}
-
-- (void)initUI
+- (void)initObject
 {
     [self.headerImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,self.head_img]] placeholderImage:[UIImage imageNamed:@"default_head"]];
     self.nameField.text = [self.userInfo objectForKey:kNickName];
@@ -100,14 +70,19 @@
     self.departmentField.text = [self.userInfo objectForKey:kDepartment];
     self.locationField.text = [self.userInfo objectForKey:kLocation];
 
+    [self updateCloseButtonState:self.nameField];
+    [self updateCloseButtonState:self.industryField];
+    [self updateCloseButtonState:self.companyField];
+    [self updateCloseButtonState:self.departmentField];
+    [self updateCloseButtonState:self.locationField];
+
+    CGRect frame = self.nextButton.frame;
+    frame.origin.y *= YFACTOR;
+    self.nextButton.frame = frame;
+
 }
 
-- (void)leftButtonClick:(UIButton *)button
-{
-    [self.navigationController popViewControllerAnimated:YES];
-}
-
-- (void)rightButtonClick:(UIButton *)button
+- (IBAction)nextButtonClick:(UIButton *)button
 {
     if (self.imageChanged) {
         [self uploadHeadImage:self.headerImage.image];
@@ -173,12 +148,14 @@
 - (IBAction)clickNameButton:(UIButton *)sender
 {
     self.nameField.text = @"";
+    [self updateCloseButtonState:self.nameField];
     [self.nameField becomeFirstResponder];
 }
 
 - (IBAction)clickIndustryButton:(id)sender
 {
     self.industryField.text = @"";
+    [self updateCloseButtonState:self.industryField];
     [self.industryField becomeFirstResponder];
 
 }
@@ -186,18 +163,21 @@
 - (IBAction)clickCompanyButton:(id)sender
 {
     self.companyField.text = @"";
+    [self updateCloseButtonState:self.companyField];
     [self.companyField becomeFirstResponder];
 }
 
 - (IBAction)clickDepartmentButton:(id)sender
 {
     self.departmentField.text = @"";
+    [self updateCloseButtonState:self.departmentField];
     [self.departmentField becomeFirstResponder];
 
 }
 - (IBAction)clickLocationButton:(id)sender
 {
     self.locationField.text = @"";
+    [self updateCloseButtonState:self.locationField];
     [self.locationField becomeFirstResponder];
 }
 
@@ -274,10 +254,48 @@
     [self scrollFieldToVisible];
 }
 
-- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+
+- (void)textFieldDidChange:(NSNotification *)notif
 {
-    textField.textColor = [UIColor colorWithHexString:@"161616"];
-    return YES;
+    UITextField *field = (UITextField *)notif.object;
+    [self updateCloseButtonState:field];
+}
+
+
+
+- (void)updateCloseButtonState:(UITextField *)textField
+{
+    if ([textField isEqual:self.nameField]) {
+        if (textField.text.length > 0) {
+            self.nameButton.hidden = NO;
+        } else{
+            self.nameButton.hidden = YES;
+        }
+    } else if ([textField isEqual:self.industryField]) {
+        if (textField.text.length > 0) {
+            self.industryButton.hidden = NO;
+        } else{
+            self.industryButton.hidden = YES;
+        }
+    } else if ([textField isEqual:self.companyField]) {
+        if (textField.text.length > 0) {
+            self.companyButton.hidden = NO;
+        } else{
+            self.companyButton.hidden = YES;
+        }
+    } else if ([textField isEqual:self.departmentField]) {
+        if (textField.text.length > 0) {
+            self.departmentButton.hidden = NO;
+        } else{
+            self.departmentButton.hidden = YES;
+        }
+    } else if ([textField isEqual:self.locationField]) {
+        if (textField.text.length > 0) {
+            self.locationButton.hidden = NO;
+        } else{
+            self.locationButton.hidden = YES;
+        }
+    }
 }
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField

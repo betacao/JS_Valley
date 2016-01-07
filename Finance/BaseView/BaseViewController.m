@@ -39,7 +39,7 @@
     self.view.userInteractionEnabled = YES;
 }
 
--(void)initUI
+- (void)initUI
 {
     UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
     NSString *imageName ;
