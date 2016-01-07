@@ -17,10 +17,14 @@
 @property (weak, nonatomic) IBOutlet UITextField *txtPwd;
 @property (weak, nonatomic) IBOutlet UITextField *txtCode;
 @property (nonatomic, assign) NSInteger remainTime;
+@property (weak, nonatomic) IBOutlet UIButton *psdButton;
+@property (weak, nonatomic) IBOutlet UIButton *againPsdButton;
+
 //重新发送的定时器
 @property (nonatomic, strong) NSTimer	*remainTimer;
 @property (nonatomic, assign) CodeType registType;
-
+- (IBAction)psdButtonClick:(id)sender;
+- (IBAction)againPsdButtonClick:(id)sender;
 @end
 
 @implementation ResetPasswardViewController
@@ -32,7 +36,29 @@
     self.title = @"密码找回";
     phone = [NSString stringWithFormat:@"%@****%@",[self.phone substringToIndex:2],[self.phone substringFromIndex:7]];
     _lblCode.text = [NSString stringWithFormat:@"已向您的手机%@发送了短信验证码，验证为本人使用",phone];
+    _lblCode.textColor = [UIColor colorWithHexString:@"AFAFAF"];
+    _lblCode.font = [UIFont systemFontOfSize:12];
     // Do any additional setup after loading the view from its nib.
+    UIView *paddingView1 = [[UIView alloc] initWithFrame:CGRectMake(0, 0,20, 45)];
+    self.txtCode.leftView = paddingView1;
+    self.txtCode.leftViewMode = UITextFieldViewModeAlways;
+    self.txtCode.placeholder = @"验证码";
+    [self.txtCode setValue:[UIColor colorWithHexString:@"AFAFAF"] forKeyPath:@"_placeholderLabel.textColor"];
+    [self.txtCode setValue:[UIFont boldSystemFontOfSize:14] forKeyPath:@"_placeholderLabel.font"];
+    
+    UIView *paddingView2 = [[UIView alloc] initWithFrame:CGRectMake(0, 0,20, 45)];
+    self.txtPwd.leftView = paddingView2;
+    self.txtPwd.leftViewMode = UITextFieldViewModeAlways;
+    self.txtPwd.placeholder = @"输入新密码";
+    [self.txtPwd setValue:[UIColor colorWithHexString:@"AFAFAF"] forKeyPath:@"_placeholderLabel.textColor"];
+    [self.txtPwd setValue:[UIFont boldSystemFontOfSize:14] forKeyPath:@"_placeholderLabel.font"];
+    
+    UIView *paddingView3 = [[UIView alloc] initWithFrame:CGRectMake(0, 0,20, 45)];
+    self.txtPwdVery.leftView = paddingView3;
+    self.txtPwdVery.leftViewMode = UITextFieldViewModeAlways;
+    self.txtPwdVery.placeholder = @"再次输入新密码";
+    [self.txtPwdVery setValue:[UIColor colorWithHexString:@"AFAFAF"] forKeyPath:@"_placeholderLabel.textColor"];
+    [self.txtPwdVery setValue:[UIFont boldSystemFontOfSize:14] forKeyPath:@"_placeholderLabel.font"];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -107,21 +133,26 @@
     if (CodeType == CodeInit) {
         self.txtPwd.text= @"";
         self.txtPwdVery.text= @"";
+        [self.btnCode setTitleColor:[UIColor colorWithHexString:@"4482C8"] forState:UIControlStateNormal];
         [self.btnCode setTitle:@"获取验证码" forState:UIControlStateNormal];
         [self.btnCode setTitle:@"获取验证码" forState:UIControlStateHighlighted];
+        [self.btnCode setTitleColor:[UIColor colorWithHexString:@"4482C8"] forState:UIControlStateHighlighted];
         _lblCode.hidden = YES;
         self.btnCode.userInteractionEnabled = YES;
         
     }else if (CodeType == CodeInTime){
-        
-        [self.btnCode setTitle:[NSString stringWithFormat:@"重新发送(%ld)",(long)self.remainTime] forState:UIControlStateNormal];
-        [self.btnCode setTitle:[NSString stringWithFormat:@"重新发送(%ld)",(long)self.remainTime] forState:UIControlStateHighlighted];
+        [self.btnCode setTitleColor:[UIColor colorWithHexString:@"AFAFAF"] forState:UIControlStateNormal];
+        [self.btnCode setTitleColor:[UIColor colorWithHexString:@"AFAFAF"] forState:UIControlStateHighlighted];
+        [self.btnCode setTitle:[NSString stringWithFormat:@"%ld秒后可重新获取",(long)self.remainTime] forState:UIControlStateNormal];
+        [self.btnCode setTitle:[NSString stringWithFormat:@"%ld秒后可重新获取",(long)self.remainTime] forState:UIControlStateHighlighted];
         
         _lblCode.hidden = NO;
 
     }else if (CodeType == CodeOverTime){
-        [self.btnCode setTitle:@"重新发送" forState:UIControlStateNormal];
-        [self.btnCode setTitle:@"重新发送" forState:UIControlStateHighlighted];
+        [self.btnCode setTitleColor:[UIColor colorWithHexString:@"4482C8"] forState:UIControlStateNormal];
+        [self.btnCode setTitleColor:[UIColor colorWithHexString:@"4482C8"] forState:UIControlStateHighlighted];
+        [self.btnCode setTitle:@"重新获取" forState:UIControlStateNormal];
+        [self.btnCode setTitle:@"重新获取" forState:UIControlStateHighlighted];
         self.btnCode.userInteractionEnabled = YES;
         _lblCode.hidden = YES;
         
@@ -144,5 +175,14 @@
         
     }];
     
+}
+- (IBAction)psdButtonClick:(id)sender {
+    self.txtPwd.text = @"";
+    [self.txtPwd becomeFirstResponder];
+}
+
+- (IBAction)againPsdButtonClick:(id)sender {
+    self.txtPwdVery.text = @"";
+    [self.txtPwdVery becomeFirstResponder];
 }
 @end

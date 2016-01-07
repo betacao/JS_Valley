@@ -28,7 +28,9 @@
 @property (weak, nonatomic) IBOutlet UIButton *QQButton;
 @property (weak, nonatomic) IBOutlet UIButton *weiBoButton;
 @property (weak, nonatomic) IBOutlet UILabel *lineLabel;
+@property (weak, nonatomic) IBOutlet UIButton *deleteButton;
 
+- (IBAction)deleteButtonClick:(id)sender;
 
 
 @end
@@ -55,6 +57,13 @@
     if ([[NSUserDefaults standardUserDefaults]objectForKey:KEY_PHONE]){
          _textUser.text = [[NSUserDefaults standardUserDefaults]objectForKey:KEY_PHONE];
     }
+    UIView * paddingView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 20.0, 45.0)];
+    self.textUser.leftView = paddingView;
+    self.textUser.leftViewMode = UITextFieldViewModeAlways;
+    
+    self.textUser.placeholder = @"请输入手机号码";
+    [self.textUser setValue:[UIColor colorWithHexString:@"AFAFAF"] forKeyPath:@"_placeholderLabel.textColor"];
+    [self.textUser setValue:[UIFont systemFontOfSize:14] forKeyPath:@"_placeholderLabel.font"];
 }
 - (void)viewWillAppear:(BOOL)animated
 {
@@ -285,5 +294,9 @@
     vc.dictionary = self.rid;
     BaseNavigationController *nav = [[BaseNavigationController alloc] initWithRootViewController:vc];
     [AppDelegate currentAppdelegate].window.rootViewController =nav;
+}
+- (IBAction)deleteButtonClick:(id)sender {
+    self.textUser.text = @"";
+    [self.textUser becomeFirstResponder];
 }
 @end

@@ -41,11 +41,13 @@ typedef NS_ENUM(NSInteger, RegistType)
 @property (nonatomic, assign) NSInteger             remainTime;
 //重新发送的定时器
 @property (nonatomic, strong) NSTimer               *remainTimer;
+@property (weak, nonatomic) IBOutlet UIButton *pswDeleteButton;
 
 - (IBAction)getverifyCodeButtonClicked:(id)sender;
 - (IBAction)nextStepButtonClicked:(id)sender;
 - (IBAction)protocolCheckButtonClicked:(id)sender;
 - (IBAction)protocolButtonClicked:(id)sender;
+- (IBAction)pswDeleteButton:(id)sender;
 
 @property (nonatomic, assign) BOOL isAgree;
 @end
@@ -74,13 +76,31 @@ typedef NS_ENUM(NSInteger, RegistType)
     NSRange range =[btnStr rangeOfString:@"《"];
     range = NSMakeRange(range.location, 9);
     NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc]initWithString:btnStr];
-    NSDictionary *dic =@{NSForegroundColorAttributeName:[UIColor colorWithRed:255/255.0 green:57/255.0 blue:67/255.0 alpha:1.0]};
+    NSDictionary *dic =@{NSForegroundColorAttributeName:[UIColor colorWithHexString:@"D43C33"]};
     [attrString setAttributes:dic range:range];
+    [attrString addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"AFAFAF"] range:NSMakeRange(0, 7)];
+    [attrString addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:12] range:NSMakeRange(0, attrString.length)];
     [self.protocolButton setAttributedTitle:attrString forState:UIControlStateNormal];
     
 	[self reloadView:RegistInit];
 	
 	self.isAgree = YES;
+    
+    UIView * padView1 = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 20, 45)];
+    self.verifyCodeTextField.leftView = padView1;
+    self.verifyCodeTextField.leftViewMode = UITextFieldViewModeAlways;
+    
+    UIView * padView2 = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 20, 45)];
+    self.passwordTextField.leftView = padView2;
+    self.passwordTextField.leftViewMode = UITextFieldViewModeAlways;
+    
+    self.verifyCodeTextField.placeholder = @"验证码";
+    [self.verifyCodeTextField setValue:[UIColor colorWithHexString:@"AFAFAF"] forKeyPath:@"_placeholderLabel.textColor"];
+    [self.verifyCodeTextField setValue:[UIFont systemFontOfSize:14] forKeyPath:@"_placeholderLabel.font"];
+    
+    self.passwordTextField.placeholder = @"登录密码";
+    [self.passwordTextField setValue:[UIColor colorWithHexString:@"AFAFAF"] forKeyPath:@"_placeholderLabel.textColor"];
+    [self.passwordTextField setValue:[UIFont systemFontOfSize:14] forKeyPath:@"_placeholderLabel.font"];
 }
 
 - (IBAction)protocolCheckButtonClicked:(id)sender
@@ -103,26 +123,30 @@ typedef NS_ENUM(NSInteger, RegistType)
 	if (registType == RegistInit) {
 		self.verifyCodeTextField.text	= @"";
 		self.passwordTextField.text		= @"";
-        
-		[self.getVerfyCodeButton setTitle:@"获取验证码" forState:UIControlStateNormal];
+        [self.getVerfyCodeButton setTitleColor:[UIColor colorWithHexString:@"4482C8"] forState:UIControlStateNormal];
+        [self.getVerfyCodeButton setTitleColor:[UIColor colorWithHexString:@"4482C8"] forState:UIControlStateHighlighted];
+        [self.getVerfyCodeButton setTitle:@"获取验证码" forState:UIControlStateNormal];
 		[self.getVerfyCodeButton setTitle:@"获取验证码" forState:UIControlStateHighlighted];
-        self.getVerfyCodeButton.titleLabel.font = [UIFont systemFontOfSize:15.0f];
+        self.getVerfyCodeButton.titleLabel.font = [UIFont systemFontOfSize:12.0f];
 		self.getVerfyCodeButton.userInteractionEnabled = YES;
 		self.messageSendedLabel.hidden = YES;
-		self.footerView.origin  = CGPointMake(self.footerView.origin.x, 185);
+		self.footerView.origin  = CGPointMake(self.footerView.origin.x, 180);
         registType = RegistInTime;
 	}else if (registType == RegistInTime){
-		
-		[self.getVerfyCodeButton setTitle:[NSString stringWithFormat:@"重新发送(%ld)",(long)self.remainTime] forState:UIControlStateNormal];
-		[self.getVerfyCodeButton setTitle:[NSString stringWithFormat:@"重新发送(%ld)",(long)self.remainTime] forState:UIControlStateHighlighted];
+        [self.getVerfyCodeButton setTitleColor:[UIColor colorWithHexString:@"AFAFAF"] forState:UIControlStateNormal];
+        [self.getVerfyCodeButton setTitleColor:[UIColor colorWithHexString:@"AFAFAF"] forState:UIControlStateHighlighted];
+		[self.getVerfyCodeButton setTitle:[NSString stringWithFormat:@"%ld秒后可重新获取",(long)self.remainTime] forState:UIControlStateNormal];
+		[self.getVerfyCodeButton setTitle:[NSString stringWithFormat:@"%ld秒后可重新获取",(long)self.remainTime] forState:UIControlStateHighlighted];
 		
 		self.messageSendedLabel.hidden = NO;
 
 		self.footerView.origin  = CGPointMake(self.footerView.origin.x, 265);
 
 	}else if (registType == RegistOverTime){
-		[self.getVerfyCodeButton setTitle:@"重新发送" forState:UIControlStateNormal];
-		[self.getVerfyCodeButton setTitle:@"重新发送" forState:UIControlStateHighlighted];
+        [self.getVerfyCodeButton setTitleColor:[UIColor colorWithHexString:@"4482C8"] forState:UIControlStateNormal];
+        [self.getVerfyCodeButton setTitleColor:[UIColor colorWithHexString:@"4482C8"] forState:UIControlStateHighlighted];
+		[self.getVerfyCodeButton setTitle:@"重新获取" forState:UIControlStateNormal];
+		[self.getVerfyCodeButton setTitle:@"重新获取" forState:UIControlStateHighlighted];
 		self.getVerfyCodeButton.userInteractionEnabled = YES;
 		
 		self.messageSendedLabel.hidden = YES;
@@ -274,5 +298,10 @@ typedef NS_ENUM(NSInteger, RegistType)
 {
 	ProtocolViewController *vc = [[ProtocolViewController alloc] init];
 	[self.navigationController pushViewController:vc animated:YES];
+}
+
+- (IBAction)pswDeleteButton:(id)sender {
+    self.passwordTextField.text = @"";
+    [self.passwordTextField becomeFirstResponder];
 }
 @end

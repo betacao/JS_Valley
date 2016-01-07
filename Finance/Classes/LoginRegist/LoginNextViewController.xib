@@ -1,49 +1,39 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9059" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="14F1509" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LoginNextViewController">
             <connections>
+                <outlet property="deleteButton" destination="efY-W3-Kky" id="UH6-eH-H5E"/>
                 <outlet property="lblPassward" destination="9LL-DT-AvR" id="ehR-6r-XJN"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
-            <rect key="frame" x="0.0" y="64" width="600" height="536"/>
+            <rect key="frame" x="0.0" y="64" width="320" height="504"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pcg-7W-cNg">
-                    <rect key="frame" x="11" y="60" width="580" height="1"/>
-                    <animations/>
+                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="pcg-7W-cNg">
+                    <rect key="frame" x="11" y="60" width="300" height="1"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="1" id="d6L-Tj-9rV"/>
-                    </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="密码图标.png" translatesAutoresizingMaskIntoConstraints="NO" id="E0F-cK-40U">
+                <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="密码图标.png" id="E0F-cK-40U">
                     <rect key="frame" x="21" y="30" width="12" height="22"/>
-                    <animations/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="22" id="GKf-b8-YGY"/>
-                        <constraint firstAttribute="width" constant="12" id="uo6-GC-oMP"/>
-                    </constraints>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 </imageView>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3jY-9R-lOt">
-                    <rect key="frame" x="15" y="140" width="580" height="40"/>
-                    <animations/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="3jY-9R-lOt">
+                    <rect key="frame" x="11" y="175" width="298" height="40"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" red="1" green="0.22352941179999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="40" id="P2D-Kx-Nd2"/>
-                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="40" id="xTH-bs-ix1"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
                     <state key="normal" title="登录">
                         <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -52,54 +42,42 @@
                         <action selector="actionLogin:" destination="-1" eventType="touchUpInside" id="XtA-hP-6Kw"/>
                     </connections>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qz2-Xg-KrF">
-                    <rect key="frame" x="531" y="69" width="60" height="30"/>
-                    <animations/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="30" id="D28-1a-rCt"/>
-                        <constraint firstAttribute="width" constant="60" id="zqb-bY-y1S"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="12"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="qz2-Xg-KrF">
+                    <rect key="frame" x="255" y="45" width="60" height="30"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="11"/>
                     <state key="normal" title="忘记密码？">
-                        <color key="titleColor" red="1" green="0.22352941179999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="titleColor" red="0.61568627450980395" green="0.61176470588235299" blue="0.61176470588235299" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                     <connections>
                         <action selector="actionFogetPwd:" destination="-1" eventType="touchUpInside" id="xrh-70-4C8"/>
                     </connections>
                 </button>
-                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="登录密码" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="9LL-DT-AvR">
-                    <rect key="frame" x="43" y="28" width="458" height="30"/>
-                    <animations/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="30" id="LXy-KM-ubL"/>
-                    </constraints>
-                    <color key="textColor" red="0.38823529410000002" green="0.38823529410000002" blue="0.38823529410000002" alpha="1" colorSpace="calibratedRGB"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="输入密码" minimumFontSize="17" id="9LL-DT-AvR">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="45"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <color key="textColor" red="0.086274509803921567" green="0.086274509803921567" blue="0.086274509803921567" alpha="1" colorSpace="calibratedRGB"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                 </textField>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="efY-W3-Kky">
+                    <rect key="frame" x="294" y="15" width="15" height="15"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                    <state key="normal" backgroundImage="me_deleteInput"/>
+                    <connections>
+                        <action selector="deleteButton:" destination="-1" eventType="touchDragInside" id="8Pd-S8-sFH"/>
+                    </connections>
+                </button>
             </subviews>
-            <animations/>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-            <constraints>
-                <constraint firstItem="pcg-7W-cNg" firstAttribute="top" secondItem="E0F-cK-40U" secondAttribute="bottom" constant="8" id="RUh-Q3-ibY"/>
-                <constraint firstAttribute="trailing" secondItem="pcg-7W-cNg" secondAttribute="trailing" constant="9" id="SSm-MF-2Jc"/>
-                <constraint firstAttribute="trailing" secondItem="3jY-9R-lOt" secondAttribute="trailing" constant="5" id="Spp-BA-K8k"/>
-                <constraint firstItem="pcg-7W-cNg" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="11" id="UwG-Tk-VJ2"/>
-                <constraint firstItem="pcg-7W-cNg" firstAttribute="top" secondItem="9LL-DT-AvR" secondAttribute="bottom" constant="2" id="WQs-1Q-J2L"/>
-                <constraint firstItem="3jY-9R-lOt" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="15" id="dF5-G8-qyB"/>
-                <constraint firstItem="9LL-DT-AvR" firstAttribute="leading" secondItem="E0F-cK-40U" secondAttribute="trailing" constant="10" id="goG-NJ-Wa7"/>
-                <constraint firstItem="E0F-cK-40U" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="30" id="llU-NP-Vq0"/>
-                <constraint firstItem="3jY-9R-lOt" firstAttribute="top" secondItem="pcg-7W-cNg" secondAttribute="bottom" constant="79" id="m3V-Id-OSc"/>
-                <constraint firstAttribute="trailing" secondItem="qz2-Xg-KrF" secondAttribute="trailing" constant="9" id="p7W-vs-dvJ"/>
-                <constraint firstAttribute="trailing" secondItem="9LL-DT-AvR" secondAttribute="trailing" constant="99" id="sSg-XO-np8"/>
-                <constraint firstItem="qz2-Xg-KrF" firstAttribute="top" secondItem="pcg-7W-cNg" secondAttribute="bottom" constant="8" id="teS-i2-HwE"/>
-                <constraint firstItem="E0F-cK-40U" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="21" id="uhB-5r-iPx"/>
-            </constraints>
+            <color key="backgroundColor" red="0.93333333333333335" green="0.93725490196078431" blue="0.94117647058823528" alpha="1" colorSpace="calibratedRGB"/>
             <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
+            <point key="canvasLocation" x="398" y="216"/>
         </view>
     </objects>
     <resources>
+        <image name="me_deleteInput" width="14" height="14"/>
         <image name="密码图标.png" width="17" height="27"/>
     </resources>
 </document>
