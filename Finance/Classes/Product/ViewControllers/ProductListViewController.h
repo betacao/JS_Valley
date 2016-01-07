@@ -12,7 +12,6 @@
 @interface ProductListViewController : BaseTableViewController<UIScrollViewDelegate,UISearchBarDelegate,UITextFieldDelegate,UIAlertViewDelegate>
 
 @property (strong ,nonatomic, readonly) UIView *titleView;
-@property (nonatomic ,strong)    UILabel *titleLabel;
 @property (strong ,nonatomic, readonly) UIBarButtonItem *rightBarButtonItem;
 @property (strong ,nonatomic) NSArray *rightBarButtonItemArr;
 @property (strong ,nonatomic, readonly) UIBarButtonItem *leftBarButtonItem;

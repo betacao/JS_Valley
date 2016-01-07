@@ -365,8 +365,6 @@
     return nil;
 }
 
-
-
 - (NSString *)codeToIndustry:(NSString *)code
 {
     if ([code isEqualToString:@"bank"]) {
@@ -388,7 +386,6 @@
 {
     [super viewDidDisappear:animated];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-
 }
 
 - (void)didReceiveMemoryWarning

@@ -15,28 +15,21 @@
 @interface ProductListViewController ()
 {
     NSMutableArray *itemArr;
-    UIView *backView;
-    UIButton *addBtn;
-    UIButton *searchBtn;
     UIScrollView *backScrollView;
     UIImageView *imageBttomLine;
     NSInteger width;
     NSInteger index;
-    UIBarButtonItem *searchItem;
-    UIBarButtonItem *addItem;
-    UIBarButtonItem *cancelItem;
-
-    UITextField *searchTextField;
     BOOL hasRequestFailed;
     BOOL hasDataFinished;
-   // UISearchBar *searchHeader;
 }
 @property (weak, nonatomic) IBOutlet UILabel *noDataLabel;
 @property (weak, nonatomic) IBOutlet UITableView *listTable;
-@property (nonatomic, strong) UIBarButtonItem *rightBarButtonItem;
-@property (nonatomic, strong) UIBarButtonItem *leftBarButtonItem;
-@property (nonatomic,strong) UIView *titleView;
+@property (strong, nonatomic) UISearchBar *searchBar;
 
+@property (strong, nonatomic) UIBarButtonItem *searchItem;
+@property (strong, nonatomic) UIBarButtonItem *addItem;
+@property (strong, nonatomic) UIBarButtonItem *cancelItem;
+@property (nonatomic ,strong) UILabel *titleLabel;
 @end
 
 @implementation ProductListViewController
@@ -51,8 +44,7 @@
     [self.view bringSubviewToFront:_noDataLabel];
     index = 0;
     [self initSearch];
-    self.navigationItem.titleView = backView;
-    self.navigationItem.rightBarButtonItems =@[addItem];
+    self.navigationItem.rightBarButtonItem = self.addItem;
     self.listTable.tag = 1002;
     [self requestType];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshHeader) name:NOTIFI_CHANGE_UPDATE_AUTO_STATUE object:nil];
@@ -60,51 +52,33 @@
     [self addHeaderRefresh:self.listTable headerRefesh:YES andFooter:YES];
 }
 
-- (UIView *)titleView
+- (UISearchBar *)searchBar
 {
-    if (!_titleView)
-    {
-        _titleView =backView;
+    if (!_searchBar) {
+        _searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0.0f, 0.0f, SCREENWIDTH, 44.0f)];
+        _searchBar.delegate = self;
+        _searchBar.tintColor = [UIColor whiteColor];
+        _searchBar.barTintColor = [UIColor colorWithHexString:@"d43c33"];
+        _searchBar.searchBarStyle = UISearchBarStyleDefault;
+        _searchBar.placeholder = @"输入产品名称";
+        [_searchBar setImage:[UIImage imageNamed:@"market_search"] forSearchBarIcon:UISearchBarIconSearch state:UIControlStateNormal];
+        UIView *view = [_searchBar.subviews firstObject];
+        for (id object in view.subviews) {
+            if ([object isKindOfClass:NSClassFromString(@"UISearchBarTextField")]) {
+                UITextField *textField = (UITextField *)object;
+                textField.textColor = [UIColor whiteColor];
+                textField.enablesReturnKeyAutomatically = NO;
+            } else if ([object isKindOfClass:NSClassFromString(@"UISearchBarBackground")]){
+            } else{
+
+            }
+        }
+        [_searchBar setSearchFieldBackgroundImage:[[UIImage imageNamed:@"market_searchBorder"] resizableImageWithCapInsets:UIEdgeInsetsMake(0.0f, 10.0f, 0.0f, 10.0f) resizingMode:UIImageResizingModeStretch] forState:UIControlStateNormal];
     }
-    return _titleView;
+    return _searchBar;
 }
 
-
--(NSArray *)rightBarButtonItemArr
-{
-    if (!_rightBarButtonItemArr) {
-        
-        _rightBarButtonItemArr =@[addItem,searchItem];
-        
-    }
-    return _rightBarButtonItemArr;
-}
-
-- (UIBarButtonItem *)rightBarButtonItem
-{
-    if (!_rightBarButtonItem) {
-        
-        addBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        [addBtn setImage:[UIImage imageNamed:@"right_add"] forState:UIControlStateNormal];
-        [addBtn addTarget:self action:@selector(addSelect) forControlEvents:UIControlEventTouchUpInside];
-        addItem = [[UIBarButtonItem alloc]initWithCustomView:addBtn];
-        [addBtn setFrame:CGRectMake(0, 0, 24, 24)];
-        
-        self.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:addBtn];
-        
-    }
-    return _rightBarButtonItem;
-}
-
-- (UIBarButtonItem *)leftBarButtonItem
-{
-    if (!_leftBarButtonItem) {
-    }
-    
-    return _leftBarButtonItem;
-}
-
--(void)requestType
+- (void)requestType
 {
     NSString *url = [NSString stringWithFormat:@"%@/%@",rBaseAddressForHttpProd,@"type"];
     [MOCHTTPRequestOperationManager getWithURL:url class:[CirclleItemObj class] parameters:@{@"uid":[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID]} success:^(MOCHTTPResponse *response) {
@@ -125,6 +99,7 @@
         NSLog(@"%@",response.errorMessage);
     }];
 }
+
 -(void)requestDataWithtcode:(NSString *)tcode isHot:(NSString*)isHot target:(NSString*)target name:(NSString *)name time:(NSString *)time
 {
     if ([target isEqualToString:@"first"])
@@ -134,7 +109,7 @@
     }
     [Hud showLoadingWithMessage:@"加载中"];
     if (IsStrEmpty(name)) {
-        searchTextField.text = @"";
+        self.searchBar.text = @"";
     }
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
@@ -211,80 +186,80 @@
     }];
   
 }
--(void)viewDidAppear:(BOOL)animated
-{
 
-}
--(void)viewWillDisappear:(BOOL)animated
+- (void)viewWillAppear:(BOOL)animated
 {
+    [super viewWillAppear:animated];
+    self.navigationItem.titleView = self.searchBar;
 }
--(void)initSearch
-{
-    backView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 219, 27)];
-    backView.layer.masksToBounds = YES;
-    backView.layer.cornerRadius = 13.5;
-    backView.backgroundColor = RGB(242, 242, 242);
-    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(12, 6.8, 13.5, 13.5)];
-    imageView.image = [UIImage imageNamed:@"搜索图标"];
-    [backView addSubview:imageView];
-    
-    searchTextField = [[UITextField alloc] initWithFrame:CGRectMake(28.5, 0, 190, 27)];
-    searchTextField.font = [UIFont systemFontOfSize:15];
-    [searchTextField setReturnKeyType:UIReturnKeySearch];
-    searchTextField.delegate = self;
-    searchTextField.backgroundColor = [UIColor clearColor];
-    searchTextField.placeholder = @"搜索产品";
-    [searchTextField setValue:RGB(180, 180, 180)forKeyPath:@"_placeholderLabel.textColor"];
 
-    [backView addSubview:searchTextField];
-    
-    
-    addBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [addBtn setImage:[UIImage imageNamed:@"right_add"] forState:UIControlStateNormal];
+- (void)initSearch
+{
+//    backView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 219, 27)];
+//    backView.backgroundColor = [UIColor clearColor];
+//
+//    UIImageView *bgImageView = [[UIImageView alloc] initWithFrame:backView.bounds];
+//    bgImageView.image = [[UIImage imageNamed:@"market_searchBorder"] resizableImageWithCapInsets:UIEdgeInsetsMake(0.0f, 10.0f, 0.0f, 10.0f) resizingMode:UIImageResizingModeStretch];
+//    [backView addSubview:bgImageView];
+//
+//    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(12, 6.8, 13.5, 13.5)];
+//    imageView.image = [UIImage imageNamed:@"搜索图标"];
+//    [backView addSubview:imageView];
+//    
+//    searchTextField = [[UITextField alloc] initWithFrame:CGRectMake(28.5, 0, 190, 27)];
+//    searchTextField.font = [UIFont systemFontOfSize:14.0f];
+//    [searchTextField setReturnKeyType:UIReturnKeySearch];
+//    searchTextField.delegate = self;
+//    searchTextField.backgroundColor = [UIColor clearColor];
+//    searchTextField.placeholder = @"搜索产品";
+//    [searchTextField setValue:RGB(180, 180, 180)forKeyPath:@"_placeholderLabel.textColor"];
+//
+//    [backView addSubview:searchTextField];
+
+    UIButton *addBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [addBtn setTitle:@"发布" forState:UIControlStateNormal];
     [addBtn addTarget:self action:@selector(addSelect) forControlEvents:UIControlEventTouchUpInside];
-    addItem = [[UIBarButtonItem alloc]initWithCustomView:addBtn];
-    [addBtn setFrame:CGRectMake(0, 0, 24, 24)];
-    addItem = [[UIBarButtonItem alloc] initWithCustomView:addBtn];
-    
-    searchBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [searchBtn setImage:[UIImage imageNamed:@"搜索"] forState:UIControlStateNormal];
-    [searchBtn addTarget:self action:@selector(searchSelect) forControlEvents:UIControlEventTouchUpInside];
-    [searchBtn setFrame:CGRectMake(0, 0, 27, 27)];
+    addBtn.titleLabel.font = [UIFont systemFontOfSize:14.0f];
+    [addBtn sizeToFit];
+    self.addItem = [[UIBarButtonItem alloc]initWithCustomView:addBtn];
 
-    searchItem = [[UIBarButtonItem alloc]initWithCustomView:searchBtn];
+
+    UIButton *searchBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [searchBtn setImage:[UIImage imageNamed:@"marketSearch"] forState:UIControlStateNormal];
+    [searchBtn addTarget:self action:@selector(searchSelect) forControlEvents:UIControlEventTouchUpInside];
+    [searchBtn sizeToFit];
+
+    self.searchItem = [[UIBarButtonItem alloc]initWithCustomView:searchBtn];
     
-    _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 60, 30)];
-    _titleLabel.font = [UIFont systemFontOfSize:17.0f];
-    _titleLabel.textColor = TEXT_COLOR;
+    self.titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 60, 30)];
+    self.titleLabel.font = [UIFont systemFontOfSize:17.0f];
+    self.titleLabel.textColor = TEXT_COLOR;
     
     UIButton *cancelBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [cancelBtn setTitle:@"取消" forState:UIControlStateNormal];
-    [cancelBtn setTitleColor:RGB(255, 57, 67) forState:UIControlStateNormal];
-    [cancelBtn.titleLabel setFont:[UIFont systemFontOfSize:16]];
+    [cancelBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [cancelBtn.titleLabel setFont:[UIFont systemFontOfSize:14.0f]];
     [cancelBtn addTarget:self action:@selector(cancelSearch) forControlEvents:UIControlEventTouchUpInside];
-    [cancelBtn setFrame:CGRectMake(0, 0, 40, 24)];
-
-    cancelItem = [[UIBarButtonItem alloc]initWithCustomView:cancelBtn];
-   // self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects:addItem, nil];
-    //self.navigationItem.titleView = backView;
+    [cancelBtn sizeToFit];
+    self.cancelItem = [[UIBarButtonItem alloc]initWithCustomView:cancelBtn];
 }
 
--(void)searchSelect
+- (void)searchSelect
 {
-    self.navigationItem.titleView = backView;
-    [searchTextField becomeFirstResponder];
-     self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects:addItem,cancelItem, nil];
+    self.navigationItem.titleView = self.searchBar;
+    [self.searchBar becomeFirstResponder];
+    self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects:self.addItem,self.cancelItem, nil];
 }
--(void)cancelSearch
+
+- (void)cancelSearch
 {
-    [searchTextField resignFirstResponder];
+    [self.searchBar resignFirstResponder];
     if (itemArr.count > 0) {
         CirclleItemObj *obj = itemArr[index];
-        
-        _titleLabel.text = obj.tname;
+        self.titleLabel.text = obj.tname;
     }
-    self.navigationItem.titleView = _titleLabel;
-     self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects:addItem,searchItem, nil];
+    self.navigationItem.titleView = self.titleLabel;
+    self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects:self.addItem,self.searchItem, nil];
 }
 
 
@@ -482,45 +457,29 @@
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    [searchTextField resignFirstResponder];
+    [self.searchBar resignFirstResponder];
 }
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
-    [searchTextField resignFirstResponder];
-    if (scrollView.tag == 1001)
-    {
-    }
-    else if(scrollView.tag == 1002)
-    {
-        if (scrollView.contentOffset.y >46 )
-        {
-            if (self.listTable.tableHeaderView)
-            {
-                [UIView beginAnimations:nil context:nil];
-                
+    [self.searchBar resignFirstResponder];
+    if (scrollView.tag == 1001){
+    } else if(scrollView.tag == 1002){
+        if (scrollView.contentOffset.y > 46.0f){
+            if (self.listTable.tableHeaderView){
                 self.listTable.tableHeaderView = nil;
                 if (itemArr.count > 0) {
                     CirclleItemObj *obj = itemArr[index];
-                    
-                    _titleLabel.text = obj.tname;
-                    self.navigationItem.titleView = _titleLabel;
+                    self.titleLabel.text = obj.tname;
+                    self.navigationItem.titleView = self.titleLabel;
                 }
-                self.navigationItem.rightBarButtonItems = @[addItem,searchItem];
-                [UIView setAnimationDuration:0.4];
-                [UIView commitAnimations];
-                NSLog(@"NoHeader ===== %f",scrollView.contentOffset.y);
-
+                self.navigationItem.rightBarButtonItems = @[self.addItem,self.searchItem];
             }
         }
-        if (scrollView.contentOffset.y < -46 )
-        {
+        if (scrollView.contentOffset.y < -46.0f){
             if (!self.listTable.tableHeaderView) {
-                [UIView beginAnimations:nil context:nil];
                 self.listTable.tableHeaderView = backScrollView;
-                    self.navigationItem.titleView = backView;
-                self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects:addItem, nil];
-                [UIView setAnimationDuration:0.4];
-                [UIView commitAnimations];
+                self.navigationItem.titleView = self.searchBar;
+                self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects:self.addItem, nil];
             }
         }
         
@@ -586,9 +545,9 @@
 
 #pragma mark - textfieldDelegate
 
-- (BOOL)textFieldShouldReturn:(UITextField *)textField
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
-    [textField resignFirstResponder];
+    [searchBar resignFirstResponder];
     CirclleItemObj *obj = itemArr[index];
     NSString *tcode = @"";
     NSString *ishot = @"";
@@ -599,9 +558,9 @@
     {
         ishot = @"1";
     }
-    NSString *transString = [NSString stringWithString:[textField.text stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+    NSString *transString = [NSString stringWithString:[searchBar.text stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
     [self requestDataWithtcode:tcode isHot:ishot target:@"first" name:transString time:@""];
-    return YES;
+//    return YES;
 }
 
 @end
