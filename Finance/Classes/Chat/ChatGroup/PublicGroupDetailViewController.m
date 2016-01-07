@@ -62,7 +62,7 @@
     // Uncomment the following line to preserve selection between presentations.
     
     self.tableView.backgroundColor = [UIColor whiteColor];
-    self.tableView.tableHeaderView = self.headerView;
+    //self.tableView.tableHeaderView = self.headerView;
     self.tableView.tableFooterView = self.footerView;
     
     [self fetchGroupInfo];
@@ -107,15 +107,15 @@
 - (UIView *)footerView
 {
     if (_footerView == nil) {
-        _footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 80)];
+        _footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT-150-64-10)];
         _footerView.backgroundColor = [UIColor whiteColor];
         
-        UIView *line = [[UIView alloc] initWithFrame:CGRectMake(0, 0, _footerView.frame.size.width, 0.5)];
-        line.backgroundColor = [UIColor lightGrayColor];
-        [_footerView addSubview:line];
+//        UIView *line = [[UIView alloc] initWithFrame:CGRectMake(0, 0, _footerView.frame.size.width, 0.5)];
+//        line.backgroundColor = [UIColor lightGrayColor];
+//        [_footerView addSubview:line];
         
-        _footerButton = [[UIButton alloc] initWithFrame:CGRectMake(40, 20, _footerView.frame.size.width - 80, 40)];
-        _footerButton.titleLabel.font = [UIFont systemFontOfSize:16.0f];
+        _footerButton = [[UIButton alloc] initWithFrame:CGRectMake(20, _footerView.height-35, _footerView.frame.size.width - 40, 35)];
+        _footerButton.titleLabel.font = [UIFont systemFontOfSize:15.0f];
         [_footerButton setTitle:NSLocalizedString(@"group.join", @"join the group") forState:UIControlStateNormal];
         [_footerButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [_footerButton addTarget:self action:@selector(joinAction) forControlEvents:UIControlEventTouchUpInside];
@@ -138,7 +138,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return 2;
+    return 3;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -149,15 +149,24 @@
     // Configure the cell...
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier];
-        cell.textLabel.font = [UIFont systemFontOfSize:16.0f];
-        cell.detailTextLabel.font = [UIFont systemFontOfSize:16.0f];
+        cell.textLabel.font = [UIFont systemFontOfSize:15.0f];
+        cell.textLabel.textColor = [UIColor colorWithHexString:@"161616"];
+        cell.detailTextLabel.font = [UIFont systemFontOfSize:14.0f];
+        cell.detailTextLabel.textColor = [UIColor colorWithHexString:@"AFAFAF"];
+        UIView * lineView = [[UIView alloc] initWithFrame:CGRectMake(15, cell.height-1, self.tableView.width-15, 0.5)];
+        lineView.backgroundColor = [UIColor colorWithHexString:@"E6E7E8"];
+        [cell addSubview:lineView];
     }
     
-    if (indexPath.row == 0) {
+    if (indexPath.row == 0){
         cell.textLabel.text = NSLocalizedString(@"group.owner", @"Owner");
         cell.detailTextLabel.text = _group.owner;
+        
+    }else if (indexPath.row == 1) {
+        cell.textLabel.text = @"群成员";
+        cell.detailTextLabel.text = [NSString stringWithFormat:@"%ld人",_group.groupOccupantsCount];
     }
-    else{
+    else if (indexPath.row == 2){
         cell.textLabel.text = NSLocalizedString(@"group.describe", @"Describe");
         cell.detailTextLabel.text = _group.groupDescription;
     }
@@ -171,7 +180,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row == 0) {
+    if (indexPath.row == 0 || indexPath.row == 1) {
         return 50;
     }
     else{

@@ -125,8 +125,8 @@
 //    }
         self.companyLabel.text = self.responseObject.company;
     
-    if (self.responseObject.company.length > 5) {
-        NSString *str = [self.responseObject.title substringToIndex:5];
+    if (self.responseObject.company.length > 6) {
+        NSString *str = [self.responseObject.title substringToIndex:6];
         self.positionLabel.text = [NSString stringWithFormat:@"%@…",str];
     }else{
         self.positionLabel.text = self.responseObject.title;
@@ -181,7 +181,7 @@
     //控件位置
     self.typeLabel.frame = CGRectMake(self.typeLabel.origin.x, CGRectGetMaxY(self.titleLabel.frame)+k_SecondToTop, self.typeLabel.width, self.typeLabel.height);
     //self.capitalLabel.frame = CGRectMake(self.capitalLabel.origin.x, CGRectGetMaxY(self.typeLabel.frame)+k_SecondToTop, self.capitalLabel.width, self.capitalLabel.height);
-    self.capitalLabel.frame =CGRectMake(k_ThirdToTop,CGRectGetMaxY(self.typeLabel.frame)+k_FirstToTop, self.capitalLabel.width, CGRectGetHeight(self.capitalLabel.frame));
+    self.capitalLabel.frame =CGRectMake(self.capitalLabel.frame.origin.x,CGRectGetMaxY(self.typeLabel.frame)+k_FirstToTop, self.capitalLabel.width, CGRectGetHeight(self.capitalLabel.frame));
     self.phoneNumLabel.frame =CGRectMake(self.phoneNumLabel.origin.x, CGRectGetMaxY(self.capitalLabel.frame)+k_FirstToTop, self.phoneNumLabel.width, self.phoneNumLabel.height);
     self.addressLabel.frame =CGRectMake(self.addressLabel.origin.x, CGRectGetMaxY(self.phoneNumLabel.frame)+k_FirstToTop, self.addressLabel.width, self.phoneNumLabel.height);
     self.secondHorizontalLine.frame = CGRectMake(self.secondHorizontalLine.origin.x, CGRectGetMaxY(self.addressLabel.frame)+k_ThirdToTop, self.secondHorizontalLine.width, self.secondHorizontalLine.height);

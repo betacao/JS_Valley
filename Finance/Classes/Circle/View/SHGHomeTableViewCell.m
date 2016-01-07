@@ -361,8 +361,8 @@
 
     //设置公司名称
     NSString *comp = obj.company;
-    if (obj.company.length > 5) {
-        NSString *str = [obj.company substringToIndex:5];
+    if (obj.company.length > 6) {
+        NSString *str = [obj.company substringToIndex:6];
         comp = [NSString stringWithFormat:@"%@…",str];
     }
     self.lblCompanyName.text = comp;
@@ -374,8 +374,8 @@
     self.lblCompanyName.frame = companRect;
 
     NSString *str = obj.title;
-    if (obj.title.length > 5) {
-        str= [obj.title substringToIndex:5];
+    if (obj.title.length > 4) {
+        str= [obj.title substringToIndex:4];
         str = [NSString stringWithFormat:@"%@…",str];
     }
     self.lblPosition.text = str;

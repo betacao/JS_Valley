@@ -176,8 +176,8 @@
     self.Action_lineView.frame = frame;
 
     NSString *company = self.object.company;
-    if (self.object.company.length > 5) {
-        company = [[company substringToIndex:5] stringByAppendingString:@"..."];
+    if (self.object.company.length > 6) {
+        company = [[company substringToIndex:6] stringByAppendingString:@"..."];
     }
     self.Action_companyLable.text = company;
     frame = self.Action_companyLable.frame;
@@ -187,8 +187,8 @@
     self.Action_companyLable.frame = frame;
 
     NSString *department = self.object.department;
-    if (self.object.department.length > 5) {
-        department = [[department substringToIndex:5] stringByAppendingString:@"..."];
+    if (self.object.department.length > 4) {
+        department = [[department substringToIndex:4] stringByAppendingString:@"..."];
     }
     self.Action_departmentLable.text = department;
     frame = self.Action_departmentLable.frame;

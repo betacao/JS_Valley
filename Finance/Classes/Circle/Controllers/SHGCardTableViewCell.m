@@ -44,8 +44,8 @@
     CGSize dActualsize = [obj.titles boundingRectWithSize:dSize options:NSStringDrawingUsesLineFragmentOrigin  attributes:dDic context:nil].size;
     self.departmentLabel.frame = CGRectMake(CGRectGetMaxX(self.userNameLabel.frame) + 10.0f, self.departmentLabel.origin.y, dActualsize.width, self.departmentLabel.height);
     
-    if (obj.titles.length > 5) {
-        NSString * str = [obj.titles substringToIndex:5];
+    if (obj.titles.length > 6) {
+        NSString * str = [obj.titles substringToIndex:6];
         self.departmentLabel.text = [NSString stringWithFormat:@"%@...",str];
     }else {
         self.departmentLabel.text = obj.titles;

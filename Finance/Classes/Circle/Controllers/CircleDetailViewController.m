@@ -425,8 +425,8 @@
 
     //设置公司名称
     NSString *comp = obj.company;
-    if (obj.company.length > 5) {
-        NSString *str = [obj.company substringToIndex:5];
+    if (obj.company.length > 6) {
+        NSString *str = [obj.company substringToIndex:6];
         comp = [NSString stringWithFormat:@"%@…",str];
     }
     self.lblCompanyName.text = comp;

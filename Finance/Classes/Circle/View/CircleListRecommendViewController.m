@@ -109,8 +109,8 @@ const CGFloat kOtherRecommendCellHeight = 58.0f;
             detailString = [[NSString stringWithFormat:@"%@",obj.recomfri] stringByAppendingString:@"等人也关注了他"];
         }
         NSString *company = obj.company;
-        if (obj.company.length > 5) {
-            company = [obj.company substringToIndex:5];
+        if (obj.company.length > 6) {
+            company = [obj.company substringToIndex:6];
             company = [NSString stringWithFormat:@"%@…",company];
         }
 

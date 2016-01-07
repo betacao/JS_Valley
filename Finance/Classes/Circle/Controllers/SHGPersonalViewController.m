@@ -139,8 +139,8 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
     self.departmentLabel.frame = CGRectMake(CGRectGetMaxX(self.userNameLabel.frame) + 5.0, self.departmentLabel.frame.origin.y, self.departmentLabel.frame.size.width, self.departmentLabel.frame.size.height);
     
     [self.headerImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,self.potName]] placeholderImage:[UIImage imageNamed:@"default_head"]];
-    if (self.department.length > 5) {
-        NSString * str = [self.department substringToIndex:5];
+    if (self.department.length > 6) {
+        NSString * str = [self.department substringToIndex:6];
         self.departmentLabel.text = [NSString stringWithFormat:@"%@...",str];
     }else{
         self.departmentLabel.text = self.department;
