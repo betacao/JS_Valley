@@ -13,6 +13,8 @@
 @interface LoginNextViewController ()
 - (IBAction)actionFogetPwd:(id)sender;
 - (IBAction)actionLogin:(id)sender;
+- (IBAction)deleteButton:(id)sender;
+@property (weak, nonatomic) IBOutlet UIButton *deleteButton;
 @property (weak, nonatomic) IBOutlet UITextField *lblPassward;
 @property (nonatomic, strong)NSString *isFull;
 @end
@@ -23,7 +25,15 @@
     [super viewDidLoad];
     [_lblPassward becomeFirstResponder];
 
-    self.title = @"登录";
+    self.title = @"输入密码";
+    
+    UIView * padView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 20.0, 45.0)];
+    self.lblPassward.leftView = padView;
+    self.lblPassward.leftViewMode = UITextFieldViewModeAlways;
+    
+    self.lblPassward.placeholder = @"请输入密码";
+    [self.lblPassward setValue:[UIColor colorWithHexString:@"AFAFAF"] forKeyPath:@"_placeholderLabel.textColor"];
+    [self.lblPassward setValue:[UIFont systemFontOfSize:14] forKeyPath:@"_placeholderLabel.font"];
     
     NSLog(@"phonephone=%@",self.phone);
     // Do any additional setup after loading the view from its nib.
@@ -81,6 +91,11 @@
          [Hud showMessageWithText:response.errorMessage];
          [Hud hideHud];
      }];
+}
+
+- (IBAction)deleteButton:(id)sender {
+    self.lblPassward.text = @"";
+    [self.lblPassward becomeFirstResponder];
 }
 
 -(void)regiestToken
