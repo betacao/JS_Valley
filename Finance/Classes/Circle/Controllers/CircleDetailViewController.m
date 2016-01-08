@@ -50,7 +50,7 @@
 @property (weak, nonatomic) IBOutlet headerView *imageHeader;
 @property (strong, nonatomic) BRCommentView *popupView;
 @property (strong, nonatomic) IBOutlet UIView *viewHeader;
-@property (strong, nonatomic) IBOutlet UIView *navigationView;
+//@property (strong, nonatomic) IBOutlet UIView *navigationView;
 @property (weak,nonatomic) IBOutlet UIView *breakLineView;
 @property (weak, nonatomic) IBOutlet UIImageView *backImageView;
 @property (weak, nonatomic) IBOutlet UILabel *lineView;
@@ -84,10 +84,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-//    self.navigationItem.leftBarButtonItem = nil;
-//    self.navigationItem.hidesBackButton = YES;
-//    self.navigationItem.titleView = self.navigationView;
-
+    //    self.navigationItem.leftBarButtonItem = nil;
+    //    self.navigationItem.hidesBackButton = YES;
+    //    self.navigationItem.titleView = self.navigationView;
+    self.title = @"动态详情";
     [CommonMethod setExtraCellLineHidden:self.listTable];
     [self addHeaderRefresh:self.listTable headerRefesh:NO andFooter:NO];
     [Hud showLoadingWithMessage:@"加载中"];
@@ -135,11 +135,6 @@
     frame = self.btnAttention.frame;
     frame.origin.x *= XFACTOR;
     self.btnAttention.frame = frame;
-}
-
-- (IBAction)btnBackClick:(id)sender
-{
-    [self.navigationController popViewControllerAnimated:YES];
 }
 
 -(void)parseObjWithDic:(NSDictionary *)dics
