@@ -227,7 +227,7 @@
         self.navigationItem.titleView = self.marketSegmentTitleView;
         self.navigationItem.rightBarButtonItem = self.marketSegmentViewController.rightBarButtonItem;
         self.navigationItem.leftBarButtonItem = self.marketSegmentViewController.leftBarButtonItem;
-        [MobClick event:@"ChatListViewController" label:@"onClick"];
+        [MobClick event:@"EnterMarketController" label:@"onClick"];
 
     } else if (item.tag == 3000){
         self.navigationItem.leftBarButtonItem=nil;

@@ -211,7 +211,7 @@
         }
 
         if ([response.dataDictionary objectForKey:@"auditstate"]) {
-            self.auditState = [response.dataDictionary objectForKey:@""];
+            self.auditState = [response.dataDictionary objectForKey:@"auditstate"];
             if ([self.auditState isEqualToString:@"0"]) {
                 [self.authButton setImage:[UIImage imageNamed:@"me_unAuth"] forState:UIControlStateNormal];
             } else if ([self.auditState isEqualToString:@"1"]){

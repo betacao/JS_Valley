@@ -106,6 +106,7 @@
 }
 - (void)searchMarket:(UIButton *)button
 {
+    [MobClick event:@"ActionMarketSearchClicked" label:@"onClick"];
     SHGMarketSearchViewController *controller = [[SHGMarketSearchViewController alloc] init];
     controller.dataArr = ((BaseTableViewController *)[self.viewControllers firstObject]).dataArr;
     [self.navigationController pushViewController:controller animated:YES];
@@ -113,6 +114,7 @@
 
 - (void)addNewMarket:(UIButton *)button
 {
+    [MobClick event:@"ActionCreateMarketClicked" label:@"onClick"];
     SHGMarketSendViewController *controller = [[SHGMarketSendViewController alloc] init];
     [self.navigationController pushViewController:controller animated:YES];
 }

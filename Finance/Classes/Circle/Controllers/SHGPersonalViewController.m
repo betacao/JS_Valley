@@ -16,6 +16,7 @@
 
 #define kTagViewWidth 45.0f * XFACTOR
 #define kTagViewHeight 16.0f * XFACTOR
+#define kLineViewLeftMargin 14.0f
 
 typedef NS_ENUM(NSInteger, SHGUserType) {
     //马甲号类型
@@ -133,12 +134,12 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
 {
     CGSize tsize =CGSizeMake(MAXFLOAT,self.userNameLabel.frame.size.height);
     
-    NSDictionary * tdic = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:14 ],NSFontAttributeName,nil];
+    NSDictionary * tdic = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:14.0f], NSFontAttributeName,nil];
     
     CGSize  actualsize =[self.nickName boundingRectWithSize:tsize options:NSStringDrawingUsesLineFragmentOrigin  attributes:tdic context:nil].size;
     self.userNameLabel.frame =CGRectMake(self.userNameLabel.frame.origin.x,self.userNameLabel.frame.origin.y,actualsize.width ,self.userNameLabel.frame.size.height );
     
-    self.departmentLabel.frame = CGRectMake(CGRectGetMaxX(self.userNameLabel.frame) + 5.0, self.departmentLabel.frame.origin.y, self.departmentLabel.frame.size.width, self.departmentLabel.frame.size.height);
+    self.departmentLabel.frame = CGRectMake(CGRectGetMaxX(self.userNameLabel.frame) + kObjectMargin / 2.0f, self.departmentLabel.frame.origin.y, self.departmentLabel.frame.size.width, self.departmentLabel.frame.size.height);
     
     [self.headerImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,self.potName]] placeholderImage:[UIImage imageNamed:@"default_head"]];
     if (self.department.length > 6) {
@@ -359,7 +360,7 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
     label.textColor = [UIColor colorWithHexString:@"919291"];
     
     UIView * lineView = [[UIView alloc]init];
-    lineView.frame = CGRectMake(14.0,43.0 , SCREENWIDTH-14.0, 0.5);
+    lineView.frame = CGRectMake(kLineViewLeftMargin, CGRectGetHeight(cell.contentView.frame) - 1.0f, SCREENWIDTH - kLineViewLeftMargin, 0.5f);
     lineView.backgroundColor = [UIColor colorWithHexString:@"E6E7E8"];
     [cell addSubview:lineView];
     switch (indexPath.row) {

@@ -102,6 +102,9 @@
     }
     //移动scrollview到相应的位置
     [self scrollRectToVisible:button.frame animated:YES];
+
+    NSString *umentString = [@"ActionMarketTypeCode" stringByAppendingString:[self marketFirstId]];
+    [MobClick event:umentString label:@"onClick"];
 }
 
 - (void)layoutSubviews
