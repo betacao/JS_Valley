@@ -447,7 +447,7 @@
     self.lbldepartName.text = str;
 
     CGRect positionRect = self.lbldepartName.frame;
-    positionRect.origin.x = kItemMargin + CGRectGetMaxX(companRect);
+    positionRect.origin.x = CGRectGetMaxX(companRect);
     [self.lbldepartName sizeToFit];
     size = self.lbldepartName.frame.size;
     positionRect.size.width = size.width;

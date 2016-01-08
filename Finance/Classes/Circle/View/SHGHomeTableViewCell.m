@@ -10,7 +10,7 @@
 #import "MLEmojiLabel.h"
 #import "SDPhotoGroup.h"
 #import "SDPhotoItem.h"
-#define kItemMargin 7.0f * XFACTOR
+#define kItemMargin 6.0f * XFACTOR
 
 
 @interface SHGHomeTableViewCell()<MLEmojiLabelDelegate>
@@ -367,7 +367,7 @@
     }
     self.lblCompanyName.text = comp;
     CGRect companRect = self.lblCompanyName.frame;
-    companRect.origin.x = kItemMargin + CGRectGetMaxX(frame);
+    companRect.origin.x =  CGRectGetMaxX(frame);
     [self.lblCompanyName sizeToFit];
     CGSize size = self.lblCompanyName.frame.size;
     companRect.size.width = size.width;
@@ -379,9 +379,8 @@
         str = [NSString stringWithFormat:@"%@…",str];
     }
     self.lblPosition.text = str;
-
     CGRect positionRect = self.lblPosition.frame;
-    positionRect.origin.x = kItemMargin + CGRectGetMaxX(companRect);
+    positionRect.origin.x = CGRectGetMaxX(companRect);
     self.lblPosition.frame = positionRect;
 
     //如果公司名和职位名字都不存在的话则隐藏分割线(1.72 不需要分割线)

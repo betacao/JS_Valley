@@ -144,11 +144,11 @@ const CGFloat kOtherRecommendCellHeight = 58.0f;
             frame = self.topCompantyLabel.frame;
             size = [self.topCompantyLabel sizeThatFits:CGSizeMake(MAXFLOAT, CGRectGetHeight(frame))];
             frame.size.width = size.width;
-            frame.origin.x = CGRectGetMaxX(self.topBreakLine.frame) + kLabelMargin;
+            frame.origin.x = CGRectGetMaxX(self.topBreakLine.frame);
             self.topCompantyLabel.frame = frame;
 
             frame = self.topDepartLabel.frame;
-            frame.origin.x = CGRectGetMaxX(self.topCompantyLabel.frame) + kLabelMargin;
+            frame.origin.x = CGRectGetMaxX(self.topCompantyLabel.frame);
             self.topDepartLabel.frame = frame;
             
         } else if (index == 1){
@@ -176,11 +176,11 @@ const CGFloat kOtherRecommendCellHeight = 58.0f;
             frame = self.middleCompantyLabel.frame;
             size = [self.middleCompantyLabel sizeThatFits:CGSizeMake(MAXFLOAT, CGRectGetHeight(frame))];
             frame.size.width = size.width;
-            frame.origin.x = CGRectGetMaxX(self.middleBreakLine.frame) + kLabelMargin;
+            frame.origin.x = CGRectGetMaxX(self.middleBreakLine.frame) ;
             self.middleCompantyLabel.frame = frame;
 
             frame = self.middleDepartLabel.frame;
-            frame.origin.x = CGRectGetMaxX(self.middleCompantyLabel.frame) + kLabelMargin;
+            frame.origin.x = CGRectGetMaxX(self.middleCompantyLabel.frame);
             self.middleDepartLabel.frame = frame;
 
 
@@ -211,7 +211,7 @@ const CGFloat kOtherRecommendCellHeight = 58.0f;
             frame = self.bottomCompantyLabel.frame;
             size = [self.bottomCompantyLabel sizeThatFits:CGSizeMake(MAXFLOAT, CGRectGetHeight(frame))];
             frame.size.width = size.width;
-            frame.origin.x = CGRectGetMaxX(self.bottomBreakLine.frame) + kLabelMargin;
+            frame.origin.x = CGRectGetMaxX(self.bottomBreakLine.frame);
             self.bottomCompantyLabel.frame = frame;
 
             frame = self.bottomDepartLabel.frame;
