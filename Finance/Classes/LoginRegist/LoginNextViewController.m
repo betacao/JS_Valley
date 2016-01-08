@@ -83,8 +83,7 @@
         [[NSUserDefaults standardUserDefaults] synchronize];
         //环信登录
         [self regiestToken];
-    } failed:^(MOCHTTPResponse *response)
-     {
+    } failed:^(MOCHTTPResponse *response){
          [Hud showMessageWithText:response.errorMessage];
          [Hud hideHud];
      }];
@@ -95,7 +94,7 @@
     [self.lblPassward becomeFirstResponder];
 }
 
--(void)regiestToken
+- (void)regiestToken
 {
     NSString *channelId = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_BPUSH_CHANNELID];
     NSString *uid =  [[NSUserDefaults standardUserDefaults]objectForKey:KEY_UID];

@@ -29,7 +29,7 @@
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                     <state key="normal" backgroundImage="me_deleteInput"/>
                     <connections>
-                        <action selector="deleteButton:" destination="-1" eventType="touchDragInside" id="H52-ZR-kk6"/>
+                        <action selector="deleteButton:" destination="-1" eventType="touchUpInside" id="f6p-Wb-CgQ"/>
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="oGg-kH-V4P">
