@@ -72,8 +72,8 @@
 {
     self.lblContent.numberOfLines = 5;
     self.lblContent.lineBreakMode = NSLineBreakByWordWrapping;
-    self.lblContent.font = [UIFont systemFontOfSize:15.0f];
-    self.lblContent.textColor = [UIColor colorWithHexString:@"606060"];
+    self.lblContent.font = [UIFont systemFontOfSize:14.0f];
+    self.lblContent.textColor = [UIColor colorWithHexString:@"3C3C3C"];
     self.lblContent.delegate = self;
     self.lblContent.backgroundColor = [UIColor clearColor];
 
@@ -367,7 +367,7 @@
     }
     self.lblCompanyName.text = comp;
     CGRect companRect = self.lblCompanyName.frame;
-    companRect.origin.x =  CGRectGetMaxX(frame);
+    companRect.origin.x = CGRectGetMaxX(frame);
     [self.lblCompanyName sizeToFit];
     CGSize size = self.lblCompanyName.frame.size;
     companRect.size.width = size.width;
@@ -407,6 +407,10 @@
     CGRect frame = self.bottomView.frame;
     frame.origin.y = originY;
     self.bottomView.frame = frame;
+    
+    frame = self.bottomLineView.frame;
+    frame.size.height = 0.5f;
+    self.bottomLineView.frame = frame;
 }
 
 -(void)cnickClick:(UIButton *)sender

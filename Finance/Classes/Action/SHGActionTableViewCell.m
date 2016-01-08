@@ -7,7 +7,7 @@
 //
 
 #import "SHGActionTableViewCell.h"
-#define kItemMargin 7.0f
+#define kItemMargin 6.0f * XFACTOR
 
 @interface SHGActionTableViewCell ()
 
