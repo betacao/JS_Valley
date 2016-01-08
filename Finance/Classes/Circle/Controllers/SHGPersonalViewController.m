@@ -41,6 +41,7 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
 @property (weak, nonatomic) IBOutlet UIImageView *friendImage;
 @property (weak, nonatomic) IBOutlet UIView *tagViews;
 @property (weak, nonatomic) IBOutlet UIImageView *headerBackImageView;
+@property (weak, nonatomic) IBOutlet UIView *lineView;
 @property (weak, nonatomic) IBOutlet UIView *fView;
 //@property (weak, nonatomic) IBOutlet UIView *footerView;
 @property (weak, nonatomic) IBOutlet UIButton *leftButton;
@@ -80,7 +81,8 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
     [self.tableView setTableFooterView:[[UIView alloc] init]];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     [self initView];
-
+    self.lineView.frame = CGRectMake(self.lineView.origin.x, self.lineView.origin.y, SCREENWIDTH, 0.5f);
+    self.tableView.separatorStyle = UITableViewCellSelectionStyleNone;
     [self requestDataWithTarget:@"first" time:@""];
 }
 
@@ -355,6 +357,11 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
     UILabel *label = [[UILabel alloc] init];
     label.font = [UIFont systemFontOfSize:11.0f];
     label.textColor = [UIColor colorWithHexString:@"919291"];
+    
+    UIView * lineView = [[UIView alloc]init];
+    lineView.frame = CGRectMake(14.0,43.0 , SCREENWIDTH-14.0, 0.5);
+    lineView.backgroundColor = [UIColor colorWithHexString:@"E6E7E8"];
+    [cell addSubview:lineView];
     switch (indexPath.row) {
         case 0:{
             if (self.dynamicNumber) {
