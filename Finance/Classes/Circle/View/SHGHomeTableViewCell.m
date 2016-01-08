@@ -267,11 +267,10 @@
             replyLabel.font = [UIFont systemFontOfSize:14.0f];
             replyLabel.userInteractionEnabled = YES;
             replyLabel.tag = i + 1000;
-            //replyLabel.textColor = TEXT_COLOR;
-            
+
             NSString *text = @"";
             commentOBj *comobj = obj.comments[i];
-            
+
             NSMutableAttributedString *str = nil;
             if (IsStrEmpty(comobj.rnickname)){
                 text = [NSString stringWithFormat:@"%@:  %@",comobj.cnickname,comobj.cdetail];
@@ -321,9 +320,6 @@
             replyLabel.font = [UIFont systemFontOfSize:14.0f];
             replyLabel.userInteractionEnabled = YES;
             replyLabel.textColor = [UIColor colorWithHexString:@"4277B2"];
-//            NSMutableAttributedString * attributedStr = [[NSMutableAttributedString alloc]initWithString:replyLabel.text];
-//            [attributedStr addAttribute:NSForegroundColorAttributeName value:RGB(248, 85, 86) range:NSMakeRange(4, obj.cmmtnum.length)];
-//            replyLabel.attributedText = attributedStr;
             [self.viewComment addSubview:replyLabel];
             commentRect.size.height = CGRectGetMaxY(replyLabel.frame) + kCommentBottomMargin;
         } else{
@@ -360,18 +356,17 @@
     self.breakLine.frame = frame;
 
     //设置公司名称
-    NSString *comp = obj.company;
+    NSString *company = obj.company;
     if (obj.company.length > 6) {
         NSString *str = [obj.company substringToIndex:6];
-        comp = [NSString stringWithFormat:@"%@…",str];
+        company = [NSString stringWithFormat:@"%@…",str];
     }
-    self.lblCompanyName.text = comp;
-    CGRect companRect = self.lblCompanyName.frame;
-    companRect.origin.x = CGRectGetMaxX(frame);
-    [self.lblCompanyName sizeToFit];
-    CGSize size = self.lblCompanyName.frame.size;
-    companRect.size.width = size.width;
-    self.lblCompanyName.frame = companRect;
+    self.lblCompanyName.text = company;
+    CGRect companyRect = self.lblCompanyName.frame;
+    CGSize size = [self.lblCompanyName sizeThatFits:CGSizeMake(CGFLOAT_MAX, CGRectGetHeight(companyRect))];
+    companyRect.origin.x = CGRectGetMaxX(frame);
+    companyRect.size.width = size.width;
+    self.lblCompanyName.frame = companyRect;
 
     NSString *str = obj.title;
     if (obj.title.length > 4) {
@@ -380,7 +375,7 @@
     }
     self.lblPosition.text = str;
     CGRect positionRect = self.lblPosition.frame;
-    positionRect.origin.x = CGRectGetMaxX(companRect);
+    positionRect.origin.x = CGRectGetMaxX(companyRect);
     self.lblPosition.frame = positionRect;
 
     //如果公司名和职位名字都不存在的话则隐藏分割线(1.72 不需要分割线)
