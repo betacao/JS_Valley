@@ -16,32 +16,29 @@
 - (IBAction)deleteButton:(id)sender;
 @property (weak, nonatomic) IBOutlet UIButton *deleteButton;
 @property (weak, nonatomic) IBOutlet UITextField *lblPassward;
-@property (nonatomic, strong)NSString *isFull;
+@property (nonatomic, strong) NSString *isFull;
 @end
 
 @implementation LoginNextViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [_lblPassward becomeFirstResponder];
+    [self.lblPassward becomeFirstResponder];
 
     self.title = @"输入密码";
     
     UIView * padView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 20.0, 45.0)];
     self.lblPassward.leftView = padView;
     self.lblPassward.leftViewMode = UITextFieldViewModeAlways;
-    
-    self.lblPassward.placeholder = @"请输入密码";
+
     [self.lblPassward setValue:[UIColor colorWithHexString:@"AFAFAF"] forKeyPath:@"_placeholderLabel.textColor"];
-    [self.lblPassward setValue:[UIFont systemFontOfSize:14] forKeyPath:@"_placeholderLabel.font"];
+    [self.lblPassward setValue:[UIFont systemFontOfSize:14.0f] forKeyPath:@"_placeholderLabel.font"];
     
     NSLog(@"phonephone=%@",self.phone);
-    // Do any additional setup after loading the view from its nib.
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 - (IBAction)actionFogetPwd:(id)sender

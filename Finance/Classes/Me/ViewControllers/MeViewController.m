@@ -216,8 +216,10 @@
                 [self.authButton setImage:[UIImage imageNamed:@"me_unAuth"] forState:UIControlStateNormal];
             } else if ([self.auditState isEqualToString:@"1"]){
                 [self.authButton setImage:[UIImage imageNamed:@"me_authed"] forState:UIControlStateNormal];
-            } else{
+            } else if ([self.auditState isEqualToString:@"2"]){
                 [self.authButton setImage:[UIImage imageNamed:@"me_authering"] forState:UIControlStateNormal];
+            } else{
+                [self.authButton setImage:[UIImage imageNamed:@"me_rejected"] forState:UIControlStateNormal];
             }
         }
 
