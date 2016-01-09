@@ -9,7 +9,9 @@
             <connections>
                 <outlet property="QQButton" destination="jrs-cd-6lU" id="Nx9-QG-wbX"/>
                 <outlet property="deleteButton" destination="0J9-vj-xcY" id="N61-RK-8V7"/>
+                <outlet property="leftLine" destination="ndE-DL-iMk" id="dMV-Ke-zYo"/>
                 <outlet property="lineLabel" destination="PS6-Ue-rx9" id="Yt0-cr-0XC"/>
+                <outlet property="rightLine" destination="nhP-6d-i8M" id="zLo-8m-p4O"/>
                 <outlet property="textUser" destination="Msy-E4-e09" id="rp5-d8-Fc7"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
                 <outlet property="weChatButton" destination="oru-Y0-dni" id="Kfd-mU-Ogf"/>
@@ -60,7 +62,7 @@
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ndE-DL-iMk">
                     <rect key="frame" x="15" y="433" width="112" height="1"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <color key="backgroundColor" red="0.90588235294117647" green="0.90588235294117647" blue="0.90588235294117647" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="backgroundColor" red="0.90196078431372551" green="0.90588235294117647" blue="0.90980392156862744" alpha="1" colorSpace="calibratedRGB"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
@@ -75,13 +77,13 @@
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="nhP-6d-i8M">
                     <rect key="frame" x="193" y="433" width="112" height="1"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMinY="YES"/>
-                    <color key="backgroundColor" red="0.90588235289999997" green="0.90588235289999997" blue="0.90588235289999997" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="backgroundColor" red="0.90196078431372551" green="0.90588235294117647" blue="0.90980392156862744" alpha="1" colorSpace="calibratedRGB"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" tag="1001" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="oru-Y0-dni">
-                    <rect key="frame" x="42" y="469" width="56" height="56"/>
+                    <rect key="frame" x="42" y="494" width="56" height="56"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <state key="normal" image="wx.png">
@@ -93,7 +95,7 @@
                     </connections>
                 </button>
                 <button opaque="NO" tag="1002" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="jrs-cd-6lU">
-                    <rect key="frame" x="132" y="469" width="56" height="56"/>
+                    <rect key="frame" x="132" y="494" width="56" height="56"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <state key="normal" image="qq.png">
@@ -105,7 +107,7 @@
                     </connections>
                 </button>
                 <button opaque="NO" tag="1000" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="hkG-sQ-WrE">
-                    <rect key="frame" x="222" y="469" width="56" height="56"/>
+                    <rect key="frame" x="222" y="494" width="56" height="56"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <state key="normal" image="wb.png">
@@ -124,7 +126,7 @@
                         <action selector="deleteButtonClick:" destination="-1" eventType="touchUpInside" id="3tv-vO-Mwn"/>
                     </connections>
                 </button>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="输入手机号码登录或注册，大牛圈不会在任何地方泄漏您的号码。" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="DVq-n1-acm">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="输入手机号码登录或注册，大牛圈不会在任何地方泄漏您的号码。" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="DVq-n1-acm">
                     <rect key="frame" x="15" y="57" width="290" height="40"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" name="PartyLetPlain" family="Party LET" pointSize="11"/>

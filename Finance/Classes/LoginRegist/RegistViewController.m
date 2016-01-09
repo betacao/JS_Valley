@@ -71,6 +71,8 @@ typedef NS_ENUM(NSInteger, RegistType)
 	self.nextStepButton.layer.masksToBounds = YES;
 	self.nextStepButton.layer.cornerRadius = 3;
     
+    self.protocolButton.layer.masksToBounds = YES;
+    self.protocolButton.layer.cornerRadius = 3.0;
     self.protocolButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     NSString *btnStr = @"我已阅读并同意《大牛圈用户协议》";
     NSRange range =[btnStr rangeOfString:@"《"];
@@ -140,7 +142,7 @@ typedef NS_ENUM(NSInteger, RegistType)
 		
 		self.messageSendedLabel.hidden = NO;
 
-		self.footerView.origin  = CGPointMake(self.footerView.origin.x, 265);
+		self.footerView.origin  = CGPointMake(self.footerView.origin.x, 180);
 
 	}else if (registType == RegistOverTime){
         [self.getVerfyCodeButton setTitleColor:[UIColor colorWithHexString:@"4482C8"] forState:UIControlStateNormal];
@@ -151,7 +153,7 @@ typedef NS_ENUM(NSInteger, RegistType)
 		
 		self.messageSendedLabel.hidden = YES;
 		
-		self.footerView.origin  = CGPointMake(self.footerView.origin.x, 185);
+		self.footerView.origin  = CGPointMake(self.footerView.origin.x, 180);
 	}else{
 		return;
 	}

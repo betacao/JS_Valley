@@ -29,6 +29,8 @@
 @property (weak, nonatomic) IBOutlet UIButton *weiBoButton;
 @property (weak, nonatomic) IBOutlet UILabel *lineLabel;
 @property (weak, nonatomic) IBOutlet UIButton *deleteButton;
+@property (weak, nonatomic) IBOutlet UILabel *leftLine;
+@property (weak, nonatomic) IBOutlet UILabel *rightLine;
 
 - (IBAction)deleteButtonClick:(id)sender;
 
@@ -64,6 +66,8 @@
     self.textUser.placeholder = @"请输入手机号码";
     [self.textUser setValue:[UIColor colorWithHexString:@"AFAFAF"] forKeyPath:@"_placeholderLabel.textColor"];
     [self.textUser setValue:[UIFont systemFontOfSize:14] forKeyPath:@"_placeholderLabel.font"];
+    self.leftLine.size = CGSizeMake(self.leftLine.width, 0.5f);
+    self.rightLine.size = CGSizeMake(self.rightLine.width, 0.5f);
 }
 - (void)viewWillAppear:(BOOL)animated
 {

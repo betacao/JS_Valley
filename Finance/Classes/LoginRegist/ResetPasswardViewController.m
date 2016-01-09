@@ -44,21 +44,21 @@
     self.txtCode.leftViewMode = UITextFieldViewModeAlways;
     self.txtCode.placeholder = @"验证码";
     [self.txtCode setValue:[UIColor colorWithHexString:@"AFAFAF"] forKeyPath:@"_placeholderLabel.textColor"];
-    [self.txtCode setValue:[UIFont boldSystemFontOfSize:14] forKeyPath:@"_placeholderLabel.font"];
+    [self.txtCode setValue:[UIFont systemFontOfSize:14] forKeyPath:@"_placeholderLabel.font"];
     
     UIView *paddingView2 = [[UIView alloc] initWithFrame:CGRectMake(0, 0,20, 45)];
     self.txtPwd.leftView = paddingView2;
     self.txtPwd.leftViewMode = UITextFieldViewModeAlways;
     self.txtPwd.placeholder = @"输入新密码";
     [self.txtPwd setValue:[UIColor colorWithHexString:@"AFAFAF"] forKeyPath:@"_placeholderLabel.textColor"];
-    [self.txtPwd setValue:[UIFont boldSystemFontOfSize:14] forKeyPath:@"_placeholderLabel.font"];
+    [self.txtPwd setValue:[UIFont systemFontOfSize:14] forKeyPath:@"_placeholderLabel.font"];
     
     UIView *paddingView3 = [[UIView alloc] initWithFrame:CGRectMake(0, 0,20, 45)];
     self.txtPwdVery.leftView = paddingView3;
     self.txtPwdVery.leftViewMode = UITextFieldViewModeAlways;
     self.txtPwdVery.placeholder = @"再次输入新密码";
     [self.txtPwdVery setValue:[UIColor colorWithHexString:@"AFAFAF"] forKeyPath:@"_placeholderLabel.textColor"];
-    [self.txtPwdVery setValue:[UIFont boldSystemFontOfSize:14] forKeyPath:@"_placeholderLabel.font"];
+    [self.txtPwdVery setValue:[UIFont systemFontOfSize:14] forKeyPath:@"_placeholderLabel.font"];
 }
 
 - (void)didReceiveMemoryWarning {
