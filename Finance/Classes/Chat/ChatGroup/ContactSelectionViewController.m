@@ -132,11 +132,9 @@
 - (UISearchBar *)searchBar
 {
     if (_searchBar == nil) {
-        _searchBar = [[EMSearchBar alloc] initWithFrame: CGRectMake(0, 0, SCREENWIDTH, 44)];
+        _searchBar = [[EMSearchBar alloc] init];
         _searchBar.delegate = self;
         _searchBar.placeholder = NSLocalizedString(@"search", @"Search");
-        _searchBar.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleRightMargin;
-        _searchBar.backgroundColor = [UIColor colorWithRed:0.747 green:0.756 blue:0.751 alpha:1.000];
     }
     
     return _searchBar;

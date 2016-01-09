@@ -139,10 +139,9 @@ static NSString * const kCommonFNum			= @"commonnum";
 - (EMSearchBar *)searchBar
 {
     if (!_searchBar) {
-        _searchBar = [[EMSearchBar alloc] initWithFrame: CGRectMake(0, 0, self.view.frame.size.width, 44)];
+        _searchBar = [[EMSearchBar alloc] init];
         _searchBar.delegate = self;
         _searchBar.placeholder = @"搜索";
-        _searchBar.backgroundColor = [UIColor colorWithRed:0.747 green:0.756 blue:0.751 alpha:1.000];
     }
     
     return _searchBar;

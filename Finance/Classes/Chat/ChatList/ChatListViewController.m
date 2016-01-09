@@ -62,9 +62,9 @@ static NSString * const kCommonFNum			= @"commonnum";
 @property (nonatomic, strong) UIBarButtonItem *rightBarButtonItem;
 @property (nonatomic, strong) UIBarButtonItem *leftBarButtonItem;
 @property (strong, nonatomic) UILabel *unapplyCountLabel;
-@property(nonatomic,strong) MLKMenuPopover *menuPopover;
-@property(nonatomic,strong) MLKMenuPopover1 *menuPopover1;
-@property(nonatomic,strong) NSArray *menuItems;
+@property (nonatomic,strong) MLKMenuPopover *menuPopover;
+@property (nonatomic,strong) MLKMenuPopover1 *menuPopover1;
+@property (nonatomic,strong) NSArray *menuItems;
 @property (nonatomic,strong) GroupListViewController *groupVC;
 @end
 
@@ -81,11 +81,10 @@ static NSString * const kCommonFNum			= @"commonnum";
         pageNum = 1;
         area = @"";
         self.shouldRefresh = NO;
-        
-        //        [[EaseMob sharedInstance].chatManager addDelegate:self delegateQueue:nil];
     }
     return self;
 }
+
 -(GroupListViewController*)groupVC
 {
     if (!_groupVC){
@@ -98,30 +97,10 @@ static NSString * const kCommonFNum			= @"commonnum";
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    
-    //处理tableView左边空白
-    if ([self.tableView respondsToSelector:@selector(setSeparatorInset:)]) {
-        
-        [self.tableView setSeparatorInset:UIEdgeInsetsZero];
-        
-    }
-    if ([self.tableView respondsToSelector:@selector(setLayoutMargins:)]) {
-        
-        [self.tableView setLayoutMargins:UIEdgeInsetsZero];
-        
-    }
-    
-    if ([self respondsToSelector:@selector(setEdgesForExtendedLayout:)])
-    {
-        [self setEdgesForExtendedLayout:UIRectEdgeNone];
-    }
     self.view.backgroundColor = [UIColor whiteColor];
     
     [self loadUI];
-    self.tableView.separatorStyle = UITableViewCellSelectionStyleNone;
-    // self.tableView.separatorStyle = 1;
-    [TabBarViewController tabBar].tabBar.backgroundColor=[UIColor whiteColor];
+    [TabBarViewController tabBar].tabBar.backgroundColor = [UIColor whiteColor];
     [self removeEmptyConversationsFromDB];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(actionInvite:) name:NOTIFI_CHANGE_ACTION_INVITE_FRIEND object:nil];
@@ -136,19 +115,21 @@ static NSString * const kCommonFNum			= @"commonnum";
     [self networkStateView];
     [self searchController];
     [self refreshDataSource];
-    
 
 }
--(void)changeState
+
+- (void)changeState
 {
     self.shouldRefresh = YES;
 }
--(void)refreshHeader
+
+- (void)refreshHeader
 {
     pageNum = 1;
     [self refreshDataSource];
 }
--(void)refreshFooter
+
+- (void)refreshFooter
 {
     if (hasMoreData) {
         pageNum ++;
@@ -271,15 +252,12 @@ static NSString * const kCommonFNum			= @"commonnum";
             if (!needRemoveConversations) {
                 needRemoveConversations = [[NSMutableArray alloc] initWithCapacity:0];
             }
-            
             [needRemoveConversations addObject:conversation.chatter];
         }
     }
-    
+
     if (needRemoveConversations && needRemoveConversations.count > 0) {
-        [[EaseMob sharedInstance].chatManager removeConversationsByChatters:needRemoveConversations
-                                                             deleteMessages:YES
-                                                                append2Chat:NO];
+        [[EaseMob sharedInstance].chatManager removeConversationsByChatters:needRemoveConversations deleteMessages:YES append2Chat:NO];
     }
 }
 
@@ -322,7 +300,7 @@ static NSString * const kCommonFNum			= @"commonnum";
 - (UITableView *)tableView
 {
     if (_tableView == nil) {
-        _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height) style:UITableViewStylePlain];
+        _tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
         _tableView.backgroundColor = [UIColor whiteColor];
         _tableView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
         _tableView.delegate = self;
@@ -424,19 +402,18 @@ static NSString * const kCommonFNum			= @"commonnum";
     NSMutableArray *ret = nil;
     NSArray *conversations = [[EaseMob sharedInstance].chatManager conversations];
     
-    NSArray* sorte = [conversations sortedArrayUsingComparator:
-                      ^(EMConversation *obj1, EMConversation* obj2){
-                          EMMessage *message1 = [obj1 latestMessage];
-                          EMMessage *message2 = [obj2 latestMessage];
-                          if(message1.timestamp > message2.timestamp) {
-                              return(NSComparisonResult)NSOrderedAscending;
-                          }else {
-                              return(NSComparisonResult)NSOrderedDescending;
-                          }
-                      }];
-    
+    NSArray* sorte = [conversations sortedArrayUsingComparator:^(EMConversation *obj1, EMConversation* obj2){
+        EMMessage *message1 = [obj1 latestMessage];
+        EMMessage *message2 = [obj2 latestMessage];
+        if(message1.timestamp > message2.timestamp) {
+            return(NSComparisonResult)NSOrderedAscending;
+        }else {
+            return(NSComparisonResult)NSOrderedDescending;
+        }
+    }];
+
     ret = [[NSMutableArray alloc] initWithArray:sorte];
-    
+
     return ret;
 }
 
@@ -1090,9 +1067,7 @@ static NSString * const kCommonFNum			= @"commonnum";
     
     if (count == 0) {
         self.unapplyCountLabel.hidden = YES;
-    }
-    else
-    {
+    } else{
         NSString *tmpStr = [NSString stringWithFormat:@"%i", (int)count];
         CGSize size = [tmpStr sizeWithFont:self.unapplyCountLabel.font constrainedToSize:CGSizeMake(50, 20) lineBreakMode:NSLineBreakByWordWrapping];
         CGRect rect = self.unapplyCountLabel.frame;
@@ -1122,6 +1097,7 @@ static NSString * const kCommonFNum			= @"commonnum";
     
     return _unapplyCountLabel;
 }
+
 -(NSMutableArray *)arrCityCode
 {
     if (!_arrCityCode) {
@@ -1241,7 +1217,7 @@ static NSString * const kCommonFNum			= @"commonnum";
 - (void)selected:(id)sender
 {
     UISegmentedControl* control = (UISegmentedControl*)sender;
-    [_searchBar resignFirstResponder];
+    [self.searchBar resignFirstResponder];
     switch (control.selectedSegmentIndex) {
         case 0:
         {
@@ -1266,11 +1242,10 @@ static NSString * const kCommonFNum			= @"commonnum";
     [self refreshDataSource];
 }
 
--(void)loadUI
+- (void)loadUI
 {
     [self.view addSubview:self.searchBar];
     [self.view addSubview:self.tableView];
-    self.searchBar.frame=CGRectMake(0, 0, self.view.frame.size.width, 44);
     [self.tableView addSubview:self.slimeView];
     if (self.chatListType != ChatListView) {
         UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -1284,7 +1259,7 @@ static NSString * const kCommonFNum			= @"commonnum";
         self.navigationItem.titleView = self.titleLabel;
         [self.view sendSubviewToBack:self.tableView];
         
-        _searchBar.hidden=NO;
+        self.searchBar.hidden=NO;
         _tableView.frame = CGRectMake(0, self.searchBar.frame.size.height, self.view.frame.size.width, self.view.frame.size.height - self.searchBar.frame.size.height);
         [self.view sendSubviewToBack:self.tableView];
         [self addHeaderRefresh:self.tableView headerRefesh:YES andFooter:YES];

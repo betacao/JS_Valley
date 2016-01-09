@@ -54,7 +54,7 @@
 	self.tableView.tableHeaderView = self.searchBar;
 	[self searchController];
 }
--(void)requestData
+- (void)requestData
 {
     if (self.relationShip == 1) {
         [self requestFollowListWithTarget:@"first" time:@"-1"];
@@ -304,7 +304,7 @@
 - (EMSearchBar *)searchBar
 {
 	if (!_searchBar) {
-		_searchBar = [[EMSearchBar alloc] initWithFrame: CGRectMake(0.0f, 0.0f, SCREENWIDTH, 44.0f)];
+		_searchBar = [[EMSearchBar alloc] init];
 		_searchBar.delegate = self;
 		_searchBar.placeholder = @"搜索";
 	}
