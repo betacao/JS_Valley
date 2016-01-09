@@ -250,7 +250,7 @@
     image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     UIImage *selectedImage = [UIImage imageNamed:@"home_height"];
     selectedImage = [selectedImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    self.homeSegmentViewController.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"首页" image:image selectedImage:selectedImage];
+    self.homeSegmentViewController.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"动态" image:image selectedImage:selectedImage];
     self.homeSegmentViewController.tabBarItem.tag = 1000;
     __weak typeof(self)weakSelf = self;
     self.homeSegmentViewController.block = ^(UIView *view){
