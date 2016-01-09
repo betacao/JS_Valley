@@ -95,11 +95,8 @@
 {
     if ([NSThread currentThread].isMainThread) {
         [self hidesHud];
-        
     }else{
-        [self performSelectorOnMainThread:@selector(hidesHud)
-                               withObject:nil
-                            waitUntilDone:NO];
+        [self performSelectorOnMainThread:@selector(hidesHud) withObject:nil waitUntilDone:NO];
     }
 }
 + (void)hidesHud

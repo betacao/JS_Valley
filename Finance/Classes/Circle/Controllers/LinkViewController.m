@@ -7,15 +7,16 @@
 //
 
 #import "LinkViewController.h"
+#import <JavaScriptCore/JavaScriptCore.h>  
+#import "SHGUnifiedTreatment.h"
 
 @interface LinkViewController ()<UIWebViewDelegate>
-{
-    UIWebView *gameWebView;
-   
-    
-}
-@property (nonatomic,strong)NSString *stringUrl;
+
+@property (strong, nonatomic) NSString *stringUrl;
+@property (strong, nonatomic) UIWebView *webView;
+
 @end
+
 @implementation LinkViewController
 
 - (void)viewDidLoad {
@@ -31,21 +32,20 @@
     }
     [self loadURL];
 }
+
 - (void)loadURL
 {
-    gameWebView = [[UIWebView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, SCREENWIDTH, SCREENHEIGHT - kNavigationBarHeight - kStatusBarHeight)];
-    gameWebView.backgroundColor = [UIColor clearColor];
-    gameWebView.delegate = self;
-    gameWebView.scalesPageToFit= YES;
+    self.webView = [[UIWebView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, SCREENWIDTH, SCREENHEIGHT - kNavigationBarHeight - kStatusBarHeight)];
+    self.webView.backgroundColor = [UIColor clearColor];
+    self.webView.delegate = self;
+    self.webView.scalesPageToFit= YES;
 
     NSString *Url = (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault,(CFStringRef)self.stringUrl,NULL,NULL,kCFStringEncodingUTF8));
-    NSLog(@"Url%@",Url);
     NSURL *url = [NSURL URLWithString:Url];
-    NSLog(@"urlurlurl%@",url);
 
     NSURLRequest *request = [[NSURLRequest alloc]initWithURL:url];
-    [gameWebView loadRequest:request];
-    [self.view addSubview:gameWebView];
+    [self.webView loadRequest:request];
+    [self.view addSubview:self.webView];
 }
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType{
@@ -53,27 +53,35 @@
     return YES;
 }
 
-- (void)webViewDidFinishLoad:(UIWebView *)webView{
-
+- (void)webViewDidFinishLoad:(UIWebView *)webView
+{
+    [self addHtmlListener];
     [Hud hideHud];
 }
+
 -(void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
 {
-    
+
 }
-- (void)didReceiveMemoryWarning {
+
+- (void)addHtmlListener
+{
+    JSContext *context = [self.webView valueForKeyPath:@"documentView.webView.mainFrame.javaScriptContext"];
+    context[@"openShare"] = ^() {
+        NSLog(@"+++++++Begin Log+++++++");
+        NSArray *args = [JSContext currentArguments];
+        for (JSValue *jsVal in args) {
+            NSLog(@"%@", jsVal);
+        }
+//        JSValue *this = [JSContext currentThis];
+        [[SHGUnifiedTreatment sharedTreatment] shareClicked:self.object];
+    };
+}
+
+- (void)didReceiveMemoryWarning
+{
     [super didReceiveMemoryWarning];
     
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

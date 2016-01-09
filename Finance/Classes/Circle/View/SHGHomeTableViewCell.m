@@ -435,18 +435,19 @@
     }
     [self.delegate attentionClicked:self.dataObj];
 }
+
 - (IBAction)actionComment:(id)sender
 {
     [self.delegate clicked:self.index];
 }
+
 - (IBAction)actionPraise:(id)sender
 {
     [self.delegate praiseClicked:self.dataObj];
-    
 }
+
 - (IBAction)actionShare:(id)sender
-{ 
-    
+{
     [self.delegate shareClicked:self.dataObj];
 }
 

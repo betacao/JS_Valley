@@ -7,7 +7,10 @@
 //
 
 #import "BaseViewController.h"
+#import "CircleListObj.h"
 
 @interface LinkViewController : BaseViewController
-@property(nonatomic,retain)NSString *url;
+
+@property (strong,nonatomic) NSString *url;
+@property (strong, nonatomic) CircleListObj *object;
 @end

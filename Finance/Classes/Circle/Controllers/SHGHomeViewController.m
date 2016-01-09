@@ -679,9 +679,10 @@ const CGFloat kAdButtomMargin = 20.0f;
         if([obj isKindOfClass:[CircleListObj class]]){
             if (!IsStrEmpty(obj.feedhtml)){
                 NSLog(@"%@",obj.feedhtml);
-                LinkViewController *vc = [[LinkViewController alloc]init];
-                vc.url = obj.feedhtml;
-                [self.navigationController pushViewController:vc animated:YES];
+                LinkViewController *controller = [[LinkViewController alloc]init];
+                controller.url = obj.feedhtml;
+                controller.object = obj;
+                [self.navigationController pushViewController:controller animated:YES];
             } else{
                 CircleDetailViewController *viewController = [[CircleDetailViewController alloc] initWithNibName:@"CircleDetailViewController" bundle:nil];
                 viewController.delegate = [SHGUnifiedTreatment sharedTreatment];
