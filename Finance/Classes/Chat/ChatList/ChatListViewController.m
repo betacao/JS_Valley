@@ -119,6 +119,7 @@ static NSString * const kCommonFNum			= @"commonnum";
     self.view.backgroundColor = [UIColor whiteColor];
     
     [self loadUI];
+    self.tableView.separatorStyle = UITableViewCellSelectionStyleNone;
     // self.tableView.separatorStyle = 1;
     [TabBarViewController tabBar].tabBar.backgroundColor=[UIColor whiteColor];
     [self removeEmptyConversationsFromDB];
@@ -519,7 +520,7 @@ static NSString * const kCommonFNum			= @"commonnum";
         }
         cell.separatorInset = UIEdgeInsetsMake(0, 15, 0, 0);
         if(indexPath.row == 0){
-            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            //cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             cell.placeholderImage = [UIImage imageNamed:@"申请头像图标"];
             cell.name=@"群申请与通知";
             cell.imageURL=nil;
@@ -527,7 +528,7 @@ static NSString * const kCommonFNum			= @"commonnum";
             cell.time=@"";
             [cell addSubview:self.unapplyCountLabel];
         } else if(indexPath.row==1){
-            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            //cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             cell.placeholderImage=[UIImage imageNamed:@"消息通知"];
             cell.imageURL=nil;
             cell.name =@"通知";
@@ -647,7 +648,7 @@ static NSString * const kCommonFNum			= @"commonnum";
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (self.chatListType == ContactListView || self.chatListType == ContactTwainListView) {
-        return 72.0f;
+        return 45.0f;
     }
     return [ChatListCell tableView:tableView heightForRowAtIndexPath:indexPath];
 }

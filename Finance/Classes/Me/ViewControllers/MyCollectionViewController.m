@@ -27,6 +27,7 @@
     NSInteger photoIndex;
     CircleListObj *deleteObj;
     NSInteger   clickIndex;
+    NSInteger imageBttomLineWidth ;
 }
 
 @property (nonatomic, strong) UISegmentedControl *segmentControl;
@@ -86,14 +87,16 @@
 
 -(UIView * )categoryView
 {
+    NSInteger  categoryViewHeight = 37.0f;
+    NSInteger  buttonHeight = 35.0f;
     if (!_categoryView) {
-        _categoryView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.tableView.width, 37.0)];
+        _categoryView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.tableView.width, categoryViewHeight)];
         _categoryView.backgroundColor = [UIColor colorWithHexString:@"F6F6F6"];
         NSArray * cartegoryArry = [NSArray arrayWithObjects:@"动态",@"产品",@"名片", nil];
         NSInteger buttonWidth = self.tableView.width/3.0;
         for (NSInteger i = 0; i< 3; i ++) {
             UIButton * button = [UIButton buttonWithType:UIButtonTypeCustom];
-            button.frame = CGRectMake(i*KButtonWidth, 0, KButtonWidth, 35.0);
+            button.frame = CGRectMake(i*KButtonWidth, 0, KButtonWidth, buttonHeight);
             button.tag = 20+i;
             [button setTitleColor:[UIColor colorWithHexString:@"333333"] forState:UIControlStateNormal];
             button.titleLabel.font = [UIFont systemFontOfSize:14];
@@ -107,9 +110,12 @@
             [_categoryView addSubview:button];
         }
         clickIndex = 20;
-        imageBttomLine = [[UIImageView alloc] initWithFrame:CGRectMake((buttonWidth-40.0)/2, 34.0, 40.0f, 2.0f)];
+        NSInteger imageBttomY = 34.0f;
+        imageBttomLineWidth = 35.0f;
+        imageBttomLine = [[UIImageView alloc] initWithFrame:CGRectMake((SCREENWIDTH/3-imageBttomLineWidth)/2, imageBttomY, imageBttomLineWidth, 2.0f)];
         [imageBttomLine setImage:[UIImage imageNamed:@"tab下划线"]];
-        UIView * lineView = [[UIView alloc]initWithFrame:CGRectMake(0, 36, SCREENWIDTH, 0.5)];
+        NSInteger lineViewY = 36.0f;
+        UIView * lineView = [[UIView alloc]initWithFrame:CGRectMake(0, lineViewY, SCREENWIDTH, 0.5)];
         lineView.backgroundColor = [UIColor colorWithHexString:@"e3e3e3"];
         [self.categoryView addSubview:lineView];
         [_categoryView addSubview:imageBttomLine];
@@ -139,7 +145,7 @@
             [self refreshDataSource];
             self.tableView.separatorStyle = 0;
             CGRect rect = imageBttomLine.frame;
-            rect.origin.x =(self.tableView.width/3-40.0)/2+ (btn.tag-20)*self.tableView.width/3 ;
+            rect.origin.x =(self.tableView.width/3- imageBttomLineWidth )/2+ (btn.tag-20)*self.tableView.width/3 ;
             [UIView beginAnimations:nil context:nil];
             [imageBttomLine setFrame:rect];
             [UIView setAnimationDuration:0.3];
@@ -157,7 +163,7 @@
             self.selectType = 2;
             [self refreshDataSource];
             CGRect rect = imageBttomLine.frame;
-            rect.origin.x =(self.tableView.width/3-40.0)/2+ (btn.tag-20)*self.tableView.width/3 ;
+            rect.origin.x =(self.tableView.width/3-imageBttomLineWidth)/2+ (btn.tag-20)*self.tableView.width/3 ;
             [UIView beginAnimations:nil context:nil];
             [imageBttomLine setFrame:rect];
             [UIView setAnimationDuration:0.3];
@@ -176,7 +182,7 @@
             self.selectType = 3;
              [self refreshDataSource];
             CGRect rect = imageBttomLine.frame;
-            rect.origin.x =(self.tableView.width/3-40.0)/2+ (btn.tag-20)*self.tableView.width/3 ;
+            rect.origin.x =(self.tableView.width/3-imageBttomLineWidth)/2+ (btn.tag-20)*self.tableView.width/3 ;
             [UIView beginAnimations:nil context:nil];
             [imageBttomLine setFrame:rect];
             [UIView setAnimationDuration:0.3];
@@ -953,7 +959,7 @@
     }
     else if (self.selectType == 3)
     {
-        return 86.0f;
+        return 78.0f;
         
     }else if (self.selectType == 4)
     {

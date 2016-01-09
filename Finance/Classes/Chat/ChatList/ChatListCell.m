@@ -45,11 +45,15 @@
         _unreadLabel.clipsToBounds = YES;
         [self.contentView addSubview:_unreadLabel];
         
-        _detailLabel = [[UILabel alloc] initWithFrame:CGRectMake(70, 30, SCREENWIDTH-80, 20)];
+        _detailLabel = [[UILabel alloc] initWithFrame:CGRectMake(58, 20, SCREENWIDTH-80, 20)];
         _detailLabel.backgroundColor = [UIColor clearColor];
         _detailLabel.font = [UIFont systemFontOfSize:15];
         _detailLabel.textColor = [UIColor lightGrayColor];
         [self.contentView addSubview:_detailLabel];
+        _lineView = [[UIView alloc]initWithFrame:CGRectMake(15.0f, 44.0f, SCREENWIDTH-15.0f, 0.5)];
+        _lineView.backgroundColor = [UIColor colorWithHexString:@"E6E7E8"];
+        [self.contentView addSubview:_lineView];
+        
         
         self.textLabel.backgroundColor = [UIColor clearColor];
         
@@ -83,15 +87,15 @@
 //    CGRect frame = self.imageView.frame;
     
     [self.imageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,_imageURL]] placeholderImage:_placeholderImage];
-    self.imageView.frame = CGRectMake(15, 7, 45, 45);
+    self.imageView.frame = CGRectMake(15, 8, 28, 28);
     
     self.textLabel.text = _name;
     if([_name isEqualToString:@"群申请与通知"] || [_name isEqualToString:@"通知"])
     {
-        self.textLabel.frame = CGRectMake(70, 20, 175, 20);
+        self.textLabel.frame = CGRectMake(58, 8, 175, 20);
     }else
     {
-        self.textLabel.frame = CGRectMake(70, 7, 175, 20);
+        self.textLabel.frame = CGRectMake(58, 5, 175, 20);
     }
     
     _detailLabel.text = _detailMsg;
@@ -130,6 +134,6 @@
 
 +(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 60;
+    return 45.0f;
 }
 @end
