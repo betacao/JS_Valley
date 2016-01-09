@@ -34,6 +34,9 @@
         }
         [self setSearchFieldBackgroundImage:[[UIImage imageNamed:@"search_background"] resizableImageWithCapInsets:UIEdgeInsetsMake(0.0f, 10.0f, 0.0f, 10.0f) resizingMode:UIImageResizingModeStretch] forState:UIControlStateNormal];
         self.backgroundImage = [UIImage imageWithColor:[UIColor colorWithHexString:@"F8F9F9"] andSize:frame.size];
+        UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, CGRectGetHeight(frame) - 1.0f, SCREENWIDTH, 0.5f)];
+        lineView.backgroundColor = [UIColor colorWithHexString:@"E6E7E8"];
+        [self addSubview:lineView];
     }
     return self;
 }
@@ -46,7 +49,12 @@
     for (id object in view.subviews) {
         if ([object isKindOfClass:NSClassFromString(@"UISearchBarBackground")]) {
         } else if ([object isKindOfClass:NSClassFromString(@"UISearchBarTextField")]) {
-        } else{
+            UITextField *textFeild = (UITextField *)object;
+            textFeild.placeholder = @"输入群组名称";
+            [textFeild setValue:[UIColor colorWithHexString:@"BEBEBE"] forKeyPath:@"_placeholderLabel.textColor"];
+            [textFeild setValue:[UIFont systemFontOfSize:14] forKeyPath:@"_placeholderLabel.font"];
+            
+        } else if ([object isKindOfClass:NSClassFromString(@"UINavigationButton")]){
             UIButton *button = (UIButton *)object;
             [button setTitle:@"取消" forState:UIControlStateNormal];
             [button setTitleColor:[UIColor colorWithHexString:@"BEBEBE"] forState:UIControlStateNormal];

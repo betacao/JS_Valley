@@ -28,7 +28,7 @@
 
 +(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 45.0;
+    return 56.0;
 }
 
 - (IBAction)followButtonClicked:(id)sender

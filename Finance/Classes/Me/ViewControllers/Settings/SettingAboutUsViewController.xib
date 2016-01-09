@@ -7,6 +7,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SettingAboutUsViewController">
             <connections>
+                <outlet property="bgImage" destination="ARt-JX-gSE" id="kq0-93-5fl"/>
                 <outlet property="lblVersion" destination="Eb2-5d-dfE" id="ON1-Ot-9ME"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>

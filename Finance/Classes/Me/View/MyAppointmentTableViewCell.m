@@ -14,6 +14,7 @@
 @property (nonatomic, strong) IBOutlet UILabel *product1Name;
 @property (nonatomic, strong) IBOutlet UILabel *product1Rate;
 @property (nonatomic, strong) IBOutlet UILabel *product1Status;
+@property (weak, nonatomic) IBOutlet UIView *viewLine1;
 
 
 //打新股
@@ -24,6 +25,7 @@
 @property (nonatomic, strong) IBOutlet UILabel *product2Cycle;
 @property (nonatomic, strong) IBOutlet UILabel *product2Origin;
 @property (nonatomic, strong) IBOutlet UILabel *product2Status;
+@property (weak, nonatomic) IBOutlet UIView *viewLine2;
 
 
 //定向增发
@@ -36,6 +38,7 @@
 @property (nonatomic, strong) IBOutlet UILabel *product3Cycle;
 @property (nonatomic, strong) IBOutlet UILabel *product3SinglePrice;
 @property (nonatomic, strong) IBOutlet UILabel *product3Status;
+@property (weak, nonatomic) IBOutlet UIView *viewLine3;
 
 //新三板
 @property (nonatomic , strong) IBOutlet UIView *product4;
@@ -46,6 +49,8 @@
 @property (nonatomic, strong) IBOutlet UILabel *product4Origin;
 @property (nonatomic, strong) IBOutlet UILabel *product4IncreaseUnit;
 @property (nonatomic, strong) IBOutlet UILabel *product4Status;
+@property (weak, nonatomic) IBOutlet UIView *viewLine4;
+
 
 
 @end
@@ -54,6 +59,10 @@
 
 - (void)awakeFromNib {
     // Initialization code
+    self.viewLine1.size = CGSizeMake(self.viewLine1.width, 0.5f);
+    self.viewLine2.size = CGSizeMake(self.viewLine2.width, 0.5f);
+    self.viewLine3.size = CGSizeMake(self.viewLine3.width, 0.5f);
+    self.viewLine4.size = CGSizeMake(self.viewLine4.width, 0.5f);
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -81,8 +90,8 @@
 		self.product1Status.textColor = [UIColor redColor];
 		
 		self.height = self.product1.height + 10;
-		self.product1.origin = CGPointMake(15, 5);
-		self.product1.width = self.width -30;
+		self.product1.origin = CGPointMake(13, 5);
+		self.product1.width = self.width -26;
 
 		self.product1.layer.masksToBounds = YES;
 		self.product1.layer.cornerRadius = 5;
@@ -105,8 +114,8 @@
 		self.product2Status.textColor = [UIColor redColor];
 
 		self.height = self.product2.height + 10;
-		self.product2.origin = CGPointMake(15, 5);
-		self.product2.width = self.width -30;
+		self.product2.origin = CGPointMake(13, 5);
+		self.product2.width = self.width -26;
 
 		self.product2.layer.masksToBounds = YES;
 		self.product2.layer.cornerRadius = 5;
@@ -131,8 +140,8 @@
 		self.product3Status.textColor = [UIColor redColor];
 		
 		self.height = self.product3.height + 10;
-		self.product3.origin = CGPointMake(15, 5);
-		self.product3.width = self.width -30;
+		self.product3.origin = CGPointMake(13, 5);
+		self.product3.width = self.width -26;
 
 		self.product3.layer.masksToBounds = YES;
 		self.product3.layer.cornerRadius = 5;
@@ -156,8 +165,8 @@
 		self.product4Status.textColor = [UIColor redColor];
 		
 		self.height = self.product4.height + 10;
-		self.product4.origin = CGPointMake(15, 5);
-		self.product4.width = self.width -30;
+		self.product4.origin = CGPointMake(13, 5);
+		self.product4.width = self.width -26;
 
 		self.product4.layer.masksToBounds = YES;
 		self.product4.layer.cornerRadius = 5;

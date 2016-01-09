@@ -68,11 +68,6 @@ typedef NS_ENUM(NSInteger, RegistType)
     [super viewDidLoad];
     self.title = @"注册";
     NSLog(@"phoneNumberphoneNumber%@",self.phoneNumber);
-	self.nextStepButton.layer.masksToBounds = YES;
-	self.nextStepButton.layer.cornerRadius = 3;
-    
-    self.protocolButton.layer.masksToBounds = YES;
-    self.protocolButton.layer.cornerRadius = 3.0;
     self.protocolButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     NSString *btnStr = @"我已阅读并同意《大牛圈用户协议》";
     NSRange range =[btnStr rangeOfString:@"《"];

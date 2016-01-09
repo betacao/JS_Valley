@@ -111,7 +111,7 @@
         }
         clickIndex = 20;
         NSInteger imageBttomY = 34.0f;
-        imageBttomLineWidth = 35.0f;
+        imageBttomLineWidth = 28.0f;
         imageBttomLine = [[UIImageView alloc] initWithFrame:CGRectMake((SCREENWIDTH/3-imageBttomLineWidth)/2, imageBttomY, imageBttomLineWidth, 2.0f)];
         [imageBttomLine setImage:[UIImage imageNamed:@"tab下划线"]];
         NSInteger lineViewY = 36.0f;

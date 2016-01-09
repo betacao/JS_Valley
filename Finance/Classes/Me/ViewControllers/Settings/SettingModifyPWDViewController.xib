@@ -7,7 +7,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SettingModifyPWDViewController">
             <connections>
-                <outlet property="changeButton" destination="H2f-XB-kBh" id="WUZ-iL-egU"/>
+                <outlet property="changeButton" destination="oF9-Ym-0GX" id="9BD-WU-Lbw"/>
                 <outlet property="changedPassword" destination="MKA-ED-F7U" id="ENH-0R-XsS"/>
                 <outlet property="confirmButton" destination="kAZ-yt-iJT" id="WS3-gU-gOQ"/>
                 <outlet property="confirmPassword" destination="DKh-qg-aNQ" id="gfz-t4-In2"/>
@@ -35,14 +35,6 @@
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                 </textField>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="H2f-XB-kBh">
-                    <rect key="frame" x="294" y="68" width="15" height="15"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
-                    <state key="normal" backgroundImage="me_deleteInput"/>
-                    <connections>
-                        <action selector="changeButtonClick:" destination="-1" eventType="touchUpInside" id="zlm-AV-RMj"/>
-                    </connections>
-                </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="lEZ-WM-J0C">
                     <rect key="frame" x="11" y="525" width="298" height="35"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
@@ -82,6 +74,14 @@
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                 </textField>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="oF9-Ym-0GX">
+                    <rect key="frame" x="294" y="68" width="15" height="15"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                    <state key="normal" backgroundImage="me_deleteInput"/>
+                    <connections>
+                        <action selector="changeButtonClick:" destination="-1" eventType="touchUpInside" id="Fsy-r9-bLr"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" red="0.93333333333333335" green="0.93725490196078431" blue="0.94117647058823528" alpha="1" colorSpace="calibratedRGB"/>
             <point key="canvasLocation" x="295" y="41"/>
