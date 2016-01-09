@@ -24,7 +24,7 @@
                     <view contentMode="scaleToFill" id="4M8-2o-2fb">
                         <rect key="frame" x="15" y="48" width="323" height="1"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                        <color key="backgroundColor" red="0.0" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="accessoryView" id="Bum-dc-pMo">
                         <rect key="frame" x="300" y="18" width="7" height="13"/>
@@ -40,6 +40,6 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="accessoryView" width="7" height="13"/>
+        <image name="accessoryView" width="5" height="10"/>
     </resources>
 </document>

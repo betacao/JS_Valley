@@ -16,7 +16,7 @@
 
 #define kTagViewWidth 45.0f * XFACTOR
 #define kTagViewHeight 16.0f * XFACTOR
-#define kLineViewLeftMargin 14.0f
+#define kBottomViewLeftMargin 14.0f
 
 typedef NS_ENUM(NSInteger, SHGUserType) {
     //马甲号类型
@@ -360,7 +360,7 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
     label.textColor = [UIColor colorWithHexString:@"919291"];
     
     UIView * lineView = [[UIView alloc]init];
-    lineView.frame = CGRectMake(kLineViewLeftMargin, CGRectGetHeight(cell.contentView.frame) - 1.0f, SCREENWIDTH - kLineViewLeftMargin, 0.5f);
+    lineView.frame = CGRectMake(kBottomViewLeftMargin, CGRectGetHeight(cell.contentView.frame) - 1.0f, SCREENWIDTH - kBottomViewLeftMargin, 0.5f);
     lineView.backgroundColor = [UIColor colorWithHexString:@"E6E7E8"];
     [cell addSubview:lineView];
     switch (indexPath.row) {

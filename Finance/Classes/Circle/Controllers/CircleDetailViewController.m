@@ -84,9 +84,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    //    self.navigationItem.leftBarButtonItem = nil;
-    //    self.navigationItem.hidesBackButton = YES;
-    //    self.navigationItem.titleView = self.navigationView;
     self.title = @"动态详情";
     [CommonMethod setExtraCellLineHidden:self.listTable];
     [self addHeaderRefresh:self.listTable headerRefesh:NO andFooter:NO];
@@ -131,10 +128,6 @@
     CGRect frame = self.lineView.frame;
     frame.size.height = 0.5f;
     self.lineView.frame = frame;
-
-    frame = self.btnAttention.frame;
-    frame.origin.x *= XFACTOR;
-    self.btnAttention.frame = frame;
 }
 
 -(void)parseObjWithDic:(NSDictionary *)dics

@@ -35,7 +35,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
 	[self addHeaderRefresh:self.tableView headerRefesh:YES andFooter:YES];
 
 	_dataSource = [[NSMutableArray alloc] init];
@@ -45,7 +44,6 @@
     self.view.backgroundColor = [UIColor whiteColor];
     [CommonMethod setExtraCellLineHidden:self.tableView];
 	[self.tableView reloadData];
-	//self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
 	UIView *view = [[UIView alloc] init];
 	view.backgroundColor = [UIColor clearColor];
 	[_tableView setTableFooterView:view];
@@ -306,10 +304,9 @@
 - (EMSearchBar *)searchBar
 {
 	if (!_searchBar) {
-		_searchBar = [[EMSearchBar alloc] initWithFrame: CGRectMake(0, 0, SCREENWIDTH, 44)];
+		_searchBar = [[EMSearchBar alloc] initWithFrame: CGRectMake(0.0f, 0.0f, SCREENWIDTH, 44.0f)];
 		_searchBar.delegate = self;
 		_searchBar.placeholder = @"搜索";
-		_searchBar.backgroundColor = [UIColor colorWithRed:0.747 green:0.756 blue:0.751 alpha:1.000];
 	}
 	
 	return _searchBar;

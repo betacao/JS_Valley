@@ -14,14 +14,15 @@
 
 @implementation EMSearchBar
 
-- (id)initWithFrame:(CGRect)frame
+- (instancetype)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
     if (self) {
 
+//        [self setSearchFieldBackgroundImage:[UIImage imageWithColor:[UIColor colorWithHexString:@"F8F9F9"] andSize:frame.size] forState:UIControlStateNormal];
+
         self.searchBarStyle = UISearchBarStyleDefault;
-        self.barTintColor = [UIColor colorWithHexString:@"F8F9F9"];
-        UIView *view = [self.subviews firstObject];
+        self.barTintColor = [UIColor colorWithHexString:@"F8F9F9"];        UIView *view = [self.subviews firstObject];
         for (id object in view.subviews) {
             if ([object isKindOfClass:NSClassFromString(@"UISearchBarBackground")]) {
             } else if ([object isKindOfClass:NSClassFromString(@"UISearchBarTextField")]) {
@@ -41,6 +42,7 @@
 - (void)layoutSubviews
 {
     [super layoutSubviews];
+
     UIView *view = [self.subviews firstObject];
     for (id object in view.subviews) {
         if ([object isKindOfClass:NSClassFromString(@"UISearchBarBackground")]) {
