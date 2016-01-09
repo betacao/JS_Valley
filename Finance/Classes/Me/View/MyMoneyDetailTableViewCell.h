@@ -15,6 +15,7 @@
 @property (nonatomic, strong) IBOutlet UILabel *totalMoney;
 @property (nonatomic, strong) IBOutlet UILabel *commissionMoney;
 @property (weak, nonatomic) IBOutlet UILabel *moneyType;
+@property (weak, nonatomic) IBOutlet UIView *lineView;
 
 
 @end

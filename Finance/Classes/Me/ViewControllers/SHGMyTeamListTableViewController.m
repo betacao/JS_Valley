@@ -54,7 +54,7 @@
     		if (cell == nil) {
     			cell = [[[NSBundle mainBundle] loadNibNamed:CellIdentifier owner:self options:nil]objectAtIndex:0];
     		}
-    
+            cell.lineView.size = CGSizeMake(cell.lineView.width, 0.5f);
     		TeamDetailObject *obj = self.dataArr[indexPath.row];
     		cell.nameLabel.text = obj.name;
     		cell.moneyLabel.text = obj.money;

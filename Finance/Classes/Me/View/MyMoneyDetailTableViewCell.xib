@@ -93,6 +93,7 @@
             </tableViewCellContentView>
             <connections>
                 <outlet property="commissionMoney" destination="UC2-6y-7zf" id="Bxa-4d-U3M"/>
+                <outlet property="lineView" destination="WEF-pz-6TH" id="pAB-yg-VIg"/>
                 <outlet property="moneyType" destination="Q5p-yy-fbQ" id="gHo-ot-g7u"/>
                 <outlet property="nameLabel" destination="vvj-MY-VfK" id="NXv-YR-pcc"/>
                 <outlet property="productLabel" destination="vB9-5n-OHj" id="Xpp-6I-rxl"/>

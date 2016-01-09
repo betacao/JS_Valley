@@ -120,7 +120,7 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	if (indexPath.section == 0) {
-		return 60.0f;
+		return 50.0f;
 	}else if(indexPath.section == 1){
         
 		return 125.0f;
@@ -132,9 +132,16 @@
 {
 	if (indexPath.section == 0) {
 		UITableViewCell  *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"empty"];
-        cell.textLabel.textColor = [UIColor colorWithHexString:@"D43C33"];
-        cell.textLabel.font = [UIFont boldSystemFontOfSize:20];
-		cell.textLabel.text = [NSString stringWithFormat:@"%@",self.totalMoney];
+//        cell.textLabel.textColor = [UIColor colorWithHexString:@"D43C33"];
+//        cell.textLabel.font = [UIFont boldSystemFontOfSize:20];
+//		cell.textLabel.text = [NSString stringWithFormat:@"%@",self.totalMoney];
+        NSInteger toLeft = 16.0f;
+        NSInteger toSeaction = 5.0f;
+        UILabel * label = [[UILabel alloc] initWithFrame:CGRectMake(toLeft, toSeaction, SCREENWIDTH-toLeft, 30.0f)];
+        label.textColor = [UIColor colorWithHexString:@"D43C33"];
+        label.font = [UIFont boldSystemFontOfSize:20];
+        label.text = [NSString stringWithFormat:@"%@",self.totalMoney];
+        [cell addSubview:label];
 		return cell;
 		
 	}else if(indexPath.section == 1){
@@ -147,7 +154,7 @@
 		}
 		
 		MyMoneyDetailObject *obj = self.dataSource[indexPath.row];
-		
+        cell.lineView.size = CGSizeMake(cell.lineView.width, 0.5f);
 		cell.nameLabel.text = obj.name;
 		cell.productLabel.text = obj.productName;
 		cell.totalMoney.text = obj.totalMoney;

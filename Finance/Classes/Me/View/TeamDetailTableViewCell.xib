@@ -50,6 +50,7 @@
                 </subviews>
             </tableViewCellContentView>
             <connections>
+                <outlet property="lineView" destination="xdf-oR-YCc" id="4nP-Wa-Xc7"/>
                 <outlet property="moneyLabel" destination="Ixp-bd-bpe" id="T6Y-h9-2hx"/>
                 <outlet property="nameLabel" destination="Eed-VV-Bm6" id="v1B-hE-iQC"/>
             </connections>
