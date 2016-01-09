@@ -50,11 +50,6 @@
         _detailLabel.font = [UIFont systemFontOfSize:15];
         _detailLabel.textColor = [UIColor lightGrayColor];
         [self.contentView addSubview:_detailLabel];
-        _lineView = [[UIView alloc]initWithFrame:CGRectMake(15.0f, 44.0f, SCREENWIDTH-15.0f, 0.5)];
-        _lineView.backgroundColor = [UIColor colorWithHexString:@"E6E7E8"];
-        [self.contentView addSubview:_lineView];
-        
-        
         self.textLabel.backgroundColor = [UIColor clearColor];
         
         self.textLabel.font = [UIFont systemFontOfSize: 16.0f];
@@ -92,7 +87,7 @@
     self.textLabel.text = _name;
     if([_name isEqualToString:@"群申请与通知"] || [_name isEqualToString:@"通知"])
     {
-        self.textLabel.frame = CGRectMake(58, 8, 175, 20);
+        self.textLabel.frame = CGRectMake(58, 12, 175, 20);
     }else
     {
         self.textLabel.frame = CGRectMake(58, 5, 175, 20);

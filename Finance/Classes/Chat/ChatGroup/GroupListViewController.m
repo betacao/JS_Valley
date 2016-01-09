@@ -221,6 +221,14 @@
         cell.imageView.contentMode = UIViewContentModeScaleAspectFit;
         cell.textLabel.textColor = [UIColor colorWithHexString:@"161616"];
         cell.textLabel.font = [UIFont systemFontOfSize:13];
+        NSInteger spaceToRight = 15.0f;
+        NSInteger lineToTop = 44.0f;
+        if (!indexPath.section == 0) {
+      
+        UIView * lineView = [[UIView alloc]initWithFrame:CGRectMake(spaceToRight, lineToTop, SCREENWIDTH-spaceToRight, 0.5)];
+        lineView.backgroundColor = [UIColor colorWithHexString:@"E6E7E8"];
+        [cell addSubview:lineView];
+        }
     }
 
     if (indexPath.section == 0){
@@ -230,35 +238,45 @@
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 
     } else if (indexPath.section == 1){
+        UIImageView * qunImage = [[UIImageView alloc]init];
+        qunImage.frame = CGRectMake(15, 8, 28, 28);
+        [cell addSubview:qunImage];
         cell.accessoryType = UITableViewCellAccessoryNone;
         EMGroup *group = [self.dataSource objectAtIndex:indexPath.row];
         NSString *imageName = group.isPublic ? @"群头像图标" : @"群头像图标";
-        cell.imageView.image = [UIImage imageNamed:imageName];
+        qunImage.image = [UIImage imageNamed:imageName];
         if (group.groupSubject && group.groupSubject.length > 0){
-            cell.textLabel.text = group.groupSubject;
+            cell.textLabel.text = [NSString stringWithFormat:@"         %@",group.groupSubject];
+            
         } else {
-            cell.textLabel.text = group.groupId;
+            cell.textLabel.text = [NSString stringWithFormat:@"         %@",group.groupId];
         }
         
     } else if (indexPath.section == 2){
+        UIImageView * qunImage = [[UIImageView alloc]init];
+        qunImage.frame = CGRectMake(15, 8, 28, 28);
+        [cell addSubview:qunImage];
         cell.accessoryType = UITableViewCellAccessoryNone;
         EMGroup *group = [self.commonArr objectAtIndex:indexPath.row];
         NSString *imageName = group.isPublic ? @"群头像图标" : @"群头像图标";
-        cell.imageView.image = [UIImage imageNamed:imageName];
+        qunImage.image = [UIImage imageNamed:imageName];
         if (group.groupSubject && group.groupSubject.length > 0){
-            cell.textLabel.text = group.groupSubject;
+            cell.textLabel.text = [NSString stringWithFormat:@"         %@",group.groupSubject];
         } else {
-            cell.textLabel.text = group.groupId;
+            cell.textLabel.text = [NSString stringWithFormat:@"         %@",group.groupId];
         }
     } else if (indexPath.section == 3){
+        UIImageView * qunImage = [[UIImageView alloc]init];
+        qunImage.frame = CGRectMake(15, 8, 28, 28);
+        [cell addSubview:qunImage];
         cell.accessoryType = UITableViewCellAccessoryNone;
         EMGroup *group = [self.joinArr objectAtIndex:indexPath.row];
         NSString *imageName = group.isPublic ? @"群头像图标" : @"群头像图标";
-        cell.imageView.image = [UIImage imageNamed:imageName];
+        qunImage.image = [UIImage imageNamed:imageName];
         if (group.groupSubject && group.groupSubject.length > 0){
-            cell.textLabel.text = group.groupSubject;
+            cell.textLabel.text = [NSString stringWithFormat:@"         %@",group.groupSubject];
         } else{
-            cell.textLabel.text = group.groupId;
+            cell.textLabel.text = [NSString stringWithFormat:@"         %@",group.groupId];
         }
     }
 
@@ -269,11 +287,11 @@
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
 
-    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 51)];
+    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 45)];
     headerView.backgroundColor = [[UIColor alloc]initWithRed:1 green:1 blue:1 alpha:1];
     
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-    button.frame = CGRectMake(30, 1, 320, 48);
+    button.frame = CGRectMake(30, 1, 320, 42);
     button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     button.titleEdgeInsets = UIEdgeInsetsMake(0,0, 0, 0);
     button.backgroundColor = [UIColor clearColor];
@@ -311,7 +329,7 @@
     
     [headerView addSubview:button];
     
-    UIView *lineVIew = [[UIView alloc]initWithFrame:CGRectMake(15, 50, self.view.bounds.size.height, 0.5)];
+    UIView *lineVIew = [[UIView alloc]initWithFrame:CGRectMake(15, 44, self.view.bounds.size.height, 0.5)];
     lineVIew.backgroundColor = [[UIColor alloc]initWithHue:0 saturation:0 brightness:0 alpha:0.1];
     [headerView addSubview:lineVIew];
     
@@ -327,13 +345,13 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 50;
+    return 45.0f;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     if (section == 0) {
         return 0;
     }else{
-        return 51;
+        return 45.0f;
     }
 }
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath

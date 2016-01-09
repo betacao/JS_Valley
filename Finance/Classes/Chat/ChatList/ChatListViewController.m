@@ -496,6 +496,14 @@ static NSString * const kCommonFNum			= @"commonnum";
             cell = [[ChatListCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:identify];
         }
         cell.separatorInset = UIEdgeInsetsMake(0, 15, 0, 0);
+        NSInteger spaceToRight = 15.0f;
+        NSInteger spaceToTop = 16.0f;
+        NSInteger rightImageWidth = 7.0f;
+        NSInteger rightImageHeight = 13.0f;
+        NSInteger lineToTop = 44.0f;
+        UIView * lineView = [[UIView alloc]initWithFrame:CGRectMake(spaceToRight, lineToTop, SCREENWIDTH-spaceToRight, 0.5)];
+        lineView.backgroundColor = [UIColor colorWithHexString:@"E6E7E8"];
+        [cell addSubview:lineView];
         if(indexPath.row == 0){
             //cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             cell.placeholderImage = [UIImage imageNamed:@"申请头像图标"];
@@ -503,6 +511,10 @@ static NSString * const kCommonFNum			= @"commonnum";
             cell.imageURL=nil;
             cell.detailMsg=@"";
             cell.time=@"";
+            UIImageView * rightImage = [[UIImageView  alloc]init];
+            rightImage.frame = CGRectMake(SCREENWIDTH - spaceToRight - rightImageWidth, spaceToTop, rightImageWidth, rightImageHeight);
+            rightImage.image = [UIImage imageNamed:@"accessoryView"];
+            [cell addSubview:rightImage];
             [cell addSubview:self.unapplyCountLabel];
         } else if(indexPath.row==1){
             //cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
@@ -511,6 +523,10 @@ static NSString * const kCommonFNum			= @"commonnum";
             cell.name =@"通知";
             cell.detailMsg=@"";
             cell.time=@"";
+            UIImageView * rightImage = [[UIImageView  alloc]init];
+            rightImage.frame = CGRectMake(SCREENWIDTH - spaceToRight - rightImageWidth, spaceToTop, rightImageWidth, rightImageHeight);
+            rightImage.image = [UIImage imageNamed:@"accessoryView"];
+            [cell addSubview:rightImage];
         } else{
             EMConversation *conversation = [self.dataSource objectAtIndex:indexPath.row];
             for (BasePeopleObject *obj in self.contactsSource) {
