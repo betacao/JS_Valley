@@ -156,7 +156,7 @@
     if (section == 0) {
         return 0.1;
     } else if (section == 1){
-        return 10;
+        return 10.0f;
     } else{
         return 0.0f;
     }

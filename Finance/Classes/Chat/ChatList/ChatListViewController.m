@@ -451,8 +451,7 @@ static NSString * const kCommonFNum			= @"commonnum";
             } break;
             case eMessageBodyType_Text:{
                 // 表情映射。
-                NSString *didReceiveText = [ConvertToCommonEmoticonsHelper
-                                            convertToSystemEmoticons:((EMTextMessageBody *)messageBody).text];
+                NSString *didReceiveText = [ConvertToCommonEmoticonsHelper convertToSystemEmoticons:((EMTextMessageBody *)messageBody).text];
                 ret = didReceiveText;
             } break;
             case eMessageBodyType_Voice:{

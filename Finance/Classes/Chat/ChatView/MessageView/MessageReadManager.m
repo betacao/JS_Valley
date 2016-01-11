@@ -11,10 +11,11 @@
   */
 
 #import "MessageReadManager.h"
+#import "SDPhotoBrowser.h"
 
 static MessageReadManager *detailInstance = nil;
 
-@interface MessageReadManager()
+@interface MessageReadManager()<SDPhotoBrowserDelegate>
 
 @property (strong, nonatomic) UIWindow *keyWindow;
 
@@ -74,33 +75,17 @@ static MessageReadManager *detailInstance = nil;
 
 - (void)showBrowserWithImages:(NSArray *)imageArray
 {
-//    if (imageArray && [imageArray count] > 0) {
-//        NSMutableArray *photoArray = [NSMutableArray array];
-//        for (id object in imageArray) {
-//            MWPhoto *photo;
-//            if ([object isKindOfClass:[UIImage class]]) {
-//                photo = [MWPhoto photoWithImage:object];
-//            }
-//            else if ([object isKindOfClass:[NSURL class]])
-//            {
-//                photo = [MWPhoto photoWithURL:object];
-//            }
-//            else if ([object isKindOfClass:[NSString class]])
-//            {
-//                
-//            }
-//            [photoArray addObject:photo];
-//        }
-//        
-//        self.photos = photoArray;
-//    }
+    [self.photos removeAllObjects];
+    [self.photos addObjectsFromArray:imageArray];
+    SDPhotoBrowser *browser = [[SDPhotoBrowser alloc] initWithFrame:CGRectMake(0.0f, 0.0f, CGRectGetWidth([UIScreen mainScreen].bounds), CGRectGetHeight([UIScreen mainScreen].bounds))];
+    browser.imageCount = imageArray.count;
+    browser.currentImageIndex = 0;
+    browser.delegate = self;
+    [browser show];
 
-    UIViewController *rootController = [self.keyWindow rootViewController];
-    [rootController presentViewController:self.photoNavigationController animated:YES completion:nil];
 }
 
-- (BOOL)prepareMessageAudioModel:(MessageModel *)messageModel
-                      updateViewCompletion:(void (^)(MessageModel *prevAudioModel, MessageModel *currentAudioModel))updateCompletion
+- (BOOL)prepareMessageAudioModel:(MessageModel *)messageModel updateViewCompletion:(void (^)(MessageModel *prevAudioModel, MessageModel *currentAudioModel))updateCompletion
 {
     BOOL isPrepare = NO;
     
@@ -160,5 +145,24 @@ static MessageReadManager *detailInstance = nil;
     return model;
 }
 
+#pragma mark - photobrowser代理方法
 
+// 返回临时占位图片（即原来的小图）
+- (UIImage *)photoBrowser:(SDPhotoBrowser *)browser placeholderImageForIndex:(NSInteger)index
+{
+    return nil;
+}
+
+
+// 返回高质量图片的url
+- (NSURL *)photoBrowser:(SDPhotoBrowser *)browser highQualityImageURLForIndex:(NSInteger)index
+{
+    NSURL *urlStr = self.photos[index];
+    return urlStr;
+}
+
+- (void)photoBrowser:(SDPhotoBrowser *)browser didSlideAtIndex:(NSInteger)index
+{
+
+}
 @end
