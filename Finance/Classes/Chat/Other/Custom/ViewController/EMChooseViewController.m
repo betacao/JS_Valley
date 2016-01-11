@@ -48,17 +48,19 @@
     _indexCollation = [UILocalizedIndexedCollation currentCollation];
     
     if (!self.defaultEditing) {
-        UIButton *chooseButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 60, 40)];
+        UIButton *chooseButton = [[UIButton alloc] init];
         [chooseButton setTitle:NSLocalizedString(@"choose", @"Choose") forState:UIControlStateNormal];
         [chooseButton setTitle:NSLocalizedString(@"down", @"Down") forState:UIControlStateSelected];
-        [chooseButton setBackgroundColor:[UIColor clearColor]];
+        chooseButton.titleLabel.font = [UIFont systemFontOfSize:15.0f];
+        [chooseButton sizeToFit];
         [chooseButton addTarget:self action:@selector(chooseAction:) forControlEvents:UIControlEventTouchUpInside];
         [self.navigationItem setRightBarButtonItem:[[UIBarButtonItem alloc] initWithCustomView:chooseButton]];
     }
     else{
         UIButton *doneButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 60, 40)];
         [doneButton setTitle:NSLocalizedString(@"down", @"Down") forState:UIControlStateNormal];
-        [doneButton setBackgroundColor:[UIColor clearColor]];
+        doneButton.titleLabel.font = [UIFont systemFontOfSize:15.0f];
+        [doneButton sizeToFit];
         [doneButton addTarget:self action:@selector(doneAction:) forControlEvents:UIControlEventTouchUpInside];
         [self.navigationItem setRightBarButtonItem:[[UIBarButtonItem alloc] initWithCustomView:doneButton]];
     }

@@ -156,13 +156,10 @@
 - (void)requestDataWithTarget:(NSString *)target time:(NSString *)time tagId:(NSString * )tagId
 {
     self.isRefreshing = YES;
-   // NSDictionary *userTags = [SHGGloble sharedGloble].maxUserTags;
-    
     if ([target isEqualToString:@"first"]){
         [self.listTable.footer resetNoMoreData];
         self.hasDataFinished = NO;
     } else if([target isEqualToString:@"load"]){
-       // userTags = [SHGGloble sharedGloble].minUserTags;
     }
 
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];

@@ -52,20 +52,17 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
-    if ([self respondsToSelector:@selector(setEdgesForExtendedLayout:)])
-    {
-        [self setEdgesForExtendedLayout:UIRectEdgeNone];
-    }
+    
     self.title = NSLocalizedString(@"title.createGroup", @"Create a group");
     self.view.backgroundColor = [UIColor colorWithRed:242/255.0 green:242/255.0 blue:242/255.0 alpha:1.0];
     [self initTextField];
     [self initTextView];
     
-    UIButton *addButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 45, 45)];
-    addButton.titleLabel.font = [UIFont systemFontOfSize:15.0];
+    UIButton *addButton = [[UIButton alloc] init];
+    addButton.titleLabel.font = [UIFont systemFontOfSize:15.0f];
     [addButton setTitle:NSLocalizedString(@"group.create.addOccupant", @"add members") forState:UIControlStateNormal];
-    [addButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [addButton sizeToFit];
+    [addButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [addButton addTarget:self action:@selector(addContacts:) forControlEvents:UIControlEventTouchUpInside];
     _rightItem = [[UIBarButtonItem alloc] initWithCustomView:addButton];
     [self.navigationItem setRightBarButtonItem:_rightItem];
