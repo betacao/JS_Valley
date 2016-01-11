@@ -14,5 +14,4 @@
 #import "ChatListViewController.h"
 @interface DiscoverViewController : BaseTableViewController
 @property (nonatomic, strong)UILabel *titleLabel;
-@property (nonatomic, strong) UIBarButtonItem *rightItem;
 @end

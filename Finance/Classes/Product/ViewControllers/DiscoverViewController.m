@@ -83,25 +83,11 @@
     }];
 }
 
--(UIBarButtonItem *)rightItem
+- (void)didReceiveMemoryWarning
 {
-    if (!_rightItem) {
-        
-        UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        [rightButton setFrame:CGRectMake(0, 0, 100, 40)];
-        [rightButton.titleLabel setTextAlignment:NSTextAlignmentRight];
-        [rightButton setTitle:@"更新通讯录" forState:UIControlStateNormal];
-        [rightButton setTitleColor:RGB(255, 57, 67) forState:UIControlStateNormal];
-        [rightButton.titleLabel setFont:[UIFont systemFontOfSize:17] ];
-        [rightButton addTarget:self action:@selector(uploadContact) forControlEvents:UIControlEventTouchUpInside];
-        
-        _rightItem = [[UIBarButtonItem alloc] initWithCustomView:rightButton];
-    }
-    return _rightItem;
-}
-- (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }
+
 -(void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
@@ -129,12 +115,13 @@
         cell.numberLable.text = nil;
     } else if (indexPath.section == 1){
         if (indexPath.row == 0){
-            cell.lineView.hidden = NO;
-            [cell loadDataWithImage:@"erdurenmai" title:@"二度人脉" rightItem:nil rightItemColor: nil];
-            cell.numberLable.text = [NSString stringWithFormat:@"%ld人", (long)weakSelf.secondFriendNumber];
-        } else if (indexPath.row == 1){
             [cell loadDataWithImage:@"yidurenmai" title:@"一度人脉" rightItem:nil rightItemColor:nil];
             cell.numberLable.text = [NSString stringWithFormat:@"%ld人", (long)weakSelf.firstFriendNumber];
+            cell.lineView.hidden = NO;
+
+        } else if (indexPath.row == 1){
+            [cell loadDataWithImage:@"erdurenmai" title:@"二度人脉" rightItem:nil rightItemColor: nil];
+            cell.numberLable.text = [NSString stringWithFormat:@"%ld人", (long)weakSelf.secondFriendNumber];
         } else if (indexPath.row == 2){
             [cell loadDataWithImage:@"action_Icon" title:@"会议活动" rightItem:nil rightItemColor:nil];
             cell.numberLable.text = nil;
@@ -150,7 +137,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 51;
+    return 54.0f;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
@@ -204,17 +191,17 @@
         switch (indexPath.row) {
             case 0:{
                 ChatListViewController *vc = [[ChatListViewController alloc] init];
-                vc.chatListType = ContactTwainListView;
+                vc.chatListType = ContactListView;
                 vc.hidesBottomBarWhenPushed = YES;
-                [MobClick event:@"ChatListContactListView" label:@"onClick"];
+                [MobClick event:@"ChatListContactTwainListView" label:@"onClick"];
                 [self.navigationController pushViewController:vc animated:YES];
             }
                 break;
             case 1:{
                 ChatListViewController *vc = [[ChatListViewController alloc] init];
-                vc.chatListType = ContactListView;
+                vc.chatListType = ContactTwainListView;
                 vc.hidesBottomBarWhenPushed = YES;
-                [MobClick event:@"ChatListContactTwainListView" label:@"onClick"];
+                [MobClick event:@"ChatListContactListView" label:@"onClick"];
                 [self.navigationController pushViewController:vc animated:YES];
                 
             }

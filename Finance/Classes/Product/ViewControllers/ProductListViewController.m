@@ -368,7 +368,7 @@
         UILabel *item = [[UILabel alloc] init];
         item.userInteractionEnabled = YES;
         [item setFrame:CGRectMake(itemWidth *i, 0, itemWidth, 80)];
-        item.tag = i+ 1000;
+        item.tag = i + 1000;
         UIImageView *timg = [[UIImageView alloc] initWithFrame:CGRectMake((itemWidth/2-21), 10, 42, 42)];
         timg.layer.masksToBounds = YES;
         timg.layer.cornerRadius = 21;
@@ -384,7 +384,7 @@
         
         UILabel *tname = [[UILabel alloc] initWithFrame:CGRectMake(0, 60, itemWidth, 20)];
         [tname setFont:[UIFont systemFontOfSize:14.0f]];
-        [tname setTextColor:TEXT_COLOR];
+        [tname setTextColor: [UIColor blackColor]];
         [tname setTextAlignment:NSTextAlignmentCenter];
         [tname setText:obj.tname];
         [item addSubview:tname];
