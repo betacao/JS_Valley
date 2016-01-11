@@ -288,7 +288,7 @@ static NSString * const kCommonFNum			= @"commonnum";
         _tableView.delegate = self;
         _tableView.dataSource = self;
         _tableView.tableFooterView = [[UIView alloc] init];
-        _tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+        _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         _tableView.separatorInset=UIEdgeInsetsMake(0, 0, 0, 0);
         [_tableView registerClass:[ChatListCell class] forCellReuseIdentifier:@"chatListCell"];
     }

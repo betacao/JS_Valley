@@ -123,11 +123,13 @@
     if (!cell) {
         cell = [[[NSBundle mainBundle] loadNibNamed:@"DiscoveryTableViewCell" owner:self options:nil] lastObject];
     }
+    cell.lineView.hidden = YES;
     if (indexPath.section == 0){
         [cell loadDataWithImage:@"合作" title:@"产品合作" rightItem:nil rightItemColor:nil];
         cell.numberLable.text = nil;
     } else if (indexPath.section == 1){
         if (indexPath.row == 0){
+            cell.lineView.hidden = NO;
             [cell loadDataWithImage:@"erdurenmai" title:@"二度人脉" rightItem:nil rightItemColor: nil];
             cell.numberLable.text = [NSString stringWithFormat:@"%ld人", (long)weakSelf.secondFriendNumber];
         } else if (indexPath.row == 1){

@@ -40,12 +40,18 @@
                         <color key="textColor" red="0.56862745098039214" green="0.5725490196078431" blue="0.56862745098039214" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <view contentMode="scaleToFill" id="4vI-Dp-GQy">
+                        <rect key="frame" x="15" y="52" width="306" height="1"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
                 </subviews>
             </tableViewCellContentView>
             <connections>
                 <outlet property="imageTitle" destination="uBE-ie-Nss" id="rE2-kC-ZqX"/>
                 <outlet property="lblRight" destination="ZDD-Lg-bYT" id="OhO-c5-kbB"/>
                 <outlet property="lblTitle" destination="GtF-Ig-XLZ" id="hFJ-KT-wkO"/>
+                <outlet property="lineView" destination="4vI-Dp-GQy" id="26q-T8-Wm6"/>
                 <outlet property="numberLable" destination="eVZ-sh-RoU" id="gcl-lE-bYm"/>
             </connections>
             <point key="canvasLocation" x="108" y="236"/>

@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface DiscoveryTableViewCell : UITableViewCell
+@property (weak, nonatomic) IBOutlet UIView *lineView;
 
 -(void)loadDataWithImage:(NSString *)imageName title:(NSString *)title rightItem:(NSString *)itemName rightItemColor:(UIColor *)color;
 @property (weak, nonatomic) IBOutlet UILabel *numberLable;

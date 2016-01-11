@@ -89,7 +89,7 @@
             self.alertContentLabel.frame = frame;
         }
         
-        [self.rightBtn setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithHexString:@"F85C53"]] forState:UIControlStateNormal];
+        [self.rightBtn setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithHexString:@"F04241"]] forState:UIControlStateNormal];
         [self.leftBtn setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithHexString:@"C5C5C5"]] forState:UIControlStateNormal];
         [self.rightBtn setTitle:rigthTitle forState:UIControlStateNormal];
         [self.leftBtn setTitle:leftTitle forState:UIControlStateNormal];
@@ -153,7 +153,7 @@
             self.rightBtn.frame = rightBtnFrame;
         }
 
-        [self.rightBtn setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithHexString:@"F85C53"]] forState:UIControlStateNormal];
+        [self.rightBtn setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithHexString:@"F04241"]] forState:UIControlStateNormal];
         [self.leftBtn setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithHexString:@"C5C5C5"]] forState:UIControlStateNormal];
         [self.rightBtn setTitle:rigthTitle forState:UIControlStateNormal];
         [self.leftBtn setTitle:leftTitle forState:UIControlStateNormal];
@@ -205,7 +205,7 @@
             self.rightBtn.frame = rightBtnFrame;
         }
 
-        [self.rightBtn setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithHexString:@"F85C53"]] forState:UIControlStateNormal];
+        [self.rightBtn setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithHexString:@"F04241"]] forState:UIControlStateNormal];
         [self.leftBtn setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithHexString:@"C5C5C5"]] forState:UIControlStateNormal];
         [self.rightBtn setTitle:rigthTitle forState:UIControlStateNormal];
         [self.leftBtn setTitle:leftTitle forState:UIControlStateNormal];

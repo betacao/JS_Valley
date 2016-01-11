@@ -18,7 +18,7 @@
 
 - (void)awakeFromNib
 {
-
+    self.lineView.size = CGSizeMake(self.lineView.width, 0.5f);
 }
 
 - (void)loadDataWithImage:(NSString *)imageName title:(NSString *)title rightItem:(NSString *)itemName rightItemColor:(UIColor *)color
