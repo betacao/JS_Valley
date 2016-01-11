@@ -138,20 +138,14 @@
 {
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
     self.currentUserID = uid;
-    NSString *path = [NSString stringWithFormat:kFilePath, uid];
-    self.maxUserTags = [NSKeyedUnarchiver unarchiveObjectWithFile:path];
     if(!uid || uid.length == 0){
         return;
     }
-    NSDictionary *param = @{@"uid":uid, @"type":@"all", @"target":@"first", @"rid":@(0), @"num": rRequestNum, @"tagIds": self.maxUserTags ? self.maxUserTags : @{}};
+    NSDictionary *param = @{@"uid":uid, @"type":@"all", @"target":@"first", @"rid":@(0), @"num": rRequestNum, @"tagId": @"-1"};
     
     __weak typeof(self) weakSelf = self;
-    [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttpCircle,circleListNew] class:[CircleListObj class] parameters:param success:^(MOCHTTPResponse *response){
+    [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,dynamicAndNews] class:[CircleListObj class] parameters:param success:^(MOCHTTPResponse *response){
         NSLog(@"首页预加载数据成功");
-        NSLog(@"YYYYYYYYYYYYY%@",[response.dataDictionary objectForKey:@"tagids"]);
-        //刚进入首页最大和最小是相同的
-        weakSelf.maxUserTags = [response.dataDictionary objectForKey:@"tagids"];
-        weakSelf.minUserTags = [response.dataDictionary objectForKey:@"tagids"];
         NSArray *array = [response.dataDictionary objectForKey:@"normalpostlist"];
         array = [self parseServerJsonArrayToJSONModel:array class:[CircleListObj class]];
         [weakSelf.homeListArray removeAllObjects];

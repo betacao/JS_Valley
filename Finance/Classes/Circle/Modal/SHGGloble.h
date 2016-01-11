@@ -62,21 +62,6 @@ typedef void (^SHHomeDataCompletionBlock)(NSArray *allList, NSArray *normalList,
  */
 @property (strong, nonatomic) NSMutableArray *contactArray;
 
-/**
- @brief  用户浏览的数据字典，从服务端读取 然后返回给服务端
- 用于下拉刷新
-
- @since 1.5.0
- */
-@property (strong, nonatomic) NSDictionary *maxUserTags;
-
-/**
- @brief  用户浏览的数据字典，从服务端读取 然后返回给服务端
- 用于上拉加载
-
- @since 1.5.0
- */
-@property (strong, nonatomic) NSDictionary *minUserTags;
 
 /**
  @brief  首页请求完成的回掉

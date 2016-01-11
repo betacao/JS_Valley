@@ -77,5 +77,6 @@
 #define circleBak               @"circleBak"
 #define circleNew               @"circleNew"
 #define circleListNew           @"circleListNew"
+#define dynamicAndNews          @"dynamic/dynamicAndNews"
 
 #endif

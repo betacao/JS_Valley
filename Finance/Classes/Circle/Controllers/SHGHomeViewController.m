@@ -301,13 +301,11 @@ const CGFloat kAdButtomMargin = 20.0f;
 {
     [Hud showLoadingWithMessage:@"加载中"];
     self.isRefreshing = YES;
-    NSDictionary *userTags = [SHGGloble sharedGloble].maxUserTags;
 
     if ([target isEqualToString:@"first"]){
         [self.listTable.footer resetNoMoreData];
         self.hasDataFinished = NO;
     } else if([target isEqualToString:@"load"]){
-        userTags = [SHGGloble sharedGloble].minUserTags;
     }
 
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
@@ -315,26 +313,8 @@ const CGFloat kAdButtomMargin = 20.0f;
     NSDictionary *param = @{@"uid":uid, @"type":@"all", @"target":target, @"rid":@(rid), @"num": rRequestNum, @"tagId" : @"-1"};
 
     __weak typeof(self) weakSelf = self;
-    [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttp,@"dynamic",@"dynamicAndNews"] class:[CircleListObj class] parameters:param success:^(MOCHTTPResponse *response){
+    [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,dynamicAndNews] class:[CircleListObj class] parameters:param success:^(MOCHTTPResponse *response){
         weakSelf.isRefreshing = NO;
-        if([target isEqualToString:@"first"]){
-            if([response.dataDictionary objectForKey:@"tagids"]){
-                //大小统一
-                [SHGGloble sharedGloble].maxUserTags = [response.dataDictionary objectForKey:@"tagids"];
-                [SHGGloble sharedGloble].minUserTags = [response.dataDictionary objectForKey:@"tagids"];
-                NSLog(@"XXXXXXXXXXXXX%@",[response.dataDictionary objectForKey:@"tagids"]);
-            }
-        } else if ([target isEqualToString:@"refresh"]){
-            if([response.dataDictionary objectForKey:@"tagids"]){
-                [SHGGloble sharedGloble].maxUserTags = [response.dataDictionary objectForKey:@"tagids"];
-                NSLog(@"XXXXXXXXXXXXX%@",[response.dataDictionary objectForKey:@"tagids"]);
-            }
-        } else{
-            if([response.dataDictionary objectForKey:@"tagids"]){
-                [SHGGloble sharedGloble].minUserTags = [response.dataDictionary objectForKey:@"tagids"];
-                NSLog(@"XXXXXXXXXXXXX%@",[response.dataDictionary objectForKey:@"tagids"]);
-            }
-        }
         [weakSelf assembleDictionary:response.dataDictionary target:target];
 
         [weakSelf.listTable.header endRefreshing];

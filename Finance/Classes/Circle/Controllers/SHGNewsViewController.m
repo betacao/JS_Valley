@@ -173,24 +173,7 @@
 
     [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttp,@"dynamic",@"dynamicAndNews"] class:[CircleListObj class] parameters:param success:^(MOCHTTPResponse *response){
         weakSelf.isRefreshing = NO;
-        if([target isEqualToString:@"first"]){
-            if([response.dataDictionary objectForKey:@"tagids"]){
-                //大小统一
-                [SHGGloble sharedGloble].maxUserTags = [response.dataDictionary objectForKey:@"tagids"];
-                [SHGGloble sharedGloble].minUserTags = [response.dataDictionary objectForKey:@"tagids"];
-                NSLog(@"XXXXXXXXXXXXX%@",[response.dataDictionary objectForKey:@"tagids"]);
-            }
-        } else if ([target isEqualToString:@"refresh"]){
-            if([response.dataDictionary objectForKey:@"tagids"]){
-                [SHGGloble sharedGloble].maxUserTags = [response.dataDictionary objectForKey:@"tagids"];
-                NSLog(@"XXXXXXXXXXXXX%@",[response.dataDictionary objectForKey:@"tagids"]);
-            }
-        } else{
-            if([response.dataDictionary objectForKey:@"tagids"]){
-                [SHGGloble sharedGloble].minUserTags = [response.dataDictionary objectForKey:@"tagids"];
-                NSLog(@"XXXXXXXXXXXXX%@",[response.dataDictionary objectForKey:@"tagids"]);
-            }
-        }
+        
         [weakSelf assembleDictionary:response.dataDictionary target:target];
 
         [weakSelf.listTable.header endRefreshing];
