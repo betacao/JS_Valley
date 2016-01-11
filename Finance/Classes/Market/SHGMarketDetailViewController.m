@@ -102,7 +102,7 @@
     }
     NSString * typeStr = self.responseObject.catalog;
     self.typeLabel.text = [NSString stringWithFormat:@"类型： %@",typeStr];
-    if ([self.responseObject.status isEqualToString:@"true" ]) {
+    if (![self.responseObject.status isEqualToString:@"true" ]) {
         NSString * contactString = @"电话： 认证可见";
         NSMutableAttributedString * str = [[NSMutableAttributedString alloc]initWithString:contactString];
         [str addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:14] range:NSMakeRange(4, 4)];

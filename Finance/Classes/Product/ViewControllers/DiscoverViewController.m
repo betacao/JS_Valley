@@ -158,7 +158,7 @@
     } else if (section == 1){
         return 10;
     } else{
-        return 10;
+        return 0.0f;
     }
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -180,7 +180,12 @@
     }
     return 0;
 }
-
+- (UIView * )tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    UIView * view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 10.0f)];
+    view.backgroundColor = RGB(236, 236, 236);
+    return view;
+}
 #pragma mark =============  UITableView Delegate  =============
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
