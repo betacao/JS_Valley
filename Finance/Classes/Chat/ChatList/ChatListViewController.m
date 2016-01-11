@@ -54,7 +54,6 @@ static NSString * const kCommonFNum			= @"commonnum";
 @property (strong, nonatomic) NSMutableArray        *dataSource;
 @property (strong, nonatomic) UITableView           *tableView;
 @property (nonatomic, strong) EMSearchBar           *searchBar;
-@property (nonatomic, strong) SRRefreshView         *slimeView;
 @property (nonatomic, strong) UIView                *networkStateView;
 @property (strong, nonatomic) EMSearchDisplayController *searchController;
 @property (nonatomic, strong) UISegmentedControl *segmentControl;
@@ -127,6 +126,7 @@ static NSString * const kCommonFNum			= @"commonnum";
 {
     pageNum = 1;
     [self refreshDataSource];
+    [self.tableView.header endRefreshing];
 }
 
 - (void)refreshFooter
@@ -262,24 +262,6 @@ static NSString * const kCommonFNum			= @"commonnum";
 }
 
 #pragma mark - getter
-
-- (SRRefreshView *)slimeView
-{
-    if (!_slimeView) {
-        _slimeView = [[SRRefreshView alloc] init];
-        _slimeView.delegate = self;
-        _slimeView.upInset = 0;
-        _slimeView.slimeMissWhenGoingBack = YES;
-        _slimeView.slime.bodyColor = [UIColor grayColor];
-        _slimeView.slime.skinColor = [UIColor grayColor];
-        _slimeView.slime.lineWith = 1;
-        _slimeView.slime.shadowBlur = 4;
-        _slimeView.slime.shadowColor = [UIColor grayColor];
-        _slimeView.backgroundColor = [UIColor whiteColor];
-    }
-    
-    return _slimeView;
-}
 
 - (UISearchBar *)searchBar
 {
@@ -795,29 +777,6 @@ static NSString * const kCommonFNum			= @"commonnum";
     [searchBar setShowsCancelButton:NO animated:YES];
 }
 
-#pragma mark - scrollView delegate
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView
-{
-    [_slimeView scrollViewDidScroll];
-}
-
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
-{
-    [_slimeView scrollViewDidEndDraging];
-}
-
-#pragma mark - slimeRefresh delegate
-//刷新消息列表
-- (void)slimeRefreshStartRefresh:(SRRefreshView *)refreshView
-{
-    if (self.chatListType == ChatListView) {
-        [self refreshDataSource];
-    }
-    [_slimeView endRefresh];
-    
-    
-}
-
 #pragma mark - IChatMangerDelegate
 
 -(void)didUnreadMessagesCountChanged
@@ -1001,36 +960,24 @@ static NSString * const kCommonFNum			= @"commonnum";
 }
 -(void)refreshDataSource
 {
-    if(self.chatListType == ContactListView)
-    {
-//        [self refreshFriendShip];
+    if(self.chatListType == ContactListView){
         [self requestContact];
-        
-    }
-    else if (self.chatListType == ContactTwainListView){
+    } else if (self.chatListType == ContactTwainListView){
         [self requestTwainContact];
-    }
-    else
-    {
+    } else{
         [self.dataSource removeAllObjects];
-        for(unsigned int i=0;i<2;i++)
-        {
+        for(unsigned int i=0; i < 2; i++){
             [self.dataSource addObject:[NSString stringWithFormat:@"%d",i]];
         }
         NSArray *dSource=[self loadDataSource];
-        for(unsigned int i=0;i<dSource.count;i++)
-        {
+        for(unsigned int i=0;i<dSource.count;i++){
             EMConversation *emc=dSource[i];
-            if ([emc loadAllMessages].count > 0)
-            {
+            if ([emc loadAllMessages].count > 0){
                 [self.dataSource addObject:emc];
-                
             }
         }
         
-        if(IsArrEmpty(self.contactsSource))
-        {
-            //[self requestContact];
+        if(IsArrEmpty(self.contactsSource)){
             NSArray *arr = [HeadImage queryAll] ;
             for (NSManagedObject *object in arr) {
                 BasePeopleObject *obj = [[BasePeopleObject alloc] init];
@@ -1261,7 +1208,7 @@ static NSString * const kCommonFNum			= @"commonnum";
 {
     [self.view addSubview:self.searchBar];
     [self.view addSubview:self.tableView];
-    [self.tableView addSubview:self.slimeView];
+    [self addHeaderRefresh:self.tableView headerRefesh:YES andFooter:NO];
     if (self.chatListType != ChatListView) {
         UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
         NSString *imageName ;

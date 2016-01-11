@@ -31,7 +31,6 @@
 @property (strong, nonatomic) NSMutableArray *dataSource; //推荐群组
 @property (strong, nonatomic) NSMutableArray *commonArr; //我创建的群组
 @property (strong, nonatomic) NSMutableArray *joinArr; // 我加入的群组
-@property (strong, nonatomic) SRRefreshView *slimeView;
 @property (strong, nonatomic) EMSearchBar *searchBar;
 @property (strong, nonatomic) EMSearchDisplayController *searchController;
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
@@ -49,7 +48,7 @@
     _joinArr = [NSMutableArray array];
     [[EaseMob sharedInstance].chatManager removeDelegate:self];
     [[EaseMob sharedInstance].chatManager addDelegate:self delegateQueue:nil];
-    [self.tableView addSubview:self.slimeView];
+    [self addHeaderRefresh:self.tableView headerRefesh:YES andFooter:NO];
     self.tableView.separatorInset = UIEdgeInsetsMake(0, 15, 0, 0);
 
     //公共群组
@@ -84,6 +83,11 @@
 
     [MobClick event:@"GroupListViewController" label:@"onClick"];
 }
+
+- (void)refreshHeader
+{
+    [self.tableView.header endRefreshing];
+}
 - (void) returnClick
 {
     [self.navigationController popViewControllerAnimated:YES];
@@ -101,24 +105,6 @@
 }
 
 #pragma mark - getter
-
-- (SRRefreshView *)slimeView
-{
-    if (_slimeView == nil){
-        _slimeView = [[SRRefreshView alloc] init];
-        _slimeView.delegate = self;
-        _slimeView.upInset = 0;
-        _slimeView.slimeMissWhenGoingBack = YES;
-        _slimeView.slime.bodyColor = [UIColor grayColor];
-        _slimeView.slime.skinColor = [UIColor grayColor];
-        _slimeView.slime.lineWith = 1;
-        _slimeView.slime.shadowBlur = 4;
-        _slimeView.slime.shadowColor = [UIColor grayColor];
-        _slimeView.backgroundColor = [UIColor whiteColor];
-    }
-    
-    return _slimeView;
-}
 
 - (UISearchBar *)searchBar
 {
@@ -495,34 +481,6 @@
     [[RealtimeSearchUtil currentUtil] realtimeSearchStop];
     [searchBar resignFirstResponder];
     [searchBar setShowsCancelButton:NO animated:YES];
-}
-
-#pragma mark - SRRefreshDelegate
-
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView
-{
-    [_slimeView scrollViewDidScroll];
-}
-
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
-{
-    [_slimeView scrollViewDidEndDraging];
-}
-
-- (void)slimeRefreshStartRefresh:(SRRefreshView *)refreshView
-{
-//    [[EaseMob sharedInstance].chatManager asyncFetchMyGroupsListWithCompletion:^(NSArray *groups, EMError *error) {
-//        if (!error) {
-//            [self.dataSource removeAllObjects];
-//            EMGroup *grp=[[EMGroup alloc] initWithGroupId:@"-1"];
-//            [self.dataSource addObject:grp];
-//            [self.dataSource addObjectsFromArray:groups];
-//            [self.tableView reloadData];
-//        }
-//    } onQueue:nil];
-//    [self reloadDataSource];
-    
-    [_slimeView endRefresh];
 }
 
 #pragma mark - IChatManagerDelegate
