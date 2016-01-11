@@ -588,7 +588,7 @@ static NSString * const kCommonFNum			= @"commonnum";
     [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/user/%@",rBaseAddressForHttp,userId] parameters:nil success:^(MOCHTTPResponse *response) {
         NSMutableArray *arr = [NSMutableArray array];
         NSDictionary *dic = response.dataDictionary;
-        
+
         BasePeopleObject *obj = [[BasePeopleObject alloc] init];
         obj.name = [dic valueForKey:@"nick"];
         obj.headImageUrl = [dic valueForKey:@"avatar"];

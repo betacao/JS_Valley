@@ -261,8 +261,8 @@
     [self.btnNickname setTitle:name forState:UIControlStateNormal];
     [self.btnNickname setBackgroundImage:[UIImage imageWithColor:BTN_SELECT_BACK_COLOR andSize:self.btnNickname.size] forState:UIControlStateHighlighted];
 
-    //self.lblTime.text = obj.publishdate;
-    self.lblTime.text = [obj.publishdate substringToIndex:10];
+    self.lblTime.text = obj.publishdate;
+    // self.lblTime.text = [obj.publishdate substringToIndex:10];
     [self.btnShare setTitle:obj.sharenum forState:UIControlStateNormal];
     [self.btnComment setTitle:obj.cmmtnum forState:UIControlStateNormal];
     [self.btnPraise setTitle:obj.praisenum forState:UIControlStateNormal];
