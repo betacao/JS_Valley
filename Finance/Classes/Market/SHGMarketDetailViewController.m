@@ -111,20 +111,13 @@
         self.phoneNumLabel.userInteractionEnabled = YES;
         UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapContactLabelToIdentification)];
         [self.phoneNumLabel addGestureRecognizer:recognizer];
-        }else
-        {
+    } else{
         self.phoneNumLabel.text = [@"电话：" stringByAppendingString: self.responseObject.contactInfo];
-        }
+    }
     self.nameLabel.text = self.responseObject.realname;
-    //1.7.2界面修改
-    
-//    if (self.responseObject.company.length > 5) {
-//        NSString *str = [self.responseObject.company substringToIndex:5];
-//        self.companyLabel.text = [NSString stringWithFormat:@"%@…",str];
-//    }else{
-//    }
-        self.companyLabel.text = self.responseObject.company;
-    
+
+    self.companyLabel.text = self.responseObject.company;
+
     if (self.responseObject.company.length > 6) {
         NSString *str = [self.responseObject.title substringToIndex:6];
         self.positionLabel.text = [NSString stringWithFormat:@"%@…",str];

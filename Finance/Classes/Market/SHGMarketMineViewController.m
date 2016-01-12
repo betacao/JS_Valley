@@ -197,9 +197,16 @@
 - (void)tapUserHeaderImageView:(NSString *)uid
 {
     __weak typeof(self) weakSelf = self;
-    SHGPersonalViewController * vc = [[SHGPersonalViewController alloc]init ];
-    vc.userId = uid;
-    [weakSelf.navigationController pushViewController:vc animated:YES];
+    SHGPersonalViewController * controller = [[SHGPersonalViewController alloc] init];
+    controller.userId = uid;
+    [weakSelf.navigationController pushViewController:controller animated:YES];
+}
+
+- (void)tapContactLabelToIdentification
+{
+    __weak typeof(self) weakSelf = self;
+    VerifyIdentityViewController * controller = [[VerifyIdentityViewController alloc] init];
+    [weakSelf.navigationController pushViewController:controller animated:YES];
 }
 
 

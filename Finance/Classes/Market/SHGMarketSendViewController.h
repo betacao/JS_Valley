@@ -11,7 +11,7 @@
 
 @protocol SHGMarketSendDelegate <NSObject>
 
-- (void)didCreateNewMarket;
+- (void)didCreateNewMarket:(SHGMarketFirstCategoryObject *)object;
 
 @end
 

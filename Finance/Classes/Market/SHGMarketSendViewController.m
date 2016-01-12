@@ -246,7 +246,12 @@ typedef NS_ENUM(NSInteger, SHGMarketSendType){
 
                         NSDictionary *param = @{@"uid":uid, @"marketName": marketName, @"firstCatalogId": firstId, @"secondCatalogId": secondId, @"price": price, @"contactInfo": contactInfo, @"detail": detail, @"photo":self.imageName, @"city":city};
                         [SHGMarketManager createNewMarket:param success:^(BOOL success) {
-                            [weakSelf.navigationController popViewControllerAnimated:YES];
+                            if (success) {
+                                if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(didCreateNewMarket:)]) {
+                                    [weakSelf.delegate didCreateNewMarket:firstObject];
+                                }
+                                [weakSelf.navigationController performSelector:@selector(popViewControllerAnimated:) withObject:@(YES) afterDelay:1.2f];
+                            }
                         }];
                     }
                         break;
@@ -270,7 +275,15 @@ typedef NS_ENUM(NSInteger, SHGMarketSendType){
 
                         NSDictionary *param = @{@"uid":uid, @"marketName": marketName, @"firstCatalogId": firstId, @"secondCatalogId": secondId, @"price": price, @"contactInfo": contactInfo, @"detail": detail, @"photo":self.imageName, @"city":city};
                         [SHGMarketManager modifyMarket:param success:^(BOOL success) {
-                            [weakSelf.navigationController popViewControllerAnimated:YES];
+                            if (success) {
+                                if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(didCreateNewMarket:)]) {
+                                    [weakSelf.delegate didCreateNewMarket:firstObject];
+                                }
+                                UIViewController *controller = [weakSelf.navigationController.viewControllers objectAtIndex:1];
+                                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.2f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                                    [weakSelf.navigationController popToViewController:controller animated:YES];
+                                });
+                            }
                         }];
                     }
                         break;

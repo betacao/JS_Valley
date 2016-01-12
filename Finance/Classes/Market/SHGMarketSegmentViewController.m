@@ -116,6 +116,7 @@
 {
     [MobClick event:@"ActionCreateMarketClicked" label:@"onClick"];
     SHGMarketSendViewController *controller = [[SHGMarketSendViewController alloc] init];
+    controller.delegate = [SHGMarketSegmentViewController sharedSegmentController];
     [self.navigationController pushViewController:controller animated:YES];
 }
 
@@ -315,7 +316,15 @@
     }
 }
 
-- (void)didCreateNewMarket
+- (void)didCreateNewMarket:(SHGMarketFirstCategoryObject *)object
+{
+    UIViewController *firstController = [self.viewControllers firstObject];
+    [firstController performSelector:@selector(scrollToCategory:) withObject:object];
+    UIViewController *secondController = [self.viewControllers lastObject];
+    [secondController performSelector:@selector(refreshHeader) withObject:object];
+}
+
+- (void)scrollToCategory:(SHGMarketFirstCategoryObject *)object
 {
 
 }

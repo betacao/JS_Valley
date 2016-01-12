@@ -7,8 +7,11 @@
 //
 
 #import "BaseViewController.h"
+#import "SHGMarketObject.h"
 
 @interface SHGMarketListViewController : BaseTableViewController
 - (NSMutableArray *) currentDataArray;
 - (void)reloadData;
+//移动到某个分类
+- (void)scrollToCategory:(SHGMarketFirstCategoryObject *)object;
 @end

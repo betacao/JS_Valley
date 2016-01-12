@@ -9,7 +9,6 @@
 #import "SHGMarketListViewController.h"
 #import "SHGMarketTableViewCell.h"
 #import "SHGMarketManager.h"
-#import "SHGMarketObject.h"
 #import "SHGCategoryScrollView.h"
 #import "SHGEmptyDataView.h"
 #import "SHGMarketDetailViewController.h"
@@ -67,7 +66,12 @@
     [self.tableView reloadData];
 }
 
-
+- (void)scrollToCategory:(SHGMarketFirstCategoryObject *)object
+{
+    NSInteger index = [self.scrollView.categoryArray indexOfObject:object];
+    [self.scrollView moveToIndex:index];
+    [self refreshHeader];
+}
 
 - (void)loadMarketList:(NSString *)target firstId:(NSString *)firstId second:(NSString *)secondId marketId:(NSString *)marketId
 {
