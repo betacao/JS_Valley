@@ -147,22 +147,12 @@
     self.verticalLine.hidden = YES;
     self.verticalLine.frame = CGRectMake(CGRectGetMaxX(self.nameLabel.frame)+k_FirstToTop,self.verticalLine.origin.y, self.verticalLine.frame.size.width, CGRectGetHeight(self.verticalLine.frame));
 
-//    CGSize companySize =CGSizeMake(MAXFLOAT,CGRectGetHeight(self.companyLabel.frame));
-//    NSDictionary * companyDic = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:12.0],NSFontAttributeName,nil];
-//    CGSize  companyActualsize =[self.companyLabel.text boundingRectWithSize:companySize options:NSStringDrawingUsesLineFragmentOrigin  attributes:companyDic context:nil].size;
     self.companyLabel.frame =CGRectMake(self.companyLabel.origin.x,self.companyLabel.origin.y, self.companyLabel.width, CGRectGetHeight(self.companyLabel.frame));
 
     CGSize positionSize =CGSizeMake(MAXFLOAT,CGRectGetHeight(self.positionLabel.frame));
     NSDictionary * positionDic = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:12.0],NSFontAttributeName,nil];
     CGSize  positionActualsize =[self.positionLabel.text boundingRectWithSize:positionSize options:NSStringDrawingUsesLineFragmentOrigin  attributes:positionDic context:nil].size;
     self.positionLabel.frame =CGRectMake(CGRectGetMaxX(self.nameLabel.frame) + k_FirstToTop,self.positionLabel.origin.y, positionActualsize.width, CGRectGetHeight(self.positionLabel.frame));
-
-//    CGSize capitalSize =CGSizeMake(MAXFLOAT,CGRectGetHeight(self.capitalLabel.frame));
-//    NSDictionary * capitalDic = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:12.0],NSFontAttributeName,nil];
-//    CGSize  capitalActualsize =[self.capitalLabel.text boundingRectWithSize:capitalSize options:NSStringDrawingUsesLineFragmentOrigin  attributes:capitalDic context:nil].size;
-//    self.capitalLabel.frame =CGRectMake(SCREENWIDTH-capitalActualsize.width-k_ThirdToTop,self.capitalLabel.origin.y, capitalActualsize.width, CGRectGetHeight(self.positionLabel.frame));
-    
-
 
     NSString *title = self.responseObject.marketName;
     self.titleLabel.text = title;
@@ -172,7 +162,7 @@
     self.titleLabel.height = actualsize.height;
     //控件位置
     self.typeLabel.frame = CGRectMake(self.typeLabel.origin.x, CGRectGetMaxY(self.titleLabel.frame)+k_SecondToTop, self.typeLabel.width, self.typeLabel.height);
-    //self.capitalLabel.frame = CGRectMake(self.capitalLabel.origin.x, CGRectGetMaxY(self.typeLabel.frame)+k_SecondToTop, self.capitalLabel.width, self.capitalLabel.height);
+
     self.capitalLabel.frame =CGRectMake(self.capitalLabel.frame.origin.x,CGRectGetMaxY(self.typeLabel.frame)+k_FirstToTop, self.capitalLabel.width, CGRectGetHeight(self.capitalLabel.frame));
     self.phoneNumLabel.frame =CGRectMake(self.phoneNumLabel.origin.x, CGRectGetMaxY(self.capitalLabel.frame)+k_FirstToTop, self.phoneNumLabel.width, self.phoneNumLabel.height);
     self.addressLabel.frame =CGRectMake(self.addressLabel.origin.x, CGRectGetMaxY(self.phoneNumLabel.frame)+k_FirstToTop, self.addressLabel.width, self.phoneNumLabel.height);

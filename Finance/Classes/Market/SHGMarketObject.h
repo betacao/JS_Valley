@@ -36,6 +36,7 @@
 @property (strong, nonatomic) NSString *position;//新增的业务地区
 @property (strong, nonatomic) NSMutableArray *praiseList;
 @property (strong, nonatomic) NSMutableArray *commentList;
+@property (strong, nonatomic) NSString *isDeleted;//是否已经在服务端删除了
 @end
 
 

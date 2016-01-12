@@ -8,6 +8,7 @@
 
 #import "SHGGloble.h"
 #import "SHGUserTagModel.h"
+#import "SHGMarketSegmentViewController.h"
 
 
 @interface SHGGloble ()
@@ -192,6 +193,9 @@
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
     if(uid && uid.length != 0 && ![self.currentUserID isEqualToString:uid]){
         [self requestHomePageData];
+        SHGMarketSegmentViewController *controller = [SHGMarketSegmentViewController sharedSegmentController];
+        if ([controller isViewLoaded]) {
+        }
     }
 }
 
