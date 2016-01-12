@@ -68,6 +68,7 @@
                 UITextField *textField = (UITextField *)object;
                 textField.textColor = [UIColor whiteColor];
                 textField.enablesReturnKeyAutomatically = NO;
+                [textField setValue:[UIColor colorWithHexString:@"F67070"] forKeyPath:@"_placeholderLabel.textColor"];
             } else if ([object isKindOfClass:NSClassFromString(@"UISearchBarBackground")]){
             } else{
 

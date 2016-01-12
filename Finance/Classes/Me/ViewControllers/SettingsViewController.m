@@ -42,8 +42,6 @@
     [self initArrContents];
     [self loadSwitchInfo];
     self.title = @"设置";
-    
-    self.tableView.tableFooterView = self.footerView;
 }
 
 -(void)viewWillAppear:(BOOL)animated

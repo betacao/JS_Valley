@@ -58,7 +58,7 @@
     [leftButton sizeToFit];
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:leftButton];
     self.navigationItem.leftBarButtonItem=rightItem;
-
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     // Uncomment the following line to preserve selection between presentations.
     
     self.tableView.backgroundColor = [UIColor whiteColor];
@@ -119,7 +119,7 @@
         [_footerButton setTitle:NSLocalizedString(@"group.join", @"join the group") forState:UIControlStateNormal];
         [_footerButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [_footerButton addTarget:self action:@selector(joinAction) forControlEvents:UIControlEventTouchUpInside];
-        [_footerButton setBackgroundColor:[UIColor colorWithRed:245 / 255.0 green:93 / 255.0 blue:88 / 255.0 alpha:1.0]];
+        [_footerButton setBackgroundColor:[UIColor colorWithHexString:@"F04241"]];
         _footerButton.enabled = NO;
         [_footerView addSubview:_footerButton];
     }

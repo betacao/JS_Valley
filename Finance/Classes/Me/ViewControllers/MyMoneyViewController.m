@@ -85,7 +85,7 @@
     if (section == 0) {
         return 40.0f;
     }else{
-        return 50.0f;
+        return 34.0f;
     }
 	return 0;
 }
@@ -102,8 +102,8 @@
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-	UIView *sectionView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 50)];
-	UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(16, 0, 300, 50)];
+	UIView *sectionView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 34)];
+	UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(16, 0, 300, 34)];
      label.textColor = [UIColor colorWithHexString:@"989898"];
     label.font = [UIFont systemFontOfSize:12];
 	if (section == 0) {
@@ -120,7 +120,7 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	if (indexPath.section == 0) {
-		return 50.0f;
+		return 60.0f;
 	}else if(indexPath.section == 1){
         
 		return 125.0f;
@@ -136,7 +136,7 @@
 //        cell.textLabel.font = [UIFont boldSystemFontOfSize:20];
 //		cell.textLabel.text = [NSString stringWithFormat:@"%@",self.totalMoney];
         NSInteger toLeft = 16.0f;
-        NSInteger toSeaction = 5.0f;
+        NSInteger toSeaction = 4.0f;
         UILabel * label = [[UILabel alloc] initWithFrame:CGRectMake(toLeft, toSeaction, SCREENWIDTH-toLeft, 30.0f)];
         label.textColor = [UIColor colorWithHexString:@"D43C33"];
         label.font = [UIFont boldSystemFontOfSize:20];

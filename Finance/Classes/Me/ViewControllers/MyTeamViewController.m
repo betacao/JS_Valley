@@ -25,6 +25,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *totalLabel;
 
 @property (nonatomic, strong) IBOutlet UITableViewCell *teamEncourageDescriptionCell;
+@property (weak, nonatomic) IBOutlet UIView *teamLine;
+
 
 - (IBAction)inviteButtonClicked:(id *)sender;
 
@@ -39,13 +41,14 @@
 	UIView *view = [[UIView alloc] init];
 	view.backgroundColor = [UIColor whiteColor];
     [_tableView setTableFooterView:view];
+    self.teamLine.size = CGSizeMake(self.teamLine.width, 0.5f);
 	
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
     
     [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttp,@"user",@"team"] parameters:@{@"uid":uid}success:^(MOCHTTPResponse *response){
         
-        self.myMoneyLabel.text = [NSString stringWithFormat:@"%@ 元",[response.dataDictionary valueForKey:@"me"]];
-        self.teamMoneyLabel.text = [NSString stringWithFormat:@"%@ 元",[response.dataDictionary valueForKey:@"team"]];
+        self.myMoneyLabel.text = [NSString stringWithFormat:@"%@ ",[response.dataDictionary valueForKey:@"me"]];
+        self.teamMoneyLabel.text = [NSString stringWithFormat:@"%@ ",[response.dataDictionary valueForKey:@"team"]];
         NSArray *array = [response.dataDictionary valueForKey:@"detail"];
         
         for (NSDictionary *dic in array) {

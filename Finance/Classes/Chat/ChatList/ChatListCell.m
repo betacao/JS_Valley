@@ -17,7 +17,6 @@
     UILabel *_timeLabel;
     UILabel *_unreadLabel;
     UILabel *_detailLabel;
-    UIView *_lineView;
 }
 
 @end
@@ -29,6 +28,11 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         // Initialization code
+        CGFloat spaceToRight = 15.0f;
+        CGFloat spaceToTop = 16.0f;
+        CGFloat rightImageWidth = 7.0f;
+        CGFloat rightImageHeight = 13.0f;
+        CGFloat lineToTop = 44.0f;
         _timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(SCREENWIDTH-100, 7, 80, 16)];
         _timeLabel.font = [UIFont systemFontOfSize:13];
         _timeLabel.backgroundColor = [UIColor clearColor];
@@ -51,8 +55,16 @@
         _detailLabel.textColor = [UIColor lightGrayColor];
         [self.contentView addSubview:_detailLabel];
         self.textLabel.backgroundColor = [UIColor clearColor];
-        
         self.textLabel.font = [UIFont systemFontOfSize: 16.0f];
+        _lineView = [[UIView alloc]initWithFrame:CGRectMake(spaceToRight, lineToTop, SCREENWIDTH-spaceToRight, 0.5)];
+        _lineView.backgroundColor = [UIColor colorWithHexString:@"E6E7E8"];
+        [self.contentView addSubview:_lineView];
+        
+        _rightImage = [[UIImageView  alloc]init];
+        _rightImage.frame = CGRectMake(SCREENWIDTH - spaceToRight - rightImageWidth, spaceToTop, rightImageWidth, rightImageHeight);
+        _rightImage.image = [UIImage imageNamed:@"accessoryView"];
+        [self.contentView addSubview:_rightImage];
+
     }
     return self;
 }
@@ -114,9 +126,6 @@
         [_unreadLabel setHidden:YES];
     }
     
-//    frame = _lineView.frame;
-//    frame.origin.y = self.contentView.frame.size.height;
-//    _lineView.frame = frame;
 }
 
 -(void)setName:(NSString *)name

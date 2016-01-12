@@ -24,6 +24,8 @@
 #import "AppDelegate.h"
 #import "ChatListViewController.h"
 #import "PublicGroupDetailViewController.h"
+#define kImageViewLeftMargin 15.0f
+
 @interface GroupListViewController ()<UISearchBarDelegate, UISearchDisplayDelegate, IChatManagerDelegate, SRRefreshDelegate>
 {
    BOOL _isExpand[4];
@@ -206,31 +208,34 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         cell.imageView.contentMode = UIViewContentModeScaleAspectFit;
         cell.textLabel.textColor = [UIColor colorWithHexString:@"161616"];
-        cell.textLabel.font = [UIFont systemFontOfSize:13];
-        NSInteger spaceToRight = 15.0f;
-        NSInteger lineToTop = 44.0f;
-        if (!indexPath.section == 0) {
-      
-        UIView * lineView = [[UIView alloc]initWithFrame:CGRectMake(spaceToRight, lineToTop, SCREENWIDTH-spaceToRight, 0.5)];
+        cell.textLabel.font = [UIFont systemFontOfSize:13.0f];
+        UIView *lineView = [[UIView alloc]initWithFrame:CGRectMake(kImageViewLeftMargin, cell.height - 1.0f, SCREENWIDTH - kImageViewLeftMargin, 0.5f)];
+        lineView.tag = 1000;
         lineView.backgroundColor = [UIColor colorWithHexString:@"E6E7E8"];
+        lineView.hidden = NO;
         [cell addSubview:lineView];
-        }
-    }
+        
+        UIImage *image = [UIImage imageNamed:@"群头像图标"];
+        CGSize size = image.size;
+        UIImageView *imageView = [[UIImageView alloc]initWithFrame: CGRectMake(kImageViewLeftMargin, (cell.height - size.height) / 2.0f, size.width, size.height)];
+        imageView.tag = 1001;
+        imageView.image = image;
+        [cell addSubview:imageView];
 
+    }
+    UIImageView *imageView = [cell viewWithTag:1001];
+    imageView.hidden = NO;
     if (indexPath.section == 0){
+        [cell viewWithTag:1000].hidden = YES;
+        imageView.hidden = YES;
         cell.textLabel.textColor = [UIColor colorWithHexString:@"161616"];
         cell.textLabel.font = [UIFont systemFontOfSize:13];
         cell.textLabel.text = @"     新建群组";
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 
     } else if (indexPath.section == 1){
-        UIImageView * qunImage = [[UIImageView alloc]init];
-        qunImage.frame = CGRectMake(15, 8, 28, 28);
-        [cell addSubview:qunImage];
         cell.accessoryType = UITableViewCellAccessoryNone;
         EMGroup *group = [self.dataSource objectAtIndex:indexPath.row];
-        NSString *imageName = group.isPublic ? @"群头像图标" : @"群头像图标";
-        qunImage.image = [UIImage imageNamed:imageName];
         if (group.groupSubject && group.groupSubject.length > 0){
             cell.textLabel.text = [NSString stringWithFormat:@"         %@",group.groupSubject];
             
@@ -239,26 +244,16 @@
         }
         
     } else if (indexPath.section == 2){
-        UIImageView * qunImage = [[UIImageView alloc]init];
-        qunImage.frame = CGRectMake(15, 8, 28, 28);
-        [cell addSubview:qunImage];
         cell.accessoryType = UITableViewCellAccessoryNone;
         EMGroup *group = [self.commonArr objectAtIndex:indexPath.row];
-        NSString *imageName = group.isPublic ? @"群头像图标" : @"群头像图标";
-        qunImage.image = [UIImage imageNamed:imageName];
         if (group.groupSubject && group.groupSubject.length > 0){
             cell.textLabel.text = [NSString stringWithFormat:@"         %@",group.groupSubject];
         } else {
             cell.textLabel.text = [NSString stringWithFormat:@"         %@",group.groupId];
         }
     } else if (indexPath.section == 3){
-        UIImageView * qunImage = [[UIImageView alloc]init];
-        qunImage.frame = CGRectMake(15, 8, 28, 28);
-        [cell addSubview:qunImage];
         cell.accessoryType = UITableViewCellAccessoryNone;
         EMGroup *group = [self.joinArr objectAtIndex:indexPath.row];
-        NSString *imageName = group.isPublic ? @"群头像图标" : @"群头像图标";
-        qunImage.image = [UIImage imageNamed:imageName];
         if (group.groupSubject && group.groupSubject.length > 0){
             cell.textLabel.text = [NSString stringWithFormat:@"         %@",group.groupSubject];
         } else{
@@ -288,7 +283,7 @@
     //设置每组的的标题
     
     UIButton *imageBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    imageBtn.frame = CGRectMake(15, 20, 8, 11);
+    imageBtn.frame = CGRectMake(15, 17, 8, 11);
     imageBtn.tag = section;
     [imageBtn setImage:[UIImage imageNamed:@"arrowRight"] forState:UIControlStateNormal];
     [imageBtn addTarget:self action:@selector(sectionBurronClick:) forControlEvents:UIControlEventTouchUpInside];

@@ -27,9 +27,28 @@
                         <outlet property="delegate" destination="-1" id="iCp-HM-OQm"/>
                     </connections>
                 </tableView>
+                <view contentMode="scaleToFill" id="5n1-Re-l8W">
+                    <rect key="frame" x="0.0" y="523" width="320" height="45"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Ygx-cF-w1E">
+                            <rect key="frame" x="15" y="0.0" width="290" height="35"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            <color key="backgroundColor" red="0.94117647058823528" green="0.25882352941176467" blue="0.25490196078431371" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <state key="normal" title="退出当前账号">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="logout:" destination="-1" eventType="touchUpInside" id="vzs-ny-QMh"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                </view>
             </subviews>
             <color key="backgroundColor" red="0.94117647059999998" green="0.94117647059999998" blue="0.94117647059999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-            <point key="canvasLocation" x="526" y="273"/>
+            <point key="canvasLocation" x="646" y="222"/>
         </view>
         <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" id="RND-oW-lER">
             <rect key="frame" x="0.0" y="0.0" width="51" height="31"/>
@@ -40,27 +59,5 @@
             </connections>
             <point key="canvasLocation" x="766.5" y="130.5"/>
         </switch>
-        <view contentMode="scaleToFill" id="5n1-Re-l8W">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="100"/>
-            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-            <subviews>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Ygx-cF-w1E">
-                    <rect key="frame" x="15" y="55" width="290" height="35"/>
-                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                    <color key="backgroundColor" red="0.94117647058823528" green="0.25882352941176467" blue="0.25490196078431371" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    <state key="normal" title="退出当前账号">
-                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                    <connections>
-                        <action selector="logout:" destination="-1" eventType="touchUpInside" id="vzs-ny-QMh"/>
-                    </connections>
-                </button>
-            </subviews>
-            <color key="backgroundColor" red="0.94117647058823528" green="0.94117647058823528" blue="0.94117647058823528" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-            <nil key="simulatedStatusBarMetrics"/>
-            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <point key="canvasLocation" x="706" y="16.5"/>
-        </view>
     </objects>
 </document>

@@ -29,6 +29,7 @@
         [self.imageTitle setImage:[UIImage imageNamed:imageName]];
     }
     self.lblTitle.text = title;
+    self.lblTitle.textColor = [UIColor colorWithHexString:@"161616"];
     if (itemName && color){
         self.lblRight.text = itemName;
         self.lblRight.backgroundColor = color;

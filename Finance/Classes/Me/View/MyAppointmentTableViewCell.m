@@ -90,8 +90,8 @@
 		self.product1Status.textColor = [UIColor redColor];
 		
 		self.height = self.product1.height + 10;
-		self.product1.origin = CGPointMake(13, 5);
-		self.product1.width = self.width -26;
+		self.product1.origin = CGPointMake(12, 5);
+		self.product1.width = self.width -24;
 
 		self.product1.layer.masksToBounds = YES;
 		self.product1.layer.cornerRadius = 5;
@@ -114,8 +114,8 @@
 		self.product2Status.textColor = [UIColor redColor];
 
 		self.height = self.product2.height + 10;
-		self.product2.origin = CGPointMake(13, 5);
-		self.product2.width = self.width -26;
+		self.product2.origin = CGPointMake(12, 5);
+		self.product2.width = self.width -24;
 
 		self.product2.layer.masksToBounds = YES;
 		self.product2.layer.cornerRadius = 5;
@@ -140,8 +140,8 @@
 		self.product3Status.textColor = [UIColor redColor];
 		
 		self.height = self.product3.height + 10;
-		self.product3.origin = CGPointMake(13, 5);
-		self.product3.width = self.width -26;
+		self.product3.origin = CGPointMake(12, 5);
+		self.product3.width = self.width -24;
 
 		self.product3.layer.masksToBounds = YES;
 		self.product3.layer.cornerRadius = 5;
@@ -165,8 +165,8 @@
 		self.product4Status.textColor = [UIColor redColor];
 		
 		self.height = self.product4.height + 10;
-		self.product4.origin = CGPointMake(13, 5);
-		self.product4.width = self.width -26;
+		self.product4.origin = CGPointMake(12, 5);
+		self.product4.width = self.width -24;
 
 		self.product4.layer.masksToBounds = YES;
 		self.product4.layer.cornerRadius = 5;
