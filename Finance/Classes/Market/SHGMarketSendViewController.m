@@ -283,7 +283,7 @@ typedef NS_ENUM(NSInteger, SHGMarketSendType){
                             secondId = secondObject.rowId;
                         }
 
-                        NSDictionary *param = @{@"uid":uid, @"marketName": marketName, @"firstCatalogId": firstId, @"secondCatalogId": secondId, @"price": price, @"contactInfo": contactInfo, @"detail": detail, @"photo":self.imageName, @"city":city};
+                        NSDictionary *param = @{@"uid":uid, @"marketName": marketName, @"firstCatalogId": firstId, @"secondCatalogId": secondId, @"price": price, @"contactInfo": contactInfo, @"detail": detail, @"photo":self.imageName, @"city":city, @"marketId":weakSelf.object.marketId};
                         [SHGMarketManager modifyMarket:param success:^(BOOL success) {
                             if (success) {
                                 if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(didModifyMarket:)]) {

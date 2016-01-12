@@ -15,8 +15,8 @@
 - (void)clickPrasiseButton:(SHGMarketObject *)object;
 - (void)clickCommentButton:(SHGMarketObject *)object;
 - (void)clickEditButton:(SHGMarketObject *)object;
+- (void)clickDeleteButton:(SHGMarketObject *)object;
 - (void)tapUserHeaderImageView:(NSString *)uid;
-- (void)tapContactLabelToIdentification;
 @end
 
 @interface SHGMarketTableViewCell : UITableViewCell

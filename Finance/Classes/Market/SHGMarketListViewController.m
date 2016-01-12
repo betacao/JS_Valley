@@ -309,13 +309,6 @@
     vc.userId = uid;
     [weakSelf.navigationController pushViewController:vc animated:YES];
 }
-- (void)tapContactLabelToIdentification
-{
-    __weak typeof(self) weakSelf = self;
-    VerifyIdentityViewController * vc = [[VerifyIdentityViewController alloc]init];
-    [weakSelf.navigationController pushViewController:vc animated:YES];
-    
-}
 
 - (void)didReceiveMemoryWarning
 {

@@ -52,6 +52,15 @@
     return @{@"firstCatalogId":@"firstcatalogid", @"firstCatalogName":@"firstcatalogname", @"secondCataLogs":@"secondcatalogs"};
 }
 
+- (BOOL)isEqual:(SHGMarketFirstCategoryObject *)object
+{
+    if ([self.firstCatalogId isEqualToString:object.firstCatalogId]) {
+        return YES;
+    } else{
+        return NO;
+    }
+}
+
 + (NSValueTransformer *)JSONTransformerForKey:(NSString *)key
 {
     return [MTLValueTransformer transformerUsingForwardBlock:^id(id value, BOOL *success, NSError *__autoreleasing *error) {

@@ -115,8 +115,9 @@
     }];
 }
 
-+ (void)deleteMarket:(NSDictionary *)param success:(void (^)(BOOL success))block
++ (void)deleteMarket:(SHGMarketObject *)object success:(void (^)(BOOL))block
 {
+    NSDictionary *param = @{@"marketId":object.marketId};
     NSString *request = [rBaseAddressForHttp stringByAppendingString:@"/market/deleteMarket"];
     [MOCHTTPRequestOperationManager postWithURL:request class:[SHGMarketFirstCategoryObject class] parameters:param success:^(MOCHTTPResponse *response) {
         [Hud hideHud];

@@ -44,12 +44,12 @@
         self.leftView.hidden = NO;
         self.rightView.hidden = NO;
         CGRect frame = self.leftView.frame;
-        frame.origin.x = SCREENWIDTH - 2.0f * CGRectGetWidth(frame);
+        frame.origin.x = CGRectGetMinX(self.rightView.frame) - CGRectGetWidth(frame);
         self.leftView.frame = frame;
     } else{
         self.leftView.hidden = NO;
         CGRect frame = self.leftView.frame;
-        frame.origin.x = SCREENWIDTH - CGRectGetWidth(frame);
+        frame.origin.x = CGRectGetMinX(self.rightView.frame);
         self.leftView.frame = frame;
     }
     self.typeLabel.text = [@"类型：" stringByAppendingString:object.catalog];
@@ -82,8 +82,6 @@
     }
 
     [self.commentButton setTitle:object.commentNum forState:UIControlStateNormal];
-    UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapContactLabelToIdentification)];
-    [self.contactLabel addGestureRecognizer:recognizer];
 
     
 }
@@ -134,19 +132,10 @@
 //删除
 - (IBAction)clickDeleteButton:(UIButton *)sender
 {
-    if (self.delegate && [self.delegate respondsToSelector:@selector(tapUserHeaderImageView:)]) {
-//        [self.delegate tapUserHeaderImageView:self.object.publisher];
+    if (self.delegate && [self.delegate respondsToSelector:@selector(clickDeleteButton:)]) {
+        [self.delegate clickDeleteButton:self.object];
     }
 }
-
-- (void)tapContactLabelToIdentification
-{
-    if (self.delegate && [self.delegate respondsToSelector:@selector(tapContactLabelToIdentification)]) {
-        [self.delegate tapContactLabelToIdentification];
-    }
-
-}
-
 
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

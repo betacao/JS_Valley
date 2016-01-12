@@ -206,13 +206,10 @@
     [weakSelf.navigationController pushViewController:controller animated:YES];
 }
 
-- (void)tapContactLabelToIdentification
+- (void)clickDeleteButton:(SHGMarketObject *)object
 {
-    __weak typeof(self) weakSelf = self;
-    VerifyIdentityViewController * controller = [[VerifyIdentityViewController alloc] init];
-    [weakSelf.navigationController pushViewController:controller animated:YES];
+    [[SHGMarketSegmentViewController sharedSegmentController] deleteMarket:object];
 }
-
 
 - (void)didReceiveMemoryWarning
 {

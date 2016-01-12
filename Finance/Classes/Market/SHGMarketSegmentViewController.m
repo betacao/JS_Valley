@@ -273,8 +273,6 @@
     }
 }
 
-#pragma mark ------ 点赞状态改变
-
 - (void)didChangePraiseState:(SHGMarketObject *)object isPraise:(BOOL)isPraise
 {
     for (UIViewController *controller in self.viewControllers){
@@ -332,13 +330,34 @@
     //移动选项 重新请求
     UIViewController *firstController = [self.viewControllers firstObject];
     [firstController performSelector:@selector(scrollToCategory:) withObject:object];
-    [firstController performSelector:@selector(reloadData) withObject:object];
+    [firstController performSelector:@selector(refreshData) withObject:object];
     //重新请求
     UIViewController *secondController = [self.viewControllers lastObject];
-    [secondController performSelector:@selector(reloadData) withObject:object];
+    [secondController performSelector:@selector(refreshData) withObject:object];
+}
+
+- (void)deleteMarket:(SHGMarketObject *)object
+{
+    [SHGMarketManager deleteMarket:object success:^(BOOL success) {
+        //移动选项 重新请求
+        UIViewController *firstController = [self.viewControllers firstObject];
+        //创建一个分类 让首页去查找到 然后刷新
+        SHGMarketFirstCategoryObject *categoryObject = [[SHGMarketFirstCategoryObject alloc] init];
+        categoryObject.firstCatalogId = object.firstcatalogid;
+        [firstController performSelector:@selector(scrollToCategory:) withObject:categoryObject];
+        [firstController performSelector:@selector(refreshData) withObject:object];
+        //重新请求
+        UIViewController *secondController = [self.viewControllers lastObject];
+        [secondController performSelector:@selector(refreshData) withObject:object];
+    }];
 }
 
 - (void)scrollToCategory:(SHGMarketFirstCategoryObject *)object
+{
+
+}
+
+- (void)refreshData
 {
 
 }
