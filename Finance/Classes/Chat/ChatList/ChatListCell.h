@@ -13,13 +13,13 @@
 #import <UIKit/UIKit.h>
 
 @interface ChatListCell : UITableViewCell
-@property (nonatomic, strong) NSURL *imageURL;
-@property (nonatomic, strong) UIImage *placeholderImage;
-@property (nonatomic, strong) NSString *name;
-@property (nonatomic, strong) NSString *detailMsg;
-@property (nonatomic, strong) NSString *time;
-@property (nonatomic) NSInteger unreadCount;
-@property (nonatomic) UIView * lineView;
-@property (nonatomic) UIImageView * rightImage;
+@property (strong, nonatomic) NSURL *imageURL;
+@property (strong, nonatomic) UIImage *placeholderImage;
+@property (strong, nonatomic) NSString *name;
+@property (strong, nonatomic) NSString *detailMsg;
+@property (strong, nonatomic) NSString *time;
+@property (assign, nonatomic) NSInteger unreadCount;
+@property (strong, nonatomic) UIView *lineView;
+@property (strong, nonatomic) UIImageView * rightImage;
 +(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath;
 @end

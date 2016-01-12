@@ -48,6 +48,6 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="accessoryView" width="7" height="13"/>
+        <image name="accessoryView" width="5" height="10"/>
     </resources>
 </document>

@@ -13,11 +13,10 @@
 
 #import "ChatListCell.h"
 
-@interface ChatListCell (){
-    UILabel *_timeLabel;
-    UILabel *_unreadLabel;
-    UILabel *_detailLabel;
-}
+@interface ChatListCell ()
+@property (strong, nonatomic) UILabel *timeLabel;
+@property (strong, nonatomic) UILabel *unreadLabel;
+@property (strong, nonatomic) UILabel *detailLabel;
 
 @end
 
@@ -27,43 +26,41 @@
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        // Initialization code
         CGFloat spaceToRight = 15.0f;
-        CGFloat spaceToTop = 16.0f;
-        CGFloat rightImageWidth = 7.0f;
-        CGFloat rightImageHeight = 13.0f;
-        CGFloat lineToTop = 44.0f;
-        _timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(SCREENWIDTH-100, 7, 80, 16)];
-        _timeLabel.font = [UIFont systemFontOfSize:13];
-        _timeLabel.backgroundColor = [UIColor clearColor];
-        _timeLabel.textAlignment=NSTextAlignmentRight;
-        [self.contentView addSubview:_timeLabel];
+        self.timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(SCREENWIDTH - 100.0f, 7.0f, 80.0f, 16.0f)];
+        self.timeLabel.font = [UIFont systemFontOfSize:13.0f];
+        self.timeLabel.backgroundColor = [UIColor clearColor];
+        self.timeLabel.textAlignment = NSTextAlignmentRight;
+        [self.contentView addSubview:self.timeLabel];
         
-        _unreadLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, 0, 20, 20)];
-        _unreadLabel.backgroundColor = [UIColor redColor];
-        _unreadLabel.textColor = [UIColor whiteColor];
+        self.unreadLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 16.0f, 16.0f)];
+        self.unreadLabel.backgroundColor = [UIColor redColor];
+        self.unreadLabel.textColor = [UIColor whiteColor];
         
-        _unreadLabel.textAlignment = NSTextAlignmentCenter;
-        _unreadLabel.font = [UIFont systemFontOfSize:11];
-        _unreadLabel.layer.cornerRadius = 10;
-        _unreadLabel.clipsToBounds = YES;
-        [self.contentView addSubview:_unreadLabel];
+        self.unreadLabel.textAlignment = NSTextAlignmentCenter;
+        self.unreadLabel.font = [UIFont systemFontOfSize:11.0f];
+        self.unreadLabel.layer.cornerRadius = CGRectGetWidth(self.unreadLabel.frame) / 2.0f;
+        self.unreadLabel.layer.masksToBounds = YES;
+        [self.contentView addSubview:self.unreadLabel];
         
-        _detailLabel = [[UILabel alloc] initWithFrame:CGRectMake(58, 20, SCREENWIDTH-80, 20)];
-        _detailLabel.backgroundColor = [UIColor clearColor];
-        _detailLabel.font = [UIFont systemFontOfSize:15];
-        _detailLabel.textColor = [UIColor lightGrayColor];
-        [self.contentView addSubview:_detailLabel];
+        self.detailLabel = [[UILabel alloc] initWithFrame:CGRectMake(58, 20, SCREENWIDTH-80, 20)];
+        self.detailLabel.backgroundColor = [UIColor clearColor];
+        self.detailLabel.font = [UIFont systemFontOfSize:15];
+        self.detailLabel.textColor = [UIColor lightGrayColor];
+        [self.contentView addSubview:self.detailLabel];
+
         self.textLabel.backgroundColor = [UIColor clearColor];
         self.textLabel.font = [UIFont systemFontOfSize: 16.0f];
-        _lineView = [[UIView alloc]initWithFrame:CGRectMake(spaceToRight, lineToTop, SCREENWIDTH-spaceToRight, 0.5)];
-        _lineView.backgroundColor = [UIColor colorWithHexString:@"E6E7E8"];
-        [self.contentView addSubview:_lineView];
-        
-        _rightImage = [[UIImageView  alloc]init];
-        _rightImage.frame = CGRectMake(SCREENWIDTH - spaceToRight - rightImageWidth, spaceToTop, rightImageWidth, rightImageHeight);
-        _rightImage.image = [UIImage imageNamed:@"accessoryView"];
-        [self.contentView addSubview:_rightImage];
+        self.lineView = [[UIView alloc]initWithFrame:CGRectMake(spaceToRight, CGRectGetHeight(self.frame) - 1.0f, SCREENWIDTH - spaceToRight, 0.5f)];
+        self.lineView.backgroundColor = [UIColor colorWithHexString:@"E6E7E8"];
+        [self.contentView addSubview:self.lineView];
+
+        UIImage *image = [UIImage imageNamed:@"accessoryView"];
+        self.rightImage = [[UIImageView  alloc] initWithImage:image];
+        CGSize size = image.size;
+        self.rightImage.frame = CGRectMake(SCREENWIDTH - spaceToRight - size.width, (CGRectGetHeight(self.frame) - size.height) / 2.0f, size.width, size.height);
+        self.rightImage.image = image;
+        [self.contentView addSubview:self.rightImage];
 
     }
     return self;
@@ -71,64 +68,58 @@
 
 - (void)awakeFromNib
 {
-    // Initialization code
+
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
     [super setSelected:selected animated:animated];
-    if (![_unreadLabel isHidden]) {
-        _unreadLabel.backgroundColor = [UIColor redColor];
+    if (![self.unreadLabel isHidden]) {
+        self.unreadLabel.backgroundColor = [UIColor redColor];
     }
 }
 
--(void)setHighlighted:(BOOL)highlighted animated:(BOOL)animated{
+- (void)setHighlighted:(BOOL)highlighted animated:(BOOL)animated{
     [super setHighlighted:highlighted animated:animated];
-    if (![_unreadLabel isHidden]) {
-        _unreadLabel.backgroundColor = [UIColor redColor];
+    if (![self.unreadLabel isHidden]) {
+        self.unreadLabel.backgroundColor = [UIColor redColor];
     }
 }
 
--(void)layoutSubviews{
+- (void)layoutSubviews
+{
     [super layoutSubviews];
-//    CGRect frame = self.imageView.frame;
-    
-    [self.imageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,_imageURL]] placeholderImage:_placeholderImage];
+
     self.imageView.frame = CGRectMake(15, 8, 28, 28);
-    
-    self.textLabel.text = _name;
-    if([_name isEqualToString:@"群申请与通知"] || [_name isEqualToString:@"通知"])
-    {
+    [self.imageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,self.imageURL]] placeholderImage:self.placeholderImage];
+    self.unreadLabel.center = CGPointMake(CGRectGetMaxX(self.imageView.frame), CGRectGetMinY(self.imageView.frame));
+    self.textLabel.text = self.name;
+    if([self.name isEqualToString:@"群申请与通知"] || [self.name isEqualToString:@"通知"]){
         self.textLabel.frame = CGRectMake(58, 12, 175, 20);
-    }else
-    {
+    } else{
         self.textLabel.frame = CGRectMake(58, 5, 175, 20);
     }
-    
-    _detailLabel.text = _detailMsg;
-    _timeLabel.text = _time;
-    if (_unreadCount > 0)
-    {
-        if (_unreadCount < 9)
-        {
-            _unreadLabel.font = [UIFont systemFontOfSize:13];
-        }else if(_unreadCount > 9 && _unreadCount < 99)
-        {
-            _unreadLabel.font = [UIFont systemFontOfSize:12];
-        }else
-        {
-            _unreadLabel.font = [UIFont systemFontOfSize:10];
+
+    self.detailLabel.text = self.detailMsg;
+    self.timeLabel.text = self.time;
+    if (self.unreadCount > 0){
+        if (self.unreadCount < 9){
+            self.unreadLabel.font = [UIFont systemFontOfSize:13.0f];
+        } else if(self.unreadCount > 9 && self.unreadCount < 99){
+            self.unreadLabel.font = [UIFont systemFontOfSize:12.0f];
+        } else{
+            self.unreadLabel.font = [UIFont systemFontOfSize:10.0f];
         }
-        [_unreadLabel setHidden:NO];
-        [self.contentView bringSubviewToFront:_unreadLabel];
-        _unreadLabel.text = [NSString stringWithFormat:@"%ld",(long)_unreadCount];
-    }else{
-        [_unreadLabel setHidden:YES];
+        [self.unreadLabel setHidden:NO];
+        [self.contentView bringSubviewToFront:self.unreadLabel];
+        self.unreadLabel.text = [NSString stringWithFormat:@"%ld",(long)self.unreadCount];
+    } else{
+        [self.unreadLabel setHidden:YES];
     }
-    
+
 }
 
--(void)setName:(NSString *)name
+- (void)setName:(NSString *)name
 {
     _name = name;
     self.textLabel.text = name;
@@ -136,7 +127,7 @@
     self.textLabel.font = [UIFont systemFontOfSize:13];
 }
 
-+(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
++ (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return 45.0f;
 }
