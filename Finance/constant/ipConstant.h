@@ -24,7 +24,7 @@
 #define rBaseAddRessHttp                @"http://120.26.114.154:8080/api"
 //#define rBaseAddRessHttp                @"http://192.168.0.127:8080/api"
 //#define rBaseAddRessHttp                @"http://192.168.1.116:8080/api"
-//#define rBaseAddRessHttp                @"http://192.168.0.112:8080/api"
+//#define rBaseAddRessHttp                @"http://192.168.1.109:8080/api"
 
 #define rBaseAddressForHttp				[NSString stringWithFormat:@"%@/v1",rBaseAddRessHttp]
 #define rBaseAddressForHttpCircle		[NSString stringWithFormat:@"%@/v1/group",rBaseAddRessHttp]

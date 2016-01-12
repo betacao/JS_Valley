@@ -32,6 +32,7 @@
             } else{
             }
         }
+        [self setImage:[UIImage imageNamed:@"emsearch_icon"] forSearchBarIcon:UISearchBarIconSearch state:UIControlStateNormal];
         [self setSearchFieldBackgroundImage:[[UIImage imageNamed:@"search_background"] resizableImageWithCapInsets:UIEdgeInsetsMake(0.0f, 10.0f, 0.0f, 10.0f) resizingMode:UIImageResizingModeStretch] forState:UIControlStateNormal];
         self.backgroundImage = [UIImage imageWithColor:[UIColor colorWithHexString:@"F8F9F9"] andSize:frame.size];
         UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, CGRectGetHeight(frame) - 1.0f, SCREENWIDTH, 0.5f)];
