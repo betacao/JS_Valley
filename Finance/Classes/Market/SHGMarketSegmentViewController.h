@@ -26,7 +26,7 @@ typedef void(^loadViewFinishBlock)(UIView *view);
 + (instancetype)sharedSegmentController;
 - (void)setSelectedIndex:(NSUInteger)index animated:(BOOL)animated;
 - (void)setSelectedViewController:(UIViewController *)viewController animated:(BOOL)animated;
-
+- (void)refreshMineViewController;
 - (void)addOrDeletePraise:(SHGMarketObject *)object block:(void(^)(BOOL success))block;
 - (void)deleteMarket:(SHGMarketObject *)object;
 @end

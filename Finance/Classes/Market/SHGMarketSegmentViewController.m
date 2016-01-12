@@ -330,7 +330,7 @@
     [firstController performSelector:@selector(refreshHeader) withObject:nil];
     //加载更多
     UIViewController *secondController = [self.viewControllers lastObject];
-    [secondController performSelector:@selector(refreshHeader) withObject:object];
+    [secondController performSelector:@selector(refreshHeader) withObject:nil];
 }
 
 - (void)didModifyMarket:(SHGMarketFirstCategoryObject *)object
@@ -338,10 +338,18 @@
     //移动选项 重新请求
     UIViewController *firstController = [self.viewControllers firstObject];
     [firstController performSelector:@selector(scrollToCategory:) withObject:object];
-    [firstController performSelector:@selector(refreshData) withObject:object];
+    [firstController performSelector:@selector(refreshData) withObject:nil];
     //重新请求
     UIViewController *secondController = [self.viewControllers lastObject];
     [secondController performSelector:@selector(refreshData) withObject:object];
+}
+
+//用户切换用户的时候重新去请求用户数据（仅限我的界面）
+- (void)refreshMineViewController
+{
+    //重新请求
+    UIViewController *secondController = [self.viewControllers lastObject];
+    [secondController performSelector:@selector(refreshData) withObject:nil];
 }
 
 - (void)deleteMarket:(SHGMarketObject *)object
