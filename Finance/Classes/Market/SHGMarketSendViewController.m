@@ -38,7 +38,7 @@ typedef NS_ENUM(NSInteger, SHGMarketSendType){
 @property (assign, nonatomic) SHGMarketSendType sendType;
 @property (weak, nonatomic) IBOutlet UIView *addImageBgView;
 @property (weak, nonatomic) IBOutlet UIButton *addImageButton;
-@property (strong, nonatomic) NSArray *categoryArray;
+@property (strong, nonatomic) NSMutableArray *categoryArray;
 @property (strong, nonatomic) NSString *imageName;
 @property (assign, nonatomic) BOOL hasImage;
 @end
@@ -69,18 +69,21 @@ typedef NS_ENUM(NSInteger, SHGMarketSendType){
     self.locationField.leftViewMode = UITextFieldViewModeAlways;
     [self.locationField setValue:[UIColor colorWithHexString:@"D3D3D3"] forKeyPath:@"_placeholderLabel.textColor"];
 
+    [self initBoxView];
+
     __weak typeof(self)weakSelf = self;
     [[SHGMarketManager shareManager] loadMarketCategoryBlock:^(NSArray *array) {
-        weakSelf.categoryArray = [NSArray arrayWithArray:array];
+        weakSelf.categoryArray = [NSMutableArray arrayWithArray:array];
+        [weakSelf.categoryArray removeObjectAtIndex:0];
         NSMutableArray *titleArray = [NSMutableArray array];
-        [array enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        [weakSelf.categoryArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             SHGMarketFirstCategoryObject *object = (SHGMarketFirstCategoryObject *)obj;
             [titleArray addObject:object.firstCatalogName];
         }];
         weakSelf.firstCategoryBox.titlesList = titleArray;
         [weakSelf.firstCategoryBox reloadData];
     }];
-    
+
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -88,8 +91,6 @@ typedef NS_ENUM(NSInteger, SHGMarketSendType){
     [super viewWillAppear:animated];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardDidShow:) name:UIKeyboardDidShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardDidHide:) name:UIKeyboardWillHideNotification object:nil];
-
-    [self initBoxView];
 
     if (self.object) {
         self.title = @"编辑业务信息";

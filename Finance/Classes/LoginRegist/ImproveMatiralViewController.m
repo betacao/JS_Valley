@@ -249,7 +249,8 @@
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
     uid = uid ? uid : @"";
     NSString *url = [NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"friend/dealFriendPush"];
-    NSDictionary *parm = @{@"uid":uid};
+    NSString *name = self.nameTextField.text;
+    NSDictionary *parm = @{@"uid":uid, @"name":name};
     [MOCHTTPRequestOperationManager postWithURL:url class:nil parameters:parm success:^(MOCHTTPResponse *response) {
         NSString *code = [response.data valueForKey:@"code"];
         if ([code isEqualToString:@"000"]){

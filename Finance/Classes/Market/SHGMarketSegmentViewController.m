@@ -42,7 +42,7 @@
     self.navigationItem.rightBarButtonItem = [self rightBarButtonItem];
     self.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 
-    tabButtonsContainerView = [[UISegmentedControl alloc] initWithItems: [NSArray arrayWithObjects:@"所有业务", @"我的业务", nil]];
+    tabButtonsContainerView = [[UISegmentedControl alloc] initWithItems: [NSArray arrayWithObjects:@"全部", @"我的", nil]];
     tabButtonsContainerView.frame = CGRectMake(0.0f, 50.0f, 170.0f, 26.0f);;
     tabButtonsContainerView.enabled = YES;
     tabButtonsContainerView.layer.masksToBounds = YES;
@@ -71,6 +71,7 @@
     [tabButtonsContainerView addTarget:self action:@selector(valueChange:) forControlEvents:UIControlEventValueChanged];
 
     contentContainerView = [[UIView alloc] initWithFrame:self.view.bounds];
+    contentContainerView.backgroundColor = [UIColor whiteColor];
     contentContainerView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     [self.view addSubview:contentContainerView];
     [self reloadTabButtons];
@@ -85,11 +86,10 @@
 {
     UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [rightButton setFrame:CGRectZero];
-    UIImage *image = [UIImage imageNamed:@"sendMarket"];
-    [rightButton setBackgroundImage:image forState:UIControlStateNormal];
-    [rightButton addTarget:self action:@selector(addNewMarket:) forControlEvents:UIControlEventTouchUpInside];
+    [rightButton setTitle:@"发布" forState:UIControlStateNormal];
+    rightButton.titleLabel.font = [UIFont systemFontOfSize:14.0f];
     [rightButton sizeToFit];
-    return  [[UIBarButtonItem alloc] initWithCustomView:rightButton];
+    [rightButton addTarget:self action:@selector(addNewMarket:) forControlEvents:UIControlEventTouchUpInside];    return  [[UIBarButtonItem alloc] initWithCustomView:rightButton];
 
 }
 
