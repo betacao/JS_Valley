@@ -66,6 +66,9 @@
 
     self.headImageButton.layer.masksToBounds = YES;
     self.headImageButton.layer.cornerRadius = CGRectGetHeight(self.headImageButton.frame) / 2.0f;
+    self.headImageButton.layer.borderColor = [[UIColor colorWithHexString:@"D1D1D1"]CGColor];
+    self.headImageButton.layer.borderWidth = 0.5f;
+    
     [self initTextFieldStyle:@[self.nameTextField,self.industrycodeTextField, self.companyTextField, self.titleTextField]];
 
     self.personCategoryView.superview.hidden = YES;
@@ -193,7 +196,8 @@
 	[picker dismissViewControllerAnimated:YES completion:nil];
 	
 	self.headImage = newHeadiamge;
-	[self.headImageButton setBackgroundImage:newHeadiamge forState:UIControlStateNormal];
+    self.headImageButton.layer.borderWidth = 0.0f;
+    [self.headImageButton setBackgroundImage:newHeadiamge forState:UIControlStateNormal];
 	[self.headImageButton setBackgroundImage:newHeadiamge forState:UIControlStateHighlighted];
 
 }

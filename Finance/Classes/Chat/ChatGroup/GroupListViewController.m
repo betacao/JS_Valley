@@ -221,17 +221,27 @@
         imageView.tag = 1001;
         imageView.image = image;
         [cell addSubview:imageView];
+        
+        UIImage *imageR = [UIImage imageNamed:@"accessoryView"];
+        UIImageView *rightImage = [[UIImageView  alloc]initWithImage:imageR];
+        CGSize sizeR = imageR.size;
+        rightImage.frame = CGRectMake(SCREENWIDTH - kImageViewLeftMargin - sizeR.width, (cell.height - sizeR.height) / 2.0f, sizeR.width, sizeR.height);
+        rightImage.image = imageR;
+        rightImage.hidden = YES;
+        rightImage.tag = 1002;
+        [cell addSubview:rightImage];
 
     }
     UIImageView *imageView = [cell viewWithTag:1001];
     imageView.hidden = NO;
     if (indexPath.section == 0){
         [cell viewWithTag:1000].hidden = YES;
+        [cell viewWithTag:1002].hidden = NO;
         imageView.hidden = YES;
         cell.textLabel.textColor = [UIColor colorWithHexString:@"161616"];
         cell.textLabel.font = [UIFont systemFontOfSize:13];
         cell.textLabel.text = @"     新建群组";
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        cell.accessoryType = UITableViewCellAccessoryNone;
 
     } else if (indexPath.section == 1){
         cell.accessoryType = UITableViewCellAccessoryNone;
@@ -293,7 +303,7 @@
     }
     
     if (section == 0){
-        
+       
     }
     else if (section == 1){
         UIView *upVIew = [[UIView alloc]initWithFrame:CGRectMake(15, 0, self.view.bounds.size.height, 0.5)];

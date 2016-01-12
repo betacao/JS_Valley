@@ -13,7 +13,7 @@
 const CGFloat kUserInfoHeight = 55.0f;
 const CGFloat kMoreCommentHeight = 20.0f;
 const CGFloat kCutOffLineHeight = 10.0f;
-const CGFloat kActionViewHeight = 34.0f;
+const CGFloat kActionViewHeight = 40.0f;
 
 @interface CircleListObj()
 @property (assign, nonatomic) CGFloat totalHeight;

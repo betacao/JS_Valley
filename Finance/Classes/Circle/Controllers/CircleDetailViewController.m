@@ -19,7 +19,7 @@
 
 #define PRAISE_SEPWIDTH     10
 #define PRAISE_RIGHTWIDTH     40
-#define PRAISE_WIDTH 30.0f
+#define PRAISE_WIDTH 28.0f
 #define kItemMargin 7.0f * XFACTOR
 
 @interface CircleDetailViewController ()<MLEmojiLabelDelegate, CircleListDelegate>
@@ -302,7 +302,7 @@
         [photoView addSubview:linkImageView];
         [photoView addSubview:titleLabel];
         [photoView addSubview:detailLabel];
-        [photoView setFrame:CGRectMake(60, _lblContent.bottom + 10, SCREENWIDTH-CELLRIGHT_WIDTH, 50)];
+        [photoView setFrame:CGRectMake(60, _lblContent.bottom + kPhotoViewTopMargin, SCREENWIDTH-CELLRIGHT_WIDTH, 50)];
         photoView.userInteractionEnabled = YES;
         DDTapGestureRecognizer *ges = [[DDTapGestureRecognizer alloc] initWithTarget:self action:@selector(linkTap:)];
         [photoView addGestureRecognizer:ges];
@@ -317,7 +317,7 @@
         photoGroup.photoItemArray = temp;
         [photoView addSubview:photoGroup];
 
-        photoView.frame = CGRectMake(kPhotoViewLeftMargin, self.lblContent.bottom + kPhotoViewTopMargin, CGRectGetWidth(photoGroup.frame),CGRectGetHeight(photoGroup.frame));
+        photoView.frame = CGRectMake(kPhotoViewLeftMargin, self.lblContent.bottom + 3.0f * kPhotoViewTopMargin/5.0f, CGRectGetWidth(photoGroup.frame),CGRectGetHeight(photoGroup.frame));
     }
     [self.viewHeader addSubview:photoView];
     CGRect actionViewRect = self.actionView.frame;
