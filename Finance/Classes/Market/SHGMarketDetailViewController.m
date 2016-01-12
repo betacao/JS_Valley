@@ -430,9 +430,6 @@
         if (success) {
             [weakSelf.detailTable reloadData];
             [weakSelf.btnComment setTitle:[NSString stringWithFormat:@"%@",self.responseObject.commentNum] forState:UIControlStateNormal];
-            if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(didCommentAction:)]) {
-                [weakSelf.delegate didCommentAction:weakSelf.responseObject];
-            }
         }
     }];
 }
@@ -445,9 +442,6 @@
         if (success) {
             [weakSelf.detailTable reloadData];
             [weakSelf.btnComment setTitle:[NSString stringWithFormat:@"%@",self.responseObject.commentNum] forState:UIControlStateNormal];
-            if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(didCommentAction:)]) {
-                [weakSelf.delegate didCommentAction:weakSelf.responseObject];
-            }
         }
     }];
 }
@@ -473,6 +467,14 @@
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [Hud showMessageWithText:@"分享成功"];
     });
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    if (self.delegate && [self.delegate respondsToSelector:@selector(updateToNewestMarket:)]) {
+        [self.delegate updateToNewestMarket:self.responseObject];
+    }
 }
 
 - (void)dealloc

@@ -114,7 +114,7 @@
                     }
                 } else{
                     VerifyIdentityViewController *controller = [[VerifyIdentityViewController alloc] init];
-                    [self.navigationController pushViewController:controller animated:YES];
+                    [weakSelf.navigationController pushViewController:controller animated:YES];
                 }
             } failString:@"认证后才能发起活动哦～"];
         }

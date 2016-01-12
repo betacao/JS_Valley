@@ -89,7 +89,8 @@
     [rightButton setTitle:@"发布" forState:UIControlStateNormal];
     rightButton.titleLabel.font = [UIFont systemFontOfSize:14.0f];
     [rightButton sizeToFit];
-    [rightButton addTarget:self action:@selector(addNewMarket:) forControlEvents:UIControlEventTouchUpInside];    return  [[UIBarButtonItem alloc] initWithCustomView:rightButton];
+    [rightButton addTarget:self action:@selector(addNewMarket:) forControlEvents:UIControlEventTouchUpInside];
+    return  [[UIBarButtonItem alloc] initWithCustomView:rightButton];
 
 }
 
@@ -114,10 +115,17 @@
 
 - (void)addNewMarket:(UIButton *)button
 {
-    [MobClick event:@"ActionCreateMarketClicked" label:@"onClick"];
-    SHGMarketSendViewController *controller = [[SHGMarketSendViewController alloc] init];
-    controller.delegate = [SHGMarketSegmentViewController sharedSegmentController];
-    [self.navigationController pushViewController:controller animated:YES];
+    __weak typeof(self)weakSelf = self;
+    [[SHGGloble sharedGloble] requsetUserVerifyStatus:^(BOOL status) {
+        if (status) {
+            SHGMarketSendViewController *controller = [[SHGMarketSendViewController alloc] init];
+            controller.delegate = [SHGMarketSegmentViewController sharedSegmentController];
+            [weakSelf.navigationController pushViewController:controller animated:YES];
+        } else{
+            VerifyIdentityViewController *controller = [[VerifyIdentityViewController alloc] init];
+            [weakSelf.navigationController pushViewController:controller animated:YES];
+        }
+    } failString:@"认证后才能发起活动哦～"];
 }
 
 - (void)reloadTabButtons
@@ -278,18 +286,16 @@
     for (UIViewController *controller in self.viewControllers){
         if ([controller respondsToSelector:@selector(currentDataArray)]) {
             NSMutableArray *array = [controller performSelector:@selector(currentDataArray)];
+            //可能存在2个对象 在热门列表和自身的列表中
             for (SHGMarketObject * obj in array){
                 if ([object.marketId isEqualToString:obj.marketId]) {
                     obj.isPraise = isPraise ? @"Y" : @"N";
                     if (isPraise) {
-
                         obj.praiseNum = [NSString stringWithFormat:@"%ld",(long)[obj.praiseNum integerValue] + 1];
-
                     } else{
                         obj.praiseNum = [NSString stringWithFormat:@"%ld",(long)[obj.praiseNum integerValue] - 1];
 
                     }
-                    break;
                 }
             }
         }
@@ -298,15 +304,17 @@
 
 }
 
-- (void)didCommentAction:(SHGMarketObject *)object
+- (void)updateToNewestMarket:(SHGMarketObject *)object
 {
+    //详情界面消失的时候做下数据统计
     for (UIViewController *controller in self.viewControllers){
         if ([controller respondsToSelector:@selector(currentDataArray)]) {
             NSMutableArray *array = [controller performSelector:@selector(currentDataArray)];
             for (SHGMarketObject * obj in array){
                 if ([object.marketId isEqualToString:obj.marketId]) {
-                    obj.commentNum = [NSString stringWithFormat:@"%ld",(long)[obj.commentNum integerValue] + 1];
-                    break;
+                    obj.commentNum = object.commentNum;
+                    obj.praiseNum = object.praiseNum;
+                    obj.isPraise = object.isPraise;
                 }
             }
         }
