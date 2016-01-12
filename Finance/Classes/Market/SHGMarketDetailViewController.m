@@ -43,7 +43,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *phoneNumLabel;
 @property (weak, nonatomic) IBOutlet UILabel *marketDetialLabel;
 @property (weak, nonatomic) IBOutlet UILabel *detailContentLabel;
-@property (weak, nonatomic) IBOutlet UIView *photoImageView;
 @property (weak, nonatomic) IBOutlet UIView *actionView;
 @property (weak, nonatomic) IBOutlet UIView *praiseView;
 @property (weak, nonatomic) IBOutlet UIImageView *backImageView;
@@ -138,7 +137,6 @@
 - (void)loadUI
 {
     //1.7.2界面修改
-    self.photoImageView.hidden = YES;
     self.timeLabel.hidden = YES;
     
     CGSize nameSize =CGSizeMake(MAXFLOAT,CGRectGetHeight(self.nameLabel.frame));

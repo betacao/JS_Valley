@@ -43,6 +43,10 @@
     [self.tableView reloadData];
 }
 
+- (void)refreshData
+{
+    [self loadMarketList:@"first" firstId:@"" second:@"" marketId:@"-1"];
+}
 
 - (void)loadMarketList:(NSString *)target firstId:(NSString *)firstId second:(NSString *)secondId marketId:(NSString *)marketId
 {

@@ -48,10 +48,47 @@ typedef NS_ENUM(NSInteger, SHGMarketSendType){
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"发布业务信息";
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardDidShow:) name:UIKeyboardDidShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardDidHide:) name:UIKeyboardWillHideNotification object:nil];
+    self.sendType = SHGMarketSendTypeNew;
+
     [self.tableView setTableHeaderView:self.bgView];
     [self.tableView setTableFooterView:self.nextBgView];
+
     [self initView];
-    self.sendType = SHGMarketSendTypeNew;
+
+    __weak typeof(self)weakSelf = self;
+    [[SHGMarketManager shareManager] loadMarketCategoryBlock:^(NSArray *array) {
+        weakSelf.categoryArray = [NSMutableArray arrayWithArray:array];
+        [weakSelf.categoryArray removeObjectAtIndex:0];
+        NSMutableArray *titleArray = [NSMutableArray array];
+        [weakSelf.categoryArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            SHGMarketFirstCategoryObject *object = (SHGMarketFirstCategoryObject *)obj;
+            [titleArray addObject:object.firstCatalogName];
+        }];
+        weakSelf.firstCategoryBox.titlesList = titleArray;
+        [weakSelf.firstCategoryBox reloadData];
+    }];
+    if (self.object) {
+        self.title = @"编辑业务信息";
+        [self editObject:self.object];
+        self.sendType = SHGMarketSendTypeReSet;
+    }
+
+}
+
+- (void)initView
+{
+    self.marketNameField.layer.masksToBounds = YES;
+    self.marketNameField.layer.cornerRadius = 3.0f;
+    self.acountField.layer.masksToBounds = YES;
+    self.acountField.layer.cornerRadius = 3.0f;
+    self.contactField.layer.masksToBounds = YES;
+    self.contactField.layer.cornerRadius = 3.0f;
+    self.introduceView.layer.masksToBounds = YES;
+    self.introduceView.layer.cornerRadius = 3.0f;
+    self.locationField.layer.masksToBounds = YES;
+    self.locationField.layer.cornerRadius = 3.0f;
     //设置textField文字与左边存在一点间距
     self.marketNameField.leftView = [[UIView alloc]initWithFrame:CGRectMake(0.0f, 0.0f, 5.0f, 0.0f)];
     self.marketNameField.leftViewMode = UITextFieldViewModeAlways;
@@ -70,47 +107,6 @@ typedef NS_ENUM(NSInteger, SHGMarketSendType){
     [self.locationField setValue:[UIColor colorWithHexString:@"D3D3D3"] forKeyPath:@"_placeholderLabel.textColor"];
 
     [self initBoxView];
-
-    __weak typeof(self)weakSelf = self;
-    [[SHGMarketManager shareManager] loadMarketCategoryBlock:^(NSArray *array) {
-        weakSelf.categoryArray = [NSMutableArray arrayWithArray:array];
-        [weakSelf.categoryArray removeObjectAtIndex:0];
-        NSMutableArray *titleArray = [NSMutableArray array];
-        [weakSelf.categoryArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            SHGMarketFirstCategoryObject *object = (SHGMarketFirstCategoryObject *)obj;
-            [titleArray addObject:object.firstCatalogName];
-        }];
-        weakSelf.firstCategoryBox.titlesList = titleArray;
-        [weakSelf.firstCategoryBox reloadData];
-    }];
-
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardDidShow:) name:UIKeyboardDidShowNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardDidHide:) name:UIKeyboardWillHideNotification object:nil];
-
-    if (self.object) {
-        self.title = @"编辑业务信息";
-        [self editObject:self.object];
-        self.sendType = SHGMarketSendTypeReSet;
-    }
-}
-
-- (void)initView
-{
-    self.marketNameField.layer.masksToBounds = YES;
-    self.marketNameField.layer.cornerRadius = 3.0f;
-    self.acountField.layer.masksToBounds = YES;
-    self.acountField.layer.cornerRadius = 3.0f;
-    self.contactField.layer.masksToBounds = YES;
-    self.contactField.layer.cornerRadius = 3.0f;
-    self.introduceView.layer.masksToBounds = YES;
-    self.introduceView.layer.cornerRadius = 3.0f;
-    self.locationField.layer.masksToBounds = YES;
-    self.locationField.layer.cornerRadius = 3.0f;
 }
 
 - (void)initBoxView
@@ -143,7 +139,16 @@ typedef NS_ENUM(NSInteger, SHGMarketSendType){
     self.contactField.text = object.contactInfo;
     self.locationField.text = object.position;
     self.introduceView.text = object.detail;
-    [self.addImageButton sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,object.url]] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"addImageButton"]];
+    if (object.url && object.url.length > 0) {
+        self.hasImage = YES;
+        __weak typeof(self) weakSelf = self;
+        [[SDWebImageManager sharedManager] downloadImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,object.url]] options:SDWebImageRetryFailed|SDWebImageLowPriority progress:^(NSInteger receivedSize, NSInteger expectedSize) {
+
+        } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
+            [weakSelf.addImageButton setImage:image forState:UIControlStateNormal];
+        }];
+    }
+
 }
 
 
@@ -215,8 +220,13 @@ typedef NS_ENUM(NSInteger, SHGMarketSendType){
 - (IBAction)addNewImage:(id)sender
 {
     [self.currentContext resignFirstResponder];
-    UIActionSheet *takeSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"拍照",@"选图", nil];
-    [takeSheet showInView:self.view];
+    if (!self.hasImage) {
+        UIActionSheet *takeSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"拍照", @"选图", nil];
+        [takeSheet showInView:self.view];
+    } else{
+        UIActionSheet *takeSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"删除", nil];
+        [takeSheet showInView:self.view];
+    }
 }
 
 - (IBAction)nextButtonClick:(id)sender
@@ -276,13 +286,10 @@ typedef NS_ENUM(NSInteger, SHGMarketSendType){
                         NSDictionary *param = @{@"uid":uid, @"marketName": marketName, @"firstCatalogId": firstId, @"secondCatalogId": secondId, @"price": price, @"contactInfo": contactInfo, @"detail": detail, @"photo":self.imageName, @"city":city};
                         [SHGMarketManager modifyMarket:param success:^(BOOL success) {
                             if (success) {
-                                if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(didCreateNewMarket:)]) {
-                                    [weakSelf.delegate didCreateNewMarket:firstObject];
+                                if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(didModifyMarket:)]) {
+                                    [weakSelf.delegate didModifyMarket:firstObject];
                                 }
-                                UIViewController *controller = [weakSelf.navigationController.viewControllers objectAtIndex:1];
-                                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.2f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                                    [weakSelf.navigationController popToViewController:controller animated:YES];
-                                });
+                                [weakSelf.navigationController performSelector:@selector(popViewControllerAnimated:) withObject:@(YES) afterDelay:1.2f];
                             }
                         }];
                     }
@@ -357,32 +364,29 @@ typedef NS_ENUM(NSInteger, SHGMarketSendType){
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     UIImagePickerController *pickerImage = [[UIImagePickerController alloc] init];
-
-    switch (buttonIndex) {
-        case 0:{
-            if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
-                pickerImage.sourceType = UIImagePickerControllerSourceTypeCamera;
-                pickerImage.mediaTypes = [UIImagePickerController availableMediaTypesForSourceType:pickerImage.sourceType];
-                pickerImage.delegate = self;
-                pickerImage.allowsEditing = YES;
-                [self presentViewController:pickerImage animated:YES completion:nil];
-            }
+    NSString *title = [actionSheet buttonTitleAtIndex:buttonIndex];
+    if ([title isEqualToString:@"拍照"]) {
+        if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+            pickerImage.sourceType = UIImagePickerControllerSourceTypeCamera;
+            pickerImage.mediaTypes = [UIImagePickerController availableMediaTypesForSourceType:pickerImage.sourceType];
+            pickerImage.delegate = self;
+            pickerImage.allowsEditing = YES;
+            [self presentViewController:pickerImage animated:YES completion:nil];
         }
-            break;
-        case 1:{
-            if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]) {
-                pickerImage.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-                pickerImage.mediaTypes = [UIImagePickerController availableMediaTypesForSourceType:pickerImage.sourceType];
-                pickerImage.delegate = self;
-                pickerImage.allowsEditing = YES;
-                [self presentViewController:pickerImage animated:YES completion:nil];
-            }
+    } else if ([title isEqualToString:@"选图"]){
+        if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]) {
+            pickerImage.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+            pickerImage.mediaTypes = [UIImagePickerController availableMediaTypesForSourceType:pickerImage.sourceType];
+            pickerImage.delegate = self;
+            pickerImage.allowsEditing = YES;
+            [self presentViewController:pickerImage animated:YES completion:nil];
         }
-        default:
-            break;
+    } else if ([title isEqualToString:@"删除"]){
+        self.hasImage = NO;
+        [self.addImageButton setImage:[UIImage imageNamed:@"addImageButton"] forState:UIControlStateNormal];
     }
-
 }
+
 
 #pragma mark ------pickviewcontroller代理
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info
@@ -401,9 +405,9 @@ typedef NS_ENUM(NSInteger, SHGMarketSendType){
         SHGMarketFirstCategoryObject *firstObject = [self.categoryArray objectAtIndex:index];
         NSArray *secondArray = firstObject.secondCataLogs;
         if (secondArray.count == 0) {
-            self.secondCategoryBox.userInteractionEnabled = NO;
+            self.secondCategoryBox.hidden = YES;
         } else{
-            self.secondCategoryBox.userInteractionEnabled = YES;
+            self.secondCategoryBox.hidden = NO;
         }
         [secondArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             SHGMarketSecondCategoryObject *object = (SHGMarketSecondCategoryObject *)obj;
@@ -418,6 +422,12 @@ typedef NS_ENUM(NSInteger, SHGMarketSendType){
         }
     }
 }
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];

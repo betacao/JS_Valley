@@ -318,10 +318,24 @@
 
 - (void)didCreateNewMarket:(SHGMarketFirstCategoryObject *)object
 {
+    //移动选项 加载更多
     UIViewController *firstController = [self.viewControllers firstObject];
     [firstController performSelector:@selector(scrollToCategory:) withObject:object];
+    [firstController performSelector:@selector(refreshHeader) withObject:nil];
+    //加载更多
     UIViewController *secondController = [self.viewControllers lastObject];
     [secondController performSelector:@selector(refreshHeader) withObject:object];
+}
+
+- (void)didModifyMarket:(SHGMarketFirstCategoryObject *)object
+{
+    //移动选项 重新请求
+    UIViewController *firstController = [self.viewControllers firstObject];
+    [firstController performSelector:@selector(scrollToCategory:) withObject:object];
+    [firstController performSelector:@selector(reloadData) withObject:object];
+    //重新请求
+    UIViewController *secondController = [self.viewControllers lastObject];
+    [secondController performSelector:@selector(reloadData) withObject:object];
 }
 
 - (void)scrollToCategory:(SHGMarketFirstCategoryObject *)object

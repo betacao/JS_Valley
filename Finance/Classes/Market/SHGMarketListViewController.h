@@ -12,6 +12,7 @@
 @interface SHGMarketListViewController : BaseTableViewController
 - (NSMutableArray *) currentDataArray;
 - (void)reloadData;
+- (void)refreshData;
 //移动到某个分类
 - (void)scrollToCategory:(SHGMarketFirstCategoryObject *)object;
 @end

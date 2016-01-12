@@ -66,11 +66,15 @@
     [self.tableView reloadData];
 }
 
+- (void)refreshData
+{
+    [self loadMarketList:@"first" firstId:[self.scrollView marketFirstId] second:[self.scrollView marketSecondId] marketId:@"-1"];
+}
+
 - (void)scrollToCategory:(SHGMarketFirstCategoryObject *)object
 {
     NSInteger index = [self.scrollView.categoryArray indexOfObject:object];
     [self.scrollView moveToIndex:index];
-    [self refreshHeader];
 }
 
 - (void)loadMarketList:(NSString *)target firstId:(NSString *)firstId second:(NSString *)secondId marketId:(NSString *)marketId

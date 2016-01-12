@@ -104,7 +104,7 @@
 //修改业务
 + (void)modifyMarket:(NSDictionary *)param success:(void (^)(BOOL success))block
 {
-    NSString *request = [rBaseAddressForHttp stringByAppendingString:@"/market/saveMarket"];
+    NSString *request = [rBaseAddressForHttp stringByAppendingString:@"/market/editMarket"];
     [MOCHTTPRequestOperationManager postWithURL:request class:[SHGMarketFirstCategoryObject class] parameters:param success:^(MOCHTTPResponse *response) {
         [Hud hideHud];
         [Hud showMessageWithText:@"修改业务成功"];
@@ -112,6 +112,19 @@
     } failed:^(MOCHTTPResponse *response) {
         [Hud hideHud];
         [Hud showMessageWithText:@"修改业务失败"];
+    }];
+}
+
++ (void)deleteMarket:(NSDictionary *)param success:(void (^)(BOOL success))block
+{
+    NSString *request = [rBaseAddressForHttp stringByAppendingString:@"/market/deleteMarket"];
+    [MOCHTTPRequestOperationManager postWithURL:request class:[SHGMarketFirstCategoryObject class] parameters:param success:^(MOCHTTPResponse *response) {
+        [Hud hideHud];
+        [Hud showMessageWithText:@"删除业务成功"];
+        block(YES);
+    } failed:^(MOCHTTPResponse *response) {
+        [Hud hideHud];
+        [Hud showMessageWithText:@"删除业务失败"];
     }];
 }
 

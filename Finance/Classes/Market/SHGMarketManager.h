@@ -23,6 +23,8 @@
 
 + (void)modifyMarket:(NSDictionary *)param success:(void (^)(BOOL success))block;
 
++ (void)deleteMarket:(NSDictionary *)param success:(void (^)(BOOL success))block;
+
 + (void)loadMarketDetail:(NSDictionary *)param block:(void (^)(SHGMarketObject *object))block;
 
 + (void)addPraiseWithObject:(SHGMarketObject *)object finishBlock:(void (^)(BOOL))block;
