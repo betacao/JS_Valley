@@ -34,7 +34,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="accessoryView" id="Pmx-4Z-MIk">
-                        <rect key="frame" x="300" y="16" width="7" height="13"/>
+                        <rect key="frame" x="300" y="18" width="5" height="10"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                     </imageView>
                 </subviews>
