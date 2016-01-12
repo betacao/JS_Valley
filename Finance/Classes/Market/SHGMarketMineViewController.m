@@ -61,7 +61,10 @@
             [weakSelf.dataArr addObjectsFromArray:array];
             [weakSelf.tableView reloadData];
         } else if([target isEqualToString:@"refresh"]){
-            [weakSelf.dataArr addObjectsFromArray:array];
+            for (NSInteger i = array.count - 1; i >= 0; i--){
+                SHGMarketObject *obj = [array objectAtIndex:i];
+                [weakSelf.dataArr insertObject:obj atIndex:0];
+            }
             [weakSelf.tableView reloadData];
         } else if([target isEqualToString:@"load"]){
             [weakSelf.dataArr addObjectsFromArray:array];

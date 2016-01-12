@@ -546,12 +546,7 @@ const CGFloat kAdButtomMargin = 20.0f;
 
                     cell.adLable.text = @"推广";
                     cell.adLable.textColor = [UIColor grayColor];
-
-                    NSArray *arr = [obj.publishdate componentsSeparatedByString:@" "];
-                    for (int i = 0; i < [arr count]; i++) {
-                        NSLog(@"string:%@", [arr objectAtIndex:i]);
-                    }
-                    cell.lableTime.text = arr[0];
+                    cell.lableTime.text = obj.publishdate;
                     cell.lableTime.textAlignment = NSTextAlignmentRight;
                     
                     return cell;
