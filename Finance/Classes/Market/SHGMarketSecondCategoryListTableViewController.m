@@ -149,7 +149,7 @@
         if (!cell) {
             cell = [[[NSBundle mainBundle] loadNibNamed:@"SHGMarketTableViewCell" owner:self options:nil] lastObject];
         }
-        [cell loadDataWithObject:[self.dataArr objectAtIndex:indexPath.row]];
+        [cell loadDataWithObject:[self.dataArr objectAtIndex:indexPath.row] type:SHGMarketTableViewCellTypeOther];
         return cell;
     } else{
         return self.emptyCell;

@@ -201,7 +201,7 @@
             cell = [[[NSBundle mainBundle] loadNibNamed:@"SHGMarketTableViewCell" owner:self options:nil] lastObject];
         }
         cell.delegate = self;
-        [cell loadDataWithObject:[self.currentArray objectAtIndex:indexPath.row]];
+        [cell loadDataWithObject:[self.currentArray objectAtIndex:indexPath.row] type:SHGMarketTableViewCellTypeAll];
         if (secondCount == 0) {
             [cell loadNewUi];
         }

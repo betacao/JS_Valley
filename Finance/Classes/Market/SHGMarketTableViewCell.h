@@ -10,6 +10,12 @@
 #import "SHGMarketObject.h"
 #define kMarketCellHeight 166.0f
 
+typedef NS_ENUM(NSInteger, SHGMarketTableViewCellType) {
+    SHGMarketTableViewCellTypeAll = 0,
+    SHGMarketTableViewCellTypeMine,
+    SHGMarketTableViewCellTypeOther
+};
+
 @protocol SHGMarketTableViewDelegate <NSObject>
 
 - (void)clickPrasiseButton:(SHGMarketObject *)object;
@@ -21,6 +27,6 @@
 
 @interface SHGMarketTableViewCell : UITableViewCell
 @property (assign, nonatomic) id<SHGMarketTableViewDelegate> delegate;
-- (void)loadDataWithObject:(SHGMarketObject *)object;
+- (void)loadDataWithObject:(SHGMarketObject *)object type:(SHGMarketTableViewCellType)type;
 - (void)loadNewUi;
 @end

@@ -21,7 +21,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"链接详情";
+    self.title = @"详情";
     NSLog(@"%@",self.url);
     if ([self.url hasPrefix:@"http://"]){
         NSLog(@"1");

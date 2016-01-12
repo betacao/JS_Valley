@@ -32,7 +32,7 @@
     
 }
 
-- (void)loadDataWithObject:(SHGMarketObject *)object
+- (void)loadDataWithObject:(SHGMarketObject *)object type:(SHGMarketTableViewCellType)type
 {
     [self clearCell];
     self.object = object;
@@ -40,7 +40,7 @@
     self.xuXian.image = [img resizableImageWithCapInsets:UIEdgeInsetsMake(0 , 1, 0, 1) resizingMode:UIImageResizingModeTile];
     self.titleView.text = object.marketName;
 
-    if ([UID isEqualToString:object.createBy]) {
+    if ([UID isEqualToString:object.createBy] && type == SHGMarketTableViewCellTypeMine) {
         self.leftView.hidden = NO;
         self.rightView.hidden = NO;
         CGRect frame = self.leftView.frame;
