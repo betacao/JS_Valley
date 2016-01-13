@@ -46,7 +46,7 @@
             [weakSelf.dataArr addObject:subArray];
         }
         weakSelf.currentArray = [weakSelf.dataArr firstObject];
-        [weakSelf loadMarketList:@"first" firstId:[weakSelf.scrollView marketFirstId] second:[weakSelf.scrollView marketSecondId] marketId:@"-1"];
+        [weakSelf loadMarketList:@"first" firstId:[weakSelf.scrollView marketFirstId] second:[weakSelf.scrollView marketSecondId] marketId:@"-1" modifyTime:@""];
     }];
 }
 
@@ -68,7 +68,7 @@
 
 - (void)refreshData
 {
-    [self loadMarketList:@"first" firstId:[self.scrollView marketFirstId] second:[self.scrollView marketSecondId] marketId:@"-1"];
+    [self loadMarketList:@"first" firstId:[self.scrollView marketFirstId] second:[self.scrollView marketSecondId] marketId:@"-1" modifyTime:@""];
 }
 
 - (void)scrollToCategory:(SHGMarketFirstCategoryObject *)object
@@ -77,11 +77,11 @@
     [self.scrollView moveToIndex:index];
 }
 
-- (void)loadMarketList:(NSString *)target firstId:(NSString *)firstId second:(NSString *)secondId marketId:(NSString *)marketId
+- (void)loadMarketList:(NSString *)target firstId:(NSString *)firstId second:(NSString *)secondId marketId:(NSString *)marketId modifyTime:(NSString *)modifyTime
 {
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
     __weak typeof(self) weakSelf = self;
-    NSDictionary *param = @{@"marketId":marketId ,@"uid":uid ,@"type":@"all" ,@"target":target ,@"pageSize":@"10" ,@"firstCatalog":firstId ,@"secondCatalog":secondId};
+    NSDictionary *param = @{@"marketId":marketId ,@"uid":uid ,@"type":@"all" ,@"target":target ,@"pageSize":@"10" ,@"firstCatalog":firstId ,@"secondCatalog":secondId, @"modifyTime":modifyTime};
     [SHGMarketManager loadMarketList:param block:^(NSArray *array) {
         [weakSelf.tableView.header endRefreshing];
         [weakSelf.tableView.footer endRefreshing];
@@ -139,9 +139,9 @@
 - (void)refreshHeader
 {
     if (self.currentArray.count > 0) {
-        [self loadMarketList:@"refresh" firstId:[self.scrollView marketFirstId] second:[self.scrollView marketSecondId] marketId:[self maxMarketID]];
+        [self loadMarketList:@"refresh" firstId:[self.scrollView marketFirstId] second:[self.scrollView marketSecondId] marketId:[self maxMarketID] modifyTime:[self maxModifyTime]];
     } else{
-        [self loadMarketList:@"first" firstId:[self.scrollView marketFirstId] second:[self.scrollView marketSecondId] marketId:@"-1"];
+        [self loadMarketList:@"first" firstId:[self.scrollView marketFirstId] second:[self.scrollView marketSecondId] marketId:@"-1" modifyTime:@""];
     }
 }
 
@@ -149,20 +149,44 @@
 - (void)refreshFooter
 {
     if (self.currentArray.count > 0) {
-        [self loadMarketList:@"load" firstId:[self.scrollView marketFirstId] second:[self.scrollView marketSecondId] marketId:[self minMarketID]];
+        [self loadMarketList:@"load" firstId:[self.scrollView marketFirstId] second:[self.scrollView marketSecondId] marketId:[self minMarketID] modifyTime:@""];
     } else{
-        [self loadMarketList:@"first" firstId:[self.scrollView marketFirstId] second:[self.scrollView marketSecondId] marketId:@"-1"];
+        [self loadMarketList:@"first" firstId:[self.scrollView marketFirstId] second:[self.scrollView marketSecondId] marketId:@"-1" modifyTime:@""];
     }
 }
 
 - (NSString *)maxMarketID
 {
-    return ((SHGMarketObject *)[self.currentArray firstObject]).marketId;
+    NSString *marketID = @"";
+    for (SHGMarketObject *object in self.currentArray) {
+        if ([object.marketId compare:marketID] == NSOrderedDescending) {
+            marketID = object.marketId;
+        }
+    }
+    return marketID;
 }
 
 - (NSString *)minMarketID
 {
-    return ((SHGMarketObject *)[self.currentArray lastObject]).marketId;
+    SHGMarketObject *object = [self.currentArray firstObject];
+    NSString *marketID = object.marketId;
+    for (SHGMarketObject *object in self.currentArray) {
+        if ([object.marketId compare:marketID] == NSOrderedAscending) {
+            marketID = object.marketId;
+        }
+    }
+    return marketID;
+}
+
+- (NSString *)maxModifyTime
+{
+    NSString *modifyTime = @"";
+    for (SHGMarketObject *object in self.currentArray) {
+        if ([object.modifyTime compare:modifyTime] == NSOrderedDescending) {
+            modifyTime = object.modifyTime;
+        }
+    }
+    return modifyTime;
 }
 
 #pragma mark ------tableview代理
@@ -264,7 +288,7 @@
     
     if (!subArray || subArray.count == 0) {
         self.currentArray = subArray;
-        [self loadMarketList:@"first" firstId:firstId second:secondId marketId:@"-1"];
+        [self loadMarketList:@"first" firstId:firstId second:secondId marketId:@"-1" modifyTime:@""];
     } else{
         self.currentArray = subArray;
         [self.tableView reloadData];

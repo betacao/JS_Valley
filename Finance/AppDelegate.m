@@ -27,6 +27,7 @@
 #import "SHGActionDetailViewController.h"
 #import "GeTuiSdk.h"
 #import "GeTuiSdkError.h"
+#import "LinkViewController.h"
 
 #define resultcodekey       @"code"
 #define successcode         @"000"
@@ -496,6 +497,16 @@
         SHGActionDetailViewController *controller = [[SHGActionDetailViewController alloc] init];
         SHGActionObject *object = [[SHGActionObject alloc] init];
         object.meetId = [userInfo objectForKey:@"rid"];
+        controller.object = object;
+        [self pushIntoViewController:TopVC newViewController:controller];
+    } else if ([ridCode isEqualToString:@"1013"]){
+        //feed流
+        CircleListObj *object = [[CircleListObj alloc] init];
+        object.feedhtml = [userInfo objectForKey:@"feedHtml"];
+        object.rid = [userInfo objectForKey:@"rid"];
+        object.postType = @"ad";
+        LinkViewController *controller = [[LinkViewController alloc] init];
+        controller.url = object.feedhtml;
         controller.object = object;
         [self pushIntoViewController:TopVC newViewController:controller];
     } else{  //进入帖子详情

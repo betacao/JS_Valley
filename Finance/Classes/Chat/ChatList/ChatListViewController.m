@@ -15,7 +15,6 @@
 #import "ChatListCell.h"
 #import "EMSearchBar.h"
 #import "NSDate+Category.h"
-#import "RealtimeSearchUtil.h"
 #import "ChatViewController.h"
 #import "EMSearchDisplayController.h"
 #import "ConvertToCommonEmoticonsHelper.h"
@@ -693,17 +692,8 @@ static NSString * const kCommonFNum			= @"commonnum";
         [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
     }
 }
-//处理tableView左边空白
--(void)viewDidLayoutSubviews
-{
-    if ([self.tableView respondsToSelector:@selector(setSeparatorInset:)]) {
-        [self.tableView setSeparatorInset:UIEdgeInsetsMake(0,15,0,0)];
-    }
-    
-    if ([self.tableView respondsToSelector:@selector(setLayoutMargins:)]) {
-        [self.tableView setLayoutMargins:UIEdgeInsetsMake(0,15,0,0)];
-    }
-}
+
+
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
     if ([cell respondsToSelector:@selector(setSeparatorInset:)]) {
         
@@ -731,16 +721,16 @@ static NSString * const kCommonFNum			= @"commonnum";
 #pragma mark -- 检索
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
 {
-    [[RealtimeSearchUtil currentUtil] realtimeSearchWithSource:self.contactsSource searchText:searchText firstSel:@selector(name) secondSel:@selector(company) thirdSel:@selector(position) resultBlock:^(NSArray *results) {
-        if (results){
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [self.searchController.resultsSource removeAllObjects];
-                [self.searchController.resultsSource addObjectsFromArray:results];
-                [self.searchController.searchResultsTableView reloadData];
-            });
-        }
-
-    }];
+//    [[RealtimeSearchUtil currentUtil] realtimeSearchWithSource:self.contactsSource searchText:searchText firstSel:@selector(name) secondSel:@selector(company) thirdSel:@selector(position) resultBlock:^(NSArray *results) {
+//        if (results){
+//            dispatch_async(dispatch_get_main_queue(), ^{
+//                [self.searchController.resultsSource removeAllObjects];
+//                [self.searchController.resultsSource addObjectsFromArray:results];
+//                [self.searchController.searchResultsTableView reloadData];
+//            });
+//        }
+//
+//    }];
 }
 
 - (BOOL)searchBarShouldEndEditing:(UISearchBar *)searchBar
@@ -757,8 +747,6 @@ static NSString * const kCommonFNum			= @"commonnum";
 {
     searchBar.text = @"";
     [searchBar resignFirstResponder];
-    [[RealtimeSearchUtil currentUtil] realtimeSearchStop];
-    
     [searchBar setShowsCancelButton:NO animated:YES];
 }
 
@@ -1191,7 +1179,6 @@ static NSString * const kCommonFNum			= @"commonnum";
 
 - (void)loadUI
 {
-    [self.view addSubview:self.searchBar];
     [self.view addSubview:self.tableView];
     [self addHeaderRefresh:self.tableView headerRefesh:YES andFooter:NO];
     if (self.chatListType != ChatListView) {
@@ -1204,12 +1191,9 @@ static NSString * const kCommonFNum			= @"commonnum";
         UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:leftButton];
         self.navigationItem.leftBarButtonItem = leftItem;
         self.navigationItem.titleView = self.titleLabel;
-        [self.view sendSubviewToBack:self.tableView];
         
-        self.searchBar.hidden=NO;
-        _tableView.frame = CGRectMake(0, self.searchBar.frame.size.height, self.view.frame.size.width, self.view.frame.size.height - self.searchBar.frame.size.height);
-        [self.view sendSubviewToBack:self.tableView];
-        [self addHeaderRefresh:self.tableView headerRefesh:YES andFooter:YES];
+        self.searchBar.hidden = NO;
+        self.tableView.tableHeaderView = self.searchBar;
         rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [rightButton setTitle:@"分组" forState:UIControlStateNormal];
         [rightButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
