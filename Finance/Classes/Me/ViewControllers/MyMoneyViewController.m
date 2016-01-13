@@ -141,7 +141,7 @@
         label.textColor = [UIColor colorWithHexString:@"D43C33"];
         label.font = [UIFont boldSystemFontOfSize:20];
         label.text = [NSString stringWithFormat:@"%@",self.totalMoney];
-        [cell addSubview:label];
+        [cell.contentView addSubview:label];
 		return cell;
 		
 	}else if(indexPath.section == 1){

@@ -145,7 +145,7 @@ const CGFloat kAdButtomMargin = 20.0f;
 {
     __weak typeof(self) weakSelf = self;
     if(!_recommendViewController){
-        _recommendViewController = [[CircleListRecommendViewController alloc] initWithNibName:@"CircleListRecommendViewController" bundle:nil];
+        _recommendViewController = [[CircleListRecommendViewController alloc] init];
         _recommendViewController.delegate = [SHGUnifiedTreatment sharedTreatment];
         _recommendViewController.closeBlock = ^{
             weakSelf.shouldDisplayRecommend = NO;
@@ -483,7 +483,6 @@ const CGFloat kAdButtomMargin = 20.0f;
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
     if (self.dataArr.count > 0) {
         NSObject *obj = self.dataArr[indexPath.row];
         if(![obj isKindOfClass:[CircleListObj class]]){
@@ -498,9 +497,8 @@ const CGFloat kAdButtomMargin = 20.0f;
             if(self.recommendViewController.view.superview){
                 [self.recommendViewController.view removeFromSuperview];
             }
-            self.recommendViewController.delegate = self;
             [self.recommendViewController loadViewWithData:array];
-            [cell addSubview:self.recommendViewController.view];
+            [cell.contentView addSubview:self.recommendViewController.view];
             return cell;
 
         } else{
@@ -686,12 +684,6 @@ const CGFloat kAdButtomMargin = 20.0f;
 }
 
 #pragma mark cellDelegate
-
-//推荐好友的进入个人中心
-- (void)didSelectPerson:(NSString *)uid name:(NSString *)userName
-{
-    [self gotoSomeOne:uid name:userName];
-}
 
 - (void)gotoSomeOne:(NSString *)uid name:(NSString *)name
 {

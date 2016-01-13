@@ -50,6 +50,7 @@ typedef NS_ENUM(NSInteger, SHGMarketSendType){
     self.title = @"发布业务信息";
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardDidShow:) name:UIKeyboardDidShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardDidHide:) name:UIKeyboardWillHideNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textFieldDidChange:) name:UITextFieldTextDidChangeNotification object:nil];
     self.sendType = SHGMarketSendTypeNew;
 
     [self.tableView setTableHeaderView:self.bgView];
@@ -206,6 +207,7 @@ typedef NS_ENUM(NSInteger, SHGMarketSendType){
         frame.size.height = size.height;
         if (!CGRectEqualToRect(self.introduceView.frame, frame) && CGRectGetHeight(frame) > kTextViewOriginalHeight) {
             self.introduceView.frame = frame;
+            self.addImageBgView.origin = CGPointMake(0.0f, CGRectGetMaxY(frame));
             [self.tableView reloadData];
         } else{
             [self.currentContext resignFirstResponder];
@@ -214,6 +216,28 @@ typedef NS_ENUM(NSInteger, SHGMarketSendType){
         [self.currentContext resignFirstResponder];
         [self.firstCategoryBox closeOtherCombox];
         [self.secondCategoryBox closeOtherCombox];
+    }
+}
+
+- (void)textFieldDidChange:(NSNotification *)notification
+{
+    UITextField *textField = notification.object;
+    if ([textField isEqual:self.marketNameField]) {
+        if (textField.text.length > 40) {
+            textField.text = [textField.text substringToIndex:40];
+        }
+    } else if ([textField isEqual:self.acountField]) {
+        if (textField.text.length > 20){
+            textField.text = [textField.text substringToIndex:20];
+        }
+    } else if ([textField isEqual:self.acountField]) {
+        if (textField.text.length > 50) {
+            textField.text = [textField.text substringToIndex:50];
+        }
+    } else if ([textField isEqual:self.locationField]) {
+        if (textField.text.length > 50) {
+            textField.text = [textField.text substringToIndex:50];
+        }
     }
 }
 

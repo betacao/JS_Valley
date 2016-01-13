@@ -20,9 +20,6 @@
 - (void)pullClicked:(CircleListObj *)obj;
 - (void)clicked:(NSInteger )index;
 - (void)headTap:(NSInteger )index;
-- (void)didSelectPerson:(NSString *)uid name:(NSString *)userName;
 - (void)cnickCLick:(NSString * )userId name:(NSString *)name;
-
--(void)photosTapWIthIndex:(NSInteger)index imageIndex:(NSInteger) imageIndex;
 
 @end

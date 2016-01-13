@@ -847,7 +847,7 @@
     [cell loadUIWithObj:obj commentType:type];
     
     UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(longPressGesturecognized:)];
-    [cell addGestureRecognizer:longPress];
+    [cell.contentView addGestureRecognizer:longPress];
     return cell;
 }
 

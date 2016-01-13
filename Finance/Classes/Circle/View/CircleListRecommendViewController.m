@@ -65,11 +65,11 @@ const CGFloat kOtherRecommendCellHeight = 58.0f;
     [super viewDidLoad];
     self.view.clipsToBounds = YES;
     DDTapGestureRecognizer *topRecognizer = [[DDTapGestureRecognizer alloc]initWithTarget:self action:@selector(didTapHeaderView:)];
-    [self.topImageView addGestureRecognizer:topRecognizer];
+    [self.topView addGestureRecognizer:topRecognizer];
     DDTapGestureRecognizer *middleRecognizer = [[DDTapGestureRecognizer alloc]initWithTarget:self action:@selector(didTapHeaderView:)];
-    [self.middleImageView addGestureRecognizer:middleRecognizer];
+    [self.middleView addGestureRecognizer:middleRecognizer];
     DDTapGestureRecognizer *bottomRecognizer = [[DDTapGestureRecognizer alloc]initWithTarget:self action:@selector(didTapHeaderView:)];
-    [self.bottomImageView addGestureRecognizer:bottomRecognizer];
+    [self.bottomView addGestureRecognizer:bottomRecognizer];
 
     [self.markView sizeToFit];
     CGRect frame = self.markView.frame;
@@ -264,22 +264,22 @@ const CGFloat kOtherRecommendCellHeight = 58.0f;
     if([recognizer.view isEqual:self.topImageView]){
         uid = ((RecmdFriendObj *)[self.dataArray firstObject]).uid;
         name = ((RecmdFriendObj *)[self.dataArray firstObject]).username;
-        if(self.delegate && [self.delegate respondsToSelector:@selector(didSelectPerson:name:)]){
-            [self.delegate didSelectPerson:uid name:name];
+        if(self.delegate && [self.delegate respondsToSelector:@selector(cnickCLick:name:)]){
+            [self.delegate cnickCLick:uid name:name];
         }
         
     } else if([recognizer.view isEqual:self.middleImageView]){
         uid = ((RecmdFriendObj *)[self.dataArray objectAtIndex:1]).uid;
         name = ((RecmdFriendObj *)[self.dataArray objectAtIndex:1]).username;
-        if(self.delegate && [self.delegate respondsToSelector:@selector(didSelectPerson:name:)]){
-            [self.delegate didSelectPerson:uid name:name];
+        if(self.delegate && [self.delegate respondsToSelector:@selector(cnickCLick:name:)]){
+            [self.delegate cnickCLick:uid name:name];
         }
         
     } else{
         uid = ((RecmdFriendObj *)[self.dataArray lastObject]).uid;
         name = ((RecmdFriendObj *)[self.dataArray lastObject]).username;
-        if(self.delegate && [self.delegate respondsToSelector:@selector(didSelectPerson:name:)]){
-            [self.delegate didSelectPerson:uid name:name];
+        if(self.delegate && [self.delegate respondsToSelector:@selector(cnickCLick:name:)]){
+            [self.delegate cnickCLick:uid name:name];
         }
         
     }

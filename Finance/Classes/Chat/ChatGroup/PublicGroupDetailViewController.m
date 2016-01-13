@@ -155,7 +155,7 @@
         cell.detailTextLabel.textColor = [UIColor colorWithHexString:@"AFAFAF"];
         UIView * lineView = [[UIView alloc] initWithFrame:CGRectMake(15, cell.height-1, self.tableView.width-15, 0.5)];
         lineView.backgroundColor = [UIColor colorWithHexString:@"E6E7E8"];
-        [cell addSubview:lineView];
+        [cell.contentView addSubview:lineView];
     }
     
     if (indexPath.row == 0){

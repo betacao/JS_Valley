@@ -484,7 +484,7 @@ static NSString * const kCommonFNum			= @"commonnum";
             cell.imageURL=nil;
             cell.detailMsg=@"";
             cell.time=@"";
-            [cell addSubview:self.unapplyCountLabel];
+            [cell.contentView addSubview:self.unapplyCountLabel];
         } else if(indexPath.row==1){
             cell.placeholderImage=[UIImage imageNamed:@"消息通知"];
             cell.imageURL=nil;

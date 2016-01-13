@@ -213,14 +213,14 @@
         lineView.tag = 1000;
         lineView.backgroundColor = [UIColor colorWithHexString:@"E6E7E8"];
         lineView.hidden = NO;
-        [cell addSubview:lineView];
+        [cell.contentView addSubview:lineView];
         
         UIImage *image = [UIImage imageNamed:@"群头像图标"];
         CGSize size = image.size;
         UIImageView *imageView = [[UIImageView alloc]initWithFrame: CGRectMake(kImageViewLeftMargin, (cell.height - size.height) / 2.0f, size.width, size.height)];
         imageView.tag = 1001;
         imageView.image = image;
-        [cell addSubview:imageView];
+        [cell.contentView addSubview:imageView];
         
         UIImage *imageR = [UIImage imageNamed:@"accessoryView"];
         UIImageView *rightImage = [[UIImageView  alloc]initWithImage:imageR];
@@ -229,7 +229,7 @@
         rightImage.image = imageR;
         rightImage.hidden = YES;
         rightImage.tag = 1002;
-        [cell addSubview:rightImage];
+        [cell.contentView addSubview:rightImage];
 
     }
     UIImageView *imageView = [cell viewWithTag:1001];

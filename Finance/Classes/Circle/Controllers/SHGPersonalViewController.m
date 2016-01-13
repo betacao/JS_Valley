@@ -362,7 +362,7 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
     UIView * lineView = [[UIView alloc]init];
     lineView.frame = CGRectMake(kBottomViewLeftMargin, CGRectGetHeight(cell.contentView.frame) - 1.0f, SCREENWIDTH - kBottomViewLeftMargin, 0.5f);
     lineView.backgroundColor = [UIColor colorWithHexString:@"E6E7E8"];
-    [cell addSubview:lineView];
+    [cell.contentView addSubview:lineView];
     switch (indexPath.row) {
         case 0:{
             if (self.dynamicNumber) {
