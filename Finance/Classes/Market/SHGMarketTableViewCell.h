@@ -21,8 +21,9 @@ typedef NS_ENUM(NSInteger, SHGMarketTableViewCellType) {
 - (void)clickPrasiseButton:(SHGMarketObject *)object;
 - (void)clickCommentButton:(SHGMarketObject *)object;
 - (void)clickEditButton:(SHGMarketObject *)object;
-- (void)clickDeleteButton:(SHGMarketObject *)object;
 - (void)tapUserHeaderImageView:(NSString *)uid;
+@optional
+- (void)clickDeleteButton:(SHGMarketObject *)object;
 @end
 
 @interface SHGMarketTableViewCell : UITableViewCell
