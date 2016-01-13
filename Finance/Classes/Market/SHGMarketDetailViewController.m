@@ -16,6 +16,7 @@
 #import "SHGPersonalViewController.h"
 #import "SHGMarketCommentTableViewCell.h"
 #import "VerifyIdentityViewController.h"
+#import "SHGEmptyDataView.h"
 #define k_FirstToTop 5.0f * XFACTOR
 #define k_SecondToTop 10.0f * XFACTOR
 #define k_ThirdToTop 15.0f * XFACTOR
@@ -55,11 +56,10 @@
 @property (weak, nonatomic) IBOutlet UIButton *smileImage;
 @property (weak, nonatomic) IBOutlet UIButton *speakButton;
 @property (weak, nonatomic) IBOutlet UIButton *sendButton;
-
+@property (strong, nonatomic) SHGEmptyDataView *emptyView;
 @property (strong, nonatomic) BRCommentView *popupView;
 //数据
 @property (strong, nonatomic) SHGMarketObject *responseObject;
-
 - (IBAction)zan:(id)sender;
 - (IBAction)comment:(id)sender;
 - (IBAction)share:(id)sender;
@@ -88,6 +88,15 @@
         [weakSelf loadUI];
         [weakSelf.detailTable reloadData];
     }];
+}
+
+- (SHGEmptyDataView *)emptyView
+{
+    if (!_emptyView) {
+        _emptyView = [[SHGEmptyDataView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, SCREENWIDTH, SCREENHEIGHT)];
+        _emptyView.type = SHGEmptyDateTypeDeletedMarket;
+    }
+    return _emptyView;
 }
 
 - (void)loadData
@@ -188,7 +197,7 @@
         [photoView addSubview:photoGroup];
         photoView.frame = CGRectMake(15.0, self.detailContentLabel.bottom + k_FirstToTop*2, CGRectGetWidth(photoGroup.frame),CGRectGetHeight(photoGroup.frame));
         [self.viewHeader addSubview:photoView];
-        self.actionView.frame = CGRectMake(self.actionView.origin.x, CGRectGetMaxY(photoView.frame)+k_FirstToTop, self.actionView.width, self.actionView.height);
+        self.actionView.frame = CGRectMake(self.actionView.origin.x, CGRectGetMaxY(photoView.frame) + k_FirstToTop, self.actionView.width, self.actionView.height);
     }else{
         self.actionView.frame = CGRectMake(self.actionView.origin.x, CGRectGetMaxY(self.detailContentLabel.frame)+k_FirstToTop, self.actionView.width, self.actionView.height);
     }
@@ -206,6 +215,7 @@
     self.backImageView.image = image;
 
     [self addTableHeaderView];
+    [self addEmptyViewIfNeeded];
 }
 
 - (void)tapContactLabelToIdentification
@@ -221,6 +231,14 @@
     self.viewHeader.frame = frame;
     [self.detailTable setTableHeaderView: self.viewHeader];
 }
+
+- (void)addEmptyViewIfNeeded
+{
+    if ([self.responseObject.isDeleted isEqualToString:@"Y"]) {
+        [self.view addSubview:self.emptyView];
+    }
+}
+
 #pragma mark ----tableView----
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {

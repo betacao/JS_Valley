@@ -851,6 +851,7 @@
 		B0EAB2551B467AB8005A760F /* MLEmojiLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = B0EAB2511B467AB8005A760F /* MLEmojiLabel.m */; };
 		B0EAB2561B467AB8005A760F /* TTTAttributedLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = B0EAB2531B467AB8005A760F /* TTTAttributedLabel.m */; };
 		CEB958E5843B739F6CB8F600 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B1E0AB5E4D6E1102E811C936 /* libPods.a */; };
+		F9002CA51C45ECD6002797E9 /* NSArray+Category.m in Sources */ = {isa = PBXBuildFile; fileRef = F9002CA41C45ECD6002797E9 /* NSArray+Category.m */; };
 		F90344151C1C192F0063EABB /* SHGMarketDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F90344131C1C192F0063EABB /* SHGMarketDetailViewController.m */; };
 		F90344161C1C192F0063EABB /* SHGMarketDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F90344141C1C192F0063EABB /* SHGMarketDetailViewController.xib */; };
 		F908C1511BFECD2F00CAE018 /* SHGActionCommentTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F908C14F1BFECD2F00CAE018 /* SHGActionCommentTableViewCell.m */; };
@@ -2115,6 +2116,8 @@
 		B0EAB2531B467AB8005A760F /* TTTAttributedLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTTAttributedLabel.m; sourceTree = "<group>"; };
 		B0EAB2541B467AB8005A760F /* TTTAttributedLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTTAttributedLabel.h; sourceTree = "<group>"; };
 		B1E0AB5E4D6E1102E811C936 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		F9002CA31C45ECD6002797E9 /* NSArray+Category.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+Category.h"; sourceTree = "<group>"; };
+		F9002CA41C45ECD6002797E9 /* NSArray+Category.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+Category.m"; sourceTree = "<group>"; };
 		F90344121C1C192F0063EABB /* SHGMarketDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGMarketDetailViewController.h; sourceTree = "<group>"; };
 		F90344131C1C192F0063EABB /* SHGMarketDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGMarketDetailViewController.m; sourceTree = "<group>"; };
 		F90344141C1C192F0063EABB /* SHGMarketDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGMarketDetailViewController.xib; sourceTree = "<group>"; };
@@ -3804,6 +3807,8 @@
 				610FF0811AD623F80027EBA6 /* NSString+Check.m */,
 				B00903531B622274000EAD7D /* UIColor+extend.h */,
 				B00903541B622274000EAD7D /* UIColor+extend.m */,
+				F9002CA31C45ECD6002797E9 /* NSArray+Category.h */,
+				F9002CA41C45ECD6002797E9 /* NSArray+Category.m */,
 			);
 			path = Categray;
 			sourceTree = "<group>";
@@ -5679,6 +5684,7 @@
 				4088DD881AF0EEA200393855 /* SettingsViewController.m in Sources */,
 				98E1035D1C3128E800712CFE /* SHGMarketSecondCategoryTableViewCell.m in Sources */,
 				614BA7E11AE61C1E009480CD /* ProductListTableViewCell.m in Sources */,
+				F9002CA51C45ECD6002797E9 /* NSArray+Category.m in Sources */,
 				40302B041AEF22E800F22EB6 /* BasePeopleObject.m in Sources */,
 				408D8B861AF9F57B0055810C /* SettingsSuggestionsViewController.m in Sources */,
 				F9DDEFBF1BF9EB79001341CF /* SHGActionSendViewController.m in Sources */,

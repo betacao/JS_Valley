@@ -20,11 +20,26 @@
     if (self) {
         self.backgroundColor = [UIColor colorWithHexString:@"EFEEEF"];
         self.imageView = [[UIImageView alloc] init];
-        self.imageView.image = [UIImage imageNamed:@"emptyBg"];
-        [self.imageView sizeToFit];
+        self.type = SHGEmptyDateTypeNormal;
         [self addSubview:self.imageView];
     }
     return self;
+}
+
+- (void)setType:(SHGEmptyDateType)type
+{
+    switch (type) {
+        case SHGEmptyDateTypeNormal:
+            self.imageView.image = [UIImage imageNamed:@"emptyBg"];
+            [self.imageView sizeToFit];
+            break;
+        case SHGEmptyDateTypeDeletedMarket:
+            self.imageView.image = [UIImage imageNamed:@"deleted_market"];
+            [self.imageView sizeToFit];
+            break;
+        default:
+            break;
+    }
 }
 
 - (void)layoutSubviews
