@@ -102,7 +102,7 @@
     NSString * typeStr = self.responseObject.catalog;
     self.typeLabel.text = [NSString stringWithFormat:@"类型： %@",typeStr];
     if ([self.responseObject.loginuserstate isEqualToString:@"0" ]) {
-        NSString * contactString = @"电话： 认证可见";
+        NSString * contactString = @"联系方式： 认证可见";
         NSMutableAttributedString * str = [[NSMutableAttributedString alloc]initWithString:contactString];
         [str addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:14] range:NSMakeRange(4, 4)];
         [str addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"4277B2"] range:NSMakeRange(4, 4)];
@@ -112,7 +112,7 @@
         [self.phoneNumLabel addGestureRecognizer:recognizer];
         
     } else if([self.responseObject.loginuserstate isEqualToString:@"1" ]){
-        self.phoneNumLabel.text = [@"电话：" stringByAppendingString: self.responseObject.contactInfo];
+        self.phoneNumLabel.text = [@"联系方式：" stringByAppendingString: self.responseObject.contactInfo];
     }
     self.nameLabel.text = self.responseObject.realname;
 

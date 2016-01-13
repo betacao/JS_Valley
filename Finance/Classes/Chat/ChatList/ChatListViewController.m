@@ -476,6 +476,7 @@ static NSString * const kCommonFNum			= @"commonnum";
         if (!cell){
             cell = [[ChatListCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:identify];
         }
+        
         cell.separatorInset = UIEdgeInsetsMake(0, 15, 0, 0);
         if(indexPath.row == 0){
             cell.placeholderImage = [UIImage imageNamed:@"申请头像图标"];

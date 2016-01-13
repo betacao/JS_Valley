@@ -106,7 +106,7 @@
     self.lblContent.lineBreakMode = NSLineBreakByWordWrapping;
     self.lblContent.font = [UIFont systemFontOfSize:15.0f];
     self.lblContent.delegate = self;
-    self.lblContent.textColor = [UIColor colorWithHexString:@"606060"];
+    self.lblContent.textColor = [UIColor colorWithHexString:@"3C3C3C"];
     self.lblContent.backgroundColor = [UIColor clearColor];
 
     [self initData];
@@ -127,6 +127,7 @@
 
     CGRect frame = self.lineView.frame;
     frame.size.height = 0.5f;
+    
     self.lineView.frame = frame;
 }
 
@@ -406,7 +407,7 @@
     //设置分割线的坐标
     self.breakLineView.hidden = YES;
     CGRect frame = self.breakLineView.frame;
-    frame.origin.x = kItemMargin + CGRectGetMaxX(userRect);
+    frame.origin.x =  CGRectGetMaxX(userRect);
     frame.size.width = 0.5f;
     frame.size.height = CGRectGetHeight(userRect);
     self.breakLineView.frame = frame;

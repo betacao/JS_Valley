@@ -11,7 +11,7 @@
 @implementation MyMoneyDetailTableViewCell
 
 - (void)awakeFromNib {
-    // Initialization code
+    self.lineView.size = CGSizeMake(self.lineView.width, 0.5f);
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

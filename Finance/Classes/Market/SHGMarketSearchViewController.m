@@ -47,6 +47,7 @@
         if ([object isKindOfClass:NSClassFromString(@"UISearchBarTextField")]) {
             UITextField *textField = (UITextField *)object;
             textField.textColor = [UIColor whiteColor];
+            [textField setValue:[UIColor colorWithHexString:@"F67070"] forKeyPath:@"_placeholderLabel.textColor"];
             textField.enablesReturnKeyAutomatically = NO;
         } else if ([object isKindOfClass:NSClassFromString(@"UISearchBarBackground")]){
         } else{
@@ -199,6 +200,8 @@
         id object = [self.resultArray objectAtIndex:indexPath.row];
         SHGMarketObject *obj = (SHGMarketObject *)object;
         cell.textLabel.text = obj.marketName;
+        cell.textLabel.textColor = [UIColor colorWithHexString:@"3A3A3A"];
+        cell.textLabel.font = [UIFont systemFontOfSize:14.0f];
         cell.textLabel.backgroundColor = [UIColor clearColor];
         return cell;
     } else{

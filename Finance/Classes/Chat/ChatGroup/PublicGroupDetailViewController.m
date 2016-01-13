@@ -114,7 +114,7 @@
 //        line.backgroundColor = [UIColor lightGrayColor];
 //        [_footerView addSubview:line];
         
-        _footerButton = [[UIButton alloc] initWithFrame:CGRectMake(20, _footerView.height-35, _footerView.frame.size.width - 40, 35)];
+        _footerButton = [[UIButton alloc] initWithFrame:CGRectMake(14.0f, _footerView.height-35, _footerView.frame.size.width - 28.0f, 35)];
         _footerButton.titleLabel.font = [UIFont systemFontOfSize:15.0f];
         [_footerButton setTitle:NSLocalizedString(@"group.join", @"join the group") forState:UIControlStateNormal];
         [_footerButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];

@@ -286,8 +286,8 @@
     self.meViewController.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"我的" image:image selectedImage:selectedImage];
     self.meViewController.tabBarItem.tag = 4000;
     
-    [[UITabBarItem appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor blackColor],NSForegroundColorAttributeName, nil] forState:UIControlStateNormal];
-    [[UITabBarItem appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor redColor],NSForegroundColorAttributeName, nil] forState:UIControlStateSelected];
+    [[UITabBarItem appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor colorWithHexString:@"949494"],NSForegroundColorAttributeName, nil] forState:UIControlStateNormal];
+    [[UITabBarItem appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor colorWithHexString:@"E21F0D"],NSForegroundColorAttributeName, nil] forState:UIControlStateSelected];
 
     self.viewControllers = [NSArray arrayWithObjects:self.homeSegmentViewController,self.marketSegmentViewController,self.prodViewController ,self.meViewController ,nil];
     self.selectedIndex = 0;

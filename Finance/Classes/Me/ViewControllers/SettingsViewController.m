@@ -218,7 +218,7 @@
         if (hasUpdatedContacts){
             [Hud showMessageWithText:@"您刚刚更新过好友"];
         } else{
-            DXAlertView *alert = [[DXAlertView alloc] initWithTitle:@"提示" contentText:@"更新好友将更新您一度人脉中手机通讯录，将有效拓展您的人脉。" leftButtonTitle:@"取消" rightButtonTitle:@"确定"];
+            DXAlertView *alert = [[DXAlertView alloc] initWithTitle:@"提示" contentText:@"更新好友将更新您一度人脉中手机通讯录，将有效拓展您的人脉。" leftButtonTitle:@"取消" rightButtonTitle:@"更新"];
             __weak typeof(self) weakSelf = self;
             alert.rightBlock = ^{
                 [weakSelf uploadContact];
