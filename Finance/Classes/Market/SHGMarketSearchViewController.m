@@ -118,6 +118,7 @@
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
 {
     [self.searchBar resignFirstResponder];
+    [[RealtimeSearchUtil currentUtil] realtimeSearchStop];
     [self.navigationController popViewControllerAnimated:YES];
 }
 

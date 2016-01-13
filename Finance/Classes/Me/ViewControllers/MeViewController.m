@@ -395,9 +395,6 @@
 
 #pragma mark -身份认证
 - (void)actionAuth:(id)sender {
-    if ([self.auditState isEqualToString:@"1"]||[self.auditState isEqualToString:@"2"]) {
-        return;
-    }
     VerifyIdentityViewController *vc = [[VerifyIdentityViewController alloc] init];
     vc.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:vc animated:YES];

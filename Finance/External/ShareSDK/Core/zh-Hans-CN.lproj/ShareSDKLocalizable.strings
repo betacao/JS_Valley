@@ -129,7 +129,7 @@
 "QQ_MSG_SEND_SUCCESS" = "QQ messages sent successfully";
 "QQ_MSG_SEND_FAIL" = "Failed to send QQ:%@";
 
-"SHARE_VIEW_CANCEL_BUTTON" = "Cancel";
+"SHARE_VIEW_CANCEL_BUTTON" = "取消";
 "SHARE_VIEW_PUBLISH_BUTTON" = "Publish";
 "SHARE_VIEW_MSG_INVALID_CONTENT" = "Please input share content";
 "SHARE_VIEW_MSG_INVALID_CLIENTS" = "Please select the target platform";

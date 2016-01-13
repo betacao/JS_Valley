@@ -45,13 +45,12 @@
 {
     [super viewDidLoad];
     self.title = @"群组";
-    _dataSource = [NSMutableArray array];
-    _commonArr = [NSMutableArray array];
-    _joinArr = [NSMutableArray array];
+    self.dataSource = [NSMutableArray array];
+    self.commonArr = [NSMutableArray array];
+    self.joinArr = [NSMutableArray array];
     [[EaseMob sharedInstance].chatManager removeDelegate:self];
     [[EaseMob sharedInstance].chatManager addDelegate:self delegateQueue:nil];
     [self addHeaderRefresh:self.tableView headerRefesh:YES andFooter:NO];
-    self.tableView.separatorInset = UIEdgeInsetsMake(0, 15, 0, 0);
 
     //公共群组
     UIButton *publicButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -75,22 +74,20 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    self.tableView.backgroundColor = [UIColor colorWithHexString:@"efeff4"];
     self.view.frame = CGRectMake(0.0f, 0.0f, SCREENWIDTH, SCREENHEIGHT);
-
-    self.tableView.backgroundColor = [UIColor whiteColor];
     self.tableView.tableFooterView = [[UIView alloc] init];
     [self.tableView setTableHeaderView:self.searchBar];
-
     [self searchController];
-
     [MobClick event:@"GroupListViewController" label:@"onClick"];
 }
 
 - (void)refreshHeader
 {
-    [self.tableView.header endRefreshing];
+    [self reloadDataSource];
 }
-- (void) returnClick
+
+- (void)returnClick
 {
     [self.navigationController popViewControllerAnimated:YES];
 }
@@ -169,7 +166,6 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    // Return the number of sections.
     return 4;
 }
 
@@ -330,7 +326,7 @@
 {
     _isExpand[button.tag] = !_isExpand[button.tag];
     NSIndexSet *set =[NSIndexSet indexSetWithIndex:button.tag];
-    [_tableView reloadSections:set withRowAnimation: UITableViewRowAnimationNone];
+    [self.tableView reloadSections:set withRowAnimation: UITableViewRowAnimationNone];
     
 }
 
@@ -406,17 +402,6 @@
     }
     
 }
-//处理tableView左边空白
--(void)viewDidLayoutSubviews
-{
-    if ([self.tableView respondsToSelector:@selector(setSeparatorInset:)]) {
-        [self.tableView setSeparatorInset:UIEdgeInsetsMake(0,15,0,0)];
-    }
-    
-    if ([self.tableView respondsToSelector:@selector(setLayoutMargins:)]) {
-        [self.tableView setLayoutMargins:UIEdgeInsetsMake(0,15,0,0)];
-    }
-}
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
     if ([cell respondsToSelector:@selector(setSeparatorInset:)]) {
@@ -434,14 +419,6 @@
 #pragma mark - UISearchBarDelegate
 - (void)searchDisplayControllerWillBeginSearch:(UISearchDisplayController *)controller
 {
-    for(UIView * v in controller.searchResultsTableView.superview.subviews)
-    {
-        NSLog(@"%@",[v class]);
-        if([v isKindOfClass:NSClassFromString(@"_EMSearchDisplayControllerDimmingView")])
-    {
-        v.frame = CGRectMake(0,44,SCREENWIDTH,SCREENHEIGHT);
-    }
-    }
 
 }
 - (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar
@@ -453,12 +430,14 @@
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
 {
-    [[RealtimeSearchUtil currentUtil] realtimeSearchWithSource:self.dataSource searchText:(NSString *)searchText collationStringSelector:@selector(groupSubject) resultBlock:^(NSArray *results)
-    {
-        if (results)
-        {
-            dispatch_async(dispatch_get_main_queue(),^
-            {
+    NSMutableArray *array = [NSMutableArray array];
+    [array appendUniqueObjectsFromArray:self.dataSource];
+    [array appendUniqueObjectsFromArray:self.commonArr];
+    [array appendUniqueObjectsFromArray:self.joinArr];
+    
+    [[RealtimeSearchUtil currentUtil] realtimeSearchWithSource:array searchText:(NSString *)searchText collationStringSelector:@selector(groupSubject) resultBlock:^(NSArray *results){
+        if (results){
+            dispatch_async(dispatch_get_main_queue(),^{
                 [self.searchController.resultsSource removeAllObjects];
                 EMGroup *grp=[[EMGroup alloc] initWithGroupId:@"-1"];
                 NSMutableArray *resultArr=[[NSMutableArray alloc] initWithArray:results];
@@ -515,18 +494,19 @@
 - (void)reloadDataSource
 {
     //增加点击进入增加群组
-    [self showHudInView:self.view hint:NSLocalizedString(@"loadData", @"Load data...")];
+    [Hud showLoadingWithMessage:NSLocalizedString(@"loadData", @"Load data...")];
     [[EaseMob sharedInstance].chatManager asyncFetchAllPublicGroups];
     NSDictionary *loginInfo = [[[EaseMob sharedInstance] chatManager] loginInfo];
     [[EaseMob sharedInstance].chatManager asyncFetchMyGroupsListWithCompletion:^(NSArray *groups, EMError *error){
         for (EMGroup *group in groups){
-            [self hideHud];
+            [Hud hideHud];
+            [self.tableView.header endRefreshing];
             [[EaseMob sharedInstance].chatManager asyncFetchGroupInfo:group.groupId completion:^(EMGroup *group, EMError *error) {
                 if (!error){
                     if (![group.owner isEqualToString:loginInfo[@"username"]]){
-                        [_joinArr addObject:group];
+                        [self.joinArr addObject:group];
                     }else{
-                        [_commonArr addObject:group];
+                        [self.commonArr addObject:group];
                     }
                 }
                 dispatch_async(dispatch_get_main_queue(), ^(){
