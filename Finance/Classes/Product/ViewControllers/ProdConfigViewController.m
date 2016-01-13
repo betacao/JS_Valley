@@ -305,7 +305,7 @@
 
 }
 
--(void)otherShareWithObj:(ProdListObj *)obj
+- (void)otherShareWithObj:(ProdListObj *)obj
 {
     NSString *url = [NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttpCircle,@"circle",obj.pid];
     NSDictionary *param = @{@"uid":[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID]};

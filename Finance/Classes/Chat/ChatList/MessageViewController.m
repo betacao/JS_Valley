@@ -10,6 +10,7 @@
 #import "MessageTableViewCell.h"
 #import "SHGPersonalViewController.h"
 #import "SHGActionDetailViewController.h"
+#import "LinkViewController.h"
 
 @interface MessageViewController ()
 {
@@ -68,51 +69,37 @@
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
     
     NSDictionary *param;
-    if([@"-1" isEqualToString:time])
-    {
-        param= @{@"uid":uid,
-                @"target":target,
-                @"num":rRequestNum};
-    }else
-    {
-        param= @{@"uid":uid,
-                 @"target":target,
-                 @"time":time,
-                 @"num":rRequestNum};
+    if([@"-1" isEqualToString:time]){
+        param= @{@"uid":uid, @"target":target, @"num":rRequestNum};
+    } else{
+        param= @{@"uid":uid, @"target":target, @"time":time, @"num":rRequestNum};
     }
-    
+
     [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttpUser,@"notice"] class:[MessageObj class] parameters:param success:^(MOCHTTPResponse *response) {
         [Hud hideHud];
         NSLog(@"=data = %@",response.dataArray);
-        if ([target isEqualToString:@"first"])
-        {
+        if ([target isEqualToString:@"first"]){
             [self.dataArr removeAllObjects];
             [self.dataArr addObjectsFromArray:response.dataArray];
-            
         }
-        if ([target isEqualToString:@"refresh"])
-        {
+
+        if ([target isEqualToString:@"refresh"]){
             if (response.dataArray.count > 0) {
                 for (NSInteger i = response.dataArray.count-1; i >= 0; i --) {
                     MessageObj *obj = response.dataArray[i];
                     [self.dataArr insertObject:obj atIndex:0];
                 }
-                
             }
-            
         }
+
         if ([target isEqualToString:@"load"]) {
             [self.dataArr addObjectsFromArray:response.dataArray];
         }
         
-        if (IsArrEmpty(response.dataArray))
-        {
+        if (IsArrEmpty(response.dataArray)){
             hasDataFinished = YES;
-        }
-        else
-        {
+        } else{
             hasDataFinished = NO;
-            
         }
         
         [self.tableView.header endRefreshing];
@@ -231,6 +218,15 @@
         SHGActionDetailViewController *controller = [[SHGActionDetailViewController alloc] init];
         SHGActionObject *object = [[SHGActionObject alloc] init];
         object.meetId = obj.oid;
+        controller.object = object;
+        [self.navigationController pushViewController:controller animated:YES];
+    } else if ([obj.code isEqualToString:@"1013"]){
+        //feed流
+        CircleListObj *object = [[CircleListObj alloc] init];
+        object.feedhtml = obj.feedHtml;
+        object.postType = @"ad";
+        LinkViewController *controller = [[LinkViewController alloc] init];
+        controller.url = object.feedhtml;
         controller.object = object;
         [self.navigationController pushViewController:controller animated:YES];
     } else{
