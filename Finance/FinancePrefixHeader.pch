@@ -59,5 +59,6 @@
 #import "SHGGloble.h"
 #import "headerView.h"
 #import "DXAlertView.h"
+#import "NSArray+Category.h"
 #endif
 #endif

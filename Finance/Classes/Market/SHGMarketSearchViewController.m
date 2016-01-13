@@ -73,13 +73,9 @@
 - (void)prepareListArray
 {
     [self.dataArr enumerateObjectsUsingBlock:^(NSArray *object, NSUInteger idx, BOOL * _Nonnull stop) {
-        [object enumerateObjectsUsingBlock:^(SHGMarketObject *obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            [self.listArray addObject:obj];
-        }];
+        [self.listArray appendUniqueObjectsFromArray:object];
     }];
-    NSSet *set = [NSSet setWithArray:self.listArray];
-    NSLog(@"%@",[set allObjects]);
-    self.resultArray = [NSMutableArray arrayWithArray:[set allObjects]];
+    self.resultArray = [NSMutableArray arrayWithArray:self.listArray];
 }
 
 

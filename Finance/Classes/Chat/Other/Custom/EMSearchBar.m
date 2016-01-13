@@ -51,7 +51,6 @@
         if ([object isKindOfClass:NSClassFromString(@"UISearchBarBackground")]) {
         } else if ([object isKindOfClass:NSClassFromString(@"UISearchBarTextField")]) {
             UITextField *textFeild = (UITextField *)object;
-            textFeild.placeholder = @"输入群组名称";
             [textFeild setValue:[UIColor colorWithHexString:@"BEBEBE"] forKeyPath:@"_placeholderLabel.textColor"];
             [textFeild setValue:[UIFont systemFontOfSize:14] forKeyPath:@"_placeholderLabel.font"];
             
