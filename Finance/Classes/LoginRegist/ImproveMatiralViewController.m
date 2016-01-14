@@ -424,7 +424,8 @@
     if(!self.currentField ||CGRectGetHeight(self.keyboaradRect) == 0){
         return;
     }
-    if(CGRectGetMaxY(self.currentField.frame) + 64.0f > CGRectGetMinY(self.keyboaradRect)){
+    //64是navigation+status 15是间距
+    if(CGRectGetMaxY(self.currentField.frame) + 64.0f + 15.0f > CGRectGetMinY(self.keyboaradRect)){
         [self.bgScrollView setContentOffset:CGPointMake(0.0f, CGRectGetMaxY(self.currentField.frame) - CGRectGetMinY(self.keyboaradRect) + 2 * 64.0f) animated:YES];
     }
 }
@@ -432,6 +433,10 @@
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     [textField resignFirstResponder];
+    __weak typeof(self)weakSelf = self;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [weakSelf.bgScrollView setContentOffset:CGPointZero animated:YES];
+    });
     return YES;
 }
 
