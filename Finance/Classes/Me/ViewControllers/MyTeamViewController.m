@@ -124,7 +124,7 @@
 	}else if(indexPath.section == 1){
 		return 65.0f;
 	}else if (indexPath.section == 2){
-		return 250.0f;
+		return 350.0f;
 	}
 	return 0;
 }
