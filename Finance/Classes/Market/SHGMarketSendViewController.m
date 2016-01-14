@@ -230,7 +230,7 @@ typedef NS_ENUM(NSInteger, SHGMarketSendType){
         if (textField.text.length > 20){
             textField.text = [textField.text substringToIndex:20];
         }
-    } else if ([textField isEqual:self.acountField]) {
+    } else if ([textField isEqual:self.contactField]) {
         if (textField.text.length > 50) {
             textField.text = [textField.text substringToIndex:50];
         }
