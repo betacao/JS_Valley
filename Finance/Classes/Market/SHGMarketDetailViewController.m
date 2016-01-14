@@ -117,7 +117,7 @@
         [str addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"4277B2"] range:NSMakeRange(6, 4)];
         self.phoneNumLabel.attributedText = str;
         self.phoneNumLabel.userInteractionEnabled = YES;
-        UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapContactLabelToIdentification)];
+          UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapContactLabelToIdentification:)];
         [self.phoneNumLabel addGestureRecognizer:recognizer];
         
     } else if([self.responseObject.loginuserstate isEqualToString:@"1" ]){
@@ -218,10 +218,20 @@
     [self addEmptyViewIfNeeded];
 }
 
-- (void)tapContactLabelToIdentification
+- (void)tapContactLabelToIdentification:(UIButton *)button
 {
-    VerifyIdentityViewController * vc = [[VerifyIdentityViewController alloc]init];
-    [self.navigationController pushViewController:vc animated:YES];
+    
+    __weak typeof(self)weakSelf = self;
+    [[SHGGloble sharedGloble] requsetUserVerifyStatus:^(BOOL status) {
+        if (status) {
+            if([weakSelf respondsToSelector:@selector(tapContactLabelToIdentification:)]){
+                [weakSelf performSelector:@selector(tapContactLabelToIdentification:) withObject:button];
+            }
+        } else{
+            VerifyIdentityViewController * vc = [[VerifyIdentityViewController alloc]init];
+            [self.navigationController pushViewController:vc animated:YES];
+        }
+    } failString:@"认证后才能查看联系方式～"];
 }
 
 - (void)addTableHeaderView

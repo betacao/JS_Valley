@@ -54,17 +54,22 @@
 {
     __weak typeof(self) weakSelf = self;
     NSString * uid = weakSelf.group.owner;
-    [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttp,@"user",@"personaluser"] parameters:@{@"uid":uid}success:^(MOCHTTPResponse *response) {
-        UITableViewCell *cell = [weakSelf.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
-        if (cell) {
-            NSString *name = [response.dataDictionary valueForKey:@"name"];
-            cell.detailTextLabel.text = name.length > 0 ? name : uid;
-        }
-    }failed:^(MOCHTTPResponse *response) {
-        [weakSelf.tableView.header endRefreshing];
-        
-    }];
-   
+    if (!uid.length == 0) {
+        [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttp,@"user",@"personaluser"] parameters:@{@"uid":uid}success:^(MOCHTTPResponse *response) {
+            UITableViewCell *cell = [weakSelf.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+            if (cell) {
+                NSString *name = [response.dataDictionary valueForKey:@"name"];
+                cell.detailTextLabel.text = name.length > 0 ? name : uid;
+            }
+        }failed:^(MOCHTTPResponse *response) {
+            [weakSelf.tableView.header endRefreshing];
+            
+        }];
+
+    }else{
+        return;
+    }
+    
 }
 - (void)viewDidLoad
 {

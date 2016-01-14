@@ -7,7 +7,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SHGPersonalViewController">
             <connections>
-                <outlet property="attentionAndCollectView" destination="IZs-Tv-ZZ0" id="Gt3-Bu-Qkr"/>
+                <outlet property="attentionAndCollectView" destination="IZs-Tv-ZZ0" id="uYF-MU-Qeh"/>
+                <outlet property="centerLine" destination="3kO-lQ-f0f" id="fmf-sp-30b"/>
                 <outlet property="companyLabel" destination="2Vl-c0-6WT" id="bGD-hO-miX"/>
                 <outlet property="departmentLabel" destination="gMJ-VA-N13" id="fNT-sY-aDf"/>
                 <outlet property="friendImage" destination="2tp-FC-dL8" id="5u0-9T-wXm"/>
