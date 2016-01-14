@@ -129,7 +129,7 @@
 "QQ_MSG_SEND_SUCCESS" = "QQ messages sent successfully";
 "QQ_MSG_SEND_FAIL" = "Failed to send QQ:%@";
 
-"SHARE_VIEW_CANCEL_BUTTON" = "取消";
+"SHARE_VIEW_CANCEL_BUTTON" = "Cancel";
 "SHARE_VIEW_PUBLISH_BUTTON" = "Publish";
 "SHARE_VIEW_MSG_INVALID_CONTENT" = "Please input share content";
 "SHARE_VIEW_MSG_INVALID_CLIENTS" = "Please select the target platform";
@@ -144,7 +144,7 @@
 "SHARE_VIEW_AUTH_TITLE" = "Bind %@";
 "SHARE_VIEW_TITLE" = "Share";
 "SHARE_VIEW_ONE_KEY_LIST_TITLE" = "Share to";
-"SHARE_ACTION_SHEET_CANCEL_BUTTON" = "Cancel";
+"SHARE_ACTION_SHEET_CANCEL_BUTTON" = "取消";
 "SHARE_VIEW_TOPIC" = "Topic";
 
 "FRIENDS_VIEW_TITLE" = "Contact";
