@@ -420,35 +420,31 @@ static CGFloat const __imagePadding = 8.0f;
         __notificationWindow.currentNotification = viewToRotateIn;
     }
     
-    [UIView animateWithDuration:0.5
-                          delay:0.0
-                        options:UIViewAnimationOptionCurveEaseInOut
-                     animations:^{
-                         viewToRotateIn.layer.transform = CATransform3DIdentity;
-                         viewToRotateOut.layer.transform = viewOutEndTransform;
-                     }
-                     completion:^(BOOL finished) {
-                         [viewToRotateOut removeFromSuperview];
-                         [__notificationWindow.notificationQueue removeObject:viewToRotateOut];
-                         if ([viewToRotateIn isKindOfClass:[MPNotificationView class]])
-                         {
-                             MPNotificationView *notification = (MPNotificationView*)viewToRotateIn;
-                             [self performSelector:@selector(showNextNotification)
-                                        withObject:nil
-                                        afterDelay:notification.duration];
-                             
-                             __notificationWindow.currentNotification = notification;
-                             [__notificationWindow.notificationQueue removeObject:notification];
-                         }
-                         else
-                         {
-                             [viewToRotateIn removeFromSuperview];
-                             __notificationWindow.hidden = YES;
-                             __notificationWindow.currentNotification = nil;
-                         }
-                         
-                          __notificationWindow.backgroundColor = [UIColor clearColor];
-                     }];
+    [UIView animateWithDuration:0.5 delay:0.0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+        viewToRotateIn.layer.transform = CATransform3DIdentity;
+        viewToRotateOut.layer.transform = viewOutEndTransform;
+    } completion:^(BOOL finished) {
+        [viewToRotateOut removeFromSuperview];
+        [__notificationWindow.notificationQueue removeObject:viewToRotateOut];
+        if ([viewToRotateIn isKindOfClass:[MPNotificationView class]])
+        {
+            MPNotificationView *notification = (MPNotificationView*)viewToRotateIn;
+            [self performSelector:@selector(showNextNotification)
+                       withObject:nil
+                       afterDelay:notification.duration];
+
+            __notificationWindow.currentNotification = notification;
+            [__notificationWindow.notificationQueue removeObject:notification];
+        }
+        else
+        {
+            [viewToRotateIn removeFromSuperview];
+            __notificationWindow.hidden = YES;
+            __notificationWindow.currentNotification = nil;
+        }
+
+        __notificationWindow.backgroundColor = [UIColor clearColor];
+    }];
 }
 
 + (UIImage *) screenImageWithRect:(CGRect)rect
@@ -456,7 +452,7 @@ static CGFloat const __imagePadding = 8.0f;
     CALayer *layer = [[UIApplication sharedApplication] keyWindow].layer;
     CGFloat scale = [UIScreen mainScreen].scale;
     UIGraphicsBeginImageContextWithOptions(layer.frame.size, NO, scale);
-    
+
     [layer renderInContext:UIGraphicsGetCurrentContext()];
     UIImage *screenshot = UIGraphicsGetImageFromCurrentImageContext();
     

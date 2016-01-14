@@ -135,7 +135,6 @@
 - (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
     if(self.delegate && [self.delegate respondsToSelector:@selector(didClickNoticeViewWithUid:)]){
-        [self hide];
         [self.delegate didClickNoticeViewWithUid:self.uid];
     }
 }

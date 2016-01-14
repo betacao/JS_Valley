@@ -257,7 +257,7 @@
 {
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(changeUserHeadImage)];
     tap.cancelsTouchesInView = YES;
-//    [self.btnUserPic addGestureRecognizer:tap];
+    [self.btnUserPic addGestureRecognizer:tap];
     self.btnUserPic.userInteractionEnabled = YES;
 
     NSString *headImage = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_HEAD_IMAGE];
