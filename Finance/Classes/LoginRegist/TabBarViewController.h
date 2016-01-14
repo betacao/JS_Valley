@@ -12,8 +12,8 @@
 {
     NSDictionary *pushInfo;
 }
-+(TabBarViewController *)tabBar;
 
++ (TabBarViewController *)tabBar;
 - (void)jumpToChatList;
 - (void)setupUntreatedApplyCount;
 

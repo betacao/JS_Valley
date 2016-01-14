@@ -242,6 +242,7 @@
         [MobClick event:@"MeViewController" label:@"onClick"];
     }
 }
+
 #pragma mark - 子页面初始化
 -(void)initSubpage
 {
@@ -378,7 +379,7 @@
 }
 #pragma mark - 操作
 
--(void)setSelectedIndex:(NSUInteger)selectedIndex
+- (void)setSelectedIndex:(NSUInteger)selectedIndex
 {
     [super setSelectedIndex:selectedIndex];
 }

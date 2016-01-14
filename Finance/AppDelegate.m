@@ -977,7 +977,8 @@
 {
     TabBarViewController *controller = [TabBarViewController tabBar];
     if ([controller isViewLoaded]) {
-        [controller setSelectedIndex:0];
+        controller.selectedIndex = 0;
+        [controller tabBar:controller.tabBar didSelectItem:[controller.tabBar.items firstObject]];
     }
     [[SHGHomeViewController sharedController] requestRecommendFriends];
     controller.dictionary = dictionary;
