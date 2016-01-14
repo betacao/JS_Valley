@@ -33,8 +33,8 @@
 	[button setTitle:@"修改" forState:UIControlStateNormal];
 	[button setTitle:@"修改" forState:UIControlStateHighlighted];
 	
-	[button setTitleColor:RGB(255, 0, 40) forState:UIControlStateNormal];
-	[button setTitleColor:RGB(255, 0, 40) forState:UIControlStateHighlighted];
+	[button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+	[button setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
 	
 	button.titleLabel.font = [UIFont systemFontOfSize:15.0f];
 	

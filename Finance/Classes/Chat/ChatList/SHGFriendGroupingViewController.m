@@ -34,14 +34,14 @@
 {
     [super viewDidLoad];
     self.title = @"人脉分组";
-
     CGRect frame = self.bgView.frame;
     frame.size.width = kBGViewWidth;
     self.bgView.frame = frame;
-
+    
     frame = self.tableView.frame;
     frame.origin.x = kBGViewWidth;
     frame.size.width = SCREENWIDTH - kBGViewWidth;
+    frame.size.height = SCREENHEIGHT ;
     self.tableView.frame = frame;
 
     frame = self.lineView1.frame;

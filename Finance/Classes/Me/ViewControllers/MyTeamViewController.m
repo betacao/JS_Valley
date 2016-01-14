@@ -26,6 +26,7 @@
 
 @property (nonatomic, strong) IBOutlet UITableViewCell *teamEncourageDescriptionCell;
 @property (weak, nonatomic) IBOutlet UIView *teamLine;
+@property (weak, nonatomic) IBOutlet UIView *shuLine;
 
 
 - (IBAction)inviteButtonClicked:(id *)sender;
@@ -42,7 +43,7 @@
 	view.backgroundColor = [UIColor whiteColor];
     [_tableView setTableFooterView:view];
     self.teamLine.size = CGSizeMake(self.teamLine.width, 0.5f);
-	
+    self.shuLine.size = CGSizeMake(0.5f, self.shuLine.height);
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
     
     [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttp,@"user",@"team"] parameters:@{@"uid":uid}success:^(MOCHTTPResponse *response){
@@ -120,7 +121,7 @@
 	if (indexPath.section == 0) {
 		return 94.0f;
 	}else if(indexPath.section == 1){
-		return 73.0f;
+		return 65.0f;
 	}else if (indexPath.section == 2){
 		return 250.0f;
 	}

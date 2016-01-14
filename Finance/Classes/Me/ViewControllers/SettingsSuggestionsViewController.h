@@ -8,6 +8,6 @@
 
 #import "BaseViewController.h"
 
-@interface SettingsSuggestionsViewController : BaseViewController
+@interface SettingsSuggestionsViewController : BaseViewController<UITextViewDelegate>
 
 @end

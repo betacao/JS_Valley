@@ -15,6 +15,7 @@
 @property (nonatomic, strong) IBOutlet UILabel *product1Rate;
 @property (nonatomic, strong) IBOutlet UILabel *product1Status;
 @property (weak, nonatomic) IBOutlet UIView *viewLine1;
+@property (weak, nonatomic) IBOutlet UILabel *product1Type;
 
 
 //打新股
@@ -73,8 +74,9 @@
 
 - (void)setCellWithDic:(NSDictionary *)dic
 {
-	NSString *ptype = [dic valueForKey:@"ptype"];
-	if ([ptype isEqualToString:@"股票配资"]) {
+	//NSString *ptype = [dic valueForKey:@"ptype"];
+	//if ([ptype isEqualToString:@"股票配资"]) {
+        self.product1Type.text = [dic valueForKey:@"ptype"];
 		self.product1Time.text = [dic valueForKey:@"time"];
 		self.product1Name.text = [dic valueForKey:@"pname"];
 		self.product1Rate.text = [NSString stringWithFormat:@"%@％",[dic valueForKey:@"crate"]];
@@ -96,82 +98,82 @@
 		self.product1.layer.masksToBounds = YES;
 		self.product1.layer.cornerRadius = 5;
 		[self.contentView addSubview:self.product1];
-	}else if ([ptype isEqualToString:@"打新股"]){
-		self.product2Time.text = [dic valueForKey:@"time"];
-		self.product2Name.text = [dic valueForKey:@"pname"];
-		self.product2Rate.text = [NSString stringWithFormat:@"%@％",[dic valueForKey:@"crate"]];
-		self.product2Cycle.text = [dic valueForKey:@"holding"];
-		self.product2Origin.text = [dic valueForKey:@"bline"];
-		NSString *status = [dic valueForKey:@"pstate"];
-		if ([status isEqualToString:@"0"]) {
-			self.product2Status.text = @"未支付";
-		}else if ([status isEqualToString:@"1"]){
-			self.product2Status.text = @"已支付";
-		}else{
-			self.product2Status.text = @"";
-		}
-
-		self.product2Status.textColor = [UIColor redColor];
-
-		self.height = self.product2.height + 10;
-		self.product2.origin = CGPointMake(12, 5);
-		self.product2.width = self.width -24;
-
-		self.product2.layer.masksToBounds = YES;
-		self.product2.layer.cornerRadius = 5;
-		[self.contentView addSubview:self.product2];
-	}else if ([ptype isEqualToString:@"定向增发"]){
-		self.product3Time.text = [dic valueForKey:@"time"];
-		self.product3Name.text = [dic valueForKey:@"pname"];
-		self.product3Rate.text = [NSString stringWithFormat:@"%@％",[dic valueForKey:@"crate"]];
-		NSString *status = [dic valueForKey:@"pstate"];
-		if ([status isEqualToString:@"0"]) {
-			self.product3Status.text = @"未支付";
-		}else if ([status isEqualToString:@"1"]){
-			self.product3Status.text = @"已支付";
-		}else{
-			self.product3Status.text = @"";
-		}
-		self.product3DetailName.text = [dic valueForKey:@"sname"];
-		self.product3Code.text = [dic valueForKey:@"recordno"];
-		self.product3Cycle.text = [dic valueForKey:@"holding"];
-		self.product3SinglePrice.text = [dic valueForKey:@"sprice"];
-
-		self.product3Status.textColor = [UIColor redColor];
-		
-		self.height = self.product3.height + 10;
-		self.product3.origin = CGPointMake(12, 5);
-		self.product3.width = self.width -24;
-
-		self.product3.layer.masksToBounds = YES;
-		self.product3.layer.cornerRadius = 5;
-		[self.contentView addSubview:self.product3];
-	}else if ([ptype isEqualToString:@"新三板"]){
-		self.product4Time.text = [dic valueForKey:@"time"];
-		self.product4Name.text = [dic valueForKey:@"pname"];
-		self.product4Rate.text = [NSString stringWithFormat:@"%@％",[dic valueForKey:@"crate"]];
-		NSString *status = [dic valueForKey:@"pstate"];
-		if ([status isEqualToString:@"0"]) {
-			self.product4Status.text = @"未支付";
-		}else if ([status isEqualToString:@"1"]){
-			self.product4Status.text = @"已支付";
-		}else{
-			self.product4Status.text = @"";
-		}
-		self.product4Cycle.text = [dic valueForKey:@"holding"];
-		self.product4Origin.text = [dic valueForKey:@"bline"];
-		self.product4IncreaseUnit.text = [dic valueForKey:@"add"];
-
-		self.product4Status.textColor = [UIColor redColor];
-		
-		self.height = self.product4.height + 10;
-		self.product4.origin = CGPointMake(12, 5);
-		self.product4.width = self.width -24;
-
-		self.product4.layer.masksToBounds = YES;
-		self.product4.layer.cornerRadius = 5;
-		[self.contentView addSubview:self.product4];
-	}
+//	}else if ([ptype isEqualToString:@"打新股"]){
+//		self.product2Time.text = [dic valueForKey:@"time"];
+//		self.product2Name.text = [dic valueForKey:@"pname"];
+//		self.product2Rate.text = [NSString stringWithFormat:@"%@％",[dic valueForKey:@"crate"]];
+//		self.product2Cycle.text = [dic valueForKey:@"holding"];
+//		self.product2Origin.text = [dic valueForKey:@"bline"];
+//		NSString *status = [dic valueForKey:@"pstate"];
+//		if ([status isEqualToString:@"0"]) {
+//			self.product2Status.text = @"未支付";
+//		}else if ([status isEqualToString:@"1"]){
+//			self.product2Status.text = @"已支付";
+//		}else{
+//			self.product2Status.text = @"";
+//		}
+//
+//		self.product2Status.textColor = [UIColor redColor];
+//
+//		self.height = self.product2.height + 10;
+//		self.product2.origin = CGPointMake(12, 5);
+//		self.product2.width = self.width -24;
+//
+//		self.product2.layer.masksToBounds = YES;
+//		self.product2.layer.cornerRadius = 5;
+//		[self.contentView addSubview:self.product2];
+//	}else if ([ptype isEqualToString:@"定向增发"]){
+//		self.product3Time.text = [dic valueForKey:@"time"];
+//		self.product3Name.text = [dic valueForKey:@"pname"];
+//		self.product3Rate.text = [NSString stringWithFormat:@"%@％",[dic valueForKey:@"crate"]];
+//		NSString *status = [dic valueForKey:@"pstate"];
+//		if ([status isEqualToString:@"0"]) {
+//			self.product3Status.text = @"未支付";
+//		}else if ([status isEqualToString:@"1"]){
+//			self.product3Status.text = @"已支付";
+//		}else{
+//			self.product3Status.text = @"";
+//		}
+//		self.product3DetailName.text = [dic valueForKey:@"sname"];
+//		self.product3Code.text = [dic valueForKey:@"recordno"];
+//		self.product3Cycle.text = [dic valueForKey:@"holding"];
+//		self.product3SinglePrice.text = [dic valueForKey:@"sprice"];
+//
+//		self.product3Status.textColor = [UIColor redColor];
+//		
+//		self.height = self.product3.height + 10;
+//		self.product3.origin = CGPointMake(12, 5);
+//		self.product3.width = self.width -24;
+//
+//		self.product3.layer.masksToBounds = YES;
+//		self.product3.layer.cornerRadius = 5;
+//		[self.contentView addSubview:self.product3];
+//	}else if ([ptype isEqualToString:@"新三板"]){
+//		self.product4Time.text = [dic valueForKey:@"time"];
+//		self.product4Name.text = [dic valueForKey:@"pname"];
+//		self.product4Rate.text = [NSString stringWithFormat:@"%@％",[dic valueForKey:@"crate"]];
+//		NSString *status = [dic valueForKey:@"pstate"];
+//		if ([status isEqualToString:@"0"]) {
+//			self.product4Status.text = @"未支付";
+//		}else if ([status isEqualToString:@"1"]){
+//			self.product4Status.text = @"已支付";
+//		}else{
+//			self.product4Status.text = @"";
+//		}
+//		self.product4Cycle.text = [dic valueForKey:@"holding"];
+//		self.product4Origin.text = [dic valueForKey:@"bline"];
+//		self.product4IncreaseUnit.text = [dic valueForKey:@"add"];
+//
+//		self.product4Status.textColor = [UIColor redColor];
+//		
+//		self.height = self.product4.height + 10;
+//		self.product4.origin = CGPointMake(12, 5);
+//		self.product4.width = self.width -24;
+//
+//		self.product4.layer.masksToBounds = YES;
+//		self.product4.layer.cornerRadius = 5;
+//		[self.contentView addSubview:self.product4];
+//	}
 	
 }
 

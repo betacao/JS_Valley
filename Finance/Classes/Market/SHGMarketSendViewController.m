@@ -262,7 +262,7 @@ typedef NS_ENUM(NSInteger, SHGMarketSendType){
                 __weak typeof(self) weakSelf = self;
                 switch (self.sendType) {
                     case SHGMarketSendTypeNew:{
-                        //新建活动
+                        //新建业务
                         NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
                         NSString *marketName = self.marketNameField.text;
                         NSString *price = self.acountField.text;
@@ -279,7 +279,11 @@ typedef NS_ENUM(NSInteger, SHGMarketSendType){
                         }
 
                         NSDictionary *param = @{@"uid":uid, @"marketName": marketName, @"firstCatalogId": firstId, @"secondCatalogId": secondId, @"price": price, @"contactInfo": contactInfo, @"detail": detail, @"photo":self.imageName, @"city":city};
-                        [SHGMarketManager createNewMarket:param success:^(BOOL success) {
+                        NSMutableDictionary *mParam = [NSMutableDictionary dictionaryWithDictionary:param];
+                        if (!secondId || secondId.length == 0) {
+                            [mParam removeObjectForKey:@"secondCatalogId"];
+                        }
+                        [SHGMarketManager createNewMarket:mParam success:^(BOOL success) {
                             if (success) {
                                 if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(didCreateNewMarket:)]) {
                                     [weakSelf.delegate didCreateNewMarket:firstObject];
@@ -291,7 +295,7 @@ typedef NS_ENUM(NSInteger, SHGMarketSendType){
                         break;
 
                     default:{
-                        //修改活动
+                        //修改业务
                         NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
                         NSString *marketName = self.marketNameField.text;
                         NSString *price = self.acountField.text;
@@ -306,9 +310,12 @@ typedef NS_ENUM(NSInteger, SHGMarketSendType){
                             SHGMarketSecondCategoryObject *secondObject = [firstObject.secondCataLogs objectAtIndex:self.secondCategoryBox.currentIndex];
                             secondId = secondObject.rowId;
                         }
-
                         NSDictionary *param = @{@"uid":uid, @"marketName": marketName, @"firstCatalogId": firstId, @"secondCatalogId": secondId, @"price": price, @"contactInfo": contactInfo, @"detail": detail, @"photo":self.imageName, @"city":city, @"marketId":weakSelf.object.marketId};
-                        [SHGMarketManager modifyMarket:param success:^(BOOL success) {
+                        NSMutableDictionary *mParam = [NSMutableDictionary dictionaryWithDictionary:param];
+                        if (!secondId || secondId.length == 0) {
+                            [mParam removeObjectForKey:@"secondCatalogId"];
+                        }
+                        [SHGMarketManager modifyMarket:mParam success:^(BOOL success) {
                             if (success) {
                                 if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(didModifyMarket:)]) {
                                     [weakSelf.delegate didModifyMarket:firstObject];

@@ -51,16 +51,16 @@
         self.departmentLabel.text = obj.titles;
     }
     //判断好友是一度好友还是二度好友
-    if ([obj.friendShip isEqualToString:@"一度"]) {
-        self.friendImage.image = [UIImage imageNamed:@"first_friend.png"];
-    }
-    if ([obj.friendShip isEqualToString:@"二度"])
-    {
-         self.friendImage.image = [UIImage imageNamed:@"second_friend.png"];
-    }
-    if ([obj.friendShip isEqualToString:@""]) {
-         self.friendImage.image = nil;
-    }
+//    if ([obj.friendShip isEqualToString:@"一度"]) {
+//        self.friendImage.image = [UIImage imageNamed:@"first_friend.png"];
+//    }
+//    if ([obj.friendShip isEqualToString:@"二度"])
+//    {
+//         self.friendImage.image = [UIImage imageNamed:@"second_friend.png"];
+//    }
+//    if ([obj.friendShip isEqualToString:@""]) {
+//         self.friendImage.image = nil;
+//    }
    
 //    if (![obj.tags isEqualToString:@""]) {
 //        NSArray *arry = [obj.tags componentsSeparatedByString:@","];
@@ -79,7 +79,7 @@
     self.positionLabel.text = @"";
     self.departmentLabel.text = @"";
     self.positionLabel.text = @"";
-    self.friendImage.image = nil;
+    //self.friendImage.image = nil;
     //self.tagViews = nil;
     //[self.headerImageView sd_setImageWithURL:[NSURL URLWithString:ni placeholderImage:[UIImage imageNamed:@"default_head"]];
     self.headerImageView.image = [UIImage imageNamed:@"default_head"];

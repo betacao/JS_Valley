@@ -28,7 +28,8 @@
     if (self) {
         CGFloat spaceToRight = 15.0f;
         self.timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(SCREENWIDTH - 100.0f, 7.0f, 80.0f, 16.0f)];
-        self.timeLabel.font = [UIFont systemFontOfSize:13.0f];
+        self.timeLabel.font = [UIFont systemFontOfSize:10.0f];
+        self.timeLabel.textColor = [UIColor colorWithHexString:@"919291"];
         self.timeLabel.backgroundColor = [UIColor clearColor];
         self.timeLabel.textAlignment = NSTextAlignmentRight;
         [self.contentView addSubview:self.timeLabel];
@@ -38,15 +39,15 @@
         self.unreadLabel.textColor = [UIColor whiteColor];
         
         self.unreadLabel.textAlignment = NSTextAlignmentCenter;
-        self.unreadLabel.font = [UIFont systemFontOfSize:11.0f];
+        self.unreadLabel.font = [UIFont systemFontOfSize:12.0f];
         self.unreadLabel.layer.cornerRadius = CGRectGetWidth(self.unreadLabel.frame) / 2.0f;
         self.unreadLabel.layer.masksToBounds = YES;
         [self.contentView addSubview:self.unreadLabel];
         
         self.detailLabel = [[UILabel alloc] initWithFrame:CGRectMake(58, 20, SCREENWIDTH-80, 20)];
         self.detailLabel.backgroundColor = [UIColor clearColor];
-        self.detailLabel.font = [UIFont systemFontOfSize:15];
-        self.detailLabel.textColor = [UIColor lightGrayColor];
+        self.detailLabel.font = [UIFont systemFontOfSize:12.0f];
+        self.detailLabel.textColor = [UIColor colorWithHexString:@"565656"];
         [self.contentView addSubview:self.detailLabel];
 
         self.textLabel.backgroundColor = [UIColor clearColor];

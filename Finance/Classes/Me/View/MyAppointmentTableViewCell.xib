@@ -21,6 +21,7 @@
                 <outlet property="product1Rate" destination="MNu-gz-39y" id="e9t-TR-UM6"/>
                 <outlet property="product1Status" destination="vaj-7k-rh6" id="bku-7K-iCX"/>
                 <outlet property="product1Time" destination="SY0-Lu-gjf" id="FPz-el-uOO"/>
+                <outlet property="product1Type" destination="iK3-cH-njm" id="5HA-JK-QWG"/>
                 <outlet property="product2" destination="5rm-J9-bPB" id="xF8-iq-WbZ"/>
                 <outlet property="product2Cycle" destination="xpO-yJ-sK6" id="HIt-jN-Nde"/>
                 <outlet property="product2Name" destination="cgZ-yX-CBV" id="5vy-er-3gf"/>

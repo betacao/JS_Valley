@@ -9,6 +9,7 @@
             <connections>
                 <outlet property="myMoneyCell" destination="7bV-Zj-6ac" id="6Eq-2q-HPJ"/>
                 <outlet property="myMoneyLabel" destination="3NC-nK-sVA" id="B2W-k7-pyU"/>
+                <outlet property="shuLine" destination="gFn-Yi-GL7" id="VOB-P5-i8d"/>
                 <outlet property="tableView" destination="PtW-ss-jQf" id="Of8-tw-R0o"/>
                 <outlet property="teamEncourageDescriptionCell" destination="4v6-cq-50l" id="cT7-WJ-1fm"/>
                 <outlet property="teamLine" destination="ee6-N5-ZK3" id="izL-5Y-oah"/>
@@ -35,20 +36,22 @@
                 <view contentMode="scaleToFill" id="DFg-Bs-Igy">
                     <rect key="frame" x="0.0" y="520" width="320" height="48"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="9xI-bV-tO0">
+                            <rect key="frame" x="11" y="0.0" width="298" height="35"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                            <color key="backgroundColor" red="0.94117647058823528" green="0.25882352941176467" blue="0.25490196078431371" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                            <state key="normal" title="立即邀请">
+                                <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            </state>
+                            <connections>
+                                <action selector="inviteButtonClicked:" destination="-1" eventType="touchUpInside" id="ZWL-y0-e8H"/>
+                            </connections>
+                        </button>
+                    </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="9xI-bV-tO0">
-                    <rect key="frame" x="8" y="520" width="304" height="35"/>
-                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                    <color key="backgroundColor" red="0.94117647058823528" green="0.25882352941176467" blue="0.25490196078431371" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                    <state key="normal" title="立即邀请">
-                        <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                    </state>
-                    <connections>
-                        <action selector="inviteButtonClicked:" destination="-1" eventType="touchUpInside" id="ZWL-y0-e8H"/>
-                    </connections>
-                </button>
             </subviews>
             <color key="backgroundColor" red="0.94117647058823528" green="0.94117647058823528" blue="0.94117647058823528" alpha="1" colorSpace="calibratedRGB"/>
             <point key="canvasLocation" x="600" y="274"/>
@@ -97,36 +100,36 @@
             </tableViewCellContentView>
             <point key="canvasLocation" x="210" y="52"/>
         </tableViewCell>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="73" id="7bV-Zj-6ac">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="76"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="65" id="7bV-Zj-6ac">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="65"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="7bV-Zj-6ac" id="jp2-Ml-yr8">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="75"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="64"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" id="VpE-fK-7Qr">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="14"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="10"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" red="0.93333333333333335" green="0.93725490196078431" blue="0.94117647058823528" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
                     <view contentMode="scaleToFill" id="pWO-iT-zJg">
-                        <rect key="frame" x="0.0" y="59" width="320" height="14"/>
+                        <rect key="frame" x="0.0" y="55" width="320" height="10"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                         <color key="backgroundColor" red="0.93333333333333335" green="0.93725490196078431" blue="0.94117647058823528" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="合伙人明细" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="cPd-PF-ibb">
-                        <rect key="frame" x="16" y="20" width="88" height="36"/>
+                        <rect key="frame" x="16" y="20" width="88" height="25"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <color key="textColor" red="0.086274509803921567" green="0.086274509803921567" blue="0.086274509803921567" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="goToNext" id="5nc-Un-mRL">
-                        <rect key="frame" x="290" y="32" width="6" height="11"/>
+                        <rect key="frame" x="290" y="27" width="6" height="11"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Zcq-iv-Ftt">
-                        <rect key="frame" x="240" y="27" width="42" height="21"/>
+                        <rect key="frame" x="240" y="22" width="42" height="21"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                         <color key="textColor" red="0.59607843137254901" green="0.59607843137254901" blue="0.59607843137254901" alpha="1" colorSpace="calibratedRGB"/>
@@ -156,21 +159,21 @@
                         <color key="backgroundColor" red="0.90196078431372551" green="0.90588235294117647" blue="0.90980392156862744" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="rkH-zz-85p">
-                        <rect key="frame" x="16" y="54" width="288" height="154"/>
+                        <rect key="frame" x="16" y="54" width="288" height="170"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <attributedString key="attributedText">
                             <fragment content="1.">
                                 <attributes>
                                     <color key="NSColor" red="0.33725490196078434" green="0.33725490196078434" blue="0.33725490196078434" alpha="1" colorSpace="calibratedRGB"/>
                                     <font key="NSFont" size="14" name="HelveticaNeue"/>
-                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineSpacing="5"/>
                                 </attributes>
                             </fragment>
-                            <fragment content="全车采用全新中网格栅设计，家族式直瀑布式格栅更换为钢琴漆材质，车标两侧各有一条镀铬横条。">
+                            <fragment content="您邀请的合伙人产生的销售佣金，您可获得其总佣金的5%的额外奖励。">
                                 <attributes>
                                     <color key="NSColor" red="0.33725490196078434" green="0.33725490196078434" blue="0.33725490196078434" alpha="1" colorSpace="calibratedRGB"/>
                                     <font key="NSFont" size="14" name="STHeitiSC-Light"/>
-                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineSpacing="5"/>
                                 </attributes>
                             </fragment>
                             <fragment>
@@ -179,38 +182,28 @@
                                 <attributes>
                                     <color key="NSColor" red="0.33725490196078434" green="0.33725490196078434" blue="0.33725490196078434" alpha="1" colorSpace="calibratedRGB"/>
                                     <font key="NSFont" size="14" name="HelveticaNeue"/>
-                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineSpacing="5"/>
                                 </attributes>
                             </fragment>
-                            <fragment content="家族前脸设计历练来源于别克的概念车。疝气大灯造型犀利。">
+                            <fragment content="您的合伙人再邀请的成员产生的销售佣金，您也可以获得其总佣金1%的额外奖励。                          ">
                                 <attributes>
                                     <color key="NSColor" red="0.33725490196078434" green="0.33725490196078434" blue="0.33725490196078434" alpha="1" colorSpace="calibratedRGB"/>
                                     <font key="NSFont" size="14" name="STHeitiSC-Light"/>
-                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
-                                </attributes>
-                            </fragment>
-                            <fragment>
-                                <string key="content" base64-UTF8="YES">
-Cg
-</string>
-                                <attributes>
-                                    <color key="NSColor" red="0.33725490196078434" green="0.33725490196078434" blue="0.33725490196078434" alpha="1" colorSpace="calibratedRGB"/>
-                                    <font key="NSFont" size="14" name="HelveticaNeue"/>
-                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineSpacing="5"/>
                                 </attributes>
                             </fragment>
                             <fragment content="3.">
                                 <attributes>
                                     <color key="NSColor" red="0.33725490196078434" green="0.33725490196078434" blue="0.33725490196078434" alpha="1" colorSpace="calibratedRGB"/>
                                     <font key="NSFont" size="14" name="HelveticaNeue"/>
-                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineSpacing="6" paragraphSpacing="5" paragraphSpacingBefore="5"/>
+                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineSpacing="5"/>
                                 </attributes>
                             </fragment>
-                            <fragment content="中网格栅为主动式格栅，可自动开闭来控制气流。">
+                            <fragment content="您每邀请10位好友成功注册且通过认证，将获得50元话费（150元封顶）充值。">
                                 <attributes>
                                     <color key="NSColor" red="0.33725490196078434" green="0.33725490196078434" blue="0.33725490196078434" alpha="1" colorSpace="calibratedRGB"/>
                                     <font key="NSFont" size="14" name="STHeitiSC-Light"/>
-                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineSpacing="6" paragraphSpacing="5" paragraphSpacingBefore="5"/>
+                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineSpacing="5"/>
                                 </attributes>
                             </fragment>
                             <fragment>
@@ -220,7 +213,7 @@ Cg
                                 <attributes>
                                     <color key="NSColor" red="0.33725490196078434" green="0.33725490196078434" blue="0.33725490196078434" alpha="1" colorSpace="calibratedRGB"/>
                                     <font key="NSFont" size="14" name="HelveticaNeue"/>
-                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineSpacing="6" paragraphSpacing="5" paragraphSpacingBefore="5"/>
+                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineSpacing="5"/>
                                 </attributes>
                             </fragment>
                         </attributedString>

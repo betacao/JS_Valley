@@ -45,8 +45,8 @@
 	[button setTitle:@"保存" forState:UIControlStateNormal];
 	[button setTitle:@"保存" forState:UIControlStateHighlighted];
 	
-	[button setTitleColor:RGB(255, 0, 40) forState:UIControlStateNormal];
-	[button setTitleColor:RGB(255, 0, 40) forState:UIControlStateHighlighted];
+	[button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+	[button setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
 	
 	button.titleLabel.font = [UIFont systemFontOfSize:15.0f];
 	self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:button];

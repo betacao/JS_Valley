@@ -148,15 +148,20 @@
         NSString *circleString = [NSString stringWithFormat:@"动态 \n%@",circleCount];
         NSString *followString = [NSString stringWithFormat:@"关注 \n%@",followCount];
         NSString *fansString = [NSString stringWithFormat:@"粉丝 \n%@",fansCount];
-
+        NSMutableParagraphStyle * paragraphStyle1 = [[NSMutableParagraphStyle alloc] init];
+        [paragraphStyle1 setLineSpacing:1.0f];
+        paragraphStyle1.alignment = NSTextAlignmentCenter;
         NSMutableAttributedString *aCircleString = [[NSMutableAttributedString alloc] initWithString:circleString];
         [aCircleString addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"161616"] range:NSMakeRange(4, aCircleString.length - 4)];
+        [aCircleString addAttribute:NSParagraphStyleAttributeName value:paragraphStyle1 range:NSMakeRange(0, [aCircleString length])];
 
         NSMutableAttributedString *aFollowString = [[NSMutableAttributedString alloc] initWithString:followString];
         [aFollowString addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"161616"] range:NSMakeRange(4, aFollowString.length - 4)];
+        [aFollowString addAttribute:NSParagraphStyleAttributeName value:paragraphStyle1 range:NSMakeRange(0, [aFollowString length])];
 
         NSMutableAttributedString *aFansString = [[NSMutableAttributedString alloc] initWithString:fansString];
         [aFansString addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"161616"] range:NSMakeRange(4, aFansString.length - 4)];
+        [aFansString addAttribute:NSParagraphStyleAttributeName value:paragraphStyle1 range:NSMakeRange(0, [aFansString length])];
 
         weakSelf.circleHeaderLabel.attributedText = aCircleString;
         weakSelf.followHeaderLabel.attributedText = aFollowString;
@@ -197,7 +202,7 @@
 
         size = [weakSelf.moneyLabel sizeThatFits:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX)];
         frame = weakSelf.moneyLabel.frame;
-        frame.origin.x = CGRectGetMaxX(weakSelf.txtNickName.frame) + kObjectMargin;
+        frame.origin.x = CGRectGetMaxX(weakSelf.txtNickName.frame) + kObjectMargin/2.0f;
         frame.size.width = size.width;
         weakSelf.moneyLabel.frame = frame;
 
@@ -571,7 +576,7 @@
         _circleHeaderLabel = [[UILabel alloc] initWithFrame:CGRectMake(spaceWidth, 0, labelWidth, self.labelView.height)];
         _circleHeaderLabel.textAlignment = NSTextAlignmentCenter;
         _circleHeaderLabel.numberOfLines = 0;
-        _circleHeaderLabel.font = [UIFont systemFontOfSize:10.0f] ;
+        _circleHeaderLabel.font = [UIFont systemFontOfSize:11.0f] ;
         _circleHeaderLabel.textColor = [UIColor colorWithHexString:@"989898"];
         _circleHeaderLabel.userInteractionEnabled = YES;
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(goToMyCircle)];
@@ -587,7 +592,7 @@
         _followHeaderLabel = [[UILabel alloc] initWithFrame:CGRectMake(spaceWidth + labelWidth, 0, labelWidth, self.labelView.height)];
         _followHeaderLabel.textAlignment = NSTextAlignmentCenter;
         _followHeaderLabel.numberOfLines = 0;
-        _followHeaderLabel.font = [UIFont systemFontOfSize:10.0f];
+        _followHeaderLabel.font = [UIFont systemFontOfSize:11.0f];
         _followHeaderLabel.textColor = [UIColor colorWithHexString:@"989898"];
 
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(goToFollowList)];
@@ -608,7 +613,7 @@
         _fansHeaderLabel.textAlignment = NSTextAlignmentCenter;
         _fansHeaderLabel.textColor = [UIColor colorWithHexString:@"989898"];
         _fansHeaderLabel.numberOfLines = 0;
-        _fansHeaderLabel.font = [UIFont systemFontOfSize:10.0f];
+        _fansHeaderLabel.font = [UIFont systemFontOfSize:11.0f];
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(goToFansList)];
         [_fansHeaderLabel addGestureRecognizer:tap];
         _fansHeaderLabel.userInteractionEnabled = YES;

@@ -60,8 +60,8 @@
     [super viewDidLoad];
   
     UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [rightButton setFrame:CGRectMake(0, 0, 24, 24)];
-    [rightButton setBackgroundImage:[UIImage imageNamed:@"咨询"] forState:UIControlStateNormal];
+    [rightButton setImage:[UIImage imageNamed:@"consult"] forState:UIControlStateNormal];
+    [rightButton sizeToFit];
     [rightButton addTarget:self action:@selector(rightItemClick:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:rightButton];
     self.navigationItem.rightBarButtonItem = rightItem;

@@ -21,14 +21,24 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
 	self.title = @"意见反馈";
-	
+    self.textView.delegate = self;
 	self.textView.placeholder = @"请输入反馈，我们将为您不断改进。";
 }
--(void)viewWillAppear:(BOOL)animated
+- (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     [MobClick event:@"SettingsSuggestionsViewController" label:@"onClick"];
 }
+
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
+{
+    if ([text isEqualToString:@"\n"]) {
+        [self.textView resignFirstResponder];
+        return  NO;
+    }
+    return YES;
+}
+
 - (IBAction)sugguestButtonClicked:(id)sender
 {
 	if (IsStrEmpty(self.textView.text)) {

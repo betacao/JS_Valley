@@ -70,10 +70,6 @@
                                 <color key="textColor" red="0.086274509803921567" green="0.086274509803921567" blue="0.086274509803921567" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="1ct-SK-KYz">
-                                <rect key="frame" x="292" y="0.0" width="28" height="23"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
-                            </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="wuQ-2v-EOI">
                                 <rect key="frame" x="144" y="14" width="111" height="15"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -91,7 +87,6 @@
             <connections>
                 <outlet property="companyLabel" destination="5s6-io-g5O" id="rLY-4m-pZB"/>
                 <outlet property="departmentLabel" destination="wuQ-2v-EOI" id="QuG-4x-rdU"/>
-                <outlet property="friendImage" destination="1ct-SK-KYz" id="fms-kY-uQf"/>
                 <outlet property="headerImageView" destination="wis-PN-8NJ" id="wiv-Co-Rps"/>
                 <outlet property="headerView" destination="Pq2-6u-BlY" id="sYL-JP-RMf"/>
                 <outlet property="positionLabel" destination="vt1-tK-SoV" id="QCw-xh-ghy"/>

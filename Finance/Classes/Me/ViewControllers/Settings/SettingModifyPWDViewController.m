@@ -35,6 +35,9 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    self.oldPassword.delegate = self;
+    self.changedPassword.delegate = self;
+    self.confirmPassword.delegate = self;
     self.title = @"密码修改";
     UIView *paddingView1 = [[UIView alloc] initWithFrame:CGRectMake(0, 0,20, 30)];
     self.oldPassword.leftView = paddingView1;
@@ -45,16 +48,12 @@
     UIView *paddingView3 = [[UIView alloc] initWithFrame:CGRectMake(0, 0,20, 30)];
     self.confirmPassword.leftView = paddingView3;
     self.confirmPassword.leftViewMode = UITextFieldViewModeAlways;
-
-    self.oldPassword.placeholder = @"请输入旧密码";
     [self.oldPassword setValue:[UIColor colorWithHexString:@"AFAFAF"] forKeyPath:@"_placeholderLabel.textColor"];
     [self.oldPassword setValue:[UIFont systemFontOfSize:14] forKeyPath:@"_placeholderLabel.font"];
     
-    self.changedPassword.placeholder = @"请输入新密码";
     [self.changedPassword setValue:[UIColor colorWithHexString:@"AFAFAF"] forKeyPath:@"_placeholderLabel.textColor"];
     [self.changedPassword setValue:[UIFont systemFontOfSize:14] forKeyPath:@"_placeholderLabel.font"];
     
-    self.confirmPassword.placeholder = @"请确认新密码";
     [self.confirmPassword setValue:[UIColor colorWithHexString:@"AFAFAF"] forKeyPath:@"_placeholderLabel.textColor"];
     [self.confirmPassword setValue:[UIFont systemFontOfSize:14] forKeyPath:@"_placeholderLabel.font"];
    
@@ -64,6 +63,14 @@
     [super viewWillAppear:animated];
     [MobClick event:@"SettingModifyPWDViewController" label:@"onClick"];
 }
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [textField resignFirstResponder];
+
+    return YES;
+}
+
 - (IBAction)oldButtonClick:(id)sender {
     self.oldPassword.text = @"";
     [self.oldPassword becomeFirstResponder];

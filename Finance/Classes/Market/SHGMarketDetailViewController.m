@@ -104,17 +104,17 @@
     self.timeLabel.text = self.responseObject.createTime;
     if (!self.responseObject.price.length == 0) {
         NSString * zjStr = self.responseObject.price;
-        self.capitalLabel.text = [NSString stringWithFormat:@"金额：%@",zjStr];
+        self.capitalLabel.text = [NSString stringWithFormat:@"金额： %@",zjStr];
     }else {
         self.capitalLabel.text = [NSString stringWithFormat:@"金额： 暂未说明"];
     }
-    NSString * typeStr = self.responseObject.catalog;
-    self.typeLabel.text = [NSString stringWithFormat:@"类型： %@",typeStr];
-    if ([self.responseObject.loginuserstate isEqualToString:@"0" ]) {
+     self.typeLabel.text = [NSString stringWithFormat:@"类型： %@",self.responseObject.catalog];
+
+      if ([self.responseObject.loginuserstate isEqualToString:@"0" ]) {
         NSString * contactString = @"联系方式： 认证可见";
         NSMutableAttributedString * str = [[NSMutableAttributedString alloc]initWithString:contactString];
-        [str addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:14] range:NSMakeRange(4, 4)];
-        [str addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"4277B2"] range:NSMakeRange(4, 4)];
+        [str addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:14.0f] range:NSMakeRange(6, 4)];
+        [str addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"4277B2"] range:NSMakeRange(6, 4)];
         self.phoneNumLabel.attributedText = str;
         self.phoneNumLabel.userInteractionEnabled = YES;
         UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapContactLabelToIdentification)];
