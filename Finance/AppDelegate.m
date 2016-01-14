@@ -973,4 +973,15 @@
     }
 }
 
+- (void)moveToRootController:(NSDictionary *)dictionary
+{
+    TabBarViewController *controller = [TabBarViewController tabBar];
+    if ([controller isViewLoaded]) {
+        [controller setSelectedIndex:0];
+    }
+    controller.dictionary = dictionary;
+    BaseNavigationController *nav = [[BaseNavigationController alloc] initWithRootViewController:controller];
+    self.window.rootViewController = nav;
+}
+
 @end
