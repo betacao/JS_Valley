@@ -71,11 +71,11 @@ const CGFloat kOtherRecommendCellHeight = 58.0f;
     DDTapGestureRecognizer *bottomRecognizer = [[DDTapGestureRecognizer alloc]initWithTarget:self action:@selector(didTapHeaderView:)];
     [self.bottomView addGestureRecognizer:bottomRecognizer];
 
-    [self.markView sizeToFit];
-    CGRect frame = self.markView.frame;
-    frame.origin.x = 0.0f;
-    frame.origin.y = 0.0f;
-    self.markView.frame = frame;
+//    [self.markView sizeToFit];
+//    CGRect frame = self.markView.frame;
+//    frame.origin.x = 0.0f;
+//    frame.origin.y = 0.0f;
+//    self.markView.frame = frame;
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -221,8 +221,9 @@ const CGFloat kOtherRecommendCellHeight = 58.0f;
             self.middleViewLine.hidden = NO;
         }
     }
-    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, [self heightOfView] - kLabelMargin, SCREENWIDTH , kLabelMargin)];
-    view.backgroundColor = RGBA(239, 238, 239, 1);
+    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0.0f, [self heightOfView] - kObjectMargin, SCREENWIDTH , kObjectMargin)];
+    view.backgroundColor = [UIColor colorWithHexString:@"EFEEEF"];
+
     [self.view addSubview:view];
     frame = self.view.frame;
     frame.size.height = CGRectGetMaxY(view.frame);
@@ -232,7 +233,7 @@ const CGFloat kOtherRecommendCellHeight = 58.0f;
 
 - (CGFloat)heightOfView
 {
-    return kFirstRecommendCellHeight + (self.arrayCount - 1) * kOtherRecommendCellHeight + kLabelMargin;
+    return kFirstRecommendCellHeight + (self.arrayCount - 1) * kOtherRecommendCellHeight + kObjectMargin;
 }
 
 - (IBAction)didClickFocusButton:(UIButton *)sender {
@@ -261,14 +262,14 @@ const CGFloat kOtherRecommendCellHeight = 58.0f;
 {
     NSString *uid = @"";
     NSString *name = @"";
-    if([recognizer.view isEqual:self.topImageView]){
+    if([recognizer.view isEqual:self.topView]){
         uid = ((RecmdFriendObj *)[self.dataArray firstObject]).uid;
         name = ((RecmdFriendObj *)[self.dataArray firstObject]).username;
         if(self.delegate && [self.delegate respondsToSelector:@selector(cnickCLick:name:)]){
             [self.delegate cnickCLick:uid name:name];
         }
         
-    } else if([recognizer.view isEqual:self.middleImageView]){
+    } else if([recognizer.view isEqual:self.middleView]){
         uid = ((RecmdFriendObj *)[self.dataArray objectAtIndex:1]).uid;
         name = ((RecmdFriendObj *)[self.dataArray objectAtIndex:1]).username;
         if(self.delegate && [self.delegate respondsToSelector:@selector(cnickCLick:name:)]){

@@ -227,10 +227,9 @@
         }
         cell.delegate = self;
         SHGMarketFirstCategoryObject  *obj  = [self.scrollView.categoryArray objectAtIndex:[self.scrollView currentIndex]];
-         if (obj.secondCataLogs.count == 0 && [self.scrollView currentIndex] != 0) {
+        [cell loadDataWithObject:[self.currentArray objectAtIndex:indexPath.row] type:SHGMarketTableViewCellTypeAll];
+        if (obj.secondCataLogs.count == 0 && [self.scrollView currentIndex] != 0) {
             [cell loadNewUi];
-        } else{
-            [cell loadDataWithObject:[self.currentArray objectAtIndex:indexPath.row] type:SHGMarketTableViewCellTypeAll];
         }
         return cell;
     } else{
