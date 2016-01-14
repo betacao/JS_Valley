@@ -27,6 +27,7 @@
 @property (nonatomic, strong) IBOutlet UITableViewCell *teamEncourageDescriptionCell;
 @property (weak, nonatomic) IBOutlet UIView *teamLine;
 @property (weak, nonatomic) IBOutlet UIView *shuLine;
+@property (weak, nonatomic) IBOutlet UILabel *contentLabel;
 
 
 - (IBAction)inviteButtonClicked:(id *)sender;
@@ -152,6 +153,14 @@
 		return self.myMoneyCell;
 
 	}else if (indexPath.section == 2){
+        self.contentLabel.numberOfLines = 0;
+        NSString * str = @"1.您邀请的合伙人产生的销售佣金，您可获得其总佣金的5%的额外奖励。\n2.您的合伙人再邀请的成员产生的销售佣金，您也可以获得其总佣金1%的额外奖励。\n3.您每邀请10位好友成功注册且通过认证，将获得50元话费（150元封顶）充值。";
+        NSMutableAttributedString *aCircleString = [[NSMutableAttributedString alloc] initWithString:str];
+        NSMutableParagraphStyle * paragraphStyle1 = [[NSMutableParagraphStyle alloc] init];
+        [paragraphStyle1 setLineSpacing:5.0f];
+        [aCircleString addAttributes:@{NSParagraphStyleAttributeName:paragraphStyle1, NSFontAttributeName:[UIFont systemFontOfSize:14.0f], NSForegroundColorAttributeName:[UIColor colorWithHexString:@"565656"]} range:NSMakeRange(0, [aCircleString length])];
+        self.contentLabel.attributedText = aCircleString;
+        
 		return self.teamEncourageDescriptionCell;
 	}
 	
