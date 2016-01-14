@@ -20,5 +20,5 @@ typedef NS_ENUM(NSInteger, contactType)
 @property (nonatomic, assign) contactType type;
 
 - (void)loadDataWithobj:(BasePeopleObject *)obj;
-
+- (void)loadDataWithObject:(SHGPeopleObject *)obj;
 @end
