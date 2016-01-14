@@ -392,10 +392,7 @@
 
 - (void)loginSuccess
 {
-    TabBarViewController *vc = [TabBarViewController tabBar];
-    vc.dictionary = self.rid;
-    BaseNavigationController *nav = [[BaseNavigationController alloc] initWithRootViewController:vc];
-    [AppDelegate currentAppdelegate].window.rootViewController = nav;
+    [[AppDelegate currentAppdelegate] moveToRootController:self.rid];
 }
 
 - (void)keyboardDidShow:(NSNotification *)notification

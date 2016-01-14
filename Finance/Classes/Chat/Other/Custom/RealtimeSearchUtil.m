@@ -130,11 +130,9 @@ static RealtimeSearchUtil *defaultUtil = nil;
                 if(tmp1 && [tmp1 rangeOfString:subStr].location != NSNotFound)
                 {
                     [results addObject:object];
-                }
-                if(tmp2 && [tmp2 rangeOfString:subStr].location != NSNotFound){
+                } else if(tmp2 && [tmp2 rangeOfString:subStr].location != NSNotFound){
                     [results addObject:object];
-                }
-                if(tmp3 && [tmp3 rangeOfString:subStr].location != NSNotFound){
+                } else if(tmp3 && [tmp3 rangeOfString:subStr].location != NSNotFound){
                     [results addObject:object];
                 }
             }

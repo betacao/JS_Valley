@@ -49,6 +49,12 @@
     [CommonMethod setExtraCellLineHidden:self.listTable];
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [self loadFriendNumber];
+}
+
 - (void)loadFriendNumber
 {
     __weak typeof(self) weakSelf = self;

@@ -503,8 +503,6 @@
         //feed流
         CircleListObj *object = [[CircleListObj alloc] init];
         object.feedhtml = [userInfo objectForKey:@"feedHtml"];
-        object.rid = [userInfo objectForKey:@"rid"];
-        object.postType = @"ad";
         LinkViewController *controller = [[LinkViewController alloc] init];
         controller.url = object.feedhtml;
         controller.object = object;
@@ -814,6 +812,8 @@
             message = @"分享成功";
             if (shareRid.length > 0) {
                 [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_CHANGE_SHARE_TO_SMSSUCCESS object:shareRid];
+            } else{
+                [Hud showMessageWithText:@"分享成功"];
             }
             
         } else if(resp.errCode == -1){
@@ -971,6 +971,18 @@
     } else{
         [Hud showMessageWithText:@"现版本微信不支持分享,请更新"];
     }
+}
+
+- (void)moveToRootController:(NSDictionary *)dictionary
+{
+    TabBarViewController *controller = [TabBarViewController tabBar];
+    if ([controller isViewLoaded]) {
+        [controller setSelectedIndex:0];
+    }
+    [[SHGHomeViewController sharedController] requestRecommendFriends];
+    controller.dictionary = dictionary;
+    BaseNavigationController *nav = [[BaseNavigationController alloc] initWithRootViewController:controller];
+    self.window.rootViewController = nav;
 }
 
 @end

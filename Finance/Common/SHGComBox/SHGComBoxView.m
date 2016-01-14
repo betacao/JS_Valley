@@ -81,6 +81,7 @@
         _tableView.layer.masksToBounds = YES;
         _tableView.layer.cornerRadius = 3.0f;
         _tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+        _tableView.showsVerticalScrollIndicator = NO;
     }
     return _tableView;
 }
@@ -170,10 +171,7 @@
             [self.parentView addSubview:self.tableView];
             CGRect frame = self.tableView.frame;
             frame.size.height = self.titlesList.count * CGRectGetHeight(self.frame);
-            if(CGRectGetMaxY(frame) > SCREENHEIGHT){
-                //避免超出屏幕外
-                frame.size.height -= CGRectGetMaxY(frame) - SCREENHEIGHT;
-            }
+            frame.size.height = MIN(CGRectGetMaxY(self.parentView.frame) - CGRectGetMinY(frame), CGRectGetHeight(frame));
             self.tableView.frame = frame;
         } completion:^(BOOL finished){
             self.isOpen = YES;

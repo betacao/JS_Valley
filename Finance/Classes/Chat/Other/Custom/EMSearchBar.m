@@ -50,10 +50,10 @@
     for (id object in view.subviews) {
         if ([object isKindOfClass:NSClassFromString(@"UISearchBarBackground")]) {
         } else if ([object isKindOfClass:NSClassFromString(@"UISearchBarTextField")]) {
-            UITextField *textFeild = (UITextField *)object;
-            [textFeild setValue:[UIColor colorWithHexString:@"BEBEBE"] forKeyPath:@"_placeholderLabel.textColor"];
-            [textFeild setValue:[UIFont systemFontOfSize:14] forKeyPath:@"_placeholderLabel.font"];
-            
+            UITextField *textField = (UITextField *)object;
+            [textField setValue:[UIColor colorWithHexString:@"BEBEBE"] forKeyPath:@"_placeholderLabel.textColor"];
+            [textField setValue:[UIFont systemFontOfSize:14] forKeyPath:@"_placeholderLabel.font"];
+            textField.enablesReturnKeyAutomatically = NO;
         } else if ([object isKindOfClass:NSClassFromString(@"UINavigationButton")]){
             UIButton *button = (UIButton *)object;
             [button setTitle:@"取消" forState:UIControlStateNormal];

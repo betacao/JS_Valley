@@ -17,8 +17,8 @@
 @interface SHGConnectionsViewController ()<UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) EMSearchBar *searchBar;
-@property (assign, nonatomic) NSInteger pageNum;
-
+@property (assign, nonatomic) NSInteger normalPage;
+@property (assign, nonatomic) NSInteger searchPage;
 @property (strong, nonatomic) NSMutableArray *resultArray;
 @property (assign, nonatomic) BOOL searchLocal;
 @property (strong, nonatomic) UITableViewCell *emptyCell;
@@ -50,12 +50,12 @@
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:rightButton];
     self.navigationItem.rightBarButtonItem = rightItem;
 
-    self.pageNum = 1;
-    NSDictionary *param = @{@"uid":UID ,@"pagesize":@"15" ,@"pagenum":@(self.pageNum)};
+    self.normalPage = 1;
+    self.searchPage = 1;
+    NSDictionary *param = @{@"uid":UID ,@"pagesize":@"15" ,@"pagenum":@(self.normalPage)};
 
     __weak typeof(self) weakSelf = self;
     [self loadFriendList:param block:^(NSArray *array) {
-        [weakSelf.dataArr addObjectsFromArray:array];
         [weakSelf.listArray addObjectsFromArray:array];
         weakSelf.resultArray = [NSMutableArray arrayWithArray:array];
         [weakSelf.tableView reloadData];
@@ -81,22 +81,36 @@
 
 - (void)refreshFooter
 {
-    if (self.resultArray.count > 0) {
-        NSDictionary *param = @{@"uid":UID ,@"pagesize":@"15" ,@"pagenum":@(self.pageNum + 1)};
-        __weak typeof(self) weakSelf = self;
-        [self loadFriendList:param block:^(NSArray *array) {
-            weakSelf.pageNum++;
-            [weakSelf.resultArray addObjectsFromArray:array];
-            [weakSelf.tableView reloadData];
-        }];
+    if (self.searchLocal) {
+        if (self.resultArray.count > 0) {
+            NSDictionary *param = @{@"uid":UID ,@"pagesize":@"15" ,@"pagenum":@(self.normalPage + 1)};
+            __weak typeof(self) weakSelf = self;
+            [self loadFriendList:param block:^(NSArray *array) {
+                weakSelf.normalPage++;
+                [weakSelf.listArray addObjectsFromArray:array];
+                [weakSelf.resultArray addObjectsFromArray:array];
+                [weakSelf.tableView reloadData];
+            }];
+        }
     } else{
-        self.pageNum = 1;
-        NSDictionary *param = @{@"uid":UID ,@"pagesize":@"15" ,@"pagenum":@(1)};
-        __weak typeof(self) weakSelf = self;
-        [self loadFriendList:param block:^(NSArray *array) {
-            [weakSelf.resultArray addObjectsFromArray:array];
-            [weakSelf.tableView reloadData];
-        }];
+        if (self.resultArray.count > 0) {
+            NSDictionary *param = nil;
+            __weak typeof(self)weakSelf = self;
+            switch (self.type) {
+                case SHGFriendTypeFirst:
+                    param = @{@"uid":UID, @"pagenum":@(self.searchPage + 1), @"pagesize":@"15", @"type":@"once", @"condition":self.searchBar.text};
+                    break;
+
+                default:
+                    param = @{@"uid":UID, @"pagenum":@(self.searchPage + 1), @"pagesize":@"15", @"type":@"twice", @"condition":self.searchBar.text};
+                    break;
+            }
+            [self searchFriendList:param block:^(NSArray *array) {
+                weakSelf.searchPage++;
+                [weakSelf.resultArray addObjectsFromArray:array];
+                [weakSelf.tableView reloadData];
+            }];
+        }
     }
 }
 
@@ -145,6 +159,24 @@
             request =[rBaseAddressForHttp stringByAppendingString:@"/friends/level/two"];
             break;
     }
+    [MOCHTTPRequestOperationManager getWithURL:request class:[SHGPeopleObject class] parameters:param success:^(MOCHTTPResponse *response) {
+        [Hud hideHud];
+        [weakSelf.tableView.footer endRefreshing];
+        block(response.dataArray);
+    } failed:^(MOCHTTPResponse *response) {
+        [Hud hideHud];
+        [weakSelf.tableView.footer endRefreshing];
+        block(nil);
+        [Hud showMessageWithText:@"获取好友信息失败"];
+    }];
+}
+
+- (void)searchFriendList:(NSDictionary *)param block:(void (^)(NSArray *array))block
+{
+    __weak typeof(self) weakSelf = self;
+    [Hud showLoadingWithMessage:@"请稍等..."];
+    NSString *request =[rBaseAddressForHttp stringByAppendingString:@"/friends/searchFriends"];
+
     [MOCHTTPRequestOperationManager getWithURL:request class:[SHGPeopleObject class] parameters:param success:^(MOCHTTPResponse *response) {
         [Hud hideHud];
         [weakSelf.tableView.footer endRefreshing];
@@ -232,8 +264,13 @@
 {
     __weak typeof(self) weakSelf = self;
     if (self.searchLocal || searchText.length == 0) {
-        self.tableView.footer = nil;
         self.searchLocal = YES;
+        if (searchText.length == 0) {
+            [self addHeaderRefresh:self.tableView headerRefesh:NO andFooter:YES];
+        } else{
+            self.tableView.footer = nil;
+        }
+
         if (self.type == SHGFriendTypeFirst) {
             [[RealtimeSearchUtil currentUtil] realtimeSearchWithSource:self.listArray searchText:searchText firstSel:@selector(name) secondSel:@selector(company) thirdSel:@selector(position) resultBlock:^(NSArray *results) {
                 dispatch_async(dispatch_get_main_queue(), ^{
@@ -260,7 +297,24 @@
     [self.searchBar resignFirstResponder];
     if (searchBar.text.length > 0) {
         self.searchLocal = NO;
-//        [self searchMarketList:@"first" searchText:searchBar.text marketId:@"-1"];
+        [self addHeaderRefresh:self.tableView headerRefesh:NO andFooter:YES];
+        NSDictionary *param = nil;
+        self.searchPage = 1;
+        __weak typeof(self)weakSelf = self;
+        switch (self.type) {
+            case SHGFriendTypeFirst:
+                param = @{@"uid":UID, @"pagenum":@(self.searchPage), @"pagesize":@"15", @"type":@"once", @"condition":searchBar.text};
+                break;
+
+            default:
+                param = @{@"uid":UID, @"pagenum":@(self.searchPage), @"pagesize":@"15", @"type":@"twice", @"condition":searchBar.text};
+                break;
+        }
+        [self searchFriendList:param block:^(NSArray *array) {
+            [weakSelf.resultArray removeAllObjects];
+            [weakSelf.resultArray addObjectsFromArray:array];
+            [weakSelf.tableView reloadData];
+        }];
     }
 }
 

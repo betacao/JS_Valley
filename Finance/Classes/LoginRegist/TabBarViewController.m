@@ -307,7 +307,7 @@
 - (SHGHomeViewController *)homeViewController
 {
     if (!_homeViewController){
-        _homeViewController = [[SHGHomeViewController alloc]initWithNibName:@"SHGHomeViewController" bundle:nil];
+        _homeViewController = [SHGHomeViewController sharedController];
     }
     return _homeViewController;
 }

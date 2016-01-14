@@ -160,11 +160,7 @@
 - (void)loginSuccess
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_CHANGE_UPDATE_AUTO_STATUE object:nil];
-
-    TabBarViewController *vc = [TabBarViewController tabBar];
-    vc.dictionary = self.rid;
-    BaseNavigationController *nav = [[BaseNavigationController alloc] initWithRootViewController:vc];
-    [AppDelegate currentAppdelegate].window.rootViewController = nav;
+    [[AppDelegate currentAppdelegate] moveToRootController:self.rid];
     //重新登录时刷新我的页面数据
 }
 @end

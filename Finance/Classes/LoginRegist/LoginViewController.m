@@ -294,10 +294,7 @@
 
 - (void)loginSuccess
 {
-    TabBarViewController *vc = [TabBarViewController tabBar];
-    vc.dictionary = self.rid;
-    BaseNavigationController *nav = [[BaseNavigationController alloc] initWithRootViewController:vc];
-    [AppDelegate currentAppdelegate].window.rootViewController =nav;
+    [[AppDelegate currentAppdelegate] moveToRootController:self.rid];
 }
 - (IBAction)deleteButtonClick:(id)sender {
     self.textUser.text = @"";

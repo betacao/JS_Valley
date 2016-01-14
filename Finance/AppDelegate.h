@@ -35,5 +35,7 @@
 - (void)wechatShareWithText:(NSString *)text shareUrl:(NSString *)shareUrl shareType:(NSInteger)scene;
 - (void)shareActionToSMS:(NSString *)content;
 - (void)shareActionToWeChat:(NSInteger)type content:(NSString *)content url:(NSString *)url;
+- (void)moveToRootController:(NSDictionary *)dictionary;
+
 @end
 

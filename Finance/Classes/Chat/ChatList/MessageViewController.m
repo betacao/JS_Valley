@@ -224,7 +224,6 @@
         //feed流
         CircleListObj *object = [[CircleListObj alloc] init];
         object.feedhtml = obj.feedHtml;
-        object.postType = @"ad";
         LinkViewController *controller = [[LinkViewController alloc] init];
         controller.url = object.feedhtml;
         controller.object = object;
