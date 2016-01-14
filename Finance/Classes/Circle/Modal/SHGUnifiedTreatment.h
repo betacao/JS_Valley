@@ -13,4 +13,6 @@
 
 + (instancetype)sharedTreatment;
 
+- (void)shareFeedhtmlString:(NSString *)url;
+
 @end

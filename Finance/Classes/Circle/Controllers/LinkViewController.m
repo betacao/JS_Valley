@@ -73,8 +73,7 @@
         for (JSValue *jsVal in args) {
             NSLog(@"%@", jsVal);
         }
-//        JSValue *this = [JSContext currentThis];
-        [[SHGUnifiedTreatment sharedTreatment] shareClicked:self.object];
+        [[SHGUnifiedTreatment sharedTreatment] shareFeedhtmlString:self.object.feedhtml];
     };
 }
 

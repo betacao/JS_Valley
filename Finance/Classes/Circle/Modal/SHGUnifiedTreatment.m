@@ -174,12 +174,8 @@
         shareTitle = [obj.detail substringToIndex:15];
         shareContent = [NSString stringWithFormat:@"%@…",[obj.detail substringToIndex:15]];
     }
-    NSString *content = @"";
-    if ([obj.postType isEqualToString:@"ad"]) {
-        content = [NSString stringWithFormat:@"%@\"%@\"%@%@",@"Hi，我在金融大牛圈上看到了一个非常棒的帖子,关于",postContent,@"，赶快下载大牛圈查看吧！",obj.feedhtml];
-    } else{
-        content = [NSString stringWithFormat:@"%@\"%@\"%@%@",@"Hi，我在金融大牛圈上看到了一个非常棒的帖子,关于",postContent,@"，赶快下载大牛圈查看吧！",[NSString stringWithFormat:@"%@%@",rBaseAddressForHttpShare,obj.rid]];
-    }
+    NSString *content = [NSString stringWithFormat:@"%@\"%@\"%@%@",@"Hi，我在金融大牛圈上看到了一个非常棒的帖子,关于",postContent,@"，赶快下载大牛圈查看吧！",[NSString stringWithFormat:@"%@%@",rBaseAddressForHttpShare,obj.rid]];
+
     id<ISSShareActionSheetItem> item1 = [ShareSDK shareActionSheetItemWithTitle:@"动态" icon:[UIImage imageNamed:@"圈子图标"] clickHandler:^{
         [self circleShareWithObj:obj];
     }];
@@ -231,6 +227,52 @@
     }];
 
 }
+
+- (void)shareFeedhtmlString:(NSString *)url
+{
+    UIImage *png = [UIImage imageNamed:@"80.png"];
+    id<ISSCAttachment> image  = [ShareSDK pngImageWithImage:png];
+//    NSString *shareTitle = SHARE_TITLE;
+
+    id<ISSShareActionSheetItem> item4 = [ShareSDK shareActionSheetItemWithTitle:@"朋友圈" icon:[UIImage imageNamed:@"sns_icon_23"] clickHandler:^{
+        [[AppDelegate currentAppdelegate] wechatShareWithText:@"大牛圈推广" shareUrl:url shareType:1];
+    }];
+    id<ISSShareActionSheetItem> item5 = [ShareSDK shareActionSheetItemWithTitle:@"微信好友" icon:[UIImage imageNamed:@"sns_icon_22"] clickHandler:^{
+         [[AppDelegate currentAppdelegate] wechatShareWithText:@"大牛圈推广" shareUrl:url shareType:0];
+    }];
+    NSArray *shareArray = nil;
+    if ([WXApi isWXAppSupportApi]) {
+        if ([QQApiInterface isQQSupportApi]) {
+            shareArray = [ShareSDK customShareListWithType: item5, item4, SHARE_TYPE_NUMBER(ShareTypeQQ), nil];
+        } else{
+            shareArray = [ShareSDK customShareListWithType: item5, item4, nil];
+        }
+    } else{
+        if ([QQApiInterface isQQSupportApi]) {
+            shareArray = [ShareSDK customShareListWithType: SHARE_TYPE_NUMBER(ShareTypeQQ), nil];
+        }
+    }
+    if (!shareArray) {
+        return;
+    }
+    NSString *shareUrl = url;
+
+    //构造分享内容
+    id<ISSContent> publishContent = [ShareSDK content:@"大牛圈推广" defaultContent:@"大牛圈推广" image:image title:SHARE_TITLE url:shareUrl description:@"大牛圈推广" mediaType:SHARE_TYPE];
+    //创建弹出菜单容器
+    id<ISSContainer> container = [ShareSDK container];
+    [container setIPadContainerWithView:[SHGSegmentController sharedSegmentController].selectedViewController.view arrowDirect:UIPopoverArrowDirectionUp];
+
+    //弹出分享菜单
+    [ShareSDK showShareActionSheet:container shareList:shareArray content:publishContent statusBarTips:YES authOptions:nil shareOptions:nil result:^(ShareType type, SSResponseState state, id<ISSPlatformShareInfo> statusInfo, id<ICMErrorInfo> error, BOOL end) {
+        if (state == SSResponseStateSuccess){
+            [Hud showMessageWithText:@"分享成功"];
+        } else if (state == SSResponseStateFail){
+            [Hud showMessageWithText:@"分享失败"];
+        }
+    }];
+}
+
 //分享给好友
 - (void)shareToFriendWithObj:(CircleListObj *)obj
 {
