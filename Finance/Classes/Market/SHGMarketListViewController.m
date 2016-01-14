@@ -157,7 +157,7 @@
 {
     NSString *marketID = @"";
     for (SHGMarketObject *object in self.currentArray) {
-        if ([object.marketId compare:marketID] == NSOrderedDescending) {
+        if ([object.marketId compare:marketID options:NSNumericSearch] == NSOrderedDescending) {
             marketID = object.marketId;
         }
     }
@@ -169,7 +169,7 @@
     SHGMarketObject *object = [self.currentArray firstObject];
     NSString *marketID = object.marketId;
     for (SHGMarketObject *object in self.currentArray) {
-        if ([object.marketId compare:marketID] == NSOrderedAscending) {
+        if ([object.marketId compare:marketID options:NSNumericSearch] == NSOrderedAscending) {
             marketID = object.marketId;
         }
     }
@@ -180,7 +180,7 @@
 {
     NSString *modifyTime = @"";
     for (SHGMarketObject *object in self.currentArray) {
-        if ([object.modifyTime compare:modifyTime] == NSOrderedDescending) {
+        if ([object.modifyTime compare:modifyTime options:NSNumericSearch] == NSOrderedDescending) {
             modifyTime = object.modifyTime;
         }
     }
