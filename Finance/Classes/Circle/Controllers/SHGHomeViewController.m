@@ -65,9 +65,18 @@ const CGFloat kAdButtomMargin = 20.0f;
     return  self;
 }
 
++ (instancetype)sharedController
+{
+    static SHGHomeViewController *sharedGlobleInstance = nil;
+    static dispatch_once_t predicate;
+    dispatch_once(&predicate, ^{
+        sharedGlobleInstance = [[self alloc] init];
+    });
+    return sharedGlobleInstance;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [CommonMethod setExtraCellLineHidden:self.listTable];
     [self addHeaderRefresh:self.listTable headerRefesh:YES headerTitle:@{kRefreshStateIdle:@"下拉可以刷新", kRefreshStatePulling:@"释放后查看最新动态", kRefreshStateRefreshing:@"正在努力加载中"} andFooter:YES footerTitle:nil];
     self.listTable.separatorStyle = NO;
     //处理tableView左边空白
@@ -104,7 +113,6 @@ const CGFloat kAdButtomMargin = 20.0f;
         [SHGGloble sharedGloble].CompletionBlock = ^(NSArray *allArray, NSArray *normalArray, NSArray *adArray){
             [Hud hideHud];
             if(allArray && [allArray count] > 0){
-                [weakSelf requestAlermInfo];
                 //更新整体数据
                 [weakSelf.dataArr removeAllObjects];
                 [weakSelf.dataArr addObjectsFromArray:allArray];
@@ -117,15 +125,14 @@ const CGFloat kAdButtomMargin = 20.0f;
 
                 [weakSelf.listTable.header endRefreshing];
                 [weakSelf.listTable.footer endRefreshing];
-                weakSelf.listTable.footer.hidden = NO;
 
                 [weakSelf.newMessageNoticeView showWithText:[NSString stringWithFormat:@"为您加载了%ld条新动态",(long)allArray.count]];
 
+                [weakSelf insertRecomandArray];
                 dispatch_async(dispatch_get_main_queue(), ^(){
                     [weakSelf.listTable reloadData];
                 });
             } else{
-                weakSelf.listTable.footer.hidden = NO;
                 [weakSelf.listTable.header endRefreshing];
                 [Hud showMessageWithText:@"获取首页数据失败"];
                 [weakSelf performSelector:@selector(endrefresh) withObject:nil afterDelay:1.0];
@@ -218,7 +225,7 @@ const CGFloat kAdButtomMargin = 20.0f;
     return _emptyView;
 }
 
-- (void)requestAlermInfo
+- (void)requestRecommendFriends
 {
     NSString *uid = [[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID] stringValue];
     NSDictionary *param = @{@"uid":uid, @"area":@""};
@@ -241,21 +248,22 @@ const CGFloat kAdButtomMargin = 20.0f;
             obj.title = [dic valueForKey:@"title"];
             [weakSelf.recomandArray addObject:obj];
         }
-        if(weakSelf.recomandArray && weakSelf.recomandArray.count > 0){
-            [weakSelf insertRecomandArray];
-            dispatch_async(dispatch_get_main_queue(), ^(){
-                [weakSelf.listTable reloadData];
-            });
-        }
-        
+        [weakSelf insertRecomandArray];
+        dispatch_async(dispatch_get_main_queue(), ^(){
+            [weakSelf.listTable reloadData];
+        });
+
     } failed:^(MOCHTTPResponse *response){
         NSLog(@"%@",response.error);
-        
+
     }];
 }
 
 - (void)insertRecomandArray
 {
+    if ([self.dataArr indexOfObject:self.recomandArray]||self.recomandArray.count == 0) {
+        return;
+    }
     //当前允许显示推荐好友 并且是动态页面不是已关注页面
     if(self.shouldDisplayRecommend){
         if(self.dataArr.count > 4){
@@ -331,8 +339,6 @@ const CGFloat kAdButtomMargin = 20.0f;
         [weakSelf.listTable.header endRefreshing];
         [weakSelf performSelector:@selector(endrefresh) withObject:nil afterDelay:1.0];
         [Hud hideHud];
-       
-
     }];
 }
 

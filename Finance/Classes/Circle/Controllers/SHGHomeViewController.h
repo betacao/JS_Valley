@@ -8,10 +8,10 @@
 
 #import "BaseTableViewController.h"
 @interface SHGHomeViewController : BaseTableViewController
-
++ (instancetype)sharedController;
 - (UITableView *)currentTableView;
 - (NSMutableArray *) currentDataArray;
 - (NSMutableArray *) currentListArray;
 - (void)refreshHeader;
-
+- (void)requestRecommendFriends;
 @end

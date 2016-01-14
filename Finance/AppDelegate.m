@@ -979,6 +979,7 @@
     if ([controller isViewLoaded]) {
         [controller setSelectedIndex:0];
     }
+    [[SHGHomeViewController sharedController] requestRecommendFriends];
     controller.dictionary = dictionary;
     BaseNavigationController *nav = [[BaseNavigationController alloc] initWithRootViewController:controller];
     self.window.rootViewController = nav;
