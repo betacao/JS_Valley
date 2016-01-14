@@ -17,7 +17,7 @@
 #define kTagViewWidth 45.0f * XFACTOR
 #define kTagViewHeight 16.0f * XFACTOR
 #define kBottomViewLeftMargin 14.0f
-
+#define kHeaderViewHeight 82.0f * XFACTOR
 typedef NS_ENUM(NSInteger, SHGUserType) {
     //马甲号类型
     SHGUserTypeVest = 0,
@@ -43,7 +43,7 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
 @property (weak, nonatomic) IBOutlet UIView *tagViews;
 @property (weak, nonatomic) IBOutlet UIImageView *headerBackImageView;
 @property (weak, nonatomic) IBOutlet UIView *lineView;
-@property (weak, nonatomic) IBOutlet UIView *fView;
+@property (weak, nonatomic) IBOutlet UIView *attentionAndCollectView;
 //@property (weak, nonatomic) IBOutlet UIView *footerView;
 @property (weak, nonatomic) IBOutlet UIButton *leftButton;
 @property (weak, nonatomic) IBOutlet UIButton *rightButton;
@@ -71,8 +71,10 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
     self.title = @"个人动态";
     if ([self.userId isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID]]) {
         self.listArray = [NSMutableArray arrayWithArray:@[@"我的动态", @"我的好友"]];
-        //self.fView.hidden = YES;
+        self.headerView.size = CGSizeMake(self.headerView.width, kHeaderViewHeight);
+        self.attentionAndCollectView.hidden = YES;
         self.friendImage.hidden = YES;
+        self.lineView.hidden = YES;
     } else{
         self.friendImage.hidden = NO;
         self.listArray = [NSMutableArray arrayWithArray:@[@"他的动态", @"他的好友", @"共同好友"]];
@@ -184,7 +186,7 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
         [self.leftButton setTitleColor:[UIColor colorWithHexString:@"F7514A"] forState:UIControlStateNormal];
         //[self.leftButton setBackgroundColor:[UIColor colorWithHexString:@"F7514A"]];
     } else if ([self.relationShip intValue] == 1){      //已关注
-        [self.leftButton setTitle:@"已关注" forState:UIControlStateNormal];
+        [self.leftButton setTitle:@"发消息" forState:UIControlStateNormal];
         self.leftButton.enabled = NO;
         [self.leftButton setTitleColor:[UIColor colorWithHexString:@"919291"] forState:UIControlStateNormal];
          //[self.leftButton setBackgroundColor:[UIColor colorWithHexString:@"B7B7B7"]];

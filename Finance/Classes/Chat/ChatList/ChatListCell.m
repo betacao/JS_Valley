@@ -27,7 +27,7 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         CGFloat spaceToRight = 15.0f;
-        self.timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(SCREENWIDTH - 100.0f, 7.0f, 80.0f, 16.0f)];
+        self.timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(SCREENWIDTH - 95.0f, 7.0f, 80.0f, 16.0f)];
         self.timeLabel.font = [UIFont systemFontOfSize:10.0f];
         self.timeLabel.textColor = [UIColor colorWithHexString:@"919291"];
         self.timeLabel.backgroundColor = [UIColor clearColor];

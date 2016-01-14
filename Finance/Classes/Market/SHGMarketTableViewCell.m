@@ -36,6 +36,7 @@
 {
     [self clearCell];
     self.object = object;
+    self.typeLabel.hidden = NO;
     UIImage * img = [UIImage imageNamed:@"action_xuxian"];
     self.xuXian.image = [img resizableImageWithCapInsets:UIEdgeInsetsMake(0 , 1, 0, 1) resizingMode:UIImageResizingModeTile];
     self.titleView.text = object.marketName;

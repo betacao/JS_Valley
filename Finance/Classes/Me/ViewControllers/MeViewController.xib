@@ -38,7 +38,7 @@
             <point key="canvasLocation" x="-696" y="-127"/>
         </view>
         <view contentMode="scaleToFill" id="Aif-Hw-V8z">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="121"/>
+            <rect key="frame" x="0.0" y="0.0" width="320" height="123"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" id="MHf-1H-IXg">

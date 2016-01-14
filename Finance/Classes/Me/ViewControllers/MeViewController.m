@@ -51,7 +51,6 @@
 - (void)changeUserHeadImage;
 
 @end
-
 #define spaceWidth  0
 #define labelWidth  (SCREENWIDTH - spaceWidth * 3.0f ) / 4.0f
 

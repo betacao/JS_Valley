@@ -39,23 +39,23 @@
     self.changedPassword.delegate = self;
     self.confirmPassword.delegate = self;
     self.title = @"密码修改";
-    UIView *paddingView1 = [[UIView alloc] initWithFrame:CGRectMake(0, 0,20, 30)];
+    UIView *paddingView1 = [[UIView alloc] initWithFrame:CGRectMake(0, 0,14.0, 30.0f)];
     self.oldPassword.leftView = paddingView1;
     self.oldPassword.leftViewMode = UITextFieldViewModeAlways;
-    UIView *paddingView2 = [[UIView alloc] initWithFrame:CGRectMake(0, 0,20, 30)];
+    UIView *paddingView2 = [[UIView alloc] initWithFrame:CGRectMake(0, 0,14.0f, 30.0f)];
     self.changedPassword.leftView = paddingView2;
     self.changedPassword.leftViewMode = UITextFieldViewModeAlways;
-    UIView *paddingView3 = [[UIView alloc] initWithFrame:CGRectMake(0, 0,20, 30)];
+    UIView *paddingView3 = [[UIView alloc] initWithFrame:CGRectMake(0, 0,14.0f, 30.0f)];
     self.confirmPassword.leftView = paddingView3;
     self.confirmPassword.leftViewMode = UITextFieldViewModeAlways;
     [self.oldPassword setValue:[UIColor colorWithHexString:@"AFAFAF"] forKeyPath:@"_placeholderLabel.textColor"];
-    [self.oldPassword setValue:[UIFont systemFontOfSize:14] forKeyPath:@"_placeholderLabel.font"];
+    [self.oldPassword setValue:[UIFont systemFontOfSize:14.0f] forKeyPath:@"_placeholderLabel.font"];
     
     [self.changedPassword setValue:[UIColor colorWithHexString:@"AFAFAF"] forKeyPath:@"_placeholderLabel.textColor"];
-    [self.changedPassword setValue:[UIFont systemFontOfSize:14] forKeyPath:@"_placeholderLabel.font"];
+    [self.changedPassword setValue:[UIFont systemFontOfSize:14.0f] forKeyPath:@"_placeholderLabel.font"];
     
     [self.confirmPassword setValue:[UIColor colorWithHexString:@"AFAFAF"] forKeyPath:@"_placeholderLabel.textColor"];
-    [self.confirmPassword setValue:[UIFont systemFontOfSize:14] forKeyPath:@"_placeholderLabel.font"];
+    [self.confirmPassword setValue:[UIFont systemFontOfSize:14.0f] forKeyPath:@"_placeholderLabel.font"];
    
 }
 -(void)viewWillAppear:(BOOL)animated

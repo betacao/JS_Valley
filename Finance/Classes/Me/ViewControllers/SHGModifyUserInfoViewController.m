@@ -8,7 +8,7 @@
 
 #import "SHGModifyUserInfoViewController.h"
 #import "SHGIndustryChoiceView.h"
-
+#define kNextButtonHeight 8.0f *  XFACTOR
 @interface SHGModifyUserInfoViewController ()<UIActionSheetDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, SHGIndustryChoiceDelegate>
 
 @property (weak, nonatomic) IBOutlet UIScrollView *bgScrollView;
@@ -77,7 +77,8 @@
     [self updateCloseButtonState:self.locationField];
 
     CGRect frame = self.nextButton.frame;
-    frame.origin.y *= YFACTOR;
+    //frame.origin.y *= YFACTOR;
+    frame.origin.y = self.bgScrollView.height - kNextButtonHeight - frame.size.height;
     self.nextButton.frame = frame;
 
 }
