@@ -261,7 +261,7 @@ const CGFloat kAdButtomMargin = 20.0f;
 
 - (void)insertRecomandArray
 {
-    if ([self.dataArr indexOfObject:self.recomandArray]||self.recomandArray.count == 0) {
+    if ([self.dataArr indexOfObject:self.recomandArray] != NSNotFound||self.recomandArray.count == 0) {
         return;
     }
     //当前允许显示推荐好友 并且是动态页面不是已关注页面
