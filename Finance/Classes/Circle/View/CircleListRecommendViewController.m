@@ -9,7 +9,7 @@
 #import "CircleListRecommendViewController.h"
 #import "popObj.h"
 
-const CGFloat kFirstRecommendCellHeight = 73.0f;
+const CGFloat kFirstRecommendCellHeight = 79.0f;
 const CGFloat kOtherRecommendCellHeight = 58.0f;
 #define kLabelMargin  7.0f * XFACTOR
 
