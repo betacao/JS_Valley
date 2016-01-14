@@ -43,6 +43,8 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
 @property (weak, nonatomic) IBOutlet UIView *tagViews;
 @property (weak, nonatomic) IBOutlet UIImageView *headerBackImageView;
 @property (weak, nonatomic) IBOutlet UIView *lineView;
+@property (weak, nonatomic) IBOutlet UIView *centerLine;
+
 @property (weak, nonatomic) IBOutlet UIView *attentionAndCollectView;
 //@property (weak, nonatomic) IBOutlet UIView *footerView;
 @property (weak, nonatomic) IBOutlet UIButton *leftButton;
@@ -85,6 +87,7 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     [self initView];
     self.lineView.frame = CGRectMake(self.lineView.origin.x, self.lineView.origin.y, SCREENWIDTH, 0.5f);
+    self.centerLine.frame = CGRectMake(self.centerLine.origin.x, self.centerLine.origin.y, 0.5f, self.centerLine.height);
     self.tableView.separatorStyle = UITableViewCellSelectionStyleNone;
     [self requestDataWithTarget:@"first" time:@""];
 }

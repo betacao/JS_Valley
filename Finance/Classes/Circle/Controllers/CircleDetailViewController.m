@@ -420,7 +420,7 @@
     }
     self.lblCompanyName.text = comp;
     CGRect companRect = self.lblCompanyName.frame;
-    companRect.origin.x =  CGRectGetMaxX(frame);
+    companRect.origin.x = kItemMargin +  CGRectGetMaxX(frame);
     [self.lblCompanyName sizeToFit];
     CGSize size = self.lblCompanyName.frame.size;
     companRect.size.width = size.width;
