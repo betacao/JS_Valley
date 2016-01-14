@@ -878,6 +878,8 @@
 		F986DE3A1BFDE65200E6709F /* SHGActionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F986DE391BFDE65200E6709F /* SHGActionManager.m */; };
 		F98B16EF1BC7947D000A577C /* libGeTuiSdk-1.2.1.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F98B16EE1BC7947D000A577C /* libGeTuiSdk-1.2.1.a */; };
 		F98D64F01C0053ED00717EA5 /* SHGActionCommentTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F98D64EF1C0053ED00717EA5 /* SHGActionCommentTableViewCell.xib */; };
+		F99503A01C4675700050562F /* SHGConnectionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F995039E1C4675700050562F /* SHGConnectionsViewController.m */; };
+		F99503A11C4675700050562F /* SHGConnectionsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F995039F1C4675700050562F /* SHGConnectionsViewController.xib */; };
 		F99580C41B9D338B001F8AA6 /* SHGModifyInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F99580C21B9D338B001F8AA6 /* SHGModifyInfoViewController.m */; };
 		F99580C51B9D338B001F8AA6 /* SHGModifyInfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F99580C31B9D338B001F8AA6 /* SHGModifyInfoViewController.xib */; };
 		F99580C81B9D7F39001F8AA6 /* DXAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = F99580C71B9D7F39001F8AA6 /* DXAlertView.m */; };
@@ -2160,6 +2162,9 @@
 		F98B16ED1BC7947D000A577C /* GeTuiSdkError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeTuiSdkError.h; sourceTree = "<group>"; };
 		F98B16EE1BC7947D000A577C /* libGeTuiSdk-1.2.1.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libGeTuiSdk-1.2.1.a"; sourceTree = "<group>"; };
 		F98D64EF1C0053ED00717EA5 /* SHGActionCommentTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGActionCommentTableViewCell.xib; sourceTree = "<group>"; };
+		F995039D1C4675700050562F /* SHGConnectionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGConnectionsViewController.h; sourceTree = "<group>"; };
+		F995039E1C4675700050562F /* SHGConnectionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGConnectionsViewController.m; sourceTree = "<group>"; };
+		F995039F1C4675700050562F /* SHGConnectionsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGConnectionsViewController.xib; sourceTree = "<group>"; };
 		F99580C11B9D338B001F8AA6 /* SHGModifyInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGModifyInfoViewController.h; sourceTree = "<group>"; };
 		F99580C21B9D338B001F8AA6 /* SHGModifyInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGModifyInfoViewController.m; sourceTree = "<group>"; };
 		F99580C31B9D338B001F8AA6 /* SHGModifyInfoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGModifyInfoViewController.xib; sourceTree = "<group>"; };
@@ -2848,6 +2853,9 @@
 				B007E0F51B412FDF00BB8E8D /* GameViewController.h */,
 				B007E0F61B412FDF00BB8E8D /* GameViewController.m */,
 				B007E0F71B412FDF00BB8E8D /* GameViewController.xib */,
+				F995039D1C4675700050562F /* SHGConnectionsViewController.h */,
+				F995039E1C4675700050562F /* SHGConnectionsViewController.m */,
+				F995039F1C4675700050562F /* SHGConnectionsViewController.xib */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -5105,6 +5113,7 @@
 				61E83D641AF7C78E00703651 /* 产品-默认@3x.png in Resources */,
 				6145FF191AE4A3450074AB49 /* CircleDetailViewController.xib in Resources */,
 				614EFECF1AEF594A00F2BDD1 /* ProdConfigTableViewCell.xib in Resources */,
+				F99503A11C4675700050562F /* SHGConnectionsViewController.xib in Resources */,
 				61E83D921AF7C78E00703651 /* 输入框@3x.png in Resources */,
 				61E83D3E1AF7C78E00703651 /* 微博图标@3x.png in Resources */,
 				56F2D50F1B5A5CB3008E2855 /* 认证.png in Resources */,
@@ -5864,6 +5873,7 @@
 				F93242BA1BE9EE92003B7F07 /* SHGUnifiedTreatment.m in Sources */,
 				614A597B1AD3AEA1005DAB04 /* AppDelegate.m in Sources */,
 				614DC8931AD66B3200F610D4 /* BRCommonPopup.m in Sources */,
+				F99503A01C4675700050562F /* SHGConnectionsViewController.m in Sources */,
 				F9EDD5F71BABFBCF00506C0C /* SDPhotoBrowser.m in Sources */,
 				6187D2DB1AF1C693008E1D21 /* DXFaceView.m in Sources */,
 				6145FF251AE4FCFE0074AB49 /* ProductListViewController.m in Sources */,

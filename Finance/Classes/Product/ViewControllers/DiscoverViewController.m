@@ -10,7 +10,7 @@
 #import "MyFollowViewController.h"
 #import "GameObj.h"
 #import "GameViewController.h"
-
+#import "SHGConnectionsViewController.h"
 #import "SHGActionListViewController.h"
 #import "SHGActionMineViewController.h"
 #import "SHGActionSegmentViewController.h"
@@ -190,19 +190,19 @@
     } else if (indexPath.section == 1){
         switch (indexPath.row) {
             case 0:{
-                ChatListViewController *vc = [[ChatListViewController alloc] init];
-                vc.chatListType = ContactListView;
-                vc.hidesBottomBarWhenPushed = YES;
-                [MobClick event:@"ChatListContactTwainListView" label:@"onClick"];
-                [self.navigationController pushViewController:vc animated:YES];
+                SHGConnectionsViewController *controller = [[SHGConnectionsViewController alloc] init];
+                controller.type = SHGFriendTypeFirst;
+                controller.hidesBottomBarWhenPushed = YES;
+                [MobClick event:@"ChatListContactListView" label:@"onClick"];
+                [self.navigationController pushViewController:controller animated:YES];
             }
                 break;
             case 1:{
-                ChatListViewController *vc = [[ChatListViewController alloc] init];
-                vc.chatListType = ContactTwainListView;
-                vc.hidesBottomBarWhenPushed = YES;
-                [MobClick event:@"ChatListContactListView" label:@"onClick"];
-                [self.navigationController pushViewController:vc animated:YES];
+                SHGConnectionsViewController *controller = [[SHGConnectionsViewController alloc] init];
+                controller.type = SHGFriendTypeSecond;
+                controller.hidesBottomBarWhenPushed = YES;
+                [MobClick event:@"ChatListContactTwainListView" label:@"onClick"];
+                [self.navigationController pushViewController:controller animated:YES];
                 
             }
                 break;
