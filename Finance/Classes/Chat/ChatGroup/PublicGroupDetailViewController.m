@@ -47,6 +47,24 @@
 {
     [super viewWillAppear:animated];
     [MobClick event:@"PublicGroupDetailViewController" label:@"onClick"];
+    
+}
+
+- (void)getGroupManagerName
+{
+    __weak typeof(self) weakSelf = self;
+    NSString * uid = weakSelf.group.owner;
+    [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttp,@"user",@"personaluser"] parameters:@{@"uid":uid}success:^(MOCHTTPResponse *response) {
+        UITableViewCell *cell = [weakSelf.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+        if (cell) {
+            NSString *name = [response.dataDictionary valueForKey:@"name"];
+            cell.detailTextLabel.text = name.length > 0 ? name : uid;
+        }
+    }failed:^(MOCHTTPResponse *response) {
+        [weakSelf.tableView.header endRefreshing];
+        
+    }];
+   
 }
 - (void)viewDidLoad
 {
@@ -158,7 +176,7 @@
     
     if (indexPath.row == 0){
         cell.textLabel.text = NSLocalizedString(@"group.owner", @"Owner");
-        cell.detailTextLabel.text = _group.owner;
+       // cell.detailTextLabel.text = _group.owner;
         
     }else if (indexPath.row == 1) {
         cell.textLabel.text = @"群成员";
@@ -225,6 +243,7 @@
     [[EaseMob sharedInstance].chatManager asyncFetchGroupInfo:_groupId completion:^(EMGroup *group, EMError *error) {
         weakSelf.group = group;
         [weakSelf reloadSubviewsInfo];
+        [weakSelf getGroupManagerName];
         [weakSelf hideHud];
     } onQueue:nil];
 }
