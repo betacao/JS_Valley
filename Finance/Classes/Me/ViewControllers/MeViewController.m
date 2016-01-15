@@ -100,11 +100,11 @@
 {
     if (!_titleLabel)
     {
-        _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 60, 30)];
+        _titleLabel = [[UILabel alloc] init];
         _titleLabel.font = [UIFont systemFontOfSize:17.0f];
         _titleLabel.textColor = TEXT_COLOR;
-        _titleLabel.textAlignment = NSTextAlignmentCenter;
         _titleLabel.text = @"我";
+        [_titleLabel sizeToFit];
     }
     return _titleLabel;
 }
@@ -482,13 +482,12 @@
 #pragma mark - TableView Delegate
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    // Return the number of sections.
     return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 6;
+    return 5;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -513,8 +512,6 @@
     }else if (indexPath.row == 3) {
         cell.lblName.text = @"我的收藏";
     }else if (indexPath.row == 4) {
-        cell.lblName.text = @"我的地址";
-    }else if (indexPath.row == 5) {
         cell.lblName.text = @"设置";
     }
     return cell;
@@ -546,11 +543,6 @@
         [self.navigationController pushViewController:vc animated:YES];
         
     } else if (indexPath.row == 4) {
-        MyAddressViewController *vc = [[MyAddressViewController alloc] init];
-        vc.hidesBottomBarWhenPushed = YES;
-        [MobClick event:@"MyAddressViewController" label:@"onClick"];
-        [self.navigationController pushViewController:vc animated:YES];
-    } else if (indexPath.row == 5) {
         [self goToSettings];
     }
 }
