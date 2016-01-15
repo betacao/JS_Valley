@@ -64,7 +64,9 @@
                 });
             }];
         } else{
-            [Hud showLoadingWithMessage:@"获取通讯录列表失败，请到系统设置设置权限"];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [Hud showMessageWithLongText:@"获取通讯录列表失败，请到系统设置设置权限"];
+            });
         }
     }];
 }
