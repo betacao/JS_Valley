@@ -16,9 +16,7 @@
 
 #define labletextColor    [UIColor colorWithRed:51/255.0 green:51/255.0 blue:51/255.0 alpha:1.0]
 
-#define kNavBarTitleFontSize    18
-
-#define NavBarRightItmFontSize  17
+#define kNavBarTitleFontSize    17
 
 #define UID [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID]
 

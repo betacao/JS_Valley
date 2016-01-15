@@ -114,11 +114,11 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
 -(UILabel *)titleLabel
 {
     if (!_titleLabel){
-        _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 60, 30)];
+        _titleLabel = [[UILabel alloc] init];
         _titleLabel.font = [UIFont systemFontOfSize:17.0f];
         _titleLabel.textColor = TEXT_COLOR;
         _titleLabel.text = @"动态";
-        _titleLabel.textAlignment = NSTextAlignmentCenter;
+        [_titleLabel sizeToFit];
     }
     return _titleLabel;
 }

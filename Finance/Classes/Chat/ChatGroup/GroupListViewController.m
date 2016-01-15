@@ -204,7 +204,7 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         cell.imageView.contentMode = UIViewContentModeScaleAspectFit;
         cell.textLabel.textColor = [UIColor colorWithHexString:@"161616"];
-        cell.textLabel.font = [UIFont systemFontOfSize:13.0f];
+        cell.textLabel.font = [UIFont systemFontOfSize:12.0f * XFACTOR];
         UIView *lineView = [[UIView alloc]initWithFrame:CGRectMake(kImageViewLeftMargin, cell.height - 1.0f, SCREENWIDTH - kImageViewLeftMargin, 0.5f)];
         lineView.tag = 1000;
         lineView.backgroundColor = [UIColor colorWithHexString:@"E6E7E8"];
@@ -235,7 +235,6 @@
         [cell viewWithTag:1002].hidden = NO;
         imageView.hidden = YES;
         cell.textLabel.textColor = [UIColor colorWithHexString:@"161616"];
-        cell.textLabel.font = [UIFont systemFontOfSize:13];
         cell.textLabel.text = @"     新建群组";
         cell.accessoryType = UITableViewCellAccessoryNone;
 
@@ -282,7 +281,7 @@
     button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     button.titleEdgeInsets = UIEdgeInsetsMake(0,0, 0, 0);
     button.backgroundColor = [UIColor clearColor];
-    button.titleLabel.font = [UIFont systemFontOfSize: 13.0f];
+    button.titleLabel.font = [UIFont systemFontOfSize:12.0f * XFACTOR];
     [button setTitleColor:[UIColor colorWithHexString:@"161616"] forState:UIControlStateNormal];
     button.tag = section;
     [button addTarget:self action:@selector(sectionBurronClick:) forControlEvents:UIControlEventTouchUpInside];

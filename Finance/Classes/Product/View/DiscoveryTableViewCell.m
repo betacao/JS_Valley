@@ -19,6 +19,8 @@
 - (void)awakeFromNib
 {
     self.lineView.size = CGSizeMake(self.lineView.width, 0.5f);
+    self.lblTitle.font = [UIFont systemFontOfSize:13.0f * XFACTOR];
+    self.lblTitle.textColor = [UIColor colorWithHexString:@"161616"];
 }
 
 - (void)loadDataWithImage:(NSString *)imageName title:(NSString *)title rightItem:(NSString *)itemName rightItemColor:(UIColor *)color
@@ -29,7 +31,6 @@
         [self.imageTitle setImage:[UIImage imageNamed:imageName]];
     }
     self.lblTitle.text = title;
-    self.lblTitle.textColor = [UIColor colorWithHexString:@"161616"];
     if (itemName && color){
         self.lblRight.text = itemName;
         self.lblRight.backgroundColor = color;
