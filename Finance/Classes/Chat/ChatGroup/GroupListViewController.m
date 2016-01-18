@@ -204,7 +204,7 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         cell.imageView.contentMode = UIViewContentModeScaleAspectFit;
         cell.textLabel.textColor = [UIColor colorWithHexString:@"161616"];
-        cell.textLabel.font = [UIFont systemFontOfSize:12.0f * FontFactor];
+        cell.textLabel.font = [UIFont systemFontOfSize:13.0f * FontFactor];
         UIView *lineView = [[UIView alloc]initWithFrame:CGRectMake(kImageViewLeftMargin, cell.height - 1.0f, SCREENWIDTH - kImageViewLeftMargin, 0.5f)];
         lineView.tag = 1000;
         lineView.backgroundColor = [UIColor colorWithHexString:@"E6E7E8"];

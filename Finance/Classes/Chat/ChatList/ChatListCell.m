@@ -52,7 +52,7 @@
 
         self.textLabel.backgroundColor = [UIColor clearColor];
         self.textLabel.textColor = [UIColor colorWithHexString:@"161616"];
-        self.textLabel.font = [UIFont systemFontOfSize:12.0f * FontFactor];
+        self.textLabel.font = [UIFont systemFontOfSize:13.0f * FontFactor];
         
         self.lineView = [[UIView alloc]initWithFrame:CGRectMake(spaceToRight, CGRectGetHeight(self.frame) - 1.0f, SCREENWIDTH - spaceToRight, 0.5f)];
         self.lineView.backgroundColor = [UIColor colorWithHexString:@"E6E7E8"];

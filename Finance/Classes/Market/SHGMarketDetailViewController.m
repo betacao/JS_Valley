@@ -181,7 +181,7 @@
 
     //内容详情
     self.detailContentLabel.numberOfLines = 0;
-    CGSize dsize =CGSizeMake(self.detailContentLabel.frame.size.width,MAXFLOAT);
+    CGSize dsize = CGSizeMake(SCREENWIDTH - 2 * k_ThirdToTop,MAXFLOAT);
     NSDictionary * ddic = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:14.0],NSFontAttributeName,nil];
     CGSize  dActualsize =[self.detailContentLabel.text boundingRectWithSize:dsize options:NSStringDrawingUsesLineFragmentOrigin  attributes:ddic context:nil].size;
     self.detailContentLabel.frame = CGRectMake(self.detailContentLabel.origin.x, CGRectGetMaxY(self.thirdHorizontalLine.frame)+ k_ThirdToTop, self.detailContentLabel.width, dActualsize.height);
