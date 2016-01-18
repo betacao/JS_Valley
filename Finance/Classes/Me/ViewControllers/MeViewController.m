@@ -101,7 +101,7 @@
     if (!_titleLabel)
     {
         _titleLabel = [[UILabel alloc] init];
-        _titleLabel.font = [UIFont systemFontOfSize:17.0f];
+        _titleLabel.font = [UIFont systemFontOfSize:17.0f * FontFactor];
         _titleLabel.textColor = TEXT_COLOR;
         _titleLabel.text = @"我";
         [_titleLabel sizeToFit];
@@ -254,6 +254,9 @@
 
 - (void)initUI
 {
+    self.txtNickName.font = [UIFont systemFontOfSize:14.0f * FontFactor];
+    self.moneyLabel.font = [UIFont systemFontOfSize:12.0f * FontFactor];
+    self.companyName.font = [UIFont systemFontOfSize:12.0f * FontFactor];
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(changeUserHeadImage)];
     tap.cancelsTouchesInView = YES;
     [self.btnUserPic addGestureRecognizer:tap];
@@ -567,7 +570,7 @@
         _circleHeaderLabel = [[UILabel alloc] initWithFrame:CGRectMake(spaceWidth, 0, labelWidth, self.labelView.height)];
         _circleHeaderLabel.textAlignment = NSTextAlignmentCenter;
         _circleHeaderLabel.numberOfLines = 0;
-        _circleHeaderLabel.font = [UIFont systemFontOfSize:11.0f] ;
+        _circleHeaderLabel.font = [UIFont systemFontOfSize:11.0f * FontFactor] ;
         _circleHeaderLabel.textColor = [UIColor colorWithHexString:@"989898"];
         _circleHeaderLabel.userInteractionEnabled = YES;
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(goToMyCircle)];
@@ -583,7 +586,7 @@
         _followHeaderLabel = [[UILabel alloc] initWithFrame:CGRectMake(spaceWidth + labelWidth, 0, labelWidth, self.labelView.height)];
         _followHeaderLabel.textAlignment = NSTextAlignmentCenter;
         _followHeaderLabel.numberOfLines = 0;
-        _followHeaderLabel.font = [UIFont systemFontOfSize:11.0f];
+        _followHeaderLabel.font = [UIFont systemFontOfSize:11.0f * FontFactor];
         _followHeaderLabel.textColor = [UIColor colorWithHexString:@"989898"];
 
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(goToFollowList)];
@@ -604,7 +607,7 @@
         _fansHeaderLabel.textAlignment = NSTextAlignmentCenter;
         _fansHeaderLabel.textColor = [UIColor colorWithHexString:@"989898"];
         _fansHeaderLabel.numberOfLines = 0;
-        _fansHeaderLabel.font = [UIFont systemFontOfSize:11.0f];
+        _fansHeaderLabel.font = [UIFont systemFontOfSize:11.0f * FontFactor];
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(goToFansList)];
         [_fansHeaderLabel addGestureRecognizer:tap];
         _fansHeaderLabel.userInteractionEnabled = YES;

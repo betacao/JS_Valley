@@ -1070,23 +1070,6 @@ static NSString * const kCommonFNum			= @"commonnum";
     return _titleView;
 }
 
--(UILabel *)titleLabel
-{
-    if (!_titleLabel)
-    {
-        _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 60, 30)];
-        _titleLabel.font = [UIFont systemFontOfSize:17.0f];
-        _titleLabel.textColor = TEXT_COLOR;
-        if (self.chatListType == ChatListView) {
-            _titleLabel.text = @"我的消息";
-        } else if(self.chatListType == ContactListView){
-            _titleLabel.text = @"一度人脉";
-        } else{
-            _titleLabel.text = @"二度人脉";
-        }
-    }
-    return _titleLabel;
-}
 #pragma mark -- sdc 
 #pragma mark -- 加号按钮
 - (UIBarButtonItem *)rightBarButtonItem
@@ -1124,9 +1107,9 @@ static NSString * const kCommonFNum			= @"commonnum";
         _segmentControl.enabled = YES;
         _segmentControl.layer.masksToBounds = YES;
         _segmentControl.layer.cornerRadius = 4;
-        NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor colorWithHexString:@"d53432"],NSForegroundColorAttributeName,[UIFont systemFontOfSize:17.0f],NSFontAttributeName ,nil];
+        NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor colorWithHexString:@"d53432"],NSForegroundColorAttributeName,[UIFont systemFontOfSize:17.0f * FontFactor],NSFontAttributeName ,nil];
 
-        NSDictionary *dic1 = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor],NSForegroundColorAttributeName,[UIFont systemFontOfSize:17.0f],NSFontAttributeName ,nil];
+        NSDictionary *dic1 = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor],NSForegroundColorAttributeName,[UIFont systemFontOfSize:17.0f * FontFactor],NSFontAttributeName ,nil];
         //设置标题的颜色 字体和大小 阴影和阴影颜色
         [_segmentControl setTitleTextAttributes:dic1 forState:UIControlStateNormal];
         [_segmentControl setTitleTextAttributes:dic forState:UIControlStateSelected];
@@ -1190,7 +1173,6 @@ static NSString * const kCommonFNum			= @"commonnum";
         [leftButton addTarget:self action:@selector(btnBackClick:) forControlEvents:UIControlEventTouchUpInside];
         UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:leftButton];
         self.navigationItem.leftBarButtonItem = leftItem;
-        self.navigationItem.titleView = self.titleLabel;
         
         self.searchBar.hidden = NO;
         self.tableView.tableHeaderView = self.searchBar;

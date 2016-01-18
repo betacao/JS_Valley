@@ -35,7 +35,6 @@ typedef NS_ENUM(NSInteger, ChatListViewType)
 @property (strong ,nonatomic, readonly) UIBarButtonItem *rightBarButtonItem;
 @property (strong ,nonatomic, readonly) UIBarButtonItem *leftBarButtonItem;
 @property (strong, nonatomic) NSMutableArray *contactsSource;
-@property (nonatomic ,strong) UILabel *titleLabel;
 
 @property (nonatomic, strong)NSMutableArray *arrCityCode;
 //好友请求变化时，更新好友请求未处理的个数

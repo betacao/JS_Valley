@@ -9,8 +9,8 @@
 #import "SHGCategoryScrollView.h"
 #import "SHGMarketObject.h"
 #define kCategoryObjectMargin 10.0f * XFACTOR
-#define kCategoryNormalFont [UIFont systemFontOfSize:14.0f]
-#define kCategorySelectFont [UIFont systemFontOfSize:15.0f]
+#define kCategoryNormalFont [UIFont systemFontOfSize:14.0f * FontFactor]
+#define kCategorySelectFont [UIFont systemFontOfSize:15.0f * FontFactor]
 @interface SHGCategoryScrollView ()
 @property (assign, nonatomic) CGFloat categoryWidth;
 @property (assign, nonatomic) NSInteger selectedIndex;

@@ -21,6 +21,8 @@
     CGRect frame = self.lineView.frame;
     frame.size.height = 0.5f;
     self.lineView.frame = frame;
+
+    self.lblName.font = [UIFont systemFontOfSize:13.0f * FontFactor];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

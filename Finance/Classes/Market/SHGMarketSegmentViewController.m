@@ -47,9 +47,9 @@
     tabButtonsContainerView.enabled = YES;
     tabButtonsContainerView.layer.masksToBounds = YES;
     tabButtonsContainerView.layer.cornerRadius = 4;
-    NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor colorWithHexString:@"d53432"],NSForegroundColorAttributeName,[UIFont systemFontOfSize:17],NSFontAttributeName ,nil];
+    NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor colorWithHexString:@"d53432"],NSForegroundColorAttributeName,[UIFont systemFontOfSize:17 * FontFactor],NSFontAttributeName ,nil];
 
-    NSDictionary *dic1 = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor],NSForegroundColorAttributeName,[UIFont systemFontOfSize:17],NSFontAttributeName ,nil];
+    NSDictionary *dic1 = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor],NSForegroundColorAttributeName,[UIFont systemFontOfSize:17 * FontFactor],NSFontAttributeName ,nil];
     //设置标题的颜色 字体和大小 阴影和阴影颜色
     [tabButtonsContainerView setTitleTextAttributes:dic1 forState:UIControlStateNormal];
     [tabButtonsContainerView setTitleTextAttributes:dic forState:UIControlStateSelected];

@@ -269,7 +269,7 @@
     if (!_titleLabel)
     {
         _titleLabel = [[UILabel alloc] init];
-        _titleLabel.font = [UIFont systemFontOfSize:17.0f];
+        _titleLabel.font = [UIFont systemFontOfSize:17.0f * FontFactor];
         _titleLabel.textColor = TEXT_COLOR;
         _titleLabel.text = @"发现";
         [_titleLabel sizeToFit];

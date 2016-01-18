@@ -99,23 +99,6 @@
 	return 0;
 }
 
-//- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-//{
-//	UIView *sectionView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 50)];
-//	sectionView.backgroundColor = RGB(240, 240, 240);
-//	UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(16, 0, 300, 50)];
-//	if (section == 0) {
-//		label.text = [NSString stringWithFormat:@"总计%ld位",(long)self.dataSource.count];;
-//	}else if(section == 1){
-//		label.text = @"合伙人明细";
-//	}else if (section == 2){
-//		label.text =@"合伙人激励机制说明";
-//	}
-//	label.font = [UIFont systemFontOfSize:17.0f];
-//	[sectionView addSubview:label];
-//	return sectionView;
-//}
-
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
