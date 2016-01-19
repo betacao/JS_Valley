@@ -462,11 +462,33 @@ static UIColor *titleColor;
 
 - (void)setupButtons
 {
-    self.navigationItem.rightBarButtonItem =
-    [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"完成", nil)
-                                     style:UIBarButtonItemStylePlain
-                                    target:self
-                                    action:@selector(finishPickingAssets:)];
+    UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [leftButton setImage:[UIImage imageNamed:@"newBack"] forState:UIControlStateNormal];
+    [leftButton setTitle:@"相簿" forState:UIControlStateNormal];
+    leftButton.titleLabel.font = [UIFont systemFontOfSize:14.0f * XFACTOR];
+    [leftButton addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
+    [leftButton sizeToFit];
+    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:leftButton];
+    self.navigationItem.leftBarButtonItem=leftItem;
+    
+    UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [rightButton setTitle:@"完成" forState:UIControlStateNormal];
+    rightButton.titleLabel.font = [UIFont systemFontOfSize:14.0f * XFACTOR];
+    [rightButton addTarget:self action:@selector(finishPickingAssets:) forControlEvents:UIControlEventTouchUpInside];
+    [rightButton sizeToFit];
+    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:rightButton];
+    self.navigationItem.rightBarButtonItem=rightItem;
+
+//    self.navigationItem.rightBarButtonItem =
+//    [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"完成", nil)
+//                                     style:UIBarButtonItemStylePlain
+//                                    target:self
+//                                    action:@selector(finishPickingAssets:)];
+}
+
+- (void)back
+{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)setupAssets
@@ -776,11 +798,18 @@ static UIColor *titleColor;
     
     if (picker.showCancelButton)
     {
-        self.navigationItem.rightBarButtonItem =
-        [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"取消", nil)
-                                         style:UIBarButtonItemStylePlain
-                                        target:self
-                                        action:@selector(dismiss:)];
+        UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [rightButton setTitle:@"取消" forState:UIControlStateNormal];
+        rightButton.titleLabel.font = [UIFont systemFontOfSize:14.0f * XFACTOR];
+        [rightButton addTarget:self action:@selector(dismiss:) forControlEvents:UIControlEventTouchUpInside];
+        [rightButton sizeToFit];
+        UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:rightButton];
+        self.navigationItem.rightBarButtonItem=rightItem;
+//        self.navigationItem.rightBarButtonItem =
+//        [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"取消", nil)
+//                                         style:UIBarButtonItemStylePlain
+//                                        target:self
+//                                        action:@selector(dismiss:)];
     }
 }
 
