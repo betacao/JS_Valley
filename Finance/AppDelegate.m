@@ -239,7 +239,6 @@
  *  @return 当前的界面
  */
 - (UIViewController *)getCurrentRootViewController {
-    
     UIViewController *result;
     // Try to find the root view controller programmically
     // Find the top window (that is not an alert view or other window)
