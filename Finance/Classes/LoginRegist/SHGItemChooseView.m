@@ -6,18 +6,18 @@
 //  Copyright © 2015年 HuMin. All rights reserved.
 //
 
-#import "SHGIndustryChoiceView.h"
+#import "SHGItemChooseView.h"
 #define kBgViewLeftMargin 35.0f * XFACTOR
 #define kCellHeight 45.0f
 
-@interface SHGIndustryChoiceView ()<UITableViewDataSource, UITableViewDelegate>
+@interface SHGItemChooseView ()<UITableViewDataSource, UITableViewDelegate>
 
 @property (strong, nonatomic) UIView *bgView;
 @property (strong, nonatomic) UITableView *tableView;
 
 @end
 
-@implementation SHGIndustryChoiceView
+@implementation SHGItemChooseView
 
 - (instancetype)initWithFrame:(CGRect)frame
 {
@@ -56,9 +56,9 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    if (self.delegate && [self.delegate respondsToSelector:@selector(didSelectIndustry:)]) {
+    if (self.delegate && [self.delegate respondsToSelector:@selector(didSelectItem:)]) {
         NSString *industry = [self.dataArray objectAtIndex:indexPath.row];
-        [self.delegate didSelectIndustry:industry];
+        [self.delegate didSelectItem:industry];
         [self removeFromSuperview];
     }
 }

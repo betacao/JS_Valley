@@ -13,7 +13,7 @@
 #import "CCLocationManager.h"
 #import "SHGProvincesViewController.h"
 #import "SHGUserTagModel.h"
-#import "SHGIndustryChoiceView.h"
+#import "SHGItemChooseView.h"
 
 #define kPersonCategoryLeftMargin 13.0f * XFACTOR
 #define kPersonCategoryTopMargin 10.0f * XFACTOR
@@ -21,7 +21,7 @@
 #define kPersonCategoryVerticalMargin 9.0f * XFACTOR
 #define kPersonCategoryHeight 22.0f * XFACTOR
 
-@interface ImproveMatiralViewController ()<UIScrollViewDelegate, SHGGlobleDelegate, SHGAreaDelegate, SHGIndustryChoiceDelegate>
+@interface ImproveMatiralViewController ()<UIScrollViewDelegate, SHGGlobleDelegate, SHGAreaDelegate, SHGItemChooseDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextField *nameTextField;
 @property (weak, nonatomic) IBOutlet UITextField *companyTextField;
@@ -501,7 +501,7 @@
 
 - (void)showIndustryChoiceView
 {
-    SHGIndustryChoiceView *view = [[SHGIndustryChoiceView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, SCREENWIDTH, SCREENHEIGHT)];
+    SHGItemChooseView *view = [[SHGItemChooseView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, SCREENWIDTH, SCREENHEIGHT)];
     view.delegate = self;
     view.dataArray = @[@"银行机构", @"证券公司", @"三方理财", @"基金公司", @"其他"];
     [self.view.window addSubview:view];

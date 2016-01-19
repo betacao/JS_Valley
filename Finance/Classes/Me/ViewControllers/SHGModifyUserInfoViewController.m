@@ -7,9 +7,9 @@
 //
 
 #import "SHGModifyUserInfoViewController.h"
-#import "SHGIndustryChoiceView.h"
+#import "SHGItemChooseView.h"
 #define kNextButtonHeight 8.0f *  XFACTOR
-@interface SHGModifyUserInfoViewController ()<UIActionSheetDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, SHGIndustryChoiceDelegate>
+@interface SHGModifyUserInfoViewController ()<UIActionSheetDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, SHGItemChooseDelegate>
 
 @property (weak, nonatomic) IBOutlet UIScrollView *bgScrollView;
 @property (weak, nonatomic) IBOutlet UIView *topView;
@@ -337,16 +337,16 @@
 
 - (void)showIndustryChoiceView
 {
-    SHGIndustryChoiceView *view = [[SHGIndustryChoiceView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, SCREENWIDTH, SCREENHEIGHT)];
+    SHGItemChooseView *view = [[SHGItemChooseView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, SCREENWIDTH, SCREENHEIGHT)];
     view.delegate = self;
     [self.view.window addSubview:view];
 }
 
 #pragma mark ------ 选择行业代理
-- (void)didSelectIndustry:(NSString *)industry
+- (void)didSelectItem:(NSString *)item
 {
-    self.industryField.text = industry;
-    self.industry = [self industryToCode:industry];
+    self.industryField.text = item;
+    self.industry = [self industryToCode:item];
 
 }
 

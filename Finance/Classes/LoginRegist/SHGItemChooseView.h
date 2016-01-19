@@ -8,15 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
-@protocol SHGIndustryChoiceDelegate <NSObject>
+@protocol SHGItemChooseDelegate <NSObject>
 
-- (void)didSelectIndustry:(NSString *)industry;
+- (void)didSelectItem:(NSString *)item;
 
 @end
 
-@interface SHGIndustryChoiceView : UIView
+@interface SHGItemChooseView : UIView
 
-@property (assign, nonatomic) id<SHGIndustryChoiceDelegate> delegate;
+@property (assign, nonatomic) id<SHGItemChooseDelegate> delegate;
 
 @property (strong, nonatomic) NSArray *dataArray;
 
