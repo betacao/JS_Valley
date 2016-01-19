@@ -14,7 +14,6 @@
 
 @property (strong, nonatomic) UIView *bgView;
 @property (strong, nonatomic) UITableView *tableView;
-@property (strong, nonatomic) NSArray *dataArray;
 
 @end
 
@@ -25,7 +24,6 @@
     self = [super initWithFrame:frame];
     if (self) {
         self.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.6];
-        self.dataArray = @[@"银行机构", @"证券公司", @"三方理财", @"基金公司", @"其他"];
         self.bgView = [[UIView alloc] initWithFrame:CGRectInset(frame, kBgViewLeftMargin, (CGRectGetHeight(frame) - 5.0f * kCellHeight) / 2.0f)];
         self.bgView.layer.masksToBounds = YES;
         self.bgView.layer.cornerRadius = 5.0f;

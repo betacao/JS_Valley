@@ -503,6 +503,7 @@
 {
     SHGIndustryChoiceView *view = [[SHGIndustryChoiceView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, SCREENWIDTH, SCREENHEIGHT)];
     view.delegate = self;
+    view.dataArray = @[@"银行机构", @"证券公司", @"三方理财", @"基金公司", @"其他"];
     [self.view.window addSubview:view];
 }
 

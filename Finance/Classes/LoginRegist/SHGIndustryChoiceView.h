@@ -18,4 +18,6 @@
 
 @property (assign, nonatomic) id<SHGIndustryChoiceDelegate> delegate;
 
+@property (strong, nonatomic) NSArray *dataArray;
+
 @end
