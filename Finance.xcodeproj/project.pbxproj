@@ -733,6 +733,8 @@
 		985CBDBA1C03FD0B002B3D9D /* SHGCardTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 985CBDB81C03FD0B002B3D9D /* SHGCardTableViewCell.m */; };
 		985CBDBB1C03FD0B002B3D9D /* SHGCardTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 985CBDB91C03FD0B002B3D9D /* SHGCardTableViewCell.xib */; };
 		985CBDC31C04042C002B3D9D /* SHGCollectCardClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 985CBDC21C04042C002B3D9D /* SHGCollectCardClass.m */; };
+		9871849E1C4E4FB0006F2946 /* SHGMomentCityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9871849C1C4E4FB0006F2946 /* SHGMomentCityViewController.m */; };
+		9871849F1C4E4FB0006F2946 /* SHGMomentCityViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9871849D1C4E4FB0006F2946 /* SHGMomentCityViewController.xib */; };
 		9894C9781BF5BCE700F80577 /* SHGActionSignViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9894C9761BF5BCE700F80577 /* SHGActionSignViewController.m */; };
 		9894C9791BF5BCE700F80577 /* SHGActionSignViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9894C9771BF5BCE700F80577 /* SHGActionSignViewController.xib */; };
 		9894C97D1BF5D24200F80577 /* SHGActionSignTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9894C97B1BF5D24200F80577 /* SHGActionSignTableViewCell.m */; };
@@ -1968,6 +1970,9 @@
 		985CBDB91C03FD0B002B3D9D /* SHGCardTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGCardTableViewCell.xib; sourceTree = "<group>"; };
 		985CBDC11C04042C002B3D9D /* SHGCollectCardClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGCollectCardClass.h; sourceTree = "<group>"; };
 		985CBDC21C04042C002B3D9D /* SHGCollectCardClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGCollectCardClass.m; sourceTree = "<group>"; };
+		9871849B1C4E4FB0006F2946 /* SHGMomentCityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGMomentCityViewController.h; sourceTree = "<group>"; };
+		9871849C1C4E4FB0006F2946 /* SHGMomentCityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGMomentCityViewController.m; sourceTree = "<group>"; };
+		9871849D1C4E4FB0006F2946 /* SHGMomentCityViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGMomentCityViewController.xib; sourceTree = "<group>"; };
 		9894C9751BF5BCE700F80577 /* SHGActionSignViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGActionSignViewController.h; sourceTree = "<group>"; };
 		9894C9761BF5BCE700F80577 /* SHGActionSignViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGActionSignViewController.m; sourceTree = "<group>"; };
 		9894C9771BF5BCE700F80577 /* SHGActionSignViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGActionSignViewController.xib; sourceTree = "<group>"; };
@@ -4838,6 +4843,9 @@
 				98CB3AA51C3224DF0006A3F3 /* SHGMarketSecondCategoryListTableViewController.xib */,
 				98CB422D1C3262C00023A124 /* SecondCategoryButton.h */,
 				98CB422E1C3262C00023A124 /* SecondCategoryButton.m */,
+				9871849B1C4E4FB0006F2946 /* SHGMomentCityViewController.h */,
+				9871849C1C4E4FB0006F2946 /* SHGMomentCityViewController.m */,
+				9871849D1C4E4FB0006F2946 /* SHGMomentCityViewController.xib */,
 			);
 			path = Market;
 			sourceTree = "<group>";
@@ -5242,6 +5250,7 @@
 				408D8B781AF8618C0055810C /* chat_sender_audio_playing_002.png in Resources */,
 				619027131B233AB100D9EEA2 /* ChatListTableViewCell.xib in Resources */,
 				408D8B521AF8618C0055810C /* chatBar_colorMore_audioCallSelected@2x.png in Resources */,
+				9871849F1C4E4FB0006F2946 /* SHGMomentCityViewController.xib in Resources */,
 				408D8AF81AF8618C0055810C /* VoiceSearchFeedback002@2x.png in Resources */,
 				408D8B281AF8618C0055810C /* chatBar_more_card@2x.png in Resources */,
 				6152348A1B0D92B200011EAC /* 我好友的好友@2x.png in Resources */,
@@ -5739,6 +5748,7 @@
 				6187D2E81AF1C693008E1D21 /* MessageModel.m in Sources */,
 				F9B0636B1BD7699400471DF4 /* SHGNavigationView.m in Sources */,
 				614BA7DC1AE5E96C009480CD /* LoginNextViewController.m in Sources */,
+				9871849E1C4E4FB0006F2946 /* SHGMomentCityViewController.m in Sources */,
 				615010DC1AD61BD700827F82 /* ZSYPopoverListView.m in Sources */,
 				B00903551B622274000EAD7D /* UIColor+extend.m in Sources */,
 				B04355CE1B4BD3560033BBBF /* LinkViewController.m in Sources */,
