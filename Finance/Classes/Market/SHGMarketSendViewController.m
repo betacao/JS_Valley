@@ -59,9 +59,9 @@ typedef NS_ENUM(NSInteger, SHGMarketSendType){
     [self initView];
 
     __weak typeof(self)weakSelf = self;
-    [[SHGMarketManager shareManager] loadMarketCategoryBlock:^(NSArray *array) {
+
+    [[SHGMarketManager shareManager] userListArray:^(NSArray *array) {
         weakSelf.categoryArray = [NSMutableArray arrayWithArray:array];
-        [weakSelf.categoryArray removeObjectAtIndex:0];
         NSMutableArray *titleArray = [NSMutableArray array];
         [weakSelf.categoryArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             SHGMarketFirstCategoryObject *object = (SHGMarketFirstCategoryObject *)obj;
@@ -275,7 +275,7 @@ typedef NS_ENUM(NSInteger, SHGMarketSendType){
                         NSString *secondId = @"";
                         if (firstObject.secondCataLogs.count > 0) {
                             SHGMarketSecondCategoryObject *secondObject = [firstObject.secondCataLogs objectAtIndex:self.secondCategoryBox.currentIndex];
-                            secondId = secondObject.rowId;
+                            secondId = secondObject.secondCatalogId;
                         }
 
                         NSDictionary *param = @{@"uid":uid, @"marketName": marketName, @"firstCatalogId": firstId, @"secondCatalogId": secondId, @"price": price, @"contactInfo": contactInfo, @"detail": detail, @"photo":self.imageName, @"city":city};
@@ -308,7 +308,7 @@ typedef NS_ENUM(NSInteger, SHGMarketSendType){
                         NSString *secondId = @"";
                         if (firstObject.secondCataLogs.count > 0) {
                             SHGMarketSecondCategoryObject *secondObject = [firstObject.secondCataLogs objectAtIndex:self.secondCategoryBox.currentIndex];
-                            secondId = secondObject.rowId;
+                            secondId = secondObject.secondCatalogId;
                         }
                         NSDictionary *param = @{@"uid":uid, @"marketName": marketName, @"firstCatalogId": firstId, @"secondCatalogId": secondId, @"price": price, @"contactInfo": contactInfo, @"detail": detail, @"photo":self.imageName, @"city":city, @"marketId":weakSelf.object.marketId};
                         NSMutableDictionary *mParam = [NSMutableDictionary dictionaryWithDictionary:param];
@@ -442,7 +442,7 @@ typedef NS_ENUM(NSInteger, SHGMarketSendType){
         }
         [secondArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             SHGMarketSecondCategoryObject *object = (SHGMarketSecondCategoryObject *)obj;
-            [titleArray addObject:object.catalogName];
+            [titleArray addObject:object.secondCatalogName];
         }];
         self.secondCategoryBox.titlesList = titleArray;
         [self.secondCategoryBox reloadData];

@@ -102,9 +102,9 @@
                     [button addTarget:self action:@selector(secondCategoryClick:) forControlEvents:UIControlEventTouchUpInside];
                     SHGMarketSecondCategoryObject * objs = [arry objectAtIndex:i];
                     button.firstCategory = objf.firstCatalogId;
-                    button.secondId = objs.rowId;
-                    button.seocndName = objs.catalogName;
-                    [button setTitle:objs.catalogName forState:UIControlStateNormal];
+                    button.secondId = objs.secondCatalogId;
+                    button.seocndName = objs.secondCatalogName;
+                    [button setTitle:objs.secondCatalogName forState:UIControlStateNormal];
                     button.tag = i ;
                     [cell.bgView addSubview:button];
                 }

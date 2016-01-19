@@ -94,7 +94,7 @@
 {
     if (!_emptyView) {
         _emptyView = [[SHGEmptyDataView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, SCREENWIDTH, SCREENHEIGHT)];
-        _emptyView.type = SHGEmptyDateTypeDeletedMarket;
+        _emptyView.type = SHGEmptyDateTypeMarketDeleted;
     }
     return _emptyView;
 }

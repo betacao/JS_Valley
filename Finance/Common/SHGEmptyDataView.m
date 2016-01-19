@@ -33,7 +33,7 @@
             self.imageView.image = [UIImage imageNamed:@"emptyBg"];
             [self.imageView sizeToFit];
             break;
-        case SHGEmptyDateTypeDeletedMarket:
+        case SHGEmptyDateTypeMarketEmptyRecommended:
             self.imageView.image = [UIImage imageNamed:@"deleted_market"];
             [self.imageView sizeToFit];
             break;

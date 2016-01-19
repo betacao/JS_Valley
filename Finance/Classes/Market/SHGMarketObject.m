@@ -79,7 +79,7 @@
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey
 {
-    return @{@"parentId":@"parentid", @"rowId":@"rowid", @"catalogName":@"catalogname"};
+    return @{@"parentId":@"parentid", @"secondCatalogId":@"secondcatalogid", @"secondCatalogName":@"secondcatalogname"};
 }
 
 + (NSValueTransformer *)JSONTransformerForKey:(NSString *)key

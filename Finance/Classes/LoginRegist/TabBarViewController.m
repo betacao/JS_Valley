@@ -225,7 +225,7 @@
         [MobClick event:@"SHGHomeViewController" label:@"onClick"];
     } else if (item.tag == 2000){
         self.navigationItem.titleView = self.marketSegmentTitleView;
-        self.navigationItem.rightBarButtonItem = self.marketSegmentViewController.rightBarButtonItem;
+        self.navigationItem.rightBarButtonItems = self.marketSegmentViewController.rightBarButtonItems;
         self.navigationItem.leftBarButtonItem = self.marketSegmentViewController.leftBarButtonItem;
         [MobClick event:@"EnterMarketController" label:@"onClick"];
 

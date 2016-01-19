@@ -44,8 +44,8 @@
 
 @interface SHGMarketSecondCategoryObject : MTLModel<MTLJSONSerializing>
 @property (strong, nonatomic) NSString *parentId;
-@property (strong, nonatomic) NSString *rowId;
-@property (strong, nonatomic) NSString *catalogName;
+@property (strong, nonatomic) NSString *secondCatalogId;
+@property (strong, nonatomic) NSString *secondCatalogName;
 @end
 
 @interface SHGMarketFirstCategoryObject : MTLModel<MTLJSONSerializing>

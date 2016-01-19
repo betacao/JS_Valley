@@ -11,7 +11,9 @@
 
 @interface SHGMarketManager ()
 
-@property (strong, nonatomic) NSMutableArray *categoryArray;
+@property (strong, nonatomic) NSArray *selecetedArray;
+@property (strong, nonatomic) NSArray *listArray;
+@property (strong, nonatomic) NSArray *totalArray;
 
 @end
 
@@ -27,20 +29,51 @@
     return sharedManager;
 }
 //大分类
-- (void)loadMarketCategoryBlock:(void (^)(NSArray *array))block
+- (void)loadMarketCategoryBlock:(void (^)(void))block
 {
-    if (!self.categoryArray) {
+    if (!self.totalArray) {
         __weak typeof(self) weakSelf = self;
-        NSString *request = [rBaseAddressForHttp stringByAppendingString:@"/market/getMarketCatalog"];
-        [MOCHTTPRequestOperationManager postWithURL:request class:[SHGMarketFirstCategoryObject class] parameters:nil success:^(MOCHTTPResponse *response) {
-            weakSelf.categoryArray = [NSMutableArray arrayWithArray:response.dataArray];
-            block(weakSelf.categoryArray);
+        NSDictionary *param = @{@"uid":UID};
+        NSString *request = [rBaseAddressForHttp stringByAppendingString:@"/market/getMarketCatalogByUid"];
+        [MOCHTTPRequestOperationManager postWithURL:request class:nil parameters:param success:^(MOCHTTPResponse *response) {
+            NSDictionary *dictionary = response.dataDictionary;
+
+            weakSelf.listArray = [dictionary objectForKey:@"cataloglist"];
+            NSMutableArray *temp = [NSMutableArray arrayWithArray:[dictionary objectForKey:@"definedcatalog"]];
+            if (temp.count > 0) {
+                [temp addObjectsFromArray:weakSelf.listArray];
+                weakSelf.totalArray = [[SHGGloble sharedGloble] parseServerJsonArrayToJSONModel:temp class:[SHGMarketFirstCategoryObject class]];
+            }
+            weakSelf.selecetedArray = [[SHGGloble sharedGloble] parseServerJsonArrayToJSONModel:[dictionary objectForKey:@"selectcatalog"] class:[SHGMarketFirstCategoryObject class]] ;
+            weakSelf.listArray = [[SHGGloble sharedGloble] parseServerJsonArrayToJSONModel:[dictionary objectForKey:@"cataloglist"] class:[SHGMarketFirstCategoryObject class]];
+            block();
         } failed:^(MOCHTTPResponse *response) {
             [Hud showMessageWithText:@"获取业务分类错误"];
         }];
     } else{
-        block(self.categoryArray);
+        block();
     }
+}
+
+- (void)userListArray:(void (^)(NSArray *array))block
+{
+    [self loadMarketCategoryBlock:^{
+        block(self.listArray);
+    }];
+}
+
+- (void)userSelectedArray:(void (^)(NSArray *array))block
+{
+    [self loadMarketCategoryBlock:^{
+        block(self.selecetedArray);
+    }];
+}
+
+- (void)userTotalArray:(void (^)(NSArray *array))block
+{
+    [self loadMarketCategoryBlock:^{
+        block(self.totalArray);
+    }];
 }
 //列表
 + (void)loadMarketList:(NSDictionary *)param block:(void (^)(NSArray *array))block

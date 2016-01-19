@@ -13,7 +13,11 @@
 
 + (instancetype)shareManager;
 
-- (void)loadMarketCategoryBlock:(void (^)(NSArray *array))block;
+- (void)userSelectedArray:(void (^)(NSArray *array))block;
+
+- (void)userListArray:(void (^)(NSArray *array))block;
+
+- (void)userTotalArray:(void (^)(NSArray *array))block;
 
 + (void)loadMarketList:(NSDictionary *)param block:(void (^)(NSArray *array))block;
 

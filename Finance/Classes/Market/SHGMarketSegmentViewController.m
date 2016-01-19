@@ -13,8 +13,11 @@
 #import "SHGProvincesViewController.h"
 
 @interface SHGMarketSegmentViewController ()
-@property (nonatomic, strong) UIBarButtonItem *rightBarButtonItem;
+@property (nonatomic, strong) NSArray *rightBarButtonItems;
 @property (nonatomic, strong) UIBarButtonItem *leftBarButtonItem;
+@property (nonatomic, strong) UIButton *titleButton;
+@property (nonatomic, strong) UILabel *titleLabel;
+@property (nonatomic, strong) UIImageView *titleImageView;
 @end
 
 @implementation SHGMarketSegmentViewController
@@ -40,7 +43,6 @@
 {
     [super viewDidLoad];
 
-    self.navigationItem.rightBarButtonItem = [self rightBarButtonItem];
     self.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 
     tabButtonsContainerView = [[UISegmentedControl alloc] initWithItems: [NSArray arrayWithObjects:@"全部", @"我的", nil]];
@@ -78,34 +80,69 @@
     [self reloadTabButtons];
 
     if(self.block){
-        self.block(tabButtonsContainerView);
+        self.block(self.titleButton);
     }
 }
 
-
-- (UIBarButtonItem *)rightBarButtonItem
+- (UIButton *)titleButton
 {
-    UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [rightButton setFrame:CGRectZero];
-    [rightButton setTitle:@"发布" forState:UIControlStateNormal];
-    rightButton.titleLabel.font = [UIFont systemFontOfSize:14.0f];
-    [rightButton sizeToFit];
-    [rightButton addTarget:self action:@selector(addNewMarket:) forControlEvents:UIControlEventTouchUpInside];
-    return  [[UIBarButtonItem alloc] initWithCustomView:rightButton];
+    if (!_titleButton) {
+        _titleButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        _titleButton.backgroundColor = [UIColor clearColor];
+
+        self.titleLabel = [[UILabel alloc] init];
+        self.titleLabel.text = @"上海";
+        self.titleLabel.font = [UIFont systemFontOfSize:kNavBarTitleFontSize];
+        self.titleLabel.textColor = [UIColor whiteColor];
+        [self.titleLabel sizeToFit];
+        [_titleButton addSubview:self.titleLabel];
+
+        self.titleImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"market_locationArrow"]];
+        [self.titleImageView sizeToFit];
+        self.titleImageView.origin = CGPointMake(CGRectGetMaxX(self.titleLabel.frame) + 2.0f, (CGRectGetHeight(self.titleLabel.frame) - CGRectGetHeight(self.titleImageView.frame)) / 2.0f);
+        [_titleButton addSubview:self.titleImageView];
+        
+        _titleButton.frame = CGRectMake(0.0f, 0.0f, CGRectGetMaxX(self.titleImageView.frame), CGRectGetHeight(self.titleLabel.frame));
+    }
+    return _titleButton;
+}
+
+
+- (NSArray *)rightBarButtonItems
+{
+    if (!_rightBarButtonItems) {
+        UIButton *sendButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [sendButton setTitle:@"发布" forState:UIControlStateNormal];
+        sendButton.titleLabel.font = [UIFont systemFontOfSize:14.0f];
+        [sendButton sizeToFit];
+        [sendButton addTarget:self action:@selector(addNewMarket:) forControlEvents:UIControlEventTouchUpInside];
+        UIBarButtonItem *sendItem = [[UIBarButtonItem alloc] initWithCustomView:sendButton];
+
+        UIButton *modifyButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        UIImage *image = [UIImage imageNamed:@"market_modify"];
+        [modifyButton setBackgroundImage:image forState:UIControlStateNormal];
+        [modifyButton sizeToFit];
+        [modifyButton addTarget:self action:@selector(addNewMarket:) forControlEvents:UIControlEventTouchUpInside];
+        UIBarButtonItem *modifyItem = [[UIBarButtonItem alloc] initWithCustomView:modifyButton];
+
+        _rightBarButtonItems = @[sendItem, modifyItem];
+    }
+    return  _rightBarButtonItems;
 
 }
 
 - (UIBarButtonItem *)leftBarButtonItem
 {
-    UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [leftButton setFrame:CGRectZero];
-//    UIImage *image = [UIImage imageNamed:@"marketSearch"];
-//    [leftButton setBackgroundImage:image forState:UIControlStateNormal];
-    [leftButton setTitle:@"南京" forState:UIControlStateNormal];
-    [leftButton addTarget:self action:@selector(moveToProvincesViewController:) forControlEvents:UIControlEventTouchUpInside];
-    [leftButton sizeToFit];
-    return  [[UIBarButtonItem alloc] initWithCustomView:leftButton];
-
+    if (!_leftBarButtonItem) {
+        UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [leftButton setFrame:CGRectZero];
+        UIImage *image = [UIImage imageNamed:@"marketSearch"];
+        [leftButton setBackgroundImage:image forState:UIControlStateNormal];
+        [leftButton addTarget:self action:@selector(searchMarket:) forControlEvents:UIControlEventTouchUpInside];
+        [leftButton sizeToFit];
+        _leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:leftButton];
+    }
+    return _leftBarButtonItem;
 }
 
 - (void)moveToProvincesViewController:(UIButton *)button

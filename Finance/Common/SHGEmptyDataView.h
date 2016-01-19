@@ -9,7 +9,8 @@
 #import <UIKit/UIKit.h>
 typedef NS_ENUM(NSInteger, SHGEmptyDateType) {
     SHGEmptyDateTypeNormal = 0,//普通的无数据
-    SHGEmptyDateTypeDeletedMarket
+    SHGEmptyDateTypeMarketDeleted = 1,
+    SHGEmptyDateTypeMarketEmptyRecommended
 };
 
 @interface SHGEmptyDataView : UIView

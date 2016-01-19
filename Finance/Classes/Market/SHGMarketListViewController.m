@@ -26,6 +26,7 @@
 @property (strong, nonatomic) UITableViewCell *emptyCell;
 @property (strong, nonatomic) SHGEmptyDataView *emptyView;
 @property (strong, nonatomic) NSMutableArray *currentArray;
+
 @end
 
 @implementation SHGMarketListViewController
@@ -37,7 +38,7 @@
     self.tableView.dataSource = self;
     [self addHeaderRefresh:self.tableView headerRefesh:YES andFooter:YES];
     __weak typeof(self) weakSelf = self;
-    [[SHGMarketManager shareManager] loadMarketCategoryBlock:^(NSArray *array) {
+    [[SHGMarketManager shareManager] userTotalArray:^(NSArray *array) {
         weakSelf.scrollView.categoryArray = array;
         for (NSInteger i = 0; i < array.count; i++) {
             NSMutableArray *subArray = [NSMutableArray array];
@@ -95,9 +96,6 @@
             [weakSelf.tableView reloadData];
         } else if([target isEqualToString:@"load"]){
             [weakSelf.currentArray addObjectsFromArray:array];
-            if (array.count < 10) {
-                [weakSelf.tableView.footer endRefreshingWithNoMoreData];
-            }
             [weakSelf.tableView reloadData];
         }
     }];
