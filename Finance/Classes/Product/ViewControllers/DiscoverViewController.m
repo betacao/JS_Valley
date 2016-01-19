@@ -233,20 +233,7 @@
         [self.navigationController pushViewController:gameVC animated:YES];
     }
 }
-//处理tableView左边空白
-- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
-    if ([cell respondsToSelector:@selector(setSeparatorInset:)]) {
-        
-        [cell setSeparatorInset:UIEdgeInsetsZero];
-        
-    }
-    
-    if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
-        
-        [cell setLayoutMargins:UIEdgeInsetsZero];
-        
-    }
-}
+
 - (void)goToFollowList
 {
     MyFollowViewController *vc = [[MyFollowViewController alloc] init];
@@ -255,6 +242,7 @@
     vc.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:vc animated:YES];
 }
+
 - (void)goToFansList
 {
     MyFollowViewController *vc = [[MyFollowViewController alloc] init];

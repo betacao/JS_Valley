@@ -18,6 +18,7 @@
 #import "SHGUserTagModel.h"
 #import "SHGPersonalViewController.h"
 #import "SHGSelectTagsViewController.h"
+#import "SHGMarketMineViewController.h"
 //为标签弹出框定义的值
 #define kItemTopMargin  18.0f * XFACTOR
 #define kItemMargin 14.0f * XFACTOR
@@ -70,14 +71,6 @@
 
     [self addHeaderRefresh:self.tableView headerRefesh:YES andFooter:NO];
     self.tableView.tableHeaderView = self.headerView;
-    
-    //处理tableView左边空白
-    if ([self.tableView respondsToSelector:@selector(setSeparatorInset:)]) {
-        [self.tableView setSeparatorInset:UIEdgeInsetsZero];
-    }
-    if ([self.tableView respondsToSelector:@selector(setLayoutMargins:)]) {
-        [self.tableView setLayoutMargins:UIEdgeInsetsZero];
-    }
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshData) name:NOTIFI_CHANGE_UPDATE_AUTO_STATUE object:nil];
 }
 
@@ -251,6 +244,7 @@
         [self.navigationController	pushViewController:self.settingController animated:YES];
     }
 }
+
 
 - (void)initUI
 {
@@ -490,7 +484,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 5;
+    return 6;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -508,13 +502,15 @@
     }
     if (indexPath.row == 0) {
         cell.lblName.text = @"我的合伙人";
-    }else if (indexPath.row == 1) {
+    } else if (indexPath.row == 1) {
         cell.lblName.text = @"我的佣金";
-    }else if (indexPath.row == 2) {
+    } else if (indexPath.row == 2) {
         cell.lblName.text = @"我的预约";
-    }else if (indexPath.row == 3) {
+    } else if (indexPath.row == 3) {
         cell.lblName.text = @"我的收藏";
-    }else if (indexPath.row == 4) {
+    } else if (indexPath.row == 4) {
+        cell.lblName.text = @"我的业务";
+    } else if (indexPath.row == 5) {
         cell.lblName.text = @"设置";
     }
     return cell;
@@ -546,6 +542,10 @@
         [self.navigationController pushViewController:vc animated:YES];
         
     } else if (indexPath.row == 4) {
+        SHGMarketMineViewController *marketMineViewController = [[SHGMarketMineViewController alloc] init];
+        marketMineViewController.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:marketMineViewController animated:YES];
+    } else if (indexPath.row == 5) {
         [self goToSettings];
     }
 }

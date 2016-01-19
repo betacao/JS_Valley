@@ -10,6 +10,7 @@
 #import "SHGMarketSendViewController.h"
 #import "SHGMarketSearchViewController.h"
 #import "SHGMarketManager.h"
+#import "SHGProvincesViewController.h"
 
 @interface SHGMarketSegmentViewController ()
 @property (nonatomic, strong) UIBarButtonItem *rightBarButtonItem;
@@ -98,12 +99,20 @@
 {
     UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [leftButton setFrame:CGRectZero];
-    UIImage *image = [UIImage imageNamed:@"marketSearch"];
-    [leftButton setBackgroundImage:image forState:UIControlStateNormal];
-    [leftButton addTarget:self action:@selector(searchMarket:) forControlEvents:UIControlEventTouchUpInside];
+//    UIImage *image = [UIImage imageNamed:@"marketSearch"];
+//    [leftButton setBackgroundImage:image forState:UIControlStateNormal];
+    [leftButton setTitle:@"南京" forState:UIControlStateNormal];
+    [leftButton addTarget:self action:@selector(moveToProvincesViewController:) forControlEvents:UIControlEventTouchUpInside];
     [leftButton sizeToFit];
     return  [[UIBarButtonItem alloc] initWithCustomView:leftButton];
 
+}
+
+- (void)moveToProvincesViewController:(UIButton *)button
+{
+    SHGProvincesViewController *controller = [[SHGProvincesViewController alloc] init];
+    [self.navigationController pushViewController:controller animated:YES];
+    
 }
 - (void)searchMarket:(UIButton *)button
 {
