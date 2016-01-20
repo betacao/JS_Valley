@@ -729,6 +729,8 @@
 		9894C9791BF5BCE700F80577 /* SHGActionSignViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9894C9771BF5BCE700F80577 /* SHGActionSignViewController.xib */; };
 		9894C97D1BF5D24200F80577 /* SHGActionSignTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9894C97B1BF5D24200F80577 /* SHGActionSignTableViewCell.m */; };
 		9894C97E1BF5D24200F80577 /* SHGActionSignTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9894C97C1BF5D24200F80577 /* SHGActionSignTableViewCell.xib */; };
+		9896F11F1C4F185C00E10A53 /* SHGMomentCityTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9896F11D1C4F185C00E10A53 /* SHGMomentCityTableViewCell.m */; };
+		9896F1201C4F185C00E10A53 /* SHGMomentCityTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9896F11E1C4F185C00E10A53 /* SHGMomentCityTableViewCell.xib */; };
 		98CB3AA61C3224DF0006A3F3 /* SHGMarketSecondCategoryListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98CB3AA41C3224DF0006A3F3 /* SHGMarketSecondCategoryListTableViewController.m */; };
 		98CB3AA71C3224DF0006A3F3 /* SHGMarketSecondCategoryListTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98CB3AA51C3224DF0006A3F3 /* SHGMarketSecondCategoryListTableViewController.xib */; };
 		98CB422F1C3262C00023A124 /* SHGSecondCategoryButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 98CB422E1C3262C00023A124 /* SHGSecondCategoryButton.m */; };
@@ -1976,6 +1978,9 @@
 		9894C97A1BF5D24200F80577 /* SHGActionSignTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGActionSignTableViewCell.h; sourceTree = "<group>"; };
 		9894C97B1BF5D24200F80577 /* SHGActionSignTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGActionSignTableViewCell.m; sourceTree = "<group>"; };
 		9894C97C1BF5D24200F80577 /* SHGActionSignTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGActionSignTableViewCell.xib; sourceTree = "<group>"; };
+		9896F11C1C4F185C00E10A53 /* SHGMomentCityTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGMomentCityTableViewCell.h; sourceTree = "<group>"; };
+		9896F11D1C4F185C00E10A53 /* SHGMomentCityTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGMomentCityTableViewCell.m; sourceTree = "<group>"; };
+		9896F11E1C4F185C00E10A53 /* SHGMomentCityTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGMomentCityTableViewCell.xib; sourceTree = "<group>"; };
 		98CB3AA31C3224DF0006A3F3 /* SHGMarketSecondCategoryListTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGMarketSecondCategoryListTableViewController.h; sourceTree = "<group>"; };
 		98CB3AA41C3224DF0006A3F3 /* SHGMarketSecondCategoryListTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGMarketSecondCategoryListTableViewController.m; sourceTree = "<group>"; };
 		98CB3AA51C3224DF0006A3F3 /* SHGMarketSecondCategoryListTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGMarketSecondCategoryListTableViewController.xib; sourceTree = "<group>"; };
@@ -4885,6 +4890,9 @@
 				987184A01C4E51ED006F2946 /* SHGMomentCityViewController.h */,
 				987184A11C4E51ED006F2946 /* SHGMomentCityViewController.m */,
 				987184A21C4E51ED006F2946 /* SHGMomentCityViewController.xib */,
+				9896F11C1C4F185C00E10A53 /* SHGMomentCityTableViewCell.h */,
+				9896F11D1C4F185C00E10A53 /* SHGMomentCityTableViewCell.m */,
+				9896F11E1C4F185C00E10A53 /* SHGMomentCityTableViewCell.xib */,
 			);
 			path = Market;
 			sourceTree = "<group>";
@@ -5324,6 +5332,7 @@
 				61E83CF51AF7C78E00703651 /* 弹出对话框背景@2x.png in Resources */,
 				61E83D911AF7C78E00703651 /* 手机图标@3x.png in Resources */,
 				61E83D6A1AF7C78E00703651 /* 我的-选中@3x.png in Resources */,
+				9896F1201C4F185C00E10A53 /* SHGMomentCityTableViewCell.xib in Resources */,
 				B080FEA91B81E30100426579 /* emoji_recent_s@2x.png in Resources */,
 				61E83D251AF7C78E00703651 /* 删除@2x.png in Resources */,
 				61BF11941B276B3E00FEC690 /* 1_1@2x.png in Resources */,
@@ -5865,6 +5874,7 @@
 				61D62BDF1ADCF328002DD395 /* NSDictionary+Common.m in Sources */,
 				6187D2E21AF1C693008E1D21 /* EMChatLocationBubbleView.m in Sources */,
 				F9A227BE1BF5ABC60054F8D7 /* SHGActionListViewController.m in Sources */,
+				9896F11F1C4F185C00E10A53 /* SHGMomentCityTableViewCell.m in Sources */,
 				6152347D1B0D8C4200011EAC /* DiscoveryTableViewCell.m in Sources */,
 				61425B421AFA7ED600758BCB /* ConfigObj.m in Sources */,
 				F99580C41B9D338B001F8AA6 /* SHGModifyInfoViewController.m in Sources */,
