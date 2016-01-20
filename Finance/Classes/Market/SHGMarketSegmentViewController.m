@@ -11,7 +11,7 @@
 #import "SHGMarketSearchViewController.h"
 #import "SHGMarketManager.h"
 #import "SHGProvincesViewController.h"
-
+#import "SHGMomentCityViewController.h"
 @interface SHGMarketSegmentViewController ()
 @property (nonatomic, strong) NSArray *rightBarButtonItems;
 @property (nonatomic, strong) UIBarButtonItem *leftBarButtonItem;
@@ -147,7 +147,7 @@
 
 - (void)moveToProvincesViewController:(UIButton *)button
 {
-    SHGProvincesViewController *controller = [[SHGProvincesViewController alloc] init];
+    SHGMomentCityViewController * controller = [[SHGMomentCityViewController alloc]init];
     [self.navigationController pushViewController:controller animated:YES];
     
 }
