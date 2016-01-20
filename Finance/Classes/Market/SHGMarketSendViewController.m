@@ -10,6 +10,7 @@
 #import "SHGComBoxView.h"
 #import "SHGMarketManager.h"
 #import "UIButton+WebCache.h"
+#import "SHGItemChooseView.h"
 
 #define kTextViewOriginalHeight 80.0f
 #define kTextViewTopBlank 100.0f * XFACTOR
@@ -19,7 +20,7 @@ typedef NS_ENUM(NSInteger, SHGMarketSendType){
     SHGMarketSendTypeReSet = 1
 };
 
-@interface SHGMarketSendViewController ()<UITextFieldDelegate, UITextViewDelegate, UITableViewDataSource, UITableViewDelegate, SHGComBoxViewDelegate, UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
+@interface SHGMarketSendViewController ()<UITextFieldDelegate, UITextViewDelegate, UITableViewDataSource, UITableViewDelegate, SHGComBoxViewDelegate, UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, SHGItemChooseDelegate>
 
 @property (strong, nonatomic) IBOutlet UIView *bgView;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -166,6 +167,11 @@ typedef NS_ENUM(NSInteger, SHGMarketSendType){
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
 {
+    if ([textField isEqual:self.locationField]) {
+        [self.currentContext resignFirstResponder];
+        [self chooseCity:textField];
+        return NO;
+    }
     return YES;
 }
 
@@ -239,6 +245,15 @@ typedef NS_ENUM(NSInteger, SHGMarketSendType){
             textField.text = [textField.text substringToIndex:50];
         }
     }
+}
+
+- (void)chooseCity:(UITextField *)textField
+{
+    SHGItemChooseView *view = [[SHGItemChooseView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, SCREENWIDTH, SCREENHEIGHT)];
+    view.delegate = self;
+    view.dataArray = @[@"银行机构", @"证券公司", @"三方理财", @"基金公司", @"其他"];
+    [self.view.window addSubview:view];
+    
 }
 
 - (IBAction)addNewImage:(id)sender
@@ -373,6 +388,12 @@ typedef NS_ENUM(NSInteger, SHGMarketSendType){
         block(YES);
     }
 
+}
+
+#pragma mark ------选择城市代理
+- (void)didSelectItem:(NSString *)item
+{
+    self.locationField.text = item;
 }
 
 #pragma mark tableViewDelegate

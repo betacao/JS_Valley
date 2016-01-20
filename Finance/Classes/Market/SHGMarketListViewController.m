@@ -231,6 +231,11 @@
         }
         return cell;
     } else{
+        if ([[self.scrollView marketFirstId] isEqualToString:@"-2"]) {
+            self.emptyView.type = SHGEmptyDateTypeMarketEmptyRecommended;
+        } else{
+            self.emptyView.type = SHGEmptyDateTypeNormal;
+        }
         return self.emptyCell;
     }
 }
