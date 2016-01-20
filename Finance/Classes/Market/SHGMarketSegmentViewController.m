@@ -13,7 +13,7 @@
 #import "SHGProvincesViewController.h"
 #import "SHGMomentCityViewController.h"
 #import "SHGMarketSecondCategoryViewController.h"
-@interface SHGMarketSegmentViewController ()
+@interface SHGMarketSegmentViewController ()<SHGMomentCityDelegate>
 @property (nonatomic, strong) NSArray *rightBarButtonItems;
 @property (nonatomic, strong) UIBarButtonItem *leftBarButtonItem;
 @property (nonatomic, strong) UIButton *titleButton;
@@ -145,13 +145,17 @@
     }
     return _leftBarButtonItem;
 }
-
+- (void)didSelectCity: (NSString *)city
+{
+    self.titleLabel.text = city;
+}
 - (void)moveToProvincesViewController:(UIButton *)button
 {
     SHGMomentCityViewController * controller = [[SHGMomentCityViewController alloc]init];
+    controller.delegate = self;
     [self.navigationController pushViewController:controller animated:YES];
-    
 }
+
 - (void)searchMarket:(UIButton *)button
 {
     [MobClick event:@"ActionMarketSearchClicked" label:@"onClick"];
