@@ -9,7 +9,6 @@
 #import "SHGMarketSecondCategoryViewController.h"
 #import "SHGMarketObject.h"
 #import "SHGMarketSecondCategoryTableViewCell.h"
-#import "SHGMarketSecondCategoryListTableViewController.h"
 #import "SHGMarketListViewController.h"
 #import "SHGSecondCategoryButton.h"
 
@@ -133,9 +132,7 @@
 
 - (void)secondCategoryClick: (SHGSecondCategoryButton * )btn
 {
-    SHGMarketSecondCategoryListTableViewController * VC = [[SHGMarketSecondCategoryListTableViewController alloc]init];
-    [VC fromSecondCategore:btn.firstCategory seocndName:btn.seocndName secondId:btn.secondId];
-    [self.navigationController pushViewController:VC animated:YES];
+    
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section

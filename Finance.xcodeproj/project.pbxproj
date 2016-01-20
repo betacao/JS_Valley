@@ -731,8 +731,6 @@
 		9894C97E1BF5D24200F80577 /* SHGActionSignTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9894C97C1BF5D24200F80577 /* SHGActionSignTableViewCell.xib */; };
 		9896F11F1C4F185C00E10A53 /* SHGMomentCityTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9896F11D1C4F185C00E10A53 /* SHGMomentCityTableViewCell.m */; };
 		9896F1201C4F185C00E10A53 /* SHGMomentCityTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9896F11E1C4F185C00E10A53 /* SHGMomentCityTableViewCell.xib */; };
-		98CB3AA61C3224DF0006A3F3 /* SHGMarketSecondCategoryListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98CB3AA41C3224DF0006A3F3 /* SHGMarketSecondCategoryListTableViewController.m */; };
-		98CB3AA71C3224DF0006A3F3 /* SHGMarketSecondCategoryListTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98CB3AA51C3224DF0006A3F3 /* SHGMarketSecondCategoryListTableViewController.xib */; };
 		98CB422F1C3262C00023A124 /* SHGSecondCategoryButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 98CB422E1C3262C00023A124 /* SHGSecondCategoryButton.m */; };
 		98D13FD71C3B69E6007CDFCD /* SHGMyTeamListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98D13FD51C3B69E6007CDFCD /* SHGMyTeamListTableViewController.m */; };
 		98D13FD81C3B69E6007CDFCD /* SHGMyTeamListTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98D13FD61C3B69E6007CDFCD /* SHGMyTeamListTableViewController.xib */; };
@@ -1981,9 +1979,6 @@
 		9896F11C1C4F185C00E10A53 /* SHGMomentCityTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGMomentCityTableViewCell.h; sourceTree = "<group>"; };
 		9896F11D1C4F185C00E10A53 /* SHGMomentCityTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGMomentCityTableViewCell.m; sourceTree = "<group>"; };
 		9896F11E1C4F185C00E10A53 /* SHGMomentCityTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGMomentCityTableViewCell.xib; sourceTree = "<group>"; };
-		98CB3AA31C3224DF0006A3F3 /* SHGMarketSecondCategoryListTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGMarketSecondCategoryListTableViewController.h; sourceTree = "<group>"; };
-		98CB3AA41C3224DF0006A3F3 /* SHGMarketSecondCategoryListTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGMarketSecondCategoryListTableViewController.m; sourceTree = "<group>"; };
-		98CB3AA51C3224DF0006A3F3 /* SHGMarketSecondCategoryListTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGMarketSecondCategoryListTableViewController.xib; sourceTree = "<group>"; };
 		98CB422D1C3262C00023A124 /* SHGSecondCategoryButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGSecondCategoryButton.h; sourceTree = "<group>"; };
 		98CB422E1C3262C00023A124 /* SHGSecondCategoryButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGSecondCategoryButton.m; sourceTree = "<group>"; };
 		98D13FD41C3B69E6007CDFCD /* SHGMyTeamListTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGMyTeamListTableViewController.h; sourceTree = "<group>"; };
@@ -4879,9 +4874,6 @@
 				F908C8411C30FA83004DD99A /* SHGMarketSecondCategoryViewController.xib */,
 				98E1035B1C3128E800712CFE /* SHGMarketSecondCategoryTableViewCell.h */,
 				98E1035C1C3128E800712CFE /* SHGMarketSecondCategoryTableViewCell.m */,
-				98CB3AA31C3224DF0006A3F3 /* SHGMarketSecondCategoryListTableViewController.h */,
-				98CB3AA41C3224DF0006A3F3 /* SHGMarketSecondCategoryListTableViewController.m */,
-				98CB3AA51C3224DF0006A3F3 /* SHGMarketSecondCategoryListTableViewController.xib */,
 				F9DF860F1C34FCE900D42DBE /* SHGMarketCommentTableViewCell.h */,
 				F9DF86101C34FCE900D42DBE /* SHGMarketCommentTableViewCell.m */,
 				F9DF86111C34FCE900D42DBE /* SHGMarketCommentTableViewCell.xib */,
@@ -5187,7 +5179,6 @@
 				F936DD511C3A553800584F53 /* SHGFriendGropingTableViewCell.xib in Resources */,
 				B080FE8D1B81E30100426579 /* btn_publish_keyboard_a@3x.png in Resources */,
 				53BD2BDF1B04452100342B2E /* 新增群组@3x.png in Resources */,
-				98CB3AA71C3224DF0006A3F3 /* SHGMarketSecondCategoryListTableViewController.xib in Resources */,
 				408D8B571AF8618C0055810C /* chatBar_colorMore_photo@2x.png in Resources */,
 				61E83D4C1AF7C78E00703651 /* 短信图标@3x.png in Resources */,
 				40302AFC1AEE6CE900F22EB6 /* MyFollowViewController.xib in Resources */,
@@ -5720,7 +5711,6 @@
 				565136D51B834E2F00894B1D /* RecommendModel.m in Sources */,
 				6187D2D71AF1C693008E1D21 /* ChatViewController.m in Sources */,
 				F9F349B11C1921900090F111 /* SHGMarketSegmentViewController.m in Sources */,
-				98CB3AA61C3224DF0006A3F3 /* SHGMarketSecondCategoryListTableViewController.m in Sources */,
 				6187D2DE1AF1C693008E1D21 /* DXRecordView.m in Sources */,
 				61425B3D1AFA7CDD00758BCB /* CinfigView.m in Sources */,
 				F9D9F1571BB51D5F00F94E70 /* SHGUserTagModel.m in Sources */,
