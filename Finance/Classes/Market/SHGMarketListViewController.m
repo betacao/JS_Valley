@@ -287,9 +287,17 @@
     }
 }
 #pragma mark -----二级分类返回代理
-- (void)backFromSecondChangeToIndex:(NSInteger)index
+- (void)didUploadUserCategoryTags
 {
-    [self.scrollView moveToIndex:index];
+    NSMutableArray *subArray = [self.dataArr objectAtIndex:1];
+    [subArray removeAllObjects];
+    NSString *marketId = [self.scrollView marketFirstId];
+    if ([marketId isEqualToString:@"-2"]) {
+        self.currentArray = subArray;
+        [self loadMarketList:@"first" firstId:[self.scrollView marketFirstId] second:[self.scrollView marketSecondId] marketId:@"-1" modifyTime:@""];
+    } else{
+        [self.scrollView moveToIndex:1];
+    }
 }
 
 #pragma mark ------切换分类代理
