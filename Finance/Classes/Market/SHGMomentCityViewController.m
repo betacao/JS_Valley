@@ -111,14 +111,14 @@
         cell = [[[NSBundle mainBundle]loadNibNamed:@"SHGMomentCityTableViewCell" owner:self options:nil] lastObject];
     }
     cell.selectionStyle = UITableViewCellSeparatorStyleNone;
-    SHGMarketCity * obj = [self.dataArr objectAtIndex:indexPath.row];
+    SHGMarketCityObject *obj = [self.dataArr objectAtIndex:indexPath.row];
     [cell loadWithUi:obj];
     return cell;
 
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    SHGMarketCity * obj = [self.dataArr objectAtIndex:indexPath.row];
+    SHGMarketCityObject *obj = [self.dataArr objectAtIndex:indexPath.row];
     NSString * cityName = obj.cityName;
     [self didSelectCity:cityName];
     [self.navigationController popViewControllerAnimated:YES];
@@ -133,10 +133,5 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return K_topViewHeight;
-}
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    
 }
 @end

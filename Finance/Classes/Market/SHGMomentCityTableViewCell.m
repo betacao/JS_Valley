@@ -11,7 +11,7 @@
 @interface SHGMomentCityTableViewCell()
 @property (weak, nonatomic) IBOutlet UILabel *cityNameLabel;
 @property (weak, nonatomic) IBOutlet UIView *redLine;
-@property (strong, nonatomic) SHGMarketCity * object;
+@property (strong, nonatomic) SHGMarketCityObject *object;
 @end
 @implementation SHGMomentCityTableViewCell
 
@@ -31,7 +31,7 @@
 
     }
 
-- (void)loadWithUi:(SHGMarketCity *)obj
+- (void)loadWithUi:(SHGMarketCityObject *)obj
 {
     self.object = obj;
     self.cityNameLabel.text = obj.cityName;
