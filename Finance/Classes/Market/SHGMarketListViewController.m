@@ -295,7 +295,6 @@
 - (void)clickMoreButton:(UIButton *)button
 {
     SHGMarketSecondCategoryViewController *controller = [[SHGMarketSecondCategoryViewController alloc] init];
-    [controller getArr:self.scrollView.categoryArray];
     controller.secondCategoryDelegate = self;
     [self.navigationController pushViewController:controller animated:YES];
 }

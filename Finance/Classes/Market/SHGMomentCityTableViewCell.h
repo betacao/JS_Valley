@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "SHGMarketObject.h"
 @interface SHGMomentCityTableViewCell : UITableViewCell
-- (void)loadWithUi;
+- (void)loadWithUi:(SHGMarketCity *)obj;
 @end

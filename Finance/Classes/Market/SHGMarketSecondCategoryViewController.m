@@ -12,6 +12,7 @@
 #import "SHGMarketSecondCategoryListTableViewController.h"
 #import "SHGMarketListViewController.h"
 #import "SHGSecondCategoryButton.h"
+#import "SHGMarketManager.h"
 
 #define k_ToleftOne 11.0f * XFACTOR
 #define k_ToleftTwo 21.0f * XFACTOR
@@ -32,6 +33,10 @@
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.title = @"业务";
+    
+    [[SHGMarketManager shareManager] userListArray:^(NSArray *array) {
+        self.categoryArray = array;
+    }];
 }
 -(NSArray * )categoryArray
 {
@@ -48,17 +53,6 @@
     return _categoryNameArray;
 }
 
--(void)getArr:(NSArray * )arry
-{
-    self.categoryArray = arry;
-    [self.categoryArray enumerateObjectsUsingBlock:^(SHGMarketFirstCategoryObject *obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        if (![obj.firstCatalogName isEqualToString: @"热门"]) {
-            [self.categoryNameArray addObject:obj.firstCatalogName];
-        }
-        
-    }];
-    
-}
 #pragma mark -- tableView--
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -69,23 +63,14 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-//    NSInteger  num;
-//    SHGMarketFirstCategoryObject * obj = [self.categoryArray objectAtIndex:section + 1];
-//    if (obj.secondCataLogs.count == 0) {
-//        num = 0;
-//    }else{
-//         num = 1;
-//    }
-    
     return  1;
-    
 }
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSString * identifier = @"SHGMarketSecondCategoryTableViewCell";
     SHGMarketSecondCategoryTableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:identifier];
-    SHGMarketFirstCategoryObject * objf = [self.categoryArray objectAtIndex:indexPath.section +1];
+    SHGMarketFirstCategoryObject * objf = [self.categoryArray objectAtIndex:indexPath.section +2];
     NSArray * arry = objf.secondCataLogs;
     if (!cell) {
         cell = [[SHGMarketSecondCategoryTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];

@@ -508,7 +508,7 @@
 }
 
 #pragma mark ------ 选择行业代理
-- (void)didSelectIndustry:(NSString *)industry
+- (void)didSelectItem:(NSString *)industry
 {
     self.industrycodeTextField.text = industry;
     if ([industry isEqualToString:@"银行机构"]) {

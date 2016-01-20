@@ -17,6 +17,6 @@
 {
     
 }
--(void)getArr:(NSArray * )arry;
+
 @property (nonatomic , assign)id<SHGMarketSecondCategoryViewControllerDelegate>secondCategoryDelegate;
 @end

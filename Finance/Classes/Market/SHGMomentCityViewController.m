@@ -9,7 +9,7 @@
 #import "SHGMomentCityViewController.h"
 #import "SHGMomentCityTableViewCell.h"
 #import "SHGMarketManager.h"
-#define K_topViewHeight 44.0f * XFACTOR
+#define K_topViewHeight 44.0f
 #define K_leftMargin 15.0f
 @interface SHGMomentCityViewController ()<UITableViewDataSource,UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -38,6 +38,14 @@
         [weakSelf.tableView reloadData];
     }];
     [self initUi];
+
+}
+- (void)didSelectCity: (NSString *)city
+{
+    if (self.delegate && [self.delegate respondsToSelector:@selector(didSelectCity:)]) {
+        [self.delegate didSelectCity:city];
+    }
+    
 }
 
 - (void)initUi
@@ -67,8 +75,8 @@
     [self.GPSButton addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.GPSButton sizeToFit];
     frame = self.GPSButton.frame;
-    frame.origin.y = (K_topViewHeight - frame.size.height) / 2.0f;
     frame.origin.x = SCREENWIDTH - frame.size.width - K_leftMargin;
+    frame.origin.y = (K_topViewHeight - frame.size.height) / 2.0f;
     self.GPSButton.frame = frame;
     
     self.allLabel.text = @"全部城市";
@@ -80,7 +88,10 @@
 
 - (void)buttonClick:(UIButton * )btn
 {
-    
+        [Hud showMessageWithText:@"正在定位，请稍后..."];
+        NSString *cityName = [SHGGloble sharedGloble].cityName;
+        self.localLabel.text = cityName;
+        [self.tableView reloadData];
 }
 
 
@@ -88,7 +99,8 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.dataArr.count;
+   return self.dataArr.count;
+    
 }
 
 - (UITableViewCell * )tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -98,8 +110,18 @@
     if (!cell) {
         cell = [[[NSBundle mainBundle]loadNibNamed:@"SHGMomentCityTableViewCell" owner:self options:nil] lastObject];
     }
-    [cell loadWithUi];
+    cell.selectionStyle = UITableViewCellSeparatorStyleNone;
+    SHGMarketCity * obj = [self.dataArr objectAtIndex:indexPath.row];
+    [cell loadWithUi:obj];
     return cell;
+
+}
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    SHGMarketCity * obj = [self.dataArr objectAtIndex:indexPath.row];
+    NSString * cityName = obj.cityName;
+    [self didSelectCity:cityName];
+    [self.navigationController popViewControllerAnimated:YES];
 
 }
 
@@ -113,4 +135,8 @@
     return K_topViewHeight;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+}
 @end

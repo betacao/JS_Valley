@@ -7,10 +7,11 @@
 //
 
 #import "SHGMomentCityTableViewCell.h"
+
 @interface SHGMomentCityTableViewCell()
 @property (weak, nonatomic) IBOutlet UILabel *cityNameLabel;
 @property (weak, nonatomic) IBOutlet UIView *redLine;
-
+@property (strong, nonatomic) SHGMarketCity * object;
 @end
 @implementation SHGMomentCityTableViewCell
 
@@ -22,6 +23,7 @@
     self.redLine.backgroundColor = [UIColor colorWithHexString:@"E6E7E8"];
     self.redLine.frame = CGRectMake(self.redLine.origin.x, self.contentView.height - 1.0f, self.redLine.width, 0.5f);
     
+    
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -29,9 +31,9 @@
 
     }
 
-- (void)loadWithUi
+- (void)loadWithUi:(SHGMarketCity *)obj
 {
-    self.cityNameLabel.text = @"中国";
-    
+    self.object = obj;
+    self.cityNameLabel.text = obj.cityName;
 }
 @end
