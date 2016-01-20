@@ -12,6 +12,7 @@
 #import "SHGMarketSecondCategoryListTableViewController.h"
 #import "SHGMarketListViewController.h"
 #import "SHGSecondCategoryButton.h"
+
 #define k_ToleftOne 11.0f * XFACTOR
 #define k_ToleftTwo 21.0f * XFACTOR
 #define k_SectionHeight 40

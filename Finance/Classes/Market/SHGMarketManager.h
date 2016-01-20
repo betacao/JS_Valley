@@ -19,6 +19,8 @@
 
 - (void)userTotalArray:(void (^)(NSArray *array))block;
 
+- (void)loadHotCitys:(void (^)(NSArray *array))block;
+
 + (void)loadMarketList:(NSDictionary *)param block:(void (^)(NSArray *array))block;
 
 + (void)searchMarketList:(NSDictionary *)param block:(void (^)(NSArray *array))block;

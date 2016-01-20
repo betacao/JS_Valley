@@ -12,6 +12,7 @@
 #import "SHGMarketManager.h"
 #import "SHGProvincesViewController.h"
 #import "SHGMomentCityViewController.h"
+#import "SHGMarketSecondCategoryViewController.h"
 @interface SHGMarketSegmentViewController ()
 @property (nonatomic, strong) NSArray *rightBarButtonItems;
 @property (nonatomic, strong) UIBarButtonItem *leftBarButtonItem;
@@ -89,7 +90,7 @@
     if (!_titleButton) {
         _titleButton = [UIButton buttonWithType:UIButtonTypeCustom];
         _titleButton.backgroundColor = [UIColor clearColor];
-
+        [_titleButton addTarget:self action:@selector(moveToProvincesViewController:) forControlEvents:UIControlEventTouchUpInside];
         self.titleLabel = [[UILabel alloc] init];
         self.titleLabel.text = @"上海";
         self.titleLabel.font = [UIFont systemFontOfSize:kNavBarTitleFontSize];
@@ -122,7 +123,7 @@
         UIImage *image = [UIImage imageNamed:@"market_modify"];
         [modifyButton setBackgroundImage:image forState:UIControlStateNormal];
         [modifyButton sizeToFit];
-        [modifyButton addTarget:self action:@selector(addNewMarket:) forControlEvents:UIControlEventTouchUpInside];
+        [modifyButton addTarget:self action:@selector(modifyUserSelectedTags:) forControlEvents:UIControlEventTouchUpInside];
         UIBarButtonItem *modifyItem = [[UIBarButtonItem alloc] initWithCustomView:modifyButton];
 
         _rightBarButtonItems = @[sendItem, modifyItem];
@@ -156,6 +157,12 @@
     [MobClick event:@"ActionMarketSearchClicked" label:@"onClick"];
     SHGMarketSearchViewController *controller = [[SHGMarketSearchViewController alloc] init];
     controller.dataArr = ((BaseTableViewController *)[self.viewControllers firstObject]).dataArr;
+    [self.navigationController pushViewController:controller animated:YES];
+}
+
+- (void)modifyUserSelectedTags:(UIButton *)button
+{
+    SHGMarketSecondCategoryViewController *controller = [[SHGMarketSecondCategoryViewController alloc] init];
     [self.navigationController pushViewController:controller animated:YES];
 }
 

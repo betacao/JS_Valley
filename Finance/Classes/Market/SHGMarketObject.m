@@ -126,3 +126,13 @@
 }
 
 @end
+
+
+@implementation SHGMarketCity
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey
+{
+    return @{@"cityId":@"cityid", @"cityName":@"cityname"};
+}
+
+@end

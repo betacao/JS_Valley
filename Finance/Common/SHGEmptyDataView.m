@@ -35,14 +35,17 @@
     _type = type;
     switch (type) {
         case SHGEmptyDateTypeNormal:
+            self.actionButton.hidden = YES;
             self.imageView.image = [UIImage imageNamed:@"emptyBg"];
             [self.imageView sizeToFit];
             break;
         case SHGEmptyDateTypeMarketDeleted:
+            self.actionButton.hidden = YES;
             self.imageView.image = [UIImage imageNamed:@"deleted_market"];
             [self.imageView sizeToFit];
             break;
         case SHGEmptyDateTypeMarketEmptyRecommended:
+            self.actionButton.hidden = NO ;
             self.imageView.image = [UIImage imageNamed:@"market_emptyUser"];
             [self.imageView sizeToFit];
             [self.actionButton setTitle:@"立即创建" forState:UIControlStateNormal];

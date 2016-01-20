@@ -14,6 +14,7 @@
 @property (strong, nonatomic) NSArray *selecetedArray;
 @property (strong, nonatomic) NSArray *listArray;
 @property (strong, nonatomic) NSArray *totalArray;
+@property (strong, nonatomic) NSArray *citysArray;
 
 @end
 
@@ -74,6 +75,24 @@
     [self loadMarketCategoryBlock:^{
         block(self.totalArray);
     }];
+}
+
+- (void)loadHotCitys:(void (^)(NSArray *))block
+{
+    if (!self.citysArray) {
+        __weak typeof(self) weakSelf = self;
+        NSString *request = [rBaseAddressForHttp stringByAppendingString:@"/market/getMarketHotCity"];
+        [MOCHTTPRequestOperationManager postWithURL:request class:nil parameters:nil success:^(MOCHTTPResponse *response) {
+            NSDictionary *dictionary = response.dataDictionary;
+            weakSelf.citysArray = [dictionary objectForKey:@"city"];
+            weakSelf.citysArray = [[SHGGloble sharedGloble] parseServerJsonArrayToJSONModel:weakSelf.citysArray class:[SHGMarketCity class]];
+            block(weakSelf.citysArray);
+        } failed:^(MOCHTTPResponse *response) {
+            [Hud showMessageWithText:@"获取业务分类错误"];
+        }];
+    } else{
+        block(self.citysArray);
+    }
 }
 //列表
 + (void)loadMarketList:(NSDictionary *)param block:(void (^)(NSArray *array))block

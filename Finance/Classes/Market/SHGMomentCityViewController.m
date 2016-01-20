@@ -8,6 +8,7 @@
 
 #import "SHGMomentCityViewController.h"
 #import "SHGMomentCityTableViewCell.h"
+#import "SHGMarketManager.h"
 #define K_topViewHeight 44.0f * XFACTOR
 #define K_leftMargin 15.0f
 @interface SHGMomentCityViewController ()<UITableViewDataSource,UITableViewDelegate>
@@ -30,6 +31,12 @@
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.tableHeaderView = self.headerView;
+    __weak typeof(self) weakSelf = self;
+    [[SHGMarketManager shareManager] loadHotCitys:^(NSArray *array) {
+        [weakSelf.dataArr removeAllObjects];
+        [weakSelf.dataArr addObjectsFromArray:array];
+        [weakSelf.tableView reloadData];
+    }];
     [self initUi];
 }
 

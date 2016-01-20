@@ -66,3 +66,10 @@
 - (CGFloat)heightForCell;
 
 @end
+
+@interface SHGMarketCity : MTLModel<MTLJSONSerializing>
+
+@property (strong, nonatomic) NSString *cityId;
+@property (strong, nonatomic) NSString *cityName;
+
+@end
