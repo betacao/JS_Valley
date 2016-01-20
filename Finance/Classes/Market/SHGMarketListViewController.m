@@ -85,27 +85,48 @@
 - (void)loadMarketList:(NSString *)target firstId:(NSString *)firstId second:(NSString *)secondId marketId:(NSString *)marketId modifyTime:(NSString *)modifyTime
 {
     __weak typeof(self) weakSelf = self;
-    NSString *area = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_USER_AREA];
-    if (!area || area.length == 0) {
-        area = [SHGGloble sharedGloble].cityName;
-    }
-    NSDictionary *param = @{@"marketId":marketId ,@"uid":UID ,@"type":@"all" ,@"target":target ,@"pageSize":@"10" ,@"firstCatalog":firstId ,@"secondCatalog":secondId, @"modifyTime":modifyTime, @"city":area};
+    NSString *area = [SHGMarketManager shareManager].cityName;
+    NSString *redirect = self.adArray.count > 0 ? @"1" : @"0";
+    NSDictionary *param = @{@"marketId":marketId ,@"uid":UID ,@"type":@"all" ,@"target":target ,@"pageSize":@"10" ,@"firstCatalog":firstId ,@"secondCatalog":secondId, @"modifyTime":modifyTime, @"city":area, @"redirect":redirect};
     [SHGMarketManager loadTotalMarketList:param block:^(NSArray *dataArray, NSArray *tipArray) {
         [weakSelf.tableView.header endRefreshing];
         [weakSelf.tableView.footer endRefreshing];
         if ([target isEqualToString:@"first"]) {
+
+            [weakSelf.listArray removeAllObjects];
+            [weakSelf.listArray addObjectsFromArray:dataArray];
+
+            [weakSelf.adArray removeAllObjects];
+            [weakSelf.adArray addObjectsFromArray:tipArray];
+
             [weakSelf.currentArray removeAllObjects];
             [weakSelf.currentArray addObjectsFromArray:tipArray];
             [weakSelf.currentArray addObjectsFromArray:dataArray];
+
             [weakSelf.tableView reloadData];
         } else if([target isEqualToString:@"refresh"]){
             for (NSInteger i = dataArray.count - 1; i >= 0; i--){
                 SHGMarketObject *obj = [dataArray objectAtIndex:i];
-                [weakSelf.currentArray insertObject:obj atIndex:1];
+                [weakSelf.listArray insertObject:obj atIndex:0];
             }
+            [weakSelf.adArray removeAllObjects];
+            [weakSelf.adArray addObjectsFromArray:tipArray];
+
+            [weakSelf.currentArray removeAllObjects];
+            [weakSelf.currentArray addObjectsFromArray:weakSelf.adArray];
+            [weakSelf.currentArray addObjectsFromArray:weakSelf.listArray];
+
             [weakSelf.tableView reloadData];
         } else if([target isEqualToString:@"load"]){
-            [weakSelf.currentArray addObjectsFromArray:dataArray];
+            [weakSelf.listArray addObjectsFromArray:dataArray];
+
+            [weakSelf.adArray removeAllObjects];
+            [weakSelf.adArray addObjectsFromArray:tipArray];
+
+            [weakSelf.currentArray removeAllObjects];
+            [weakSelf.currentArray addObjectsFromArray:weakSelf.adArray];
+            [weakSelf.currentArray addObjectsFromArray:weakSelf.listArray];
+
             [weakSelf.tableView reloadData];
         }
     }];
@@ -138,6 +159,11 @@
     if (!_emptyView) {
         _emptyView = [[SHGEmptyDataView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, SCREENWIDTH, SCREENHEIGHT)];
         _emptyView.type = SHGEmptyDateTypeMarketEmptyRecommended;
+        __weak typeof(self) weakSelf = self;
+        _emptyView.block = ^(NSDictionary *dictionary){
+            SHGMarketSecondCategoryViewController *controller = [[SHGMarketSecondCategoryViewController alloc] init];
+            [weakSelf.navigationController pushViewController:controller animated:YES];
+        };
     }
     return _emptyView;
 }
@@ -263,21 +289,24 @@
     if (!self.headerView) {
         self.headerView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, SCREENWIDTH, CGRectGetHeight(self.scrollView.frame))];
         [self.headerView addSubview:self.scrollView];
-        //添加右面...按钮
-        UIButton *moreButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        [moreButton setBackgroundImage:[UIImage imageNamed:@"more_CategoryButton"] forState:UIControlStateNormal];
-        [moreButton addTarget:self action:@selector(clickMoreButton:) forControlEvents:UIControlEventTouchUpInside];
-        [moreButton sizeToFit];
-        CGRect frame = moreButton.frame;
-        frame.origin.x = SCREENWIDTH - CGRectGetWidth(frame);
-        moreButton.frame = frame;
-//        [self.headerView addSubview:moreButton];
 
         UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, kCategoryScrollViewHeight, SCREENWIDTH, 0.5f)];
         lineView.backgroundColor = [UIColor colorWithHexString:@"d9dadb"];
         [self.headerView addSubview:lineView];
     }
     return self.headerView;
+}
+
+- (void)clearAndReloadData
+{
+    [self.dataArr enumerateObjectsUsingBlock:^(NSMutableArray *array, NSUInteger idx, BOOL * _Nonnull stop) {
+        [array removeAllObjects];
+    }];
+    NSMutableArray *subArray = [self.dataArr objectAtIndex:[self.scrollView currentIndex]];
+    if (!subArray || subArray.count == 0) {
+        self.currentArray = subArray;
+        [self loadMarketList:@"first" firstId:[self.scrollView marketFirstId] second:[self.scrollView marketSecondId] marketId:@"-1" modifyTime:@""];
+    }
 }
 #pragma mark -----二级分类返回代理
 - (void)backFromSecondChangeToIndex:(NSInteger)index
@@ -296,15 +325,6 @@
         self.currentArray = subArray;
         [self.tableView reloadData];
     }
-}
-
-#pragma mark ------点击更多按钮
-
-- (void)clickMoreButton:(UIButton *)button
-{
-    SHGMarketSecondCategoryViewController *controller = [[SHGMarketSecondCategoryViewController alloc] init];
-    controller.secondCategoryDelegate = self;
-    [self.navigationController pushViewController:controller animated:YES];
 }
 
 #pragma mark ------SHGMarketTableViewDelegate

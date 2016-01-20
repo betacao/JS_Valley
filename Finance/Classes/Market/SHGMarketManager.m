@@ -38,6 +38,7 @@
         NSString *request = [rBaseAddressForHttp stringByAppendingString:@"/market/getMarketCatalogByUid"];
         [MOCHTTPRequestOperationManager postWithURL:request class:nil parameters:param success:^(MOCHTTPResponse *response) {
             NSDictionary *dictionary = response.dataDictionary;
+            weakSelf.cityName = [dictionary objectForKey:@"cityname"];
 
             weakSelf.listArray = [dictionary objectForKey:@"cataloglist"];
             NSMutableArray *temp = [NSMutableArray arrayWithArray:[dictionary objectForKey:@"definedcatalog"]];

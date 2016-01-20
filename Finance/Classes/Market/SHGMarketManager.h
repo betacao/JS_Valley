@@ -11,6 +11,8 @@
 
 @interface SHGMarketManager : NSObject
 
+@property (strong, nonatomic) NSString *cityName;
+
 + (instancetype)shareManager;
 
 - (void)userSelectedArray:(void (^)(NSArray *array))block;

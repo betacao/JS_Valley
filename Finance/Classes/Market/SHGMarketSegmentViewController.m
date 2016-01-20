@@ -109,6 +109,17 @@
 }
 
 
+#pragma mark ------变更城市代理
+- (void)didSelectCity: (NSString *)city
+{
+    if (![city isEqualToString:self.titleLabel.text]) {
+        self.titleLabel.text = city;
+        [SHGMarketManager shareManager].cityName = city;
+        UIViewController *controller = [self.viewControllers firstObject];
+        [controller performSelector:@selector(clearAndReloadData) withObject:nil];
+    }
+}
+
 - (NSArray *)rightBarButtonItems
 {
     if (!_rightBarButtonItems) {
@@ -145,10 +156,7 @@
     }
     return _leftBarButtonItem;
 }
-- (void)didSelectCity: (NSString *)city
-{
-    self.titleLabel.text = city;
-}
+
 - (void)moveToProvincesViewController:(UIButton *)button
 {
     SHGMomentCityViewController * controller = [[SHGMomentCityViewController alloc]init];
@@ -438,6 +446,11 @@
 - (void)refreshData
 {
 
+}
+
+- (void)clearAndReloadData
+{
+    
 }
 
 - (void)viewDidUnload

@@ -12,9 +12,9 @@ typedef NS_ENUM(NSInteger, SHGEmptyDateType) {
     SHGEmptyDateTypeMarketDeleted = 1,
     SHGEmptyDateTypeMarketEmptyRecommended
 };
-
+typedef void(^SHGEmptyDataViewBlock)(NSDictionary *dictionary);
 @interface SHGEmptyDataView : UIView
 
 @property (assign, nonatomic) SHGEmptyDateType type;
-
+@property (copy, nonatomic) SHGEmptyDataViewBlock block;
 @end

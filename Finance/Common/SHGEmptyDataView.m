@@ -24,6 +24,7 @@
         self.backgroundColor = [UIColor colorWithHexString:@"EFEEEF"];
         self.imageView = [[UIImageView alloc] init];
         self.actionButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [self.actionButton addTarget:self action:@selector(actionButtonClick:) forControlEvents:UIControlEventTouchUpInside];
         self.type = SHGEmptyDateTypeNormal;
         [self addSubview:self.imageView];
     }
@@ -55,6 +56,20 @@
             break;
         default:
             break;
+    }
+}
+
+- (void)actionButtonClick:(UIButton *)button
+{
+    if (self.block) {
+        switch (self.type) {
+            case SHGEmptyDateTypeMarketEmptyRecommended:
+                self.block(nil);
+                break;
+                
+            default:
+                break;
+        }
     }
 }
 

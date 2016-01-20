@@ -13,6 +13,7 @@
 - (NSMutableArray *) currentDataArray;
 - (void)reloadData;
 - (void)refreshData;
+- (void)clearAndReloadData;
 //移动到某个分类
 - (void)scrollToCategory:(SHGMarketFirstCategoryObject *)object;
 @end
