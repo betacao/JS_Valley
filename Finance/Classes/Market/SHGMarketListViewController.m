@@ -93,12 +93,6 @@
         [weakSelf.tableView.footer endRefreshing];
         if ([target isEqualToString:@"first"]) {
 
-            [weakSelf.listArray removeAllObjects];
-            [weakSelf.listArray addObjectsFromArray:dataArray];
-
-            [weakSelf.adArray removeAllObjects];
-            [weakSelf.adArray addObjectsFromArray:tipArray];
-
             [weakSelf.currentArray removeAllObjects];
             [weakSelf.currentArray addObjectsFromArray:tipArray];
             [weakSelf.currentArray addObjectsFromArray:dataArray];
@@ -107,26 +101,11 @@
         } else if([target isEqualToString:@"refresh"]){
             for (NSInteger i = dataArray.count - 1; i >= 0; i--){
                 SHGMarketObject *obj = [dataArray objectAtIndex:i];
-                [weakSelf.listArray insertObject:obj atIndex:0];
+                [weakSelf.currentArray insertUniqueObject:obj atIndex:1];
             }
-            [weakSelf.adArray removeAllObjects];
-            [weakSelf.adArray addObjectsFromArray:tipArray];
-
-            [weakSelf.currentArray removeAllObjects];
-            [weakSelf.currentArray addObjectsFromArray:weakSelf.adArray];
-            [weakSelf.currentArray addObjectsFromArray:weakSelf.listArray];
-
             [weakSelf.tableView reloadData];
         } else if([target isEqualToString:@"load"]){
-            [weakSelf.listArray addObjectsFromArray:dataArray];
-
-            [weakSelf.adArray removeAllObjects];
-            [weakSelf.adArray addObjectsFromArray:tipArray];
-
-            [weakSelf.currentArray removeAllObjects];
-            [weakSelf.currentArray addObjectsFromArray:weakSelf.adArray];
-            [weakSelf.currentArray addObjectsFromArray:weakSelf.listArray];
-
+            [weakSelf.currentArray addObjectsFromArray:dataArray];
             [weakSelf.tableView reloadData];
         }
     }];
@@ -201,10 +180,9 @@
 
 - (NSString *)minMarketID
 {
-    SHGMarketObject *object = [self.currentArray firstObject];
-    NSString *marketID = object.marketId;
+    NSString *marketID = @"";
     for (SHGMarketObject *object in self.currentArray) {
-        if ([object.marketId compare:marketID options:NSNumericSearch] == NSOrderedAscending) {
+        if ([object.marketId compare:marketID options:NSNumericSearch] == NSOrderedAscending || [marketID isEqualToString:@""]) {
             marketID = object.marketId;
         }
     }

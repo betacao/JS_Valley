@@ -128,7 +128,10 @@
             return;
         }
     }
-    if (index < 0 || index > [self count]) {
+    if (index > [self count]) {
+        [self addObject:anObject];
+    }
+    if (index < 0) {
         return;
     }
     [self insertObject:anObject atIndex:index];

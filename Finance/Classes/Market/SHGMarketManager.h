@@ -27,6 +27,8 @@
 
 + (void)loadMineMarketList:(NSDictionary *)param block:(void (^)(NSArray *array))block;
 
++ (void)uploadUserMarket:(NSDictionary *)param block:(void(^)(void))block;
+
 + (void)searchMarketList:(NSDictionary *)param block:(void (^)(NSArray *array))block;
 
 + (void)createNewMarket:(NSDictionary *)param success:(void (^)(BOOL success))block;

@@ -127,6 +127,20 @@
         [Hud showMessageWithText:@"获取列表数据失败"];
     }];
 }
+
+//上传用户选择的市场标签
++ (void)uploadUserMarket:(NSDictionary *)param block:(void (^)(void))block
+{
+    [Hud showLoadingWithMessage:@"请稍等..."];
+    NSString *request = [rBaseAddressForHttp stringByAppendingString:@"/market/editUserMarket"];
+    [MOCHTTPRequestOperationManager postWithURL:request class:[SHGMarketObject class] parameters:param success:^(MOCHTTPResponse *response) {
+        [Hud hideHud];
+        block();
+    } failed:^(MOCHTTPResponse *response) {
+        [Hud hideHud];
+        [Hud showMessageWithText:@"上传业务信息失败"];
+    }];
+}
 //详情
 + (void)loadMarketDetail:(NSDictionary *)param block:(void (^)(SHGMarketObject *))block
 {
