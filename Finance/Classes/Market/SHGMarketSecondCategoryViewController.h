@@ -10,7 +10,7 @@
 
 @protocol SHGMarketSecondCategoryViewControllerDelegate <NSObject>
 
-- (void)backFromSecondChangeToIndex:(NSInteger)index ;
+- (void)didUploadUserCategoryTags ;
 
 @end
 @interface SHGMarketSecondCategoryViewController : BaseViewController
@@ -18,5 +18,5 @@
     
 }
 
-@property (nonatomic , assign)id<SHGMarketSecondCategoryViewControllerDelegate>secondCategoryDelegate;
+@property (nonatomic , assign)id<SHGMarketSecondCategoryViewControllerDelegate>delegate;
 @end

@@ -738,7 +738,6 @@
 		98D65B031C1E607300B65119 /* CircleNewDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98D65B011C1E607300B65119 /* CircleNewDetailViewController.xib */; };
 		98D73C2D1C194E7E0055AF75 /* SHGNewsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 98D73C2B1C194E7E0055AF75 /* SHGNewsTableViewCell.m */; };
 		98D73C2E1C194E7E0055AF75 /* SHGNewsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98D73C2C1C194E7E0055AF75 /* SHGNewsTableViewCell.xib */; };
-		98E1035D1C3128E800712CFE /* SHGMarketSecondCategoryTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 98E1035C1C3128E800712CFE /* SHGMarketSecondCategoryTableViewCell.m */; };
 		98E3022B1BFB0708001D4A69 /* SHGAuthenticationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98E302291BFB0708001D4A69 /* SHGAuthenticationViewController.m */; };
 		98E3022C1BFB0708001D4A69 /* SHGAuthenticationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98E3022A1BFB0708001D4A69 /* SHGAuthenticationViewController.xib */; };
 		98FA41C31BF5E1B40058A4EF /* SHGActionDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98FA41C11BF5E1B40058A4EF /* SHGActionDetailViewController.m */; };
@@ -1990,8 +1989,6 @@
 		98D73C2A1C194E7E0055AF75 /* SHGNewsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGNewsTableViewCell.h; sourceTree = "<group>"; };
 		98D73C2B1C194E7E0055AF75 /* SHGNewsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGNewsTableViewCell.m; sourceTree = "<group>"; };
 		98D73C2C1C194E7E0055AF75 /* SHGNewsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGNewsTableViewCell.xib; sourceTree = "<group>"; };
-		98E1035B1C3128E800712CFE /* SHGMarketSecondCategoryTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGMarketSecondCategoryTableViewCell.h; sourceTree = "<group>"; };
-		98E1035C1C3128E800712CFE /* SHGMarketSecondCategoryTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGMarketSecondCategoryTableViewCell.m; sourceTree = "<group>"; };
 		98E302281BFB0708001D4A69 /* SHGAuthenticationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGAuthenticationViewController.h; sourceTree = "<group>"; };
 		98E302291BFB0708001D4A69 /* SHGAuthenticationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGAuthenticationViewController.m; sourceTree = "<group>"; };
 		98E3022A1BFB0708001D4A69 /* SHGAuthenticationViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGAuthenticationViewController.xib; sourceTree = "<group>"; };
@@ -4872,8 +4869,6 @@
 				F908C83F1C30FA83004DD99A /* SHGMarketSecondCategoryViewController.h */,
 				F908C8401C30FA83004DD99A /* SHGMarketSecondCategoryViewController.m */,
 				F908C8411C30FA83004DD99A /* SHGMarketSecondCategoryViewController.xib */,
-				98E1035B1C3128E800712CFE /* SHGMarketSecondCategoryTableViewCell.h */,
-				98E1035C1C3128E800712CFE /* SHGMarketSecondCategoryTableViewCell.m */,
 				F9DF860F1C34FCE900D42DBE /* SHGMarketCommentTableViewCell.h */,
 				F9DF86101C34FCE900D42DBE /* SHGMarketCommentTableViewCell.m */,
 				F9DF86111C34FCE900D42DBE /* SHGMarketCommentTableViewCell.xib */,
@@ -5684,7 +5679,6 @@
 				6187D2DD1AF1C693008E1D21 /* DXChatBarMoreView.m in Sources */,
 				40302B1E1AEF657300F22EB6 /* TeamDetailObject.m in Sources */,
 				4088DD881AF0EEA200393855 /* SettingsViewController.m in Sources */,
-				98E1035D1C3128E800712CFE /* SHGMarketSecondCategoryTableViewCell.m in Sources */,
 				614BA7E11AE61C1E009480CD /* ProductListTableViewCell.m in Sources */,
 				F9002CA51C45ECD6002797E9 /* NSArray+Category.m in Sources */,
 				40302B041AEF22E800F22EB6 /* BasePeopleObject.m in Sources */,
