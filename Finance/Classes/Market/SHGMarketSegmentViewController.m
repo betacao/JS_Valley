@@ -92,7 +92,7 @@
         _titleButton.backgroundColor = [UIColor clearColor];
         [_titleButton addTarget:self action:@selector(moveToProvincesViewController:) forControlEvents:UIControlEventTouchUpInside];
         self.titleLabel = [[UILabel alloc] init];
-        self.titleLabel.text = @"上海";
+        self.titleLabel.text = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_USER_AREA];
         self.titleLabel.font = [UIFont systemFontOfSize:kNavBarTitleFontSize];
         self.titleLabel.textColor = [UIColor whiteColor];
         [self.titleLabel sizeToFit];

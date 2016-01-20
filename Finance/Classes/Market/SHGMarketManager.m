@@ -85,7 +85,7 @@
         [MOCHTTPRequestOperationManager postWithURL:request class:nil parameters:nil success:^(MOCHTTPResponse *response) {
             NSDictionary *dictionary = response.dataDictionary;
             weakSelf.citysArray = [dictionary objectForKey:@"city"];
-            weakSelf.citysArray = [[SHGGloble sharedGloble] parseServerJsonArrayToJSONModel:weakSelf.citysArray class:[SHGMarketCity class]];
+            weakSelf.citysArray = [[SHGGloble sharedGloble] parseServerJsonArrayToJSONModel:weakSelf.citysArray class:[SHGMarketCityObject class]];
             block(weakSelf.citysArray);
         } failed:^(MOCHTTPResponse *response) {
             [Hud showMessageWithText:@"获取业务分类错误"];
@@ -99,11 +99,11 @@
 {
     [Hud showLoadingWithMessage:@"请稍等..."];
     NSString *request = [rBaseAddressForHttp stringByAppendingString:@"/market/getMarketList"];
-    [MOCHTTPRequestOperationManager postWithURL:request class:[SHGMarketObject class] parameters:param success:^(MOCHTTPResponse *response) {
+    [MOCHTTPRequestOperationManager postWithURL:request class:nil parameters:param success:^(MOCHTTPResponse *response) {
         [Hud hideHud];
         NSDictionary *dictionary = response.dataDictionary;
-        NSArray *dataArray = [dictionary objectForKey:@"datalist"];
-        NSArray *tipArray = [dictionary objectForKey:@"tiplist"];
+        NSArray *dataArray = [[SHGGloble sharedGloble] parseServerJsonArrayToJSONModel:[dictionary objectForKey:@"datalist"] class:[SHGMarketObject class]];
+        NSArray *tipArray = [[SHGGloble sharedGloble] parseServerJsonArrayToJSONModel:[dictionary objectForKey:@"tiplist"] class:[SHGMarketObject class]];
         block(dataArray, tipArray);
     } failed:^(MOCHTTPResponse *response) {
         [Hud hideHud];

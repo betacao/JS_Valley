@@ -7,6 +7,7 @@
 //
 
 #import "SHGMarketTableViewCell.h"
+#import "UIButton+WebCache.h"
 
 @interface SHGMarketTableViewCell ()
 @property (weak, nonatomic) IBOutlet UILabel *titleView;
@@ -21,6 +22,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *editButton;
 @property (weak, nonatomic) IBOutlet UIButton *deleteButton;
 @property (weak, nonatomic) IBOutlet UIImageView *xuXian;
+@property (weak, nonatomic) IBOutlet UIButton *imageButton;//展示图片当数据中含有tipUrl的时候显示 然后隐藏其他全部控件
 @property (strong ,nonatomic) SHGMarketObject *object;
 @property (strong ,nonatomic) SHGMarketFirstCategoryObject *obj;
 @end
@@ -29,16 +31,20 @@
 
 - (void)awakeFromNib
 {
-    
+    UIImage *img = [UIImage imageNamed:@"action_xuxian"];
+    self.xuXian.image = [img resizableImageWithCapInsets:UIEdgeInsetsMake(0 , 1, 0, 1) resizingMode:UIImageResizingModeTile];
+
 }
 
 - (void)loadDataWithObject:(SHGMarketObject *)object type:(SHGMarketTableViewCellType)type
 {
     [self clearCell];
     self.object = object;
-    self.typeLabel.hidden = NO;
-    UIImage * img = [UIImage imageNamed:@"action_xuxian"];
-    self.xuXian.image = [img resizableImageWithCapInsets:UIEdgeInsetsMake(0 , 1, 0, 1) resizingMode:UIImageResizingModeTile];
+    if (object.tipUrl.length > 0) {
+        self.imageButton.hidden = NO;
+        [self.imageButton sd_setBackgroundImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage, object.tipUrl]] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@""]];
+        return;
+    }
     self.titleView.text = object.marketName;
 
     if ([UID isEqualToString:object.createBy] && type == SHGMarketTableViewCellTypeMine) {
@@ -86,6 +92,7 @@
 
     
 }
+
 - (void)loadNewUi
 {
     self.typeLabel.hidden = YES;
@@ -94,6 +101,7 @@
 
 - (void)clearCell
 {
+    self.imageButton.hidden = YES;
     self.titleView.text = @"";
     self.leftView.hidden = YES;
     self.rightView.hidden = YES;
@@ -101,6 +109,7 @@
     self.amountLabel.text = @"";
     self.contactLabel.text = @"";
     self.relationLabel.text = @"";
+    self.typeLabel.hidden = NO;
     [self.praiseButton setTitle:@"0" forState:UIControlStateNormal];
     [self.praiseButton setImage:[UIImage imageNamed:@"home_weizan"] forState:UIControlStateNormal];
     [self.commentButton setTitle:@"0" forState:UIControlStateNormal];

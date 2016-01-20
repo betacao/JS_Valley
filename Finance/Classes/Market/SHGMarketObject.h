@@ -38,6 +38,7 @@
 @property (strong, nonatomic) NSMutableArray *commentList;
 @property (strong, nonatomic) NSString *isDeleted;//是否已经在服务端删除了
 @property (strong, nonatomic) NSString *modifyTime;
+@property (strong, nonatomic) NSString *tipUrl;
 @end
 
 
@@ -67,7 +68,7 @@
 
 @end
 
-@interface SHGMarketCity : MTLModel<MTLJSONSerializing>
+@interface SHGMarketCityObject : MTLModel<MTLJSONSerializing>
 
 @property (strong, nonatomic) NSString *cityId;
 @property (strong, nonatomic) NSString *cityName;

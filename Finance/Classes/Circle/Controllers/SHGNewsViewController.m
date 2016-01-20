@@ -16,7 +16,6 @@
 #import "RecmdFriendObj.h"
 #import "CircleListRecommendViewController.h"
 #import "SHGNoticeView.h"
-#import "CCLocationManager.h"
 #import "SHGHomeTableViewCell.h"
 #import "CircleDetailViewController.h"
 #import "SHGUnifiedTreatment.h"
@@ -28,7 +27,7 @@
 #import "CircleNewDetailViewController.h"
 
 #define ImageBttomLineWidth 32
-@interface SHGNewsViewController ()<MLEmojiLabelDelegate,CLLocationManagerDelegate,SHGNoticeDelegate>
+@interface SHGNewsViewController ()<MLEmojiLabelDelegate,SHGNoticeDelegate>
 {
      UIImageView *imageBttomLine;
      NSInteger width;

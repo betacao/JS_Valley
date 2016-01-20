@@ -26,6 +26,7 @@
 @property (strong, nonatomic) UITableViewCell *emptyCell;
 @property (strong, nonatomic) SHGEmptyDataView *emptyView;
 @property (strong, nonatomic) NSMutableArray *currentArray;
+@property (strong, nonatomic) NSArray *userSelectedArray;
 
 @end
 
@@ -39,6 +40,11 @@
     [self addHeaderRefresh:self.tableView headerRefesh:YES andFooter:YES];
     __weak typeof(self) weakSelf = self;
     [[SHGMarketManager shareManager] userTotalArray:^(NSArray *array) {
+
+        [[SHGMarketManager shareManager] userSelectedArray:^(NSArray *array) {
+            weakSelf.userSelectedArray = array;
+        }];
+        
         weakSelf.scrollView.categoryArray = array;
         for (NSInteger i = 0; i < array.count; i++) {
             NSMutableArray *subArray = [NSMutableArray array];
@@ -78,24 +84,28 @@
 
 - (void)loadMarketList:(NSString *)target firstId:(NSString *)firstId second:(NSString *)secondId marketId:(NSString *)marketId modifyTime:(NSString *)modifyTime
 {
-    NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
     __weak typeof(self) weakSelf = self;
-    NSDictionary *param = @{@"marketId":marketId ,@"uid":uid ,@"type":@"all" ,@"target":target ,@"pageSize":@"10" ,@"firstCatalog":firstId ,@"secondCatalog":secondId, @"modifyTime":modifyTime};
-    [SHGMarketManager loadMarketList:param block:^(NSArray *array) {
+    NSString *area = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_USER_AREA];
+    if (!area || area.length == 0) {
+        area = [SHGGloble sharedGloble].cityName;
+    }
+    NSDictionary *param = @{@"marketId":marketId ,@"uid":UID ,@"type":@"all" ,@"target":target ,@"pageSize":@"10" ,@"firstCatalog":firstId ,@"secondCatalog":secondId, @"modifyTime":modifyTime, @"city":area};
+    [SHGMarketManager loadTotalMarketList:param block:^(NSArray *dataArray, NSArray *tipArray) {
         [weakSelf.tableView.header endRefreshing];
         [weakSelf.tableView.footer endRefreshing];
         if ([target isEqualToString:@"first"]) {
             [weakSelf.currentArray removeAllObjects];
-            [weakSelf.currentArray addObjectsFromArray:array];
+            [weakSelf.currentArray addObjectsFromArray:tipArray];
+            [weakSelf.currentArray addObjectsFromArray:dataArray];
             [weakSelf.tableView reloadData];
         } else if([target isEqualToString:@"refresh"]){
-            for (NSInteger i = array.count - 1; i >= 0; i--){
-                SHGMarketObject *obj = [array objectAtIndex:i];
-                [weakSelf.currentArray insertObject:obj atIndex:0];
+            for (NSInteger i = dataArray.count - 1; i >= 0; i--){
+                SHGMarketObject *obj = [dataArray objectAtIndex:i];
+                [weakSelf.currentArray insertObject:obj atIndex:1];
             }
             [weakSelf.tableView reloadData];
         } else if([target isEqualToString:@"load"]){
-            [weakSelf.currentArray addObjectsFromArray:array];
+            [weakSelf.currentArray addObjectsFromArray:dataArray];
             [weakSelf.tableView reloadData];
         }
     }];
@@ -127,6 +137,7 @@
 {
     if (!_emptyView) {
         _emptyView = [[SHGEmptyDataView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, SCREENWIDTH, SCREENHEIGHT)];
+        _emptyView.type = SHGEmptyDateTypeMarketEmptyRecommended;
     }
     return _emptyView;
 }
@@ -193,21 +204,17 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (self.currentArray.count > 0) {
-        NSInteger count = self.currentArray.count;
-        return count;
-    } else{
-        return 1;
-    }
+    NSInteger count = self.currentArray.count;
+    return count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (self.currentArray.count > 0) {
-        return kMarketCellHeight;
-    } else{
+
+    if ([[self.scrollView marketFirstId] isEqualToString:@"-2"] && self.userSelectedArray.count == 0) {
         return CGRectGetHeight(self.view.frame);
     }
+    return kMarketCellHeight;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
@@ -218,33 +225,34 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSString *identifier = @"SHGMarketTableViewCell";
-    if (self.currentArray.count > 0) {
-        SHGMarketTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
-        if (!cell) {
-            cell = [[[NSBundle mainBundle] loadNibNamed:@"SHGMarketTableViewCell" owner:self options:nil] lastObject];
-        }
-        cell.delegate = self;
-        SHGMarketFirstCategoryObject  *obj  = [self.scrollView.categoryArray objectAtIndex:[self.scrollView currentIndex]];
-        [cell loadDataWithObject:[self.currentArray objectAtIndex:indexPath.row] type:SHGMarketTableViewCellTypeAll];
-        if (obj.secondCataLogs.count == 0 && [self.scrollView currentIndex] != 0) {
-            [cell loadNewUi];
-        }
-        return cell;
-    } else{
-        if ([[self.scrollView marketFirstId] isEqualToString:@"-2"]) {
-            self.emptyView.type = SHGEmptyDateTypeMarketEmptyRecommended;
-        } else{
-            self.emptyView.type = SHGEmptyDateTypeNormal;
-        }
+    if ([[self.scrollView marketFirstId] isEqualToString:@"-2"] && self.userSelectedArray.count == 0) {
         return self.emptyCell;
     }
+    SHGMarketTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+    if (!cell) {
+        cell = [[[NSBundle mainBundle] loadNibNamed:@"SHGMarketTableViewCell" owner:self options:nil] lastObject];
+    }
+    cell.delegate = self;
+    SHGMarketFirstCategoryObject  *obj  = [self.scrollView.categoryArray objectAtIndex:[self.scrollView currentIndex]];
+    [cell loadDataWithObject:[self.currentArray objectAtIndex:indexPath.row] type:SHGMarketTableViewCellTypeAll];
+    if (obj.secondCataLogs.count == 0 && [self.scrollView currentIndex] != 0) {
+        [cell loadNewUi];
+    }
+    return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (self.currentArray.count > 0) {
+    if ([[self.scrollView marketFirstId] isEqualToString:@"-2"] && self.userSelectedArray.count == 0) {
+        return;
+    }
+    SHGMarketObject *object = [self.currentArray objectAtIndex:indexPath.row];
+    if (object.tipUrl.length > 0) {
+        SHGMarketSecondCategoryViewController *controller = [[SHGMarketSecondCategoryViewController alloc] init];
+        [self.navigationController pushViewController:controller animated:YES];
+    } else{
         SHGMarketDetailViewController *controller = [[SHGMarketDetailViewController alloc]init];
-        controller.object = [self.currentArray objectAtIndex:indexPath.row];
+        controller.object = object;
         controller.delegate = [SHGMarketSegmentViewController sharedSegmentController];
         [self.navigationController pushViewController:controller animated:YES];
     }

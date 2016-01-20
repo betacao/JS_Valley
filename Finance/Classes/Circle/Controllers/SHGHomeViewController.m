@@ -16,7 +16,6 @@
 #import "RecmdFriendObj.h"
 #import "CircleListRecommendViewController.h"
 #import "SHGNoticeView.h"
-#import "CCLocationManager.h"
 #import "SHGHomeTableViewCell.h"
 #import "CircleDetailViewController.h"
 #import "SHGUnifiedTreatment.h"
@@ -31,7 +30,7 @@
 const CGFloat kAdTableViewCellHeight = 191.0f;
 const CGFloat kAdButtomMargin = 20.0f;
 
-@interface SHGHomeViewController ()<MLEmojiLabelDelegate,CLLocationManagerDelegate,SHGNoticeDelegate,CircleListDelegate>
+@interface SHGHomeViewController ()<MLEmojiLabelDelegate,SHGNoticeDelegate,CircleListDelegate>
 {
     NSInteger photoIndex;
     BOOL hasRequestFailed;

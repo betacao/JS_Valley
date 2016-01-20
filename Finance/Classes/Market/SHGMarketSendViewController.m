@@ -251,8 +251,15 @@ typedef NS_ENUM(NSInteger, SHGMarketSendType){
 {
     SHGItemChooseView *view = [[SHGItemChooseView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, SCREENWIDTH, SCREENHEIGHT)];
     view.delegate = self;
-    view.dataArray = @[@"银行机构", @"证券公司", @"三方理财", @"基金公司", @"其他"];
-    [self.view.window addSubview:view];
+    __weak typeof(self) weakSelf = self;
+    [[SHGMarketManager shareManager] loadHotCitys:^(NSArray *array) {
+        NSMutableArray *cityArray = [NSMutableArray array];
+        [array enumerateObjectsUsingBlock:^(SHGMarketCityObject *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            [cityArray addObject:obj.cityName];
+        }];
+        view.dataArray = cityArray;
+        [weakSelf.view.window addSubview:view];
+    }];
     
 }
 

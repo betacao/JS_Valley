@@ -7,7 +7,7 @@
 //
 
 #import "RootViewController.h"
-//#import "MagicalRecord+Setup.h"
+#import "CCLocationManager.h"
 #import "ApplyViewController.h"
 #import "LoginViewController.h"
 #import "ImproveMatiralViewController.h"
@@ -44,6 +44,7 @@
 - (void)moveToHomePage
 {
     [[SHGGloble sharedGloble] requestHomePageData];
+    [[CCLocationManager shareLocation] getCity:nil];
     NSString *flagStr = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_AUTOLOGIN];
     BOOL flag = NO;
     if (!IsStrEmpty(flagStr)){
@@ -156,7 +157,7 @@
             NSString *name = response.dataDictionary[@"name"];
             NSString *head_img = response.dataDictionary[@"head_img"];
             NSString *area = response.dataDictionary[@"area"];
-            
+
             [[NSUserDefaults standardUserDefaults] setObject:uid forKey:KEY_UID];
             [[NSUserDefaults standardUserDefaults] setObject:state forKey:KEY_AUTHSTATE];
             [[NSUserDefaults standardUserDefaults] setObject:name forKey:KEY_USER_NAME];

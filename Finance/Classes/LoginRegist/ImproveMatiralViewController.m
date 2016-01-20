@@ -81,9 +81,6 @@
     }];
 //    [self downloadUserSelectedInfo];
     [self adjustLocationFrame];
-    [[CCLocationManager shareLocation] getCity:^{
-
-    }];
 }
 
 - (void)initTextFieldStyle:(NSArray *)arrays
