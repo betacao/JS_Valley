@@ -72,6 +72,7 @@
         NSString *name = response.dataDictionary[@"name"];
         NSString *head_img = response.dataDictionary[@"head_img"];
         NSString *isfull = response.dataDictionary[@"isfull"];
+        NSString *area = response.dataDictionary[@"area"];
         self.isFull = isfull;
         [[NSUserDefaults standardUserDefaults] setObject:uid forKey:KEY_UID];
         [[NSUserDefaults standardUserDefaults] setObject:password forKey:KEY_PASSWORD];
@@ -79,7 +80,8 @@
         [[NSUserDefaults standardUserDefaults] setObject:name forKey:KEY_USER_NAME];
         [[NSUserDefaults standardUserDefaults] setObject:head_img forKey:KEY_HEAD_IMAGE];
         [[NSUserDefaults standardUserDefaults] setObject:token forKey:KEY_TOKEN];
-        [[NSUserDefaults standardUserDefaults] setObject:@"1" forKey:        KEY_AUTOLOGIN];
+        [[NSUserDefaults standardUserDefaults] setObject:area forKey:KEY_USER_AREA];
+        [[NSUserDefaults standardUserDefaults] setObject:@"1" forKey: KEY_AUTOLOGIN];
         [[NSUserDefaults standardUserDefaults] synchronize];
         //环信登录
         [self regiestToken];

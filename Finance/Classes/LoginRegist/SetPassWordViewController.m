@@ -64,33 +64,35 @@
     NSDictionary *param = @{@"loginNum":thirdUid, @"loginType":logType, @"ctype":@"iphone", @"phone":phone, @"pwd":[passWordText.text md5], @"validateCode":authCode, @"os":@"ios", @"osv":osv, @"appv":LOCAL_Version, @"yuncid":channelId?:@"", @"yunuid":userId?:@""};
     
     [MOCHTTPRequestOperationManager postWithURL:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"thirdLogin/thirdUserRegister"] class:nil parameters:param success:^(MOCHTTPResponse *response){
-         [Hud hideHud];
-//         NSString *isthirdlogin = response.dataDictionary[@"bindResult"];
-         NSString *uid = response.dataDictionary[@"uid"];
-         NSString *token = response.dataDictionary[@"token"];
-         NSString *state = response.dataDictionary[@"state"];
-         NSString *name = response.dataDictionary[@"name"];
-         NSString *head_img = response.dataDictionary[@"head_img"];
-         NSString *isfull = response.dataDictionary[@"isfull"];
-         [[NSUserDefaults standardUserDefaults] setObject:uid forKey:KEY_UID];
-         [[NSUserDefaults standardUserDefaults] setObject:isfull forKey:KEY_ISFULL];
-         [[NSUserDefaults standardUserDefaults] setObject:state forKey:KEY_AUTHSTATE];
-         [[NSUserDefaults standardUserDefaults] setObject:name forKey:KEY_USER_NAME];
-         [[NSUserDefaults standardUserDefaults] setObject:head_img forKey:KEY_HEAD_IMAGE];
-         [[NSUserDefaults standardUserDefaults] setObject:token forKey:KEY_TOKEN];
-         [[NSUserDefaults standardUserDefaults] setObject:@"1" forKey:KEY_AUTOLOGIN];
-         [[NSUserDefaults standardUserDefaults] setObject:[passWordText.text md5] forKey:KEY_PASSWORD];
-         [[NSUserDefaults standardUserDefaults] synchronize];
-         
-         [self chatLoagin];
-         ImproveMatiralViewController *vc = [[ImproveMatiralViewController alloc] init];
-          vc.rid = self.rid;
-         [self.navigationController pushViewController:vc animated:YES];
-     } failed:^(MOCHTTPResponse *response) {
-         [Hud showMessageWithText:response.errorMessage];
-         [Hud hideHud];
-     }];
-    
+        [Hud hideHud];
+        //         NSString *isthirdlogin = response.dataDictionary[@"bindResult"];
+        NSString *uid = response.dataDictionary[@"uid"];
+        NSString *token = response.dataDictionary[@"token"];
+        NSString *state = response.dataDictionary[@"state"];
+        NSString *name = response.dataDictionary[@"name"];
+        NSString *head_img = response.dataDictionary[@"head_img"];
+        NSString *isfull = response.dataDictionary[@"isfull"];
+        NSString *area = response.dataDictionary[@"area"];
+        [[NSUserDefaults standardUserDefaults] setObject:uid forKey:KEY_UID];
+        [[NSUserDefaults standardUserDefaults] setObject:isfull forKey:KEY_ISFULL];
+        [[NSUserDefaults standardUserDefaults] setObject:state forKey:KEY_AUTHSTATE];
+        [[NSUserDefaults standardUserDefaults] setObject:name forKey:KEY_USER_NAME];
+        [[NSUserDefaults standardUserDefaults] setObject:head_img forKey:KEY_HEAD_IMAGE];
+        [[NSUserDefaults standardUserDefaults] setObject:area forKey:KEY_USER_AREA];
+        [[NSUserDefaults standardUserDefaults] setObject:token forKey:KEY_TOKEN];
+        [[NSUserDefaults standardUserDefaults] setObject:@"1" forKey:KEY_AUTOLOGIN];
+        [[NSUserDefaults standardUserDefaults] setObject:[passWordText.text md5] forKey:KEY_PASSWORD];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+
+        [self chatLoagin];
+        ImproveMatiralViewController *vc = [[ImproveMatiralViewController alloc] init];
+        vc.rid = self.rid;
+        [self.navigationController pushViewController:vc animated:YES];
+    } failed:^(MOCHTTPResponse *response) {
+        [Hud showMessageWithText:response.errorMessage];
+        [Hud hideHud];
+    }];
+
 }
 - (void)chatLoagin
 {

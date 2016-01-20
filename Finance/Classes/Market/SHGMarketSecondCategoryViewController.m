@@ -132,7 +132,7 @@
 
 - (void)secondCategoryClick: (SHGSecondCategoryButton * )btn
 {
-    
+
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section

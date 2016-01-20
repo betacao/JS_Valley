@@ -95,7 +95,25 @@
     }
 }
 //列表
-+ (void)loadMarketList:(NSDictionary *)param block:(void (^)(NSArray *array))block
++ (void)loadTotalMarketList:(NSDictionary *)param block:(void (^)(NSArray *listArray, NSArray *tipArray))block
+{
+    [Hud showLoadingWithMessage:@"请稍等..."];
+    NSString *request = [rBaseAddressForHttp stringByAppendingString:@"/market/getMarketList"];
+    [MOCHTTPRequestOperationManager postWithURL:request class:[SHGMarketObject class] parameters:param success:^(MOCHTTPResponse *response) {
+        [Hud hideHud];
+        NSDictionary *dictionary = response.dataDictionary;
+        NSArray *dataArray = [dictionary objectForKey:@"datalist"];
+        NSArray *tipArray = [dictionary objectForKey:@"tiplist"];
+        block(dataArray, tipArray);
+    } failed:^(MOCHTTPResponse *response) {
+        [Hud hideHud];
+        block(nil, nil);
+        [Hud showMessageWithText:@"获取列表数据失败"];
+    }];
+}
+
+//我的
++ (void)loadMineMarketList:(NSDictionary *)param block:(void (^)(NSArray *array))block
 {
     [Hud showLoadingWithMessage:@"请稍等..."];
     NSString *request = [rBaseAddressForHttp stringByAppendingString:@"/market/getMarketList"];

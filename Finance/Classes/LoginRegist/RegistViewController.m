@@ -239,14 +239,16 @@ typedef NS_ENUM(NSInteger, RegistType)
 		NSString *state = response.dataDictionary[@"state"];
 		
 		NSString *name = response.dataDictionary[@"name"];
-		NSString *head_img = response.dataDictionary[@"head_img"];
+        NSString *head_img = response.dataDictionary[@"head_img"];
+        NSString *area = response.dataDictionary[@"area"];
 		
 		[[NSUserDefaults standardUserDefaults] setObject:uid forKey:KEY_UID];
         [[NSUserDefaults standardUserDefaults] setObject:self.phoneNumber forKey:KEY_PHONE];
 		[[NSUserDefaults standardUserDefaults] setObject:[self.passwordTextField.text md5] forKey:KEY_PASSWORD];
 		[[NSUserDefaults standardUserDefaults] setObject:state forKey:KEY_AUTHSTATE];
 		[[NSUserDefaults standardUserDefaults] setObject:name forKey:KEY_USER_NAME];
-		[[NSUserDefaults standardUserDefaults] setObject:head_img forKey:KEY_HEAD_IMAGE];
+        [[NSUserDefaults standardUserDefaults] setObject:head_img forKey:KEY_HEAD_IMAGE];
+        [[NSUserDefaults standardUserDefaults] setObject:area forKey:KEY_USER_AREA];
 		[[NSUserDefaults standardUserDefaults] setObject:token forKey:KEY_TOKEN];
         [[NSUserDefaults standardUserDefaults] setObject:@"1" forKey:KEY_AUTOLOGIN];
         [[NSUserDefaults standardUserDefaults] synchronize];

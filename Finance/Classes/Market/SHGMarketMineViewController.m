@@ -54,7 +54,7 @@
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
     __weak typeof(self) weakSelf = self;
     NSDictionary *param = @{@"marketId":marketId ,@"uid":uid ,@"type":@"my" ,@"target":target ,@"pageSize":@"10" ,@"firstCatalog":firstId ,@"secondCatalog":secondId};
-    [SHGMarketManager loadMarketList:param block:^(NSArray *array) {
+    [SHGMarketManager loadMineMarketList:param block:^(NSArray *array) {
         [weakSelf.tableView.header endRefreshing];
         [weakSelf.tableView.footer endRefreshing];
         if ([target isEqualToString:@"first"]) {

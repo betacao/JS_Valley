@@ -186,13 +186,15 @@
                 NSString *name = response.dataDictionary[@"name"];
                 NSString *head_img = response.dataDictionary[@"head_img"];
                 NSString *isfull = response.dataDictionary[@"isfull"];
-                NSString *pwd =response.dataDictionary[@"pwd"];
+                NSString *pwd = response.dataDictionary[@"pwd"];
+                NSString *area = response.dataDictionary[@"area"];
                 [[NSUserDefaults standardUserDefaults] setObject:uid forKey:KEY_UID];
                 [[NSUserDefaults standardUserDefaults] setObject:[userInfo uid] forKey:KEY_THIRDPARTY_UID];
                 [[NSUserDefaults standardUserDefaults] setObject:isfull forKey:KEY_ISFULL];
                 [[NSUserDefaults standardUserDefaults] setObject:logType forKey:KEY_THIRDPARTY_TYPE];
                 [[NSUserDefaults standardUserDefaults] setObject:state forKey:KEY_AUTHSTATE];
                 [[NSUserDefaults standardUserDefaults] setObject:name forKey:KEY_USER_NAME];
+                [[NSUserDefaults standardUserDefaults] setObject:area forKey:KEY_USER_AREA];
                 [[NSUserDefaults standardUserDefaults] setObject:head_img forKey:KEY_HEAD_IMAGE];
                 [[NSUserDefaults standardUserDefaults] setObject:token forKey:KEY_TOKEN];
                 [[NSUserDefaults standardUserDefaults] setObject:@"1" forKey: KEY_AUTOLOGIN];

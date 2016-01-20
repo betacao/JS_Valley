@@ -280,6 +280,7 @@
             NSString *code = [responseObject valueForKey:@"code"];
             if ([code isEqualToString:@"000"]) {
                 [[NSUserDefaults standardUserDefaults] setObject:self.nameTextField.text forKey:KEY_USER_NAME];
+                [[NSUserDefaults standardUserDefaults] setObject:self.userLocation ? self.userLocation : @"" forKey:KEY_USER_AREA];
                 [[NSUserDefaults standardUserDefaults] setObject:self.headImageName forKey:KEY_HEAD_IMAGE];
                 [[NSUserDefaults standardUserDefaults] synchronize];
                 [weakSelf chatLoagin];

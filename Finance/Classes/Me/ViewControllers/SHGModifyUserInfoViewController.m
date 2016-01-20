@@ -128,6 +128,7 @@
             weakSelf.block(@{kHeaderImage:weakSelf.head_img,kNickName:weakSelf.nameField.text, kIndustry:weakSelf.industry, kCompany:weakSelf.companyField.text, kLocation:weakSelf.locationField.text, kDepartment:weakSelf.departmentField.text});
         }
         [[NSUserDefaults standardUserDefaults] setObject:weakSelf.nameField.text forKey:KEY_USER_NAME];
+        [[NSUserDefaults standardUserDefaults] setObject:weakSelf.locationField.text forKey:KEY_USER_AREA];
         [weakSelf performSelector:@selector(delayPostNotification) withObject:nil afterDelay:1.2f];
         [Hud showMessageWithText:@"修改个人信息成功"];
     }failed:^(MOCHTTPResponse *response) {

@@ -166,38 +166,40 @@ typedef NS_ENUM(NSInteger, RegistType)
 
     NSDictionary *param = @{@"loginNum":thirdUid, @"loginType":logType, @"ctype":@"iphone", @"phone":phoneText.text, @"validateCode":authCodeText.text, @"os":@"ios", @"osv":osv, @"appv":LOCAL_Version, @"yuncid":channelId?:@"", @"yunuid":userId?:@""};
     [MOCHTTPRequestOperationManager postWithURL:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"thirdLogin/bindingPhone"] class:nil parameters:param success:^(MOCHTTPResponse *response){
-         [Hud hideHud];
-         NSString *isthirdlogin = response.dataDictionary[@"bindresult"];
-         NSString *uid = response.dataDictionary[@"uid"];
-         NSString *token = response.dataDictionary[@"token"];
-         NSString *state = response.dataDictionary[@"state"];
-         NSString *name = response.dataDictionary[@"name"];
-         NSString *head_img = response.dataDictionary[@"head_img"];
-         NSString *isfull = response.dataDictionary[@"isfull"];
-         NSString *pwd =response.dataDictionary[@"pwd"];
-         [[NSUserDefaults standardUserDefaults] setObject:uid forKey:KEY_UID];
-         [[NSUserDefaults standardUserDefaults] setObject:isfull forKey:KEY_ISFULL];
-         [[NSUserDefaults standardUserDefaults] setObject:state forKey:KEY_AUTHSTATE];
-         [[NSUserDefaults standardUserDefaults] setObject:name forKey:KEY_USER_NAME];
-         [[NSUserDefaults standardUserDefaults] setObject:head_img forKey:KEY_HEAD_IMAGE];
-         [[NSUserDefaults standardUserDefaults] setObject:token forKey:KEY_TOKEN];
-         [[NSUserDefaults standardUserDefaults] setObject:@"1" forKey:KEY_AUTOLOGIN];
-         [[NSUserDefaults standardUserDefaults] setObject:pwd forKey:KEY_PASSWORD];
-         [[NSUserDefaults standardUserDefaults] setObject:authCodeText.text forKey:KEY_AUTHCODE];
-         [[NSUserDefaults standardUserDefaults] setObject:phoneText.text forKey:KEY_PHONE];
-         [[NSUserDefaults standardUserDefaults] synchronize];
+        [Hud hideHud];
+        NSString *isthirdlogin = response.dataDictionary[@"bindresult"];
+        NSString *uid = response.dataDictionary[@"uid"];
+        NSString *token = response.dataDictionary[@"token"];
+        NSString *state = response.dataDictionary[@"state"];
+        NSString *name = response.dataDictionary[@"name"];
+        NSString *head_img = response.dataDictionary[@"head_img"];
+        NSString *isfull = response.dataDictionary[@"isfull"];
+        NSString *pwd =response.dataDictionary[@"pwd"];
+        NSString *area =response.dataDictionary[@"area"];
+        [[NSUserDefaults standardUserDefaults] setObject:uid forKey:KEY_UID];
+        [[NSUserDefaults standardUserDefaults] setObject:isfull forKey:KEY_ISFULL];
+        [[NSUserDefaults standardUserDefaults] setObject:state forKey:KEY_AUTHSTATE];
+        [[NSUserDefaults standardUserDefaults] setObject:name forKey:KEY_USER_NAME];
+        [[NSUserDefaults standardUserDefaults] setObject:head_img forKey:KEY_HEAD_IMAGE];
+        [[NSUserDefaults standardUserDefaults] setObject:token forKey:KEY_TOKEN];
+        [[NSUserDefaults standardUserDefaults] setObject:@"1" forKey:KEY_AUTOLOGIN];
+        [[NSUserDefaults standardUserDefaults] setObject:pwd forKey:KEY_PASSWORD];
+        [[NSUserDefaults standardUserDefaults] setObject:area forKey:KEY_USER_AREA];
+        [[NSUserDefaults standardUserDefaults] setObject:authCodeText.text forKey:KEY_AUTHCODE];
+        [[NSUserDefaults standardUserDefaults] setObject:phoneText.text forKey:KEY_PHONE];
+        [[NSUserDefaults standardUserDefaults] synchronize];
 
-         if ([isthirdlogin isEqualToString:@"false"]){ //输入密码
-             SetPassWordViewController *detaiVC = [[SetPassWordViewController alloc]init];
-             [self.navigationController pushViewController:detaiVC animated:YES];
+        if ([isthirdlogin isEqualToString:@"false"]){ //输入密码
+            SetPassWordViewController *detaiVC = [[SetPassWordViewController alloc]init];
+            [self.navigationController pushViewController:detaiVC animated:YES];
         }else{ //跳转至大牛圈
             [self chatLoagin];
             [self loginSuccess];
         }
-     } failed:^(MOCHTTPResponse *response) {
-         [Hud showMessageWithText:response.errorMessage];
-         [Hud hideHud];
-     }];
+    } failed:^(MOCHTTPResponse *response) {
+        [Hud showMessageWithText:response.errorMessage];
+        [Hud hideHud];
+    }];
 
 }
 - (void)chatLoagin
