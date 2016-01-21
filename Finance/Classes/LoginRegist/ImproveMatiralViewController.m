@@ -501,7 +501,7 @@
 {
     SHGItemChooseView *view = [[SHGItemChooseView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, SCREENWIDTH, SCREENHEIGHT)];
     view.delegate = self;
-    view.dataArray = @[@"银行机构", @"证券公司", @"三方理财", @"基金公司", @"其他"];
+    view.dataArray = @[@"银行机构", @"证券公司", @"PE/VC",@"公募基金",@"信托公司",@"三方理财", @"担保小贷", @"上市公司", @"其他"];
     [self.view.window addSubview:view];
 }
 
@@ -513,13 +513,21 @@
         self.instustryCode = @"bank";
     } else if ([industry isEqualToString:@"证券公司"]) {
         self.instustryCode = @"bond";
+    } else if ([industry isEqualToString:@"PE/VC"]) {
+        self.instustryCode = @"pevc";
+    } else if ([industry isEqualToString:@"公募基金"]) {
+        self.instustryCode = @"fund";
+    } else if ([industry isEqualToString:@"信托公司"]) {
+        self.instustryCode = @"entrust";
     } else if ([industry isEqualToString:@"三方理财"]) {
         self.instustryCode = @"manage";
-    } else if ([industry isEqualToString:@"基金公司"]) {
-        self.instustryCode = @"fund";
+    } else if ([industry isEqualToString:@"担保小贷"]) {
+        self.instustryCode = @"bonding";
+    } else if ([industry isEqualToString:@"上市公司"]) {
+        self.instustryCode = @"public";
     } else if ([industry isEqualToString:@"其他"]) {
         self.instustryCode = @"other";
-    }
+    } 
     
 }
 

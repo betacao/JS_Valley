@@ -30,7 +30,7 @@
         self.tableView = [[UITableView alloc] initWithFrame:self.bgView.bounds];
         self.tableView.dataSource = self;
         self.tableView.delegate = self;
-        self.tableView.scrollEnabled = NO;
+        self.tableView.scrollEnabled = YES;
         [self addSubview:self.bgView];
         [self.bgView addSubview:self.tableView];
     }

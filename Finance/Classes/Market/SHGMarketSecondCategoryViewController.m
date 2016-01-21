@@ -20,7 +20,8 @@
 #define kItemMargin 14.0f * XFACTOR
 #define kItemHeight 30.0f * XFACTOR
 #define kItemLeftMargin  11.0f
-
+#define kSectionHeight 40.0f * XFACTOR
+#define kTitleToTop  15.0  * XFACTOR
 @interface SHGMarketSecondCategoryViewController ()<UITableViewDataSource,UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic , strong) NSArray *categoryArray;
@@ -28,6 +29,7 @@
 @property (nonatomic , assign) NSInteger firstCategoryIndex;
 @property (nonatomic , strong) NSMutableArray *cellArray;
 @property (strong, nonatomic) NSMutableArray *selectedArray;
+@property (strong, nonatomic) NSMutableArray *haveSelectedArray;
 @end
 
 @implementation SHGMarketSecondCategoryViewController
@@ -48,9 +50,15 @@
     self.navigationItem.rightBarButtonItem = rightItem;
 
     self.tableView.backgroundColor = [UIColor colorWithHexString:@"EEEFF0"];
+    [self createCell];
+    }
+- (void)createCell
+{    __weak typeof(self) weakSelf = self;
+    [[SHGMarketManager shareManager] userSelectedArray:^(NSArray *array) {
+        [weakSelf.haveSelectedArray addObjectsFromArray:array];
+    }];
     [[SHGMarketManager shareManager] userListArray:^(NSArray *array) {
         self.categoryArray = array;
-    
         CGFloat width = (SCREENWIDTH - 2 * kItemMargin - 2 * kItemLeftMargin) / 3.0f;
         for (NSInteger i = 0 ; i < self.categoryArray.count; i ++ ) {
             UITableViewCell * cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
@@ -64,14 +72,20 @@
                 SHGSecondCategoryButton *button = [SHGSecondCategoryButton buttonWithType:UIButtonTypeCustom];
                 button.selected = NO;
                 button.secondId = obj.secondCatalogId;
-                button.layer.cornerRadius = 1.0f;
-                button.layer.borderWidth = 0.5f;
-                button.layer.borderColor = [UIColor colorWithHexString:@"FFFFFF"].CGColor;
+                for (SHGMarketSelectedObject *object in self.haveSelectedArray) {
+                    if ([button.secondId isEqualToString:object.catalogId]) {
+                        [self.selectedArray addObject:object.catalogId];
+                        button.selected = YES;
+                    }
+                }
+                [button.layer setCornerRadius:2.0f];
+                [button.layer setBorderWidth:0.5f];
+                [button.layer setBorderColor:[UIColor colorWithHexString:@"E1E1E6"].CGColor ];
                 button.titleLabel.font = [UIFont systemFontOfSize:13.0f * XFACTOR];
                 [button setTitle:obj.secondCatalogName forState:UIControlStateNormal];
                 [button setTitleColor:[UIColor colorWithHexString:@"8A8A8A"] forState:UIControlStateNormal];
                 [button setTitleColor:[UIColor colorWithHexString:@"FF3232"] forState:UIControlStateSelected];
-                [button setBackgroundImage:[UIImage imageWithColor:[UIColor whiteColor]] forState:UIControlStateNormal];
+                [button setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithHexString:@"FFFFFF"]] forState:UIControlStateNormal];
                 [button setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithHexString:@"F3F3F3"]] forState:UIControlStateSelected];
                 [button addTarget:self action:@selector(didSelectCategory:) forControlEvents:UIControlEventTouchUpInside];
                 CGRect frame = CGRectMake(ceilf(kItemLeftMargin + (kItemMargin + width) * col), ceilf(kItemTopMargin + (kItemMargin + kItemHeight) * row), ceilf(width), ceilf(kItemHeight));
@@ -82,55 +96,8 @@
         }
         
     }];
-}
-//- (void)updateSelectedArray
-//{
-//    NSArray *selectedArray = [SHGGloble sharedGloble].selectedTagsArray;
-//    NSArray *tagsArray = [SHGGloble sharedGloble].tagsArray;
-//    [self.selectedArray removeAllObjects];
-//    [self clearButtonState];
-//    for(SHGUserTagModel *model in selectedArray){
-//        NSInteger index = [tagsArray indexOfObject:model];
-//        NSLog(@"......%ld",(long)index);
-//        [self.selectedArray addObject:@(index)];
-//        UIButton *button = [self.buttonArray objectAtIndex:index];
-//        if(button){
-//            [button setSelected:YES];
-//        }
-//    }
-//}
-//
-//- (void)didSelectCategory:(UIButton *)button
-//{
-//    BOOL isSelecetd = button.selected;
-//    NSInteger index = [self.categoryArray indexOfObject:button];
-//    if(!isSelecetd){
-//        if(self.selectedArray.count >= 3){
-//            [Hud showMessageWithText:@"最多选3项"];
-//        } else{
-//            button.selected = !isSelecetd;
-//            [self.selectedArray addObject:@(index)];
-//        }
-//    } else{
-//        button.selected = !isSelecetd;
-//        [self.selectedArray removeObject:@(index)];
-//    }
-//}
-//
-//- (void)clearButtonState
-//{
-//    [self.subviews enumerateObjectsUsingBlock:^(__kindof UIView * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-//        if([obj isKindOfClass:[UIButton class]]){
-//            UIButton *button = (UIButton *)obj;
-//            [button setSelected:NO];
-//        }
-//    }];
-//}
 
-//- (NSArray *)userSelectedTags
-//{
-//    return self.selectedArray;
-//}
+}
 
 - (void)finishButton:(UIButton * )btn
 {
@@ -173,6 +140,14 @@
     }
     return _categoryArray;
 }
+-(NSMutableArray * )haveSelectedArray
+{
+    if (!_haveSelectedArray) {
+        _haveSelectedArray = [NSMutableArray array];
+    }
+    return _haveSelectedArray;
+}
+
 - (NSMutableArray *)cellArray
 {
     if (!_cellArray) {
@@ -216,28 +191,25 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return k_SectionHeight;
+    return kSectionHeight;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     CGFloat height;
     SHGMarketFirstCategoryObject * objf = [self.categoryArray objectAtIndex:indexPath.section];
-    height = objf.secondCataLogs.count / 3.0f * (2 * kItemTopMargin + kItemHeight);
-    
-    return height;
+    height = objf.secondCataLogs.count / 3.0f * ( kItemTopMargin + kItemHeight);
+        return height;
 }
 - (UIView * )tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    NSInteger sectionHeight = 50.0f;
-    NSInteger titleToTop = 20.0f;
-    UIView * view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREENWIDTH, sectionHeight)];
+    UIView * view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREENWIDTH, kSectionHeight)];
     view.backgroundColor = [UIColor colorWithHexString:@"EEEFF0"];
-    UILabel * title = [[UILabel alloc]initWithFrame:CGRectMake(k_ToleftOne, titleToTop, 100.0f, 20.0f)];
+    UILabel * title = [[UILabel alloc]initWithFrame:CGRectMake(kItemMargin, kTitleToTop, SCREENWIDTH, kSectionHeight - kTitleToTop)];
     title.backgroundColor = [UIColor clearColor];
      SHGMarketFirstCategoryObject * obj = [self.categoryArray objectAtIndex:section];
     title.text = obj.firstCatalogName;
     title.textAlignment = NSTextAlignmentLeft;
-    title.font = [UIFont systemFontOfSize:14.0F];
+    title.font = [UIFont systemFontOfSize:15.0f * XFACTOR];
     title.textColor = [UIColor colorWithHexString:@"161616"];
     [view addSubview:title];
     return view;

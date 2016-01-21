@@ -354,32 +354,50 @@
 - (NSString *)industryToCode:(NSString *)industry
 {
     if ([industry isEqualToString:@"银行机构"]) {
-        return @"bank";
+        return  @"bank";
     } else if ([industry isEqualToString:@"证券公司"]) {
         return @"bond";
+    } else if ([industry isEqualToString:@"PE/VC"]) {
+        return  @"pevc";
+    } else if ([industry isEqualToString:@"公募基金"]) {
+        return @"fund";
+    } else if ([industry isEqualToString:@"信托公司"]) {
+        return @"entrust";
     } else if ([industry isEqualToString:@"三方理财"]) {
         return @"manage";
-    } else if ([industry isEqualToString:@"基金公司"]) {
-        return @"fund";
+    } else if ([industry isEqualToString:@"担保小贷"]) {
+        return @"bonding";
+    } else if ([industry isEqualToString:@"上市公司"]) {
+        return @"public";
     } else if ([industry isEqualToString:@"其他"]) {
         return @"other";
     }
+
     return nil;
 }
 
 - (NSString *)codeToIndustry:(NSString *)code
 {
-    if ([code isEqualToString:@"bank"]) {
-        return @"银行机构";
-    } else if ([code isEqualToString:@"bond"]) {
-        return @"证券公司";
-    } else if ([code isEqualToString:@"manage"]) {
-        return @"三方理财";
-    } else if ([code isEqualToString:@"fund"]) {
-        return @"基金公司";
-    } else if ([code isEqualToString:@"other"]) {
-        return @"其他";
+    if ([code isEqualToString:@"银行机构"]) {
+        return  @"bank";
+    } else if ([code isEqualToString:@"证券公司"]) {
+        return @"bond";
+    } else if ([code isEqualToString:@"PE/VC"]) {
+        return  @"pevc";
+    } else if ([code isEqualToString:@"公募基金"]) {
+        return @"fund";
+    } else if ([code isEqualToString:@"信托公司"]) {
+        return @"entrust";
+    } else if ([code isEqualToString:@"三方理财"]) {
+        return @"manage";
+    } else if ([code isEqualToString:@"担保小贷"]) {
+        return @"bonding";
+    } else if ([code isEqualToString:@"上市公司"]) {
+        return @"public";
+    } else if ([code isEqualToString:@"其他"]) {
+        return @"other";
     }
+
     return nil;
 }
 
