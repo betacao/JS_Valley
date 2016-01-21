@@ -74,3 +74,9 @@
 @property (strong, nonatomic) NSString *cityName;
 
 @end
+
+@interface SHGMarketSelectedObject : MTLModel<MTLJSONSerializing>
+
+@property (strong, nonatomic) NSString *catalogId;
+
+@end

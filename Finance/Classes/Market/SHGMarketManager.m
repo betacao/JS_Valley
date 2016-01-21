@@ -46,7 +46,7 @@
                 [temp addObjectsFromArray:weakSelf.listArray];
                 weakSelf.totalArray = [[SHGGloble sharedGloble] parseServerJsonArrayToJSONModel:temp class:[SHGMarketFirstCategoryObject class]];
             }
-            weakSelf.selecetedArray = [[SHGGloble sharedGloble] parseServerJsonArrayToJSONModel:[dictionary objectForKey:@"selectcatalog"] class:[SHGMarketFirstCategoryObject class]] ;
+            weakSelf.selecetedArray = [[SHGGloble sharedGloble] parseServerJsonArrayToJSONModel:[dictionary objectForKey:@"selectcatalog"] class:[SHGMarketSelectedObject class]] ;
             weakSelf.listArray = [[SHGGloble sharedGloble] parseServerJsonArrayToJSONModel:[dictionary objectForKey:@"cataloglist"] class:[SHGMarketFirstCategoryObject class]];
             block();
         } failed:^(MOCHTTPResponse *response) {
@@ -69,6 +69,11 @@
     [self loadMarketCategoryBlock:^{
         block(self.selecetedArray);
     }];
+}
+
+- (void)modifyUserSelectedArray:(NSArray *)array
+{
+    self.selecetedArray = [NSArray arrayWithArray:array];
 }
 
 - (void)userTotalArray:(void (^)(NSArray *array))block

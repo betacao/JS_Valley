@@ -18,6 +18,8 @@
 #import "SHGMarketSendViewController.h"
 #import "VerifyIdentityViewController.h"
 
+#define kUserDefineCategoryID @"-2"
+
 @interface SHGMarketListViewController ()<UITabBarDelegate, UITableViewDataSource, SHGCategoryScrollViewDelegate,SHGMarketSecondCategoryViewControllerDelegate, SHGMarketTableViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -215,7 +217,7 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
 
-    if ([[self.scrollView marketFirstId] isEqualToString:@"-2"] && self.userSelectedArray.count == 0) {
+    if ([[self.scrollView marketFirstId] isEqualToString:kUserDefineCategoryID] && self.userSelectedArray.count == 0) {
         return CGRectGetHeight(self.view.frame);
     }
     return kMarketCellHeight;
@@ -229,7 +231,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSString *identifier = @"SHGMarketTableViewCell";
-    if ([[self.scrollView marketFirstId] isEqualToString:@"-2"] && self.userSelectedArray.count == 0) {
+    if ([[self.scrollView marketFirstId] isEqualToString:kUserDefineCategoryID] && self.userSelectedArray.count == 0) {
         return self.emptyCell;
     }
     SHGMarketTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
@@ -247,7 +249,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if ([[self.scrollView marketFirstId] isEqualToString:@"-2"] && self.userSelectedArray.count == 0) {
+    if ([[self.scrollView marketFirstId] isEqualToString:kUserDefineCategoryID] && self.userSelectedArray.count == 0) {
         return;
     }
     SHGMarketObject *object = [self.currentArray objectAtIndex:indexPath.row];
@@ -287,17 +289,25 @@
     }
 }
 #pragma mark -----二级分类返回代理
-- (void)didUploadUserCategoryTags
+- (void)didUploadUserCategoryTags:(NSArray *)array
 {
-    NSMutableArray *subArray = [self.dataArr objectAtIndex:1];
-    [subArray removeAllObjects];
+    [[SHGMarketManager shareManager] modifyUserSelectedArray:array];
     NSString *marketId = [self.scrollView marketFirstId];
-    if ([marketId isEqualToString:@"-2"]) {
-        self.currentArray = subArray;
+    if ([marketId isEqualToString:kUserDefineCategoryID]) {
+        [self.currentArray removeAllObjects];
         [self loadMarketList:@"first" firstId:[self.scrollView marketFirstId] second:[self.scrollView marketSecondId] marketId:@"-1" modifyTime:@""];
     } else{
-        [self.scrollView moveToIndex:1];
+        for (SHGMarketFirstCategoryObject *object in self.scrollView.categoryArray) {
+            if ([object.firstCatalogId isEqualToString:kUserDefineCategoryID]) {
+                NSInteger index = [self.scrollView.categoryArray indexOfObject:object];
+                NSMutableArray *subArray = [self.dataArr objectAtIndex:index];
+                [subArray removeAllObjects];
+                [self.scrollView moveToIndex:1];
+                break;
+            }
+        }
     }
+
 }
 
 #pragma mark ------切换分类代理

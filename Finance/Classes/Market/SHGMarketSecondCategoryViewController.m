@@ -136,7 +136,7 @@
 {
     __weak typeof(self) weakSelf= self;
     NSString * string = @"";
-    for (NSString * str  in weakSelf.selectedArray) {
+    for (NSString *str  in self.selectedArray) {
         string = [string stringByAppendingFormat:@"%@,",str];
     }
     if (string.length > 0) {
@@ -144,8 +144,8 @@
     }
     NSDictionary *param = @{@"uid":UID ,@"catalogIds":string};
     [SHGMarketManager uploadUserMarket:param block:^{
-        if (self.delegate && [self.delegate respondsToSelector:@selector(didUploadUserCategoryTags)]) {
-            [self.delegate didUploadUserCategoryTags];
+        if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(didUploadUserCategoryTags:)]) {
+            [weakSelf.delegate didUploadUserCategoryTags:weakSelf.selectedArray];
         }
         [weakSelf.navigationController popViewControllerAnimated:YES];
     }];

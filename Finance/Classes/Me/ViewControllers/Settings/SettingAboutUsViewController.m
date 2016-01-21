@@ -31,26 +31,12 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
+    [MobClick event:@"SettingAboutUsViewController" label:@"onClick"];
     self.lblVersion.text = [NSString stringWithFormat:@"V%@",[[NSBundle mainBundle] infoDictionary][@"CFBundleShortVersionString"]];
 	self.title = @"关于我们";
     self.bgImage.frame = CGRectMake(self.bgImage.origin.x,kBgImageY, self.bgImage.width, self.bgImage.height);
     self.lblVersion.frame = CGRectMake(self.lblVersion.origin.x, CGRectGetMaxY(self.bgImage.frame) +kLblVersionToBgSpace , self.lblVersion.width, self.lblVersion.height);
 
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    [MobClick event:@"SettingAboutUsViewController" label:@"onClick"];
-    self.title = @"关于我们";
-    UIButton *btnBack = [UIButton buttonWithType:UIButtonTypeCustom];
-    [btnBack setFrame:CGRectMake(0, 0, 44, 44)];
-    [btnBack setBackgroundImage:[UIImage imageNamed:@"nav_back.png"] forState:UIControlStateNormal];
-    [btnBack addTarget:self action:@selector(btnBackClick:) forControlEvents:UIControlEventTouchUpInside];
-    
-//    [self.navigationController navbarLeftItemCustomized:@[btnBack] onwer:self.navigationItem];
-	
 }
 
 - (void)didReceiveMemoryWarning

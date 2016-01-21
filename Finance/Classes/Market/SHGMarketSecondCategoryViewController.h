@@ -10,13 +10,9 @@
 
 @protocol SHGMarketSecondCategoryViewControllerDelegate <NSObject>
 
-- (void)didUploadUserCategoryTags ;
+- (void)didUploadUserCategoryTags:(NSArray *)array;
 
 @end
 @interface SHGMarketSecondCategoryViewController : BaseViewController
-{
-    
-}
-
 @property (nonatomic , assign)id<SHGMarketSecondCategoryViewControllerDelegate>delegate;
 @end

@@ -136,3 +136,12 @@
 }
 
 @end
+
+@implementation SHGMarketSelectedObject
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey
+{
+    return @{@"catalogId":@"catalogid"};
+}
+
+@end

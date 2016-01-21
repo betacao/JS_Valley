@@ -17,6 +17,8 @@
 
 - (void)userSelectedArray:(void (^)(NSArray *array))block;
 
+- (void)modifyUserSelectedArray:(NSArray *)array;
+
 - (void)userListArray:(void (^)(NSArray *array))block;
 
 - (void)userTotalArray:(void (^)(NSArray *array))block;
