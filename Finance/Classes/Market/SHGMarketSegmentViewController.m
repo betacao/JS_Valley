@@ -92,7 +92,6 @@
         _titleButton.backgroundColor = [UIColor clearColor];
         [_titleButton addTarget:self action:@selector(moveToProvincesViewController:) forControlEvents:UIControlEventTouchUpInside];
         self.titleLabel = [[UILabel alloc] init];
-        self.titleLabel.text = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_USER_AREA];
         self.titleLabel.font = [UIFont systemFontOfSize:kNavBarTitleFontSize];
         self.titleLabel.textColor = [UIColor whiteColor];
         [self.titleLabel sizeToFit];
@@ -118,6 +117,9 @@
     }
     if (![city isEqualToString:self.titleLabel.text]) {
         self.titleLabel.text = city;
+        [self.titleLabel sizeToFit];
+        self.titleImageView.origin = CGPointMake(CGRectGetMaxX(self.titleLabel.frame) + 2.0f, (CGRectGetHeight(self.titleLabel.frame) - CGRectGetHeight(self.titleImageView.frame)) / 2.0f);
+        self.titleButton.frame = CGRectMake(0.0f, 0.0f, CGRectGetMaxX(self.titleImageView.frame), CGRectGetHeight(self.titleLabel.frame));
         UIViewController *controller = [self.viewControllers firstObject];
         [controller performSelector:@selector(clearAndReloadData) withObject:nil];
     }
