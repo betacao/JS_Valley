@@ -19,7 +19,7 @@
     
     self.cityNameLabel.textAlignment = NSTextAlignmentLeft;
     self.cityNameLabel.textColor = [UIColor colorWithHexString:@"434343"];
-    self.cityNameLabel.font = [UIFont systemFontOfSize:14.0f * XFACTOR];
+    self.cityNameLabel.font = [UIFont systemFontOfSize:14.0f * FontFactor];
     self.redLine.backgroundColor = [UIColor colorWithHexString:@"E6E7E8"];
     self.redLine.frame = CGRectMake(self.redLine.origin.x, self.contentView.height - 1.0f, self.redLine.width, 0.5f);
     

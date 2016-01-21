@@ -51,7 +51,6 @@
 @property (weak, nonatomic) IBOutlet UIButton *btnComment;
 @property (weak, nonatomic) IBOutlet UIButton *btnShare;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollPraise;
-
 @property (weak, nonatomic) IBOutlet UIView *viewInput;
 @property (weak, nonatomic) IBOutlet UIButton *smileImage;
 @property (weak, nonatomic) IBOutlet UIButton *speakButton;
@@ -105,7 +104,7 @@
     if (!self.responseObject.price.length == 0) {
         NSString * zjStr = self.responseObject.price;
         self.capitalLabel.text = [NSString stringWithFormat:@"金额： %@",zjStr];
-    }else {
+    } else {
         self.capitalLabel.text = [NSString stringWithFormat:@"金额： 暂未说明"];
     }
      self.typeLabel.text = [NSString stringWithFormat:@"类型： %@",self.responseObject.catalog];
@@ -113,16 +112,21 @@
       if ([self.responseObject.loginuserstate isEqualToString:@"0" ]) {
         NSString * contactString = @"联系方式： 认证可见";
         NSMutableAttributedString * str = [[NSMutableAttributedString alloc]initWithString:contactString];
-        [str addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:14.0f] range:NSMakeRange(6, 4)];
+        [str addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:14.0f * FontFactor] range:NSMakeRange(6, 4)];
         [str addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"4277B2"] range:NSMakeRange(6, 4)];
         self.phoneNumLabel.attributedText = str;
-        self.phoneNumLabel.userInteractionEnabled = YES;
-          UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapContactLabelToIdentification:)];
-        [self.phoneNumLabel addGestureRecognizer:recognizer];
         
     } else if([self.responseObject.loginuserstate isEqualToString:@"1" ]){
-        self.phoneNumLabel.text = [@"联系方式：" stringByAppendingString: self.responseObject.contactInfo];
+        NSString * contactString = [@"联系方式：" stringByAppendingString: self.responseObject.contactInfo];
+        NSMutableAttributedString * str = [[NSMutableAttributedString alloc]initWithString:contactString];
+        [str addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:12.0f * FontFactor] range:NSMakeRange(5, str.length - 5)];
+        [str addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"4277B2"] range:NSMakeRange(5, str.length - 5)];
+        self.phoneNumLabel.attributedText = str;
+
     }
+    self.phoneNumLabel.userInteractionEnabled = YES;
+    UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapContactLabelToIdentification:)];
+    [self.phoneNumLabel addGestureRecognizer:recognizer];
     self.nameLabel.text = self.responseObject.realname;
 
     self.companyLabel.text = self.responseObject.company;
@@ -130,7 +134,7 @@
     if (self.responseObject.company.length > 6) {
         NSString *str = [self.responseObject.title substringToIndex:6];
         self.positionLabel.text = [NSString stringWithFormat:@"%@…",str];
-    }else{
+    } else{
         self.positionLabel.text = self.responseObject.title;
     }
     
@@ -148,27 +152,23 @@
     //1.7.2界面修改
     self.timeLabel.hidden = YES;
     
-    CGSize nameSize =CGSizeMake(MAXFLOAT,CGRectGetHeight(self.nameLabel.frame));
-    NSDictionary * nameDic = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont boldSystemFontOfSize:15.0],NSFontAttributeName,nil];
-    CGSize  nameActualsize =[self.nameLabel.text boundingRectWithSize:nameSize options:NSStringDrawingUsesLineFragmentOrigin  attributes:nameDic context:nil].size;
-    self.nameLabel.frame = CGRectMake(self.nameLabel.origin.x,self.nameLabel.origin.y, nameActualsize.width, CGRectGetHeight(self.nameLabel.frame));
+    CGSize nameSize = [self.nameLabel sizeThatFits:CGSizeMake(MAXFLOAT, CGRectGetHeight(self.nameLabel.frame))];
+    self.nameLabel.frame = CGRectMake(self.nameLabel.origin.x,self.nameLabel.origin.y, nameSize.width, CGRectGetHeight(self.nameLabel.frame));
     //1.72版本不需要分割线
     self.verticalLine.hidden = YES;
     self.verticalLine.frame = CGRectMake(CGRectGetMaxX(self.nameLabel.frame)+k_FirstToTop,self.verticalLine.origin.y, self.verticalLine.frame.size.width, CGRectGetHeight(self.verticalLine.frame));
 
     self.companyLabel.frame =CGRectMake(self.companyLabel.origin.x,self.companyLabel.origin.y, self.companyLabel.width, CGRectGetHeight(self.companyLabel.frame));
 
-    CGSize positionSize =CGSizeMake(MAXFLOAT,CGRectGetHeight(self.positionLabel.frame));
-    NSDictionary * positionDic = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:12.0],NSFontAttributeName,nil];
-    CGSize  positionActualsize =[self.positionLabel.text boundingRectWithSize:positionSize options:NSStringDrawingUsesLineFragmentOrigin  attributes:positionDic context:nil].size;
-    self.positionLabel.frame =CGRectMake(CGRectGetMaxX(self.nameLabel.frame) + k_FirstToTop,self.positionLabel.origin.y, positionActualsize.width, CGRectGetHeight(self.positionLabel.frame));
+    CGSize positionSize = [self.positionLabel sizeThatFits:CGSizeMake(MAXFLOAT, CGRectGetHeight(self.positionLabel.frame))];
+    self.positionLabel.frame =CGRectMake(CGRectGetMaxX(self.nameLabel.frame) + k_FirstToTop,self.positionLabel.origin.y, positionSize.width, CGRectGetHeight(self.positionLabel.frame));
 
     NSString *title = self.responseObject.marketName;
     self.titleLabel.text = title;
-    CGSize tsize =CGSizeMake(self.titleLabel.frame.size.width,MAXFLOAT);
-    NSDictionary * tdic = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont boldSystemFontOfSize:14.0],NSFontAttributeName,nil];
-    CGSize  actualsize =[title boundingRectWithSize:tsize options:NSStringDrawingUsesLineFragmentOrigin  attributes:tdic context:nil].size;
-    self.titleLabel.height = actualsize.height;
+    
+    CGSize titleSize = [self.titleLabel sizeThatFits:CGSizeMake(self.titleLabel.frame.size.width, MAXFLOAT)];
+    self.titleLabel.height = titleSize.height;
+    
     //控件位置
     self.typeLabel.frame = CGRectMake(self.typeLabel.origin.x, CGRectGetMaxY(self.titleLabel.frame)+k_SecondToTop, self.typeLabel.width, self.typeLabel.height);
 
@@ -180,11 +180,13 @@
     self.thirdHorizontalLine.frame = CGRectMake(self.thirdHorizontalLine.origin.x, CGRectGetMaxY(self.marketDetialLabel.frame)+k_ThirdToTop, self.thirdHorizontalLine.width, self.thirdHorizontalLine.height);
 
     //内容详情
+    self.marketDetialLabel.text = @"业务描述：";
+    self.marketDetialLabel.textColor = [UIColor colorWithHexString:@"3A3A3A"];
+    self.marketDetialLabel.font = [UIFont systemFontOfSize:14.0f * FontFactor];
     self.detailContentLabel.numberOfLines = 0;
-    CGSize dsize = CGSizeMake(SCREENWIDTH - 2 * k_ThirdToTop,MAXFLOAT);
-    NSDictionary * ddic = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:14.0],NSFontAttributeName,nil];
-    CGSize  dActualsize =[self.detailContentLabel.text boundingRectWithSize:dsize options:NSStringDrawingUsesLineFragmentOrigin  attributes:ddic context:nil].size;
-    self.detailContentLabel.frame = CGRectMake(self.detailContentLabel.origin.x, CGRectGetMaxY(self.thirdHorizontalLine.frame)+ k_ThirdToTop, self.detailContentLabel.width, dActualsize.height);
+    
+    CGSize detailSize = [self.detailContentLabel sizeThatFits:CGSizeMake(SCREENWIDTH - 2 * k_ThirdToTop, MAXFLOAT)];
+    self.detailContentLabel.frame = CGRectMake(self.detailContentLabel.origin.x, CGRectGetMaxY(self.thirdHorizontalLine.frame)+ k_ThirdToTop, self.detailContentLabel.width, detailSize.height);
     if (!self.responseObject.url.length == 0) {
 
         UIView *photoView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, CGRectGetMaxY(self.detailContentLabel.frame)+k_FirstToTop*2, 0.0f, 0.0f)];
@@ -198,7 +200,7 @@
         photoView.frame = CGRectMake(15.0, self.detailContentLabel.bottom + k_FirstToTop*2, CGRectGetWidth(photoGroup.frame),CGRectGetHeight(photoGroup.frame));
         [self.viewHeader addSubview:photoView];
         self.actionView.frame = CGRectMake(self.actionView.origin.x, CGRectGetMaxY(photoView.frame) + k_FirstToTop, self.actionView.width, self.actionView.height);
-    }else{
+    } else{
         self.actionView.frame = CGRectMake(self.actionView.origin.x, CGRectGetMaxY(self.detailContentLabel.frame)+k_FirstToTop, self.actionView.width, self.actionView.height);
     }
     [self loadFooterUI];
@@ -218,20 +220,29 @@
     [self addEmptyViewIfNeeded];
 }
 
-- (void)tapContactLabelToIdentification:(UIButton *)button
+- (void)tapContactLabelToIdentification:(UITapGestureRecognizer *)rescognizer
 {
-    
-    __weak typeof(self)weakSelf = self;
-    [[SHGGloble sharedGloble] requsetUserVerifyStatus:^(BOOL status) {
-        if (status) {
-            if([weakSelf respondsToSelector:@selector(tapContactLabelToIdentification:)]){
-                [weakSelf performSelector:@selector(tapContactLabelToIdentification:) withObject:button];
-            }
+    if([self.responseObject.loginuserstate isEqualToString:@"1" ]){
+        NSString *phoneNum = self.responseObject.contactInfo;
+        NSString *num = [[NSString alloc] initWithFormat:@"telprompt://%@",phoneNum];
+        if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:num]]) {
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:num]];
         } else{
-            VerifyIdentityViewController * vc = [[VerifyIdentityViewController alloc]init];
-            [self.navigationController pushViewController:vc animated:YES];
+            NSLog(@"拨打失败");
         }
-    } failString:@"认证后才能查看联系方式～"];
+
+    } else{
+        [[SHGGloble sharedGloble] requsetUserVerifyStatus:^(BOOL status) {
+            if (status) {
+                
+            } else{
+                VerifyIdentityViewController * vc = [[VerifyIdentityViewController alloc]init];
+                [self.navigationController pushViewController:vc animated:YES];
+            }
+        } failString:@"认证后才能查看联系方式～"];
+    }
+    
+   
 }
 
 - (void)addTableHeaderView

@@ -12,15 +12,11 @@
 #import "SHGSecondCategoryButton.h"
 #import "SHGMarketManager.h"
 
-#define k_ToleftOne 11.0f * XFACTOR
-#define k_ToleftTwo 21.0f * XFACTOR
-#define k_SectionHeight 40
-
 #define kItemTopMargin  10.0f * XFACTOR
 #define kItemMargin 14.0f * XFACTOR
-#define kItemHeight 30.0f * XFACTOR
+#define kItemHeight 30.0f
 #define kItemLeftMargin  11.0f
-#define kSectionHeight 40.0f * XFACTOR
+#define kSectionHeight 40.0f 
 #define kTitleToTop  15.0  * XFACTOR
 @interface SHGMarketSecondCategoryViewController ()<UITableViewDataSource,UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -43,7 +39,7 @@
     UIButton * rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [rightButton setTitle:@"完成" forState:UIControlStateNormal];
     [rightButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [rightButton.titleLabel setFont:[UIFont systemFontOfSize:15.0f *XFACTOR]];
+    [rightButton.titleLabel setFont:[UIFont systemFontOfSize:15.0f *FontFactor]];
     [rightButton sizeToFit];
     [rightButton addTarget:self action:@selector(finishButton:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:rightButton];
@@ -81,7 +77,7 @@
                 [button.layer setCornerRadius:2.0f];
                 [button.layer setBorderWidth:0.5f];
                 [button.layer setBorderColor:[UIColor colorWithHexString:@"E1E1E6"].CGColor ];
-                button.titleLabel.font = [UIFont systemFontOfSize:13.0f * XFACTOR];
+                button.titleLabel.font = [UIFont systemFontOfSize:13.0f * FontFactor];
                 [button setTitle:obj.secondCatalogName forState:UIControlStateNormal];
                 [button setTitleColor:[UIColor colorWithHexString:@"8A8A8A"] forState:UIControlStateNormal];
                 [button setTitleColor:[UIColor colorWithHexString:@"FF3232"] forState:UIControlStateSelected];
@@ -173,7 +169,13 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return  1;
+    SHGMarketFirstCategoryObject * object = [self.categoryArray objectAtIndex:section];
+    if ( object.secondCataLogs.count > 0) {
+        return  1;
+    } else{
+        return 0;
+    }
+   
 }
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -197,7 +199,7 @@
 {
     CGFloat height;
     SHGMarketFirstCategoryObject * objf = [self.categoryArray objectAtIndex:indexPath.section];
-    height = objf.secondCataLogs.count / 3.0f * ( kItemTopMargin + kItemHeight);
+    height = objf.secondCataLogs.count / 3.0f * ( 2 * kItemTopMargin + kItemHeight);
         return height;
 }
 - (UIView * )tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
@@ -209,7 +211,7 @@
      SHGMarketFirstCategoryObject * obj = [self.categoryArray objectAtIndex:section];
     title.text = obj.firstCatalogName;
     title.textAlignment = NSTextAlignmentLeft;
-    title.font = [UIFont systemFontOfSize:15.0f * XFACTOR];
+    title.font = [UIFont systemFontOfSize:15.0f * FontFactor];
     title.textColor = [UIColor colorWithHexString:@"161616"];
     [view addSubview:title];
     return view;
