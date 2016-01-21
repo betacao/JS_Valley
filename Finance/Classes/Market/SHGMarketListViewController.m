@@ -143,6 +143,7 @@
         __weak typeof(self) weakSelf = self;
         _emptyView.block = ^(NSDictionary *dictionary){
             SHGMarketSecondCategoryViewController *controller = [[SHGMarketSecondCategoryViewController alloc] init];
+            controller.delegate = weakSelf;
             [weakSelf.navigationController pushViewController:controller animated:YES];
         };
     }
@@ -255,6 +256,7 @@
     SHGMarketObject *object = [self.currentArray objectAtIndex:indexPath.row];
     if (object.tipUrl.length > 0) {
         SHGMarketSecondCategoryViewController *controller = [[SHGMarketSecondCategoryViewController alloc] init];
+        controller.delegate = self;
         [self.navigationController pushViewController:controller animated:YES];
     } else{
         SHGMarketDetailViewController *controller = [[SHGMarketDetailViewController alloc]init];

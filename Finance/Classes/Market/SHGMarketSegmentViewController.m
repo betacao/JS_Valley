@@ -175,6 +175,7 @@
 - (void)modifyUserSelectedTags:(UIButton *)button
 {
     SHGMarketSecondCategoryViewController *controller = [[SHGMarketSecondCategoryViewController alloc] init];
+    controller.delegate = [self.viewControllers firstObject];
     [self.navigationController pushViewController:controller animated:YES];
 }
 

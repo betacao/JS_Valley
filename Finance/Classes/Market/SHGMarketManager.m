@@ -73,7 +73,13 @@
 
 - (void)modifyUserSelectedArray:(NSArray *)array
 {
-    self.selecetedArray = [NSArray arrayWithArray:array];
+    NSMutableArray *objectArray = [NSMutableArray array];
+    for (NSString *catalogId in array) {
+        SHGMarketSelectedObject *object = [[SHGMarketSelectedObject alloc] init];
+        object.catalogId = catalogId;
+        [objectArray addObject:object];
+    }
+    self.selecetedArray = [NSArray arrayWithArray:objectArray];
 }
 
 - (void)userTotalArray:(void (^)(NSArray *array))block
