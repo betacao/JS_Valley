@@ -218,6 +218,7 @@
 - (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item
 {
     self.navigationItem.titleView = nil;
+    self.navigationItem.rightBarButtonItems = nil;
     if (item.tag == 1000){
         self.navigationItem.titleView = self.homeSegmentTitleView;
         self.navigationItem.rightBarButtonItem = self.homeSegmentViewController.rightBarButtonItem;
