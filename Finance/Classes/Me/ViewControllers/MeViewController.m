@@ -507,9 +507,9 @@
     } else if (indexPath.row == 2) {
         cell.lblName.text = @"我的预约";
     } else if (indexPath.row == 3) {
-        cell.lblName.text = @"我的收藏";
-    } else if (indexPath.row == 4) {
         cell.lblName.text = @"我的业务";
+    } else if (indexPath.row == 4) {
+        cell.lblName.text = @"我的收藏";
     } else if (indexPath.row == 5) {
         cell.lblName.text = @"设置";
     }
@@ -536,15 +536,15 @@
         [MobClick event:@"MyAppointmentViewController" label:@"onClick"];
         [self.navigationController pushViewController:vc animated:YES];
     } else if (indexPath.row == 3) {
+        SHGMarketMineViewController *marketMineViewController = [[SHGMarketMineViewController alloc] init];
+        marketMineViewController.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:marketMineViewController animated:YES];
+        
+    } else if (indexPath.row == 4) {
         MyCollectionViewController *vc = [[MyCollectionViewController alloc] init];
         vc.hidesBottomBarWhenPushed = YES;
         [MobClick event:@"MyCollectionViewController" label:@"onClick"];
         [self.navigationController pushViewController:vc animated:YES];
-        
-    } else if (indexPath.row == 4) {
-        SHGMarketMineViewController *marketMineViewController = [[SHGMarketMineViewController alloc] init];
-        marketMineViewController.hidesBottomBarWhenPushed = YES;
-        [self.navigationController pushViewController:marketMineViewController animated:YES];
     } else if (indexPath.row == 5) {
         [self goToSettings];
     }
