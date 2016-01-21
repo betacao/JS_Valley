@@ -24,6 +24,7 @@ typedef void(^loadViewFinishBlock)(UIView *view);
 @property (nonatomic, copy) loadViewFinishBlock block;
 
 + (instancetype)sharedSegmentController;
+- (void)changeTitleCityName:(NSString *)name;
 - (void)setSelectedIndex:(NSUInteger)index animated:(BOOL)animated;
 - (void)setSelectedViewController:(UIViewController *)viewController animated:(BOOL)animated;
 - (void)refreshMineViewController;

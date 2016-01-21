@@ -7,13 +7,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SHGMomentCityViewController">
             <connections>
-                <outlet property="GPSButton" destination="DdU-aD-uET" id="da0-LZ-hNq"/>
-                <outlet property="allLabel" destination="Wh8-yd-4UQ" id="Bx5-z2-ibV"/>
-                <outlet property="bottomView" destination="5gP-Nz-Kkb" id="cWd-OW-VZ7"/>
-                <outlet property="headerView" destination="nhb-By-HBO" id="F7U-us-QFx"/>
-                <outlet property="localLabel" destination="ZJF-i2-Tyq" id="Lb1-7d-y3W"/>
                 <outlet property="tableView" destination="g0T-yI-Cdi" id="6mv-As-WYk"/>
-                <outlet property="topView" destination="p6h-aO-046" id="QGH-iG-w6Q"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -30,48 +24,6 @@
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <point key="canvasLocation" x="179" y="292"/>
-        </view>
-        <view contentMode="scaleToFill" id="nhb-By-HBO">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="86"/>
-            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-            <subviews>
-                <view contentMode="scaleToFill" id="p6h-aO-046">
-                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
-                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                    <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="DdU-aD-uET">
-                            <rect key="frame" x="170" y="0.0" width="135" height="43"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <state key="normal" title="Button"/>
-                        </button>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ZJF-i2-Tyq">
-                            <rect key="frame" x="15" y="0.0" width="129" height="43"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                            <nil key="highlightedColor"/>
-                        </label>
-                    </subviews>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                </view>
-                <view contentMode="scaleToFill" id="5gP-Nz-Kkb">
-                    <rect key="frame" x="0.0" y="43" width="320" height="43"/>
-                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                    <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Wh8-yd-4UQ">
-                            <rect key="frame" x="15" y="0.0" width="293" height="43"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                            <nil key="highlightedColor"/>
-                        </label>
-                    </subviews>
-                    <color key="backgroundColor" red="0.93725490196078431" green="0.93333333333333335" blue="0.93725490196078431" alpha="1" colorSpace="calibratedRGB"/>
-                </view>
-            </subviews>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <point key="canvasLocation" x="574" y="214"/>
         </view>
     </objects>
 </document>
