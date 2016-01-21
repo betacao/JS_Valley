@@ -192,7 +192,9 @@
     NSString *request = [rBaseAddressForHttp stringByAppendingString:@"/market/getMarketList"];
     [MOCHTTPRequestOperationManager postWithURL:request class:[SHGMarketObject class] parameters:param success:^(MOCHTTPResponse *response) {
         [Hud hideHud];
-        block(response.dataArray);
+        NSDictionary *dictionary = response.dataDictionary;
+        NSArray *dataArray = [[SHGGloble sharedGloble] parseServerJsonArrayToJSONModel:[dictionary objectForKey:@"datalist"] class:[SHGMarketObject class]];
+        block(dataArray);
     } failed:^(MOCHTTPResponse *response) {
         [Hud hideHud];
         block(nil);
