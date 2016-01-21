@@ -39,6 +39,7 @@
 @property (strong, nonatomic) NSString *isDeleted;//是否已经在服务端删除了
 @property (strong, nonatomic) NSString *modifyTime;
 @property (strong, nonatomic) NSString *tipUrl;
+@property (strong, nonatomic) NSString *anonymous;//是否委托大牛发布
 @end
 
 

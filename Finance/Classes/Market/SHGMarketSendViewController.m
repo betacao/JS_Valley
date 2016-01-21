@@ -39,6 +39,7 @@ typedef NS_ENUM(NSInteger, SHGMarketSendType){
 @property (assign, nonatomic) SHGMarketSendType sendType;
 @property (weak, nonatomic) IBOutlet UIView *addImageBgView;
 @property (weak, nonatomic) IBOutlet UIButton *addImageButton;
+@property (weak, nonatomic) IBOutlet UIButton *anonymousButton;
 @property (strong, nonatomic) NSMutableArray *categoryArray;
 @property (strong, nonatomic) NSString *imageName;
 @property (assign, nonatomic) BOOL hasImage;
@@ -108,6 +109,9 @@ typedef NS_ENUM(NSInteger, SHGMarketSendType){
     self.locationField.leftViewMode = UITextFieldViewModeAlways;
     [self.locationField setValue:[UIColor colorWithHexString:@"D3D3D3"] forKeyPath:@"_placeholderLabel.textColor"];
 
+    [self.anonymousButton setImage:[UIImage imageNamed:@"market_select"] forState:UIControlStateSelected];
+    [self.anonymousButton setImage:[UIImage imageNamed:@"market_unselect"] forState:UIControlStateNormal];
+
     [self initBoxView];
 }
 
@@ -141,6 +145,11 @@ typedef NS_ENUM(NSInteger, SHGMarketSendType){
     self.contactField.text = object.contactInfo;
     self.locationField.text = object.position;
     self.introduceView.text = object.detail;
+    if ([object.anonymous isEqualToString:@"1"]){
+        self.anonymousButton.selected = YES;
+    } else{
+        self.anonymousButton.selected = NO;
+    }
     if (object.url && object.url.length > 0) {
         self.hasImage = YES;
         __weak typeof(self) weakSelf = self;
@@ -153,6 +162,10 @@ typedef NS_ENUM(NSInteger, SHGMarketSendType){
 
 }
 
+- (IBAction)clickAnonymousButton:(UIButton *)button
+{
+    button.selected = !button.selected;
+}
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField
 {
@@ -279,9 +292,10 @@ typedef NS_ENUM(NSInteger, SHGMarketSendType){
 {
     [self.currentContext resignFirstResponder];
     if ([self checkInputMessage]){
+        __weak typeof(self) weakSelf = self;
         [self uploadImage:^(BOOL success) {
             if (success) {
-                __weak typeof(self) weakSelf = self;
+                NSString *anonymous = weakSelf.anonymousButton.isSelected ? @"1" : @"0";
                 switch (self.sendType) {
                     case SHGMarketSendTypeNew:{
                         //新建业务
@@ -300,7 +314,7 @@ typedef NS_ENUM(NSInteger, SHGMarketSendType){
                             secondId = secondObject.secondCatalogId;
                         }
 
-                        NSDictionary *param = @{@"uid":uid, @"marketName": marketName, @"firstCatalogId": firstId, @"secondCatalogId": secondId, @"price": price, @"contactInfo": contactInfo, @"detail": detail, @"photo":self.imageName, @"city":city};
+                        NSDictionary *param = @{@"uid":uid, @"marketName": marketName, @"firstCatalogId": firstId, @"secondCatalogId": secondId, @"price": price, @"contactInfo": contactInfo, @"detail": detail, @"photo":self.imageName, @"city":city, @"anonymous":anonymous};
                         NSMutableDictionary *mParam = [NSMutableDictionary dictionaryWithDictionary:param];
                         if (!secondId || secondId.length == 0) {
                             [mParam removeObjectForKey:@"secondCatalogId"];
@@ -332,7 +346,7 @@ typedef NS_ENUM(NSInteger, SHGMarketSendType){
                             SHGMarketSecondCategoryObject *secondObject = [firstObject.secondCataLogs objectAtIndex:self.secondCategoryBox.currentIndex];
                             secondId = secondObject.secondCatalogId;
                         }
-                        NSDictionary *param = @{@"uid":uid, @"marketName": marketName, @"firstCatalogId": firstId, @"secondCatalogId": secondId, @"price": price, @"contactInfo": contactInfo, @"detail": detail, @"photo":self.imageName, @"city":city, @"marketId":weakSelf.object.marketId};
+                        NSDictionary *param = @{@"uid":uid, @"marketName": marketName, @"firstCatalogId": firstId, @"secondCatalogId": secondId, @"price": price, @"contactInfo": contactInfo, @"detail": detail, @"photo":self.imageName, @"city":city, @"marketId":weakSelf.object.marketId, @"anonymous":anonymous};
                         NSMutableDictionary *mParam = [NSMutableDictionary dictionaryWithDictionary:param];
                         if (!secondId || secondId.length == 0) {
                             [mParam removeObjectForKey:@"secondCatalogId"];

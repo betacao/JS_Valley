@@ -57,7 +57,7 @@
 {
     if(!_noticeLabel){
         _noticeLabel = [[UILabel alloc] initWithFrame:self.bounds];
-        _noticeLabel.textColor = [UIColor colorWithHexString:@"161616"];
+        _noticeLabel.textColor = [UIColor colorWithHexString:@"5785d0"];
         _noticeLabel.textAlignment = NSTextAlignmentCenter;
         _noticeLabel.font = [UIFont systemFontOfSize:12.0f];
     }

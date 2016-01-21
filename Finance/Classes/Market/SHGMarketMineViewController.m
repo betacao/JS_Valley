@@ -31,7 +31,11 @@
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     [self addHeaderRefresh:self.tableView headerRefesh:YES andFooter:YES];
-    [self loadMarketList:@"first" firstId:@"" second:@"" marketId:@"-1"];
+    __weak typeof(self) weakSelf = self;
+    [[SHGMarketManager shareManager] userTotalArray:^(NSArray *array) {
+        [weakSelf loadMarketList:@"first" firstId:@"" second:@"" marketId:@"-1"];
+    }];
+
 }
 
 - (NSMutableArray *)currentDataArray

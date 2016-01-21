@@ -182,6 +182,11 @@ typedef NS_ENUM(NSInteger, RegistType)
 - (void)getverifyCodeRequest
 {
 	[MOCHTTPRequestOperationManager postWithURL:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"sms"] parameters:@{@"type":@"register",@"phone":self.phoneNumber} success:^(MOCHTTPResponse *response) {
+        NSString *code = [response.dataDictionary objectForKey:@"code"];
+        if ([code isEqualToString:@"1104"]) {
+            [Hud showMessageWithText:@"验证码未失效，请使用之前验证码"];
+            return ;
+        }
         self.getVerfyCodeButton.userInteractionEnabled = NO;
         self.remainTime = 60;
         self.remainTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(refreshButtonCount) userInfo:nil repeats:YES];
@@ -221,44 +226,35 @@ typedef NS_ENUM(NSInteger, RegistType)
 	NSString *channelId = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_BPUSH_CHANNELID];
 	NSString *userId = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_BPUSH_USERID];
 
-	NSDictionary *parameters = @{@"phone"		:self.phoneNumber,
-								 @"pwd"			:[self.passwordTextField.text md5],
-								 @"validatecode":self.verifyCodeTextField.text,
-								 @"ctype"		:@"iphone",
-								 @"os"			:@"ios",
-								 @"osv"			:osv,
-								 @"appv"		:LOCAL_Version,
-								 @"yuncid"		:channelId?:@"",
-								 @"yunuid"		:userId?:@""};
+	NSDictionary *parameters = @{@"phone":self.phoneNumber, @"pwd":[self.passwordTextField.text md5], @"validatecode":self.verifyCodeTextField.text, @"ctype":@"iphone", @"os":@"ios", @"osv":osv, @"appv":LOCAL_Version, @"yuncid":channelId?:@"",  @"yunuid":userId?:@""};
 	
-    [MOCHTTPRequestOperationManager postWithURL:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"register"] parameters:parameters success:^(MOCHTTPResponse *response)
-    {
-		[Hud hideHud];
-		NSString *uid = response.dataDictionary[@"uid"];
-		NSString *token = response.dataDictionary[@"token"];
-		NSString *state = response.dataDictionary[@"state"];
-		
-		NSString *name = response.dataDictionary[@"name"];
+    [MOCHTTPRequestOperationManager postWithURL:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"register"] parameters:parameters success:^(MOCHTTPResponse *response){
+        [Hud hideHud];
+        NSString *uid = response.dataDictionary[@"uid"];
+        NSString *token = response.dataDictionary[@"token"];
+        NSString *state = response.dataDictionary[@"state"];
+
+        NSString *name = response.dataDictionary[@"name"];
         NSString *head_img = response.dataDictionary[@"head_img"];
         NSString *area = response.dataDictionary[@"area"];
-		
-		[[NSUserDefaults standardUserDefaults] setObject:uid forKey:KEY_UID];
+
+        [[NSUserDefaults standardUserDefaults] setObject:uid forKey:KEY_UID];
         [[NSUserDefaults standardUserDefaults] setObject:self.phoneNumber forKey:KEY_PHONE];
-		[[NSUserDefaults standardUserDefaults] setObject:[self.passwordTextField.text md5] forKey:KEY_PASSWORD];
-		[[NSUserDefaults standardUserDefaults] setObject:state forKey:KEY_AUTHSTATE];
-		[[NSUserDefaults standardUserDefaults] setObject:name forKey:KEY_USER_NAME];
+        [[NSUserDefaults standardUserDefaults] setObject:[self.passwordTextField.text md5] forKey:KEY_PASSWORD];
+        [[NSUserDefaults standardUserDefaults] setObject:state forKey:KEY_AUTHSTATE];
+        [[NSUserDefaults standardUserDefaults] setObject:name forKey:KEY_USER_NAME];
         [[NSUserDefaults standardUserDefaults] setObject:head_img forKey:KEY_HEAD_IMAGE];
         [[NSUserDefaults standardUserDefaults] setObject:area forKey:KEY_USER_AREA];
-		[[NSUserDefaults standardUserDefaults] setObject:token forKey:KEY_TOKEN];
+        [[NSUserDefaults standardUserDefaults] setObject:token forKey:KEY_TOKEN];
         [[NSUserDefaults standardUserDefaults] setObject:@"1" forKey:KEY_AUTOLOGIN];
         [[NSUserDefaults standardUserDefaults] synchronize];
         ImproveMatiralViewController *vc = [[ImproveMatiralViewController alloc] init];
         [self.navigationController pushViewController:vc animated:YES];
-		
-	} failed:^(MOCHTTPResponse *response) {
+
+    } failed:^(MOCHTTPResponse *response) {
         [Hud showMessageWithText:response.errorMessage];
-		[Hud hideHud];
-	}];
+        [Hud hideHud];
+    }];
 }
 
 -(void)registChat

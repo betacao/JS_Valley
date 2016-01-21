@@ -405,11 +405,27 @@
 {
     //移动选项 重新请求
     UIViewController *firstController = [self.viewControllers firstObject];
-    [firstController performSelector:@selector(scrollToCategory:) withObject:object];
-    [firstController performSelector:@selector(refreshData) withObject:nil];
+    if ([firstController isViewLoaded]) {
+        [firstController performSelector:@selector(scrollToCategory:) withObject:object];
+        [firstController performSelector:@selector(refreshData) withObject:nil];
+    }
+
     //重新请求
     UIViewController *secondController = [self.viewControllers lastObject];
-    [secondController performSelector:@selector(refreshData) withObject:object];
+    if ([secondController isViewLoaded]) {
+        [secondController performSelector:@selector(refreshData) withObject:object];
+    }
+
+    //我的业务被移动到个人中心后 要刷新
+    NSInteger count = self.navigationController.viewControllers.count;
+    if (count >= 2) {
+        UIViewController *controller = [self.navigationController.viewControllers objectAtIndex:count - 2];
+
+        if ([NSStringFromClass([controller class]) isEqualToString:@"SHGMarketMineViewController"]) {
+            [controller performSelector:@selector(refreshData) withObject:object];
+        }
+    }
+
 }
 
 //用户切换用户的时候重新去请求用户数据（仅限我的界面）
