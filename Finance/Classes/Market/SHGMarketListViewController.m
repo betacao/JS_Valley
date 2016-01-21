@@ -281,13 +281,16 @@
 
 - (void)clearAndReloadData
 {
-    [self.dataArr enumerateObjectsUsingBlock:^(NSMutableArray *array, NSUInteger idx, BOOL * _Nonnull stop) {
-        [array removeAllObjects];
-    }];
-    NSMutableArray *subArray = [self.dataArr objectAtIndex:[self.scrollView currentIndex]];
-    if (!subArray || subArray.count == 0) {
-        self.currentArray = subArray;
-        [self loadMarketList:@"first" firstId:[self.scrollView marketFirstId] second:[self.scrollView marketSecondId] marketId:@"-1" modifyTime:@""];
+    if (self.dataArr.count > 0) {
+
+        [self.dataArr enumerateObjectsUsingBlock:^(NSMutableArray *array, NSUInteger idx, BOOL * _Nonnull stop) {
+            [array removeAllObjects];
+        }];
+        NSMutableArray *subArray = [self.dataArr objectAtIndex:[self.scrollView currentIndex]];
+        if (!subArray || subArray.count == 0) {
+            self.currentArray = subArray;
+            [self loadMarketList:@"first" firstId:[self.scrollView marketFirstId] second:[self.scrollView marketSecondId] marketId:@"-1" modifyTime:@""];
+        }
     }
 }
 #pragma mark -----二级分类返回代理

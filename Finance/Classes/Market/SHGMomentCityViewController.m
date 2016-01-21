@@ -9,17 +9,14 @@
 #import "SHGMomentCityViewController.h"
 #import "SHGMomentCityTableViewCell.h"
 #import "SHGMarketManager.h"
-#define K_topViewHeight 44.0f
-#define K_leftMargin 15.0f
-@interface SHGMomentCityViewController ()<UITableViewDataSource,UITableViewDelegate>
-@property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property (weak, nonatomic) IBOutlet UILabel *localLabel;
-@property (weak, nonatomic) IBOutlet UIButton *GPSButton;
-@property (strong, nonatomic) IBOutlet UIView *headerView;
-@property (weak, nonatomic) IBOutlet UIView *topView;
-@property (weak, nonatomic) IBOutlet UIView *bottomView;
-@property (weak, nonatomic) IBOutlet UILabel *allLabel;
+#import "CCLocationManager.h"
+//主要目的是记录“全部”显示的位置，与cell里面的对齐
+#define leftMargin 16.0f * XFACTOR
 
+@interface SHGMomentCityViewController ()<UITableViewDataSource,UITableViewDelegate>
+@property (strong, nonatomic) UITableViewCell *gpsCell;
+@property (strong, nonatomic) UIActivityIndicatorView *indicator;
+@property (strong, nonatomic) UITableView *tableView;
 
 @end
 
@@ -30,108 +27,138 @@
     self.title = @"当前城市";
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
-    self.tableView.tableHeaderView = self.headerView;
     __weak typeof(self) weakSelf = self;
     [[SHGMarketManager shareManager] loadHotCitys:^(NSArray *array) {
         [weakSelf.dataArr removeAllObjects];
         [weakSelf.dataArr addObjectsFromArray:array];
         [weakSelf.tableView reloadData];
     }];
-    [self initUi];
+
 
 }
-- (void)didSelectCity: (NSString *)city
+
+- (UITableViewCell *)gpsCell
 {
-    if (self.delegate && [self.delegate respondsToSelector:@selector(didSelectCity:)]) {
-        [self.delegate didSelectCity:city];
+    if(!_gpsCell){
+        self.indicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+        NSString *cityName = [SHGMarketManager shareManager].cityName;
+
+        _gpsCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+        _gpsCell.textLabel.font = [UIFont boldSystemFontOfSize:15.0f];
+        _gpsCell.textLabel.textColor = [UIColor colorWithHexString:@"141414"];
+        _gpsCell.textLabel.text = cityName;
+
+        UIButton *gpsButton = [UIButton buttonWithType:UIButtonTypeCustom];;
+        [gpsButton setTitle:@"重新定位" forState:UIControlStateNormal];
+        [gpsButton setTitleColor:[UIColor colorWithHexString:@"4b88b7"] forState:UIControlStateNormal];
+        [gpsButton setImage:[UIImage imageNamed:@"location"] forState:UIControlStateNormal];
+        [gpsButton addTarget:self action:@selector(startlocation) forControlEvents:UIControlEventTouchUpInside];
+        gpsButton.titleLabel.font = [UIFont systemFontOfSize:14.0f];
+        [gpsButton sizeToFit];
+        gpsButton.center = _gpsCell.contentView.center;
+        CGRect frame = gpsButton.frame;
+        frame.origin.x = SCREENWIDTH - CGRectGetWidth(frame) - leftMargin;
+        gpsButton.frame = frame;
+
+        self.indicator.center = _gpsCell.contentView.center;
+         frame = self.indicator.frame;
+        frame.origin.x = leftMargin;
+        self.indicator.frame = frame;
+        self.indicator.hidesWhenStopped = YES;
+        [_gpsCell.contentView addSubview:self.indicator];
+
+        [_gpsCell.contentView addSubview:gpsButton];
     }
-    
+
+    return _gpsCell;
 }
 
-- (void)initUi
+- (void)startlocation
 {
-    CGRect frame = self.topView.frame;
-    frame.size.height = K_topViewHeight;
-    self.topView.frame = frame;
-    
-    frame = self.bottomView.frame;
-    frame.origin.y = self.topView.bottom;
-    self.bottomView.frame = frame;
-    
-    self.localLabel.text = @"南京";
-    self.localLabel.textAlignment = NSTextAlignmentLeft;
-    self.localLabel.font = [UIFont systemFontOfSize:15.0f * XFACTOR];
-    self.localLabel.textColor = [UIColor colorWithHexString:@"141414"];
-    [self.localLabel sizeToFit];
-    frame = self.localLabel.frame;
-    frame.origin.y = (K_topViewHeight - frame.size.height) / 2.0f;
-    frame.origin.x = K_leftMargin;
-    self.localLabel.frame = frame;
-
-    [self.GPSButton setTitle:@"重新定位" forState:UIControlStateNormal];
-    self.GPSButton.titleLabel.font = [UIFont systemFontOfSize:15.0f * XFACTOR];
-    [self.GPSButton setTitleColor:[UIColor colorWithHexString:@"4B88B7"] forState:UIControlStateNormal];
-    [self.GPSButton setImage:[UIImage imageNamed:@"location"] forState:UIControlStateNormal];
-    [self.GPSButton addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchUpInside];
-    [self.GPSButton sizeToFit];
-    frame = self.GPSButton.frame;
-    frame.origin.x = SCREENWIDTH - frame.size.width - K_leftMargin;
-    frame.origin.y = (K_topViewHeight - frame.size.height) / 2.0f;
-    self.GPSButton.frame = frame;
-    
-    self.allLabel.text = @"全部城市";
-    self.allLabel.textColor = [UIColor colorWithHexString:@"606060"];
-    self.allLabel.textAlignment = NSTextAlignmentLeft;
-    self.allLabel.font = [UIFont systemFontOfSize:14.0f * XFACTOR];
-    self.bottomView.backgroundColor = [UIColor colorWithHexString:@"EFEEEF"];
+    __weak typeof(self) weakSelf = self;
+    [self.indicator startAnimating];
+    self.gpsCell.textLabel.text = @"";
+    [[CCLocationManager shareLocation] getCity:^{
+        [weakSelf.indicator stopAnimating];
+        weakSelf.gpsCell.textLabel.text = [SHGGloble sharedGloble].cityName;
+    }];
 }
 
-- (void)buttonClick:(UIButton * )btn
+#pragma mark - Table view data source
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-        [Hud showMessageWithText:@"正在定位，请稍后..."];
-        NSString *cityName = [SHGGloble sharedGloble].cityName;
-        self.localLabel.text = cityName;
-        [self.tableView reloadData];
-}
-
-
-#pragma mark ---UitableViewDelegate---
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-   return self.dataArr.count;
-    
-}
-
-- (UITableViewCell * )tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    NSString *cellIdentifier = @"SHGMomentCityTableViewCell";
-    SHGMomentCityTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-    if (!cell) {
-        cell = [[[NSBundle mainBundle]loadNibNamed:@"SHGMomentCityTableViewCell" owner:self options:nil] lastObject];
+    if(section == 1){
+        return 37.0f;
     }
-    cell.selectionStyle = UITableViewCellSeparatorStyleNone;
-    SHGMarketCityObject *obj = [self.dataArr objectAtIndex:indexPath.row];
-    [cell loadWithUi:obj];
+    return 0.0f;
+}
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 2;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    if(section == 0){
+        return 1;
+    }
+    return self.dataArr.count;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    static NSString *identifier = @"identfier";
+    SHGMomentCityTableViewCell *cell = nil;
+    if(indexPath.section > 0){
+        cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+    } else{
+        return self.gpsCell;
+    }
+
+    if(!cell){
+        cell = [[[NSBundle mainBundle] loadNibNamed:@"SHGMomentCityTableViewCell" owner:self options:nil] lastObject];
+    }
+    if(indexPath.section == 1){
+        SHGMarketCityObject *object = [self.dataArr objectAtIndex:indexPath.row];
+        [cell loadWithUi:object];
+    }
     return cell;
-
-}
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    SHGMarketCityObject *obj = [self.dataArr objectAtIndex:indexPath.row];
-    NSString * cityName = obj.cityName;
-    [self didSelectCity:cityName];
-    [self.navigationController popViewControllerAnimated:YES];
-
 }
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    return  1;
+    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, SCREENWIDTH, 37.0f)];
+    headerView.backgroundColor = [UIColor colorWithHexString:@"EFEEEF"];
+
+    UILabel *allLabel = [[UILabel alloc] init];
+    allLabel.text = @"热门城市";
+    allLabel.font = [UIFont systemFontOfSize:15.0f];
+    allLabel.textColor = [UIColor colorWithHexString:@"606060"];
+    [allLabel sizeToFit];
+    allLabel.center = headerView.center;
+    CGRect frame = allLabel.frame;
+    frame.origin.x = leftMargin;
+    allLabel.frame = frame;
+    [headerView addSubview:allLabel];
+    return headerView;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    return K_topViewHeight;
+
+#pragma mark - Table view delegate
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    if(indexPath.section == 0){
+        NSString *cityName = self.gpsCell.textLabel.text;
+        if(cityName && cityName.length > 0){
+            [SHGMarketManager shareManager].cityName = cityName;
+            [self.navigationController popViewControllerAnimated:YES];
+        } else{
+            [Hud showMessageWithText:@"正在定位，请稍后..."];
+        }
+    } else{
+        SHGMarketCityObject *city = [self.dataArr objectAtIndex:indexPath.row];
+        [SHGMarketManager shareManager].cityName = city.cityName;
+        [self.navigationController popViewControllerAnimated:YES];
+    }
 }
 @end

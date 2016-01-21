@@ -8,6 +8,7 @@
 
 #import "SHGMarketManager.h"
 #import "SHGMarketObject.h"
+#import "SHGMarketSegmentViewController.h"
 
 @interface SHGMarketManager ()
 
@@ -28,6 +29,20 @@
         sharedManager = [[self alloc] init];
     });
     return sharedManager;
+}
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        [self addObserver:self forKeyPath:@"cityName" options:NSKeyValueObservingOptionNew context:nil];
+    }
+    return self;
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context
+{
+    [[SHGMarketSegmentViewController sharedSegmentController] changeTitleCityName:self.cityName];
 }
 //大分类
 - (void)loadMarketCategoryBlock:(void (^)(void))block

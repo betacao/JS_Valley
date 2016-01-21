@@ -23,7 +23,6 @@
     self.redLine.backgroundColor = [UIColor colorWithHexString:@"E6E7E8"];
     self.redLine.frame = CGRectMake(self.redLine.origin.x, self.contentView.height - 1.0f, self.redLine.width, 0.5f);
     
-    
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

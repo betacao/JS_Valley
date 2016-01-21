@@ -13,7 +13,7 @@
 #import "SHGProvincesViewController.h"
 #import "SHGMomentCityViewController.h"
 #import "SHGMarketSecondCategoryViewController.h"
-@interface SHGMarketSegmentViewController ()<SHGMomentCityDelegate>
+@interface SHGMarketSegmentViewController ()
 @property (nonatomic, strong) NSArray *rightBarButtonItems;
 @property (nonatomic, strong) UIBarButtonItem *leftBarButtonItem;
 @property (nonatomic, strong) UIButton *titleButton;
@@ -110,11 +110,14 @@
 
 
 #pragma mark ------变更城市代理
-- (void)didSelectCity: (NSString *)city
+
+- (void)changeTitleCityName:(NSString *)city
 {
+    if ([city isEqualToString:@"其他城市"]) {
+        city = @"其他";
+    }
     if (![city isEqualToString:self.titleLabel.text]) {
         self.titleLabel.text = city;
-        [SHGMarketManager shareManager].cityName = city;
         UIViewController *controller = [self.viewControllers firstObject];
         [controller performSelector:@selector(clearAndReloadData) withObject:nil];
     }
@@ -159,8 +162,7 @@
 
 - (void)moveToProvincesViewController:(UIButton *)button
 {
-    SHGMomentCityViewController * controller = [[SHGMomentCityViewController alloc]init];
-    controller.delegate = self;
+    SHGMomentCityViewController * controller = [[SHGMomentCityViewController alloc] init];
     [self.navigationController pushViewController:controller animated:YES];
 }
 
