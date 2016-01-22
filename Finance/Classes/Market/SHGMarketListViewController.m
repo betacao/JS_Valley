@@ -297,6 +297,10 @@
 - (void)didUploadUserCategoryTags:(NSArray *)array
 {
     [[SHGMarketManager shareManager] modifyUserSelectedArray:array];
+    __weak typeof(self)weakSelf = self;
+    [[SHGMarketManager shareManager] userSelectedArray:^(NSArray *array) {
+        weakSelf.userSelectedArray = array;
+    }];
     NSString *marketId = [self.scrollView marketFirstId];
     if ([marketId isEqualToString:kUserDefineCategoryID]) {
         [self.currentArray removeAllObjects];
