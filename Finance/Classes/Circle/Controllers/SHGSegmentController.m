@@ -79,9 +79,9 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     tabButtonsContainerView.enabled = YES;
     tabButtonsContainerView.layer.masksToBounds = YES;
     tabButtonsContainerView.layer.cornerRadius = 4;
-    NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:RGB(255, 57, 67),NSForegroundColorAttributeName,[UIFont systemFontOfSize:17 * FontFactor],NSFontAttributeName ,nil];
+    NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:RGB(255, 57, 67),NSForegroundColorAttributeName,[UIFont systemFontOfSize:kNavBarTitleFontSize],NSFontAttributeName ,nil];
 
-    NSDictionary *dic1 = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor],NSForegroundColorAttributeName,[UIFont systemFontOfSize:17 * FontFactor],NSFontAttributeName ,nil];
+    NSDictionary *dic1 = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor],NSForegroundColorAttributeName,[UIFont systemFontOfSize:kNavBarTitleFontSize],NSFontAttributeName ,nil];
     //设置标题的颜色 字体和大小 阴影和阴影颜色
     [tabButtonsContainerView setTitleTextAttributes:dic1 forState:UIControlStateSelected];
     [tabButtonsContainerView setTitleTextAttributes:dic forState:UIControlStateNormal];
@@ -115,7 +115,7 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
 {
     if (!_titleLabel){
         _titleLabel = [[UILabel alloc] init];
-        _titleLabel.font = [UIFont systemFontOfSize:17.0f * FontFactor];
+        _titleLabel.font = [UIFont systemFontOfSize:kNavBarTitleFontSize];
         _titleLabel.textColor = TEXT_COLOR;
         _titleLabel.text = @"动态";
         [_titleLabel sizeToFit];
