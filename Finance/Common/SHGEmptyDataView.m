@@ -54,11 +54,12 @@
             [self.actionButton setTitle:@"立即创建" forState:UIControlStateNormal];
             [self.actionButton setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithHexString:@"F04241"]] forState:UIControlStateNormal];
             [self addSubview:self.actionButton];
-            [self setNeedsLayout];
             break;
         default:
             break;
     }
+
+    [self setNeedsLayout];
 }
 
 - (void)actionButtonClick:(UIButton *)button

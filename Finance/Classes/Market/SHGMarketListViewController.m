@@ -150,7 +150,6 @@
 {
     if (!_emptyView) {
         _emptyView = [[SHGEmptyDataView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, SCREENWIDTH, SCREENHEIGHT)];
-        _emptyView.type = SHGEmptyDateTypeMarketEmptyRecommended;
         __weak typeof(self) weakSelf = self;
         _emptyView.block = ^(NSDictionary *dictionary){
             SHGMarketSecondCategoryViewController *controller = [[SHGMarketSecondCategoryViewController alloc] init];
@@ -223,12 +222,12 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     NSInteger count = self.currentArray.count;
-    return count;
+    return count > 0 ? count : 1;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if ([[self.scrollView marketFirstId] isEqualToString:kUserDefineCategoryID] && self.userSelectedArray.count == 0) {
+    if (([[self.scrollView marketFirstId] isEqualToString:kUserDefineCategoryID] && self.userSelectedArray.count == 0) || self.currentArray.count == 0) {
         return CGRectGetHeight(self.view.frame);
     } else{
         SHGMarketObject *object = [self.currentArray objectAtIndex:indexPath.row];
@@ -248,6 +247,11 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if ([[self.scrollView marketFirstId] isEqualToString:kUserDefineCategoryID] && self.userSelectedArray.count == 0) {
+        self.emptyView.type = SHGEmptyDateTypeMarketEmptyRecommended;
+        return self.emptyCell;
+    }
+    if (self.currentArray.count == 0) {
+        self.emptyView.type = SHGEmptyDateTypeNormal;
         return self.emptyCell;
     }
     UITableViewCell *cell = nil;
@@ -260,12 +264,12 @@
         }
 
         [(SHGMarketNoticeTableViewCell *)cell loadDataWithObject:[self.currentArray objectAtIndex:indexPath.row] block:^(CGFloat height) {
-//            [weakSelf.heightDictionary setObject:@(height) forKey:indexPath];
-//            [weakSelf.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+            //            [weakSelf.heightDictionary setObject:@(height) forKey:indexPath];
+            //            [weakSelf.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
         }];
     } else{
         NSString *identifier = @"SHGMarketTableViewCell";
-         cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+        cell = [tableView dequeueReusableCellWithIdentifier:identifier];
         if (!cell) {
             cell = [[[NSBundle mainBundle] loadNibNamed:@"SHGMarketTableViewCell" owner:self options:nil] lastObject];
             ((SHGMarketTableViewCell *)cell).delegate = self;
@@ -284,7 +288,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if ([[self.scrollView marketFirstId] isEqualToString:kUserDefineCategoryID] && self.userSelectedArray.count == 0) {
+    if (([[self.scrollView marketFirstId] isEqualToString:kUserDefineCategoryID] && self.userSelectedArray.count == 0)||self.currentArray.count == 0) {
         return;
     }
     SHGMarketObject *object = [self.currentArray objectAtIndex:indexPath.row];
