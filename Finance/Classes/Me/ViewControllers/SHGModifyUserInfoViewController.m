@@ -340,17 +340,10 @@
 
 - (void)showIndustryChoiceView
 {
-    __weak typeof(self) weakSelf = self;
-    [[SHGMarketManager shareManager] loadHotCitys:^(NSArray *array) {
-        NSMutableArray *cityArray = [NSMutableArray array];
-        [array enumerateObjectsUsingBlock:^(SHGMarketCityObject *obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            [cityArray addObject:obj.cityName];
-        }];
-        SHGItemChooseView *view = [[SHGItemChooseView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, SCREENWIDTH, SCREENHEIGHT) lineNumber:cityArray.count];
-        view.delegate = weakSelf;
-        view.dataArray = cityArray;
-        [weakSelf.view.window addSubview:view];
-    }];
+    SHGItemChooseView *view = [[SHGItemChooseView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, SCREENWIDTH, SCREENHEIGHT) lineNumber:9];
+    view.delegate = self;
+    view.dataArray = @[@"银行机构", @"证券公司", @"PE/VC",@"公募基金",@"信托公司",@"三方理财", @"担保小贷", @"上市公司", @"其他"];
+    [self.view.window addSubview:view];
 }
 
 #pragma mark ------ 选择行业代理

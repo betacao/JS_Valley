@@ -450,16 +450,19 @@
             //创建一个分类 让首页去查找到 然后刷新
             SHGMarketFirstCategoryObject *categoryObject = [[SHGMarketFirstCategoryObject alloc] init];
             categoryObject.firstCatalogId = object.firstcatalogid;
-            [firstController performSelector:@selector(scrollToCategory:) withObject:categoryObject];
-            [firstController performSelector:@selector(refreshData) withObject:object];
+            if ([firstController isViewLoaded]) {
+                [firstController performSelector:@selector(scrollToCategory:) withObject:categoryObject];
+                [firstController performSelector:@selector(refreshData) withObject:object];
+            }
             //重新请求
             UIViewController *secondController = [self.viewControllers lastObject];
-            [secondController performSelector:@selector(refreshData) withObject:object];
-
+            if ([secondController isViewLoaded]) {
+                [secondController performSelector:@selector(refreshData) withObject:object];
+            }
             //我的业务被移动到个人中心后 要刷新
             NSInteger count = self.navigationController.viewControllers.count;
-            if (count >= 2) {
-                UIViewController *controller = [self.navigationController.viewControllers objectAtIndex:count - 2];
+            if (count >= 1) {
+                UIViewController *controller = [self.navigationController.viewControllers objectAtIndex:count - 1];
 
                 if ([NSStringFromClass([controller class]) isEqualToString:@"SHGMarketMineViewController"]) {
                     [controller performSelector:@selector(refreshData) withObject:object];
