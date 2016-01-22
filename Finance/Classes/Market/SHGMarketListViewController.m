@@ -248,7 +248,7 @@
     cell.delegate = self;
     SHGMarketFirstCategoryObject  *obj  = [self.scrollView.categoryArray objectAtIndex:[self.scrollView currentIndex]];
     [cell loadDataWithObject:[self.currentArray objectAtIndex:indexPath.row] type:SHGMarketTableViewCellTypeAll];
-    if (obj.secondCataLogs.count == 0 && [self.scrollView currentIndex] != 0) {
+    if (obj.secondCataLogs.count == 0 && [self.scrollView currentIndex] != 0 && ![[self.scrollView marketFirstId] isEqualToString:kUserDefineCategoryID]) {
         [cell loadNewUi];
     }
     return cell;

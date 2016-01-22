@@ -129,7 +129,12 @@
     [self.phoneNumLabel addGestureRecognizer:recognizer];
     self.nameLabel.text = self.responseObject.realname;
 
-    self.companyLabel.text = self.responseObject.company;
+    if (![self.responseObject.createBy isEqualToString:[[NSUserDefaults standardUserDefaults]objectForKey:KEY_UID]] && [self.responseObject.anonymous isEqualToString:@"1"]) {
+        self.companyLabel.text = @"委托发布";
+    } else{
+        self.companyLabel.text = self.responseObject.company;
+    }
+    
 
     if (self.responseObject.company.length > 6) {
         NSString *str = [self.responseObject.title substringToIndex:6];

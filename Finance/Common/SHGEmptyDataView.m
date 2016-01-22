@@ -21,7 +21,7 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        self.backgroundColor = [UIColor colorWithHexString:@"EFEEEF"];
+        self.backgroundColor = [UIColor whiteColor];
         self.imageView = [[UIImageView alloc] init];
         self.actionButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [self.actionButton addTarget:self action:@selector(actionButtonClick:) forControlEvents:UIControlEventTouchUpInside];

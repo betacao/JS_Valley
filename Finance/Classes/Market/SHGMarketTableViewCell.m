@@ -53,11 +53,13 @@
         CGRect frame = self.leftView.frame;
         frame.origin.x = CGRectGetMinX(self.rightView.frame) - CGRectGetWidth(frame);
         self.leftView.frame = frame;
+        self.relationLabel.text = object.createTime;
     } else{
         self.leftView.hidden = NO;
         CGRect frame = self.leftView.frame;
         frame.origin.x = CGRectGetMinX(self.rightView.frame);
         self.leftView.frame = frame;
+        self.relationLabel.text = [object.modifyTime substringToIndex:10];
     }
     self.typeLabel.text = [@"类型：" stringByAppendingString:object.catalog];
     if (object.price.length == 0) {
@@ -79,7 +81,7 @@
     }
     self.amountLabel.frame =CGRectMake(SCREENWIDTH-capitalActualsize.width-15,self.amountLabel.origin.y, capitalActualsize.width, CGRectGetHeight(self.amountLabel.frame));
     self.contactLabel.text = [@"地区：" stringByAppendingString: object.position];
-    self.relationLabel.text = object.createTime;
+   
     [self.praiseButton setTitle:object.praiseNum forState:UIControlStateNormal];
 
     if ([object.isPraise isEqualToString:@"Y"]) {
