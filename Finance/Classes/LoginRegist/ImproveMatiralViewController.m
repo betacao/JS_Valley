@@ -499,7 +499,7 @@
 
 - (void)showIndustryChoiceView
 {
-    SHGItemChooseView *view = [[SHGItemChooseView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, SCREENWIDTH, SCREENHEIGHT)];
+    SHGItemChooseView *view = [[SHGItemChooseView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, SCREENWIDTH, SCREENHEIGHT) lineNumber:9];
     view.delegate = self;
     view.dataArray = @[@"银行机构", @"证券公司", @"PE/VC",@"公募基金",@"信托公司",@"三方理财", @"担保小贷", @"上市公司", @"其他"];
     [self.view.window addSubview:view];

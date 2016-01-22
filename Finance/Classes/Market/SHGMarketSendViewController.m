@@ -262,14 +262,15 @@ typedef NS_ENUM(NSInteger, SHGMarketSendType){
 
 - (void)chooseCity:(UITextField *)textField
 {
-    SHGItemChooseView *view = [[SHGItemChooseView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, SCREENWIDTH, SCREENHEIGHT)];
-    view.delegate = self;
+
     __weak typeof(self) weakSelf = self;
     [[SHGMarketManager shareManager] loadHotCitys:^(NSArray *array) {
         NSMutableArray *cityArray = [NSMutableArray array];
         [array enumerateObjectsUsingBlock:^(SHGMarketCityObject *obj, NSUInteger idx, BOOL * _Nonnull stop) {
             [cityArray addObject:obj.cityName];
         }];
+        SHGItemChooseView *view = [[SHGItemChooseView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, SCREENWIDTH, SCREENHEIGHT) lineNumber:cityArray.count];
+        view.delegate = weakSelf;
         view.dataArray = cityArray;
         [weakSelf.view.window addSubview:view];
     }];

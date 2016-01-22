@@ -20,12 +20,12 @@
 
 @implementation SHGItemChooseView
 
-- (instancetype)initWithFrame:(CGRect)frame
+- (instancetype)initWithFrame:(CGRect)frame lineNumber:(NSInteger)number
 {
     self = [super initWithFrame:frame];
     if (self) {
         self.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.6];
-        self.bgView = [[UIView alloc] initWithFrame:CGRectInset(frame, kBgViewLeftMargin, (CGRectGetHeight(frame) - 5.0f * kCellHeight) / 2.0f)];
+        self.bgView = [[UIView alloc] initWithFrame:CGRectInset(frame, kBgViewLeftMargin, (CGRectGetHeight(frame) - (number > 5 ? 5 : number) * kCellHeight) / 2.0f)];
         self.bgView.layer.masksToBounds = YES;
         self.bgView.layer.cornerRadius = 5.0f;
         self.tableView = [[UITableView alloc] initWithFrame:self.bgView.bounds];

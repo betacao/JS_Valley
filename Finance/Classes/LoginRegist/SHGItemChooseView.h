@@ -16,6 +16,8 @@
 
 @interface SHGItemChooseView : UIView
 
+- (instancetype)initWithFrame:(CGRect)frame lineNumber:(NSInteger)number;
+
 @property (assign, nonatomic) id<SHGItemChooseDelegate> delegate;
 
 @property (strong, nonatomic) NSArray *dataArray;

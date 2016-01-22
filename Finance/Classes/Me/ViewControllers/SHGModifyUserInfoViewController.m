@@ -8,6 +8,8 @@
 
 #import "SHGModifyUserInfoViewController.h"
 #import "SHGItemChooseView.h"
+#import "SHGMarketManager.h"
+
 #define kNextButtonHeight 8.0f *  XFACTOR
 @interface SHGModifyUserInfoViewController ()<UIActionSheetDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, SHGItemChooseDelegate>
 
@@ -338,9 +340,17 @@
 
 - (void)showIndustryChoiceView
 {
-    SHGItemChooseView *view = [[SHGItemChooseView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, SCREENWIDTH, SCREENHEIGHT)];
-    view.delegate = self;
-    [self.view.window addSubview:view];
+    __weak typeof(self) weakSelf = self;
+    [[SHGMarketManager shareManager] loadHotCitys:^(NSArray *array) {
+        NSMutableArray *cityArray = [NSMutableArray array];
+        [array enumerateObjectsUsingBlock:^(SHGMarketCityObject *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            [cityArray addObject:obj.cityName];
+        }];
+        SHGItemChooseView *view = [[SHGItemChooseView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, SCREENWIDTH, SCREENHEIGHT) lineNumber:cityArray.count];
+        view.delegate = weakSelf;
+        view.dataArray = cityArray;
+        [weakSelf.view.window addSubview:view];
+    }];
 }
 
 #pragma mark ------ 选择行业代理
