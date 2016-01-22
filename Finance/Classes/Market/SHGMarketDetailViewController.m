@@ -41,7 +41,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *typeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *capitalLabel;
 @property (weak, nonatomic) IBOutlet UILabel *addressLabel;
-@property (weak, nonatomic) IBOutlet UILabel *phoneNumLabel;
+@property (weak, nonatomic) IBOutlet UIWebView *phoneNumLabel;
 @property (weak, nonatomic) IBOutlet UILabel *marketDetialLabel;
 @property (weak, nonatomic) IBOutlet UILabel *detailContentLabel;
 @property (weak, nonatomic) IBOutlet UIView *actionView;
@@ -75,6 +75,7 @@
     self.detailTable.dataSource = self;
     [self.detailTable setTableFooterView:[[UIView alloc] init]];
 
+    self.phoneNumLabel.scrollView.scrollEnabled = NO;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shareToFriendSuccess:) name:NOTIFI_ACTION_SHARE_TO_FRIENDSUCCESS object:nil];
 
     __weak typeof(self) weakSelf = self;
@@ -107,21 +108,15 @@
     } else {
         self.capitalLabel.text = [NSString stringWithFormat:@"金额： 暂未说明"];
     }
-     self.typeLabel.text = [NSString stringWithFormat:@"类型： %@",self.responseObject.catalog];
+    self.typeLabel.text = [NSString stringWithFormat:@"类型： %@",self.responseObject.catalog];
 
-      if ([self.responseObject.loginuserstate isEqualToString:@"0" ]) {
-        NSString * contactString = @"联系方式： 认证可见";
-        NSMutableAttributedString * str = [[NSMutableAttributedString alloc]initWithString:contactString];
-        [str addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:14.0f * FontFactor] range:NSMakeRange(6, 4)];
-        [str addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"4277B2"] range:NSMakeRange(6, 4)];
-        self.phoneNumLabel.attributedText = str;
-        
+    if ([self.responseObject.loginuserstate isEqualToString:@"0" ]) {
+        NSString * contactString = @" 认证可见";
+        [self.phoneNumLabel loadHTMLString:[self authHtmlString:contactString] baseURL:nil];
+
     } else if([self.responseObject.loginuserstate isEqualToString:@"1" ]){
         NSString * contactString = [@"联系方式：" stringByAppendingString: self.responseObject.contactInfo];
-        NSMutableAttributedString * str = [[NSMutableAttributedString alloc]initWithString:contactString];
-        [str addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:12.0f * FontFactor] range:NSMakeRange(5, str.length - 5)];
-        [str addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"4277B2"] range:NSMakeRange(5, str.length - 5)];
-        self.phoneNumLabel.attributedText = str;
+        [self.phoneNumLabel loadHTMLString:[self numberHtmlString:contactString] baseURL:nil];
 
     }
     self.phoneNumLabel.userInteractionEnabled = YES;
@@ -134,7 +129,7 @@
     } else{
         self.companyLabel.text = self.responseObject.company;
     }
-    
+
 
     if (self.responseObject.company.length > 6) {
         NSString *str = [self.responseObject.title substringToIndex:6];
@@ -142,21 +137,47 @@
     } else{
         self.positionLabel.text = self.responseObject.title;
     }
-    
+
     NSString * aStr = self.responseObject.position;
     self.addressLabel.text = [NSString stringWithFormat:@"地区： %@",aStr];
     [self.headImageView updateStatus:[self.responseObject.status isEqualToString:@"1"] ? YES : NO];
     [self.headImageView updateHeaderView:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,self.responseObject.headimageurl] placeholderImage:[UIImage imageNamed:@"default_head"]];
     self.detailContentLabel.text = self.responseObject.detail;
+}
 
+- (NSString *)numberHtmlString:(NSString *)text
+{
+    NSString *css = [NSString stringWithFormat:@"<html> \n"
+                     "<head> \n"
+                     "<style type=\"text/css\"> \n"
+                     "a{text-decoration: none;color:#4277B2\n}"
+                     "body{font-size : %fpx;color:#898989\n;margin-left:0em;margin-top:0em}"
+                     "</style> \n"
+                     "</head> \n"
+                     "<body>%@</body> \n"
+                     "</html>",12.0f,text];
+    return css;
+}
 
+- (NSString *)authHtmlString:(NSString *)text
+{
+    NSString *css = [NSString stringWithFormat:@"<html> \n"
+                     "<head> \n"
+                     "<style type=\"text/css\"> \n"
+                     "body{margin-left:0em;margin-top:0em}"
+                     "</style> \n"
+                     "</head> \n"
+                     "<body><span style=\"color:#898989;font-size:12px;\">联系方式:</span><span style=\"color:#4277B2;font-size:13px;\">%@</span></body> \n"
+                     "</html>",text];
+
+    return css;
 }
 
 - (void)loadUI
 {
     //1.7.2界面修改
     self.timeLabel.hidden = YES;
-    
+
     CGSize nameSize = [self.nameLabel sizeThatFits:CGSizeMake(MAXFLOAT, CGRectGetHeight(self.nameLabel.frame))];
     self.nameLabel.frame = CGRectMake(self.nameLabel.origin.x,self.nameLabel.origin.y, nameSize.width, CGRectGetHeight(self.nameLabel.frame));
     //1.72版本不需要分割线
@@ -170,10 +191,10 @@
 
     NSString *title = self.responseObject.marketName;
     self.titleLabel.text = title;
-    
+
     CGSize titleSize = [self.titleLabel sizeThatFits:CGSizeMake(self.titleLabel.frame.size.width, MAXFLOAT)];
     self.titleLabel.height = titleSize.height;
-    
+
     //控件位置
     self.typeLabel.frame = CGRectMake(self.typeLabel.origin.x, CGRectGetMaxY(self.titleLabel.frame)+k_SecondToTop, self.typeLabel.width, self.typeLabel.height);
 
@@ -189,7 +210,7 @@
     self.marketDetialLabel.textColor = [UIColor colorWithHexString:@"3A3A3A"];
     self.marketDetialLabel.font = [UIFont systemFontOfSize:14.0f * FontFactor];
     self.detailContentLabel.numberOfLines = 0;
-    
+
     CGSize detailSize = [self.detailContentLabel sizeThatFits:CGSizeMake(SCREENWIDTH - 2 * k_ThirdToTop, MAXFLOAT)];
     self.detailContentLabel.frame = CGRectMake(self.detailContentLabel.origin.x, CGRectGetMaxY(self.thirdHorizontalLine.frame)+ k_ThirdToTop, self.detailContentLabel.width, detailSize.height);
     if (!self.responseObject.url.length == 0) {
@@ -239,15 +260,15 @@
     } else{
         [[SHGGloble sharedGloble] requsetUserVerifyStatus:^(BOOL status) {
             if (status) {
-                
+
             } else{
                 VerifyIdentityViewController * vc = [[VerifyIdentityViewController alloc]init];
                 [self.navigationController pushViewController:vc animated:YES];
             }
         } failString:@"认证后才能查看联系方式～"];
     }
-    
-   
+
+
 }
 
 - (void)addTableHeaderView

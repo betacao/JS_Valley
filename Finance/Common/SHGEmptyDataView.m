@@ -21,7 +21,6 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        self.backgroundColor = [UIColor whiteColor];
         self.imageView = [[UIImageView alloc] init];
         self.actionButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [self.actionButton addTarget:self action:@selector(actionButtonClick:) forControlEvents:UIControlEventTouchUpInside];
@@ -34,6 +33,7 @@
 - (void)setType:(SHGEmptyDateType)type
 {
     _type = type;
+    self.backgroundColor = [UIColor colorWithHexString:@"EFEEEF"];
     switch (type) {
         case SHGEmptyDateTypeNormal:
             self.actionButton.hidden = YES;
@@ -47,6 +47,7 @@
             break;
         case SHGEmptyDateTypeMarketEmptyRecommended:
             self.actionButton.hidden = NO ;
+            self.backgroundColor = [UIColor whiteColor];
             self.imageView.image = [UIImage imageNamed:@"market_emptyUser"];
             [self.imageView sizeToFit];
             [self.actionButton setTitle:@"立即创建" forState:UIControlStateNormal];

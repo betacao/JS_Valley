@@ -107,9 +107,14 @@
 
             [weakSelf.tableView reloadData];
         } else if([target isEqualToString:@"refresh"]){
+            SHGMarketObject *object = [weakSelf.currentArray firstObject];
+            NSInteger index = 0;
+            if (object.tipUrl.length > 0) {
+                index = 1;
+            }
             for (NSInteger i = dataArray.count - 1; i >= 0; i--){
                 SHGMarketObject *obj = [dataArray objectAtIndex:i];
-                [weakSelf.currentArray insertUniqueObject:obj atIndex:1];
+                [weakSelf.currentArray insertUniqueObject:obj atIndex:index];
             }
             [weakSelf.tableView reloadData];
         } else if([target isEqualToString:@"load"]){
@@ -223,11 +228,16 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-
     if ([[self.scrollView marketFirstId] isEqualToString:kUserDefineCategoryID] && self.userSelectedArray.count == 0) {
         return CGRectGetHeight(self.view.frame);
+    } else{
+        SHGMarketObject *object = [self.currentArray objectAtIndex:indexPath.row];
+        if (object.tipUrl.length > 0) {
+            return kMarketNoticeCellHeight;
+        } else{
+            return kMarketCellHeight;
+        }
     }
-    return kMarketCellHeight;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
