@@ -17,6 +17,7 @@
 #import "SHGMarketSegmentViewController.h"
 #import "SHGMarketSendViewController.h"
 #import "VerifyIdentityViewController.h"
+#import "SHGMomentCityViewController.h"
 
 #define kUserDefineCategoryID @"-2"
 
@@ -255,8 +256,7 @@
     }
     SHGMarketObject *object = [self.currentArray objectAtIndex:indexPath.row];
     if (object.tipUrl.length > 0) {
-        SHGMarketSecondCategoryViewController *controller = [[SHGMarketSecondCategoryViewController alloc] init];
-        controller.delegate = self;
+        SHGMomentCityViewController *controller = [[SHGMomentCityViewController alloc] init];
         [self.navigationController pushViewController:controller animated:YES];
     } else{
         SHGMarketDetailViewController *controller = [[SHGMarketDetailViewController alloc]init];

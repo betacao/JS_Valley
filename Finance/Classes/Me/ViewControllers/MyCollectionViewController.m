@@ -91,7 +91,6 @@
         _categoryView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.tableView.width, categoryViewHeight)];
         _categoryView.backgroundColor = [UIColor colorWithHexString:@"F6F6F6"];
         NSArray * cartegoryArry = [NSArray arrayWithObjects:@"动态",@"产品",@"名片", nil];
-        NSInteger buttonWidth = self.tableView.width/3.0;
         for (NSInteger i = 0; i< 3; i ++) {
             UIButton * button = [UIButton buttonWithType:UIButtonTypeCustom];
             button.frame = CGRectMake(i*KButtonWidth, 0, KButtonWidth, buttonHeight);

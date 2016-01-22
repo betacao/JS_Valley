@@ -84,7 +84,7 @@
                 [button setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithHexString:@"FFFFFF"]] forState:UIControlStateNormal];
                 [button setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithHexString:@"F3F3F3"]] forState:UIControlStateSelected];
                 [button addTarget:self action:@selector(didSelectCategory:) forControlEvents:UIControlEventTouchUpInside];
-                CGRect frame = CGRectMake(ceilf(kItemLeftMargin + (kItemMargin + width) * col), ceilf(kItemTopMargin + (kItemMargin + kItemHeight) * row), ceilf(width), ceilf(kItemHeight));
+                CGRect frame = CGRectMake(kItemLeftMargin + (kItemMargin + width) * col, (kItemTopMargin + kItemHeight) * row + kItemTopMargin, width, kItemHeight);
                 button.frame = frame;
                 [cell.contentView addSubview:button];
                 
@@ -195,13 +195,16 @@
 {
     return kSectionHeight;
 }
+
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     CGFloat height;
     SHGMarketFirstCategoryObject * objf = [self.categoryArray objectAtIndex:indexPath.section];
-    height = objf.secondCataLogs.count / 3.0f * ( 2 * kItemTopMargin + kItemHeight);
-        return height;
+    NSInteger row = (NSInteger)ceilf(objf.secondCataLogs.count / 3.0f);
+    height = (kItemTopMargin + kItemHeight) * row + kItemTopMargin;
+    return height;
 }
+
 - (UIView * )tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     UIView * view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREENWIDTH, kSectionHeight)];

@@ -185,7 +185,7 @@
         
     }else if (indexPath.row == 1) {
         cell.textLabel.text = @"群成员";
-        cell.detailTextLabel.text = [NSString stringWithFormat:@"%ld人",_group.groupOccupantsCount];
+        cell.detailTextLabel.text = [NSString stringWithFormat:@"%ld人",(long)_group.groupOccupantsCount];
     }
     else if (indexPath.row == 2){
         cell.textLabel.text = NSLocalizedString(@"group.describe", @"Describe");
