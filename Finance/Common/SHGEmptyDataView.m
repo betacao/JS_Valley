@@ -50,7 +50,7 @@
             self.imageView.image = [UIImage imageNamed:@"market_emptyUser"];
             [self.imageView sizeToFit];
             [self.actionButton setTitle:@"立即创建" forState:UIControlStateNormal];
-            [self.actionButton setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithHexString:@"ee4341"]] forState:UIControlStateNormal];
+            [self.actionButton setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithHexString:@"F04241"]] forState:UIControlStateNormal];
             [self addSubview:self.actionButton];
             [self setNeedsLayout];
             break;

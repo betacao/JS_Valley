@@ -7,9 +7,10 @@
 //
 
 #import "SHGItemChooseView.h"
+#import "SHGUnderlineTableViewCell.h"
 #define kBgViewLeftMargin 35.0f * XFACTOR
-#define kCellHeight 45.0f
-
+#define kCellHeight 37.0f
+#define kCellLabelLeftMargin 15.0f
 @interface SHGItemChooseView ()<UITableViewDataSource, UITableViewDelegate>
 
 @property (strong, nonatomic) UIView *bgView;
@@ -31,6 +32,7 @@
         self.tableView.dataSource = self;
         self.tableView.delegate = self;
         self.tableView.scrollEnabled = YES;
+        self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         [self addSubview:self.bgView];
         [self.bgView addSubview:self.tableView];
     }
@@ -44,12 +46,16 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSString *identfier = @"industryChoiceViewCell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identfier];
+    NSString *identfier = @"SHGUnderlineTableViewCell";
+    SHGUnderlineTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identfier];
+
     if (!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identfier];
-    }
-    cell.textLabel.text = [self.dataArray objectAtIndex:indexPath.row];
+        cell = [[[NSBundle mainBundle] loadNibNamed:@"SHGUnderlineTableViewCell" owner:self options:nil]lastObject];
+        }
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    cell.titleLabel.text = [self.dataArray objectAtIndex:indexPath.row];
+    cell.underLine.frame = CGRectMake(kCellLabelLeftMargin, cell.height - 1.0f, cell.width - kCellLabelLeftMargin, 0.5f);
+    cell.underLine.backgroundColor = [UIColor colorWithHexString:@"E6E7E8"];
     return cell;
 }
 
