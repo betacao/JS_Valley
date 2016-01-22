@@ -203,15 +203,18 @@
 
         //更改合适的位置
         CGSize size = [weakSelf.txtNickName sizeThatFits:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX)];
+        [self.txtNickName sizeToFit];
         CGRect frame = weakSelf.txtNickName.frame;
         frame.size.width = size.width;
         frame.origin.y = (kMessageViewHeight - self.btnUserPic.size.height) /2.0f;
         weakSelf.txtNickName.frame = frame;
 
         size = [weakSelf.moneyLabel sizeThatFits:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX)];
+        [self.moneyLabel sizeToFit];
         frame = weakSelf.moneyLabel.frame;
         frame.origin.x = CGRectGetMaxX(weakSelf.txtNickName.frame) + kObjectMargin/2.0f;
-        frame.origin.y = (kMessageViewHeight - self.btnUserPic.size.height) /2.0f;
+//        frame.origin.y = (kMessageViewHeight - self.btnUserPic.size.height) /2.0f;
+        frame.origin.y = CGRectGetMaxY(self.txtNickName.frame) - frame.size.height;
         frame.size.width = size.width;
         weakSelf.moneyLabel.frame = frame;
         
