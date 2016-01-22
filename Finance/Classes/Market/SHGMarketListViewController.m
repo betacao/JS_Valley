@@ -223,11 +223,16 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-
     if ([[self.scrollView marketFirstId] isEqualToString:kUserDefineCategoryID] && self.userSelectedArray.count == 0) {
         return CGRectGetHeight(self.view.frame);
+    } else{
+        SHGMarketObject *object = [self.currentArray objectAtIndex:indexPath.row];
+        if (object.tipUrl.length > 0) {
+            return kMarketNoticeCellHeight;
+        } else{
+            return kMarketCellHeight;
+        }
     }
-    return kMarketCellHeight;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
