@@ -455,6 +455,16 @@
             //重新请求
             UIViewController *secondController = [self.viewControllers lastObject];
             [secondController performSelector:@selector(refreshData) withObject:object];
+
+            //我的业务被移动到个人中心后 要刷新
+            NSInteger count = self.navigationController.viewControllers.count;
+            if (count >= 2) {
+                UIViewController *controller = [self.navigationController.viewControllers objectAtIndex:count - 2];
+
+                if ([NSStringFromClass([controller class]) isEqualToString:@"SHGMarketMineViewController"]) {
+                    [controller performSelector:@selector(refreshData) withObject:object];
+                }
+            }
         }];
     };
     [alertView show];

@@ -238,6 +238,13 @@
     }
 }
 
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.searchBar resignFirstResponder];
+    });
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
