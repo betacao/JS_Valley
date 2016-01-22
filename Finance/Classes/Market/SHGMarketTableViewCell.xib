@@ -11,7 +11,7 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="166"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="165"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="165.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="一起聊一聊互联网招聘第二期" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="InF-Ut-R2E">
@@ -72,7 +72,7 @@
                         <color key="textColor" red="0.53725490196078429" green="0.53725490196078429" blue="0.53725490196078429" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="我的好友，南京" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Gwc-wc-Y6n">
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="我的好友，南京" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Gwc-wc-Y6n">
                         <rect key="frame" x="20" y="125" width="146" height="20"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
@@ -124,10 +124,6 @@
                         <color key="textColor" red="0.53725490196078429" green="0.53725490196078429" blue="0.53725490196078429" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" id="De7-KJ-8HR">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="166"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                    </button>
                 </subviews>
                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             </tableViewCellContentView>
@@ -137,7 +133,6 @@
                 <outlet property="contactLabel" destination="No8-Zf-DKw" id="XL2-K5-Ohc"/>
                 <outlet property="deleteButton" destination="idh-fp-Kn0" id="DSA-EW-on9"/>
                 <outlet property="editButton" destination="G5b-RH-j0T" id="a7T-dd-4MD"/>
-                <outlet property="imageButton" destination="De7-KJ-8HR" id="PSS-TY-p0x"/>
                 <outlet property="leftView" destination="0Uq-tF-LGz" id="d4L-Jy-I5W"/>
                 <outlet property="praiseButton" destination="UUY-jo-Dej" id="wxm-Xl-ttD"/>
                 <outlet property="relationLabel" destination="Gwc-wc-Y6n" id="3L2-An-my2"/>

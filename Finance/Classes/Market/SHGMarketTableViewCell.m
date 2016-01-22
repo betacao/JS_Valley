@@ -7,7 +7,6 @@
 //
 
 #import "SHGMarketTableViewCell.h"
-#import "UIButton+WebCache.h"
 
 @interface SHGMarketTableViewCell ()
 @property (weak, nonatomic) IBOutlet UILabel *titleView;
@@ -22,7 +21,6 @@
 @property (weak, nonatomic) IBOutlet UIButton *editButton;
 @property (weak, nonatomic) IBOutlet UIButton *deleteButton;
 @property (weak, nonatomic) IBOutlet UIImageView *xuXian;
-@property (weak, nonatomic) IBOutlet UIButton *imageButton;//展示图片当数据中含有tipUrl的时候显示 然后隐藏其他全部控件
 @property (strong ,nonatomic) SHGMarketObject *object;
 @property (strong ,nonatomic) SHGMarketFirstCategoryObject *obj;
 @end
@@ -40,11 +38,6 @@
 {
     [self clearCell];
     self.object = object;
-    if (object.tipUrl.length > 0) {
-        self.imageButton.hidden = NO;
-        [self.imageButton sd_setBackgroundImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage, object.tipUrl]] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@""]];
-        return;
-    }
     self.titleView.text = object.marketName;
 
     if ([UID isEqualToString:object.createBy] && type == SHGMarketTableViewCellTypeMine) {
@@ -103,7 +96,6 @@
 
 - (void)clearCell
 {
-    self.imageButton.hidden = YES;
     self.titleView.text = @"";
     self.leftView.hidden = YES;
     self.rightView.hidden = YES;

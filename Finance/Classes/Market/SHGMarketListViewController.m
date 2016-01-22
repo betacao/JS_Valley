@@ -18,7 +18,7 @@
 #import "SHGMarketSendViewController.h"
 #import "VerifyIdentityViewController.h"
 #import "SHGMomentCityViewController.h"
-
+#import "SHGMarketNoticeTableViewCell.h"
 #define kUserDefineCategoryID @"-2"
 
 @interface SHGMarketListViewController ()<UITabBarDelegate, UITableViewDataSource, SHGCategoryScrollViewDelegate,SHGMarketSecondCategoryViewControllerDelegate, SHGMarketTableViewDelegate>
@@ -237,22 +237,40 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSString *identifier = @"SHGMarketTableViewCell";
     if ([[self.scrollView marketFirstId] isEqualToString:kUserDefineCategoryID] && self.userSelectedArray.count == 0) {
         return self.emptyCell;
     }
-    SHGMarketTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
-    if (!cell) {
-        cell = [[[NSBundle mainBundle] loadNibNamed:@"SHGMarketTableViewCell" owner:self options:nil] lastObject];
+    UITableViewCell *cell = nil;
+    SHGMarketObject *object = [self.currentArray objectAtIndex:indexPath.row];
+    if (object.tipUrl.length > 0) {
+        NSString *identifier = @"SHGMarketNoticeTableViewCell";
+        cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+        if (!cell) {
+            cell = [[[NSBundle mainBundle] loadNibNamed:@"SHGMarketNoticeTableViewCell" owner:self options:nil] lastObject];
+        }
+
+        [(SHGMarketNoticeTableViewCell *)cell loadDataWithObject:[self.currentArray objectAtIndex:indexPath.row] block:^(CGFloat height) {
+//            [weakSelf.heightDictionary setObject:@(height) forKey:indexPath];
+//            [weakSelf.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+        }];
+    } else{
+        NSString *identifier = @"SHGMarketTableViewCell";
+         cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+        if (!cell) {
+            cell = [[[NSBundle mainBundle] loadNibNamed:@"SHGMarketTableViewCell" owner:self options:nil] lastObject];
+            ((SHGMarketTableViewCell *)cell).delegate = self;
+        }
+
+        [(SHGMarketTableViewCell *)cell loadDataWithObject:[self.currentArray objectAtIndex:indexPath.row] type:SHGMarketTableViewCellTypeAll];
+        SHGMarketFirstCategoryObject *obj = [self.scrollView.categoryArray objectAtIndex:[self.scrollView currentIndex]];
+        if (obj.secondCataLogs.count == 0 && [self.scrollView currentIndex] != 0 && ![[self.scrollView marketFirstId] isEqualToString:kUserDefineCategoryID]) {
+            [(SHGMarketTableViewCell *)cell loadNewUi];
+        }
     }
-    cell.delegate = self;
-    SHGMarketFirstCategoryObject  *obj  = [self.scrollView.categoryArray objectAtIndex:[self.scrollView currentIndex]];
-    [cell loadDataWithObject:[self.currentArray objectAtIndex:indexPath.row] type:SHGMarketTableViewCellTypeAll];
-    if (obj.secondCataLogs.count == 0 && [self.scrollView currentIndex] != 0 && ![[self.scrollView marketFirstId] isEqualToString:kUserDefineCategoryID]) {
-        [cell loadNewUi];
-    }
+
     return cell;
 }
+
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {

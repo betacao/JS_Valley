@@ -76,7 +76,19 @@
     [self.dataArr enumerateObjectsUsingBlock:^(NSArray *object, NSUInteger idx, BOOL * _Nonnull stop) {
         [self.listArray appendUniqueObjectsFromArray:object];
     }];
-    self.resultArray = [NSMutableArray arrayWithArray:self.listArray];
+    [self.listArray enumerateObjectsUsingBlock:^(SHGMarketObject *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if (obj.tipUrl.length == 0) {
+            [self.resultArray addObject:obj];
+        }
+    }];
+}
+
+- (NSMutableArray *)resultArray
+{
+    if (!_resultArray) {
+        _resultArray = [NSMutableArray array];
+    }
+    return _resultArray;
 }
 
 
