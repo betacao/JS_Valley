@@ -27,7 +27,7 @@ typedef void(^loadViewFinishBlock)(UIView *view);
 - (void)changeTitleCityName:(NSString *)name;
 - (void)setSelectedIndex:(NSUInteger)index animated:(BOOL)animated;
 - (void)setSelectedViewController:(UIViewController *)viewController animated:(BOOL)animated;
-- (void)refreshMineViewController;
+- (void)refreshListViewController;
 - (void)addOrDeletePraise:(SHGMarketObject *)object block:(void(^)(BOOL success))block;
 - (void)deleteMarket:(SHGMarketObject *)object;
 @end

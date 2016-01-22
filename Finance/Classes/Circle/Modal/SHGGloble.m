@@ -195,7 +195,7 @@
         [self requestHomePageData];
         SHGMarketSegmentViewController *controller = [SHGMarketSegmentViewController sharedSegmentController];
         if ([controller isViewLoaded]) {
-            [controller refreshMineViewController];
+            [controller refreshListViewController];
         }
     }
 }

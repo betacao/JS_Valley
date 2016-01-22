@@ -41,13 +41,18 @@
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     [self addHeaderRefresh:self.tableView headerRefesh:YES andFooter:YES];
+    [self loadData];
+}
+
+- (void)loadData
+{
     __weak typeof(self) weakSelf = self;
     [[SHGMarketManager shareManager] userTotalArray:^(NSArray *array) {
 
         [[SHGMarketManager shareManager] userSelectedArray:^(NSArray *array) {
             weakSelf.userSelectedArray = array;
         }];
-        
+
         weakSelf.scrollView.categoryArray = array;
         for (NSInteger i = 0; i < array.count; i++) {
             NSMutableArray *subArray = [NSMutableArray array];
@@ -76,7 +81,7 @@
 
 - (void)refreshData
 {
-    [self loadMarketList:@"first" firstId:[self.scrollView marketFirstId] second:[self.scrollView marketSecondId] marketId:@"-1" modifyTime:@""];
+    [self loadData];
 }
 
 - (void)scrollToCategory:(SHGMarketFirstCategoryObject *)object

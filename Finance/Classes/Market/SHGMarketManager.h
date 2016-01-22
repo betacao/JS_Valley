@@ -15,6 +15,8 @@
 
 + (instancetype)shareManager;
 
+- (void)clearAllData;
+
 - (void)userSelectedArray:(void (^)(NSArray *array))block;
 
 - (void)modifyUserSelectedArray:(NSArray *)array;

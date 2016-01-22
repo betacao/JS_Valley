@@ -44,10 +44,19 @@
 {
     [[SHGMarketSegmentViewController sharedSegmentController] changeTitleCityName:self.cityName];
 }
+
+- (void)clearAllData
+{
+    self.cityName = @"";
+    self.selecetedArray = @[];
+    self.listArray = @[];
+    self.totalArray = @[];
+    self.citysArray = @[];
+}
 //大分类
 - (void)loadMarketCategoryBlock:(void (^)(void))block
 {
-    if (!self.totalArray) {
+    if (!self.totalArray || self.totalArray.count == 0) {
         __weak typeof(self) weakSelf = self;
         NSDictionary *param = @{@"uid":UID};
         NSString *request = [rBaseAddressForHttp stringByAppendingString:@"/market/getMarketCatalogByUid"];
@@ -106,7 +115,7 @@
 
 - (void)loadHotCitys:(void (^)(NSArray *))block
 {
-    if (!self.citysArray) {
+    if (!self.citysArray || self.citysArray.count == 0) {
         __weak typeof(self) weakSelf = self;
         NSString *request = [rBaseAddressForHttp stringByAppendingString:@"/market/getMarketHotCity"];
         [MOCHTTPRequestOperationManager postWithURL:request class:nil parameters:nil success:^(MOCHTTPResponse *response) {

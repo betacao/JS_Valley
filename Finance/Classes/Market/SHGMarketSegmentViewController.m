@@ -115,7 +115,7 @@
     if ([city isEqualToString:@"其他城市"]) {
         city = @"其他";
     }
-    if (![city isEqualToString:self.titleLabel.text]) {
+    if (![city isEqualToString:self.titleLabel.text] && city.length > 0) {
         self.titleLabel.text = city;
         [self.titleLabel sizeToFit];
         self.titleImageView.origin = CGPointMake(CGRectGetMaxX(self.titleLabel.frame) + 2.0f, (CGRectGetHeight(self.titleLabel.frame) - CGRectGetHeight(self.titleImageView.frame)) / 2.0f);
@@ -431,11 +431,13 @@
 }
 
 //用户切换用户的时候重新去请求用户数据（仅限我的界面）
-- (void)refreshMineViewController
+- (void)refreshListViewController
 {
     //重新请求
-    UIViewController *secondController = [self.viewControllers lastObject];
-    [secondController performSelector:@selector(refreshData) withObject:nil];
+    [[SHGMarketManager shareManager] clearAllData];
+    UIViewController *controller = [self.viewControllers firstObject];
+    [controller performSelector:@selector(refreshData) withObject:nil];
+
 }
 
 - (void)deleteMarket:(SHGMarketObject *)object
