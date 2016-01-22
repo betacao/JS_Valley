@@ -12,7 +12,7 @@
 
 
 #import "ChatListCell.h"
-
+#define k_rowHeight 45.0f * YFACTOR
 @interface ChatListCell ()
 @property (strong, nonatomic) UILabel *timeLabel;
 @property (strong, nonatomic) UILabel *unreadLabel;
@@ -27,8 +27,8 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         CGFloat spaceToRight = 15.0f;
-        self.timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(SCREENWIDTH - 95.0f, 7.0f, 80.0f, 16.0f)];
-        self.timeLabel.font = [UIFont systemFontOfSize:10.0f];
+        self.timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(SCREENWIDTH - 95.0f, (k_rowHeight - 20.0f) / 2.0f, 80.0f, 16.0f)];
+        self.timeLabel.font = [UIFont systemFontOfSize:10.0f * FontFactor];
         self.timeLabel.textColor = [UIColor colorWithHexString:@"919291"];
         self.timeLabel.backgroundColor = [UIColor clearColor];
         self.timeLabel.textAlignment = NSTextAlignmentRight;
@@ -44,24 +44,23 @@
         self.unreadLabel.layer.masksToBounds = YES;
         [self.contentView addSubview:self.unreadLabel];
         
-        self.detailLabel = [[UILabel alloc] initWithFrame:CGRectMake(58, 20, SCREENWIDTH-80, 20)];
+        self.detailLabel = [[UILabel alloc] initWithFrame:CGRectMake(58, k_rowHeight/2.0f - 2.0f * YFACTOR, SCREENWIDTH-80, 20)];
         self.detailLabel.backgroundColor = [UIColor clearColor];
         self.detailLabel.font = [UIFont systemFontOfSize:12.0f];
-        self.detailLabel.textColor = [UIColor colorWithHexString:@"565656"];
         [self.contentView addSubview:self.detailLabel];
 
         self.textLabel.backgroundColor = [UIColor clearColor];
         self.textLabel.textColor = [UIColor colorWithHexString:@"161616"];
-        self.textLabel.font = [UIFont systemFontOfSize:13.0f * FontFactor];
+        self.textLabel.font = [UIFont systemFontOfSize:13.0f];
         
-        self.lineView = [[UIView alloc]initWithFrame:CGRectMake(spaceToRight, CGRectGetHeight(self.frame) - 1.0f, SCREENWIDTH - spaceToRight, 0.5f)];
+        self.lineView = [[UIView alloc]initWithFrame:CGRectMake(spaceToRight, k_rowHeight - 1.0f, SCREENWIDTH - spaceToRight, 0.5f)];
         self.lineView.backgroundColor = [UIColor colorWithHexString:@"E6E7E8"];
         [self.contentView addSubview:self.lineView];
 
         UIImage *image = [UIImage imageNamed:@"accessoryView"];
         self.rightImage = [[UIImageView  alloc] initWithImage:image];
         CGSize size = image.size;
-        self.rightImage.frame = CGRectMake(SCREENWIDTH - spaceToRight - size.width, (CGRectGetHeight(self.frame) - size.height) / 2.0f, size.width, size.height);
+        self.rightImage.frame = CGRectMake(SCREENWIDTH - spaceToRight - size.width, (k_rowHeight - size.height) / 2.0f, size.width, size.height);
         self.rightImage.image = image;
         [self.contentView addSubview:self.rightImage];
 
@@ -93,14 +92,14 @@
 {
     [super layoutSubviews];
 
-    self.imageView.frame = CGRectMake(15, 8, 28, 28);
+    self.imageView.frame = CGRectMake(15, (k_rowHeight - 28.0f)/2.0f, 28, 28);
     [self.imageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,self.imageURL]] placeholderImage:self.placeholderImage];
     self.unreadLabel.center = CGPointMake(CGRectGetMaxX(self.imageView.frame), CGRectGetMinY(self.imageView.frame));
     self.textLabel.text = self.name;
     if([self.name isEqualToString:@"群申请与通知"] || [self.name isEqualToString:@"通知"]){
-        self.textLabel.frame = CGRectMake(58, 12, 175, 20);
+        self.textLabel.frame = CGRectMake(58, (k_rowHeight - 20.f)/2.0f, 175, 20);
     } else{
-        self.textLabel.frame = CGRectMake(58, 5, 175, 20);
+        self.textLabel.frame = CGRectMake(58, 7 * YFACTOR, 175, 20);
     }
 
     self.detailLabel.text = self.detailMsg;
@@ -130,6 +129,6 @@
 
 + (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 45.0f;
+    return k_rowHeight;
 }
 @end

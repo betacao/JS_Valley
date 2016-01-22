@@ -18,7 +18,7 @@
 
 - (void)awakeFromNib
 {
-    self.lineView.size = CGSizeMake(self.lineView.width, 0.5f);
+    self.lineView.height = 0.5f;
     self.lblTitle.font = [UIFont systemFontOfSize:13.0f * FontFactor];
     self.lblTitle.textColor = [UIColor colorWithHexString:@"161616"];
 }

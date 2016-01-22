@@ -19,20 +19,21 @@
 #import "SHGPersonalViewController.h"
 #import "SHGSelectTagsViewController.h"
 #import "SHGMarketMineViewController.h"
-//为标签弹出框定义的值
-#define kItemTopMargin  18.0f * XFACTOR
-#define kItemMargin 14.0f * XFACTOR
-#define kItemHeight 25.0f * XFACTOR
-
+#define kRowHeight 50.0f * YFACTOR
+#define kMessageViewHeight 72.0f * YFACTOR
+#define klabelViewHeight 41.0f * YFACTOR
+#define kSpaceMargin 10.0f * YFACTOR
 @interface MeViewController ()<UITextFieldDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UIActionSheetDelegate,UITableViewDataSource,UITableViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView	*tableView;
 @property (weak, nonatomic) IBOutlet UIView		*headerView;
+@property (weak, nonatomic) IBOutlet UIView     *messageView;
 @property (weak, nonatomic) IBOutlet UIView     *labelView;
 @property (weak, nonatomic) IBOutlet UILabel    *moneyLabel;  //职位
 @property (weak, nonatomic) IBOutlet UILabel    *txtNickName;
 @property (weak, nonatomic) IBOutlet UILabel    *companyName; //公司名称
 @property (weak, nonatomic) IBOutlet UIImageView *btnUserPic;
+@property (weak, nonatomic) IBOutlet UIView *defaultView;
 
 @property (strong, nonatomic) SettingsViewController *settingController;
 @property (strong, nonatomic) UILabel	*circleHeaderLabel;  //动态lable
@@ -70,6 +71,20 @@
     [self initUI];
 
     [self addHeaderRefresh:self.tableView headerRefesh:YES andFooter:NO];
+    CGRect frame = self.messageView.frame;
+    frame.size.height = kMessageViewHeight;
+    self.messageView.frame = frame;
+    
+    frame = self.labelView.frame;
+    frame.size.height = klabelViewHeight ;
+    frame.origin.y = kMessageViewHeight;
+    self.labelView.frame = frame;
+    self.headerView.height = kMessageViewHeight + klabelViewHeight + kSpaceMargin;
+    
+    frame = self.btnUserPic.frame;
+    frame.origin.y = (kMessageViewHeight - frame.size.height) /2.0f;
+    self.btnUserPic.frame = frame;
+    self.defaultView.frame = frame;
     self.tableView.tableHeaderView = self.headerView;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshData) name:NOTIFI_CHANGE_UPDATE_AUTO_STATUE object:nil];
 }
@@ -190,14 +205,20 @@
         CGSize size = [weakSelf.txtNickName sizeThatFits:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX)];
         CGRect frame = weakSelf.txtNickName.frame;
         frame.size.width = size.width;
+        frame.origin.y = (kMessageViewHeight - self.btnUserPic.size.height) /2.0f;
         weakSelf.txtNickName.frame = frame;
 
         size = [weakSelf.moneyLabel sizeThatFits:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX)];
         frame = weakSelf.moneyLabel.frame;
         frame.origin.x = CGRectGetMaxX(weakSelf.txtNickName.frame) + kObjectMargin/2.0f;
+        frame.origin.y = (kMessageViewHeight - self.btnUserPic.size.height) /2.0f;
         frame.size.width = size.width;
         weakSelf.moneyLabel.frame = frame;
-
+        
+        [self.companyName sizeToFit];
+        frame = self.companyName.frame;
+        frame.origin.y  = kMessageViewHeight - self.btnUserPic.origin.y - frame.size.height;
+        self.companyName.frame = frame;
         NSString *headImageUrl = [response.dataDictionary valueForKey:@"head_img"];
         if (!IsStrEmpty(headImageUrl)) {
             UIImage *placeImage = weakSelf.btnUserPic.image;
@@ -263,9 +284,9 @@
     self.followHeaderLabel.text = @"关注 \n0";
     self.fansHeaderLabel.text	= @"粉丝 \n0";
 
-    UIView *spaceView1 = [[UIView alloc] initWithFrame:CGRectMake(SCREENWIDTH / 4.0f, 10.0f, 0.5f, 22.0f)];
-    UIView *spaceView2 = [[UIView alloc] initWithFrame:CGRectMake(SCREENWIDTH / 4.0f * 2.0f,10.0f, 0.5f, 22.0f)];
-    UIView *spaceView3 = [[UIView alloc] initWithFrame:CGRectMake(SCREENWIDTH / 4.0f * 3.0f,10.0f, 0.5f, 22.0f)];
+    UIView *spaceView1 = [[UIView alloc] initWithFrame:CGRectMake(SCREENWIDTH / 4.0f, (klabelViewHeight - 22.0f)/2.0f, 0.5f, 22.0f)];
+    UIView *spaceView2 = [[UIView alloc] initWithFrame:CGRectMake(SCREENWIDTH / 4.0f * 2.0f,(klabelViewHeight - 22.0f)/2.0f, 0.5f, 22.0f)];
+    UIView *spaceView3 = [[UIView alloc] initWithFrame:CGRectMake(SCREENWIDTH / 4.0f * 3.0f,(klabelViewHeight - 22.0f)/2.0f, 0.5f, 22.0f)];
     spaceView1.backgroundColor = [UIColor colorWithHexString:@"e6e7e8"];
     spaceView2.backgroundColor = [UIColor colorWithHexString:@"e6e7e8"];
     spaceView3.backgroundColor = [UIColor colorWithHexString:@"e6e7e8"];
@@ -489,7 +510,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 50;
+    return kRowHeight;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -567,7 +588,7 @@
 - (UILabel *)circleHeaderLabel
 {
     if (!_circleHeaderLabel) {
-        _circleHeaderLabel = [[UILabel alloc] initWithFrame:CGRectMake(spaceWidth, 0, labelWidth, self.labelView.height)];
+        _circleHeaderLabel = [[UILabel alloc] initWithFrame:CGRectMake(spaceWidth, 0, labelWidth, klabelViewHeight)];
         _circleHeaderLabel.textAlignment = NSTextAlignmentCenter;
         _circleHeaderLabel.numberOfLines = 0;
         _circleHeaderLabel.font = [UIFont systemFontOfSize:11.0f * FontFactor] ;
@@ -583,7 +604,7 @@
 - (UILabel *)followHeaderLabel
 {
     if (!_followHeaderLabel) {
-        _followHeaderLabel = [[UILabel alloc] initWithFrame:CGRectMake(spaceWidth + labelWidth, 0, labelWidth, self.labelView.height)];
+        _followHeaderLabel = [[UILabel alloc] initWithFrame:CGRectMake(spaceWidth + labelWidth, 0, labelWidth, klabelViewHeight)];
         _followHeaderLabel.textAlignment = NSTextAlignmentCenter;
         _followHeaderLabel.numberOfLines = 0;
         _followHeaderLabel.font = [UIFont systemFontOfSize:11.0f * FontFactor];
@@ -603,7 +624,7 @@
 - (UILabel *)fansHeaderLabel
 {
     if (!_fansHeaderLabel) {
-        _fansHeaderLabel = [[UILabel alloc] initWithFrame:CGRectMake(spaceWidth + labelWidth*2, 0, labelWidth, self.labelView.height)];
+        _fansHeaderLabel = [[UILabel alloc] initWithFrame:CGRectMake(spaceWidth + labelWidth*2, 0, labelWidth, klabelViewHeight)];
         _fansHeaderLabel.textAlignment = NSTextAlignmentCenter;
         _fansHeaderLabel.textColor = [UIColor colorWithHexString:@"989898"];
         _fansHeaderLabel.numberOfLines = 0;

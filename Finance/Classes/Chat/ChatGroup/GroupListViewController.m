@@ -25,6 +25,7 @@
 #import "ChatListViewController.h"
 #import "PublicGroupDetailViewController.h"
 #define kImageViewLeftMargin 15.0f
+#define krowHeight 45.0f * YFACTOR
 
 @interface GroupListViewController ()<UISearchBarDelegate, UISearchDisplayDelegate, IChatManagerDelegate, SRRefreshDelegate>
 {
@@ -205,7 +206,7 @@
         cell.imageView.contentMode = UIViewContentModeScaleAspectFit;
         cell.textLabel.textColor = [UIColor colorWithHexString:@"161616"];
         cell.textLabel.font = [UIFont systemFontOfSize:13.0f * FontFactor];
-        UIView *lineView = [[UIView alloc]initWithFrame:CGRectMake(kImageViewLeftMargin, cell.height - 1.0f, SCREENWIDTH - kImageViewLeftMargin, 0.5f)];
+        UIView *lineView = [[UIView alloc]initWithFrame:CGRectMake(kImageViewLeftMargin, krowHeight - 0.5f, SCREENWIDTH - kImageViewLeftMargin, 0.5f)];
         lineView.tag = 1000;
         lineView.backgroundColor = [UIColor colorWithHexString:@"E6E7E8"];
         lineView.hidden = NO;
@@ -213,7 +214,7 @@
         
         UIImage *image = [UIImage imageNamed:@"群头像图标"];
         CGSize size = image.size;
-        UIImageView *imageView = [[UIImageView alloc]initWithFrame: CGRectMake(kImageViewLeftMargin, (cell.height - size.height) / 2.0f, size.width, size.height)];
+        UIImageView *imageView = [[UIImageView alloc]initWithFrame: CGRectMake(kImageViewLeftMargin, (krowHeight - size.height) / 2.0f, size.width, size.height)];
         imageView.tag = 1001;
         imageView.image = image;
         [cell.contentView addSubview:imageView];
@@ -221,7 +222,7 @@
         UIImage *imageR = [UIImage imageNamed:@"accessoryView"];
         UIImageView *rightImage = [[UIImageView  alloc]initWithImage:imageR];
         CGSize sizeR = imageR.size;
-        rightImage.frame = CGRectMake(SCREENWIDTH - kImageViewLeftMargin - sizeR.width, (cell.height - sizeR.height) / 2.0f, sizeR.width, sizeR.height);
+        rightImage.frame = CGRectMake(SCREENWIDTH - kImageViewLeftMargin - sizeR.width, (krowHeight - sizeR.height) / 2.0f, sizeR.width, sizeR.height);
         rightImage.image = imageR;
         rightImage.hidden = YES;
         rightImage.tag = 1002;
@@ -273,11 +274,11 @@
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
 
-    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 45)];
+    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, krowHeight)];
     headerView.backgroundColor = [[UIColor alloc]initWithRed:1 green:1 blue:1 alpha:1];
     
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-    button.frame = CGRectMake(30, 1, 320, 42);
+    button.frame = CGRectMake(30, 0, 320, krowHeight);
     button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     button.titleEdgeInsets = UIEdgeInsetsMake(0,0, 0, 0);
     button.backgroundColor = [UIColor clearColor];
@@ -288,7 +289,7 @@
     //设置每组的的标题
     
     UIButton *imageBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    imageBtn.frame = CGRectMake(15, 17, 8, 11);
+    imageBtn.frame = CGRectMake(15, (krowHeight - 11.0f) /2.0f, 8, 11);
     imageBtn.tag = section;
     [imageBtn setImage:[UIImage imageNamed:@"arrowRight"] forState:UIControlStateNormal];
     [imageBtn addTarget:self action:@selector(sectionBurronClick:) forControlEvents:UIControlEventTouchUpInside];
@@ -315,7 +316,7 @@
     
     [headerView addSubview:button];
     
-    UIView *lineVIew = [[UIView alloc]initWithFrame:CGRectMake(15, 44, self.view.bounds.size.height, 0.5)];
+    UIView *lineVIew = [[UIView alloc]initWithFrame:CGRectMake(15, krowHeight - 1.0f, self.view.bounds.size.height, 0.5)];
     lineVIew.backgroundColor = [[UIColor alloc]initWithHue:0 saturation:0 brightness:0 alpha:0.1];
     [headerView addSubview:lineVIew];
     
@@ -331,13 +332,13 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 45.0f;
+    return krowHeight;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     if (section == 0) {
         return 0;
     }else{
-        return 45.0f;
+        return krowHeight;
     }
 }
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath

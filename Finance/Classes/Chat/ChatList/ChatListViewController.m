@@ -606,7 +606,7 @@ static NSString * const kCommonFNum			= @"commonnum";
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (self.chatListType == ContactListView || self.chatListType == ContactTwainListView) {
-        return 72.0f;
+        return 72.0f ;
     }
     return [ChatListCell tableView:tableView heightForRowAtIndexPath:indexPath];
 }
