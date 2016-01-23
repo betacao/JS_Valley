@@ -460,7 +460,7 @@
 
                     [weakSelf.scrollView addSubview:contactView];
                 } else{
-                    if(showAddButton && index == self.dataSource.count){
+                    if(showAddButton && index <= self.dataSource.count){
                         weakSelf.addButton.frame = CGRectMake(j * kContactSize + 5, i * kContactSize + 10, kContactSize - 10, kContactSize - 10);
                     }
                     isEnd = YES;
