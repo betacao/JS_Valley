@@ -102,9 +102,6 @@
     for (NSString *str  in self.selectedArray) {
         string = [string stringByAppendingFormat:@"%@,",str];
     }
-    if (string.length > 0) {
-        string = [string substringToIndex:string.length - 1];
-    }
     NSDictionary *param = @{@"uid":UID ,@"catalogIds":string};
     [SHGMarketManager uploadUserMarket:param block:^{
         if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(didUploadUserCategoryTags:)]) {
