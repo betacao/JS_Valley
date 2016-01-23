@@ -58,7 +58,9 @@
         [gpsButton sizeToFit];
         gpsButton.center = _gpsCell.contentView.center;
         CGRect frame = gpsButton.frame;
+        frame.size.height = CGRectGetHeight(_gpsCell.frame);
         frame.origin.x = SCREENWIDTH - CGRectGetWidth(frame) - leftMargin;
+        frame.origin.y = 0.0f;
         gpsButton.frame = frame;
 
         self.indicator.center = _gpsCell.contentView.center;
