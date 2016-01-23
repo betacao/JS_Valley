@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="14F1509" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
@@ -70,7 +70,7 @@
                                             </connections>
                                         </textField>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="l93-5c-jjM">
-                                            <rect key="frame" x="286" y="12" width="14" height="22"/>
+                                            <rect key="frame" x="275" y="0.0" width="45" height="45"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                                             <state key="normal" image="me_deleteInput"/>
                                             <connections>
@@ -95,7 +95,7 @@
                                             </connections>
                                         </textField>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="6mO-pO-fbj">
-                                            <rect key="frame" x="286" y="12" width="14" height="22"/>
+                                            <rect key="frame" x="275" y="0.0" width="45" height="45"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                                             <state key="normal" image="me_deleteInput"/>
                                             <connections>
@@ -120,7 +120,7 @@
                                             </connections>
                                         </textField>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="UKt-RW-oRA">
-                                            <rect key="frame" x="286" y="12" width="14" height="22"/>
+                                            <rect key="frame" x="275" y="0.0" width="45" height="45"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                                             <state key="normal" image="me_deleteInput"/>
                                             <connections>
@@ -145,7 +145,7 @@
                                             </connections>
                                         </textField>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="x6G-b9-Ajw">
-                                            <rect key="frame" x="286" y="12" width="14" height="22"/>
+                                            <rect key="frame" x="275" y="0.0" width="45" height="45"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                                             <state key="normal" image="me_deleteInput"/>
                                             <connections>
@@ -170,7 +170,7 @@
                                             </connections>
                                         </textField>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="a3T-Gx-Mtp">
-                                            <rect key="frame" x="286" y="12" width="14" height="22"/>
+                                            <rect key="frame" x="275" y="0.0" width="45" height="45"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                                             <state key="normal" image="me_deleteInput"/>
                                             <connections>
