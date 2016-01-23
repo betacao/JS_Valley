@@ -135,6 +135,8 @@
         [str addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:13.0f] range:NSMakeRange(6, 4)];
         [str addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"4277B2"] range:NSMakeRange(6, 4)];
         self.phoneNumLabel.attributedText = str;
+        UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapContactLabelToIdentification:)];
+        [self.phoneNumLabel addGestureRecognizer:recognizer];
 
     } else if([self.responseObject.loginuserstate isEqualToString:@"1" ]){
         NSString * contactString = [@"联系方式：" stringByAppendingString: self.responseObject.contactInfo];
