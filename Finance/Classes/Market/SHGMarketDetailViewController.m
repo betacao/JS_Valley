@@ -18,6 +18,7 @@
 #import "VerifyIdentityViewController.h"
 #import "SHGEmptyDataView.h"
 #import "MLEmojiLabel.h"
+#import "SHGUnifiedTreatment.h"
 #define k_FirstToTop 5.0f * XFACTOR
 #define k_SecondToTop 10.0f * XFACTOR
 #define k_ThirdToTop 15.0f * XFACTOR
@@ -83,10 +84,15 @@
     self.phoneNumLabel.font = [UIFont systemFontOfSize:12.0f];
     self.phoneNumLabel.delegate = self;
     self.phoneNumLabel.backgroundColor = [UIColor clearColor];
+    
     self.firstHorizontalLine.height = 0.5f;
     self.secondHorizontalLine.height = 0.5f;
     self.thirdHorizontalLine.height = 0.5f;
     self.bottomLine.height = 0.5f;
+
+    DDTapGestureRecognizer *hdGes = [[DDTapGestureRecognizer alloc] initWithTarget:self action:@selector(didTapHeaderView:)];
+    [self.headImageView addGestureRecognizer:hdGes];
+    self.headImageView.userInteractionEnabled = YES;
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shareToFriendSuccess:) name:NOTIFI_ACTION_SHARE_TO_FRIENDSUCCESS object:nil];
 
@@ -544,6 +550,14 @@
     NSMutableString * str=[[NSMutableString alloc] initWithFormat:@"telprompt://%@",tel];
     NSLog(@"str======%@",str);
     return  [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str]];
+}
+
+- (void)didTapHeaderView:(UIGestureRecognizer *)recognizer
+{
+    SHGPersonalViewController *controller = [[SHGPersonalViewController alloc] initWithNibName:@"SHGPersonalViewController" bundle:nil];
+    controller.userId = self.responseObject.createBy;
+    controller.delegate = [SHGUnifiedTreatment sharedTreatment];
+    [self.navigationController pushViewController:controller animated:YES];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
