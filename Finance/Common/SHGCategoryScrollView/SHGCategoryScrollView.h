@@ -17,7 +17,7 @@
 
 @interface SHGCategoryScrollView : UIScrollView
 
-@property (strong, nonatomic) NSArray *categoryArray;
+@property (strong, nonatomic) NSMutableArray *categoryArray;
 @property (assign, nonatomic) id<SHGCategoryScrollViewDelegate>categoryDelegate;
 
 - (NSString *)marketFirstId;

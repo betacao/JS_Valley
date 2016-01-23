@@ -122,7 +122,7 @@
         NSString * contactString = @"联系方式： 认证可见";
         NSMutableAttributedString * str = [[NSMutableAttributedString alloc]initWithString:contactString];
         [str addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"898989"] range:NSMakeRange(0, 6)];
-        [str addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:13.0f * FontFactor] range:NSMakeRange(6, 4)];
+        [str addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:13.0f] range:NSMakeRange(6, 4)];
         [str addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"4277B2"] range:NSMakeRange(6, 4)];
         self.phoneNumLabel.attributedText = str;
 
