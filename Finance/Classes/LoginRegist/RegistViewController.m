@@ -182,18 +182,16 @@ typedef NS_ENUM(NSInteger, RegistType)
 - (void)getverifyCodeRequest
 {
 	[MOCHTTPRequestOperationManager postWithURL:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"sms"] parameters:@{@"type":@"register",@"phone":self.phoneNumber} success:^(MOCHTTPResponse *response) {
-        NSString *code = [response.dataDictionary objectForKey:@"code"];
-        if ([code isEqualToString:@"1104"]) {
-            [Hud showMessageWithText:@"验证码未失效，请使用之前验证码"];
-            return ;
-        }
         self.getVerfyCodeButton.userInteractionEnabled = NO;
         self.remainTime = 60;
         self.remainTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(refreshButtonCount) userInfo:nil repeats:YES];
 		NSLog(@"%@",response.dataDictionary);
 		NSLog(@"%@",response);
 	} failed:^(MOCHTTPResponse *response) {
-		
+        NSString *code = [response.data valueForKey:@"code"];
+        if ([code isEqualToString:@"1104"]) {
+            [Hud showMessageWithText:[response.data objectForKey:@"msg"]];
+        }
 	}];
 }
 

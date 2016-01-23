@@ -122,6 +122,9 @@
         self.titleButton.frame = CGRectMake(0.0f, 0.0f, CGRectGetMaxX(self.titleImageView.frame), CGRectGetHeight(self.titleLabel.frame));
         UIViewController *controller = [self.viewControllers firstObject];
         [controller performSelector:@selector(clearAndReloadData) withObject:nil];
+    } else if (city.length == 0){
+        self.titleLabel.text = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_USER_AREA];
+        [self.titleLabel sizeToFit];
     }
 }
 

@@ -164,10 +164,6 @@
     
     [MOCHTTPRequestOperationManager postWithURL:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"sms"] parameters:@{@"type":@"backpwd",@"phone":self.phone} success:^(MOCHTTPResponse *response) {
         NSString *code = [response.data valueForKey:@"code"];
-        if ([code isEqualToString:@"1104"]) {
-            [Hud showMessageWithText:@"验证码未失效，请使用之前验证码"];
-            return ;
-        }
         if ([code isEqualToString:@"000"]) {
             self.btnCode.userInteractionEnabled = NO;
             self.remainTime = 60;
@@ -176,7 +172,10 @@
         NSLog(@"%@",response.dataDictionary);
         NSLog(@"%@",response);
     } failed:^(MOCHTTPResponse *response) {
-        
+        NSString *code = [response.data valueForKey:@"code"];
+        if ([code isEqualToString:@"1104"]) {
+            [Hud showMessageWithText:[response.data objectForKey:@"msg"]];
+        }
     }];
     
 }

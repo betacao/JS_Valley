@@ -42,7 +42,8 @@
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context
 {
-    [[SHGMarketSegmentViewController sharedSegmentController] changeTitleCityName:self.cityName];
+    NSString *value = [change objectForKey:@"new"];
+    [[SHGMarketSegmentViewController sharedSegmentController] changeTitleCityName:value];
 }
 
 - (void)clearAllData
