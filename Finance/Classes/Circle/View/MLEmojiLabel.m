@@ -212,10 +212,10 @@ static CGFloat widthCallback(void *refCon) {
 
     NSMutableDictionary *mutableActiveLinkAttributes = [@{(NSString *)kCTUnderlineStyleAttributeName:@(NO)}mutableCopy];
 
-    UIColor *commonLinkColor = [UIColor colorWithHexString:@"4B88B7"];
+    UIColor *commonLinkColor = [UIColor colorWithHexString:@"4277B2"];
 
     //点击时候的背景色
-    [mutableActiveLinkAttributes setValue:(__bridge id)[[UIColor colorWithWhite:0.631 alpha:1.000] CGColor] forKey:(NSString *)kTTTBackgroundFillColorAttributeName];
+    [mutableActiveLinkAttributes setValue:(__bridge id)[[UIColor clearColor] CGColor] forKey:(NSString *)kTTTBackgroundFillColorAttributeName];
 
     if ([NSMutableParagraphStyle class]) {
         [mutableLinkAttributes setObject:commonLinkColor forKey:(NSString *)kCTForegroundColorAttributeName];
@@ -225,7 +225,7 @@ static CGFloat widthCallback(void *refCon) {
         [mutableActiveLinkAttributes setObject:(__bridge id)[commonLinkColor CGColor] forKey:(NSString *)kCTForegroundColorAttributeName];
     }
 
-    [mutableLinkAttributes setObject:[UIFont systemFontOfSize:14.0f] forKey:(NSString *)kCTFontAttributeName];
+    [mutableLinkAttributes setObject:self.font forKey:(NSString *)kCTFontAttributeName];
 
     self.linkAttributes = [NSDictionary dictionaryWithDictionary:mutableLinkAttributes];
     self.activeLinkAttributes = [NSDictionary dictionaryWithDictionary:mutableActiveLinkAttributes];
@@ -636,6 +636,7 @@ static inline CGFloat TTTFlushFactorForTextAlignment(NSTextAlignment textAlignme
 {
     [super setFont:font];
     self.text = self.emojiText; //简单重新绘制处理下
+    
 }
 
 #pragma mark - select link override

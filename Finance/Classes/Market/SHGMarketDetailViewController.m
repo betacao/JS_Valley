@@ -17,6 +17,7 @@
 #import "SHGMarketCommentTableViewCell.h"
 #import "VerifyIdentityViewController.h"
 #import "SHGEmptyDataView.h"
+#import "MLEmojiLabel.h"
 #define k_FirstToTop 5.0f * XFACTOR
 #define k_SecondToTop 10.0f * XFACTOR
 #define k_ThirdToTop 15.0f * XFACTOR
@@ -24,7 +25,7 @@
 #define PRAISE_SEPWIDTH     10.0f
 #define PRAISE_RIGHTWIDTH     40.0f
 
-@interface SHGMarketDetailViewController ()<BRCommentViewDelegate, CircleActionDelegate, SHGMarketCommentDelegate>
+@interface SHGMarketDetailViewController ()<BRCommentViewDelegate, CircleActionDelegate, SHGMarketCommentDelegate, MLEmojiLabelDelegate>
 //界面
 @property (weak, nonatomic) IBOutlet UITableView *detailTable;
 @property (strong, nonatomic) IBOutlet UIView *viewHeader;
@@ -41,7 +42,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *typeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *capitalLabel;
 @property (weak, nonatomic) IBOutlet UILabel *addressLabel;
-@property (weak, nonatomic) IBOutlet UIWebView *phoneNumLabel;
+@property (weak, nonatomic) IBOutlet MLEmojiLabel *phoneNumLabel;
 @property (weak, nonatomic) IBOutlet UILabel *marketDetialLabel;
 @property (weak, nonatomic) IBOutlet UILabel *detailContentLabel;
 @property (weak, nonatomic) IBOutlet UIView *actionView;
@@ -75,7 +76,14 @@
     self.detailTable.dataSource = self;
     [self.detailTable setTableFooterView:[[UIView alloc] init]];
 
-    self.phoneNumLabel.scrollView.scrollEnabled = NO;
+    self.phoneNumLabel.numberOfLines = 0;
+    self.phoneNumLabel.lineBreakMode = NSLineBreakByWordWrapping;
+    self.phoneNumLabel.textColor = [UIColor colorWithHexString:@"898989"];
+    self.phoneNumLabel.font = [UIFont systemFontOfSize:12.0f];
+    self.phoneNumLabel.delegate = self;
+    self.phoneNumLabel.backgroundColor = [UIColor clearColor];
+
+
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shareToFriendSuccess:) name:NOTIFI_ACTION_SHARE_TO_FRIENDSUCCESS object:nil];
 
     __weak typeof(self) weakSelf = self;
@@ -111,17 +119,28 @@
     self.typeLabel.text = [NSString stringWithFormat:@"类型： %@",self.responseObject.catalog];
 
     if ([self.responseObject.loginuserstate isEqualToString:@"0" ]) {
-        NSString * contactString = @" 认证可见";
-        [self.phoneNumLabel loadHTMLString:[self authHtmlString:contactString] baseURL:nil];
+        NSString * contactString = @"联系方式： 认证可见";
+        NSMutableAttributedString * str = [[NSMutableAttributedString alloc]initWithString:contactString];
+        [str addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"898989"] range:NSMakeRange(0, 6)];
+        [str addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:13.0f * FontFactor] range:NSMakeRange(6, 4)];
+        [str addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"4277B2"] range:NSMakeRange(6, 4)];
+        self.phoneNumLabel.attributedText = str;
 
     } else if([self.responseObject.loginuserstate isEqualToString:@"1" ]){
         NSString * contactString = [@"联系方式：" stringByAppendingString: self.responseObject.contactInfo];
-        [self.phoneNumLabel loadHTMLString:[self numberHtmlString:contactString] baseURL:nil];
+
+        NSMutableAttributedString * str = [[NSMutableAttributedString alloc]initWithString:contactString];
+        [str addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"898989"] range:NSMakeRange(0, 6)];
+        [str addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:12.0f * FontFactor] range:NSMakeRange(5, str.length - 5)];
+        [str addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"4277B2"] range:NSMakeRange(5, str.length - 5)];
+        self.phoneNumLabel.text = contactString;
+        CGSize size = [self.phoneNumLabel preferredSizeWithMaxWidth:kCellContentWidth];
+        CGRect frame = self.phoneNumLabel.frame;
+        frame.size.width = kCellContentWidth;
+        frame.size.height = size.height;
+        self.phoneNumLabel.frame = frame;
 
     }
-    self.phoneNumLabel.userInteractionEnabled = YES;
-    UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapContactLabelToIdentification:)];
-    [self.phoneNumLabel addGestureRecognizer:recognizer];
     self.nameLabel.text = self.responseObject.realname;
 
     if (![self.responseObject.createBy isEqualToString:[[NSUserDefaults standardUserDefaults]objectForKey:KEY_UID]] && [self.responseObject.anonymous isEqualToString:@"1"]) {
@@ -143,34 +162,8 @@
     [self.headImageView updateStatus:[self.responseObject.status isEqualToString:@"1"] ? YES : NO];
     [self.headImageView updateHeaderView:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,self.responseObject.headimageurl] placeholderImage:[UIImage imageNamed:@"default_head"]];
     self.detailContentLabel.text = self.responseObject.detail;
-}
 
-- (NSString *)numberHtmlString:(NSString *)text
-{
-    NSString *css = [NSString stringWithFormat:@"<html> \n"
-                     "<head> \n"
-                     "<style type=\"text/css\"> \n"
-                     "a{text-decoration: none;color:#4277B2\n}"
-                     "body{font-size : %fpx;color:#898989\n;margin-left:0em;margin-top:0em}"
-                     "</style> \n"
-                     "</head> \n"
-                     "<body>%@</body> \n"
-                     "</html>",12.0f,text];
-    return css;
-}
 
-- (NSString *)authHtmlString:(NSString *)text
-{
-    NSString *css = [NSString stringWithFormat:@"<html> \n"
-                     "<head> \n"
-                     "<style type=\"text/css\"> \n"
-                     "body{margin-left:0em;margin-top:0em}"
-                     "</style> \n"
-                     "</head> \n"
-                     "<body><span style=\"color:#898989;font-size:12px;\">联系方式:</span><span style=\"color:#4277B2;font-size:13px;\">%@</span></body> \n"
-                     "</html>",text];
-
-    return css;
 }
 
 - (void)loadUI
@@ -200,7 +193,7 @@
 
     self.capitalLabel.frame =CGRectMake(self.capitalLabel.frame.origin.x,CGRectGetMaxY(self.typeLabel.frame)+k_FirstToTop, self.capitalLabel.width, CGRectGetHeight(self.capitalLabel.frame));
     self.phoneNumLabel.frame =CGRectMake(self.phoneNumLabel.origin.x, CGRectGetMaxY(self.capitalLabel.frame)+k_FirstToTop, self.phoneNumLabel.width, self.phoneNumLabel.height);
-    self.addressLabel.frame =CGRectMake(self.addressLabel.origin.x, CGRectGetMaxY(self.phoneNumLabel.frame)+k_FirstToTop, self.addressLabel.width, self.phoneNumLabel.height);
+    self.addressLabel.frame =CGRectMake(self.addressLabel.origin.x, CGRectGetMaxY(self.phoneNumLabel.frame) +k_FirstToTop, self.addressLabel.width, self.addressLabel.height);
     self.secondHorizontalLine.frame = CGRectMake(self.secondHorizontalLine.origin.x, CGRectGetMaxY(self.addressLabel.frame)+k_ThirdToTop, self.secondHorizontalLine.width, self.secondHorizontalLine.height);
     self.marketDetialLabel.frame = CGRectMake(self.detailContentLabel.origin.x, CGRectGetMaxY(self.secondHorizontalLine.frame)+k_ThirdToTop, self.marketDetialLabel.width, self.marketDetialLabel.height);
     self.thirdHorizontalLine.frame = CGRectMake(self.thirdHorizontalLine.origin.x, CGRectGetMaxY(self.marketDetialLabel.frame)+k_ThirdToTop, self.thirdHorizontalLine.width, self.thirdHorizontalLine.height);
@@ -522,6 +515,29 @@
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [Hud showMessageWithText:@"分享成功"];
     });
+}
+
+
+- (void)mlEmojiLabel:(MLEmojiLabel*)emojiLabel didSelectLink:(NSString*)link withType:(MLEmojiLabelLinkType)type
+{
+    switch(type){
+        case MLEmojiLabelLinkTypePhoneNumber:
+            [self openTel:link];
+            NSLog(@"点击了电话%@",link);
+            break;
+        default:
+            NSLog(@"点击了不知道啥%@",link);
+            break;
+    }
+
+}
+#pragma mark -- sdc
+#pragma mark -- 拨打电话
+- (BOOL)openTel:(NSString *)tel
+{
+    NSMutableString * str=[[NSMutableString alloc] initWithFormat:@"telprompt://%@",tel];
+    NSLog(@"str======%@",str);
+    return  [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str]];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
