@@ -381,24 +381,24 @@
 
 - (NSString *)codeToIndustry:(NSString *)code
 {
-    if ([code isEqualToString:@"银行机构"]) {
-        return  @"bank";
-    } else if ([code isEqualToString:@"证券公司"]) {
-        return @"bond";
-    } else if ([code isEqualToString:@"PE/VC"]) {
-        return  @"pevc";
-    } else if ([code isEqualToString:@"公募基金"]) {
-        return @"fund";
-    } else if ([code isEqualToString:@"信托公司"]) {
-        return @"entrust";
-    } else if ([code isEqualToString:@"三方理财"]) {
-        return @"manage";
-    } else if ([code isEqualToString:@"担保小贷"]) {
-        return @"bonding";
-    } else if ([code isEqualToString:@"上市公司"]) {
-        return @"public";
-    } else if ([code isEqualToString:@"其他"]) {
-        return @"other";
+    if ([code isEqualToString:@"bank"]) {
+        return  @"银行机构";
+    } else if ([code isEqualToString:@"bond"]) {
+        return @"证券公司";
+    } else if ([code isEqualToString:@"pevc"]) {
+        return  @"PE/VC";
+    } else if ([code isEqualToString:@"fund"]) {
+        return @"公募基金";
+    } else if ([code isEqualToString:@"entrust"]) {
+        return @"信托公司";
+    } else if ([code isEqualToString:@"manage"]) {
+        return @"三方理财";
+    } else if ([code isEqualToString:@"bonding"]) {
+        return @"担保小贷";
+    } else if ([code isEqualToString:@"public"]) {
+        return @"上市公司";
+    } else if ([code isEqualToString:@"other"]) {
+        return @"其他";
     }
 
     return nil;
