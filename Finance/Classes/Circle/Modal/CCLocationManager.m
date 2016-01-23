@@ -77,7 +77,10 @@
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(nonnull NSArray<CLLocation *> *)locations
 {
     [SHGGloble sharedGloble].provinceName = @"";
-    [SHGGloble sharedGloble].cityName = @"";
+    if ([SHGGloble sharedGloble].cityName && ![[SHGGloble sharedGloble].cityName isEqualToString:@""]) {
+        [SHGGloble sharedGloble].cityName = @"";
+    }
+
     NSUserDefaults *standard = [NSUserDefaults standardUserDefaults];
     CLLocation *newLocation = [locations firstObject];
     CLGeocoder *geocoder=[[CLGeocoder alloc]init];

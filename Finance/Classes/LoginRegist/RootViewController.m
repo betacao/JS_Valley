@@ -44,7 +44,6 @@
 - (void)moveToHomePage
 {
     [[SHGGloble sharedGloble] requestHomePageData];
-    [[CCLocationManager shareLocation] getCity:nil];
     NSString *flagStr = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_AUTOLOGIN];
     BOOL flag = NO;
     if (!IsStrEmpty(flagStr)){
