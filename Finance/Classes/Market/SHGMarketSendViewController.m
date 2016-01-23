@@ -109,6 +109,7 @@ typedef NS_ENUM(NSInteger, SHGMarketSendType){
     self.locationField.leftViewMode = UITextFieldViewModeAlways;
     [self.locationField setValue:[UIColor colorWithHexString:@"D3D3D3"] forKeyPath:@"_placeholderLabel.textColor"];
 
+    [self.anonymousButton sizeToFit];
     [self.anonymousButton setImage:[UIImage imageNamed:@"market_select"] forState:UIControlStateSelected];
     [self.anonymousButton setImage:[UIImage imageNamed:@"market_unselect"] forState:UIControlStateNormal];
 

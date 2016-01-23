@@ -162,7 +162,7 @@
     }
 
 
-    if (self.responseObject.company.length > 6) {
+    if (self.responseObject.title.length > 6) {
         NSString *str = [self.responseObject.title substringToIndex:6];
         self.positionLabel.text = [NSString stringWithFormat:@"%@…",str];
     } else{
