@@ -39,7 +39,7 @@
     UIButton * rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [rightButton setTitle:@"完成" forState:UIControlStateNormal];
     [rightButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [rightButton.titleLabel setFont:[UIFont systemFontOfSize:15.0f *FontFactor]];
+    [rightButton.titleLabel setFont:[UIFont systemFontOfSize:15.0f]];
     [rightButton sizeToFit];
     [rightButton addTarget:self action:@selector(finishButton:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:rightButton];
@@ -77,7 +77,7 @@
                 [button.layer setCornerRadius:2.0f];
                 [button.layer setBorderWidth:0.5f];
                 [button.layer setBorderColor:[UIColor colorWithHexString:@"E1E1E6"].CGColor ];
-                button.titleLabel.font = [UIFont systemFontOfSize:13.0f * FontFactor];
+                button.titleLabel.font = [UIFont systemFontOfSize:13.0f];
                 [button setTitle:obj.secondCatalogName forState:UIControlStateNormal];
                 [button setTitleColor:[UIColor colorWithHexString:@"8A8A8A"] forState:UIControlStateNormal];
                 [button setTitleColor:[UIColor colorWithHexString:@"FF3232"] forState:UIControlStateSelected];
@@ -214,7 +214,7 @@
      SHGMarketFirstCategoryObject * obj = [self.categoryArray objectAtIndex:section];
     title.text = obj.firstCatalogName;
     title.textAlignment = NSTextAlignmentLeft;
-    title.font = [UIFont systemFontOfSize:15.0f * FontFactor];
+    title.font = [UIFont systemFontOfSize:15.0f];
     title.textColor = [UIColor colorWithHexString:@"161616"];
     [view addSubview:title];
     return view;

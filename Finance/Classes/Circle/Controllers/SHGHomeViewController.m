@@ -27,7 +27,7 @@
 #define IS_IOS7 ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7)
 #define IS_IOS8 ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8)
 
-const CGFloat kAdTableViewCellHeight = 191.0f;
+const CGFloat kAdTableViewCellHeight = 213.0f;
 const CGFloat kAdButtomMargin = 20.0f;
 
 @interface SHGHomeViewController ()<MLEmojiLabelDelegate,SHGNoticeDelegate,CircleListDelegate>
@@ -548,7 +548,6 @@ const CGFloat kAdButtomMargin = 20.0f;
                     cell.popularizeImage.contentMode = UIViewContentModeScaleAspectFit;
 
                     cell.adLable.text = @"推广";
-                    cell.adLable.textColor = [UIColor grayColor];
                     cell.lableTime.text = obj.publishdate;
                     cell.lableTime.textAlignment = NSTextAlignmentRight;
                     

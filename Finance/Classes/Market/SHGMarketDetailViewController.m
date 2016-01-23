@@ -37,6 +37,7 @@
 @property (weak, nonatomic) IBOutlet UIView *firstHorizontalLine;
 @property (weak, nonatomic) IBOutlet UIView *secondHorizontalLine;
 @property (weak, nonatomic) IBOutlet UIView *thirdHorizontalLine;
+@property (weak, nonatomic) IBOutlet UIView *bottomLine;
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *typeLabel;
@@ -82,7 +83,10 @@
     self.phoneNumLabel.font = [UIFont systemFontOfSize:12.0f];
     self.phoneNumLabel.delegate = self;
     self.phoneNumLabel.backgroundColor = [UIColor clearColor];
-
+    self.firstHorizontalLine.height = 0.5f;
+    self.secondHorizontalLine.height = 0.5f;
+    self.thirdHorizontalLine.height = 0.5f;
+    self.bottomLine.height = 0.5f;
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shareToFriendSuccess:) name:NOTIFI_ACTION_SHARE_TO_FRIENDSUCCESS object:nil];
 
@@ -169,6 +173,8 @@
 - (void)loadUI
 {
     //1.7.2界面修改
+    self.speakButton.layer.masksToBounds = YES;
+    self.speakButton.layer.cornerRadius = 4;
     self.timeLabel.hidden = YES;
 
     CGSize nameSize = [self.nameLabel sizeThatFits:CGSizeMake(MAXFLOAT, CGRectGetHeight(self.nameLabel.frame))];
@@ -201,7 +207,7 @@
     //内容详情
     self.marketDetialLabel.text = @"业务描述：";
     self.marketDetialLabel.textColor = [UIColor colorWithHexString:@"3A3A3A"];
-    self.marketDetialLabel.font = [UIFont systemFontOfSize:14.0f * FontFactor];
+    self.marketDetialLabel.font = [UIFont systemFontOfSize:14.0f];
     self.detailContentLabel.numberOfLines = 0;
 
     CGSize detailSize = [self.detailContentLabel sizeThatFits:CGSizeMake(SCREENWIDTH - 2 * k_ThirdToTop, MAXFLOAT)];

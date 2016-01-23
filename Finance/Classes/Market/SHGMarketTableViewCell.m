@@ -21,6 +21,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *editButton;
 @property (weak, nonatomic) IBOutlet UIButton *deleteButton;
 @property (weak, nonatomic) IBOutlet UIImageView *xuXian;
+@property (weak, nonatomic) IBOutlet UIView *lineVIew;
 @property (strong ,nonatomic) SHGMarketObject *object;
 @property (strong ,nonatomic) SHGMarketFirstCategoryObject *obj;
 @end
@@ -31,6 +32,8 @@
 {
     UIImage *img = [UIImage imageNamed:@"action_xuxian"];
     self.xuXian.image = [img resizableImageWithCapInsets:UIEdgeInsetsMake(0 , 1, 0, 1) resizingMode:UIImageResizingModeTile];
+    self.lineVIew.backgroundColor = [UIColor colorWithHexString:@"F1F1F0"];
+    self.lineVIew.frame = CGRectMake(0, 0.5f, SCREENWIDTH, 0.5f);
 
 }
 

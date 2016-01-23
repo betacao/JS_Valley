@@ -213,15 +213,16 @@
         [self.moneyLabel sizeToFit];
         frame = weakSelf.moneyLabel.frame;
         frame.origin.x = CGRectGetMaxX(weakSelf.txtNickName.frame) + kObjectMargin/2.0f;
-//        frame.origin.y = (kMessageViewHeight - self.btnUserPic.size.height) /2.0f;
-        frame.origin.y = CGRectGetMaxY(self.txtNickName.frame) - frame.size.height;
+        frame.origin.y = CGRectGetMaxY(self.txtNickName.frame) - CGRectGetHeight(frame);
         frame.size.width = size.width;
         weakSelf.moneyLabel.frame = frame;
         
+        size = [weakSelf.companyName sizeThatFits:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX)];
         [self.companyName sizeToFit];
         frame = self.companyName.frame;
-        frame.origin.y  = kMessageViewHeight - self.btnUserPic.origin.y - frame.size.height;
+        frame.origin.y = CGRectGetMaxY(self.btnUserPic.frame) - CGRectGetHeight(frame);
         self.companyName.frame = frame;
+        
         NSString *headImageUrl = [response.dataDictionary valueForKey:@"head_img"];
         if (!IsStrEmpty(headImageUrl)) {
             UIImage *placeImage = weakSelf.btnUserPic.image;

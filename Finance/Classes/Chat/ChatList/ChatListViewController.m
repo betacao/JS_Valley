@@ -1107,9 +1107,9 @@ static NSString * const kCommonFNum			= @"commonnum";
         _segmentControl.enabled = YES;
         _segmentControl.layer.masksToBounds = YES;
         _segmentControl.layer.cornerRadius = 4;
-        NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor colorWithHexString:@"d53432"],NSForegroundColorAttributeName,[UIFont systemFontOfSize:kNavBarTitleFontSize],NSFontAttributeName ,nil];
+        NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor colorWithHexString:@"d53432"],NSForegroundColorAttributeName,[UIFont systemFontOfSize:15.0f],NSFontAttributeName ,nil];
 
-        NSDictionary *dic1 = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor],NSForegroundColorAttributeName,[UIFont systemFontOfSize:kNavBarTitleFontSize],NSFontAttributeName ,nil];
+        NSDictionary *dic1 = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor],NSForegroundColorAttributeName,[UIFont systemFontOfSize:15.0f],NSFontAttributeName ,nil];
         //设置标题的颜色 字体和大小 阴影和阴影颜色
         [_segmentControl setTitleTextAttributes:dic1 forState:UIControlStateNormal];
         [_segmentControl setTitleTextAttributes:dic forState:UIControlStateSelected];

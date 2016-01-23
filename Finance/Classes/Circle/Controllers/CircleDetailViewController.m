@@ -53,7 +53,8 @@
 //@property (strong, nonatomic) IBOutlet UIView *navigationView;
 @property (weak,nonatomic) IBOutlet UIView *breakLineView;
 @property (weak, nonatomic) IBOutlet UIImageView *backImageView;
-@property (weak, nonatomic) IBOutlet UILabel *lineView;
+@property (weak, nonatomic) IBOutlet UIView *lineView;
+
 
 - (IBAction)actionAttention:(id)sender;
 - (IBAction)actionComment:(id)sender;
@@ -115,7 +116,7 @@
     [self.view bringSubviewToFront:self.viewInput];
 
     self.btnSend.layer.masksToBounds = YES;
-    self.btnSend.layer.cornerRadius = 8;
+    self.btnSend.layer.cornerRadius = 4;
 
     DDTapGestureRecognizer *hdGes = [[DDTapGestureRecognizer alloc] initWithTarget:self action:@selector(didTapHeaderView:)];
     [self.imageHeader addGestureRecognizer:hdGes];
