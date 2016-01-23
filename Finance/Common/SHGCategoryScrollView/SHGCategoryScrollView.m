@@ -33,8 +33,11 @@
 
 - (NSString *)marketFirstId
 {
-    SHGMarketFirstCategoryObject *object = [self.categoryArray objectAtIndex:self.selectedIndex];
-    return object.firstCatalogId;
+    if (self.categoryArray && self.categoryArray.count > self.selectedIndex) {
+        SHGMarketFirstCategoryObject *object = [self.categoryArray objectAtIndex:self.selectedIndex];
+        return object.firstCatalogId;
+    }
+    return @"";
 }
 
 - (NSString *)marketSecondId
@@ -47,9 +50,13 @@
     return self.selectedIndex;
 }
 
-- (void)setCategoryArray:(NSArray *)categoryArray
+- (void)setCategoryArray:(NSMutableArray *)categoryArray
 {
-    _categoryArray = categoryArray;
+    if (!_categoryArray) {
+        _categoryArray = [NSMutableArray array];
+    }
+    [_categoryArray removeAllObjects];
+    [_categoryArray addObjectsFromArray:categoryArray];
     [self setNeedsLayout];
 }
 

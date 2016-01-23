@@ -53,7 +53,7 @@
             weakSelf.userSelectedArray = array;
         }];
 
-        weakSelf.scrollView.categoryArray = array;
+        weakSelf.scrollView.categoryArray = [NSMutableArray arrayWithArray:array];
         for (NSInteger i = 0; i < array.count; i++) {
             NSMutableArray *subArray = [NSMutableArray array];
             [weakSelf.dataArr addObject:subArray];

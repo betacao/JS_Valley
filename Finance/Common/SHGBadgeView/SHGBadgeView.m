@@ -78,9 +78,9 @@
     NSDictionary *fontAttr = @{ NSFontAttributeName : [self fontForBadgeWithSize:10.0f] };
 	CGSize stringSize = [badgeString sizeWithAttributes:fontAttr];
 	CGFloat flexSpace;
-	if ([badgeString length]>=2) {
+	if ([badgeString length] >= 2) {
 		flexSpace = [badgeString length];
-		rectWidth = 20 + (stringSize.width + flexSpace);
+		rectWidth = stringSize.width + stringSize.width;
         rectHeight = 20;
 		retValue = CGSizeMake(rectWidth*badgeScaleFactor, rectHeight*badgeScaleFactor);
 	} else {
@@ -249,7 +249,7 @@
         UIFont *textFont =  [self fontForBadgeWithSize:sizeOfFont];
         NSDictionary *fontAttr = @{ NSFontAttributeName : textFont, NSForegroundColorAttributeName : self.badgeStyle.badgeTextColor };
 		CGSize textSize = [self.badgeText sizeWithAttributes:fontAttr];
-        CGPoint textPoint = CGPointMake((rect.size.width/2-textSize.width/2), (rect.size.height/2-textSize.height/2) - 1 );
+        CGPoint textPoint = CGPointMake(ceilf(rect.size.width - textSize.width) / 2.0f, ceilf(rect.size.height - textSize.height) / 2.0f - 1.0f);
 		[self.badgeText drawAtPoint:textPoint withAttributes:fontAttr];
 	}
 }
