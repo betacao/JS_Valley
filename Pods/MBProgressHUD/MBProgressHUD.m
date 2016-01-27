@@ -422,6 +422,7 @@ static const CGFloat kDetailsLabelFontSize = 12.f;
     label.adjustsFontSizeToFitWidth = YES;
 }
 
+
 #endif
 
 - (void)launchExecution {

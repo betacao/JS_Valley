@@ -269,16 +269,6 @@ typedef void (^MBProgressHUDCompletionBlock)();
 - (void)showAnimated:(BOOL)animated whileExecutingBlock:(dispatch_block_t)block onQueue:(dispatch_queue_t)queue
 		  completionBlock:(MBProgressHUDCompletionBlock)completion;
 
-/**
- @brief  set font adjust to the width
- 
- @param copy copy description
- 
- @return nil
- 
- @since 1.4.1
- */
-
 - (void)adjustFontToWidth;
 
 /**

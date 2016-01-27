@@ -1,8 +1,7 @@
 
 platform :ios, '7.0'
 
-xcodeproj 'Finance'
-
+target 'Finance' do
 
 pod 'Mantle'
 pod 'AFNetworking'
@@ -11,3 +10,4 @@ pod 'MBProgressHUD'
 pod 'SDWebImage'
 pod 'MagicalRecord'
 
+end
