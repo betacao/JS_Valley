@@ -423,17 +423,15 @@
     
     //删除
     NSString *url = [NSString stringWithFormat:@"%@/%@",rBaseAddressForHttpCircle,@"circle"];
-    NSDictionary *dic = @{@"rid":obj.rid,
-                          @"uid":obj.userid};
-    [[AFHTTPRequestOperationManager manager] DELETE:url parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"%@",responseObject);
+    NSDictionary *dic = @{@"rid":obj.rid, @"uid":obj.userid};
+    __weak typeof(self) weakSelf = self;
+    [[AFHTTPSessionManager manager] DELETE:url parameters:dic success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         NSString *code = [responseObject valueForKey:@"code"];
-        if ([code isEqualToString:@"000"])
-        {
-            [self detailDeleteWithRid:obj.rid];
+        if ([code isEqualToString:@"000"]){
+            [weakSelf detailDeleteWithRid:obj.rid];
             [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_COLLECT_DELETE_CLICK object:obj];
         }
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         [Hud showMessageWithText:error.domain];
     }];
 }
@@ -442,10 +440,9 @@
 {
     NSString *url = [NSString stringWithFormat:@"%@/%@",rBaseAddressForHttpCircle,@"praisesend"];
     NSDictionary *param = @{@"uid":[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID],@"rid":obj.rid};
-
+    __weak typeof(self) weakSelf = self;
     if (![obj.ispraise isEqualToString:@"Y"]) {
         [Hud showLoadingWithMessage:@"正在点赞"];
-
         [MOCHTTPRequestOperationManager postWithURL:url class:nil parameters:param success:^(MOCHTTPResponse *response) {
             NSLog(@"%@",response.data);
             NSString *code = [response.data valueForKey:@"code"];
@@ -455,24 +452,17 @@
                 [Hud showMessageWithText:@"赞成功"];
           
                 [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_COLLECT_PRAISE_CLICK object:obj];
-
             }
             [Hud hideHud];
-            [self.tableView reloadData];
-            
-            
+            [weakSelf.tableView reloadData];
         } failed:^(MOCHTTPResponse *response) {
             [Hud hideHud];
             [Hud showMessageWithText:response.errorMessage];
         }];
         
-    }
-    else
-    {
+    } else{
         [Hud showLoadingWithMessage:@"正在取消点赞"];
-
-        [[AFHTTPRequestOperationManager manager] DELETE:url parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            NSLog(@"%@",responseObject);
+        [[AFHTTPSessionManager manager] DELETE:url parameters:param success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
             NSString *code = [responseObject valueForKey:@"code"];
             if ([code isEqualToString:@"000"]) {
                 obj.ispraise = @"N";
@@ -481,13 +471,11 @@
                 [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_COLLECT_PRAISE_CLICK object:obj];
 
             }
-            [self.tableView reloadData];
+            [weakSelf.tableView reloadData];
             [Hud hideHud];
-            
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
             [Hud showMessageWithText:error.domain];
             [Hud hideHud];
-
         }];
     }
 }
@@ -662,27 +650,26 @@
     }];
 }
 
--(void)otherShareWithObj:(CircleListObj *)obj
+- (void)otherShareWithObj:(CircleListObj *)obj
 {
     NSString *url = [NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttpCircle,@"circle",obj.rid];
     NSDictionary *param = @{@"uid":[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID]};
-    [[AFHTTPRequestOperationManager manager] PUT:url parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSString *code = [responseObject valueForKey:@"code"];
+    [MOCHTTPRequestOperationManager putWithURL:url class:nil parameters:param success:^(MOCHTTPResponse *response) {
+        NSString *code = [response.data valueForKey:@"code"];
         if ([code isEqualToString:@"000"]) {
-            // [self refreshData];
             obj.sharenum = [NSString stringWithFormat:@"%ld",(long)[obj.sharenum integerValue]+1];
             [self.tableView reloadData];
             [Hud showMessageWithText:@"分享成功"];
         }
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [Hud showMessageWithText:error.domain];
-        
+    } failed:^(MOCHTTPResponse *response) {
+        [Hud showMessageWithText:response.errorMessage];
     }];
 }
 
 - (void)attentionClicked:(CircleListObj *)obj
 {
     [Hud showLoadingWithMessage:@"请稍等..."];
+    __weak typeof(self) weakSelf = self;
     NSString *url = [NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"friends"];
     NSDictionary *param = @{@"uid":[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID], @"oid":obj.userid};
     if (![obj.isattention isEqualToString:@"Y"]) {
@@ -700,13 +687,13 @@
             } else{
                 [Hud showMessageWithText:@"失败"];
             }
-            [self.tableView reloadData];
+            [weakSelf.tableView reloadData];
         } failed:^(MOCHTTPResponse *response) {
             [Hud hideHud];
             [Hud showMessageWithText:response.errorMessage];
         }];
     } else{
-        [[AFHTTPRequestOperationManager manager] DELETE:url parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [[AFHTTPSessionManager manager] DELETE:url parameters:param success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
             [Hud hideHud];
             NSString *code = [responseObject valueForKey:@"code"];
             if ([code isEqualToString:@"000"]){
@@ -720,9 +707,8 @@
             } else{
                 [Hud showMessageWithText:@"失败"];
             }
-            [self.tableView reloadData];
-            
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            [weakSelf.tableView reloadData];
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
             [Hud hideHud];
             [Hud showMessageWithText:error.domain];
         }];
@@ -805,9 +791,6 @@
                             @"num":@"100"};
     [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttp,@"collection",@"myNewsList"] class:[CircleListObj class] parameters:param success:^(MOCHTTPResponse *response) {
         NSLog(@"=========%@",response.dataArray);
-//        NSArray *normalArray = [response.dataDictionary objectForKey:@"normalpostlist"];
-//        normalArray = [[SHGGloble sharedGloble] parseServerJsonArrayToJSONModel:normalArray class:[CircleListObj class]];
-
         
         if ([target isEqualToString:@"first"]) {
             [self.newsList removeAllObjects];

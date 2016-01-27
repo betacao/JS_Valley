@@ -121,29 +121,24 @@
 	}
  
 	if ([self.changedPassword.text containsString:@" "]) {
-		[Hud showMessageWithText:@"请勿输入空格"];
-		return;
-	}
-	
-	NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
-	
-	NSString *oldPassword = [self.oldPassword.text md5];
-	NSString *newPassword = [self.changedPassword.text md5];
-	
-	[[AFHTTPRequestOperationManager manager] PUT:[NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttp,@"account",@"modifyPwd"] parameters:@{@"uid":uid,@"oldpwd":oldPassword,@"newpwd":newPassword	} success:^(AFHTTPRequestOperation *operation, id responseObject) {
-		NSLog(@"%@",operation);
-		NSLog(@"%@",responseObject);
-		NSString *code = [responseObject valueForKey:@"code"];
-		if ([code isEqualToString:@"000"]) {
-			[Hud showMessageWithText:@"修改成功"];
-			[self.navigationController performSelector:@selector(popViewControllerAnimated:) withObject:[NSNumber numberWithBool:YES] afterDelay:1];
-		}else{
-			NSString *code = [responseObject valueForKey:@"msg"];
-			[Hud showMessageWithText:code];
-		}
-	} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-		[Hud showMessageWithText:@"修改失败"];
-	}];
+        [Hud showMessageWithText:@"请勿输入空格"];
+        return;
+    }
+
+    NSString *oldPassword = [self.oldPassword.text md5];
+    NSString *newPassword = [self.changedPassword.text md5];
+    [MOCHTTPRequestOperationManager putWithURL:[NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttp,@"account",@"modifyPwd"] class:nil parameters:@{@"uid":UID,@"oldpwd":oldPassword,@"newpwd":newPassword} success:^(MOCHTTPResponse *response) {
+        NSString *code = [response.data valueForKey:@"code"];
+        if ([code isEqualToString:@"000"]) {
+            [Hud showMessageWithText:@"修改成功"];
+            [self.navigationController performSelector:@selector(popViewControllerAnimated:) withObject:[NSNumber numberWithBool:YES] afterDelay:1];
+        }else{
+            NSString *code = [response.data valueForKey:@"msg"];
+            [Hud showMessageWithText:code];
+        }
+    } failed:^(MOCHTTPResponse *response) {
+        [Hud showMessageWithText:@"修改失败"];
+    }];
 }
 
 @end

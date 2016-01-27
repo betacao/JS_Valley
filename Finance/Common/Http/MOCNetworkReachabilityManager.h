@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "AFHTTPRequestOperationManager.h"
+#import "AFNetworkReachabilityManager.h"
 
 typedef void(^MOCNetworkReachabilityManagerBlock)();
 

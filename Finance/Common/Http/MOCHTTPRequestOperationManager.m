@@ -32,7 +32,7 @@ NSString *moc_http_request_operation_manager_token;
 
 @interface MOCHTTPRequestOperationManager ()
 @property (nonatomic, strong) MOCHTTPResponse *response;
-@property (nonatomic, strong) AFHTTPRequestOperationManager *manager;
+@property (nonatomic, strong) AFHTTPSessionManager *manager;
 @end
 
 @implementation MOCHTTPRequestOperationManager
@@ -55,105 +55,129 @@ NSString *moc_http_request_operation_manager_token;
 }
 
 #pragma mark -
-+ (void )postWithURL:(NSString *)url
-           parameters:(id)parameters
-              success:(MOCResponseBlock)success
-               failed:(MOCResponseBlock)failed{
++ (void)postWithURL:(NSString *)url parameters:(id)parameters success:(MOCResponseBlock)success failed:(MOCResponseBlock)failed{
     [MOCHTTPRequestOperationManager postWithURL:url class:nil parameters:parameters success:success failed:failed complete:nil];
 }
 
-+ (void )postWithURL:(NSString *)url
-                class:(Class)aclass
-           parameters:(id)parameters
-              success:(MOCResponseBlock)success
-               failed:(MOCResponseBlock)failed{
++ (void)postWithURL:(NSString *)url class:(Class)aclass parameters:(id)parameters success:(MOCResponseBlock)success failed:(MOCResponseBlock)failed{
     [MOCHTTPRequestOperationManager postWithURL:url class:aclass parameters:parameters success:success failed:failed complete:nil];
 }
 
-+ (void )postWithURL:(NSString *)url
-           parameters:(id)parameters
-              success:(MOCResponseBlock)success
-               failed:(MOCResponseBlock)failed
-             complete:(Block)complete{
++ (void)postWithURL:(NSString *)url parameters:(id)parameters success:(MOCResponseBlock)success failed:(MOCResponseBlock)failed complete:(Block)complete{
     [MOCHTTPRequestOperationManager postWithURL:url class:nil parameters:parameters success:success failed:failed complete:complete];
 }
 
-+ (void )postWithURL:(NSString *)url
-                class:(Class)aclass
-           parameters:(id)parameters
-              success:(MOCResponseBlock)success
-               failed:(MOCResponseBlock)failed
-             complete:(Block)complete{
-    [MOCHTTPRequestOperationManager requestWithURL:url post:YES class:aclass parameters:parameters success:success failed:failed complete:complete];
++ (void)postWithURL:(NSString *)url class:(Class)aclass parameters:(id)parameters success:(MOCResponseBlock)success failed:(MOCResponseBlock)failed complete:(Block)complete{
+    [MOCHTTPRequestOperationManager requestWithURL:url method:@"post" class:aclass parameters:parameters success:success failed:failed complete:complete];
 }
 
 #pragma mark -
-+ (void )getWithURL:(NSString *)url
-           parameters:(id)parameters
-              success:(MOCResponseBlock)success
-               failed:(MOCResponseBlock)failed{
++ (void)getWithURL:(NSString *)url parameters:(id)parameters success:(MOCResponseBlock)success failed:(MOCResponseBlock)failed{
     [MOCHTTPRequestOperationManager getWithURL:url class:nil parameters:parameters success:success failed:failed complete:nil];
 }
 
-+ (void )getWithURL:(NSString *)url
-                class:(Class)aclass
-           parameters:(id)parameters
-              success:(MOCResponseBlock)success
-               failed:(MOCResponseBlock)failed{
++ (void)getWithURL:(NSString *)url class:(Class)aclass parameters:(id)parameters success:(MOCResponseBlock)success failed:(MOCResponseBlock)failed{
     [MOCHTTPRequestOperationManager getWithURL:url class:aclass parameters:parameters success:success failed:failed complete:nil];
 }
 
-+ (void )getWithURL:(NSString *)url
-           parameters:(id)parameters
-              success:(MOCResponseBlock)success
-               failed:(MOCResponseBlock)failed
-             complete:(Block)complete{
++ (void)getWithURL:(NSString *)url parameters:(id)parameters success:(MOCResponseBlock)success failed:(MOCResponseBlock)failed complete:(Block)complete{
     [MOCHTTPRequestOperationManager getWithURL:url class:nil parameters:parameters success:success failed:failed complete:complete];
 }
 
-+ (void )getWithURL:(NSString *)url
-                class:(Class)aclass
-           parameters:(id)parameters
-              success:(MOCResponseBlock)success
-               failed:(MOCResponseBlock)failed
-             complete:(Block)complete{
-    [MOCHTTPRequestOperationManager requestWithURL:url post:NO class:aclass parameters:parameters success:success failed:failed complete:complete];
++ (void)getWithURL:(NSString *)url class:(Class)aclass parameters:(id)parameters success:(MOCResponseBlock)success failed:(MOCResponseBlock)failed complete:(Block)complete{
+    [MOCHTTPRequestOperationManager requestWithURL:url method:@"get" class:aclass parameters:parameters success:success failed:failed complete:complete];
 }
 
++ (void)putWithURL:(NSString *)url parameters:(id)parameters success:(MOCResponseBlock)success failed:(MOCResponseBlock)failed
+{
+    [self putWithURL:url class:nil parameters:parameters success:success failed:failed complete:nil];
+}
+
++ (void)putWithURL:(NSString *)url parameters:(id)parameters success:(MOCResponseBlock)success failed:(MOCResponseBlock)failed complete:(Block)complete
+{
+    [self putWithURL:url class:nil parameters:parameters success:success failed:failed complete:complete];
+}
+
++ (void)putWithURL:(NSString *)url class:(Class)aclass parameters:(id)parameters success:(MOCResponseBlock)success failed:(MOCResponseBlock)failed
+{
+    [self putWithURL:url class:aclass parameters:parameters success:success failed:false complete:nil];
+}
+
++ (void)putWithURL:(NSString *)url class:(Class)aclass parameters:(id)parameters success:(MOCResponseBlock)success failed:(MOCResponseBlock)failed complete:(Block)complete
+{
+    [MOCHTTPRequestOperationManager requestWithURL:url method:@"put" class:aclass parameters:parameters success:success failed:failed complete:complete];
+}
+
+
+
++ (void)deleteWithURL:(NSString *)url parameters:(id)parameters success:(MOCResponseBlock)success failed:(MOCResponseBlock)failed
+{
+    [self deleteWithURL:url class:nil parameters:parameters success:success failed:failed complete:nil];
+}
+
++ (void)deleteWithURL:(NSString *)url parameters:(id)parameters success:(MOCResponseBlock)success failed:(MOCResponseBlock)failed complete:(Block)complete
+{
+    [self putWithURL:url class:nil parameters:parameters success:success failed:failed complete:complete];
+}
+
++ (void)deleteWithURL:(NSString *)url class:(Class)aclass parameters:(id)parameters success:(MOCResponseBlock)success failed:(MOCResponseBlock)failed
+{
+    [self deleteWithURL:url class:aclass parameters:parameters success:success failed:false complete:nil];
+}
+
++ (void)deleteWithURL:(NSString *)url class:(Class)aclass parameters:(id)parameters success:(MOCResponseBlock)success failed:(MOCResponseBlock)failed complete:(Block)complete
+{
+    [MOCHTTPRequestOperationManager requestWithURL:url method:@"delete" class:aclass parameters:parameters success:success failed:failed complete:complete];
+}
+
+
 #pragma mark -
-+ (void )requestWithURL:(NSString *)url
-                   post:(BOOL)isPost
-                class:(Class)class
-           parameters:(id)parameters
-              success:(MOCResponseBlock)success
-               failed:(MOCResponseBlock)failed
-               complete:(Block)complete{
-    
++ (void )requestWithURL:(NSString *)url method:(NSString *)method class:(Class)class parameters:(id)parameters success:(MOCResponseBlock)success failed:(MOCResponseBlock)failed complete:(Block)complete {
+
     NSAssert(url, @"请求地址不能为空");
-    
+
     MOCHTTPRequestOperationManager *client = [MOCHTTPRequestOperationManager manager];
-    
+
     if (![MOCNetworkReachabilityManager isReachable]) {//网络不可达
-       // [Hud showMessageWithText:@"断网了~"];
+        // [Hud showMessageWithText:@"断网了~"];
         [client parseResponseFailed:nil failed:failed logInfo:@"网络不可达"];
         return;
     }
     parameters = [client packageParameters:parameters];
     NSLog(@"%@   parameters:%@", url,parameters);
-    if (isPost) {
-        [client.manager POST:url parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-    
+    if([method isEqualToString:@"post"]){
+        [client.manager POST:url parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
+
+        } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
             [client parseResponseSuccess:responseObject class:class success:success failed:failed logInfo:url];
             complete?complete():nil;
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
             [client parseResponseFailed:error failed:failed logInfo:error.domain];
             complete?complete():nil;
         }];
-    }else{
-        [client.manager GET:url parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    } else if([method isEqualToString:@"get"]){
+        [client.manager GET:url parameters:parameters progress:^(NSProgress * _Nonnull downloadProgress) {
+
+        } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
             [client parseResponseSuccess:responseObject class:class success:success failed:failed logInfo:url];
             complete?complete():nil;
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+            [client parseResponseFailed:error failed:failed logInfo:error.domain];
+            complete?complete():nil;
+        }];
+    } else if([method isEqualToString:@"put"]){
+        [client.manager PUT:url parameters:parameters success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+            [client parseResponseSuccess:responseObject class:class success:success failed:failed logInfo:url];
+            complete?complete():nil;
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+            [client parseResponseFailed:error failed:failed logInfo:error.domain];
+            complete?complete():nil;
+        }];
+    } else if([method isEqualToString:@"delete"]){
+        [client.manager DELETE:url parameters:parameters success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+            [client parseResponseSuccess:responseObject class:class success:success failed:failed logInfo:url];
+            complete?complete():nil;
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
             [client parseResponseFailed:error failed:failed logInfo:error.domain];
             complete?complete():nil;
         }];
@@ -261,16 +285,16 @@ NSString *moc_http_request_operation_manager_token;
     MOCHTTPRequestOperationManager *client = [[MOCHTTPRequestOperationManager alloc] init];
 
     if (IsStrEmpty(moc_http_request_operation_manager_base_url_string)){
-        client.manager= [AFHTTPRequestOperationManager manager];
+        client.manager= [AFHTTPSessionManager manager];
         client.response = [[MOCHTTPResponse alloc] init];
         [client clientSetup];
         return client;
     }else{
         NSURL *baseURL = [[NSURL alloc] initWithString:moc_http_request_operation_manager_base_url_string];
         if (baseURL) {
-            client.manager = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:baseURL];
+            client.manager = [[AFHTTPSessionManager alloc] initWithBaseURL:baseURL];
         }else{
-            client.manager = [AFHTTPRequestOperationManager manager];
+            client.manager = [AFHTTPSessionManager manager];
         }
         client.response = [[MOCHTTPResponse alloc] init];
         [client clientSetup];

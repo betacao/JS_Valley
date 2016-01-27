@@ -103,20 +103,20 @@
 
     NSString *token = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_TOKEN];
     NSDictionary *param = @{@"uid":uid, @"t":token?:@"", @"channelid":channelId?:@"", @"channeluid":@"getui"};
-    [[AFHTTPRequestOperationManager manager] PUT:rBaseAddressForHttpUBpush parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject){
-         NSString *code = [responseObject valueForKey:@"code"];
-         if ([code isEqualToString:@"000"]){
-             if ([self.isFull isEqualToString:@"1"]){
-                 [self chatLoagin];
-                 [self loginSuccess];
-             } else{
-                 ImproveMatiralViewController *vc = [[ImproveMatiralViewController alloc] init];
-                 [self.navigationController pushViewController:vc animated:YES];
-             }
-         }
-     } failure:^(AFHTTPRequestOperation *operation, NSError *error){
-        [Hud showLoadingWithMessage:error.domain];
-        
+    __weak typeof(self) weakSelf = self;
+    [MOCHTTPRequestOperationManager putWithURL:rBaseAddressForHttpUBpush class:nil parameters:param success:^(MOCHTTPResponse *response) {
+        NSString *code = [response.data valueForKey:@"code"];
+        if ([code isEqualToString:@"000"]){
+            if ([weakSelf.isFull isEqualToString:@"1"]){
+                [weakSelf chatLoagin];
+                [self loginSuccess];
+            } else{
+                ImproveMatiralViewController *vc = [[ImproveMatiralViewController alloc] init];
+                [weakSelf.navigationController pushViewController:vc animated:YES];
+            }
+        }
+    } failed:^(MOCHTTPResponse *response) {
+        [Hud showLoadingWithMessage:response.errorMessage];
     }];
 }
 -(void)gotoImprove

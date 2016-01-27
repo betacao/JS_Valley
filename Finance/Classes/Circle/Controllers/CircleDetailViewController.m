@@ -612,29 +612,29 @@
         
     } else{
         [Hud showLoadingWithMessage:@"正在取消点赞"];
-        [[AFHTTPRequestOperationManager manager] DELETE:url parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            NSLog(@"%@",responseObject);
+        __weak typeof(self) weakSelf = self;
+        [[AFHTTPSessionManager manager] DELETE:url parameters:param success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
             NSString *code = [responseObject valueForKey:@"code"];
             if ([code isEqualToString:@"000"]){
-                self.obj.ispraise = @"N";
-                self.obj.praisenum = [NSString stringWithFormat:@"%ld",(long)([self.obj.praisenum integerValue] - 1)];
-                for (praiseOBj *obj in self.obj.heads) {
+                weakSelf.obj.ispraise = @"N";
+                weakSelf.obj.praisenum = [NSString stringWithFormat:@"%ld",(long)([self.obj.praisenum integerValue] - 1)];
+                for (praiseOBj *obj in weakSelf.obj.heads) {
                     if ([obj.puserid isEqualToString:[[NSUserDefaults standardUserDefaults]objectForKey:KEY_UID]]) {
-                        [self.obj.heads removeObject:obj];
+                        [weakSelf.obj.heads removeObject:obj];
                         break;
                     }
                 }
                 [Hud showMessageWithText:@"取消点赞"];
                 [MobClick event:@"ActionPraiseClicked_Off" label:@"onClick"];
-                [self loadDatasWithObj:self.obj];
-                [self.listTable reloadData];
+                [weakSelf loadDatasWithObj:self.obj];
+                [weakSelf.listTable reloadData];
 
-                [self.delegate detailPraiseWithRid:self.obj.rid praiseNum:self.obj.praisenum isPraised:@"N"];
-                [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_COLLECT_PRAISE_CLICK object:self.obj];
+                [weakSelf.delegate detailPraiseWithRid:self.obj.rid praiseNum:self.obj.praisenum isPraised:@"N"];
+                [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_COLLECT_PRAISE_CLICK object:weakSelf.obj];
 
             }
             [Hud hideHud];
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
             [Hud showMessageWithText:error.domain];
             [Hud hideHud];
         }];
@@ -724,7 +724,8 @@
 {
     [[AppDelegate currentAppdelegate] sendmessageToShareWithObjContent:text rid:rid];
 }
--(void)shareToFriendWithText:(NSString *)text
+
+- (void)shareToFriendWithText:(NSString *)text
 {
     NSString *shareText = [NSString stringWithFormat:@"转自:%@的帖子：%@",self.obj.nickname,text];
     FriendsListViewController *vc=[[FriendsListViewController alloc] init];
@@ -734,25 +735,24 @@
     [self.navigationController pushViewController:vc animated:YES];
 }
 
--(void)otherShareWithObj:(CircleListObj *)obj
+- (void)otherShareWithObj:(CircleListObj *)obj
 {
     NSString *url = [NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttpCircle,@"circle",obj.rid];
-    NSDictionary *param = @{@"uid":[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID]};
-    [[AFHTTPRequestOperationManager manager] PUT:url parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSString *code = [responseObject valueForKey:@"code"];
+    NSDictionary *param = @{@"uid":UID};
+    __weak typeof(self) weakSelf = self;
+    [MOCHTTPRequestOperationManager putWithURL:url class:nil parameters:param success:^(MOCHTTPResponse *response) {
+        NSString *code = [response.data valueForKey:@"code"];
         if ([code isEqualToString:@"000"]) {
             obj.sharenum = [NSString stringWithFormat:@"%ld",(long)([obj.sharenum integerValue] + 1)];
-            [self.delegate detailShareWithRid:obj.rid shareNum:obj.sharenum];
+            [weakSelf.delegate detailShareWithRid:obj.rid shareNum:obj.sharenum];
             [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_COLLECT_SHARE_CLIC object:obj];
 
-            [self loadDatasWithObj:obj];
-            [self.listTable reloadData];
+            [weakSelf loadDatasWithObj:obj];
+            [weakSelf.listTable reloadData];
             [Hud showMessageWithText:@"分享成功"];
-            
         }
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [Hud showMessageWithText:error.domain];
-
+    } failed:^(MOCHTTPResponse *response) {
+        [Hud showMessageWithText:response.errorMessage];
     }];
 }
 -(void)circleShareWithObj:(CircleListObj *)obj
@@ -797,20 +797,20 @@
             [Hud showMessageWithText:response.errorMessage];
         }];
     } else{
-        [[AFHTTPRequestOperationManager manager] DELETE:url parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject)
-        {
+        __weak typeof(self)weakSelf = self;
+        [[AFHTTPSessionManager manager] DELETE:url parameters:param success:^(NSURLSessionDataTask *operation, id responseObject){
             NSString *code = [responseObject valueForKey:@"code"];
             if ([code isEqualToString:@"000"]) {
-                self.obj.iscollection = @"N";
+                weakSelf.obj.iscollection = @"N";
             }
-            [self loadDatasWithObj:self.obj];
-            if (self.delegate && [self.delegate respondsToSelector:@selector(detailCollectionWithRid:collected:)]){
-                [self.delegate detailCollectionWithRid:self.obj.rid collected:self.obj.iscollection];
+            [weakSelf loadDatasWithObj:weakSelf.obj];
+            if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(detailCollectionWithRid:collected:)]){
+                [weakSelf.delegate detailCollectionWithRid:weakSelf.obj.rid collected:weakSelf.obj.iscollection];
             }
             [MobClick event:@"ActionCollection_Off" label:@"onClick"];
             [Hud showMessageWithText:@"取消收藏"];
 
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        } failure:^(NSURLSessionDataTask *operation, NSError *error) {
             [Hud showMessageWithText:error.domain];
         }];
     }
@@ -839,17 +839,18 @@
             [Hud showMessageWithText:response.errorMessage];
         }];
     } else{
-        [[AFHTTPRequestOperationManager manager] DELETE:url parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        __weak typeof(self) weakSelf = self;
+        [[AFHTTPSessionManager manager] DELETE:url parameters:param success:^(NSURLSessionDataTask *operation, id responseObject) {
             [Hud hideHud];
             NSString *code = [responseObject valueForKey:@"code"];
             if ([code isEqualToString:@"000"]){
-                self.obj.isattention = @"N";
+                weakSelf.obj.isattention = @"N";
                 [Hud showMessageWithText:@"取消关注成功"];
             }
-            [self loadDatasWithObj:self.obj];
-            [self.delegate detailAttentionWithRid:self.obj.userid attention:self.obj.isattention];
-            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_COLLECT_COLLECT_CLIC object:self.obj];
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            [weakSelf loadDatasWithObj:self.obj];
+            [weakSelf.delegate detailAttentionWithRid:weakSelf.obj.userid attention:weakSelf.obj.isattention];
+            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_COLLECT_COLLECT_CLIC object:weakSelf.obj];
+        } failure:^(NSURLSessionDataTask *operation, NSError *error) {
             [Hud hideHud];
             [Hud showMessageWithText:error.domain];
         }];
@@ -1044,17 +1045,16 @@
 -(void)deleteSelf
 {
     NSString *url = [NSString stringWithFormat:@"%@/%@",rBaseAddressForHttpCircle,@"circle"];
-    NSDictionary *dic = @{@"rid":self.obj.rid,
-                          @"uid":self.obj.userid};
-    [[AFHTTPRequestOperationManager manager] DELETE:url parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    NSDictionary *dic = @{@"rid":self.obj.rid, @"uid":self.obj.userid};
+    __weak typeof(self) weakSelf = self;
+    [[AFHTTPSessionManager manager] DELETE:url parameters:dic success:^(NSURLSessionDataTask *operation, id responseObject) {
         NSLog(@"%@",responseObject);
         NSString *code = [responseObject valueForKey:@"code"];
-        if ([code isEqualToString:@"000"])
-        {
-            [self.delegate detailDeleteWithRid:self.obj.rid];
-            [self.navigationController popViewControllerAnimated:YES];
+        if ([code isEqualToString:@"000"]){
+            [weakSelf.delegate detailDeleteWithRid:weakSelf.obj.rid];
+            [weakSelf.navigationController popViewControllerAnimated:YES];
         }
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionDataTask *operation, NSError *error) {
         [Hud showMessageWithText:error.domain];
     }];
 }

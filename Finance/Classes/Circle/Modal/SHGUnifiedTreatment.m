@@ -57,14 +57,14 @@
     __weak typeof(self)weakSelf = self;
     NSString *url = [NSString stringWithFormat:@"%@/%@",rBaseAddressForHttpCircle,@"circle"];
     NSDictionary *dic = @{@"rid":obj.rid, @"uid":obj.userid};
-    [[AFHTTPRequestOperationManager manager] DELETE:url parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject){
+    [[AFHTTPSessionManager manager] DELETE:url parameters:dic success:^(NSURLSessionDataTask *operation, id responseObject){
         NSLog(@"%@",responseObject);
         NSString *code = [responseObject valueForKey:@"code"];
         if ([code isEqualToString:@"000"]){
             [MobClick event:@"ActionDeletepost" label:@"onClick"];
             [weakSelf detailDeleteWithRid:obj.rid];
         }
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error){
+    } failure:^(NSURLSessionDataTask *operation, NSError *error){
          [Hud showMessageWithText:error.domain];
      }];
 }
@@ -107,7 +107,7 @@
         }];
     } else{
         [Hud showLoadingWithMessage:@"正在取消点赞"];
-        [[AFHTTPRequestOperationManager manager] DELETE:url parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [[AFHTTPSessionManager manager] DELETE:url parameters:param success:^(NSURLSessionDataTask *operation, id responseObject) {
             NSLog(@"%@",responseObject);
             NSString *code = [responseObject valueForKey:@"code"];
             if ([code isEqualToString:@"000"]) {
@@ -121,7 +121,7 @@
             [MobClick event:@"ActionPraiseClicked_Off" label:@"onClick"];
             [[SHGSegmentController sharedSegmentController] reloadData];
             [Hud hideHud];
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        } failure:^(NSURLSessionDataTask *operation, NSError *error) {
             [Hud showMessageWithText:error.domain];
             [Hud hideHud];
         }];
@@ -314,9 +314,10 @@
 - (void)otherShareWithObj:(CircleListObj *)obj
 {
     NSString *url = [NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttpCircle,@"circle",obj.rid];
-    NSDictionary *param = @{@"uid":[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID]};
-    [[AFHTTPRequestOperationManager manager] PUT:url parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSString *code = [responseObject valueForKey:@"code"];
+    NSDictionary *param = @{@"uid":UID};
+
+    [MOCHTTPRequestOperationManager putWithURL:url class:nil parameters:param success:^(MOCHTTPResponse *response) {
+        NSString *code = [response.data valueForKey:@"code"];
         if ([code isEqualToString:@"000"]) {
             NSArray *array = [[SHGSegmentController sharedSegmentController] targetObjectsByRid:obj.rid];
             for (CircleListObj *object in array){
@@ -326,9 +327,8 @@
             [MobClick event:@"ActionShareClicked" label:@"onClick"];
             [Hud showMessageWithText:@"分享成功"];
         }
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [Hud showMessageWithText:error.domain];
-
+    } failed:^(MOCHTTPResponse *response) {
+        [Hud showMessageWithText:response.errorMessage];
     }];
 }
 
@@ -392,7 +392,7 @@
                 [Hud showMessageWithText:response.errorMessage];
             }];
         } else{
-            [[AFHTTPRequestOperationManager manager] DELETE:url parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            [[AFHTTPSessionManager manager] DELETE:url parameters:param success:^(NSURLSessionDataTask *operation, id responseObject) {
                 [Hud hideHud];
                 NSString *code = [responseObject valueForKey:@"code"];
                 if ([code isEqualToString:@"000"]) {
@@ -414,7 +414,7 @@
                 } else{
                     [Hud showMessageWithText:@"取消关注失败"];
                 }
-            } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            } failure:^(NSURLSessionDataTask *operation, NSError *error) {
                 [Hud hideHud];
                 [Hud showMessageWithText:error.domain];
             }];
@@ -445,7 +445,7 @@
                 [Hud showMessageWithText:response.errorMessage];
             }];
         } else{
-            [[AFHTTPRequestOperationManager manager] DELETE:url parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            [[AFHTTPSessionManager manager] DELETE:url parameters:param success:^(NSURLSessionDataTask *operation, id responseObject) {
                 [Hud hideHud];
                 NSString *code = [responseObject valueForKey:@"code"];
                 if ([code isEqualToString:@"000"]) {
@@ -457,7 +457,7 @@
                     [Hud hideHud];
                     [Hud showMessageWithText:@"取消关注失败"];
                 }
-            } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            } failure:^(NSURLSessionDataTask *operation, NSError *error) {
                 [Hud showMessageWithText:error.domain];
             }];
         }

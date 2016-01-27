@@ -309,15 +309,16 @@
 {
     NSString *url = [NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttpCircle,@"circle",obj.pid];
     NSDictionary *param = @{@"uid":[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID]};
-    [[AFHTTPRequestOperationManager manager] PUT:url parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSString *code = [responseObject valueForKey:@"code"];
+    [MOCHTTPRequestOperationManager putWithURL:url class:nil parameters:param success:^(MOCHTTPResponse *response) {
+        NSString *code = [response.data valueForKey:@"code"];
         if ([code isEqualToString:@"000"]) {
             [Hud showMessageWithText:@"分享成功"];
         }
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [Hud showMessageWithText:error.domain];
+    } failed:^(MOCHTTPResponse *response) {
+        [Hud showMessageWithText:response.errorMessage];
     }];
 }
+
 - (void)shareToFriendWithText:(NSString *)text
 {
     __weak typeof(self) weakSelf = self;
@@ -338,15 +339,15 @@
 - (IBAction)actionCollet:(id)sender {
     NSString *url = [NSString stringWithFormat:@"%@/%@",rBaseAddressForHttpProd,@"collection"];
     NSDictionary *param = @{@"uid":[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID], @"pid":self.obj.pid};
-    if ([_obj.iscollected boolValue]){
-        [[AFHTTPRequestOperationManager manager ] DELETE:url parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    if ([self.obj.iscollected boolValue]){
+        [[AFHTTPSessionManager manager] DELETE:url parameters:param success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
             NSString *code = [responseObject valueForKey:@"code"];
             if ([code isEqualToString:@"000"]) {
-                _obj.iscollected = @"0";
-                [_btnCollet setImage:[UIImage imageNamed:@"收藏prod"] forState:UIControlStateNormal];
+                self.obj.iscollected = @"0";
+                [self.btnCollet setImage:[UIImage imageNamed:@"收藏prod"] forState:UIControlStateNormal];
             }
             [Hud showMessageWithText:@"取消收藏"];
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
             [Hud showMessageWithText:error.domain];
         }];
     } else{
@@ -355,8 +356,8 @@
             if ([code isEqualToString:@"000"]){
                 ProdListObj *obj = _obj;
                 obj.iscollected = @"1";
-                _obj = obj;
-                [_btnCollet setImage:[UIImage imageNamed:@"已收藏prod"] forState:UIControlStateNormal];
+                self.obj = obj;
+                [self.btnCollet setImage:[UIImage imageNamed:@"已收藏prod"] forState:UIControlStateNormal];
             }
             [Hud showMessageWithText:@"收藏成功"];
 

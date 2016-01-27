@@ -393,16 +393,18 @@ typedef NS_ENUM(NSInteger, SHGMarketSendType){
     [Hud showLoadingWithMessage:@"请稍等..."];
     if (self.hasImage) {
         __weak typeof(self) weakSelf = self;
-        [[AFHTTPRequestOperationManager manager] POST:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"image/uploadPhotoCompress"] parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+        [[AFHTTPSessionManager manager] POST:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"image/uploadPhotoCompress"] parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
             NSData *imageData = UIImageJPEGRepresentation(self.addImageButton.imageView.image, 0.1);
             [formData appendPartWithFileData:imageData name:@"market.jpg" fileName:@"market.jpg" mimeType:@"image/jpeg"];
-        } success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        } progress:^(NSProgress * _Nonnull uploadProgress) {
+
+        } success:^(NSURLSessionDataTask *operation, id responseObject) {
             NSLog(@"%@",responseObject);
             [Hud hideHud];
             NSDictionary *dic = [(NSString *)[responseObject valueForKey:@"data"] parseToArrayOrNSDictionary];
             weakSelf.imageName = [(NSArray *)[dic valueForKey:@"pname"] objectAtIndex:0];
             block(YES);
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        } failure:^(NSURLSessionDataTask *operation, NSError *error) {
             NSLog(@"%@",error);
             [Hud hideHud];
             [Hud showMessageWithText:@"上传图片失败"];

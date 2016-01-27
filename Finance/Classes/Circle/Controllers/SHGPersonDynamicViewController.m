@@ -310,19 +310,18 @@
 - (void)otherShareWithObj:(CircleListObj *)obj
 {
     NSString *url = [NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttpCircle,@"circle",obj.rid];
-    NSDictionary *param = @{@"uid":[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID]};
-    [[AFHTTPRequestOperationManager manager] PUT:url parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSString *code = [responseObject valueForKey:@"code"];
+    NSDictionary *param = @{@"uid":UID};
+    __weak typeof(self) weakSelf = self;
+    [MOCHTTPRequestOperationManager putWithURL:url class:nil parameters:param success:^(MOCHTTPResponse *response) {
+        NSString *code = [response.data valueForKey:@"code"];
         if ([code isEqualToString:@"000"]) {
-            // [self refreshData];
             obj.sharenum = [NSString stringWithFormat:@"%ld",(long)([obj.sharenum integerValue] + 1)];
-            [self.tableView reloadData];
             [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_COLLECT_SHARE_CLIC object:obj];
             [Hud showMessageWithText:@"分享成功"];
+            [weakSelf.tableView reloadData];
         }
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [Hud showMessageWithText:error.domain];
-
+    } failed:^(MOCHTTPResponse *response) {
+        [Hud showMessageWithText:response.errorMessage];
     }];
 }
 
@@ -385,7 +384,7 @@
             [Hud showMessageWithText:response.errorMessage];
         }];
     } else{
-        [[AFHTTPRequestOperationManager manager] DELETE:url parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [[AFHTTPSessionManager manager] DELETE:url parameters:param success:^(NSURLSessionDataTask *operation, id responseObject) {
             [Hud hideHud];
             NSString *code = [responseObject valueForKey:@"code"];
             if ([code isEqualToString:@"000"]) {
@@ -407,7 +406,7 @@
                 [Hud showMessageWithText:@"取消关注成功"];
             }
             [weakSelf.tableView reloadData];
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        } failure:^(NSURLSessionDataTask *operation, NSError *error) {
             [Hud hideHud];
             [Hud showMessageWithText:error.domain];
         }];
@@ -439,14 +438,14 @@
     alert.rightBlock = ^{
         NSString *url = [NSString stringWithFormat:@"%@/%@",rBaseAddressForHttpCircle,@"circle"];
         NSDictionary *dic = @{@"rid":obj.rid, @"uid":obj.userid};
-        [[AFHTTPRequestOperationManager manager] DELETE:url parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [[AFHTTPSessionManager manager] DELETE:url parameters:dic success:^(NSURLSessionDataTask *operation, id responseObject) {
             NSLog(@"%@",responseObject);
             NSString *code = [responseObject valueForKey:@"code"];
             if ([code isEqualToString:@"000"]){
                 [weakSelf detailDeleteWithRid:obj.rid];
                 [weakSelf.delegate detailDeleteWithRid:obj.rid];
             }
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        } failure:^(NSURLSessionDataTask *operation, NSError *error) {
             [Hud showMessageWithText:error.domain];
         }];
     };
@@ -491,7 +490,7 @@
         }];
     } else{
         [Hud showLoadingWithMessage:@"正在取消点赞"];
-        [[AFHTTPRequestOperationManager manager] DELETE:url parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [[AFHTTPSessionManager manager] DELETE:url parameters:param success:^(NSURLSessionDataTask *operation, id responseObject) {
             NSLog(@"%@",responseObject);
             NSString *code = [responseObject valueForKey:@"code"];
             if ([code isEqualToString:@"000"]) {
@@ -504,7 +503,7 @@
             [weakSelf.tableView reloadData];
             [weakSelf.delegate detailPraiseWithRid:obj.rid praiseNum:obj.praisenum isPraised:@"N"];
             [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_COLLECT_PRAISE_CLICK object:obj];
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error){
+        } failure:^(NSURLSessionDataTask *operation, NSError *error){
             [Hud hideHud];
             [Hud showMessageWithText:error.domain];
         }];

@@ -486,31 +486,26 @@
     //把发送按钮的变成不可点
     rightButton.userInteractionEnabled = NO;
     [Hud showLoadingWithMessage:@"正在发帖……"];
-    
     if (self.imageArr.count == 0){
         //无图片
         [self sendPostWithPohots:nil];
     } else{
-        [[AFHTTPRequestOperationManager manager] POST:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"image/base"] parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
-            
-            for (int i = 0; i < self.imageArr.count; i++)
-            {
+        __weak typeof(self) weakSelf = self;
+        [[AFHTTPSessionManager manager] POST:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"image/base"] parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+            for (NSInteger i = 0; i < self.imageArr.count; i++){
                 RecommendTypeObj *obj = self.imageArr[i];
                 NSData *imgData = obj.content;
-                [formData appendPartWithFileData:imgData name:[NSString stringWithFormat:@"%d.jpg",i+1] fileName:[NSString stringWithFormat:@"%d.jpg",i] mimeType:@"image/jpeg"];
+                [formData appendPartWithFileData:imgData name:[NSString stringWithFormat:@"%ld.jpg",(long)(i + 1)] fileName:[NSString stringWithFormat:@"%ld.jpg",(long)i] mimeType:@"image/jpeg"];
             }
-        } success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            NSLog(@"p");
+        } progress:^(NSProgress * _Nonnull uploadProgress) {
+
+        } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
             id data = [responseObject valueForKey:@"data"];
             NSData *datas =    [data dataUsingEncoding:NSASCIIStringEncoding];
             id json = [self toArrayOrNSDictionary:datas];
-            
             id pname = [json valueForKey:@"pname"];
-            // 将JSON串转化为字典或者数组
-            // NSString *str1 = [responseObject JSONString];
-            [self sendPostWithPohots:pname];
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            NSLog(@"f");
+            [weakSelf sendPostWithPohots:pname];
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
             [Hud hideHud];
             [Hud showMessageWithText:error.domain];
         }];

@@ -227,17 +227,19 @@
         [Hud showLoadingWithMessage:@"正在上传图片..."];
         __weak typeof(self) weakSelf = self;
         //头像需要压缩 跟其他的上传图片接口不一样了
-        [[AFHTTPRequestOperationManager manager] POST:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"image/basephoto"] parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+        [[AFHTTPSessionManager manager] POST:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"image/basephoto"] parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
             NSData *imageData = UIImageJPEGRepresentation(image, 0.1);
             [formData appendPartWithFileData:imageData name:@"hahaggggggg.jpg" fileName:@"hahaggggggg.jpg" mimeType:@"image/jpeg"];
-        } success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        } progress:^(NSProgress * _Nonnull uploadProgress) {
+
+        } success:^(NSURLSessionDataTask *operation, id responseObject) {
             NSLog(@"%@",responseObject);
             [Hud hideHud];
             NSDictionary *dic = [(NSString *)[responseObject valueForKey:@"data"] parseToArrayOrNSDictionary];
             weakSelf.headImageName = [(NSArray *)[dic valueForKey:@"pname"] objectAtIndex:0];
             [[NSUserDefaults standardUserDefaults] setObject:weakSelf.headImageName forKey:KEY_HEAD_IMAGE];
             [weakSelf uploadMaterial];
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        } failure:^(NSURLSessionDataTask *operation, NSError *error) {
             NSLog(@"%@",error);
             [Hud hideHud];
             [Hud showMessageWithText:@"上传图片失败"];
@@ -274,10 +276,8 @@
 
         NSDictionary *param = @{@"uid":uid, @"head_img":self.headImageName ? self.headImageName : @"", @"name":self.nameTextField.text, @"industrycode":self.instustryCode, @"company":self.companyTextField.text, @"title":self.titleTextField.text, @"position":self.userLocation ? self.userLocation : @""};
         [Hud showLoadingWithMessage:@"完善信息中"];
-        [[AFHTTPRequestOperationManager manager] PUT:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"register"] parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            NSLog(@"%@",operation);
-            NSLog(@"%@",responseObject);
-            NSString *code = [responseObject valueForKey:@"code"];
+        [MOCHTTPRequestOperationManager putWithURL:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"register"] class:nil parameters:param success:^(MOCHTTPResponse *response) {
+            NSString *code = [response.data valueForKey:@"code"];
             if ([code isEqualToString:@"000"]) {
                 [[NSUserDefaults standardUserDefaults] setObject:self.nameTextField.text forKey:KEY_USER_NAME];
                 [[NSUserDefaults standardUserDefaults] setObject:self.userLocation ? self.userLocation : @"" forKey:KEY_USER_AREA];
@@ -288,7 +288,7 @@
                 [weakSelf didUploadAllUserInfo];
                 NSLog(@"**********");
             }
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        } failed:^(MOCHTTPResponse *response) {
             [Hud hideHud];
         }];
     }

@@ -99,19 +99,20 @@
     //头像需要压缩 跟其他的上传图片接口不一样了
     __weak typeof(self) weakSelf = self;
     [Hud showLoadingWithMessage:@"正在上传图片..."];
-    [[AFHTTPRequestOperationManager manager] POST:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"image/basephoto"] parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+    [[AFHTTPSessionManager manager] POST:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"image/basephoto"] parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
         NSData *imageData = UIImageJPEGRepresentation(image, 0.1f);
         [formData appendPartWithFileData:imageData name:@"hahaggg.jpg" fileName:@"hahaggg.jpg" mimeType:@"image/jpeg"];
-    } success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    } progress:^(NSProgress * _Nonnull uploadProgress) {
+
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         NSLog(@"%@",responseObject);
         NSDictionary *dic = [(NSString *)[responseObject valueForKey:@"data"] parseToArrayOrNSDictionary];
         NSString *newHeadIamgeName = [(NSArray *)[dic valueForKey:@"pname"] objectAtIndex:0];
         weakSelf.head_img = newHeadIamgeName;
         [[NSUserDefaults standardUserDefaults] setObject:newHeadIamgeName forKey:KEY_HEAD_IMAGE];
-        [weakSelf uploadUserInfo];
         [Hud hideHud];
-
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [weakSelf uploadUserInfo];
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"%@",error);
         [Hud hideHud];
         [Hud showMessageWithText:@"上传图片失败"];

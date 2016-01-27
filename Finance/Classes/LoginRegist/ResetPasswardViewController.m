@@ -112,20 +112,19 @@
 {
     NSString *url = [NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttp,@"account",@"findpwd"];
     NSDictionary *param = @{@"phone":self.phone,@"pwd":[_txtPwd.text md5],@"validatecode":_txtCode.text};
-    [[AFHTTPRequestOperationManager manager] PUT:url parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSString *code = [responseObject valueForKey:@"code"];
-        if ([code isEqualToString:@"000"])
-        {
+
+    [MOCHTTPRequestOperationManager putWithURL:url class:nil parameters:param success:^(MOCHTTPResponse *response) {
+        NSString *code = [response.data valueForKey:@"code"];
+        if ([code isEqualToString:@"000"]){
             [self.navigationController popViewControllerAnimated:YES];
             [Hud showMessageWithText:@"密码修改成功"];
+        } else{
+            [Hud showMessageWithText:[response.data objectForKey:@"msg"]];
         }
-        else
-        {
-            [Hud showMessageWithText:[responseObject objectForKey:@"msg"]];
-        }
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [Hud showLoadingWithMessage:error.domain];
+    } failed:^(MOCHTTPResponse *response) {
+        [Hud showLoadingWithMessage:response.errorMessage];
     }];
+
 }
 - (void)reloadView:(CodeType)CodeType
 {

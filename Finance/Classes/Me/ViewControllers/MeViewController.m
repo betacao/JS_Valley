@@ -373,43 +373,38 @@
 {
     //头像需要压缩 跟其他的上传图片接口不一样了
     [Hud showLoadingWithMessage:@"正在上传图片..."];
-    [[AFHTTPRequestOperationManager manager] POST:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"image/basephoto"] parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+    __weak typeof(self) weakSelf = self;
+    [[AFHTTPSessionManager manager] POST:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"image/basephoto"] parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
         NSData *imageData = UIImageJPEGRepresentation(image, 0.1);
         [formData appendPartWithFileData:imageData name:@"hahaggg.jpg" fileName:@"hahaggg.jpg" mimeType:@"image/jpeg"];
-    } success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    } progress:^(NSProgress * _Nonnull uploadProgress) {
+
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         NSLog(@"%@",responseObject);
         NSDictionary *dic = [(NSString *)[responseObject valueForKey:@"data"] parseToArrayOrNSDictionary];
         NSString *newHeadIamgeName = [(NSArray *)[dic valueForKey:@"pname"] objectAtIndex:0];
         [[NSUserDefaults standardUserDefaults] setObject:newHeadIamgeName forKey:KEY_HEAD_IMAGE];
         [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_SENDPOST object:nil];
-        
-        [self putHeadImage:newHeadIamgeName];
+
+        [weakSelf putHeadImage:newHeadIamgeName];
         [Hud hideHud];
-        
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"%@",error);
         [Hud hideHud];
         [Hud showMessageWithText:@"上传图片失败"];
-        
     }];
     
 }
 
 - (void)putHeadImage:(NSString *)headImageName
 {
-    NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
-    
-    [[AFHTTPRequestOperationManager manager] PUT:[NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttp,@"user",@"modifyuser"] parameters:@{@"uid":uid,@"type":@"headimage",@"value":headImageName, @"title":self.department,  @"company":self.company} success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"%@",operation);
-        NSLog(@"%@",responseObject);
-        NSString *code = [responseObject valueForKey:@"code"];
+    [MOCHTTPRequestOperationManager putWithURL:[NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttp,@"user",@"modifyuser"] class:nil parameters:@{@"uid":UID,@"type":@"headimage",@"value":headImageName, @"title":self.department,  @"company":self.company} success:^(MOCHTTPResponse *response) {
+        NSString *code = [response.data valueForKey:@"code"];
         if ([code isEqualToString:@"000"]) {
-            
             [Hud showMessageWithText:@"修改成功"];
         }
-        
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        
+    } failed:^(MOCHTTPResponse *response) {
+
     }];
     
 }

@@ -7,19 +7,18 @@
 //
 
 #import "MOCNetworkReachabilityManager.h"
-#import "AFHTTPRequestOperationManager.h"
 
 NSString * const moc_network_status_change_notification = @"moc_network_status_change_notification";
 
-static AFHTTPRequestOperationManager *moc_http_request_operation_manager(NSString *checkURLString){
-    static AFHTTPRequestOperationManager *mow_http_request_operation_manager;
+static AFHTTPSessionManager *moc_http_request_operation_manager(NSString *checkURLString){
+    static AFHTTPSessionManager *mow_http_request_operation_manager;
     static dispatch_once_t oneToken;
     if (IsStrEmpty(checkURLString)) {
         checkURLString = @"www.baidu.com";
     }
     dispatch_once(&oneToken,^{
         NSURL *baseURL = [NSURL URLWithString:checkURLString];
-        mow_http_request_operation_manager = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:baseURL];
+        mow_http_request_operation_manager = [[AFHTTPSessionManager alloc] initWithBaseURL:baseURL];
     });
     return mow_http_request_operation_manager;
 }
@@ -35,7 +34,7 @@ BOOL monitorIsInit;
 
 + (void)startMonitor:(NSString *)checkURLString viaWWAN:(MOCNetworkReachabilityManagerBlock)viaWWANBlock viaWiFi:(MOCNetworkReachabilityManagerBlock)viaWiFiBlock notReachable:(MOCNetworkReachabilityManagerBlock)notReachableBlock{
     
-    AFHTTPRequestOperationManager *manager = moc_http_request_operation_manager(checkURLString);
+    AFHTTPSessionManager *manager = moc_http_request_operation_manager(checkURLString);
     monitorIsInit = YES;
     
     [manager.reachabilityManager setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {

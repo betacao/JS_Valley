@@ -49,6 +49,16 @@ typedef void (^Block)();
 + (void )getWithURL:(NSString *)url parameters:(id)parameters success:(MOCResponseBlock)success failed:(MOCResponseBlock)failed complete:(Block)complete;
 + (void )getWithURL:(NSString *)url class:(Class)aclass parameters:(id)parameters success:(MOCResponseBlock)success failed:(MOCResponseBlock)failed complete:(Block)complete;
 
++ (void )putWithURL:(NSString *)url parameters:(id)parameters success:(MOCResponseBlock)success failed:(MOCResponseBlock)failed;
++ (void )putWithURL:(NSString *)url class:(Class)aclass parameters:(id)parameters success:(MOCResponseBlock)success failed:(MOCResponseBlock)failed;
++ (void )putWithURL:(NSString *)url parameters:(id)parameters success:(MOCResponseBlock)success failed:(MOCResponseBlock)failed complete:(Block)complete;
++ (void )putWithURL:(NSString *)url class:(Class)aclass parameters:(id)parameters success:(MOCResponseBlock)success failed:(MOCResponseBlock)failed complete:(Block)complete;
+
++ (void )deleteWithURL:(NSString *)url parameters:(id)parameters success:(MOCResponseBlock)success failed:(MOCResponseBlock)failed;
++ (void )deleteWithURL:(NSString *)url class:(Class)aclass parameters:(id)parameters success:(MOCResponseBlock)success failed:(MOCResponseBlock)failed;
++ (void )deleteWithURL:(NSString *)url parameters:(id)parameters success:(MOCResponseBlock)success failed:(MOCResponseBlock)failed complete:(Block)complete;
++ (void )deleteWithURL:(NSString *)url class:(Class)aclass parameters:(id)parameters success:(MOCResponseBlock)success failed:(MOCResponseBlock)failed complete:(Block)complete;
+
 //需要重载的方法
 - (BOOL)validateTokenIsLegal:(id)responseObject;//验证token
 - (id)packageParameters:(id)parameters;//封装头部

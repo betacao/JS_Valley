@@ -222,51 +222,45 @@
 			return;
 		}
 	}
-	if (self.identifyImage) {
+    if (self.identifyImage) {
         __weak typeof(self) weakSelf = self;
-		[Hud showLoadingWithMessage:@"正在上传图片..."];
-		[[AFHTTPRequestOperationManager manager] POST:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"image/base"] parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
-			NSData *imageData = UIImageJPEGRepresentation(self.identifyImage, 0.1);
-			[formData appendPartWithFileData:imageData name:@"haha.jpg" fileName:@"haha.jpg" mimeType:@"image/jpeg"];
-		} success:^(AFHTTPRequestOperation *operation, id responseObject) {
-			NSLog(@"%@",responseObject);
-			NSDictionary *dic = [(NSString *)[responseObject valueForKey:@"data"] parseToArrayOrNSDictionary];
-			weakSelf.identifyImageName = [(NSArray *)[dic valueForKey:@"pname"] objectAtIndex:0];
-			[Hud hideHud];
-			[weakSelf submitMaterial];
-		} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-			NSLog(@"%@",error);
-			[Hud hideHud];
-			[Hud showMessageWithText:@"上传图片失败"];
+        [Hud showLoadingWithMessage:@"正在上传图片..."];
+        [[AFHTTPSessionManager manager] POST:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"image/base"] parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+            NSData *imageData = UIImageJPEGRepresentation(self.identifyImage, 0.1);
+            [formData appendPartWithFileData:imageData name:@"haha.jpg" fileName:@"haha.jpg" mimeType:@"image/jpeg"];
+        } progress:^(NSProgress * _Nonnull uploadProgress) {
 
-		}];
+        } success:^(NSURLSessionDataTask *operation, id responseObject) {
+            NSLog(@"%@",responseObject);
+            NSDictionary *dic = [(NSString *)[responseObject valueForKey:@"data"] parseToArrayOrNSDictionary];
+            weakSelf.identifyImageName = [(NSArray *)[dic valueForKey:@"pname"] objectAtIndex:0];
+            [Hud hideHud];
+            [weakSelf submitMaterial];
+        } failure:^(NSURLSessionDataTask *operation, NSError *error) {
+            NSLog(@"%@",error);
+            [Hud hideHud];
+            [Hud showMessageWithText:@"上传图片失败"];
 
-	}else{
+        }];
+
+    }else{
 		[Hud showMessageWithText:@"请选择图片"];
 	}
 }
 
 - (void)submitMaterial
 {
-//	[Hud showLoadingWithMessage:@"正在上传资料..."];
-	NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
-	[[AFHTTPRequestOperationManager manager] PUT:[NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttp,@"user",@"identity"] parameters:@{@"uid":uid,@"potname":self.identifyImageName} success:^(AFHTTPRequestOperation *operation, id responseObject) {
-		NSLog(@"%@",operation);
-		NSLog(@"%@",responseObject);
-		NSString *code = [responseObject valueForKey:@"code"];
-		if ([code isEqualToString:@"000"]) {
-			[Hud hideHud];
-			[Hud showMessageWithText:@"上传成功"];
-            
-             [self performSelector:@selector(popBack) withObject:nil afterDelay:1.0];
-		}
-		
-		
-	} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-		[Hud hideHud];
-		//[Hud showMessageWithText:@"上传资料失败"];
-
-	}];
+    __weak typeof(self)weakSelf = self;
+    [MOCHTTPRequestOperationManager putWithURL:[NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttp,@"user",@"identity"] class:nil parameters:@{@"uid":UID,@"potname":self.identifyImageName} success:^(MOCHTTPResponse *response) {
+        NSString *code = [response.data valueForKey:@"code"];
+        if ([code isEqualToString:@"000"]) {
+            [Hud hideHud];
+            [Hud showMessageWithText:@"上传成功"];
+            [weakSelf performSelector:@selector(popBack) withObject:nil afterDelay:1.0];
+        }
+    } failed:^(MOCHTTPResponse *response) {
+        [Hud hideHud];
+    }];
 
 }
 

@@ -436,7 +436,7 @@
 	}else if (obj.followRelation == 1){
         [Hud showLoadingWithMessage:@"正在取消关注"];
 
-		[[AFHTTPRequestOperationManager manager] DELETE:url parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject) {
+		[[AFHTTPSessionManager manager] DELETE:url parameters:param success:^(NSURLSessionDataTask *operation, id responseObject) {
 			NSString *code = [responseObject valueForKey:@"code"];
 			if ([code isEqualToString:@"000"])
 			{
@@ -457,7 +457,7 @@
             [Hud hideHud];
 
 			
-		} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+		} failure:^(NSURLSessionDataTask *operation, NSError *error) {
 			[Hud showMessageWithText:error.domain];
             [Hud hideHud];
 		}];
@@ -465,7 +465,7 @@
 	}else if (obj.followRelation == 2){
         [Hud showLoadingWithMessage:@"正在取消关注"];
 
-		[[AFHTTPRequestOperationManager manager] DELETE:url parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject) {
+		[[AFHTTPSessionManager manager] DELETE:url parameters:param success:^(NSURLSessionDataTask *operation, id responseObject) {
 			NSString *code = [responseObject valueForKey:@"code"];
 			if ([code isEqualToString:@"000"])
 			{
@@ -486,7 +486,7 @@
 			}
             [Hud hideHud];
 
-		} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+		} failure:^(NSURLSessionDataTask *operation, NSError *error) {
 			[Hud showMessageWithText:error.domain];
             [Hud hideHud];
 		}];

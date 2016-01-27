@@ -77,18 +77,15 @@
 	
 	NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
 
-	[[AFHTTPRequestOperationManager manager] PUT:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"address"] parameters:@{@"uid":uid,@"name":self.obj.name ,@"phone":self.obj.phoneNumber,@"code":self.obj.code,@"area":self.obj.area,@"street":self.obj.street,@"address":self.obj.addressDescription} success:^(AFHTTPRequestOperation *operation, id responseObject) {
-		NSLog(@"%@",operation);
-		NSLog(@"%@",responseObject);
-		NSString *code = [responseObject valueForKey:@"code"];
-		if ([code isEqualToString:@"000"]) {
-			[Hud showMessageWithText:@"修改成功"];
-			[self.navigationController popViewControllerAnimated:YES];
-		}
-		
-	} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-		
-	}];
+    [MOCHTTPRequestOperationManager putWithURL:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"address"] class:nil parameters:@{@"uid":uid,@"name":self.obj.name ,@"phone":self.obj.phoneNumber,@"code":self.obj.code,@"area":self.obj.area,@"street":self.obj.street,@"address":self.obj.addressDescription} success:^(MOCHTTPResponse *response) {
+        NSString *code = [response.data valueForKey:@"code"];
+        if ([code isEqualToString:@"000"]) {
+            [Hud showMessageWithText:@"修改成功"];
+            [self.navigationController popViewControllerAnimated:YES];
+        }
+    } failed:^(MOCHTTPResponse *response) {
+
+    }];
 
 }
 
