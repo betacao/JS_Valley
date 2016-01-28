@@ -9,5 +9,5 @@ pod 'MJRefresh'
 pod 'MBProgressHUD'
 pod 'SDWebImage'
 pod 'MagicalRecord'
-
+pod 'SDAutoLayout'
 end

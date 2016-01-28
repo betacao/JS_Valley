@@ -22,6 +22,7 @@ PODS:
   - Mantle/extobjc (2.0.6)
   - MBProgressHUD (0.9.2)
   - MJRefresh (2.4.12)
+  - SDAutoLayout (1.3)
   - SDWebImage (3.7.5):
     - SDWebImage/Core (= 3.7.5)
   - SDWebImage/Core (3.7.5)
@@ -32,6 +33,7 @@ DEPENDENCIES:
   - Mantle
   - MBProgressHUD
   - MJRefresh
+  - SDAutoLayout
   - SDWebImage
 
 SPEC CHECKSUMS:
@@ -40,8 +42,9 @@ SPEC CHECKSUMS:
   Mantle: 299966b00759634931699f69cb6a30b9239b944d
   MBProgressHUD: 1569cf7ace17a8bac47aabfbb8580a49690386d1
   MJRefresh: ca8e9589895977df32d379d46e6b8a5450b3ff44
+  SDAutoLayout: 5cf822185eaf1c8d236ccda010b890912f9baeba
   SDWebImage: 69c6303e3348fba97e03f65d65d4fbc26740f461
 
-PODFILE CHECKSUM: dd3f7dc595c979a1046b04e953df2c05e68213a4
+PODFILE CHECKSUM: 1087912c59e598eda4f813b3986e85bed74abf00
 
 COCOAPODS: 1.0.0.beta.2
