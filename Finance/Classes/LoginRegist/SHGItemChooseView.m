@@ -7,14 +7,16 @@
 //
 
 #import "SHGItemChooseView.h"
-#import "SHGUnderlineTableViewCell.h"
+
 #define kBgViewLeftMargin 35.0f * XFACTOR
 #define kCellHeight 37.0f
 #define kCellLabelLeftMargin 15.0f
+
 @interface SHGItemChooseView ()<UITableViewDataSource, UITableViewDelegate>
 
 @property (strong, nonatomic) UIView *bgView;
 @property (strong, nonatomic) UITableView *tableView;
+@property (strong, nonatomic) NSMutableArray *modelsArray;
 
 @end
 
@@ -39,6 +41,20 @@
     return self;
 }
 
+- (NSMutableArray *)modelsArray
+{
+    if (!_modelsArray) {
+        _modelsArray = [NSMutableArray array];
+        for (NSInteger i = 0; i < 6; i++) {
+            SHGGlobleModel *model = [[SHGGlobleModel alloc] init];
+            model.text = [self.dataArray objectAtIndex:i];
+            [_modelsArray addObject:model];
+        }
+    }
+    return _modelsArray;
+}
+
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return self.dataArray.count;
@@ -46,16 +62,13 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSString *identfier = @"SHGUnderlineTableViewCell";
-    SHGUnderlineTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identfier];
+    NSString *identfier = @"SHGGlobleTableViewCell";
+    SHGGlobleTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identfier];
 
     if (!cell) {
-        cell = [[[NSBundle mainBundle] loadNibNamed:@"SHGUnderlineTableViewCell" owner:self options:nil]lastObject];
+        cell = [[SHGGlobleTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identfier];
         }
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    cell.titleLabel.text = [self.dataArray objectAtIndex:indexPath.row];
-    cell.underLine.frame = CGRectMake(kCellLabelLeftMargin, cell.height - 1.0f, cell.width - kCellLabelLeftMargin, 0.5f);
-    cell.underLine.backgroundColor = [UIColor colorWithHexString:@"E6E7E8"];
+    cell.model = [self.modelsArray objectAtIndex:indexPath.row];
     return cell;
 }
 
@@ -71,7 +84,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return kCellHeight;
+   return [self.tableView cellHeightForIndexPath:indexPath model:self.modelsArray[indexPath.row] keyPath:@"model" cellClass:[SHGGlobleTableViewCell class] contentViewWidth:SCREENWIDTH];
 }
 
 - (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event

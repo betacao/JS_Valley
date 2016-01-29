@@ -9,6 +9,12 @@
 #import "SHGUserCenterViewController.h"
 #import "SHGPersonalViewController.h"
 #import "MyFollowViewController.h"
+#import "MyTeamViewController.h"
+#import "MyMoneyViewController.h"
+#import "MyAppointmentViewController.h"
+#import "SHGMarketMineViewController.h"
+#import "MyCollectionViewController.h"
+#import "SettingsViewController.h"
 
 #define kLabelWidth SCREENWIDTH / 4.0f
 
@@ -43,6 +49,8 @@
 
 @property (assign, nonatomic) BOOL shouldRefresh;
 @property (strong, nonatomic) NSString *auditState;
+@property (strong, nonatomic) NSArray *titleArray;
+@property (strong, nonatomic) NSMutableArray *modelsArray;
 
 @end
 
@@ -50,7 +58,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.titleArray = @[@"我的合伙人", @"我的佣金", @"我的预约", @"我的业务", @"我的收藏", @"设置"];
     [self addHeaderRefresh:self.tableView headerRefesh:YES andFooter:NO];
+    self.tableHeaderView.backgroundColor = [UIColor clearColor];
 
     //tableView
     self.tableView.sd_layout
@@ -76,7 +86,7 @@
     //职位
     self.departmentLabel.sd_layout
     .leftSpaceToView(self.nickNameLabel, 4.0f)
-    .topEqualToView(self.nickNameLabel)
+    .bottomEqualToView(self.nickNameLabel)
     .autoHeightRatio(0);
     [self.departmentLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
 
@@ -156,7 +166,9 @@
     .heightIs(9.0f);
 
     [self.tableHeaderView setupAutoHeightWithBottomView:self.bottomView bottomMargin:9.0f];
-
+    [self.tableHeaderView layoutSubviews];
+    
+    [self.tableView setTableHeaderView:self.tableHeaderView];
     [self initData];
 
 }
@@ -215,7 +227,8 @@
     if (!_tableView) {
         _tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
         _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-        [_tableView setTableHeaderView:self.tableHeaderView];
+        _tableView.delegate = self;
+        _tableView.dataSource = self;
         [self.view addSubview:_tableView];
     }
     return _tableView;
@@ -393,6 +406,19 @@
     return _bottomView;
 }
 
+- (NSMutableArray *)modelsArray
+{
+    if (!_modelsArray) {
+        _modelsArray = [NSMutableArray array];
+        for (NSInteger i = 0; i < 6; i++) {
+            SHGGlobleModel *model = [[SHGGlobleModel alloc] init];
+            model.text = [self.titleArray objectAtIndex:i];
+            [_modelsArray addObject:model];
+        }
+    }
+    return _modelsArray;
+}
+
 - (void)refreshHeader
 {
     [self getMyselfMaterial];
@@ -514,6 +540,7 @@
         [weakSelf.tableHeaderView layoutSubviews];
 
     } failed:^(MOCHTTPResponse *response) {
+
         [weakSelf.tableView.header endRefreshing];
         
     }];
@@ -531,30 +558,18 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return kRowHeight;
+    return [self.tableView cellHeightForIndexPath:indexPath model:self.modelsArray[indexPath.row] keyPath:@"model" cellClass:[SHGGlobleTableViewCell class] contentViewWidth:SCREENWIDTH];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"MeCell";
-    MeTableViewCell *cell = (MeTableViewCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    static NSString *CellIdentifier = @"SHGGlobleTableViewCell";
+    SHGGlobleTableViewCell *cell = (SHGGlobleTableViewCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
 
     if (cell == nil){
-        cell = [[[NSBundle mainBundle] loadNibNamed:@"MeTableViewCell" owner:self options:nil] lastObject];
+        cell = [[SHGGlobleTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
-    if (indexPath.row == 0) {
-        cell.lblName.text = @"我的合伙人";
-    } else if (indexPath.row == 1) {
-        cell.lblName.text = @"我的佣金";
-    } else if (indexPath.row == 2) {
-        cell.lblName.text = @"我的预约";
-    } else if (indexPath.row == 3) {
-        cell.lblName.text = @"我的业务";
-    } else if (indexPath.row == 4) {
-        cell.lblName.text = @"我的收藏";
-    } else if (indexPath.row == 5) {
-        cell.lblName.text = @"设置";
-    }
+    cell.model = [self.modelsArray objectAtIndex:indexPath.row];
     return cell;
 }
 
@@ -562,33 +577,46 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if (indexPath.row == 0){
-        MyTeamViewController *vc = [[MyTeamViewController alloc] init];
-        vc.hidesBottomBarWhenPushed = YES;
+
+        MyTeamViewController *controller = [[MyTeamViewController alloc] init];
+        controller.hidesBottomBarWhenPushed = YES;
         [MobClick event:@"MyTeamViewController" label:@"onClick"];
-        [self.navigationController pushViewController:vc animated:YES];
+        [self.navigationController pushViewController:controller animated:YES];
+
     } else if (indexPath.row == 1) {
-        MyMoneyViewController *vc = [[MyMoneyViewController alloc] init];
-        vc.hidesBottomBarWhenPushed = YES;
+        MyMoneyViewController *controller = [[MyMoneyViewController alloc] init];
+        controller.hidesBottomBarWhenPushed = YES;
         [MobClick event:@"MyMoneyViewController" label:@"onClick"];
-        [self.navigationController pushViewController:vc animated:YES];
+        [self.navigationController pushViewController:controller animated:YES];
 
     } else if (indexPath.row == 2) {
-        MyAppointmentViewController *vc = [[MyAppointmentViewController alloc] init];
-        vc.hidesBottomBarWhenPushed = YES;
+
+        MyAppointmentViewController *controller = [[MyAppointmentViewController alloc] init];
+        controller.hidesBottomBarWhenPushed = YES;
         [MobClick event:@"MyAppointmentViewController" label:@"onClick"];
-        [self.navigationController pushViewController:vc animated:YES];
+        [self.navigationController pushViewController:controller animated:YES];
+
     } else if (indexPath.row == 3) {
-        SHGMarketMineViewController *marketMineViewController = [[SHGMarketMineViewController alloc] init];
-        marketMineViewController.hidesBottomBarWhenPushed = YES;
-        [self.navigationController pushViewController:marketMineViewController animated:YES];
+
+        SHGMarketMineViewController *controller = [[SHGMarketMineViewController alloc] init];
+        controller.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:controller animated:YES];
 
     } else if (indexPath.row == 4) {
-        MyCollectionViewController *vc = [[MyCollectionViewController alloc] init];
-        vc.hidesBottomBarWhenPushed = YES;
+
+        MyCollectionViewController *controller = [[MyCollectionViewController alloc] init];
+        controller.hidesBottomBarWhenPushed = YES;
         [MobClick event:@"MyCollectionViewController" label:@"onClick"];
-        [self.navigationController pushViewController:vc animated:YES];
+        [self.navigationController pushViewController:controller animated:YES];
+
     } else if (indexPath.row == 5) {
-        [self goToSettings];
+
+        if (self.nickName.length > 0){
+            SettingsViewController *controller = [[SettingsViewController alloc] init];
+            controller.hidesBottomBarWhenPushed = YES;
+            controller.userInfo = @{kNickName:self.nickName, kDepartment:self.department, kCompany:self.company, kLocation:self.location, kIndustry:self.industry, kHeaderImage:self.imageUrl};
+            [self.navigationController	pushViewController:controller animated:YES];
+        }
     }
 }
 

@@ -33,11 +33,10 @@
 #import "CommonMethod.h"
 #import "NSString+Check.h"
 #import "Hud.h"
-#import "NSDictionary+Common.h"
-#import "MOWHttpManager.h"
 #import "NSDate+Customized.h"
 #import "UIView+Additions.h"
 #import "DDTapGestureRecognizer.h"
+#import "MOCHTTPRequestOperationManager.h"
 #import "UIImage+Customized.h"
 #import "BRCommentView.h"
 #import "TabBarViewController.h"
@@ -56,6 +55,6 @@
 #import "NSArray+Category.h"
 #import "UIView+SDAutoLayout.h"
 #import "UITableView+SDAutoTableViewCellHeight.h"
-
+#import "SHGGlobleTableViewCell.h"
 #endif
 #endif
