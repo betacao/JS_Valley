@@ -861,7 +861,6 @@
 		F91982C61C59B98400A450B9 /* libxml2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = F91982C51C59B98400A450B9 /* libxml2.tbd */; };
 		F91982C81C59B98A00A450B9 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = F91982C71C59B98A00A450B9 /* libz.tbd */; };
 		F91982CC1C59F9FA00A450B9 /* SHGUserCenterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F91982CA1C59F9FA00A450B9 /* SHGUserCenterViewController.m */; };
-		F91982CD1C59F9FA00A450B9 /* SHGUserCenterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F91982CB1C59F9FA00A450B9 /* SHGUserCenterViewController.xib */; };
 		F91F51BB1C3136E800D848E3 /* SHGMarketSearchTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F91F51B91C3136E800D848E3 /* SHGMarketSearchTableViewCell.m */; };
 		F91F51BC1C3136E800D848E3 /* SHGMarketSearchTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F91F51BA1C3136E800D848E3 /* SHGMarketSearchTableViewCell.xib */; };
 		F928141C1C045F8900C7782D /* SHGItemChooseView.m in Sources */ = {isa = PBXBuildFile; fileRef = F928141B1C045F8900C7782D /* SHGItemChooseView.m */; };
@@ -2137,7 +2136,6 @@
 		F91982C71C59B98A00A450B9 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		F91982C91C59F9FA00A450B9 /* SHGUserCenterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGUserCenterViewController.h; sourceTree = "<group>"; };
 		F91982CA1C59F9FA00A450B9 /* SHGUserCenterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGUserCenterViewController.m; sourceTree = "<group>"; };
-		F91982CB1C59F9FA00A450B9 /* SHGUserCenterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGUserCenterViewController.xib; sourceTree = "<group>"; };
 		F91B2B871BAA788300BC166D /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F91F51B81C3136E800D848E3 /* SHGMarketSearchTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGMarketSearchTableViewCell.h; sourceTree = "<group>"; };
 		F91F51B91C3136E800D848E3 /* SHGMarketSearchTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGMarketSearchTableViewCell.m; sourceTree = "<group>"; };
@@ -3692,7 +3690,6 @@
 				4088DD841AF0EE7C00393855 /* Settings */,
 				F91982C91C59F9FA00A450B9 /* SHGUserCenterViewController.h */,
 				F91982CA1C59F9FA00A450B9 /* SHGUserCenterViewController.m */,
-				F91982CB1C59F9FA00A450B9 /* SHGUserCenterViewController.xib */,
 				40302AF81AEE6CE900F22EB6 /* MyFollowViewController.h */,
 				40302AF91AEE6CE900F22EB6 /* MyFollowViewController.m */,
 				40302AFA1AEE6CE900F22EB6 /* MyFollowViewController.xib */,
@@ -5353,7 +5350,6 @@
 				61E83CE21AF7C78E00703651 /* 热门@2x.png in Resources */,
 				61E83D381AF7C78E00703651 /* 分享@3x.png in Resources */,
 				B09BF76B1B7C6C1F008260B3 /* 2度@2x.png in Resources */,
-				F91982CD1C59F9FA00A450B9 /* SHGUserCenterViewController.xib in Resources */,
 				9894C97E1BF5D24200F80577 /* SHGActionSignTableViewCell.xib in Resources */,
 				408D8B471AF8618C0055810C /* chatBar_moreSelected.png in Resources */,
 				408D8B031AF8618C0055810C /* VoiceSearchFeedback008.png in Resources */,

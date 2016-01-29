@@ -7,6 +7,10 @@
 //
 
 #import "SHGUserCenterViewController.h"
+#import "SHGPersonalViewController.h"
+#import "MyFollowViewController.h"
+
+#define kLabelWidth SCREENWIDTH / 4.0f
 
 @interface SHGUserCenterViewController ()<UITableViewDataSource, UITableViewDelegate>
 @property (strong, nonatomic) UITableView     *tableView;
@@ -19,6 +23,14 @@
 
 @property (strong, nonatomic) UIView          *messageView;
 @property (strong, nonatomic) UIView          *labelView;
+@property (strong, nonatomic) UILabel	*circleHeaderLabel;  //动态lable
+@property (strong, nonatomic) UILabel	*followHeaderLabel;  //关注label
+@property (strong, nonatomic) UILabel	*fansHeaderLabel;  //粉丝label
+@property (strong, nonatomic) UIView	*breakLine1;
+@property (strong, nonatomic) UIView	*breakLine2;
+@property (strong, nonatomic) UIView	*breakLine3;
+@property (strong, nonatomic) UIView	*bottomView;
+
 
 @property (strong, nonatomic) UIButton      *authButton;
 @property (strong, nonatomic) NSString      *nickName;
@@ -40,44 +52,112 @@
     [super viewDidLoad];
     [self addHeaderRefresh:self.tableView headerRefesh:YES andFooter:NO];
 
+    //tableView
     self.tableView.sd_layout
     .leftSpaceToView(self.view, 0.0f)
     .rightSpaceToView(self.view, 0.0f)
     .topSpaceToView(self.view, 0.0f)
     .bottomSpaceToView(self.view, 0.0f);
 
+    //tableView头
     self.userHeaderView.sd_layout
     .leftSpaceToView(self.tableHeaderView, 19.0f)
     .topSpaceToView(self.tableHeaderView, 17.0f)
     .widthIs(45.0f)
     .heightEqualToWidth();
 
+    //用户名
     self.nickNameLabel.sd_layout
     .leftSpaceToView(self.userHeaderView, 11.0f)
     .topEqualToView(self.userHeaderView)
     .autoHeightRatio(0);
     [self.nickNameLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
 
+    //职位
     self.departmentLabel.sd_layout
     .leftSpaceToView(self.nickNameLabel, 4.0f)
     .topEqualToView(self.nickNameLabel)
     .autoHeightRatio(0);
     [self.departmentLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
 
+    //公司名
     self.companyLabel.sd_layout
     .leftEqualToView(self.nickNameLabel)
     .bottomEqualToView(self.userHeaderView)
     .autoHeightRatio(0);
     [self.companyLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
 
+    //分割线
     self.lineView.sd_layout
     .leftSpaceToView(self.tableHeaderView, 0.0f)
     .rightSpaceToView(self.tableHeaderView, 0.0f)
     .topSpaceToView(self.userHeaderView, 17.0f)
     .heightIs(0.5f);
 
-    [self.tableHeaderView setupAutoHeightWithBottomView:self.lineView bottomMargin:0];
-    [self.tableHeaderView layoutSubviews];
+    //四个按钮
+    self.labelView.sd_layout
+    .leftSpaceToView(self.tableHeaderView, 0.0f)
+    .rightSpaceToView(self.tableHeaderView, 0.0f)
+    .topSpaceToView(self.lineView, 0.0f)
+    .heightIs(58.0f);
+
+    //动态
+    self.circleHeaderLabel.sd_layout
+    .topSpaceToView(self.labelView, 0.0f)
+    .leftSpaceToView(self.labelView, 0.0f)
+    .widthIs(kLabelWidth)
+    .heightRatioToView(self.labelView, 1.0f);
+
+    //关注
+    self.followHeaderLabel.sd_layout
+    .topSpaceToView(self.labelView, 0.0f)
+    .leftSpaceToView(self.circleHeaderLabel, 0.0f)
+    .widthIs(kLabelWidth)
+    .heightRatioToView(self.labelView, 1.0f);
+
+    //粉丝
+    self.fansHeaderLabel.sd_layout
+    .leftSpaceToView(self.followHeaderLabel, 0.0f)
+    .widthIs(kLabelWidth)
+    .heightRatioToView(self.labelView, 1.0f)
+    .centerYEqualToView(self.labelView);
+
+    //认证
+    self.authButton.sd_layout
+    .topSpaceToView(self.labelView, 0.0f)
+    .leftSpaceToView(self.fansHeaderLabel, 0.0f)
+    .widthIs(kLabelWidth)
+    .heightRatioToView(self.labelView, 1.0f);
+
+
+    self.breakLine1.sd_layout
+    .leftSpaceToView(self.circleHeaderLabel, 0.0f)
+    .widthIs(0.5f)
+    .heightIs(22.0f)
+    .centerYEqualToView(self.labelView);
+
+
+    self.breakLine2.sd_layout
+    .leftSpaceToView(self.followHeaderLabel, 0.0f)
+    .widthIs(0.5f)
+    .heightIs(22.0f)
+    .centerYEqualToView(self.labelView);
+
+    self.breakLine3.sd_layout
+    .leftSpaceToView(self.fansHeaderLabel, 0.0f)
+    .widthIs(0.5f)
+    .heightIs(22.0f)
+    .centerYEqualToView(self.labelView);
+
+    self.bottomView.sd_layout
+    .topSpaceToView(self.labelView, 0.0f)
+    .leftSpaceToView(self.tableHeaderView, 0.0f)
+    .rightSpaceToView(self.tableHeaderView, 0.0f)
+    .heightIs(9.0f);
+
+    [self.tableHeaderView setupAutoHeightWithBottomView:self.bottomView bottomMargin:9.0f];
+
+    [self initData];
 
 }
 
@@ -89,6 +169,19 @@
     } else{
         self.shouldRefresh = YES;
     }
+}
+
+- (void)initData
+{
+    self.shouldRefresh = YES;
+    self.nickName = @"";
+    self.department = @"";
+    self.company = @"";
+    self.industry = @"";
+    self.location = @"";
+    self.imageUrl = @"";
+
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshHeader) name:NOTIFI_CHANGE_UPDATE_AUTO_STATUE object:nil];
 }
 
 - (UILabel *)titleLabel
@@ -137,6 +230,8 @@
         [_tableHeaderView addSubview:self.companyLabel];
         [_tableHeaderView addSubview:self.departmentLabel];
         [_tableHeaderView addSubview:self.lineView];
+        [_tableHeaderView addSubview:self.labelView];
+        [_tableHeaderView addSubview:self.bottomView];
     }
     return _tableHeaderView;
 }
@@ -188,10 +283,149 @@
     return _lineView;
 }
 
+- (UIView *)labelView
+{
+    if (!_labelView) {
+        _labelView = [[UIView alloc] init];
+        [_labelView addSubview:self.circleHeaderLabel];
+        [_labelView addSubview:self.followHeaderLabel];
+        [_labelView addSubview:self.fansHeaderLabel];
+        [_labelView addSubview:self.authButton];
+        [_labelView addSubview:self.breakLine1];
+        [_labelView addSubview:self.breakLine2];
+        [_labelView addSubview:self.breakLine3];
+    }
+    return _labelView;
+}
 
--(void)refreshHeader
+- (UILabel *)circleHeaderLabel
+{
+    if (!_circleHeaderLabel) {
+        _circleHeaderLabel = [[UILabel alloc] init];
+        _circleHeaderLabel.textAlignment = NSTextAlignmentCenter;
+        _circleHeaderLabel.textColor = [UIColor colorWithHexString:@"989898"];
+        _circleHeaderLabel.numberOfLines = 0;
+        _circleHeaderLabel.font = [UIFont systemFontOfSize:12.0f];
+        _circleHeaderLabel.userInteractionEnabled = YES;
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(goToMyCircle)];
+        [_circleHeaderLabel addGestureRecognizer:tap];
+    }
+    return _circleHeaderLabel;
+}
+
+- (UILabel *)followHeaderLabel
+{
+    if (!_followHeaderLabel) {
+        _followHeaderLabel = [[UILabel alloc] init];
+        _followHeaderLabel.textAlignment = NSTextAlignmentCenter;
+        _followHeaderLabel.numberOfLines = 0;
+        _followHeaderLabel.textColor = [UIColor colorWithHexString:@"989898"];
+        _followHeaderLabel.font = [UIFont systemFontOfSize:12.0f];
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(goToFollowList)];
+        [_followHeaderLabel addGestureRecognizer:tap];
+        _followHeaderLabel.userInteractionEnabled = YES;
+    }
+
+    return _followHeaderLabel;
+}
+
+
+- (UILabel *)fansHeaderLabel
+{
+    if (!_fansHeaderLabel) {
+        _fansHeaderLabel = [[UILabel alloc] init];
+        _fansHeaderLabel.textAlignment = NSTextAlignmentCenter;
+        _fansHeaderLabel.numberOfLines = 0;
+        _fansHeaderLabel.textColor = [UIColor colorWithHexString:@"989898"];
+        _fansHeaderLabel.font = [UIFont systemFontOfSize:12.0f];
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(goToFansList)];
+        [_fansHeaderLabel addGestureRecognizer:tap];
+        _fansHeaderLabel.userInteractionEnabled = YES;
+    }
+
+    return _fansHeaderLabel;
+}
+
+- (UIButton *)authButton
+{
+    if (!_authButton) {
+        _authButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [_authButton setImage:[UIImage imageNamed:@"me_unAuth"] forState:UIControlStateNormal];
+        [_authButton addTarget:self action:@selector(actionAuth:) forControlEvents:UIControlEventTouchUpInside];
+    }
+
+    return _authButton;
+}
+
+- (UIView *)breakLine1
+{
+    if (!_breakLine1) {
+        _breakLine1 = [[UIView alloc] init];
+        _breakLine1.backgroundColor = [UIColor colorWithHexString:@"e6e7e8"];
+    }
+    return _breakLine1;
+}
+
+- (UIView *)breakLine2
+{
+    if (!_breakLine2) {
+        _breakLine2 = [[UIView alloc] init];
+        _breakLine2.backgroundColor = [UIColor colorWithHexString:@"e6e7e8"];
+    }
+    return _breakLine2;
+}
+
+- (UIView *)breakLine3
+{
+    if (!_breakLine3) {
+        _breakLine3 = [[UIView alloc] init];
+        _breakLine3.backgroundColor = [UIColor colorWithHexString:@"e6e7e8"];
+    }
+    return _breakLine3;
+}
+
+- (UIView *)bottomView
+{
+    if (!_bottomView) {
+        _bottomView = [[UIView alloc] init];
+        _bottomView.backgroundColor = [UIColor colorWithHexString:@"edeeef"];
+    }
+    return _bottomView;
+}
+
+- (void)refreshHeader
 {
     [self getMyselfMaterial];
+}
+
+- (void)goToMyCircle
+{
+    SHGPersonalViewController *controller = [[SHGPersonalViewController alloc] initWithNibName:@"SHGPersonalViewController" bundle:nil];
+    controller.hidesBottomBarWhenPushed = YES;
+    controller.userId = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
+    [self.navigationController pushViewController:controller animated:YES];
+}
+
+- (void)goToFollowList
+{
+    MyFollowViewController *controller = [[MyFollowViewController alloc] init];
+    controller.relationShip = 1;
+    controller.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:controller animated:YES];
+}
+
+- (void)goToFansList
+{
+    MyFollowViewController *controller = [[MyFollowViewController alloc] init];
+    controller.relationShip = 2;
+    controller.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:controller animated:YES];
+}
+
+- (void)actionAuth:(id)sender {
+    VerifyIdentityViewController *controller = [[VerifyIdentityViewController alloc] init];
+    controller.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:controller animated:YES];
 }
 
 #pragma mark ------获取数据
@@ -208,6 +442,7 @@
         NSString *circleString = [NSString stringWithFormat:@"动态 \n%@",circleCount];
         NSString *followString = [NSString stringWithFormat:@"关注 \n%@",followCount];
         NSString *fansString = [NSString stringWithFormat:@"粉丝 \n%@",fansCount];
+
         NSMutableParagraphStyle * paragraphStyle1 = [[NSMutableParagraphStyle alloc] init];
         [paragraphStyle1 setLineSpacing:1.0f];
         paragraphStyle1.alignment = NSTextAlignmentCenter;
@@ -223,9 +458,9 @@
         [aFansString addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"161616"] range:NSMakeRange(4, aFansString.length - 4)];
         [aFansString addAttribute:NSParagraphStyleAttributeName value:paragraphStyle1 range:NSMakeRange(0, [aFansString length])];
 
-//        weakSelf.circleHeaderLabel.attributedText = aCircleString;
-//        weakSelf.followHeaderLabel.attributedText = aFollowString;
-//        weakSelf.fansHeaderLabel.attributedText = aFansString;
+        weakSelf.circleHeaderLabel.attributedText = aCircleString;
+        weakSelf.followHeaderLabel.attributedText = aFollowString;
+        weakSelf.fansHeaderLabel.attributedText = aFansString;
 
         weakSelf.nickNameLabel.text = [response.dataDictionary valueForKey:@"name"];
         weakSelf.nickName = [response.dataDictionary valueForKey:@"name"];
@@ -275,14 +510,86 @@
                 [self.authButton setImage:[UIImage imageNamed:@"me_rejected"] forState:UIControlStateNormal];
             }
         }
-
         [weakSelf.tableView.header endRefreshing];
-
         [weakSelf.tableHeaderView layoutSubviews];
+
     } failed:^(MOCHTTPResponse *response) {
         [weakSelf.tableView.header endRefreshing];
         
     }];
+}
+#pragma mark - TableView Delegate
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return 6;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return kRowHeight;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *CellIdentifier = @"MeCell";
+    MeTableViewCell *cell = (MeTableViewCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+
+    if (cell == nil){
+        cell = [[[NSBundle mainBundle] loadNibNamed:@"MeTableViewCell" owner:self options:nil] lastObject];
+    }
+    if (indexPath.row == 0) {
+        cell.lblName.text = @"我的合伙人";
+    } else if (indexPath.row == 1) {
+        cell.lblName.text = @"我的佣金";
+    } else if (indexPath.row == 2) {
+        cell.lblName.text = @"我的预约";
+    } else if (indexPath.row == 3) {
+        cell.lblName.text = @"我的业务";
+    } else if (indexPath.row == 4) {
+        cell.lblName.text = @"我的收藏";
+    } else if (indexPath.row == 5) {
+        cell.lblName.text = @"设置";
+    }
+    return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    if (indexPath.row == 0){
+        MyTeamViewController *vc = [[MyTeamViewController alloc] init];
+        vc.hidesBottomBarWhenPushed = YES;
+        [MobClick event:@"MyTeamViewController" label:@"onClick"];
+        [self.navigationController pushViewController:vc animated:YES];
+    } else if (indexPath.row == 1) {
+        MyMoneyViewController *vc = [[MyMoneyViewController alloc] init];
+        vc.hidesBottomBarWhenPushed = YES;
+        [MobClick event:@"MyMoneyViewController" label:@"onClick"];
+        [self.navigationController pushViewController:vc animated:YES];
+
+    } else if (indexPath.row == 2) {
+        MyAppointmentViewController *vc = [[MyAppointmentViewController alloc] init];
+        vc.hidesBottomBarWhenPushed = YES;
+        [MobClick event:@"MyAppointmentViewController" label:@"onClick"];
+        [self.navigationController pushViewController:vc animated:YES];
+    } else if (indexPath.row == 3) {
+        SHGMarketMineViewController *marketMineViewController = [[SHGMarketMineViewController alloc] init];
+        marketMineViewController.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:marketMineViewController animated:YES];
+
+    } else if (indexPath.row == 4) {
+        MyCollectionViewController *vc = [[MyCollectionViewController alloc] init];
+        vc.hidesBottomBarWhenPushed = YES;
+        [MobClick event:@"MyCollectionViewController" label:@"onClick"];
+        [self.navigationController pushViewController:vc animated:YES];
+    } else if (indexPath.row == 5) {
+        [self goToSettings];
+    }
 }
 
 #pragma mark -邀请好友
