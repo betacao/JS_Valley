@@ -67,7 +67,7 @@
     .leftSpaceToView(self.view, 0.0f)
     .rightSpaceToView(self.view, 0.0f)
     .topSpaceToView(self.view, 0.0f)
-    .bottomSpaceToView(self.view, 49.0f);
+    .bottomSpaceToView(self.view, 0.0f);
 
     //tableView头
     self.userHeaderView.sd_layout
@@ -80,21 +80,21 @@
     self.nickNameLabel.sd_layout
     .leftSpaceToView(self.userHeaderView, 11.0f)
     .topEqualToView(self.userHeaderView)
-    .autoHeightRatio(0);
+    .autoHeightRatio(0.0f);
     [self.nickNameLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
 
     //职位
     self.departmentLabel.sd_layout
     .leftSpaceToView(self.nickNameLabel, 4.0f)
     .bottomEqualToView(self.nickNameLabel)
-    .autoHeightRatio(0);
+    .autoHeightRatio(0.0f);
     [self.departmentLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
 
     //公司名
     self.companyLabel.sd_layout
     .leftEqualToView(self.nickNameLabel)
     .bottomEqualToView(self.userHeaderView)
-    .autoHeightRatio(0);
+    .autoHeightRatio(0.0f);
     [self.companyLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
 
     //分割线
