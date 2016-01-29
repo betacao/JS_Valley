@@ -29,13 +29,7 @@
 #import "BaseNavigationController.h"
 #import "BaseTableViewController.h"
 #import "BaseViewController.h"
-#import "ZSYPopoverListView.h"
-#import "ZYQAssetPickerController.h"
-#import "CPTextViewPlaceholder.h"
-#import "BRCommonPopup.h"
 #import "PopoverListObj.h"
-#import "ZSYPopoverListView.h"
-#import "ZYQAssetPickerController.h"
 #import "CommonMethod.h"
 #import "NSString+Check.h"
 #import "Hud.h"
@@ -60,5 +54,8 @@
 #import "headerView.h"
 #import "DXAlertView.h"
 #import "NSArray+Category.h"
+#import "UIView+SDAutoLayout.h"
+#import "UITableView+SDAutoTableViewCellHeight.h"
+
 #endif
 #endif

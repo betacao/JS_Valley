@@ -7,6 +7,7 @@
 //
 
 #import "SettingsSuggestionsViewController.h"
+#import "CPTextViewPlaceholder.h"
 
 @interface SettingsSuggestionsViewController ()
 

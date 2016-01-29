@@ -9,7 +9,7 @@
 #import "BaseViewController.h"
 #import "SHGHomeViewController.h"
 #import "ProductListViewController.h"
-#import "MeViewController.h"
+#import "SHGUserCenterViewController.h"
 #import "ChatListViewController.h"
 @interface BaseViewController ()
 

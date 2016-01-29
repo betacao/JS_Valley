@@ -11,6 +11,7 @@
 #define IS_IOS8 ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8)
 #import "CircleSendViewController.h"
 #import "TWEmojiKeyBoard.h"
+#import "CPTextViewPlaceholder.h"
 
 #define MAX_TEXT_LENGTH         2000
 

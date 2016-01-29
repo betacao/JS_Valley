@@ -407,7 +407,6 @@
 		61647AF61AE8F33000B52544 /* LoginObj.m in Sources */ = {isa = PBXBuildFile; fileRef = 61647AF51AE8F33000B52544 /* LoginObj.m */; };
 		61656F8E1B15DD5B008B2AB4 /* MeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 61656F8C1B15DD5B008B2AB4 /* MeTableViewCell.m */; };
 		61656F8F1B15DD5B008B2AB4 /* MeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61656F8D1B15DD5B008B2AB4 /* MeTableViewCell.xib */; };
-		61656F911B162DBA008B2AB4 /* MeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61656F901B162DBA008B2AB4 /* MeViewController.m */; };
 		6186DF381AFB7F3800960934 /* 好友@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6186DF311AFB7F3800960934 /* 好友@2x.png */; };
 		6186DF391AFB7F3800960934 /* 好友@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6186DF321AFB7F3800960934 /* 好友@3x.png */; };
 		6186DF3A1AFB7F3800960934 /* 帖子@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6186DF331AFB7F3800960934 /* 帖子@2x.png */; };
@@ -475,7 +474,6 @@
 		61909FD31AF90D1F0023935F /* ProdSubViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61909FD11AF90D1F0023935F /* ProdSubViewController.xib */; };
 		61909FD61AF92BAF0023935F /* comment_btn_cancel@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 61909FD41AF92BAF0023935F /* comment_btn_cancel@2x.png */; };
 		61909FD71AF92BAF0023935F /* comment_btn_ok@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 61909FD51AF92BAF0023935F /* comment_btn_ok@2x.png */; };
-		61B992F71ADB94580025BE7B /* MeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61B992F51ADB94580025BE7B /* MeViewController.xib */; };
 		61B992FB1ADBBE540025BE7B /* SHGHomeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 61B992F91ADBBE540025BE7B /* SHGHomeTableViewCell.m */; };
 		61B992FC1ADBBE540025BE7B /* SHGHomeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61B992FA1ADBBE540025BE7B /* SHGHomeTableViewCell.xib */; };
 		61BF11941B276B3E00FEC690 /* 1_1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 61BF11901B276B3E00FEC690 /* 1_1@2x.png */; };
@@ -862,6 +860,8 @@
 		F91982C41C59B97B00A450B9 /* libstdc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = F91982C31C59B97B00A450B9 /* libstdc++.tbd */; };
 		F91982C61C59B98400A450B9 /* libxml2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = F91982C51C59B98400A450B9 /* libxml2.tbd */; };
 		F91982C81C59B98A00A450B9 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = F91982C71C59B98A00A450B9 /* libz.tbd */; };
+		F91982CC1C59F9FA00A450B9 /* SHGUserCenterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F91982CA1C59F9FA00A450B9 /* SHGUserCenterViewController.m */; };
+		F91982CD1C59F9FA00A450B9 /* SHGUserCenterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F91982CB1C59F9FA00A450B9 /* SHGUserCenterViewController.xib */; };
 		F91F51BB1C3136E800D848E3 /* SHGMarketSearchTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F91F51B91C3136E800D848E3 /* SHGMarketSearchTableViewCell.m */; };
 		F91F51BC1C3136E800D848E3 /* SHGMarketSearchTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F91F51BA1C3136E800D848E3 /* SHGMarketSearchTableViewCell.xib */; };
 		F928141C1C045F8900C7782D /* SHGItemChooseView.m in Sources */ = {isa = PBXBuildFile; fileRef = F928141B1C045F8900C7782D /* SHGItemChooseView.m */; };
@@ -1481,7 +1481,6 @@
 		61656F8B1B15DD5B008B2AB4 /* MeTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MeTableViewCell.h; sourceTree = "<group>"; };
 		61656F8C1B15DD5B008B2AB4 /* MeTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MeTableViewCell.m; sourceTree = "<group>"; };
 		61656F8D1B15DD5B008B2AB4 /* MeTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MeTableViewCell.xib; sourceTree = "<group>"; };
-		61656F901B162DBA008B2AB4 /* MeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MeViewController.m; sourceTree = "<group>"; };
 		6186DF311AFB7F3800960934 /* 好友@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "好友@2x.png"; sourceTree = "<group>"; };
 		6186DF321AFB7F3800960934 /* 好友@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "好友@3x.png"; sourceTree = "<group>"; };
 		6186DF331AFB7F3800960934 /* 帖子@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "帖子@2x.png"; sourceTree = "<group>"; };
@@ -1601,8 +1600,6 @@
 		61909FD11AF90D1F0023935F /* ProdSubViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProdSubViewController.xib; sourceTree = "<group>"; };
 		61909FD41AF92BAF0023935F /* comment_btn_cancel@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "comment_btn_cancel@2x.png"; sourceTree = "<group>"; };
 		61909FD51AF92BAF0023935F /* comment_btn_ok@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "comment_btn_ok@2x.png"; sourceTree = "<group>"; };
-		61B992F31ADB94580025BE7B /* MeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MeViewController.h; sourceTree = "<group>"; };
-		61B992F51ADB94580025BE7B /* MeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MeViewController.xib; sourceTree = "<group>"; };
 		61B992F81ADBBE540025BE7B /* SHGHomeTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGHomeTableViewCell.h; sourceTree = "<group>"; };
 		61B992F91ADBBE540025BE7B /* SHGHomeTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGHomeTableViewCell.m; sourceTree = "<group>"; };
 		61B992FA1ADBBE540025BE7B /* SHGHomeTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGHomeTableViewCell.xib; sourceTree = "<group>"; };
@@ -2138,6 +2135,9 @@
 		F91982C31C59B97B00A450B9 /* libstdc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.tbd"; path = "usr/lib/libstdc++.tbd"; sourceTree = SDKROOT; };
 		F91982C51C59B98400A450B9 /* libxml2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libxml2.tbd; path = usr/lib/libxml2.tbd; sourceTree = SDKROOT; };
 		F91982C71C59B98A00A450B9 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		F91982C91C59F9FA00A450B9 /* SHGUserCenterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGUserCenterViewController.h; sourceTree = "<group>"; };
+		F91982CA1C59F9FA00A450B9 /* SHGUserCenterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGUserCenterViewController.m; sourceTree = "<group>"; };
+		F91982CB1C59F9FA00A450B9 /* SHGUserCenterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGUserCenterViewController.xib; sourceTree = "<group>"; };
 		F91B2B871BAA788300BC166D /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F91F51B81C3136E800D848E3 /* SHGMarketSearchTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGMarketSearchTableViewCell.h; sourceTree = "<group>"; };
 		F91F51B91C3136E800D848E3 /* SHGMarketSearchTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGMarketSearchTableViewCell.m; sourceTree = "<group>"; };
@@ -3690,9 +3690,9 @@
 			isa = PBXGroup;
 			children = (
 				4088DD841AF0EE7C00393855 /* Settings */,
-				61B992F31ADB94580025BE7B /* MeViewController.h */,
-				61656F901B162DBA008B2AB4 /* MeViewController.m */,
-				61B992F51ADB94580025BE7B /* MeViewController.xib */,
+				F91982C91C59F9FA00A450B9 /* SHGUserCenterViewController.h */,
+				F91982CA1C59F9FA00A450B9 /* SHGUserCenterViewController.m */,
+				F91982CB1C59F9FA00A450B9 /* SHGUserCenterViewController.xib */,
 				40302AF81AEE6CE900F22EB6 /* MyFollowViewController.h */,
 				40302AF91AEE6CE900F22EB6 /* MyFollowViewController.m */,
 				40302AFA1AEE6CE900F22EB6 /* MyFollowViewController.xib */,
@@ -5353,6 +5353,7 @@
 				61E83CE21AF7C78E00703651 /* 热门@2x.png in Resources */,
 				61E83D381AF7C78E00703651 /* 分享@3x.png in Resources */,
 				B09BF76B1B7C6C1F008260B3 /* 2度@2x.png in Resources */,
+				F91982CD1C59F9FA00A450B9 /* SHGUserCenterViewController.xib in Resources */,
 				9894C97E1BF5D24200F80577 /* SHGActionSignTableViewCell.xib in Resources */,
 				408D8B471AF8618C0055810C /* chatBar_moreSelected.png in Resources */,
 				408D8B031AF8618C0055810C /* VoiceSearchFeedback008.png in Resources */,
@@ -5472,7 +5473,6 @@
 				F9A227BD1BF5ABC60054F8D7 /* SHGActionTableViewCell.xib in Resources */,
 				B080FEA21B81E30100426579 /* emoji_face_s.png in Resources */,
 				61E83CDF1AF7C78E00703651 /* 收起箭头@2x.png in Resources */,
-				61B992F71ADB94580025BE7B /* MeViewController.xib in Resources */,
 				408D8B251AF8618C0055810C /* callBg@2x.png in Resources */,
 				408D8B111AF8618C0055810C /* VoiceSearchFeedback015.png in Resources */,
 				408D8B5F1AF8618C0055810C /* chatBar_more_location.png in Resources */,
@@ -5710,7 +5710,6 @@
 				6187D2E91AF1C693008E1D21 /* MessageModelManager.m in Sources */,
 				619027481B2359C600D9EEA2 /* MLKMenuPopover1.m in Sources */,
 				6149CFDD1B259E40006E45FE /* MLKMenuPopover.m in Sources */,
-				61656F911B162DBA008B2AB4 /* MeViewController.m in Sources */,
 				61909FD21AF90D1F0023935F /* ProdSubViewController.m in Sources */,
 				6187D2CC1AF1C693008E1D21 /* CreateGroupViewController.m in Sources */,
 				40302B221AEF673200F22EB6 /* TeamDetailTableViewCell.m in Sources */,
@@ -5807,6 +5806,7 @@
 				F9B0636B1BD7699400471DF4 /* SHGNavigationView.m in Sources */,
 				614BA7DC1AE5E96C009480CD /* LoginNextViewController.m in Sources */,
 				615010DC1AD61BD700827F82 /* ZSYPopoverListView.m in Sources */,
+				F91982CC1C59F9FA00A450B9 /* SHGUserCenterViewController.m in Sources */,
 				B00903551B622274000EAD7D /* UIColor+extend.m in Sources */,
 				B04355CE1B4BD3560033BBBF /* LinkViewController.m in Sources */,
 				6187D2E51AF1C693008E1D21 /* EMChatTimeCell.m in Sources */,

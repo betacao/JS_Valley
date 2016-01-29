@@ -9,7 +9,7 @@
 #import "TabBarViewController.h"
 #import "SHGHomeViewController.h"
 #import "ProductListViewController.h"
-#import "MeViewController.h"
+#import "SHGUserCenterViewController.h"
 #import "ApplyViewController.h"
 #import "CircleDetailViewController.h"
 #import "DiscoverViewController.h"
@@ -29,7 +29,7 @@
 @property (strong, nonatomic) SHGHomeViewController *homeViewController;
 @property (strong, nonatomic) SHGNewsViewController *newsViewController;
 @property (strong, nonatomic) DiscoverViewController *prodViewController;
-@property (strong, nonatomic) MeViewController *meViewController;
+@property (strong, nonatomic) SHGUserCenterViewController *meViewController;
 @property (strong, nonatomic) SHGMarketSegmentViewController *marketSegmentViewController;
 @property (strong, nonatomic) SHGMarketListViewController *marketListViewController;
 @property (strong, nonatomic) SHGMarketMineViewController *marketMineViewController;
@@ -357,11 +357,11 @@
     return _prodViewController;
 }
 
-- (MeViewController *)meViewController
+- (SHGUserCenterViewController *)meViewController
 {
     if (!_meViewController)
     {
-        _meViewController = [[MeViewController alloc] initWithNibName:@"MeViewController" bundle:nil];
+        _meViewController = [[SHGUserCenterViewController alloc] init];
     }
     return _meViewController;
 }

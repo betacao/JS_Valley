@@ -8,6 +8,7 @@
 
 #import "BaseViewController.h"
 #import "RecommendTypeObj.h"
+#import "ZYQAssetPickerController.h"
 @interface CircleSendViewController : BaseViewController<UIActionSheetDelegate,UIScrollViewDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,ZYQAssetPickerControllerDelegate,UITextViewDelegate,UIAlertViewDelegate>
 
 @end
