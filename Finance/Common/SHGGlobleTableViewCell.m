@@ -27,10 +27,10 @@
         [self.contentView addSubview:self.lineView];
 
         self.textLabel.sd_layout
-        .bottomSpaceToView(self.contentView, 0.0f)
         .leftSpaceToView(self.contentView, 15.0f)
         .topSpaceToView(self.contentView, 0.0f)
-        .rightSpaceToView(self.contentView, 0.0f);
+        .rightSpaceToView(self.contentView, 0.0f)
+        .heightIs(54.0f);
 
         self.lineView.sd_layout
         .bottomSpaceToView(self.contentView, 0.0f)
