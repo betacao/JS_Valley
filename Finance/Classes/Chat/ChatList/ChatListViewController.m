@@ -1004,7 +1004,8 @@ static NSString * const kCommonFNum			= @"commonnum";
         self.unapplyCountLabel.hidden = YES;
     } else{
         NSString *tmpStr = [NSString stringWithFormat:@"%i", (int)count];
-        CGSize size = [tmpStr sizeWithFont:self.unapplyCountLabel.font constrainedToSize:CGSizeMake(50, 20) lineBreakMode:NSLineBreakByWordWrapping];
+//        CGSize size = [tmpStr sizeWithFont:self.unapplyCountLabel.font constrainedToSize:CGSizeMake(50, 20) lineBreakMode:NSLineBreakByWordWrapping];
+        CGSize size = [tmpStr boundingRectWithSize:CGSizeMake(50, 20) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName: self.unapplyCountLabel.font} context:nil].size;
         CGRect rect = self.unapplyCountLabel.frame;
         rect.size.width = size.width > 20 ? size.width : 20;
         self.unapplyCountLabel.text = tmpStr;

@@ -19,8 +19,14 @@
 #import "SHGNewsTableViewCell.h"
 #import "CircleNewDetailViewController.h"
 #import "SHGEmptyDataView.h"
-#define KButtonWidth 320.f/3.0 * XFACTOR
-@interface MyCollectionViewController ()
+#import "SHGMarketObject.h"
+#import "SHGMarketTableViewCell.h"
+#import "SHGMarketDetailViewController.h"
+#import "SHGMarketSendViewController.h"
+#import "SHGMarketSegmentViewController.h"
+#import "SHGMarketDetailViewController.h"
+#define KButtonWidth 320.f/4.0 * XFACTOR
+@interface MyCollectionViewController ()<SHGMarketTableViewDelegate>
 {
     UIImageView *imageBttomLine;
     BOOL hasDataFinished;
@@ -45,6 +51,8 @@
 @property (nonatomic, strong) NSMutableArray * cardList;
 
 @property (nonatomic, strong) NSMutableArray * newsList;
+
+@property (nonatomic, strong) NSMutableArray * marketList;
 
 @property (nonatomic, strong) IBOutlet UITableView *tableView;
 
@@ -90,8 +98,8 @@
     if (!_categoryView) {
         _categoryView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.tableView.width, categoryViewHeight)];
         _categoryView.backgroundColor = [UIColor colorWithHexString:@"F6F6F6"];
-        NSArray * cartegoryArry = [NSArray arrayWithObjects:@"动态",@"产品",@"名片", nil];
-        for (NSInteger i = 0; i< 3; i ++) {
+        NSArray * cartegoryArry = [NSArray arrayWithObjects:@"动态",@"业务",@"产品",@"名片", nil];
+        for (NSInteger i = 0; i< cartegoryArry.count; i ++) {
             UIButton * button = [UIButton buttonWithType:UIButtonTypeCustom];
             button.frame = CGRectMake(i*KButtonWidth, 0, KButtonWidth, buttonHeight);
             button.tag = 20+i;
@@ -109,7 +117,7 @@
         clickIndex = 20;
         NSInteger imageBttomY = 34.0f;
         imageBttomLineWidth = 28.0f;
-        imageBttomLine = [[UIImageView alloc] initWithFrame:CGRectMake((SCREENWIDTH/3-imageBttomLineWidth)/2, imageBttomY, imageBttomLineWidth, 2.0f)];
+        imageBttomLine = [[UIImageView alloc] initWithFrame:CGRectMake((SCREENWIDTH/4.0f-imageBttomLineWidth)/2, imageBttomY, imageBttomLineWidth, 2.0f)];
         [imageBttomLine setImage:[UIImage imageNamed:@"tab下划线"]];
         NSInteger lineViewY = 36.0f;
         UIView * lineView = [[UIView alloc]initWithFrame:CGRectMake(0, lineViewY, SCREENWIDTH, 0.5)];
@@ -142,7 +150,7 @@
             [self refreshDataSource];
             self.tableView.separatorStyle = 0;
             CGRect rect = imageBttomLine.frame;
-            rect.origin.x =(self.tableView.width/3- imageBttomLineWidth )/2+ (btn.tag-20)*self.tableView.width/3 ;
+            rect.origin.x =(self.tableView.width/4.0f- imageBttomLineWidth )/2+ (btn.tag-20)*self.tableView.width/4.0f ;
             [UIView beginAnimations:nil context:nil];
             [imageBttomLine setFrame:rect];
             [UIView setAnimationDuration:0.3];
@@ -154,13 +162,13 @@
             [self requestPostListWithTarget:@"first" time:@"-1"];
         }
             break;
-        case 21:
+        case 22:
         {
             self.tableView.separatorStyle = 0;
-            self.selectType = 2;
+            self.selectType = 3;
             [self refreshDataSource];
             CGRect rect = imageBttomLine.frame;
-            rect.origin.x =(self.tableView.width/3-imageBttomLineWidth)/2+ (btn.tag-20)*self.tableView.width/3 ;
+            rect.origin.x =(self.tableView.width/4.0f-imageBttomLineWidth)/2+ (btn.tag-20)*self.tableView.width/4.0f ;
             [UIView beginAnimations:nil context:nil];
             [imageBttomLine setFrame:rect];
             [UIView setAnimationDuration:0.3];
@@ -173,13 +181,13 @@
             
         }
             break;
-        case 22:
+        case 23:
         {
             self.tableView.separatorStyle = 0;
-            self.selectType = 3;
+            self.selectType = 4;
              [self refreshDataSource];
             CGRect rect = imageBttomLine.frame;
-            rect.origin.x =(self.tableView.width/3-imageBttomLineWidth)/2+ (btn.tag-20)*self.tableView.width/3 ;
+            rect.origin.x =(self.tableView.width/4.0f-imageBttomLineWidth)/2+ (btn.tag-20)*self.tableView.width/4.0f ;
             [UIView beginAnimations:nil context:nil];
             [imageBttomLine setFrame:rect];
             [UIView setAnimationDuration:0.3];
@@ -189,6 +197,26 @@
             [self.tableView reloadData];
             [Hud showLoadingWithMessage:@"加载中"];
             [self requestCardListWithTarget:@"first" time:@"-1" ];
+            
+            
+        }
+            break;
+        case 21:
+        {
+            self.tableView.separatorStyle = 0;
+            self.selectType = 2;
+            [self refreshDataSource];
+            CGRect rect = imageBttomLine.frame;
+            rect.origin.x =(self.tableView.width/4.0f-imageBttomLineWidth)/2+ (btn.tag-20)*self.tableView.width/4.0f ;
+            [UIView beginAnimations:nil context:nil];
+            [imageBttomLine setFrame:rect];
+            [UIView setAnimationDuration:0.3];
+            [UIView commitAnimations];
+            [btn setTitleColor:[UIColor colorWithHexString:@"D82626"] forState:UIControlStateNormal];
+            btn.titleLabel.font = [UIFont systemFontOfSize:14];
+            [self.tableView reloadData];
+            [Hud showLoadingWithMessage:@"加载中"];
+            [self requestMarketCollectWithTarget:@"first" time:@"" ];
             
             
         }
@@ -259,10 +287,12 @@
 {
 	if (self.selectType == 1) {
 		self.dataSource = self.postList;
-	}else if (self.selectType == 2){
+	} else if (self.selectType == 3){
 		self.dataSource = self.productList;
-    }else if (self.selectType == 3){
+    } else if (self.selectType == 4){
         self.dataSource = self.cardList;
+    } else if (self.selectType == 2){
+        self.dataSource = self.marketList;
     }
     //1.7.2 资讯隐藏
 //    else if (self.selectType == 4){
@@ -290,14 +320,17 @@
             updateTime = obj.publishdate;
             [Hud showLoadingWithMessage:@"加载中"];
 			[self requestPostListWithTarget:target time:updateTime];
-		}else if (self.selectType == 2){
+		} else if (self.selectType == 3){
             ProdListObj *obj = self.dataSource[0];
             updateTime = obj.time;
 			[self requestProductListWithTarget:target time:updateTime];
-		}
-        else if (self.selectType == 3){
+		} else if (self.selectType == 4){
             SHGCollectCardClass *obj = self.dataSource[0];
             updateTime = obj.collectTime;
+            [self requestCardListWithTarget:target time:updateTime];
+        } else if (self.selectType == 2){
+            SHGMarketObject *obj = self.dataSource[0];
+            updateTime = obj.createTime;
             [self requestCardListWithTarget:target time:updateTime];
         }
         //1.7.2 资讯隐藏
@@ -324,10 +357,13 @@
 		if (self.selectType == 1) {
             [Hud showLoadingWithMessage:@"加载中"];
 			[self requestPostListWithTarget:@"load" time:updateTime];
-		}else if (self.selectType == 2){
+		} else if (self.selectType == 3){
 			[self requestProductListWithTarget:@"load" time:updateTime];
-        }else if (self.selectType == 3){
+        } else if (self.selectType == 4){
              [Hud showLoadingWithMessage:@"加载中"];
+            [self requestCardListWithTarget:@"load" time:updateTime];
+        } else if (self.selectType == 2){
+            [Hud showLoadingWithMessage:@"加载中"];
             [self requestCardListWithTarget:@"load" time:updateTime];
         }
         //1.7.2 资讯隐藏
@@ -396,6 +432,62 @@
 		[self.tableView.header endRefreshing];
         [self performSelector:@selector(endFoot) withObject:nil afterDelay:1.0];
 	}];
+
+}
+- (void)requestMarketCollectWithTarget:(NSString *)target time:(NSString *)time
+{
+    if ([target isEqualToString:@"first"])
+    {
+        [self.tableView.footer resetNoMoreData];
+        hasDataFinished = NO;
+        
+    }
+    
+    NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
+    [Hud showLoadingWithMessage:@"加载中"];
+    NSDictionary *param = @{@"uid":uid,@"target":target,@"time":time,@"num":@"100"};
+    [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttp,@"market",@"collection"] class:[SHGMarketObject class] parameters:param success:^(MOCHTTPResponse *response) {
+        NSDictionary *dictionary = response.dataDictionary;
+        NSArray * dataArray = [[SHGGloble sharedGloble] parseServerJsonArrayToJSONModel:[dictionary objectForKey:@"datas"] class:[SHGMarketObject class]];
+
+        if ([target isEqualToString:@"first"]) {
+            [self.marketList removeAllObjects];
+            [self.marketList addObjectsFromArray:dataArray];
+            
+        }
+        if ([target isEqualToString:@"refresh"]) {
+            if (dataArray.count > 0) {
+                for (NSInteger i = dataArray.count-1; i >= 0; i --) {
+                    SHGMarketObject *obj = dataArray[i];
+                    [self.marketList insertObject:obj atIndex:0];
+                }
+                
+            }
+            
+        }
+        if ([target isEqualToString:@"load"]) {
+            [self.marketList addObjectsFromArray:dataArray];
+            
+        }
+        if (IsArrEmpty(dataArray)) {
+            hasDataFinished = YES;
+        }
+        else
+        {
+            hasDataFinished = NO;
+        }
+        [self refreshDataSource];
+        [self.tableView.header endRefreshing];
+        [self.tableView.footer endRefreshing];
+        [Hud hideHud];
+        
+    } failed:^(MOCHTTPResponse *response) {
+        NSLog(@"%@",response.errorMessage);
+        [self.tableView.header endRefreshing];
+        [self.tableView.footer endRefreshing];
+        [Hud hideHud];
+        
+    }];
 
 }
 
@@ -932,18 +1024,18 @@
         else{
             return 44.0f;
         }
-    }else if (self.selectType == 2)
+    }else if (self.selectType == 3)
     {
         return 100.0f;
         
     }
-    else if (self.selectType == 3)
+    else if (self.selectType == 4)
     {
         return 78.0f;
         
-    }else if (self.selectType == 4)
+    }else if (self.selectType == 2)
     {
-        return 83.0f;
+        return 166.0f;
         
     }else
     {
@@ -986,7 +1078,7 @@
               {
                   return self.emptyCell;
               }
-        }else if (self.selectType == 2)
+        }else if (self.selectType == 3)
         {
             if (self.dataSource.count > 0 ) {
                 
@@ -1004,9 +1096,8 @@
             {
                 return self.emptyCell;
             }
-        }if (self.selectType == 3) {
+        }if (self.selectType == 4) {
             if (self.dataSource > 0) {
-                
             NSString *cardCellIdentifier = @"circleCellIdentifier";
             SHGCardTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cardCellIdentifier];
             if (!cell) {
@@ -1022,33 +1113,23 @@
             }
             
         }
-        if (self.selectType == 4) {
-            //        NSString *cardCellIdentifier = @"circleCellIdentifier";
-            //        SHGCardTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cardCellIdentifier];
-            //        if (!cell) {
-            //            cell = [[[NSBundle mainBundle] loadNibNamed:@"SHGCardTableViewCell" owner:self options:nil] lastObject];
-            //        }
-            //        SHGCollectCardClass *obj = self.dataSource[indexPath.row];
-            //        [cell loadCardDatasWithObj:obj];
+        if (self.selectType == 2) {
+            
+            NSString *identifier = @"SHGMarketTableViewCell";
             if (self.dataSource.count > 0) {
-                
-            CircleListObj *obj = [self.dataSource objectAtIndex:indexPath.row];
-            NSString * cellIdentifier = @"SHGNewsTableViewCell";
-            SHGNewsTableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-            if (!cell) {
-                cell = [[[NSBundle mainBundle]loadNibNamed:@"SHGNewsTableViewCell" owner:self options:nil] lastObject];
-                cell.selectionStyle = UITableViewCellSelectionStyleNone;
-                
-            }
-            [cell loadUi:obj];
-            return cell;
-            }
-            else
-            {
+                SHGMarketTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+                if (!cell) {
+                    cell = [[[NSBundle mainBundle] loadNibNamed:@"SHGMarketTableViewCell" owner:self options:nil] lastObject];
+                }
+                cell.delegate = self;
+                SHGMarketObject * obj = [self.dataSource objectAtIndex:indexPath.row];
+                [cell loadDataWithObject:obj type:SHGMarketTableViewCellTypeAll];
+                return cell;
+            } else{
                 return self.emptyCell;
             }
-            }
-       
+        }
+    
 		return nil;
 		
 }
@@ -1061,7 +1142,7 @@
         vc.delegate = self;
         vc.rid = obj.rid;
         [self.navigationController pushViewController:vc animated:YES];
-    }else if (self.selectType == 2)
+    }else if (self.selectType == 3)
     {
         ProdListObj *obj = self.dataSource[indexPath.row];
         ProdConfigViewController *vc = [[ProdConfigViewController alloc] initWithNibName:@"ProdConfigViewController" bundle:nil];
@@ -1080,7 +1161,7 @@
         }
         vc.type = type;
         [self.navigationController pushViewController:vc animated:YES];
-    }else if (self.selectType == 3)
+    }else if (self.selectType == 4)
     { 
        
         SHGCollectCardClass * obj = self.dataSource[indexPath.row];
@@ -1089,16 +1170,14 @@
         [self.navigationController pushViewController:vc animated:YES];
     
 
-    }else if (self.selectType == 4)
+    }else if (self.selectType == 2)
     {
-        if (self.newsList.count > 0) {
+        if (self.marketList.count > 0) {
             
-            CircleListObj *obj = [self.newsList objectAtIndex:indexPath.row];
-            CircleNewDetailViewController *  viewController =[[CircleNewDetailViewController alloc] initWithNibName:@"CircleNewDetailViewController" bundle:nil];
-           // viewController.delegate = [SHGUnifiedTreatment sharedTreatment];
-            viewController.rid = obj.rid;
-            NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:obj.praisenum, kPraiseNum,obj.sharenum,kShareNum,obj.cmmtnum,kCommentNum, nil];
-            viewController.itemInfoDictionary = dictionary;
+            SHGMarketObject *obj = [self.marketList objectAtIndex:indexPath.row];
+            SHGMarketDetailViewController *  viewController =[[SHGMarketDetailViewController alloc] initWithNibName:@"SHGMarketDetailViewController" bundle:nil];
+            viewController.object = obj;
+            viewController.delegate = [SHGMarketSegmentViewController sharedSegmentController];
             [self.navigationController pushViewController:viewController animated:YES];
         }
 
@@ -1107,31 +1186,38 @@
     
 }
 
--(NSMutableArray *)dataSource{
+- (NSMutableArray *)dataSource{
     if (!_dataSource) {
         _dataSource = [NSMutableArray array];
 
     }    return _dataSource;
 }
--(NSMutableArray *)productList{
+- (NSMutableArray *)productList{
     if (!_productList) {
         _productList = [NSMutableArray array];
     }
     return _productList;
 }
--(NSMutableArray *)postList{
+- (NSMutableArray *)postList{
     if (!_postList) {
         _postList = [NSMutableArray array];
     }
     return _postList;
 }
--(NSMutableArray *)cardList{
+- (NSMutableArray *)cardList{
     if (!_cardList) {
         _cardList = [NSMutableArray array];
     }
     return _cardList;
 }
--(NSMutableArray *)newsList{
+- (NSMutableArray *)marketList{
+    if (!_marketList) {
+        _marketList = [NSMutableArray array];
+    }
+    return _marketList;
+}
+
+- (NSMutableArray *)newsList{
     if (!_newsList) {
         _newsList = [NSMutableArray array];
     }
@@ -1227,6 +1313,54 @@
 -(void)detailCollectionWithRid:(NSString *)rid collected:(NSString *)isColle
 {
     [self requestPostListWithTarget:@"first" time:@"-1"];
+}
+#pragma mark ------SHGMarketTableViewDelegate
+- (void)clickPrasiseButton:(SHGMarketObject *)object
+{
+    [[SHGMarketSegmentViewController sharedSegmentController] addOrDeletePraise:object block:^(BOOL success) {
+        
+    }];
+    [self.tableView reloadData];
+}
+- (void)ClickCollectButton:(SHGMarketObject *)object
+{
+    [[SHGMarketSegmentViewController sharedSegmentController] addOrDeleteCollect:object block:^(BOOL success) {
+        if (success) {
+            [self.dataSource removeObject:object];
+            [self.tableView reloadData];
+        }
+    }];
+    
+    
+}
+- (void)clickCommentButton:(SHGMarketObject *)object
+{
+    SHGMarketDetailViewController *controller = [[SHGMarketDetailViewController alloc] init];
+    controller.object = object;
+    controller.delegate = [SHGMarketSegmentViewController sharedSegmentController];
+    [self.navigationController pushViewController:controller animated:YES];
+}
+
+- (void)clickEditButton:(SHGMarketObject *)object
+{
+    SHGMarketSendViewController *controller = [[SHGMarketSendViewController alloc] init];
+    controller.object = object;
+    controller.delegate = [SHGMarketSegmentViewController sharedSegmentController];
+    [self.navigationController pushViewController:controller animated:YES];
+}
+
+
+- (void)tapUserHeaderImageView:(NSString *)uid
+{
+    __weak typeof(self) weakSelf = self;
+    SHGPersonalViewController * controller = [[SHGPersonalViewController alloc] init];
+    controller.userId = uid;
+    [weakSelf.navigationController pushViewController:controller animated:YES];
+}
+
+- (void)clickDeleteButton:(SHGMarketObject *)object
+{
+    [[SHGMarketSegmentViewController sharedSegmentController] deleteMarket:object];
 }
 
 @end
