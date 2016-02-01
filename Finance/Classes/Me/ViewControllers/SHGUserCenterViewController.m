@@ -58,6 +58,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.view.backgroundColor = [UIColor whiteColor];
     self.titleArray = @[@"我的合伙人", @"我的佣金", @"我的预约", @"我的业务", @"我的收藏", @"设置"];
     [self addHeaderRefresh:self.tableView headerRefesh:YES andFooter:NO];
     self.tableHeaderView.backgroundColor = [UIColor clearColor];
@@ -67,25 +68,26 @@
     .leftSpaceToView(self.view, 0.0f)
     .rightSpaceToView(self.view, 0.0f)
     .topSpaceToView(self.view, 0.0f)
-    .bottomSpaceToView(self.view, 0.0f);
+    .bottomSpaceToView(self.view, kTabBarHeight);
 
     //tableView头
+    NSLog(@"%f",factor(19.0f));
     self.userHeaderView.sd_layout
-    .leftSpaceToView(self.tableHeaderView, 19.0f)
-    .topSpaceToView(self.tableHeaderView, 17.0f)
-    .widthIs(45.0f)
+    .leftSpaceToView(self.tableHeaderView, factor(19.0f))
+    .topSpaceToView(self.tableHeaderView, factor(17.0f))
+    .widthIs(factor(45.0f))
     .heightEqualToWidth();
 
     //用户名
     self.nickNameLabel.sd_layout
-    .leftSpaceToView(self.userHeaderView, 11.0f)
+    .leftSpaceToView(self.userHeaderView, factor(11.0f))
     .topEqualToView(self.userHeaderView)
     .autoHeightRatio(0.0f);
     [self.nickNameLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
 
     //职位
     self.departmentLabel.sd_layout
-    .leftSpaceToView(self.nickNameLabel, 4.0f)
+    .leftSpaceToView(self.nickNameLabel, factor(4.0f))
     .bottomEqualToView(self.nickNameLabel)
     .autoHeightRatio(0.0f);
     [self.departmentLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
@@ -101,7 +103,7 @@
     self.lineView.sd_layout
     .leftSpaceToView(self.tableHeaderView, 0.0f)
     .rightSpaceToView(self.tableHeaderView, 0.0f)
-    .topSpaceToView(self.userHeaderView, 17.0f)
+    .topSpaceToView(self.userHeaderView, factor(17.0f))
     .heightIs(0.5f);
 
     //四个按钮
@@ -109,7 +111,7 @@
     .leftSpaceToView(self.tableHeaderView, 0.0f)
     .rightSpaceToView(self.tableHeaderView, 0.0f)
     .topSpaceToView(self.lineView, 0.0f)
-    .heightIs(58.0f);
+    .heightIs(factor(58.0f));
 
     //动态
     self.circleHeaderLabel.sd_layout
@@ -143,29 +145,29 @@
     self.breakLine1.sd_layout
     .leftSpaceToView(self.circleHeaderLabel, 0.0f)
     .widthIs(0.5f)
-    .heightIs(22.0f)
+    .heightIs(factor(22.0f))
     .centerYEqualToView(self.labelView);
 
 
     self.breakLine2.sd_layout
     .leftSpaceToView(self.followHeaderLabel, 0.0f)
     .widthIs(0.5f)
-    .heightIs(22.0f)
+    .heightIs(factor(22.0f))
     .centerYEqualToView(self.labelView);
 
     self.breakLine3.sd_layout
     .leftSpaceToView(self.fansHeaderLabel, 0.0f)
     .widthIs(0.5f)
-    .heightIs(22.0f)
+    .heightIs(factor(22.0f))
     .centerYEqualToView(self.labelView);
 
     self.bottomView.sd_layout
     .topSpaceToView(self.labelView, 0.0f)
     .leftSpaceToView(self.tableHeaderView, 0.0f)
     .rightSpaceToView(self.tableHeaderView, 0.0f)
-    .heightIs(9.0f);
+    .heightIs(factor(9.0f));
 
-    [self.tableHeaderView setupAutoHeightWithBottomView:self.bottomView bottomMargin:9.0f];
+    [self.tableHeaderView setupAutoHeightWithBottomView:self.bottomView bottomMargin:factor(9.0f)];
     [self.tableHeaderView layoutSubviews];
     
     [self.tableView setTableHeaderView:self.tableHeaderView];
@@ -215,7 +217,7 @@
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
         [button addTarget:self action:@selector(actionInvite:) forControlEvents:UIControlEventTouchUpInside];
         [button setTitle:@"邀请" forState:UIControlStateNormal];
-        button.titleLabel.font = [UIFont systemFontOfSize:14.0f];
+        button.titleLabel.font = [UIFont systemFontOfSize:factor(14.0f)];
         [button sizeToFit];
         _rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:button];
     }
@@ -261,7 +263,7 @@
 {
     if (!_nickNameLabel) {
         _nickNameLabel = [[UILabel alloc] init];
-        _nickNameLabel.font = [UIFont systemFontOfSize:16.0f];
+        _nickNameLabel.font = [UIFont systemFontOfSize:factor(16.0f)];
         _nickNameLabel.textColor = [UIColor colorWithHexString:@"1d5798"];
     }
     return _nickNameLabel;
@@ -271,7 +273,7 @@
 {
     if (!_companyLabel) {
         _companyLabel = [[UILabel alloc] init];
-        _companyLabel.font = [UIFont systemFontOfSize:14.0f];
+        _companyLabel.font = [UIFont systemFontOfSize:factor(14.0f)];
         _companyLabel.textColor = [UIColor colorWithHexString:@"161616"];
     }
     return _companyLabel;
@@ -281,7 +283,7 @@
 {
     if (!_departmentLabel) {
         _departmentLabel = [[UILabel alloc] init];
-        _departmentLabel.font = [UIFont systemFontOfSize:14.0f];
+        _departmentLabel.font = [UIFont systemFontOfSize:factor(14.0f)];
         _departmentLabel.textColor = [UIColor colorWithHexString:@"161616"];
     }
     return _departmentLabel;
@@ -318,7 +320,7 @@
         _circleHeaderLabel.textAlignment = NSTextAlignmentCenter;
         _circleHeaderLabel.textColor = [UIColor colorWithHexString:@"989898"];
         _circleHeaderLabel.numberOfLines = 0;
-        _circleHeaderLabel.font = [UIFont systemFontOfSize:12.0f];
+        _circleHeaderLabel.font = [UIFont systemFontOfSize:factor(12.0f)];
         _circleHeaderLabel.userInteractionEnabled = YES;
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(goToMyCircle)];
         [_circleHeaderLabel addGestureRecognizer:tap];
@@ -333,7 +335,7 @@
         _followHeaderLabel.textAlignment = NSTextAlignmentCenter;
         _followHeaderLabel.numberOfLines = 0;
         _followHeaderLabel.textColor = [UIColor colorWithHexString:@"989898"];
-        _followHeaderLabel.font = [UIFont systemFontOfSize:12.0f];
+        _followHeaderLabel.font = [UIFont systemFontOfSize:factor(12.0f)];
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(goToFollowList)];
         [_followHeaderLabel addGestureRecognizer:tap];
         _followHeaderLabel.userInteractionEnabled = YES;
@@ -350,7 +352,7 @@
         _fansHeaderLabel.textAlignment = NSTextAlignmentCenter;
         _fansHeaderLabel.numberOfLines = 0;
         _fansHeaderLabel.textColor = [UIColor colorWithHexString:@"989898"];
-        _fansHeaderLabel.font = [UIFont systemFontOfSize:12.0f];
+        _fansHeaderLabel.font = [UIFont systemFontOfSize:factor(12.0f)];
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(goToFansList)];
         [_fansHeaderLabel addGestureRecognizer:tap];
         _fansHeaderLabel.userInteractionEnabled = YES;
@@ -363,7 +365,6 @@
 {
     if (!_authButton) {
         _authButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        [_authButton setImage:[UIImage imageNamed:@"me_unAuth"] forState:UIControlStateNormal];
         [_authButton addTarget:self action:@selector(actionAuth:) forControlEvents:UIControlEventTouchUpInside];
     }
 
@@ -473,15 +474,15 @@
         [paragraphStyle1 setLineSpacing:1.0f];
         paragraphStyle1.alignment = NSTextAlignmentCenter;
         NSMutableAttributedString *aCircleString = [[NSMutableAttributedString alloc] initWithString:circleString];
-        [aCircleString addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"161616"] range:NSMakeRange(4, aCircleString.length - 4)];
+        [aCircleString addAttributes:@{NSForegroundColorAttributeName:[UIColor colorWithHexString:@"161616"], NSFontAttributeName:[UIFont systemFontOfSize:factor(13.0f)]} range:NSMakeRange(4, aCircleString.length - 4)];
         [aCircleString addAttribute:NSParagraphStyleAttributeName value:paragraphStyle1 range:NSMakeRange(0, [aCircleString length])];
 
         NSMutableAttributedString *aFollowString = [[NSMutableAttributedString alloc] initWithString:followString];
-        [aFollowString addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"161616"] range:NSMakeRange(4, aFollowString.length - 4)];
+        [aFollowString addAttributes:@{NSForegroundColorAttributeName:[UIColor colorWithHexString:@"161616"], NSFontAttributeName:[UIFont systemFontOfSize:factor(13.0f)]} range:NSMakeRange(4, aCircleString.length - 4)];
         [aFollowString addAttribute:NSParagraphStyleAttributeName value:paragraphStyle1 range:NSMakeRange(0, [aFollowString length])];
 
         NSMutableAttributedString *aFansString = [[NSMutableAttributedString alloc] initWithString:fansString];
-        [aFansString addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"161616"] range:NSMakeRange(4, aFansString.length - 4)];
+        [aFansString addAttributes:@{NSForegroundColorAttributeName:[UIColor colorWithHexString:@"161616"], NSFontAttributeName:[UIFont systemFontOfSize:factor(13.0f)]} range:NSMakeRange(4, aCircleString.length - 4)];
         [aFansString addAttribute:NSParagraphStyleAttributeName value:paragraphStyle1 range:NSMakeRange(0, [aFansString length])];
 
         weakSelf.circleHeaderLabel.attributedText = aCircleString;
@@ -525,15 +526,15 @@
         }
 
         if ([response.dataDictionary objectForKey:@"auditstate"]) {
-            self.auditState = [response.dataDictionary objectForKey:@"auditstate"];
-            if ([self.auditState isEqualToString:@"0"]) {
-                [self.authButton setImage:[UIImage imageNamed:@"me_unAuth"] forState:UIControlStateNormal];
-            } else if ([self.auditState isEqualToString:@"1"]){
-                [self.authButton setImage:[UIImage imageNamed:@"me_authed"] forState:UIControlStateNormal];
-            } else if ([self.auditState isEqualToString:@"2"]){
-                [self.authButton setImage:[UIImage imageNamed:@"me_authering"] forState:UIControlStateNormal];
+            weakSelf.auditState = [response.dataDictionary objectForKey:@"auditstate"];
+            if ([weakSelf.auditState isEqualToString:@"0"]) {
+                [weakSelf.authButton setImage:[UIImage imageNamed:@"me_unAuth"] forState:UIControlStateNormal];
+            } else if ([weakSelf.auditState isEqualToString:@"1"]){
+                [weakSelf.authButton setImage:[UIImage imageNamed:@"me_authed"] forState:UIControlStateNormal];
+            } else if ([weakSelf.auditState isEqualToString:@"2"]){
+                [weakSelf.authButton setImage:[UIImage imageNamed:@"me_authering"] forState:UIControlStateNormal];
             } else{
-                [self.authButton setImage:[UIImage imageNamed:@"me_rejected"] forState:UIControlStateNormal];
+                [weakSelf.authButton setImage:[UIImage imageNamed:@"me_rejected"] forState:UIControlStateNormal];
             }
         }
         [weakSelf.tableView.header endRefreshing];

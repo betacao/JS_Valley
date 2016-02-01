@@ -21,20 +21,20 @@
     if (self) {
         self.selectionStyle = UITableViewCellSelectionStyleNone;
 
-        self.textLabel.font = [UIFont systemFontOfSize:15.0f];
+        self.textLabel.font = [UIFont systemFontOfSize:factor(15.0f)];
         self.textLabel.textColor = [UIColor colorWithHexString:@"161616"];
 
         [self.contentView addSubview:self.lineView];
 
         self.textLabel.sd_layout
-        .leftSpaceToView(self.contentView, 15.0f)
+        .leftSpaceToView(self.contentView, factor(19.0f))
         .topSpaceToView(self.contentView, 0.0f)
         .rightSpaceToView(self.contentView, 0.0f)
-        .heightIs(54.0f);
+        .heightIs(factor(54.0f));
 
         self.lineView.sd_layout
-        .bottomSpaceToView(self.contentView, 0.0f)
-        .leftSpaceToView(self.contentView, 16.0f)
+        .topSpaceToView(self.textLabel, 0.0f)
+        .leftSpaceToView(self.contentView, factor(18.0f))
         .rightSpaceToView(self.contentView, 0.0f)
         .heightIs(0.5f);
     }
@@ -57,7 +57,7 @@
 
     //***********************高度自适应cell设置步骤************************
 
-    [self setupAutoHeightWithBottomView:self.textLabel bottomMargin:0.0f];
+    [self setupAutoHeightWithBottomView:self.lineView bottomMargin:1.0f];
 }
 
 @end

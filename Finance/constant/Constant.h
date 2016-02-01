@@ -23,25 +23,24 @@
 #define kStatusBarHeight CGRectGetHeight([UIApplication sharedApplication].statusBarFrame)
 
 #define kNavigationBarHeight  44.0f
+
 #define kTabBarHeight  49.0f
 
 #define CURRENT_VERSION [[UIDevice currentDevice].systemVersion floatValue]
 
 #define LOCAL_Version       [[NSBundle mainBundle] infoDictionary][@"CFBundleVersion"]
 
-#define IOS8_OR_LATER   ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0f)
-
-#define isIPhone4 ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(640, 960), [[UIScreen mainScreen] currentMode].size) : NO)
-
 #define kIsScreen3_5Inch ([[UIScreen mainScreen] bounds].size.height == 480.0f) ? YES : NO
 
 //屏幕尺寸
 #define SCREENWIDTH [[UIScreen mainScreen] bounds].size.width
 #define SCREENHEIGHT [[UIScreen mainScreen] bounds].size.height
+
 #define XFACTOR SCREENWIDTH / 320.0f
 #define YFACTOR SCREENHEIGHT / 568.0f
-#define FontFactor floor(SCREENWIDTH / 320.0f * 10) / 10
 
+#define FontFactor floor(SCREENWIDTH / 320.0f * 10) / 10
+#define factor(x) ceilf(ceilf(SCREENWIDTH / 375.0f * 10) / 10 * x)
 //计算颜色
 #define RGB(r,g,b) [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:1.0]
 
