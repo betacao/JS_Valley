@@ -41,6 +41,7 @@
 @property (weak, nonatomic) IBOutlet UIView *bottomLine;
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
+@property (weak, nonatomic) IBOutlet UIButton *collectionButton;
 @property (weak, nonatomic) IBOutlet UILabel *typeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *capitalLabel;
 @property (weak, nonatomic) IBOutlet UILabel *addressLabel;
@@ -65,6 +66,7 @@
 - (IBAction)zan:(id)sender;
 - (IBAction)comment:(id)sender;
 - (IBAction)share:(id)sender;
+- (IBAction)collectionClick:(UIButton *)sender;
 
 @end
 
@@ -106,6 +108,7 @@
         [weakSelf loadUI];
         [weakSelf.detailTable reloadData];
     }];
+    self.praiseView.hidden = YES;
 }
 
 - (SHGEmptyDataView *)emptyView
@@ -180,6 +183,11 @@
 
 - (void)loadUI
 {
+    if (self.responseObject.isCollection) {
+        [self.collectionButton setImage:[UIImage imageNamed:@"collected"] forState:UIControlStateNormal];
+    } else{
+         [self.collectionButton setImage:[UIImage imageNamed:@"uncollected"] forState:UIControlStateNormal];
+    }
     //1.7.2界面修改
     self.speakButton.layer.masksToBounds = YES;
     self.speakButton.layer.cornerRadius = 4;
@@ -281,7 +289,7 @@
 - (void)addTableHeaderView
 {
     CGRect frame = self.viewHeader.frame;
-    frame.size.height = CGRectGetMaxY(self.praiseView.frame);
+    frame.size.height = CGRectGetMaxY(self.actionView.frame);
     self.viewHeader.frame = frame;
     [self.detailTable setTableHeaderView: self.viewHeader];
 }
@@ -516,6 +524,31 @@
 
     }];
 }
+
+- (IBAction)collectionClick:(UIButton *)sender {
+    __weak typeof(self)weakSelf = self;
+    [[SHGMarketSegmentViewController sharedSegmentController] addOrDeleteCollect:self.responseObject block:^(BOOL success) {
+        if (!weakSelf.responseObject.isCollection) {
+            weakSelf.responseObject.isCollection = YES;
+            [weakSelf loadCollectButtonState];
+        } else{
+            weakSelf.responseObject.isCollection = NO;
+            [weakSelf loadCollectButtonState];
+        }
+    }];
+
+}
+- (void)loadCollectButtonState
+{
+    //设置点赞的状态
+    if (self.responseObject.isCollection ) {
+        [self.collectionButton setImage:[UIImage imageNamed:@"collected"] forState:UIControlStateNormal];
+    } else{
+        [self.collectionButton setImage:[UIImage imageNamed:@"uncollected"] forState:UIControlStateNormal];
+    }
+//    [self.btnZan setTitle:self.responseObject.praiseNum forState:UIControlStateNormal];
+}
+
 
 #pragma mark ------分享到圈内好友的通知
 - (void)shareToFriendSuccess:(NSNotification *)notification

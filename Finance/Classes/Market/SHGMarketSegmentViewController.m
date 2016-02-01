@@ -331,7 +331,60 @@
 {
     [self setSelectedIndex:seg.selectedSegmentIndex animated:YES];
 }
+#pragma mark ------ 收藏和取消收藏
+- (void)addOrDeleteCollect:(SHGMarketObject *)object block:(void(^)(BOOL success))block
+{
+    __weak typeof(self)weakSelf = self;
+    if (!object.isCollection) {
+        [SHGMarketManager addCollectWithObject:object finishBlock:^(BOOL success) {
+            [weakSelf didChangeCollectState:object iscollection:YES];
+            if (block) {
+                block(success);
+            }
+        }];
+    } else{
+        [SHGMarketManager deleteCollectWithObject:object finishBlock:^(BOOL success) {
+            [weakSelf didChangeCollectState:object iscollection:NO];
+            if (block) {
+                block(success);
+            }
+        }];
+    }
 
+}
+- (void)didChangeCollectState:(SHGMarketObject *)object iscollection:(BOOL)iscollection
+{
+    for (UIViewController *controller in self.viewControllers){
+        if ([controller respondsToSelector:@selector(currentDataArray)]) {
+            NSMutableArray *array = [controller performSelector:@selector(currentDataArray)];
+            for (SHGMarketObject * obj in array){
+                if ([object.marketId isEqualToString:obj.marketId]) {
+                    obj.isCollection = iscollection ? YES : NO;
+                    }
+            
+        }
+}        [controller performSelector:@selector(reloadData)];
+    }
+
+    NSInteger count = self.navigationController.viewControllers.count;
+    if (count >= 1) {
+        UIViewController *controller = [self.navigationController.viewControllers objectAtIndex:count - 1];
+        if ([NSStringFromClass([controller class]) isEqualToString:@"SHGMarketMineViewController"]) {
+            if ([controller respondsToSelector:@selector(currentDataArray)]) {
+                NSMutableArray *array = [controller performSelector:@selector(currentDataArray)];
+                for (SHGMarketObject * obj in array){
+                    if ([object.marketId isEqualToString:obj.marketId]) {
+                        obj.isCollection = iscollection ? YES : NO;
+                       }
+                }
+            }
+            
+            [controller performSelector:@selector(reloadData)];
+        }
+        
+    }
+
+}
 
 #pragma mark ------ 点赞和取消点赞
 - (void)addOrDeletePraise:(SHGMarketObject *)object block:(void (^)(BOOL success))block

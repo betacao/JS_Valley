@@ -8,8 +8,6 @@
 
 #import "DiscoverViewController.h"
 #import "MyFollowViewController.h"
-#import "GameObj.h"
-#import "GameViewController.h"
 #import "SHGConnectionsViewController.h"
 #import "SHGActionListViewController.h"
 #import "SHGActionMineViewController.h"
@@ -41,7 +39,6 @@
         [self.listTable setLayoutMargins:UIEdgeInsetsZero];
     }
     self.gameArray = [[NSMutableArray alloc] initWithCapacity:0];
-    [self httpURL];
     self.firstFriendNumber = 0;
     self.secondFriendNumber = 0;
     [self loadFriendNumber];
@@ -67,27 +64,6 @@
     }];
 }
 
-- (void)httpURL{
-    NSString *str = @" ";
-    NSMutableDictionary *dic = [[NSMutableDictionary alloc]init];
-    [dic setObject:str forKey:@"phone"];
-    [dic setObject:[[NSUserDefaults standardUserDefaults] objectForKey:KEY_USER_NAME] forKey:@"name"];
-    [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@",rBaseAddressForHttpProduct] class:[GameObj class] parameters:dic success:^(MOCHTTPResponse *response){
-        NSLog(@"-------调用游戏接口获得数据%@",response.dataArray);
-        for (int i = 0; i<response.dataArray.count; i++){
-            NSDictionary *dic = response.dataArray[i];
-            GameObj *obj = [[GameObj alloc]init];
-            obj.imageurl = [NSString stringWithFormat:@"%@/%@",rBaseAddressForImage,[dic valueForKey:@"imageurl"]];
-            obj.name = [dic valueForKey:@"name"];
-            obj.url = [dic valueForKey:@"url"];
-            [self.gameArray addObject:obj];
-        }
-        [self.listTable reloadData];
-        
-    } failed:^(MOCHTTPResponse *response){
-        NSLog(@"%@",response.errorMessage);
-    }];
-}
 
 - (void)didReceiveMemoryWarning
 {
@@ -133,10 +109,6 @@
             cell.numberLable.text = nil;
         }
         
-    } else{
-        GameObj *obj = self.gameArray[indexPath.row]; 
-        [cell loadDataWithImage:obj.imageurl title:obj.name rightItem:nil rightItemColor:nil];
-        cell.numberLable.text = nil;
     }
     return cell;
 }
@@ -224,13 +196,6 @@
             default:
                 break;
         }
-    }else
-    {
-        GameViewController *gameVC = [[GameViewController alloc]init];
-        GameObj *obj = self.gameArray[indexPath.row];
-        gameVC.url = obj.url;
-        gameVC.titleName = obj.name;
-        [self.navigationController pushViewController:gameVC animated:YES];
     }
 }
 

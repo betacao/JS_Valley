@@ -15,6 +15,7 @@
                 <outlet property="btnShare" destination="LHm-Ws-2WH" id="pmw-iZ-47v"/>
                 <outlet property="btnZan" destination="p95-ud-2Wh" id="JVU-xJ-CI3"/>
                 <outlet property="capitalLabel" destination="ukB-Yh-XHs" id="HU4-Lz-2fA"/>
+                <outlet property="collectionButton" destination="d4b-hW-ran" id="D6T-mo-kBB"/>
                 <outlet property="companyLabel" destination="M93-w2-4yW" id="0Zh-cB-8Ua"/>
                 <outlet property="detailContentLabel" destination="kXI-U4-4OP" id="vST-07-WAv"/>
                 <outlet property="detailTable" destination="BM7-u0-yVh" id="9JE-hu-biB"/>
@@ -213,7 +214,7 @@
                                 <action selector="share:" destination="-1" eventType="touchUpInside" id="Yxt-bE-Z5t"/>
                             </connections>
                         </button>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="p95-ud-2Wh">
+                        <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="p95-ud-2Wh">
                             <rect key="frame" x="140" y="1" width="50" height="34"/>
                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
@@ -224,6 +225,14 @@
                             </state>
                             <connections>
                                 <action selector="zan:" destination="-1" eventType="touchUpInside" id="GJp-cN-fsY"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="d4b-hW-ran">
+                            <rect key="frame" x="157" y="0.0" width="41" height="34"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                            <state key="normal" title="Button" image="collected"/>
+                            <connections>
+                                <action selector="collectionClick:" destination="-1" eventType="touchUpInside" id="N1K-Qp-gCJ"/>
                             </connections>
                         </button>
                     </subviews>
@@ -280,6 +289,7 @@
         </view>
     </objects>
     <resources>
+        <image name="collected" width="13" height="11"/>
         <image name="comment_backimage" width="25" height="25"/>
         <image name="home_comment" width="12" height="13"/>
         <image name="home_weizan" width="13" height="13"/>

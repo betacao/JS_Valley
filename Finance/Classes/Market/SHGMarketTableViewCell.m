@@ -22,6 +22,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *deleteButton;
 @property (weak, nonatomic) IBOutlet UIImageView *xuXian;
 @property (weak, nonatomic) IBOutlet UIView *lineVIew;
+@property (weak, nonatomic) IBOutlet UIButton *collectButton;
 @property (strong ,nonatomic) SHGMarketObject *object;
 @property (strong ,nonatomic) SHGMarketFirstCategoryObject *obj;
 @end
@@ -34,7 +35,8 @@
     self.xuXian.image = [img resizableImageWithCapInsets:UIEdgeInsetsMake(0 , 1, 0, 1) resizingMode:UIImageResizingModeTile];
     self.lineVIew.backgroundColor = [UIColor colorWithHexString:@"F1F1F0"];
     self.lineVIew.frame = CGRectMake(0, 0.5f, SCREENWIDTH, 0.5f);
-
+    //把点赞按钮改为收藏按钮
+    self.praiseButton.hidden = YES;
 }
 
 - (void)loadDataWithObject:(SHGMarketObject *)object type:(SHGMarketTableViewCellType)type
@@ -85,6 +87,14 @@
     } else{
         [self.praiseButton setImage:[UIImage imageNamed:@"home_weizan"] forState:UIControlStateNormal];
     }
+    
+    
+    if (object.isCollection ) {
+        [self.collectButton setImage:[UIImage imageNamed:@"collected"] forState:UIControlStateNormal];
+    } else{
+        [self.collectButton setImage:[UIImage imageNamed:@"uncollected"] forState:UIControlStateNormal];
+    }
+
 
     [self.commentButton setTitle:object.commentNum forState:UIControlStateNormal];
 
@@ -109,6 +119,7 @@
     self.typeLabel.hidden = NO;
     [self.praiseButton setTitle:@"0" forState:UIControlStateNormal];
     [self.praiseButton setImage:[UIImage imageNamed:@"home_weizan"] forState:UIControlStateNormal];
+    [self.collectButton setImage:[UIImage imageNamed:@"uncollected"] forState:UIControlStateNormal];
     [self.commentButton setTitle:@"0" forState:UIControlStateNormal];
 }
 
@@ -117,6 +128,13 @@
 {
     if (self.delegate && [self.delegate respondsToSelector:@selector(clickPrasiseButton:)]) {
         [self.delegate clickPrasiseButton:self.object];
+    }
+}
+//收藏
+- (IBAction)clickCollectButton:(UIButton *)sender
+{
+    if (self.delegate && [self.delegate respondsToSelector:@selector(ClickCollectButton:)]) {
+        [self.delegate ClickCollectButton:self.object];
     }
 }
 

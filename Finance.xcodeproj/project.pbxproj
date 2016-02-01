@@ -250,7 +250,6 @@
 		53F6CFAC1B06C1D6007716E5 /* load_6p.png in Resources */ = {isa = PBXBuildFile; fileRef = 53F6CFA91B06C1D6007716E5 /* load_6p.png */; };
 		53F6CFAE1B06C1FD007716E5 /* load_6.png in Resources */ = {isa = PBXBuildFile; fileRef = 53F6CFAD1B06C1FD007716E5 /* load_6.png */; };
 		53F6CFB01B06C404007716E5 /* load_5s.png in Resources */ = {isa = PBXBuildFile; fileRef = 53F6CFAF1B06C404007716E5 /* load_5s.png */; };
-		5610A79F1B41482C00DE2BAF /* GameObj.m in Sources */ = {isa = PBXBuildFile; fileRef = 5610A79E1B41482C00DE2BAF /* GameObj.m */; };
 		565136D51B834E2F00894B1D /* RecommendModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 565136D41B834E2F00894B1D /* RecommendModel.m */; };
 		569C6D2F1B7CA9EB00AD59C3 /* BindPhoneViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 569C6D2D1B7CA9EB00AD59C3 /* BindPhoneViewController.m */; };
 		569C6D301B7CA9EB00AD59C3 /* BindPhoneViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 569C6D2E1B7CA9EB00AD59C3 /* BindPhoneViewController.xib */; };
@@ -728,8 +727,6 @@
 		98E3022C1BFB0708001D4A69 /* SHGAuthenticationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98E3022A1BFB0708001D4A69 /* SHGAuthenticationViewController.xib */; };
 		98FA41C31BF5E1B40058A4EF /* SHGActionDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98FA41C11BF5E1B40058A4EF /* SHGActionDetailViewController.m */; };
 		98FA41C41BF5E1B40058A4EF /* SHGActionDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98FA41C21BF5E1B40058A4EF /* SHGActionDetailViewController.xib */; };
-		B007E0F81B412FDF00BB8E8D /* GameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B007E0F61B412FDF00BB8E8D /* GameViewController.m */; };
-		B007E0F91B412FDF00BB8E8D /* GameViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B007E0F71B412FDF00BB8E8D /* GameViewController.xib */; };
 		B00903551B622274000EAD7D /* UIColor+extend.m in Sources */ = {isa = PBXBuildFile; fileRef = B00903541B622274000EAD7D /* UIColor+extend.m */; };
 		B03657391B5CD45E0038971E /* fqdh.png in Resources */ = {isa = PBXBuildFile; fileRef = B03657381B5CD45E0038971E /* fqdh.png */; };
 		B03938B21B623F83003A85EC /* 5.png in Resources */ = {isa = PBXBuildFile; fileRef = B03938AE1B623F83003A85EC /* 5.png */; };
@@ -1253,8 +1250,6 @@
 		53F6CFA91B06C1D6007716E5 /* load_6p.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = load_6p.png; sourceTree = "<group>"; };
 		53F6CFAD1B06C1FD007716E5 /* load_6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = load_6.png; sourceTree = "<group>"; };
 		53F6CFAF1B06C404007716E5 /* load_5s.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = load_5s.png; sourceTree = "<group>"; };
-		5610A79D1B41482C00DE2BAF /* GameObj.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameObj.h; sourceTree = "<group>"; };
-		5610A79E1B41482C00DE2BAF /* GameObj.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameObj.m; sourceTree = "<group>"; };
 		565136D31B834E2F00894B1D /* RecommendModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecommendModel.h; sourceTree = "<group>"; };
 		565136D41B834E2F00894B1D /* RecommendModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecommendModel.m; sourceTree = "<group>"; };
 		569C6D2C1B7CA9EB00AD59C3 /* BindPhoneViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BindPhoneViewController.h; sourceTree = "<group>"; };
@@ -1973,9 +1968,6 @@
 		98FA41C11BF5E1B40058A4EF /* SHGActionDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGActionDetailViewController.m; sourceTree = "<group>"; };
 		98FA41C21BF5E1B40058A4EF /* SHGActionDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGActionDetailViewController.xib; sourceTree = "<group>"; };
 		A4D946A4AD798CCD6903D76E /* libPods-Finance.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Finance.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		B007E0F51B412FDF00BB8E8D /* GameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameViewController.h; sourceTree = "<group>"; };
-		B007E0F61B412FDF00BB8E8D /* GameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameViewController.m; sourceTree = "<group>"; };
-		B007E0F71B412FDF00BB8E8D /* GameViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GameViewController.xib; sourceTree = "<group>"; };
 		B00903531B622274000EAD7D /* UIColor+extend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+extend.h"; sourceTree = "<group>"; };
 		B00903541B622274000EAD7D /* UIColor+extend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+extend.m"; sourceTree = "<group>"; };
 		B03657381B5CD45E0038971E /* fqdh.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fqdh.png; sourceTree = "<group>"; };
@@ -2792,8 +2784,6 @@
 				614BA7F01AE77AFA009480CD /* ProdListObj.m */,
 				61425B401AFA7ED600758BCB /* ConfigObj.h */,
 				61425B411AFA7ED600758BCB /* ConfigObj.m */,
-				5610A79D1B41482C00DE2BAF /* GameObj.h */,
-				5610A79E1B41482C00DE2BAF /* GameObj.m */,
 			);
 			path = modal;
 			sourceTree = "<group>";
@@ -2844,9 +2834,6 @@
 				615234A21B0DAF1400011EAC /* DiscovSecondFriendViewController.h */,
 				615234A31B0DAF1400011EAC /* DiscovSecondFriendViewController.m */,
 				615234A41B0DAF1400011EAC /* DiscovSecondFriendViewController.xib */,
-				B007E0F51B412FDF00BB8E8D /* GameViewController.h */,
-				B007E0F61B412FDF00BB8E8D /* GameViewController.m */,
-				B007E0F71B412FDF00BB8E8D /* GameViewController.xib */,
 				F995039D1C4675700050562F /* SHGConnectionsViewController.h */,
 				F995039E1C4675700050562F /* SHGConnectionsViewController.m */,
 				F995039F1C4675700050562F /* SHGConnectionsViewController.xib */,
@@ -5246,7 +5233,6 @@
 				61E83CED1AF7C78E00703651 /* 加关注按钮@2x.png in Resources */,
 				61E83CF11AF7C78E00703651 /* 发送按钮-按下@2x.png in Resources */,
 				61E83D811AF7C78E00703651 /* 意见反馈@3x.png in Resources */,
-				B007E0F91B412FDF00BB8E8D /* GameViewController.xib in Resources */,
 				4088DDBA1AF102FE00393855 /* SettingQuestionDetailViewController3.5.xib in Resources */,
 				408D8B041AF8618C0055810C /* VoiceSearchFeedback008@2x.png in Resources */,
 				61D62C071ADE3E85002DD395 /* 2.png in Resources */,
@@ -5764,7 +5750,6 @@
 				4088DDCE1AF105FD00393855 /* SettingQuestionObj.m in Sources */,
 				40302B361AF0B7F500F22EB6 /* MyCollectionTableViewCell.m in Sources */,
 				F91F51BB1C3136E800D848E3 /* SHGMarketSearchTableViewCell.m in Sources */,
-				5610A79F1B41482C00DE2BAF /* GameObj.m in Sources */,
 				61D62BF01ADD1C4D002DD395 /* MOCNetworkReachabilityManager.m in Sources */,
 				B082D6631B82EF1C00BB6C20 /* RecmdFriendObj.m in Sources */,
 				614EFEC91AEF2DF800F2BDD1 /* ProdConfigViewController.m in Sources */,
@@ -5874,7 +5859,6 @@
 				40302B451AF0C67F00F22EB6 /* MyAppointmentTableViewCell.m in Sources */,
 				538964D71AFC6BEB00041548 /* UIViewController+HUD.m in Sources */,
 				F9F349B71C1945920090F111 /* SHGBadgeStyle.m in Sources */,
-				B007E0F81B412FDF00BB8E8D /* GameViewController.m in Sources */,
 				98D73C2D1C194E7E0055AF75 /* SHGNewsTableViewCell.m in Sources */,
 				5331DF261AFC02B400E035B8 /* EMAlertView.m in Sources */,
 				5331DF1D1AFC017600E035B8 /* ApplyViewController.m in Sources */,

@@ -70,7 +70,7 @@ static NSString * const kCommonFNum			= @"commonnum";
 }
 + (void)insertAll:(BasePeopleObject *) hImage
 {
-    HeadImage *hi = [HeadImage MR_createInContext:[NSManagedObjectContext MR_defaultContext]];
+    HeadImage *hi = [HeadImage MR_createEntityInContext:[NSManagedObjectContext MR_defaultContext]];
     [hi setValue:hImage.uid forKey:kUid];
     [hi setValue:hImage.headImageUrl forKey:kHeadImg];
     [hi setValue:hImage.name forKey:kNickName];

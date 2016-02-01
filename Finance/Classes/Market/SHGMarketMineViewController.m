@@ -188,7 +188,12 @@
 
     }];
 }
-
+- (void)ClickCollectButton:(SHGMarketObject *)object
+{
+    [[SHGMarketSegmentViewController sharedSegmentController] addOrDeleteCollect:object block:^(BOOL success) {
+       
+    }];
+}
 - (void)clickCommentButton:(SHGMarketObject *)object
 {
     SHGMarketDetailViewController *controller = [[SHGMarketDetailViewController alloc] init];

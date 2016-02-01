@@ -253,7 +253,50 @@
         [Hud showMessageWithText:@"删除业务失败"];
     }];
 }
+//收藏
++ (void)addCollectWithObject:(SHGMarketObject *)object finishBlock:(void (^)(BOOL))block
+{
+    [Hud showLoadingWithMessage:@"请稍等..."];
+    NSString *request = [rBaseAddressForHttp stringByAppendingString:@"/market/collection"];
+    NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
+    NSDictionary *param = @{@"uid":uid, @"marketId":object.marketId};
+    [MOCHTTPRequestOperationManager postWithURL:request parameters:param success:^(MOCHTTPResponse *response) {
+        [Hud hideHud];
+        [Hud showMessageWithText:@"收藏成功"];
+        if (block) {
+            block(YES);
+        }
+    } failed:^(MOCHTTPResponse *response) {
+        [Hud hideHud];
+        [Hud showMessageWithText:@"收藏失败"];
+        if (block) {
+            block(NO);
+        }
+    }];
 
+}
+//取消收藏
++ (void)deleteCollectWithObject:(SHGMarketObject *)object finishBlock:(void (^)(BOOL))block
+{
+    [Hud showLoadingWithMessage:@"请稍等..."];
+    NSString *request = [rBaseAddressForHttp stringByAppendingString:@"/market/collection"];
+    NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
+    NSDictionary *param = @{@"uid":uid, @"marketId":object.marketId};
+    [MOCHTTPRequestOperationManager deleteWithURL:request parameters:param success:^(MOCHTTPResponse *response) {
+        [Hud hideHud];
+        [Hud showMessageWithText:@"取消收藏成功"];
+        if (block) {
+            block(YES);
+        }
+    } failed:^(MOCHTTPResponse *response) {
+        [Hud hideHud];
+        [Hud showMessageWithText:@"取消收藏失败"];
+        if (block) {
+            block(NO);
+        }
+    }];
+
+}
 //赞
 + (void)addPraiseWithObject:(SHGMarketObject *)object finishBlock:(void (^)(BOOL))block
 {

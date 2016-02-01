@@ -121,6 +121,14 @@
                                     <action selector="clickCommentButton:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="UsA-wI-WRY"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="gC0-8f-Xe9">
+                                <rect key="frame" x="9" y="0.0" width="33" height="34"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button" image="collected"/>
+                                <connections>
+                                    <action selector="clickCollectButton:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="UhI-sP-Z12"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </view>
@@ -136,6 +144,7 @@
             </tableViewCellContentView>
             <connections>
                 <outlet property="amountLabel" destination="Zkx-XR-VWp" id="Cro-NZ-zuS"/>
+                <outlet property="collectButton" destination="gC0-8f-Xe9" id="GE1-US-j0r"/>
                 <outlet property="commentButton" destination="fnf-Jr-U8G" id="Tzo-JL-rL2"/>
                 <outlet property="contactLabel" destination="No8-Zf-DKw" id="XL2-K5-Ohc"/>
                 <outlet property="deleteButton" destination="idh-fp-Kn0" id="DSA-EW-on9"/>
@@ -149,10 +158,11 @@
                 <outlet property="typeLabel" destination="IKv-Q7-PLj" id="hKQ-dy-usv"/>
                 <outlet property="xuXian" destination="JkU-zp-0pm" id="OQW-c9-bG8"/>
             </connections>
-            <point key="canvasLocation" x="384" y="240"/>
+            <point key="canvasLocation" x="467" y="237"/>
         </tableViewCell>
     </objects>
     <resources>
+        <image name="collected" width="13" height="11"/>
         <image name="home_comment" width="12" height="13"/>
         <image name="home_delete" width="13" height="13"/>
         <image name="home_weizan" width="13" height="13"/>
