@@ -61,7 +61,6 @@
     self.view.backgroundColor = [UIColor whiteColor];
     self.titleArray = @[@"我的合伙人", @"我的佣金", @"我的预约", @"我的业务", @"我的收藏", @"设置"];
     [self addHeaderRefresh:self.tableView headerRefesh:YES andFooter:NO];
-    self.tableHeaderView.backgroundColor = [UIColor clearColor];
 
     //tableView
     self.tableView.sd_layout
