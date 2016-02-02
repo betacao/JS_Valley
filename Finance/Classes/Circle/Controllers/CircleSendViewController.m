@@ -579,7 +579,7 @@
     }];
 }
 
--(void)popView
+- (void)popView
 {
     [self.navigationController popViewControllerAnimated:YES];
     [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_SENDPOST object:nil];

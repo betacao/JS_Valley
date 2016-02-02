@@ -18,7 +18,7 @@
 
 #define kLabelWidth SCREENWIDTH / 4.0f
 
-@interface SHGUserCenterViewController ()<UITableViewDataSource, UITableViewDelegate>
+@interface SHGUserCenterViewController ()<UITableViewDataSource, UITableViewDelegate, UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 @property (strong, nonatomic) UITableView     *tableView;
 @property (strong, nonatomic) UIView          *tableHeaderView;
 @property (strong, nonatomic) UIImageView     *userHeaderView;
@@ -167,9 +167,8 @@
     .rightSpaceToView(self.tableHeaderView, 0.0f)
     .heightIs(factor(9.0f));
 
-    [self.tableHeaderView setupAutoHeightWithBottomView:self.bottomView bottomMargin:factor(9.0f)];
+    [self.tableHeaderView setupAutoHeightWithBottomView:self.bottomView bottomMargin:0.0f];
     [self.tableHeaderView layoutSubviews];
-    
     [self.tableView setTableHeaderView:self.tableHeaderView];
     [self initData];
 
@@ -231,6 +230,7 @@
         _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         _tableView.delegate = self;
         _tableView.dataSource = self;
+        _tableView.backgroundColor = [UIColor colorWithHexString:@"f3f4f5"];
         [self.view addSubview:_tableView];
     }
     return _tableView;
@@ -248,6 +248,7 @@
         [_tableHeaderView addSubview:self.labelView];
         [_tableHeaderView addSubview:self.bottomView];
     }
+    _tableHeaderView.backgroundColor = [UIColor whiteColor];
     return _tableHeaderView;
 }
 
@@ -255,6 +256,9 @@
 {
     if (!_userHeaderView) {
         _userHeaderView = [[UIImageView alloc] init];
+        _userHeaderView.userInteractionEnabled = YES;
+        UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(changeUserHeadImage:)];
+        [_userHeaderView addGestureRecognizer:recognizer];
     }
     return _userHeaderView;
 }
@@ -455,6 +459,149 @@
     [self.navigationController pushViewController:controller animated:YES];
 }
 
+#pragma mark ------更换头像
+- (void)changeUserHeadImage:(UIGestureRecognizer *)recognizer
+{
+    UIActionSheet *takeSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"拍照",@"选图", nil];
+    [takeSheet showInView:self.view];
+}
+
+- (void)cameraClick
+{
+    UIImagePickerController *pickerImage = [[UIImagePickerController alloc] init];
+
+    if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+        pickerImage.sourceType = UIImagePickerControllerSourceTypeCamera;
+        pickerImage.mediaTypes = [UIImagePickerController availableMediaTypesForSourceType:pickerImage.sourceType];
+    }
+    pickerImage.delegate = self;
+    pickerImage.allowsEditing = YES;
+    [self presentViewController:pickerImage animated:YES completion:nil];
+}
+
+- (void)photosClick
+{
+    UIImagePickerController *pickerImage = [[UIImagePickerController alloc] init];
+    if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]) {
+        pickerImage.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+        pickerImage.mediaTypes = [UIImagePickerController availableMediaTypesForSourceType:pickerImage.sourceType];
+    }
+    pickerImage.delegate = self;
+    pickerImage.allowsEditing = YES;
+    [self presentViewController:pickerImage animated:YES completion:nil];
+}
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+    UIImage *newHeadiamge = info[UIImagePickerControllerEditedImage];
+    [picker dismissViewControllerAnimated:YES completion:nil];
+    self.userHeaderView.image = newHeadiamge;
+    //更改头像不需要刷新界面了，直接更改头像图片
+    self.shouldRefresh = NO;
+    [self uploadHeadImage:newHeadiamge];
+}
+
+#pragma mark ------上传头像
+- (void)uploadHeadImage:(UIImage *)image
+{
+    //头像需要压缩 跟其他的上传图片接口不一样了
+    [Hud showLoadingWithMessage:@"正在上传图片..."];
+    __weak typeof(self) weakSelf = self;
+    [[AFHTTPSessionManager manager] POST:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"image/basephoto"] parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+        NSData *imageData = UIImageJPEGRepresentation(image, 0.1);
+        [formData appendPartWithFileData:imageData name:@"hahaggg.jpg" fileName:@"hahaggg.jpg" mimeType:@"image/jpeg"];
+    } progress:^(NSProgress * _Nonnull uploadProgress) {
+
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        NSLog(@"%@",responseObject);
+        NSDictionary *dic = [(NSString *)[responseObject valueForKey:@"data"] parseToArrayOrNSDictionary];
+        NSString *newHeadIamgeName = [(NSArray *)[dic valueForKey:@"pname"] objectAtIndex:0];
+        [[NSUserDefaults standardUserDefaults] setObject:newHeadIamgeName forKey:KEY_HEAD_IMAGE];
+        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_SENDPOST object:nil];
+
+        [weakSelf putHeadImage:newHeadIamgeName];
+        [Hud hideHud];
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        NSLog(@"%@",error);
+        [Hud hideHud];
+        [Hud showMessageWithText:@"上传图片失败"];
+    }];
+    
+}
+
+//更新服务器端
+- (void)putHeadImage:(NSString *)headImageName
+{
+    [MOCHTTPRequestOperationManager putWithURL:[NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttp,@"user",@"modifyuser"] class:nil parameters:@{@"uid":UID,@"type":@"headimage",@"value":headImageName, @"title":self.department,  @"company":self.company} success:^(MOCHTTPResponse *response) {
+        NSString *code = [response.data valueForKey:@"code"];
+        if ([code isEqualToString:@"000"]) {
+            [Hud showMessageWithText:@"修改成功"];
+        }
+    } failed:^(MOCHTTPResponse *response) {
+
+    }];
+}
+
+#pragma mark -邀请好友
+- (void)actionInvite:(id)sender
+{
+    __weak typeof(self) weakSelf = self;
+    id<ISSCAttachment> image  = [ShareSDK pngImageWithImage:[UIImage imageNamed:@"80"]];
+    NSString *contentOther =[NSString stringWithFormat:@"%@",@"诚邀您加入金融大牛圈！金融从业人员的家！"];
+    NSString *content =[NSString stringWithFormat:@"%@%@",@"诚邀您加入大牛圈APP！金融从业人员的家！这里有干货资讯、人脉嫁接、业务互助！赶快加入吧！",[NSString stringWithFormat:@"%@?uid=%@",SHARE_YAOQING_URL,[[NSUserDefaults standardUserDefaults]objectForKey:KEY_UID]]];
+    id<ISSShareActionSheetItem> item3 = [ShareSDK shareActionSheetItemWithTitle:@"短信" icon:[UIImage imageNamed:@"sns_icon_19"] clickHandler:^{
+        [weakSelf shareToSMS:content];
+    }];
+
+    NSString *shareUrl =[NSString stringWithFormat:@"%@?uid=%@",SHARE_YAOQING_URL,[[NSUserDefaults standardUserDefaults]objectForKey:KEY_UID]];
+    id<ISSShareActionSheetItem> item4 = [ShareSDK shareActionSheetItemWithTitle:@"微信朋友圈" icon:[UIImage imageNamed:@"sns_icon_23"] clickHandler:^{
+        [[AppDelegate currentAppdelegate] wechatShareWithText:contentOther shareUrl:shareUrl shareType:1];
+    }];
+    id<ISSShareActionSheetItem> item5 = [ShareSDK shareActionSheetItemWithTitle:@"微信好友" icon:[UIImage imageNamed:@"sns_icon_22"] clickHandler:^{
+        [[AppDelegate currentAppdelegate] wechatShareWithText:contentOther shareUrl:shareUrl shareType:0];
+    }];
+
+    NSArray *shareArray = nil;
+    if ([WXApi isWXAppSupportApi]) {
+        if ([QQApiInterface isQQSupportApi]) {
+            shareArray = [ShareSDK customShareListWithType: item3, item5, item4, SHARE_TYPE_NUMBER(ShareTypeQQ), nil];
+        } else{
+            shareArray = [ShareSDK customShareListWithType: item3, item5, item4, nil];
+        }
+    } else{
+        if ([QQApiInterface isQQSupportApi]) {
+            shareArray = [ShareSDK customShareListWithType: item3, SHARE_TYPE_NUMBER(ShareTypeQQ), nil];
+        } else{
+            shareArray = [ShareSDK customShareListWithType: item3, nil];
+        }
+    }
+
+
+    //构造分享内容
+    id<ISSContent> publishContent = [ShareSDK content:contentOther defaultContent:SHARE_DEFAULT_CONTENT image:image title:SHARE_TITLE_INVITE url:shareUrl description:SHARE_DEFAULT_CONTENT mediaType:SHARE_TYPE];
+
+    //创建弹出菜单容器
+    id<ISSContainer> container = [ShareSDK container];
+    [container setIPadContainerWithView:self.view arrowDirect:UIPopoverArrowDirectionUp];
+
+    //弹出分享菜单
+    [ShareSDK showShareActionSheet:container shareList:shareArray content:publishContent statusBarTips:YES authOptions:nil shareOptions:nil result:^(ShareType type, SSResponseState state, id<ISSPlatformShareInfo> statusInfo, id<ICMErrorInfo> error, BOOL end) {
+        if (state == SSResponseStateSuccess){
+            [MobClick event:@"ActionInviteFriend" label:@"onClick"];
+            NSLog(NSLocalizedString(@"TEXT_ShARE_SUC", @"分享成功"));
+        }
+        else if (state == SSResponseStateFail){
+            NSLog(NSLocalizedString(@"TEXT_ShARE_FAI", @"分享失败,错误码:%d,错误描述:%@"), [error errorCode], [error errorDescription]);
+
+        }
+    }];
+}
+
+-(void)shareToSMS:(NSString *)text
+{
+    [[AppDelegate currentAppdelegate] sendSmsWithText:text rid:@""];
+}
+
 #pragma mark ------获取数据
 - (void)getMyselfMaterial
 {
@@ -621,65 +768,21 @@
     }
 }
 
-#pragma mark -邀请好友
-- (void)actionInvite:(id)sender
+#pragma mark ------actionSheetDelegate
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    __weak typeof(self) weakSelf = self;
-    id<ISSCAttachment> image  = [ShareSDK pngImageWithImage:[UIImage imageNamed:@"80"]];
-    NSString *contentOther =[NSString stringWithFormat:@"%@",@"诚邀您加入金融大牛圈！金融从业人员的家！"];
-    NSString *content =[NSString stringWithFormat:@"%@%@",@"诚邀您加入大牛圈APP！金融从业人员的家！这里有干货资讯、人脉嫁接、业务互助！赶快加入吧！",[NSString stringWithFormat:@"%@?uid=%@",SHARE_YAOQING_URL,[[NSUserDefaults standardUserDefaults]objectForKey:KEY_UID]]];
-    id<ISSShareActionSheetItem> item3 = [ShareSDK shareActionSheetItemWithTitle:@"短信" icon:[UIImage imageNamed:@"sns_icon_19"] clickHandler:^{
-        [weakSelf shareToSMS:content];
-    }];
-
-    NSString *shareUrl =[NSString stringWithFormat:@"%@?uid=%@",SHARE_YAOQING_URL,[[NSUserDefaults standardUserDefaults]objectForKey:KEY_UID]];
-    id<ISSShareActionSheetItem> item4 = [ShareSDK shareActionSheetItemWithTitle:@"微信朋友圈" icon:[UIImage imageNamed:@"sns_icon_23"] clickHandler:^{
-        [[AppDelegate currentAppdelegate] wechatShareWithText:contentOther shareUrl:shareUrl shareType:1];
-    }];
-    id<ISSShareActionSheetItem> item5 = [ShareSDK shareActionSheetItemWithTitle:@"微信好友" icon:[UIImage imageNamed:@"sns_icon_22"] clickHandler:^{
-        [[AppDelegate currentAppdelegate] wechatShareWithText:contentOther shareUrl:shareUrl shareType:0];
-    }];
-
-    NSArray *shareArray = nil;
-    if ([WXApi isWXAppSupportApi]) {
-        if ([QQApiInterface isQQSupportApi]) {
-            shareArray = [ShareSDK customShareListWithType: item3, item5, item4, SHARE_TYPE_NUMBER(ShareTypeQQ), nil];
-        } else{
-            shareArray = [ShareSDK customShareListWithType: item3, item5, item4, nil];
-        }
-    } else{
-        if ([QQApiInterface isQQSupportApi]) {
-            shareArray = [ShareSDK customShareListWithType: item3, SHARE_TYPE_NUMBER(ShareTypeQQ), nil];
-        } else{
-            shareArray = [ShareSDK customShareListWithType: item3, nil];
-        }
+    if (buttonIndex == 0){
+        NSLog(@"拍照");
+        [self cameraClick];
+    } else if (buttonIndex == 1){
+        NSLog(@"选图");
+        [self photosClick];
+    } else if (buttonIndex == 2){
+        NSLog(@"取消");
     }
-
-
-    //构造分享内容
-    id<ISSContent> publishContent = [ShareSDK content:contentOther defaultContent:SHARE_DEFAULT_CONTENT image:image title:SHARE_TITLE_INVITE url:shareUrl description:SHARE_DEFAULT_CONTENT mediaType:SHARE_TYPE];
-
-    //创建弹出菜单容器
-    id<ISSContainer> container = [ShareSDK container];
-    [container setIPadContainerWithView:self.view arrowDirect:UIPopoverArrowDirectionUp];
-
-    //弹出分享菜单
-    [ShareSDK showShareActionSheet:container shareList:shareArray content:publishContent statusBarTips:YES authOptions:nil shareOptions:nil result:^(ShareType type, SSResponseState state, id<ISSPlatformShareInfo> statusInfo, id<ICMErrorInfo> error, BOOL end) {
-        if (state == SSResponseStateSuccess){
-            [MobClick event:@"ActionInviteFriend" label:@"onClick"];
-            NSLog(NSLocalizedString(@"TEXT_ShARE_SUC", @"分享成功"));
-        }
-        else if (state == SSResponseStateFail){
-            NSLog(NSLocalizedString(@"TEXT_ShARE_FAI", @"分享失败,错误码:%d,错误描述:%@"), [error errorCode], [error errorDescription]);
-            
-        }
-    }];
 }
 
--(void)shareToSMS:(NSString *)text
-{
-    [[AppDelegate currentAppdelegate] sendSmsWithText:text rid:@""];
-}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

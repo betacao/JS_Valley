@@ -44,11 +44,11 @@
     [self.tableView reloadData];
 }
 
--(void)refreshData
+- (void)refreshData
 {
     [self requestDataWithTarget:@"first" time:@"-1"];
-    
 }
+
 - (UITableView *)tableView
 {
     if (_tableView == nil) {

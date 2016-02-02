@@ -10,6 +10,7 @@
 @interface SHGGlobleTableViewCell()
 
 @property (strong, nonatomic) UIView *lineView;
+@property (strong, nonatomic) UIImageView *rightArrowView;
 
 @end
 
@@ -25,12 +26,20 @@
         self.textLabel.textColor = [UIColor colorWithHexString:@"161616"];
 
         [self.contentView addSubview:self.lineView];
+        [self.contentView addSubview:self.rightArrowView];
 
         self.textLabel.sd_layout
         .leftSpaceToView(self.contentView, factor(19.0f))
         .topSpaceToView(self.contentView, 0.0f)
         .rightSpaceToView(self.contentView, 0.0f)
         .heightIs(factor(54.0f));
+
+        CGSize size = self.rightArrowView.frame.size;
+        self.rightArrowView.sd_layout
+        .widthIs(size.width)
+        .heightIs(size.height)
+        .centerYEqualToView(self.contentView)
+        .rightSpaceToView(self.contentView, factor(11.0f));
 
         self.lineView.sd_layout
         .topSpaceToView(self.textLabel, 0.0f)
@@ -48,6 +57,15 @@
         _lineView.backgroundColor = [UIColor colorWithHexString:@"e6e7e8"];
     }
     return _lineView;
+}
+
+- (UIImageView *)rightArrowView
+{
+    if (!_rightArrowView) {
+        _rightArrowView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"rightArrowImage"]];
+        [_rightArrowView sizeToFit];
+    }
+    return _rightArrowView;
 }
 
 - (void)setModel:(SHGGlobleModel *)model
