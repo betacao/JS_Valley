@@ -41,6 +41,7 @@
 @property (strong, nonatomic) NSString *modifyTime;
 @property (strong, nonatomic) NSString *tipUrl;
 @property (strong, nonatomic) NSString *anonymous;//是否委托大牛发布
+@property (strong, nonatomic) NSString *model;//业务模式
 @end
 
 

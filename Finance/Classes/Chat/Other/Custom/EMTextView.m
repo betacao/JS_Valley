@@ -29,6 +29,16 @@
     return self;
 }
 
+- (void)awakeFromNib
+{
+    _contentColor = [UIColor blackColor];
+    _placeholderColor = [UIColor lightGrayColor];
+    _editing = NO;
+
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(startEditing:) name:UITextViewTextDidBeginEditingNotification object:self];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(finishEditing:) name:UITextViewTextDidEndEditingNotification object:self];
+}
+
 #pragma mark - super
 
 - (void)setTextColor:(UIColor *)textColor
@@ -40,7 +50,7 @@
 
 - (NSString *)text
 {
-    if ([super.text isEqualToString:_placeholder] && super.textColor == _placeholderColor) {
+    if ([super.text isEqualToString:_placeholder]) {
         return @"";
     }
     
@@ -77,10 +87,11 @@
 {
     _editing = YES;
     
-    if ([super.text isEqualToString:_placeholder] && super.textColor == _placeholderColor) {
+    if ([super.text isEqualToString:_placeholder]) {
         super.textColor = _contentColor;
         super.text = @"";
     }
+
 }
 
 - (void)finishEditing:(NSNotification *)notification

@@ -13,6 +13,8 @@
 
 @property (strong, nonatomic) SHGGlobleModel *model;
 
+- (void)setupNeedShowAccessorView:(BOOL)hidden;
+
 @end
 
 @interface SHGGlobleModel : NSObject

@@ -52,7 +52,7 @@
 {
     if (!_titleLabel) {
         _titleLabel = [[UILabel alloc] init];
-        _titleLabel.font = [UIFont systemFontOfSize:14.0f];
+        _titleLabel.font = [UIFont systemFontOfSize:factor(14.0f)];
         _titleLabel.backgroundColor = [UIColor clearColor];
         _titleLabel.textAlignment = NSTextAlignmentLeft;
         _titleLabel.textColor = [UIColor colorWithHexString:@"606060"];
@@ -171,7 +171,7 @@
             [self.parentView addSubview:self.tableView];
             CGRect frame = self.tableView.frame;
             frame.size.height = self.titlesList.count * CGRectGetHeight(self.frame);
-            frame.size.height = MIN(CGRectGetMaxY(self.parentView.frame) - CGRectGetMinY(frame), CGRectGetHeight(frame));
+            frame.size.height = MIN(SCREENHEIGHT - kNavigationBarHeight - kStatusBarHeight - CGRectGetMinY(frame), CGRectGetHeight(frame));
             self.tableView.frame = frame;
         } completion:^(BOOL finished){
             self.isOpen = YES;

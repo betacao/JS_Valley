@@ -12,8 +12,7 @@
 #import "UIButton+WebCache.h"
 #import "SHGItemChooseView.h"
 #import "UIButton+EnlargeEdge.h"
-#define kTextViewOriginalHeight 80.0f
-#define kTextViewTopBlank 100.0f * XFACTOR
+#import "EMTextView.h"
 
 typedef NS_ENUM(NSInteger, SHGMarketSendType){
     SHGMarketSendTypeNew = 0,
@@ -24,95 +23,155 @@ typedef NS_ENUM(NSInteger, SHGMarketSendType){
 
 @property (strong, nonatomic) IBOutlet UIView *bgView;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property (weak, nonatomic) IBOutlet UITextField *marketNameField;
+
 @property (weak, nonatomic) IBOutlet SHGComBoxView *firstCategoryBox;
 @property (weak, nonatomic) IBOutlet SHGComBoxView *secondCategoryBox;
+
+@property (weak, nonatomic) IBOutlet UITextField *marketNameField;
 @property (weak, nonatomic) IBOutlet UITextField *acountField;
 @property (weak, nonatomic) IBOutlet UITextField *contactField;
 @property (weak, nonatomic) IBOutlet UITextField *locationField;
-@property (weak, nonatomic) IBOutlet UITextView *introduceView;
+@property (weak, nonatomic) IBOutlet UIImageView *starView1;
+@property (weak, nonatomic) IBOutlet UIImageView *starView2;
+@property (weak, nonatomic) IBOutlet UIImageView *starView3;
+@property (weak, nonatomic) IBOutlet UILabel *yuanLabel;
+
+@property (weak, nonatomic) IBOutlet UILabel *modelLabel;
+@property (weak, nonatomic) IBOutlet UIView *modelContentView;
+@property (weak, nonatomic) IBOutlet UIButton *leftButton;
+@property (weak, nonatomic) IBOutlet UIView *breakView;
+@property (weak, nonatomic) IBOutlet UIButton *rightButton;
+
+@property (weak, nonatomic) IBOutlet UILabel *introduceLabel;
+
+@property (weak, nonatomic) IBOutlet EMTextView *introduceView;
+
 @property (weak, nonatomic) IBOutlet UIButton *nextButton;
-@property (strong, nonatomic) IBOutlet UIView *nextBgView;
-@property (strong, nonatomic) IBOutlet UITableViewCell *introduceCell;
 @property (strong, nonatomic) id currentContext;
 @property (assign, nonatomic) CGFloat keyBoardOrginY;
 @property (assign, nonatomic) SHGMarketSendType sendType;
-@property (weak, nonatomic) IBOutlet UIView *addImageBgView;
 @property (weak, nonatomic) IBOutlet UIButton *addImageButton;
+@property (weak, nonatomic) IBOutlet UILabel *addImageLabel;
 @property (weak, nonatomic) IBOutlet UIButton *anonymousButton;
 @property (strong, nonatomic) NSMutableArray *categoryArray;
 @property (strong, nonatomic) NSString *imageName;
 @property (assign, nonatomic) BOOL hasImage;
+
+@property (strong, nonatomic) NSString *model;
+
 @end
 
 @implementation SHGMarketSendViewController
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
     self.title = @"发布业务信息";
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardDidShow:) name:UIKeyboardDidShowNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardDidHide:) name:UIKeyboardWillHideNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textFieldDidChange:) name:UITextFieldTextDidChangeNotification object:nil];
     self.sendType = SHGMarketSendTypeNew;
 
-    [self.tableView setTableHeaderView:self.bgView];
-    [self.tableView setTableFooterView:self.nextBgView];
-
-    [self initView];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardDidShow:) name:UIKeyboardDidShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textFieldDidChange:) name:UITextFieldTextDidChangeNotification object:nil];
 
     __weak typeof(self)weakSelf = self;
-
     [[SHGMarketManager shareManager] userListArray:^(NSArray *array) {
-        weakSelf.categoryArray = [NSMutableArray arrayWithArray:array];
-        NSMutableArray *titleArray = [NSMutableArray array];
-        [weakSelf.categoryArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            SHGMarketFirstCategoryObject *object = (SHGMarketFirstCategoryObject *)obj;
-            [titleArray addObject:object.firstCatalogName];
-        }];
-        weakSelf.firstCategoryBox.titlesList = titleArray;
-        [weakSelf.firstCategoryBox reloadData];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            weakSelf.categoryArray = [NSMutableArray arrayWithArray:array];
+            NSMutableArray *titleArray = [NSMutableArray array];
+            [weakSelf.categoryArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                SHGMarketFirstCategoryObject *object = (SHGMarketFirstCategoryObject *)obj;
+                [titleArray addObject:object.firstCatalogName];
+            }];
+            weakSelf.firstCategoryBox.titlesList = titleArray;
+            [weakSelf.firstCategoryBox reloadData];
+        });
     }];
+
+    [self initView];
+    [self addAutoLayout];
+
     if (self.object) {
         self.title = @"编辑业务信息";
         [self editObject:self.object];
         self.sendType = SHGMarketSendTypeReSet;
     }
-
+    [self.bgView setupAutoHeightWithBottomView:self.anonymousButton bottomMargin:factor(65.0f)];
+    [self.bgView layoutSubviews];
+    [self.tableView setTableHeaderView:self.bgView];
 }
 
 - (void)initView
 {
+    self.marketNameField.font = [UIFont systemFontOfSize:factor(14.0f)];
     self.marketNameField.layer.masksToBounds = YES;
     self.marketNameField.layer.cornerRadius = 3.0f;
-    self.acountField.layer.masksToBounds = YES;
-    self.acountField.layer.cornerRadius = 3.0f;
-    self.contactField.layer.masksToBounds = YES;
-    self.contactField.layer.cornerRadius = 3.0f;
-    self.introduceView.layer.masksToBounds = YES;
-    self.introduceView.layer.cornerRadius = 3.0f;
-    self.locationField.layer.masksToBounds = YES;
-    self.locationField.layer.cornerRadius = 3.0f;
-    //设置textField文字与左边存在一点间距
     self.marketNameField.leftView = [[UIView alloc]initWithFrame:CGRectMake(0.0f, 0.0f, 5.0f, 0.0f)];
     self.marketNameField.leftViewMode = UITextFieldViewModeAlways;
     [self.marketNameField setValue:[UIColor colorWithHexString:@"D3D3D3"] forKeyPath:@"_placeholderLabel.textColor"];
 
+    self.acountField.font = [UIFont systemFontOfSize:factor(14.0f)];
+    self.acountField.layer.masksToBounds = YES;
+    self.acountField.layer.cornerRadius = 3.0f;
     self.acountField.leftView = [[UIView alloc]initWithFrame:CGRectMake(0.0f, 0.0f, 5.0f, 0.0f)];
     self.acountField.leftViewMode = UITextFieldViewModeAlways;
     [self.acountField setValue:[UIColor colorWithHexString:@"D3D3D3"] forKeyPath:@"_placeholderLabel.textColor"];
 
+    self.yuanLabel.font = [UIFont systemFontOfSize:factor(14.0f)];
+    [self.yuanLabel sizeToFit];
+
+    self.contactField.font = [UIFont systemFontOfSize:factor(14.0f)];
+    self.contactField.layer.masksToBounds = YES;
+    self.contactField.layer.cornerRadius = 3.0f;
     self.contactField.leftView = [[UIView alloc]initWithFrame:CGRectMake(0.0f, 0.0f, 5.0f, 0.0f)];
     self.contactField.leftViewMode = UITextFieldViewModeAlways;
     [self.contactField setValue:[UIColor colorWithHexString:@"D3D3D3"] forKeyPath:@"_placeholderLabel.textColor"];
 
+    self.locationField.font = [UIFont systemFontOfSize:factor(14.0f)];
+    self.locationField.layer.masksToBounds = YES;
+    self.locationField.layer.cornerRadius = 3.0f;
     self.locationField.leftView = [[UIView alloc]initWithFrame:CGRectMake(0.0f, 0.0f, 5.0f, 0.0f)];
     self.locationField.leftViewMode = UITextFieldViewModeAlways;
     [self.locationField setValue:[UIColor colorWithHexString:@"D3D3D3"] forKeyPath:@"_placeholderLabel.textColor"];
 
-    [self.anonymousButton sizeToFit];
+    [self.starView1 sizeToFit];
+    [self.starView2 sizeToFit];
+    [self.starView3 sizeToFit];
+
+    self.modelLabel.font = [UIFont systemFontOfSize:factor(14.0f)];
+
+    self.modelContentView.layer.masksToBounds = YES;
+    self.modelContentView.layer.cornerRadius = 3.0f;
+    self.modelContentView.layer.borderColor = [UIColor colorWithHexString:@"e1e1e6"].CGColor;
+    self.modelContentView.layer.borderWidth = 0.5f;
+
+    self.leftButton.titleLabel.font = [UIFont systemFontOfSize:factor(13.0f)];
+    [self.leftButton setTitleColor:[UIColor colorWithHexString:@"e1e1e6"] forState:UIControlStateNormal];
+    [self.leftButton setTitleColor:[UIColor colorWithHexString:@"d43c33"] forState:UIControlStateSelected];
+    self.leftButton.selected = YES;
+    self.model = self.leftButton.titleLabel.text;
+
+    self.rightButton.titleLabel.font = [UIFont systemFontOfSize:factor(13.0f)];
+    [self.rightButton setTitleColor:[UIColor colorWithHexString:@"e1e1e6"] forState:UIControlStateNormal];
+    [self.rightButton setTitleColor:[UIColor colorWithHexString:@"d43c33"] forState:UIControlStateSelected];
+
+    self.introduceLabel.font = [UIFont systemFontOfSize:factor(14.0f)];
+
+    self.introduceView.font = [UIFont systemFontOfSize:factor(14.0f)];
+    self.introduceView.placeholder = @"描述您的业务详细信息";
+    self.introduceView.placeholderColor = [UIColor colorWithHexString:@"d3d3d3"];
+    self.introduceView.layer.masksToBounds = YES;
+    self.introduceView.layer.cornerRadius = 3.0f;
+
+    [self.addImageButton sizeToFit];
+
+    self.addImageLabel.font = [UIFont systemFontOfSize:factor(14.0f)];
+
+    self.nextButton.titleLabel.font = [UIFont systemFontOfSize:factor(15.0f)];
+
+    self.anonymousButton.titleLabel.font = [UIFont systemFontOfSize:factor(13.0f)];
     [self.anonymousButton setEnlargeEdge: 20.0f];
     [self.anonymousButton setImage:[UIImage imageNamed:@"market_select"] forState:UIControlStateSelected];
     [self.anonymousButton setImage:[UIImage imageNamed:@"market_unselect"] forState:UIControlStateNormal];
+    [self.anonymousButton sizeToFit];
 
     [self initBoxView];
 }
@@ -126,6 +185,140 @@ typedef NS_ENUM(NSInteger, SHGMarketSendType){
     self.secondCategoryBox.backgroundColor = [UIColor whiteColor];
     self.secondCategoryBox.delegate = self;
     self.secondCategoryBox.parentView = self.bgView;
+}
+
+- (void)addAutoLayout
+{
+    CGSize starSize = self.starView1.frame.size;
+
+    self.firstCategoryBox.sd_layout
+    .topSpaceToView(self.bgView, factor(15.0f))
+    .leftSpaceToView(self.bgView, factor(13.0f))
+    .heightIs(factor(35.0f))
+    .widthIs(factor(155.0f));
+
+    self.secondCategoryBox.sd_layout
+    .topSpaceToView(self.bgView, factor(15.0f))
+    .rightSpaceToView(self.bgView, factor(13.0f))
+    .heightIs(factor(35.0f))
+    .widthIs(factor(155.0f));
+
+    self.marketNameField.sd_layout
+    .leftEqualToView(self.firstCategoryBox)
+    .topSpaceToView(self.firstCategoryBox, factor(15.0f))
+    .widthIs(factor(320.0f))
+    .heightIs(factor(35.0f));
+    
+    self.starView1.sd_layout
+    .centerYEqualToView(self.marketNameField)
+    .centerXIs((SCREENWIDTH - CGRectGetMaxX(self.marketNameField.frame)) / 2.0f + CGRectGetMaxX(self.marketNameField.frame))
+    .widthIs(starSize.width)
+    .heightIs(starSize.height);
+
+    self.acountField.sd_layout
+    .leftEqualToView(self.firstCategoryBox)
+    .topSpaceToView(self.marketNameField, factor(15.0f))
+    .widthRatioToView(self.marketNameField, 1.0f)
+    .heightRatioToView(self.marketNameField, 1.0f);
+
+    CGSize labelSize = self.yuanLabel.frame.size;
+    self.yuanLabel.sd_layout
+    .centerYEqualToView(self.acountField)
+    .centerXEqualToView(self.starView1)
+    .widthIs(labelSize.width)
+    .heightIs(labelSize.height);
+
+    self.contactField.sd_layout
+    .leftEqualToView(self.firstCategoryBox)
+    .topSpaceToView(self.acountField, factor(15.0f))
+    .widthRatioToView(self.marketNameField, 1.0f)
+    .heightRatioToView(self.marketNameField, 1.0f);
+
+    self.starView2.sd_layout
+    .centerYEqualToView(self.contactField)
+    .centerXEqualToView(self.starView1)
+    .widthIs(starSize.width)
+    .heightIs(starSize.height);
+
+    self.locationField.sd_layout
+    .leftEqualToView(self.firstCategoryBox)
+    .topSpaceToView(self.contactField, factor(15.0f))
+    .widthRatioToView(self.marketNameField, 1.0f)
+    .heightRatioToView(self.marketNameField, 1.0f);
+
+    self.starView3.sd_layout
+    .centerYEqualToView(self.locationField)
+    .centerXEqualToView(self.starView1)
+    .widthIs(starSize.width)
+    .heightIs(starSize.height);
+
+    self.modelLabel.sd_layout
+    .topSpaceToView(self.locationField, factor(28.0f))
+    .leftSpaceToView(self.bgView, factor(16.0f))
+    .autoHeightRatio(0);
+    [self.modelLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
+
+    self.modelContentView.sd_layout
+    .leftEqualToView(self.firstCategoryBox)
+    .topSpaceToView(self.modelLabel, factor(14.0f))
+    .rightSpaceToView(self.bgView, factor(13.0f))
+    .heightIs(factor(35.0f));
+
+    self.breakView.sd_layout
+    .heightIs(factor(25.0f))
+    .widthIs(0.5f)
+    .centerYEqualToView(self.modelContentView)
+    .centerXEqualToView(self.modelContentView);
+
+    self.leftButton.sd_layout
+    .leftSpaceToView(self.modelContentView, 0.0f)
+    .topSpaceToView(self.modelContentView, 0.0f)
+    .rightSpaceToView(self.breakView, 0.0f)
+    .heightRatioToView(self.modelContentView, 1.0f);
+
+    self.rightButton.sd_layout
+    .leftSpaceToView(self.breakView, 0.0f)
+    .topSpaceToView(self.modelContentView, 0.0f)
+    .rightSpaceToView(self.modelContentView, 0.0f)
+    .heightRatioToView(self.modelContentView, 1.0f);
+
+    self.introduceLabel.sd_layout
+    .topSpaceToView(self.modelContentView, factor(28.0f))
+    .leftEqualToView(self.modelLabel)
+    .autoHeightRatio(0);
+    [self.modelLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
+
+    self.introduceView.sd_layout
+    .leftEqualToView(self.firstCategoryBox)
+    .topSpaceToView(self.introduceLabel, factor(14.0f))
+    .rightEqualToView(self.modelContentView)
+    .heightIs(factor(137.0f));
+
+    CGSize plusSize = self.addImageButton.frame.size;
+    self.addImageButton.sd_layout
+    .topSpaceToView(self.introduceView, factor(12.0f))
+    .leftSpaceToView(self.bgView, factor(15.0f))
+    .widthIs(plusSize.width)
+    .heightIs(plusSize.height);
+
+    self.addImageLabel.sd_layout
+    .leftSpaceToView(self.addImageButton, factor(12.0f))
+    .centerYEqualToView(self.addImageButton)
+    .autoHeightRatio(0.0f);
+    [self.addImageLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
+
+    self.nextButton.sd_layout
+    .leftEqualToView(self.firstCategoryBox)
+    .topSpaceToView(self.addImageButton, factor(12.0f))
+    .rightEqualToView(self.modelContentView)
+    .heightIs(factor(40.0f));
+
+    CGSize anonymousSize = self.anonymousButton.frame.size;
+    self.anonymousButton.sd_layout
+    .topSpaceToView(self.nextButton, factor(12.0f))
+    .leftEqualToView(self.firstCategoryBox)
+    .widthIs(anonymousSize.width)
+    .heightIs(anonymousSize.height);
 
 }
 
@@ -152,6 +345,13 @@ typedef NS_ENUM(NSInteger, SHGMarketSendType){
     } else{
         self.anonymousButton.selected = NO;
     }
+    if ([object.model isEqualToString:self.leftButton.titleLabel.text]) {
+        self.leftButton.selected = YES;
+        self.rightButton.selected = NO;
+    } else if ([object.model isEqualToString:self.rightButton.titleLabel.text]) {
+        self.leftButton.selected = NO;
+        self.rightButton.selected = YES;
+    }
     if (object.url && object.url.length > 0) {
         self.hasImage = YES;
         __weak typeof(self) weakSelf = self;
@@ -167,6 +367,20 @@ typedef NS_ENUM(NSInteger, SHGMarketSendType){
 - (IBAction)clickAnonymousButton:(UIButton *)button
 {
     button.selected = !button.selected;
+}
+
+- (IBAction)leftButtonClick:(UIButton *)sender
+{
+    sender.selected = YES;
+    self.rightButton.selected = NO;
+    self.model = sender.titleLabel.text;
+}
+
+- (IBAction)rightButtonClick:(UIButton *)sender
+{
+    sender.selected = YES;
+    self.leftButton.selected = NO;
+    self.model = sender.titleLabel.text;
 }
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField
@@ -198,21 +412,11 @@ typedef NS_ENUM(NSInteger, SHGMarketSendType){
     self.keyBoardOrginY = keyboardOrigin.y;
     UIView *view = (UIView *)self.currentContext;
     CGPoint point = CGPointMake(0.0f, CGRectGetMinY(view.frame));
-    if ([self.currentContext isEqual:self.introduceView]) {
-        if (CGRectGetHeight(self.introduceView.frame) > kTextViewOriginalHeight) {
-            point = CGPointMake(0.0f, CGRectGetMaxY(view.frame));
-        }
-        point = [self.introduceCell convertPoint:point toView:self.tableView];
-        point.y -= kTextViewTopBlank;
-    }
-    [self.tableView setContentOffset:point animated:YES];
-}
-
-- (void)keyBoardDidHide:(NSNotification *)notificaiton
-{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.tableView setContentOffset:point animated:YES];
+    });
 
 }
-
 
 
 - (void)textViewDidBeginEditing:(UITextView *)textView
@@ -222,22 +426,9 @@ typedef NS_ENUM(NSInteger, SHGMarketSendType){
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
 {
-    if ([self.currentContext isEqual: self.introduceView]) {
-        CGSize size = [self.introduceView sizeThatFits:CGSizeMake(CGRectGetWidth(self.introduceView.frame), MAXFLOAT)];
-        CGRect frame = self.introduceView.frame;
-        frame.size.height = size.height;
-        if (!CGRectEqualToRect(self.introduceView.frame, frame) && CGRectGetHeight(frame) > kTextViewOriginalHeight) {
-            self.introduceView.frame = frame;
-            self.addImageBgView.origin = CGPointMake(0.0f, CGRectGetMaxY(frame));
-            [self.tableView reloadData];
-        } else{
-            [self.currentContext resignFirstResponder];
-        }
-    } else{
-        [self.currentContext resignFirstResponder];
-        [self.firstCategoryBox closeOtherCombox];
-        [self.secondCategoryBox closeOtherCombox];
-    }
+    [self.currentContext resignFirstResponder];
+    [self.firstCategoryBox closeOtherCombox];
+    [self.secondCategoryBox closeOtherCombox];
 }
 
 - (void)textFieldDidChange:(NSNotification *)notification
@@ -317,7 +508,7 @@ typedef NS_ENUM(NSInteger, SHGMarketSendType){
                             secondId = secondObject.secondCatalogId;
                         }
 
-                        NSDictionary *param = @{@"uid":uid, @"marketName": marketName, @"firstCatalogId": firstId, @"secondCatalogId": secondId, @"price": price, @"contactInfo": contactInfo, @"detail": detail, @"photo":self.imageName, @"city":city, @"anonymous":anonymous};
+                        NSDictionary *param = @{@"uid":uid, @"marketName": marketName, @"firstCatalogId": firstId, @"secondCatalogId": secondId, @"price": price, @"contactInfo": contactInfo, @"detail": detail, @"photo":self.imageName, @"city":city, @"anonymous":anonymous, @"model":self.model};
                         NSMutableDictionary *mParam = [NSMutableDictionary dictionaryWithDictionary:param];
                         if (!secondId || secondId.length == 0) {
                             [mParam removeObjectForKey:@"secondCatalogId"];
@@ -349,7 +540,7 @@ typedef NS_ENUM(NSInteger, SHGMarketSendType){
                             SHGMarketSecondCategoryObject *secondObject = [firstObject.secondCataLogs objectAtIndex:self.secondCategoryBox.currentIndex];
                             secondId = secondObject.secondCatalogId;
                         }
-                        NSDictionary *param = @{@"uid":uid, @"marketName": marketName, @"firstCatalogId": firstId, @"secondCatalogId": secondId, @"price": price, @"contactInfo": contactInfo, @"detail": detail, @"photo":self.imageName, @"city":city, @"marketId":weakSelf.object.marketId, @"anonymous":anonymous};
+                        NSDictionary *param = @{@"uid":uid, @"marketName": marketName, @"firstCatalogId": firstId, @"secondCatalogId": secondId, @"price": price, @"contactInfo": contactInfo, @"detail": detail, @"photo":self.imageName, @"city":city, @"marketId":weakSelf.object.marketId, @"anonymous":anonymous, @"model":self.model};
                         NSMutableDictionary *mParam = [NSMutableDictionary dictionaryWithDictionary:param];
                         if (!secondId || secondId.length == 0) {
                             [mParam removeObjectForKey:@"secondCatalogId"];
@@ -425,17 +616,17 @@ typedef NS_ENUM(NSInteger, SHGMarketSendType){
 #pragma mark tableViewDelegate
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 1;
+    return 0;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return CGRectGetMaxY(self.addImageBgView.frame);
+    return 0.0f;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return self.introduceCell;
+    return nil;
 }
 
 #pragma mark ------actionSheet代理

@@ -45,7 +45,7 @@
 {
     if (!_modelsArray) {
         _modelsArray = [NSMutableArray array];
-        for (NSInteger i = 0; i < 6; i++) {
+        for (NSInteger i = 0; i < self.dataArray.count; i++) {
             SHGGlobleModel *model = [[SHGGlobleModel alloc] init];
             model.text = [self.dataArray objectAtIndex:i];
             [_modelsArray addObject:model];
@@ -67,7 +67,8 @@
 
     if (!cell) {
         cell = [[SHGGlobleTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identfier];
-        }
+        [cell setupNeedShowAccessorView:YES];
+    }
     cell.model = [self.modelsArray objectAtIndex:indexPath.row];
     return cell;
 }
