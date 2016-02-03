@@ -203,17 +203,17 @@ typedef NS_ENUM(NSInteger, SHGMarketSendType){
     .heightIs(factor(35.0f))
     .widthIs(factor(155.0f));
 
-    self.secondCategoryBox.sd_layout
-    .topSpaceToView(self.bgView, factor(15.0f))
-    .rightSpaceToView(self.bgView, factor(13.0f))
-    .heightIs(factor(35.0f))
-    .widthIs(factor(155.0f));
-
     self.marketNameField.sd_layout
     .leftEqualToView(self.firstCategoryBox)
     .topSpaceToView(self.firstCategoryBox, factor(15.0f))
     .widthIs(factor(320.0f))
     .heightIs(factor(35.0f));
+
+    self.secondCategoryBox.sd_layout
+    .topSpaceToView(self.bgView, factor(15.0f))
+    .rightEqualToView(self.marketNameField)
+    .heightIs(factor(35.0f))
+    .widthIs(factor(155.0f));
     
     self.starView1.sd_layout
     .centerYEqualToView(self.marketNameField)

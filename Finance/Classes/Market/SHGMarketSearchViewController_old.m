@@ -1,12 +1,12 @@
 //
-//  SHGMarketSearchViewController.m
+//  SHGMarketSearchViewController_old.m
 //  Finance
 //
 //  Created by changxicao on 15/12/28.
 //  Copyright © 2015年 HuMin. All rights reserved.
 //
 
-#import "SHGMarketSearchViewController.h"
+#import "SHGMarketSearchViewController_old.h"
 #import "SHGMarketObject.h"
 #import "RealtimeSearchUtil.h"
 #import "SHGMarketManager.h"
@@ -15,7 +15,7 @@
 #import "SHGMarketDetailViewController.h"
 #import "SHGMarketSegmentViewController.h"
 
-@interface SHGMarketSearchViewController ()<UISearchBarDelegate>
+@interface SHGMarketSearchViewController_old ()<UISearchBarDelegate>
 
 @property (strong, nonatomic) UISearchBar *searchBar;
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
@@ -27,7 +27,7 @@
 
 @end
 
-@implementation SHGMarketSearchViewController
+@implementation SHGMarketSearchViewController_old
 
 - (void)viewDidLoad
 {

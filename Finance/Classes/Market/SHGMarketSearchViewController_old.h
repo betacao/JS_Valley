@@ -1,5 +1,5 @@
 //
-//  SHGMarketSearchViewController.h
+//  SHGMarketSearchViewController_old.h
 //  Finance
 //
 //  Created by changxicao on 15/12/28.
@@ -8,6 +8,6 @@
 
 #import "BaseViewController.h"
 
-@interface SHGMarketSearchViewController : BaseTableViewController
+@interface SHGMarketSearchViewController_old : BaseTableViewController
 //@property 
 @end

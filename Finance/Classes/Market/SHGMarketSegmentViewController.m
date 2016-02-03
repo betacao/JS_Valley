@@ -8,7 +8,7 @@
 
 #import "SHGMarketSegmentViewController.h"
 #import "SHGMarketSendViewController.h"
-#import "SHGMarketSearchViewController.h"
+#import "SHGMarketSearchViewController_old.h"
 #import "SHGMarketManager.h"
 #import "SHGProvincesViewController.h"
 #import "SHGMomentCityViewController.h"
@@ -174,7 +174,7 @@
 - (void)searchMarket:(UIButton *)button
 {
     [MobClick event:@"ActionMarketSearchClicked" label:@"onClick"];
-    SHGMarketSearchViewController *controller = [[SHGMarketSearchViewController alloc] init];
+    SHGMarketSearchViewController_old *controller = [[SHGMarketSearchViewController_old alloc] init];
     controller.dataArr = ((BaseTableViewController *)[self.viewControllers firstObject]).dataArr;
     [self.navigationController pushViewController:controller animated:YES];
 }
