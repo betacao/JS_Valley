@@ -208,7 +208,7 @@
     if(!cell){
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIndentifier];
         cell.backgroundColor = [UIColor clearColor];
-        cell.textLabel.font = [UIFont systemFontOfSize:14.0f];
+        cell.textLabel.font = [UIFont systemFontOfSize:factor(14.0f)];
         cell.textLabel.textColor = kTextColor;
     }
     cell.textLabel.text = [self.titlesList objectAtIndex:indexPath.row];

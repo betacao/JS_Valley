@@ -40,7 +40,7 @@
 #define YFACTOR SCREENHEIGHT / 568.0f
 
 #define FontFactor floor(SCREENWIDTH / 320.0f * 10) / 10
-#define factor(x) ceilf(ceilf(SCREENWIDTH / 375.0f * 10) / 10 * x)
+#define factor(x) ceilf(SCREENWIDTH / 375.0f * x)
 //计算颜色
 #define RGB(r,g,b) [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:1.0]
 

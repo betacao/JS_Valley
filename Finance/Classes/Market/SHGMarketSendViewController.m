@@ -191,6 +191,12 @@ typedef NS_ENUM(NSInteger, SHGMarketSendType){
 {
     CGSize starSize = self.starView1.frame.size;
 
+    self.tableView.sd_layout
+    .leftSpaceToView(self.view, 0.0f)
+    .rightSpaceToView(self.view, 0.0f)
+    .bottomSpaceToView(self.view, 0.0f)
+    .topSpaceToView(self.view, 0.0f);
+
     self.firstCategoryBox.sd_layout
     .topSpaceToView(self.bgView, factor(15.0f))
     .leftSpaceToView(self.bgView, factor(13.0f))
@@ -286,7 +292,7 @@ typedef NS_ENUM(NSInteger, SHGMarketSendType){
     .topSpaceToView(self.modelContentView, factor(28.0f))
     .leftEqualToView(self.modelLabel)
     .autoHeightRatio(0);
-    [self.modelLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
+    [self.introduceLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
 
     self.introduceView.sd_layout
     .leftEqualToView(self.firstCategoryBox)

@@ -47,6 +47,7 @@
         if ([object isKindOfClass:NSClassFromString(@"UISearchBarTextField")]) {
             UITextField *textField = (UITextField *)object;
             textField.textColor = [UIColor whiteColor];
+            textField.font = [UIFont systemFontOfSize:factor(15.0f)];
             [textField setValue:[UIColor colorWithHexString:@"F67070"] forKeyPath:@"_placeholderLabel.textColor"];
             textField.enablesReturnKeyAutomatically = NO;
         } else if ([object isKindOfClass:NSClassFromString(@"UISearchBarBackground")]){
@@ -54,7 +55,7 @@
             UIButton *button = (UIButton *)object;
             self.backButton = button;
             [button setTitle:@"取消" forState:UIControlStateNormal];
-            button.titleLabel.font = [UIFont systemFontOfSize:14.0f];
+            button.titleLabel.font = [UIFont systemFontOfSize:factor(15.0f)];
             button.enabled = YES;
         }
     }
