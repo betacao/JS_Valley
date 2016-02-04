@@ -7,9 +7,9 @@
 //
 
 #import "SHGMarketSearchViewController.h"
-#define kItemLeftMargin factor(14.0f)
-#define kItemHorizontalMargin factor(16.0f)
-#define kItemVerticalMargin factor(11.0f)
+#define kItemLeftMargin MarginFactor(14.0f)
+#define kItemHorizontalMargin MarginFactor(16.0f)
+#define kItemVerticalMargin MarginFactor(11.0f)
 
 @interface SHGMarketSearchViewController ()<UISearchBarDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
@@ -61,7 +61,7 @@
             if ([object isKindOfClass:NSClassFromString(@"UISearchBarTextField")]) {
                 UITextField *textField = (UITextField *)object;
                 textField.textColor = [UIColor whiteColor];
-                textField.font = [UIFont systemFontOfSize:factor(15.0f)];
+                textField.font = [UIFont systemFontOfSize:FontFactor(15.0f)];
                 [textField setValue:[UIColor colorWithHexString:@"F67070"] forKeyPath:@"_placeholderLabel.textColor"];
                 textField.enablesReturnKeyAutomatically = NO;
             } else if ([object isKindOfClass:NSClassFromString(@"UISearchBarBackground")]){
@@ -69,7 +69,7 @@
                 UIButton *button = (UIButton *)object;
                 self.backButton = button;
                 [button setTitle:@"取消" forState:UIControlStateNormal];
-                button.titleLabel.font = [UIFont systemFontOfSize:factor(16.0f)];
+                button.titleLabel.font = [UIFont systemFontOfSize:FontFactor(16.0f)];
                 button.enabled = YES;
             }
         }
@@ -88,9 +88,9 @@
 
 - (void)initView
 {
-    self.titleLabel.font = [UIFont systemFontOfSize:factor(15.0f)];
+    self.titleLabel.font = [UIFont systemFontOfSize:FontFactor(16.0f)];
 
-    self.moreLabel.font = [UIFont systemFontOfSize:factor(14.0f)];
+    self.moreLabel.font = [UIFont systemFontOfSize:FontFactor(14.0f)];
     [self.moreLabel sizeToFit];
 
     [self.moreImageView sizeToFit];
@@ -101,27 +101,27 @@
     CGSize size = self.titleLabel.frame.size;
 
     self.titleLabel.sd_layout
-    .topSpaceToView(self.view, factor(28.0f))
-    .leftSpaceToView(self.view, factor(12.0f))
+    .topSpaceToView(self.view, MarginFactor(28.0f))
+    .leftSpaceToView(self.view, MarginFactor(12.0f))
     .autoHeightRatio(0.0f);
     [self.titleLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
     
     self.contentView.sd_layout
-    .topSpaceToView(self.titleLabel, factor(20.0f))
+    .topSpaceToView(self.titleLabel, MarginFactor(20.0f))
     .leftSpaceToView(self.view, 0.0f)
     .rightSpaceToView(self.view, 0.0f)
-    .heightIs(factor(10.0f));
+    .heightIs(MarginFactor(10.0f));
 
     size = self.moreImageView.frame.size;
     self.moreImageView.sd_layout
-    .topSpaceToView(self.contentView, factor(26.0f))
-    .rightSpaceToView(self.view, factor(12.0f))
+    .topSpaceToView(self.contentView, MarginFactor(26.0f))
+    .rightSpaceToView(self.view, MarginFactor(12.0f))
     .widthIs(size.width)
     .heightIs(size.height);
 
     self.moreLabel.sd_layout
     .centerYEqualToView(self.moreImageView)
-    .rightSpaceToView(self.moreImageView, factor(10.0f))
+    .rightSpaceToView(self.moreImageView, MarginFactor(10.0f))
     .autoHeightRatio(0.0f);
     [self.moreLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
 }
@@ -129,7 +129,7 @@
 - (void)addHotItem
 {
     CGFloat width = ceilf((SCREENWIDTH - 2 * (kItemLeftMargin + kItemHorizontalMargin)) / 3.0f);
-    CGFloat height = factor(35.0f);
+    CGFloat height = FontFactor(35.0f);
     NSInteger row = 0;
     NSInteger col = 0;
     for (NSInteger i = 0; i < self.dataArray.count; i++) {
@@ -143,7 +143,7 @@
         [button setTitle:[self.dataArray objectAtIndex:i] forState:UIControlStateNormal];
         [button setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithHexString:@"feffff"]] forState:UIControlStateNormal];
         [button setTitleColor:[UIColor colorWithHexString:@"8a8a8a"] forState:UIControlStateNormal];
-        button.titleLabel.font = [UIFont systemFontOfSize:factor(14.0f)];
+        button.titleLabel.font = [UIFont systemFontOfSize:FontFactor(14.0f)];
         CGRect frame = CGRectMake(kItemLeftMargin + col * (kItemHorizontalMargin + width), row * (kItemVerticalMargin + height) , width, height);
         button.frame = frame;
         [self.contentView addSubview:button];
@@ -151,7 +151,7 @@
     }
     CGFloat maxHeight = CGRectGetMaxY(((UIButton *)[self.buttonArray lastObject]).frame);
     self.contentView.sd_resetLayout
-    .topSpaceToView(self.titleLabel, factor(20.0f))
+    .topSpaceToView(self.titleLabel, MarginFactor(20.0f))
     .leftSpaceToView(self.view, 0.0f)
     .widthIs(SCREENWIDTH)
     .heightIs(maxHeight);

@@ -102,12 +102,8 @@
     if ([object.price isEqualToString:@""]) {
         self.amountLabel.text = @"金额：暂未说明";
     } else{
-        if (object.price.length > 13) {
-            NSString * str = [object.price substringToIndex:10];
-            self.amountLabel.text = [@"金额：" stringByAppendingString: str];;
-        } else{
-            self.amountLabel.text = [@"金额：" stringByAppendingString: object.price];
-        }
+        self.amountLabel.text = [@"金额：" stringByAppendingString: object.price];
+    
    }
     
     
