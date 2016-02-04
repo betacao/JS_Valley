@@ -28,7 +28,7 @@
     if (self) {
         CGFloat spaceToRight = 15.0f;
         self.timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(SCREENWIDTH - 95.0f, (k_rowHeight - 20.0f) / 2.0f, 80.0f, 16.0f)];
-        self.timeLabel.font = [UIFont systemFontOfSize:10.0f * FontFactor];
+        self.timeLabel.font = [UIFont systemFontOfSize:FontFactor(10.0f)];
         self.timeLabel.textColor = [UIColor colorWithHexString:@"919291"];
         self.timeLabel.backgroundColor = [UIColor clearColor];
         self.timeLabel.textAlignment = NSTextAlignmentRight;
@@ -46,12 +46,12 @@
         
         self.detailLabel = [[UILabel alloc] initWithFrame:CGRectMake(58, k_rowHeight/2.0f - 2.0f * YFACTOR, SCREENWIDTH-80, 20)];
         self.detailLabel.backgroundColor = [UIColor clearColor];
-        self.detailLabel.font = [UIFont systemFontOfSize:12.0f * FontFactor];
+        self.detailLabel.font = [UIFont systemFontOfSize:FontFactor(12.0f)];
         [self.contentView addSubview:self.detailLabel];
 
         self.textLabel.backgroundColor = [UIColor clearColor];
         self.textLabel.textColor = [UIColor colorWithHexString:@"161616"];
-        self.textLabel.font = [UIFont systemFontOfSize:13.0f * FontFactor];
+        self.textLabel.font = [UIFont systemFontOfSize:FontFactor(13.0f)];
         
         self.lineView = [[UIView alloc]initWithFrame:CGRectMake(spaceToRight, k_rowHeight - 1.0f, SCREENWIDTH - spaceToRight, 0.5f)];
         self.lineView.backgroundColor = [UIColor colorWithHexString:@"E6E7E8"];

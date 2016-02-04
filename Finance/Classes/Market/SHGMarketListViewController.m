@@ -234,7 +234,8 @@
         if (object.tipUrl.length > 0) {
             return kMarketNoticeCellHeight;
         } else{
-            return kMarketCellHeight;
+            CGFloat height = [self.tableView cellHeightForIndexPath:indexPath model:object keyPath:@"object" cellClass:[SHGMarketTableViewCell class] contentViewWidth:SCREENWIDTH];
+            return height;
         }
     }
 }
@@ -264,8 +265,6 @@
         }
 
         [(SHGMarketNoticeTableViewCell *)cell loadDataWithObject:[self.currentArray objectAtIndex:indexPath.row] block:^(CGFloat height) {
-            //            [weakSelf.heightDictionary setObject:@(height) forKey:indexPath];
-            //            [weakSelf.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
         }];
     } else{
         NSString *identifier = @"SHGMarketTableViewCell";
@@ -275,11 +274,8 @@
             ((SHGMarketTableViewCell *)cell).delegate = self;
         }
 
-        [(SHGMarketTableViewCell *)cell loadDataWithObject:[self.currentArray objectAtIndex:indexPath.row] type:SHGMarketTableViewCellTypeAll];
-        SHGMarketFirstCategoryObject *obj = [self.scrollView.categoryArray objectAtIndex:[self.scrollView currentIndex]];
-        if (obj.secondCataLogs.count == 0 && [self.scrollView currentIndex] != 0 && ![[self.scrollView marketFirstId] isEqualToString:kUserDefineCategoryID]) {
-            [(SHGMarketTableViewCell *)cell loadNewUi];
-        }
+//        [(SHGMarketTableViewCell *)cell loadDataWithObject:[self.currentArray objectAtIndex:indexPath.row] type:SHGMarketTableViewCellTypeAll];
+        ((SHGMarketTableViewCell *)cell).object = [self.currentArray objectAtIndex:indexPath.row];
     }
 
     return cell;

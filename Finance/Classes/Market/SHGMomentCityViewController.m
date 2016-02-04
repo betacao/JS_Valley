@@ -54,7 +54,7 @@
         [gpsButton setImage:[UIImage imageNamed:@"location"] forState:UIControlStateNormal];
         [gpsButton setImageEdgeInsets:UIEdgeInsetsMake(0, -5.0f, 0, 0)];
         [gpsButton addTarget:self action:@selector(startlocation) forControlEvents:UIControlEventTouchUpInside];
-        gpsButton.titleLabel.font = [UIFont systemFontOfSize:14.0f * FontFactor];
+        gpsButton.titleLabel.font = [UIFont systemFontOfSize:FontFactor(14.0f)];
         [gpsButton sizeToFit];
         gpsButton.center = _gpsCell.contentView.center;
         CGRect frame = gpsButton.frame;

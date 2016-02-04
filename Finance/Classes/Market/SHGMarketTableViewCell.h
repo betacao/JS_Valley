@@ -11,12 +11,6 @@
 #define kMarketCellHeight 166.0f
 #define kMarketNoticeCellHeight (SCREENWIDTH * 206.0f) / 960.0f + 12.0f//加间隔
 
-typedef NS_ENUM(NSInteger, SHGMarketTableViewCellType) {
-    SHGMarketTableViewCellTypeAll = 0,
-    SHGMarketTableViewCellTypeMine,
-    SHGMarketTableViewCellTypeOther
-};
-
 @protocol SHGMarketTableViewDelegate <NSObject>
 
 - (void)clickPrasiseButton:(SHGMarketObject *)object;
@@ -29,7 +23,6 @@ typedef NS_ENUM(NSInteger, SHGMarketTableViewCellType) {
 @end
 
 @interface SHGMarketTableViewCell : UITableViewCell
+@property (strong ,nonatomic) SHGMarketObject *object;
 @property (assign, nonatomic) id<SHGMarketTableViewDelegate> delegate;
-- (void)loadDataWithObject:(SHGMarketObject *)object type:(SHGMarketTableViewCellType)type;
-- (void)loadNewUi;
 @end

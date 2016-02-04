@@ -10,20 +10,13 @@
 
 @interface SHGMarketTableViewCell ()
 @property (weak, nonatomic) IBOutlet UILabel *titleView;
-@property (weak, nonatomic) IBOutlet UIView *leftView;
-@property (weak, nonatomic) IBOutlet UIView *rightView;
 @property (weak, nonatomic) IBOutlet UILabel *typeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *amountLabel;
 @property (weak, nonatomic) IBOutlet UILabel *contactLabel;
-@property (weak, nonatomic) IBOutlet UILabel *relationLabel;
-@property (weak, nonatomic) IBOutlet UIButton *praiseButton;
-@property (weak, nonatomic) IBOutlet UIButton *commentButton;
-@property (weak, nonatomic) IBOutlet UIButton *editButton;
-@property (weak, nonatomic) IBOutlet UIButton *deleteButton;
-@property (weak, nonatomic) IBOutlet UIImageView *xuXian;
-@property (weak, nonatomic) IBOutlet UIView *lineVIew;
 @property (weak, nonatomic) IBOutlet UIButton *collectButton;
-@property (strong ,nonatomic) SHGMarketObject *object;
+@property (weak, nonatomic) IBOutlet UILabel *timeLabel;
+@property (weak, nonatomic) IBOutlet UIView *bottomView;
+@property (weak, nonatomic) IBOutlet UIView *bottomLineView;
 @property (strong ,nonatomic) SHGMarketFirstCategoryObject *obj;
 @end
 
@@ -31,104 +24,110 @@
 
 - (void)awakeFromNib
 {
-    UIImage *img = [UIImage imageNamed:@"action_xuxian"];
-    self.xuXian.image = [img resizableImageWithCapInsets:UIEdgeInsetsMake(0 , 1, 0, 1) resizingMode:UIImageResizingModeTile];
-    self.lineVIew.backgroundColor = [UIColor colorWithHexString:@"F1F1F0"];
-    self.lineVIew.frame = CGRectMake(0, 0.5f, SCREENWIDTH, 0.5f);
-    //把点赞按钮改为收藏按钮
-    self.praiseButton.hidden = YES;
+    [self clearCell];
+    [self loadView];
 }
 
-- (void)loadDataWithObject:(SHGMarketObject *)object type:(SHGMarketTableViewCellType)type
+- (void)loadView
 {
-    [self clearCell];
-    self.object = object;
-    self.titleView.text = object.marketName;
+    self.titleView.font = [UIFont systemFontOfSize:FontFactor(15.0f)];
+    self.typeLabel.font = [UIFont systemFontOfSize:FontFactor(13.0f)];
+    self.amountLabel.font = [UIFont systemFontOfSize:FontFactor(13.0f)];
+    self.timeLabel.font = [UIFont systemFontOfSize:FontFactor(13.0f)];
+    self.contactLabel.font = [UIFont systemFontOfSize:FontFactor(13.0f)];
+    self.titleView.numberOfLines = 1;
+    
+    self.titleView.sd_layout
+    .topSpaceToView(self.contentView, MarginFactor(18.0f))
+    .leftSpaceToView(self.contentView, MarginFactor(12.0f))
+    .widthIs(SCREENWIDTH - MarginFactor(24.0f))
+    .heightIs(MarginFactor(15.0f));
+    //[self.titleView setSingleLineAutoResizeWithMaxWidth:SCREENWIDTH - factor(24.0f)];
+    
+    self.typeLabel.sd_layout
+    .topSpaceToView(self.titleView, MarginFactor(14.0f))
+    .leftSpaceToView(self.contentView, MarginFactor(12.0f))
+    .autoHeightRatio(0.0f);
+    [self.typeLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
 
-    if ([UID isEqualToString:object.createBy] && type == SHGMarketTableViewCellTypeMine) {
-        self.leftView.hidden = NO;
-        self.rightView.hidden = NO;
-        CGRect frame = self.leftView.frame;
-        frame.origin.x = CGRectGetMinX(self.rightView.frame) - CGRectGetWidth(frame);
-        self.leftView.frame = frame;
-        self.relationLabel.text = object.createTime;
+    self.amountLabel.sd_layout
+    .topSpaceToView(self.titleView, MarginFactor(14.0f))
+    .leftSpaceToView(self.contentView, SCREENWIDTH /2.0f)
+    .autoHeightRatio(0.0f);
+    [self.amountLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
+    
+    self.contactLabel.sd_layout
+    .topSpaceToView(self.typeLabel, MarginFactor(11.0f))
+    .leftSpaceToView(self.contentView, MarginFactor(12.0f))
+    .autoHeightRatio(0.0f);
+    [self.contactLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
+    
+    self.timeLabel.sd_layout
+    .topSpaceToView(self.amountLabel, MarginFactor(11.0f))
+    .leftSpaceToView(self.contentView, SCREENWIDTH /2.0f)
+    .autoHeightRatio(0.0f);
+    [self.timeLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
+    
+    [self.collectButton sizeToFit];
+    CGSize size = self.collectButton.frame.size;
+    self.collectButton.sd_layout
+    .rightSpaceToView(self.contentView, MarginFactor(12.0f))
+    .bottomEqualToView(self.timeLabel)
+    .widthIs(MarginFactor(size.width))
+    .heightIs(MarginFactor(size.height));
+    
+    self.bottomLineView.sd_layout
+    .leftSpaceToView(self.contentView, MarginFactor(0.0f))
+    .rightSpaceToView(self.contentView, MarginFactor(0.0f))
+    .heightIs(0.5f)
+    .topSpaceToView(self.contactLabel, MarginFactor(13.0f));
+    
+    self.bottomView.sd_layout
+    .topSpaceToView(self.bottomLineView, 0.0f)
+    .leftSpaceToView(self.contentView, 0.0f)
+    .rightSpaceToView(self.contentView, 0.0f)
+    .heightIs(MarginFactor(10.0f));
+}
+
+- (void)setObject:(SHGMarketObject *)object
+{
+    _object = object;
+    [self clearCell];
+    if (object.marketName.length == 0) {
+        self.titleView.text = @" ";
     } else{
-        self.leftView.hidden = NO;
-        CGRect frame = self.leftView.frame;
-        frame.origin.x = CGRectGetMinX(self.rightView.frame);
-        self.leftView.frame = frame;
-        self.relationLabel.text = [object.modifyTime substringToIndex:10];
+         self.titleView.text = object.marketName;
     }
     self.typeLabel.text = [@"类型：" stringByAppendingString:object.catalog];
-    if (object.price.length == 0) {
+    if ([object.price isEqualToString:@""]) {
         self.amountLabel.text = @"金额：暂未说明";
     } else{
         if (object.price.length > 13) {
-            NSString * str = [object.price substringToIndex:13];
+            NSString * str = [object.price substringToIndex:10];
             self.amountLabel.text = [@"金额：" stringByAppendingString: str];;
         } else{
             self.amountLabel.text = [@"金额：" stringByAppendingString: object.price];
         }
-    }
+   }
     
-    CGSize capitalSize =CGSizeMake(MAXFLOAT,CGRectGetHeight(self.amountLabel.frame));
-    NSDictionary * capitalDic = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:12.0],NSFontAttributeName,nil];
-    CGSize  capitalActualsize =[self.amountLabel.text boundingRectWithSize:capitalSize options:NSStringDrawingUsesLineFragmentOrigin  attributes:capitalDic context:nil].size;
-    if (capitalActualsize.width > 120.f) {
-        capitalActualsize.width = 120.f;
-    }
-    self.amountLabel.frame =CGRectMake(SCREENWIDTH-capitalActualsize.width-15,self.amountLabel.origin.y, capitalActualsize.width, CGRectGetHeight(self.amountLabel.frame));
+    
     self.contactLabel.text = [@"地区：" stringByAppendingString: object.position];
-   
-    [self.praiseButton setTitle:object.praiseNum forState:UIControlStateNormal];
-
-    if ([object.isPraise isEqualToString:@"Y"]) {
-        [self.praiseButton setImage:[UIImage imageNamed:@"home_yizan"] forState:UIControlStateNormal];
-    } else{
-        [self.praiseButton setImage:[UIImage imageNamed:@"home_weizan"] forState:UIControlStateNormal];
-    }
-    
-    
     if (object.isCollection ) {
-        [self.collectButton setImage:[UIImage imageNamed:@"collected"] forState:UIControlStateNormal];
+        [self.collectButton setImage:[UIImage imageNamed:@"newDetialCollect"] forState:UIControlStateNormal];
     } else{
-        [self.collectButton setImage:[UIImage imageNamed:@"uncollected"] forState:UIControlStateNormal];
+        [self.collectButton setImage:[UIImage imageNamed:@"newNoDetialCollect"] forState:UIControlStateNormal];
     }
-
-
-    [self.commentButton setTitle:object.commentNum forState:UIControlStateNormal];
-
-    
-}
-
-- (void)loadNewUi
-{
-    self.typeLabel.hidden = YES;
-    self.amountLabel.frame = self.typeLabel.frame;
+    self.timeLabel.text = [@"时间：" stringByAppendingString: object.createTime];
+    [self setupAutoHeightWithBottomView:self.bottomView bottomMargin:0.0f];
 }
 
 - (void)clearCell
 {
     self.titleView.text = @"";
-    self.leftView.hidden = YES;
-    self.rightView.hidden = YES;
     self.typeLabel.text = @"";
     self.amountLabel.text = @"";
     self.contactLabel.text = @"";
-    self.relationLabel.text = @"";
-    self.typeLabel.hidden = NO;
-    [self.praiseButton setTitle:@"0" forState:UIControlStateNormal];
-    [self.praiseButton setImage:[UIImage imageNamed:@"home_weizan"] forState:UIControlStateNormal];
-    [self.collectButton setImage:[UIImage imageNamed:@"uncollected"] forState:UIControlStateNormal];
-    [self.commentButton setTitle:@"0" forState:UIControlStateNormal];
-}
-
-//点赞
-- (IBAction)clickPraiseButton:(UIButton *)sender
-{
-    if (self.delegate && [self.delegate respondsToSelector:@selector(clickPrasiseButton:)]) {
-        [self.delegate clickPrasiseButton:self.object];
-    }
+    [self.collectButton setImage:[UIImage imageNamed:@"newNoDetialCollect"] forState:UIControlStateNormal];
 }
 //收藏
 - (IBAction)clickCollectButton:(UIButton *)sender
@@ -137,31 +136,6 @@
         [self.delegate ClickCollectButton:self.object];
     }
 }
-
-//评论数
-- (IBAction)clickCommentButton:(UIButton *)sender
-{
-    if (self.delegate && [self.delegate respondsToSelector:@selector(clickCommentButton:)]) {
-        [self.delegate clickCommentButton:self.object];
-    }
-}
-
-//修改
-- (IBAction)clickEditButton:(UIButton *)sender
-{
-    if (self.delegate && [self.delegate respondsToSelector:@selector(clickEditButton:)]) {
-        [self.delegate clickEditButton:self.object];
-    }
-}
-
-//删除
-- (IBAction)clickDeleteButton:(UIButton *)sender
-{
-    if (self.delegate && [self.delegate respondsToSelector:@selector(clickDeleteButton:)]) {
-        [self.delegate clickDeleteButton:self.object];
-    }
-}
-
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];

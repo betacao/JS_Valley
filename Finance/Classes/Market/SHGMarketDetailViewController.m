@@ -146,7 +146,7 @@
 
         NSMutableAttributedString * str = [[NSMutableAttributedString alloc]initWithString:contactString];
         [str addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"898989"] range:NSMakeRange(0, 6)];
-        [str addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:12.0f * FontFactor] range:NSMakeRange(5, str.length - 5)];
+        [str addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:FontFactor(12.0f)] range:NSMakeRange(5, str.length - 5)];
         [str addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"4277B2"] range:NSMakeRange(5, str.length - 5)];
         self.phoneNumLabel.text = contactString;
         CGSize size = [self.phoneNumLabel preferredSizeWithMaxWidth:kCellContentWidth];
@@ -184,9 +184,9 @@
 - (void)loadUI
 {
     if (self.responseObject.isCollection) {
-        [self.collectionButton setImage:[UIImage imageNamed:@"collected"] forState:UIControlStateNormal];
+        [self.collectionButton setImage:[UIImage imageNamed:@"newDetialCollect"] forState:UIControlStateNormal];
     } else{
-         [self.collectionButton setImage:[UIImage imageNamed:@"uncollected"] forState:UIControlStateNormal];
+         [self.collectionButton setImage:[UIImage imageNamed:@"newNoDetialCollect"] forState:UIControlStateNormal];
     }
     //1.7.2界面修改
     self.speakButton.layer.masksToBounds = YES;
@@ -542,9 +542,9 @@
 {
     //设置点赞的状态
     if (self.responseObject.isCollection ) {
-        [self.collectionButton setImage:[UIImage imageNamed:@"collected"] forState:UIControlStateNormal];
+        [self.collectionButton setImage:[UIImage imageNamed:@"newDetialCollect"] forState:UIControlStateNormal];
     } else{
-        [self.collectionButton setImage:[UIImage imageNamed:@"uncollected"] forState:UIControlStateNormal];
+        [self.collectionButton setImage:[UIImage imageNamed:@"newNoDetialCollect"] forState:UIControlStateNormal];
     }
 //    [self.btnZan setTitle:self.responseObject.praiseNum forState:UIControlStateNormal];
 }

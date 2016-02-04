@@ -52,7 +52,7 @@
 {
     if (!_titleLabel) {
         _titleLabel = [[UILabel alloc] init];
-        _titleLabel.font = [UIFont systemFontOfSize:factor(14.0f)];
+        _titleLabel.font = [UIFont systemFontOfSize:FontFactor(14.0f)];
         _titleLabel.backgroundColor = [UIColor clearColor];
         _titleLabel.textAlignment = NSTextAlignmentLeft;
         _titleLabel.textColor = [UIColor colorWithHexString:@"606060"];
@@ -208,7 +208,7 @@
     if(!cell){
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIndentifier];
         cell.backgroundColor = [UIColor clearColor];
-        cell.textLabel.font = [UIFont systemFontOfSize:factor(14.0f)];
+        cell.textLabel.font = [UIFont systemFontOfSize:FontFactor(14.0f)];
         cell.textLabel.textColor = kTextColor;
     }
     cell.textLabel.text = [self.titlesList objectAtIndex:indexPath.row];

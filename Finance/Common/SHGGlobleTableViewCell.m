@@ -28,10 +28,10 @@
         [self.contentView addSubview:self.rightArrowView];
 
         self.titleLabel.sd_layout
-        .leftSpaceToView(self.contentView, factor(19.0f))
+        .leftSpaceToView(self.contentView, MarginFactor(19.0f))
         .topSpaceToView(self.contentView, 0.0f)
         .rightSpaceToView(self.contentView, 0.0f)
-        .heightIs(factor(54.0f));
+        .heightIs(MarginFactor(54.0f));
 
         CGSize size = self.rightArrowView.frame.size;
 
@@ -39,11 +39,11 @@
         .widthIs(size.width)
         .heightIs(size.height)
         .centerYEqualToView(self.contentView)
-        .rightSpaceToView(self.contentView, factor(11.0f));
+        .rightSpaceToView(self.contentView, MarginFactor(11.0f));
 
         self.lineView.sd_layout
         .topSpaceToView(self.titleLabel, 1.0f)
-        .leftSpaceToView(self.contentView, factor(18.0f))
+        .leftSpaceToView(self.contentView, MarginFactor(18.0f))
         .rightSpaceToView(self.contentView, 0.0f)
         .heightIs(0.5f);
     }
@@ -63,7 +63,7 @@
 {
     if (!_titleLabel) {
         _titleLabel = [[UILabel alloc] init];
-        _titleLabel.font = [UIFont systemFontOfSize:factor(15.0f)];
+        _titleLabel.font = [UIFont systemFontOfSize:FontFactor(15.0f)];
         _titleLabel.textColor = [UIColor colorWithHexString:@"161616"];
     }
     return _titleLabel;

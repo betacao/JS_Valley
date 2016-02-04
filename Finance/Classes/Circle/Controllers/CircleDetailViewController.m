@@ -250,9 +250,9 @@
         [self.btnPraise setImage:[UIImage imageNamed:@"home_yizan"] forState:UIControlStateNormal];
     }
     if (![obj.iscollection isEqualToString:@"Y"]) {
-        [self.btnCollet setImage:[UIImage imageNamed:@"uncollected"] forState:UIControlStateNormal];
+        [self.btnCollet setImage:[UIImage imageNamed:@"newNoDetialCollect"] forState:UIControlStateNormal];
     } else{
-        [self.btnCollet setImage:[UIImage imageNamed:@"collected"] forState:UIControlStateNormal];
+        [self.btnCollet setImage:[UIImage imageNamed:@"newDetialCollect"] forState:UIControlStateNormal];
     }
     NSString *name = obj.nickname;
     if (obj.nickname.length > 4){

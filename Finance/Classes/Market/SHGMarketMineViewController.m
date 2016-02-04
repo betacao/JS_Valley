@@ -164,7 +164,8 @@
             cell = [[[NSBundle mainBundle] loadNibNamed:@"SHGMarketTableViewCell" owner:self options:nil] lastObject];
         }
         cell.delegate = self;
-        [cell loadDataWithObject:[self.dataArr objectAtIndex:indexPath.row] type:SHGMarketTableViewCellTypeMine];
+        SHGMarketObject * obj = [self.dataArr objectAtIndex:indexPath.row];
+        cell.object = obj;
         return cell;
     } else{
         return self.emptyCell;

@@ -205,7 +205,7 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         cell.imageView.contentMode = UIViewContentModeScaleAspectFit;
         cell.textLabel.textColor = [UIColor colorWithHexString:@"161616"];
-        cell.textLabel.font = [UIFont systemFontOfSize:13.0f * FontFactor];
+        cell.textLabel.font = [UIFont systemFontOfSize:FontFactor(13.0f)];
         UIView *lineView = [[UIView alloc]initWithFrame:CGRectMake(kImageViewLeftMargin, krowHeight - 0.5f, SCREENWIDTH - kImageViewLeftMargin, 0.5f)];
         lineView.tag = 1000;
         lineView.backgroundColor = [UIColor colorWithHexString:@"E6E7E8"];
@@ -282,7 +282,7 @@
     button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     button.titleEdgeInsets = UIEdgeInsetsMake(0,0, 0, 0);
     button.backgroundColor = [UIColor clearColor];
-    button.titleLabel.font = [UIFont systemFontOfSize:12.0f * FontFactor];
+    button.titleLabel.font = [UIFont systemFontOfSize:FontFactor(12.0f)];
     [button setTitleColor:[UIColor colorWithHexString:@"161616"] forState:UIControlStateNormal];
     button.tag = section;
     [button addTarget:self action:@selector(sectionBurronClick:) forControlEvents:UIControlEventTouchUpInside];

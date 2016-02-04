@@ -71,23 +71,22 @@
     .bottomSpaceToView(self.view, kTabBarHeight);
 
     //tableView头
-    NSLog(@"%f",factor(19.0f));
     self.userHeaderView.sd_layout
-    .leftSpaceToView(self.tableHeaderView, factor(19.0f))
-    .topSpaceToView(self.tableHeaderView, factor(17.0f))
-    .widthIs(factor(45.0f))
+    .leftSpaceToView(self.tableHeaderView, MarginFactor(19.0f))
+    .topSpaceToView(self.tableHeaderView, MarginFactor(17.0f))
+    .widthIs(MarginFactor(45.0f))
     .heightEqualToWidth();
 
     //用户名
     self.nickNameLabel.sd_layout
-    .leftSpaceToView(self.userHeaderView, factor(11.0f))
+    .leftSpaceToView(self.userHeaderView, MarginFactor(11.0f))
     .topEqualToView(self.userHeaderView)
     .autoHeightRatio(0.0f);
     [self.nickNameLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
 
     //职位
     self.departmentLabel.sd_layout
-    .leftSpaceToView(self.nickNameLabel, factor(4.0f))
+    .leftSpaceToView(self.nickNameLabel, MarginFactor(4.0f))
     .bottomEqualToView(self.nickNameLabel)
     .autoHeightRatio(0.0f);
     [self.departmentLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
@@ -103,7 +102,7 @@
     self.lineView.sd_layout
     .leftSpaceToView(self.tableHeaderView, 0.0f)
     .rightSpaceToView(self.tableHeaderView, 0.0f)
-    .topSpaceToView(self.userHeaderView, factor(17.0f))
+    .topSpaceToView(self.userHeaderView, MarginFactor(17.0f))
     .heightIs(0.5f);
 
     //四个按钮
@@ -111,7 +110,7 @@
     .leftSpaceToView(self.tableHeaderView, 0.0f)
     .rightSpaceToView(self.tableHeaderView, 0.0f)
     .topSpaceToView(self.lineView, 0.0f)
-    .heightIs(factor(58.0f));
+    .heightIs(MarginFactor(58.0f));
 
     //动态
     self.circleHeaderLabel.sd_layout
@@ -145,27 +144,27 @@
     self.breakLine1.sd_layout
     .leftSpaceToView(self.circleHeaderLabel, 0.0f)
     .widthIs(0.5f)
-    .heightIs(factor(22.0f))
+    .heightIs(MarginFactor(22.0f))
     .centerYEqualToView(self.labelView);
 
 
     self.breakLine2.sd_layout
     .leftSpaceToView(self.followHeaderLabel, 0.0f)
     .widthIs(0.5f)
-    .heightIs(factor(22.0f))
+    .heightIs(MarginFactor(22.0f))
     .centerYEqualToView(self.labelView);
 
     self.breakLine3.sd_layout
     .leftSpaceToView(self.fansHeaderLabel, 0.0f)
     .widthIs(0.5f)
-    .heightIs(factor(22.0f))
+    .heightIs(MarginFactor(22.0f))
     .centerYEqualToView(self.labelView);
 
     self.bottomView.sd_layout
     .topSpaceToView(self.labelView, 0.0f)
     .leftSpaceToView(self.tableHeaderView, 0.0f)
     .rightSpaceToView(self.tableHeaderView, 0.0f)
-    .heightIs(factor(9.0f));
+    .heightIs(MarginFactor(9.0f));
 
     [self.tableHeaderView setupAutoHeightWithBottomView:self.bottomView bottomMargin:0.0f];
     [self.tableHeaderView layoutSubviews];
@@ -216,7 +215,7 @@
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
         [button addTarget:self action:@selector(actionInvite:) forControlEvents:UIControlEventTouchUpInside];
         [button setTitle:@"邀请" forState:UIControlStateNormal];
-        button.titleLabel.font = [UIFont systemFontOfSize:factor(14.0f)];
+        button.titleLabel.font = [UIFont systemFontOfSize:FontFactor(14.0f)];
         [button sizeToFit];
         _rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:button];
     }
@@ -267,7 +266,7 @@
 {
     if (!_nickNameLabel) {
         _nickNameLabel = [[UILabel alloc] init];
-        _nickNameLabel.font = [UIFont systemFontOfSize:factor(16.0f)];
+        _nickNameLabel.font = [UIFont systemFontOfSize:FontFactor(16.0f)];
         _nickNameLabel.textColor = [UIColor colorWithHexString:@"1d5798"];
     }
     return _nickNameLabel;
@@ -277,7 +276,7 @@
 {
     if (!_companyLabel) {
         _companyLabel = [[UILabel alloc] init];
-        _companyLabel.font = [UIFont systemFontOfSize:factor(14.0f)];
+        _companyLabel.font = [UIFont systemFontOfSize:FontFactor(14.0f)];
         _companyLabel.textColor = [UIColor colorWithHexString:@"161616"];
     }
     return _companyLabel;
@@ -287,7 +286,7 @@
 {
     if (!_departmentLabel) {
         _departmentLabel = [[UILabel alloc] init];
-        _departmentLabel.font = [UIFont systemFontOfSize:factor(14.0f)];
+        _departmentLabel.font = [UIFont systemFontOfSize:FontFactor(14.0f)];
         _departmentLabel.textColor = [UIColor colorWithHexString:@"161616"];
     }
     return _departmentLabel;
@@ -324,7 +323,7 @@
         _circleHeaderLabel.textAlignment = NSTextAlignmentCenter;
         _circleHeaderLabel.textColor = [UIColor colorWithHexString:@"989898"];
         _circleHeaderLabel.numberOfLines = 0;
-        _circleHeaderLabel.font = [UIFont systemFontOfSize:factor(12.0f)];
+        _circleHeaderLabel.font = [UIFont systemFontOfSize:FontFactor(12.0f)];
         _circleHeaderLabel.userInteractionEnabled = YES;
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(goToMyCircle)];
         [_circleHeaderLabel addGestureRecognizer:tap];
@@ -339,7 +338,7 @@
         _followHeaderLabel.textAlignment = NSTextAlignmentCenter;
         _followHeaderLabel.numberOfLines = 0;
         _followHeaderLabel.textColor = [UIColor colorWithHexString:@"989898"];
-        _followHeaderLabel.font = [UIFont systemFontOfSize:factor(12.0f)];
+        _followHeaderLabel.font = [UIFont systemFontOfSize:FontFactor(12.0f)];
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(goToFollowList)];
         [_followHeaderLabel addGestureRecognizer:tap];
         _followHeaderLabel.userInteractionEnabled = YES;
@@ -356,7 +355,7 @@
         _fansHeaderLabel.textAlignment = NSTextAlignmentCenter;
         _fansHeaderLabel.numberOfLines = 0;
         _fansHeaderLabel.textColor = [UIColor colorWithHexString:@"989898"];
-        _fansHeaderLabel.font = [UIFont systemFontOfSize:factor(12.0f)];
+        _fansHeaderLabel.font = [UIFont systemFontOfSize:FontFactor(12.0f)];
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(goToFansList)];
         [_fansHeaderLabel addGestureRecognizer:tap];
         _fansHeaderLabel.userInteractionEnabled = YES;
@@ -621,15 +620,15 @@
         [paragraphStyle1 setLineSpacing:1.0f];
         paragraphStyle1.alignment = NSTextAlignmentCenter;
         NSMutableAttributedString *aCircleString = [[NSMutableAttributedString alloc] initWithString:circleString];
-        [aCircleString addAttributes:@{NSForegroundColorAttributeName:[UIColor colorWithHexString:@"161616"], NSFontAttributeName:[UIFont systemFontOfSize:factor(13.0f)]} range:NSMakeRange(4, aCircleString.length - 4)];
+        [aCircleString addAttributes:@{NSForegroundColorAttributeName:[UIColor colorWithHexString:@"161616"], NSFontAttributeName:[UIFont systemFontOfSize:FontFactor(13.0f)]} range:NSMakeRange(4, aCircleString.length - 4)];
         [aCircleString addAttribute:NSParagraphStyleAttributeName value:paragraphStyle1 range:NSMakeRange(0, [aCircleString length])];
 
         NSMutableAttributedString *aFollowString = [[NSMutableAttributedString alloc] initWithString:followString];
-        [aFollowString addAttributes:@{NSForegroundColorAttributeName:[UIColor colorWithHexString:@"161616"], NSFontAttributeName:[UIFont systemFontOfSize:factor(13.0f)]} range:NSMakeRange(4, aCircleString.length - 4)];
+        [aFollowString addAttributes:@{NSForegroundColorAttributeName:[UIColor colorWithHexString:@"161616"], NSFontAttributeName:[UIFont systemFontOfSize:FontFactor(13.0f)]} range:NSMakeRange(4, aCircleString.length - 4)];
         [aFollowString addAttribute:NSParagraphStyleAttributeName value:paragraphStyle1 range:NSMakeRange(0, [aFollowString length])];
 
         NSMutableAttributedString *aFansString = [[NSMutableAttributedString alloc] initWithString:fansString];
-        [aFansString addAttributes:@{NSForegroundColorAttributeName:[UIColor colorWithHexString:@"161616"], NSFontAttributeName:[UIFont systemFontOfSize:factor(13.0f)]} range:NSMakeRange(4, aCircleString.length - 4)];
+        [aFansString addAttributes:@{NSForegroundColorAttributeName:[UIColor colorWithHexString:@"161616"], NSFontAttributeName:[UIFont systemFontOfSize:FontFactor(13.0f)]} range:NSMakeRange(4, aCircleString.length - 4)];
         [aFansString addAttribute:NSParagraphStyleAttributeName value:paragraphStyle1 range:NSMakeRange(0, [aFansString length])];
 
         weakSelf.circleHeaderLabel.attributedText = aCircleString;

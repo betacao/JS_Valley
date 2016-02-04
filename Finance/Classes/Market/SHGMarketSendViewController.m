@@ -94,38 +94,38 @@ typedef NS_ENUM(NSInteger, SHGMarketSendType){
         [self editObject:self.object];
         self.sendType = SHGMarketSendTypeReSet;
     }
-    [self.bgView setupAutoHeightWithBottomView:self.anonymousButton bottomMargin:factor(65.0f)];
+    [self.bgView setupAutoHeightWithBottomView:self.anonymousButton bottomMargin:MarginFactor(65.0f)];
     [self.bgView layoutSubviews];
     [self.tableView setTableHeaderView:self.bgView];
 }
 
 - (void)initView
 {
-    self.marketNameField.font = [UIFont systemFontOfSize:factor(14.0f)];
+    self.marketNameField.font = [UIFont systemFontOfSize:FontFactor(14.0f)];
     self.marketNameField.layer.masksToBounds = YES;
     self.marketNameField.layer.cornerRadius = 3.0f;
     self.marketNameField.leftView = [[UIView alloc]initWithFrame:CGRectMake(0.0f, 0.0f, 5.0f, 0.0f)];
     self.marketNameField.leftViewMode = UITextFieldViewModeAlways;
     [self.marketNameField setValue:[UIColor colorWithHexString:@"D3D3D3"] forKeyPath:@"_placeholderLabel.textColor"];
 
-    self.acountField.font = [UIFont systemFontOfSize:factor(14.0f)];
+    self.acountField.font = [UIFont systemFontOfSize:FontFactor(14.0f)];
     self.acountField.layer.masksToBounds = YES;
     self.acountField.layer.cornerRadius = 3.0f;
     self.acountField.leftView = [[UIView alloc]initWithFrame:CGRectMake(0.0f, 0.0f, 5.0f, 0.0f)];
     self.acountField.leftViewMode = UITextFieldViewModeAlways;
     [self.acountField setValue:[UIColor colorWithHexString:@"D3D3D3"] forKeyPath:@"_placeholderLabel.textColor"];
 
-    self.yuanLabel.font = [UIFont systemFontOfSize:factor(14.0f)];
+    self.yuanLabel.font = [UIFont systemFontOfSize:FontFactor(14.0f)];
     [self.yuanLabel sizeToFit];
 
-    self.contactField.font = [UIFont systemFontOfSize:factor(14.0f)];
+    self.contactField.font = [UIFont systemFontOfSize:FontFactor(14.0f)];
     self.contactField.layer.masksToBounds = YES;
     self.contactField.layer.cornerRadius = 3.0f;
     self.contactField.leftView = [[UIView alloc]initWithFrame:CGRectMake(0.0f, 0.0f, 5.0f, 0.0f)];
     self.contactField.leftViewMode = UITextFieldViewModeAlways;
     [self.contactField setValue:[UIColor colorWithHexString:@"D3D3D3"] forKeyPath:@"_placeholderLabel.textColor"];
 
-    self.locationField.font = [UIFont systemFontOfSize:factor(14.0f)];
+    self.locationField.font = [UIFont systemFontOfSize:FontFactor(14.0f)];
     self.locationField.layer.masksToBounds = YES;
     self.locationField.layer.cornerRadius = 3.0f;
     self.locationField.leftView = [[UIView alloc]initWithFrame:CGRectMake(0.0f, 0.0f, 5.0f, 0.0f)];
@@ -136,26 +136,26 @@ typedef NS_ENUM(NSInteger, SHGMarketSendType){
     [self.starView2 sizeToFit];
     [self.starView3 sizeToFit];
 
-    self.modelLabel.font = [UIFont systemFontOfSize:factor(14.0f)];
+    self.modelLabel.font = [UIFont systemFontOfSize:FontFactor(14.0f)];
 
     self.modelContentView.layer.masksToBounds = YES;
     self.modelContentView.layer.cornerRadius = 3.0f;
     self.modelContentView.layer.borderColor = [UIColor colorWithHexString:@"e1e1e6"].CGColor;
     self.modelContentView.layer.borderWidth = 0.5f;
 
-    self.leftButton.titleLabel.font = [UIFont systemFontOfSize:factor(13.0f)];
+    self.leftButton.titleLabel.font = [UIFont systemFontOfSize:FontFactor(13.0f)];
     [self.leftButton setTitleColor:[UIColor colorWithHexString:@"e1e1e6"] forState:UIControlStateNormal];
     [self.leftButton setTitleColor:[UIColor colorWithHexString:@"d43c33"] forState:UIControlStateSelected];
     self.leftButton.selected = YES;
     self.model = self.leftButton.titleLabel.text;
 
-    self.rightButton.titleLabel.font = [UIFont systemFontOfSize:factor(13.0f)];
+    self.rightButton.titleLabel.font = [UIFont systemFontOfSize:FontFactor(13.0f)];
     [self.rightButton setTitleColor:[UIColor colorWithHexString:@"e1e1e6"] forState:UIControlStateNormal];
     [self.rightButton setTitleColor:[UIColor colorWithHexString:@"d43c33"] forState:UIControlStateSelected];
 
-    self.introduceLabel.font = [UIFont systemFontOfSize:factor(14.0f)];
+    self.introduceLabel.font = [UIFont systemFontOfSize:FontFactor(14.0f)];
 
-    self.introduceView.font = [UIFont systemFontOfSize:factor(14.0f)];
+    self.introduceView.font = [UIFont systemFontOfSize:FontFactor(14.0f)];
     self.introduceView.placeholder = @"描述您的业务详细信息";
     self.introduceView.placeholderColor = [UIColor colorWithHexString:@"d3d3d3"];
     self.introduceView.layer.masksToBounds = YES;
@@ -163,11 +163,11 @@ typedef NS_ENUM(NSInteger, SHGMarketSendType){
 
     [self.addImageButton sizeToFit];
 
-    self.addImageLabel.font = [UIFont systemFontOfSize:factor(14.0f)];
+    self.addImageLabel.font = [UIFont systemFontOfSize:FontFactor(14.0f)];
 
-    self.nextButton.titleLabel.font = [UIFont systemFontOfSize:factor(15.0f)];
+    self.nextButton.titleLabel.font = [UIFont systemFontOfSize:FontFactor(15.0f)];
 
-    self.anonymousButton.titleLabel.font = [UIFont systemFontOfSize:factor(13.0f)];
+    self.anonymousButton.titleLabel.font = [UIFont systemFontOfSize:FontFactor(13.0f)];
     [self.anonymousButton setEnlargeEdge: 20.0f];
     [self.anonymousButton setImage:[UIImage imageNamed:@"market_select"] forState:UIControlStateSelected];
     [self.anonymousButton setImage:[UIImage imageNamed:@"market_unselect"] forState:UIControlStateNormal];
@@ -198,22 +198,22 @@ typedef NS_ENUM(NSInteger, SHGMarketSendType){
     .topSpaceToView(self.view, 0.0f);
 
     self.firstCategoryBox.sd_layout
-    .topSpaceToView(self.bgView, factor(15.0f))
-    .leftSpaceToView(self.bgView, factor(13.0f))
-    .heightIs(factor(35.0f))
-    .widthIs(factor(155.0f));
+    .topSpaceToView(self.bgView, MarginFactor(15.0f))
+    .leftSpaceToView(self.bgView, MarginFactor(13.0f))
+    .heightIs(MarginFactor(35.0f))
+    .widthIs(MarginFactor(155.0f));
 
     self.marketNameField.sd_layout
     .leftEqualToView(self.firstCategoryBox)
-    .topSpaceToView(self.firstCategoryBox, factor(15.0f))
-    .widthIs(factor(320.0f))
-    .heightIs(factor(35.0f));
+    .topSpaceToView(self.firstCategoryBox, MarginFactor(15.0f))
+    .widthIs(MarginFactor(320.0f))
+    .heightIs(MarginFactor(35.0f));
 
     self.secondCategoryBox.sd_layout
-    .topSpaceToView(self.bgView, factor(15.0f))
+    .topSpaceToView(self.bgView, MarginFactor(15.0f))
     .rightEqualToView(self.marketNameField)
-    .heightIs(factor(35.0f))
-    .widthIs(factor(155.0f));
+    .heightIs(MarginFactor(35.0f))
+    .widthIs(MarginFactor(155.0f));
     
     self.starView1.sd_layout
     .centerYEqualToView(self.marketNameField)
@@ -223,7 +223,7 @@ typedef NS_ENUM(NSInteger, SHGMarketSendType){
 
     self.acountField.sd_layout
     .leftEqualToView(self.firstCategoryBox)
-    .topSpaceToView(self.marketNameField, factor(15.0f))
+    .topSpaceToView(self.marketNameField, MarginFactor(15.0f))
     .widthRatioToView(self.marketNameField, 1.0f)
     .heightRatioToView(self.marketNameField, 1.0f);
 
@@ -236,7 +236,7 @@ typedef NS_ENUM(NSInteger, SHGMarketSendType){
 
     self.contactField.sd_layout
     .leftEqualToView(self.firstCategoryBox)
-    .topSpaceToView(self.acountField, factor(15.0f))
+    .topSpaceToView(self.acountField, MarginFactor(15.0f))
     .widthRatioToView(self.marketNameField, 1.0f)
     .heightRatioToView(self.marketNameField, 1.0f);
 
@@ -248,7 +248,7 @@ typedef NS_ENUM(NSInteger, SHGMarketSendType){
 
     self.locationField.sd_layout
     .leftEqualToView(self.firstCategoryBox)
-    .topSpaceToView(self.contactField, factor(15.0f))
+    .topSpaceToView(self.contactField, MarginFactor(15.0f))
     .widthRatioToView(self.marketNameField, 1.0f)
     .heightRatioToView(self.marketNameField, 1.0f);
 
@@ -259,19 +259,19 @@ typedef NS_ENUM(NSInteger, SHGMarketSendType){
     .heightIs(starSize.height);
 
     self.modelLabel.sd_layout
-    .topSpaceToView(self.locationField, factor(28.0f))
-    .leftSpaceToView(self.bgView, factor(16.0f))
+    .topSpaceToView(self.locationField, MarginFactor(28.0f))
+    .leftSpaceToView(self.bgView, MarginFactor(16.0f))
     .autoHeightRatio(0);
     [self.modelLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
 
     self.modelContentView.sd_layout
     .leftEqualToView(self.firstCategoryBox)
-    .topSpaceToView(self.modelLabel, factor(14.0f))
-    .rightSpaceToView(self.bgView, factor(13.0f))
-    .heightIs(factor(35.0f));
+    .topSpaceToView(self.modelLabel, MarginFactor(14.0f))
+    .rightSpaceToView(self.bgView, MarginFactor(13.0f))
+    .heightIs(MarginFactor(35.0f));
 
     self.breakView.sd_layout
-    .heightIs(factor(25.0f))
+    .heightIs(MarginFactor(25.0f))
     .widthIs(0.5f)
     .centerYEqualToView(self.modelContentView)
     .centerXEqualToView(self.modelContentView);
@@ -289,39 +289,39 @@ typedef NS_ENUM(NSInteger, SHGMarketSendType){
     .heightRatioToView(self.modelContentView, 1.0f);
 
     self.introduceLabel.sd_layout
-    .topSpaceToView(self.modelContentView, factor(28.0f))
+    .topSpaceToView(self.modelContentView, MarginFactor(28.0f))
     .leftEqualToView(self.modelLabel)
     .autoHeightRatio(0);
     [self.introduceLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
 
     self.introduceView.sd_layout
     .leftEqualToView(self.firstCategoryBox)
-    .topSpaceToView(self.introduceLabel, factor(14.0f))
+    .topSpaceToView(self.introduceLabel, MarginFactor(14.0f))
     .rightEqualToView(self.modelContentView)
-    .heightIs(factor(137.0f));
+    .heightIs(MarginFactor(137.0f));
 
     CGSize plusSize = self.addImageButton.frame.size;
     self.addImageButton.sd_layout
-    .topSpaceToView(self.introduceView, factor(12.0f))
-    .leftSpaceToView(self.bgView, factor(15.0f))
+    .topSpaceToView(self.introduceView, MarginFactor(12.0f))
+    .leftSpaceToView(self.bgView, MarginFactor(15.0f))
     .widthIs(plusSize.width)
     .heightIs(plusSize.height);
 
     self.addImageLabel.sd_layout
-    .leftSpaceToView(self.addImageButton, factor(12.0f))
+    .leftSpaceToView(self.addImageButton, MarginFactor(12.0f))
     .centerYEqualToView(self.addImageButton)
     .autoHeightRatio(0.0f);
     [self.addImageLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
 
     self.nextButton.sd_layout
     .leftEqualToView(self.firstCategoryBox)
-    .topSpaceToView(self.addImageButton, factor(12.0f))
+    .topSpaceToView(self.addImageButton, MarginFactor(12.0f))
     .rightEqualToView(self.modelContentView)
-    .heightIs(factor(40.0f));
+    .heightIs(MarginFactor(40.0f));
 
     CGSize anonymousSize = self.anonymousButton.frame.size;
     self.anonymousButton.sd_layout
-    .topSpaceToView(self.nextButton, factor(12.0f))
+    .topSpaceToView(self.nextButton, MarginFactor(12.0f))
     .leftEqualToView(self.firstCategoryBox)
     .widthIs(anonymousSize.width)
     .heightIs(anonymousSize.height);
