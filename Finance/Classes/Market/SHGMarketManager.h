@@ -59,4 +59,6 @@
 
 + (void)shareSuccessCallBack:(SHGMarketObject *)object finishBlock:(void (^)(BOOL))block;
 
++ (void)loadHotSearchWordFinishBlock:(void (^)(NSArray *array))block;
+
 @end

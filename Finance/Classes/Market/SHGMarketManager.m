@@ -492,5 +492,19 @@
     }];
 }
 
++ (void)loadHotSearchWordFinishBlock:(void (^)(NSArray *))block
+{
+    NSString *request = [rBaseAddressForHttp stringByAppendingString:@"/market/getHotSearchWord"];
+    [MOCHTTPRequestOperationManager postWithURL:request parameters:nil success:^(MOCHTTPResponse *response) {
+        NSArray *hotwords = [response.dataDictionary objectForKey:@"hotwords"];
+        if (block) {
+            block(hotwords);
+        }
+    } failed:^(MOCHTTPResponse *response) {
+        if (block) {
+            block(nil);
+        }
+    }];
+}
 
 @end

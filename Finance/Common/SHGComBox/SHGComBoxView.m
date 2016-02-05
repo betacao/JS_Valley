@@ -66,6 +66,7 @@
     if (!_arrowView) {
         _arrowView = [[UIImageView alloc] init];
         _arrowView.image = [UIImage imageNamed:@"down_dark0.png"];
+        [_arrowView sizeToFit];
         [self.bgButton addSubview:_arrowView];
     }
     return _arrowView;
@@ -90,8 +91,9 @@
 {
     [super layoutSubviews];
     self.bgButton.frame = self.bounds;
-    self.titleLabel.frame = CGRectMake(imgW, 0.0f, CGRectGetWidth(self.frame) - 3 * imgW, CGRectGetHeight(self.frame));
-    self.arrowView.frame = CGRectMake(CGRectGetWidth(self.frame) - 2 * imgW, (CGRectGetHeight(self.frame) - imgH)/2.0, imgW, imgH);
+    CGSize size = self.arrowView.image.size;
+    self.titleLabel.frame = CGRectMake(size.width, 0.0f, CGRectGetWidth(self.frame) - 3 * size.width, CGRectGetHeight(self.frame));
+    self.arrowView.frame = CGRectMake(CGRectGetWidth(self.frame) - 2 * size.width, (CGRectGetHeight(self.frame) - size.height)/2.0, size.width, size.height);
     self.tableView.frame = CGRectMake(CGRectGetMinX(self.frame), CGRectGetMaxY(self.frame), CGRectGetWidth(self.frame), 0.0f);
 }
 

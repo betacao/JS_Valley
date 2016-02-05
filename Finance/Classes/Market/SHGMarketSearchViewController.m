@@ -7,6 +7,9 @@
 //
 
 #import "SHGMarketSearchViewController.h"
+#import "SHGMarketManager.h"
+#import "SHGMarketAdvancedSearchViewController.h"
+
 #define kItemLeftMargin MarginFactor(14.0f)
 #define kItemHorizontalMargin MarginFactor(16.0f)
 #define kItemVerticalMargin MarginFactor(11.0f)
@@ -30,17 +33,17 @@
 {
     [super viewDidLoad];
 
-    self.dataArray = @[@"上海", @"北京", @"南京", @"融资", @"投资", @"优劣项目", @"PE/VC", @"通道业务", @"同业业务"];
-
     self.navigationItem.titleView = self.searchBar;
     self.navigationItem.leftBarButtonItem = nil;
     self.navigationItem.hidesBackButton = YES;
 
     [self initView];
     [self addAutoLayout];
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [self addHotItem];
-    });
+    __weak typeof(self) weakSelf = self;
+    [SHGMarketManager loadHotSearchWordFinishBlock:^(NSArray *array) {
+        weakSelf.dataArray = [NSArray arrayWithArray:array];
+        [weakSelf addHotItem];
+    }];
 }
 
 - (UISearchBar *)searchBar
@@ -91,6 +94,9 @@
     self.titleLabel.font = [UIFont systemFontOfSize:FontFactor(16.0f)];
 
     self.moreLabel.font = [UIFont systemFontOfSize:FontFactor(14.0f)];
+    self.moreLabel.userInteractionEnabled = YES;
+    UITapGestureRecognizer *recogizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pushToAdvancedSearchController:)];
+    [self.moreLabel addGestureRecognizer:recogizer];
     [self.moreLabel sizeToFit];
 
     [self.moreImageView sizeToFit];
@@ -141,8 +147,9 @@
         button.layer.borderWidth = 0.5f;
         button.layer.borderColor = [UIColor colorWithHexString:@"e1e1e8"].CGColor;
         [button setTitle:[self.dataArray objectAtIndex:i] forState:UIControlStateNormal];
-        [button setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithHexString:@"feffff"]] forState:UIControlStateNormal];
         [button setTitleColor:[UIColor colorWithHexString:@"8a8a8a"] forState:UIControlStateNormal];
+        [button addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchUpInside];
+        button.backgroundColor = [UIColor colorWithHexString:@"feffff"];
         button.titleLabel.font = [UIFont systemFontOfSize:FontFactor(14.0f)];
         CGRect frame = CGRectMake(kItemLeftMargin + col * (kItemHorizontalMargin + width), row * (kItemVerticalMargin + height) , width, height);
         button.frame = frame;
@@ -156,6 +163,17 @@
     .widthIs(SCREENWIDTH)
     .heightIs(maxHeight);
 
+}
+
+- (void)buttonClick:(UIButton *)button
+{
+
+}
+
+- (void)pushToAdvancedSearchController:(UITapGestureRecognizer *)recognizer
+{
+    SHGMarketAdvancedSearchViewController *controller = [[SHGMarketAdvancedSearchViewController alloc] init];
+    [self.navigationController pushViewController:controller animated:YES];
 }
 
 #pragma mark ------搜索的代理

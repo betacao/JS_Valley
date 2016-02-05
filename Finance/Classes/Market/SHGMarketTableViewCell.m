@@ -9,7 +9,7 @@
 #import "SHGMarketTableViewCell.h"
 
 @interface SHGMarketTableViewCell ()
-@property (weak, nonatomic) IBOutlet UILabel *titleView;
+@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *typeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *amountLabel;
 @property (weak, nonatomic) IBOutlet UILabel *contactLabel;
@@ -30,14 +30,13 @@
 
 - (void)loadView
 {
-    self.titleView.font = [UIFont systemFontOfSize:FontFactor(15.0f)];
+    self.titleLabel.font = [UIFont systemFontOfSize:FontFactor(15.0f)];
     self.typeLabel.font = [UIFont systemFontOfSize:FontFactor(13.0f)];
     self.amountLabel.font = [UIFont systemFontOfSize:FontFactor(13.0f)];
     self.timeLabel.font = [UIFont systemFontOfSize:FontFactor(13.0f)];
     self.contactLabel.font = [UIFont systemFontOfSize:FontFactor(13.0f)];
-    self.titleView.numberOfLines = 1;
     
-    self.titleView.sd_layout
+    self.titleLabel.sd_layout
     .topSpaceToView(self.contentView, MarginFactor(18.0f))
     .leftSpaceToView(self.contentView, MarginFactor(12.0f))
     .widthIs(SCREENWIDTH - MarginFactor(24.0f))
@@ -45,13 +44,13 @@
     //[self.titleView setSingleLineAutoResizeWithMaxWidth:SCREENWIDTH - factor(24.0f)];
     
     self.typeLabel.sd_layout
-    .topSpaceToView(self.titleView, MarginFactor(14.0f))
+    .topSpaceToView(self.titleLabel, MarginFactor(14.0f))
     .leftSpaceToView(self.contentView, MarginFactor(12.0f))
     .autoHeightRatio(0.0f);
     [self.typeLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
 
     self.amountLabel.sd_layout
-    .topSpaceToView(self.titleView, MarginFactor(14.0f))
+    .topSpaceToView(self.titleLabel, MarginFactor(14.0f))
     .leftSpaceToView(self.contentView, SCREENWIDTH /2.0f)
     .autoHeightRatio(0.0f);
     [self.amountLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
@@ -94,9 +93,9 @@
     _object = object;
     [self clearCell];
     if (object.marketName.length == 0) {
-        self.titleView.text = @" ";
+        self.titleLabel.text = @" ";
     } else{
-         self.titleView.text = object.marketName;
+         self.titleLabel.text = object.marketName;
     }
     self.typeLabel.text = [@"类型：" stringByAppendingString:object.catalog];
     if ([object.price isEqualToString:@""]) {
@@ -119,7 +118,7 @@
 
 - (void)clearCell
 {
-    self.titleView.text = @"";
+    self.titleLabel.text = @"";
     self.typeLabel.text = @"";
     self.amountLabel.text = @"";
     self.contactLabel.text = @"";

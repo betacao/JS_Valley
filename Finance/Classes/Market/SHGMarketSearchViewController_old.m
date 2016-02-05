@@ -11,7 +11,6 @@
 #import "RealtimeSearchUtil.h"
 #import "SHGMarketManager.h"
 #import "SHGEmptyDataView.h"
-#import "SHGMarketSearchTableViewCell.h"
 #import "SHGMarketDetailViewController.h"
 #import "SHGMarketSegmentViewController.h"
 
@@ -201,22 +200,23 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (self.resultArray.count > 0) {
-        NSString *identifier = @"marketSearchCell";
-        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
-        if (!cell) {
-            cell = [[[NSBundle mainBundle] loadNibNamed:@"SHGMarketSearchTableViewCell" owner:self options:nil]lastObject];
-        }
-        id object = [self.resultArray objectAtIndex:indexPath.row];
-        SHGMarketObject *obj = (SHGMarketObject *)object;
-        cell.textLabel.text = obj.marketName;
-        cell.textLabel.textColor = [UIColor colorWithHexString:@"3A3A3A"];
-        cell.textLabel.font = [UIFont systemFontOfSize:14.0f];
-        cell.textLabel.backgroundColor = [UIColor clearColor];
-        return cell;
-    } else{
-        return self.emptyCell;
-    }
+//    if (self.resultArray.count > 0) {
+//        NSString *identifier = @"marketSearchCell";
+//        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+//        if (!cell) {
+//            cell = [[[NSBundle mainBundle] loadNibNamed:@"SHGMarketSearchTableViewCell" owner:self options:nil]lastObject];
+//        }
+//        id object = [self.resultArray objectAtIndex:indexPath.row];
+//        SHGMarketObject *obj = (SHGMarketObject *)object;
+//        cell.textLabel.text = obj.marketName;
+//        cell.textLabel.textColor = [UIColor colorWithHexString:@"3A3A3A"];
+//        cell.textLabel.font = [UIFont systemFontOfSize:14.0f];
+//        cell.textLabel.backgroundColor = [UIColor clearColor];
+//        return cell;
+//    } else{
+//        return self.emptyCell;
+//    }
+    return nil;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

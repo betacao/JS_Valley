@@ -215,7 +215,7 @@
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
         [button addTarget:self action:@selector(actionInvite:) forControlEvents:UIControlEventTouchUpInside];
         [button setTitle:@"邀请" forState:UIControlStateNormal];
-        button.titleLabel.font = [UIFont systemFontOfSize:FontFactor(14.0f)];
+        button.titleLabel.font = [UIFont systemFontOfSize:FontFactor(15.0f)];
         [button sizeToFit];
         _rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:button];
     }
