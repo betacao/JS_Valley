@@ -60,7 +60,7 @@
     if (!self.totalArray || self.totalArray.count == 0) {
         __weak typeof(self) weakSelf = self;
         NSDictionary *param = @{@"uid":UID};
-        NSString *request = [rBaseAddressForHttp stringByAppendingString:@"/market/getMarketCatalogByUid"];
+        NSString *request = [rBaseAddressForHttp stringByAppendingString:@"/market/getMarketCataByUidDefine"];
         [MOCHTTPRequestOperationManager postWithURL:request class:nil parameters:param success:^(MOCHTTPResponse *response) {
             NSDictionary *dictionary = response.dataDictionary;
             weakSelf.cityName = [dictionary objectForKey:@"cityname"];
@@ -254,7 +254,7 @@
     }];
 }
 //收藏
-+ (void)addCollectWithObject:(SHGMarketObject *)object finishBlock:(void (^)(BOOL))block
++ (void)addCollectWithObject:(SHGMarketObject *)object finishBlock:(void (^)(void))block
 {
     [Hud showLoadingWithMessage:@"请稍等..."];
     NSString *request = [rBaseAddressForHttp stringByAppendingString:@"/market/collection"];
@@ -264,19 +264,16 @@
         [Hud hideHud];
         [Hud showMessageWithText:@"收藏成功"];
         if (block) {
-            block(YES);
+            block();
         }
     } failed:^(MOCHTTPResponse *response) {
         [Hud hideHud];
         [Hud showMessageWithText:@"收藏失败"];
-        if (block) {
-            block(NO);
-        }
     }];
 
 }
 //取消收藏
-+ (void)deleteCollectWithObject:(SHGMarketObject *)object finishBlock:(void (^)(BOOL))block
++ (void)deleteCollectWithObject:(SHGMarketObject *)object finishBlock:(void (^)(void))block
 {
     [Hud showLoadingWithMessage:@"请稍等..."];
     NSString *request = [rBaseAddressForHttp stringByAppendingString:@"/market/collection"];
@@ -286,14 +283,11 @@
         [Hud hideHud];
         [Hud showMessageWithText:@"取消收藏成功"];
         if (block) {
-            block(YES);
+            block();
         }
     } failed:^(MOCHTTPResponse *response) {
         [Hud hideHud];
         [Hud showMessageWithText:@"取消收藏失败"];
-        if (block) {
-            block(NO);
-        }
     }];
 
 }

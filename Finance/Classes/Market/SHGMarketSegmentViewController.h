@@ -29,6 +29,6 @@ typedef void(^loadViewFinishBlock)(UIView *view);
 - (void)setSelectedViewController:(UIViewController *)viewController animated:(BOOL)animated;
 - (void)refreshListViewController;
 - (void)addOrDeletePraise:(SHGMarketObject *)object block:(void(^)(BOOL success))block;
-- (void)addOrDeleteCollect:(SHGMarketObject *)object block:(void(^)(BOOL success))block;
+- (void)addOrDeleteCollect:(SHGMarketObject *)object state:(void(^)(BOOL state))block;
 - (void)deleteMarket:(SHGMarketObject *)object;
 @end

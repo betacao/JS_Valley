@@ -167,7 +167,7 @@ typedef NS_ENUM(NSInteger, SHGMarketSendType){
 
     self.nextButton.titleLabel.font = [UIFont systemFontOfSize:FontFactor(15.0f)];
 
-    self.anonymousButton.titleLabel.font = [UIFont systemFontOfSize:FontFactor(13.0f)];
+    self.anonymousButton.titleLabel.font = [UIFont systemFontOfSize:FontFactor(11.0f)];
     [self.anonymousButton setEnlargeEdge: 20.0f];
     [self.anonymousButton setImage:[UIImage imageNamed:@"market_select"] forState:UIControlStateSelected];
     [self.anonymousButton setImage:[UIImage imageNamed:@"market_unselect"] forState:UIControlStateNormal];

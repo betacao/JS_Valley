@@ -107,13 +107,18 @@
     
     
     self.contactLabel.text = [@"地区：" stringByAppendingString: object.position];
-    if (object.isCollection ) {
+    [self loadCollectionState];
+    self.timeLabel.text = [@"时间：" stringByAppendingString: object.createTime];
+    [self setupAutoHeightWithBottomView:self.bottomView bottomMargin:0.0f];
+}
+
+- (void)loadCollectionState
+{
+    if (self.object.isCollection ) {
         [self.collectButton setImage:[UIImage imageNamed:@"newDetialCollect"] forState:UIControlStateNormal];
     } else{
         [self.collectButton setImage:[UIImage imageNamed:@"newNoDetialCollect"] forState:UIControlStateNormal];
     }
-    self.timeLabel.text = [@"时间：" stringByAppendingString: object.createTime];
-    [self setupAutoHeightWithBottomView:self.bottomView bottomMargin:0.0f];
 }
 
 - (void)clearCell
@@ -127,8 +132,11 @@
 //收藏
 - (IBAction)clickCollectButton:(UIButton *)sender
 {
-    if (self.delegate && [self.delegate respondsToSelector:@selector(ClickCollectButton:)]) {
-        [self.delegate ClickCollectButton:self.object];
+    __weak typeof(self)weakSelf = self;
+    if (self.delegate && [self.delegate respondsToSelector:@selector(clickCollectButton:state:)]) {
+        [self.delegate clickCollectButton:self.object state:^(BOOL state) {
+            [weakSelf loadCollectionState];
+        }];
     }
 }
 

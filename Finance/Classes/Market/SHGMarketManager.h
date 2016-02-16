@@ -43,9 +43,9 @@
 
 + (void)loadMarketDetail:(NSDictionary *)param block:(void (^)(SHGMarketObject *object))block;
 
-+ (void)addCollectWithObject:(SHGMarketObject *)object finishBlock:(void (^)(BOOL))block;
++ (void)addCollectWithObject:(SHGMarketObject *)object finishBlock:(void (^)(void))block;
 
-+ (void)deleteCollectWithObject:(SHGMarketObject *)object finishBlock:(void (^)(BOOL))block;
++ (void)deleteCollectWithObject:(SHGMarketObject *)object finishBlock:(void (^)(void))block;
 
 + (void)addPraiseWithObject:(SHGMarketObject *)object finishBlock:(void (^)(BOOL))block;
 

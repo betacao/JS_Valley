@@ -331,21 +331,23 @@
     [self setSelectedIndex:seg.selectedSegmentIndex animated:YES];
 }
 #pragma mark ------ 收藏和取消收藏
-- (void)addOrDeleteCollect:(SHGMarketObject *)object block:(void(^)(BOOL success))block
+- (void)addOrDeleteCollect:(SHGMarketObject *)object state:(void(^)(BOOL state))block
 {
     __weak typeof(self)weakSelf = self;
     if (!object.isCollection) {
-        [SHGMarketManager addCollectWithObject:object finishBlock:^(BOOL success) {
+        [SHGMarketManager addCollectWithObject:object finishBlock:^{
             [weakSelf didChangeCollectState:object iscollection:YES];
+            object.isCollection = YES;
             if (block) {
-                block(success);
+                block(YES);
             }
         }];
     } else{
-        [SHGMarketManager deleteCollectWithObject:object finishBlock:^(BOOL success) {
+        [SHGMarketManager deleteCollectWithObject:object finishBlock:^{
             [weakSelf didChangeCollectState:object iscollection:NO];
+            object.isCollection = NO;
             if (block) {
-                block(success);
+                block(NO);
             }
         }];
     }
@@ -358,31 +360,13 @@
             NSMutableArray *array = [controller performSelector:@selector(currentDataArray)];
             for (SHGMarketObject * obj in array){
                 if ([object.marketId isEqualToString:obj.marketId]) {
-                    obj.isCollection = iscollection ? YES : NO;
-                    }
-            
-        }
-}        [controller performSelector:@selector(reloadData)];
-    }
-
-    NSInteger count = self.navigationController.viewControllers.count;
-    if (count >= 1) {
-        UIViewController *controller = [self.navigationController.viewControllers objectAtIndex:count - 1];
-        if ([NSStringFromClass([controller class]) isEqualToString:@"SHGMarketMineViewController"]) {
-            if ([controller respondsToSelector:@selector(currentDataArray)]) {
-                NSMutableArray *array = [controller performSelector:@selector(currentDataArray)];
-                for (SHGMarketObject * obj in array){
-                    if ([object.marketId isEqualToString:obj.marketId]) {
-                        obj.isCollection = iscollection ? YES : NO;
-                       }
+                    obj.isCollection = iscollection;
                 }
             }
-            
-            [controller performSelector:@selector(reloadData)];
         }
-        
+        [controller performSelector:@selector(reloadData)];
     }
-
+    
 }
 
 #pragma mark ------ 点赞和取消点赞
@@ -463,6 +447,7 @@
                     obj.commentNum = object.commentNum;
                     obj.praiseNum = object.praiseNum;
                     obj.isPraise = object.isPraise;
+                    obj.isCollection = object.isCollection;
                 }
             }
         }
@@ -482,6 +467,7 @@
                         obj.commentNum = object.commentNum;
                         obj.praiseNum = object.praiseNum;
                         obj.isPraise = object.isPraise;
+                        obj.isCollection = object.isCollection;
                     }
                 }
             }

@@ -365,7 +365,7 @@
     }
 }
 
-#pragma mark ------SHGMarketTableViewDelegate
+#pragma mark ------SHGMarketTableViewCellDelegate
 - (void)clickPrasiseButton:(SHGMarketObject *)object
 {
     [[SHGMarketSegmentViewController sharedSegmentController] addOrDeletePraise:object block:^(BOOL success) {
@@ -373,10 +373,10 @@
     }];
 }
 
-- (void)ClickCollectButton:(SHGMarketObject *)object
+- (void)clickCollectButton:(SHGMarketObject *)object state:(void (^)(BOOL))block
 {
-    [[SHGMarketSegmentViewController sharedSegmentController] addOrDeleteCollect:object block:^(BOOL success) {
-        
+    [[SHGMarketSegmentViewController sharedSegmentController] addOrDeleteCollect:object state:^(BOOL state) {
+        block(state);
     }];
 }
 - (void)clickCommentButton:(SHGMarketObject *)object

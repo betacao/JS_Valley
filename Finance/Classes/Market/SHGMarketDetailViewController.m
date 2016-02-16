@@ -527,14 +527,9 @@
 
 - (IBAction)collectionClick:(UIButton *)sender {
     __weak typeof(self)weakSelf = self;
-    [[SHGMarketSegmentViewController sharedSegmentController] addOrDeleteCollect:self.responseObject block:^(BOOL success) {
-        if (!weakSelf.responseObject.isCollection) {
-            weakSelf.responseObject.isCollection = YES;
-            [weakSelf loadCollectButtonState];
-        } else{
-            weakSelf.responseObject.isCollection = NO;
-            [weakSelf loadCollectButtonState];
-        }
+    [[SHGMarketSegmentViewController sharedSegmentController] addOrDeleteCollect:self.responseObject state:^(BOOL state) {
+        weakSelf.responseObject.isCollection = state;
+        [weakSelf loadCollectButtonState];
     }];
 
 }

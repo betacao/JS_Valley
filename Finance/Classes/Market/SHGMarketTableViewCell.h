@@ -13,12 +13,12 @@
 
 @protocol SHGMarketTableViewDelegate <NSObject>
 
+- (void)clickCollectButton:(SHGMarketObject *)object state:(void(^)(BOOL state))block;
+@optional
 - (void)clickPrasiseButton:(SHGMarketObject *)object;
 - (void)clickCommentButton:(SHGMarketObject *)object;
 - (void)clickEditButton:(SHGMarketObject *)object;
 - (void)tapUserHeaderImageView:(NSString *)uid;
-- (void)ClickCollectButton:(SHGMarketObject *)object;
-@optional
 - (void)clickDeleteButton:(SHGMarketObject *)object;
 @end
 

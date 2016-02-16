@@ -1314,7 +1314,7 @@
 {
     [self requestPostListWithTarget:@"first" time:@"-1"];
 }
-#pragma mark ------SHGMarketTableViewDelegate
+#pragma mark ------SHGMarketTableViewCellDelegate
 - (void)clickPrasiseButton:(SHGMarketObject *)object
 {
     [[SHGMarketSegmentViewController sharedSegmentController] addOrDeletePraise:object block:^(BOOL success) {
@@ -1322,13 +1322,12 @@
     }];
     [self.tableView reloadData];
 }
-- (void)ClickCollectButton:(SHGMarketObject *)object
+- (void)clickCollectButton:(SHGMarketObject *)object state:(void (^)(BOOL))block
 {
-    [[SHGMarketSegmentViewController sharedSegmentController] addOrDeleteCollect:object block:^(BOOL success) {
-        if (success) {
-            [self.dataSource removeObject:object];
-            [self.tableView reloadData];
-        }
+    __weak typeof(self) weakSelf = self;
+    [[SHGMarketSegmentViewController sharedSegmentController] addOrDeleteCollect:object state:^(BOOL state) {
+        [weakSelf.dataSource removeObject:object];
+        [weakSelf.tableView reloadData];
     }];
     
     

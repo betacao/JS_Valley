@@ -39,7 +39,7 @@
 #define XFACTOR SCREENWIDTH / 320.0f
 #define YFACTOR SCREENHEIGHT / 568.0f
 
-#define FontFactor(font) SCREENWIDTH >= 375.0f ? font : (font - 1.5f)
+#define FontFactor(font) SCREENWIDTH >= 375.0f ? font : (font - 1.0f)
 #define MarginFactor(x) floorf(SCREENWIDTH / 375.0f * x)
 //计算颜色
 #define RGB(r,g,b) [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:1.0]

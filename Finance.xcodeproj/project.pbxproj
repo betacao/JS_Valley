@@ -906,6 +906,8 @@
 		F9A8D28E1BE712B700A2BFB1 /* ShareSDKFlatShareViewUI.bundle in Resources */ = {isa = PBXBuildFile; fileRef = F9A8D27B1BE712B700A2BFB1 /* ShareSDKFlatShareViewUI.bundle */; };
 		F9A8D28F1BE712B700A2BFB1 /* ShareSDKFlatShareViewUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9A8D27C1BE712B700A2BFB1 /* ShareSDKFlatShareViewUI.framework */; };
 		F9A8D2901BE712B700A2BFB1 /* ShareSDKShareActionSheet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9A8D27D1BE712B700A2BFB1 /* ShareSDKShareActionSheet.framework */; };
+		F9A997F61C72CAA500355337 /* SHGMarketSearchResultViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9A997F41C72CAA500355337 /* SHGMarketSearchResultViewController.m */; };
+		F9A997F71C72CAA500355337 /* SHGMarketSearchResultViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9A997F51C72CAA500355337 /* SHGMarketSearchResultViewController.xib */; };
 		F9AA69CF1C61E0A800C920B5 /* SHGMarketSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9AA69CD1C61E0A800C920B5 /* SHGMarketSearchViewController.m */; };
 		F9AA69D01C61E0A800C920B5 /* SHGMarketSearchViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9AA69CE1C61E0A800C920B5 /* SHGMarketSearchViewController.xib */; };
 		F9AAC1A71C51F0F800E92B7A /* SHGMarketNoticeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F9AAC1A51C51F0F800E92B7A /* SHGMarketNoticeTableViewCell.m */; };
@@ -2208,6 +2210,9 @@
 		F9A8D27B1BE712B700A2BFB1 /* ShareSDKFlatShareViewUI.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = ShareSDKFlatShareViewUI.bundle; sourceTree = "<group>"; };
 		F9A8D27C1BE712B700A2BFB1 /* ShareSDKFlatShareViewUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ShareSDKFlatShareViewUI.framework; sourceTree = "<group>"; };
 		F9A8D27D1BE712B700A2BFB1 /* ShareSDKShareActionSheet.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ShareSDKShareActionSheet.framework; sourceTree = "<group>"; };
+		F9A997F31C72CAA500355337 /* SHGMarketSearchResultViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGMarketSearchResultViewController.h; sourceTree = "<group>"; };
+		F9A997F41C72CAA500355337 /* SHGMarketSearchResultViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGMarketSearchResultViewController.m; sourceTree = "<group>"; };
+		F9A997F51C72CAA500355337 /* SHGMarketSearchResultViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGMarketSearchResultViewController.xib; sourceTree = "<group>"; };
 		F9AA69CC1C61E0A800C920B5 /* SHGMarketSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGMarketSearchViewController.h; sourceTree = "<group>"; };
 		F9AA69CD1C61E0A800C920B5 /* SHGMarketSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGMarketSearchViewController.m; sourceTree = "<group>"; };
 		F9AA69CE1C61E0A800C920B5 /* SHGMarketSearchViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGMarketSearchViewController.xib; sourceTree = "<group>"; };
@@ -4845,6 +4850,9 @@
 				F92057071C63203600897C8B /* SHGMarketAdvancedSearchViewController.h */,
 				F92057081C63203600897C8B /* SHGMarketAdvancedSearchViewController.m */,
 				F92057091C63203600897C8B /* SHGMarketAdvancedSearchViewController.xib */,
+				F9A997F31C72CAA500355337 /* SHGMarketSearchResultViewController.h */,
+				F9A997F41C72CAA500355337 /* SHGMarketSearchResultViewController.m */,
+				F9A997F51C72CAA500355337 /* SHGMarketSearchResultViewController.xib */,
 				F908C83F1C30FA83004DD99A /* SHGMarketSecondCategoryViewController.h */,
 				F908C8401C30FA83004DD99A /* SHGMarketSecondCategoryViewController.m */,
 				F908C8411C30FA83004DD99A /* SHGMarketSecondCategoryViewController.xib */,
@@ -5592,6 +5600,7 @@
 				61E83CF61AF7C78E00703651 /* 收藏@2x.png in Resources */,
 				61E83D551AF7C78E00703651 /* 发帖表情@3x.png in Resources */,
 				F920570B1C63203600897C8B /* SHGMarketAdvancedSearchViewController.xib in Resources */,
+				F9A997F71C72CAA500355337 /* SHGMarketSearchResultViewController.xib in Resources */,
 				61E83D201AF7C78E00703651 /* 编辑@2x.png in Resources */,
 				408D8B4D1AF8618C0055810C /* chatBar_recordSelected.png in Resources */,
 				408D8B361AF8618C0055810C /* chat_location_detail_disclosureHL@2x.png in Resources */,
@@ -5785,6 +5794,7 @@
 				53AFF7841AFBF5F700D04B6B /* THProgressView.m in Sources */,
 				610FF0451AD621500027EBA6 /* PopoverListObj.m in Sources */,
 				538964D11AFC6BEB00041548 /* AppDelegate+EaseMob.m in Sources */,
+				F9A997F61C72CAA500355337 /* SHGMarketSearchResultViewController.m in Sources */,
 				6153B9481ADFB4CA0015F6E1 /* CircleSendViewController.m in Sources */,
 				6187D2D91AF1C693008E1D21 /* LocationViewController.m in Sources */,
 				F936DD4B1C3A437500584F53 /* SHGFriendGroupingViewController.m in Sources */,

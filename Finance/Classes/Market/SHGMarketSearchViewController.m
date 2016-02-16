@@ -9,6 +9,7 @@
 #import "SHGMarketSearchViewController.h"
 #import "SHGMarketManager.h"
 #import "SHGMarketAdvancedSearchViewController.h"
+#import "SHGMarketSearchResultViewController.h"
 
 #define kItemLeftMargin MarginFactor(14.0f)
 #define kItemHorizontalMargin MarginFactor(16.0f)
@@ -167,7 +168,9 @@
 
 - (void)buttonClick:(UIButton *)button
 {
-
+    SHGMarketSearchResultViewController *controller = [[SHGMarketSearchResultViewController alloc] initWithType:SHGMarketSearchTypeNormal];
+    controller.param = @{@"uid":UID ,@"type":@"searcher" ,@"pageSize":@"10", @"marketName":button.titleLabel.text};
+    [self.navigationController pushViewController:controller animated:YES];
 }
 
 - (void)pushToAdvancedSearchController:(UITapGestureRecognizer *)recognizer
