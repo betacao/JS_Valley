@@ -17,4 +17,6 @@
 @property (nonatomic, strong) NSString *rightItemtitleName;
 
 @property (nonatomic, assign) NSInteger upDistance;
+
+- (void)rightItemClick:(id)sender;
 @end

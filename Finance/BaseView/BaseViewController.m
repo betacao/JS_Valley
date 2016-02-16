@@ -52,8 +52,8 @@
         [leftButton setBackgroundImage:[UIImage imageNamed:imageName] forState:UIControlStateNormal];
     } else{
         [leftButton setTitle:self.leftItemtitleName forState:UIControlStateNormal];
-        [leftButton setTitleColor:RGB(255, 0, 40) forState:UIControlStateNormal];
-        [leftButton.titleLabel setFont:[UIFont systemFontOfSize:14.0f]];
+        [leftButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [leftButton.titleLabel setFont:[UIFont systemFontOfSize:FontFactor(15.0f)]];
     }
 
     [leftButton sizeToFit];
@@ -63,26 +63,19 @@
     
     
     UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [rightButton setFrame:CGRectMake(0, 0, 24, 24)];
     
     NSString *rightImageName ;
-    if (!IsStrEmpty(self.rightItemImageName))
-    {
+    if (!IsStrEmpty(self.rightItemImageName)){
         rightImageName = self.rightItemImageName;
-        [rightButton setBackgroundImage:[UIImage imageNamed:imageName] forState:UIControlStateNormal];
-    }
-    else if(!IsStrEmpty(self.rightItemtitleName))
-    {
+        [rightButton setImage:[UIImage imageNamed:imageName] forState:UIControlStateNormal];
+    } else if(!IsStrEmpty(self.rightItemtitleName)){
         [rightButton setTitle:self.rightItemtitleName forState:UIControlStateNormal];
-        [rightButton setTitleColor:RGB(255, 0, 40) forState:UIControlStateNormal];
-        [rightButton.titleLabel setFont:[UIFont systemFontOfSize:14.0f]];
+        [rightButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [rightButton.titleLabel setFont:[UIFont systemFontOfSize:FontFactor(15.0f)]];
     }
-    else
-    {
-        
-    }
-    if (!IsStrEmpty(self.rightItemtitleName) || !IsStrEmpty(self.rightItemImageName))
-    {
+
+    if (!IsStrEmpty(self.rightItemtitleName) || !IsStrEmpty(self.rightItemImageName)){
+        [rightButton sizeToFit];
         [rightButton addTarget:self action:@selector(rightItemClick:) forControlEvents:UIControlEventTouchUpInside];
         UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:rightButton];
         self.navigationItem.rightBarButtonItem = rightItem;
@@ -133,9 +126,10 @@
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
-- (void)didReceiveMemoryWarning {
+
+- (void)didReceiveMemoryWarning
+{
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 #pragma mark - textField Delegate

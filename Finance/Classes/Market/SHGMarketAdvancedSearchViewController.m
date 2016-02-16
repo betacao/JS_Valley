@@ -9,6 +9,7 @@
 #import "SHGMarketAdvancedSearchViewController.h"
 #import "SHGComBoxView.h"
 #import "SHGMarketManager.h"
+#import "SHGItemChooseView.h"
 
 @interface SHGMarketAdvancedSearchViewController ()<SHGComBoxViewDelegate>
 
@@ -44,11 +45,13 @@
 
 - (void)viewDidLoad
 {
-    [super viewDidLoad];
     self.title = @"更多搜索条件";
+    self.leftItemtitleName = @"取消";
+    self.rightItemtitleName = @"重置";
     [self initView];
     [self addAutoLayout];
 
+    [super viewDidLoad];
     __weak typeof(self)weakSelf = self;
     [[SHGMarketManager shareManager] userListArray:^(NSArray *array) {
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -279,6 +282,41 @@
     }];
 }
 
+
+- (void)rightItemClick:(id)sender
+{
+    [self topButtonsClick:self.leftButton];
+    self.locationTextField.text = @"";
+
+    [self bottomButtonsClick:self.bottomLeftButton];
+}
+
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
+{
+    if ([textField isEqual:self.locationTextField]) {
+        [self chooseCity:textField];
+        return NO;
+    }
+    return YES;
+}
+
+- (void)chooseCity:(UITextField *)textField
+{
+
+    __weak typeof(self) weakSelf = self;
+    [[SHGMarketManager shareManager] loadHotCitys:^(NSArray *array) {
+        NSMutableArray *cityArray = [NSMutableArray array];
+        [array enumerateObjectsUsingBlock:^(SHGMarketCityObject *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            [cityArray addObject:obj.cityName];
+        }];
+        SHGItemChooseView *view = [[SHGItemChooseView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, SCREENWIDTH, SCREENHEIGHT) lineNumber:cityArray.count];
+        view.delegate = weakSelf;
+        view.dataArray = cityArray;
+        [weakSelf.view.window addSubview:view];
+    }];
+
+}
+
 #pragma mark ------combox代理
 - (void)selectAtIndex:(NSInteger)index inCombox:(SHGComBoxView *)combox
 {
@@ -298,6 +336,12 @@
         self.rightCombox.titlesList = titleArray;
         [self.rightCombox reloadData];
     }
+}
+
+#pragma mark ------选择城市代理
+- (void)didSelectItem:(NSString *)item
+{
+    self.locationTextField.text = item;
 }
 
 - (void)didReceiveMemoryWarning
