@@ -10,6 +10,7 @@
 #import "SHGMarketManager.h"
 #import "SHGMarketTableViewCell.h"
 #import "SHGMarketSegmentViewController.h"
+#import "SHGMarketAdvancedSearchViewController.h"
 
 @interface SHGMarketSearchResultViewController ()<UITableViewDataSource, UITableViewDelegate, SHGMarketTableViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -34,12 +35,14 @@
 {
     [super viewDidLoad];
     self.title = @"搜索结果";
-    
+
     [self initView];
     [self addAutoLayout];
 
+    self.sectionView.parentController = self;
+    self.sectionView.type = self.searchType;
+    
     if (self.searchType == SHGMarketSearchTypeNormal) {
-        self.sectionView.type = self.searchType;
         [self searchNormalMarketList:@"first" marketId:@"-1"];
     } else{
         [self searchAdvancedMarketList:@"first" marketId:@"-1"];
@@ -222,6 +225,10 @@
 - (void)initView
 {
     self.leftLabel.font = [UIFont systemFontOfSize:FontFactor(15.0f)];
+    UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(leftLabelClick:)];
+    [self.leftLabel addGestureRecognizer:recognizer];
+    self.leftLabel.userInteractionEnabled = YES;
+
     [self.arrowButton sizeToFit];
     self.rightLabel.font = [UIFont systemFontOfSize:FontFactor(14.0f)];
 }
@@ -271,6 +278,16 @@
         self.leftLabel.text = @"更多搜索条件";
     } else{
         self.leftLabel.text = @"显示搜索条件";
+    }
+}
+
+- (void)leftLabelClick:(UITapGestureRecognizer *)recognizer
+{
+    if (self.type == SHGMarketSearchTypeNormal) {
+        SHGMarketAdvancedSearchViewController *controller = [[SHGMarketAdvancedSearchViewController alloc] init];
+        [self.parentController.navigationController pushViewController:controller animated:YES];
+    } else{
+        [self.parentController.navigationController popViewControllerAnimated:YES];
     }
 }
 

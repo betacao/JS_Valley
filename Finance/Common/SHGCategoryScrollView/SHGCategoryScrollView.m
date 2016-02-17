@@ -71,7 +71,7 @@
 - (UIView *)underLineView
 {
     if (!_underLineView) {
-        _underLineView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, kCategoryScrollViewHeight - 1.0f, 0.0f, 1.50f)];
+        _underLineView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, kCategoryScrollViewHeight - 1.0f, 0.0f, 1.5f)];
         _underLineView.backgroundColor = [UIColor colorWithHexString:@"D82626"];
         [self addSubview:_underLineView];
     }

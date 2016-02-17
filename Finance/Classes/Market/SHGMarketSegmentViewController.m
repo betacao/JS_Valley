@@ -137,15 +137,7 @@
         [sendButton sizeToFit];
         [sendButton addTarget:self action:@selector(addNewMarket:) forControlEvents:UIControlEventTouchUpInside];
         UIBarButtonItem *sendItem = [[UIBarButtonItem alloc] initWithCustomView:sendButton];
-
-        UIButton *modifyButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        UIImage *image = [UIImage imageNamed:@"market_modify"];
-        [modifyButton setBackgroundImage:image forState:UIControlStateNormal];
-        [modifyButton sizeToFit];
-        [modifyButton addTarget:self action:@selector(modifyUserSelectedTags:) forControlEvents:UIControlEventTouchUpInside];
-        UIBarButtonItem *modifyItem = [[UIBarButtonItem alloc] initWithCustomView:modifyButton];
-
-        _rightBarButtonItems = @[sendItem, modifyItem];
+        _rightBarButtonItems = @[sendItem];
     }
     return  _rightBarButtonItems;
 

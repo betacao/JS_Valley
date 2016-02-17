@@ -32,4 +32,6 @@ typedef NS_ENUM(NSInteger, SHGMarketSearchType)
 
 @property (assign, nonatomic) SHGMarketSearchType type;
 
+@property (weak, nonatomic) UIViewController *parentController;
+
 @end
