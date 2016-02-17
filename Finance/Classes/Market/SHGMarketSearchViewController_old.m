@@ -168,7 +168,7 @@
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
     __weak typeof(self) weakSelf = self;
     NSDictionary *param = @{@"marketId":marketId ,@"uid":uid ,@"type":@"searcher" ,@"target":target ,@"pageSize":@"10", @"marketName":searchText};
-    [SHGMarketManager searchMarketList:param block:^(NSArray *array) {
+    [SHGMarketManager searchNormalMarketList:param block:^(NSString *count, NSArray *array) {
         [weakSelf.tableView.header endRefreshing];
         [weakSelf.tableView.footer endRefreshing];
         if ([target isEqualToString:@"first"]) {

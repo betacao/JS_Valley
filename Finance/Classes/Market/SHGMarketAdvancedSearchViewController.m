@@ -10,8 +10,9 @@
 #import "SHGComBoxView.h"
 #import "SHGMarketManager.h"
 #import "SHGItemChooseView.h"
+#import "SHGMarketSearchResultViewController.h"
 
-@interface SHGMarketAdvancedSearchViewController ()<SHGComBoxViewDelegate>
+@interface SHGMarketAdvancedSearchViewController ()<SHGComBoxViewDelegate, SHGItemChooseDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *firstLabel;
 @property (weak, nonatomic) IBOutlet UIView *firstContentView;
@@ -39,6 +40,9 @@
 
 @property (strong, nonatomic) NSMutableArray *categoryArray;
 
+@property (strong, nonatomic) NSString *recentUpdate;//最近更新
+@property (strong, nonatomic) NSString *city;//业务地区
+@property (strong, nonatomic) NSString *mode;//业务模式
 @end
 
 @implementation SHGMarketAdvancedSearchViewController
@@ -48,6 +52,11 @@
     self.title = @"更多搜索条件";
     self.leftItemtitleName = @"取消";
     self.rightItemtitleName = @"重置";
+
+    self.recentUpdate = @"";
+    self.city = @"";
+    self.mode = @"";
+
     [self initView];
     [self addAutoLayout];
 
@@ -56,6 +65,18 @@
     [[SHGMarketManager shareManager] userListArray:^(NSArray *array) {
         dispatch_async(dispatch_get_main_queue(), ^{
             weakSelf.categoryArray = [NSMutableArray arrayWithArray:array];
+            SHGMarketFirstCategoryObject *firstObject = [[SHGMarketFirstCategoryObject alloc] init];
+            SHGMarketSecondCategoryObject *secondObject = [[SHGMarketSecondCategoryObject alloc] init];
+            secondObject.parentId = @"";
+            secondObject.secondCatalogId = @"";
+            secondObject.secondCatalogName = @"不限";
+
+            firstObject.firstCatalogId = @"";
+            firstObject.firstCatalogName = @"不限";
+            firstObject.secondCataLogs = @[secondObject];
+
+            [weakSelf.categoryArray insertObject:firstObject atIndex:0];
+
             NSMutableArray *titleArray = [NSMutableArray array];
             [weakSelf.categoryArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
                 SHGMarketFirstCategoryObject *object = (SHGMarketFirstCategoryObject *)obj;
@@ -77,11 +98,11 @@
     self.firstContentView.layer.borderWidth = 0.5f;
 
     [self.bottomArrowImage1 sizeToFit];
+    self.bottomArrowImage1.hidden = YES;
 
     self.leftButton.titleLabel.font = [UIFont systemFontOfSize:FontFactor(14.0f)];
     [self.leftButton setTitleColor:[UIColor colorWithHexString:@"b2b2b2"] forState:UIControlStateNormal];
     [self.leftButton setTitleColor:[UIColor colorWithHexString:@"d43c33"] forState:UIControlStateSelected];
-    self.leftButton.selected = YES;
 
     self.middleButton.titleLabel.font = [UIFont systemFontOfSize:FontFactor(14.0f)];
     [self.middleButton setTitleColor:[UIColor colorWithHexString:@"b2b2b2"] forState:UIControlStateNormal];
@@ -118,11 +139,11 @@
     self.fourthContentView.layer.borderWidth = 0.5f;
 
     [self.bottomArrowImage2 sizeToFit];
+    self.bottomArrowImage2.hidden = YES;
 
     self.bottomLeftButton.titleLabel.font = [UIFont systemFontOfSize:FontFactor(14.0f)];
     [self.bottomLeftButton setTitleColor:[UIColor colorWithHexString:@"b2b2b2"] forState:UIControlStateNormal];
     [self.bottomLeftButton setTitleColor:[UIColor colorWithHexString:@"d43c33"] forState:UIControlStateSelected];
-    self.bottomLeftButton.selected = YES;
 
     self.bottomRightButton.titleLabel.font = [UIFont systemFontOfSize:FontFactor(14.0f)];
     [self.bottomRightButton setTitleColor:[UIColor colorWithHexString:@"b2b2b2"] forState:UIControlStateNormal];
@@ -258,37 +279,88 @@
 
 - (IBAction)topButtonsClick:(UIButton *)sender
 {
-    self.leftButton.selected = NO;
-    self.middleButton.selected = NO;
-    self.rightButton.selected = NO;
-    sender.selected = YES;
-    [UIView animateWithDuration:0.25f animations:^{
-        self.bottomArrowImage1.sd_layout
-        .centerXEqualToView(sender);
-        [self.bottomArrowImage1 updateLayout];
-    }];
+    if (!sender.isSelected) {
+        self.bottomArrowImage1.hidden = NO;
+        self.leftButton.selected = NO;
+        self.middleButton.selected = NO;
+        self.rightButton.selected = NO;
+        sender.selected = YES;
+        [UIView animateWithDuration:0.25f animations:^{
+            self.bottomArrowImage1.sd_layout
+            .centerXEqualToView(sender);
+            [self.bottomArrowImage1 updateLayout];
+        }];
 
+        if ([sender isEqual:self.leftButton]) {
+            self.recentUpdate = @"3";
+        } else if ([sender isEqual:self.middleButton]){
+            self.recentUpdate = @"7";
+        } else{
+            self.recentUpdate = @"31";
+        }
+    } else{
+        self.bottomArrowImage1.hidden = YES;
+        sender.selected = NO;
+        self.recentUpdate = @"";
+    }
 }
 
 - (IBAction)bottomButtonsClick:(UIButton *)sender
 {
-    self.bottomLeftButton.selected = NO;
-    self.bottomRightButton.selected = NO;
-    sender.selected = YES;
-    [UIView animateWithDuration:0.25f animations:^{
-        self.bottomArrowImage2.sd_layout
-        .centerXEqualToView(sender);
-        [self.bottomArrowImage2 updateLayout];
-    }];
+    if (!sender.isSelected) {
+        self.bottomArrowImage2.hidden = NO;
+        self.bottomLeftButton.selected = NO;
+        self.bottomRightButton.selected = NO;
+        sender.selected = YES;
+        [UIView animateWithDuration:0.25f animations:^{
+            self.bottomArrowImage2.sd_layout
+            .centerXEqualToView(sender);
+            [self.bottomArrowImage2 updateLayout];
+        }];
+
+        self.mode = sender.titleLabel.text;
+    } else{
+        self.bottomArrowImage2.hidden = YES;
+        sender.selected = NO;
+        self.mode = @"";
+    }
+}
+
+- (IBAction)searchButtonClick:(UIButton *)sender
+{
+    SHGMarketFirstCategoryObject *firstObject = [self.categoryArray objectAtIndex:self.leftComBox.currentIndex];
+    NSString *firstId = firstObject.firstCatalogId;
+
+    NSString *secondId = @"";
+    if (firstObject.secondCataLogs.count > 0) {
+        SHGMarketSecondCategoryObject *secondObject = [firstObject.secondCataLogs objectAtIndex:self.rightCombox.currentIndex];
+        secondId = secondObject.secondCatalogId;
+    }
+
+    SHGMarketSearchResultViewController *controller = [[SHGMarketSearchResultViewController alloc] initWithType:SHGMarketSearchTypeAdvanced];
+    controller.advancedParam = @{@"uid":UID ,@"pageSize":@"10", @"recentUpdate":self.recentUpdate, @"city":self.city, @"firstCatalog":firstId, @"secondCatalog":secondId, @"mode":self.mode};
+    
+    [self.navigationController pushViewController:controller animated:YES];
 }
 
 
 - (void)rightItemClick:(id)sender
 {
-    [self topButtonsClick:self.leftButton];
+    NSArray *array = @[self.leftButton, self.middleButton, self.rightButton];
+    for (UIButton *button in array){
+        if (button.isSelected) {
+            [self topButtonsClick:button];
+            break;
+        }
+    }
+    array = @[self.bottomLeftButton, self.bottomRightButton];
+    for (UIButton *button in array){
+        if (button.isSelected) {
+            [self bottomButtonsClick:button];
+            break;
+        }
+    }
     self.locationTextField.text = @"";
-
-    [self bottomButtonsClick:self.bottomLeftButton];
 }
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
@@ -306,6 +378,7 @@
     __weak typeof(self) weakSelf = self;
     [[SHGMarketManager shareManager] loadHotCitys:^(NSArray *array) {
         NSMutableArray *cityArray = [NSMutableArray array];
+        [cityArray addObject:@"不限"];
         [array enumerateObjectsUsingBlock:^(SHGMarketCityObject *obj, NSUInteger idx, BOOL * _Nonnull stop) {
             [cityArray addObject:obj.cityName];
         }];
@@ -342,6 +415,7 @@
 - (void)didSelectItem:(NSString *)item
 {
     self.locationTextField.text = item;
+    self.city = [item isEqualToString:@"不限"] ? @"" : item;
 }
 
 - (void)didReceiveMemoryWarning

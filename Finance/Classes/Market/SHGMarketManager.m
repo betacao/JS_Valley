@@ -196,7 +196,7 @@
 }
 
 //搜索
-+ (void)searchMarketList:(NSDictionary *)param block:(void (^)(NSArray *array))block
++ (void)searchNormalMarketList:(NSDictionary *)param block:(void (^)(NSString *, NSArray *))block
 {
     [Hud showLoadingWithMessage:@"请稍等..."];
     NSString *request = [rBaseAddressForHttp stringByAppendingString:@"/market/getMarketList"];
@@ -204,10 +204,27 @@
         [Hud hideHud];
         NSDictionary *dictionary = response.dataDictionary;
         NSArray *dataArray = [[SHGGloble sharedGloble] parseServerJsonArrayToJSONModel:[dictionary objectForKey:@"datalist"] class:[SHGMarketObject class]];
-        block(dataArray);
+        NSString *string = [dictionary objectForKey:@"total"];
+        block(string, dataArray);
     } failed:^(MOCHTTPResponse *response) {
         [Hud hideHud];
-        block(nil);
+        [Hud showMessageWithText:@"搜索数据失败"];
+    }];
+}
+
+//高级搜索
++ (void)searchAdvancedMarketList:(NSDictionary *)param block:(void (^)(NSString *, NSArray *))block
+{
+    [Hud showLoadingWithMessage:@"请稍等..."];
+    NSString *request = [rBaseAddressForHttp stringByAppendingString:@"/market/searchWithMoreCondition"];
+    [MOCHTTPRequestOperationManager postWithURL:request class:[SHGMarketObject class] parameters:param success:^(MOCHTTPResponse *response) {
+        [Hud hideHud];
+        NSDictionary *dictionary = response.dataDictionary;
+        NSArray *dataArray = [[SHGGloble sharedGloble] parseServerJsonArrayToJSONModel:[dictionary objectForKey:@"datalist"] class:[SHGMarketObject class]];
+        NSString *string = [dictionary objectForKey:@"total"];
+        block(string, dataArray);
+    } failed:^(MOCHTTPResponse *response) {
+        [Hud hideHud];
         [Hud showMessageWithText:@"搜索数据失败"];
     }];
 }

@@ -33,7 +33,9 @@
 
 + (void)uploadUserMarket:(NSDictionary *)param block:(void(^)(void))block;
 
-+ (void)searchMarketList:(NSDictionary *)param block:(void (^)(NSArray *array))block;
++ (void)searchNormalMarketList:(NSDictionary *)param block:(void (^)(NSString *count, NSArray *array))block;
+
++ (void)searchAdvancedMarketList:(NSDictionary *)param block:(void (^)(NSString *count, NSArray *array))block;
 
 + (void)createNewMarket:(NSDictionary *)param success:(void (^)(BOOL success))block;
 

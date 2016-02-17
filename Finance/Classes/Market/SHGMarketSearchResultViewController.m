@@ -16,6 +16,8 @@
 
 @property (assign, nonatomic) SHGMarketSearchType searchType;
 
+@property (strong, nonatomic) IBOutlet SHGMarketSearchResultHeaderView *sectionView;
+
 @end
 
 @implementation SHGMarketSearchResultViewController
@@ -37,9 +39,10 @@
     [self addAutoLayout];
 
     if (self.searchType == SHGMarketSearchTypeNormal) {
+        self.sectionView.type = self.searchType;
         [self searchNormalMarketList:@"first" marketId:@"-1"];
     } else{
-
+        [self searchAdvancedMarketList:@"first" marketId:@"-1"];
     }
 }
 
@@ -63,14 +66,14 @@
         if (self.searchType == SHGMarketSearchTypeNormal) {
             [self searchNormalMarketList:@"load" marketId:[self minMarketID]];
         } else{
-
+            [self searchAdvancedMarketList:@"load" marketId:[self minMarketID]];
         }
 
     } else{
         if (self.searchType == SHGMarketSearchTypeNormal) {
             [self searchNormalMarketList:@"first" marketId:@"-1"];
         } else{
-            
+            [self searchAdvancedMarketList:@"first" marketId:@"-1"];
         }
     }
 }
@@ -93,9 +96,39 @@
     [dictionary setObject:target forKey:@"target"];
     [dictionary setObject:marketId forKey:@"marketId"];
 
-    [SHGMarketManager searchMarketList:dictionary block:^(NSArray *array) {
+    [SHGMarketManager searchNormalMarketList:dictionary block:^(NSString *count, NSArray *array) {
         [weakSelf.tableView.header endRefreshing];
         [weakSelf.tableView.footer endRefreshing];
+        weakSelf.sectionView.totalCount = count;
+        if ([target isEqualToString:@"first"]) {
+            [weakSelf.dataArr removeAllObjects];
+            [weakSelf.dataArr addObjectsFromArray:array];
+            [weakSelf.tableView reloadData];
+        } else if([target isEqualToString:@"refresh"]){
+            [weakSelf.dataArr addObjectsFromArray:array];
+            [weakSelf.tableView reloadData];
+        } else if([target isEqualToString:@"load"]){
+            [weakSelf.dataArr addObjectsFromArray:array];
+            if (array.count < 10) {
+                [weakSelf.tableView.footer endRefreshingWithNoMoreData];
+            }
+            [weakSelf.tableView reloadData];
+        }
+    }];
+}
+
+- (void)searchAdvancedMarketList:(NSString *)target marketId:(NSString *)marketId
+{
+    __weak typeof(self) weakSelf = self;
+    NSMutableDictionary *dictionary = [NSMutableDictionary dictionaryWithDictionary:self.advancedParam];
+    [dictionary setObject:target forKey:@"target"];
+    [dictionary setObject:marketId forKey:@"marketId"];
+
+    [SHGMarketManager searchAdvancedMarketList:dictionary block:^(NSString *count, NSArray *array) {
+
+        [weakSelf.tableView.header endRefreshing];
+        [weakSelf.tableView.footer endRefreshing];
+        weakSelf.sectionView.totalCount = count;
         if ([target isEqualToString:@"first"]) {
             [weakSelf.dataArr removeAllObjects];
             [weakSelf.dataArr addObjectsFromArray:array];
@@ -114,6 +147,18 @@
 }
 
 #pragma mark ------tableview 代理
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    return self.sectionView;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    CGFloat height = CGRectGetHeight(self.sectionView.frame);
+    return height;
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return self.dataArr.count;
@@ -147,10 +192,86 @@
         block(state);
     }];
 }
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
 }
 
+
+@end
+
+
+@interface SHGMarketSearchResultHeaderView ()
+
+@property (weak, nonatomic) IBOutlet UILabel *leftLabel;
+@property (weak, nonatomic) IBOutlet UIButton *arrowButton;
+@property (weak, nonatomic) IBOutlet UILabel *rightLabel;
+@property (weak, nonatomic) IBOutlet UIView *bottomLine;
+
+@end
+
+@implementation SHGMarketSearchResultHeaderView
+
+- (void)awakeFromNib
+{
+    [self initView];
+    [self addAutoLayout];
+}
+
+- (void)initView
+{
+    self.leftLabel.font = [UIFont systemFontOfSize:FontFactor(15.0f)];
+    [self.arrowButton sizeToFit];
+    self.rightLabel.font = [UIFont systemFontOfSize:FontFactor(14.0f)];
+}
+
+- (void)addAutoLayout
+{
+    self.sd_layout
+    .heightIs(MarginFactor(41.0f));
+
+    self.leftLabel.sd_layout
+    .leftSpaceToView(self, MarginFactor(12.0f))
+    .centerYEqualToView(self)
+    .autoHeightRatio(0.0f);
+    [self.leftLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
+
+    CGSize size = self.arrowButton.frame.size;
+    self.arrowButton.sd_layout
+    .leftSpaceToView(self.leftLabel, MarginFactor(7.0f))
+    .centerYEqualToView(self)
+    .widthIs(size.width)
+    .heightIs(size.height);
+
+    self.rightLabel.sd_layout
+    .rightSpaceToView(self, MarginFactor(12.0f))
+    .centerYEqualToView(self)
+    .autoHeightRatio(0.0f);
+    [self.rightLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
+
+    self.bottomLine.sd_layout
+    .leftSpaceToView(self, 0.0f)
+    .rightSpaceToView(self, 0.0f)
+    .bottomSpaceToView(self,0.0f)
+    .heightIs(0.5f);
+}
+
+- (void)setTotalCount:(NSString *)totalCount
+{
+    _totalCount = totalCount;
+    self.rightLabel.text = [NSString stringWithFormat:@"共%@个搜索结果",totalCount];
+    [self.rightLabel updateLayout];
+}
+
+- (void)setType:(SHGMarketSearchType)type
+{
+    _type = type;
+    if (type == SHGMarketSearchTypeNormal) {
+        self.leftLabel.text = @"更多搜索条件";
+    } else{
+        self.leftLabel.text = @"显示搜索条件";
+    }
+}
 
 @end

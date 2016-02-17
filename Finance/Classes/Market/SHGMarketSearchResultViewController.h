@@ -25,3 +25,11 @@ typedef NS_ENUM(NSInteger, SHGMarketSearchType)
 - (instancetype)initWithType:(SHGMarketSearchType)type;
 
 @end
+
+@interface SHGMarketSearchResultHeaderView : UIView
+
+@property (strong, nonatomic) NSString *totalCount;
+
+@property (assign, nonatomic) SHGMarketSearchType type;
+
+@end
