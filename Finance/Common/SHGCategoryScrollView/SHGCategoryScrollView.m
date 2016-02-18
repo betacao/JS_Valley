@@ -11,11 +11,14 @@
 #define kCategoryObjectMargin 10.0f * XFACTOR
 #define kCategoryNormalFont [UIFont systemFontOfSize:14.0f]
 #define kCategorySelectFont [UIFont systemFontOfSize:15.0f]
-@interface SHGCategoryScrollView ()
+
+@interface SHGCategoryScrollView ()<UIScrollViewDelegate>
+@property (strong, nonatomic) UIScrollView *scrollView;
 @property (assign, nonatomic) CGFloat categoryWidth;
 @property (assign, nonatomic) NSInteger selectedIndex;
 @property (strong, nonatomic) NSMutableArray *buttonArrays;
 @property (strong, nonatomic) UIView *underLineView;
+@property (strong, nonatomic) UIImageView *blurImageView;
 @property (weak, nonatomic) UIButton *selectedButton;
 @end
 
@@ -27,6 +30,10 @@
     self = [super initWithFrame:frame];
     if (self) {
         self.backgroundColor = [UIColor colorWithHexString:@"f6f6f6"];
+        self.scrollView = [[UIScrollView alloc] initWithFrame:frame];
+        self.scrollView.backgroundColor = [UIColor clearColor];
+        self.scrollView.delegate = self;
+        [self addSubview:self.scrollView];
     }
     return self;
 }
@@ -73,9 +80,25 @@
     if (!_underLineView) {
         _underLineView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, kCategoryScrollViewHeight - 1.0f, 0.0f, 1.5f)];
         _underLineView.backgroundColor = [UIColor colorWithHexString:@"D82626"];
-        [self addSubview:_underLineView];
+        [self.scrollView addSubview:_underLineView];
     }
     return _underLineView;
+}
+
+- (UIImageView *)blurImageView
+{
+    if (!_blurImageView) {
+        UIImage *blurImage = [UIImage imageNamed:@"more_Categoryblur"];
+        _blurImageView = [[UIImageView alloc] init];
+        _blurImageView.image = blurImage;
+        [_blurImageView sizeToFit];
+        [self.scrollView insertSubview:_blurImageView belowSubview:self.underLineView];
+
+        CGPoint point = CGPointMake(CGRectGetWidth(self.frame) - blurImage.size.width, (CGRectGetHeight(self.frame) - blurImage.size.height) / 2.0f);
+        point = [self convertPoint:point toView:self.scrollView];
+        _blurImageView.origin = point;
+    }
+    return _blurImageView;
 }
 
 - (void)moveToIndex:(NSInteger)index
@@ -85,6 +108,7 @@
 
 - (void)setSelectedIndex:(NSInteger)selectedIndex
 {
+    self.blurImageView.alpha = 1.0f;
     BOOL isChanged = _selectedIndex == selectedIndex ? NO : YES;
     _selectedIndex = selectedIndex;
     UIButton *button = [self.buttonArrays objectAtIndex:selectedIndex];
@@ -108,7 +132,7 @@
         [self.categoryDelegate didChangeToIndex:selectedIndex firstId:[self marketFirstId] secondId:[self marketSecondId]];
     }
     //移动scrollview到相应的位置
-    [self scrollRectToVisible:button.frame animated:YES];
+    [self.scrollView scrollRectToVisible:button.frame animated:YES];
 
     NSString *umentString = [@"ActionMarketTypeCode" stringByAppendingString:[self marketFirstId]];
     [MobClick event:umentString label:@"onClick"];
@@ -120,7 +144,7 @@
     if (self.categoryArray.count == 0 || self.buttonArrays.count != 0) {
         return;
     }
-    [self removeAllSubviews];
+    [self.scrollView removeAllSubviews];
     [self.buttonArrays removeAllObjects];
 
     __block NSString *string = @"";
@@ -143,8 +167,8 @@
             frame.origin.y = 0.0f;
             button.frame = frame;
             self.categoryWidth = CGRectGetMaxX(frame);
-            self.contentSize = CGSizeMake(self.categoryWidth, CGRectGetHeight(self.frame));
-            [self addSubview:button];
+            self.scrollView.contentSize = CGSizeMake(self.categoryWidth, CGRectGetHeight(self.frame));
+            [self.scrollView addSubview:button];
             [self.buttonArrays addObject:button];
         }];
     } else{
@@ -162,8 +186,8 @@
             frame.origin.y = 0.0f;
             button.frame = frame;
             self.categoryWidth = CGRectGetMaxX(frame);
-            self.contentSize = CGSizeMake(self.categoryWidth, CGRectGetHeight(self.frame));
-            [self addSubview: button];
+            self.scrollView.contentSize = CGSizeMake(self.categoryWidth, CGRectGetHeight(self.frame));
+            [self.scrollView addSubview: button];
             [self.buttonArrays addObject:button];
         }];
     }
@@ -175,6 +199,14 @@
 {
     NSInteger index = [self.buttonArrays indexOfObject:button];
     self.selectedIndex = index;
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    UIImage *blurImage = [UIImage imageNamed:@"more_Categoryblur"];
+    CGPoint point = CGPointMake(CGRectGetWidth(self.frame) - blurImage.size.width, (CGRectGetHeight(self.frame) - blurImage.size.height) / 2.0f);
+    point = [self convertPoint:point toView:self.scrollView];
+    self.blurImageView.origin = point;
 }
 
 @end

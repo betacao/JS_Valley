@@ -128,8 +128,8 @@
 - (SHGCategoryScrollView *)scrollView
 {
     if (!_scrollView) {
-//        UIImage *image = [UIImage imageNamed:@"more_CategoryButton"];
-        _scrollView = [[SHGCategoryScrollView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, SCREENWIDTH, kCategoryScrollViewHeight)];
+        UIImage *image = [UIImage imageNamed:@"more_CategoryButton"];
+        _scrollView = [[SHGCategoryScrollView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, SCREENWIDTH - image.size.width, kCategoryScrollViewHeight)];
         _scrollView.categoryDelegate = self;
     }
     return _scrollView;
@@ -273,8 +273,6 @@
             cell = [[[NSBundle mainBundle] loadNibNamed:@"SHGMarketTableViewCell" owner:self options:nil] lastObject];
             ((SHGMarketTableViewCell *)cell).delegate = self;
         }
-
-//        [(SHGMarketTableViewCell *)cell loadDataWithObject:[self.currentArray objectAtIndex:indexPath.row] type:SHGMarketTableViewCellTypeAll];
         ((SHGMarketTableViewCell *)cell).object = [self.currentArray objectAtIndex:indexPath.row];
     }
 
@@ -305,11 +303,30 @@
         self.headerView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, SCREENWIDTH, CGRectGetHeight(self.scrollView.frame))];
         [self.headerView addSubview:self.scrollView];
 
+        UIImage *addImage = [UIImage imageNamed:@"more_CategoryButton"];
+        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+        [button setImage:addImage forState:UIControlStateNormal];
+        [button sizeToFit];
+        [button addTarget:self action:@selector(modifyUserSelectedTags:) forControlEvents:UIControlEventTouchUpInside];
+        button.center = self.scrollView.center;
+
+        CGRect frame = button.frame;
+        frame.origin.x = CGRectGetMaxX(self.scrollView.frame);
+        button.frame = frame;
+        [self.headerView addSubview:button];
+
         UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, kCategoryScrollViewHeight, SCREENWIDTH, 0.5f)];
         lineView.backgroundColor = [UIColor colorWithHexString:@"d9dadb"];
         [self.headerView addSubview:lineView];
     }
     return self.headerView;
+}
+
+- (void)modifyUserSelectedTags:(UIButton *)button
+{
+    SHGMarketSecondCategoryViewController *controller = [[SHGMarketSecondCategoryViewController alloc] init];
+    controller.delegate = self;
+    [self.navigationController pushViewController:controller animated:YES];
 }
 
 - (void)clearAndReloadData

@@ -12,7 +12,7 @@
 #import "SHGMarketManager.h"
 #import "SHGProvincesViewController.h"
 #import "SHGMomentCityViewController.h"
-#import "SHGMarketSecondCategoryViewController.h"
+
 @interface SHGMarketSegmentViewController ()
 @property (nonatomic, strong) NSArray *rightBarButtonItems;
 @property (nonatomic, strong) UIBarButtonItem *leftBarButtonItem;
@@ -167,13 +167,6 @@
 {
     [MobClick event:@"ActionMarketSearchClicked" label:@"onClick"];
     SHGMarketSearchViewController *controller = [[SHGMarketSearchViewController alloc] init];
-    [self.navigationController pushViewController:controller animated:YES];
-}
-
-- (void)modifyUserSelectedTags:(UIButton *)button
-{
-    SHGMarketSecondCategoryViewController *controller = [[SHGMarketSecondCategoryViewController alloc] init];
-    controller.delegate = [self.viewControllers firstObject];
     [self.navigationController pushViewController:controller animated:YES];
 }
 
