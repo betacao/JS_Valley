@@ -16,6 +16,7 @@
 @interface SHGMarketSegmentViewController ()
 @property (nonatomic, strong) NSArray *rightBarButtonItems;
 @property (nonatomic, strong) UIBarButtonItem *leftBarButtonItem;
+@property (nonatomic, strong) UIView *container;
 @property (nonatomic, strong) UIButton *titleButton;
 @property (nonatomic, strong) UILabel *titleLabel;
 @property (nonatomic, strong) UIImageView *titleImageView;
@@ -81,7 +82,7 @@
     [self reloadTabButtons];
 
     if(self.block){
-        self.block(self.titleButton);
+        self.block(self.container);
     }
 }
 
@@ -91,22 +92,28 @@
         _titleButton = [UIButton buttonWithType:UIButtonTypeCustom];
         _titleButton.backgroundColor = [UIColor clearColor];
         [_titleButton addTarget:self action:@selector(moveToProvincesViewController:) forControlEvents:UIControlEventTouchUpInside];
+
         self.titleLabel = [[UILabel alloc] init];
         self.titleLabel.font = [UIFont systemFontOfSize:kNavBarTitleFontSize];
         self.titleLabel.textColor = [UIColor whiteColor];
-        [self.titleLabel sizeToFit];
         [_titleButton addSubview:self.titleLabel];
 
         self.titleImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"market_locationArrow"]];
         [self.titleImageView sizeToFit];
         self.titleImageView.origin = CGPointMake(CGRectGetMaxX(self.titleLabel.frame) + 2.0f, (CGRectGetHeight(self.titleLabel.frame) - CGRectGetHeight(self.titleImageView.frame)) / 2.0f);
         [_titleButton addSubview:self.titleImageView];
-        
-        _titleButton.frame = CGRectMake(0.0f, 0.0f, CGRectGetMaxX(self.titleImageView.frame), CGRectGetHeight(self.titleLabel.frame));
     }
     return _titleButton;
 }
 
+- (UIView *)container
+{
+    if (!_container) {
+        _container = [[UIView alloc] init];
+        [_container addSubview:self.titleButton];
+    }
+    return _container;
+}
 
 #pragma mark ------变更城市代理
 
@@ -120,6 +127,8 @@
         [self.titleLabel sizeToFit];
         self.titleImageView.origin = CGPointMake(CGRectGetMaxX(self.titleLabel.frame) + 2.0f, (CGRectGetHeight(self.titleLabel.frame) - CGRectGetHeight(self.titleImageView.frame)) / 2.0f);
         self.titleButton.frame = CGRectMake(0.0f, 0.0f, CGRectGetMaxX(self.titleImageView.frame), CGRectGetHeight(self.titleLabel.frame));
+        self.container.frame = self.titleButton.bounds;
+
         UIViewController *controller = [self.viewControllers firstObject];
         [controller performSelector:@selector(clearAndReloadData) withObject:nil];
     } else if (city.length == 0){
@@ -146,13 +155,17 @@
 - (UIBarButtonItem *)leftBarButtonItem
 {
     if (!_leftBarButtonItem) {
+        UIView *leftView = [[UIView alloc] init];
+        leftView.userInteractionEnabled = YES;
         UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        [leftButton setFrame:CGRectZero];
         UIImage *image = [UIImage imageNamed:@"marketSearch"];
-        [leftButton setBackgroundImage:image forState:UIControlStateNormal];
+        [leftButton setImage:image forState:UIControlStateNormal];
         [leftButton addTarget:self action:@selector(searchMarket:) forControlEvents:UIControlEventTouchUpInside];
         [leftButton sizeToFit];
-        _leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:leftButton];
+        
+        leftView.frame = leftButton.bounds;
+        [leftView addSubview:leftButton];
+        _leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:leftView];
     }
     return _leftBarButtonItem;
 }

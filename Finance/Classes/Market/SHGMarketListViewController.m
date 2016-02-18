@@ -301,6 +301,7 @@
 {
     if (!self.headerView) {
         self.headerView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, SCREENWIDTH, CGRectGetHeight(self.scrollView.frame))];
+        self.headerView.clipsToBounds = YES;
         [self.headerView addSubview:self.scrollView];
 
         UIImage *addImage = [UIImage imageNamed:@"more_CategoryButton"];
