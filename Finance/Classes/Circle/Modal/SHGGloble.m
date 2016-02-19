@@ -417,4 +417,14 @@
     }];
 }
 
+- (void)recordUserAction:(NSString *)recordIdStr type:(NSString *)typeStr
+{
+    NSString *request = [rBaseAddressForHttp stringByAppendingString:@"/record/recordUserAction"];
+    NSString *uid = [[NSUserDefaults standardUserDefaults]objectForKey:KEY_UID ];
+    NSString *recordId = recordIdStr;
+    NSString *type = typeStr;
+    [MOCHTTPRequestOperationManager postWithURL:request parameters:@{@"uid":uid, @"recordId":recordId,@"type":type} success:^(MOCHTTPResponse *response) {
+    } failed:^(MOCHTTPResponse *response) {
+    }];
+}
 @end

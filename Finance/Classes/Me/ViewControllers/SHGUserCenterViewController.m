@@ -624,11 +624,11 @@
         [aCircleString addAttribute:NSParagraphStyleAttributeName value:paragraphStyle1 range:NSMakeRange(0, [aCircleString length])];
 
         NSMutableAttributedString *aFollowString = [[NSMutableAttributedString alloc] initWithString:followString];
-        [aFollowString addAttributes:@{NSForegroundColorAttributeName:[UIColor colorWithHexString:@"161616"], NSFontAttributeName:[UIFont systemFontOfSize:FontFactor(13.0f)]} range:NSMakeRange(4, aCircleString.length - 4)];
+        [aFollowString addAttributes:@{NSForegroundColorAttributeName:[UIColor colorWithHexString:@"161616"], NSFontAttributeName:[UIFont systemFontOfSize:FontFactor(13.0f)]} range:NSMakeRange(4, aFollowString.length - 4)];
         [aFollowString addAttribute:NSParagraphStyleAttributeName value:paragraphStyle1 range:NSMakeRange(0, [aFollowString length])];
 
         NSMutableAttributedString *aFansString = [[NSMutableAttributedString alloc] initWithString:fansString];
-        [aFansString addAttributes:@{NSForegroundColorAttributeName:[UIColor colorWithHexString:@"161616"], NSFontAttributeName:[UIFont systemFontOfSize:FontFactor(13.0f)]} range:NSMakeRange(4, aCircleString.length - 4)];
+        [aFansString addAttributes:@{NSForegroundColorAttributeName:[UIColor colorWithHexString:@"161616"], NSFontAttributeName:[UIFont systemFontOfSize:FontFactor(13.0f)]} range:NSMakeRange(4, aFansString.length - 4)];
         [aFansString addAttribute:NSParagraphStyleAttributeName value:paragraphStyle1 range:NSMakeRange(0, [aFansString length])];
 
         weakSelf.circleHeaderLabel.attributedText = aCircleString;

@@ -27,6 +27,11 @@
 #define PRAISE_RIGHTWIDTH     40.0f
 
 @interface SHGMarketDetailViewController ()<BRCommentViewDelegate, CircleActionDelegate, SHGMarketCommentDelegate, MLEmojiLabelDelegate>
+{
+    UIView *PickerBackView;
+    NSString *copyString;
+    NSString *commentRid;
+}
 //界面
 @property (weak, nonatomic) IBOutlet UITableView *detailTable;
 @property (strong, nonatomic) IBOutlet UIView *viewHeader;
@@ -38,32 +43,24 @@
 @property (weak, nonatomic) IBOutlet UIView *firstHorizontalLine;
 @property (weak, nonatomic) IBOutlet UIView *secondHorizontalLine;
 @property (weak, nonatomic) IBOutlet UIView *thirdHorizontalLine;
-@property (weak, nonatomic) IBOutlet UIView *bottomLine;
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UIButton *collectionButton;
 @property (weak, nonatomic) IBOutlet UILabel *typeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *capitalLabel;
 @property (weak, nonatomic) IBOutlet UILabel *addressLabel;
+@property (weak, nonatomic) IBOutlet UILabel *modelLabel;
 @property (weak, nonatomic) IBOutlet MLEmojiLabel *phoneNumLabel;
 @property (weak, nonatomic) IBOutlet UILabel *marketDetialLabel;
 @property (weak, nonatomic) IBOutlet UILabel *detailContentLabel;
-@property (weak, nonatomic) IBOutlet UIView *actionView;
-@property (weak, nonatomic) IBOutlet UIView *praiseView;
-@property (weak, nonatomic) IBOutlet UIImageView *backImageView;
-@property (weak, nonatomic) IBOutlet UIButton *btnZan;
-@property (weak, nonatomic) IBOutlet UIButton *btnComment;
 @property (weak, nonatomic) IBOutlet UIButton *btnShare;
-@property (weak, nonatomic) IBOutlet UIScrollView *scrollPraise;
 @property (weak, nonatomic) IBOutlet UIView *viewInput;
-@property (weak, nonatomic) IBOutlet UIButton *smileImage;
 @property (weak, nonatomic) IBOutlet UIButton *speakButton;
-@property (weak, nonatomic) IBOutlet UIButton *sendButton;
 @property (strong, nonatomic) SHGEmptyDataView *emptyView;
 @property (strong, nonatomic) BRCommentView *popupView;
 //数据
+@property (strong, nonatomic) UIView *photoView ;
 @property (strong, nonatomic) SHGMarketObject *responseObject;
-- (IBAction)zan:(id)sender;
 - (IBAction)comment:(id)sender;
 - (IBAction)share:(id)sender;
 - (IBAction)collectionClick:(UIButton *)sender;
@@ -76,27 +73,21 @@
 {
     [super viewDidLoad];
     self.title = @"业务详情";
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shareToFriendSuccess:) name:NOTIFI_ACTION_SHARE_TO_FRIENDSUCCESS object:nil];
+    
     self.detailTable.delegate = self;
     self.detailTable.dataSource = self;
     [self.detailTable setTableFooterView:[[UIView alloc] init]];
 
-    self.phoneNumLabel.numberOfLines = 0;
-    self.phoneNumLabel.lineBreakMode = NSLineBreakByWordWrapping;
-    self.phoneNumLabel.textColor = [UIColor colorWithHexString:@"898989"];
-    self.phoneNumLabel.font = [UIFont systemFontOfSize:12.0f];
-    self.phoneNumLabel.delegate = self;
-    self.phoneNumLabel.backgroundColor = [UIColor clearColor];
-    
-    self.firstHorizontalLine.height = 0.5f;
-    self.secondHorizontalLine.height = 0.5f;
-    self.thirdHorizontalLine.height = 0.5f;
-    self.bottomLine.height = 0.5f;
 
     DDTapGestureRecognizer *hdGes = [[DDTapGestureRecognizer alloc] initWithTarget:self action:@selector(didTapHeaderView:)];
     [self.headImageView addGestureRecognizer:hdGes];
     self.headImageView.userInteractionEnabled = YES;
-
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shareToFriendSuccess:) name:NOTIFI_ACTION_SHARE_TO_FRIENDSUCCESS object:nil];
+    
+    [self initView];
+    [self addLayout];
+    
 
     __weak typeof(self) weakSelf = self;
     NSDictionary *param = @{@"marketId":self.object.marketId ,@"uid":UID};
@@ -105,10 +96,8 @@
         weakSelf.responseObject.commentList = [NSMutableArray arrayWithArray:[[SHGGloble sharedGloble] parseServerJsonArrayToJSONModel:weakSelf.responseObject.commentList class:[SHGMarketCommentObject class]]];
         weakSelf.responseObject.praiseList = [NSMutableArray arrayWithArray:[[SHGGloble sharedGloble] parseServerJsonArrayToJSONModel:weakSelf.responseObject.praiseList class:[praiseOBj class]]];
         [weakSelf loadData];
-        [weakSelf loadUI];
         [weakSelf.detailTable reloadData];
     }];
-    self.praiseView.hidden = YES;
 }
 
 - (SHGEmptyDataView *)emptyView
@@ -120,8 +109,187 @@
     return _emptyView;
 }
 
+//- (UIView *)photoView
+//{
+//    if (!_photoView) {
+//        _photoView = [[UIView alloc]init];
+//        [self.viewHeader addSubview:_photoView];
+//    }
+//    return _photoView;
+//}
+
+- (void)initView
+{
+    self.nameLabel.font = [UIFont systemFontOfSize:FontFactor(15.0f)];
+    self.companyLabel.font = [UIFont systemFontOfSize:FontFactor(13.0f)];
+    self.positionLabel.font = [UIFont systemFontOfSize:FontFactor(13.0f)];
+    self.titleLabel.font = [UIFont systemFontOfSize:FontFactor(15.0f)];
+    self.typeLabel.font = [UIFont systemFontOfSize:FontFactor(14.0f)];
+    self.capitalLabel.font = [UIFont systemFontOfSize:FontFactor(14.0f)];
+    self.addressLabel.font = [UIFont systemFontOfSize:FontFactor(14.0f)];
+    self.modelLabel.font = [UIFont systemFontOfSize:FontFactor(14.0f)];
+    self.phoneNumLabel.numberOfLines = 0;
+    self.phoneNumLabel.lineBreakMode = NSLineBreakByWordWrapping;
+    self.phoneNumLabel.textColor = [UIColor colorWithHexString:@"888888"];
+    self.phoneNumLabel.font = [UIFont systemFontOfSize:FontFactor(14.0f)];
+    self.phoneNumLabel.delegate = self;
+    self.phoneNumLabel.backgroundColor = [UIColor clearColor];
+    self.marketDetialLabel.font = [UIFont systemFontOfSize:FontFactor(15.0f)];
+    self.detailContentLabel.font = [UIFont systemFontOfSize:FontFactor(15.0f)];
+    [self.speakButton setTitle:@"写评论" forState:UIControlStateNormal];
+    [self.speakButton setImage:[UIImage imageNamed:@"market_change"] forState:UIControlStateNormal];
+    self.speakButton.imageEdgeInsets = UIEdgeInsetsMake(0.0f, MarginFactor(8.0f), 0.0f,0.0f);
+    self.speakButton.titleEdgeInsets = UIEdgeInsetsMake(0.0f, MarginFactor(15.0f), 0.0f, 0.0f);
+    self.speakButton.titleLabel.font = [UIFont systemFontOfSize:FontFactor(13.0)];
+    self.speakButton.layer.masksToBounds = YES;
+    self.speakButton.layer.cornerRadius = 4;
+    self.timeLabel.hidden = YES;
+}
+
+- (void)addLayout
+{
+    self.viewInput.sd_layout
+    .leftSpaceToView(self.view, 0.0f)
+    .rightSpaceToView(self.view, 0.0f)
+    .bottomSpaceToView(self.view, 0.0f)
+    .heightIs(MarginFactor(45.0f));
+    
+    self.detailTable.sd_layout
+    .leftSpaceToView(self.view, 0.0f)
+    .rightSpaceToView(self.view, 0.0f)
+    .topSpaceToView(self.view, 0.0f)
+    .bottomSpaceToView(self.viewInput, 0.0f);
+    
+    self.speakButton.sd_layout
+    .leftSpaceToView(self.viewInput, MarginFactor(13.0f))
+    .topSpaceToView(self.viewInput, MarginFactor(10.0f))
+    .bottomSpaceToView(self.viewInput, MarginFactor(10.0f))
+    .widthIs(MarginFactor(256.0f));
+    
+    [self.btnShare sizeToFit];
+    CGSize shareSize = self.btnShare.frame.size;
+    self.btnShare.sd_layout
+    .rightSpaceToView(self.viewInput, MarginFactor(18.0f))
+    .centerYEqualToView(self.speakButton)
+    .widthIs(MarginFactor(shareSize.width))
+    .heightIs(MarginFactor(shareSize.height));
+    
+    [self.collectionButton sizeToFit];
+    CGSize collectSize = self.collectionButton.frame.size;
+    self.collectionButton.sd_layout
+    .rightSpaceToView(self.btnShare, MarginFactor(25.0f))
+    .centerYEqualToView(self.speakButton)
+    .widthIs(MarginFactor(collectSize.width))
+    .heightIs(MarginFactor(collectSize.height));
+    
+    //headerView
+    self.headImageView.sd_layout
+    .leftSpaceToView(self.viewHeader, MarginFactor(15.0f))
+    .topSpaceToView(self.viewHeader, MarginFactor(15.0f))
+    .widthIs(MarginFactor(45.0f))
+    .heightIs(MarginFactor(45.0f));
+    
+    self.nameLabel.sd_layout
+    .leftSpaceToView(self.headImageView, MarginFactor(9.0f))
+    .topSpaceToView(self.viewHeader, MarginFactor(18.0f))
+    .autoHeightRatio(0.0f);
+    [self.nameLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
+    
+    self.positionLabel.sd_layout
+    .leftSpaceToView(self.nameLabel, MarginFactor(7.0f))
+    .topEqualToView(self.nameLabel)
+    .autoHeightRatio(0.0);
+    [self.positionLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
+    
+    self.firstHorizontalLine.sd_layout
+    .leftSpaceToView(self.viewHeader, 0.0f)
+    .widthIs(SCREENWIDTH)
+    .heightIs(0.5f)
+    .topSpaceToView(self.headImageView, MarginFactor(15.0f));
+    
+    self.companyLabel.sd_layout
+    .bottomSpaceToView(self.firstHorizontalLine, MarginFactor(18.0f))
+    .leftSpaceToView(self.headImageView, MarginFactor(9.0f))
+    .autoHeightRatio(0.0f);
+    [self.companyLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
+    
+    self.titleLabel.sd_layout
+    .leftSpaceToView(self.viewHeader, MarginFactor(12.0f))
+    .rightSpaceToView(self.viewHeader, MarginFactor(12.0f))
+    .topSpaceToView(self.firstHorizontalLine, MarginFactor(12.0f))
+    .autoHeightRatio(0.0f);
+    
+    self.typeLabel.sd_layout
+    .leftSpaceToView(self.viewHeader, MarginFactor(12.0f))
+    .topSpaceToView(self.titleLabel, MarginFactor(12.0f))
+    .autoHeightRatio(0.0f);
+    [self.typeLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
+    
+    self.capitalLabel.sd_layout
+    .leftSpaceToView(self.viewHeader, MarginFactor(12.0f))
+    .topSpaceToView(self.typeLabel, MarginFactor(12.0f))
+    .autoHeightRatio(0.0f);
+    [self.capitalLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
+    
+    self.addressLabel.sd_layout
+    .leftSpaceToView(self.viewHeader, MarginFactor(12.0f))
+    .topSpaceToView(self.capitalLabel, MarginFactor(12.0f))
+    .autoHeightRatio(0.0f);
+    [self.addressLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
+    
+    self.modelLabel.sd_layout
+    .leftSpaceToView(self.viewHeader, MarginFactor(12.0f))
+    .topSpaceToView(self.addressLabel, MarginFactor(12.0f))
+    .autoHeightRatio(0.0f);
+    [self.modelLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
+    
+    self.phoneNumLabel.sd_layout
+    .leftSpaceToView(self.viewHeader, MarginFactor(12.0f))
+    .topSpaceToView(self.modelLabel, MarginFactor(12.0f))
+    .autoHeightRatio(0.0f);
+    [self.phoneNumLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
+    
+    self.secondHorizontalLine.sd_layout
+    .leftSpaceToView(self.viewHeader, MarginFactor(0.0f))
+    .rightSpaceToView(self.viewHeader, MarginFactor(0.0f))
+    .topSpaceToView(self.phoneNumLabel, MarginFactor(12.0f))
+    .heightIs(0.5f);
+    
+    self.marketDetialLabel.sd_layout
+    .leftSpaceToView(self.viewHeader, MarginFactor(12.0f))
+    .topSpaceToView(self.secondHorizontalLine, MarginFactor(12.0f))
+    .autoHeightRatio(0.0f);
+    [self.marketDetialLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
+    
+    self.thirdHorizontalLine.sd_layout
+    .leftSpaceToView(self.viewHeader, 0.0f)
+    .rightSpaceToView(self.viewHeader, 0.0f)
+    .topSpaceToView(self.marketDetialLabel, MarginFactor(12.0f))
+    .heightIs(0.5f);
+    
+    self.detailContentLabel.sd_layout
+    .leftSpaceToView(self.viewHeader, MarginFactor(12.0f))
+    .rightSpaceToView(self.viewHeader, MarginFactor(12.0f))
+    .topSpaceToView(self.thirdHorizontalLine, MarginFactor(16.0f))
+    .autoHeightRatio(0.0f);
+    
+    
+    self.photoView = [[UIView alloc] init];
+    [self.viewHeader addSubview:self.photoView];
+    self.photoView.sd_layout
+    .leftSpaceToView(self.viewHeader, MarginFactor(15.0f))
+    .rightSpaceToView(self.viewHeader, MarginFactor(15.0f))
+    .topSpaceToView(self.detailContentLabel,0.0f)
+    .heightIs(0.0f);
+    
+    [self.viewHeader setupAutoHeightWithBottomView:self.photoView bottomMargin:MarginFactor(16.0f)];
+}
+
 - (void)loadData
 {
+    [self addEmptyViewIfNeeded];
+    [self loadShareButtonState];
+    self.modelLabel.text = @"模式： 找资金";
     self.timeLabel.text = self.responseObject.createTime;
     if (!self.responseObject.price.length == 0) {
         NSString * zjStr = self.responseObject.price;
@@ -134,7 +302,7 @@
     if ([self.responseObject.loginuserstate isEqualToString:@"0" ]) {
         NSString * contactString = @"联系方式： 认证可见";
         NSMutableAttributedString * str = [[NSMutableAttributedString alloc]initWithString:contactString];
-        [str addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"898989"] range:NSMakeRange(0, 6)];
+        [str addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"888888"] range:NSMakeRange(0, 6)];
         [str addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:13.0f] range:NSMakeRange(6, 4)];
         [str addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"4277B2"] range:NSMakeRange(6, 4)];
         self.phoneNumLabel.attributedText = str;
@@ -145,15 +313,10 @@
         NSString * contactString = [@"联系方式：" stringByAppendingString: self.responseObject.contactInfo];
 
         NSMutableAttributedString * str = [[NSMutableAttributedString alloc]initWithString:contactString];
-        [str addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"898989"] range:NSMakeRange(0, 6)];
-        [str addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:FontFactor(12.0f)] range:NSMakeRange(5, str.length - 5)];
+        [str addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"888888"] range:NSMakeRange(0, 6)];
+        [str addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:FontFactor(13.0f)] range:NSMakeRange(5, str.length - 5)];
         [str addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"4277B2"] range:NSMakeRange(5, str.length - 5)];
         self.phoneNumLabel.text = contactString;
-        CGSize size = [self.phoneNumLabel preferredSizeWithMaxWidth:kCellContentWidth];
-        CGRect frame = self.phoneNumLabel.frame;
-        frame.size.width = kCellContentWidth;
-        frame.size.height = size.height;
-        self.phoneNumLabel.frame = frame;
 
     }
     self.nameLabel.text = self.responseObject.realname;
@@ -178,87 +341,38 @@
     [self.headImageView updateHeaderView:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,self.responseObject.headimageurl] placeholderImage:[UIImage imageNamed:@"default_head"]];
     self.detailContentLabel.text = self.responseObject.detail;
 
-
-}
-
-- (void)loadUI
-{
-    if (self.responseObject.isCollection) {
-        [self.collectionButton setImage:[UIImage imageNamed:@"newDetialCollect"] forState:UIControlStateNormal];
-    } else{
-         [self.collectionButton setImage:[UIImage imageNamed:@"newNoDetialCollect"] forState:UIControlStateNormal];
-    }
-    //1.7.2界面修改
-    self.speakButton.layer.masksToBounds = YES;
-    self.speakButton.layer.cornerRadius = 4;
-    self.timeLabel.hidden = YES;
-
-    CGSize nameSize = [self.nameLabel sizeThatFits:CGSizeMake(MAXFLOAT, CGRectGetHeight(self.nameLabel.frame))];
-    self.nameLabel.frame = CGRectMake(self.nameLabel.origin.x,self.nameLabel.origin.y, nameSize.width, CGRectGetHeight(self.nameLabel.frame));
-    //1.72版本不需要分割线
-    self.verticalLine.hidden = YES;
-    self.verticalLine.frame = CGRectMake(CGRectGetMaxX(self.nameLabel.frame)+k_FirstToTop,self.verticalLine.origin.y, self.verticalLine.frame.size.width, CGRectGetHeight(self.verticalLine.frame));
-
-    self.companyLabel.frame =CGRectMake(self.companyLabel.origin.x,self.companyLabel.origin.y, self.companyLabel.width, CGRectGetHeight(self.companyLabel.frame));
-
-    CGSize positionSize = [self.positionLabel sizeThatFits:CGSizeMake(MAXFLOAT, CGRectGetHeight(self.positionLabel.frame))];
-    self.positionLabel.frame =CGRectMake(CGRectGetMaxX(self.nameLabel.frame) + k_FirstToTop,self.positionLabel.origin.y, positionSize.width, CGRectGetHeight(self.positionLabel.frame));
-
+    self.marketDetialLabel.text = @"业务描述：";
+   
     NSString *title = self.responseObject.marketName;
     self.titleLabel.text = title;
 
-    CGSize titleSize = [self.titleLabel sizeThatFits:CGSizeMake(self.titleLabel.frame.size.width, MAXFLOAT)];
-    self.titleLabel.height = titleSize.height;
-
-    //控件位置
-    self.typeLabel.frame = CGRectMake(self.typeLabel.origin.x, CGRectGetMaxY(self.titleLabel.frame)+k_SecondToTop, self.typeLabel.width, self.typeLabel.height);
-
-    self.capitalLabel.frame =CGRectMake(self.capitalLabel.frame.origin.x,CGRectGetMaxY(self.typeLabel.frame)+k_FirstToTop, self.capitalLabel.width, CGRectGetHeight(self.capitalLabel.frame));
-    self.phoneNumLabel.frame =CGRectMake(self.phoneNumLabel.origin.x, CGRectGetMaxY(self.capitalLabel.frame)+k_FirstToTop, self.phoneNumLabel.width, self.phoneNumLabel.height);
-    self.addressLabel.frame =CGRectMake(self.addressLabel.origin.x, CGRectGetMaxY(self.phoneNumLabel.frame) +k_FirstToTop, self.addressLabel.width, self.addressLabel.height);
-    self.secondHorizontalLine.frame = CGRectMake(self.secondHorizontalLine.origin.x, CGRectGetMaxY(self.addressLabel.frame)+k_ThirdToTop, self.secondHorizontalLine.width, self.secondHorizontalLine.height);
-    self.marketDetialLabel.frame = CGRectMake(self.detailContentLabel.origin.x, CGRectGetMaxY(self.secondHorizontalLine.frame)+k_ThirdToTop, self.marketDetialLabel.width, self.marketDetialLabel.height);
-    self.thirdHorizontalLine.frame = CGRectMake(self.thirdHorizontalLine.origin.x, CGRectGetMaxY(self.marketDetialLabel.frame)+k_ThirdToTop, self.thirdHorizontalLine.width, self.thirdHorizontalLine.height);
-
-    //内容详情
-    self.marketDetialLabel.text = @"业务描述：";
-    self.marketDetialLabel.textColor = [UIColor colorWithHexString:@"3A3A3A"];
-    self.marketDetialLabel.font = [UIFont systemFontOfSize:14.0f];
-    self.detailContentLabel.numberOfLines = 0;
-
-    CGSize detailSize = [self.detailContentLabel sizeThatFits:CGSizeMake(SCREENWIDTH - 2 * k_ThirdToTop, MAXFLOAT)];
-    self.detailContentLabel.frame = CGRectMake(self.detailContentLabel.origin.x, CGRectGetMaxY(self.thirdHorizontalLine.frame)+ k_ThirdToTop, self.detailContentLabel.width, detailSize.height);
-    if (!self.responseObject.url.length == 0) {
-
-        UIView *photoView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, CGRectGetMaxY(self.detailContentLabel.frame)+k_FirstToTop*2, 0.0f, 0.0f)];
-        SDPhotoGroup *photoGroup = [[SDPhotoGroup alloc] init];
+    
+    if (self.responseObject.isCollection) {
+        [self.collectionButton setImage:[UIImage imageNamed:@"marketDetailCollection"] forState:UIControlStateNormal];
+    } else{
+        [self.collectionButton setImage:[UIImage imageNamed:@"marketDetailNoCollection"] forState:UIControlStateNormal];
+    }
+    if (self.responseObject.url.length > 0) {
+        self.photoView.sd_resetLayout
+        .leftSpaceToView(self.viewHeader, MarginFactor(15.0f))
+        .rightSpaceToView(self.viewHeader, MarginFactor(15.0f))
+        .topSpaceToView(self.detailContentLabel, MarginFactor(15.0f))
+        .heightIs(MarginFactor(135.0f));
+        self.photoView.clipsToBounds = YES;
+        SDPhotoGroup * photoGroup = [[SDPhotoGroup alloc] init];
         NSMutableArray *temp = [NSMutableArray array];
         SDPhotoItem *item = [[SDPhotoItem alloc] init];
         item.thumbnail_pic = [NSString stringWithFormat:@"%@%@",rBaseAddressForImage,self.responseObject.url];
         [temp addObject:item];
         photoGroup.photoItemArray = temp;
-        [photoView addSubview:photoGroup];
-        photoView.frame = CGRectMake(15.0, self.detailContentLabel.bottom + k_FirstToTop*2, CGRectGetWidth(photoGroup.frame),CGRectGetHeight(photoGroup.frame));
-        [self.viewHeader addSubview:photoView];
-        self.actionView.frame = CGRectMake(self.actionView.origin.x, CGRectGetMaxY(photoView.frame) + k_FirstToTop, self.actionView.width, self.actionView.height);
-    } else{
-        self.actionView.frame = CGRectMake(self.actionView.origin.x, CGRectGetMaxY(self.detailContentLabel.frame)+k_FirstToTop, self.actionView.width, self.actionView.height);
+        [self.photoView addSubview:photoGroup];
     }
-    [self loadFooterUI];
-    [self loadPraiseButtonState];
-    [self loadShareButtonState];
 
-    [self.btnComment setImage:[UIImage imageNamed:@"home_comment"] forState:UIControlStateNormal];
-    [self.btnComment setTitle:[NSString stringWithFormat:@"%@",self.responseObject.commentNum] forState:UIControlStateNormal];
-
-    self.praiseView.frame = CGRectMake(self.praiseView.origin.x, CGRectGetMaxY(self.actionView.frame)+k_FirstToTop, self.praiseView.width, self.praiseView.height);
-    //image处理边帽
-    UIImage *image = self.backImageView.image;
-    image = [image resizableImageWithCapInsets:UIEdgeInsetsMake(15.0f, 35.0f, 9.0f, 11.0f) resizingMode:UIImageResizingModeStretch];
-    self.backImageView.image = image;
-
-    [self addTableHeaderView];
-    [self addEmptyViewIfNeeded];
+    
+    [self.viewHeader layoutSubviews];
+    if (!self.detailTable.tableHeaderView) {
+        self.detailTable.tableHeaderView = self.viewHeader;
+    }
 }
 
 - (void)tapContactLabelToIdentification:(UITapGestureRecognizer *)rescognizer
@@ -284,14 +398,6 @@
     }
 
 
-}
-
-- (void)addTableHeaderView
-{
-    CGRect frame = self.viewHeader.frame;
-    frame.size.height = CGRectGetMaxY(self.actionView.frame);
-    self.viewHeader.frame = frame;
-    [self.detailTable setTableHeaderView: self.viewHeader];
 }
 
 - (void)addEmptyViewIfNeeded
@@ -354,11 +460,139 @@
     //    self.copyedString = object.commentDetail;
     if ([object.commentUserName isEqualToString:[[NSUserDefaults standardUserDefaults]objectForKey:KEY_USER_NAME]]) {
         //复制删除试图
-        //        [self createPickerView];
+       // [self createPickerView];
     } else{
         [self replyClicked:object commentIndex:indexPath.row];
     }
 }
+//- (void)longPressGesturecognized:(id)sender{
+//    
+//    UILongPressGestureRecognizer *longPress = (UILongPressGestureRecognizer *)sender;
+//    UIGestureRecognizerState state = longPress.state;//这是长按手势的状态   下面switch用到了
+//    CGPoint location = [longPress locationInView:self.detailTable];
+//    NSIndexPath *indexPath = [self.detailTable indexPathForRowAtPoint:location];
+//    switch (state)
+//    {
+//        case UIGestureRecognizerStateBegan:{
+//            if (indexPath){
+//                //判断是否是自己
+//                commentOBj *obj = self.res.comments[indexPath.row];
+//                commentRid = obj.rid;
+//                copyString = obj.cdetail;
+//                
+//                if ([obj.cnickname isEqualToString:[[NSUserDefaults standardUserDefaults]objectForKey:KEY_USER_NAME]]){
+//                    [self createPickerView];
+//                } else{
+//                    NSLog(@"2");
+//                    PickerBackView = [[UIView alloc] initWithFrame:self.view.bounds];
+//                    PickerBackView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.4];
+//                    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(closeView)];
+//                    tap.cancelsTouchesInView = YES;
+//                    [PickerBackView addGestureRecognizer:tap];
+//                    PickerBackView.userInteractionEnabled = YES;
+//                    
+//                    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+//                    button.frame = CGRectMake(30, (self.view.bounds.size.height-50)/2, self.view.bounds.size.width - 60, 50);
+//                    button.backgroundColor = [UIColor whiteColor];
+//                    [button setTitle:@"复制" forState:UIControlStateNormal];
+//                    button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+//                    button.titleEdgeInsets = UIEdgeInsetsMake(0, 20, 0, 0);
+//                    [button addTarget:self action:@selector(copyButton) forControlEvents:UIControlEventTouchUpInside];
+//                    [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+//                    [PickerBackView addSubview:button];
+//                    [self.view addSubview:PickerBackView];
+//                    [self.view bringSubviewToFront:PickerBackView];
+//                    //[self.view sendSubviewToBack:PickerBackView];
+//                }
+//            }
+//            break;
+//        }
+//        default:{
+//            
+//        }
+//    }
+//}
+
+//创建删除试图
+- (void)createPickerView{
+    PickerBackView = [[UIView alloc] initWithFrame:self.view.bounds];
+    PickerBackView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.4];
+    
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(closeView)];
+    tap.cancelsTouchesInView = YES;
+    [PickerBackView addGestureRecognizer:tap];
+    PickerBackView.userInteractionEnabled = YES;
+    
+    UIButton *copy = [UIButton buttonWithType:UIButtonTypeCustom];
+    copy.frame = CGRectMake(30, (self.view.bounds.size.height-50)/2-50, self.view.bounds.size.width - 60, 50);
+    copy.backgroundColor = [UIColor whiteColor];
+    [copy setTitle:@"复制" forState:UIControlStateNormal];
+    copy.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+    copy.titleEdgeInsets = UIEdgeInsetsMake(0, 20, 0, 0);
+    [copy addTarget:self action:@selector(copyButton) forControlEvents:UIControlEventTouchUpInside];
+    [copy setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [PickerBackView addSubview:copy];
+    
+    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(30, (self.view.bounds.size.height-50)/2, self.view.bounds.size.width - 60, 1)];
+    view.backgroundColor = [UIColor grayColor];
+    [PickerBackView addSubview:view];
+    
+    UIButton *delete = [UIButton buttonWithType:UIButtonTypeCustom];
+    delete.frame = CGRectMake(30, (self.view.bounds.size.height-50)/2+1, self.view.bounds.size.width - 60, 50);
+    delete.backgroundColor = [UIColor whiteColor];
+    [delete setTitle:@"删除" forState:UIControlStateNormal];
+    delete.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+    delete.titleEdgeInsets = UIEdgeInsetsMake(0, 20, 0, 0);
+    [delete addTarget:self action:@selector(deleteButton) forControlEvents:UIControlEventTouchUpInside];
+    [delete setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [PickerBackView addSubview:delete];
+    
+    [self.view addSubview:PickerBackView];
+    [self.view bringSubviewToFront:PickerBackView];
+}
+- (void)closeView
+{
+    [PickerBackView removeFromSuperview];
+}
+//复制
+- (void)copyButton
+{
+    NSLog(@"....%@",copyString);
+    [UIPasteboard generalPasteboard].string = copyString;
+    self.detailTable.frame = CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT);
+    [self.view sendSubviewToBack:PickerBackView];
+}
+//删除
+//- (void)deleteButton
+//{
+//    NSDictionary *param = @{@"rid":commentRid};
+//    NSString *url = [NSString stringWithFormat:@"%@/%@",rBaseAddressForHttpCircle,@"deleteComments"];
+//    [MOCHTTPRequestOperationManager postWithURL:url class:nil parameters:param success:^(MOCHTTPResponse *response)
+//     {
+//         [Hud hideHud];
+//         NSLog(@"%@",response.dataDictionary);
+//         for (commentOBj *obj in self.responseObject.comments)
+//         {
+//             if ([obj.rid  isEqualToString:commentRid])
+//             {
+//                 [self.responseObject.comments removeObject:obj];
+//                 self.responseObject.cmmtnum = [NSString stringWithFormat:@"%ld",(long)([self.responseObject.cmmtnum integerValue] - 1)];
+//                 break;
+//             }
+//         }
+//         [self loadDatasWithObj:self.responseObject];
+//         [self.detailTable reloadData];
+//         [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_COLLECT_COMMENT_CLIC object:self.obj];
+//     } failed:^(MOCHTTPResponse *response)
+//     {
+//         [Hud showMessageWithText:response.errorMessage];
+//         NSLog(@"response.errorMessage==%@",response.errorMessage);
+//     }];
+//    //listTable适应屏幕
+//    self.detailTable.frame = CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT);
+//    [self.view sendSubviewToBack:PickerBackView];
+//    
+//}
 
 - (void)didReceiveMemoryWarning
 {
@@ -367,78 +601,78 @@
 
 #pragma  mark ----btnClick---
 
-- (IBAction)zan:(id)sender
-{
-    __weak typeof(self)weakSelf = self;
-    [[SHGMarketSegmentViewController sharedSegmentController] addOrDeletePraise:self.responseObject block:^(BOOL success) {
-        if ([weakSelf.responseObject.isPraise isEqualToString:@"N"]) {
-            weakSelf.responseObject.praiseNum = [NSString stringWithFormat:@"%ld",(long)[weakSelf.responseObject.praiseNum integerValue] + 1];
-            weakSelf.responseObject.isPraise = @"Y";
-            praiseOBj *obj = [[praiseOBj alloc] init];
-            obj.pnickname = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_USER_NAME];
-            obj.ppotname = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_HEAD_IMAGE];
-            obj.puserid =[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
-            [weakSelf.responseObject.praiseList addObject:obj];
+//- (IBAction)zan:(id)sender
+//{
+//    __weak typeof(self)weakSelf = self;
+//    [[SHGMarketSegmentViewController sharedSegmentController] addOrDeletePraise:self.responseObject block:^(BOOL success) {
+//        if ([weakSelf.responseObject.isPraise isEqualToString:@"N"]) {
+//            weakSelf.responseObject.praiseNum = [NSString stringWithFormat:@"%ld",(long)[weakSelf.responseObject.praiseNum integerValue] + 1];
+//            weakSelf.responseObject.isPraise = @"Y";
+//            praiseOBj *obj = [[praiseOBj alloc] init];
+//            obj.pnickname = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_USER_NAME];
+//            obj.ppotname = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_HEAD_IMAGE];
+//            obj.puserid =[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
+//            [weakSelf.responseObject.praiseList addObject:obj];
+//
+//            [weakSelf loadPraiseButtonState];
+//           // [weakSelf loadFooterUI];
+//        } else{
+//            weakSelf.responseObject.praiseNum = [NSString stringWithFormat:@"%ld",(long)[weakSelf.responseObject.praiseNum integerValue] - 1];
+//            weakSelf.responseObject.isPraise = @"N";
+//            for (praiseOBj *obj in weakSelf.responseObject.praiseList) {
+//                NSString *uid = UID;
+//                if ([obj.puserid isEqualToString:uid]) {
+//                    [weakSelf.responseObject.praiseList removeObject:obj];
+//                    break;
+//                }
+//            }
+//            [weakSelf loadPraiseButtonState];
+//           //[weakSelf loadFooterUI];
+//        }
+//    }];
+//}
 
-            [weakSelf loadPraiseButtonState];
-            [weakSelf loadFooterUI];
-        } else{
-            weakSelf.responseObject.praiseNum = [NSString stringWithFormat:@"%ld",(long)[weakSelf.responseObject.praiseNum integerValue] - 1];
-            weakSelf.responseObject.isPraise = @"N";
-            for (praiseOBj *obj in weakSelf.responseObject.praiseList) {
-                NSString *uid = UID;
-                if ([obj.puserid isEqualToString:uid]) {
-                    [weakSelf.responseObject.praiseList removeObject:obj];
-                    break;
-                }
-            }
-            [weakSelf loadPraiseButtonState];
-            [weakSelf loadFooterUI];
-        }
-    }];
-}
-
-- (void)loadPraiseButtonState
-{
-    //设置点赞的状态
-    if ([self.responseObject.isPraise isEqualToString:@"N"]) {
-        [self.btnZan setImage:[UIImage imageNamed:@"home_weizan"] forState:UIControlStateNormal];
-    } else{
-        [self.btnZan setImage:[UIImage imageNamed:@"home_yizan"] forState:UIControlStateNormal];
-    }
-    [self.btnZan setTitle:self.responseObject.praiseNum forState:UIControlStateNormal];
-}
+//- (void)loadPraiseButtonState
+//{
+//    //设置点赞的状态
+//    if ([self.responseObject.isPraise isEqualToString:@"N"]) {
+//        [self.btnZan setImage:[UIImage imageNamed:@"home_weizan"] forState:UIControlStateNormal];
+//    } else{
+//        [self.btnZan setImage:[UIImage imageNamed:@"home_yizan"] forState:UIControlStateNormal];
+//    }
+//    [self.btnZan setTitle:self.responseObject.praiseNum forState:UIControlStateNormal];
+//}
 
 - (void)loadShareButtonState
 {
-    [self.btnShare setImage:[UIImage imageNamed:@"shareImage"] forState:UIControlStateNormal];
-    [self.btnShare setTitle:[NSString stringWithFormat:@"%@",self.responseObject.shareNum] forState:UIControlStateNormal];
+    [self.btnShare setImage:[UIImage imageNamed:@"marketShareImage"] forState:UIControlStateNormal];
+    //[self.btnShare setTitle:[NSString stringWithFormat:@"%@",self.responseObject.shareNum] forState:UIControlStateNormal];
 }
 
-- (void)loadFooterUI
-{
-    UIImage *image = self.backImageView.image;
-    self.backImageView.image = [image resizableImageWithCapInsets:UIEdgeInsetsMake(15.0f, 35.0f, 9.0f, 11.0f) resizingMode:UIImageResizingModeStretch];
-    [self.scrollPraise removeAllSubviews];
-    CGRect praiseRect = self.praiseView.frame;
-    CGFloat praiseWidth = 0;
-    if ([self.responseObject.praiseNum integerValue] > 0){
-        NSArray *array = self.responseObject.praiseList;
-        for (NSInteger i = 0; i < array.count; i++) {
-            praiseOBj *obj = [array objectAtIndex:i];
-            praiseWidth = PRAISE_WIDTH;
-            CGRect rect = CGRectMake((praiseWidth + PRAISE_SEPWIDTH) * i , (CGRectGetHeight(praiseRect) - praiseWidth) / 2.0f, praiseWidth, praiseWidth);
-            UIImageView *head = [[UIImageView alloc] initWithFrame:rect];
-            head.tag = [obj.puserid integerValue];
-            [head sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,obj.ppotname]] placeholderImage:[UIImage imageNamed:@"default_head"]];
-            head.userInteractionEnabled = YES;
-            DDTapGestureRecognizer *recognizer = [[DDTapGestureRecognizer alloc] initWithTarget:self action:@selector(moveToUserCenter:)];
-            [head addGestureRecognizer:recognizer];
-            [self.scrollPraise addSubview:head];
-        }
-        [self.scrollPraise setContentSize:CGSizeMake(array.count * (praiseWidth + PRAISE_SEPWIDTH), CGRectGetHeight(self.scrollPraise.frame))];
-    }
-}
+//- (void)loadFooterUI
+//{
+//    UIImage *image = self.backImageView.image;
+//    self.backImageView.image = [image resizableImageWithCapInsets:UIEdgeInsetsMake(15.0f, 35.0f, 9.0f, 11.0f) resizingMode:UIImageResizingModeStretch];
+//    [self.scrollPraise removeAllSubviews];
+//    CGRect praiseRect = self.praiseView.frame;
+//    CGFloat praiseWidth = 0;
+//    if ([self.responseObject.praiseNum integerValue] > 0){
+//        NSArray *array = self.responseObject.praiseList;
+//        for (NSInteger i = 0; i < array.count; i++) {
+//            praiseOBj *obj = [array objectAtIndex:i];
+//            praiseWidth = PRAISE_WIDTH;
+//            CGRect rect = CGRectMake((praiseWidth + PRAISE_SEPWIDTH) * i , (CGRectGetHeight(praiseRect) - praiseWidth) / 2.0f, praiseWidth, praiseWidth);
+//            UIImageView *head = [[UIImageView alloc] initWithFrame:rect];
+//            head.tag = [obj.puserid integerValue];
+//            [head sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,obj.ppotname]] placeholderImage:[UIImage imageNamed:@"default_head"]];
+//            head.userInteractionEnabled = YES;
+//            DDTapGestureRecognizer *recognizer = [[DDTapGestureRecognizer alloc] initWithTarget:self action:@selector(moveToUserCenter:)];
+//            [head addGestureRecognizer:recognizer];
+//            [self.scrollPraise addSubview:head];
+//        }
+//        [self.scrollPraise setContentSize:CGSizeMake(array.count * (praiseWidth + PRAISE_SEPWIDTH), CGRectGetHeight(self.scrollPraise.frame))];
+//    }
+//}
 
 - (void)moveToUserCenter:(UITapGestureRecognizer *)recognizer
 {
@@ -456,7 +690,6 @@
     self.popupView.detail = @"";
     [self.navigationController.view addSubview:self.popupView];
     [self.popupView showWithAnimated:YES];
-
 }
 
 - (void)replyClicked:(SHGMarketCommentObject *)obj commentIndex:(NSInteger)index
@@ -499,7 +732,7 @@
     [SHGMarketManager addCommentWithObject:self.responseObject content:comment toOther:nil finishBlock:^(BOOL success) {
         if (success) {
             [weakSelf.detailTable reloadData];
-            [weakSelf.btnComment setTitle:[NSString stringWithFormat:@"%@",self.responseObject.commentNum] forState:UIControlStateNormal];
+//            [weakSelf.btnComment setTitle:[NSString stringWithFormat:@"%@",self.responseObject.commentNum] forState:UIControlStateNormal];
         }
     }];
 }
@@ -511,7 +744,7 @@
     [SHGMarketManager addCommentWithObject:self.responseObject content:comment toOther:fid finishBlock:^(BOOL success) {
         if (success) {
             [weakSelf.detailTable reloadData];
-            [weakSelf.btnComment setTitle:[NSString stringWithFormat:@"%@",self.responseObject.commentNum] forState:UIControlStateNormal];
+//  [weakSelf.btnComment setTitle:[NSString stringWithFormat:@"%@",self.responseObject.commentNum] forState:UIControlStateNormal];
         }
     }];
 }
@@ -531,17 +764,17 @@
         weakSelf.responseObject.isCollection = state;
         [weakSelf loadCollectButtonState];
     }];
-
+ 
 }
 - (void)loadCollectButtonState
 {
     //设置点赞的状态
     if (self.responseObject.isCollection ) {
-        [self.collectionButton setImage:[UIImage imageNamed:@"newDetialCollect"] forState:UIControlStateNormal];
+        [self.collectionButton setImage:[UIImage imageNamed:@"marketDetailCollection"] forState:UIControlStateNormal];
     } else{
-        [self.collectionButton setImage:[UIImage imageNamed:@"newNoDetialCollect"] forState:UIControlStateNormal];
+        [self.collectionButton setImage:[UIImage imageNamed:@"marketDetailNoCollection"] forState:UIControlStateNormal];
     }
-//    [self.btnZan setTitle:self.responseObject.praiseNum forState:UIControlStateNormal];
+//  [self.btnZan setTitle:self.responseObject.praiseNum forState:UIControlStateNormal];
 }
 
 
@@ -577,6 +810,7 @@
 #pragma mark -- 拨打电话
 - (BOOL)openTel:(NSString *)tel
 {
+    [[SHGGloble sharedGloble] recordUserAction:self.responseObject.marketId type:@"call"];
     NSMutableString * str=[[NSMutableString alloc] initWithFormat:@"telprompt://%@",tel];
     NSLog(@"str======%@",str);
     return  [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str]];

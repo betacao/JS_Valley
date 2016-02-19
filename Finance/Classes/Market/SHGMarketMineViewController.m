@@ -149,6 +149,7 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (self.dataArr.count > 0) {
+        
         SHGMarketObject *object = [self.dataArr objectAtIndex:indexPath.row];
         CGFloat height = [self.tableView cellHeightForIndexPath:indexPath model:object keyPath:@"object" cellClass:[SHGMarketTableViewCell class] contentViewWidth:SCREENWIDTH];
         return height;
@@ -166,8 +167,8 @@
             cell = [[[NSBundle mainBundle] loadNibNamed:@"SHGMarketTableViewCell" owner:self options:nil] lastObject];
         }
         cell.delegate = self;
-        SHGMarketObject * obj = [self.dataArr objectAtIndex:indexPath.row];
-        cell.object = obj;
+        cell.object = [self.dataArr objectAtIndex:indexPath.row];
+        [cell loadNewUiFortype:SHGMarketTableViewCellTypeMine];
         return cell;
     } else{
         return self.emptyCell;

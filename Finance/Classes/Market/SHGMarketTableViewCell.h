@@ -9,6 +9,11 @@
 #import <UIKit/UIKit.h>
 #import "SHGMarketObject.h"
 
+typedef NS_ENUM(NSInteger, SHGMarketTableViewCellType) {
+    SHGMarketTableViewCellTypeAll = 0,
+    SHGMarketTableViewCellTypeMine,
+    SHGMarketTableViewCellTypeOther
+};
 @protocol SHGMarketTableViewDelegate <NSObject>
 
 - (void)clickCollectButton:(SHGMarketObject *)object state:(void(^)(BOOL state))block;
@@ -23,4 +28,6 @@
 @interface SHGMarketTableViewCell : UITableViewCell
 @property (strong ,nonatomic) SHGMarketObject *object;
 @property (assign, nonatomic) id<SHGMarketTableViewDelegate> delegate;
+- (void)loadNewUiFortype:(SHGMarketTableViewCellType)type;
+
 @end

@@ -14,6 +14,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *amountLabel;
 @property (weak, nonatomic) IBOutlet UILabel *contactLabel;
 @property (weak, nonatomic) IBOutlet UIButton *collectButton;
+@property (weak, nonatomic) IBOutlet UIButton *deleteButton;
+@property (weak, nonatomic) IBOutlet UIButton *editButton;
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
 @property (weak, nonatomic) IBOutlet UIView *bottomView;
 @property (weak, nonatomic) IBOutlet UIView *bottomLineView;
@@ -39,41 +41,51 @@
     self.titleLabel.sd_layout
     .topSpaceToView(self.contentView, MarginFactor(18.0f))
     .leftSpaceToView(self.contentView, MarginFactor(12.0f))
-    .widthIs(SCREENWIDTH - MarginFactor(24.0f))
-    .heightIs(MarginFactor(15.0f));
-    //[self.titleView setSingleLineAutoResizeWithMaxWidth:SCREENWIDTH - factor(24.0f)];
+    .rightSpaceToView(self.contentView, MarginFactor(12.0f));
     
     self.typeLabel.sd_layout
     .topSpaceToView(self.titleLabel, MarginFactor(14.0f))
     .leftSpaceToView(self.contentView, MarginFactor(12.0f))
-    .autoHeightRatio(0.0f);
-    [self.typeLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
-
-    self.amountLabel.sd_layout
-    .topSpaceToView(self.titleLabel, MarginFactor(14.0f))
-    .leftSpaceToView(self.contentView, SCREENWIDTH /2.0f)
-    .autoHeightRatio(0.0f);
-    [self.amountLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
+    .widthIs(SCREENWIDTH/2.0f - MarginFactor(12.0f));
     
     self.contactLabel.sd_layout
     .topSpaceToView(self.typeLabel, MarginFactor(11.0f))
     .leftSpaceToView(self.contentView, MarginFactor(12.0f))
-    .autoHeightRatio(0.0f);
-    [self.contactLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
-    
-    self.timeLabel.sd_layout
-    .topSpaceToView(self.amountLabel, MarginFactor(11.0f))
-    .leftSpaceToView(self.contentView, SCREENWIDTH /2.0f)
-    .autoHeightRatio(0.0f);
-    [self.timeLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
+    .widthIs(SCREENWIDTH/2.0f - MarginFactor(12.0f));
     
     [self.collectButton sizeToFit];
     CGSize size = self.collectButton.frame.size;
     self.collectButton.sd_layout
     .rightSpaceToView(self.contentView, MarginFactor(12.0f))
-    .bottomEqualToView(self.timeLabel)
-    .widthIs(MarginFactor(size.width))
-    .heightIs(MarginFactor(size.height));
+    .centerYEqualToView(self.contactLabel)
+    .widthIs(size.width)
+    .heightIs(size.height);
+    
+    [self.deleteButton sizeToFit];
+    CGSize deleteSize = self.deleteButton.frame.size;
+    self.deleteButton.sd_layout
+    .rightSpaceToView(self.contentView, MarginFactor(12.0f))
+    .centerYEqualToView(self.contactLabel)
+    .widthIs(deleteSize.width)
+    .heightIs(deleteSize.height);
+    
+    [self.editButton sizeToFit];
+    CGSize editeSize = self.deleteButton.frame.size;
+    self.editButton.sd_layout
+    .rightSpaceToView(self.deleteButton, MarginFactor(15.0f))
+    .centerYEqualToView(self.contactLabel)
+    .widthIs(editeSize.width)
+    .heightIs(editeSize.height);
+    
+    self.amountLabel.sd_layout
+    .centerYEqualToView(self.typeLabel)
+    .leftSpaceToView(self.contentView, SCREENWIDTH / 2.0)
+    .rightSpaceToView(self.contentView, MarginFactor(12.0f));
+    
+    self.timeLabel.sd_layout
+    .centerYEqualToView(self.contactLabel)
+    .leftSpaceToView(self.contentView, SCREENWIDTH /2.0f)
+    .rightSpaceToView(self.collectButton, 0.0f);
     
     self.bottomLineView.sd_layout
     .leftSpaceToView(self.contentView, MarginFactor(0.0f))
@@ -86,7 +98,7 @@
     .leftSpaceToView(self.contentView, 0.0f)
     .rightSpaceToView(self.contentView, 0.0f)
     .heightIs(MarginFactor(10.0f));
-
+    
     [self setupAutoHeightWithBottomView:self.bottomView bottomMargin:0.0f];
 }
 
@@ -94,30 +106,44 @@
 {
     _object = object;
     [self clearCell];
+    
     if (object.marketName.length == 0) {
         self.titleLabel.text = @" ";
     } else{
-         self.titleLabel.text = object.marketName;
+        self.titleLabel.text = object.marketName;
     }
     self.typeLabel.text = [@"类型：" stringByAppendingString:object.catalog];
     if ([object.price isEqualToString:@""]) {
         self.amountLabel.text = @"金额：暂未说明";
     } else{
         self.amountLabel.text = [@"金额：" stringByAppendingString: object.price];
-    
-   }
-
-    self.contactLabel.text = [@"地区：" stringByAppendingString: object.position];
+        self.contactLabel.text = [@"地区：" stringByAppendingString: object.position];
+    }
     [self loadCollectionState];
     self.timeLabel.text = [@"时间：" stringByAppendingString: object.createTime];
+    [self.titleLabel sizeToFit];
+    [self.typeLabel sizeToFit];
+    [self.contactLabel sizeToFit];
+    [self.amountLabel sizeToFit];
+    [self.timeLabel sizeToFit];
+    [self setupAutoHeightWithBottomView:self.bottomView bottomMargin:0.0f];
+    
 }
-
+- (void)loadNewUiFortype:(SHGMarketTableViewCellType)type
+{
+    if (type == SHGMarketTableViewCellTypeAll) {
+        self.editButton.hidden = YES;
+        self.deleteButton.hidden = YES;
+    } else if (type == SHGMarketTableViewCellTypeMine){
+        self.collectButton.hidden = YES;
+    }
+}
 - (void)loadCollectionState
 {
     if (self.object.isCollection ) {
-        [self.collectButton setImage:[UIImage imageNamed:@"newDetialCollect"] forState:UIControlStateNormal];
+        [self.collectButton setImage:[UIImage imageNamed:@"marketListCollection"] forState:UIControlStateNormal];
     } else{
-        [self.collectButton setImage:[UIImage imageNamed:@"newNoDetialCollect"] forState:UIControlStateNormal];
+        [self.collectButton setImage:[UIImage imageNamed:@"marketListNoCollection"] forState:UIControlStateNormal];
     }
 }
 
@@ -127,7 +153,8 @@
     self.typeLabel.text = @"";
     self.amountLabel.text = @"";
     self.contactLabel.text = @"";
-    [self.collectButton setImage:[UIImage imageNamed:@"newNoDetialCollect"] forState:UIControlStateNormal];
+    self.timeLabel.text = @"";
+    [self.collectButton setImage:[UIImage imageNamed:@"marketListNoCollection"] forState:UIControlStateNormal];
 }
 //收藏
 - (IBAction)clickCollectButton:(UIButton *)sender
@@ -140,9 +167,27 @@
     }
 }
 
+//修改
+- (IBAction)clickEditButton:(UIButton *)sender
+{
+    if (self.delegate && [self.delegate respondsToSelector:@selector(clickEditButton:)]) {
+        [self.delegate clickEditButton:self.object];
+    }
+}
+
+//删除
+- (IBAction)clickDeleteButton:(UIButton *)sender
+{
+    if (self.delegate && [self.delegate respondsToSelector:@selector(clickDeleteButton:)]) {
+        [self.delegate clickDeleteButton:self.object];
+    }
+}
+
+
+
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
-
+    
 }
 
 @end

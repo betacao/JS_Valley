@@ -1035,8 +1035,11 @@
         
     }else if (self.selectType == 2)
     {
-        return 166.0f;
-        
+        //return 166.0f;
+        SHGMarketObject *object = [self.marketList objectAtIndex:indexPath.row];
+        CGFloat height = [self.tableView cellHeightForIndexPath:indexPath model:object keyPath:@"object" cellClass:[SHGMarketTableViewCell class] contentViewWidth:SCREENWIDTH];
+        return height;
+
     }else
     {
         return 0;
@@ -1124,6 +1127,7 @@
                 cell.delegate = self;
                 SHGMarketObject * obj = [self.dataSource objectAtIndex:indexPath.row];
                 cell.object = obj;
+                 [(SHGMarketTableViewCell *)cell loadNewUiFortype:SHGMarketTableViewCellTypeAll];
                 return cell;
             } else{
                 return self.emptyCell;

@@ -100,7 +100,7 @@
 
         self.titleImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"market_locationArrow"]];
         [self.titleImageView sizeToFit];
-        self.titleImageView.origin = CGPointMake(CGRectGetMaxX(self.titleLabel.frame) + 2.0f, (CGRectGetHeight(self.titleLabel.frame) - CGRectGetHeight(self.titleImageView.frame)) / 2.0f);
+        self.titleImageView.origin = CGPointMake(CGRectGetMaxX(self.titleLabel.frame) + 4.0f, (CGRectGetHeight(self.titleLabel.frame) - CGRectGetHeight(self.titleImageView.frame)) / 2.0f);
         [_titleButton addSubview:self.titleImageView];
     }
     return _titleButton;
@@ -125,7 +125,7 @@
     if (![city isEqualToString:self.titleLabel.text] && city.length > 0) {
         self.titleLabel.text = city;
         [self.titleLabel sizeToFit];
-        self.titleImageView.origin = CGPointMake(CGRectGetMaxX(self.titleLabel.frame) + 2.0f, (CGRectGetHeight(self.titleLabel.frame) - CGRectGetHeight(self.titleImageView.frame)) / 2.0f);
+        self.titleImageView.origin = CGPointMake(CGRectGetMaxX(self.titleLabel.frame) + 4.0f, (CGRectGetHeight(self.titleLabel.frame) - CGRectGetHeight(self.titleImageView.frame)) / 2.0f);
         self.titleButton.frame = CGRectMake(0.0f, 0.0f, CGRectGetMaxX(self.titleImageView.frame), CGRectGetHeight(self.titleLabel.frame));
         self.container.frame = self.titleButton.bounds;
 

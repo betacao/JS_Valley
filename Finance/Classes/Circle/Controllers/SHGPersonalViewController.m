@@ -290,6 +290,7 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
 }
 
 - (void)chat{
+    [[SHGGloble sharedGloble] recordUserAction:self.userId type:@"imChat"];
     ChatViewController *chatVC = [[ChatViewController alloc] initWithChatter:self.userId isGroup:NO];
     chatVC.title = self.nickName;
     [self.navigationController pushViewController:chatVC animated:YES];

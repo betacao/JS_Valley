@@ -36,17 +36,31 @@
 
 - (void)awakeFromNib
 {
-    CGRect frame = self.bounds;
     
-    self.headerImageView = [[UIImageView alloc] initWithFrame:frame];
+    self.headerImageView = [[UIImageView alloc] init];
     [self addSubview:self.headerImageView];
-    self.VImageView = [[UIImageView alloc] initWithFrame:CGRectZero];
+    
+    self.headerImageView.sd_layout
+    .topSpaceToView(self, 0.0f)
+    .leftSpaceToView(self, 0.0f)
+    .bottomSpaceToView(self, 0.0f)
+    .rightSpaceToView(self, 0.0f);
+    
+    
+    self.VImageView = [[UIImageView alloc] init];
     self.VImageView.contentMode = UIViewContentModeScaleAspectFit;
     self.VImageView.image = [UIImage imageNamed:@"V"];
     [self.VImageView sizeToFit];
-    self.VImageView.center = CGPointMake(CGRectGetMaxX(frame) - 2.0f, CGRectGetMaxY(frame) - 2.0f);
     [self addSubview:self.VImageView];
+    
     self.VImageView.hidden = YES;
+}
+
+- (void)layoutSubviews
+{
+    [super layoutSubviews];
+    CGSize size = self.bounds.size;
+    self.VImageView.center = CGPointMake(size.width, size.height);
 }
 
 

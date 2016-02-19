@@ -115,7 +115,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 45.0f * YFACTOR;
+    return MarginFactor(60.0f);
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
@@ -123,7 +123,7 @@
     if (section == 0) {
         return 0.1;
     } else if (section == 1){
-        return 10.0f * YFACTOR;
+        return  MarginFactor(10.0f);
     } else{
         return 0.0f;
     }
@@ -149,7 +149,7 @@
 }
 - (UIView * )tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    UIView * view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 10.0f * YFACTOR)];
+    UIView * view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREENWIDTH, MarginFactor(10.0f))];
     view.backgroundColor = RGB(236, 236, 236);
     return view;
 }

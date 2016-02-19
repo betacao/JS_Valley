@@ -75,9 +75,11 @@
                         button.selected = YES;
                     }
                 }
-                [button.layer setCornerRadius:2.0f];
-                [button.layer setBorderWidth:0.5f];
-                [button.layer setBorderColor:[UIColor colorWithHexString:@"E1E1E6"].CGColor ];
+                button.adjustsImageWhenHighlighted = NO;
+                button.layer.cornerRadius = 2.0f;
+                button.layer.borderWidth = 0.5f;
+                button.layer.borderColor = [UIColor colorWithHexString:@"E1E1E6"].CGColor;
+                
                 button.titleLabel.font = [UIFont systemFontOfSize:13.0f];
                 [button setTitle:obj.secondCatalogName forState:UIControlStateNormal];
                 [button setTitleColor:[UIColor colorWithHexString:@"8A8A8A"] forState:UIControlStateNormal];

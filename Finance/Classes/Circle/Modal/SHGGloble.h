@@ -158,4 +158,10 @@ typedef void (^SHHomeDataCompletionBlock)(NSArray *allList, NSArray *normalList,
  */
 - (void)requsetUserVerifyStatus:(void (^)(BOOL))block failString:(NSString *)string;
 
+
+/**
+ @breief  记录用户行为
+ @since 1.7
+ */
+- (void)recordUserAction:(NSString *)recordIdStr type:(NSString *)typeStr;
 @end

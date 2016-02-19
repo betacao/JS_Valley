@@ -87,6 +87,7 @@
 {
     _model = model;
     self.titleLabel.text = model.text;
+
 }
 
 - (void)setupNeedShowAccessorView:(BOOL)hidden
@@ -95,8 +96,6 @@
 }
 
 @end
-
-
 
 @implementation SHGGlobleModel
 

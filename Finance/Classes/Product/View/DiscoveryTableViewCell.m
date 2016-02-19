@@ -7,10 +7,13 @@
 //
 
 #import "DiscoveryTableViewCell.h"
+
 @interface DiscoveryTableViewCell()
 @property (weak, nonatomic) IBOutlet UILabel *lblRight;
 @property (weak, nonatomic) IBOutlet UILabel *lblTitle;
 @property (strong, nonatomic) IBOutlet UIImageView *imageTitle;
+@property (weak, nonatomic) IBOutlet UIImageView *rightImage;
+
 
 @end
 
@@ -21,12 +24,50 @@
     self.lineView.height = 0.5f;
     self.lblTitle.font = [UIFont systemFontOfSize:FontFactor(15.0f)];
     self.lblTitle.textColor = [UIColor colorWithHexString:@"161616"];
+    self.numberLable.font = [UIFont systemFontOfSize:FontFactor(15.0f)];
+    self.numberLable.textAlignment = NSTextAlignmentRight;
+    [self addLayout];
 }
 
+- (void)addLayout
+{
+    CGSize imageSize = self.imageTitle.frame.size;
+   self.imageTitle.sd_layout
+    .leftSpaceToView(self.contentView, MarginFactor(15.0f))
+    .topSpaceToView(self.contentView, MarginFactor((60.0f - imageSize.height))/2.0f)
+    .widthIs(MarginFactor(imageSize.width))
+    .heightIs(MarginFactor(imageSize.height));
+   
+   self.lblTitle.sd_layout
+    .leftSpaceToView(self.imageTitle, MarginFactor(13.0f))
+    .centerYEqualToView(self.imageTitle)
+    .autoHeightRatio(0.0f);
+    [self.lblTitle setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
+    
+    self.lineView.sd_layout
+    .leftSpaceToView(self.contentView, MarginFactor(15.0f))
+    .bottomSpaceToView(self.contentView, 1.0f)
+    .widthIs(SCREENWIDTH-  MarginFactor(15.0f))
+    .heightIs(0.5f);
+    
+    CGSize rightSize = self.rightImage.frame.size;
+    self.rightImage.sd_layout
+    .rightSpaceToView(self.contentView, MarginFactor(15.0f))
+    .centerYEqualToView(self.imageTitle)
+    .widthIs(rightSize.width)
+    .heightIs(rightSize.height);
+    
+    self.numberLable.sd_layout
+    .rightSpaceToView(self.rightImage, MarginFactor(13.0f))
+    .centerYEqualToView(self.rightImage)
+    .autoHeightRatio(0.0f);
+    [self.numberLable  setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
+}
 - (void)loadDataWithImage:(NSString *)imageName title:(NSString *)title rightItem:(NSString *)itemName rightItemColor:(UIColor *)color
 {
     if ([imageName hasPrefix:@"http://"]){
         [self.imageTitle sd_setImageWithURL:[NSURL URLWithString:imageName] placeholderImage:nil];
+        
     } else{
         [self.imageTitle setImage:[UIImage imageNamed:imageName]];
     }
