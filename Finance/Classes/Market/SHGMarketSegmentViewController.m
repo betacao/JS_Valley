@@ -162,7 +162,7 @@
         [leftButton setImage:image forState:UIControlStateNormal];
         [leftButton addTarget:self action:@selector(searchMarket:) forControlEvents:UIControlEventTouchUpInside];
         [leftButton sizeToFit];
-        
+
         leftView.frame = leftButton.bounds;
         [leftView addSubview:leftButton];
         _leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:leftView];

@@ -16,7 +16,7 @@
 #define kItemMargin 14.0f * XFACTOR
 #define kItemHeight 30.0f
 #define kItemLeftMargin  11.0f
-#define kSectionHeight 40.0f 
+#define kSectionHeight 40.0f
 #define kTitleToTop  15.0  * XFACTOR
 @interface SHGMarketSecondCategoryViewController ()<UITableViewDataSource,UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -47,7 +47,8 @@
 
     self.tableView.backgroundColor = [UIColor colorWithHexString:@"EEEFF0"];
     [self createCell];
-    }
+}
+
 - (void)createCell
 {    __weak typeof(self) weakSelf = self;
     [[SHGMarketManager shareManager] userSelectedArray:^(NSArray *array) {
@@ -87,10 +88,10 @@
                 CGRect frame = CGRectMake(kItemLeftMargin + (kItemMargin + width) * col, (kItemTopMargin + kItemHeight) * row + kItemTopMargin, width, kItemHeight);
                 button.frame = frame;
                 [cell.contentView addSubview:button];
-                
+
             }
         }
-        
+
     }];
 
 }
@@ -110,7 +111,7 @@
         [weakSelf.navigationController popViewControllerAnimated:YES];
     }];
 
-   
+
 }
 
 - (void)didSelectCategory:(SHGSecondCategoryButton *)btn
@@ -161,7 +162,7 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return self.categoryArray.count ;
-    
+
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -172,12 +173,12 @@
     } else{
         return 0;
     }
-   
+
 }
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-   
+
     UITableViewCell *cell = [self.cellArray objectAtIndex:indexPath.section ];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
@@ -185,7 +186,7 @@
 
 - (void)secondCategoryClick: (SHGSecondCategoryButton * )btn
 {
-  
+
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section

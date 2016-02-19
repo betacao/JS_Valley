@@ -46,6 +46,11 @@
         .leftSpaceToView(self.contentView, MarginFactor(18.0f))
         .rightSpaceToView(self.contentView, 0.0f)
         .heightIs(0.5f);
+
+
+        //***********************高度自适应cell设置步骤************************
+
+        [self setupAutoHeightWithBottomView:self.lineView bottomMargin:0.0f];
     }
     return self;
 }
@@ -82,10 +87,6 @@
 {
     _model = model;
     self.titleLabel.text = model.text;
-
-    //***********************高度自适应cell设置步骤************************
-
-    [self setupAutoHeightWithBottomView:self.lineView bottomMargin:0.0f];
 }
 
 - (void)setupNeedShowAccessorView:(BOOL)hidden

@@ -42,13 +42,29 @@
 {
     if (self.categoryArray && self.categoryArray.count > self.selectedIndex) {
         SHGMarketFirstCategoryObject *object = [self.categoryArray objectAtIndex:self.selectedIndex];
-        return object.firstCatalogId;
+        //区分对象实际上是一级还是二级
+        if ([object.parentId isEqualToString:@"-1"]) {
+            return object.firstCatalogId;
+        } else{
+            return object.parentId;
+        }
+
     }
     return @"";
 }
 
 - (NSString *)marketSecondId
 {
+    if (self.categoryArray && self.categoryArray.count > self.selectedIndex) {
+        SHGMarketFirstCategoryObject *object = [self.categoryArray objectAtIndex:self.selectedIndex];
+        //区分对象实际上是一级还是二级
+        if ([object.parentId isEqualToString:@"-1"]) {
+            return @"";
+        } else{
+            return object.firstCatalogId;
+        }
+
+    }
     return @"";
 }
 
@@ -141,7 +157,7 @@
 - (void)layoutSubviews
 {
     [super layoutSubviews];
-    if (self.categoryArray.count == 0 || self.buttonArrays.count != 0) {
+    if (self.categoryArray.count == self.buttonArrays.count) {
         return;
     }
     [self.scrollView removeAllSubviews];

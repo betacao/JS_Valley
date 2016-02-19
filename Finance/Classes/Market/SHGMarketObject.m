@@ -12,7 +12,7 @@
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey
 {
-    return @{ @"loginuserstate":@"loginuserstate",@"price":@"price",@"url":@"url",@"headimageurl":@"headimageurl",@"status":@"status", @"company":@"company", @"title":@"title",@"marketName":@"marketname",@"realname":@"realname", @"contactInfo":@"contactinfo", @"detail":@"detail", @"marketId":@"marketid", @"commentNum":@"commentnum", @"createBy":@"createby", @"praiseNum":@"praisenum",@"isCollection":@"iscollected", @"createTime":@"createtime", @"shareNum":@"sharenum", @"friendShip":@"friendship", @"catalog":@"catalog", @"firstcatalog":@"firstcatalog", @"secondcatalog":@"secondcatalog", @"firstcatalogid":@"firstcatalogid", @"secondcatalogid":@"secondcatalogid", @"isPraise":@"ispraise", @"position":@"position", @"praiseList":@"praiselist", @"commentList":@"commentlist", @"isDeleted":@"isdeleted", @"modifyTime":@"modifytime", @"tipUrl":@"tipurl", @"anonymous":@"anonymous", @"model":@"model"};
+    return @{ @"loginuserstate":@"loginuserstate",@"price":@"price",@"url":@"url",@"headimageurl":@"headimageurl",@"status":@"status", @"company":@"company", @"title":@"title",@"marketName":@"marketname",@"realname":@"realname", @"contactInfo":@"contactinfo", @"detail":@"detail", @"marketId":@"marketid", @"commentNum":@"commentnum", @"createBy":@"createby", @"praiseNum":@"praisenum",@"isCollection":@"iscollected", @"createTime":@"createtime", @"shareNum":@"sharenum", @"friendShip":@"friendship", @"catalog":@"catalog", @"firstcatalog":@"firstcatalog", @"secondcatalog":@"secondcatalog", @"firstcatalogid":@"firstcatalogid", @"secondcatalogid":@"secondcatalogid", @"isPraise":@"ispraise", @"position":@"position", @"praiseList":@"praiselist", @"commentList":@"commentlist", @"isDeleted":@"isdeleted", @"modifyTime":@"modifytime", @"anonymous":@"anonymous", @"model":@"model"};
 }
 
 + (NSValueTransformer *)JSONTransformerForKey:(NSString *)key
@@ -49,7 +49,7 @@
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey
 {
-    return @{@"firstCatalogId":@"firstcatalogid", @"firstCatalogName":@"firstcatalogname", @"secondCataLogs":@"secondcatalogs"};
+    return @{@"firstCatalogId":@"firstcatalogid", @"firstCatalogName":@"firstcatalogname", @"secondCataLogs":@"secondcatalogs", @"parentId":@"parentid"};
 }
 
 - (BOOL)isEqual:(SHGMarketFirstCategoryObject *)object
@@ -143,6 +143,13 @@
 {
     return @{@"catalogId":@"catalogid"};
 }
+
+@end
+
+
+@implementation SHGMarketNoticeObject
+
+
 
 @end
 

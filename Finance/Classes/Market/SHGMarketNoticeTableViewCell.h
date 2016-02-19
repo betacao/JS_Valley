@@ -10,5 +10,9 @@
 #import "SHGMarketObject.h"
 
 @interface SHGMarketNoticeTableViewCell : UITableViewCell
-- (void)loadDataWithObject:(SHGMarketObject *)object block: (void(^)(CGFloat height))block;
+
+@property (strong ,nonatomic) SHGMarketNoticeObject *object;
+
+@property (weak, nonatomic) UIViewController *controller;
+
 @end

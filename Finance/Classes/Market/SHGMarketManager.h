@@ -27,7 +27,7 @@
 
 - (void)loadHotCitys:(void (^)(NSArray *array))block;
 
-+ (void)loadTotalMarketList:(NSDictionary *)param block:(void (^)(NSArray *dataArray, NSArray *tipArray))block;
++ (void)loadTotalMarketList:(NSDictionary *)param block:(void (^)(NSArray *dataArray, NSString *position, NSString *total, NSString *tipUrl))block;
 
 + (void)loadMineMarketList:(NSDictionary *)param block:(void (^)(NSArray *array))block;
 

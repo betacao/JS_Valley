@@ -8,8 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import "SHGMarketObject.h"
-#define kMarketCellHeight 166.0f
-#define kMarketNoticeCellHeight (SCREENWIDTH * 206.0f) / 960.0f + 12.0f//加间隔
 
 @protocol SHGMarketTableViewDelegate <NSObject>
 

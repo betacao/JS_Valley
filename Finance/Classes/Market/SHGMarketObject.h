@@ -39,7 +39,6 @@
 @property (strong, nonatomic) NSMutableArray *commentList;
 @property (strong, nonatomic) NSString *isDeleted;//是否已经在服务端删除了
 @property (strong, nonatomic) NSString *modifyTime;
-@property (strong, nonatomic) NSString *tipUrl;
 @property (strong, nonatomic) NSString *anonymous;//是否委托大牛发布
 @property (strong, nonatomic) NSString *model;//业务模式
 @end
@@ -55,6 +54,7 @@
 @interface SHGMarketFirstCategoryObject : MTLModel<MTLJSONSerializing>
 @property (strong, nonatomic) NSString *firstCatalogId;
 @property (strong, nonatomic) NSString *firstCatalogName;
+@property (strong, nonatomic) NSString *parentId;
 @property (strong, nonatomic) NSArray *secondCataLogs;
 @end
 
@@ -85,3 +85,15 @@
 @end
 
 
+typedef NS_ENUM(NSInteger, SHGMarketNoticeType)
+{
+    SHGMarketNoticeTypePositionTop = 0,
+    SHGMarketNoticeTypePositionAny
+};
+
+@interface SHGMarketNoticeObject : SHGMarketObject
+
+@property (strong, nonatomic) NSString *tipUrl;
+@property (assign, nonatomic) SHGMarketNoticeType type;
+
+@end

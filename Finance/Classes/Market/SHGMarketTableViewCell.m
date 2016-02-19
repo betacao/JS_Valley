@@ -86,6 +86,8 @@
     .leftSpaceToView(self.contentView, 0.0f)
     .rightSpaceToView(self.contentView, 0.0f)
     .heightIs(MarginFactor(10.0f));
+
+    [self setupAutoHeightWithBottomView:self.bottomView bottomMargin:0.0f];
 }
 
 - (void)setObject:(SHGMarketObject *)object
@@ -104,12 +106,10 @@
         self.amountLabel.text = [@"金额：" stringByAppendingString: object.price];
     
    }
-    
-    
+
     self.contactLabel.text = [@"地区：" stringByAppendingString: object.position];
     [self loadCollectionState];
     self.timeLabel.text = [@"时间：" stringByAppendingString: object.createTime];
-    [self setupAutoHeightWithBottomView:self.bottomView bottomMargin:0.0f];
 }
 
 - (void)loadCollectionState

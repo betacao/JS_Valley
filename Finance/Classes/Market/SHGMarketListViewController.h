@@ -14,6 +14,7 @@
 - (void)reloadData;
 - (void)refreshData;
 - (void)clearAndReloadData;
+- (void)reloadDataWithHeight:(CGFloat)height;
 //移动到某个分类
 - (void)scrollToCategory:(SHGMarketFirstCategoryObject *)object;
 @end

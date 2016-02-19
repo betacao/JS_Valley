@@ -149,7 +149,9 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (self.dataArr.count > 0) {
-        return kMarketCellHeight;
+        SHGMarketObject *object = [self.dataArr objectAtIndex:indexPath.row];
+        CGFloat height = [self.tableView cellHeightForIndexPath:indexPath model:object keyPath:@"object" cellClass:[SHGMarketTableViewCell class] contentViewWidth:SCREENWIDTH];
+        return height;
     } else{
         return CGRectGetHeight(self.view.frame);
     }

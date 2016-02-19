@@ -94,7 +94,6 @@ typedef NS_ENUM(NSInteger, SHGMarketSendType){
         [self editObject:self.object];
         self.sendType = SHGMarketSendTypeReSet;
     }
-    [self.bgView setupAutoHeightWithBottomView:self.anonymousButton bottomMargin:MarginFactor(65.0f)];
     [self.bgView layoutSubviews];
     [self.tableView setTableHeaderView:self.bgView];
 }
@@ -326,6 +325,8 @@ typedef NS_ENUM(NSInteger, SHGMarketSendType){
     .widthIs(anonymousSize.width)
     .heightIs(anonymousSize.height);
 
+
+    [self.bgView setupAutoHeightWithBottomView:self.anonymousButton bottomMargin:MarginFactor(65.0f)];
 }
 
 - (void)editObject:(SHGMarketObject *)object

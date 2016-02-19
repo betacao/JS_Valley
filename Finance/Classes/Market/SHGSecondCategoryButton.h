@@ -10,8 +10,8 @@
 
 @interface SHGSecondCategoryButton : UIButton
 
-@property (nonatomic , assign)NSString * firstCategory;
-@property (nonatomic , assign)NSString * seocndName;
-@property (nonatomic , assign)NSString * secondId;
+@property (nonatomic, strong) NSString * firstCategory;
+@property (nonatomic, strong) NSString * secondName;
+@property (nonatomic, strong) NSString * secondId;
 
 @end
