@@ -260,7 +260,7 @@ const CGFloat kAdButtomMargin = 20.0f;
 
 - (void)insertRecomandArray
 {
-    if ([self.dataArr indexOfObject:self.recomandArray] != NSNotFound||self.recomandArray.count == 0) {
+    if ([self.dataArr indexOfObject:self.recomandArray] != NSNotFound || self.recomandArray.count == 0) {
         return;
     }
     //当前允许显示推荐好友 并且是动态页面不是已关注页面
@@ -268,10 +268,6 @@ const CGFloat kAdButtomMargin = 20.0f;
         if(self.dataArr.count > 4){
             if(self.recomandArray.count > 0){
                 [self.dataArr insertObject:self.recomandArray atIndex:3];
-            }
-        } else{
-            if(self.recomandArray.count > 0){
-                [self.dataArr addObject:self.recomandArray];
             }
         }
     }

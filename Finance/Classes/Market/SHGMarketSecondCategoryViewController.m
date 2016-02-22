@@ -20,7 +20,7 @@
 #define kTitleToTop  15.0  * XFACTOR
 @interface SHGMarketSecondCategoryViewController ()<UITableViewDataSource,UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property (nonatomic , strong) NSArray *categoryArray;
+@property (nonatomic , strong) NSMutableArray *categoryArray;
 @property (nonatomic , assign) NSInteger RowHeight;
 @property (nonatomic , assign) NSInteger firstCategoryIndex;
 @property (nonatomic , strong) NSMutableArray *cellArray;
@@ -55,7 +55,7 @@
         [weakSelf.haveSelectedArray addObjectsFromArray:array];
     }];
     [[SHGMarketManager shareManager] userListArray:^(NSArray *array) {
-        self.categoryArray = array;
+        self.categoryArray = [NSMutableArray arrayWithArray:array];
         CGFloat width = (SCREENWIDTH - 2 * kItemMargin - 2 * kItemLeftMargin) / 3.0f;
         for (NSInteger i = 0 ; i < self.categoryArray.count; i ++ ) {
             UITableViewCell * cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
@@ -129,13 +129,6 @@
     }
 }
 
--(NSArray * )categoryArray
-{
-    if (!_categoryArray) {
-        _categoryArray = [NSArray array];
-    }
-    return _categoryArray;
-}
 -(NSMutableArray * )haveSelectedArray
 {
     if (!_haveSelectedArray) {

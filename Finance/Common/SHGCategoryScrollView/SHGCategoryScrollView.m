@@ -97,6 +97,8 @@
     if (!_underLineView) {
         _underLineView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, kCategoryScrollViewHeight - 1.0f, 0.0f, 1.5f)];
         _underLineView.backgroundColor = [UIColor colorWithHexString:@"D82626"];
+    }
+    if (!_underLineView.superview) {
         [self.scrollView addSubview:_underLineView];
     }
     return _underLineView;
@@ -114,6 +116,9 @@
         CGPoint point = CGPointMake(CGRectGetWidth(self.frame) - blurImage.size.width, (CGRectGetHeight(self.frame) - blurImage.size.height) / 2.0f);
         point = [self convertPoint:point toView:self.scrollView];
         _blurImageView.origin = point;
+    }
+    if (!_blurImageView.superview) {
+        [self.scrollView insertSubview:_blurImageView belowSubview:self.underLineView];
     }
     return _blurImageView;
 }
@@ -158,10 +163,11 @@
 - (void)layoutSubviews
 {
     [super layoutSubviews];
-    if (self.categoryArray.count == self.buttonArrays.count) {
+    if (self.categoryArray.count == 0) {
         return;
     }
     [self.scrollView removeAllSubviews];
+    self.categoryWidth = 0.0f;
     [self.buttonArrays removeAllObjects];
 
     __block NSString *string = @"";

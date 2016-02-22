@@ -14,7 +14,8 @@
 
 @property (strong, nonatomic) NSArray *selecetedArray;
 @property (strong, nonatomic) NSArray *listArray;
-@property (strong, nonatomic) NSArray *totalArray;
+@property (strong, nonatomic) NSMutableArray *totalArray;
+@property (strong, nonatomic) NSArray *definedArray;
 @property (strong, nonatomic) NSArray *citysArray;
 
 @end
@@ -51,7 +52,7 @@
     self.cityName = @"";
     self.selecetedArray = @[];
     self.listArray = @[];
-    self.totalArray = @[];
+    [self.totalArray removeAllObjects];
     self.citysArray = @[];
 }
 //大分类
@@ -67,14 +68,18 @@
 
             weakSelf.listArray = [dictionary objectForKey:@"cataloglist"];
             NSArray *userselectdlist = [dictionary objectForKey:@"userselectdlist"];
-            NSMutableArray *temp = [NSMutableArray arrayWithArray:[dictionary objectForKey:@"definedcatalog"]];
-            if (temp.count > 0) {
-                [temp addObjectsFromArray:userselectdlist];
-                [temp addObjectsFromArray:weakSelf.listArray];
-                weakSelf.totalArray = [[SHGGloble sharedGloble] parseServerJsonArrayToJSONModel:temp class:[SHGMarketFirstCategoryObject class]];
-            }
+            weakSelf.definedArray = [dictionary objectForKey:@"definedcatalog"];
+            NSMutableArray *temp = [NSMutableArray array];
+
+            [temp addObjectsFromArray:weakSelf.definedArray];
+            [temp addObjectsFromArray:userselectdlist];
+            [temp addObjectsFromArray:weakSelf.listArray];
+
+            weakSelf.totalArray = [NSMutableArray arrayWithArray: [[SHGGloble sharedGloble] parseServerJsonArrayToJSONModel:temp class:[SHGMarketFirstCategoryObject class]]];
             weakSelf.selecetedArray = [[SHGGloble sharedGloble] parseServerJsonArrayToJSONModel:[dictionary objectForKey:@"selectcatalog"] class:[SHGMarketSelectedObject class]] ;
             weakSelf.listArray = [[SHGGloble sharedGloble] parseServerJsonArrayToJSONModel:weakSelf.listArray class:[SHGMarketFirstCategoryObject class]];
+            weakSelf.definedArray = [[SHGGloble sharedGloble] parseServerJsonArrayToJSONModel:weakSelf.definedArray class:[SHGMarketFirstCategoryObject class]];
+
             block();
         } failed:^(MOCHTTPResponse *response) {
             [Hud showMessageWithText:@"获取业务分类错误"];
@@ -98,6 +103,13 @@
     }];
 }
 
+- (void)userTotalArray:(void (^)(NSArray *array))block
+{
+    [self loadMarketCategoryBlock:^{
+        block(self.totalArray);
+    }];
+}
+
 - (void)modifyUserSelectedArray:(NSArray *)array
 {
     NSMutableArray *objectArray = [NSMutableArray array];
@@ -109,11 +121,13 @@
     self.selecetedArray = [NSArray arrayWithArray:objectArray];
 }
 
-- (void)userTotalArray:(void (^)(NSArray *array))block
+- (void)modifyUserTotalArray:(NSArray *)array
 {
-    [self loadMarketCategoryBlock:^{
-        block(self.totalArray);
-    }];
+    [self.totalArray removeAllObjects];
+
+    [self.totalArray addObjectsFromArray:self.definedArray];
+    [self.totalArray addObjectsFromArray:array];
+    [self.totalArray addObjectsFromArray:self.listArray];
 }
 
 - (void)loadHotCitys:(void (^)(NSArray *))block
@@ -519,6 +533,28 @@
             block(nil);
         }
     }];
+}
+
+- (NSMutableArray *)searchObjectWithCatalogIds:(NSArray *)ids
+{
+    NSMutableArray *resultArray = [NSMutableArray array];
+    if (ids.count == 0) {
+        return resultArray;
+    }
+    [self.listArray enumerateObjectsUsingBlock:^(SHGMarketFirstCategoryObject *firstObject, NSUInteger idx, BOOL * _Nonnull stop) {
+        [firstObject.secondCataLogs enumerateObjectsUsingBlock:^(SHGMarketSecondCategoryObject *secondObject, NSUInteger idx, BOOL * _Nonnull stop) {
+            [ids enumerateObjectsUsingBlock:^(NSString *string, NSUInteger idx, BOOL * _Nonnull stop) {
+                if ([secondObject.secondCatalogId isEqualToString:string]) {
+                    SHGMarketFirstCategoryObject *obj = [[SHGMarketFirstCategoryObject alloc] init];
+                    obj.firstCatalogId = secondObject.secondCatalogId;
+                    obj.firstCatalogName = secondObject.secondCatalogName;
+                    obj.parentId = firstObject.firstCatalogId;
+                    [resultArray addObject:obj];
+                }
+            }];
+        }];
+    }];
+    return resultArray;
 }
 
 @end

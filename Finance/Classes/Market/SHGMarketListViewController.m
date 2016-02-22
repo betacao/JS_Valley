@@ -32,10 +32,9 @@
 @property (strong, nonatomic) SHGMarketNoticeObject *otherObject;
 
 @property (strong, nonatomic) NSMutableArray *currentArray;
-@property (strong, nonatomic) NSArray *userSelectedArray;
 @property (strong, nonatomic) NSString *tipUrl;
 @property (strong, nonatomic) NSString *position;
-@property (strong, nonatomic) NSString *total;
+@property (strong, nonatomic) NSArray *selectedArray;
 
 @property (assign, nonatomic) CGFloat noticeHeight;
 @end
@@ -55,11 +54,6 @@
 {
     __weak typeof(self) weakSelf = self;
     [[SHGMarketManager shareManager] userTotalArray:^(NSArray *array) {
-
-        [[SHGMarketManager shareManager] userSelectedArray:^(NSArray *array) {
-            weakSelf.userSelectedArray = array;
-        }];
-
         weakSelf.scrollView.categoryArray = [NSMutableArray arrayWithArray:array];
         for (NSInteger i = 0; i < array.count; i++) {
             NSMutableArray *subArray = [NSMutableArray array];
@@ -123,7 +117,6 @@
         }
         weakSelf.position = position;
         weakSelf.tipUrl = tipUrl;
-        weakSelf.total = total;
 
         [weakSelf.tableView reloadData];
     }];
@@ -378,31 +371,37 @@
 - (void)reloadDataWithHeight:(CGFloat)height
 {
     self.noticeHeight = height;
-    [self.tableView reloadData];
+    [self.tableView beginUpdates];
+    [self.tableView endUpdates];
 }
 #pragma mark -----二级分类返回代理
 - (void)didUploadUserCategoryTags:(NSArray *)array
 {
-    [[SHGMarketManager shareManager] modifyUserSelectedArray:array];
-    __weak typeof(self)weakSelf = self;
+    __weak typeof(self) weakSelf = self;
+    NSMutableArray *objectArray = [[SHGMarketManager shareManager] searchObjectWithCatalogIds:array];
+    [[SHGMarketManager shareManager] modifyUserTotalArray:objectArray];
+
     [[SHGMarketManager shareManager] userSelectedArray:^(NSArray *array) {
-        weakSelf.userSelectedArray = array;
+        weakSelf.selectedArray = [NSArray arrayWithArray:array];
     }];
-//    NSString *marketId = [self.scrollView marketFirstId];
-//    if ([marketId isEqualToString:kUserDefineCategoryID]) {
-//        [self.currentArray removeAllObjects];
-//        [self loadMarketList:@"first" firstId:[self.scrollView marketFirstId] second:[self.scrollView marketSecondId] marketId:@"-1" modifyTime:@""];
-//    } else{
-//        for (SHGMarketFirstCategoryObject *object in self.scrollView.categoryArray) {
-//            if ([object.firstCatalogId isEqualToString:kUserDefineCategoryID]) {
-//                NSInteger index = [self.scrollView.categoryArray indexOfObject:object];
-//                NSMutableArray *subArray = [self.dataArr objectAtIndex:index];
-//                [subArray removeAllObjects];
-//                [self.scrollView moveToIndex:1];
-//                break;
-//            }
-//        }
-//    }
+
+    [[SHGMarketManager shareManager] userTotalArray:^(NSArray *totalArray) {
+        weakSelf.scrollView.categoryArray = [NSMutableArray arrayWithArray:totalArray];
+
+        [weakSelf.dataArr removeObjectsInRange:NSMakeRange(1, weakSelf.selectedArray.count)];
+        
+        for (NSInteger i = 0; i < array.count; i++) {
+            NSMutableArray *subArray = [NSMutableArray array];
+            [weakSelf.dataArr insertObject:subArray atIndex:i+1];
+        }
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+
+            [weakSelf.scrollView moveToIndex:1];
+        });
+    }];
+
+
+    [[SHGMarketManager shareManager] modifyUserSelectedArray:array];
 
 }
 

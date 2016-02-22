@@ -21,6 +21,8 @@
 
 - (void)modifyUserSelectedArray:(NSArray *)array;
 
+- (void)modifyUserTotalArray:(NSArray *)array;
+
 - (void)userListArray:(void (^)(NSArray *array))block;
 
 - (void)userTotalArray:(void (^)(NSArray *array))block;
@@ -62,5 +64,7 @@
 + (void)shareSuccessCallBack:(SHGMarketObject *)object finishBlock:(void (^)(BOOL))block;
 
 + (void)loadHotSearchWordFinishBlock:(void (^)(NSArray *array))block;
+
+- (NSMutableArray *)searchObjectWithCatalogIds:(NSArray *)ids;
 
 @end
