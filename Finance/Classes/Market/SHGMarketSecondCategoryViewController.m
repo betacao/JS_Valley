@@ -56,7 +56,7 @@
     }];
     [[SHGMarketManager shareManager] userListArray:^(NSArray *array) {
         self.categoryArray = [NSMutableArray arrayWithArray:array];
-        CGFloat width = (SCREENWIDTH - 2 * kItemMargin - 2 * kItemLeftMargin) / 3.0f;
+        CGFloat width = ceilf((SCREENWIDTH - 2 * kItemMargin - 2 * kItemLeftMargin) / 3.0f);
         for (NSInteger i = 0 ; i < self.categoryArray.count; i ++ ) {
             UITableViewCell * cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
             cell.backgroundColor = [UIColor colorWithHexString:@"EEEFF0"];
@@ -87,7 +87,7 @@
                 [button setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithHexString:@"FFFFFF"]] forState:UIControlStateNormal];
                 [button setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithHexString:@"F3F3F3"]] forState:UIControlStateSelected];
                 [button addTarget:self action:@selector(didSelectCategory:) forControlEvents:UIControlEventTouchUpInside];
-                CGRect frame = CGRectMake(kItemLeftMargin + (kItemMargin + width) * col, (kItemTopMargin + kItemHeight) * row + kItemTopMargin, width, kItemHeight);
+                CGRect frame = CGRectMake(kItemLeftMargin + (kItemMargin + width) * col, ceilf((kItemTopMargin + kItemHeight) * row + kItemTopMargin), width, kItemHeight);
                 button.frame = frame;
                 [cell.contentView addSubview:button];
 

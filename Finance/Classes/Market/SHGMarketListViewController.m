@@ -29,11 +29,11 @@
 @property (strong, nonatomic) SHGEmptyDataView *emptyView;
 
 @property (strong, nonatomic) SHGMarketNoticeTableViewCell *noticeCell;
-@property (strong, nonatomic) SHGMarketNoticeObject *otherObject;
 
 @property (strong, nonatomic) NSMutableArray *currentArray;
 @property (strong, nonatomic) NSString *tipUrl;
-@property (strong, nonatomic) NSString *position;
+@property (strong, nonatomic) NSString *index;
+@property (strong, nonatomic) NSMutableDictionary *positionDictionary;
 @property (strong, nonatomic) NSArray *selectedArray;
 
 @property (assign, nonatomic) CGFloat noticeHeight;
@@ -96,26 +96,35 @@
     __weak typeof(self) weakSelf = self;
     NSString *area = [SHGMarketManager shareManager].cityName;
 
-    NSString *redirect = [self.position isEqualToString:@"0"] ? @"1" : @"0";
+    NSString *position = [self.positionDictionary objectForKey:[self.scrollView marketFirstId]];
+    NSString *redirect = [position isEqualToString:@"0"] ? @"1" : @"0";
 
     NSDictionary *param = @{@"marketId":marketId ,@"uid":UID ,@"type":@"all" ,@"target":target ,@"pageSize":@"10" ,@"firstCatalog":firstId ,@"secondCatalog":secondId, @"modifyTime":modifyTime, @"city":area, @"redirect":redirect};
 
-    [SHGMarketManager loadTotalMarketList:param block:^(NSArray *dataArray, NSString *position, NSString *total, NSString *tipUrl) {
+    [SHGMarketManager loadTotalMarketList:param block:^(NSArray *dataArray, NSString *index, NSString *total, NSString *tipUrl) {
 
         [weakSelf.tableView.header endRefreshing];
         [weakSelf.tableView.footer endRefreshing];
         if ([target isEqualToString:@"first"]) {
             [weakSelf.currentArray removeAllObjects];
             [weakSelf.currentArray addObjectsFromArray:dataArray];
+            //第一次给服务器的值
+            weakSelf.index = index;
+
         } else if([target isEqualToString:@"refresh"]){
             for (NSInteger i = dataArray.count - 1; i >= 0; i--){
                 SHGMarketObject *obj = [dataArray objectAtIndex:i];
                 [weakSelf.currentArray insertUniqueObject:obj atIndex:0];
             }
+            //下拉的话如果之前显示了偏少 则下移 否则不管
+            NSInteger position = [[weakSelf.positionDictionary objectForKey:[weakSelf.scrollView marketFirstId]] integerValue];
+            if (position > 0) {
+                weakSelf.index = [NSString stringWithFormat:@"%ld", (long)(position + dataArray.count)];
+
+            }
         } else if([target isEqualToString:@"load"]){
             [weakSelf.currentArray addObjectsFromArray:dataArray];
         }
-        weakSelf.position = position;
         weakSelf.tipUrl = tipUrl;
 
         [weakSelf.tableView reloadData];
@@ -168,7 +177,13 @@
     return _noticeCell;
 }
 
-
+- (NSMutableDictionary *)positionDictionary
+{
+    if (!_positionDictionary) {
+        _positionDictionary = [NSMutableDictionary dictionary];
+    }
+    return _positionDictionary;
+}
 
 - (void)refreshHeader
 {
@@ -224,28 +239,37 @@
 
 - (SHGMarketNoticeObject *)otherObject
 {
-    if (!_otherObject) {
-        _otherObject = [[SHGMarketNoticeObject alloc] init];
+    SHGMarketNoticeObject *otherObject = [[SHGMarketNoticeObject alloc] init];
+    otherObject.tipUrl = self.tipUrl;
+    NSString *position = [self.positionDictionary objectForKey:[self.scrollView marketFirstId]];
+    if ([position isEqualToString:@"0"]) {
+        otherObject.type = SHGMarketNoticeTypePositionTop;
+    } else if ([position integerValue] > 0){
+        otherObject.type = SHGMarketNoticeTypePositionAny;
     }
-    _otherObject.tipUrl = self.tipUrl;
-    if ([_position isEqualToString:@"0"]) {
-        _otherObject.type = SHGMarketNoticeTypePositionTop;
-    } else if ([_position integerValue] > 0){
-        _otherObject.type = SHGMarketNoticeTypePositionAny;
-    }
-    return _otherObject;
+    return otherObject;
 }
 
-- (void)setPosition:(NSString *)position
+- (void)setIndex:(NSString *)index
 {
-    _position = position;
-    if ([self.currentArray indexOfObject:self.otherObject] != NSNotFound) {
-        [self.currentArray removeObject:self.otherObject];
+    [self.positionDictionary setObject:index forKey:[self.scrollView marketFirstId]];
+    SHGMarketNoticeObject *object = nil;
+    for (NSInteger i = 0; i < self.currentArray.count; i++) {
+        id obj = [self.currentArray objectAtIndex:i];
+        if ([obj isKindOfClass:[SHGMarketNoticeObject class]]) {
+            object = (SHGMarketNoticeObject *)obj;
+            break;
+        }
     }
-    if (![position isEqualToString:@"-1"]){
-        [self.currentArray insertUniqueObject:self.otherObject atIndex:[position integerValue]];
+    if (object) {
+        [self.currentArray removeObject:object];
+    }
+    if (![index isEqualToString:@"-1"]){
+        [self.currentArray insertUniqueObject:[self otherObject] atIndex:[index integerValue]];
     }
 }
+
+
 
 #pragma mark ------tableview代理
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -355,6 +379,7 @@
 
 - (void)clearAndReloadData
 {
+    [self.positionDictionary removeAllObjects];
     if (self.dataArr.count > 0) {
 
         [self.dataArr enumerateObjectsUsingBlock:^(NSMutableArray *array, NSUInteger idx, BOOL * _Nonnull stop) {

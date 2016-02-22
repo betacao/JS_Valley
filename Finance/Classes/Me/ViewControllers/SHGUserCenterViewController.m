@@ -16,7 +16,7 @@
 #import "MyCollectionViewController.h"
 #import "SettingsViewController.h"
 
-#define kLabelWidth SCREENWIDTH / 4.0f
+#define kLabelWidth ceilf(SCREENWIDTH / 4.0f)
 
 @interface SHGUserCenterViewController ()<UITableViewDataSource, UITableViewDelegate, UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 @property (strong, nonatomic) UITableView     *tableView;
