@@ -103,14 +103,14 @@ typedef NS_ENUM(NSInteger, SHGMarketSendType){
     self.marketNameField.font = [UIFont systemFontOfSize:FontFactor(14.0f)];
     self.marketNameField.layer.masksToBounds = YES;
     self.marketNameField.layer.cornerRadius = 3.0f;
-    self.marketNameField.leftView = [[UIView alloc]initWithFrame:CGRectMake(0.0f, 0.0f, 5.0f, 0.0f)];
+    self.marketNameField.leftView = [[UIView alloc]initWithFrame:CGRectMake(0.0f, 0.0f, 10.0f, 0.0f)];
     self.marketNameField.leftViewMode = UITextFieldViewModeAlways;
     [self.marketNameField setValue:[UIColor colorWithHexString:@"D3D3D3"] forKeyPath:@"_placeholderLabel.textColor"];
 
     self.acountField.font = [UIFont systemFontOfSize:FontFactor(14.0f)];
     self.acountField.layer.masksToBounds = YES;
     self.acountField.layer.cornerRadius = 3.0f;
-    self.acountField.leftView = [[UIView alloc]initWithFrame:CGRectMake(0.0f, 0.0f, 5.0f, 0.0f)];
+    self.acountField.leftView = [[UIView alloc]initWithFrame:CGRectMake(0.0f, 0.0f, 10.0f, 0.0f)];
     self.acountField.leftViewMode = UITextFieldViewModeAlways;
     [self.acountField setValue:[UIColor colorWithHexString:@"D3D3D3"] forKeyPath:@"_placeholderLabel.textColor"];
 
@@ -120,14 +120,14 @@ typedef NS_ENUM(NSInteger, SHGMarketSendType){
     self.contactField.font = [UIFont systemFontOfSize:FontFactor(14.0f)];
     self.contactField.layer.masksToBounds = YES;
     self.contactField.layer.cornerRadius = 3.0f;
-    self.contactField.leftView = [[UIView alloc]initWithFrame:CGRectMake(0.0f, 0.0f, 5.0f, 0.0f)];
+    self.contactField.leftView = [[UIView alloc]initWithFrame:CGRectMake(0.0f, 0.0f, 10.0f, 0.0f)];
     self.contactField.leftViewMode = UITextFieldViewModeAlways;
     [self.contactField setValue:[UIColor colorWithHexString:@"D3D3D3"] forKeyPath:@"_placeholderLabel.textColor"];
 
     self.locationField.font = [UIFont systemFontOfSize:FontFactor(14.0f)];
     self.locationField.layer.masksToBounds = YES;
     self.locationField.layer.cornerRadius = 3.0f;
-    self.locationField.leftView = [[UIView alloc]initWithFrame:CGRectMake(0.0f, 0.0f, 5.0f, 0.0f)];
+    self.locationField.leftView = [[UIView alloc]initWithFrame:CGRectMake(0.0f, 0.0f, 10.0f, 0.0f)];
     self.locationField.leftViewMode = UITextFieldViewModeAlways;
     [self.locationField setValue:[UIColor colorWithHexString:@"D3D3D3"] forKeyPath:@"_placeholderLabel.textColor"];
 
@@ -155,7 +155,7 @@ typedef NS_ENUM(NSInteger, SHGMarketSendType){
     self.introduceLabel.font = [UIFont systemFontOfSize:FontFactor(14.0f)];
 
     self.introduceView.font = [UIFont systemFontOfSize:FontFactor(14.0f)];
-    self.introduceView.placeholder = @"描述您的业务详细信息";
+    self.introduceView.placeholder = @" 描述您的业务详细信息";
     self.introduceView.placeholderColor = [UIColor colorWithHexString:@"d3d3d3"];
     self.introduceView.layer.masksToBounds = YES;
     self.introduceView.layer.cornerRadius = 3.0f;
@@ -198,7 +198,7 @@ typedef NS_ENUM(NSInteger, SHGMarketSendType){
 
     self.firstCategoryBox.sd_layout
     .topSpaceToView(self.bgView, MarginFactor(15.0f))
-    .leftSpaceToView(self.bgView, MarginFactor(13.0f))
+    .leftSpaceToView(self.bgView, MarginFactor(12.0f))
     .heightIs(MarginFactor(35.0f))
     .widthIs(MarginFactor(155.0f));
 
@@ -256,17 +256,19 @@ typedef NS_ENUM(NSInteger, SHGMarketSendType){
     .centerXEqualToView(self.starView1)
     .widthIs(starSize.width)
     .heightIs(starSize.height);
-
+    
+    [self.modelLabel sizeToFit];
+    CGSize modelSize = self.modelLabel.frame.size;
     self.modelLabel.sd_layout
-    .topSpaceToView(self.locationField, MarginFactor(28.0f))
-    .leftSpaceToView(self.bgView, MarginFactor(16.0f))
-    .autoHeightRatio(0);
-    [self.modelLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
+    .topSpaceToView(self.locationField, MarginFactor(24.0f))
+    .leftEqualToView(self.locationField)
+    .widthIs(modelSize.width)
+    .heightIs(modelSize.height);
 
     self.modelContentView.sd_layout
     .leftEqualToView(self.firstCategoryBox)
-    .topSpaceToView(self.modelLabel, MarginFactor(14.0f))
-    .rightSpaceToView(self.bgView, MarginFactor(13.0f))
+    .topSpaceToView(self.modelLabel, MarginFactor(12.0f))
+    .rightSpaceToView(self.bgView, MarginFactor(12.0f))
     .heightIs(MarginFactor(35.0f));
 
     self.breakView.sd_layout
@@ -287,15 +289,17 @@ typedef NS_ENUM(NSInteger, SHGMarketSendType){
     .rightSpaceToView(self.modelContentView, 0.0f)
     .heightRatioToView(self.modelContentView, 1.0f);
 
+    [self.introduceLabel sizeToFit];
+    CGSize introduceSize = self.introduceLabel.frame.size;
     self.introduceLabel.sd_layout
-    .topSpaceToView(self.modelContentView, MarginFactor(28.0f))
+    .topSpaceToView(self.modelContentView, MarginFactor(24.0f))
     .leftEqualToView(self.modelLabel)
-    .autoHeightRatio(0);
-    [self.introduceLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
+    .widthIs(introduceSize.width)
+    .heightIs(introduceSize.height);
 
     self.introduceView.sd_layout
     .leftEqualToView(self.firstCategoryBox)
-    .topSpaceToView(self.introduceLabel, MarginFactor(14.0f))
+    .topSpaceToView(self.introduceLabel, MarginFactor(12.0f))
     .rightEqualToView(self.modelContentView)
     .heightIs(MarginFactor(137.0f));
 

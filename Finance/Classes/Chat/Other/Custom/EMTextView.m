@@ -20,7 +20,7 @@
     if (self) {
         // Initialization code
         _contentColor = [UIColor blackColor];
-        _placeholderColor = [UIColor lightGrayColor];
+        _placeholderColor = [UIColor colorWithHexString:@"d3d3d3"];
         _editing = NO;
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(startEditing:) name:UITextViewTextDidBeginEditingNotification object:self];
@@ -32,7 +32,7 @@
 - (void)awakeFromNib
 {
     _contentColor = [UIColor blackColor];
-    _placeholderColor = [UIColor lightGrayColor];
+    _placeholderColor = [UIColor colorWithHexString:@"d3d3d3"];
     _editing = NO;
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(startEditing:) name:UITextViewTextDidBeginEditingNotification object:self];

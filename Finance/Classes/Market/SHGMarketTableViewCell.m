@@ -117,8 +117,8 @@
         self.amountLabel.text = @"金额：暂未说明";
     } else{
         self.amountLabel.text = [@"金额：" stringByAppendingString: object.price];
-        self.contactLabel.text = [@"地区：" stringByAppendingString: object.position];
     }
+    self.contactLabel.text = [@"地区：" stringByAppendingString: object.position];
     [self loadCollectionState];
     self.timeLabel.text = [@"时间：" stringByAppendingString: object.createTime];
     [self.titleLabel sizeToFit];

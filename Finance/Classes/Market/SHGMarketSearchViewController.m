@@ -135,7 +135,7 @@
 - (void)addHotItem
 {
     CGFloat width = ceilf((SCREENWIDTH - 2 * (kItemLeftMargin + kItemHorizontalMargin)) / 3.0f);
-    CGFloat height = FontFactor(35.0f);
+    CGFloat height = MarginFactor(35.0f);
     NSInteger row = 0;
     NSInteger col = 0;
     for (NSInteger i = 0; i < self.dataArray.count; i++) {

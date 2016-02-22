@@ -51,7 +51,8 @@
     .widthIs(SCREENWIDTH-  MarginFactor(15.0f))
     .heightIs(0.5f);
     
-    CGSize rightSize = self.rightImage.frame.size;
+    UIImage * rightImage = [UIImage imageNamed:@"rightArrowImage"];
+    CGSize rightSize = rightImage.size;
     self.rightImage.sd_layout
     .rightSpaceToView(self.contentView, MarginFactor(15.0f))
     .centerYEqualToView(self.imageTitle)

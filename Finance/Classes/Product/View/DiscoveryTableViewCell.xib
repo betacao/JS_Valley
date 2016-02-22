@@ -45,8 +45,8 @@
                         <color key="textColor" red="0.59607843137254901" green="0.59607843137254901" blue="0.59607843137254901" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="accessoryView" id="NqW-9S-0ch">
-                        <rect key="frame" x="300" y="18" width="5" height="10"/>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="rightArrowImage" id="NqW-9S-0ch">
+                        <rect key="frame" x="300" y="14" width="12" height="14"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     </imageView>
                 </subviews>
@@ -63,6 +63,6 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="accessoryView" width="5" height="10"/>
+        <image name="rightArrowImage" width="7" height="13"/>
     </resources>
 </document>
