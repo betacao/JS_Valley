@@ -183,12 +183,19 @@
         cell.delegate = self;
     }
     cell.object = [self.dataArr objectAtIndex:indexPath.row];
+    [cell loadNewUiFortype:SHGMarketTableViewCellTypeAll];
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
+    if (self.dataArr.count > 0) {
+        SHGMarketDetailViewController *controller = [[SHGMarketDetailViewController alloc] init];
+        controller.object = [self.dataArr objectAtIndex:indexPath.row];
+        controller.delegate = [SHGMarketSegmentViewController sharedSegmentController];
+        [self.navigationController pushViewController:controller animated:YES];
+    }
+
 }
 
 

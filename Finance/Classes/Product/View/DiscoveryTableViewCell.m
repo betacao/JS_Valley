@@ -31,12 +31,13 @@
 
 - (void)addLayout
 {
-    CGSize imageSize = self.imageTitle.frame.size;
-   self.imageTitle.sd_layout
+    UIImage * image = [UIImage imageNamed:@"hezuo"];
+    CGSize size = image.size;
+    self.imageTitle.sd_layout
     .leftSpaceToView(self.contentView, MarginFactor(15.0f))
-    .topSpaceToView(self.contentView, MarginFactor((60.0f - imageSize.height))/2.0f)
-    .widthIs(MarginFactor(imageSize.width))
-    .heightIs(MarginFactor(imageSize.height));
+    .topSpaceToView(self.contentView, MarginFactor((60.0f - size.height))/2.0f)
+    .widthIs(MarginFactor(size.width))
+    .heightIs(MarginFactor(size.height));
    
    self.lblTitle.sd_layout
     .leftSpaceToView(self.imageTitle, MarginFactor(13.0f))

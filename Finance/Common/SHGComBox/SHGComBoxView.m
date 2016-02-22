@@ -8,7 +8,7 @@
 
 
 #import "SHGComBoxView.h"
-
+#import "SHGGlobleTableViewCell.h"
 @interface SHGComBoxView ()
 
 @property (assign, nonatomic) BOOL isOpen;
@@ -56,6 +56,7 @@
         _titleLabel.backgroundColor = [UIColor clearColor];
         _titleLabel.textAlignment = NSTextAlignmentLeft;
         _titleLabel.textColor = [UIColor colorWithHexString:@"606060"];
+        [_titleLabel addObserver:self forKeyPath:@"text" options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld context:nil];
         [self.bgButton addSubview:_titleLabel];
     }
     return _titleLabel;
@@ -187,6 +188,18 @@
     return self.selectIndex;
 }
 
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context
+{
+    if ([object isEqual:self.titleLabel]) {
+        NSString *new = [change objectForKey:@"new"];
+        if ([new isEqualToString:@"不限"]) {
+            self.titleLabel.textColor = [UIColor colorWithHexString:@"b2b2b2"];
+        } else{
+            self.titleLabel.textColor = [UIColor colorWithHexString:@"606060"];
+        }
+    }
+}
+
 #pragma mark -tableview
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -224,6 +237,11 @@
     self.isOpen = YES;
     [self tapAction];
     [self moveToIndex:indexPath.row];
+}
+
+- (void)dealloc
+{
+    [self.titleLabel removeObserver:self forKeyPath:@"text"];
 }
 
 @end

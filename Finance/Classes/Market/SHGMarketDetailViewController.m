@@ -289,7 +289,13 @@
 {
     [self addEmptyViewIfNeeded];
     [self loadShareButtonState];
-    self.modelLabel.text = @"模式： 找资金";
+   
+    if (self.responseObject.model.length == 0) {
+         self.modelLabel.text = @"模式： 找资金";
+    } else{
+        self.modelLabel.text = [NSString stringWithFormat:@"模式：%@",self.responseObject.model];
+    }
+    
     self.timeLabel.text = self.responseObject.createTime;
     if (!self.responseObject.price.length == 0) {
         NSString * zjStr = self.responseObject.price;

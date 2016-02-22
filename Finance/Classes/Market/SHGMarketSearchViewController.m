@@ -73,7 +73,7 @@
                 UIButton *button = (UIButton *)object;
                 self.backButton = button;
                 [button setTitle:@"取消" forState:UIControlStateNormal];
-                button.titleLabel.font = [UIFont systemFontOfSize:FontFactor(16.0f)];
+                button.titleLabel.font = [UIFont systemFontOfSize:FontFactor(15.0f)];
                 button.enabled = YES;
             }
         }
@@ -92,8 +92,7 @@
 
 - (void)initView
 {
-    self.titleLabel.font = [UIFont systemFontOfSize:FontFactor(16.0f)];
-
+    self.titleLabel.font = [UIFont systemFontOfSize:FontFactor(15.0f)];
     self.moreLabel.font = [UIFont systemFontOfSize:FontFactor(14.0f)];
     self.moreLabel.userInteractionEnabled = YES;
     UITapGestureRecognizer *recogizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pushToAdvancedSearchController:)];
@@ -185,6 +184,13 @@
 {
     [self.searchBar resignFirstResponder];
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
+{
+    SHGMarketSearchResultViewController *controller = [[SHGMarketSearchResultViewController alloc] initWithType:SHGMarketSearchTypeNormal];
+    controller.param = @{@"uid":UID ,@"type":@"searcher" ,@"pageSize":@"10", @"marketName":searchBar.text};
+    [self.navigationController pushViewController:controller animated:YES];
 }
 
 - (void)didReceiveMemoryWarning
