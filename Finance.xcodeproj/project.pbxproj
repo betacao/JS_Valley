@@ -908,7 +908,7 @@
 		F9A997F71C72CAA500355337 /* SHGMarketSearchResultViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9A997F51C72CAA500355337 /* SHGMarketSearchResultViewController.xib */; };
 		F9AA69CF1C61E0A800C920B5 /* SHGMarketSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9AA69CD1C61E0A800C920B5 /* SHGMarketSearchViewController.m */; };
 		F9AA69D01C61E0A800C920B5 /* SHGMarketSearchViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9AA69CE1C61E0A800C920B5 /* SHGMarketSearchViewController.xib */; };
-		F9AAC1A71C51F0F800E92B7A /* SHGMarketNoticeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F9AAC1A51C51F0F800E92B7A /* SHGMarketNoticeTableViewCell.m */; };
+		F9AAC1A71C51F0F800E92B7A /* SHGMarketImageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F9AAC1A51C51F0F800E92B7A /* SHGMarketImageTableViewCell.m */; };
 		F9ADAEB71BF2DB32001366F9 /* SHGPersonalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9ADAEB51BF2DB32001366F9 /* SHGPersonalViewController.m */; };
 		F9B0636B1BD7699400471DF4 /* SHGNavigationView.m in Sources */ = {isa = PBXBuildFile; fileRef = F9B0636A1BD7699400471DF4 /* SHGNavigationView.m */; };
 		F9B18C081BA0521600EA0314 /* SHGNoticeView.m in Sources */ = {isa = PBXBuildFile; fileRef = F9B18C071BA0521600EA0314 /* SHGNoticeView.m */; };
@@ -2210,8 +2210,8 @@
 		F9AA69CC1C61E0A800C920B5 /* SHGMarketSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGMarketSearchViewController.h; sourceTree = "<group>"; };
 		F9AA69CD1C61E0A800C920B5 /* SHGMarketSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGMarketSearchViewController.m; sourceTree = "<group>"; };
 		F9AA69CE1C61E0A800C920B5 /* SHGMarketSearchViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGMarketSearchViewController.xib; sourceTree = "<group>"; };
-		F9AAC1A41C51F0F800E92B7A /* SHGMarketNoticeTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGMarketNoticeTableViewCell.h; sourceTree = "<group>"; };
-		F9AAC1A51C51F0F800E92B7A /* SHGMarketNoticeTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGMarketNoticeTableViewCell.m; sourceTree = "<group>"; };
+		F9AAC1A41C51F0F800E92B7A /* SHGMarketImageTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGMarketImageTableViewCell.h; sourceTree = "<group>"; };
+		F9AAC1A51C51F0F800E92B7A /* SHGMarketImageTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGMarketImageTableViewCell.m; sourceTree = "<group>"; };
 		F9AB29511B883F2F00BD2BDE /* CircleListDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CircleListDelegate.h; sourceTree = "<group>"; };
 		F9ADAEB41BF2DB32001366F9 /* SHGPersonalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGPersonalViewController.h; sourceTree = "<group>"; };
 		F9ADAEB51BF2DB32001366F9 /* SHGPersonalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGPersonalViewController.m; sourceTree = "<group>"; };
@@ -4828,8 +4828,8 @@
 				F9F349C61C1968310090F111 /* SHGMarketTableViewCell.h */,
 				F9F349C71C1968310090F111 /* SHGMarketTableViewCell.m */,
 				F9F349C81C1968310090F111 /* SHGMarketTableViewCell.xib */,
-				F9AAC1A41C51F0F800E92B7A /* SHGMarketNoticeTableViewCell.h */,
-				F9AAC1A51C51F0F800E92B7A /* SHGMarketNoticeTableViewCell.m */,
+				F9AAC1A41C51F0F800E92B7A /* SHGMarketImageTableViewCell.h */,
+				F9AAC1A51C51F0F800E92B7A /* SHGMarketImageTableViewCell.m */,
 				F90344121C1C192F0063EABB /* SHGMarketDetailViewController.h */,
 				F90344131C1C192F0063EABB /* SHGMarketDetailViewController.m */,
 				F90344141C1C192F0063EABB /* SHGMarketDetailViewController.xib */,
@@ -5662,7 +5662,7 @@
 				408D8B861AF9F57B0055810C /* SettingsSuggestionsViewController.m in Sources */,
 				F9DDEFBF1BF9EB79001341CF /* SHGActionSendViewController.m in Sources */,
 				6147AE011B050E7F00DFBD50 /* MPNotificationView.m in Sources */,
-				F9AAC1A71C51F0F800E92B7A /* SHGMarketNoticeTableViewCell.m in Sources */,
+				F9AAC1A71C51F0F800E92B7A /* SHGMarketImageTableViewCell.m in Sources */,
 				61D62BF31ADD1C4D002DD395 /* WSHHTTPTestModel.m in Sources */,
 				614AD1AD1AD7AC4D00DDF43E /* LoginViewController.m in Sources */,
 				61D62BFE1ADE035C002DD395 /* CircleListObj.m in Sources */,

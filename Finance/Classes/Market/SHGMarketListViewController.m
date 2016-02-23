@@ -18,7 +18,7 @@
 #import "SHGMarketSendViewController.h"
 #import "VerifyIdentityViewController.h"
 #import "SHGMomentCityViewController.h"
-#import "SHGMarketNoticeTableViewCell.h"
+#import "SHGMarketImageTableViewCell.h"
 #import "SHGNoticeView.h"
 
 @interface SHGMarketListViewController ()<UITabBarDelegate, UITableViewDataSource, SHGCategoryScrollViewDelegate,SHGMarketSecondCategoryViewControllerDelegate, SHGMarketTableViewDelegate>
@@ -29,7 +29,8 @@
 @property (strong, nonatomic) UITableViewCell *emptyCell;
 @property (strong, nonatomic) SHGEmptyDataView *emptyView;
 
-@property (strong, nonatomic) SHGMarketNoticeTableViewCell *noticeCell;
+@property (strong, nonatomic) SHGMarketImageTableViewCell *imageCell;
+@property (strong, nonatomic) SHGMarketLabelTableViewCell *labelCell;
 @property (strong, nonatomic) SHGNoticeView *noticeView;
 
 @property (strong, nonatomic) NSMutableArray *currentArray;
@@ -172,14 +173,24 @@
     return _emptyView;
 }
 
-- (SHGMarketNoticeTableViewCell *)noticeCell
+- (SHGMarketImageTableViewCell *)imageCell
 {
-    if (!_noticeCell) {
-        _noticeCell = [[SHGMarketNoticeTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"SHGMarketNoticeTableViewCell"];
-        _noticeCell.selectionStyle = UITableViewCellSelectionStyleNone;
-        _noticeCell.controller = self;
+    if (!_imageCell) {
+        _imageCell = [[SHGMarketImageTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"SHGMarketImageTableViewCell"];
+        _imageCell.selectionStyle = UITableViewCellSelectionStyleNone;
+        _imageCell.controller = self;
     }
-    return _noticeCell;
+    return _imageCell;
+}
+
+- (SHGMarketLabelTableViewCell *)labelCell
+{
+    if (!_labelCell) {
+        _labelCell = [[SHGMarketLabelTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"SHGMarketLabelTableViewCell"];
+        _labelCell.selectionStyle = UITableViewCellSelectionStyleNone;
+        _labelCell.controller = self;
+    }
+    return _labelCell;
 }
 
 - (SHGNoticeView *)noticeView
@@ -231,9 +242,9 @@
 
 - (NSString *)minMarketID
 {
-    NSString *marketID = @"-1";
+    NSString *marketID = @"";
     for (SHGMarketObject *object in self.currentArray) {
-        if ([object.marketId compare:marketID options:NSNumericSearch] == NSOrderedAscending) {
+        if ([object.marketId compare:marketID options:NSNumericSearch] == NSOrderedAscending || [marketID isEqualToString:@""]) {
             marketID = object.marketId;
         }
     }
@@ -255,6 +266,7 @@
 {
     SHGMarketNoticeObject *otherObject = [[SHGMarketNoticeObject alloc] init];
     otherObject.tipUrl = self.tipUrl;
+    otherObject.marketId = @"";
     NSString *position = [self.positionDictionary objectForKey:[self.scrollView marketFirstId]];
     if ([position isEqualToString:@"0"]) {
         otherObject.type = SHGMarketNoticeTypePositionTop;
@@ -325,9 +337,14 @@
     }
     SHGMarketObject *object = [self.currentArray objectAtIndex:indexPath.row];
     if ([object isKindOfClass:[SHGMarketNoticeObject class]]) {
-
-        self.noticeCell.object = (SHGMarketNoticeObject *)object;
-        return self.noticeCell;
+        SHGMarketNoticeObject *obj = (SHGMarketNoticeObject *)object;
+        if (obj.type == SHGMarketNoticeTypePositionAny) {
+            self.labelCell.object = obj;
+            return self.labelCell;
+        } else{
+            self.imageCell.object = obj;
+            return self.imageCell;
+        }
 
     } else{
         NSString *identifier = @"SHGMarketTableViewCell";
@@ -348,8 +365,11 @@
 {
     SHGMarketObject *object = [self.currentArray objectAtIndex:indexPath.row];
     if ([object isKindOfClass:[SHGMarketNoticeObject class]]) {
-        SHGMomentCityViewController *controller = [[SHGMomentCityViewController alloc] init];
-        [self.navigationController pushViewController:controller animated:YES];
+        //点击图片才去跳转
+        if (((SHGMarketNoticeObject *)object).type == SHGMarketNoticeTypePositionTop) {
+            SHGMomentCityViewController *controller = [[SHGMomentCityViewController alloc] init];
+            [self.navigationController pushViewController:controller animated:YES];
+        }
     } else{
         SHGMarketDetailViewController *controller = [[SHGMarketDetailViewController alloc]init];
         controller.object = object;
@@ -409,8 +429,11 @@
 
 - (void)reloadDataWithHeight:(CGFloat)height
 {
-    self.noticeHeight = height;
-    [self.tableView reloadData];
+    if (self.noticeHeight != height) {
+        self.noticeHeight = height;
+        [self.tableView beginUpdates];
+        [self.tableView endUpdates];
+    }
 }
 #pragma mark -----二级分类返回代理
 - (void)didUploadUserCategoryTags:(NSArray *)array

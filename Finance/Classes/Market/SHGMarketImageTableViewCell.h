@@ -9,7 +9,16 @@
 #import <UIKit/UIKit.h>
 #import "SHGMarketObject.h"
 
-@interface SHGMarketNoticeTableViewCell : UITableViewCell
+@interface SHGMarketImageTableViewCell : UITableViewCell
+
+@property (strong ,nonatomic) SHGMarketNoticeObject *object;
+
+@property (weak, nonatomic) UIViewController *controller;
+
+@end
+
+
+@interface SHGMarketLabelTableViewCell : UITableViewCell
 
 @property (strong ,nonatomic) SHGMarketNoticeObject *object;
 
