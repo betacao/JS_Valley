@@ -19,6 +19,7 @@
 #import "GroupBansViewController.h"
 #import "GroupSubjectChangingViewController.h"
 #import "HeadImage.h"
+#import "AFImageDownloader.h"
 #import "SHGPersonalViewController.h"
 
 #pragma mark - ChatGroupDetailViewController
@@ -46,6 +47,8 @@
 @property (strong, nonatomic) UILongPressGestureRecognizer *longPress;
 @property (strong, nonatomic) ContactView *selectedContact;
 
+@property (strong, nonatomic) UITableViewCell *firstCell;
+
 - (void)dissolveAction;
 - (void)clearAction;
 - (void)exitAction;
@@ -71,8 +74,7 @@
 - (instancetype)initWithGroup:(EMGroup *)chatGroup
 {
     self = [super init];
-    if (self) {
-        // Custom initialization
+    if (self){
         _chatGroup = chatGroup;
         _dataSource = [NSMutableArray array];
         _occupantType = GroupOccupantTypeMember;
@@ -107,8 +109,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
-    self.title=@"群组管理";
+    self.title = @"群组管理";
     
     UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [leftButton setBackgroundImage:[UIImage imageNamed:@"common_backImage"] forState:UIControlStateNormal];
@@ -125,7 +126,11 @@
     [self.view addGestureRecognizer:tap];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(groupBansChanged) name:@"GroupBansChanged" object:nil];
-    
+
+    self.firstCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@""];
+    self.firstCell.selectionStyle = UITableViewCellSelectionStyleNone;
+    [self.firstCell.contentView addSubview:self.scrollView];
+
     [self fetchGroupInfo];
 }
 
@@ -137,7 +142,6 @@
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 - (void)viewDidDisappear:(BOOL)animated
@@ -251,8 +255,7 @@
     }
     
     if (indexPath.row == 0) {
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        [cell.contentView addSubview:self.scrollView];
+        return self.firstCell;
     } else if (indexPath.row == 1){
         cell.textLabel.text = NSLocalizedString(@"title.groupSetting", @"Group Setting");
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
@@ -439,7 +442,13 @@
                     }
                     
                     contactView.remark = [dictionary objectForKey:@"realname"];
-                    [contactView.imageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,[dictionary valueForKey:@"headimageurl"]]] placeholderImage:[UIImage imageNamed:@"default_head"]];
+                    NSString *url = [NSString stringWithFormat:@"%@%@",rBaseAddressForImage,[dictionary valueForKey:@"headimageurl"]];
+                    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:url]];
+                    [[AFImageDownloader defaultInstance] downloadImageForURLRequest:request success:^(NSURLRequest * _Nonnull request, NSHTTPURLResponse * _Nullable response, UIImage * _Nonnull responseObject) {
+                        contactView.imageView.image = responseObject;
+                    } failure:^(NSURLRequest * _Nonnull request, NSHTTPURLResponse * _Nullable response, NSError * _Nonnull error) {
+
+                    }];
                     if (![[dictionary objectForKey:@"userid"] isEqualToString:loginUsername]) {
                         contactView.editing = isEditing;
                     }

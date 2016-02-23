@@ -97,6 +97,9 @@
 - (void)loadMarketList:(NSString *)target firstId:(NSString *)firstId second:(NSString *)secondId marketId:(NSString *)marketId modifyTime:(NSString *)modifyTime
 {
     __weak typeof(self) weakSelf = self;
+    if ([target isEqualToString:@"first"]) {
+        [self.tableView setContentOffset:CGPointZero];
+    }
     NSString *area = [SHGMarketManager shareManager].cityName;
 
     NSString *position = [self.positionDictionary objectForKey:[self.scrollView marketFirstId]];
