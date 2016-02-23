@@ -26,6 +26,7 @@
 #import "GeTuiSdk.h"
 #import "GeTuiSdkError.h"
 #import "LinkViewController.h"
+#import "SHGMarketSegmentViewController.h"
 
 #define resultcodekey       @"code"
 #define successcode         @"000"
@@ -503,6 +504,14 @@
         LinkViewController *controller = [[LinkViewController alloc] init];
         controller.url = object.feedhtml;
         controller.object = object;
+        [self pushIntoViewController:TopVC newViewController:controller];
+    } else if ([ridCode isEqualToString:@"3000"]){
+        NSString *marketId = [userInfo objectForKey:@"marketId"];
+        SHGMarketDetailViewController *controller = [[SHGMarketDetailViewController alloc] init];
+        SHGMarketObject *object = [[SHGMarketObject alloc] init];
+        object.marketId = marketId;
+        controller.object = object;
+        controller.delegate = [SHGMarketSegmentViewController sharedSegmentController];
         [self pushIntoViewController:TopVC newViewController:controller];
     } else{  //进入帖子详情
         CircleDetailViewController *vc = [[CircleDetailViewController alloc] init];

@@ -10,12 +10,13 @@
 
 @interface MessageObj : MTLModel<MTLJSONSerializing>
 
-@property (nonatomic,strong) NSString *title;
-@property (nonatomic,strong) NSString *content;
-@property (nonatomic,strong) NSString *time;
-@property (nonatomic,strong) NSString *code;
-@property (nonatomic,strong) NSString *oid;
+@property (strong, nonatomic) NSString *title;
+@property (strong, nonatomic) NSString *content;
+@property (strong, nonatomic) NSString *time;
+@property (strong, nonatomic) NSString *code;
+@property (strong, nonatomic) NSString *oid;
 @property (strong, nonatomic) NSString *feedHtml;
+@property (strong, nonatomic) NSString *marketId;
 
 - (CGFloat)heightForCell;
 @end

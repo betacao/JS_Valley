@@ -11,6 +11,7 @@
 #import "SHGPersonalViewController.h"
 #import "SHGActionDetailViewController.h"
 #import "LinkViewController.h"
+#import "SHGMarketSegmentViewController.h"
 
 @interface MessageViewController ()
 {
@@ -227,6 +228,14 @@
         LinkViewController *controller = [[LinkViewController alloc] init];
         controller.url = object.feedhtml;
         controller.object = object;
+        [self.navigationController pushViewController:controller animated:YES];
+    } else if ([obj.code isEqualToString:@"3000"]){
+        NSString *marketId = obj.marketId;
+        SHGMarketDetailViewController *controller = [[SHGMarketDetailViewController alloc] init];
+        SHGMarketObject *object = [[SHGMarketObject alloc] init];
+        object.marketId = marketId;
+        controller.object = object;
+        controller.delegate = [SHGMarketSegmentViewController sharedSegmentController];
         [self.navigationController pushViewController:controller animated:YES];
     } else{
         //进入帖子详情

@@ -16,7 +16,7 @@ const CGFloat kMargin = 128.0f;
 @implementation MessageObj
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey{
-    return  @{@"title": @"title", @"content":@"content", @"time":@"time", @"code":@"code", @"oid":@"oid", @"feedHtml":@"feedhtml"};
+    return  @{@"title": @"title", @"content":@"content", @"time":@"time", @"code":@"code", @"oid":@"oid", @"feedHtml":@"feedhtml", @"marketId":@"marketid"};
 }
 
 - (CGFloat)heightForCell
