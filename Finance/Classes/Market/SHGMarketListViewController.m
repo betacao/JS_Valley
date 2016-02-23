@@ -19,6 +19,7 @@
 #import "VerifyIdentityViewController.h"
 #import "SHGMomentCityViewController.h"
 #import "SHGMarketNoticeTableViewCell.h"
+#import "SHGNoticeView.h"
 
 @interface SHGMarketListViewController ()<UITabBarDelegate, UITableViewDataSource, SHGCategoryScrollViewDelegate,SHGMarketSecondCategoryViewControllerDelegate, SHGMarketTableViewDelegate>
 
@@ -29,6 +30,7 @@
 @property (strong, nonatomic) SHGEmptyDataView *emptyView;
 
 @property (strong, nonatomic) SHGMarketNoticeTableViewCell *noticeCell;
+@property (strong, nonatomic) SHGNoticeView *noticeView;
 
 @property (strong, nonatomic) NSMutableArray *currentArray;
 @property (strong, nonatomic) NSString *tipUrl;
@@ -110,7 +112,7 @@
             [weakSelf.currentArray addObjectsFromArray:dataArray];
             //第一次给服务器的值
             weakSelf.index = index;
-
+            [weakSelf.noticeView showWithText:[NSString stringWithFormat:@"为您加载了%ld条新业务",(long)dataArray.count]];
         } else if([target isEqualToString:@"refresh"]){
             for (NSInteger i = dataArray.count - 1; i >= 0; i--){
                 SHGMarketObject *obj = [dataArray objectAtIndex:i];
@@ -120,7 +122,11 @@
             NSInteger position = [[weakSelf.positionDictionary objectForKey:[weakSelf.scrollView marketFirstId]] integerValue];
             if (position > 0) {
                 weakSelf.index = [NSString stringWithFormat:@"%ld", (long)(position + dataArray.count)];
-
+            }
+            if (dataArray.count > 0) {
+                [weakSelf.noticeView showWithText:[NSString stringWithFormat:@"为您加载了%ld条新业务",(long)dataArray.count]];
+            } else{
+                [weakSelf.noticeView showWithText:@"暂无新业务，休息一会儿"];
             }
         } else if([target isEqualToString:@"load"]){
             [weakSelf.currentArray addObjectsFromArray:dataArray];
@@ -130,7 +136,6 @@
         [weakSelf.tableView reloadData];
     }];
 }
-
 
 - (SHGCategoryScrollView *)scrollView
 {
@@ -175,6 +180,15 @@
         _noticeCell.controller = self;
     }
     return _noticeCell;
+}
+
+- (SHGNoticeView *)noticeView
+{
+    if (!_noticeView) {
+        _noticeView = [[SHGNoticeView alloc] initWithFrame:CGRectZero type:SHGNoticeTypeNewMessage];
+        _noticeView.superView = self.view;
+    }
+    return _noticeView;
 }
 
 - (NSMutableDictionary *)positionDictionary
