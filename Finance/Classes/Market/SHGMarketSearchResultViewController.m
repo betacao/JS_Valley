@@ -11,6 +11,7 @@
 #import "SHGMarketTableViewCell.h"
 #import "SHGMarketSegmentViewController.h"
 #import "SHGMarketAdvancedSearchViewController.h"
+#import "SHGEmptyDataView.h"
 
 @interface SHGMarketSearchResultViewController ()<UITableViewDataSource, UITableViewDelegate, SHGMarketTableViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -19,6 +20,9 @@
 
 @property (strong, nonatomic) IBOutlet SHGMarketSearchResultHeaderView *sectionView;
 
+
+@property (strong, nonatomic) UITableViewCell *emptyCell;
+@property (strong, nonatomic) SHGEmptyDataView *emptyView;
 @end
 
 @implementation SHGMarketSearchResultViewController
@@ -47,6 +51,24 @@
     } else{
         [self searchAdvancedMarketList:@"first" marketId:@"-1"];
     }
+}
+
+- (UITableViewCell *)emptyCell
+{
+    if (!_emptyCell) {
+        _emptyCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+        _emptyCell.selectionStyle = UITableViewCellSelectionStyleNone;
+        [_emptyCell.contentView addSubview:self.emptyView];
+    }
+    return _emptyCell;
+}
+
+- (SHGEmptyDataView *)emptyView
+{
+    if (!_emptyView) {
+        _emptyView = [[SHGEmptyDataView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, SCREENWIDTH, SCREENHEIGHT)];
+    }
+    return _emptyView;
 }
 
 - (void)initView
@@ -164,18 +186,25 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.dataArr.count;
+    return self.dataArr.count == 0 ? 1 : self.dataArr.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    SHGMarketObject *object = [self.dataArr objectAtIndex:indexPath.row];
-    CGFloat height = [self.tableView cellHeightForIndexPath:indexPath model:object keyPath:@"object" cellClass:[SHGMarketTableViewCell class] contentViewWidth:SCREENWIDTH];
-    return height;
+    if (self.dataArr.count > 0) {
+        SHGMarketObject *object = [self.dataArr objectAtIndex:indexPath.row];
+        CGFloat height = [self.tableView cellHeightForIndexPath:indexPath model:object keyPath:@"object" cellClass:[SHGMarketTableViewCell class] contentViewWidth:SCREENWIDTH];
+        return height;
+    } else{
+        return CGRectGetHeight(self.view.frame);
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if (self.dataArr.count == 0) {
+        return self.emptyCell;
+    }
     NSString *identifier = @"SHGMarketTableViewCell";
     SHGMarketTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
     if (!cell) {
@@ -288,8 +317,10 @@
     _type = type;
     if (type == SHGMarketSearchTypeNormal) {
         self.leftLabel.text = @"更多搜索条件";
+        self.arrowButton.hidden = YES;
     } else{
         self.leftLabel.text = @"显示搜索条件";
+        self.arrowButton.hidden = NO;
     }
 }
 

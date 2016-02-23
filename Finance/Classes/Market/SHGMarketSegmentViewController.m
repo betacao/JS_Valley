@@ -16,7 +16,6 @@
 @interface SHGMarketSegmentViewController ()
 @property (nonatomic, strong) NSArray *rightBarButtonItems;
 @property (nonatomic, strong) UIBarButtonItem *leftBarButtonItem;
-@property (nonatomic, strong) UIView *container;
 @property (nonatomic, strong) UIButton *titleButton;
 @property (nonatomic, strong) UILabel *titleLabel;
 @property (nonatomic, strong) UIImageView *titleImageView;
@@ -82,7 +81,7 @@
     [self reloadTabButtons];
 
     if(self.block){
-        self.block(self.container);
+        self.block(self.titleButton);
     }
 }
 
@@ -106,15 +105,6 @@
     return _titleButton;
 }
 
-- (UIView *)container
-{
-    if (!_container) {
-        _container = [[UIView alloc] init];
-        [_container addSubview:self.titleButton];
-    }
-    return _container;
-}
-
 #pragma mark ------变更城市代理
 
 - (void)changeTitleCityName:(NSString *)city
@@ -123,11 +113,11 @@
         city = @"其他";
     }
     if (![city isEqualToString:self.titleLabel.text] && city.length > 0) {
+        self.titleButton.frame = CGRectZero;
         self.titleLabel.text = city;
         [self.titleLabel sizeToFit];
         self.titleImageView.origin = CGPointMake(CGRectGetMaxX(self.titleLabel.frame) + 4.0f, (CGRectGetHeight(self.titleLabel.frame) - CGRectGetHeight(self.titleImageView.frame)) / 2.0f);
-        self.titleButton.frame = CGRectMake(0.0f, 0.0f, CGRectGetMaxX(self.titleImageView.frame), CGRectGetHeight(self.titleLabel.frame));
-        self.container.frame = self.titleButton.bounds;
+        self.titleButton.size = CGSizeMake(CGRectGetMaxX(self.titleImageView.frame), CGRectGetHeight(self.titleLabel.frame));
 
         UIViewController *controller = [self.viewControllers firstObject];
         [controller performSelector:@selector(clearAndReloadData) withObject:nil];

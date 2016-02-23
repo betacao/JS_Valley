@@ -511,7 +511,8 @@
         [self pushIntoViewController:TopVC newViewController:vc];
     }
 }
--(void)pushIntoViewController:(UIViewController*)viewController newViewController:(UIViewController*)newController
+
+- (void)pushIntoViewController:(UIViewController*)viewController newViewController:(UIViewController*)newController
 {
     UINavigationController *navs;
     if ([viewController isKindOfClass:[UINavigationController class]]) {

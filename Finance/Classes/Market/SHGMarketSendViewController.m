@@ -57,7 +57,7 @@ typedef NS_ENUM(NSInteger, SHGMarketSendType){
 @property (strong, nonatomic) NSString *imageName;
 @property (assign, nonatomic) BOOL hasImage;
 
-@property (strong, nonatomic) NSString *model;
+@property (strong, nonatomic) NSString *mode;
 
 @end
 
@@ -83,17 +83,18 @@ typedef NS_ENUM(NSInteger, SHGMarketSendType){
             }];
             weakSelf.firstCategoryBox.titlesList = titleArray;
             [weakSelf.firstCategoryBox reloadData];
+
+            if (weakSelf.object) {
+                weakSelf.title = @"编辑业务信息";
+                [weakSelf editObject:self.object];
+                weakSelf.sendType = SHGMarketSendTypeReSet;
+            }
         });
     }];
 
     [self initView];
     [self addAutoLayout];
 
-    if (self.object) {
-        self.title = @"编辑业务信息";
-        [self editObject:self.object];
-        self.sendType = SHGMarketSendTypeReSet;
-    }
     [self.bgView layoutSubviews];
     [self.tableView setTableHeaderView:self.bgView];
 }
@@ -146,7 +147,7 @@ typedef NS_ENUM(NSInteger, SHGMarketSendType){
     [self.leftButton setTitleColor:[UIColor colorWithHexString:@"e1e1e6"] forState:UIControlStateNormal];
     [self.leftButton setTitleColor:[UIColor colorWithHexString:@"d43c33"] forState:UIControlStateSelected];
     self.leftButton.selected = YES;
-    self.model = self.leftButton.titleLabel.text;
+    self.mode = self.leftButton.titleLabel.text;
 
     self.rightButton.titleLabel.font = [UIFont systemFontOfSize:FontFactor(13.0f)];
     [self.rightButton setTitleColor:[UIColor colorWithHexString:@"e1e1e6"] forState:UIControlStateNormal];
@@ -356,10 +357,10 @@ typedef NS_ENUM(NSInteger, SHGMarketSendType){
     } else{
         self.anonymousButton.selected = NO;
     }
-    if ([object.model isEqualToString:self.leftButton.titleLabel.text]) {
+    if ([object.mode isEqualToString:self.leftButton.titleLabel.text]) {
         self.leftButton.selected = YES;
         self.rightButton.selected = NO;
-    } else if ([object.model isEqualToString:self.rightButton.titleLabel.text]) {
+    } else if ([object.mode isEqualToString:self.rightButton.titleLabel.text]) {
         self.leftButton.selected = NO;
         self.rightButton.selected = YES;
     }
@@ -384,14 +385,14 @@ typedef NS_ENUM(NSInteger, SHGMarketSendType){
 {
     sender.selected = YES;
     self.rightButton.selected = NO;
-    self.model = sender.titleLabel.text;
+    self.mode = sender.titleLabel.text;
 }
 
 - (IBAction)rightButtonClick:(UIButton *)sender
 {
     sender.selected = YES;
     self.leftButton.selected = NO;
-    self.model = sender.titleLabel.text;
+    self.mode = sender.titleLabel.text;
 }
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField
@@ -519,7 +520,7 @@ typedef NS_ENUM(NSInteger, SHGMarketSendType){
                             secondId = secondObject.secondCatalogId;
                         }
 
-                        NSDictionary *param = @{@"uid":uid, @"marketName": marketName, @"firstCatalogId": firstId, @"secondCatalogId": secondId, @"price": price, @"contactInfo": contactInfo, @"detail": detail, @"photo":self.imageName, @"city":city, @"anonymous":anonymous, @"model":self.model};
+                        NSDictionary *param = @{@"uid":uid, @"marketName": marketName, @"firstCatalogId": firstId, @"secondCatalogId": secondId, @"price": price, @"contactInfo": contactInfo, @"detail": detail, @"photo":self.imageName, @"city":city, @"anonymous":anonymous, @"mode":self.mode};
                         NSMutableDictionary *mParam = [NSMutableDictionary dictionaryWithDictionary:param];
                         if (!secondId || secondId.length == 0) {
                             [mParam removeObjectForKey:@"secondCatalogId"];
@@ -551,7 +552,7 @@ typedef NS_ENUM(NSInteger, SHGMarketSendType){
                             SHGMarketSecondCategoryObject *secondObject = [firstObject.secondCataLogs objectAtIndex:self.secondCategoryBox.currentIndex];
                             secondId = secondObject.secondCatalogId;
                         }
-                        NSDictionary *param = @{@"uid":uid, @"marketName": marketName, @"firstCatalogId": firstId, @"secondCatalogId": secondId, @"price": price, @"contactInfo": contactInfo, @"detail": detail, @"photo":self.imageName, @"city":city, @"marketId":weakSelf.object.marketId, @"anonymous":anonymous, @"model":self.model};
+                        NSDictionary *param = @{@"uid":uid, @"marketName": marketName, @"firstCatalogId": firstId, @"secondCatalogId": secondId, @"price": price, @"contactInfo": contactInfo, @"detail": detail, @"photo":self.imageName, @"city":city, @"marketId":weakSelf.object.marketId, @"anonymous":anonymous, @"mode":self.mode};
                         NSMutableDictionary *mParam = [NSMutableDictionary dictionaryWithDictionary:param];
                         if (!secondId || secondId.length == 0) {
                             [mParam removeObjectForKey:@"secondCatalogId"];

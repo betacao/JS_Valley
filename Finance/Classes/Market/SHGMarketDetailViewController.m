@@ -191,7 +191,7 @@
     
     self.nameLabel.sd_layout
     .leftSpaceToView(self.headImageView, MarginFactor(9.0f))
-    .topSpaceToView(self.viewHeader, MarginFactor(18.0f))
+    .topEqualToView(self.headImageView)
     .autoHeightRatio(0.0f);
     [self.nameLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
     
@@ -208,7 +208,7 @@
     .topSpaceToView(self.headImageView, MarginFactor(15.0f));
     
     self.companyLabel.sd_layout
-    .bottomSpaceToView(self.firstHorizontalLine, MarginFactor(18.0f))
+    .bottomEqualToView(self.headImageView)
     .leftSpaceToView(self.headImageView, MarginFactor(9.0f))
     .autoHeightRatio(0.0f);
     [self.companyLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
@@ -290,10 +290,10 @@
     [self addEmptyViewIfNeeded];
     [self loadShareButtonState];
    
-    if (self.responseObject.model.length == 0) {
+    if (self.responseObject.mode.length == 0) {
          self.modelLabel.text = @"模式： 找资金";
     } else{
-        self.modelLabel.text = [NSString stringWithFormat:@"模式：%@",self.responseObject.model];
+        self.modelLabel.text = [NSString stringWithFormat:@"模式：%@",self.responseObject.mode];
     }
     
     self.timeLabel.text = self.responseObject.createTime;

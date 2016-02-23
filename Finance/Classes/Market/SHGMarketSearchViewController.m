@@ -193,6 +193,11 @@
     [self.navigationController pushViewController:controller animated:YES];
 }
 
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [self.searchBar resignFirstResponder];
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];

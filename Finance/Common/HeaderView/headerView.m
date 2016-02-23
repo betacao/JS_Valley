@@ -59,8 +59,8 @@
 - (void)layoutSubviews
 {
     [super layoutSubviews];
-    CGSize size = self.bounds.size;
-    self.VImageView.center = CGPointMake(size.width, size.height);
+    CGRect bounds = self.bounds;
+    self.VImageView.center = self.VImageView.center = CGPointMake(CGRectGetMaxX(bounds) - 2.0f, CGRectGetMaxY(bounds) - 2.0f);
 }
 
 

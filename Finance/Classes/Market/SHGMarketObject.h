@@ -40,7 +40,7 @@
 @property (strong, nonatomic) NSString *isDeleted;//是否已经在服务端删除了
 @property (strong, nonatomic) NSString *modifyTime;
 @property (strong, nonatomic) NSString *anonymous;//是否委托大牛发布
-@property (strong, nonatomic) NSString *model;//业务模式
+@property (strong, nonatomic) NSString *mode;//业务模式
 @end
 
 

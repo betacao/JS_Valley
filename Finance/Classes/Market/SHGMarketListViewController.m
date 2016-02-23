@@ -363,7 +363,7 @@
         button.frame = frame;
         [self.headerView addSubview:button];
 
-        UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, kCategoryScrollViewHeight, SCREENWIDTH, 0.5f)];
+        UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, kCategoryScrollViewHeight - 0.5f, SCREENWIDTH, 0.5f)];
         lineView.backgroundColor = [UIColor colorWithHexString:@"d9dadb"];
         [self.headerView addSubview:lineView];
     }
@@ -396,8 +396,7 @@
 - (void)reloadDataWithHeight:(CGFloat)height
 {
     self.noticeHeight = height;
-    [self.tableView beginUpdates];
-    [self.tableView endUpdates];
+    [self.tableView reloadData];
 }
 #pragma mark -----二级分类返回代理
 - (void)didUploadUserCategoryTags:(NSArray *)array
@@ -421,7 +420,7 @@
         }
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
 
-            [weakSelf.scrollView moveToIndex:1];
+            [weakSelf.scrollView moveToIndex:array.count == 0 ? 0 : 1];
         });
     }];
 

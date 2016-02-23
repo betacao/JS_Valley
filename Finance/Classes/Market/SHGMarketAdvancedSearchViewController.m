@@ -255,12 +255,12 @@
     self.bottomLeftButton.sd_layout
     .topSpaceToView(self.fourthContentView, 0.0f)
     .leftSpaceToView(self.fourthContentView, 0.0f)
-    .rightSpaceToView(self.bottomBreakLine, 0.0f)
+    .widthRatioToView(self.fourthContentView, 0.5f)
     .heightRatioToView(self.fourthContentView, 1.0f);
 
     self.bottomRightButton.sd_layout
     .topSpaceToView(self.fourthContentView, 0.0f)
-    .leftSpaceToView(self.bottomBreakLine, 0.0f)
+    .widthRatioToView(self.fourthContentView, 0.5f)
     .rightSpaceToView(self.fourthContentView, 0.0f)
     .heightRatioToView(self.fourthContentView, 1.0f);
 
@@ -336,6 +336,10 @@
         SHGMarketSecondCategoryObject *secondObject = [firstObject.secondCataLogs objectAtIndex:self.rightCombox.currentIndex];
         secondId = secondObject.secondCatalogId;
     }
+    if ([self.recentUpdate isEqualToString:@""] && [self.city isEqualToString:@""] && [self.mode isEqualToString:@""] && [firstId isEqualToString:@""] && [secondId isEqualToString:@""]) {
+        [Hud showMessageWithText:@"至少选择一个条件"];
+        return;
+    }
 
     SHGMarketSearchResultViewController *controller = [[SHGMarketSearchResultViewController alloc] initWithType:SHGMarketSearchTypeAdvanced];
     controller.advancedParam = @{@"uid":UID ,@"pageSize":@"10", @"recentUpdate":self.recentUpdate, @"city":self.city, @"firstCatalog":firstId, @"secondCatalog":secondId, @"mode":self.mode};
@@ -361,6 +365,8 @@
         }
     }
     self.locationTextField.text = @"";
+
+    self.leftComBox.defaultIndex = 0;
 }
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField

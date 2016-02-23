@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#define kCategoryScrollViewHeight MarginFactor(41.0f)
+#define kCategoryScrollViewHeight MarginFactor(45.0f)
 
 @protocol SHGCategoryScrollViewDelegate <NSObject>
 
