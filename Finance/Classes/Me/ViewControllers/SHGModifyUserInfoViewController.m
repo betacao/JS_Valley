@@ -87,16 +87,42 @@
 
 - (IBAction)nextButtonClick:(UIButton *)button
 {
+    
     if (self.imageChanged) {
         [self uploadHeadImage:self.headerImage.image];
     } else{
         [self uploadUserInfo];
     }
 }
+- (BOOL)checkInputMessageValid
+{
+    if (IsStrEmpty(self.nameField.text)) {
+        [Hud showMessageWithText:@"请输入名字"];
+        return NO;
+    }
+    if (IsStrEmpty(self.industryField.text)) {
+        [Hud showMessageWithText:@"请输入行业"];
+        return NO;
+    }
+    if (IsStrEmpty(self.companyField.text)) {
+        [Hud showMessageWithText:@"请输入公司名"];
+        return NO;
+    }
+    if (IsStrEmpty(self.departmentField.text)) {
+        [Hud showMessageWithText:@"请输入职务"];
+        return NO;
+    }
+    if (IsStrEmpty(self.locationField.text)) {
+        [Hud showMessageWithText:@"请输入所在地"];
+        return NO;
+    }
+    return YES;
+}
 
 - (void)uploadHeadImage:(UIImage *)image
 {
     //头像需要压缩 跟其他的上传图片接口不一样了
+     if([self checkInputMessageValid]){
     __weak typeof(self) weakSelf = self;
     [Hud showLoadingWithMessage:@"正在上传图片..."];
     [[AFHTTPSessionManager manager] POST:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"image/basephoto"] parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
@@ -117,11 +143,12 @@
         [Hud hideHud];
         [Hud showMessageWithText:@"上传图片失败"];
     }];
-
+     }
 }
 
 - (void)uploadUserInfo
 {
+     if([self checkInputMessageValid]){
     [Hud showLoadingWithMessage:@"请稍等..."];
     __weak typeof(self) weakSelf = self;
     NSDictionary *param = @{@"uid":UID,@"picName":self.head_img,@"realName":self.nameField.text, @"industrycode":self.industry, @"company":self.companyField.text, @"city":self.locationField.text, @"title":self.departmentField.text};
@@ -138,6 +165,7 @@
         [Hud hideHud];
         [Hud showMessageWithText:@"修改个人信息失败"];
     }];
+     }
 }
 
 - (void)delayPostNotification

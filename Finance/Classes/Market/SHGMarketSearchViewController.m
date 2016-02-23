@@ -11,7 +11,7 @@
 #import "SHGMarketAdvancedSearchViewController.h"
 #import "SHGMarketSearchResultViewController.h"
 
-#define kItemLeftMargin MarginFactor(14.0f)
+#define kItemLeftMargin MarginFactor(12.0f)
 #define kItemHorizontalMargin MarginFactor(16.0f)
 #define kItemVerticalMargin MarginFactor(11.0f)
 

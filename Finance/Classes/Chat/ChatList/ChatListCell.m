@@ -12,7 +12,7 @@
 
 
 #import "ChatListCell.h"
-#define k_rowHeight 45.0f * YFACTOR
+#define k_rowHeight MarginFactor(45.0f)
 @interface ChatListCell ()
 @property (strong, nonatomic) UILabel *timeLabel;
 @property (strong, nonatomic) UILabel *unreadLabel;
@@ -44,9 +44,10 @@
         self.unreadLabel.layer.masksToBounds = YES;
         [self.contentView addSubview:self.unreadLabel];
         
-        self.detailLabel = [[UILabel alloc] initWithFrame:CGRectMake(58, k_rowHeight/2.0f - 2.0f * YFACTOR, SCREENWIDTH-80, 20)];
+        self.detailLabel = [[UILabel alloc] initWithFrame:CGRectMake(58, k_rowHeight/2.0f  , SCREENWIDTH-100, 20)];
         self.detailLabel.backgroundColor = [UIColor clearColor];
         self.detailLabel.font = [UIFont systemFontOfSize:FontFactor(12.0f)];
+        self.detailLabel.textColor = [UIColor colorWithHexString:@"919291"];
         [self.contentView addSubview:self.detailLabel];
 
         self.textLabel.backgroundColor = [UIColor clearColor];

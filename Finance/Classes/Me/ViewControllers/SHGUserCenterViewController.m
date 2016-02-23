@@ -229,7 +229,8 @@
         _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         _tableView.delegate = self;
         _tableView.dataSource = self;
-        _tableView.backgroundColor = [UIColor colorWithHexString:@"f3f4f5"];
+        //_tableView.backgroundColor = [UIColor colorWithHexString:@"f3f4f5"];
+        _tableHeaderView.backgroundColor = [UIColor whiteColor];
         [self.view addSubview:_tableView];
     }
     return _tableView;

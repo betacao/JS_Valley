@@ -29,8 +29,6 @@
 @interface SHGMarketDetailViewController ()<BRCommentViewDelegate, CircleActionDelegate, SHGMarketCommentDelegate, MLEmojiLabelDelegate>
 {
     UIView *PickerBackView;
-    NSString *copyString;
-    NSString *commentRid;
 }
 //界面
 @property (weak, nonatomic) IBOutlet UITableView *detailTable;
@@ -56,6 +54,10 @@
 @property (weak, nonatomic) IBOutlet UIButton *btnShare;
 @property (weak, nonatomic) IBOutlet UIView *viewInput;
 @property (weak, nonatomic) IBOutlet UIButton *speakButton;
+
+@property (weak, nonatomic) SHGMarketCommentObject *commentObject;
+@property (strong, nonatomic) NSString *copyedString;
+
 @property (strong, nonatomic) SHGEmptyDataView *emptyView;
 @property (strong, nonatomic) BRCommentView *popupView;
 //数据
@@ -197,7 +199,7 @@
     
     self.positionLabel.sd_layout
     .leftSpaceToView(self.nameLabel, MarginFactor(7.0f))
-    .topEqualToView(self.nameLabel)
+    .bottomEqualToView(self.nameLabel)
     .autoHeightRatio(0.0);
     [self.positionLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
     
@@ -456,6 +458,8 @@
     }
     SHGMarketCommentObject *object = [self.responseObject.commentList objectAtIndex:indexPath.row];
     [cell loadUIWithObj:object commentType:type];
+    UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(longPressGesturecognized:)];
+    [cell.contentView addGestureRecognizer:longPress];
     return cell;
 }
 
@@ -463,61 +467,63 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     SHGMarketCommentObject *object = [self.responseObject.commentList objectAtIndex:indexPath.row];
-    //    self.copyedString = object.commentDetail;
+    self.commentObject = object;
+    self.copyedString = object.commentDetail;
     if ([object.commentUserName isEqualToString:[[NSUserDefaults standardUserDefaults]objectForKey:KEY_USER_NAME]]) {
         //复制删除试图
-       // [self createPickerView];
+        [self createPickerView];
     } else{
         [self replyClicked:object commentIndex:indexPath.row];
     }
 }
-//- (void)longPressGesturecognized:(id)sender{
-//    
-//    UILongPressGestureRecognizer *longPress = (UILongPressGestureRecognizer *)sender;
-//    UIGestureRecognizerState state = longPress.state;//这是长按手势的状态   下面switch用到了
-//    CGPoint location = [longPress locationInView:self.detailTable];
-//    NSIndexPath *indexPath = [self.detailTable indexPathForRowAtPoint:location];
-//    switch (state)
-//    {
-//        case UIGestureRecognizerStateBegan:{
-//            if (indexPath){
-//                //判断是否是自己
-//                commentOBj *obj = self.res.comments[indexPath.row];
-//                commentRid = obj.rid;
-//                copyString = obj.cdetail;
-//                
-//                if ([obj.cnickname isEqualToString:[[NSUserDefaults standardUserDefaults]objectForKey:KEY_USER_NAME]]){
-//                    [self createPickerView];
-//                } else{
-//                    NSLog(@"2");
-//                    PickerBackView = [[UIView alloc] initWithFrame:self.view.bounds];
-//                    PickerBackView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.4];
-//                    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(closeView)];
-//                    tap.cancelsTouchesInView = YES;
-//                    [PickerBackView addGestureRecognizer:tap];
-//                    PickerBackView.userInteractionEnabled = YES;
-//                    
-//                    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-//                    button.frame = CGRectMake(30, (self.view.bounds.size.height-50)/2, self.view.bounds.size.width - 60, 50);
-//                    button.backgroundColor = [UIColor whiteColor];
-//                    [button setTitle:@"复制" forState:UIControlStateNormal];
-//                    button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-//                    button.titleEdgeInsets = UIEdgeInsetsMake(0, 20, 0, 0);
-//                    [button addTarget:self action:@selector(copyButton) forControlEvents:UIControlEventTouchUpInside];
-//                    [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-//                    [PickerBackView addSubview:button];
-//                    [self.view addSubview:PickerBackView];
-//                    [self.view bringSubviewToFront:PickerBackView];
-//                    //[self.view sendSubviewToBack:PickerBackView];
-//                }
-//            }
-//            break;
-//        }
-//        default:{
-//            
-//        }
-//    }
-//}
+#pragma mark -- 删除评论
+- (void)longPressGesturecognized:(id)sender{
+    
+    UILongPressGestureRecognizer *longPress = (UILongPressGestureRecognizer *)sender;
+    UIGestureRecognizerState state = longPress.state;//这是长按手势的状态   下面switch用到了
+    CGPoint location = [longPress locationInView:self.detailTable];
+    NSIndexPath *indexPath = [self.detailTable indexPathForRowAtPoint:location];
+    switch (state){
+        case UIGestureRecognizerStateBegan:{
+            if (indexPath){
+                //判断是否是自己
+                SHGMarketCommentObject *obj = self.responseObject.commentList[indexPath.row];
+                self.commentObject = obj;
+                self.copyedString = obj.commentDetail;
+                
+                if ([obj.commentUserName isEqualToString:[[NSUserDefaults standardUserDefaults]objectForKey:KEY_USER_NAME]]){
+                    [self createPickerView];
+                } else{
+                    NSLog(@"2");
+                    PickerBackView = [[UIView alloc] initWithFrame:self.view.bounds];
+                    PickerBackView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.4];
+                    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(closeView)];
+                    tap.cancelsTouchesInView = YES;
+                    [PickerBackView addGestureRecognizer:tap];
+                    PickerBackView.userInteractionEnabled = YES;
+                    
+                    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+                    button.frame = CGRectMake(30, (self.view.bounds.size.height-50)/2, self.view.bounds.size.width - 60, 50);
+                    button.backgroundColor = [UIColor whiteColor];
+                    [button setTitle:@"复制" forState:UIControlStateNormal];
+                    button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+                    button.titleEdgeInsets = UIEdgeInsetsMake(0, 20, 0, 0);
+                    [button addTarget:self action:@selector(copyButton) forControlEvents:UIControlEventTouchUpInside];
+                    [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+                    [PickerBackView addSubview:button];
+                    [self.view addSubview:PickerBackView];
+                    [self.view bringSubviewToFront:PickerBackView];
+                    //[self.view sendSubviewToBack:PickerBackView];
+                }
+            }
+            break;
+        }
+        default:{
+            
+        }
+    }
+}
+
 
 //创建删除试图
 - (void)createPickerView{
@@ -563,42 +569,24 @@
 //复制
 - (void)copyButton
 {
-    NSLog(@"....%@",copyString);
-    [UIPasteboard generalPasteboard].string = copyString;
+    NSLog(@"....%@",self.copyedString);
+    [UIPasteboard generalPasteboard].string = self.copyedString;
     self.detailTable.frame = CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT);
     [self.view sendSubviewToBack:PickerBackView];
 }
 //删除
-//- (void)deleteButton
-//{
-//    NSDictionary *param = @{@"rid":commentRid};
-//    NSString *url = [NSString stringWithFormat:@"%@/%@",rBaseAddressForHttpCircle,@"deleteComments"];
-//    [MOCHTTPRequestOperationManager postWithURL:url class:nil parameters:param success:^(MOCHTTPResponse *response)
-//     {
-//         [Hud hideHud];
-//         NSLog(@"%@",response.dataDictionary);
-//         for (commentOBj *obj in self.responseObject.comments)
-//         {
-//             if ([obj.rid  isEqualToString:commentRid])
-//             {
-//                 [self.responseObject.comments removeObject:obj];
-//                 self.responseObject.cmmtnum = [NSString stringWithFormat:@"%ld",(long)([self.responseObject.cmmtnum integerValue] - 1)];
-//                 break;
-//             }
-//         }
-//         [self loadDatasWithObj:self.responseObject];
-//         [self.detailTable reloadData];
-//         [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_COLLECT_COMMENT_CLIC object:self.obj];
-//     } failed:^(MOCHTTPResponse *response)
-//     {
-//         [Hud showMessageWithText:response.errorMessage];
-//         NSLog(@"response.errorMessage==%@",response.errorMessage);
-//     }];
-//    //listTable适应屏幕
-//    self.detailTable.frame = CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT);
-//    [self.view sendSubviewToBack:PickerBackView];
-//    
-//}
+- (void)deleteButton
+{
+    __weak typeof(self)weakSelf = self;
+    [SHGMarketManager deleteCommentWithID:self.commentObject.commentId finishBlock:^(BOOL finish) {
+        [weakSelf.responseObject.commentList removeObject:weakSelf.commentObject];
+        [weakSelf.detailTable reloadData];
+    }];
+
+    [self.view sendSubviewToBack:PickerBackView];
+    
+}
+
 
 - (void)didReceiveMemoryWarning
 {
@@ -769,6 +757,7 @@
     [[SHGMarketSegmentViewController sharedSegmentController] addOrDeleteCollect:self.responseObject state:^(BOOL state) {
         weakSelf.responseObject.isCollection = state;
         [weakSelf loadCollectButtonState];
+        
     }];
  
 }
@@ -836,6 +825,7 @@
     if (self.delegate && [self.delegate respondsToSelector:@selector(updateToNewestMarket:)]) {
         [self.delegate updateToNewestMarket:self.responseObject];
     }
+
 }
 
 - (void)dealloc

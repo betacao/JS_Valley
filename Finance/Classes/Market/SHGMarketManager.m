@@ -428,9 +428,7 @@
     } failed:^(MOCHTTPResponse *response) {
         [Hud hideHud];
         [Hud showMessageWithText:@"删除评论失败"];
-        if (block) {
-            block(NO);
-        }
+       
     }];
 }
 

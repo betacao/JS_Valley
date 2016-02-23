@@ -190,7 +190,7 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
         //[self.leftButton setBackgroundColor:[UIColor colorWithHexString:@"F7514A"]];
     } else if ([self.relationShip intValue] == 1){      //已关注
         [self.leftButton setTitle:@"发消息" forState:UIControlStateNormal];
-        self.leftButton.enabled = NO;
+        //self.leftButton.enabled = NO;
         [self.leftButton setTitleColor:[UIColor colorWithHexString:@"919291"] forState:UIControlStateNormal];
          //[self.leftButton setBackgroundColor:[UIColor colorWithHexString:@"B7B7B7"]];
     } else{

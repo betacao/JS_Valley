@@ -119,7 +119,7 @@
     self.locationTextField.layer.cornerRadius = 3.0f;
     self.locationTextField.leftView = [[UIView alloc]initWithFrame:CGRectMake(0.0f, 0.0f, 5.0f, 0.0f)];
     self.locationTextField.leftViewMode = UITextFieldViewModeAlways;
-    [self.locationTextField setValue:[UIColor colorWithHexString:@"D3D3D3"] forKeyPath:@"_placeholderLabel.textColor"];
+    [self.locationTextField setValue:[UIColor colorWithHexString:@"b2b2b2"] forKeyPath:@"_placeholderLabel.textColor"];
 
     self.thirdLabel.font = [UIFont systemFontOfSize:FontFactor(15.0f)];
 

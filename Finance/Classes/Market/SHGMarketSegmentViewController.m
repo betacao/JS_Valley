@@ -12,7 +12,6 @@
 #import "SHGMarketManager.h"
 #import "SHGProvincesViewController.h"
 #import "SHGMomentCityViewController.h"
-
 @interface SHGMarketSegmentViewController ()
 @property (nonatomic, strong) NSArray *rightBarButtonItems;
 @property (nonatomic, strong) UIBarButtonItem *leftBarButtonItem;
@@ -185,7 +184,7 @@
             VerifyIdentityViewController *controller = [[VerifyIdentityViewController alloc] init];
             [weakSelf.navigationController pushViewController:controller animated:YES];
         }
-    } failString:@"认证后才能发起活动哦～"];
+    } failString:@"认证后才能发起业务哦～"];
 }
 
 - (void)reloadTabButtons
@@ -329,6 +328,7 @@
             if (block) {
                 block(YES);
             }
+            
         }];
     } else{
         [SHGMarketManager deleteCollectWithObject:object finishBlock:^{

@@ -29,6 +29,7 @@
 @property (strong,nonatomic) EMSearchBar *searchBar;
 
 @property (nonatomic, assign) BOOL hasMoreData;
+@property (nonatomic, assign) BOOL searchBarIsEdite;
 @end
 
 @implementation MyFollowViewController
@@ -332,20 +333,20 @@
 			BasePeopleObject *obj = weakSelf.searchController.resultsSource[indexPath.row];
 			cell.nameLabel.text = obj.name;
 			cell.describtionLabel.text = obj.simpleDescription;
-            
+            cell.delegate = weakSelf;
             [cell.headerView updateHeaderView:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,obj.headImageUrl] placeholderImage:[UIImage imageNamed:@"default_head"]];
             [cell.headerView updateStatus:[obj.userstatus isEqualToString:@"true"]?YES:NO];
 			cell.obj = obj;
 			if (obj.followRelation == 0) {
 				cell.followButton.hidden = NO;
-				[cell.followButton setBackgroundImage:[UIImage imageNamed:@"me_follow"] forState:UIControlStateNormal];
+				[cell.followButton setImage:[UIImage imageNamed:@"me_follow"] forState:UIControlStateNormal];
 			}else if (obj.followRelation == 1){
 				cell.followButton.hidden = NO;
-				[cell.followButton setBackgroundImage:[UIImage imageNamed:@"me_followed"] forState:UIControlStateNormal];
+				[cell.followButton setImage:[UIImage imageNamed:@"me_followed"] forState:UIControlStateNormal];
             
 			}else if (obj.followRelation == 2){
 				cell.followButton.hidden = NO;
-				[cell.followButton setBackgroundImage:[UIImage imageNamed:@"me_follow_each"] forState:UIControlStateNormal];
+				[cell.followButton setImage:[UIImage imageNamed:@"me_follow_each"] forState:UIControlStateNormal];
 				
 			}
 			
@@ -362,7 +363,7 @@
             [tableView deselectRowAtIndexPath:indexPath animated:YES];
             BasePeopleObject *obj = weakSelf.searchController.resultsSource[indexPath.row];
             SHGPersonalViewController *controller = [[SHGPersonalViewController alloc] initWithNibName:@"SHGPersonalViewController" bundle:nil];
-            controller.userId = obj.uid;;
+            controller.userId = obj.uid;
             [weakSelf.navigationController pushViewController:controller animated:YES];
 		}];
 	}
@@ -371,6 +372,17 @@
 }
 
 #pragma mark - UISearchBarDelegate
+
+
+- (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar
+{
+    self.searchBarIsEdite = YES;
+}
+
+- (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar
+{
+    self.searchBarIsEdite = NO;
+}
 
 - (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar
 {
@@ -422,13 +434,16 @@
 		[MOCHTTPRequestOperationManager postWithURL:url class:nil parameters:param success:^(MOCHTTPResponse *response) {
             obj.followRelation = [response.dataDictionary[@"state"] integerValue];
 			[self.tableView reloadData];
+            if (self.searchBarIsEdite) {
+                [self.searchController.searchResultsTableView reloadData];
+            }
 			[Hud showMessageWithText:@"关注成功"];
             CircleListObj *robj = [[CircleListObj alloc] init];
             robj.userid = obj.uid;
             robj.isattention = @"Y";
             [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_COLLECT_COLLECT_CLIC object:robj];
             [Hud hideHud];
-		} failed:^(MOCHTTPResponse *response) {
+            		} failed:^(MOCHTTPResponse *response) {
 			[Hud showMessageWithText:response.errorMessage];
             [Hud hideHud];
 		}];
@@ -442,7 +457,9 @@
 			{
 				[self.dataSource removeObject:obj];
 				[self.tableView reloadData];
-          
+                if (self.searchBarIsEdite) {
+                    [self.searchController.searchResultsTableView reloadData];
+                }
 				[Hud showMessageWithText:@"取消关注成功"];
                 CircleListObj *robj = [[CircleListObj alloc] init];
                 robj.userid = obj.uid;
@@ -476,6 +493,9 @@
 				}
 				
 				[self.tableView reloadData];
+                if (self.searchBarIsEdite) {
+                    [self.searchController.searchResultsTableView reloadData];
+                }
                 CircleListObj *robj = [[CircleListObj alloc] init];
                 robj.userid = obj.uid;
                 robj.isattention = @"N";
@@ -485,7 +505,6 @@
 				[Hud showMessageWithText:[responseObject valueForKey:@"msg"]];
 			}
             [Hud hideHud];
-
 		} failure:^(NSURLSessionDataTask *operation, NSError *error) {
 			[Hud showMessageWithText:error.domain];
             [Hud hideHud];

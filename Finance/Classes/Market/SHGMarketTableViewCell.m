@@ -112,7 +112,12 @@
     } else{
         self.titleLabel.text = object.marketName;
     }
-    self.typeLabel.text = [@"类型：" stringByAppendingString:object.catalog];
+    if (!object.catalog.length == 0) {
+         self.typeLabel.text = [@"类型：" stringByAppendingString:object.catalog];
+    } else{
+        self.typeLabel.text = [@"类型：" stringByAppendingString:object.firstcatalog];
+    }
+   
     if ([object.price isEqualToString:@""]) {
         self.amountLabel.text = @"金额：暂未说明";
     } else{
@@ -120,7 +125,8 @@
     }
     self.contactLabel.text = [@"地区：" stringByAppendingString: object.position];
     [self loadCollectionState];
-    self.timeLabel.text = [@"时间：" stringByAppendingString: object.createTime];
+    NSString * timeStr = [object.modifyTime substringToIndex:10];
+    self.timeLabel.text = [@"时间：" stringByAppendingString: timeStr];
     [self.titleLabel sizeToFit];
     [self.typeLabel sizeToFit];
     [self.contactLabel sizeToFit];
