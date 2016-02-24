@@ -194,7 +194,7 @@
 - (void)clickCollectButton:(SHGMarketObject *)object state:(void (^)(BOOL))block
 {
     [[SHGMarketSegmentViewController sharedSegmentController] addOrDeleteCollect:object state:^(BOOL state) {
-        block(state);
+//        block(state);
     }];
 }
 - (void)clickCommentButton:(SHGMarketObject *)object

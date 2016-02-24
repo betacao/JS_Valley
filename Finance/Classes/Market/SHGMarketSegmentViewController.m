@@ -12,6 +12,8 @@
 #import "SHGMarketManager.h"
 #import "SHGProvincesViewController.h"
 #import "SHGMomentCityViewController.h"
+#import "SHGMarketSearchResultViewController.h"
+
 @interface SHGMarketSegmentViewController ()
 @property (nonatomic, strong) NSArray *rightBarButtonItems;
 @property (nonatomic, strong) UIBarButtonItem *leftBarButtonItem;
@@ -324,7 +326,6 @@
     if (!object.isCollection) {
         [SHGMarketManager addCollectWithObject:object finishBlock:^{
             [weakSelf didChangeCollectState:object iscollection:YES];
-            object.isCollection = YES;
             if (block) {
                 block(YES);
             }
@@ -333,7 +334,6 @@
     } else{
         [SHGMarketManager deleteCollectWithObject:object finishBlock:^{
             [weakSelf didChangeCollectState:object iscollection:NO];
-            object.isCollection = NO;
             if (block) {
                 block(NO);
             }
@@ -341,20 +341,33 @@
     }
 
 }
+
 - (void)didChangeCollectState:(SHGMarketObject *)object iscollection:(BOOL)iscollection
 {
-    for (UIViewController *controller in self.viewControllers){
-        if ([controller respondsToSelector:@selector(currentDataArray)]) {
-            NSMutableArray *array = [controller performSelector:@selector(currentDataArray)];
+
+    UIViewController *controller = [self.viewControllers firstObject];
+    if ([controller respondsToSelector:@selector(currentDataArray)]) {
+        NSMutableArray *array = [controller performSelector:@selector(currentDataArray)];
+        for (SHGMarketObject * obj in array){
+            if ([object.marketId isEqualToString:obj.marketId]) {
+                obj.isCollection = iscollection;
+            }
+        }
+        [controller performSelector:@selector(reloadData)];
+    }
+
+    for (BaseTableViewController *controller in self.navigationController.viewControllers) {
+        if ([controller isKindOfClass:[SHGMarketSearchResultViewController class]]) {
+            NSMutableArray *array = controller.dataArr;
             for (SHGMarketObject * obj in array){
                 if ([object.marketId isEqualToString:obj.marketId]) {
                     obj.isCollection = iscollection;
                 }
             }
+            [controller performSelector:@selector(reloadData)];
         }
-        [controller performSelector:@selector(reloadData)];
+        
     }
-    
 }
 
 #pragma mark ------ 点赞和取消点赞

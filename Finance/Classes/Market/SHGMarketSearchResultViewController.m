@@ -53,6 +53,11 @@
     }
 }
 
+- (void)reloadData
+{
+    [self.tableView reloadData];
+}
+
 - (UITableViewCell *)emptyCell
 {
     if (!_emptyCell) {
@@ -232,7 +237,7 @@
 - (void)clickCollectButton:(SHGMarketObject *)object state:(void (^)(BOOL))block
 {
     [[SHGMarketSegmentViewController sharedSegmentController] addOrDeleteCollect:object state:^(BOOL state) {
-        block(state);
+//        block(state);
     }];
 }
 

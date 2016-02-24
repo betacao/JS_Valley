@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SHGMarketDetailViewController">
@@ -20,7 +20,6 @@
                 <outlet property="modelLabel" destination="Xog-yW-ogl" id="2do-sR-fhy"/>
                 <outlet property="nameLabel" destination="svp-nP-fl2" id="kpc-6J-uiA"/>
                 <outlet property="phoneNumLabel" destination="BH9-F1-bmT" id="Xdj-eT-cEc"/>
-                <outlet property="phoneNumNameLabel" destination="MqM-BZ-P9p" id="eaO-Sg-ylw"/>
                 <outlet property="positionLabel" destination="TWe-U9-AIN" id="aYV-AV-u8H"/>
                 <outlet property="secondHorizontalLine" destination="Vhv-nl-DcY" id="q6A-dM-hp8"/>
                 <outlet property="speakButton" destination="TXb-f2-R0w" id="TfG-t8-1Kr"/>
@@ -197,13 +196,6 @@
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                     <color key="textColor" red="0.11372549019607843" green="0.3411764705882353" blue="0.59607843137254901" alpha="1" colorSpace="calibratedRGB"/>
-                    <nil key="highlightedColor"/>
-                </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="MqM-BZ-P9p">
-                    <rect key="frame" x="20" y="131" width="86" height="21"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <color key="textColor" red="0.53333333333333333" green="0.53333333333333333" blue="0.53333333333333333" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
             </subviews>

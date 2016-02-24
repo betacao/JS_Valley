@@ -168,10 +168,10 @@
 //收藏
 - (IBAction)clickCollectButton:(UIButton *)sender
 {
-    __weak typeof(self)weakSelf = self;
+//    __weak typeof(self)weakSelf = self;
     if (self.delegate && [self.delegate respondsToSelector:@selector(clickCollectButton:state:)]) {
         [self.delegate clickCollectButton:self.object state:^(BOOL state) {
-            [weakSelf loadCollectionState];
+//            [weakSelf loadCollectionState];
         }];
     }
 }

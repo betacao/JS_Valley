@@ -49,7 +49,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *addressLabel;
 @property (weak, nonatomic) IBOutlet UILabel *modelLabel;
 @property (weak, nonatomic) IBOutlet MLEmojiLabel *phoneNumLabel;
-@property (weak, nonatomic) IBOutlet UILabel *phoneNumNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *marketDetialLabel;
 @property (weak, nonatomic) IBOutlet UILabel *detailContentLabel;
 @property (weak, nonatomic) IBOutlet UIButton *btnShare;
@@ -133,12 +132,13 @@
     self.capitalLabel.font = [UIFont systemFontOfSize:FontFactor(14.0f)];
     self.addressLabel.font = [UIFont systemFontOfSize:FontFactor(14.0f)];
     self.modelLabel.font = [UIFont systemFontOfSize:FontFactor(14.0f)];
-    self.phoneNumNameLabel.font = [UIFont systemFontOfSize:FontFactor(14.0f)];
-    self.phoneNumLabel.numberOfLines = 0;
+
+    self.phoneNumLabel.numberOfLines = 1;
     self.phoneNumLabel.lineBreakMode = NSLineBreakByWordWrapping;
     self.phoneNumLabel.textColor = [UIColor colorWithHexString:@"888888"];
     self.phoneNumLabel.font = [UIFont systemFontOfSize:FontFactor(14.0f)];
     self.phoneNumLabel.delegate = self;
+
     self.phoneNumLabel.backgroundColor = [UIColor clearColor];
     self.marketDetialLabel.font = [UIFont systemFontOfSize:FontFactor(15.0f)];
     self.detailContentLabel.font = [UIFont systemFontOfSize:FontFactor(15.0f)];
@@ -249,20 +249,15 @@
     .autoHeightRatio(0.0f);
     [self.modelLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
     
-    self.phoneNumNameLabel.sd_layout
+    self.phoneNumLabel.sd_layout
     .leftSpaceToView(self.viewHeader, MarginFactor(12.0f))
-    .topSpaceToView(self.modelLabel, MarginFactor(12.0f))
-    .autoHeightRatio(0.0f);
-    [self.phoneNumNameLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
-    
-//    self.phoneNumLabel.sd_layout
-//    .leftSpaceToView(self.phoneNumNameLabel, MarginFactor(5.0f))
-//    .centerYEqualToView(self.phoneNumNameLabel);
+    .topSpaceToView(self.modelLabel, MarginFactor(12.0f));
+
     
     self.secondHorizontalLine.sd_layout
     .leftSpaceToView(self.viewHeader, MarginFactor(0.0f))
     .rightSpaceToView(self.viewHeader, MarginFactor(0.0f))
-    .topSpaceToView(self.phoneNumNameLabel, MarginFactor(12.0f))
+    .topSpaceToView(self.phoneNumLabel, MarginFactor(12.0f))
     .heightIs(0.5f);
     
     self.marketDetialLabel.sd_layout
@@ -314,9 +309,8 @@
         self.capitalLabel.text = [NSString stringWithFormat:@"金额： 暂未说明"];
     }
     self.typeLabel.text = [NSString stringWithFormat:@"类型： %@",self.responseObject.catalog];
-    self.phoneNumNameLabel.text = @"联系方式：";
     if ([self.responseObject.loginuserstate isEqualToString:@"0" ]) {
-        NSString * contactString = @"认证可见";
+        NSString * contactString = @"联系方式：认证可见";
         NSMutableAttributedString * str = [[NSMutableAttributedString alloc]initWithString:contactString];
         [str addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:14.0f] range:NSMakeRange(0, 4)];
         [str addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"4277B2"] range:NSMakeRange(0, 4)];
@@ -325,22 +319,18 @@
         [self.phoneNumLabel addGestureRecognizer:recognizer];
 
     } else if([self.responseObject.loginuserstate isEqualToString:@"1" ]){
-        NSString * contactString = self.responseObject.contactInfo;
+        NSString * contactString = [@"联系方式：" stringByAppendingString: self.responseObject.contactInfo];
         self.phoneNumLabel.text = contactString;
     }
-    
+
     dispatch_async(dispatch_get_main_queue(), ^{
-        
         CGSize size = [self.phoneNumLabel preferredSizeWithMaxWidth:kCellContentWidth];
         CGRect frame = self.phoneNumLabel.frame;
-        frame.size.width = size.width;
-        frame.size.height = CGRectGetHeight(self.phoneNumNameLabel.frame);
-        frame.origin.x = CGRectGetMaxX(self.phoneNumNameLabel.frame) + MarginFactor(5.0f);
-        frame.origin.y = CGRectGetMinY(self.phoneNumNameLabel.frame);
+        frame.size.width = kCellContentWidth;
+        frame.size.height = size.height;
         self.phoneNumLabel.frame = frame;
     });
-    
-    
+
     self.nameLabel.text = self.responseObject.realname;
 
     if (![self.responseObject.createBy isEqualToString:[[NSUserDefaults standardUserDefaults]objectForKey:KEY_UID]] && [self.responseObject.anonymous isEqualToString:@"1"]) {
@@ -390,7 +380,6 @@
         [self.photoView addSubview:photoGroup];
     }
 
-    
     [self.viewHeader layoutSubviews];
     if (!self.detailTable.tableHeaderView) {
         self.detailTable.tableHeaderView = self.viewHeader;
@@ -418,8 +407,6 @@
             }
         } failString:@"认证后才能查看联系方式～"];
     }
-
-
 }
 
 - (void)addEmptyViewIfNeeded
