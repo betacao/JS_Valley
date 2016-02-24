@@ -234,7 +234,6 @@
         SHGMarketObject *object = [[SHGMarketObject alloc] init];
         object.marketId = obj.oid;
         controller.object = object;
-        controller.delegate = [SHGMarketSegmentViewController sharedSegmentController];
         [self.navigationController pushViewController:controller animated:YES];
     } else{
         //进入帖子详情

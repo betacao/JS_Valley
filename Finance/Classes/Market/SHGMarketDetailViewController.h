@@ -8,14 +8,9 @@
 
 #import "BaseTableViewController.h"
 #import "SHGMarketObject.h"
-
-@protocol SHGMarketStateDelegate <NSObject>
-
-- (void)updateToNewestMarket:(SHGMarketObject *)object;
-
-@end
+#import "MyCollectionViewController.h"
 
 @interface SHGMarketDetailViewController : BaseTableViewController
 @property (strong, nonatomic) SHGMarketObject *object;
-@property (weak, nonatomic) id<SHGMarketStateDelegate> delegate;
+@property (weak, nonatomic) MyCollectionViewController *controller;
 @end

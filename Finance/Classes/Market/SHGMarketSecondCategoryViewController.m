@@ -77,7 +77,7 @@
                 }
                 button.adjustsImageWhenHighlighted = NO;
                 button.layer.masksToBounds = YES;
-                button.layer.cornerRadius = 2.0f;
+                button.layer.cornerRadius = 3.0f;
                 button.layer.borderWidth = 0.5f;
                 button.layer.borderColor = [UIColor colorWithHexString:@"E1E1E6"].CGColor;
                 [button setBackgroundColor: [UIColor colorWithHexString:@"EEEFF0"]];

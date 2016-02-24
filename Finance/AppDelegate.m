@@ -511,7 +511,6 @@
         SHGMarketObject *object = [[SHGMarketObject alloc] init];
         object.marketId = marketId;
         controller.object = object;
-        controller.delegate = [SHGMarketSegmentViewController sharedSegmentController];
         [self pushIntoViewController:TopVC newViewController:controller];
     } else{  //进入帖子详情
         CircleDetailViewController *vc = [[CircleDetailViewController alloc] init];

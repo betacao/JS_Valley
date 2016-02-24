@@ -424,46 +424,6 @@
 
 }
 
-- (void)updateToNewestMarket:(SHGMarketObject *)object
-{
-    //详情界面消失的时候做下数据统计
-    for (UIViewController *controller in self.viewControllers){
-        if ([controller respondsToSelector:@selector(currentDataArray)]) {
-            NSMutableArray *array = [controller performSelector:@selector(currentDataArray)];
-            for (SHGMarketObject * obj in array){
-                if ([object.marketId isEqualToString:obj.marketId]) {
-                    obj.commentNum = object.commentNum;
-                    obj.praiseNum = object.praiseNum;
-                    obj.isPraise = object.isPraise;
-                    obj.isCollection = object.isCollection;
-                }
-            }
-        }
-        [controller performSelector:@selector(reloadData)];
-    }
-
-    //我的业务被移动到个人中心后 要刷新
-    NSInteger count = self.navigationController.viewControllers.count;
-    if (count >= 1) {
-        UIViewController *controller = [self.navigationController.viewControllers objectAtIndex:count - 1];
-
-        if ([NSStringFromClass([controller class]) isEqualToString:@"SHGMarketMineViewController"]) {
-            if ([controller respondsToSelector:@selector(currentDataArray)]) {
-                NSMutableArray *array = [controller performSelector:@selector(currentDataArray)];
-                for (SHGMarketObject * obj in array){
-                    if ([object.marketId isEqualToString:obj.marketId]) {
-                        obj.commentNum = object.commentNum;
-                        obj.praiseNum = object.praiseNum;
-                        obj.isPraise = object.isPraise;
-                        obj.isCollection = object.isCollection;
-                    }
-                }
-            }
-            [controller performSelector:@selector(reloadData)];
-        }
-    }
-}
-
 - (void)didCreateNewMarket:(SHGMarketFirstCategoryObject *)object
 {
     //移动选项 加载更多

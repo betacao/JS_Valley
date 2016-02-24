@@ -25,6 +25,8 @@
 #import "SHGMarketSendViewController.h"
 #import "SHGMarketSegmentViewController.h"
 #import "SHGMarketDetailViewController.h"
+#import "ProdConfigViewController.h"
+#import "CircleDetailViewController.h"
 #define KButtonWidth 320.f/4.0 * XFACTOR
 @interface MyCollectionViewController ()<SHGMarketTableViewDelegate>
 {
@@ -221,67 +223,10 @@
             
         }
             break;
-            //1.7.2资讯收藏隐藏
-//        case 23:
-//        {
-//            self.tableView.separatorStyle = 0;
-//            self.selectType = 4;
-//             [self refreshDataSource];
-//            CGRect rect = imageBttomLine.frame;
-//            rect.origin.x =(self.tableView.width/4-40.0)/2+ (btn.tag-20.0)*self.tableView.width/4 ;
-//            [UIView beginAnimations:nil context:nil];
-//            [imageBttomLine setFrame:rect];
-//            [UIView setAnimationDuration:0.3];
-//            [UIView commitAnimations];
-//            [btn setTitleColor:[UIColor colorWithHexString:@"D82626"] forState:UIControlStateNormal];
-//             btn.titleLabel.font = [UIFont systemFontOfSize:14];
-//            [self.tableView reloadData];
-//            [Hud showLoadingWithMessage:@"加载中"];
-//            [self requestNewsListWithTarget:@"first" time:@"" ];
-//            }
-//            break;
-//
-//        default:
-//            break;
     }
 
 }
-//- (void)selected:(id)sender
-//{
-//  
-//	UISegmentedControl* control = (UISegmentedControl*)sender;
-//	switch (control.selectedSegmentIndex) {
-//		case 0:
-//		{
-//			self.selectType = 1;
-//            self.tableView.separatorStyle = 1;
-//            [Hud showLoadingWithMessage:@"加载中"];
-//			[self requestPostListWithTarget:@"first" time:@"-1"];
-//		}
-//			break;
-//		case 1:
-//		{
-//            self.tableView.separatorStyle = 0;
-//             self.selectType = 2;
-//            [Hud showLoadingWithMessage:@"加载中"];
-//            [self requestProductListWithTarget:@"first" time:@""];
-//            
-//		}
-//			break;
-//        case 2:
-//        {
-//            self.tableView.separatorStyle = 0;
-//            self.selectType = 3;
-//            [Hud showLoadingWithMessage:@"加载中"];
-//            [self requestCardListWithTarget:@"first" time:@"-1" ];
-//            
-//            
-//        }
-//            break;
-//		default:
-//			break;
-//	}
-//}
+
 
 - (void)refreshDataSource
 {
@@ -294,15 +239,12 @@
     } else if (self.selectType == 2){
         self.dataSource = self.marketList;
     }
-    //1.7.2 资讯隐藏
-//    else if (self.selectType == 4){
-//        self.dataSource = self.newsList;
-//    }
 	
 	[self.tableView reloadData];
 	
 	
 }
+
 -(void)reloadTable
 {
     [self.tableView reloadData];
@@ -1150,6 +1092,7 @@
     {
         ProdListObj *obj = self.dataSource[indexPath.row];
         ProdConfigViewController *vc = [[ProdConfigViewController alloc] initWithNibName:@"ProdConfigViewController" bundle:nil];
+        vc.controller = self;
         vc.obj = obj;
         NSString *type;
         if ([obj.type isEqualToString:@"pz"]) {
@@ -1170,6 +1113,7 @@
        
         SHGCollectCardClass * obj = self.dataSource[indexPath.row];
         SHGPersonalViewController * vc = [[SHGPersonalViewController alloc]init];
+        vc.controller = self;
         vc.userId = obj.uid;
         [self.navigationController pushViewController:vc animated:YES];
     
@@ -1180,8 +1124,8 @@
             
             SHGMarketObject *obj = [self.marketList objectAtIndex:indexPath.row];
             SHGMarketDetailViewController *  viewController =[[SHGMarketDetailViewController alloc] initWithNibName:@"SHGMarketDetailViewController" bundle:nil];
+            viewController.controller = self;
             viewController.object = obj;
-            viewController.delegate = [SHGMarketSegmentViewController sharedSegmentController];
             [self.navigationController pushViewController:viewController animated:YES];
         }
 
@@ -1317,6 +1261,19 @@
 -(void)detailCollectionWithRid:(NSString *)rid collected:(NSString *)isColle
 {
     [self requestPostListWithTarget:@"first" time:@"-1"];
+    //[self requestMarketCollectWithTarget:@"first" time:@"-1"];
+}
+- (void)changeMarketCollection
+{
+    [self requestMarketCollectWithTarget:@"first" time:@"-1"];
+}
+- (void)changeProductCollection
+{
+    [self requestProductListWithTarget:@"first" time:@"-1"];
+}
+- (void)changeCardCollection
+{
+    [self requestCardListWithTarget:@"first" time:@"-1"];
 }
 #pragma mark ------SHGMarketTableViewCellDelegate
 - (void)clickPrasiseButton:(SHGMarketObject *)object
@@ -1340,7 +1297,6 @@
 {
     SHGMarketDetailViewController *controller = [[SHGMarketDetailViewController alloc] init];
     controller.object = object;
-    controller.delegate = [SHGMarketSegmentViewController sharedSegmentController];
     [self.navigationController pushViewController:controller animated:YES];
 }
 

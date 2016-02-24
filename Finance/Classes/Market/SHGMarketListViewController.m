@@ -367,7 +367,6 @@
     } else{
         SHGMarketDetailViewController *controller = [[SHGMarketDetailViewController alloc]init];
         controller.object = object;
-        controller.delegate = [SHGMarketSegmentViewController sharedSegmentController];
         [self.navigationController pushViewController:controller animated:YES];
     }
 }
@@ -484,7 +483,6 @@
 {
     SHGMarketDetailViewController *controller = [[SHGMarketDetailViewController alloc] init];
     controller.object = object;
-    controller.delegate = [SHGMarketSegmentViewController sharedSegmentController];
     [self.navigationController pushViewController:controller animated:YES];
 }
 

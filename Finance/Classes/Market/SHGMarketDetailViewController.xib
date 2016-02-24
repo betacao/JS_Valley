@@ -20,6 +20,7 @@
                 <outlet property="modelLabel" destination="Xog-yW-ogl" id="2do-sR-fhy"/>
                 <outlet property="nameLabel" destination="svp-nP-fl2" id="kpc-6J-uiA"/>
                 <outlet property="phoneNumLabel" destination="BH9-F1-bmT" id="Xdj-eT-cEc"/>
+                <outlet property="phoneNumNameLabel" destination="MqM-BZ-P9p" id="eaO-Sg-ylw"/>
                 <outlet property="positionLabel" destination="TWe-U9-AIN" id="aYV-AV-u8H"/>
                 <outlet property="secondHorizontalLine" destination="Vhv-nl-DcY" id="q6A-dM-hp8"/>
                 <outlet property="speakButton" destination="TXb-f2-R0w" id="TfG-t8-1Kr"/>
@@ -128,7 +129,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="BH9-F1-bmT" customClass="MLEmojiLabel">
-                    <rect key="frame" x="15" y="132" width="290" height="15"/>
+                    <rect key="frame" x="150" y="132" width="155" height="15"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -196,6 +197,13 @@
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                     <color key="textColor" red="0.11372549019607843" green="0.3411764705882353" blue="0.59607843137254901" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="MqM-BZ-P9p">
+                    <rect key="frame" x="20" y="131" width="86" height="21"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" red="0.53333333333333333" green="0.53333333333333333" blue="0.53333333333333333" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
             </subviews>

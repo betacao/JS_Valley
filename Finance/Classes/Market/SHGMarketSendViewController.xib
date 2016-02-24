@@ -149,7 +149,7 @@
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                             <state key="normal" title="找资金">
-                                <color key="titleColor" red="0.69803921568627447" green="0.69803921568627447" blue="0.69803921568627447" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="titleColor" red="0.70196078431372544" green="0.70196078431372544" blue="0.70196078431372544" alpha="1" colorSpace="calibratedRGB"/>
                             </state>
                             <connections>
                                 <action selector="leftButtonClick:" destination="-1" eventType="touchUpInside" id="Uha-g0-NO3"/>
@@ -228,12 +228,12 @@
             </subviews>
             <color key="backgroundColor" red="0.93725490199999995" green="0.93333333330000001" blue="0.93725490199999995" alpha="1" colorSpace="calibratedRGB"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <point key="canvasLocation" x="-213" y="310"/>
+            <point key="canvasLocation" x="-83" y="302"/>
         </view>
     </objects>
     <resources>
-        <image name="addImageButton" width="55" height="55"/>
+        <image name="addImageButton" width="50" height="50"/>
         <image name="biXuan" width="5" height="5"/>
-        <image name="market_select" width="15" height="15"/>
+        <image name="market_select" width="11" height="11"/>
     </resources>
 </document>

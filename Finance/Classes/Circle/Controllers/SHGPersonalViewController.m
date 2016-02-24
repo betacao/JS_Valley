@@ -64,6 +64,7 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
 @property (strong, nonatomic) NSString * position;
 @property (strong, nonatomic) NSString * tags;
 @property (strong, nonatomic) NSString * commonfriends;
+@property (assign, nonatomic) BOOL isCardChange;
 @end
 
 @implementation SHGPersonalViewController
@@ -71,6 +72,7 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"个人动态";
+    self.isCardChange = YES;
     if ([self.userId isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID]]) {
         self.listArray = [NSMutableArray arrayWithArray:@[@"我的动态", @"我的好友"]];
         self.headerView.size = CGSizeMake(self.headerView.width, kHeaderViewHeight);
@@ -91,7 +93,13 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
     self.tableView.separatorStyle = UITableViewCellSelectionStyleNone;
     [self requestDataWithTarget:@"first" time:@""];
 }
-
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    if (!self.isCardChange) {
+        [self.controller changeCardCollection];
+    }
+}
 - (void)initView
 {
       //1.7.2修改
@@ -314,6 +322,7 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
         NSString *code = [response.data valueForKey:@"code"];
         if ([code isEqualToString:@"000"]){
             weakSelf.isCollected = !weakSelf.isCollected;
+            weakSelf.isCardChange = YES;
             [weakSelf loadUI];
         }
     } failed:^(MOCHTTPResponse *response) {
@@ -330,6 +339,7 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
         NSString *code = [response.data valueForKey:@"code"];
         if ([code isEqualToString:@"000"]){
             weakSelf.isCollected = !weakSelf.isCollected;
+            weakSelf.isCardChange = NO;
             [weakSelf loadUI];
         }
     } failed:^(MOCHTTPResponse *response) {

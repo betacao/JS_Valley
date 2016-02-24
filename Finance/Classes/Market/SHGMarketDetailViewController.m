@@ -49,11 +49,14 @@
 @property (weak, nonatomic) IBOutlet UILabel *addressLabel;
 @property (weak, nonatomic) IBOutlet UILabel *modelLabel;
 @property (weak, nonatomic) IBOutlet MLEmojiLabel *phoneNumLabel;
+@property (weak, nonatomic) IBOutlet UILabel *phoneNumNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *marketDetialLabel;
 @property (weak, nonatomic) IBOutlet UILabel *detailContentLabel;
 @property (weak, nonatomic) IBOutlet UIButton *btnShare;
 @property (weak, nonatomic) IBOutlet UIView *viewInput;
 @property (weak, nonatomic) IBOutlet UIButton *speakButton;
+
+@property (assign, nonatomic) BOOL isCollectionChange;
 
 @property (weak, nonatomic) SHGMarketCommentObject *commentObject;
 @property (strong, nonatomic) NSString *copyedString;
@@ -75,7 +78,7 @@
 {
     [super viewDidLoad];
     self.title = @"业务详情";
-    
+    self.isCollectionChange = YES;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shareToFriendSuccess:) name:NOTIFI_ACTION_SHARE_TO_FRIENDSUCCESS object:nil];
     
     self.detailTable.delegate = self;
@@ -130,6 +133,7 @@
     self.capitalLabel.font = [UIFont systemFontOfSize:FontFactor(14.0f)];
     self.addressLabel.font = [UIFont systemFontOfSize:FontFactor(14.0f)];
     self.modelLabel.font = [UIFont systemFontOfSize:FontFactor(14.0f)];
+    self.phoneNumNameLabel.font = [UIFont systemFontOfSize:FontFactor(14.0f)];
     self.phoneNumLabel.numberOfLines = 0;
     self.phoneNumLabel.lineBreakMode = NSLineBreakByWordWrapping;
     self.phoneNumLabel.textColor = [UIColor colorWithHexString:@"888888"];
@@ -245,16 +249,22 @@
     .autoHeightRatio(0.0f);
     [self.modelLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
     
-    self.phoneNumLabel.sd_layout
+    self.phoneNumNameLabel.backgroundColor = [UIColor redColor];
+    self.phoneNumLabel.backgroundColor = [UIColor redColor];
+    self.phoneNumNameLabel.sd_layout
     .leftSpaceToView(self.viewHeader, MarginFactor(12.0f))
     .topSpaceToView(self.modelLabel, MarginFactor(12.0f))
     .autoHeightRatio(0.0f);
-    [self.phoneNumLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
+    [self.phoneNumNameLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
+    
+//    self.phoneNumLabel.sd_layout
+//    .leftSpaceToView(self.phoneNumNameLabel, MarginFactor(5.0f))
+//    .centerYEqualToView(self.phoneNumNameLabel);
     
     self.secondHorizontalLine.sd_layout
     .leftSpaceToView(self.viewHeader, MarginFactor(0.0f))
     .rightSpaceToView(self.viewHeader, MarginFactor(0.0f))
-    .topSpaceToView(self.phoneNumLabel, MarginFactor(12.0f))
+    .topSpaceToView(self.phoneNumNameLabel, MarginFactor(12.0f))
     .heightIs(0.5f);
     
     self.marketDetialLabel.sd_layout
@@ -291,7 +301,7 @@
 {
     [self addEmptyViewIfNeeded];
     [self loadShareButtonState];
-   
+    
     if (self.responseObject.mode.length == 0) {
          self.modelLabel.text = @"模式： 找资金";
     } else{
@@ -306,27 +316,33 @@
         self.capitalLabel.text = [NSString stringWithFormat:@"金额： 暂未说明"];
     }
     self.typeLabel.text = [NSString stringWithFormat:@"类型： %@",self.responseObject.catalog];
-
+    self.phoneNumNameLabel.text = @"联系方式：";
     if ([self.responseObject.loginuserstate isEqualToString:@"0" ]) {
-        NSString * contactString = @"联系方式： 认证可见";
+        NSString * contactString = @"认证可见";
         NSMutableAttributedString * str = [[NSMutableAttributedString alloc]initWithString:contactString];
-        [str addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"888888"] range:NSMakeRange(0, 6)];
-        [str addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:13.0f] range:NSMakeRange(6, 4)];
-        [str addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"4277B2"] range:NSMakeRange(6, 4)];
+        [str addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:14.0f] range:NSMakeRange(0, 4)];
+        [str addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"4277B2"] range:NSMakeRange(0, 4)];
         self.phoneNumLabel.attributedText = str;
         UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapContactLabelToIdentification:)];
         [self.phoneNumLabel addGestureRecognizer:recognizer];
 
     } else if([self.responseObject.loginuserstate isEqualToString:@"1" ]){
-        NSString * contactString = [@"联系方式：" stringByAppendingString: self.responseObject.contactInfo];
-
-        NSMutableAttributedString * str = [[NSMutableAttributedString alloc]initWithString:contactString];
-        [str addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"888888"] range:NSMakeRange(0, 6)];
-        [str addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:FontFactor(13.0f)] range:NSMakeRange(5, str.length - 5)];
-        [str addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"4277B2"] range:NSMakeRange(5, str.length - 5)];
+        NSString * contactString = self.responseObject.contactInfo;
         self.phoneNumLabel.text = contactString;
-
     }
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        
+        CGSize size = [self.phoneNumLabel preferredSizeWithMaxWidth:kCellContentWidth];
+        CGRect frame = self.phoneNumLabel.frame;
+        frame.size.width = size.width;
+        frame.size.height = CGRectGetHeight(self.phoneNumNameLabel.frame);
+        frame.origin.x = CGRectGetMaxX(self.phoneNumNameLabel.frame) + MarginFactor(5.0f);
+        frame.origin.y = CGRectGetMinY(self.phoneNumNameLabel.frame);
+        self.phoneNumLabel.frame = frame;
+    });
+    
+    
     self.nameLabel.text = self.responseObject.realname;
 
     if (![self.responseObject.createBy isEqualToString:[[NSUserDefaults standardUserDefaults]objectForKey:KEY_UID]] && [self.responseObject.anonymous isEqualToString:@"1"]) {
@@ -764,11 +780,12 @@
 }
 - (void)loadCollectButtonState
 {
-    //设置点赞的状态
     if (self.responseObject.isCollection ) {
         [self.collectionButton setImage:[UIImage imageNamed:@"marketDetailCollection"] forState:UIControlStateNormal];
+         self.isCollectionChange = YES;
     } else{
         [self.collectionButton setImage:[UIImage imageNamed:@"marketDetailNoCollection"] forState:UIControlStateNormal];
+        self.isCollectionChange = NO;
     }
 //  [self.btnZan setTitle:self.responseObject.praiseNum forState:UIControlStateNormal];
 }
@@ -823,8 +840,8 @@
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    if (self.delegate && [self.delegate respondsToSelector:@selector(updateToNewestMarket:)]) {
-        [self.delegate updateToNewestMarket:self.responseObject];
+    if (!self.isCollectionChange) {
+        [self.controller changeMarketCollection];
     }
 
 }

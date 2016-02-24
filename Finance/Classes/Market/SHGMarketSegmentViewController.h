@@ -13,7 +13,7 @@
 
 typedef void(^loadViewFinishBlock)(UIView *view);
 
-@interface SHGMarketSegmentViewController : UIViewController<SHGMarketSendDelegate, SHGMarketStateDelegate>
+@interface SHGMarketSegmentViewController : UIViewController<SHGMarketSendDelegate>
 
 @property (nonatomic, copy) NSArray *viewControllers;
 @property (nonatomic, weak) UIViewController *selectedViewController;

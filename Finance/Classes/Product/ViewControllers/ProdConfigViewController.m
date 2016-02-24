@@ -10,7 +10,7 @@
 #import "ProdConfigTableViewCell.h"
 #import "ConfigObj.h"
 #import "AppDelegate.h"
-
+#import "MyCollectionViewController.h"
 #define kNumberOfRows 1
 #define kHeightForNormalCell 44.0f
 
@@ -29,6 +29,7 @@
 @property (weak, nonatomic) IBOutlet UITableView *tableList;
 @property (strong, nonatomic) NSMutableArray *heightArray;
 @property (strong, nonatomic) UIView *footerView;
+@property (assign, nonatomic) BOOL isProductChange;
 //业务介绍 产品信息 和业务流程的cell这边写死 不会去重复加载了
 //如果想写的灵活 就要使用缓存了
 @property (strong, nonatomic) ProdConfigTableViewCell *infomationCell;
@@ -58,7 +59,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-  
+    self.isProductChange = YES;
     UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [rightButton setImage:[UIImage imageNamed:@"consult"] forState:UIControlStateNormal];
     [rightButton sizeToFit];
@@ -103,6 +104,14 @@
 
     }];
     [self initView];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    if (!self.isProductChange) {
+        [self.controller changeProductCollection];
+    }
 }
 
 - (NSMutableArray *)heightArray
@@ -346,6 +355,7 @@
                 self.obj.iscollected = @"0";
                 [self.btnCollet setImage:[UIImage imageNamed:@"收藏prod"] forState:UIControlStateNormal];
             }
+            self.isProductChange = NO;
             [Hud showMessageWithText:@"取消收藏"];
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
             [Hud showMessageWithText:error.domain];
@@ -359,6 +369,7 @@
                 self.obj = obj;
                 [self.btnCollet setImage:[UIImage imageNamed:@"已收藏prod"] forState:UIControlStateNormal];
             }
+            self.isProductChange = YES;
             [Hud showMessageWithText:@"收藏成功"];
 
         } failed:^(MOCHTTPResponse *response) {

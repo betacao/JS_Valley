@@ -142,15 +142,15 @@ typedef NS_ENUM(NSInteger, SHGMarketSendType){
     self.modelContentView.layer.cornerRadius = 3.0f;
     self.modelContentView.layer.borderColor = [UIColor colorWithHexString:@"e1e1e6"].CGColor;
     self.modelContentView.layer.borderWidth = 0.5f;
-
+    self.breakView.backgroundColor = [UIColor colorWithHexString:@"e1e1e6"];
     self.leftButton.titleLabel.font = [UIFont systemFontOfSize:FontFactor(13.0f)];
-    [self.leftButton setTitleColor:[UIColor colorWithHexString:@"e1e1e6"] forState:UIControlStateNormal];
+    [self.leftButton setTitleColor:[UIColor colorWithHexString:@"b3b3b3"] forState:UIControlStateNormal];
     [self.leftButton setTitleColor:[UIColor colorWithHexString:@"d43c33"] forState:UIControlStateSelected];
     self.leftButton.selected = YES;
     self.mode = self.leftButton.titleLabel.text;
 
     self.rightButton.titleLabel.font = [UIFont systemFontOfSize:FontFactor(13.0f)];
-    [self.rightButton setTitleColor:[UIColor colorWithHexString:@"e1e1e6"] forState:UIControlStateNormal];
+    [self.rightButton setTitleColor:[UIColor colorWithHexString:@"b3b3b3"] forState:UIControlStateNormal];
     [self.rightButton setTitleColor:[UIColor colorWithHexString:@"d43c33"] forState:UIControlStateSelected];
 
     self.introduceLabel.font = [UIFont systemFontOfSize:FontFactor(14.0f)];
