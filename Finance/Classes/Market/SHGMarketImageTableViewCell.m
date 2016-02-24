@@ -23,6 +23,7 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         self.clipsToBounds = YES;
+        self.selectionStyle = UITableViewCellSelectionStyleNone;
         [self initView];
         [self addAutoLayout];
     }
@@ -47,27 +48,22 @@
     .heightIs(0.0f);
 }
 
-- (void)setObject:(SHGMarketNoticeObject *)object
+- (void)setTipUrl:(NSString *)tipUrl
 {
-    _object = object;
+    _tipUrl = tipUrl;
     if (CGRectGetHeight(self.imageButton.frame) > 0) {
-        [((SHGMarketListViewController *)(self.controller)) reloadDataWithHeight:CGRectGetHeight(self.imageButton.frame)];
         return;
     }
-    if (object.tipUrl.length > 0) {
-        __weak typeof(self)weakSelf = self;
-        [[SDWebImageManager sharedManager] downloadImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage, object.tipUrl]] options:SDWebImageLowPriority|SDWebImageRetryFailed progress:^(NSInteger receivedSize, NSInteger expectedSize) {
+    __weak typeof(self)weakSelf = self;
+    [[SDWebImageManager sharedManager] downloadImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage, tipUrl]] options:SDWebImageLowPriority|SDWebImageRetryFailed progress:^(NSInteger receivedSize, NSInteger expectedSize) {
 
-        } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                CGFloat height = ceilf(SCREENWIDTH * image.size.height / image.size.width);
-                weakSelf.imageButton.height = height;
-                [weakSelf.imageButton setBackgroundImage:image forState:UIControlStateNormal];
-                [((SHGMarketListViewController *)(weakSelf.controller)) reloadDataWithHeight:height];
-
-            });
-        }];
-    }
+    } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            CGFloat height = ceilf(SCREENWIDTH * image.size.height / image.size.width);
+            weakSelf.imageButton.height = height;
+            [weakSelf.imageButton setBackgroundImage:image forState:UIControlStateNormal];
+        });
+    }];
 }
 
 
@@ -89,8 +85,10 @@
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
+        self.selectionStyle = UITableViewCellSelectionStyleNone;
         [self initView];
         [self addAutoLayout];
+        [self setupAutoHeightWithBottomView:self.titleLabel bottomMargin:MarginFactor(12.0f)];
     }
     return self;
 }
@@ -103,7 +101,6 @@
     self.titleLabel.font = [UIFont systemFontOfSize:FontFactor(12.0f)];
     self.titleLabel.textColor = [UIColor colorWithHexString:@"cbc9c9"];
     self.titleLabel.textAlignment = NSTextAlignmentCenter;
-    self.titleLabel.text = @"本地区该业务较少，现为您推荐其他地区同业务信息";
 
     [self.contentView addSubview:self.titleLabel];
 }
@@ -112,17 +109,18 @@
 {
 
     self.titleLabel.sd_layout
-    .topSpaceToView(self.contentView, -MarginFactor(10.0f))
+    .topSpaceToView(self.contentView, MarginFactor(2.0f))
     .leftSpaceToView(self.contentView, 0.0f)
     .rightSpaceToView(self.contentView, 0.0f)
-    .bottomSpaceToView(self.contentView, 0.0f);
+    .autoHeightRatio(0.0f);
+
 }
 
-- (void)setObject:(SHGMarketNoticeObject *)object
+- (void)setText:(NSString *)text
 {
-    _object = object;
-    [((SHGMarketListViewController *)(self.controller)) reloadDataWithHeight:MarginFactor(26.0f)];
-    
+    _text = text;
+//    @"本地区该业务较少，现为您推荐其他地区同业务信息";
+    self.titleLabel.text = text;
 }
 
 @end

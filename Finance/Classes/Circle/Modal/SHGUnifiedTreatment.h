@@ -13,6 +13,6 @@
 
 + (instancetype)sharedTreatment;
 
-- (void)shareFeedhtmlString:(NSString *)url;
+- (void)shareFeedhtmlString:(CircleListObj *)object;
 
 @end

@@ -59,7 +59,7 @@
     [Hud hideHud];
 }
 
--(void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
+- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
 {
 
 }
@@ -73,7 +73,7 @@
         for (JSValue *jsVal in args) {
             NSLog(@"%@", jsVal);
         }
-        [[SHGUnifiedTreatment sharedTreatment] shareFeedhtmlString:self.object.feedhtml];
+        [[SHGUnifiedTreatment sharedTreatment] shareFeedhtmlString:self.object];
     };
 }
 

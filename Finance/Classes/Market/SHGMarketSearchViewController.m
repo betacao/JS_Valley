@@ -47,6 +47,18 @@
     }];
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [self.searchBar becomeFirstResponder];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [self.searchBar resignFirstResponder];
+}
+
 - (UISearchBar *)searchBar
 {
     if (!_searchBar) {
@@ -182,7 +194,6 @@
 //退出
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
 {
-    [self.searchBar resignFirstResponder];
     [self.navigationController popViewControllerAnimated:YES];
 }
 
@@ -191,11 +202,6 @@
     SHGMarketSearchResultViewController *controller = [[SHGMarketSearchResultViewController alloc] initWithType:SHGMarketSearchTypeNormal];
     controller.param = @{@"uid":UID ,@"type":@"searcher" ,@"pageSize":@"10", @"marketName":searchBar.text};
     [self.navigationController pushViewController:controller animated:YES];
-}
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [self.searchBar resignFirstResponder];
 }
 
 - (void)didReceiveMemoryWarning

@@ -394,7 +394,7 @@
         [Hud hideHud];
         SHGMarketCommentObject *newObject = [[SHGMarketCommentObject alloc] init];
         newObject.commentDetail = content;
-        newObject.commentId = [response.dataDictionary objectForKey:@"commentid"];
+        newObject.commentId = [response.dataDictionary objectForKey:@"result"];
         newObject.commentOtherName = targetCommentObject.commentUserName;
         newObject.commentUserId = uid;
         newObject.commentUserName = userName;

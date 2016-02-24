@@ -29,8 +29,6 @@
 @property (strong, nonatomic) UITableViewCell *emptyCell;
 @property (strong, nonatomic) SHGEmptyDataView *emptyView;
 
-@property (strong, nonatomic) SHGMarketImageTableViewCell *imageCell;
-@property (strong, nonatomic) SHGMarketLabelTableViewCell *labelCell;
 @property (strong, nonatomic) SHGNoticeView *noticeView;
 
 @property (strong, nonatomic) NSMutableArray *currentArray;
@@ -38,8 +36,6 @@
 @property (strong, nonatomic) NSString *index;
 @property (strong, nonatomic) NSMutableDictionary *positionDictionary;
 @property (strong, nonatomic) NSArray *selectedArray;
-
-@property (assign, nonatomic) CGFloat noticeHeight;
 @end
 
 @implementation SHGMarketListViewController
@@ -102,7 +98,7 @@
     }
     NSString *area = [SHGMarketManager shareManager].cityName;
 
-    NSString *position = [self.positionDictionary objectForKey:[self.scrollView marketFirstId]];
+    NSString *position = [self.positionDictionary objectForKey:[self.scrollView marketName]];
     NSString *redirect = [position isEqualToString:@"0"] ? @"1" : @"0";
 
     NSDictionary *param = @{@"marketId":marketId ,@"uid":UID ,@"type":@"all" ,@"target":target ,@"pageSize":@"10" ,@"firstCatalog":firstId ,@"secondCatalog":secondId, @"modifyTime":modifyTime, @"city":area, @"redirect":redirect};
@@ -174,26 +170,6 @@
         };
     }
     return _emptyView;
-}
-
-- (SHGMarketImageTableViewCell *)imageCell
-{
-    if (!_imageCell) {
-        _imageCell = [[SHGMarketImageTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"SHGMarketImageTableViewCell"];
-        _imageCell.selectionStyle = UITableViewCellSelectionStyleNone;
-        _imageCell.controller = self;
-    }
-    return _imageCell;
-}
-
-- (SHGMarketLabelTableViewCell *)labelCell
-{
-    if (!_labelCell) {
-        _labelCell = [[SHGMarketLabelTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"SHGMarketLabelTableViewCell"];
-        _labelCell.selectionStyle = UITableViewCellSelectionStyleNone;
-        _labelCell.controller = self;
-    }
-    return _labelCell;
 }
 
 - (SHGNoticeView *)noticeView
@@ -268,7 +244,6 @@
 - (SHGMarketNoticeObject *)otherObject
 {
     SHGMarketNoticeObject *otherObject = [[SHGMarketNoticeObject alloc] init];
-    otherObject.tipUrl = self.tipUrl;
     otherObject.marketId = @"";
     NSString *position = [self.positionDictionary objectForKey:[self.scrollView marketFirstId]];
     if ([position isEqualToString:@"0"]) {
@@ -317,7 +292,13 @@
     if (self.currentArray.count > 0) {
         SHGMarketObject *object = [self.currentArray objectAtIndex:indexPath.row];
         if ([object isKindOfClass:[SHGMarketNoticeObject class]]) {
-            return self.noticeHeight;
+            SHGMarketNoticeObject *obj = (SHGMarketNoticeObject *)object;
+            if (obj.type == SHGMarketNoticeTypePositionTop) {
+                return kImageTableViewCellHeight;
+            } else{
+                CGFloat height = [self.tableView cellHeightForIndexPath:indexPath model:@"本地区该业务较少，现为您推荐其他地区同业务信息" keyPath:@"text" cellClass:[SHGMarketLabelTableViewCell class] contentViewWidth:SCREENWIDTH];
+                return height;
+            }
         } else{
             CGFloat height = [self.tableView cellHeightForIndexPath:indexPath model:object keyPath:@"object" cellClass:[SHGMarketTableViewCell class] contentViewWidth:SCREENWIDTH];
             return height;
@@ -342,11 +323,21 @@
     if ([object isKindOfClass:[SHGMarketNoticeObject class]]) {
         SHGMarketNoticeObject *obj = (SHGMarketNoticeObject *)object;
         if (obj.type == SHGMarketNoticeTypePositionAny) {
-            self.labelCell.object = obj;
-            return self.labelCell;
+
+            SHGMarketLabelTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SHGMarketLabelTableViewCell"];
+            if (!cell) {
+                cell = [[SHGMarketLabelTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"SHGMarketLabelTableViewCell"];
+                cell.text = @"本地区该业务较少，现为您推荐其他地区同业务信息";
+            }
+            return cell;
         } else{
-            self.imageCell.object = obj;
-            return self.imageCell;
+
+            SHGMarketImageTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SHGMarketImageTableViewCell"];
+            if (!cell) {
+                cell = [[SHGMarketImageTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"SHGMarketImageTableViewCell"];
+                cell.tipUrl = self.tipUrl;
+            }
+            return cell;
         }
 
     } else{
@@ -385,6 +376,7 @@
 {
     if (!self.headerView) {
         self.headerView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, SCREENWIDTH, CGRectGetHeight(self.scrollView.frame))];
+        self.headerView.backgroundColor = [UIColor colorWithHexString:@"f6f6f6"];
         self.headerView.clipsToBounds = YES;
         [self.headerView addSubview:self.scrollView];
 
@@ -430,14 +422,6 @@
     }
 }
 
-- (void)reloadDataWithHeight:(CGFloat)height
-{
-    if (self.noticeHeight != height) {
-        self.noticeHeight = height;
-        [self.tableView beginUpdates];
-        [self.tableView endUpdates];
-    }
-}
 #pragma mark -----二级分类返回代理
 - (void)didUploadUserCategoryTags:(NSArray *)array
 {

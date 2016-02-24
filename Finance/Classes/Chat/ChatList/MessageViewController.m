@@ -230,10 +230,9 @@
         controller.object = object;
         [self.navigationController pushViewController:controller animated:YES];
     } else if ([obj.code isEqualToString:@"3000"]){
-        NSString *marketId = obj.marketId;
         SHGMarketDetailViewController *controller = [[SHGMarketDetailViewController alloc] init];
         SHGMarketObject *object = [[SHGMarketObject alloc] init];
-        object.marketId = marketId;
+        object.marketId = obj.oid;
         controller.object = object;
         controller.delegate = [SHGMarketSegmentViewController sharedSegmentController];
         [self.navigationController pushViewController:controller animated:YES];

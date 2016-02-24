@@ -26,7 +26,6 @@
 
 - (void)awakeFromNib
 {
-    [self clearCell];
     [self loadView];
 }
 
@@ -37,21 +36,27 @@
     self.amountLabel.font = [UIFont systemFontOfSize:FontFactor(13.0f)];
     self.timeLabel.font = [UIFont systemFontOfSize:FontFactor(13.0f)];
     self.contactLabel.font = [UIFont systemFontOfSize:FontFactor(13.0f)];
-    
+
+    CGFloat titleHeight = [@" " sizeWithAttributes:@{NSFontAttributeName : self.titleLabel.font}].height;
+    CGFloat height = [@" " sizeWithAttributes:@{NSFontAttributeName : self.typeLabel.font}].height;
+
     self.titleLabel.sd_layout
     .topSpaceToView(self.contentView, MarginFactor(18.0f))
     .leftSpaceToView(self.contentView, MarginFactor(12.0f))
-    .rightSpaceToView(self.contentView, MarginFactor(12.0f));
-    
+    .rightSpaceToView(self.contentView, MarginFactor(12.0f))
+    .heightIs(titleHeight);
+
     self.typeLabel.sd_layout
     .topSpaceToView(self.titleLabel, MarginFactor(14.0f))
     .leftSpaceToView(self.contentView, MarginFactor(12.0f))
-    .widthIs(SCREENWIDTH/2.0f - MarginFactor(12.0f));
+    .widthIs(SCREENWIDTH/2.0f - MarginFactor(12.0f))
+    .heightIs(height);
     
     self.contactLabel.sd_layout
     .topSpaceToView(self.typeLabel, MarginFactor(11.0f))
     .leftSpaceToView(self.contentView, MarginFactor(12.0f))
-    .widthIs(SCREENWIDTH/2.0f - MarginFactor(12.0f));
+    .widthIs(SCREENWIDTH/2.0f - MarginFactor(12.0f))
+    .heightRatioToView(self.typeLabel, 1.0f);
     
     [self.collectButton sizeToFit];
     CGSize size = self.collectButton.frame.size;
@@ -80,12 +85,14 @@
     self.amountLabel.sd_layout
     .centerYEqualToView(self.typeLabel)
     .leftSpaceToView(self.contentView, SCREENWIDTH / 2.0)
-    .rightSpaceToView(self.contentView, MarginFactor(12.0f));
+    .rightSpaceToView(self.contentView, MarginFactor(12.0f))
+    .heightRatioToView(self.typeLabel, 1.0f);
     
     self.timeLabel.sd_layout
     .centerYEqualToView(self.contactLabel)
     .leftSpaceToView(self.contentView, SCREENWIDTH /2.0f)
-    .rightSpaceToView(self.collectButton, 0.0f);
+    .rightSpaceToView(self.collectButton, 0.0f)
+    .heightRatioToView(self.typeLabel, 1.0f);
     
     self.bottomLineView.sd_layout
     .leftSpaceToView(self.contentView, MarginFactor(0.0f))
@@ -124,15 +131,11 @@
         self.amountLabel.text = [@"金额：" stringByAppendingString: object.price];
     }
     self.contactLabel.text = [@"地区：" stringByAppendingString: object.position];
-    [self loadCollectionState];
+
     NSString * timeStr = [object.modifyTime substringToIndex:10];
     self.timeLabel.text = [@"时间：" stringByAppendingString: timeStr];
-    [self.titleLabel sizeToFit];
-    [self.typeLabel sizeToFit];
-    [self.contactLabel sizeToFit];
-    [self.amountLabel sizeToFit];
-    [self.timeLabel sizeToFit];
-    [self setupAutoHeightWithBottomView:self.bottomView bottomMargin:0.0f];
+
+    [self loadCollectionState];
     
 }
 - (void)loadNewUiFortype:(SHGMarketTableViewCellType)type

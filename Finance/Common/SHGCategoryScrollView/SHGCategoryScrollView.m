@@ -69,6 +69,16 @@
     return @"";
 }
 
+- (NSString *)marketName
+{
+    if (self.categoryArray && self.categoryArray.count > self.selectedIndex) {
+        SHGMarketFirstCategoryObject *object = [self.categoryArray objectAtIndex:self.selectedIndex];
+        return object.firstCatalogName;
+
+    }
+    return @"";
+}
+
 - (NSInteger)currentIndex
 {
     return self.selectedIndex;

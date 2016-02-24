@@ -477,8 +477,8 @@
     }
 }
 #pragma mark -- 删除评论
-- (void)longPressGesturecognized:(id)sender{
-    
+- (void)longPressGesturecognized:(id)sender
+{    
     UILongPressGestureRecognizer *longPress = (UILongPressGestureRecognizer *)sender;
     UIGestureRecognizerState state = longPress.state;//这是长按手势的状态   下面switch用到了
     CGPoint location = [longPress locationInView:self.detailTable];
@@ -526,7 +526,8 @@
 
 
 //创建删除试图
-- (void)createPickerView{
+- (void)createPickerView
+{
     PickerBackView = [[UIView alloc] initWithFrame:self.view.bounds];
     PickerBackView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.4];
     
