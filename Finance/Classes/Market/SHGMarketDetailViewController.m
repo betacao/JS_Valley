@@ -249,8 +249,6 @@
     .autoHeightRatio(0.0f);
     [self.modelLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
     
-    self.phoneNumNameLabel.backgroundColor = [UIColor redColor];
-    self.phoneNumLabel.backgroundColor = [UIColor redColor];
     self.phoneNumNameLabel.sd_layout
     .leftSpaceToView(self.viewHeader, MarginFactor(12.0f))
     .topSpaceToView(self.modelLabel, MarginFactor(12.0f))
