@@ -70,7 +70,7 @@
 -(void)viewDidLoad
 {
     [super viewDidLoad];
-    
+    [self addObserver:[AppDelegate currentAppdelegate] forKeyPath:@"isViewLoad" options:NSKeyValueObservingOptionNew context:nil];
     NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:RGB(51, 51, 51), NSForegroundColorAttributeName, nil];;
     [[UITabBarItem appearance] setTitleTextAttributes:dic forState:UIControlStateNormal];
 
@@ -85,15 +85,12 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+    self.isViewLoad = YES;
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    if (self.dictionary){
-        [self pushCircle:self.dictionary];
-        self.dictionary = nil;
-    }
 }
 
 - (void)pushCircle:(NSDictionary*)userInfo

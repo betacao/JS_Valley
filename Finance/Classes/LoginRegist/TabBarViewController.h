@@ -17,6 +17,6 @@
 - (void)jumpToChatList;
 - (void)setupUntreatedApplyCount;
 
-@property (nonatomic, strong) NSDictionary *dictionary;
+@property (nonatomic, assign) BOOL isViewLoad;
 @end
 

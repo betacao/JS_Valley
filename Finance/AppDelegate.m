@@ -103,14 +103,10 @@
         self.pushInfo = userInfo;
     }
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pushCircle:) name:kMPNotificationViewTapReceivedNotification object:userInfo];
-    self.window.rootViewController = rootVC;
-
-
     //设置导航title字体
     [[UINavigationBar appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:kNavBarTitleFontSize],NSForegroundColorAttributeName:NavRTitleColor}];
     [[UINavigationBar appearance] setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithHexString:@"d43c33"]] forBarMetrics:UIBarMetricsDefault];
-
-    
+    self.window.rootViewController = rootVC;
     [self.window makeKeyAndVisible];
     return YES;
 }
@@ -183,11 +179,18 @@
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler{
-    self.pushInfo = userInfo;
-    NSDictionary *aps = userInfo[@"aps"];
-    NSString *alert = [aps valueForKey:@"alert"];
-    NSLog(@"%@",alert);
     completionHandler(UIBackgroundFetchResultNewData);
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context
+{
+    if ([keyPath isEqualToString:@"isViewLoad"]) {
+        BOOL isViewLoad = [[change objectForKey:@"new"] boolValue];
+        if (self.pushInfo && isViewLoad) {
+            [self pushToNoticeViewController:self.pushInfo];
+            self.pushInfo = nil;
+        }
+    }
 }
 
 - (void)receiveNotification:(NSDictionary *)userInfo
@@ -195,8 +198,7 @@
     if ([userInfo objectForKey:@"code"]){
         NSString *code = [userInfo objectForKey:@"code"];
         if (self.pushInfo){
-            [self pushToNoticeViewController:userInfo];
-            self.pushInfo = nil;
+            self.pushInfo = userInfo;
         } else{
             //程序活跃在前台
             NSString *rid = @"";
@@ -347,11 +349,6 @@
 
 - (void)GeTuiSdkDidReceivePayload:(NSString *)payloadId andTaskId:(NSString *)taskId andMessageId:(NSString *)aMsgId fromApplication:(NSString *)appId
 {
-//    if(self.pushInfo){
-//        [self receiveNotification:self.pushInfo];
-//        self.pushInfo = nil;
-//        return;
-//    }
     self.payloadId = payloadId;
     NSData* payload = [GeTuiSdk retrivePayloadById:payloadId]; //根据 payloadId 取回 Payload
     NSString *payloadMsg = nil;
@@ -985,7 +982,7 @@
         [controller tabBar:controller.tabBar didSelectItem:[controller.tabBar.items firstObject]];
     }
     [[SHGHomeViewController sharedController] requestRecommendFriends];
-    controller.dictionary = dictionary;
+//    controller.dictionary = dictionary;
     BaseNavigationController *nav = [[BaseNavigationController alloc] initWithRootViewController:controller];
     self.window.rootViewController = nav;
 }
