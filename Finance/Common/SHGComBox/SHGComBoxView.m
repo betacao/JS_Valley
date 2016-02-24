@@ -9,6 +9,7 @@
 
 #import "SHGComBoxView.h"
 #import "SHGGlobleTableViewCell.h"
+#define kCellLineLeftMargin MarginFactor(12.0f)
 @interface SHGComBoxView ()
 
 @property (assign, nonatomic) BOOL isOpen;
@@ -82,7 +83,6 @@
         _tableView.dataSource = self;
         _tableView.layer.masksToBounds = YES;
         _tableView.layer.cornerRadius = 3.0f;
-        _tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
         _tableView.showsVerticalScrollIndicator = NO;
     }
     return _tableView;
@@ -225,6 +225,9 @@
         cell.backgroundColor = [UIColor clearColor];
         cell.textLabel.font = [UIFont systemFontOfSize:FontFactor(14.0f)];
         cell.textLabel.textColor = kTextColor;
+        UIView *lineView = [[UIView alloc]initWithFrame:CGRectMake(kCellLineLeftMargin, CGRectGetHeight(self.frame) - 0.5f, SCREENWIDTH , 0.5f)];
+        lineView.backgroundColor = [UIColor colorWithHexString:@"E6E7E8"];
+        [cell.contentView addSubview:lineView];
     }
     cell.textLabel.text = [self.titlesList objectAtIndex:indexPath.row];
     cell.selectionStyle = UITableViewCellSelectionStyleGray;

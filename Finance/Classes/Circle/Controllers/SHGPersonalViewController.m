@@ -262,8 +262,16 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
     if ([self.relationShip integerValue] == 0) {
         [self action];
     } else if ([self.relationShip integerValue] == 1){
-        DXAlertView *alert = [[DXAlertView alloc] initWithTitle:@"提示" contentText:@"您与对方还不是好友，对方关注您后可进行对话" leftButtonTitle:nil rightButtonTitle:@"确定"];
-        [alert show];
+        [Hud hideHud];
+        UILabel *label = [[UILabel alloc] init];
+        label.text = @"您与对方还不是好友,对方关注您后\n可进行对话";
+        label.textColor = [UIColor whiteColor];
+        label.textAlignment = NSTextAlignmentCenter;
+        label.font = [UIFont systemFontOfSize:FontFactor(13.0f)];
+        label.backgroundColor = [UIColor clearColor];
+        label.numberOfLines = 0;
+        [label sizeToFit];
+        [Hud showMessageWithCustomView:label];
     } else{
         [self chat];
     }

@@ -82,16 +82,16 @@
     .widthIs(editeSize.width)
     .heightIs(editeSize.height);
     
-    self.amountLabel.sd_layout
-    .centerYEqualToView(self.typeLabel)
-    .leftSpaceToView(self.contentView, SCREENWIDTH / 2.0)
-    .rightSpaceToView(self.contentView, MarginFactor(12.0f))
-    .heightRatioToView(self.typeLabel, 1.0f);
-    
     self.timeLabel.sd_layout
     .centerYEqualToView(self.contactLabel)
-    .leftSpaceToView(self.contentView, SCREENWIDTH /2.0f)
-    .rightSpaceToView(self.collectButton, 0.0f)
+    .rightSpaceToView(self.editButton, MarginFactor(12.0f))
+    .heightRatioToView(self.typeLabel, 1.0f);
+    [self.timeLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
+    
+    self.amountLabel.sd_layout
+    .centerYEqualToView(self.typeLabel)
+    .leftEqualToView(self.timeLabel)
+    .rightSpaceToView(self.contentView, MarginFactor(12.0f))
     .heightRatioToView(self.typeLabel, 1.0f);
     
     self.bottomLineView.sd_layout
@@ -145,6 +145,7 @@
         self.deleteButton.hidden = YES;
     } else if (type == SHGMarketTableViewCellTypeMine){
         self.collectButton.hidden = YES;
+        
     }
 }
 - (void)loadCollectionState

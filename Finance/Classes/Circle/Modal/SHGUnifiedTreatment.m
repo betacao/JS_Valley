@@ -232,13 +232,16 @@
 {
     UIImage *png = [UIImage imageNamed:@"80.png"];
     id<ISSCAttachment> image  = [ShareSDK pngImageWithImage:png];
-//    NSString *shareTitle = SHARE_TITLE;
-
+    
+    NSString *content = object.detail;
+    if (content.length == 0) {
+        content = @"大牛圈推广";
+    }
     id<ISSShareActionSheetItem> item4 = [ShareSDK shareActionSheetItemWithTitle:@"朋友圈" icon:[UIImage imageNamed:@"sns_icon_23"] clickHandler:^{
-        [[AppDelegate currentAppdelegate] wechatShareWithText:@"大牛圈推广" shareUrl:object.feedhtml shareType:1];
+        [[AppDelegate currentAppdelegate] wechatShareWithText:content shareUrl:object.feedhtml shareType:1];
     }];
     id<ISSShareActionSheetItem> item5 = [ShareSDK shareActionSheetItemWithTitle:@"微信好友" icon:[UIImage imageNamed:@"sns_icon_22"] clickHandler:^{
-         [[AppDelegate currentAppdelegate] wechatShareWithText:@"大牛圈推广" shareUrl:object.feedhtml shareType:0];
+         [[AppDelegate currentAppdelegate] wechatShareWithText:content shareUrl:object.feedhtml shareType:0];
     }];
     NSArray *shareArray = nil;
     if ([WXApi isWXAppSupportApi]) {
@@ -256,11 +259,6 @@
         return;
     }
     NSString *shareUrl = object.feedhtml;
-
-    NSString *content = object.detail;
-    if (content.length == 0) {
-        content = @"大牛圈推广";
-    }
     //构造分享内容
     id<ISSContent> publishContent = [ShareSDK content:content defaultContent:content image:image title:SHARE_TITLE url:shareUrl description:content mediaType:SHARE_TYPE];
     //创建弹出菜单容器

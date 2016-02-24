@@ -12,5 +12,6 @@
 + (void)showLoadingWithMessage:(NSString *)message;
 + (void)showMessageWithText:(NSString *)text;
 + (void)showMessageWithLongText:(NSString *)text;
++ (void)showMessageWithCustomView:(UIView *)customView;
 + (void)hideHud;
 @end

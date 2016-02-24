@@ -113,7 +113,7 @@
         return NO;
     }
     if (IsStrEmpty(self.locationField.text)) {
-        [Hud showMessageWithText:@"请输入所在地"];
+        [Hud showMessageWithText:@"请输入城市选择"];
         return NO;
     }
     return YES;

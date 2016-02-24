@@ -38,6 +38,19 @@
     [hud hide:YES afterDelay:1.2];
 }
 
++ (void)showMessageWithCustomView:(UIView *)customView
+{
+    UIView *view = [AppDelegate currentAppdelegate].window;
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:view animated:YES];
+    hud.yOffset = -50;
+    
+    [view bringSubviewToFront:hud];
+    hud.mode = MBProgressHUDModeCustomView;
+    hud.customView = customView;
+    hud.removeFromSuperViewOnHide = YES;
+    [hud hide:YES afterDelay:1.2];
+}
+
 + (void)showLoadingWithMessage:(NSString *)message{
     
     BOOL hasShow = NO;
