@@ -133,7 +133,7 @@
     self.addressLabel.font = [UIFont systemFontOfSize:FontFactor(14.0f)];
     self.modelLabel.font = [UIFont systemFontOfSize:FontFactor(14.0f)];
 
-    self.phoneNumLabel.numberOfLines = 1;
+    self.phoneNumLabel.numberOfLines = 0;
     self.phoneNumLabel.lineBreakMode = NSLineBreakByWordWrapping;
     self.phoneNumLabel.textColor = [UIColor colorWithHexString:@"888888"];
     self.phoneNumLabel.font = [UIFont systemFontOfSize:FontFactor(14.0f)];
@@ -323,14 +323,6 @@
         self.phoneNumLabel.text = contactString;
     }
 
-    dispatch_async(dispatch_get_main_queue(), ^{
-        CGSize size = [self.phoneNumLabel preferredSizeWithMaxWidth:kCellContentWidth];
-        CGRect frame = self.phoneNumLabel.frame;
-        frame.size.width = kCellContentWidth;
-        frame.size.height = size.height;
-        self.phoneNumLabel.frame = frame;
-    });
-
     self.nameLabel.text = self.responseObject.realname;
 
     if (![self.responseObject.createBy isEqualToString:[[NSUserDefaults standardUserDefaults]objectForKey:KEY_UID]] && [self.responseObject.anonymous isEqualToString:@"1"]) {
@@ -381,9 +373,18 @@
     }
 
     [self.viewHeader layoutSubviews];
-    if (!self.detailTable.tableHeaderView) {
-        self.detailTable.tableHeaderView = self.viewHeader;
-    }
+
+    dispatch_async(dispatch_get_main_queue(), ^{
+        CGSize size = [self.phoneNumLabel preferredSizeWithMaxWidth:kCellContentWidth];
+        CGRect frame = self.phoneNumLabel.frame;
+        frame.size.width = kCellContentWidth;
+        frame.size.height = size.height;
+        self.phoneNumLabel.frame = frame;
+        if (!self.detailTable.tableHeaderView) {
+            self.detailTable.tableHeaderView = self.viewHeader;
+        }
+    });
+
 }
 
 - (void)tapContactLabelToIdentification:(UITapGestureRecognizer *)rescognizer
