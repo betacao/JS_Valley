@@ -107,7 +107,7 @@
         if ([code isEqualToString:@"000"]){
             if ([weakSelf.isFull isEqualToString:@"1"]){
                 [weakSelf chatLoagin];
-                [self loginSuccess];
+                [weakSelf loginSuccess];
             } else{
                 ImproveMatiralViewController *vc = [[ImproveMatiralViewController alloc] init];
                 [weakSelf.navigationController pushViewController:vc animated:YES];
@@ -117,6 +117,7 @@
         [Hud showLoadingWithMessage:response.errorMessage];
     }];
 }
+
 -(void)gotoImprove
 {
     ImproveMatiralViewController *vc = [[ImproveMatiralViewController alloc] init];

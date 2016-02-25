@@ -179,7 +179,7 @@
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler{
-    self.pushInfo = @{};
+    self.pushInfo = nil;
     completionHandler(UIBackgroundFetchResultNewData);
 
 }
@@ -188,7 +188,7 @@
 {
     if ([keyPath isEqualToString:@"isViewLoad"]) {
         BOOL isViewLoad = [[change objectForKey:@"new"] boolValue];
-        if (![self.pushInfo isEqualToDictionary:@{}] && isViewLoad) {
+        if (self.pushInfo && ![self.pushInfo isEqualToDictionary:@{}] && isViewLoad) {
             [self pushToNoticeViewController:self.pushInfo];
             self.pushInfo = @{};
         }
@@ -196,7 +196,7 @@
 
     if ([keyPath isEqualToString:@"pushInfo"]) {
         NSDictionary *dic = [change objectForKey:@"new"];
-        if (dic && ![dic isEqualToDictionary:@{}]) {
+        if (dic && ![dic isEqual:[NSNull null]] && ![dic isEqualToDictionary:@{}]) {
             TabBarViewController *controller = [TabBarViewController tabBar];
             if (controller.isViewLoad) {
                 [self pushToNoticeViewController:self.pushInfo];
@@ -210,7 +210,7 @@
 {
     if ([userInfo objectForKey:@"code"]){
         NSString *code = [userInfo objectForKey:@"code"];
-        if (self.pushInfo){
+        if (!self.pushInfo){
             self.pushInfo = [NSDictionary dictionaryWithDictionary:userInfo];
         } else{
             //程序活跃在前台
