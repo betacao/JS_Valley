@@ -273,7 +273,7 @@
         } else if (self.selectType == 2){
             SHGMarketObject *obj = self.dataSource[0];
             updateTime = obj.createTime;
-            [self requestCardListWithTarget:target time:updateTime];
+            [self requestMarketCollectWithTarget:target time:updateTime];
         }
         //1.7.2 资讯隐藏
 //        else if (self.selectType == 4){

@@ -9,9 +9,9 @@
 #import "SHGModifyUserInfoViewController.h"
 #import "SHGItemChooseView.h"
 #import "SHGMarketManager.h"
-
+#import "SHGProvincesViewController.h"
 #define kNextButtonHeight 8.0f *  XFACTOR
-@interface SHGModifyUserInfoViewController ()<UIActionSheetDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, SHGItemChooseDelegate>
+@interface SHGModifyUserInfoViewController ()<UIActionSheetDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, SHGItemChooseDelegate,SHGAreaDelegate>
 
 @property (weak, nonatomic) IBOutlet UIScrollView *bgScrollView;
 @property (weak, nonatomic) IBOutlet UIView *topView;
@@ -20,14 +20,13 @@
 @property (weak, nonatomic) IBOutlet UITextField *industryField;
 @property (weak, nonatomic) IBOutlet UITextField *companyField;
 @property (weak, nonatomic) IBOutlet UITextField *departmentField;
-@property (weak, nonatomic) IBOutlet UITextField *locationField;
 @property (weak, nonatomic) IBOutlet UIButton *nameButton;
 @property (weak, nonatomic) IBOutlet UIButton *industryButton;
 @property (weak, nonatomic) IBOutlet UIButton *companyButton;
 @property (weak, nonatomic) IBOutlet UIButton *departmentButton;
 @property (weak, nonatomic) IBOutlet UIButton *locationButton;
 @property (weak, nonatomic) IBOutlet UIButton *nextButton;
-
+@property (weak, nonatomic) IBOutlet UIButton *cityButton;
 @property (strong, nonatomic) NSString *nickName;
 @property (strong, nonatomic) NSString *department;
 @property (strong, nonatomic) NSString *company;
@@ -70,13 +69,17 @@
     self.industryField.text = [self codeToIndustry: [self.userInfo objectForKey:kIndustry]];
     self.companyField.text = [self.userInfo objectForKey:kCompany];
     self.departmentField.text = [self.userInfo objectForKey:kDepartment];
-    self.locationField.text = [self.userInfo objectForKey:kLocation];
-
+    NSString *locationStr = [self.userInfo objectForKey:kLocation];
+    if ([locationStr isEqualToString:@""]) {
+        [self.cityButton setTitle:@"城市选择" forState:UIControlStateNormal];
+    } else{
+        [self.cityButton setTitle:[NSString stringWithFormat:@"%@",self.location] forState:UIControlStateNormal];
+        [self.cityButton setTitleColor:[UIColor colorWithHexString:@"161616"] forState:UIControlStateNormal];
+    }
     [self updateCloseButtonState:self.nameField];
     [self updateCloseButtonState:self.industryField];
     [self updateCloseButtonState:self.companyField];
     [self updateCloseButtonState:self.departmentField];
-    [self updateCloseButtonState:self.locationField];
 
     CGRect frame = self.nextButton.frame;
     //frame.origin.y *= YFACTOR;
@@ -112,7 +115,7 @@
         [Hud showMessageWithText:@"请输入职务"];
         return NO;
     }
-    if (IsStrEmpty(self.locationField.text)) {
+    if ([self.cityButton.titleLabel.text isEqualToString:@"所选城市"]) {
         [Hud showMessageWithText:@"请输入城市选择"];
         return NO;
     }
@@ -151,14 +154,14 @@
      if([self checkInputMessageValid]){
     [Hud showLoadingWithMessage:@"请稍等..."];
     __weak typeof(self) weakSelf = self;
-    NSDictionary *param = @{@"uid":UID,@"picName":self.head_img,@"realName":self.nameField.text, @"industrycode":self.industry, @"company":self.companyField.text, @"city":self.locationField.text, @"title":self.departmentField.text};
+    NSDictionary *param = @{@"uid":UID,@"picName":self.head_img,@"realName":self.nameField.text, @"industrycode":self.industry, @"company":self.companyField.text, @"city":self.cityButton.titleLabel.text, @"title":self.departmentField.text};
     [MOCHTTPRequestOperationManager postWithURL:[NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttp,@"user",@"editUser"] parameters:param success:^(MOCHTTPResponse *response) {
         [Hud hideHud];
         if (weakSelf.block) {
-            weakSelf.block(@{kHeaderImage:weakSelf.head_img,kNickName:weakSelf.nameField.text, kIndustry:weakSelf.industry, kCompany:weakSelf.companyField.text, kLocation:weakSelf.locationField.text, kDepartment:weakSelf.departmentField.text});
+            weakSelf.block(@{kHeaderImage:weakSelf.head_img,kNickName:weakSelf.nameField.text, kIndustry:weakSelf.industry, kCompany:weakSelf.companyField.text, kLocation:weakSelf.cityButton.titleLabel.text, kDepartment:weakSelf.departmentField.text});
         }
         [[NSUserDefaults standardUserDefaults] setObject:weakSelf.nameField.text forKey:KEY_USER_NAME];
-        [[NSUserDefaults standardUserDefaults] setObject:weakSelf.locationField.text forKey:KEY_USER_AREA];
+        [[NSUserDefaults standardUserDefaults] setObject:weakSelf.cityButton.titleLabel.text forKey:KEY_USER_AREA];
         [weakSelf performSelector:@selector(delayPostNotification) withObject:nil afterDelay:1.2f];
         [Hud showMessageWithText:@"修改个人信息成功"];
     }failed:^(MOCHTTPResponse *response) {
@@ -206,12 +209,6 @@
     [self updateCloseButtonState:self.departmentField];
     [self.departmentField becomeFirstResponder];
 
-}
-- (IBAction)clickLocationButton:(id)sender
-{
-    self.locationField.text = @"";
-    [self updateCloseButtonState:self.locationField];
-    [self.locationField becomeFirstResponder];
 }
 
 - (void)tapTopView:(UIGestureRecognizer *)recognizer
@@ -321,12 +318,6 @@
             self.departmentButton.hidden = NO;
         } else{
             self.departmentButton.hidden = YES;
-        }
-    } else if ([textField isEqual:self.locationField]) {
-        if (textField.text.length > 0) {
-            self.locationButton.hidden = NO;
-        } else{
-            self.locationButton.hidden = YES;
         }
     }
 }
@@ -445,5 +436,19 @@
     [super didReceiveMemoryWarning];
 }
 
+
+- (IBAction)citySelect:(UIButton *)sender {
+    SHGProvincesViewController *controller = [[SHGProvincesViewController alloc] initWithNibName:@"SHGProvincesViewController" bundle:nil];
+    if(controller){
+        controller.delegate = self;
+        [self.navigationController pushViewController:controller animated:YES];
+    }
+
+}
+- (void)didSelectCity:(NSString *)city
+{
+    [self.cityButton setTitle:city forState:UIControlStateNormal];
+    [self.cityButton setTitleColor:[UIColor colorWithHexString:@"161616"] forState:UIControlStateNormal];
+}
 
 @end

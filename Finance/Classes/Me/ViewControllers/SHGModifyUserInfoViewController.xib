@@ -8,6 +8,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SHGModifyUserInfoViewController">
             <connections>
                 <outlet property="bgScrollView" destination="bxE-1l-oxp" id="90W-GK-Re1"/>
+                <outlet property="cityButton" destination="oVW-N8-KqZ" id="J1T-w2-VyT"/>
                 <outlet property="companyButton" destination="UKt-RW-oRA" id="V9i-In-Wa4"/>
                 <outlet property="companyField" destination="hDc-tu-8jc" id="4Wz-FW-o7U"/>
                 <outlet property="departmentButton" destination="x6G-b9-Ajw" id="4h7-bE-BGc"/>
@@ -15,8 +16,6 @@
                 <outlet property="headerImage" destination="ljI-PK-ug1" id="j05-Wv-I3Q"/>
                 <outlet property="industryButton" destination="6mO-pO-fbj" id="dYV-sB-4hb"/>
                 <outlet property="industryField" destination="SSx-R7-gV2" id="HSA-OF-RBB"/>
-                <outlet property="locationButton" destination="a3T-Gx-Mtp" id="ifR-KN-DEQ"/>
-                <outlet property="locationField" destination="N28-cB-sVW" id="1LY-ES-y3F"/>
                 <outlet property="nameButton" destination="l93-5c-jjM" id="o4Y-Bd-K4e"/>
                 <outlet property="nameField" destination="YuB-45-Hn0" id="VY1-Lr-rOL"/>
                 <outlet property="nextButton" destination="YGg-3m-IxA" id="bBI-pY-RNK"/>
@@ -159,22 +158,15 @@
                                     <rect key="frame" x="0.0" y="265" width="320" height="45"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                     <subviews>
-                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="城市选择" textAlignment="natural" minimumFontSize="17" id="N28-cB-sVW">
-                                            <rect key="frame" x="14" y="8" width="250" height="30"/>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="oVW-N8-KqZ">
+                                            <rect key="frame" x="14" y="8" width="273" height="30"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <color key="textColor" red="0.086274509803921567" green="0.086274509803921567" blue="0.086274509803921567" alpha="1" colorSpace="calibratedRGB"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                            <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                                            <state key="normal">
+                                                <color key="titleColor" red="0.70196078429999997" green="0.70196078429999997" blue="0.70196078429999997" alpha="1" colorSpace="calibratedRGB"/>
+                                            </state>
                                             <connections>
-                                                <outlet property="delegate" destination="-1" id="bha-58-dPw"/>
-                                            </connections>
-                                        </textField>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="a3T-Gx-Mtp">
-                                            <rect key="frame" x="275" y="0.0" width="45" height="45"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
-                                            <state key="normal" image="me_deleteInput"/>
-                                            <connections>
-                                                <action selector="clickLocationButton:" destination="-1" eventType="touchUpInside" id="nSB-Au-COp"/>
+                                                <action selector="citySelect:" destination="-1" eventType="touchUpInside" id="qhS-PI-s3S"/>
                                             </connections>
                                         </button>
                                     </subviews>
