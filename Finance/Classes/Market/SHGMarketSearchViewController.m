@@ -50,7 +50,6 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    [self.searchBar becomeFirstResponder];
 }
 
 - (void)viewWillDisappear:(BOOL)animated

@@ -50,14 +50,12 @@
 
 - (IBAction)actionLogin:(id)sender
 {
-    if (IsStrEmpty(_lblPassward.text))
-    {
+    if (IsStrEmpty(_lblPassward.text)){
         [Hud showMessageWithText:@"请输入密码"];
         return;
     }
     [Hud showLoadingWithMessage:@"登录中……"];
     NSString *password = [_lblPassward.text md5];
-    //	NSString *password = _lblPassward.text ;
 
     NSString *osv = [UIDevice currentDevice].systemVersion;
     NSString *channelId = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_BPUSH_CHANNELID];
