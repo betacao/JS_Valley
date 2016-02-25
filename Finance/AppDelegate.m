@@ -90,7 +90,7 @@
     [self setupShare];
     //
     [MagicalRecord setupCoreDataStackWithAutoMigratingSqliteStoreNamed:@"Finance.sqlite"];
-
+    [self addObserver:self forKeyPath:@"pushInfo" options:NSKeyValueObservingOptionNew context:nil];
     [self startSdkWith:kAppId appKey:kAppKey appSecret:kAppSecret];
     [self registerForRemoteNotification];
 
@@ -100,9 +100,9 @@
     if (userInfo) {
         NSLog(@"从消息启动______:%@",userInfo);
         rootVC.rid =userInfo;
-        self.pushInfo = userInfo;
     }
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pushCircle:) name:kMPNotificationViewTapReceivedNotification object:userInfo];
+    self.pushInfo = @{};
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pushCircle:) name:kMPNotificationViewTapReceivedNotification object:nil];
     //设置导航title字体
     [[UINavigationBar appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:kNavBarTitleFontSize],NSForegroundColorAttributeName:NavRTitleColor}];
     [[UINavigationBar appearance] setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithHexString:@"d43c33"]] forBarMetrics:UIBarMetricsDefault];
@@ -179,16 +179,29 @@
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler{
+    self.pushInfo = @{};
     completionHandler(UIBackgroundFetchResultNewData);
+
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context
 {
     if ([keyPath isEqualToString:@"isViewLoad"]) {
         BOOL isViewLoad = [[change objectForKey:@"new"] boolValue];
-        if (self.pushInfo && isViewLoad) {
+        if (![self.pushInfo isEqualToDictionary:@{}] && isViewLoad) {
             [self pushToNoticeViewController:self.pushInfo];
-            self.pushInfo = nil;
+            self.pushInfo = @{};
+        }
+    }
+
+    if ([keyPath isEqualToString:@"pushInfo"]) {
+        NSDictionary *dic = [change objectForKey:@"new"];
+        if (dic && ![dic isEqualToDictionary:@{}]) {
+            TabBarViewController *controller = [TabBarViewController tabBar];
+            if (controller.isViewLoad) {
+                [self pushToNoticeViewController:self.pushInfo];
+                self.pushInfo = @{};
+            }
         }
     }
 }
@@ -198,7 +211,7 @@
     if ([userInfo objectForKey:@"code"]){
         NSString *code = [userInfo objectForKey:@"code"];
         if (self.pushInfo){
-            self.pushInfo = userInfo;
+            self.pushInfo = [NSDictionary dictionaryWithDictionary:userInfo];
         } else{
             //程序活跃在前台
             NSString *rid = @"";
@@ -508,7 +521,7 @@
         controller.object = object;
         [self pushIntoViewController:TopVC newViewController:controller];
     } else{  //进入帖子详情
-        CircleDetailViewController *vc = [[CircleDetailViewController alloc] init];
+        CircleDetailViewController *vc = [[CircleDetailViewController alloc] initWithNibName:@"CircleDetailViewController" bundle:nil];
         NSString* rid = [userInfo objectForKey:@"rid"];
         vc.rid = rid;
         [self pushIntoViewController:TopVC newViewController:vc];

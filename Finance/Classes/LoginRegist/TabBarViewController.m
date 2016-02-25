@@ -115,7 +115,7 @@
             VerifyIdentityViewController *meControl =[[VerifyIdentityViewController alloc]init];
             [self pushIntoViewController:TopVC newViewController:meControl];
         } else{  //进入帖子详情
-            CircleDetailViewController *vc = [[CircleDetailViewController alloc] init];
+            CircleDetailViewController *vc = [[CircleDetailViewController alloc] initWithNibName:@"CircleDetailViewController" bundle:nil];
             NSString* rid = [userInfo objectForKey:@"rid"];
             vc.rid = rid;
             [self pushIntoViewController:TopVC newViewController:vc];
