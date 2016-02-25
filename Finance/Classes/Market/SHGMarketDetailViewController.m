@@ -312,8 +312,8 @@
     if ([self.responseObject.loginuserstate isEqualToString:@"0" ]) {
         NSString * contactString = @"联系方式：认证可见";
         NSMutableAttributedString * str = [[NSMutableAttributedString alloc]initWithString:contactString];
-        [str addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:14.0f] range:NSMakeRange(0, 4)];
-        [str addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"4277B2"] range:NSMakeRange(0, 4)];
+        [str addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:14.0f] range:NSMakeRange(5, 4)];
+        [str addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"4277B2"] range:NSMakeRange(5, 4)];
         self.phoneNumLabel.attributedText = str;
         UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapContactLabelToIdentification:)];
         [self.phoneNumLabel addGestureRecognizer:recognizer];

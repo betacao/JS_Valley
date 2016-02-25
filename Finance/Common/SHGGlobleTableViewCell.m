@@ -50,7 +50,7 @@
 
         //***********************高度自适应cell设置步骤************************
 
-        [self setupAutoHeightWithBottomView:self.lineView bottomMargin:0.0f];
+        [self setupAutoHeightWithBottomView:self.lineView bottomMargin:0.5f];
     }
     return self;
 }

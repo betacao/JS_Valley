@@ -109,7 +109,7 @@
     self.labelView.sd_layout
     .leftSpaceToView(self.tableHeaderView, 0.0f)
     .rightSpaceToView(self.tableHeaderView, 0.0f)
-    .topSpaceToView(self.lineView, 0.0f)
+    .topSpaceToView(self.lineView, 0.5f)
     .heightIs(MarginFactor(58.0f));
 
     //动态
@@ -229,7 +229,6 @@
         _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         _tableView.delegate = self;
         _tableView.dataSource = self;
-        //_tableView.backgroundColor = [UIColor colorWithHexString:@"f3f4f5"];
         _tableHeaderView.backgroundColor = [UIColor whiteColor];
         [self.view addSubview:_tableView];
     }
@@ -706,7 +705,8 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return [self.tableView cellHeightForIndexPath:indexPath model:self.modelsArray[indexPath.row] keyPath:@"model" cellClass:[SHGGlobleTableViewCell class] contentViewWidth:SCREENWIDTH];
+    CGFloat height = [self.tableView cellHeightForIndexPath:indexPath model:self.modelsArray[indexPath.row] keyPath:@"model" cellClass:[SHGGlobleTableViewCell class] contentViewWidth:SCREENWIDTH];
+    return height;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
