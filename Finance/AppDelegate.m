@@ -353,11 +353,22 @@
     self.clientId = clientId;
     if (self.deviceToken) {
         [GeTuiSdk registerDeviceToken:self.deviceToken];
-//        [GeTuiSdk setPushModeForOff:NO];
         [[NSUserDefaults standardUserDefaults] setObject:clientId forKey:KEY_BPUSH_CHANNELID];
         [[NSUserDefaults standardUserDefaults] setObject:@"getui" forKey:KEY_BPUSH_USERID];
         [[NSUserDefaults standardUserDefaults] synchronize];
+        if (clientId && UID) {
+            [self registerToken:clientId];
+        }
     }
+}
+
+- (void)registerToken:(NSString *)channelId
+{
+    NSString *token = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_TOKEN];
+    NSDictionary *param = @{@"uid":UID, @"t":token?:@"", @"channelid":channelId?:@"", @"channeluid":@"getui"};
+    [[SHGGloble sharedGloble] registerToken:param block:^(BOOL success, MOCHTTPResponse *response) {
+
+    }];
 }
 
 - (void)GeTuiSdkDidReceivePayload:(NSString *)payloadId andTaskId:(NSString *)taskId andMessageId:(NSString *)aMsgId fromApplication:(NSString *)appId

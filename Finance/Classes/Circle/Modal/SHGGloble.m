@@ -427,4 +427,13 @@
     } failed:^(MOCHTTPResponse *response) {
     }];
 }
+
+- (void)registerToken:(NSDictionary *)param block:(void (^)(BOOL, MOCHTTPResponse *))block
+{
+    [MOCHTTPRequestOperationManager putWithURL:rBaseAddressForHttpUBpush class:nil parameters:param success:^(MOCHTTPResponse *response) {
+        block(YES, response);
+    } failed:^(MOCHTTPResponse *response) {
+        block(NO, response);
+    }];
+}
 @end

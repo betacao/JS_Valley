@@ -82,7 +82,7 @@
         [[NSUserDefaults standardUserDefaults] setObject:@"1" forKey: KEY_AUTOLOGIN];
         [[NSUserDefaults standardUserDefaults] synchronize];
         //环信登录
-        [self regiestToken];
+        [self registerToken];
     } failed:^(MOCHTTPResponse *response){
          [Hud showMessageWithText:response.errorMessage];
          [Hud hideHud];
@@ -94,7 +94,7 @@
     [self.lblPassward becomeFirstResponder];
 }
 
-- (void)regiestToken
+- (void)registerToken
 {
     NSString *channelId = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_BPUSH_CHANNELID];
     NSString *uid =  [[NSUserDefaults standardUserDefaults]objectForKey:KEY_UID];
@@ -102,19 +102,22 @@
     NSString *token = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_TOKEN];
     NSDictionary *param = @{@"uid":uid, @"t":token?:@"", @"channelid":channelId?:@"", @"channeluid":@"getui"};
     __weak typeof(self) weakSelf = self;
-    [MOCHTTPRequestOperationManager putWithURL:rBaseAddressForHttpUBpush class:nil parameters:param success:^(MOCHTTPResponse *response) {
-        NSString *code = [response.data valueForKey:@"code"];
-        if ([code isEqualToString:@"000"]){
-            if ([weakSelf.isFull isEqualToString:@"1"]){
-                [weakSelf chatLoagin];
-                [weakSelf loginSuccess];
-            } else{
-                ImproveMatiralViewController *vc = [[ImproveMatiralViewController alloc] init];
-                [weakSelf.navigationController pushViewController:vc animated:YES];
+
+    [[SHGGloble sharedGloble] registerToken:param block:^(BOOL success, MOCHTTPResponse *response) {
+        if (success) {
+            NSString *code = [response.data valueForKey:@"code"];
+            if ([code isEqualToString:@"000"]){
+                if ([weakSelf.isFull isEqualToString:@"1"]){
+                    [weakSelf chatLoagin];
+                    [weakSelf loginSuccess];
+                } else{
+                    ImproveMatiralViewController *vc = [[ImproveMatiralViewController alloc] init];
+                    [weakSelf.navigationController pushViewController:vc animated:YES];
+                }
             }
+        } else{
+            [Hud showLoadingWithMessage:response.errorMessage];
         }
-    } failed:^(MOCHTTPResponse *response) {
-        [Hud showLoadingWithMessage:response.errorMessage];
     }];
 }
 

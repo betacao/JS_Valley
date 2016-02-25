@@ -161,7 +161,13 @@ typedef void (^SHHomeDataCompletionBlock)(NSArray *allList, NSArray *normalList,
 
 /**
  @breief  记录用户行为
+
  @since 1.7
  */
 - (void)recordUserAction:(NSString *)recordIdStr type:(NSString *)typeStr;
+
+//向服务端传递
+
+- (void)registerToken:(NSDictionary *)param block:(void(^)(BOOL success, MOCHTTPResponse *response))block;
+
 @end
