@@ -290,6 +290,8 @@
     .heightIs(0.0f);
     
     [self.viewHeader setupAutoHeightWithBottomView:self.photoView bottomMargin:MarginFactor(16.0f)];
+
+    self.detailTable.tableHeaderView = self.viewHeader;
 }
 
 - (void)loadData
