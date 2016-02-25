@@ -27,12 +27,6 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         CGFloat spaceToRight = 15.0f;
-        self.timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(SCREENWIDTH - 95.0f, (k_rowHeight - 20.0f) / 2.0f, 80.0f, 16.0f)];
-        self.timeLabel.font = [UIFont systemFontOfSize:FontFactor(10.0f)];
-        self.timeLabel.textColor = [UIColor colorWithHexString:@"919291"];
-        self.timeLabel.backgroundColor = [UIColor clearColor];
-        self.timeLabel.textAlignment = NSTextAlignmentRight;
-        [self.contentView addSubview:self.timeLabel];
         
         self.unreadLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 16.0f, 16.0f)];
         self.unreadLabel.backgroundColor = [UIColor redColor];
@@ -44,6 +38,13 @@
         self.unreadLabel.layer.masksToBounds = YES;
         [self.contentView addSubview:self.unreadLabel];
         
+        self.timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(SCREENWIDTH - 95.0f, self.unreadLabel.centerY, 80.0f, 16.0f)];
+        self.timeLabel.font = [UIFont systemFontOfSize:FontFactor(10.0f)];
+        self.timeLabel.textColor = [UIColor colorWithHexString:@"919291"];
+        self.timeLabel.backgroundColor = [UIColor clearColor];
+        self.timeLabel.textAlignment = NSTextAlignmentRight;
+        [self.contentView addSubview:self.timeLabel];
+
         self.detailLabel = [[UILabel alloc] initWithFrame:CGRectMake(58, k_rowHeight/2.0f  , SCREENWIDTH-100, 20)];
         self.detailLabel.backgroundColor = [UIColor clearColor];
         self.detailLabel.font = [UIFont systemFontOfSize:FontFactor(12.0f)];
@@ -64,6 +65,7 @@
         self.rightImage.frame = CGRectMake(SCREENWIDTH - spaceToRight - size.width, (k_rowHeight - size.height) / 2.0f, size.width, size.height);
         self.rightImage.image = image;
         [self.contentView addSubview:self.rightImage];
+        
 
     }
     return self;

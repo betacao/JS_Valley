@@ -25,7 +25,7 @@
 #import "ChatListViewController.h"
 #import "PublicGroupDetailViewController.h"
 #define kImageViewLeftMargin 15.0f
-#define krowHeight 45.0f * YFACTOR
+#define krowHeight MarginFactor(45.0f)
 
 @interface GroupListViewController ()<UISearchBarDelegate, UISearchDisplayDelegate, IChatManagerDelegate, SRRefreshDelegate>
 {
