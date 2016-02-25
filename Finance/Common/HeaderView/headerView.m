@@ -7,6 +7,7 @@
 //
 
 #import "headerView.h"
+#import "UIKit+AFNetworking.h"
 
 @interface headerView ()
 @property (strong, nonatomic) UIImageView *VImageView;
@@ -67,10 +68,9 @@
 - (void)updateHeaderView:(NSString *)sourceUrl placeholderImage:(UIImage *)placeImage
 {
     self.headerImageView.image = placeImage;
-    [self.headerImageView sd_setImageWithURL:[NSURL URLWithString:sourceUrl] placeholderImage:placeImage options:SDWebImageRetryFailed|SDWebImageLowPriority completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-        
-        
-    }];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:sourceUrl]];
+    [request addValue:@"image/*" forHTTPHeaderField:@"Accept"];
+    [self.headerImageView setImageWithURLRequest:request placeholderImage:placeImage success:nil failure:nil];
 }
 
 - (void)updateStatus:(BOOL)status

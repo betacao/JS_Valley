@@ -19,7 +19,7 @@
 #import "GroupBansViewController.h"
 #import "GroupSubjectChangingViewController.h"
 #import "HeadImage.h"
-#import "AFImageDownloader.h"
+#import "UIKit+AFNetworking.h"
 #import "SHGPersonalViewController.h"
 
 #pragma mark - ChatGroupDetailViewController
@@ -443,12 +443,11 @@
                     
                     contactView.remark = [dictionary objectForKey:@"realname"];
                     NSString *url = [NSString stringWithFormat:@"%@%@",rBaseAddressForImage,[dictionary valueForKey:@"headimageurl"]];
-                    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:url]];
-                    [[AFImageDownloader defaultInstance] downloadImageForURLRequest:request success:^(NSURLRequest * _Nonnull request, NSHTTPURLResponse * _Nullable response, UIImage * _Nonnull responseObject) {
-                        contactView.imageView.image = responseObject;
-                    } failure:^(NSURLRequest * _Nonnull request, NSHTTPURLResponse * _Nullable response, NSError * _Nonnull error) {
 
-                    }];
+                    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url]];
+                    [request addValue:@"image/*" forHTTPHeaderField:@"Accept"];
+                    [contactView.imageView setImageWithURLRequest:request placeholderImage:nil success:nil failure:nil];
+
                     if (![[dictionary objectForKey:@"userid"] isEqualToString:loginUsername]) {
                         contactView.editing = isEditing;
                     }
