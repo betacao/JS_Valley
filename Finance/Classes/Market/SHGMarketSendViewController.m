@@ -68,10 +68,11 @@ typedef NS_ENUM(NSInteger, SHGMarketSendType){
     [super viewDidLoad];
     self.title = @"发布业务信息";
     self.sendType = SHGMarketSendTypeNew;
-
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardDidShow:) name:UIKeyboardDidShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textFieldDidChange:) name:UITextFieldTextDidChangeNotification object:nil];
-
+    UITapGestureRecognizer *tapGes = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapAction:)];
+    [tapGes setCancelsTouchesInView:NO];
+    [self.bgView addGestureRecognizer:tapGes];
     __weak typeof(self)weakSelf = self;
     [[SHGMarketManager shareManager] userListArray:^(NSArray *array) {
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -640,7 +641,6 @@ typedef NS_ENUM(NSInteger, SHGMarketSendType){
 {
     return nil;
 }
-
 #pragma mark ------actionSheet代理
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
@@ -704,6 +704,12 @@ typedef NS_ENUM(NSInteger, SHGMarketSendType){
     }
 }
 
+- (void)tapAction:(UITapGestureRecognizer *)gesture
+{
+        [self.firstCategoryBox closeOtherCombox];
+        [self.secondCategoryBox closeOtherCombox];
+
+}
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];

@@ -15,6 +15,7 @@
 @property (assign, nonatomic) BOOL isOpen;
 @property (strong, nonatomic) UIButton *bgButton;
 @property (strong, nonatomic) UITableView *tableView;
+@property (strong, nonatomic) UIView *bgView;
 @property (assign, nonatomic) NSInteger selectIndex;
 @property (strong, nonatomic) UILabel *titleLabel;
 @end
@@ -49,6 +50,16 @@
     return _bgButton;
 }
 
+- (UIView *)bgView
+{
+    if (!_bgView) {
+        _bgView = [[UIView alloc]initWithFrame:CGRectMake(0.0f, 0.0f, SCREENWIDTH, SCREENHEIGHT)];
+        _bgView.backgroundColor = [UIColor blackColor];
+        _bgView.alpha = 0.5f;
+        
+    }
+    return _bgView;
+}
 - (UILabel *)titleLabel
 {
     if (!_titleLabel) {
@@ -133,6 +144,7 @@
 {
     for(UIView *subView in self.parentView.subviews){
         if([subView isKindOfClass:[SHGComBoxView class]] && subView != self){
+            [self.bgView removeFromSuperview];
             SHGComBoxView *otherCombox = (SHGComBoxView *)subView;
             if(otherCombox.isOpen){
                 [UIView animateWithDuration:0.3 animations:^{
@@ -165,12 +177,14 @@
             self.arrowView.transform = CGAffineTransformRotate(self.arrowView.transform, DEGREES_TO_RADIANS(180));
             }];
     } else{
+        
         [UIView animateWithDuration:0.3f animations:^{
             if(self.titlesList.count > 0){
                 //注意：如果不加这句话，下面的操作会导致_tableView从上面飘下来的感觉：
                 //_tableView展开并且滑动到底部 -> 点击收起 -> 再点击展开
                 [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
             }
+            [self.parentView addSubview:self.bgView];
             [self.parentView addSubview:self.tableView];
             CGRect frame = self.tableView.frame;
             frame.size.height = self.titlesList.count * CGRectGetHeight(self.frame);
@@ -241,6 +255,7 @@
     [self tapAction];
     [self moveToIndex:indexPath.row];
 }
+
 
 - (void)dealloc
 {
