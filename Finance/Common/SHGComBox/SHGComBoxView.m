@@ -54,8 +54,7 @@
 {
     if (!_bgView) {
         _bgView = [[UIView alloc]initWithFrame:CGRectMake(0.0f, 0.0f, SCREENWIDTH, SCREENHEIGHT)];
-        _bgView.backgroundColor = [UIColor blackColor];
-        _bgView.alpha = 0.5f;
+        _bgView.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.6];;
         
     }
     return _bgView;

@@ -344,7 +344,11 @@
     [self.headImageView updateStatus:[self.responseObject.status isEqualToString:@"1"] ? YES : NO];
     [self.headImageView updateHeaderView:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,self.responseObject.headimageurl] placeholderImage:[UIImage imageNamed:@"default_head"]];
     self.detailContentLabel.text = self.responseObject.detail;
-
+    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc]initWithString:self.responseObject.detail];;
+    NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc]init];
+    [paragraphStyle setLineSpacing:MarginFactor(5.0f)];
+    [attributedString addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, self.responseObject.detail.length)];
+     self.detailContentLabel.attributedText = attributedString;
     self.marketDetialLabel.text = @"业务描述：";
    
     NSString *title = self.responseObject.marketName;
