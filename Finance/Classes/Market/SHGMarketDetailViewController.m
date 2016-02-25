@@ -112,7 +112,7 @@
     }
     return _emptyView;
 }
-
+//
 //- (UIView *)photoView
 //{
 //    if (!_photoView) {
@@ -257,8 +257,8 @@
     self.phoneNumLabel.isAttributedContent = YES;
     
     self.secondHorizontalLine.sd_layout
-    .leftSpaceToView(self.viewHeader, MarginFactor(0.0f))
-    .rightSpaceToView(self.viewHeader, MarginFactor(0.0f))
+    .leftSpaceToView(self.viewHeader, 0.0f)
+    .rightSpaceToView(self.viewHeader, 0.0f)
     .topSpaceToView(self.phoneNumLabel, MarginFactor(12.0f))
     .heightIs(0.5f);
     
@@ -314,8 +314,9 @@
     if ([self.responseObject.loginuserstate isEqualToString:@"0" ]) {
         NSString * contactString = @"联系方式：认证可见";
         NSMutableAttributedString * str = [[NSMutableAttributedString alloc]initWithString:contactString];
-        [str addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:14.0f] range:NSMakeRange(5, 4)];
+        [str addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:FontFactor(14.0f)] range:NSMakeRange(5, 4)];
         [str addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"4277B2"] range:NSMakeRange(5, 4)];
+       [str addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"888888"] range:NSMakeRange(0, 5)];
         self.phoneNumLabel.attributedText = str;
         UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapContactLabelToIdentification:)];
         [self.phoneNumLabel addGestureRecognizer:recognizer];
@@ -324,16 +325,20 @@
         NSString * contactString = [@"联系方式：" stringByAppendingString: self.responseObject.contactInfo];
         self.phoneNumLabel.text = contactString;
     }
-
     self.nameLabel.text = self.responseObject.realname;
-
-    if (![self.responseObject.createBy isEqualToString:[[NSUserDefaults standardUserDefaults]objectForKey:KEY_UID]] && [self.responseObject.anonymous isEqualToString:@"1"]) {
+    if (![self.responseObject.createBy isEqualToString:UID] && [self.responseObject.anonymous isEqualToString:@"1"]) {
         self.companyLabel.text = @"委托发布";
-    } else{
-        self.companyLabel.text = self.responseObject.company;
+    }  else{
+        if (self.responseObject.company.length == 0) {
+            self.companyLabel.text = @"委托发布";
+        } else{
+            self.companyLabel.text = self.responseObject.company;
+        }
+     
+        
     }
-
-
+    
+   
     if (self.responseObject.title.length > 6) {
         NSString *str = [self.responseObject.title substringToIndex:6];
         self.positionLabel.text = [NSString stringWithFormat:@"%@…",str];
@@ -473,6 +478,7 @@
         [self replyClicked:object commentIndex:indexPath.row];
     }
 }
+
 #pragma mark -- 删除评论
 - (void)longPressGesturecognized:(id)sender
 {    
