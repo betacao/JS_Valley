@@ -490,20 +490,6 @@
     DXAlertView *alertView = [[DXAlertView alloc] initWithTitle:@"提示" contentText:@"确认删除吗?" leftButtonTitle:@"取消" rightButtonTitle:@"删除"];
     alertView.rightBlock = ^{
         [SHGMarketManager deleteMarket:object success:^(BOOL success) {
-            //移动选项 重新请求
-            UIViewController *firstController = [self.viewControllers firstObject];
-            //创建一个分类 让首页去查找到 然后刷新
-            SHGMarketFirstCategoryObject *categoryObject = [[SHGMarketFirstCategoryObject alloc] init];
-            categoryObject.firstCatalogId = object.firstcatalogid;
-            if ([firstController isViewLoaded]) {
-                [firstController performSelector:@selector(scrollToCategory:) withObject:categoryObject];
-                [firstController performSelector:@selector(refreshData) withObject:object];
-            }
-            //重新请求
-            UIViewController *secondController = [self.viewControllers lastObject];
-            if ([secondController isViewLoaded]) {
-                [secondController performSelector:@selector(refreshData) withObject:object];
-            }
             //我的业务被移动到个人中心后 要刷新
             NSInteger count = self.navigationController.viewControllers.count;
             if (count >= 1) {

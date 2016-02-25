@@ -212,7 +212,7 @@
 {
     NSString *marketID = @"";
     for (SHGMarketObject *object in self.currentArray) {
-        if ([object.marketId compare:marketID options:NSNumericSearch] == NSOrderedDescending) {
+        if ([object.marketId compare:marketID options:NSNumericSearch] == NSOrderedDescending && ![object.marketId isEqualToString:[NSString stringWithFormat:@"%ld",NSIntegerMax]]) {
             marketID = object.marketId;
         }
     }
@@ -221,9 +221,10 @@
 
 - (NSString *)minMarketID
 {
-    NSString *marketID = @"";
+    NSString *marketID = [NSString stringWithFormat:@"%ld",NSIntegerMax];
     for (SHGMarketObject *object in self.currentArray) {
-        if ([object.marketId compare:marketID options:NSNumericSearch] == NSOrderedAscending || [marketID isEqualToString:@""]) {
+        NSString *objectMarketId = object.marketId;
+        if ([objectMarketId compare:marketID options:NSNumericSearch] == NSOrderedAscending) {
             marketID = object.marketId;
         }
     }
@@ -244,7 +245,7 @@
 - (SHGMarketNoticeObject *)otherObject
 {
     SHGMarketNoticeObject *otherObject = [[SHGMarketNoticeObject alloc] init];
-    otherObject.marketId = @"";
+    otherObject.marketId = [NSString stringWithFormat:@"%ld",NSIntegerMax];
     NSString *position = [self.positionDictionary objectForKey:[self.scrollView marketFirstId]];
     if ([position isEqualToString:@"0"]) {
         otherObject.type = SHGMarketNoticeTypePositionTop;
