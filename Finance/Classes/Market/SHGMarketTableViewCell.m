@@ -36,7 +36,6 @@
     self.amountLabel.font = [UIFont systemFontOfSize:FontFactor(13.0f)];
     self.timeLabel.font = [UIFont systemFontOfSize:FontFactor(13.0f)];
     self.contactLabel.font = [UIFont systemFontOfSize:FontFactor(13.0f)];
-
     CGFloat titleHeight = [@" " sizeWithAttributes:@{NSFontAttributeName : self.titleLabel.font}].height;
     CGFloat height = [@" " sizeWithAttributes:@{NSFontAttributeName : self.typeLabel.font}].height;
 
@@ -131,10 +130,18 @@
         self.amountLabel.text = [@"金额：" stringByAppendingString: object.price];
     }
     self.contactLabel.text = [@"地区：" stringByAppendingString: object.position];
-
-    NSString * timeStr = [object.modifyTime substringToIndex:10];
-    self.timeLabel.text = [@"时间：" stringByAppendingString: timeStr];
-
+    if (object.modifyTime.length > 0) {
+        NSDateFormatter *inputFormatter = [[NSDateFormatter alloc] init];
+        [inputFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+        NSDate* inputDate = [inputFormatter dateFromString:object.modifyTime];
+        NSDateFormatter *outputFormatter = [[NSDateFormatter alloc] init];
+        [outputFormatter setDateFormat:@"yyyy-MM-dd "];
+        NSString *str = [outputFormatter stringFromDate:inputDate];
+        self.timeLabel.text = [@"时间：" stringByAppendingString: str];
+    } else{
+        self.timeLabel.text = @"时间：";
+    }
+    
     [self loadCollectionState];
     
 }
@@ -159,11 +166,11 @@
 
 - (void)clearCell
 {
-    self.titleLabel.text = @"";
-    self.typeLabel.text = @"";
-    self.amountLabel.text = @"";
-    self.contactLabel.text = @"";
-    self.timeLabel.text = @"";
+    self.titleLabel.text = @" ";
+    self.typeLabel.text = @" ";
+    self.amountLabel.text = @" ";
+    self.contactLabel.text = @" ";
+    self.timeLabel.text = @" ";
     [self.collectButton setImage:[UIImage imageNamed:@"marketListNoCollection"] forState:UIControlStateNormal];
 }
 //收藏
