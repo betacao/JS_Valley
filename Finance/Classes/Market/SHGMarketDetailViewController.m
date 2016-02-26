@@ -452,6 +452,8 @@
     if (!cell) {
         cell = [[[NSBundle mainBundle] loadNibNamed:@"SHGMarketCommentTableViewCell" owner:self options:nil] lastObject];
         cell.delegate = self;
+        UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(longPressGesturecognized:)];
+        [cell.contentView addGestureRecognizer:longPress];
     }
     cell.index = indexPath.row;
     SHGMarketCommentType type = SHGMarketCommentTypeNormal;
@@ -463,8 +465,6 @@
     }
     SHGMarketCommentObject *object = [self.responseObject.commentList objectAtIndex:indexPath.row];
     [cell loadUIWithObj:object commentType:type];
-    UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(longPressGesturecognized:)];
-    [cell.contentView addGestureRecognizer:longPress];
     return cell;
 }
 
