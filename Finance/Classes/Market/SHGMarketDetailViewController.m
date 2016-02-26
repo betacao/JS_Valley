@@ -329,11 +329,11 @@
     }
     self.nameLabel.text = self.responseObject.realname;
     if (![self.responseObject.createBy isEqualToString:UID] && [self.responseObject.anonymous isEqualToString:@"1"]) {
-        self.companyLabel.textColor = [UIColor colorWithHexString:@"3a3a3a"];
+        self.companyLabel.textColor = [UIColor colorWithHexString:@"161616"];
         self.companyLabel.text = @"委托发布";
     }  else{
         if (self.responseObject.company.length == 0) {
-            self.companyLabel.textColor = [UIColor colorWithHexString:@"3a3a3a"];
+            self.companyLabel.textColor = [UIColor colorWithHexString:@"161616"];
             self.companyLabel.text = @"委托发布";
             
         } else{
