@@ -267,7 +267,7 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
         label.text = @"您与对方还不是好友,对方关注您后\n可进行对话";
         label.textColor = [UIColor whiteColor];
         label.textAlignment = NSTextAlignmentCenter;
-        label.font = [UIFont systemFontOfSize:FontFactor(15.0f)];
+        label.font = FontFactor(15.0f);
         label.backgroundColor = [UIColor clearColor];
         label.numberOfLines = 0;
         [label sizeToFit];

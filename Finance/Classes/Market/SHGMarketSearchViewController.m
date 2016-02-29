@@ -77,7 +77,7 @@
             if ([object isKindOfClass:NSClassFromString(@"UISearchBarTextField")]) {
                 UITextField *textField = (UITextField *)object;
                 textField.textColor = [UIColor whiteColor];
-                textField.font = [UIFont systemFontOfSize:FontFactor(15.0f)];
+                textField.font = FontFactor(15.0f);
                 [textField setValue:[UIColor colorWithHexString:@"F67070"] forKeyPath:@"_placeholderLabel.textColor"];
                 textField.enablesReturnKeyAutomatically = NO;
             } else if ([object isKindOfClass:NSClassFromString(@"UISearchBarBackground")]){
@@ -85,7 +85,7 @@
                 UIButton *button = (UIButton *)object;
                 self.backButton = button;
                 [button setTitle:@"取消" forState:UIControlStateNormal];
-                button.titleLabel.font = [UIFont systemFontOfSize:FontFactor(15.0f)];
+                button.titleLabel.font = FontFactor(15.0f);
                 button.enabled = YES;
             }
         }
@@ -104,8 +104,8 @@
 
 - (void)initView
 {
-    self.titleLabel.font = [UIFont systemFontOfSize:FontFactor(15.0f)];
-    self.moreLabel.font = [UIFont systemFontOfSize:FontFactor(14.0f)];
+    self.titleLabel.font = FontFactor(15.0f);
+    self.moreLabel.font = FontFactor(14.0f);
     self.moreLabel.userInteractionEnabled = YES;
     UITapGestureRecognizer *recogizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pushToAdvancedSearchController:)];
     [self.moreLabel addGestureRecognizer:recogizer];
@@ -162,7 +162,7 @@
         [button setTitleColor:[UIColor colorWithHexString:@"8a8a8a"] forState:UIControlStateNormal];
         [button addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchUpInside];
         button.backgroundColor = [UIColor colorWithHexString:@"feffff"];
-        button.titleLabel.font = [UIFont systemFontOfSize:FontFactor(14.0f)];
+        button.titleLabel.font = FontFactor(14.0f);
         CGRect frame = CGRectMake(kItemLeftMargin + col * (kItemHorizontalMargin + width), row * (kItemVerticalMargin + height) , width, height);
         button.frame = frame;
         [self.contentView addSubview:button];

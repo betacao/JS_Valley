@@ -53,7 +53,7 @@
     } else{
         [leftButton setTitle:self.leftItemtitleName forState:UIControlStateNormal];
         [leftButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        [leftButton.titleLabel setFont:[UIFont systemFontOfSize:FontFactor(15.0f)]];
+        [leftButton.titleLabel setFont:FontFactor(15.0f)];
     }
 
     [leftButton sizeToFit];
@@ -71,7 +71,7 @@
     } else if(!IsStrEmpty(self.rightItemtitleName)){
         [rightButton setTitle:self.rightItemtitleName forState:UIControlStateNormal];
         [rightButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        [rightButton.titleLabel setFont:[UIFont systemFontOfSize:FontFactor(15.0f)]];
+        [rightButton.titleLabel setFont:FontFactor(15.0f)];
     }
 
     if (!IsStrEmpty(self.rightItemtitleName) || !IsStrEmpty(self.rightItemImageName)){

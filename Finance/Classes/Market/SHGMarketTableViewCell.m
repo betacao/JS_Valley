@@ -31,11 +31,11 @@
 
 - (void)loadView
 {
-    self.titleLabel.font = [UIFont systemFontOfSize:FontFactor(15.0f)];
-    self.typeLabel.font = [UIFont systemFontOfSize:FontFactor(13.0f)];
-    self.amountLabel.font = [UIFont systemFontOfSize:FontFactor(13.0f)];
-    self.timeLabel.font = [UIFont systemFontOfSize:FontFactor(13.0f)];
-    self.contactLabel.font = [UIFont systemFontOfSize:FontFactor(13.0f)];
+    self.titleLabel.font = FontFactor(15.0f);
+    self.typeLabel.font = FontFactor(13.0f);
+    self.amountLabel.font = FontFactor(13.0f);
+    self.timeLabel.font = FontFactor(13.0f);
+    self.contactLabel.font = FontFactor(13.0f);
     CGFloat titleHeight = [@" " sizeWithAttributes:@{NSFontAttributeName : self.titleLabel.font}].height;
     CGFloat height = [@" " sizeWithAttributes:@{NSFontAttributeName : self.typeLabel.font}].height;
 

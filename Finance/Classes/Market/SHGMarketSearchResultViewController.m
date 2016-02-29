@@ -269,13 +269,13 @@
 
 - (void)initView
 {
-    self.leftLabel.font = [UIFont systemFontOfSize:FontFactor(15.0f)];
+    self.leftLabel.font = FontFactor(15.0f);
     UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(leftLabelClick:)];
     [self.leftLabel addGestureRecognizer:recognizer];
     self.leftLabel.userInteractionEnabled = YES;
 
     [self.arrowButton sizeToFit];
-    self.rightLabel.font = [UIFont systemFontOfSize:FontFactor(14.0f)];
+    self.rightLabel.font = FontFactor(14.0f);
 }
 
 - (void)addAutoLayout

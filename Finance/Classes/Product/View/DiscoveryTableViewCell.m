@@ -22,9 +22,9 @@
 - (void)awakeFromNib
 {
     self.lineView.height = 0.5f;
-    self.lblTitle.font = [UIFont systemFontOfSize:FontFactor(15.0f)];
+    self.lblTitle.font = FontFactor(15.0f);
     self.lblTitle.textColor = [UIColor colorWithHexString:@"161616"];
-    self.numberLable.font = [UIFont systemFontOfSize:FontFactor(15.0f)];
+    self.numberLable.font = FontFactor(15.0f);
     self.numberLable.textAlignment = NSTextAlignmentRight;
     [self addLayout];
 }

@@ -90,7 +90,7 @@
 
 - (void)initView
 {
-    self.firstLabel.font = [UIFont systemFontOfSize:FontFactor(15.0f)];
+    self.firstLabel.font = FontFactor(15.0f);
 
     self.firstContentView.layer.masksToBounds = YES;
     self.firstContentView.layer.cornerRadius = 3.0f;
@@ -100,28 +100,28 @@
     [self.bottomArrowImage1 sizeToFit];
     self.bottomArrowImage1.hidden = YES;
 
-    self.leftButton.titleLabel.font = [UIFont systemFontOfSize:FontFactor(14.0f)];
+    self.leftButton.titleLabel.font = FontFactor(14.0f);
     [self.leftButton setTitleColor:[UIColor colorWithHexString:@"b2b2b2"] forState:UIControlStateNormal];
     [self.leftButton setTitleColor:[UIColor colorWithHexString:@"d43c33"] forState:UIControlStateSelected];
 
-    self.middleButton.titleLabel.font = [UIFont systemFontOfSize:FontFactor(14.0f)];
+    self.middleButton.titleLabel.font = FontFactor(14.0f);
     [self.middleButton setTitleColor:[UIColor colorWithHexString:@"b2b2b2"] forState:UIControlStateNormal];
     [self.middleButton setTitleColor:[UIColor colorWithHexString:@"d43c33"] forState:UIControlStateSelected];
 
-    self.rightButton.titleLabel.font = [UIFont systemFontOfSize:FontFactor(14.0f)];
+    self.rightButton.titleLabel.font = FontFactor(14.0f);
     [self.rightButton setTitleColor:[UIColor colorWithHexString:@"b2b2b2"] forState:UIControlStateNormal];
     [self.rightButton setTitleColor:[UIColor colorWithHexString:@"d43c33"] forState:UIControlStateSelected];
 
-    self.secondLabel.font = [UIFont systemFontOfSize:FontFactor(15.0f)];
+    self.secondLabel.font = FontFactor(15.0f);
 
-    self.locationTextField.font = [UIFont systemFontOfSize:FontFactor(14.0f)];
+    self.locationTextField.font = FontFactor(14.0f);
     self.locationTextField.layer.masksToBounds = YES;
     self.locationTextField.layer.cornerRadius = 3.0f;
     self.locationTextField.leftView = [[UIView alloc]initWithFrame:CGRectMake(0.0f, 0.0f, 5.0f, 0.0f)];
     self.locationTextField.leftViewMode = UITextFieldViewModeAlways;
     [self.locationTextField setValue:[UIColor colorWithHexString:@"b2b2b2"] forKeyPath:@"_placeholderLabel.textColor"];
 
-    self.thirdLabel.font = [UIFont systemFontOfSize:FontFactor(15.0f)];
+    self.thirdLabel.font = FontFactor(15.0f);
 
     self.leftComBox.backgroundColor = [UIColor whiteColor];
     self.leftComBox.delegate = self;
@@ -131,7 +131,7 @@
     self.rightCombox.delegate = self;
     self.rightCombox.parentView = self.view;
 
-    self.fourthLabel.font = [UIFont systemFontOfSize:FontFactor(15.0f)];
+    self.fourthLabel.font = FontFactor(15.0f);
 
     self.fourthContentView.layer.masksToBounds = YES;
     self.fourthContentView.layer.cornerRadius = 3.0f;
@@ -141,15 +141,15 @@
     [self.bottomArrowImage2 sizeToFit];
     self.bottomArrowImage2.hidden = YES;
 
-    self.bottomLeftButton.titleLabel.font = [UIFont systemFontOfSize:FontFactor(14.0f)];
+    self.bottomLeftButton.titleLabel.font = FontFactor(14.0f);
     [self.bottomLeftButton setTitleColor:[UIColor colorWithHexString:@"b2b2b2"] forState:UIControlStateNormal];
     [self.bottomLeftButton setTitleColor:[UIColor colorWithHexString:@"d43c33"] forState:UIControlStateSelected];
 
-    self.bottomRightButton.titleLabel.font = [UIFont systemFontOfSize:FontFactor(14.0f)];
+    self.bottomRightButton.titleLabel.font = FontFactor(14.0f);
     [self.bottomRightButton setTitleColor:[UIColor colorWithHexString:@"b2b2b2"] forState:UIControlStateNormal];
     [self.bottomRightButton setTitleColor:[UIColor colorWithHexString:@"d43c33"] forState:UIControlStateSelected];
 
-    self.searchButton.titleLabel.font = [UIFont systemFontOfSize:FontFactor(17.0f)];
+    self.searchButton.titleLabel.font = FontFactor(17.0f);
 }
 
 - (void)addAutoLayout

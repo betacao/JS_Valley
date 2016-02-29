@@ -9,8 +9,8 @@
 #import "SHGCategoryScrollView.h"
 #import "SHGMarketObject.h"
 #define kCategoryObjectMargin MarginFactor(15.0f)
-#define kCategoryNormalFont [UIFont systemFontOfSize: FontFactor(14.0f)]
-#define kCategorySelectFont [UIFont systemFontOfSize:FontFactor(15.0f)]
+#define kCategoryNormalFont  FontFactor(14.0f)
+#define kCategorySelectFont  FontFactor(15.0f)
 
 @interface SHGCategoryScrollView ()<UIScrollViewDelegate>
 @property (strong, nonatomic) UIScrollView *scrollView;

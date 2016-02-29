@@ -102,31 +102,31 @@ typedef NS_ENUM(NSInteger, SHGMarketSendType){
 
 - (void)initView
 {
-    self.marketNameField.font = [UIFont systemFontOfSize:FontFactor(14.0f)];
+    self.marketNameField.font = FontFactor(14.0f);
     self.marketNameField.layer.masksToBounds = YES;
     self.marketNameField.layer.cornerRadius = 3.0f;
     self.marketNameField.leftView = [[UIView alloc]initWithFrame:CGRectMake(0.0f, 0.0f, 10.0f, 0.0f)];
     self.marketNameField.leftViewMode = UITextFieldViewModeAlways;
     [self.marketNameField setValue:[UIColor colorWithHexString:@"D3D3D3"] forKeyPath:@"_placeholderLabel.textColor"];
 
-    self.acountField.font = [UIFont systemFontOfSize:FontFactor(14.0f)];
+    self.acountField.font = FontFactor(14.0f);
     self.acountField.layer.masksToBounds = YES;
     self.acountField.layer.cornerRadius = 3.0f;
     self.acountField.leftView = [[UIView alloc]initWithFrame:CGRectMake(0.0f, 0.0f, 10.0f, 0.0f)];
     self.acountField.leftViewMode = UITextFieldViewModeAlways;
     [self.acountField setValue:[UIColor colorWithHexString:@"D3D3D3"] forKeyPath:@"_placeholderLabel.textColor"];
 
-    self.yuanLabel.font = [UIFont systemFontOfSize:FontFactor(14.0f)];
+    self.yuanLabel.font = FontFactor(14.0f);
     [self.yuanLabel sizeToFit];
 
-    self.contactField.font = [UIFont systemFontOfSize:FontFactor(14.0f)];
+    self.contactField.font = FontFactor(14.0f);
     self.contactField.layer.masksToBounds = YES;
     self.contactField.layer.cornerRadius = 3.0f;
     self.contactField.leftView = [[UIView alloc]initWithFrame:CGRectMake(0.0f, 0.0f, 10.0f, 0.0f)];
     self.contactField.leftViewMode = UITextFieldViewModeAlways;
     [self.contactField setValue:[UIColor colorWithHexString:@"D3D3D3"] forKeyPath:@"_placeholderLabel.textColor"];
 
-    self.locationField.font = [UIFont systemFontOfSize:FontFactor(14.0f)];
+    self.locationField.font = FontFactor(14.0f);
     self.locationField.layer.masksToBounds = YES;
     self.locationField.layer.cornerRadius = 3.0f;
     self.locationField.leftView = [[UIView alloc]initWithFrame:CGRectMake(0.0f, 0.0f, 10.0f, 0.0f)];
@@ -137,26 +137,26 @@ typedef NS_ENUM(NSInteger, SHGMarketSendType){
     [self.starView2 sizeToFit];
     [self.starView3 sizeToFit];
 
-    self.modelLabel.font = [UIFont systemFontOfSize:FontFactor(14.0f)];
+    self.modelLabel.font = FontFactor(14.0f);
 
     self.modelContentView.layer.masksToBounds = YES;
     self.modelContentView.layer.cornerRadius = 3.0f;
     self.modelContentView.layer.borderColor = [UIColor colorWithHexString:@"e1e1e6"].CGColor;
     self.modelContentView.layer.borderWidth = 0.5f;
     self.breakView.backgroundColor = [UIColor colorWithHexString:@"e1e1e6"];
-    self.leftButton.titleLabel.font = [UIFont systemFontOfSize:FontFactor(13.0f)];
+    self.leftButton.titleLabel.font = FontFactor(13.0f);
     [self.leftButton setTitleColor:[UIColor colorWithHexString:@"b3b3b3"] forState:UIControlStateNormal];
     [self.leftButton setTitleColor:[UIColor colorWithHexString:@"d43c33"] forState:UIControlStateSelected];
     self.leftButton.selected = YES;
     self.mode = self.leftButton.titleLabel.text;
 
-    self.rightButton.titleLabel.font = [UIFont systemFontOfSize:FontFactor(13.0f)];
+    self.rightButton.titleLabel.font = FontFactor(13.0f);
     [self.rightButton setTitleColor:[UIColor colorWithHexString:@"b3b3b3"] forState:UIControlStateNormal];
     [self.rightButton setTitleColor:[UIColor colorWithHexString:@"d43c33"] forState:UIControlStateSelected];
 
-    self.introduceLabel.font = [UIFont systemFontOfSize:FontFactor(14.0f)];
+    self.introduceLabel.font = FontFactor(14.0f);
 
-    self.introduceView.font = [UIFont systemFontOfSize:FontFactor(14.0f)];
+    self.introduceView.font = FontFactor(14.0f);
     self.introduceView.placeholder = @" 描述您的业务详细信息";
     self.introduceView.placeholderColor = [UIColor colorWithHexString:@"d3d3d3"];
     self.introduceView.layer.masksToBounds = YES;
@@ -164,11 +164,11 @@ typedef NS_ENUM(NSInteger, SHGMarketSendType){
 
     [self.addImageButton sizeToFit];
 
-    self.addImageLabel.font = [UIFont systemFontOfSize:FontFactor(14.0f)];
+    self.addImageLabel.font = FontFactor(14.0f);
 
-    self.nextButton.titleLabel.font = [UIFont systemFontOfSize:FontFactor(15.0f)];
+    self.nextButton.titleLabel.font = FontFactor(15.0f);
 
-    self.anonymousButton.titleLabel.font = [UIFont systemFontOfSize:FontFactor(11.0f)];
+    self.anonymousButton.titleLabel.font = FontFactor(11.0f);
     [self.anonymousButton setEnlargeEdge: 20.0f];
     [self.anonymousButton setImage:[UIImage imageNamed:@"market_select"] forState:UIControlStateSelected];
     [self.anonymousButton setImage:[UIImage imageNamed:@"market_unselect"] forState:UIControlStateNormal];

@@ -124,29 +124,29 @@
 
 - (void)initView
 {
-    self.nameLabel.font = [UIFont systemFontOfSize:FontFactor(15.0f)];
-    self.companyLabel.font = [UIFont systemFontOfSize:FontFactor(13.0f)];
-    self.positionLabel.font = [UIFont systemFontOfSize:FontFactor(13.0f)];
-    self.titleLabel.font = [UIFont systemFontOfSize:FontFactor(15.0f)];
-    self.typeLabel.font = [UIFont systemFontOfSize:FontFactor(14.0f)];
-    self.capitalLabel.font = [UIFont systemFontOfSize:FontFactor(14.0f)];
-    self.addressLabel.font = [UIFont systemFontOfSize:FontFactor(14.0f)];
-    self.modelLabel.font = [UIFont systemFontOfSize:FontFactor(14.0f)];
+    self.nameLabel.font = FontFactor(15.0f);
+    self.companyLabel.font = FontFactor(13.0f);
+    self.positionLabel.font = FontFactor(13.0f);
+    self.titleLabel.font = FontFactor(15.0f);
+    self.typeLabel.font = FontFactor(14.0f);
+    self.capitalLabel.font = FontFactor(14.0f);
+    self.addressLabel.font = FontFactor(14.0f);
+    self.modelLabel.font = FontFactor(14.0f);
 
     self.phoneNumLabel.numberOfLines = 0;
     self.phoneNumLabel.lineBreakMode = NSLineBreakByWordWrapping;
     self.phoneNumLabel.textColor = [UIColor colorWithHexString:@"888888"];
-    self.phoneNumLabel.font = [UIFont systemFontOfSize:FontFactor(14.0f)];
+    self.phoneNumLabel.font = FontFactor(14.0f);
     self.phoneNumLabel.delegate = self;
     self.phoneNumLabel.backgroundColor = [UIColor clearColor];
 
-    self.marketDetialLabel.font = [UIFont systemFontOfSize:FontFactor(15.0f)];
-    self.detailContentLabel.font = [UIFont systemFontOfSize:FontFactor(15.0f)];
+    self.marketDetialLabel.font = FontFactor(15.0f);
+    self.detailContentLabel.font = FontFactor(15.0f);
     [self.speakButton setTitle:@"写评论" forState:UIControlStateNormal];
     [self.speakButton setImage:[UIImage imageNamed:@"market_change"] forState:UIControlStateNormal];
     self.speakButton.imageEdgeInsets = UIEdgeInsetsMake(0.0f, MarginFactor(8.0f), 0.0f,0.0f);
     self.speakButton.titleEdgeInsets = UIEdgeInsetsMake(0.0f, MarginFactor(15.0f), 0.0f, 0.0f);
-    self.speakButton.titleLabel.font = [UIFont systemFontOfSize:FontFactor(13.0)];
+    self.speakButton.titleLabel.font = FontFactor(13.0);
     self.speakButton.layer.masksToBounds = YES;
     self.speakButton.layer.cornerRadius = 4;
     self.timeLabel.hidden = YES;
@@ -316,7 +316,7 @@
     if ([self.responseObject.loginuserstate isEqualToString:@"0" ]) {
         NSString * contactString = @"联系方式：认证可见";
         NSMutableAttributedString * str = [[NSMutableAttributedString alloc]initWithString:contactString];
-        [str addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:FontFactor(14.0f)] range:NSMakeRange(5, 4)];
+        [str addAttribute:NSFontAttributeName value:FontFactor(14.0f) range:NSMakeRange(5, 4)];
         [str addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"4277B2"] range:NSMakeRange(5, 4)];
        [str addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"888888"] range:NSMakeRange(0, 5)];
         self.phoneNumLabel.attributedText = str;

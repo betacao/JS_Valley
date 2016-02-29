@@ -63,7 +63,7 @@
 {
     if (!_titleLabel) {
         _titleLabel = [[UILabel alloc] init];
-        _titleLabel.font = [UIFont systemFontOfSize:FontFactor(14.0f)];
+        _titleLabel.font = FontFactor(14.0f);
         _titleLabel.backgroundColor = [UIColor clearColor];
         _titleLabel.textAlignment = NSTextAlignmentLeft;
         _titleLabel.textColor = [UIColor colorWithHexString:@"606060"];
@@ -236,7 +236,7 @@
     if(!cell){
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIndentifier];
         cell.backgroundColor = [UIColor clearColor];
-        cell.textLabel.font = [UIFont systemFontOfSize:FontFactor(14.0f)];
+        cell.textLabel.font = FontFactor(14.0f);
         cell.textLabel.textColor = kTextColor;
         UIView *lineView = [[UIView alloc]initWithFrame:CGRectMake(kCellLineLeftMargin, CGRectGetHeight(self.frame) - 0.5f, SCREENWIDTH , 0.5f)];
         lineView.backgroundColor = [UIColor colorWithHexString:@"E6E7E8"];

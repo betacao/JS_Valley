@@ -39,7 +39,7 @@
         [self.contentView addSubview:self.unreadLabel];
         
         self.timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(SCREENWIDTH - 95.0f, self.unreadLabel.centerY, 80.0f, 16.0f)];
-        self.timeLabel.font = [UIFont systemFontOfSize:FontFactor(10.0f)];
+        self.timeLabel.font = FontFactor(10.0f);
         self.timeLabel.textColor = [UIColor colorWithHexString:@"919291"];
         self.timeLabel.backgroundColor = [UIColor clearColor];
         self.timeLabel.textAlignment = NSTextAlignmentRight;
@@ -47,13 +47,13 @@
 
         self.detailLabel = [[UILabel alloc] initWithFrame:CGRectMake(58, k_rowHeight/2.0f  , SCREENWIDTH-100, 20)];
         self.detailLabel.backgroundColor = [UIColor clearColor];
-        self.detailLabel.font = [UIFont systemFontOfSize:FontFactor(12.0f)];
+        self.detailLabel.font = FontFactor(12.0f);
         self.detailLabel.textColor = [UIColor colorWithHexString:@"919291"];
         [self.contentView addSubview:self.detailLabel];
 
         self.textLabel.backgroundColor = [UIColor clearColor];
         self.textLabel.textColor = [UIColor colorWithHexString:@"161616"];
-        self.textLabel.font = [UIFont systemFontOfSize:FontFactor(13.0f)];
+        self.textLabel.font = FontFactor(13.0f);
         
         self.lineView = [[UIView alloc]initWithFrame:CGRectMake(spaceToRight, k_rowHeight - 1.0f, SCREENWIDTH - spaceToRight, 0.5f)];
         self.lineView.backgroundColor = [UIColor colorWithHexString:@"E6E7E8"];

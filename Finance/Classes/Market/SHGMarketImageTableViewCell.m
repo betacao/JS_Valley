@@ -98,7 +98,7 @@
     self.contentView.backgroundColor = [UIColor colorWithHexString:@"EFEEEF"];
     self.titleLabel = [[UILabel alloc] init];
     self.titleLabel.backgroundColor = [UIColor clearColor];
-    self.titleLabel.font = [UIFont systemFontOfSize:FontFactor(12.0f)];
+    self.titleLabel.font = FontFactor(12.0f);
     self.titleLabel.textColor = [UIColor colorWithHexString:@"cbc9c9"];
     self.titleLabel.textAlignment = NSTextAlignmentCenter;
 

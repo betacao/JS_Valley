@@ -215,7 +215,7 @@
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
         [button addTarget:self action:@selector(actionInvite:) forControlEvents:UIControlEventTouchUpInside];
         [button setTitle:@"邀请" forState:UIControlStateNormal];
-        button.titleLabel.font = [UIFont systemFontOfSize:FontFactor(15.0f)];
+        button.titleLabel.font = FontFactor(15.0f);
         [button sizeToFit];
         _rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:button];
     }
@@ -266,7 +266,7 @@
 {
     if (!_nickNameLabel) {
         _nickNameLabel = [[UILabel alloc] init];
-        _nickNameLabel.font = [UIFont systemFontOfSize:FontFactor(16.0f)];
+        _nickNameLabel.font = FontFactor(16.0f);
         _nickNameLabel.textColor = [UIColor colorWithHexString:@"1d5798"];
     }
     return _nickNameLabel;
@@ -276,7 +276,7 @@
 {
     if (!_companyLabel) {
         _companyLabel = [[UILabel alloc] init];
-        _companyLabel.font = [UIFont systemFontOfSize:FontFactor(14.0f)];
+        _companyLabel.font = FontFactor(14.0f);
         _companyLabel.textColor = [UIColor colorWithHexString:@"161616"];
     }
     return _companyLabel;
@@ -286,7 +286,7 @@
 {
     if (!_departmentLabel) {
         _departmentLabel = [[UILabel alloc] init];
-        _departmentLabel.font = [UIFont systemFontOfSize:FontFactor(14.0f)];
+        _departmentLabel.font = FontFactor(14.0f);
         _departmentLabel.textColor = [UIColor colorWithHexString:@"161616"];
     }
     return _departmentLabel;
@@ -323,7 +323,7 @@
         _circleHeaderLabel.textAlignment = NSTextAlignmentCenter;
         _circleHeaderLabel.textColor = [UIColor colorWithHexString:@"989898"];
         _circleHeaderLabel.numberOfLines = 0;
-        _circleHeaderLabel.font = [UIFont systemFontOfSize:FontFactor(12.0f)];
+        _circleHeaderLabel.font = FontFactor(12.0f);
         _circleHeaderLabel.userInteractionEnabled = YES;
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(goToMyCircle)];
         [_circleHeaderLabel addGestureRecognizer:tap];
@@ -338,7 +338,7 @@
         _followHeaderLabel.textAlignment = NSTextAlignmentCenter;
         _followHeaderLabel.numberOfLines = 0;
         _followHeaderLabel.textColor = [UIColor colorWithHexString:@"989898"];
-        _followHeaderLabel.font = [UIFont systemFontOfSize:FontFactor(12.0f)];
+        _followHeaderLabel.font = FontFactor(12.0f);
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(goToFollowList)];
         [_followHeaderLabel addGestureRecognizer:tap];
         _followHeaderLabel.userInteractionEnabled = YES;
@@ -355,7 +355,7 @@
         _fansHeaderLabel.textAlignment = NSTextAlignmentCenter;
         _fansHeaderLabel.numberOfLines = 0;
         _fansHeaderLabel.textColor = [UIColor colorWithHexString:@"989898"];
-        _fansHeaderLabel.font = [UIFont systemFontOfSize:FontFactor(12.0f)];
+        _fansHeaderLabel.font = FontFactor(12.0f);
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(goToFansList)];
         [_fansHeaderLabel addGestureRecognizer:tap];
         _fansHeaderLabel.userInteractionEnabled = YES;
@@ -620,15 +620,15 @@
         [paragraphStyle1 setLineSpacing:1.0f];
         paragraphStyle1.alignment = NSTextAlignmentCenter;
         NSMutableAttributedString *aCircleString = [[NSMutableAttributedString alloc] initWithString:circleString];
-        [aCircleString addAttributes:@{NSForegroundColorAttributeName:[UIColor colorWithHexString:@"161616"], NSFontAttributeName:[UIFont systemFontOfSize:FontFactor(13.0f)]} range:NSMakeRange(4, aCircleString.length - 4)];
+        [aCircleString addAttributes:@{NSForegroundColorAttributeName:[UIColor colorWithHexString:@"161616"], NSFontAttributeName:FontFactor(13.0f)} range:NSMakeRange(4, aCircleString.length - 4)];
         [aCircleString addAttribute:NSParagraphStyleAttributeName value:paragraphStyle1 range:NSMakeRange(0, [aCircleString length])];
 
         NSMutableAttributedString *aFollowString = [[NSMutableAttributedString alloc] initWithString:followString];
-        [aFollowString addAttributes:@{NSForegroundColorAttributeName:[UIColor colorWithHexString:@"161616"], NSFontAttributeName:[UIFont systemFontOfSize:FontFactor(13.0f)]} range:NSMakeRange(4, aFollowString.length - 4)];
+        [aFollowString addAttributes:@{NSForegroundColorAttributeName:[UIColor colorWithHexString:@"161616"], NSFontAttributeName:FontFactor(13.0f)} range:NSMakeRange(4, aFollowString.length - 4)];
         [aFollowString addAttribute:NSParagraphStyleAttributeName value:paragraphStyle1 range:NSMakeRange(0, [aFollowString length])];
 
         NSMutableAttributedString *aFansString = [[NSMutableAttributedString alloc] initWithString:fansString];
-        [aFansString addAttributes:@{NSForegroundColorAttributeName:[UIColor colorWithHexString:@"161616"], NSFontAttributeName:[UIFont systemFontOfSize:FontFactor(13.0f)]} range:NSMakeRange(4, aFansString.length - 4)];
+        [aFansString addAttributes:@{NSForegroundColorAttributeName:[UIColor colorWithHexString:@"161616"], NSFontAttributeName:FontFactor(13.0f)} range:NSMakeRange(4, aFansString.length - 4)];
         [aFansString addAttribute:NSParagraphStyleAttributeName value:paragraphStyle1 range:NSMakeRange(0, [aFansString length])];
 
         weakSelf.circleHeaderLabel.attributedText = aCircleString;
