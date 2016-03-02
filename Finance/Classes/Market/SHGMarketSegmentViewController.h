@@ -31,4 +31,5 @@ typedef void(^loadViewFinishBlock)(UIView *view);
 - (void)addOrDeletePraise:(SHGMarketObject *)object block:(void(^)(BOOL success))block;
 - (void)addOrDeleteCollect:(SHGMarketObject *)object state:(void(^)(BOOL state))block;
 - (void)deleteMarket:(SHGMarketObject *)object;
+- (void)deleteMarketByMarketId:(NSString *)marketId;
 @end

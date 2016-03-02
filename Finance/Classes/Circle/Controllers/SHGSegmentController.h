@@ -60,6 +60,9 @@ typedef void(^loadViewFinishBlock)(UIView *view);
 //查找对象在数组中的位置
 - (NSArray *)indexOfObjectByRid:(NSString *)string;
 
+//删除帖子号为rid的动态
+- (void)deleteObjectByRid:(NSString *)rid;
+
 - (void)setSelectedIndex:(NSUInteger)index animated:(BOOL)animated;
 - (void)setSelectedViewController:(UIViewController *)viewController animated:(BOOL)animated;
 

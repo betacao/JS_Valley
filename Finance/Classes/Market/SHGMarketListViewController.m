@@ -90,6 +90,18 @@
     [self.scrollView moveToIndex:index];
 }
 
+- (void)deleteMarketByMarketId:(NSString *)marketId
+{
+    [self.dataArr enumerateObjectsUsingBlock:^(NSMutableArray *subArray, NSUInteger idx, BOOL * _Nonnull stop) {
+        [subArray enumerateObjectsUsingBlock:^(SHGMarketObject *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            if ([obj.marketId isEqualToString:marketId]) {
+                [subArray removeObject:obj];
+            }
+        }];
+    }];
+    [self.tableView reloadData];
+}
+
 - (void)loadMarketList:(NSString *)target firstId:(NSString *)firstId second:(NSString *)secondId marketId:(NSString *)marketId modifyTime:(NSString *)modifyTime
 {
     __weak typeof(self) weakSelf = self;

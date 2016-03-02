@@ -233,7 +233,7 @@
     UIImage *png = [UIImage imageNamed:@"80.png"];
     id<ISSCAttachment> image  = [ShareSDK pngImageWithImage:png];
     
-    NSString *content = object.detail;
+    NSString *content = object.shareTitle;
     if (content.length == 0) {
         content = @"大牛圈推广";
     }

@@ -273,6 +273,13 @@ const CGFloat kAdButtomMargin = 20.0f;
     }
 }
 
+- (void)deleteCellAtIndexPath:(NSArray *)paths
+{
+    [self.listTable beginUpdates];
+    [self.listTable deleteRowsAtIndexPaths:paths withRowAnimation:UITableViewRowAnimationAutomatic];
+    [self.listTable endUpdates];
+}
+
 - (void)refreshData
 {
     __weak typeof(self) weakSelf = self;
@@ -359,7 +366,7 @@ const CGFloat kAdButtomMargin = 20.0f;
                 NSInteger index = [obj.displayposition integerValue] - 1;
                 [self.dataArr insertObject:obj atIndex:index];
             }
-        }else{
+        } else{
             [self.dataArr addObjectsFromArray:self.adArray];
         }
         [self insertRecomandArray];
@@ -384,7 +391,7 @@ const CGFloat kAdButtomMargin = 20.0f;
                 NSInteger index = [obj.displayposition integerValue] - 1;
                 [self.dataArr insertObject:obj atIndex:index];
             }
-        }else{
+        } else{
             [self.dataArr addObjectsFromArray:self.adArray];
         }
         [self insertRecomandArray];

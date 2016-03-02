@@ -168,14 +168,7 @@
             NSString *osv = [UIDevice currentDevice].systemVersion;
             NSString *channelId = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_BPUSH_CHANNELID];
             NSString *userId = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_BPUSH_USERID];
-            NSDictionary *param = @{@"loginNum":[userInfo uid],
-                                    @"loginType":logType,
-                                    @"ctype":@"iphone",
-                                    @"os":@"ios",
-                                    @"osv":osv,
-                                    @"appv":LOCAL_Version,
-                                    @"yuncid":channelId?:@"",
-                                    @"yunuid":userId?:@""};
+            NSDictionary *param = @{@"loginNum":[userInfo uid], @"loginType":logType, @"ctype":@"iphone", @"os":@"ios", @"osv":osv, @"appv":LOCAL_Version, @"yuncid":channelId?:@"", @"yunuid":userId?:@""};
             
             [MOCHTTPRequestOperationManager postWithURL:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"thirdLogin/isThirdLogin"] class:nil parameters:param success:^(MOCHTTPResponse *response){
                 [Hud hideHud];

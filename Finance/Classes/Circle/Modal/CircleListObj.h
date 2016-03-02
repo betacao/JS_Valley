@@ -52,6 +52,8 @@
 @property (nonatomic,strong) NSString *feedhtml; //feed流链接
 @property (nonatomic,strong) NSString *displayposition;//广告所在的位置
 @property (nonatomic,strong) NSString *pcurl;
+@property (nonatomic,strong) NSString *shareTitle;
+
 -(CGFloat)fetchCellHeight;
 
 @end

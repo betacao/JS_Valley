@@ -13,6 +13,7 @@
 #import "SHGProvincesViewController.h"
 #import "SHGMomentCityViewController.h"
 #import "SHGMarketSearchResultViewController.h"
+#import "SHGMarketListViewController.h"
 
 @interface SHGMarketSegmentViewController ()
 @property (nonatomic, strong) NSArray *rightBarButtonItems;
@@ -503,6 +504,13 @@
     };
     [alertView show];
 
+}
+
+- (void)deleteMarketByMarketId:(NSString *)marketId
+{
+    SHGMarketListViewController *controller = [self.viewControllers firstObject];
+    [controller deleteMarketByMarketId:marketId];
+    
 }
 
 - (void)scrollToCategory:(SHGMarketFirstCategoryObject *)object
