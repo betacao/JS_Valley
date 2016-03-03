@@ -20,12 +20,18 @@
     if (self) {
         // Initialization code
     }
-    self.backgroundColor = [UIColor clearColor];
+    self.backgroundColor = [UIColor whiteColor];
     self.textLabel.backgroundColor = [UIColor clearColor];
     self.textLabel.textAlignment = NSTextAlignmentCenter;
-    self.textLabel.font = [UIFont systemFontOfSize:14];
-    self.textLabel.textColor = [UIColor grayColor];
+    self.textLabel.font = FontFactor(12.0f);
+    self.textLabel.textColor = [UIColor colorWithHexString:@"c3c3c3"];
     self.selectionStyle = UITableViewCellSelectionStyleNone;
+    
+    self.textLabel.sd_layout
+    .topSpaceToView(self.contentView, MarginFactor(28.0f))
+    .centerXEqualToView(self.contentView)
+    .autoHeightRatio(0.0f);
+    [self.textLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
     
     return self;
 }

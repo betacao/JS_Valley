@@ -43,6 +43,7 @@
 #define KEY_BPUSH_APPID     @"com.Finance.keyBpushAppid"
 #define KEY_UID     @"com.Finance.keyUid"
 #define KEY_PHONE     @"com.Finance.keyPhone"
+#define KEY_MEMORY     @"com.Finance.keyMemory"
 #define KEY_THIRDPARTY_UID @"com.Finance.keyThirdPartyuid"
 #define KEY_THIRDPARTY_TYPE @"com.Finance.keyThirdPatykind"
 #define KEY_ISFULL       @"com.Finance.isFull"

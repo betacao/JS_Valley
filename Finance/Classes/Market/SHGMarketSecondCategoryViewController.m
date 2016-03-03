@@ -76,17 +76,14 @@
                     }
                 }
                 button.adjustsImageWhenHighlighted = NO;
-                button.layer.masksToBounds = YES;
-                button.layer.cornerRadius = 3.0f;
-                button.layer.borderWidth = 0.5f;
-                button.layer.borderColor = [UIColor colorWithHexString:@"E1E1E6"].CGColor;
-                [button setBackgroundColor: [UIColor colorWithHexString:@"EEEFF0"]];
                 button.titleLabel.font = FontFactor(14.0f);
                 [button setTitle:obj.secondCatalogName forState:UIControlStateNormal];
                 [button setTitleColor:[UIColor colorWithHexString:@"8A8A8A"] forState:UIControlStateNormal];
                 [button setTitleColor:[UIColor colorWithHexString:@"FF3232"] forState:UIControlStateSelected];
-                [button setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithHexString:@"FFFFFF"]] forState:UIControlStateNormal];
-                [button setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithHexString:@"F3F3F3"]] forState:UIControlStateSelected];
+                UIImage *whiteImage = [[UIImage imageNamed:@"buttonWhiteBg"]resizableImageWithCapInsets:UIEdgeInsetsMake(5.0f, 5.0f, 5.0f, 5.0f) resizingMode:UIImageResizingModeStretch];
+                [button setBackgroundImage:whiteImage forState:UIControlStateNormal];
+                UIImage *grayImage = [[UIImage imageNamed:@"buttonGrayBg"]resizableImageWithCapInsets:UIEdgeInsetsMake(5.0f, 5.0f, 5.0f, 5.0f) resizingMode:UIImageResizingModeStretch];
+                [button setBackgroundImage:grayImage forState:UIControlStateSelected];
                 [button addTarget:self action:@selector(didSelectCategory:) forControlEvents:UIControlEventTouchUpInside];
                 CGRect frame = CGRectMake(kItemLeftMargin + (kItemMargin + width) * col, ceilf((kItemTopMargin + kItemHeight) * row + kItemTopMargin), width, kItemHeight);
                 button.frame = frame;

@@ -310,7 +310,7 @@
         _tableView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
         _tableView.delegate = self;
         _tableView.dataSource = self;
-        _tableView.backgroundColor =  [UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0f];
+        _tableView.backgroundColor = [UIColor whiteColor];
         _tableView.tableFooterView = [[UIView alloc] init];
         _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         
@@ -398,18 +398,13 @@
         }
         else{
             MessageModel *model = (MessageModel *)obj;
-            if([[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID]!=nil)
-            {
-                if([[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID] isEqual:model.username])
-                {
-                    NSLog(@"[[NSUserDefaults standardUserDefaults] objectForKey:KEY_HEAD_IMAGE]:%@",[[NSUserDefaults standardUserDefaults] objectForKey:KEY_HEAD_IMAGE]);
+            if([[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID]!=nil){
+                if([[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID] isEqual:model.username]){
                     model.headImageURL=[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,[[NSUserDefaults standardUserDefaults] objectForKey:KEY_HEAD_IMAGE]]];
                     model.nickName=[[NSUserDefaults standardUserDefaults] objectForKey:KEY_USER_NAME];
-                }else
-                {
+                } else{
                     NSArray *headUrl=[HeadImage queryAll:model.username];
-                    if(headUrl.count>0)
-                    {
+                    if(headUrl.count > 0){
                         HeadImage *hi=(HeadImage*)headUrl[0];
                         if(![hi.headimg isEqual:@""])
                         {
@@ -440,7 +435,7 @@
 {
     NSObject *obj = [self.dataSource objectAtIndex:indexPath.row];
     if ([obj isKindOfClass:[NSString class]]) {
-        return 40;
+        return MarginFactor(50.0f);
     }
     else{
         return [EMChatViewCell tableView:tableView heightForRowAtIndexPath:indexPath withObject:(MessageModel *)obj];

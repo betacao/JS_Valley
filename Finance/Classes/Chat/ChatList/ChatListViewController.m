@@ -473,31 +473,34 @@ static NSString * const kCommonFNum			= @"commonnum";
         ChatListCell *cell = [tableView dequeueReusableCellWithIdentifier:identify];
         
         if (!cell){
-            cell = [[ChatListCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:identify];
+            cell = [[ChatListCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identify];
         }
         
-        cell.separatorInset = UIEdgeInsetsMake(0, 15, 0, 0);
         if(indexPath.row == 0){
-            cell.placeholderImage = [UIImage imageNamed:@"申请头像图标"];
-            cell.name=@"群申请与通知";
-            cell.imageURL=nil;
-            cell.detailMsg=@"";
-            cell.time=@"";
+            ChatModel *model = [[ChatModel alloc] init];
+            model.placeholderImage = [UIImage imageNamed:@"申请头像图标"];
+            model.name=@"群申请与通知";
+            model.imageURL=nil;
+            model.detailMsg=@"";
+            model.time=@"";
+            cell.model = model;
             [cell.contentView addSubview:self.unapplyCountLabel];
         } else if(indexPath.row==1){
-            cell.placeholderImage=[UIImage imageNamed:@"消息通知"];
-            cell.imageURL=nil;
-            cell.name =@"通知";
-            cell.detailMsg=@"";
-            cell.time=@"";
-
+            ChatModel *model = [[ChatModel alloc] init];
+            model.placeholderImage=[UIImage imageNamed:@"消息通知"];
+            model.imageURL=nil;
+            model.name =@"通知";
+            model.detailMsg=@"";
+            model.time=@"";
+            cell.model = model;
         } else{
+            ChatModel *model = [[ChatModel alloc] init];
             cell.rightImage.hidden = YES;
             EMConversation *conversation = [self.dataSource objectAtIndex:indexPath.row];
             for (BasePeopleObject *obj in self.contactsSource) {
                 if ([obj.uid isEqualToString:conversation.chatter])
                 {
-                    cell.name =  obj.name;
+                    model.name =  obj.name;
                 }
             }
             if (conversation.isGroup)
@@ -508,12 +511,12 @@ static NSString * const kCommonFNum			= @"commonnum";
                 {
                     if ([group.groupId isEqualToString:conversation.chatter])
                     {
-                        cell.name = group.groupSubject;
+                        model.name = group.groupSubject;
                         break;
                     }
                 }
-                cell.imageURL=nil;
-                cell.placeholderImage = [UIImage imageNamed:imageName];
+                model.imageURL=nil;
+                model.placeholderImage = [UIImage imageNamed:imageName];
             }
             else{
                 NSArray *headUrl=[HeadImage queryAll:conversation.chatter];
@@ -522,28 +525,29 @@ static NSString * const kCommonFNum			= @"commonnum";
                     HeadImage *hi=(HeadImage*)headUrl[0];
                     if(![hi.headimg isEqual:@""])
                     {
-                        cell.placeholderImage = [UIImage imageNamed:@"default_head"];
-                        cell.imageURL=[NSURL URLWithString:hi.headimg];
+                        model.placeholderImage = [UIImage imageNamed:@"default_head"];
+                        model.imageURL=[NSURL URLWithString:hi.headimg];
                     }else
                     {
-                        cell.imageURL=nil;
-                        cell.placeholderImage = [UIImage imageNamed:@"default_head"];
+                        model.imageURL=nil;
+                        model.placeholderImage = [UIImage imageNamed:@"default_head"];
                     }
-                    cell.name=hi.nickname;
+                    model.name=hi.nickname;
                 } else{
                     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
                         [self refreshFriendListWithUid:conversation.chatter];
                     });
                     
-                    cell.name = @"";
-                    cell.imageURL = nil;
-                    cell.placeholderImage = [UIImage imageNamed:@"default_head"];
+                    model.name = @"";
+                    model.imageURL = nil;
+                    model.placeholderImage = [UIImage imageNamed:@"default_head"];
                 }
                 
             }
-            cell.detailMsg = [self subTitleMessageByConversation:conversation];
-            cell.time = [self lastMessageTimeByConversation:conversation];
-            cell.unreadCount = [self unreadMessageCountByConversation:conversation];
+            model.detailMsg = [self subTitleMessageByConversation:conversation];
+            model.time = [self lastMessageTimeByConversation:conversation];
+            model.unreadCount = [self unreadMessageCountByConversation:conversation];
+            cell.model = model;
         }
         
         return cell;
@@ -557,8 +561,7 @@ static NSString * const kCommonFNum			= @"commonnum";
         if (self.chatListType == ContactListView){
             cell.type = contactTypeFriend;
         }else{
-            cell.type = contactTypeFriendTwain
-            ;
+            cell.type = contactTypeFriendTwain;
         }
         
         [cell loadDataWithobj:buddy];
@@ -605,10 +608,14 @@ static NSString * const kCommonFNum			= @"commonnum";
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    CGFloat height;
     if (self.chatListType == ContactListView || self.chatListType == ContactTwainListView) {
-        return 72.0f ;
+        height = 72.0f ;
+    } else{
+        height = MarginFactor(58.0f);
     }
-    return [ChatListCell tableView:tableView heightForRowAtIndexPath:indexPath];
+    
+    return height;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

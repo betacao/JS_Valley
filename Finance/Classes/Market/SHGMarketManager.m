@@ -401,6 +401,7 @@
         [object.commentList addObject:newObject];
         object.commentNum = [NSString stringWithFormat:@"%ld",(long)[object.commentNum integerValue] + 1];
         [Hud showMessageWithText:@"评论成功"];
+        [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:KEY_MEMORY];
         if (block) {
             block(YES);
         }

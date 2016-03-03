@@ -15,6 +15,7 @@
 #import "SHGMarketMineViewController.h"
 #import "MyCollectionViewController.h"
 #import "SettingsViewController.h"
+#import "UIButton+EnlargeEdge.h" 
 
 #define kLabelWidth ceilf(SCREENWIDTH / 4.0f)
 
@@ -26,7 +27,7 @@
 @property (strong, nonatomic) UILabel         *nickNameLabel;
 @property (strong, nonatomic) UILabel         *companyLabel;
 @property (strong, nonatomic) UIView          *lineView;
-
+@property (strong, nonatomic) UIButton        *editButton;
 @property (strong, nonatomic) UIView          *messageView;
 @property (strong, nonatomic) UIView          *labelView;
 @property (strong, nonatomic) UILabel	*circleHeaderLabel;  //动态lable
@@ -62,7 +63,8 @@
     self.titleArray = @[@"我的合伙人", @"我的佣金", @"我的预约", @"我的业务", @"我的收藏", @"设置"];
     [self addHeaderRefresh:self.tableView headerRefesh:YES andFooter:NO];
     self.tableHeaderView.backgroundColor = [UIColor whiteColor];
-
+    UIImage * editImage = [UIImage imageNamed:@"userCenterEdit"];
+    CGSize editSize = editImage.size;
     //tableView
     self.tableView.sd_layout
     .leftSpaceToView(self.view, 0.0f)
@@ -84,20 +86,26 @@
     .autoHeightRatio(0.0f);
     [self.nickNameLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
 
+    //编辑按钮
+    self.editButton.sd_layout
+    .rightSpaceToView(self.tableHeaderView, MarginFactor(15.0f))
+    .centerYEqualToView(self.userHeaderView)
+    .widthIs(editSize.width)
+    .heightIs(editSize.height);
+    
     //职位
     self.departmentLabel.sd_layout
     .leftSpaceToView(self.nickNameLabel, MarginFactor(4.0f))
+    .rightSpaceToView(self.editButton, MarginFactor(39.0f))
     .bottomEqualToView(self.nickNameLabel)
-    .autoHeightRatio(0.0f);
-    [self.departmentLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
+    .heightRatioToView(self.nickNameLabel, 1.0f);
 
     //公司名
     self.companyLabel.sd_layout
     .leftEqualToView(self.nickNameLabel)
+    .rightSpaceToView(self.editButton, MarginFactor(39.0f))
     .bottomEqualToView(self.userHeaderView)
-    .autoHeightRatio(0.0f);
-    [self.companyLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
-
+    .heightRatioToView(self.nickNameLabel, 1.0f);
     //分割线
     self.lineView.sd_layout
     .leftSpaceToView(self.tableHeaderView, 0.0f)
@@ -292,6 +300,17 @@
     return _departmentLabel;
 }
 
+- (UIButton *)editButton
+{
+    if (!_editButton){
+        _editButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [_editButton setEnlargeEdge:MarginFactor(15.0f)];
+        [_editButton setImage:[UIImage imageNamed:@"userCenterEdit"] forState:UIControlStateNormal];
+        [_editButton addTarget:self action:@selector(labelTapAction:) forControlEvents:UIControlEventTouchUpInside];
+        [self.tableHeaderView addSubview:_editButton];
+    }
+    return _editButton;
+}
 - (UIView *)lineView
 {
     if (!_lineView) {
@@ -455,6 +474,15 @@
 - (void)actionAuth:(id)sender {
     VerifyIdentityViewController *controller = [[VerifyIdentityViewController alloc] init];
     controller.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:controller animated:YES];
+}
+
+- (void)labelTapAction:(UITapGestureRecognizer *)gesture
+{
+    SHGModifyUserInfoViewController *controller = [[SHGModifyUserInfoViewController alloc]init];
+    __weak typeof(self)weakSelf = self;
+    controller.hidesBottomBarWhenPushed = YES;
+    controller.userInfo = @{kNickName:weakSelf.nickName, kDepartment:weakSelf.department, kCompany:weakSelf.company, kLocation:weakSelf.location, kIndustry:weakSelf.industry, kHeaderImage:weakSelf.imageUrl};
     [self.navigationController pushViewController:controller animated:YES];
 }
 

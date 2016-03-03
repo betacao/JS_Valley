@@ -93,11 +93,9 @@
     lblTemp.backgroundColor = [UIColor clearColor];
     lblTemp.textColor = RGBA(51, 51, 51, 1);
     lblTemp.font = [UIFont systemFontOfSize:16.0f];
-    if([_type isEqualToString:@"reply"])
-    {
+    if([_type isEqualToString:@"reply"]){
         lblTemp.text = @"写回复";
-    }else
-    {
+    } else{
         lblTemp.text = @"写评论";
     }
     [self.viewContainer addSubview:lblTemp];
@@ -111,19 +109,24 @@
     textVTemp.textAlignment = NSTextAlignmentLeft;
     self.textVComment = textVTemp;
     [self.viewContainer addSubview:_textVComment];
-    
-    if([_type isEqualToString:@"reply"])
-    {
-         self.textVComment.placeholder = [NSString stringWithFormat:@"回复 %@",self.replyName];
-    }else
-    {
-        self.textVComment.placeholder = @"写评论";
-
+    NSString *memory = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_MEMORY];
+    if ([memory isEqualToString:@""]) {
+        if([_type isEqualToString:@"reply"]){
+            self.textVComment.placeholder = [NSString stringWithFormat:@"回复 %@",self.replyName];
+        } else{
+            self.textVComment.placeholder = @"写评论";
+        }
+        
+    } else{
+        self.textVComment.text = memory;
     }
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
+    
+    self.memoryString = self.textVComment.text;
+    [[NSUserDefaults standardUserDefaults] setObject:self.memoryString forKey:KEY_MEMORY];
     CGPoint point = [[touches anyObject] locationInView:self];
     
     if (!CGRectContainsPoint(self.viewContainer.frame, point)) {
@@ -141,6 +144,7 @@
 {
     NSString *comment = self.textVComment.text;
     comment = [comment stringByReplacingOccurrencesOfString:@" " withString:@""];
+    [_delegate loadCommentState];
     if ([comment validLength].length == 0) {
         if([_type isEqualToString:@"reply"])
         {
@@ -200,7 +204,6 @@
 
     if (animated) {
         self.hidden = NO;
-
         [UIView animateWithDuration:0.4 animations:^{
             CGRect rect = self.viewContainer.frame;
             
@@ -216,7 +219,7 @@
 
         }];
         
-    }else {
+    } else{
         self.hidden = NO;
     }
 }
@@ -228,7 +231,7 @@
         [UIView animateWithDuration:0.3 animations:^{
             
             self.viewContainer.frame = CGRectMake(0, CGRectGetHeight(self.bounds), SCREENWIDTH, 145);
-            
+             [_delegate loadCommentState];
         } completion:^(BOOL finished){
             if (self.superview) {
                 [self removeFromSuperview];
@@ -236,8 +239,9 @@
         }];
         
     }else {
-        if (self.superview) {
+        if (self.superview){
             [self removeFromSuperview];
+
         }
     }
 }

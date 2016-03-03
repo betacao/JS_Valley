@@ -83,7 +83,7 @@
     self.detailTable.delegate = self;
     self.detailTable.dataSource = self;
     [self.detailTable setTableFooterView:[[UIView alloc] init]];
-
+    [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:KEY_MEMORY];
 
     DDTapGestureRecognizer *hdGes = [[DDTapGestureRecognizer alloc] initWithTarget:self action:@selector(didTapHeaderView:)];
     [self.headImageView addGestureRecognizer:hdGes];
@@ -142,8 +142,7 @@
 
     self.marketDetialLabel.font = FontFactor(15.0f);
     self.detailContentLabel.font = FontFactor(15.0f);
-    [self.speakButton setTitle:@"写评论" forState:UIControlStateNormal];
-    [self.speakButton setImage:[UIImage imageNamed:@"market_change"] forState:UIControlStateNormal];
+    [self loadCommentBtnState];
     self.speakButton.imageEdgeInsets = UIEdgeInsetsMake(0.0f, MarginFactor(8.0f), 0.0f,0.0f);
     self.speakButton.titleEdgeInsets = UIEdgeInsetsMake(0.0f, MarginFactor(15.0f), 0.0f, 0.0f);
     self.speakButton.titleLabel.font = FontFactor(13.0);
@@ -594,7 +593,6 @@
     
 }
 
-
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -607,6 +605,20 @@
     [self.btnShare setImage:[UIImage imageNamed:@"marketShareImage"] forState:UIControlStateNormal];
 }
 
+- (void)loadCommentBtnState
+{
+    NSString *memory = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_MEMORY];
+    if ([memory isEqualToString:@""]) {
+        [self.speakButton setTitle:@"写评论" forState:UIControlStateNormal];
+        [self.speakButton setImage:[UIImage imageNamed:@"market_change"] forState:UIControlStateNormal];
+        [self.speakButton setTitleColor:[UIColor colorWithHexString:@"a5a5a5"] forState:UIControlStateNormal];
+    } else{
+        [self.speakButton setTitle:memory forState:UIControlStateNormal];
+         [self.speakButton setImage:nil forState:UIControlStateNormal];
+        [self.speakButton setTitleColor:[UIColor colorWithHexString:@"161616"] forState:UIControlStateNormal];
+    }
+
+}
 - (void)moveToUserCenter:(UITapGestureRecognizer *)recognizer
 {
     SHGPersonalViewController *controller = [[SHGPersonalViewController alloc] init];
@@ -623,6 +635,7 @@
     self.popupView.detail = @"";
     [self.navigationController.view addSubview:self.popupView];
     [self.popupView showWithAnimated:YES];
+    
 }
 
 - (void)replyClicked:(SHGMarketCommentObject *)obj commentIndex:(NSInteger)index
@@ -664,8 +677,8 @@
     [self.popupView hideWithAnimated:YES];
     [SHGMarketManager addCommentWithObject:self.responseObject content:comment toOther:nil finishBlock:^(BOOL success) {
         if (success) {
+            [weakSelf loadCommentBtnState];
             [weakSelf.detailTable reloadData];
-//            [weakSelf.btnComment setTitle:[NSString stringWithFormat:@"%@",self.responseObject.commentNum] forState:UIControlStateNormal];
         }
     }];
 }
@@ -676,13 +689,11 @@
     [self.popupView hideWithAnimated:YES];
     [SHGMarketManager addCommentWithObject:self.responseObject content:comment toOther:fid finishBlock:^(BOOL success) {
         if (success) {
+            [weakSelf loadCommentBtnState];
             [weakSelf.detailTable reloadData];
-//  [weakSelf.btnComment setTitle:[NSString stringWithFormat:@"%@",self.responseObject.commentNum] forState:UIControlStateNormal];
         }
     }];
 }
-
-
 
 - (IBAction)share:(id)sender
 {

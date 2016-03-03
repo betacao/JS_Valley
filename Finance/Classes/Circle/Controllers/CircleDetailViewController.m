@@ -86,6 +86,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"动态详情";
+    [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:KEY_MEMORY];
     [CommonMethod setExtraCellLineHidden:self.listTable];
     [self addHeaderRefresh:self.listTable headerRefesh:NO andFooter:NO];
     [Hud showLoadingWithMessage:@"加载中"];
@@ -485,6 +486,18 @@
 
 #pragma mark -- sdc
 #pragma mark -- 评论
+- (void)loadCommentBtnState
+{
+    NSString *memory = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_MEMORY];
+    if ([memory isEqualToString:@""]) {
+        [self.btnSend setTitle:@"说点什么吧" forState:UIControlStateNormal];
+        [self.btnSend setTitleColor:[UIColor colorWithHexString:@"a5a5a5"] forState:UIControlStateNormal];
+    } else{
+        [self.btnSend setTitle:memory forState:UIControlStateNormal];
+        [self.btnSend setTitleColor:[UIColor colorWithHexString:@"161616"] forState:UIControlStateNormal];
+    }
+}
+
 - (void)commentViewDidComment:(NSString *)comment rid:(NSString *)rid
 {
     [_popupView hideWithAnimated:YES];
@@ -509,10 +522,12 @@
         [self.listTable reloadData];
         [self loadDatasWithObj:self.obj];
         [self.delegate detailCommentWithRid:self.obj.rid commentNum:self.obj.cmmtnum comments:self.obj.comments];
-        
+         [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:KEY_MEMORY];
+         [self loadCommentBtnState];
     } failed:^(MOCHTTPResponse *response) {
         [Hud showMessageWithText:response.errorMessage];
     }];
+   
 }
 
 - (void)commentViewDidComment:(NSString *)comment reply:(NSString *) reply fid:(NSString *) fid rid:(NSString *)rid
@@ -548,7 +563,8 @@
         [self.listTable reloadData];
         [self loadDatasWithObj:self.obj];
         [self.delegate detailCommentWithRid:self.obj.rid commentNum:self.obj.cmmtnum comments:self.obj.comments];
-
+        [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:KEY_MEMORY];
+        [self loadCommentBtnState];
     } failed:^(MOCHTTPResponse *response) {
         [Hud showMessageWithText:response.errorMessage];
     }];

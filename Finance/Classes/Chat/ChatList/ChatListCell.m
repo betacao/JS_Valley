@@ -12,11 +12,14 @@
 
 
 #import "ChatListCell.h"
-#define k_rowHeight MarginFactor(45.0f)
+#define k_rowHeight MarginFactor(58.0f)
 @interface ChatListCell ()
 @property (strong, nonatomic) UILabel *timeLabel;
 @property (strong, nonatomic) UILabel *unreadLabel;
 @property (strong, nonatomic) UILabel *detailLabel;
+@property (strong, nonatomic) UIView *lineView;
+@property (strong, nonatomic) UILabel *nameLabel;
+@property (strong, nonatomic) UIImageView *headerImageVIew;
 
 @end
 
@@ -26,56 +29,140 @@
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        CGFloat spaceToRight = 15.0f;
-        
-        self.unreadLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 16.0f, 16.0f)];
-        self.unreadLabel.backgroundColor = [UIColor redColor];
-        self.unreadLabel.textColor = [UIColor whiteColor];
-        
-        self.unreadLabel.textAlignment = NSTextAlignmentCenter;
-        self.unreadLabel.font = [UIFont systemFontOfSize:12.0f];
-        self.unreadLabel.layer.cornerRadius = CGRectGetWidth(self.unreadLabel.frame) / 2.0f;
-        self.unreadLabel.layer.masksToBounds = YES;
-        [self.contentView addSubview:self.unreadLabel];
-        
-        self.timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(SCREENWIDTH - 95.0f, self.unreadLabel.centerY, 80.0f, 16.0f)];
-        self.timeLabel.font = FontFactor(10.0f);
-        self.timeLabel.textColor = [UIColor colorWithHexString:@"919291"];
-        self.timeLabel.backgroundColor = [UIColor clearColor];
-        self.timeLabel.textAlignment = NSTextAlignmentRight;
-        [self.contentView addSubview:self.timeLabel];
 
-        self.detailLabel = [[UILabel alloc] initWithFrame:CGRectMake(58, k_rowHeight/2.0f  , SCREENWIDTH-100, 20)];
-        self.detailLabel.backgroundColor = [UIColor clearColor];
-        self.detailLabel.font = FontFactor(12.0f);
-        self.detailLabel.textColor = [UIColor colorWithHexString:@"919291"];
-        [self.contentView addSubview:self.detailLabel];
-
-        self.textLabel.backgroundColor = [UIColor clearColor];
-        self.textLabel.textColor = [UIColor colorWithHexString:@"161616"];
-        self.textLabel.font = FontFactor(13.0f);
-        
-        self.lineView = [[UIView alloc]initWithFrame:CGRectMake(spaceToRight, k_rowHeight - 1.0f, SCREENWIDTH - spaceToRight, 0.5f)];
-        self.lineView.backgroundColor = [UIColor colorWithHexString:@"E6E7E8"];
-        [self.contentView addSubview:self.lineView];
-
-        UIImage *image = [UIImage imageNamed:@"accessoryView"];
-        self.rightImage = [[UIImageView  alloc] initWithImage:image];
-        CGSize size = image.size;
-        self.rightImage.frame = CGRectMake(SCREENWIDTH - spaceToRight - size.width, (k_rowHeight - size.height) / 2.0f, size.width, size.height);
-        self.rightImage.image = image;
-        [self.contentView addSubview:self.rightImage];
-        
-
+        [self loadView];
     }
     return self;
 }
 
-- (void)awakeFromNib
+- (void)loadView
 {
+    self.headerImageVIew.sd_layout
+    .leftSpaceToView(self.contentView, MarginFactor(12.0f))
+    .centerYEqualToView(self.contentView)
+    .widthIs(MarginFactor(35.0f))
+    .heightIs(MarginFactor(35.0f));
+    
+    self.unreadLabel.sd_layout
+    .centerXIs(self.headerImageVIew.frame.size.width + MarginFactor(12.0f))
+    .centerYIs(self.headerImageVIew.frame.origin.y + MarginFactor(12.0f));
+//    .widthIs(MarginFactor(16.0f))
+//    .heightIs(MarginFactor(16.0f));
+    
+    self.nameLabel.sd_layout
+    .leftSpaceToView(self.headerImageVIew, MarginFactor(10.0f))
+    .centerYEqualToView(self.headerImageVIew)
+    .autoHeightRatio(0.0f);
+    [self.nameLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
+    
+    self.timeLabel.sd_layout
+    .rightSpaceToView(self.contentView, MarginFactor(12.0f))
+    .bottomEqualToView(self.nameLabel)
+    .autoHeightRatio(0.0f);
+    [self.timeLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
 
+    UIImage *image = [UIImage imageNamed:@"accessoryView"];
+    CGSize size = image.size;
+    self.rightImage.sd_layout
+    .rightSpaceToView(self.contentView, MarginFactor(12.0f))
+    .centerYEqualToView(self.contentView)
+    .widthIs(size.width)
+    .heightIs(size.height);
+    
+    self.detailLabel.sd_layout
+    .leftSpaceToView(self.headerImageVIew, MarginFactor(10.0f))
+    .bottomEqualToView(self.headerImageVIew)
+    .autoHeightRatio(0.0f);
+    [self.detailLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
+    
+    self.lineView.sd_layout
+    .leftEqualToView(self.headerImageVIew)
+    .rightSpaceToView(self.contentView, 0.0f)
+    .bottomSpaceToView(self.contentView, 0.5f)
+    .heightIs(0.5f);
+    
+     //[self setupAutoHeightWithBottomView:self.lineView bottomMargin:0.0f];
 }
 
+- (UIImageView *)headerImageVIew
+{
+    if (!_headerImageVIew) {
+        _headerImageVIew = [[UIImageView alloc]init];
+        [self.contentView addSubview:_headerImageVIew];
+    }
+    return _headerImageVIew;
+}
+
+- (UILabel *)nameLabel
+{
+    if (!_nameLabel) {
+        _nameLabel = [[UILabel alloc]init];
+        _nameLabel.backgroundColor = [UIColor clearColor];
+        _nameLabel.textColor = [UIColor colorWithHexString:@"161616"];
+        _nameLabel.font = FontFactor(13.0f);
+        [self.contentView addSubview:_nameLabel];
+    }
+    return _nameLabel;
+}
+- (UILabel *)unreadLabel
+{
+    if (!_unreadLabel) {
+        _unreadLabel = [[UILabel alloc] init];
+        _unreadLabel.bounds = CGRectMake(0.0f, 0.0f, MarginFactor(14.0f), MarginFactor(14.0f));
+        _unreadLabel.backgroundColor = [UIColor redColor];
+        _unreadLabel.textColor = [UIColor whiteColor];
+        _unreadLabel.textAlignment = NSTextAlignmentCenter;
+        self.unreadLabel.layer.cornerRadius = CGRectGetWidth(self.unreadLabel.frame) / 2.0f;
+        self.unreadLabel.layer.masksToBounds = YES;
+        _unreadLabel.font = FontFactor(12.0f);
+        [self.contentView addSubview:_unreadLabel];
+    }
+    return _unreadLabel;
+}
+
+- (UILabel *)timeLabel
+{
+    if (!_timeLabel) {
+        _timeLabel = [[UILabel alloc] init];
+        _timeLabel.font = FontFactor(10.0f);
+        _timeLabel.textColor = [UIColor colorWithHexString:@"919291"];
+        _timeLabel.backgroundColor = [UIColor clearColor];
+        _timeLabel.textAlignment = NSTextAlignmentRight;
+        [self.contentView addSubview:_timeLabel];
+    }
+    return _timeLabel;
+}
+
+- (UILabel *)detailLabel
+{
+    if (!_detailLabel) {
+        _detailLabel = [[UILabel alloc] init];
+        _detailLabel.backgroundColor = [UIColor clearColor];
+        _detailLabel.font = FontFactor(12.0f);
+        _detailLabel.textColor = [UIColor colorWithHexString:@"919291"];
+        [self.contentView addSubview:_detailLabel];
+    }
+    return _detailLabel;
+}
+- (UIView *)lineView
+{
+    if (!_lineView) {
+        _lineView = [[UIView alloc] init];
+        _lineView.backgroundColor = [UIColor colorWithHexString:@"E6E7E8"];
+        [self.contentView addSubview:_lineView];
+    }
+    return _lineView;
+}
+
+- (UIImageView *)rightImage
+{
+    if (!_rightImage) {
+        _rightImage = [[UIImageView alloc] init];
+        _rightImage.image = [UIImage imageNamed:@"rightArrowImage"];
+        [self.contentView addSubview:_rightImage];
+    }
+    return _rightImage;
+}
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
     [super setSelected:selected animated:animated];
@@ -91,48 +178,63 @@
     }
 }
 
-- (void)layoutSubviews
+- (void)setModel:(ChatModel *)model
 {
-    [super layoutSubviews];
-
-    self.imageView.frame = CGRectMake(15, (k_rowHeight - 28.0f)/2.0f, 28, 28);
-    [self.imageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,self.imageURL]] placeholderImage:self.placeholderImage];
-    self.unreadLabel.center = CGPointMake(CGRectGetMaxX(self.imageView.frame), CGRectGetMinY(self.imageView.frame));
-    self.textLabel.text = self.name;
-    if([self.name isEqualToString:@"群申请与通知"] || [self.name isEqualToString:@"通知"]){
-        self.textLabel.frame = CGRectMake(58, (k_rowHeight - 20.f)/2.0f, 175, 20);
+    _model = model;
+    self.nameLabel.text = model.name;
+    [self.headerImageVIew sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,model.imageURL]] placeholderImage:model.placeholderImage];
+    self.nameLabel.text = model.name;
+    [self.nameLabel sizeToFit];
+    if([model.name isEqualToString:@"群申请与通知"] || [model.name isEqualToString:@"通知"]){
+        self.nameLabel.sd_resetLayout
+        .leftSpaceToView(self.headerImageVIew, MarginFactor(10.0f))
+        .centerYEqualToView(self.headerImageVIew)
+        .autoHeightRatio(0.0f);
+        [self.nameLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
+        
     } else{
-        self.textLabel.frame = CGRectMake(58, (k_rowHeight - self.imageView.height)/2.0f, 175, 20  );
-        [self.textLabel sizeToFit];
-    }
+        self.nameLabel.sd_resetLayout
+        .leftSpaceToView(self.headerImageVIew, MarginFactor(10.0f))
+        .topEqualToView(self.headerImageVIew)
+        .autoHeightRatio(0.0f);
+        [self.nameLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
+        
+//        self.timeLabel.sd_resetLayout
+//        .rightSpaceToView(self.contentView, MarginFactor(12.0f))
+//        .bottomEqualToView(self.nameLabel)
+//        .autoHeightRatio(0.0f);
+//        [self.timeLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
 
-    self.detailLabel.text = self.detailMsg;
-    self.timeLabel.text = self.time;
-    if (self.unreadCount > 0){
-        if (self.unreadCount < 9){
-            self.unreadLabel.font = [UIFont systemFontOfSize:13.0f];
-        } else if(self.unreadCount > 9 && self.unreadCount < 99){
-            self.unreadLabel.font = [UIFont systemFontOfSize:12.0f];
+    }
+    
+    self.detailLabel.text = model.detailMsg;
+    [self.detailLabel sizeToFit];
+    self.timeLabel.text = model.time;
+    [self.timeLabel sizeToFit];
+    if (model.unreadCount > 0){
+        if (model.unreadCount < 9){
+            self.unreadLabel.font = FontFactor(13.0f);
+        } else if(model.unreadCount > 9 && model.unreadCount < 99){
+            self.unreadLabel.font = FontFactor(12.0f);
         } else{
-            self.unreadLabel.font = [UIFont systemFontOfSize:10.0f];
+            self.unreadLabel.font = FontFactor(10.0f);
         }
         [self.unreadLabel setHidden:NO];
         [self.contentView bringSubviewToFront:self.unreadLabel];
-        self.unreadLabel.text = [NSString stringWithFormat:@"%ld",(long)self.unreadCount];
+        self.unreadLabel.text = [NSString stringWithFormat:@"%ld",(long)model.unreadCount];
     } else{
         [self.unreadLabel setHidden:YES];
     }
-
 }
+@end
 
-- (void)setName:(NSString *)name
-{
-    _name = name;
-    self.textLabel.text = name;
-}
 
-+ (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    return k_rowHeight;
-}
+@interface ChatModel ()
+
+@end
+
+@implementation ChatModel
+
+
+
 @end

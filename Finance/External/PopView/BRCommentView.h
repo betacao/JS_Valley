@@ -15,7 +15,7 @@
 @optional
 - (void)commentViewDidComment:(NSString *)comment rid:(NSString *)rid;
 - (void)commentViewDidComment:(NSString *)comment reply:(NSString *) reply fid:(NSString *) fid rid:(NSString *)rid;
-
+- (void)loadCommentState;
 @end
 
 @interface BRCommentView : BasePopupView
@@ -31,5 +31,5 @@
 
 @property (nonatomic, strong) NSString *fid;
 @property (nonatomic, strong) NSString *detail;
-
+@property (nonatomic, strong) NSString *memoryString;
 @end
