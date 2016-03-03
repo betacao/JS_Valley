@@ -18,6 +18,7 @@
 #define kItemLeftMargin  MarginFactor(11.0f)
 #define kSectionHeight MarginFactor(40.0f)
 #define kTitleToTop  MarginFactor(15.0f)
+
 @interface SHGMarketSecondCategoryViewController ()<UITableViewDataSource,UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic , strong) NSMutableArray *categoryArray;
@@ -75,7 +76,6 @@
                         button.selected = YES;
                     }
                 }
-                button.adjustsImageWhenHighlighted = NO;
                 button.titleLabel.font = FontFactor(14.0f);
                 [button setTitle:obj.secondCatalogName forState:UIControlStateNormal];
                 [button setTitleColor:[UIColor colorWithHexString:@"8A8A8A"] forState:UIControlStateNormal];
@@ -187,7 +187,7 @@
     return kSectionHeight;
 }
 
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     CGFloat height;
     SHGMarketFirstCategoryObject * objf = [self.categoryArray objectAtIndex:indexPath.section];

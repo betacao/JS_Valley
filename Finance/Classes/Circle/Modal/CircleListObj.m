@@ -154,7 +154,7 @@ const CGFloat kActionViewHeight = 40.0f;
 }
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey{
-    return  @{@"cmmtnum": @"cmmtnum", @"nickname":@"nickname", @"comments": @"comments", @"company": @"company", @"detail": @"detail", @"isattention": @"isattention", @"potname": @"potname", @"praisenum": @"praisenum", @"publishdate": @"publishdate", @"rid": @"rid", @"photos":@"attach", @"sharenum": @"sharenum", @"status": @"status", @"title": @"title", @"userid": @"userid", @"ispraise":@"ispraise", @"type":@"attachtype", @"linkObj":@"link", @"postType":@"type", @"friendship":@"friendship", @"userstatus":@"userstatus", @"currcity":@"currcity", @"feedhtml":@"feedhtml", @"displayposition":@"displayposition", @"pcurl":@"pcurl" };
+    return  @{@"cmmtnum": @"cmmtnum", @"nickname":@"nickname", @"comments": @"comments", @"company": @"company", @"detail": @"detail", @"isattention": @"isattention", @"potname": @"potname", @"praisenum": @"praisenum", @"publishdate": @"publishdate", @"rid": @"rid", @"photos":@"attach", @"sharenum": @"sharenum", @"status": @"status", @"title": @"title", @"userid": @"userid", @"ispraise":@"ispraise", @"type":@"attachtype", @"linkObj":@"link", @"postType":@"type", @"friendship":@"friendship", @"userstatus":@"userstatus", @"currcity":@"currcity", @"feedhtml":@"feedhtml", @"displayposition":@"displayposition", @"pcurl":@"pcurl", @"shareTitle":@"sharetitle"};
 }
 
 

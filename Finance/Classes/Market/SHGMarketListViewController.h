@@ -16,4 +16,5 @@
 - (void)clearAndReloadData;
 //移动到某个分类
 - (void)scrollToCategory:(SHGMarketFirstCategoryObject *)object;
+- (void)deleteMarketByMarketId:(NSString *)marketId;
 @end

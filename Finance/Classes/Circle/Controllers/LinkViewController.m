@@ -22,13 +22,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"详情";
-    NSLog(@"%@",self.url);
     if ([self.url hasPrefix:@"http://"]){
         NSLog(@"1");
         self.stringUrl  = self.url;
-    } else{
-        self.stringUrl = [NSString stringWithFormat:@"%@%@",rBaseAddressForImage,self.url];
-        NSLog(@"2");
     }
     [self loadURL];
 }

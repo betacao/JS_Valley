@@ -226,8 +226,7 @@ const CGFloat kAdButtomMargin = 20.0f;
 
 - (void)requestRecommendFriends
 {
-    NSString *uid = [[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID] stringValue];
-    NSDictionary *param = @{@"uid":uid, @"area":@""};
+    NSDictionary *param = @{@"uid":UID, @"area":@""};
     __weak typeof(self) weakSelf = self;
     [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/v1/recommended/friends/recommendedFriend",rBaseAddRessHttp] class:[RecmdFriendObj class] parameters:param success:^(MOCHTTPResponse *response){
         [weakSelf.recomandArray removeAllObjects];
@@ -271,6 +270,13 @@ const CGFloat kAdButtomMargin = 20.0f;
             }
         }
     }
+}
+
+- (void)deleteCellAtIndexPath:(NSArray *)paths
+{
+    [self.listTable beginUpdates];
+    [self.listTable deleteRowsAtIndexPaths:paths withRowAnimation:UITableViewRowAnimationAutomatic];
+    [self.listTable endUpdates];
 }
 
 - (void)refreshData
@@ -359,7 +365,7 @@ const CGFloat kAdButtomMargin = 20.0f;
                 NSInteger index = [obj.displayposition integerValue] - 1;
                 [self.dataArr insertObject:obj atIndex:index];
             }
-        }else{
+        } else{
             [self.dataArr addObjectsFromArray:self.adArray];
         }
         [self insertRecomandArray];
@@ -384,7 +390,7 @@ const CGFloat kAdButtomMargin = 20.0f;
                 NSInteger index = [obj.displayposition integerValue] - 1;
                 [self.dataArr insertObject:obj atIndex:index];
             }
-        }else{
+        } else{
             [self.dataArr addObjectsFromArray:self.adArray];
         }
         [self insertRecomandArray];

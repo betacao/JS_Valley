@@ -316,6 +316,19 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     return result;
 }
 
+- (void)deleteObjectByRid:(NSString *)rid
+{
+    SHGHomeViewController *controller = [self.viewControllers firstObject];
+    NSMutableArray *listArray = [controller currentListArray];
+    NSMutableArray *dataArray = [controller currentDataArray];
+//    listArray remove
+    NSArray *objectArray = [self targetObjectsByRid:rid];
+    NSArray *indexArray = [self indexOfObjectByRid:rid];
+    [listArray removeObjectsInArray:objectArray];
+    [dataArray removeObjectsInArray:objectArray];
+    [controller deleteCellAtIndexPath:@[[NSIndexPath indexPathForRow:[[indexArray firstObject] integerValue] inSection:0]]];
+}
+
 //发布
 - (void)actionPost:(UIButton *)button
 {

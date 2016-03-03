@@ -12,6 +12,7 @@
 - (UITableView *)currentTableView;
 - (NSMutableArray *) currentDataArray;
 - (NSMutableArray *) currentListArray;
+- (void)deleteCellAtIndexPath:(NSArray *)paths;
 - (void)refreshHeader;
 - (void)requestRecommendFriends;
 @end

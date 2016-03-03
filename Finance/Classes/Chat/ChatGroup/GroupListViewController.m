@@ -11,7 +11,6 @@
   */
 
 #import "GroupListViewController.h"
-
 #import "EMSearchBar.h"
 #import "SRRefreshView.h"
 #import "BaseTableViewCell.h"
@@ -25,15 +24,15 @@
 #import "ChatListViewController.h"
 #import "PublicGroupDetailViewController.h"
 #define kImageViewLeftMargin 15.0f
-#define krowHeight MarginFactor(45.0f)
 
 @interface GroupListViewController ()<UISearchBarDelegate, UISearchDisplayDelegate, IChatManagerDelegate, SRRefreshDelegate>
 {
-   BOOL _isExpand[4];
+   BOOL isExpand[4];
 }
 @property (strong, nonatomic) NSMutableArray *dataSource; //推荐群组
 @property (strong, nonatomic) NSMutableArray *commonArr; //我创建的群组
 @property (strong, nonatomic) NSMutableArray *joinArr; // 我加入的群组
+@property (strong, nonatomic) NSArray *titleArray;
 @property (strong, nonatomic) EMSearchBar *searchBar;
 @property (strong, nonatomic) EMSearchDisplayController *searchController;
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
@@ -45,7 +44,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.title = @"群组";
     self.dataSource = [NSMutableArray array];
     self.commonArr = [NSMutableArray array];
     self.joinArr = [NSMutableArray array];
@@ -53,34 +51,42 @@
     [[EaseMob sharedInstance].chatManager addDelegate:self delegateQueue:nil];
     [self addHeaderRefresh:self.tableView headerRefesh:YES andFooter:NO];
 
-    //公共群组
-    UIButton *publicButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [publicButton setFrame:CGRectMake(0, 0, 24, 24)];
-    [publicButton setBackgroundImage:[UIImage imageNamed:@"44"] forState:UIControlStateNormal];
-    [publicButton addTarget:self action:@selector(showPublicGroupList) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *publicItem = [[UIBarButtonItem alloc] initWithCustomView:publicButton];
-    
-    self.navigationItem.rightBarButtonItem=publicItem;
-    
-    UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [leftButton setBackgroundImage:[UIImage imageNamed:@"common_backImage"] forState:UIControlStateNormal];
-    [leftButton addTarget:self action:@selector(returnClick) forControlEvents:UIControlEventTouchUpInside];
-    [leftButton sizeToFit];
-    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:leftButton];
-    self.navigationItem.leftBarButtonItem=rightItem;
-    
     [self reloadDataSource];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    self.tableView.backgroundColor = [UIColor colorWithHexString:@"efeff4"];
-    self.view.frame = CGRectMake(0.0f, 0.0f, SCREENWIDTH, SCREENHEIGHT);
-    self.tableView.tableFooterView = [[UIView alloc] init];
-    [self.tableView setTableHeaderView:self.searchBar];
+    self.view.frame = self.parnetVC.view.bounds;
+    self.tableView.tableFooterView = [[UIView alloc] init];;
+    self.tableView.tableHeaderView = self.searchBar;
     [self searchController];
     [MobClick event:@"GroupListViewController" label:@"onClick"];
+}
+
+- (NSArray *)titleArray
+{
+    if (!_titleArray) {
+
+        SHGGroupHeaderObject *object0 = [[SHGGroupHeaderObject alloc] init];
+        object0.image = [UIImage imageNamed:@"message_arrowRight"];
+        object0.text = @"推荐群组(%ld)";
+
+        SHGGroupHeaderObject *object1 = [[SHGGroupHeaderObject alloc] init];
+        object1.image = [UIImage imageNamed:@"message_arrowRight"];
+        object1.text = @"推荐群组(%ld)";
+
+        SHGGroupHeaderObject *object2 = [[SHGGroupHeaderObject alloc] init];
+        object2.image = [UIImage imageNamed:@"message_arrowRight"];
+        object2.text = @"我创建的群组(%ld)";
+
+        SHGGroupHeaderObject *object3 = [[SHGGroupHeaderObject alloc] init];
+        object3.image = [UIImage imageNamed:@"message_arrowRight"];
+        object3.text = @"我加入的群组(%ld)";
+
+        _titleArray = @[object0, object1, object2, object3];
+    }
+    return _titleArray;
 }
 
 - (void)refreshHeader
@@ -172,25 +178,16 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (_isExpand[section] == YES)
-    {
-        
-        if  (section == 1)
-        {
+    if (isExpand[section] == YES){
+        if  (section == 1){
             return [self.dataSource count];
-        }
-        if (section == 2)
-        {
+        } else if (section == 2){
             return [self.commonArr count];
-        }
-        if (section == 3)
-        {
+        } else if (section == 3){
             return [self.joinArr count];
         }
-    }else
-    {
-        if (section == 0)
-        {
+    } else{
+        if (section == 0){
             return 1;
         }
     }
@@ -200,145 +197,111 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"GroupCell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    SHGGroupTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    SHGGroupObject *object = [[SHGGroupObject alloc] init];
+    NSLog(@"%ld, %ld",indexPath.section, indexPath.row);
+    switch (indexPath.section) {
+        case 0:{
+            object.text = @"新建群组";
+            object.rightViewHidden = NO;
+            object.lineViewHidden = YES;
+            object.imageViewHidden = YES;
+        }break;
+        case 1:{
+            EMGroup *group = [self.dataSource objectAtIndex:indexPath.row];
+            if (group.groupSubject && group.groupSubject.length > 0){
+                object.text = group.groupSubject;
+
+            } else {
+                object.text = group.groupId;
+            }
+            object.rightViewHidden = YES;
+            object.lineViewHidden = NO;
+            object.imageViewHidden = NO;
+        }break;
+        case 2:{
+            EMGroup *group = [self.commonArr objectAtIndex:indexPath.row];
+            if (group.groupSubject && group.groupSubject.length > 0){
+                object.text = group.groupSubject;
+
+            } else {
+                object.text = group.groupId;
+            }
+            object.rightViewHidden = YES;
+            object.lineViewHidden = NO;
+            object.imageViewHidden = NO;
+        }break;
+        case 3:{
+            EMGroup *group = [self.joinArr objectAtIndex:indexPath.row];
+            if (group.groupSubject && group.groupSubject.length > 0){
+                object.text = group.groupSubject;
+
+            } else {
+                object.text = group.groupId;
+            }
+            object.rightViewHidden = YES;
+            object.lineViewHidden = NO;
+            object.imageViewHidden = NO;
+        }break;
+        default:{
+
+        }
+    }
     if (!cell){
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-        cell.imageView.contentMode = UIViewContentModeScaleAspectFit;
-        cell.textLabel.textColor = [UIColor colorWithHexString:@"161616"];
-        cell.textLabel.font = FontFactor(13.0f);
-        UIView *lineView = [[UIView alloc]initWithFrame:CGRectMake(kImageViewLeftMargin, krowHeight - 0.5f, SCREENWIDTH - kImageViewLeftMargin, 0.5f)];
-        lineView.tag = 1000;
-        lineView.backgroundColor = [UIColor colorWithHexString:@"E6E7E8"];
-        lineView.hidden = NO;
-        [cell.contentView addSubview:lineView];
-        
-        UIImage *image = [UIImage imageNamed:@"群头像图标"];
-        CGSize size = image.size;
-        UIImageView *imageView = [[UIImageView alloc]initWithFrame: CGRectMake(kImageViewLeftMargin, (krowHeight - size.height) / 2.0f, size.width, size.height)];
-        imageView.tag = 1001;
-        imageView.image = image;
-        [cell.contentView addSubview:imageView];
-        
-        UIImage *imageR = [UIImage imageNamed:@"accessoryView"];
-        UIImageView *rightImage = [[UIImageView  alloc]initWithImage:imageR];
-        CGSize sizeR = imageR.size;
-        rightImage.frame = CGRectMake(SCREENWIDTH - kImageViewLeftMargin - sizeR.width, (krowHeight - sizeR.height) / 2.0f, sizeR.width, sizeR.height);
-        rightImage.image = imageR;
-        rightImage.hidden = YES;
-        rightImage.tag = 1002;
-        [cell.contentView addSubview:rightImage];
-
+        cell = [[SHGGroupTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
-    UIImageView *imageView = [cell viewWithTag:1001];
-    imageView.hidden = NO;
-    if (indexPath.section == 0){
-        [cell viewWithTag:1000].hidden = YES;
-        [cell viewWithTag:1002].hidden = NO;
-        imageView.hidden = YES;
-        cell.textLabel.textColor = [UIColor colorWithHexString:@"161616"];
-        cell.textLabel.text = @"     新建群组";
-        cell.accessoryType = UITableViewCellAccessoryNone;
-
-    } else if (indexPath.section == 1){
-        cell.accessoryType = UITableViewCellAccessoryNone;
-        EMGroup *group = [self.dataSource objectAtIndex:indexPath.row];
-        if (group.groupSubject && group.groupSubject.length > 0){
-            cell.textLabel.text = [NSString stringWithFormat:@"         %@",group.groupSubject];
-            
-        } else {
-            cell.textLabel.text = [NSString stringWithFormat:@"         %@",group.groupId];
-        }
-        
-    } else if (indexPath.section == 2){
-        cell.accessoryType = UITableViewCellAccessoryNone;
-        EMGroup *group = [self.commonArr objectAtIndex:indexPath.row];
-        if (group.groupSubject && group.groupSubject.length > 0){
-            cell.textLabel.text = [NSString stringWithFormat:@"         %@",group.groupSubject];
-        } else {
-            cell.textLabel.text = [NSString stringWithFormat:@"         %@",group.groupId];
-        }
-    } else if (indexPath.section == 3){
-        cell.accessoryType = UITableViewCellAccessoryNone;
-        EMGroup *group = [self.joinArr objectAtIndex:indexPath.row];
-        if (group.groupSubject && group.groupSubject.length > 0){
-            cell.textLabel.text = [NSString stringWithFormat:@"         %@",group.groupSubject];
-        } else{
-            cell.textLabel.text = [NSString stringWithFormat:@"         %@",group.groupId];
-        }
-    }
-
-   return cell;
+    cell.object = object;
+    return cell;
 }
 
 #pragma mark - Table view delegate
 
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
-
-    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, krowHeight)];
-    headerView.backgroundColor = [[UIColor alloc]initWithRed:1 green:1 blue:1 alpha:1];
-    
-    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-    button.frame = CGRectMake(30, 0, 320, krowHeight);
-    button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-    button.titleEdgeInsets = UIEdgeInsetsMake(0,0, 0, 0);
-    button.backgroundColor = [UIColor clearColor];
-    button.titleLabel.font = FontFactor(12.0f);
-    [button setTitleColor:[UIColor colorWithHexString:@"161616"] forState:UIControlStateNormal];
-    button.tag = section;
-    [button addTarget:self action:@selector(sectionBurronClick:) forControlEvents:UIControlEventTouchUpInside];
-    //设置每组的的标题
-    
-    UIButton *imageBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    imageBtn.frame = CGRectMake(15, (krowHeight - 11.0f) /2.0f, 8, 11);
-    imageBtn.tag = section;
-    [imageBtn setImage:[UIImage imageNamed:@"arrowRight"] forState:UIControlStateNormal];
-    [imageBtn addTarget:self action:@selector(sectionBurronClick:) forControlEvents:UIControlEventTouchUpInside];
-    [headerView addSubview:imageBtn];
-    if (_isExpand[section] == YES){
-        [imageBtn setImage:[UIImage imageNamed:@"arrowDown"] forState:UIControlStateNormal];
-    }
-    
-    if (section == 0){
-       
-    }
-    else if (section == 1){
-        UIView *upVIew = [[UIView alloc]initWithFrame:CGRectMake(15, 0, self.view.bounds.size.height, 0.5)];
-        upVIew.backgroundColor = [[UIColor alloc]initWithHue:0 saturation:0 brightness:0 alpha:0.1];
-        [headerView addSubview:upVIew];
-        [button setTitle:[NSString stringWithFormat:@"推荐群组 (%lu)",(unsigned long)self.dataSource.count] forState:UIControlStateNormal];
-    }
-    else if (section == 2){
-        [button setTitle:[NSString stringWithFormat:@"我创建的群组  (%lu)",(unsigned long)self.commonArr.count] forState:UIControlStateNormal];
-    }
-    if (section == 3){
-        [button setTitle:[NSString stringWithFormat:@"我加入的群组 (%lu)",(unsigned long)self.joinArr.count] forState:UIControlStateNormal];
-    }
-    
-    [headerView addSubview:button];
-    
-    UIView *lineVIew = [[UIView alloc]initWithFrame:CGRectMake(15, krowHeight - 1.0f, self.view.bounds.size.height, 0.5)];
-    lineVIew.backgroundColor = [[UIColor alloc]initWithHue:0 saturation:0 brightness:0 alpha:0.1];
-    [headerView addSubview:lineVIew];
-    
-    return headerView;
-}
--(void)sectionBurronClick:(UIButton*)button
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    _isExpand[button.tag] = !_isExpand[button.tag];
-    NSIndexSet *set =[NSIndexSet indexSetWithIndex:button.tag];
-    [self.tableView reloadSections:set withRowAnimation: UITableViewRowAnimationNone];
+    if (section == 0) {
+        return nil;
+    }
+    SHGGroupHeaderView *view = [[SHGGroupHeaderView alloc] init];
+    UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(SHGGroupHeaderViewClick:)];
+    [view addGestureRecognizer:recognizer];
+
+    SHGGroupHeaderObject *object = [self.titleArray objectAtIndex:section];
+    if (isExpand[section] == YES){
+        object.image = [UIImage imageNamed:@"message_arrowDown"];
+    } else{
+        object.image = [UIImage imageNamed:@"message_arrowRight"];
+    }
+    if (section == 1) {
+        object.count = self.dataSource.count;
+    } else if (section == 2){
+        object.count = self.commonArr.count;
+    } else{
+        object.count = self.joinArr.count;
+    }
+    view.object = object;
+    return view;
+}
+
+- (void)SHGGroupHeaderViewClick:(UITapGestureRecognizer *)recognizer
+{
+    SHGGroupHeaderView *view = (SHGGroupHeaderView *)recognizer.view;
+    SHGGroupHeaderObject *object = view.object;
+    NSInteger index = [self.titleArray indexOfObject:object];
+    isExpand[index] = !isExpand[index];
+    NSIndexSet *set =[NSIndexSet indexSetWithIndex:index];
+    [self.tableView reloadSections:set withRowAnimation:UITableViewRowAnimationNone];
     
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return krowHeight;
+    return MarginFactor(55.0f);
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     if (section == 0) {
         return 0;
-    }else{
-        return krowHeight;
+    } else{
+        return MarginFactor(55.0f);
     }
 }
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -541,6 +504,202 @@
     }
     
 }
+
+
+@end
+
+#pragma mark ------SHGGroupObject
+@interface SHGGroupObject()
+
+@end
+
+@implementation SHGGroupObject
+
+
+
+@end
+
+#pragma mark ------SHGGroupTableViewCell
+
+@interface SHGGroupTableViewCell()
+@property (strong, nonatomic) UIButton *leftButton;
+@property (strong, nonatomic) UILabel *titleLabel;
+@property (strong, nonatomic) UIView *lineView;
+@property (strong, nonatomic) UIImageView *rightArrowView;
+@end
+
+@implementation SHGGroupTableViewCell
+
+- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
+{
+    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
+    if (self) {
+        self.selectionStyle = UITableViewCellSelectionStyleNone;
+        [self initView];
+        [self addAutoLayout];
+    }
+    return self;
+}
+
+- (void)initView
+{
+    self.contentView.backgroundColor = [UIColor whiteColor];
+
+    self.leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.leftButton setImage:[UIImage imageNamed:@"message_defaultImage"] forState:UIControlStateNormal];
+
+    self.titleLabel = [[UILabel alloc] init];
+    self.titleLabel.font = FontFactor(15.0f);
+    self.titleLabel.textColor = [UIColor colorWithHexString:@"161616"];
+
+    self.lineView = [[UIView alloc] init];
+    self.lineView.backgroundColor = [UIColor colorWithHexString:@"e6e7e8"];
+
+    self.rightArrowView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"rightArrowImage"]];
+
+    [self.contentView addSubview:self.leftButton];
+    [self.contentView addSubview:self.titleLabel];
+    [self.contentView addSubview:self.lineView];
+    [self.contentView addSubview:self.rightArrowView];
+}
+
+- (void)addAutoLayout
+{
+    CGSize size = [UIImage imageNamed:@"message_defaultImage"].size;
+    self.leftButton.sd_layout
+    .leftSpaceToView(self.contentView, MarginFactor(12.0f))
+    .centerYEqualToView(self.contentView)
+    .widthIs(size.width)
+    .heightIs(size.height);
+
+    self.titleLabel.sd_layout
+    .leftSpaceToView(self.leftButton, MarginFactor(10.0f))
+    .centerYEqualToView(self.contentView)
+    .autoHeightRatio(0.0f);
+    [self.titleLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
+
+    self.lineView.sd_layout
+    .leftEqualToView(self.leftButton)
+    .rightSpaceToView(self.contentView, 0.0f)
+    .heightIs(0.5f)
+    .topSpaceToView(self.leftButton, MarginFactor(9.0f));
+
+    size = [UIImage imageNamed:@"rightArrowImage"].size;
+    self.rightArrowView.sd_layout
+    .widthIs(size.width)
+    .heightIs(size.height)
+    .centerYEqualToView(self.contentView)
+    .rightSpaceToView(self.contentView, MarginFactor(11.0f));
+
+}
+
+- (void)setObject:(SHGGroupObject *)object
+{
+    _object = object;
+    self.titleLabel.frame = CGRectZero;
+    self.titleLabel.text = object.text;
+    self.lineView.hidden = object.lineViewHidden;
+    self.rightArrowView.hidden = object.rightViewHidden;
+    if (object.imageViewHidden) {
+        [self.leftButton setImage:nil forState:UIControlStateNormal];
+        self.titleLabel.sd_resetLayout
+        .leftSpaceToView(self.contentView, MarginFactor(28.0f))
+        .centerYEqualToView(self.contentView)
+        .autoHeightRatio(0.0f);
+    } else{
+        [self.leftButton setImage:[UIImage imageNamed:@"message_defaultImage"] forState:UIControlStateNormal];
+        self.titleLabel.sd_resetLayout
+        .leftSpaceToView(self.leftButton, MarginFactor(10.0f))
+        .centerYEqualToView(self.contentView)
+        .autoHeightRatio(0.0f);
+    }
+}
+
+@end
+
+
+#pragma mark ------SHGGroupHeaderView
+@interface SHGGroupHeaderView()
+@property (strong, nonatomic) UIButton *leftButton;
+@property (strong, nonatomic) UILabel *titleLabel;
+@property (strong, nonatomic) UIView *lineView;
+
+@end
+
+@implementation SHGGroupHeaderView
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        [self initView];
+        [self addAutoLayout];
+    }
+    return self;
+}
+
+- (void)initView
+{
+    self.backgroundColor = [UIColor whiteColor];
+
+    self.leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
+
+    self.titleLabel = [[UILabel alloc] init];
+    self.titleLabel.font = FontFactor(15.0f);
+    self.titleLabel.textColor = [UIColor colorWithHexString:@"161616"];
+
+    self.lineView = [[UIView alloc] init];
+    self.lineView.backgroundColor = [UIColor colorWithHexString:@"e6e7e8"];
+
+    [self addSubview:self.leftButton];
+    [self addSubview:self.titleLabel];
+    [self addSubview:self.lineView];
+}
+
+- (void)addAutoLayout
+{
+    self.sd_layout
+    .widthIs(SCREENWIDTH)
+    .heightIs(MarginFactor(55.0f));
+
+    UIImage *image = [UIImage imageNamed:@"message_arrowRight"];
+    self.leftButton.sd_layout
+    .leftSpaceToView(self, MarginFactor(12.0f))
+    .centerYEqualToView(self)
+    .widthIs(image.size.width)
+    .heightIs(image.size.height);
+
+    self.titleLabel.sd_layout
+    .leftSpaceToView(self.leftButton, MarginFactor(9.0f))
+    .centerYEqualToView(self)
+    .autoHeightRatio(0.0f);
+    [self.titleLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
+
+    self.lineView.sd_layout
+    .leftEqualToView(self.leftButton)
+    .rightSpaceToView(self, 0.0f)
+    .heightIs(0.5f)
+    .bottomSpaceToView(self, 0.5f);
+
+}
+
+- (void)setObject:(SHGGroupHeaderObject *)object
+{
+    _object = object;
+    [self.leftButton setImage:object.image forState:UIControlStateNormal];
+
+    self.titleLabel.text = [NSString stringWithFormat:object.text, (long)object.count];
+
+}
+
+@end
+
+#pragma mark ------SHGGroupHeaderObject
+@interface SHGGroupHeaderObject()
+
+@end
+
+@implementation SHGGroupHeaderObject
+
 
 
 @end

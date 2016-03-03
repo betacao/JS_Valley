@@ -8,7 +8,7 @@
 
 #import "AppDelegate.h"
 #import "MOCHTTPRequestOperationManager.h"
-#import "SHGHomeViewController.h"
+#import "SHGSegmentController.h"
 #import "ChatListViewController.h"
 #import "ContactSelectionViewController.h"
 #import "AppDelegate+EaseMob.h"
@@ -228,6 +228,16 @@
                         image = [image reSizeImagetoSize:CGSizeMake(28, 28)];
                         [MPNotificationView notifyWithText:@"大牛圈" detail:alert image:image duration:3.0 andTouchBlock:nil pushId:userInfo];
                     }
+                }
+            } else{
+                if ([code isEqualToString:@"3001"]) {
+                    [[SHGSegmentController sharedSegmentController] deleteObjectByRid:rid];
+                } else if ([code isEqualToString:@"3002"]) {
+                    NSString *marketId = [userInfo objectForKey:@"marketId"];
+                    if (!IsStrEmpty(marketId)) {
+                        [[SHGMarketSegmentViewController sharedSegmentController] deleteMarketByMarketId:marketId];
+                    }
+
                 }
             }
         }
