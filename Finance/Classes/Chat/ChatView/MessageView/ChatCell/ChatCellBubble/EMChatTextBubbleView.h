@@ -16,7 +16,7 @@
 
 #define TEXTLABEL_MAX_WIDTH MarginFactor(200.0f) // textLaebl 最大宽度
 #define LABEL_FONT_SIZE FontFactor(14.0f)      // 文字大小
-#define LABEL_LINESPACE 5       // 行间距
+#define LABEL_LINESPACE MarginFactor(2.0f)       // 行间距
 
 extern NSString *const kRouterEventTextURLTapEventName;
 

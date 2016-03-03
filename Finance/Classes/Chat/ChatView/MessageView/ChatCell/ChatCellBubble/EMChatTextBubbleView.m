@@ -49,15 +49,8 @@ NSString *const kRouterEventTextURLTapEventName = @"kRouterEventTextURLTapEventN
     [super layoutSubviews];
     
     CGRect frame = self.bounds;
-    frame.size.width -= BUBBLE_ARROW_WIDTH;
     frame = CGRectInset(frame, BUBBLE_VIEW_PADDING, BUBBLE_VIEW_PADDING);
-    if (self.model.isSender) {
-        frame.origin.x = BUBBLE_VIEW_PADDING;
-    }else{
-        frame.origin.x = BUBBLE_VIEW_PADDING + BUBBLE_ARROW_WIDTH;
-    }
-    
-    frame.origin.y = BUBBLE_VIEW_PADDING;
+//    frame.origin.y = BUBBLE_VIEW_PADDING;
     [self.textLabel setFrame:frame];
 }
 
@@ -69,12 +62,7 @@ NSString *const kRouterEventTextURLTapEventName = @"kRouterEventTextURLTapEventN
         NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
         [paragraphStyle setLineSpacing:[[self class] lineSpacing]];//调整行间距
         
-        retSize = [self.model.content boundingRectWithSize:textBlockMinSize options:NSStringDrawingUsesLineFragmentOrigin
-                                                attributes:@{
-                                                             NSFontAttributeName:[[self class] textLabelFont],
-                                                             NSParagraphStyleAttributeName:paragraphStyle
-                                                             }
-                                                   context:nil].size;
+        retSize = [self.model.content boundingRectWithSize:textBlockMinSize options:NSStringDrawingUsesLineFragmentOrigin attributes:@{ NSFontAttributeName:[[self class] textLabelFont], NSParagraphStyleAttributeName:paragraphStyle} context:nil].size;
     }else{
         retSize = [self.model.content sizeWithFont:[[self class] textLabelFont] constrainedToSize:textBlockMinSize lineBreakMode:[[self class] textLabelLineBreakModel]];
     }
@@ -84,7 +72,7 @@ NSString *const kRouterEventTextURLTapEventName = @"kRouterEventTextURLTapEventN
         height = 2*BUBBLE_VIEW_PADDING + retSize.height;
     }
     
-    return CGSizeMake(retSize.width + BUBBLE_VIEW_PADDING*2 + BUBBLE_VIEW_PADDING, height);
+    return CGSizeMake(retSize.width + BUBBLE_VIEW_PADDING*2, height);
 }
 
 #pragma mark - setter

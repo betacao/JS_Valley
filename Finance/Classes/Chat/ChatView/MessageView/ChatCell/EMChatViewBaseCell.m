@@ -48,12 +48,22 @@ NSString *const kRouterEventChatHeadImageTapEventName = @"kRouterEventChatHeadIm
 -(void)layoutSubviews
 {
     [super layoutSubviews];
-    
-    CGRect frame = _headImageView.frame;
-    frame.origin.x = _messageModel.isSender ? (self.bounds.size.width - _headImageView.frame.size.width - HEAD_PADDING) : HEAD_PADDING;
-    _headImageView.frame = frame;
-    
-    _nameLabel.frame = CGRectMake(CGRectGetMinX(_headImageView.frame), CGRectGetMaxY(_headImageView.frame), CGRectGetWidth(_headImageView.frame), NAME_LABEL_HEIGHT);
+    CGRect frame = self.headImageView.frame;
+    if (_messageModel.isSender) {
+        frame = CGRectMake(self.bounds.size.width - HEAD_SIZE - HEAD_PADDING, CELLPADDING, HEAD_SIZE, HEAD_SIZE);
+        self.headImageView.frame = frame;
+
+        frame = self.nameLabel.frame;
+        self.nameLabel.frame = CGRectMake(CGRectGetMinX(self.headImageView.frame) - CGRectGetWidth(frame) - HEAD_PADDING, CELLPADDING, CGRectGetWidth(frame), CGRectGetHeight(frame));
+    }
+    else{
+        frame = CGRectMake(HEAD_PADDING, CELLPADDING, HEAD_SIZE, HEAD_SIZE);
+        self.headImageView.frame = frame;
+
+        frame = self.nameLabel.frame;
+        self.nameLabel.frame = CGRectMake(CGRectGetMaxX(self.headImageView.frame) + HEAD_PADDING, CELLPADDING, CGRectGetWidth(frame), CGRectGetHeight(frame));
+    }
+
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
@@ -69,8 +79,10 @@ NSString *const kRouterEventChatHeadImageTapEventName = @"kRouterEventChatHeadIm
 {
     _messageModel = messageModel;
     
-    _nameLabel.hidden = !messageModel.isChatGroup;
-    
+//    _nameLabel.hidden = !messageModel.isChatGroup;
+
+    self.nameLabel.text = messageModel.nickName;
+    [self.nameLabel sizeToFit];
     UIImage *placeholderImage = [UIImage imageNamed:@"default_head"];
     [self.headImageView sd_setImageWithURL:_messageModel.headImageURL placeholderImage:placeholderImage];
 }
@@ -91,12 +103,8 @@ NSString *const kRouterEventChatHeadImageTapEventName = @"kRouterEventChatHeadIm
 
 - (void)setupSubviewsForMessageModel:(MessageModel *)model
 {
-    if (model.isSender) {
-        self.headImageView.frame = CGRectMake(self.bounds.size.width - HEAD_SIZE - HEAD_PADDING, CELLPADDING, HEAD_SIZE, HEAD_SIZE);
-    }
-    else{
-        self.headImageView.frame = CGRectMake(0, CELLPADDING, HEAD_SIZE, HEAD_SIZE);
-    }
+
+    
 }
 
 + (NSString *)cellIdentifierForMessageModel:(MessageModel *)model

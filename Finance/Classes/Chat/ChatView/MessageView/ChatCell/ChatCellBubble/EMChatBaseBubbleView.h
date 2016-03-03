@@ -21,7 +21,7 @@ extern NSString *const kRouterEventChatCellBubbleTapEventName;
 #define BUBBLE_LEFT_IMAGE_NAME @"bubbleLeftImage" // bubbleView 的背景图片
 #define BUBBLE_RIGHT_IMAGE_NAME @"bubbleRightImage"
 #define BUBBLE_ARROW_WIDTH 5 // bubbleView中，箭头的宽度
-#define BUBBLE_VIEW_PADDING 8 // bubbleView 与 在其中的控件内边距
+#define BUBBLE_VIEW_PADDING MarginFactor(16.0f) // bubbleView 与 在其中的控件内边距
 
 #define BUBBLE_RIGHT_LEFT_CAP_WIDTH 5 // 文字在右侧时,bubble用于拉伸点的X坐标
 #define BUBBLE_RIGHT_TOP_CAP_HEIGHT 35 // 文字在右侧时,bubble用于拉伸点的Y坐标

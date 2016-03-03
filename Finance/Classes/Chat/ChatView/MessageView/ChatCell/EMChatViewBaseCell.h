@@ -18,13 +18,14 @@
 #import "UIResponder+Router.h"
 
 #define HEAD_SIZE MarginFactor(35.0f) // 头像大小
-#define HEAD_PADDING MarginFactor(12.0f) // 头像到cell的内间距和头像到bubble的间距
-#define CELLPADDING MarginFactor(18.0f)// Cell之间间距
+#define HEAD_PADDING MarginFactor(14.0f) // 头像到cell的内间距和头像到bubble的间距
+#define CELLPADDING 0.0f// Cell之间间距
+#define BUBBLEVIEW_BOTTOMMARGIN MarginFactor(18.0f)
 
-#define NAME_LABEL_WIDTH 180 // nameLabel宽度
-#define NAME_LABEL_HEIGHT 20 // nameLabel 高度
-#define NAME_LABEL_PADDING 0 // nameLabel间距
-#define NAME_LABEL_FONT_SIZE 14 // 字体
+#define NAME_LABEL_WIDTH MarginFactor(180) // nameLabel宽度
+#define NAME_LABEL_HEIGHT MarginFactor(20) // nameLabel 高度
+#define NAME_LABEL_PADDING MarginFactor(9.0f) // nameLabel间距
+#define NAME_LABEL_FONT_SIZE MarginFactor(14.0f) // 字体
 
 extern NSString *const kRouterEventChatHeadImageTapEventName;
 

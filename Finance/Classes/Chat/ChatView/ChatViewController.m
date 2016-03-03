@@ -178,8 +178,7 @@
     [MobClick event:@"ChatViewController" label:@"onClick"];
     if (_isScrollToBottom) {
         [self scrollViewToBottom:YES];
-    }
-    else{
+    } else{
         _isScrollToBottom = YES;
     }
 }

@@ -40,10 +40,9 @@ NSString *const kShouldResendCell = @"kShouldResendCell";
     [super layoutSubviews];
     
     CGRect bubbleFrame = _bubbleView.frame;
-    bubbleFrame.origin.y = self.headImageView.frame.origin.y;
+    bubbleFrame.origin.y = CGRectGetMaxY(self.nameLabel.frame) + NAME_LABEL_PADDING;
     
     if (self.messageModel.isSender) {
-        bubbleFrame.origin.y = self.headImageView.frame.origin.y;
         // 菊花状态 （因不确定菊花具体位置，要在子类中实现位置的修改）
         switch (self.messageModel.status) {
             case eMessageDeliveryState_Delivering:
@@ -90,11 +89,6 @@ NSString *const kShouldResendCell = @"kShouldResendCell";
 - (void)setMessageModel:(MessageModel *)model
 {
     [super setMessageModel:model];
-    
-    if (model.isChatGroup) {
-        _nameLabel.text = model.nickName;
-        _nameLabel.hidden = model.isSender;
-    }
     
     _bubbleView.model = self.messageModel;
     [_bubbleView sizeToFit];
@@ -222,11 +216,8 @@ NSString *const kShouldResendCell = @"kShouldResendCell";
 + (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath withObject:(MessageModel *)model
 {
     NSInteger bubbleHeight = [self bubbleViewHeightForMessageModel:model];
-    NSInteger headHeight = HEAD_PADDING * 2 + HEAD_SIZE;
-    if (model.isChatGroup && !model.isSender) {
-        headHeight += NAME_LABEL_HEIGHT;
-    }
-    return MAX(headHeight, bubbleHeight) + CELLPADDING;
+    //文字高度+文字和去泡的间距+cell的上间距+气泡高度+cell的下间距
+    return NAME_LABEL_HEIGHT + NAME_LABEL_PADDING + CELLPADDING + bubbleHeight + BUBBLEVIEW_BOTTOMMARGIN;
 }
 
 
