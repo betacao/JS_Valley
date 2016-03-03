@@ -234,10 +234,8 @@
 		53AFF7841AFBF5F700D04B6B /* THProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 53AFF74D1AFBF5F700D04B6B /* THProgressView.m */; };
 		53AFF7951AFBF5F700D04B6B /* Emoji.m in Sources */ = {isa = PBXBuildFile; fileRef = 53AFF7721AFBF5F700D04B6B /* Emoji.m */; };
 		53AFF7961AFBF5F700D04B6B /* EmojiEmoticons.m in Sources */ = {isa = PBXBuildFile; fileRef = 53AFF7741AFBF5F700D04B6B /* EmojiEmoticons.m */; };
-		53B40DCF1AFBF01800AD2EFE /* 群头像图标@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 53B40DCC1AFBF01800AD2EFE /* 群头像图标@2x.png */; };
 		53B40DD01AFBF01800AD2EFE /* 申请头像图标@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 53B40DCD1AFBF01800AD2EFE /* 申请头像图标@2x.png */; };
 		53B40DD11AFBF01800AD2EFE /* 消息通知@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 53B40DCE1AFBF01800AD2EFE /* 消息通知@2x.png */; };
-		53B40DD51AFBF02100AD2EFE /* 群头像图标@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 53B40DD21AFBF02100AD2EFE /* 群头像图标@3x.png */; };
 		53B40DD61AFBF02100AD2EFE /* 申请头像图标@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 53B40DD31AFBF02100AD2EFE /* 申请头像图标@3x.png */; };
 		53B40DD71AFBF02100AD2EFE /* 消息通知@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 53B40DD41AFBF02100AD2EFE /* 消息通知@3x.png */; };
 		53BD2BDB1B0444F900342B2E /* 新增群组@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 53BD2BDA1B0444F900342B2E /* 新增群组@2x.png */; };
@@ -724,8 +722,6 @@
 		B03938B31B623F83003A85EC /* 5s.png in Resources */ = {isa = PBXBuildFile; fileRef = B03938AF1B623F83003A85EC /* 5s.png */; };
 		B03938B41B623F83003A85EC /* 6.png in Resources */ = {isa = PBXBuildFile; fileRef = B03938B01B623F83003A85EC /* 6.png */; };
 		B03938B51B623F83003A85EC /* 6P.png in Resources */ = {isa = PBXBuildFile; fileRef = B03938B11B623F83003A85EC /* 6P.png */; };
-		B03AACB81B65D0E200E7B452 /* arrowDown.png in Resources */ = {isa = PBXBuildFile; fileRef = B03AACB61B65D0E200E7B452 /* arrowDown.png */; };
-		B03AACB91B65D0E200E7B452 /* arrowRight.png in Resources */ = {isa = PBXBuildFile; fileRef = B03AACB71B65D0E200E7B452 /* arrowRight.png */; };
 		B03D10F01B4E799900316FEA /* 11@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B03D10EF1B4E799900316FEA /* 11@2x.png */; };
 		B04355CE1B4BD3560033BBBF /* LinkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B04355CC1B4BD3560033BBBF /* LinkViewController.m */; };
 		B04355CF1B4BD3560033BBBF /* LinkViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B04355CD1B4BD3560033BBBF /* LinkViewController.xib */; };
@@ -1235,10 +1231,8 @@
 		53AFF7721AFBF5F700D04B6B /* Emoji.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Emoji.m; sourceTree = "<group>"; };
 		53AFF7731AFBF5F700D04B6B /* EmojiEmoticons.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmojiEmoticons.h; sourceTree = "<group>"; };
 		53AFF7741AFBF5F700D04B6B /* EmojiEmoticons.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmojiEmoticons.m; sourceTree = "<group>"; };
-		53B40DCC1AFBF01800AD2EFE /* 群头像图标@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "群头像图标@2x.png"; sourceTree = "<group>"; };
 		53B40DCD1AFBF01800AD2EFE /* 申请头像图标@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "申请头像图标@2x.png"; sourceTree = "<group>"; };
 		53B40DCE1AFBF01800AD2EFE /* 消息通知@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "消息通知@2x.png"; sourceTree = "<group>"; };
-		53B40DD21AFBF02100AD2EFE /* 群头像图标@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "群头像图标@3x.png"; sourceTree = "<group>"; };
 		53B40DD31AFBF02100AD2EFE /* 申请头像图标@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "申请头像图标@3x.png"; sourceTree = "<group>"; };
 		53B40DD41AFBF02100AD2EFE /* 消息通知@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "消息通知@3x.png"; sourceTree = "<group>"; };
 		53BD2BDA1B0444F900342B2E /* 新增群组@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "新增群组@2x.png"; sourceTree = "<group>"; };
@@ -1958,8 +1952,6 @@
 		B03938AF1B623F83003A85EC /* 5s.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 5s.png; sourceTree = "<group>"; };
 		B03938B01B623F83003A85EC /* 6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 6.png; sourceTree = "<group>"; };
 		B03938B11B623F83003A85EC /* 6P.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 6P.png; sourceTree = "<group>"; };
-		B03AACB61B65D0E200E7B452 /* arrowDown.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrowDown.png; sourceTree = "<group>"; };
-		B03AACB71B65D0E200E7B452 /* arrowRight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrowRight.png; sourceTree = "<group>"; };
 		B03D10EF1B4E799900316FEA /* 11@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "11@2x.png"; sourceTree = "<group>"; };
 		B04355CB1B4BD3560033BBBF /* LinkViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LinkViewController.h; sourceTree = "<group>"; };
 		B04355CC1B4BD3560033BBBF /* LinkViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LinkViewController.m; sourceTree = "<group>"; };
@@ -2889,8 +2881,6 @@
 		614A59741AD3AEA1005DAB04 /* Finance */ = {
 			isa = PBXGroup;
 			children = (
-				B03AACB61B65D0E200E7B452 /* arrowDown.png */,
-				B03AACB71B65D0E200E7B452 /* arrowRight.png */,
 				614DC8891AD65F6900F610D4 /* Common */,
 				F93FCBA41C856D5A004E356E /* Category */,
 				610FF0861AD62DB60027EBA6 /* Resource */,
@@ -4259,7 +4249,6 @@
 				61E83C591AF7C78E00703651 /* 添加群成员@2x.png */,
 				61E83C5B1AF7C78E00703651 /* 选中好友@2x.png */,
 				61E83C5C1AF7C78E00703651 /* 选择好友@2x.png */,
-				53B40DCC1AFBF01800AD2EFE /* 群头像图标@2x.png */,
 				53B40DCD1AFBF01800AD2EFE /* 申请头像图标@2x.png */,
 				53B40DCE1AFBF01800AD2EFE /* 消息通知@2x.png */,
 			);
@@ -4415,7 +4404,6 @@
 				61E83CCB1AF7C78E00703651 /* 菜单弹出背景@3x.png */,
 				61E83CCC1AF7C78E00703651 /* 选中好友@3x.png */,
 				61E83CCD1AF7C78E00703651 /* 选择好友@3x.png */,
-				53B40DD21AFBF02100AD2EFE /* 群头像图标@3x.png */,
 				53B40DD31AFBF02100AD2EFE /* 申请头像图标@3x.png */,
 				53B40DD41AFBF02100AD2EFE /* 消息通知@3x.png */,
 			);
@@ -4969,7 +4957,6 @@
 				F936DD561C3A6C9700584F53 /* SHGGropingViewController.xib in Resources */,
 				61E83D581AF7C78E00703651 /* 发送按钮-默认@3x.png in Resources */,
 				61E83CE71AF7C78E00703651 /* 笑脸@2x.png in Resources */,
-				B03AACB81B65D0E200E7B452 /* arrowDown.png in Resources */,
 				B080FE941B81E30100426579 /* emoji_characters_s.png in Resources */,
 				615234B01B0E146B00011EAC /* 二度跳转页面@3x.jpg in Resources */,
 				6186DF3D1AFB7F3800960934 /* 未收藏@3x副本.png in Resources */,
@@ -5141,7 +5128,6 @@
 				408D8AF31AF8618C0055810C /* chatFire_audioPlaying3.png in Resources */,
 				408D8AF71AF8618C0055810C /* VoiceSearchFeedback002.png in Resources */,
 				408D8AF91AF8618C0055810C /* VoiceSearchFeedback003.png in Resources */,
-				B03AACB91B65D0E200E7B452 /* arrowRight.png in Resources */,
 				61E83D0A1AF7C78E00703651 /* 消息-默认@2x.png in Resources */,
 				B080FEAF1B81E30100426579 /* emoji_unselected_center_bg@2x.png in Resources */,
 				56F2D50C1B5A5B77008E2855 /* 编辑1.png in Resources */,
@@ -5329,7 +5315,6 @@
 				408D8B7E1AF8618C0055810C /* chat_sender_bg.png in Resources */,
 				408D8B161AF8618C0055810C /* VoiceSearchFeedback017@2x.png in Resources */,
 				F936DD4C1C3A437500584F53 /* SHGFriendGroupingViewController.xib in Resources */,
-				53B40DCF1AFBF01800AD2EFE /* 群头像图标@2x.png in Resources */,
 				408D8B0E1AF8618C0055810C /* VoiceSearchFeedback013@2x.png in Resources */,
 				B04D6E411B60F2D500E3863E /* 组-46@2x.png in Resources */,
 				6187D30E1AF1C693008E1D21 /* sr_refresh@2X.png in Resources */,
@@ -5526,7 +5511,6 @@
 				B04355CF1B4BD3560033BBBF /* LinkViewController.xib in Resources */,
 				408D8B421AF8618C0055810C /* chatBar_keyboard@2x.png in Resources */,
 				6190274B1B2359C600D9EEA2 /* popTableViewCell.xib in Resources */,
-				53B40DD51AFBF02100AD2EFE /* 群头像图标@3x.png in Resources */,
 				61E83D1D1AF7C78E00703651 /* 清除缓存@2x.png in Resources */,
 				61E83CF81AF7C78E00703651 /* 评论@2x.png in Resources */,
 				B080FE8A1B81E30100426579 /* btn_publish_face_b@2x.png in Resources */,

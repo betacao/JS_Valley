@@ -226,8 +226,7 @@ const CGFloat kAdButtomMargin = 20.0f;
 
 - (void)requestRecommendFriends
 {
-    NSString *uid = [[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID] stringValue];
-    NSDictionary *param = @{@"uid":uid, @"area":@""};
+    NSDictionary *param = @{@"uid":UID, @"area":@""};
     __weak typeof(self) weakSelf = self;
     [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/v1/recommended/friends/recommendedFriend",rBaseAddRessHttp] class:[RecmdFriendObj class] parameters:param success:^(MOCHTTPResponse *response){
         [weakSelf.recomandArray removeAllObjects];
