@@ -43,23 +43,23 @@
         self.layer.cornerRadius = 8.0f;
         self.backgroundColor = [UIColor whiteColor];
         self.alertTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, 0.0f, kAlertWidth, kLineViewTopMargin)];
-        self.alertTitleLabel.font = [UIFont systemFontOfSize:17.0f];
-        self.alertTitleLabel.textColor = [UIColor colorWithRed:249.0f/255.0f green:92.0f/255.0f blue:83.0f/255.0f alpha:1.0f];
+        self.alertTitleLabel.textAlignment = NSTextAlignmentCenter;
+        self.alertTitleLabel.font = FontFactor(18.0f);
+        self.alertTitleLabel.textColor = [UIColor colorWithHexString:@"f04241"];
         [self addSubview:self.alertTitleLabel];
         
         CGFloat contentLabelWidth = kAlertWidth - kLineViewLeftMargin * 2;
         
         self.lineLabel = [[UILabel alloc] initWithFrame:CGRectMake((kAlertWidth - contentLabelWidth) * 0.5, kLineViewTopMargin, contentLabelWidth, 1.0f)];
-        self.lineLabel.backgroundColor = [UIColor colorWithRed:249.0f/255.0f green:92.0f/255.0f blue:83.0f/255.0f alpha:1.0f];
+        self.lineLabel.backgroundColor = [UIColor colorWithHexString:@"f04241"];
         [self addSubview:self.lineLabel];
         
         //content的高度先设置为0 下面动态计算高度
         self.alertContentLabel = [[UILabel alloc] initWithFrame:CGRectMake((kAlertWidth - contentLabelWidth) * 0.5, CGRectGetMaxY(self.lineLabel.frame), contentLabelWidth, 0.0f)];
         self.alertContentLabel.numberOfLines = 0;
         self.alertContentLabel.textAlignment = NSTextAlignmentCenter;
-        self.alertTitleLabel.textAlignment = NSTextAlignmentCenter;
         self.alertContentLabel.textColor = [UIColor colorWithRed:141.0/255.0 green:141.0/255.0 blue:141.0/255.0 alpha:1];
-        self.alertContentLabel.font = [UIFont systemFontOfSize:14.0f];
+        self.alertContentLabel.font = FontFactor(16.0f);
         [self addSubview:self.alertContentLabel];
         
         CGRect leftBtnFrame = CGRectZero;
@@ -93,7 +93,7 @@
         [self.leftBtn setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithHexString:@"C5C5C5"]] forState:UIControlStateNormal];
         [self.rightBtn setTitle:rigthTitle forState:UIControlStateNormal];
         [self.leftBtn setTitle:leftTitle forState:UIControlStateNormal];
-        self.leftBtn.titleLabel.font = self.rightBtn.titleLabel.font = [UIFont systemFontOfSize:15.0f];
+        self.leftBtn.titleLabel.font = self.rightBtn.titleLabel.font = FontFactor(16.0f);
         [self.leftBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [self.rightBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         
@@ -120,15 +120,15 @@
         self.layer.cornerRadius = 8.0f;
         self.backgroundColor = [UIColor whiteColor];
         self.alertTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, 0.0f, kAlertWidth, kLineViewTopMargin)];
-        self.alertTitleLabel.font = [UIFont systemFontOfSize:17.0f];
-        self.alertTitleLabel.textColor = [UIColor colorWithRed:249.0f/255.0f green:92.0f/255.0f blue:83.0f/255.0f alpha:1.0f];
+        self.alertTitleLabel.font = FontFactor(18.0f);
+        self.alertTitleLabel.textColor = [UIColor colorWithHexString:@"f04241"];
         self.alertTitleLabel.textAlignment = NSTextAlignmentCenter;
         [self addSubview:self.alertTitleLabel];
 
         CGFloat contentLabelWidth = kAlertWidth - 2 * kLineViewLeftMargin;
 
         self.lineLabel = [[UILabel alloc] initWithFrame:CGRectMake((kAlertWidth - contentLabelWidth) * 0.5, kLineViewTopMargin, contentLabelWidth, 1.0f)];
-        self.lineLabel.backgroundColor = [UIColor colorWithRed:249.0f/255.0f green:92.0f/255.0f blue:83.0f/255.0f alpha:1.0f];
+        self.lineLabel.backgroundColor = [UIColor colorWithHexString:@"f04241"];
         [self addSubview:self.lineLabel];
 
         CGRect frame = customView.frame;
@@ -157,7 +157,7 @@
         [self.leftBtn setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithHexString:@"C5C5C5"]] forState:UIControlStateNormal];
         [self.rightBtn setTitle:rigthTitle forState:UIControlStateNormal];
         [self.leftBtn setTitle:leftTitle forState:UIControlStateNormal];
-        self.leftBtn.titleLabel.font = self.rightBtn.titleLabel.font = [UIFont systemFontOfSize:15.0f];;
+        self.leftBtn.titleLabel.font = self.rightBtn.titleLabel.font = FontFactor(16.0f);
         [self.leftBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [self.rightBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
 
@@ -209,7 +209,7 @@
         [self.leftBtn setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithHexString:@"C5C5C5"]] forState:UIControlStateNormal];
         [self.rightBtn setTitle:rigthTitle forState:UIControlStateNormal];
         [self.leftBtn setTitle:leftTitle forState:UIControlStateNormal];
-        self.leftBtn.titleLabel.font = self.rightBtn.titleLabel.font = [UIFont systemFontOfSize:15.0f];;
+        self.leftBtn.titleLabel.font = self.rightBtn.titleLabel.font = FontFactor(16.0f);
         [self.leftBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [self.rightBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
 
