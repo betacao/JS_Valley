@@ -10,5 +10,5 @@
 #import "MessageObj.h"
 
 @interface SHGFriendGropingTableViewCell : UITableViewCell
-- (void)loadDataWithModule:(SHGFriendGropingObject *)object;
+@property (strong, nonatomic) SHGFriendGropingObject *object;
 @end

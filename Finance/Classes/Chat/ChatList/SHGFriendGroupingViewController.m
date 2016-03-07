@@ -10,9 +10,8 @@
 #import "MessageObj.h"
 #import "SHGFriendGropingTableViewCell.h"
 #import "SHGGropingViewController.h"
-#define kBGViewWidth 85.0f * XFACTOR
-#define kBGViewHeight 135.0f
 
+#define kCellHeight MarginFactor(55.0f)
 
 @interface SHGFriendGroupingViewController ()<UITableViewDataSource, UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet UIButton *companyButton;
@@ -34,36 +33,19 @@
 {
     [super viewDidLoad];
     self.title = @"人脉分组";
-    CGRect frame = self.bgView.frame;
-    frame.size.width = kBGViewWidth;
-    self.bgView.frame = frame;
-    
-    frame = self.tableView.frame;
-    frame.origin.x = kBGViewWidth;
-    frame.size.width = SCREENWIDTH - kBGViewWidth;
-    frame.size.height = SCREENHEIGHT ;
-    self.tableView.frame = frame;
+    [self initView];
+    [self addAutoLayout];
+    //默认选中公司
+    self.companyButton.selected = YES;
+    self.module = @"company";
+    self.currentPage = 1;
+    [self loadDataWithPage:@"1" module:self.module type:self.type];
+}
 
-    frame = self.lineView1.frame;
-    frame.size.height = 0.5f;
-    self.lineView1.frame = frame;
-
-    frame = self.lineView2.frame;
-    frame.size.height = 0.5f;
-    self.lineView2.frame = frame;
-
-    frame = self.lineView3.frame;
-    frame.size.height = 0.5f;
-    self.lineView3.frame = frame;
-
-    [self.tableView setTableFooterView:[[UIView alloc] init]];
+- (void)initView
+{
+    self.tableView.tableFooterView = [[UIView alloc] init];
     [self addHeaderRefresh:self.tableView headerRefesh:NO andFooter:YES];
-    self.tableView.dataSource = self;
-    self.tableView.delegate = self;
-
-    [self.companyButton setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithHexString:@"f4f4f4"]] forState:UIControlStateSelected];
-    [self.departmentButton setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithHexString:@"f4f4f4"]] forState:UIControlStateSelected];
-    [self.locationButton setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithHexString:@"f4f4f4"]] forState:UIControlStateSelected];
 
     [self.companyButton setBackgroundImage:[UIImage imageWithColor:[UIColor whiteColor]] forState:UIControlStateNormal];
     [self.departmentButton setBackgroundImage:[UIImage imageWithColor:[UIColor whiteColor]] forState:UIControlStateNormal];
@@ -72,11 +54,70 @@
     [self.companyButton setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithHexString:@"f4f4f4"]] forState:UIControlStateHighlighted];
     [self.departmentButton setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithHexString:@"f4f4f4"]] forState:UIControlStateHighlighted];
     [self.locationButton setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithHexString:@"f4f4f4"]] forState:UIControlStateHighlighted];
-    //默认选中公司
-    self.companyButton.selected = YES;
-    self.module = @"company";
-    self.currentPage = 1;
-    [self loadDataWithPage:@"1" module:self.module type:self.type];
+
+    [self.companyButton setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithHexString:@"f4f4f4"]] forState:UIControlStateSelected];
+    [self.departmentButton setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithHexString:@"f4f4f4"]] forState:UIControlStateSelected];
+    [self.locationButton setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithHexString:@"f4f4f4"]] forState:UIControlStateSelected];
+
+    self.companyButton.titleLabel.font = FontFactor(15.0f);
+    self.departmentButton.titleLabel.font = FontFactor(15.0f);
+    self.locationButton.titleLabel.font = FontFactor(15.0f);
+
+    [self.companyButton setTitleColor:[UIColor colorWithHexString:@"161616"] forState:UIControlStateNormal];
+    [self.departmentButton setTitleColor:[UIColor colorWithHexString:@"161616"] forState:UIControlStateNormal];
+    [self.locationButton setTitleColor:[UIColor colorWithHexString:@"161616"] forState:UIControlStateNormal];
+
+}
+
+- (void)addAutoLayout
+{
+    self.companyButton.sd_layout
+    .leftSpaceToView(self.bgView, 0.0f)
+    .topSpaceToView(self.bgView, 0.0f)
+    .rightSpaceToView(self.bgView, 0.0f)
+    .heightIs(kCellHeight);
+    self.lineView1.sd_layout
+    .leftEqualToView(self.companyButton)
+    .rightEqualToView(self.companyButton)
+    .topSpaceToView(self.companyButton, 0.0f)
+    .heightIs(0.5f);
+
+    self.departmentButton.sd_layout
+    .leftEqualToView(self.companyButton)
+    .rightEqualToView(self.companyButton)
+    .topSpaceToView(self.lineView1, 0.0f)
+    .heightIs(kCellHeight);
+    self.lineView2.sd_layout
+    .leftEqualToView(self.companyButton)
+    .rightEqualToView(self.companyButton)
+    .topSpaceToView(self.departmentButton, 0.0f)
+    .heightIs(0.5f);
+
+    self.locationButton.sd_layout
+    .leftEqualToView(self.companyButton)
+    .rightEqualToView(self.companyButton)
+    .topSpaceToView(self.lineView2, 0.0f)
+    .heightIs(kCellHeight);
+
+    self.lineView3.sd_layout
+    .leftEqualToView(self.companyButton)
+    .rightEqualToView(self.companyButton)
+    .topSpaceToView(self.locationButton, 0.0f)
+    .heightIs(0.5f);
+
+    self.bgView.sd_layout
+    .leftSpaceToView(self.view, 0.0f)
+    .topSpaceToView(self.view, 0.0f)
+    .widthIs(MarginFactor(100.0f));
+
+    [self.bgView setupAutoHeightWithBottomView:self.lineView3 bottomMargin:0.0f];
+
+    self.tableView.sd_layout
+    .leftSpaceToView(self.bgView, 0.0f)
+    .topSpaceToView(self.view, 0.0f)
+    .rightSpaceToView(self.view, 0.0)
+    .bottomSpaceToView(self.view, 0.0f);
+
 }
 
 - (void)refreshFooter
@@ -92,7 +133,8 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return kBGViewHeight / 3.0f;
+    SHGFriendGropingObject *object = [self.dataArr objectAtIndex:indexPath.row];
+    return [tableView cellHeightForIndexPath:indexPath model:object keyPath:@"object" cellClass:[SHGFriendGropingTableViewCell class] contentViewWidth:CGRectGetWidth(self.tableView.frame)];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -103,7 +145,7 @@
         cell = [[[NSBundle mainBundle] loadNibNamed:@"SHGFriendGropingTableViewCell" owner:self options:nil] lastObject];
     }
     SHGFriendGropingObject *object = [self.dataArr objectAtIndex:indexPath.row];
-    [cell loadDataWithModule: object];
+    cell.object = object;
     return cell;
 }
 
