@@ -400,9 +400,6 @@
                 if (weakSelf.block) {
                     weakSelf.block(state);
                 }
-                if ([state isEqualToString:@"0"]) {
-                    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_CHANGE_SHOULD_UPDATE object:nil];
-                }
                 [Hud showMessageWithText:@"取消关注成功"];
             }
             [weakSelf.tableView reloadData];

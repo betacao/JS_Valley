@@ -28,7 +28,7 @@
     [super setSelected:selected animated:animated];
 }
 
--(void)loadDatasWithObj:(MessageObj *)obj
+- (void)loadDatasWithObj:(MessageObj *)obj
 {
     self.title.text = obj.title;
     NSDate *date = [self dateFromString:obj.time];

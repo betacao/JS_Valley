@@ -12,7 +12,6 @@
 {
     NSString *uid;
 }
-- (IBAction)actionInvite:(id)sender;
 @property (weak, nonatomic) IBOutlet UILabel *lblRelate;
 @property (weak, nonatomic) IBOutlet UILabel *lblCompany;
 @property (weak, nonatomic) IBOutlet UILabel *lblName;
@@ -26,12 +25,7 @@
 
 @implementation ChatListTableViewCell
 
-- (IBAction)actionInvitation:(id)sender
-{
-    
-}
-
--(void)loadDataWithObject:(SHGPeopleObject *)obj
+- (void)loadDataWithObject:(SHGPeopleObject *)obj
 {
     self.lblName.text = obj.name;
     if ([obj.name isEqualToString:@"大牛助手"]) {
@@ -172,7 +166,8 @@
     [super setSelected:selected animated:animated];
 }
 
-- (IBAction)actionInvite:(id)sender {
+- (IBAction)actionInvite:(id)sender
+{
     [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_CHANGE_ACTION_INVITE_FRIEND object:uid];
 }
 @end

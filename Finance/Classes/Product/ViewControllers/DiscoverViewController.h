@@ -9,9 +9,8 @@
 #import "BaseTableViewController.h"
 #import "DiscoveryTableViewCell.h"
 #import "ProductListViewController.h"
-#import "DiscovFirstFriendViewController.h"
-#import "DiscovSecondFriendViewController.h"
 #import "ChatListViewController.h"
+
 @interface DiscoverViewController : BaseTableViewController
 @property (nonatomic, strong)UILabel *titleLabel;
 @end

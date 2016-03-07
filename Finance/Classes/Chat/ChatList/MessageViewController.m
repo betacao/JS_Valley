@@ -20,7 +20,7 @@
     NSString *_target;
 }
 
-@property (strong, nonatomic) UITableView *tableView;
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) MessageTableViewCell *prototypeCell;
 @end
 
@@ -37,9 +37,8 @@
     self.title = @"通知";
     UINib *cellNib = [UINib nibWithNibName:@"MessageTableViewCell" bundle:nil];
     [self.tableView registerNib:cellNib forCellReuseIdentifier:@"Cell"];
+    self.tableView.tableFooterView = [[UIView alloc] init];
     self.prototypeCell  = [self.tableView dequeueReusableCellWithIdentifier:@"Cell"];
-    
-    [self.view addSubview:self.tableView];
     [self addHeaderRefresh:self.tableView headerRefesh:YES andFooter:YES];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshData) name:NOTIFI_SENDPOST object:nil];
     [self refreshData];
@@ -48,20 +47,6 @@
 - (void)refreshData
 {
     [self requestDataWithTarget:@"first" time:@"-1"];
-}
-
-- (UITableView *)tableView
-{
-    if (_tableView == nil) {
-        _tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
-        _tableView.backgroundColor = [UIColor whiteColor];
-        _tableView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
-        _tableView.delegate = self;
-        _tableView.dataSource = self;
-        _tableView.tableFooterView = [[UIView alloc] init];
-    }
-    
-    return _tableView;
 }
 
 -(void)requestDataWithTarget:(NSString *)target time:(NSString *)time

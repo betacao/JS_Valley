@@ -167,10 +167,8 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
 
 - (ChatListViewController *)chatViewController
 {
-    if (!_chatViewController)
-    {
+    if (!_chatViewController){
         _chatViewController = [[ChatListViewController alloc] init];
-        _chatViewController.chatListType = ChatListView;
     }
     return _chatViewController;
 }

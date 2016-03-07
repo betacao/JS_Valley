@@ -29,8 +29,6 @@ typedef NS_ENUM(NSInteger, ChatListViewType)
 - (void)networkChanged:(EMConnectionState)connectionState;
 
 @property (nonatomic,assign) BOOL isResfresh;
-@property (nonatomic,assign) BOOL shouldRefresh;
-@property (nonatomic, assign) ChatListViewType chatListType;
 @property (strong ,nonatomic, readonly) UIView *titleView;
 @property (strong ,nonatomic, readonly) UIBarButtonItem *rightBarButtonItem;
 @property (strong ,nonatomic, readonly) UIBarButtonItem *leftBarButtonItem;

@@ -362,10 +362,6 @@
 		615234981B0D92BA00011EAC /* 合作@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 615234911B0D92BA00011EAC /* 合作@3x.png */; };
 		6152349A1B0D92BA00011EAC /* 我的关注@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 615234931B0D92BA00011EAC /* 我的关注@3x.png */; };
 		6152349C1B0D92BA00011EAC /* 我的粉丝@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 615234951B0D92BA00011EAC /* 我的粉丝@3x.png */; };
-		615234A01B0DAEBD00011EAC /* DiscovFirstFriendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6152349E1B0DAEBD00011EAC /* DiscovFirstFriendViewController.m */; };
-		615234A11B0DAEBD00011EAC /* DiscovFirstFriendViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6152349F1B0DAEBD00011EAC /* DiscovFirstFriendViewController.xib */; };
-		615234A51B0DAF1400011EAC /* DiscovSecondFriendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 615234A31B0DAF1400011EAC /* DiscovSecondFriendViewController.m */; };
-		615234A61B0DAF1400011EAC /* DiscovSecondFriendViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 615234A41B0DAF1400011EAC /* DiscovSecondFriendViewController.xib */; };
 		615234AA1B0E144F00011EAC /* 二度跳转页面@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 615234A71B0E144F00011EAC /* 二度跳转页面@2x.jpg */; };
 		615234AC1B0E144F00011EAC /* 一度跳转页面@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 615234A91B0E144F00011EAC /* 一度跳转页面@2x.jpg */; };
 		615234B01B0E146B00011EAC /* 二度跳转页面@3x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 615234AD1B0E146B00011EAC /* 二度跳转页面@3x.jpg */; };
@@ -1409,12 +1405,6 @@
 		615234911B0D92BA00011EAC /* 合作@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "合作@3x.png"; sourceTree = "<group>"; };
 		615234931B0D92BA00011EAC /* 我的关注@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "我的关注@3x.png"; sourceTree = "<group>"; };
 		615234951B0D92BA00011EAC /* 我的粉丝@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "我的粉丝@3x.png"; sourceTree = "<group>"; };
-		6152349D1B0DAEBD00011EAC /* DiscovFirstFriendViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiscovFirstFriendViewController.h; sourceTree = "<group>"; };
-		6152349E1B0DAEBD00011EAC /* DiscovFirstFriendViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DiscovFirstFriendViewController.m; sourceTree = "<group>"; };
-		6152349F1B0DAEBD00011EAC /* DiscovFirstFriendViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DiscovFirstFriendViewController.xib; sourceTree = "<group>"; };
-		615234A21B0DAF1400011EAC /* DiscovSecondFriendViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiscovSecondFriendViewController.h; sourceTree = "<group>"; };
-		615234A31B0DAF1400011EAC /* DiscovSecondFriendViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DiscovSecondFriendViewController.m; sourceTree = "<group>"; };
-		615234A41B0DAF1400011EAC /* DiscovSecondFriendViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DiscovSecondFriendViewController.xib; sourceTree = "<group>"; };
 		615234A71B0E144F00011EAC /* 二度跳转页面@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "二度跳转页面@2x.jpg"; sourceTree = "<group>"; };
 		615234A91B0E144F00011EAC /* 一度跳转页面@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "一度跳转页面@2x.jpg"; sourceTree = "<group>"; };
 		615234AD1B0E146B00011EAC /* 二度跳转页面@3x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "二度跳转页面@3x.jpg"; sourceTree = "<group>"; };
@@ -2823,12 +2813,6 @@
 				615234751B0D8A6400011EAC /* DiscoverViewController.h */,
 				615234761B0D8A6400011EAC /* DiscoverViewController.m */,
 				615234771B0D8A6400011EAC /* DiscoverViewController.xib */,
-				6152349D1B0DAEBD00011EAC /* DiscovFirstFriendViewController.h */,
-				6152349E1B0DAEBD00011EAC /* DiscovFirstFriendViewController.m */,
-				6152349F1B0DAEBD00011EAC /* DiscovFirstFriendViewController.xib */,
-				615234A21B0DAF1400011EAC /* DiscovSecondFriendViewController.h */,
-				615234A31B0DAF1400011EAC /* DiscovSecondFriendViewController.m */,
-				615234A41B0DAF1400011EAC /* DiscovSecondFriendViewController.xib */,
 				F995039D1C4675700050562F /* SHGConnectionsViewController.h */,
 				F995039E1C4675700050562F /* SHGConnectionsViewController.m */,
 				F995039F1C4675700050562F /* SHGConnectionsViewController.xib */,
@@ -5162,7 +5146,6 @@
 				B0CA7C891B7A022F0038BABB /* qq@3x.png in Resources */,
 				B04D6E2D1B60C01300E3863E /* 删除x@2x.png in Resources */,
 				B080FE891B81E30100426579 /* btn_publish_face_a@3x.png in Resources */,
-				615234A61B0DAF1400011EAC /* DiscovSecondFriendViewController.xib in Resources */,
 				F9F349CA1C1968310090F111 /* SHGMarketTableViewCell.xib in Resources */,
 				61E83D051AF7C78E00703651 /* 我的-默认@2x.png in Resources */,
 				614EFEC51AEF278A00F2BDD1 /* SubDetailViewController.xib in Resources */,
@@ -5247,7 +5230,6 @@
 				408D8B521AF8618C0055810C /* chatBar_colorMore_audioCallSelected@2x.png in Resources */,
 				408D8AF81AF8618C0055810C /* VoiceSearchFeedback002@2x.png in Resources */,
 				408D8B281AF8618C0055810C /* chatBar_more_card@2x.png in Resources */,
-				615234A11B0DAEBD00011EAC /* DiscovFirstFriendViewController.xib in Resources */,
 				B09BF7711B7C6C1F008260B3 /* 邀请@2x.png in Resources */,
 				53BD2BE11B04732800342B2E /* GroupListViewController.xib in Resources */,
 				408D8AED1AF8618C0055810C /* chatFire_audioPlaying0.png in Resources */,
@@ -5796,7 +5778,6 @@
 				4088DDD21AF1065100393855 /* SettingQuestionCell.m in Sources */,
 				40D6CC0B1B064122005F61C8 /* ProtocolViewController.m in Sources */,
 				408D8B821AF86CF20055810C /* MyMoneyDetailObject.m in Sources */,
-				615234A01B0DAEBD00011EAC /* DiscovFirstFriendViewController.m in Sources */,
 				40302B271AEF78D400F22EB6 /* VerifyIdentityViewController.m in Sources */,
 				F9A227CA1BF5C7E10054F8D7 /* SHGActionSegmentViewController.m in Sources */,
 				F986DE361BFDCBD900E6709F /* SHGActionTotalInViewController.m in Sources */,
@@ -5835,7 +5816,6 @@
 				6145FF111AE49D4A0074AB49 /* BRCommentView.m in Sources */,
 				5331DF2C1AFC20A600E035B8 /* MessageViewController.m in Sources */,
 				614BA7E51AE64816009480CD /* CirclleItemObj.m in Sources */,
-				615234A51B0DAF1400011EAC /* DiscovSecondFriendViewController.m in Sources */,
 				61046C791AE0FFBA0065F59D /* RecommendTypeObj.m in Sources */,
 				F93242BA1BE9EE92003B7F07 /* SHGUnifiedTreatment.m in Sources */,
 				614A597B1AD3AEA1005DAB04 /* AppDelegate.m in Sources */,

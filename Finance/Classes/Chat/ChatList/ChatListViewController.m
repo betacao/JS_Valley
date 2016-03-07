@@ -52,9 +52,7 @@ static NSString * const kCommonFNum			= @"commonnum";
 
 @property (strong, nonatomic) NSMutableArray        *dataSource;
 @property (strong, nonatomic) UITableView           *tableView;
-@property (nonatomic, strong) EMSearchBar           *searchBar;
 @property (nonatomic, strong) UIView                *networkStateView;
-@property (strong, nonatomic) EMSearchDisplayController *searchController;
 @property (nonatomic, strong) UISegmentedControl *segmentControl;
 @property (nonatomic,strong)  UIView *titleView;
 @property (nonatomic, strong) UIBarButtonItem *rightBarButtonItem;
@@ -74,11 +72,9 @@ static NSString * const kCommonFNum			= @"commonnum";
     if (self) {
         _dataSource = [NSMutableArray array];
         _contactsSource = [NSMutableArray array];
-        self.isResfresh=YES;
-        // self.chatListType = ChatListView;
+        self.isResfresh = YES;
         pageNum = 1;
         area = @"";
-        self.shouldRefresh = NO;
     }
     return self;
 }
@@ -102,23 +98,12 @@ static NSString * const kCommonFNum			= @"commonnum";
     [self removeEmptyConversationsFromDB];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(actionInvite:) name:NOTIFI_CHANGE_ACTION_INVITE_FRIEND object:nil];
-    
+
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshChatList) name:@"refreshFriendList" object:nil];
-    if (self.chatListType != ChatListView)
-    {
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshDataSource) name:NOTIFI_CHANGE_UPDATE_FRIEND_LIST
-                                                   object:nil];
-    }
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeState) name:NOTIFI_CHANGE_SHOULD_UPDATE object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshDataSource) name:NOTIFI_CHANGE_UPDATE_FRIEND_LIST object:nil];
     [self networkStateView];
-    [self searchController];
     [self refreshDataSource];
 
-}
-
-- (void)changeState
-{
-    self.shouldRefresh = YES;
 }
 
 - (void)refreshHeader
@@ -142,33 +127,10 @@ static NSString * const kCommonFNum			= @"commonnum";
 {
     [self.navigationController popViewControllerAnimated:YES];
 }
+
 -(void)refreshChatList
 {
     [self.tableView reloadData];
-}
-
-- (void)searchTwainFriend
-{
-//    if(self.menuPopover1.isshow)
-//    {
-//        [self.menuPopover1 dismissMenuPopover];
-//    } else{
-//        self.menuPopover1 = [[MLKMenuPopover1 alloc] initWithFrame:CGRectMake(SCREENWIDTH-150, 0, 150, 280) menuItems:self.arrCityCode];
-//        self.menuPopover1.menuPopoverDelegate = self;
-//        [self.menuPopover1 showInView:self.view];
-//    }
-    SHGFriendGroupingViewController *controller = [[SHGFriendGroupingViewController alloc] init];
-    switch (self.chatListType) {
-        case ContactListView:
-            controller.type = @"once";
-            break;
-        case ContactTwainListView:
-            controller.type = @"twice";
-            break;
-        default:
-            break;
-    }
-    [self.navigationController pushViewController:controller animated:YES];
 }
 
 - (void)rightBarButtonItemClicked:(UIButton *)sender
@@ -229,11 +191,7 @@ static NSString * const kCommonFNum			= @"commonnum";
     [self reloadApplyView];
     [self reloadDataSource];
     [self registerNotifications];
-    if (self.shouldRefresh && self.chatListType == ContactListView)
-    {
-        [self refreshDataSource];
-    }
-    self.isResfresh=NO;
+    self.isResfresh = NO;
 }
 
 -(void)viewWillDisappear:(BOOL)animated
@@ -262,22 +220,6 @@ static NSString * const kCommonFNum			= @"commonnum";
 
 #pragma mark - getter
 
-- (UISearchBar *)searchBar
-{
-    if (!_searchBar) {
-        _searchBar = [[EMSearchBar alloc] init];
-        _searchBar.delegate = self;
-        if (self.chatListType == ContactListView){
-            _searchBar.placeholder = @"请输入姓名/公司名/职位";
-        } else{
-            _searchBar.placeholder = @"请输入姓名/公司名/职位";
-        }
-        _searchBar.hidden=YES;
-    }
-    
-    return _searchBar;
-}
-
 - (UITableView *)tableView
 {
     if (_tableView == nil) {
@@ -295,66 +237,6 @@ static NSString * const kCommonFNum			= @"commonnum";
     return _tableView;
 }
 
-- (EMSearchDisplayController *)searchController
-{
-    if (_searchController == nil) {
-        _searchController = [[EMSearchDisplayController alloc] initWithSearchBar:self.searchBar contentsController:self];
-        _searchController.delegate = self;
-        _searchController.searchResultsTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-        __weak UISearchBar *weakSBar=self.searchBar;
-        __weak ChatListViewController *weakSelf = self;
-        
-        [_searchController setCellForRowAtIndexPathCompletion:^UITableViewCell *(UITableView *tableView, NSIndexPath *indexPath) {
-            static NSString *CellIdentifier = @"ChatListTableViewCell";
-            ChatListTableViewCell *cell = (ChatListTableViewCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-            // Configure the cell...
-            if (cell == nil) {
-                cell = [[[NSBundle mainBundle] loadNibNamed:CellIdentifier owner:self options:nil]objectAtIndex:0];
-            }
-            
-            BasePeopleObject *buddy = [weakSelf.searchController.resultsSource objectAtIndex:indexPath.row];
-            if (self.chatListType == ContactListView) {
-                cell.type = contactTypeFriend;
-            }else{
-                cell.type = contactTypeFriendTwain
-                ;
-            }
-            [cell loadDataWithobj:buddy];
-            
-            return cell;
-            
-        }];
-        
-        [_searchController setHeightForRowAtIndexPathCompletion:^CGFloat(UITableView *tableView, NSIndexPath *indexPath) {
-            return 72;
-        }];
-        
-        [_searchController setDidSelectRowAtIndexPathCompletion:^(UITableView *tableView, NSIndexPath *indexPath) {
-            [tableView deselectRowAtIndexPath:indexPath animated:YES];
-            BasePeopleObject *buddy = [weakSelf.searchController.resultsSource  objectAtIndex:indexPath.row];
-            NSDictionary *loginInfo = [[[EaseMob sharedInstance] chatManager] loginInfo];
-            NSString *loginUsername = [loginInfo objectForKey:kSDKUsername];
-            if (loginUsername && loginUsername.length > 0) {
-                if ([loginUsername isEqualToString:buddy.uid]) {
-                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"prompt", @"Prompt") message:NSLocalizedString(@"friend.notChatSelf", @"can't talk to yourself") delegate:nil cancelButtonTitle:NSLocalizedString(@"ok", @"OK") otherButtonTitles:nil, nil];
-                    [alertView show];
-                    return;
-                }
-            }
-            [weakSBar resignFirstResponder];
-            if ([buddy.rela isEqualToString:@"2"]){
-                return;
-            }
-            SHGPersonalViewController *controller = [[SHGPersonalViewController alloc] initWithNibName:@"SHGPersonalViewController" bundle:nil];
-            controller.hidesBottomBarWhenPushed = YES;
-            controller.userId = buddy.uid;
-            [weakSelf.navigationController pushViewController:controller animated:YES];
-        }];
-    }
-    
-    return _searchController;
-}
-
 - (UIView *)networkStateView
 {
     if (_networkStateView == nil) {
@@ -366,7 +248,7 @@ static NSString * const kCommonFNum			= @"commonnum";
         [_networkStateView addSubview:imageView];
         
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(imageView.frame) + 5, 0, _networkStateView.frame.size.width - (CGRectGetMaxX(imageView.frame) + 15), _networkStateView.frame.size.height)];
-        label.font = [UIFont systemFontOfSize:15.0];
+        label.font = FontFactor(15.0f);
         label.textColor = [UIColor grayColor];
         label.backgroundColor = [UIColor clearColor];
         label.text = NSLocalizedString(@"network.disconnection", @"Network disconnection");
@@ -466,100 +348,84 @@ static NSString * const kCommonFNum			= @"commonnum";
 
 #pragma mark - TableViewDelegate & TableViewDatasource
 
--(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    
-    if (self.chatListType == ChatListView){
-        static NSString *identify = @"chatListCell";
-        ChatListCell *cell = [tableView dequeueReusableCellWithIdentifier:identify];
-        
-        if (!cell){
-            cell = [[ChatListCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identify];
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+
+    static NSString *identify = @"chatListCell";
+    ChatListCell *cell = [tableView dequeueReusableCellWithIdentifier:identify];
+
+    if (!cell){
+        cell = [[ChatListCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identify];
+    }
+
+    if(indexPath.row == 0){
+        ChatModel *model = [[ChatModel alloc] init];
+        model.placeholderImage = [UIImage imageNamed:@"申请头像图标"];
+        model.name=@"群申请与通知";
+        model.imageURL=nil;
+        model.detailMsg=@"";
+        model.time=@"";
+        cell.model = model;
+        [cell.contentView addSubview:self.unapplyCountLabel];
+    } else if(indexPath.row==1){
+        ChatModel *model = [[ChatModel alloc] init];
+        model.placeholderImage = [UIImage imageNamed:@"消息通知"];
+        model.imageURL=nil;
+        model.name =@"通知";
+        model.detailMsg=@"";
+        model.time=@"";
+        cell.model = model;
+    } else{
+        ChatModel *model = [[ChatModel alloc] init];
+        cell.rightImage.hidden = YES;
+        EMConversation *conversation = [self.dataSource objectAtIndex:indexPath.row];
+        for (BasePeopleObject *obj in self.contactsSource) {
+            if ([obj.uid isEqualToString:conversation.chatter]){
+                model.name =  obj.name;
+            }
         }
-        
-        if(indexPath.row == 0){
-            ChatModel *model = [[ChatModel alloc] init];
-            model.placeholderImage = [UIImage imageNamed:@"申请头像图标"];
-            model.name=@"群申请与通知";
-            model.imageURL=nil;
-            model.detailMsg=@"";
-            model.time=@"";
-            cell.model = model;
-            [cell.contentView addSubview:self.unapplyCountLabel];
-        } else if(indexPath.row==1){
-            ChatModel *model = [[ChatModel alloc] init];
-            model.placeholderImage = [UIImage imageNamed:@"消息通知"];
-            model.imageURL=nil;
-            model.name =@"通知";
-            model.detailMsg=@"";
-            model.time=@"";
-            cell.model = model;
-        } else{
-            ChatModel *model = [[ChatModel alloc] init];
-            cell.rightImage.hidden = YES;
-            EMConversation *conversation = [self.dataSource objectAtIndex:indexPath.row];
-            for (BasePeopleObject *obj in self.contactsSource) {
-                if ([obj.uid isEqualToString:conversation.chatter]){
-                    model.name =  obj.name;
+        if (conversation.isGroup){
+            NSString *imageName = @"message_defaultImage";
+            NSArray *groupArray = [[EaseMob sharedInstance].chatManager groupList];
+            for (EMGroup *group in groupArray){
+                if ([group.groupId isEqualToString:conversation.chatter]){
+                    model.name = group.groupSubject;
+                    break;
                 }
             }
-            if (conversation.isGroup){
-                NSString *imageName = @"message_defaultImage";
-                NSArray *groupArray = [[EaseMob sharedInstance].chatManager groupList];
-                for (EMGroup *group in groupArray){
-                    if ([group.groupId isEqualToString:conversation.chatter]){
-                        model.name = group.groupSubject;
-                        break;
-                    }
-                }
-                model.imageURL = nil;
-                model.placeholderImage = [UIImage imageNamed:imageName];
-            } else{
-                NSArray *headUrl = [HeadImage queryAll:conversation.chatter];
-                if(headUrl.count > 0){
-                    HeadImage *hi = (HeadImage*)headUrl[0];
-                    if(![hi.headimg isEqual:@""]){
-                        model.placeholderImage = [UIImage imageNamed:@"default_head"];
-                        model.imageURL=[NSURL URLWithString:hi.headimg];
-                    } else{
-                        model.imageURL = nil;
-                        model.placeholderImage = [UIImage imageNamed:@"default_head"];
-                    }
-                    model.name=hi.nickname;
+            model.imageURL = nil;
+            model.placeholderImage = [UIImage imageNamed:imageName];
+        } else{
+            NSArray *headUrl = [HeadImage queryAll:conversation.chatter];
+            if(headUrl.count > 0){
+                HeadImage *hi = (HeadImage*)headUrl[0];
+                if(![hi.headimg isEqual:@""]){
+                    model.placeholderImage = [UIImage imageNamed:@"default_head"];
+                    model.imageURL=[NSURL URLWithString:hi.headimg];
                 } else{
-                    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-                        [self refreshFriendListWithUid:conversation.chatter];
-                    });
-                    
-                    model.name = @"";
                     model.imageURL = nil;
                     model.placeholderImage = [UIImage imageNamed:@"default_head"];
                 }
-                
+                model.name = hi.nickname;
+            } else{
+                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+                    [self refreshFriendListWithUid:conversation.chatter];
+                });
+
+                model.name = @"";
+                model.imageURL = nil;
+                model.placeholderImage = [UIImage imageNamed:@"default_head"];
             }
-            model.detailMsg = [self subTitleMessageByConversation:conversation];
-            model.time = [self lastMessageTimeByConversation:conversation];
-            model.unreadCount = [self unreadMessageCountByConversation:conversation];
-            cell.model = model;
+
         }
-        
-        return cell;
-    }else{
-        static NSString *CellIdentifier = @"ChatListTableViewCell";
-        ChatListTableViewCell *cell = (ChatListTableViewCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-        if (cell == nil) {
-            cell = [[[NSBundle mainBundle] loadNibNamed:CellIdentifier owner:self options:nil]objectAtIndex:0];
-        }
-        BasePeopleObject *buddy = [self.contactsSource objectAtIndex:indexPath.row];
-        if (self.chatListType == ContactListView){
-            cell.type = contactTypeFriend;
-        }else{
-            cell.type = contactTypeFriendTwain;
-        }
-        
-        [cell loadDataWithobj:buddy];
-        
-        return cell;
+        model.detailMsg = [self subTitleMessageByConversation:conversation];
+        model.time = [self lastMessageTimeByConversation:conversation];
+        model.unreadCount = [self unreadMessageCountByConversation:conversation];
+        cell.model = model;
     }
+
+    return cell;
+
 }
 
 -(void)refreshFriendListWithUid:(NSString *)userId
@@ -588,94 +454,62 @@ static NSString * const kCommonFNum			= @"commonnum";
         
     }];
 }
--(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    if (self.chatListType == ChatListView) {
-        return  self.dataSource.count;
-    }else if (self.chatListType == ContactListView){
-        return self.contactsSource.count;
-    }else{
-        return self.contactsSource.count;
-    }
-}
 
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    CGFloat height;
-    if (self.chatListType == ContactListView || self.chatListType == ContactTwainListView) {
-        height = 72.0f ;
-    } else{
-        height = MarginFactor(55.0f);
-    }
-    
-    return height;
+    return self.dataSource.count;
 }
 
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    return MarginFactor(55.0f);
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    if (self.chatListType == ChatListView){
-        if(indexPath.row==0){
-            ApplyViewController *vc=[ApplyViewController shareController];
-            [self.navigationController pushViewController:vc animated:YES];
-        } else if(indexPath.row==1){
-            MessageViewController *mViewController=[[MessageViewController alloc] init];
-            [self.navigationController pushViewController:mViewController animated:YES];
+    if(indexPath.row==0){
+        ApplyViewController *vc=[ApplyViewController shareController];
+        [self.navigationController pushViewController:vc animated:YES];
+    } else if(indexPath.row==1){
+        MessageViewController *mViewController=[[MessageViewController alloc] init];
+        [self.navigationController pushViewController:mViewController animated:YES];
+    } else{
+        EMConversation *conversation = [self.dataSource objectAtIndex:indexPath.row];
+        ChatViewController *chatController;
+        NSString *title = conversation.chatter;
+        if (conversation.isGroup) {
+            NSArray *groupArray = [[EaseMob sharedInstance].chatManager groupList];
+            for (EMGroup *group in groupArray) {
+                if ([group.groupId isEqualToString:conversation.chatter]) {
+                    title = group.groupSubject;
+                    break;
+                }
+            }
+        }
+        NSString *chatter = conversation.chatter;
+        NSString *titleName = @"";
+        chatController = [[ChatViewController alloc] initWithChatter:chatter isGroup:conversation.isGroup];
+        for (BasePeopleObject *obj in self.contactsSource) {
+            if ([obj.uid isEqualToString:conversation.chatter]) {
+                titleName = obj.name;
+            }
+        }
+        if (conversation.isGroup){
+            chatController.title = title;
         } else{
-            EMConversation *conversation = [self.dataSource objectAtIndex:indexPath.row];
-            ChatViewController *chatController;
-            NSString *title = conversation.chatter;
-            if (conversation.isGroup) {
-                NSArray *groupArray = [[EaseMob sharedInstance].chatManager groupList];
-                for (EMGroup *group in groupArray) {
-                    if ([group.groupId isEqualToString:conversation.chatter]) {
-                        title = group.groupSubject;
-                        break;
-                    }
-                }
-            }
-            NSString *chatter = conversation.chatter;
-            NSString *titleName = @"";
-            chatController = [[ChatViewController alloc] initWithChatter:chatter isGroup:conversation.isGroup];
-            for (BasePeopleObject *obj in self.contactsSource) {
-                if ([obj.uid isEqualToString:conversation.chatter]) {
-                    titleName = obj.name;
-                }
-            }
-            if (conversation.isGroup){
-                chatController.title = title;
-            } else{
-                chatController.title=titleName;
-            }
-            [self.navigationController pushViewController:chatController animated:YES];
+            chatController.title=titleName;
         }
-    } else if (self.chatListType == ContactListView || self.chatListType == ContactTwainListView){
-        BasePeopleObject *buddy = [self.contactsSource  objectAtIndex:indexPath.row];
-        NSDictionary *loginInfo = [[[EaseMob sharedInstance] chatManager] loginInfo];
-        NSString *loginUsername = [loginInfo objectForKey:kSDKUsername];
-        if (loginUsername && loginUsername.length > 0){
-            if ([loginUsername isEqualToString:buddy.uid]){
-                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"prompt", @"Prompt") message:NSLocalizedString(@"friend.notChatSelf", @"can't talk to yourself") delegate:nil cancelButtonTitle:NSLocalizedString(@"ok", @"OK") otherButtonTitles:nil, nil];
-                [alertView show];
-                return;
-            }
-        }
-        if ([buddy.rela isEqualToString:@"2"]){
-            return;
-        }
-        SHGPersonalViewController *controller = [[SHGPersonalViewController alloc] initWithNibName:@"SHGPersonalViewController" bundle:nil];
-        controller.hidesBottomBarWhenPushed = YES;
-        controller.userId = buddy.uid;
-        [self.navigationController pushViewController:controller animated:YES];
+        [self.navigationController pushViewController:chatController animated:YES];
     }
+
 }
 
--(BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath{
-    if(self.chatListType == ContactListView)
-    {
-        return NO;
-    }
-    NSInteger indexRow=indexPath.row;
-    if(indexRow==0||indexRow==1)
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSInteger indexRow = indexPath.row;
+    if(indexRow == 0 || indexRow == 1)
     {
         return NO;
     }
@@ -927,39 +761,33 @@ static NSString * const kCommonFNum			= @"commonnum";
         [Hud showMessageWithText:response.errorMessage];
     }];
 }
--(void)refreshDataSource
+
+- (void)refreshDataSource
 {
-    if(self.chatListType == ContactListView){
-        [self requestContact];
-    } else if (self.chatListType == ContactTwainListView){
-        [self requestTwainContact];
-    } else{
-        [self.dataSource removeAllObjects];
-        for(unsigned int i=0; i < 2; i++){
-            [self.dataSource addObject:[NSString stringWithFormat:@"%d",i]];
-        }
-        NSArray *dSource=[self loadDataSource];
-        for(unsigned int i=0;i<dSource.count;i++){
-            EMConversation *emc=dSource[i];
-            if ([emc loadAllMessages].count > 0){
-                [self.dataSource addObject:emc];
-            }
-        }
-        
-        if(IsArrEmpty(self.contactsSource)){
-            NSArray *arr = [HeadImage queryAll] ;
-            for (NSManagedObject *object in arr) {
-                BasePeopleObject *obj = [[BasePeopleObject alloc] init];
-                obj.uid = [object valueForKey:kUid];
-                obj.name = [object valueForKey:kNickName];
-                obj.headImageUrl = [object valueForKey:kHeadImg];
-                [self.contactsSource addObject:obj];
-            }
-            
-        }
-        [self.tableView reloadData];
-        
+    [self.dataSource removeAllObjects];
+    for(NSInteger i = 0; i < 2; i++){
+        [self.dataSource addObject:[NSString stringWithFormat:@"%ld",(long)i]];
     }
+    NSArray *dSource = [self loadDataSource];
+    for(NSInteger i = 0;i < dSource.count; i++){
+        EMConversation *emc = dSource[i];
+        if ([emc loadAllMessages].count > 0){
+            [self.dataSource addObject:emc];
+        }
+    }
+
+    if(IsArrEmpty(self.contactsSource)){
+        NSArray *arr = [HeadImage queryAll] ;
+        for (NSManagedObject *object in arr) {
+            BasePeopleObject *obj = [[BasePeopleObject alloc] init];
+            obj.uid = [object valueForKey:kUid];
+            obj.name = [object valueForKey:kNickName];
+            obj.headImageUrl = [object valueForKey:kHeadImg];
+            [self.contactsSource addObject:obj];
+        }
+    }
+    [self.tableView reloadData];
+
 }
 
 - (void)isConnect:(BOOL)isConnect{
@@ -1019,7 +847,7 @@ static NSString * const kCommonFNum			= @"commonnum";
     if (_unapplyCountLabel == nil) {
         _unapplyCountLabel = [[UILabel alloc] initWithFrame:CGRectMake(48, 3, 20, 20)];
         _unapplyCountLabel.textAlignment = NSTextAlignmentCenter;
-        _unapplyCountLabel.font = [UIFont systemFontOfSize:11];
+        _unapplyCountLabel.font = FontFactor(11.0f);
         _unapplyCountLabel.backgroundColor = [UIColor redColor];
         _unapplyCountLabel.textColor = [UIColor whiteColor];
         _unapplyCountLabel.layer.cornerRadius = _unapplyCountLabel.frame.size.height / 2;
@@ -1104,9 +932,9 @@ static NSString * const kCommonFNum			= @"commonnum";
         _segmentControl.enabled = YES;
         _segmentControl.layer.masksToBounds = YES;
         _segmentControl.layer.cornerRadius = 4;
-        NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor colorWithHexString:@"d53432"],NSForegroundColorAttributeName,[UIFont systemFontOfSize:15.0f],NSFontAttributeName ,nil];
+        NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor colorWithHexString:@"d53432"],NSForegroundColorAttributeName,FontFactor(15.0f),NSFontAttributeName ,nil];
 
-        NSDictionary *dic1 = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor],NSForegroundColorAttributeName,[UIFont systemFontOfSize:15.0f],NSFontAttributeName ,nil];
+        NSDictionary *dic1 = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor],NSForegroundColorAttributeName,FontFactor(15.0f),NSFontAttributeName ,nil];
         //设置标题的颜色 字体和大小 阴影和阴影颜色
         [_segmentControl setTitleTextAttributes:dic1 forState:UIControlStateNormal];
         [_segmentControl setTitleTextAttributes:dic forState:UIControlStateSelected];
@@ -1132,21 +960,15 @@ static NSString * const kCommonFNum			= @"commonnum";
 - (void)selected:(id)sender
 {
     UISegmentedControl* control = (UISegmentedControl*)sender;
-    [self.searchBar resignFirstResponder];
     switch (control.selectedSegmentIndex) {
-        case 0:
-        {
-            self.chatListType = ChatListView;
+        case 0:{
             self.tableView.hidden = NO;
-            self.searchBar.hidden = YES;
             self.tableView.frame= CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
             [self.view bringSubviewToFront:self.tableView];
             
         }
             break;
-        case 1:
-        {
-            self.searchBar.hidden = NO;
+        case 1:{
             self.tableView.hidden = YES;
             [self.view addSubview:self.groupVC.view];
         }
@@ -1161,29 +983,7 @@ static NSString * const kCommonFNum			= @"commonnum";
 {
     [self.view addSubview:self.tableView];
     [self addHeaderRefresh:self.tableView headerRefesh:YES andFooter:NO];
-    if (self.chatListType != ChatListView) {
-        UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        NSString *imageName ;
-        imageName = @"common_backImage";
-        [leftButton setBackgroundImage:[UIImage imageNamed:imageName] forState:UIControlStateNormal];
-        [leftButton sizeToFit];
-        [leftButton addTarget:self action:@selector(btnBackClick:) forControlEvents:UIControlEventTouchUpInside];
-        UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:leftButton];
-        self.navigationItem.leftBarButtonItem = leftItem;
-        
-        self.searchBar.hidden = NO;
-        self.tableView.tableHeaderView = self.searchBar;
-        rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        [rightButton setTitle:@"分组" forState:UIControlStateNormal];
-        [rightButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        [rightButton.titleLabel setFont:[UIFont systemFontOfSize:15.0f]];
-        [rightButton sizeToFit];
-        [rightButton addTarget:self action:@selector(searchTwainFriend) forControlEvents:UIControlEventTouchUpInside];
-        UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:rightButton];
-        self.navigationItem.rightBarButtonItem = rightItem;
-    } else{
-        self.navigationItem.titleView = self.titleView;
-    }
+    self.navigationItem.titleView = self.titleView;
 }
 
 - (void)actionInvite:(NSNotification *)noti
