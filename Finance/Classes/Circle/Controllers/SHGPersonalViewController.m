@@ -17,7 +17,7 @@
 #define kTagViewWidth 45.0f * XFACTOR
 #define kTagViewHeight 16.0f * XFACTOR
 #define kBottomViewLeftMargin 14.0f
-#define kHeaderViewHeight 82.0f * XFACTOR
+#define kHeaderViewHeight MarginFactor(82.0f)
 typedef NS_ENUM(NSInteger, SHGUserType) {
     //马甲号类型
     SHGUserTypeVest = 0,

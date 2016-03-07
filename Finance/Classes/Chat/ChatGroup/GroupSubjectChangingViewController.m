@@ -7,14 +7,18 @@
 //
 
 #import "GroupSubjectChangingViewController.h"
+#import "UIButton+EnlargeEdge.h"
 
 @interface GroupSubjectChangingViewController () <UITextFieldDelegate>
 {
     EMGroup         *_group;
     BOOL            _isOwner;
-    UITextField     *_subjectField;
+   
 }
-
+@property(nonatomic, strong) UIButton *saveButton;
+@property(nonatomic, strong) UITextField *subjectField;
+@property(nonatomic, strong) UIView *bgView;
+@property(nonatomic, strong) UIButton *deleteButton;
 @end
 
 @implementation GroupSubjectChangingViewController
@@ -28,7 +32,7 @@
         NSDictionary *loginInfo = [[[EaseMob sharedInstance] chatManager] loginInfo];
         NSString *loginUsername = [loginInfo objectForKey:kSDKUsername];
         _isOwner = [_group.owner isEqualToString:loginUsername];
-        self.view.backgroundColor = [UIColor whiteColor];
+        self.view.backgroundColor = [UIColor colorWithHexString:@"efeeef"];
     }
 
     return self;
@@ -39,42 +43,102 @@
     [super viewDidLoad];
 
     self.title = NSLocalizedString(@"title.groupSubjectChanging", @"Change group name");
-
+  
+    
     if (_isOwner)
     {
-        UIBarButtonItem *saveItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"save", @"Save") style:UIBarButtonItemStylePlain target:self action:@selector(save:)];
-        saveItem.tintColor = [UIColor blackColor];
-        [self.navigationItem setRightBarButtonItem:saveItem];
+        self.saveButton.hidden = NO;
+    } else{
+        self.subjectField.enabled = NO;
+        self.deleteButton.hidden = YES;
     }
+      [self initView];
+}
 
-    CGRect frame = CGRectMake(20, 30, self.view.frame.size.width - 40, 40);
-    _subjectField = [[UITextField alloc] initWithFrame:frame];
-    _subjectField.layer.cornerRadius = 5.0;
-    _subjectField.layer.borderWidth = 1.0;
-    _subjectField.layer.borderColor=[UIColor colorWithRed:236/255.0 green:236/255.0 blue:236/255.0 alpha:1.0f].CGColor;
-    _subjectField.placeholder = @"Please input group name";
-    _subjectField.text = _group.groupSubject;
-    if (!_isOwner)
-    {
-        _subjectField.enabled = NO;
+- (void)initView
+{
+    self.bgView.sd_layout
+    .topSpaceToView(self.view, 0.0f)
+    .leftSpaceToView(self.view, 0.0f)
+    .rightSpaceToView(self.view, 0.0f)
+    .heightIs(MarginFactor(50.0f));
+    
+    
+    UIImage * image = [UIImage imageNamed:@"me_deleteInput"];
+    CGSize  size = image.size;
+    self.deleteButton.sd_layout
+    .rightSpaceToView(self.bgView, MarginFactor(12.0f))
+    .centerYEqualToView(self.bgView)
+    .widthIs(size.width)
+    .heightIs(size.height);
+    
+    self.subjectField.sd_layout
+    .leftSpaceToView(self.bgView, MarginFactor(12.0f))
+    .topSpaceToView(self.bgView, 0.0f)
+    .rightSpaceToView(self.deleteButton,12.0f)
+    .heightIs(MarginFactor(50.0f));
+    
+    self.saveButton.sd_layout
+    .leftSpaceToView(self.view, MarginFactor(15.0f))
+    .rightSpaceToView(self.view, MarginFactor(15.0f))
+    .bottomSpaceToView(self.view, MarginFactor(15.0f))
+    .heightIs(MarginFactor(35.0f));
+}
+
+- (UITextField *)subjectField
+{
+    if (!_subjectField) {
+        _subjectField = [[UITextField alloc]init];
+        _subjectField.placeholder = @"请输入群组名称";
+        _subjectField.font = FontFactor(15.0f);
+        [_subjectField setValue:[UIColor colorWithHexString:@"D3D3D3"] forKeyPath:@"_placeholderLabel.textColor"];
+        _subjectField.text = _group.groupSubject;
+        _subjectField.textColor = [UIColor colorWithHexString:@"161616"];
+        _subjectField.delegate = self;
+        [self.bgView addSubview:_subjectField];
     }
-    frame.origin = CGPointMake(frame.size.width - 5.0, 0.0);
-    frame.size = CGSizeMake(5.0, 40.0);
-    UIView *holder = [[UIView alloc] initWithFrame:frame];
-    _subjectField.rightView = holder;
-    _subjectField.rightViewMode = UITextFieldViewModeAlways;
-    frame.origin = CGPointMake(0.0, 0.0);
-    holder = [[UIView alloc] initWithFrame:frame];
-    _subjectField.leftView = holder;
-    _subjectField.leftViewMode = UITextFieldViewModeAlways;
-    _subjectField.delegate = self;
-    [self.view addSubview:_subjectField];
+    return _subjectField;
+}
+
+- (UIButton *)saveButton
+{
+    if (!_saveButton) {
+        _saveButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        _saveButton.hidden = YES;
+        _saveButton.titleLabel.font = FontFactor(17.0f);
+        _saveButton.backgroundColor = [UIColor colorWithHexString:@"f04241"];
+        [_saveButton setTitle:@"保存" forState:UIControlStateNormal];
+        [_saveButton setTitleColor:[UIColor colorWithHexString:@"ffffff"] forState:UIControlStateNormal];
+        [_saveButton addTarget:self action:@selector(save:) forControlEvents:UIControlEventTouchUpInside];
+        [self.view addSubview:_saveButton];
+    }
+    return _saveButton;
+}
+
+- (UIButton *)deleteButton
+{
+    if (!_deleteButton) {
+        _deleteButton = [UIButton buttonWithType:UIButtonTypeCustom];
+       [_deleteButton setImage:[UIImage imageNamed:@"me_deleteInput"] forState:UIControlStateNormal];
+        [_deleteButton addTarget:self action:@selector(deleteClick:) forControlEvents:UIControlEventTouchUpInside];
+        [_deleteButton setEnlargeEdge:MarginFactor(10.0f)];
+        [self.bgView addSubview:_deleteButton];
+    }
+    return _deleteButton;
+}
+- (UIView *)bgView
+{
+    if (!_bgView) {
+        _bgView = [[UIView alloc] init];
+        _bgView.backgroundColor = [UIColor whiteColor];
+        [self.view addSubview:_bgView];
+    }
+    return _bgView;
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -82,6 +146,11 @@
     [super viewWillDisappear:animated];
 }
 
+- (void)deleteClick:(UIButton *)btn
+{
+    [self.subjectField resignFirstResponder];
+    self.subjectField.text = @"";
+}
 #pragma mark - UITextFieldDelegate
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {

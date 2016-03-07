@@ -15,7 +15,7 @@
     UISwitch *_pushSwitch;
     UISwitch *_blockSwitch;
 }
-
+@property (nonatomic, strong) UIButton *saveButton;
 @end
 
 @implementation GroupSettingViewController
@@ -48,25 +48,32 @@
     [super viewDidLoad];
     
     self.title = NSLocalizedString(@"title.groupSetting", @"Group Setting");
-    
     UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [leftButton setBackgroundImage:[UIImage imageNamed:@"common_backImage"] forState:UIControlStateNormal];
     [leftButton addTarget:self action:@selector(returnClick) forControlEvents:UIControlEventTouchUpInside];
     [leftButton sizeToFit];
-    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:leftButton];
-    self.navigationItem.leftBarButtonItem=rightItem;
-    
+    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:leftButton];
+    self.navigationItem.leftBarButtonItem=leftItem;
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     if (!_isOwner) {
-        UIBarButtonItem *saveItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"save", @"Save") style:UIBarButtonItemStylePlain target:self action:@selector(saveAction:)];
-        saveItem.tintColor = [UIColor blackColor];
-        [self.navigationItem setRightBarButtonItem:saveItem];
+        self.saveButton.hidden = NO;
+    } else{
+        self.saveButton.hidden = YES;
     }
     
+    UIImage * image = [UIImage imageNamed:@"switchOf"];
+    CGSize size = image.size;
     _pushSwitch = [[UISwitch alloc] init];
+    [_pushSwitch setOffImage:[UIImage imageNamed:@"switchOf"]];
+    [_pushSwitch setOnImage:[UIImage imageNamed:@"switchOn"]];
+    _pushSwitch.bounds = CGRectMake(0.0f, 0.0f, size.width, size.height);
     [_pushSwitch addTarget:self action:@selector(pushSwitchChanged:) forControlEvents:UIControlEventValueChanged];
     [_pushSwitch setOn:_group.isPushNotificationEnabled animated:YES];
     
     _blockSwitch = [[UISwitch alloc] init];
+    [_blockSwitch setOffImage:[UIImage imageNamed:@"switchOf"]];
+    [_blockSwitch setOnImage:[UIImage imageNamed:@"switchOn"]];
+    _blockSwitch.bounds = CGRectMake(0.0f, 0.0f, size.width, size.height);
     [_blockSwitch addTarget:self action:@selector(blockSwitchChanged:) forControlEvents:UIControlEventValueChanged];
     [_blockSwitch setOn:_group.isBlocked animated:YES];
     
@@ -74,6 +81,23 @@
     [self.tableView reloadData];
 }
 
+
+- (UIButton *)saveButton
+{
+    if (!_saveButton) {
+        _saveButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        _saveButton.frame = CGRectMake(MarginFactor(14.0f), self.view.frame.size.height - MarginFactor(15.0f + 35.0f) - 44.0f , SCREENWIDTH - 2 *MarginFactor(14.0f), MarginFactor(35.0f));
+        _saveButton.hidden = YES;
+        _saveButton.titleLabel.font = FontFactor(17.0f);
+        _saveButton.backgroundColor = [UIColor colorWithHexString:@"f04241"];
+        [_saveButton setTitle:@"保存" forState:UIControlStateNormal];
+        [_saveButton setTitleColor:[UIColor colorWithHexString:@"ffffff"] forState:UIControlStateNormal];
+        [_saveButton addTarget:self action:@selector(saveAction:) forControlEvents:UIControlEventTouchUpInside];
+        [self.view addSubview:_saveButton];
+
+    }
+    return _saveButton;
+}
 - (void) returnClick
 {
     [self.navigationController popViewControllerAnimated:YES];
@@ -123,10 +147,16 @@
     // Configure the cell...
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(MarginFactor(15.0f), MarginFactor(54.0f), SCREENWIDTH - CGRectGetMidX(cell.textLabel.frame) , 0.5f)];
+       lineView.backgroundColor = [UIColor colorWithHexString:@"e6e7e8"];
+        [cell.contentView addSubview:lineView];
     }
     
+    cell.textLabel.font = FontFactor(15.0f);
+    cell.textLabel.textColor = [UIColor colorWithHexString:@"111111"];
     if ((_isOwner && indexPath.row == 0) || (!_isOwner && indexPath.row == 1)) {
-        _pushSwitch.frame = CGRectMake(self.tableView.frame.size.width - (_pushSwitch.frame.size.width + 10), (cell.contentView.frame.size.height - _pushSwitch.frame.size.height) / 2, _pushSwitch.frame.size.width, _pushSwitch.frame.size.height);
+        _pushSwitch.frame = CGRectMake(self.tableView.frame.size.width - (_pushSwitch.frame.size.width + MarginFactor(12.0f)), (cell.contentView.frame.size.height - _pushSwitch.frame.size.height) / 2, _pushSwitch.frame.size.width, _pushSwitch.frame.size.height);
         
         if (_pushSwitch.isOn) {
             cell.textLabel.text = NSLocalizedString(@"group.setting.receiveAndPrompt", @"receive and prompt group of messages");
@@ -139,7 +169,7 @@
         [cell.contentView bringSubviewToFront:_pushSwitch];
     }
     else if(!_isOwner && indexPath.row == 0){
-        _blockSwitch.frame = CGRectMake(self.tableView.frame.size.width - (_blockSwitch.frame.size.width + 10), (cell.contentView.frame.size.height - _blockSwitch.frame.size.height) / 2, _blockSwitch.frame.size.width, _blockSwitch.frame.size.height);
+        _blockSwitch.frame = CGRectMake(self.tableView.frame.size.width - (_blockSwitch.frame.size.width + MarginFactor(12.0f)), (cell.contentView.frame.size.height - _blockSwitch.frame.size.height) / 2, _blockSwitch.frame.size.width, _blockSwitch.frame.size.height);
         
         cell.textLabel.text = NSLocalizedString(@"group.setting.blockMessage", @"shielding of the message");
         [cell.contentView addSubview:_blockSwitch];
@@ -153,7 +183,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 50;
+    return MarginFactor(55.0f);
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

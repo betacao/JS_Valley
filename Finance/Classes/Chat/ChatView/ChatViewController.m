@@ -31,7 +31,7 @@
 #import "DXChatBarMoreView.h"
 #import "ChatViewController+Category.h"
 #import "HeadImage.h"
-
+#import "SHGPersonalViewController.h"
 #define KPageCount 20
 
 @interface ChatViewController ()<UITableViewDataSource, UITableViewDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, SRRefreshDelegate, IChatManagerDelegate, DXChatBarMoreViewDelegate, DXMessageToolBarDelegate, LocationViewDelegate, IDeviceManagerDelegate>
@@ -421,7 +421,6 @@
                 cell.selectionStyle = UITableViewCellSelectionStyleNone;
             }
             cell.messageModel = model;
-            
             return cell;
         }
     }
@@ -501,17 +500,13 @@
     MessageModel *model = [userInfo objectForKey:KMESSAGEKEY];
     if ([eventName isEqualToString:kRouterEventTextURLTapEventName]) {
         [self chatTextCellUrlPressed:[userInfo objectForKey:@"url"]];
-    }
-    else if ([eventName isEqualToString:kRouterEventAudioBubbleTapEventName]) {
+    } else if ([eventName isEqualToString:kRouterEventAudioBubbleTapEventName]) {
         [self chatAudioCellBubblePressed:model];
-    }
-    else if ([eventName isEqualToString:kRouterEventImageBubbleTapEventName]){
+    } else if ([eventName isEqualToString:kRouterEventImageBubbleTapEventName]){
         [self chatImageCellBubblePressed:model];
-    }
-    else if ([eventName isEqualToString:kRouterEventLocationBubbleTapEventName]){
+    } else if ([eventName isEqualToString:kRouterEventLocationBubbleTapEventName]){
         [self chatLocationCellBubblePressed:model];
-    }
-    else if([eventName isEqualToString:kResendButtonTapEventName]){
+    } else if([eventName isEqualToString:kResendButtonTapEventName]){
         EMChatViewCell *resendCell = [userInfo objectForKey:kShouldResendCell];
         MessageModel *messageModel = resendCell.messageModel;
         messageModel.status = eMessageDeliveryState_Delivering;
@@ -522,9 +517,18 @@
         [self.tableView endUpdates];
         id <IChatManager> chatManager = [[EaseMob sharedInstance] chatManager];
         [chatManager asyncResendMessage:messageModel.message progress:nil];
-    }else if([eventName isEqualToString:kRouterEventChatCellVideoTapEventName]){
+    } else if([eventName isEqualToString:kRouterEventChatCellVideoTapEventName]){
         [self chatVideoCellPressed:model];
+    } else if([eventName isEqualToString:kRouterEventChatHeadImageTapEventName]){
+        NSString *userName = model.username;
+        if (!IsStrEmpty(userName)) {
+            SHGPersonalViewController *controller = [[SHGPersonalViewController alloc] initWithNibName:@"SHGPersonalViewController" bundle:nil];
+            controller.hidesBottomBarWhenPushed = YES;
+            controller.userId = userName;
+            [self.navigationController pushViewController:controller animated:YES];
+        }
     }
+    
 }
 
 //链接被点击

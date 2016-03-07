@@ -29,7 +29,15 @@
 @property (strong, nonatomic) UILabel *groupMemberTitleLabel;
 @property (strong, nonatomic) UISwitch *groupMemberSwitch;
 @property (strong, nonatomic) UILabel *groupMemberLabel;
-
+@property (strong, nonatomic) UIButton *addButton;
+@property (strong, nonatomic) UIView *mainFieldView;
+@property (strong, nonatomic) UIView *mainTextView;
+@property (strong, nonatomic) UIView *fieldTopLine;
+@property (strong, nonatomic) UIView *fieldBottomLine;
+@property (strong, nonatomic) UIView *viewTopLine;
+@property (strong, nonatomic) UIView *viewBottomLine;
+@property (strong, nonatomic) UIView *switchTopLine;
+@property (strong, nonatomic) UIView *switchBottomLine;
 @end
 
 @implementation CreateGroupViewController
@@ -55,119 +63,219 @@
     
     self.title = NSLocalizedString(@"title.createGroup", @"Create a group");
     self.view.backgroundColor = [UIColor colorWithRed:242/255.0 green:242/255.0 blue:242/255.0 alpha:1.0];
-    [self initTextField];
-    [self initTextView];
-    
-    UIButton *addButton = [[UIButton alloc] init];
-    addButton.titleLabel.font = [UIFont systemFontOfSize:15.0f];
-    [addButton setTitle:NSLocalizedString(@"group.create.addOccupant", @"add members") forState:UIControlStateNormal];
-    [addButton sizeToFit];
-    [addButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [addButton addTarget:self action:@selector(addContacts:) forControlEvents:UIControlEventTouchUpInside];
-    _rightItem = [[UIBarButtonItem alloc] initWithCustomView:addButton];
-    [self.navigationItem setRightBarButtonItem:_rightItem];
-    
-    [self.view addSubview:self.textField];
-    [self.view addSubview:self.textView];
-    [self.view addSubview:self.switchView];
+    [self loadInitView];
 }
 
-- (void)didReceiveMemoryWarning
+- (void)loadInitView
 {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    self.mainFieldView.sd_layout
+    .topSpaceToView(self.view, MarginFactor(10.0f))
+    .leftSpaceToView(self.view, 0.0f)
+    .rightSpaceToView(self.view, 0.0f)
+    .heightIs(MarginFactor(45.0f));
+    
+    self.mainTextView.sd_layout
+    .topSpaceToView(self.mainFieldView, MarginFactor(10.0f))
+    .leftEqualToView(self.mainFieldView)
+    .rightEqualToView(self.mainFieldView)
+    .heightIs(MarginFactor(82.0f));
+    
+    self.switchView.sd_layout
+    .topSpaceToView(self.mainTextView, MarginFactor(10.0f))
+    .leftEqualToView(self.mainTextView)
+    .rightEqualToView(self.mainTextView)
+    .heightIs(MarginFactor(45.0f));
+    
+    self.addButton.sd_layout
+    .leftSpaceToView(self.view, MarginFactor(15.0f))
+    .rightSpaceToView(self.view, MarginFactor(15.0f))
+    .bottomSpaceToView(self.view, MarginFactor(12.0f))
+    .heightIs(MarginFactor(35.0f));
+    
+    self.textField.sd_layout
+    .leftSpaceToView(self.mainFieldView, MarginFactor(12.0f))
+    .topSpaceToView(self.mainFieldView, 0.0f)
+    .rightSpaceToView(self.mainFieldView, MarginFactor(12.0f))
+    .bottomSpaceToView(self.mainFieldView, 0.0f);
+    
+    self.textView.sd_layout
+    .leftSpaceToView(self.mainTextView,MarginFactor(8.0f))
+    .topSpaceToView(self.mainTextView, 0.0f)
+    .rightSpaceToView(self.mainTextView, MarginFactor(12.0f))
+    .bottomSpaceToView(self.mainTextView, 0.0f);
+    
+    self.groupMemberTitleLabel.sd_layout
+    .leftSpaceToView(self.switchView, MarginFactor(12.0f))
+    .topSpaceToView(self.switchView, 0.0f)
+    .widthIs(MarginFactor(160.0f))
+    .heightIs(45.0f);
+    
+    UIImage *image = [UIImage imageNamed:@"switchOn"];
+    CGSize size = image.size;
+    self.groupMemberSwitch.sd_layout
+    .rightSpaceToView(self.switchView, MarginFactor(12.0f))
+    .centerYEqualToView(self.groupMemberTitleLabel)
+    .widthIs(size.width)
+    .heightIs(size.height);
+    
+    self.fieldTopLine.sd_layout
+    .topSpaceToView(self.mainFieldView, 0.0f)
+    .leftSpaceToView(self.mainFieldView, 0.0f)
+    .rightSpaceToView(self.mainFieldView, 0.0f)
+    .heightIs(0.5f);
+
+    self.viewTopLine.sd_layout
+    .topSpaceToView(self.mainTextView, 0.0f)
+    .leftSpaceToView(self.mainTextView, 0.0f)
+    .rightSpaceToView(self.mainTextView, 0.0f)
+    .heightIs(0.5f);
+    
+    self.SwitchTopLine.sd_layout
+    .topSpaceToView(self.switchView, 0.0f)
+    .leftSpaceToView(self.switchView, 0.0f)
+    .rightSpaceToView(self.switchView, 0.0f)
+    .heightIs(0.5f);
+    
+    self.fieldBottomLine.sd_layout
+    .bottomSpaceToView(self.mainFieldView, 0.0f)
+    .leftSpaceToView(self.mainFieldView, 0.0f)
+    .rightSpaceToView(self.mainFieldView, 0.0f)
+    .heightIs(0.5f);
+
+    self.ViewBottomLine.sd_layout
+    .bottomSpaceToView(self.mainTextView, 0.0f)
+    .leftSpaceToView(self.mainTextView, 0.0f)
+    .rightSpaceToView(self.mainTextView, 0.0f)
+    .heightIs(0.5f);
+    
+    self.switchBottomLine.sd_layout
+    .bottomSpaceToView(self.switchView, 0.0f)
+    .leftSpaceToView(self.switchView, 0.0f)
+    .rightSpaceToView(self.switchView, 0.0f)
+    .heightIs(0.5f);
+    
+}
+- (UIView *)mainFieldView
+{
+    if (!_mainFieldView) {
+        _mainFieldView = [[UIView alloc]init];
+        _mainFieldView.backgroundColor=[UIColor whiteColor];
+        _fieldTopLine= [[UIView alloc]init];
+        _fieldTopLine.backgroundColor = [UIColor colorWithHexString:@"e7e5e7"];
+        [_mainFieldView addSubview:_fieldTopLine];
+        _fieldBottomLine= [[UIView alloc]init];
+        _fieldBottomLine.backgroundColor = [UIColor colorWithHexString:@"e7e5e7"];
+        [_mainFieldView addSubview:_fieldBottomLine];
+        
+        [self.view addSubview:_mainFieldView];
+    }
+    return _mainFieldView;
+}
+- (UIView *)mainTextView
+{
+    if (!_mainTextView) {
+        _mainTextView = [[UIView alloc]init];
+        _mainTextView.backgroundColor=[UIColor whiteColor];
+        _viewTopLine= [[UIView alloc]init];
+        _viewTopLine.backgroundColor = [UIColor colorWithHexString:@"e7e5e7"];
+        [_mainTextView addSubview:_viewTopLine];
+        _viewBottomLine= [[UIView alloc]init];
+        _viewBottomLine.backgroundColor = [UIColor colorWithHexString:@"e7e5e7"];
+        [_mainTextView addSubview:_viewBottomLine];
+        [self.view addSubview:_mainTextView];
+    }
+    return _mainTextView;
 }
 
-#pragma mark - getter
-
-- (void) initTextField
+- (UITextField *)textField
 {
-    if (_textField == nil) {
-        
-        UIView *mainV=[[UIView alloc] initWithFrame:CGRectMake(0, 10, SCREENWIDTH, 40)];
-        mainV.backgroundColor=[UIColor whiteColor];
-        
-        _textField = [[UITextField alloc] initWithFrame:CGRectMake(10, 10, SCREENWIDTH-20, 40)];
-//        _textField.layer.borderColor = [[UIColor lightGrayColor] CGColor];
-//        _textField.layer.borderWidth = 0.5;
-//        _textField.layer.cornerRadius = 3;
-        _textField.leftView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 5, 30)];
+    if (!_textField) {
+        _textField = [[UITextField alloc] init];
         _textField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
-        _textField.leftViewMode = UITextFieldViewModeAlways;
         _textField.clearButtonMode = UITextFieldViewModeWhileEditing;
-        _textField.font = [UIFont systemFontOfSize:15.0];
+        _textField.textColor = [UIColor colorWithHexString:@"606060"];
+        _textField.font = FontFactor(15.0f);
         _textField.backgroundColor = [UIColor clearColor];
         _textField.placeholder = NSLocalizedString(@"group.create.inputName", @"please enter the group name");
+        [self.textField setValue:[UIColor colorWithHexString:@"D3D3D3"] forKeyPath:@"_placeholderLabel.textColor"];
         _textField.returnKeyType = UIReturnKeyDone;
         _textField.delegate = self;
         
-        [mainV addSubview:_textField];
-        [self.view addSubview:mainV];
+        [self.mainFieldView addSubview:_textField];
     }
+    return _textField;
 }
 
-- (void) initTextView
+- (EMTextView *)textView
 {
-    if (_textView == nil) {
-        
-        UIView *mainV=[[UIView alloc] initWithFrame:CGRectMake(0, 65, SCREENWIDTH, 80)];
-        mainV.backgroundColor=[UIColor whiteColor];
-        
-        _textView = [[EMTextView alloc] initWithFrame:CGRectMake(10, 65, SCREENWIDTH-20, 80)];
-//        _textView.layer.borderColor = [[UIColor lightGrayColor] CGColor];
-//        _textView.layer.borderWidth = 0.5;
-//        _textView.layer.cornerRadius = 3;
-        _textView.font = [UIFont systemFontOfSize:14.0];
+    if (!_textView ) {
+        _textView = [[EMTextView alloc] init];
+        _textView.textColor = [UIColor colorWithHexString:@"606060"];
+        _textView.font = FontFactor(15.0f);
+        _textView.textAlignment = NSTextAlignmentLeft;
         _textView.backgroundColor = [UIColor clearColor];
         _textView.placeholder = NSLocalizedString(@"group.create.inputDescribe", @"please enter a group description");
         _textView.returnKeyType = UIReturnKeyDone;
         _textView.delegate = self;
-        
-        [mainV addSubview:_textView];
-        [self.view addSubview:mainV];
+        [self.mainTextView addSubview:_textView];
     }
-    
-//    return _textView;
+    return _textView;
 }
 
+- (UIButton *)addButton
+{
+    if (!_addButton) {
+        _addButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [_addButton setBackgroundColor:[UIColor colorWithHexString:@"f04241"]];
+        [_addButton setTitle:NSLocalizedString(@"group.create.addOccupant", @"add members") forState:UIControlStateNormal];
+        [_addButton sizeToFit];
+        [_addButton setTitleColor:[UIColor colorWithHexString:@"ffffff"] forState:UIControlStateNormal];
+        [_addButton addTarget:self action:@selector(addContacts:) forControlEvents:UIControlEventTouchUpInside];
+        [self.view addSubview:_addButton];
+    }
+    return _addButton;
+}
 - (UIView *)switchView
 {
     if (_switchView == nil) {
-        _switchView = [[UIView alloc] initWithFrame:CGRectMake(0, 160, SCREENWIDTH, 55.0f)];
+        _switchView = [[UIView alloc] init];
         _switchView.backgroundColor = [UIColor whiteColor];
-        
-        CGFloat oY = 10;
-//        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(15, oY, 100, 35)];
-//        label.backgroundColor = [UIColor clearColor];
-//        label.font = [UIFont systemFontOfSize:16.0];
-//        label.text = @"是否公开";
-//        [_switchView addSubview:label];
-        
-//        UISwitch *switchControl = [[UISwitch alloc] initWithFrame:CGRectMake(SCREENWIDTH-80, oY, 50, _switchView.frame.size.height)];
-//        [switchControl addTarget:self action:@selector(groupTypeChange:) forControlEvents:UIControlEventValueChanged];
-//        [switchControl setOnTintColor:[UIColor colorWithRed:245 / 255.0 green:93 / 255.0 blue:88 / 255.0 alpha:1.0]];
-//        [_switchView addSubview:switchControl];
-        
-//        UIView *lineV=[[UIView alloc] initWithFrame:CGRectMake(0, 47, SCREENWIDTH, 0.5)];
-//        lineV.backgroundColor=[UIColor colorWithRed:242/255.0 green:242/255.0 blue:242/255.0 alpha:1.0];
-//        [_switchView addSubview:lineV];
-        
-//        oY += (35 + 10);
-        _groupMemberTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, oY, 160, 35)];
-        _groupMemberTitleLabel.font = [UIFont systemFontOfSize:16.0];
-        _groupMemberTitleLabel.backgroundColor = [UIColor clearColor];
-        _groupMemberTitleLabel.text = @"开放群成员邀请";
-        [_switchView addSubview:_groupMemberTitleLabel];
-        
-        _groupMemberSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(SCREENWIDTH-80, oY, 50, 35)];
-        [_groupMemberSwitch addTarget:self action:@selector(groupMemberChange:) forControlEvents:UIControlEventValueChanged];
-        [_groupMemberSwitch setOnTintColor:[UIColor colorWithRed:245 / 255.0 green:93 / 255.0 blue:88 / 255.0 alpha:1.0]];
-        [_switchView addSubview:_groupMemberSwitch];
+        _switchTopLine= [[UIView alloc]init];
+        _switchTopLine.backgroundColor = [UIColor colorWithHexString:@"e7e5e7"];
+        [_switchView addSubview:_switchTopLine];
+         _switchBottomLine= [[UIView alloc]init];
+        _switchBottomLine.backgroundColor = [UIColor colorWithHexString:@"e7e5e7"];
+        [_switchView addSubview:_switchBottomLine];
+        [self.view addSubview:_switchView];
     }
     
     return _switchView;
 }
 
+- (UILabel *)groupMemberTitleLabel
+{
+    if (!_groupMemberTitleLabel) {
+        _groupMemberTitleLabel = [[UILabel alloc] init];
+        _groupMemberTitleLabel.font = FontFactor(15.0f);
+        _groupMemberTitleLabel.backgroundColor = [UIColor clearColor];
+        _groupMemberTitleLabel.text = @"开放群成员邀请";
+        _groupMemberTitleLabel.textColor = [UIColor colorWithHexString:@"606060"];
+        [self.switchView addSubview:_groupMemberTitleLabel];
+    }
+    return _groupMemberTitleLabel;
+}
+
+- (UISwitch *)groupMemberSwitch
+{
+    if (!_groupMemberSwitch) {
+         _groupMemberSwitch = [[UISwitch alloc] init];
+        [_groupMemberSwitch addTarget:self action:@selector(groupMemberChange:) forControlEvents:UIControlEventValueChanged];
+        [self.groupMemberSwitch setOnImage:[UIImage imageNamed:@"switchOn"]];
+        [self.groupMemberSwitch setOffImage:[UIImage imageNamed:@"switchOf"]];
+        [self.switchView addSubview:_groupMemberSwitch];
+    }
+    return _groupMemberSwitch;
+}
 #pragma mark - UITextFieldDelegate
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
