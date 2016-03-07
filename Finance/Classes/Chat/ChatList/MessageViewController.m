@@ -21,19 +21,20 @@
 }
 
 @property (strong, nonatomic) UITableView *tableView;
-@property(nonatomic,strong)MessageTableViewCell *prototypeCell;
+@property (strong, nonatomic) MessageTableViewCell *prototypeCell;
 @end
 
 @implementation MessageViewController
 
--(void)viewWillAppear:(BOOL)animated
+- (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     [MobClick event:@"MessageViewController" label:@"onClick"];
 }
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
-    self.title=@"通知";
+    self.title = @"通知";
     UINib *cellNib = [UINib nibWithNibName:@"MessageTableViewCell" bundle:nil];
     [self.tableView registerNib:cellNib forCellReuseIdentifier:@"Cell"];
     self.prototypeCell  = [self.tableView dequeueReusableCellWithIdentifier:@"Cell"];
@@ -41,8 +42,7 @@
     [self.view addSubview:self.tableView];
     [self addHeaderRefresh:self.tableView headerRefesh:YES andFooter:YES];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshData) name:NOTIFI_SENDPOST object:nil];
-    [self requestDataWithTarget:@"first" time:@"-1"];
-    [self.tableView reloadData];
+    [self refreshData];
 }
 
 - (void)refreshData
@@ -53,17 +53,17 @@
 - (UITableView *)tableView
 {
     if (_tableView == nil) {
-        _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, CGRectGetHeight(self.view.frame)) style:UITableViewStylePlain];
-        _tableView.backgroundColor = [UIColor colorWithHexString:@"efefef"];
+        _tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
+        _tableView.backgroundColor = [UIColor whiteColor];
         _tableView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
         _tableView.delegate = self;
         _tableView.dataSource = self;
         _tableView.tableFooterView = [[UIView alloc] init];
-        _tableView.separatorInset=UIEdgeInsetsMake(0, 0, 0, 0);
     }
     
     return _tableView;
 }
+
 -(void)requestDataWithTarget:(NSString *)target time:(NSString *)time
 {
     [Hud showLoadingWithMessage:@"加载中"];
@@ -120,26 +120,23 @@
     }];
 }
 
--(void)endrefresh
+- (void)endrefresh
 {
     [self.tableView.footer endRefreshing];
-
 }
 
--(void)refreshHeader
+- (void)refreshHeader
 {
     NSLog(@"refreshHeader");
     _target = @"refresh";
-    if (self.dataArr.count > 0)
-    {
+    if (self.dataArr.count > 0){
         MessageObj *obj = self.dataArr[0];
         [self requestDataWithTarget:@"refresh" time:obj.time];
-    }
-    else
-    {
+    } else{
         [self requestDataWithTarget:@"first" time:@"-1"];
     }
 }
+
 -(void)chageValue
 {
     hasRequestFailed = NO;

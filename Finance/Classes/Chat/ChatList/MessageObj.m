@@ -22,17 +22,15 @@ const CGFloat kMargin = 128.0f;
 - (CGFloat)heightForCell
 {
     CGSize size = [self.content sizeWithSize:CGSizeMake(kContentWidth * XFACTOR, CGFLOAT_MAX) font:contentLabelFont];
-    
     return size.height + kMargin;
 }
 
 @end
 
 @implementation SHGFriendGropingObject
-+ (NSDictionary *)JSONKeyPathsByPropertyKey{
-    return  @{@"module": @"module",
-              @"counts":@"counts"
-              };
++ (NSDictionary *)JSONKeyPathsByPropertyKey
+{
+    return  @{@"module": @"module", @"counts":@"counts"};
 }
 
 

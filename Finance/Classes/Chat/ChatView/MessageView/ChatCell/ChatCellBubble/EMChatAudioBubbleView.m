@@ -87,10 +87,7 @@ NSString *const kRouterEventAudioBubbleTapEventName = @"kRouterEventAudioBubbleT
         frame.origin.x = ANIMATION_TIME_IMAGEVIEW_PADDING + BUBBLE_ARROW_WIDTH + _animationImageView.frame.size.width + _animationImageView.frame.origin.x;
         frame.origin.y = _animationImageView.center.y - frame.size.height / 2;
         _timeLabel.frame = frame;
-        frame.origin.x += frame.size.width - _isReadView.frame.size.width / 2;
-        frame.origin.y = - _isReadView.frame.size.height / 2;
-        frame.size = _isReadView.frame.size;
-        _isReadView.frame = frame;
+        _isReadView.center = CGPointMake(CGRectGetMaxX(self.bounds), CGRectGetMinY(self.bounds));
     }
 }
 

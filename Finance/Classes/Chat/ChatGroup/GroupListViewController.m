@@ -139,10 +139,8 @@
             }
             
             EMGroup *group = [weakSelf.searchController.resultsSource objectAtIndex:indexPath.row];
-            if(group!=nil&&![@"-1" isEqualToString:group.groupId])
-            {
-                NSString *imageName = @"群头像图标";
-                cell.imageView.image = [UIImage imageNamed:imageName];
+            if(group!=nil && ![@"-1" isEqualToString:group.groupId]){
+                cell.imageView.image = [UIImage imageNamed:@"message_defaultImage"];
                 cell.textLabel.text = group.groupSubject;
             }
             

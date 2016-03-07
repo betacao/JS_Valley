@@ -144,7 +144,7 @@ static BOOL isFetchingPublicGroupList = NO;
             }
             
             EMGroup *group = [weakSelf.searchController.resultsSource objectAtIndex:indexPath.row];
-            NSString *imageName = group.isPublic ? @"群头像图标" : @"群头像图标";
+            NSString *imageName = @"message_defaultImage";
             cell.imageView.image = [UIImage imageNamed:imageName];
             cell.textLabel.text = group.groupSubject;
             
@@ -187,18 +187,16 @@ static BOOL isFetchingPublicGroupList = NO;
 {
     static NSString *CellIdentifier = @"GroupCell";
     BaseTableViewCell *cell = (BaseTableViewCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    
-    // Configure the cell...
+
     if (cell == nil) {
         cell = [[BaseTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     
     EMGroup *group = [self.dataSource objectAtIndex:indexPath.row];
-    cell.imageView.image = [UIImage imageNamed:@"群头像图标"];
+    cell.imageView.image = [UIImage imageNamed:@"message_defaultImage"];
     if (group.groupSubject && group.groupSubject.length > 0) {
         cell.textLabel.text = group.groupSubject;
-    }
-    else {
+    } else {
         cell.textLabel.text = group.groupId;
     }
     

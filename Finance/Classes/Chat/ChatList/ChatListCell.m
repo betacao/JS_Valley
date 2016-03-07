@@ -19,7 +19,7 @@
 @property (strong, nonatomic) UILabel *detailLabel;
 @property (strong, nonatomic) UIView *lineView;
 @property (strong, nonatomic) UILabel *nameLabel;
-@property (strong, nonatomic) UIImageView *headerImageVIew;
+@property (strong, nonatomic) UIImageView *headerImageView;
 
 @end
 
@@ -37,29 +37,23 @@
 
 - (void)loadView
 {
-    self.headerImageVIew.sd_layout
+    self.headerImageView.sd_layout
     .leftSpaceToView(self.contentView, MarginFactor(12.0f))
     .centerYEqualToView(self.contentView)
     .widthIs(MarginFactor(35.0f))
     .heightIs(MarginFactor(35.0f));
     
     self.unreadLabel.sd_layout
-    .centerXIs(self.headerImageVIew.frame.size.width + MarginFactor(12.0f))
-    .centerYIs(self.headerImageVIew.frame.origin.y + MarginFactor(12.0f));
+    .centerXIs(self.headerImageView.frame.size.width + MarginFactor(12.0f))
+    .centerYIs(self.headerImageView.frame.origin.y + MarginFactor(12.0f));
 //    .widthIs(MarginFactor(16.0f))
 //    .heightIs(MarginFactor(16.0f));
     
     self.nameLabel.sd_layout
-    .leftSpaceToView(self.headerImageVIew, MarginFactor(10.0f))
-    .centerYEqualToView(self.headerImageVIew)
+    .leftSpaceToView(self.headerImageView, MarginFactor(10.0f))
+    .centerYEqualToView(self.headerImageView)
     .autoHeightRatio(0.0f);
     [self.nameLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
-    
-    self.timeLabel.sd_layout
-    .rightSpaceToView(self.contentView, MarginFactor(12.0f))
-    .bottomEqualToView(self.nameLabel)
-    .autoHeightRatio(0.0f);
-    [self.timeLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
 
     UIImage *image = [UIImage imageNamed:@"accessoryView"];
     CGSize size = image.size;
@@ -70,13 +64,13 @@
     .heightIs(size.height);
     
     self.detailLabel.sd_layout
-    .leftSpaceToView(self.headerImageVIew, MarginFactor(10.0f))
-    .bottomEqualToView(self.headerImageVIew)
+    .leftSpaceToView(self.headerImageView, MarginFactor(10.0f))
+    .bottomEqualToView(self.headerImageView)
     .autoHeightRatio(0.0f);
     [self.detailLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
     
     self.lineView.sd_layout
-    .leftEqualToView(self.headerImageVIew)
+    .leftEqualToView(self.headerImageView)
     .rightSpaceToView(self.contentView, 0.0f)
     .bottomSpaceToView(self.contentView, 0.5f)
     .heightIs(0.5f);
@@ -84,13 +78,13 @@
      //[self setupAutoHeightWithBottomView:self.lineView bottomMargin:0.0f];
 }
 
-- (UIImageView *)headerImageVIew
+- (UIImageView *)headerImageView
 {
-    if (!_headerImageVIew) {
-        _headerImageVIew = [[UIImageView alloc]init];
-        [self.contentView addSubview:_headerImageVIew];
+    if (!_headerImageView) {
+        _headerImageView = [[UIImageView alloc]init];
+        [self.contentView addSubview:_headerImageView];
     }
-    return _headerImageVIew;
+    return _headerImageView;
 }
 
 - (UILabel *)nameLabel
@@ -99,7 +93,7 @@
         _nameLabel = [[UILabel alloc]init];
         _nameLabel.backgroundColor = [UIColor clearColor];
         _nameLabel.textColor = [UIColor colorWithHexString:@"161616"];
-        _nameLabel.font = FontFactor(13.0f);
+        _nameLabel.font = FontFactor(15.0f);
         [self.contentView addSubview:_nameLabel];
     }
     return _nameLabel;
@@ -112,8 +106,8 @@
         _unreadLabel.backgroundColor = [UIColor redColor];
         _unreadLabel.textColor = [UIColor whiteColor];
         _unreadLabel.textAlignment = NSTextAlignmentCenter;
-        self.unreadLabel.layer.cornerRadius = CGRectGetWidth(self.unreadLabel.frame) / 2.0f;
-        self.unreadLabel.layer.masksToBounds = YES;
+        _unreadLabel.layer.cornerRadius = CGRectGetWidth(_unreadLabel.frame) / 2.0f;
+        _unreadLabel.layer.masksToBounds = YES;
         _unreadLabel.font = FontFactor(12.0f);
         [self.contentView addSubview:_unreadLabel];
     }
@@ -124,7 +118,7 @@
 {
     if (!_timeLabel) {
         _timeLabel = [[UILabel alloc] init];
-        _timeLabel.font = FontFactor(10.0f);
+        _timeLabel.font = FontFactor(12.0f);
         _timeLabel.textColor = [UIColor colorWithHexString:@"919291"];
         _timeLabel.backgroundColor = [UIColor clearColor];
         _timeLabel.textAlignment = NSTextAlignmentRight;
@@ -138,12 +132,13 @@
     if (!_detailLabel) {
         _detailLabel = [[UILabel alloc] init];
         _detailLabel.backgroundColor = [UIColor clearColor];
-        _detailLabel.font = FontFactor(12.0f);
+        _detailLabel.font = FontFactor(13.0f);
         _detailLabel.textColor = [UIColor colorWithHexString:@"919291"];
         [self.contentView addSubview:_detailLabel];
     }
     return _detailLabel;
 }
+
 - (UIView *)lineView
 {
     if (!_lineView) {
@@ -163,6 +158,7 @@
     }
     return _rightImage;
 }
+
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
     [super setSelected:selected animated:animated];
@@ -181,36 +177,39 @@
 - (void)setModel:(ChatModel *)model
 {
     _model = model;
+
+    self.nameLabel.frame = CGRectZero;
+    self.detailLabel.frame = CGRectZero;
+    self.timeLabel.frame = CGRectZero;
+
     self.nameLabel.text = model.name;
-    [self.headerImageVIew sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,model.imageURL]] placeholderImage:model.placeholderImage];
-    self.nameLabel.text = model.name;
-    [self.nameLabel sizeToFit];
+    self.detailLabel.text = model.detailMsg;
+    self.timeLabel.text = model.time;
+
+    [self.headerImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,model.imageURL]] placeholderImage:model.placeholderImage];
+
     if([model.name isEqualToString:@"群申请与通知"] || [model.name isEqualToString:@"通知"]){
         self.nameLabel.sd_resetLayout
-        .leftSpaceToView(self.headerImageVIew, MarginFactor(10.0f))
-        .centerYEqualToView(self.headerImageVIew)
+        .leftSpaceToView(self.headerImageView, MarginFactor(10.0f))
+        .centerYEqualToView(self.headerImageView)
         .autoHeightRatio(0.0f);
         [self.nameLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
         
     } else{
         self.nameLabel.sd_resetLayout
-        .leftSpaceToView(self.headerImageVIew, MarginFactor(10.0f))
-        .topEqualToView(self.headerImageVIew)
+        .leftSpaceToView(self.headerImageView, MarginFactor(10.0f))
+        .topEqualToView(self.headerImageView)
         .autoHeightRatio(0.0f);
         [self.nameLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
-        
-//        self.timeLabel.sd_resetLayout
-//        .rightSpaceToView(self.contentView, MarginFactor(12.0f))
-//        .bottomEqualToView(self.nameLabel)
-//        .autoHeightRatio(0.0f);
-//        [self.timeLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
 
     }
-    
-    self.detailLabel.text = model.detailMsg;
-    [self.detailLabel sizeToFit];
-    self.timeLabel.text = model.time;
-    [self.timeLabel sizeToFit];
+
+    self.timeLabel.sd_resetLayout
+    .rightSpaceToView(self.contentView, MarginFactor(12.0f))
+    .bottomEqualToView(self.nameLabel)
+    .autoHeightRatio(0.0f);
+    [self.timeLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
+
     if (model.unreadCount > 0){
         if (model.unreadCount < 9){
             self.unreadLabel.font = FontFactor(13.0f);

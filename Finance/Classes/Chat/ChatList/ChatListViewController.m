@@ -487,7 +487,7 @@ static NSString * const kCommonFNum			= @"commonnum";
             [cell.contentView addSubview:self.unapplyCountLabel];
         } else if(indexPath.row==1){
             ChatModel *model = [[ChatModel alloc] init];
-            model.placeholderImage=[UIImage imageNamed:@"消息通知"];
+            model.placeholderImage = [UIImage imageNamed:@"消息通知"];
             model.imageURL=nil;
             model.name =@"通知";
             model.detailMsg=@"";
@@ -498,38 +498,30 @@ static NSString * const kCommonFNum			= @"commonnum";
             cell.rightImage.hidden = YES;
             EMConversation *conversation = [self.dataSource objectAtIndex:indexPath.row];
             for (BasePeopleObject *obj in self.contactsSource) {
-                if ([obj.uid isEqualToString:conversation.chatter])
-                {
+                if ([obj.uid isEqualToString:conversation.chatter]){
                     model.name =  obj.name;
                 }
             }
-            if (conversation.isGroup)
-            {
-                NSString *imageName = @"群头像图标";
+            if (conversation.isGroup){
+                NSString *imageName = @"message_defaultImage";
                 NSArray *groupArray = [[EaseMob sharedInstance].chatManager groupList];
-                for (EMGroup *group in groupArray)
-                {
-                    if ([group.groupId isEqualToString:conversation.chatter])
-                    {
+                for (EMGroup *group in groupArray){
+                    if ([group.groupId isEqualToString:conversation.chatter]){
                         model.name = group.groupSubject;
                         break;
                     }
                 }
-                model.imageURL=nil;
+                model.imageURL = nil;
                 model.placeholderImage = [UIImage imageNamed:imageName];
-            }
-            else{
-                NSArray *headUrl=[HeadImage queryAll:conversation.chatter];
-                if(headUrl.count>0)
-                {
-                    HeadImage *hi=(HeadImage*)headUrl[0];
-                    if(![hi.headimg isEqual:@""])
-                    {
+            } else{
+                NSArray *headUrl = [HeadImage queryAll:conversation.chatter];
+                if(headUrl.count > 0){
+                    HeadImage *hi = (HeadImage*)headUrl[0];
+                    if(![hi.headimg isEqual:@""]){
                         model.placeholderImage = [UIImage imageNamed:@"default_head"];
                         model.imageURL=[NSURL URLWithString:hi.headimg];
-                    }else
-                    {
-                        model.imageURL=nil;
+                    } else{
+                        model.imageURL = nil;
                         model.placeholderImage = [UIImage imageNamed:@"default_head"];
                     }
                     model.name=hi.nickname;
@@ -612,7 +604,7 @@ static NSString * const kCommonFNum			= @"commonnum";
     if (self.chatListType == ContactListView || self.chatListType == ContactTwainListView) {
         height = 72.0f ;
     } else{
-        height = MarginFactor(58.0f);
+        height = MarginFactor(55.0f);
     }
     
     return height;

@@ -21,6 +21,6 @@ typedef NS_ENUM(NSInteger, MessageType){
 @property (strong, nonatomic) IBOutlet UIView *lineView;
 @property (strong, nonatomic) IBOutlet UIView *bgView;
 
--(void)loadDatasWithObj:(MessageObj *)obj;
+- (void)loadDatasWithObj:(MessageObj *)obj;
 
 @end

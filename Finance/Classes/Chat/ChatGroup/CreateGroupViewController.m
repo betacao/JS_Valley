@@ -130,7 +130,7 @@
     .rightSpaceToView(self.mainTextView, 0.0f)
     .heightIs(0.5f);
     
-    self.SwitchTopLine.sd_layout
+    self.switchTopLine.sd_layout
     .topSpaceToView(self.switchView, 0.0f)
     .leftSpaceToView(self.switchView, 0.0f)
     .rightSpaceToView(self.switchView, 0.0f)
@@ -142,7 +142,7 @@
     .rightSpaceToView(self.mainFieldView, 0.0f)
     .heightIs(0.5f);
 
-    self.ViewBottomLine.sd_layout
+    self.viewBottomLine.sd_layout
     .bottomSpaceToView(self.mainTextView, 0.0f)
     .leftSpaceToView(self.mainTextView, 0.0f)
     .rightSpaceToView(self.mainTextView, 0.0f)
