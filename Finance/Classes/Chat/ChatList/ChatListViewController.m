@@ -819,24 +819,22 @@ static NSString * const kCommonFNum			= @"commonnum";
 -(void)requestContact
 {
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
-    
-    NSDictionary *param = @{@"uid":uid,
-                            @"pagenum":[NSNumber numberWithInteger:pageNum],
-                            @"pagesize":@15};
+
+    NSDictionary *param = @{@"uid":uid, @"pagenum":[NSNumber numberWithInteger:pageNum], @"pagesize":@15};
     [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"friends/level/one"] parameters:param success:^(MOCHTTPResponse *response) {
         if(!response.dataArray.count>0){
             hasMoreData = NO;
         } else{
             hasMoreData = YES;
         }
-        
+
         if(response.dataArray.count>0){
             if (pageNum == 1) {
                 [self.contactsSource removeAllObjects];
             }
         }
-        for (int i = 0; i<response.dataArray.count; i++)
-        {
+
+        for (int i = 0; i < response.dataArray.count; i++){
             NSDictionary *dic = response.dataArray[i];
             BasePeopleObject *obj = [[BasePeopleObject alloc] init];
             obj.name = [dic valueForKey:@"nick"];
@@ -854,8 +852,7 @@ static NSString * const kCommonFNum			= @"commonnum";
             [HeadImage inertWithArr:self.contactsSource];
             dispatch_async(dispatch_get_main_queue(), ^{
                 [Hud hideHud];
-                if(response.dataArray.count>0)
-                {
+                if(response.dataArray.count > 0){
                     _tableView.hidden=NO;
                     [self.tableView reloadData];
                 } else{
@@ -865,7 +862,7 @@ static NSString * const kCommonFNum			= @"commonnum";
                 [self.tableView.footer endRefreshing];
             });
         });
-        
+
     } failed:^(MOCHTTPResponse *response) {
         [Hud hideHud];
         [Hud showMessageWithText:response.errorMessage];

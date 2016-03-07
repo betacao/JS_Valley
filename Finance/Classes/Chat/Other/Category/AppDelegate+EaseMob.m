@@ -234,8 +234,7 @@
 }
 
 // 好友申请回调
-- (void)didReceiveBuddyRequest:(NSString *)username
-                       message:(NSString *)message
+- (void)didReceiveBuddyRequest:(NSString *)username message:(NSString *)message
 {
     if (!username) {
         return;
@@ -278,11 +277,7 @@
 }
 
 //接收到入群申请
-- (void)didReceiveApplyToJoinGroup:(NSString *)groupId
-                         groupname:(NSString *)groupname
-                     applyUsername:(NSString *)username
-                            reason:(NSString *)reason
-                             error:(EMError *)error
+- (void)didReceiveApplyToJoinGroup:(NSString *)groupId groupname:(NSString *)groupname applyUsername:(NSString *)username reason:(NSString *)reason error:(EMError *)error
 {
     if (!groupId || !username) {
         return;

@@ -703,49 +703,61 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     notification.fireDate = [NSDate date]; //触发通知的时间
 
     if (options.displayStyle == ePushNotificationDisplayStyle_messageSummary) {
-        id<IEMMessageBody> messageBody = [message.messageBodies firstObject];
-        NSString *messageStr = nil;
-        switch (messageBody.messageBodyType) {
-            case eMessageBodyType_Text:
-            {
-                messageStr = ((EMTextMessageBody *)messageBody).text;
-            }
-                break;
-            case eMessageBodyType_Image:
-            {
-                messageStr = NSLocalizedString(@"message.image", @"Image");
-            }
-                break;
-            case eMessageBodyType_Location:
-            {
-                messageStr = NSLocalizedString(@"message.location", @"Location");
-            }
-                break;
-            case eMessageBodyType_Voice:
-            {
-                messageStr = NSLocalizedString(@"message.voice", @"Voice");
-            }
-                break;
-            case eMessageBodyType_Video:{
-                messageStr = NSLocalizedString(@"message.vidio", @"Vidio");
-            }
-                break;
-            default:
-                break;
-        }
 
         NSString *title = message.from;
         if (message.isGroup) {
             NSArray *groupArray = [[EaseMob sharedInstance].chatManager groupList];
             for (EMGroup *group in groupArray) {
                 if ([group.groupId isEqualToString:message.conversationChatter]) {
-                    title = [NSString stringWithFormat:@"%@(%@)", message.groupSenderName, group.groupSubject];
+                    title = message.groupSenderName;
                     break;
                 }
             }
         }
+        NSArray *headUrl = [HeadImage queryAll:title];
+        if(headUrl.count > 0){
+            HeadImage *hi = (HeadImage*)([headUrl firstObject]);
+            if(![hi.headimg isEqual:@""]){
+                title = hi.nickname;
+            }
+        }
 
-        notification.alertBody = [NSString stringWithFormat:@"%@:%@", title, messageStr];
+        id<IEMMessageBody> messageBody = [message.messageBodies firstObject];
+        NSString *messageStr = nil;
+        switch (messageBody.messageBodyType) {
+            case eMessageBodyType_Text:
+            {
+                messageStr = ((EMTextMessageBody *)messageBody).text;
+                notification.alertBody = [NSString stringWithFormat:@"%@:%@", title, messageStr];
+            }
+                break;
+            case eMessageBodyType_Image:
+            {
+                messageStr = NSLocalizedString(@"message.image", @"Image");
+                notification.alertBody = [NSString stringWithFormat:@"%@%@", title, messageStr];
+            }
+                break;
+            case eMessageBodyType_Location:
+            {
+                messageStr = NSLocalizedString(@"message.location", @"Location");
+                notification.alertBody = [NSString stringWithFormat:@"%@%@", title, messageStr];
+            }
+                break;
+            case eMessageBodyType_Voice:
+            {
+                messageStr = NSLocalizedString(@"message.voice", @"Voice");
+                notification.alertBody = [NSString stringWithFormat:@"%@%@", title, messageStr];
+            }
+                break;
+            case eMessageBodyType_Video:{
+                messageStr = NSLocalizedString(@"message.vidio", @"Vidio");
+                notification.alertBody = [NSString stringWithFormat:@"%@%@", title, messageStr];
+            }
+                break;
+            default:
+                break;
+        }
+
     }
     else{
         notification.alertBody = NSLocalizedString(@"receiveMessage", @"you have a new message");
@@ -758,6 +770,9 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     [[UIApplication sharedApplication] scheduleLocalNotification:notification];
     UIApplication *application = [UIApplication sharedApplication];
     application.applicationIconBadgeNumber += 1;
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.4f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [[UIApplication sharedApplication] cancelLocalNotification:notification];
+    });
 }
 
 #pragma mark - IChatManagerDelegate 登陆回调（主要用于监听自动登录是否成功）
@@ -936,8 +951,11 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
 {
     if(self.chatViewController)
     {
-        [self.navigationController popToViewController:self animated:NO];
-        [self setSelectedViewController:self.chatViewController];
+        [self.navigationController popToRootViewControllerAnimated:YES];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.2f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [self jumpToMessageViewController:nil];
+        });
+
     }
 }
 

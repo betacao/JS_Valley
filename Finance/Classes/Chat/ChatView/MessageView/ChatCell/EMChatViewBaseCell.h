@@ -18,7 +18,7 @@
 #import "UIResponder+Router.h"
 
 #define HEAD_SIZE MarginFactor(35.0f) // 头像大小
-#define HEAD_PADDING MarginFactor(14.0f) // 头像到cell的内间距和头像到bubble的间距
+#define HEAD_PADDING MarginFactor(12.0f) // 头像到cell的内间距和头像到bubble的间距
 #define CELLPADDING 0.0f// Cell之间间距
 #define BUBBLEVIEW_BOTTOMMARGIN MarginFactor(18.0f)
 

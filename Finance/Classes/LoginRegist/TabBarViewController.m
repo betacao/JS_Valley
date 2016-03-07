@@ -79,6 +79,15 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setupUntreatedApplyCount) name:@"setupUntreatedApplyCount" object:nil];
     
     self.navigationController.delegate = self;
+
+
+    EMPushNotificationOptions *options = [[EaseMob sharedInstance].chatManager pushNotificationOptions];
+    options.displayStyle = ePushNotificationDisplayStyle_messageSummary;
+    [[EaseMob sharedInstance].chatManager asyncUpdatePushOptions:options completion:^(EMPushNotificationOptions *options, EMError *error) {
+
+    } onQueue:dispatch_get_main_queue()];
+
+    
     [self initSubpage];
 }
 
