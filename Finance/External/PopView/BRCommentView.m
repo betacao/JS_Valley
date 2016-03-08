@@ -140,7 +140,7 @@
 {
     NSString *comment = self.textVComment.text;
     comment = [comment stringByReplacingOccurrencesOfString:@" " withString:@""];
-    [_delegate loadCommentState];
+    [_delegate loadCommentBtnState];
     if ([comment validLength].length == 0) {
         if([_type isEqualToString:@"reply"]){
             [Hud showMessageWithText:@"请输入回复的内容"];
@@ -219,7 +219,7 @@
         [UIView animateWithDuration:0.3 animations:^{
             
             self.viewContainer.frame = CGRectMake(0, CGRectGetHeight(self.bounds), SCREENWIDTH, 145);
-             [_delegate loadCommentState];
+             [_delegate loadCommentBtnState];
         } completion:^(BOOL finished){
             if (self.superview) {
                 [self removeFromSuperview];

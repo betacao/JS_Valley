@@ -40,7 +40,7 @@
     UILabel *replyLabel = [[UILabel alloc] initWithFrame:frame];
     replyLabel.numberOfLines = 0;
     replyLabel.lineBreakMode = NSLineBreakByWordWrapping;
-    replyLabel.font = [UIFont systemFontOfSize:14.0f];
+    replyLabel.font = FontFactor(14.0f);
     replyLabel.userInteractionEnabled = YES;
     replyLabel.textAlignment = NSTextAlignmentLeft;
     NSString *text = @"";

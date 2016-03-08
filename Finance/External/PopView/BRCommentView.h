@@ -15,7 +15,7 @@
 @optional
 - (void)commentViewDidComment:(NSString *)comment rid:(NSString *)rid;
 - (void)commentViewDidComment:(NSString *)comment reply:(NSString *) reply fid:(NSString *) fid rid:(NSString *)rid;
-- (void)loadCommentState;
+- (void)loadCommentBtnState;
 @end
 
 @interface BRCommentView : BasePopupView

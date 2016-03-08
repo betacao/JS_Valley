@@ -9,15 +9,15 @@
             <connections>
                 <outlet property="actionView" destination="HFs-C6-FpA" id="cj0-9n-gwW"/>
                 <outlet property="backImageView" destination="AC2-KC-3Lg" id="wKZ-Fq-5TK"/>
-                <outlet property="breakLineView" destination="O6d-SK-hTf" id="3NY-i9-ODj"/>
                 <outlet property="btnAttention" destination="Kgd-tr-IWO" id="UTm-WJ-xop"/>
                 <outlet property="btnCollet" destination="h3Y-4G-plf" id="mz2-sT-ld1"/>
                 <outlet property="btnComment" destination="jTv-Gm-ZGF" id="un2-D9-5GC"/>
                 <outlet property="btnDelete" destination="wJ4-Up-4Rh" id="59j-G2-jYr"/>
-                <outlet property="btnNickname" destination="M4c-zm-HYD" id="Lze-Xm-3uS"/>
                 <outlet property="btnPraise" destination="OyJ-4H-wTc" id="hkP-cn-P8Y"/>
                 <outlet property="btnSend" destination="a0u-4d-vNm" id="NjW-6P-Ql5"/>
                 <outlet property="btnShare" destination="eU6-gQ-ToL" id="HzG-zM-C5r"/>
+                <outlet property="faSongBtn" destination="Roo-oo-srH" id="iBm-TK-Ofo"/>
+                <outlet property="faceBtn" destination="ys0-he-oJB" id="oEu-wD-s4x"/>
                 <outlet property="imageHeader" destination="9Sx-ef-Sas" id="1RY-fp-lPg"/>
                 <outlet property="lblCompanyName" destination="0bu-Jl-Pav" id="qJc-5Z-j0z"/>
                 <outlet property="lblContent" destination="YrT-Xh-muG" id="JZ5-Yv-DKG"/>
@@ -25,6 +25,9 @@
                 <outlet property="lbldepartName" destination="Scx-sD-Z3A" id="x0b-lT-v5E"/>
                 <outlet property="lineView" destination="XRh-HR-PlL" id="yoq-jd-uHV"/>
                 <outlet property="listTable" destination="4Dg-M9-dvf" id="k3v-po-Yo0"/>
+                <outlet property="nickName" destination="zks-5y-PN6" id="yRz-R7-tg0"/>
+                <outlet property="personView" destination="XOQ-nE-ewr" id="4h8-k0-k9L"/>
+                <outlet property="praisebtn" destination="G5n-2p-xA3" id="J1u-yS-ec9"/>
                 <outlet property="scrollPraise" destination="aWm-Lk-eH9" id="KIK-W2-uD9"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
                 <outlet property="viewHeader" destination="Zk8-gE-mjJ" id="omM-Qh-SA3"/>
@@ -39,11 +42,11 @@
             <subviews>
                 <view contentMode="scaleToFill" id="QyD-ga-fkw">
                     <rect key="frame" x="0.0" y="459" width="320" height="45"/>
-                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="a0u-4d-vNm">
                             <rect key="frame" x="41" y="5" width="209" height="34"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <state key="normal" title=" 说点什么吧">
@@ -54,19 +57,9 @@
                                 <action selector="actionComment:" destination="-1" eventType="touchUpInside" id="bvd-Kv-GBB"/>
                             </connections>
                         </button>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="ys0-he-oJB">
-                            <rect key="frame" x="8" y="10" width="30" height="27"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <state key="normal" image="表情.png">
-                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                            </state>
-                            <connections>
-                                <action selector="actionComment:" destination="-1" eventType="touchUpInside" id="FDO-Ls-fLz"/>
-                            </connections>
-                        </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Roo-oo-srH">
                             <rect key="frame" x="258" y="7" width="54" height="30"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <color key="backgroundColor" red="1" green="0.22352941179999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
                             <state key="normal" title="发送">
                                 <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -76,12 +69,22 @@
                                 <action selector="actionComment:" destination="-1" eventType="touchUpInside" id="taw-df-SHk"/>
                             </connections>
                         </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="ys0-he-oJB">
+                            <rect key="frame" x="8" y="10" width="30" height="27"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <state key="normal" image="homeDetialFace">
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="actionComment:" destination="-1" eventType="touchUpInside" id="FDO-Ls-fLz"/>
+                            </connections>
+                        </button>
                     </subviews>
                     <color key="backgroundColor" red="0.96078431372549022" green="0.96078431372549022" blue="0.96078431372549022" alpha="1" colorSpace="calibratedRGB"/>
                 </view>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="4Dg-M9-dvf">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="459"/>
-                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803926" alpha="1" colorSpace="calibratedRGB"/>
                     <connections>
                         <outlet property="dataSource" destination="-1" id="jso-B3-0bu"/>
@@ -91,7 +94,7 @@
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
-            <point key="canvasLocation" x="-322" y="-593"/>
+            <point key="canvasLocation" x="-259" y="-596"/>
         </view>
         <view contentMode="scaleToFill" id="Zk8-gE-mjJ">
             <rect key="frame" x="0.0" y="0.0" width="320" height="249"/>
@@ -99,25 +102,13 @@
             <subviews>
                 <view contentMode="scaleToFill" id="XOQ-nE-ewr">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="46"/>
-                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
                         <view contentMode="scaleToFill" id="9Sx-ef-Sas" customClass="headerView">
                             <rect key="frame" x="14" y="10" width="30" height="30"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         </view>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="M4c-zm-HYD">
-                            <rect key="frame" x="50" y="11" width="26" height="12"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                            <state key="normal">
-                                <color key="titleColor" red="0.11372549019607843" green="0.3411764705882353" blue="0.59607843137254901" alpha="1" colorSpace="calibratedRGB"/>
-                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                            </state>
-                            <connections>
-                                <action selector="actionGoSome:" destination="-1" eventType="touchUpInside" id="Fbf-qe-Mn5"/>
-                            </connections>
-                        </button>
                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="0bu-Jl-Pav">
                             <rect key="frame" x="50" y="10" width="26" height="12"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -132,13 +123,8 @@
                             <color key="textColor" red="0.56862745098039214" green="0.5725490196078431" blue="0.56862745098039214" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <view alpha="0.0" contentMode="scaleToFill" id="O6d-SK-hTf">
-                            <rect key="frame" x="106" y="10" width="1" height="12"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <color key="backgroundColor" red="0.7803921568627451" green="0.7803921568627451" blue="0.7803921568627451" alpha="1" colorSpace="calibratedRGB"/>
-                        </view>
                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Scx-sD-Z3A">
-                            <rect key="frame" x="114" y="10" width="100" height="12"/>
+                            <rect key="frame" x="110" y="10" width="100" height="12"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                             <color key="textColor" red="0.33725490196078434" green="0.33725490196078434" blue="0.33725490196078434" alpha="1" colorSpace="calibratedRGB"/>
@@ -146,7 +132,7 @@
                         </label>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" id="Kgd-tr-IWO">
                             <rect key="frame" x="258" y="14" width="46" height="20"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                             <inset key="titleEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
                             <state key="normal" image="newAddAttention">
@@ -157,20 +143,27 @@
                                 <action selector="actionAttention:" destination="-1" eventType="touchUpInside" id="2Mh-w5-i7u"/>
                             </connections>
                         </button>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="zks-5y-PN6">
+                            <rect key="frame" x="34" y="5" width="42" height="21"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                 </view>
                 <view contentMode="scaleToFill" id="ffx-YA-YXJ">
                     <rect key="frame" x="14" y="116" width="292" height="55"/>
-                    <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="comment_backimage" id="AC2-KC-3Lg">
                             <rect key="frame" x="0.0" y="0.0" width="292" height="55"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         </imageView>
                         <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="aWm-Lk-eH9">
                             <rect key="frame" x="36" y="1" width="220" height="53"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <connections>
                                 <outlet property="delegate" destination="-1" id="Wo2-da-g0q"/>
                             </connections>
@@ -182,7 +175,7 @@
                         </button>
                         <view contentMode="scaleToFill" id="XRh-HR-PlL">
                             <rect key="frame" x="0.0" y="54" width="292" height="1"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <color key="backgroundColor" red="0.90196078431372551" green="0.90588235294117647" blue="0.90980392156862744" alpha="1" colorSpace="calibratedRGB"/>
                         </view>
                     </subviews>
@@ -190,11 +183,11 @@
                 </view>
                 <view contentMode="scaleToFill" id="HFs-C6-FpA">
                     <rect key="frame" x="14" y="73" width="292" height="34"/>
-                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="OyJ-4H-wTc">
                             <rect key="frame" x="108" y="0.0" width="50" height="34"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxY="YES"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <inset key="titleEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
                             <state key="normal" image="home_weizan">
@@ -207,7 +200,7 @@
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="eU6-gQ-ToL">
                             <rect key="frame" x="208" y="0.0" width="50" height="34"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxY="YES"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <inset key="titleEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
                             <state key="normal" image="homeShare">
@@ -220,7 +213,7 @@
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="jTv-Gm-ZGF">
                             <rect key="frame" x="158" y="0.0" width="50" height="34"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxY="YES"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <inset key="titleEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
                             <state key="normal" image="home_comment">
@@ -233,7 +226,7 @@
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="wJ4-Up-4Rh">
                             <rect key="frame" x="74" y="0.0" width="34" height="34"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxY="YES"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                             <inset key="titleEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
                             <state key="normal" image="home_delete">
@@ -246,7 +239,7 @@
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="h3Y-4G-plf">
                             <rect key="frame" x="267" y="7" width="20" height="20"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxY="YES"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <inset key="titleEdgeInsets" minX="20" minY="0.0" maxX="0.0" maxY="0.0"/>
                             <state key="normal" image="homeDetailCollection">
@@ -262,7 +255,7 @@
                 </view>
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="YrT-Xh-muG" customClass="MLEmojiLabel">
                     <rect key="frame" x="14" y="48" width="292" height="24"/>
-                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <attributedString key="attributedText"/>
                     <nil key="highlightedColor"/>
                 </label>
@@ -278,12 +271,12 @@
     <resources>
         <image name="commentWei_zan" width="14" height="13"/>
         <image name="comment_backimage" width="25" height="25"/>
-        <image name="homeDetailCollection" width="14" height="12"/>
+        <image name="homeDetailCollection" width="14" height="13"/>
+        <image name="homeDetialFace" width="25" height="25"/>
         <image name="homeShare" width="13" height="12"/>
-        <image name="home_comment" width="12" height="13"/>
-        <image name="home_delete" width="13" height="13"/>
-        <image name="home_weizan" width="13" height="13"/>
-        <image name="newAddAttention" width="46" height="20"/>
-        <image name="表情.png" width="25" height="25"/>
+        <image name="home_comment" width="13" height="14"/>
+        <image name="home_delete" width="14" height="14"/>
+        <image name="home_weizan" width="14" height="14"/>
+        <image name="newAddAttention" width="50" height="22"/>
     </resources>
 </document>

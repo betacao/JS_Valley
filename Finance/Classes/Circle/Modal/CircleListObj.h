@@ -10,8 +10,8 @@
 
 
 #define kObjectMargin 10.0f * XFACTOR
-#define kPhotoViewLeftMargin 14.0f * XFACTOR
-#define kPhotoViewRightMargin 14.0f * XFACTOR
+#define kPhotoViewLeftMargin MarginFactor(12.0f)
+#define kPhotoViewRightMargin MarginFactor(12.0f)
 #define kCellContentWidth 292.0f * XFACTOR
 #define kPhotoViewTopMargin 10.0f * XFACTOR
 #define kCommentTopMargin 11.0f * XFACTOR

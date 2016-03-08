@@ -34,11 +34,12 @@
 @property (weak, nonatomic) IBOutlet UIButton *btnSend;
 @property (weak, nonatomic) IBOutlet UIView *viewInput;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollPraise;
-@property (weak, nonatomic) IBOutlet UIButton *btnNickname;
+@property (weak, nonatomic) IBOutlet UILabel *nickName;
 @property (weak, nonatomic) IBOutlet UIButton *btnCollet;
 @property (weak, nonatomic) IBOutlet UIButton *btnComment;
 @property (weak, nonatomic) IBOutlet UIButton *btnPraise;
 @property (weak, nonatomic) IBOutlet UIView *viewPraise;
+@property (weak, nonatomic) IBOutlet UIButton *praisebtn;
 @property (weak, nonatomic) IBOutlet UIButton *btnShare;
 @property (weak, nonatomic) IBOutlet UITableView *listTable;
 @property (weak, nonatomic) IBOutlet UIView *actionView;
@@ -50,10 +51,13 @@
 @property (weak, nonatomic) IBOutlet headerView *imageHeader;
 @property (strong, nonatomic) BRCommentView *popupView;
 @property (strong, nonatomic) IBOutlet UIView *viewHeader;
+@property (weak, nonatomic) IBOutlet UIView *personView;
 //@property (strong, nonatomic) IBOutlet UIView *navigationView;
-@property (weak,nonatomic) IBOutlet UIView *breakLineView;
 @property (weak, nonatomic) IBOutlet UIImageView *backImageView;
 @property (weak, nonatomic) IBOutlet UIView *lineView;
+@property (strong, nonatomic) UIView *photoView;
+@property (weak, nonatomic) IBOutlet UIButton *faceBtn;
+@property (weak, nonatomic) IBOutlet UIButton *faSongBtn;
 
 
 - (IBAction)actionAttention:(id)sender;
@@ -90,6 +94,8 @@
     [CommonMethod setExtraCellLineHidden:self.listTable];
     [self addHeaderRefresh:self.listTable headerRefesh:NO andFooter:NO];
     [Hud showLoadingWithMessage:@"加载中"];
+    [self initView];
+    [self addSdLayout];
     __weak typeof(self) weakSelf = self;
     [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttpCircle,@"circledetail"] class:[CircleListObj class] parameters:@{@"rid":self.rid,@"uid":[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID]} success:^(MOCHTTPResponse *response) {
         [Hud hideHud];
@@ -103,22 +109,14 @@
         [Hud hideHud];
         [Hud showMessageWithText:response.errorMessage];
     }];
-
-    self.lblContent.numberOfLines = 0;
-    self.lblContent.lineBreakMode = NSLineBreakByWordWrapping;
-    self.lblContent.font = [UIFont systemFontOfSize:15.0f];
-    self.lblContent.delegate = self;
-    self.lblContent.textColor = [UIColor colorWithHexString:@"3C3C3C"];
-    self.lblContent.backgroundColor = [UIColor clearColor];
-
     [self initData];
-    self.viewHeader.hidden = YES;
     self.listTable.backgroundColor = [UIColor whiteColor];
     [self.view bringSubviewToFront:self.viewInput];
 
     self.btnSend.layer.masksToBounds = YES;
     self.btnSend.layer.cornerRadius = 4;
 
+    self.lineView.backgroundColor = [UIColor colorWithHexString:@"e6e7e8"];
     DDTapGestureRecognizer *hdGes = [[DDTapGestureRecognizer alloc] initWithTarget:self action:@selector(didTapHeaderView:)];
     [self.imageHeader addGestureRecognizer:hdGes];
     self.imageHeader.userInteractionEnabled = YES;
@@ -126,13 +124,221 @@
     UIImage *image = self.backImageView.image;
     image = [image resizableImageWithCapInsets:UIEdgeInsetsMake(15.0f, 35.0f, 9.0f, 11.0f) resizingMode:UIImageResizingModeStretch];
     self.backImageView.image = image;
-
-    CGRect frame = self.lineView.frame;
-    frame.size.height = 0.5f;
-    
-    self.lineView.frame = frame;
 }
 
+- (void)initView
+{
+    self.nickName.font = FontFactor(15.0f);
+    self.nickName.textAlignment = NSTextAlignmentLeft;
+    self.nickName.textColor = [UIColor colorWithHexString:@"1d5798"];
+    
+    self.lblCompanyName.font = FontFactor(13.0f);
+    self.lblCompanyName.textAlignment = NSTextAlignmentLeft;
+    self.lblCompanyName.textColor = [UIColor colorWithHexString:@"565656"];
+    
+    self.lbldepartName.font = FontFactor(13.0f);
+    self.lbldepartName.textAlignment = NSTextAlignmentLeft;
+    self.lbldepartName.textColor = [UIColor colorWithHexString:@"565656"];
+
+    self.lblTime.font = FontFactor(11.0f);
+    self.lblTime.textAlignment = NSTextAlignmentLeft;
+    self.lblTime.textColor = [UIColor colorWithHexString:@"919291"];
+    
+    [self.btnComment setTitleColor:[UIColor colorWithHexString:@"b3b3b3"] forState:UIControlStateNormal];
+    self.btnComment.titleLabel.font = FontFactor(13.0f);
+    
+    [self.btnShare setTitleColor:[UIColor colorWithHexString:@"b3b3b3"] forState:UIControlStateNormal];
+    self.btnShare.titleLabel.font = FontFactor(13.0f);
+    
+    [self.btnPraise setTitleColor:[UIColor colorWithHexString:@"b3b3b3"] forState:UIControlStateNormal];
+    self.btnPraise.titleLabel.font = FontFactor(13.0f);
+
+    self.lblContent.textColor = [UIColor colorWithHexString:@"3c3c3c"];
+    self.lblContent.font = FontFactor(15.0f);
+    self.lblContent.numberOfLines = 0;
+    self.lblContent.lineBreakMode = NSLineBreakByWordWrapping;
+    self.lblContent.delegate = self;
+    self.lblContent.backgroundColor = [UIColor clearColor];
+  
+    self.btnSend.titleLabel.font = FontFactor(15.0f);
+    self.faSongBtn.titleLabel.font = FontFactor(16.0f);
+    
+}
+
+- (void)addSdLayout
+{
+    self.viewInput.sd_layout
+    .leftSpaceToView(self.view, 0.0f)
+    .rightSpaceToView(self.view, 0.0f)
+    .bottomSpaceToView(self.view, 0.0f)
+    .heightIs(MarginFactor(45.0f));
+    
+    [self.faceBtn sizeToFit];
+    CGSize faceSize = self.faceBtn.frame.size;
+    self.faceBtn.sd_layout
+    .leftSpaceToView(self.viewInput, MarginFactor(12.0f))
+    .centerYEqualToView(self.viewInput)
+    .widthIs(faceSize.width)
+    .heightIs(faceSize.height);
+    
+    self.faSongBtn.sd_layout
+    .rightSpaceToView(self.viewInput, MarginFactor(12.0f))
+    .centerYEqualToView(self.viewInput)
+    .widthIs(MarginFactor(70.0f))
+    .heightIs(MarginFactor(35.0f));
+    
+    self.btnSend.sd_layout
+    .rightSpaceToView(self.faSongBtn, MarginFactor(10.0f))
+    .leftSpaceToView(self.faceBtn, MarginFactor(10.0f))
+    .centerYEqualToView(self.viewInput);
+    
+    self.listTable.sd_layout
+    .topSpaceToView(self.view, 0.0f)
+    .leftSpaceToView(self.view, 0.0f)
+    .rightSpaceToView(self.view, 0.0f)
+    .bottomSpaceToView(self.viewInput, 0.0f);
+    
+    //headerView
+    self.personView.sd_layout
+    .topSpaceToView(self.viewHeader, 0.0f)
+    .leftSpaceToView(self.viewHeader, 0.0f)
+    .rightSpaceToView(self.viewHeader, 0.0f)
+    .heightIs(MarginFactor(67.0f));
+    
+    self.imageHeader.sd_layout
+    .leftSpaceToView(self.personView, MarginFactor(12.0f))
+    .topSpaceToView(self.personView, MarginFactor(16.0f))
+    .topEqualToView(self.personView)
+    .widthIs(MarginFactor(35.0f))
+    .heightIs(MarginFactor(35.0f));
+    
+    self.nickName.sd_layout
+    .topEqualToView(self.imageHeader)
+    .leftSpaceToView(self.imageHeader, MarginFactor(9.0f))
+    .autoHeightRatio(0.0f);
+    [self.nickName setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
+    
+    self.lblCompanyName.sd_layout
+    .bottomEqualToView(self.nickName)
+    .leftSpaceToView(self.nickName,MarginFactor(7.0f))
+    .autoHeightRatio(0.0);
+    [self.lblCompanyName setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
+    
+    self.lbldepartName.sd_layout
+    .bottomEqualToView(self.lblCompanyName)
+    .leftSpaceToView(self.lblCompanyName, 0.0f)
+    .autoHeightRatio(0.0f);
+    [self.lbldepartName setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
+    
+    self.lblTime.sd_layout
+    .leftEqualToView(self.nickName)
+    .bottomEqualToView(self.imageHeader)
+    .autoHeightRatio(0.0f);
+    [self.lblTime setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
+    
+    UIImage *attentionImage = [UIImage imageNamed:@"newAttention"];
+    CGSize attentionSize = attentionImage.size;
+    self.btnAttention.sd_layout
+    .rightSpaceToView(self.personView, MarginFactor(12.0f))
+    .centerYEqualToView(self.imageHeader)
+    .widthIs(attentionSize.width)
+    .heightIs(attentionSize.height);
+    
+    self.lblContent.sd_layout
+    .topSpaceToView(self.personView, 0.0f)
+    .leftEqualToView(self.imageHeader)
+    .rightEqualToView(self.btnAttention)
+    .autoHeightRatio(0.0f);
+    self.lblContent.isAttributedContent = YES;
+    
+    self.photoView = [[UIView alloc]init];
+    [self.viewHeader addSubview:self.photoView];
+    self.photoView.sd_layout
+    .leftSpaceToView(self.viewHeader, MarginFactor(12.0f))
+    .rightSpaceToView(self.viewHeader, MarginFactor(12.0f))
+    .topSpaceToView(self.lblContent, MarginFactor(16.0f))
+    .heightIs(0.0f);
+    
+    self.actionView.sd_layout
+    .leftSpaceToView(self.viewHeader, MarginFactor(12.0f))
+    .rightSpaceToView(self.viewHeader, MarginFactor(12.0f))
+    .topSpaceToView(self.photoView, 0.0f)
+    .heightIs(MarginFactor(49.0f));
+    
+    [self.btnShare sizeToFit];
+    CGSize shareSize = self.btnShare.frame.size;
+    self.btnShare.sd_layout
+    .rightSpaceToView(self.actionView, 12.0f)
+    .centerYEqualToView(self.actionView)
+    .widthIs(shareSize.width)
+    .heightIs(shareSize.height);
+    
+    [self.btnComment sizeToFit];
+    CGSize commentSize = self.btnComment.frame.size;
+    self.btnComment.sd_layout
+    .rightSpaceToView(self.btnShare, MarginFactor(24.0f))
+    .bottomEqualToView(self.btnShare)
+    .widthIs(commentSize.width)
+    .heightIs(commentSize.height);
+    
+    [self.btnPraise sizeToFit];
+    CGSize praiseSize = self.btnPraise.frame.size;
+    self.btnPraise.sd_layout
+    .rightSpaceToView(self.btnComment, MarginFactor(24.0f))
+    .bottomEqualToView(self.btnShare)
+    .widthIs(praiseSize.width)
+    .heightIs(praiseSize.height);
+    
+    [self.btnCollet sizeToFit];
+    CGSize colletSize = self.btnCollet.frame.size;
+    self.btnCollet.sd_layout
+    .rightSpaceToView(self.btnPraise, MarginFactor(24.0f))
+    .bottomEqualToView(self.btnShare)
+    .widthIs(colletSize.width)
+    .heightIs(colletSize.height);
+    
+    [self.btnDelete sizeToFit];
+    CGSize delteSize = self.btnDelete.frame.size;
+    self.btnDelete.sd_layout
+    .rightSpaceToView(self.btnCollet, MarginFactor(24.0f))
+    .bottomEqualToView(self.btnShare)
+    .widthIs(delteSize.width)
+    .heightIs(delteSize.height);
+    
+    self.viewPraise.sd_layout
+    .leftSpaceToView(self.viewHeader, MarginFactor(12.0f))
+    .rightSpaceToView(self.viewHeader, MarginFactor(12.0f))
+    .topSpaceToView(self.actionView, 0.0f)
+    .heightIs(MarginFactor(56.0f));
+    
+    [self.praisebtn sizeToFit];
+    CGSize praiseBtnSize = self.praisebtn.frame.size;
+    self.praisebtn.sd_layout
+    .leftSpaceToView(self.viewPraise, MarginFactor(11.0f))
+    .centerYEqualToView(self.viewPraise)
+    .widthIs(praiseBtnSize.width)
+    .heightIs(praiseBtnSize.height);
+    
+    self.backImageView.sd_layout
+    .leftSpaceToView(self.viewPraise, 0.0f)
+    .rightSpaceToView(self.viewPraise, 0.0f)
+    .topEqualToView(self.viewPraise)
+    .bottomEqualToView(self.viewPraise);
+    
+    self.scrollPraise.sd_layout
+    .leftSpaceToView(self.praisebtn, MarginFactor(10.0f))
+    .rightSpaceToView(self.viewPraise, MarginFactor(10.0f) + CGRectGetMaxX(self.praisebtn.frame))
+    .centerYEqualToView(self.viewPraise);
+    
+    self.lineView.sd_layout
+    .leftSpaceToView(self.viewPraise, 0.0f)
+    .rightSpaceToView(self.viewPraise, 0.0f)
+    .bottomSpaceToView(self.viewPraise,0.0f)
+    .heightIs(1.0f);
+  [self.viewHeader setupAutoHeightWithBottomView:self.viewPraise bottomMargin:0.0f];
+    self.listTable.tableHeaderView = self.viewHeader;
+    
+}
 -(void)parseObjWithDic:(NSDictionary *)dics
 {
     NSDictionary *dic = dics[@"circle"][0];
@@ -241,10 +447,7 @@
     
     [self.imageHeader updateHeaderView:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,obj.potname] placeholderImage:[UIImage imageNamed:@"default_head"]];
     [self.imageHeader updateStatus:[obj.userstatus isEqualToString:@"true"] ? YES : NO];
-    CGRect frame = self.imageHeader.frame;
-    self.imageHeader.frame = frame;
-
-
+    
     if (![obj.ispraise isEqualToString:@"Y"]) {
         [self.btnPraise setImage:[UIImage imageNamed:@"home_weizan"] forState:UIControlStateNormal];
     } else{
@@ -260,55 +463,72 @@
         name = [obj.nickname substringToIndex:4];
         name = [NSString stringWithFormat:@"%@…",name];
     }
-    self.btnNickname.titleLabel.textAlignment = NSTextAlignmentLeft;
-    [self.btnNickname setTitle:name forState:UIControlStateNormal];
-    [self.btnNickname setBackgroundImage:[UIImage imageWithColor:BTN_SELECT_BACK_COLOR andSize:self.btnNickname.size] forState:UIControlStateHighlighted];
+    self.nickName.text = name;
+    //设置公司名称
+    NSString *comp = obj.company;
+    if (obj.company.length > 6) {
+        NSString *str = [obj.company substringToIndex:6];
+        comp = [NSString stringWithFormat:@"%@…",str];
+    }
+    self.lblCompanyName.text = comp;
+    [self.lblCompanyName sizeToFit];
+    //设置职位名称
+    NSString *str = obj.title;
+    if (obj.title.length > 4){
+        str= [obj.title substringToIndex:4];
+        str = [NSString stringWithFormat:@"%@…",str];
+    }
+    self.lbldepartName.text = str;
 
     self.lblTime.text = obj.publishdate;
-    // self.lblTime.text = [obj.publishdate substringToIndex:10];
     [self.btnShare setTitle:obj.sharenum forState:UIControlStateNormal];
+    [self.btnShare sizeToFit];
     [self.btnComment setTitle:obj.cmmtnum forState:UIControlStateNormal];
+    [self.btnComment sizeToFit];
     [self.btnPraise setTitle:obj.praisenum forState:UIControlStateNormal];
-    
-    if ([obj.isattention isEqualToString:@"Y"]){
+    [self.btnPraise sizeToFit];
+//[self.btnPraise.titleLabel sizeToFit];
+//    CGSize praiseSize = self.btnPraise.frame.size;
+//    self.btnPraise.sd_resetLayout
+//    .rightSpaceToView(self.btnComment, MarginFactor(12.0f))
+//    .bottomEqualToView(self.btnShare)
+//    .widthIs(praiseSize.width)
+//    .heightIs(praiseSize.height);
+     if ([obj.isattention isEqualToString:@"Y"]){
         [self.btnAttention setImage:[UIImage imageNamed:@"newAttention"] forState:UIControlStateNormal] ;
     } else{
         [self.btnAttention setImage:[UIImage imageNamed:@"newAddAttention"] forState:UIControlStateNormal];
     }
     
     self.lblContent.text = obj.detail;
-    CGSize size = [self.lblContent preferredSizeWithMaxWidth:kCellContentWidth];
-    frame = self.lblContent.frame;
-    frame.size.width = kCellContentWidth;
-    frame.size.height = size.height;
-    self.lblContent.frame = frame;
-    [self sizeUIWithObj:obj];
-    
-    UIView *photoView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, CGRectGetMaxY(frame), 0.0f, 0.0f)];
     if ([self.obj.type isEqualToString:@"link"]){
-        photoView.backgroundColor = RGB(245, 245, 241);
+        self.photoView.backgroundColor = RGB(245, 245, 241);
         linkOBj *link = obj.linkObj;
-        UIImageView *linkImageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 5, 40, 40)];
+        UIImageView *linkImageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, MarginFactor(5.0f), MarginFactor(40.0f), MarginFactor(40.0f))];
         if (link.thumbnail){
             [linkImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,link.thumbnail?:@"a"]] placeholderImage:[UIImage imageNamed:@"default_image"]];
         } else{
             linkImageView.image = [UIImage imageNamed:@"default_image"];
         }
-        UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(45,5, SCREENWIDTH -CELLRIGHT_WIDTH - 45,20 )];
-        [titleLabel setFont:[UIFont systemFontOfSize:13.0f]];
+        UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(MarginFactor(45.0f),MarginFactor(5.0f), SCREENWIDTH -CELLRIGHT_WIDTH - MarginFactor(45.0f),MarginFactor(20.0f))];
+        [titleLabel setFont:FontFactor(13.0f)];
         [titleLabel setTextColor:TEXT_COLOR];
         [titleLabel setText:link.title];
-        UILabel *detailLabel = [[UILabel alloc] initWithFrame:CGRectMake(45, 25, SCREENWIDTH -CELLRIGHT_WIDTH - 45,20 )];
-        [detailLabel setFont:[UIFont systemFontOfSize:13.0f]];
+        UILabel *detailLabel = [[UILabel alloc] initWithFrame:CGRectMake(MarginFactor(45.0f), MarginFactor(25.0f), SCREENWIDTH -CELLRIGHT_WIDTH - MarginFactor(45.0f),MarginFactor(20.0f))];
+        [detailLabel setFont:FontFactor(13.0f)];
         [detailLabel setTextColor:TEXT_COLOR];
         detailLabel.text = link.desc;
-        [photoView addSubview:linkImageView];
-        [photoView addSubview:titleLabel];
-        [photoView addSubview:detailLabel];
-        [photoView setFrame:CGRectMake(60, _lblContent.bottom + kPhotoViewTopMargin, SCREENWIDTH-CELLRIGHT_WIDTH, 50)];
-        photoView.userInteractionEnabled = YES;
+        [self.photoView addSubview:linkImageView];
+        [self.photoView addSubview:titleLabel];
+        [self.photoView addSubview:detailLabel];
+        self.photoView.sd_resetLayout
+        .leftSpaceToView(self.viewHeader, MarginFactor(60.0f))
+        .topSpaceToView(self.lblContent, MarginFactor(10.0f))
+        .widthIs(SCREENWIDTH - MarginFactor(45.0f))
+        .heightIs(MarginFactor(50.0f));
+        self.photoView.userInteractionEnabled = YES;
         DDTapGestureRecognizer *ges = [[DDTapGestureRecognizer alloc] initWithTarget:self action:@selector(linkTap:)];
-        [photoView addGestureRecognizer:ges];
+        [self.photoView addGestureRecognizer:ges];
     } else if ([self.obj.type isEqualToString:TYPE_PHOTO]){
         SDPhotoGroup *photoGroup = [[SDPhotoGroup alloc] init];
         NSMutableArray *temp = [NSMutableArray array];
@@ -318,17 +538,16 @@
             [temp addObject:item];
         }];
         photoGroup.photoItemArray = temp;
-        [photoView addSubview:photoGroup];
+        [self.photoView addSubview:photoGroup];
 
-        photoView.frame = CGRectMake(kPhotoViewLeftMargin, self.lblContent.bottom + 3.0f * kPhotoViewTopMargin/5.0f, CGRectGetWidth(photoGroup.frame),CGRectGetHeight(photoGroup.frame));
+        self.photoView.sd_resetLayout
+        .leftSpaceToView(self.viewHeader, MarginFactor(12.0f))
+        .topSpaceToView(self.lblContent, MarginFactor(16.0f))
+        .widthIs(CGRectGetWidth(photoGroup.frame))
+        .heightIs(CGRectGetHeight(photoGroup.frame));
+        
     }
-    [self.viewHeader addSubview:photoView];
-    CGRect actionViewRect = self.actionView.frame;
-    actionViewRect.origin.y = photoView.bottom;
-    self.actionView.frame = actionViewRect;
-    
-    CGRect praiseRect = self.viewPraise.frame;
-    praiseRect.origin.y = self.actionView.bottom;
+ 
     CGFloat praiseWidth = 0;
     if ([self.obj.praisenum intValue] > 0){
         for (UIView *subView in self.scrollPraise.subviews){
@@ -338,9 +557,9 @@
         }
         for (int i = 0; i < self.obj.heads.count; i ++ ) {
             praiseOBj *obj = self.obj.heads[i];
-            praiseWidth = PRAISE_WIDTH;
+            praiseWidth = MarginFactor(30.0f);
             NSLog(@"%f",SCREENWIDTH);
-            CGRect rect = CGRectMake((praiseWidth + PRAISE_SEPWIDTH) * i , (CGRectGetHeight(praiseRect) - praiseWidth) / 2.0f, praiseWidth, praiseWidth);
+            CGRect rect = CGRectMake((praiseWidth + MarginFactor(7.0f)) * i , MarginFactor(13.0f), praiseWidth, praiseWidth);
             UIImageView *head = [[UIImageView alloc] initWithFrame:rect];
             head.tag = i + 1000;
             [head sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,obj.ppotname]] placeholderImage:[UIImage imageNamed:@"default_head"]];
@@ -356,9 +575,8 @@
     } else{
         [self.scrollPraise removeAllSubviews];
     }
-    self.viewPraise.frame = praiseRect;
-
-    [self.viewHeader setSize:CGSizeMake(self.viewHeader.width, self.viewPraise.bottom)];
+    [self.viewHeader layoutSubviews];
+    self.listTable.tableHeaderView = self.viewHeader;
     [self.listTable reloadData];
 }
 
@@ -400,64 +618,9 @@
         name = [obj.nickname substringToIndex:4];
         name = [NSString stringWithFormat:@"%@…",name];
     }
-    CGRect userRect = self.btnNickname.frame;
-    [self.btnNickname sizeToFit];
-    CGSize nameSize = self.btnNickname.frame.size;
-    userRect.size.width = nameSize.width;
-    self.btnNickname.frame = userRect;
+    self.nickName.text = name;
 
-    //设置分割线的坐标
-    self.breakLineView.hidden = YES;
-    CGRect frame = self.breakLineView.frame;
-    frame.origin.x =  CGRectGetMaxX(userRect);
-    frame.size.width = 0.5f;
-    frame.size.height = CGRectGetHeight(userRect);
-    self.breakLineView.frame = frame;
-
-    //设置公司名称
-    NSString *comp = obj.company;
-    if (obj.company.length > 6) {
-        NSString *str = [obj.company substringToIndex:6];
-        comp = [NSString stringWithFormat:@"%@…",str];
-    }
-    self.lblCompanyName.text = comp;
-    CGRect companRect = self.lblCompanyName.frame;
-    companRect.origin.x = kItemMargin +  CGRectGetMaxX(frame);
-    [self.lblCompanyName sizeToFit];
-    CGSize size = self.lblCompanyName.frame.size;
-    companRect.size.width = size.width;
-    companRect.size.height = size.height;
-    self.lblCompanyName.frame = companRect;
-
-    //设置职位名称
-    NSString *str = obj.title;
-    if (obj.title.length > 4){
-        str= [obj.title substringToIndex:4];
-        str = [NSString stringWithFormat:@"%@…",str];
-    }
-    self.lbldepartName.text = str;
-
-    CGRect positionRect = self.lbldepartName.frame;
-    positionRect.origin.x = CGRectGetMaxX(companRect);
-    [self.lbldepartName sizeToFit];
-    size = self.lbldepartName.frame.size;
-    positionRect.size.width = size.width;
-    positionRect.size.height = size.height;
-    self.lbldepartName.frame = positionRect;
-
-    frame = self.lblTime.frame;
-    [self.lblTime sizeToFit];
-    [self.lblTime setOrigin:frame.origin];
-
-    //如果公司名和职位名字都不存在的话则隐藏分割线(1.72不休要分割线了)
-//    if(self.lblCompanyName.text.length == 0 && self.lbldepartName.text.length == 0){
-//        self.breakLineView.hidden = YES;
-//    } else{
-//        self.breakLineView.hidden = NO;
-//    }
-
-
-    [self.btnNickname setBackgroundImage:[UIImage imageWithColor:BTN_SELECT_BACK_COLOR andSize:nameSize] forState:UIControlStateHighlighted];
+   
 }
 
 - (void)didReceiveMemoryWarning {
@@ -902,7 +1065,7 @@
     SHGCommentType type = SHGCommentTypeNormal;
     if(indexPath.row == 0){
         type = SHGCommentTypeFirst;
-    }else if(indexPath.row == self.obj.comments.count - 1){
+    } else if(indexPath.row == self.obj.comments.count - 1){
         type = SHGCommentTypeLast;
     }
     [cell loadUIWithObj:obj commentType:type];
@@ -915,13 +1078,12 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     commentOBj *obj = self.obj.comments[indexPath.row];
-    UIFont *font = [UIFont systemFontOfSize:14.0f];
+    UIFont *font = FontFactor(14.0f);
     
     NSString *text;
-    if (IsStrEmpty(obj.rnickname))
-    {
+    if (IsStrEmpty(obj.rnickname)){
       text = [NSString stringWithFormat:@"%@:x%@",obj.cnickname,obj.cdetail];
-    }else{
+    } else{
       text = [NSString stringWithFormat:@"%@回复%@:x%@",obj.cnickname,obj.rnickname,obj.cdetail];
     }
     NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:text];
@@ -946,15 +1108,15 @@
     return height + kCommentMargin;
 }
 
--(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-{
-    return _viewHeader.height;
-}
-
--(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-{
-    return _viewHeader;
-}
+//-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+//{
+//    return _viewHeader.height;
+//}
+//
+//-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+//{
+//    return _viewHeader;
+//}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
