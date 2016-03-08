@@ -200,7 +200,6 @@
         [self.textField setValue:[UIColor colorWithHexString:@"D3D3D3"] forKeyPath:@"_placeholderLabel.textColor"];
         _textField.returnKeyType = UIReturnKeyDone;
         _textField.delegate = self;
-        
         [self.mainFieldView addSubview:_textField];
     }
     return _textField;
@@ -214,7 +213,7 @@
         _textView.font = FontFactor(15.0f);
         _textView.textAlignment = NSTextAlignmentLeft;
         _textView.backgroundColor = [UIColor clearColor];
-        _textView.placeholder = NSLocalizedString(@"group.create.inputDescribe", @"please enter a group description");
+        _textView.placeholder = @"请输入群组简介（150字）";
         _textView.returnKeyType = UIReturnKeyDone;
         _textView.delegate = self;
         [self.mainTextView addSubview:_textView];
@@ -288,14 +287,20 @@
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
 {
-    if ([text isEqualToString:@"\n"]) {
-        
-        
-        [textView resignFirstResponder];
+   
+    #define MY_MAX 150
+    if ((textView.text.length - range.length + text.length) > MY_MAX)
+    {
+        NSString *substring = [text substringToIndex:MY_MAX - (textView.text.length - range.length)];
+        NSMutableString *lastString = [textView.text mutableCopy];
+        [lastString replaceCharactersInRange:range withString:substring];
+        textView.text = [lastString copy];
         return NO;
     }
-    
-    return YES;
+    else
+    {
+        return YES;
+    }
 }
 
 #pragma mark - EMChooseViewDelegate

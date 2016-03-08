@@ -26,12 +26,12 @@
 
 #define kColOfRow 5
 #define kContactSize 60 * XFACTOR
+#define kScrollViewLeftMargin MarginFactor(12.0f)
 
 @interface ChatGroupDetailViewController ()<IChatManagerDelegate, EMChooseViewDelegate, ChatListContactViewDelegate,CircleActionDelegate, UIActionSheetDelegate,UIAlertViewDelegate>
 
 - (void)unregisterNotifications;
 - (void)registerNotifications;
-
 @property (nonatomic) GroupOccupantType occupantType;
 @property (strong, nonatomic) EMGroup *chatGroup;
 
@@ -40,7 +40,6 @@
 @property (strong, nonatomic) UIButton *addButton;
 
 @property (strong, nonatomic) UIView *footerView;
-@property (strong, nonatomic) UIButton *clearButton;
 @property (strong, nonatomic) UIButton *exitButton;
 @property (strong, nonatomic) UIButton *dissolveButton;
 @property (strong, nonatomic) UIButton *configureButton;
@@ -115,10 +114,10 @@
     [leftButton setBackgroundImage:[UIImage imageNamed:@"common_backImage"] forState:UIControlStateNormal];
     [leftButton sizeToFit];
     [leftButton addTarget:self action:@selector(returnClick) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:leftButton];
-    self.navigationItem.leftBarButtonItem=rightItem;
-
+    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:leftButton];
+    self.navigationItem.leftBarButtonItem = leftItem;
     
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.tableFooterView = self.footerView;
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapView:)];
@@ -154,11 +153,11 @@
 - (UIScrollView *)scrollView
 {
     if (_scrollView == nil) {
-        _scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(10, 10, self.view.frame.size.width - 20, kContactSize)];
+        _scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(kScrollViewLeftMargin, 0.0f, CGRectGetWidth(self.view.frame) - 2 * kScrollViewLeftMargin, kContactSize)];
         _scrollView.tag = 0;
-        
-        _addButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, kContactSize - 10, kContactSize - 10)];
-        [_addButton setImage:[UIImage imageNamed:@"添加群成员"] forState:UIControlStateNormal];
+        _scrollView.backgroundColor = [UIColor redColor];
+        _addButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, kContactSize, kContactSize)];
+        [_addButton setImage:[UIImage imageNamed:@"addImageButton"] forState:UIControlStateNormal];
         [_addButton addTarget:self action:@selector(addContact:) forControlEvents:UIControlEventTouchUpInside];
         
         _longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(deleteContactBegin:)];
@@ -166,19 +165,6 @@
     }
     
     return _scrollView;
-}
-
-- (UIButton *)clearButton
-{
-    if (_clearButton == nil) {
-        _clearButton = [[UIButton alloc] init];
-        [_clearButton setTitle:NSLocalizedString(@"group.removeAllMessages", @"remove all messages") forState:UIControlStateNormal];
-        [_clearButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        [_clearButton addTarget:self action:@selector(clearAction) forControlEvents:UIControlEventTouchUpInside];
-        [_clearButton setBackgroundColor:[UIColor colorWithRed:245 / 255.0 green:93 / 255.0 blue:88 / 255.0 alpha:1.0]];
-    }
-    
-    return _clearButton;
 }
 
 - (UIButton *)dissolveButton
@@ -189,7 +175,7 @@
         [_dissolveButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [_dissolveButton addTarget:self action:@selector(dissolveAction) forControlEvents:UIControlEventTouchUpInside];
         [_dissolveButton setBackgroundColor: [UIColor colorWithRed:245 / 255.0 green:93 / 255.0 blue:88 / 255.0 alpha:1.0]];
-        _dissolveButton.titleLabel.font = [UIFont systemFontOfSize:16.0f];
+        _dissolveButton.titleLabel.font = FontFactor(16.0f);
     }
     
     return _dissolveButton;
@@ -212,16 +198,12 @@
 - (UIView *)footerView
 {
     if (_footerView == nil) {
-        _footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 160)];
+        _footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, MarginFactor(350.0f))];
         _footerView.backgroundColor = [UIColor clearColor];
         
-        self.clearButton.frame = CGRectMake(20, 40, _footerView.frame.size.width - 40, 35);
-        self.clearButton.hidden=YES;
-//        [_footerView addSubview:self.clearButton];
+        self.dissolveButton.frame = CGRectMake(kScrollViewLeftMargin, self.footerView.height - MarginFactor(15.0f + 35.0f), _footerView.frame.size.width - 2 * kScrollViewLeftMargin, MarginFactor(35.0f));
         
-        self.dissolveButton.frame = CGRectMake(20, CGRectGetMaxY(self.clearButton.frame) + 30, _footerView.frame.size.width - 40, 35);
-        
-        self.exitButton.frame = CGRectMake(20, CGRectGetMaxY(self.clearButton.frame) + 30, _footerView.frame.size.width - 40, 35);
+        self.exitButton.frame = CGRectMake(kScrollViewLeftMargin, self.footerView.height - MarginFactor(15.0f + 35.0f), _footerView.frame.size.width - 2 * kScrollViewLeftMargin, MarginFactor(35.0f));
     }
     
     return _footerView;
@@ -240,7 +222,7 @@
     if (self.occupantType == GroupOccupantTypeOwner){
         return 4;
     } else{
-        return 5;
+        return 3;
     }
 }
 
@@ -249,22 +231,39 @@
     static NSString *CellIdentifier = @"Cell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier];
-        cell.textLabel.font = [UIFont systemFontOfSize:16.0f];
-        
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell.accessoryType = UITableViewCellAccessoryNone;
+        cell.textLabel.font = FontFactor(15.0f);
+        cell.textLabel.textColor = [UIColor colorWithHexString:@"111111"];
+        UIView * lineView = [[UIView alloc]init];
+        lineView.frame = CGRectMake(kScrollViewLeftMargin, MarginFactor(50.0f) - 1.0f, SCREENWIDTH - kScrollViewLeftMargin, 0.5f);
+        lineView.backgroundColor = [UIColor colorWithHexString:@"e6e7e8"];
+        [cell addSubview:lineView];
+
     }
-    
+    UIImage * image = [UIImage imageNamed:@"rightArrowImage"];
+    CGSize size = image.size;
+    UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [rightButton setImage:image forState:UIControlStateNormal];
+    rightButton.frame = CGRectMake(SCREENWIDTH - size.width - kScrollViewLeftMargin, (MarginFactor(50.0f) - size.height) / 2.0f , size.width, size.height);
+    [cell addSubview:rightButton];
     if (indexPath.row == 0) {
         return self.firstCell;
     } else if (indexPath.row == 1){
         cell.textLabel.text = NSLocalizedString(@"title.groupSetting", @"Group Setting");
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     } else if (indexPath.row == 2){
-        cell.textLabel.text = NSLocalizedString(@"title.groupSubjectChanging", @"Change group name");
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+         if (self.occupantType == GroupOccupantTypeOwner) {
+            cell.textLabel.text = NSLocalizedString(@"title.groupSubjectChanging", @"Change group name");
+         } else{
+             cell.textLabel.text = @"清空聊天记录";
+             rightButton.hidden = YES;
+         }
+        
+
     } else if(indexPath.row==3){
         cell.textLabel.text = @"清空聊天记录";
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        rightButton.hidden = YES;
     }
     
     return cell;
@@ -276,10 +275,9 @@
 {
     int row = (int)indexPath.row;
     if (row == 0) {
-        return self.scrollView.frame.size.height + 40;
-    }
-    else {
-        return 50;
+        return self.scrollView.frame.size.height + MarginFactor(30.f);
+    } else {
+        return MarginFactor(55.0f);
     }
 }
 
@@ -290,14 +288,15 @@
     if (indexPath.row == 1) {
         GroupSettingViewController *settingController = [[GroupSettingViewController alloc] initWithGroup:_chatGroup];
         [self.navigationController pushViewController:settingController animated:YES];
-    }
-    else if (indexPath.row == 2)
+    } else if (indexPath.row == 2)
     {
-        GroupSubjectChangingViewController *changingController = [[GroupSubjectChangingViewController alloc] initWithGroup:_chatGroup];
-        [self.navigationController pushViewController:changingController animated:YES];
-    }
-    else if(indexPath.row==3)
-    {
+        if (self.occupantType == GroupOccupantTypeOwner){
+            GroupSubjectChangingViewController *changingController = [[GroupSubjectChangingViewController alloc] initWithGroup:_chatGroup];
+            [self.navigationController pushViewController:changingController animated:YES];
+        } else{
+            [self clearAction];
+        }
+    } else if(indexPath.row==3){
         [self clearAction];
     }
 }
@@ -344,8 +343,7 @@
             if (!error) {
                 weakSelf.chatGroup = group;
                 [weakSelf reloadDataSource];
-            }
-            else{
+            } else{
                 [weakSelf showHint:NSLocalizedString(@"group.fetchInfoFail", @"failed to get the group details, please try again later")];
             }
         });
@@ -392,8 +390,7 @@
         [self.scrollView addGestureRecognizer:_longPress];
         [self.scrollView addSubview:self.addButton];
         showAddButton = YES;
-    }
-    else if (self.chatGroup.groupSetting.groupStyle == eGroupStyle_PrivateMemberCanInvite && self.occupantType == GroupOccupantTypeMember) {
+    } else if (self.chatGroup.groupSetting.groupStyle == eGroupStyle_PrivateMemberCanInvite && self.occupantType == GroupOccupantTypeMember) {
         [self.scrollView addSubview:self.addButton];
         showAddButton = YES;
     }
@@ -415,12 +412,12 @@
         NSInteger row = (NSInteger)(array.count + 1) / kColOfRow;
         row += tmp == 0 ? 0 : 1;
         weakSelf.scrollView.tag = row;
-        weakSelf.scrollView.frame = CGRectMake(8, 20, weakSelf.tableView.frame.size.width - 16, row * kContactSize+10);
+        weakSelf.scrollView.frame = CGRectMake(8, kScrollViewLeftMargin, weakSelf.tableView.frame.size.width - 16, row * kContactSize+10);
         weakSelf.scrollView.contentSize = CGSizeMake(weakSelf.scrollView.frame.size.width, row * kContactSize);
-
+        
         NSDictionary *loginInfo = [[[EaseMob sharedInstance] chatManager] loginInfo];
         NSString *loginUsername = [loginInfo objectForKey:kSDKUsername];
-
+        
         NSInteger i = 0;
         NSInteger j = 0;
         BOOL isEditing = weakSelf.addButton.hidden ? YES : NO;

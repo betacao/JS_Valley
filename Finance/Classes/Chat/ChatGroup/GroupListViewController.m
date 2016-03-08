@@ -310,31 +310,22 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    if (indexPath.section == 0)
-    {
-        if(indexPath.row==0)
-        {
+    if (indexPath.section == 0){
+        if(indexPath.row == 0){
             [self createGroup];
         }
-    }
-    if (indexPath.section == 1)
-    {
+    } else if (indexPath.section == 1){
         
-         EMGroup *group = [self.dataSource objectAtIndex:indexPath.row];
-         PublicGroupDetailViewController *detailController = [[PublicGroupDetailViewController alloc] initWithGroupId:group.groupId];
-         detailController.title = group.groupSubject;
-         if ([self.parnetVC isKindOfClass:[ChatListViewController class]])
-         {
-             BaseViewController *viewController =(BaseViewController*)self.parnetVC;
-             [viewController.navigationController pushViewController:detailController animated:YES];
-         }else
-         {
-             [self.navigationController pushViewController:detailController animated:YES];
-         }
+        EMGroup *group = [self.dataSource objectAtIndex:indexPath.row];
+        PublicGroupDetailViewController *detailController = [[PublicGroupDetailViewController alloc] initWithGroupId:group.groupId];
+        detailController.title = group.groupSubject;
+        if ([self.parnetVC isKindOfClass:[ChatListViewController class]]){
+            [self.parnetVC.navigationController pushViewController:detailController animated:YES];
+        } else{
+            [self.navigationController pushViewController:detailController animated:YES];
+        }
         
-    }
-    if (indexPath.section == 2)
-    {
+    } else if (indexPath.section == 2){
         EMGroup *group = [self.commonArr objectAtIndex:indexPath.row];
         ChatViewController *chatController = [[ChatViewController alloc] initWithChatter:group.groupId isGroup:YES];
         chatController.title = group.groupSubject;
@@ -346,9 +337,7 @@
         {
             [self.navigationController pushViewController:chatController animated:YES];
         }
-    }
-    if (indexPath.section == 3)
-    {
+    } else if (indexPath.section == 3){
         EMGroup *group = [self.joinArr objectAtIndex:indexPath.row];
         ChatViewController *chatController = [[ChatViewController alloc] initWithChatter:group.groupId isGroup:YES];
         chatController.title = group.groupSubject;
@@ -356,8 +345,7 @@
         {
             BaseViewController *viewController =(BaseViewController*)self.parnetVC;
             [viewController.navigationController pushViewController:chatController animated:YES];
-        }else
-        {
+        } else{
             [self.navigationController pushViewController:chatController animated:YES];
         }
     }
