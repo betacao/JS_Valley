@@ -8,7 +8,7 @@
 
 #import "SHGConnectionsViewController.h"
 #import "EMSearchBar.h"
-#import "ChatListTableViewCell.h"
+#import "SHGConnectionsTableViewCell.h"
 #import "SHGPersonalViewController.h"
 #import "SHGFriendGroupingViewController.h"
 #import "RealtimeSearchUtil.h"
@@ -203,25 +203,29 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 72.0f;
+    if (self.resultArray.count == 0) {
+        return CGRectGetHeight(self.view.frame);
+    } else{
+        BasePeopleObject *buddy = [self.resultArray objectAtIndex:indexPath.row];
+        return [tableView cellHeightForIndexPath:indexPath model:buddy keyPath:@"object" cellClass:[SHGConnectionsTableViewCell class] contentViewWidth:CGFLOAT_MAX];
+    }
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (self.resultArray.count > 0) {
-        static NSString *CellIdentifier = @"ChatListTableViewCell";
-        ChatListTableViewCell *cell = (ChatListTableViewCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        static NSString *CellIdentifier = @"SHGConnectionsTableViewCell";
+        SHGConnectionsTableViewCell *cell = (SHGConnectionsTableViewCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
         if (cell == nil) {
             cell = [[[NSBundle mainBundle] loadNibNamed:CellIdentifier owner:self options:nil]objectAtIndex:0];
         }
         SHGPeopleObject *buddy = [self.resultArray objectAtIndex:indexPath.row];
         if (self.type == SHGFriendTypeFirst){
-            cell.type = contactTypeFriend;
+            cell.type = SHGContactTypeFirst;
         }else{
-            cell.type = contactTypeFriendTwain;
+            cell.type = SHGContactTypeSecond;
         }
-
-        [cell loadDataWithObject:buddy];
+        cell.object = buddy;
         return cell;
     } else{
         return self.emptyCell;

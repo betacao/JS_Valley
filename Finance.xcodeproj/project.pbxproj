@@ -447,8 +447,6 @@
 		6189CAA11AD3CFCA000FF15D /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6189CAA01AD3CFCA000FF15D /* CoreVideo.framework */; };
 		6189CAA31AD3CFD3000FF15D /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6189CAA21AD3CFD3000FF15D /* CoreMedia.framework */; };
 		6189CAA51AD3CFD9000FF15D /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6189CAA41AD3CFD9000FF15D /* AVFoundation.framework */; };
-		619027121B233AB100D9EEA2 /* ChatListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 619027101B233AB100D9EEA2 /* ChatListTableViewCell.m */; };
-		619027131B233AB100D9EEA2 /* ChatListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 619027111B233AB100D9EEA2 /* ChatListTableViewCell.xib */; };
 		619027481B2359C600D9EEA2 /* MLKMenuPopover1.m in Sources */ = {isa = PBXBuildFile; fileRef = 619027421B2359C600D9EEA2 /* MLKMenuPopover1.m */; };
 		619027491B2359C600D9EEA2 /* popObj.m in Sources */ = {isa = PBXBuildFile; fileRef = 619027441B2359C600D9EEA2 /* popObj.m */; };
 		6190274A1B2359C600D9EEA2 /* popTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 619027461B2359C600D9EEA2 /* popTableViewCell.m */; };
@@ -856,6 +854,8 @@
 		F93FCBCB1C856D5A004E356E /* UIImage+Rotation.m in Sources */ = {isa = PBXBuildFile; fileRef = F93FCBBA1C856D5A004E356E /* UIImage+Rotation.m */; };
 		F93FCBCC1C856D5A004E356E /* UINavigationBar+Awesome.m in Sources */ = {isa = PBXBuildFile; fileRef = F93FCBBC1C856D5A004E356E /* UINavigationBar+Awesome.m */; };
 		F93FCBCD1C856D5A004E356E /* UIView+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = F93FCBBE1C856D5A004E356E /* UIView+Additions.m */; };
+		F95F42AA1C8DA341003EDA30 /* SHGConnectionsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F95F42A81C8DA341003EDA30 /* SHGConnectionsTableViewCell.m */; };
+		F95F42AB1C8DA341003EDA30 /* SHGConnectionsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F95F42A91C8DA341003EDA30 /* SHGConnectionsTableViewCell.xib */; };
 		F9758A631BB002D70085D32C /* ImproveMatiralViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9758A621BB002D70085D32C /* ImproveMatiralViewController.xib */; };
 		F986DE361BFDCBD900E6709F /* SHGActionTotalInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F986DE341BFDCBD900E6709F /* SHGActionTotalInViewController.m */; };
 		F986DE371BFDCBD900E6709F /* SHGActionTotalInViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F986DE351BFDCBD900E6709F /* SHGActionTotalInViewController.xib */; };
@@ -1538,9 +1538,6 @@
 		6189CAA01AD3CFCA000FF15D /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
 		6189CAA21AD3CFD3000FF15D /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		6189CAA41AD3CFD9000FF15D /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
-		6190270F1B233AB100D9EEA2 /* ChatListTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatListTableViewCell.h; sourceTree = "<group>"; };
-		619027101B233AB100D9EEA2 /* ChatListTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatListTableViewCell.m; sourceTree = "<group>"; };
-		619027111B233AB100D9EEA2 /* ChatListTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChatListTableViewCell.xib; sourceTree = "<group>"; };
 		619027141B233AFA00D9EEA2 /* Finance 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Finance 2.xcdatamodel"; sourceTree = "<group>"; };
 		619027411B2359C600D9EEA2 /* MLKMenuPopover1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MLKMenuPopover1.h; sourceTree = "<group>"; };
 		619027421B2359C600D9EEA2 /* MLKMenuPopover1.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MLKMenuPopover1.m; sourceTree = "<group>"; };
@@ -2117,6 +2114,9 @@
 		F93FCBBC1C856D5A004E356E /* UINavigationBar+Awesome.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationBar+Awesome.m"; sourceTree = "<group>"; };
 		F93FCBBD1C856D5A004E356E /* UIView+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Additions.h"; sourceTree = "<group>"; };
 		F93FCBBE1C856D5A004E356E /* UIView+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Additions.m"; sourceTree = "<group>"; };
+		F95F42A71C8DA341003EDA30 /* SHGConnectionsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGConnectionsTableViewCell.h; sourceTree = "<group>"; };
+		F95F42A81C8DA341003EDA30 /* SHGConnectionsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGConnectionsTableViewCell.m; sourceTree = "<group>"; };
+		F95F42A91C8DA341003EDA30 /* SHGConnectionsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGConnectionsTableViewCell.xib; sourceTree = "<group>"; };
 		F9758A621BB002D70085D32C /* ImproveMatiralViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ImproveMatiralViewController.xib; sourceTree = "<group>"; };
 		F986DE331BFDCBD900E6709F /* SHGActionTotalInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGActionTotalInViewController.h; sourceTree = "<group>"; };
 		F986DE341BFDCBD900E6709F /* SHGActionTotalInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGActionTotalInViewController.m; sourceTree = "<group>"; };
@@ -3352,9 +3352,9 @@
 		6187D2331AF1C692008E1D21 /* ChatList */ = {
 			isa = PBXGroup;
 			children = (
-				6190270F1B233AB100D9EEA2 /* ChatListTableViewCell.h */,
-				619027101B233AB100D9EEA2 /* ChatListTableViewCell.m */,
-				619027111B233AB100D9EEA2 /* ChatListTableViewCell.xib */,
+				F95F42A71C8DA341003EDA30 /* SHGConnectionsTableViewCell.h */,
+				F95F42A81C8DA341003EDA30 /* SHGConnectionsTableViewCell.m */,
+				F95F42A91C8DA341003EDA30 /* SHGConnectionsTableViewCell.xib */,
 				6187D2341AF1C692008E1D21 /* ChatListCell.h */,
 				6187D2351AF1C692008E1D21 /* ChatListCell.m */,
 				6187D2361AF1C692008E1D21 /* ChatListViewController.h */,
@@ -5226,7 +5226,6 @@
 				408D8B4B1AF8618C0055810C /* chatBar_recordBg.png in Resources */,
 				B0CA7C7C1B7A021E0038BABB /* 表情@3x.png in Resources */,
 				408D8B781AF8618C0055810C /* chat_sender_audio_playing_002.png in Resources */,
-				619027131B233AB100D9EEA2 /* ChatListTableViewCell.xib in Resources */,
 				408D8B521AF8618C0055810C /* chatBar_colorMore_audioCallSelected@2x.png in Resources */,
 				408D8AF81AF8618C0055810C /* VoiceSearchFeedback002@2x.png in Resources */,
 				408D8B281AF8618C0055810C /* chatBar_more_card@2x.png in Resources */,
@@ -5343,6 +5342,7 @@
 				F9A227C71BF5C2140054F8D7 /* SHGActionMineViewController.xib in Resources */,
 				61E83CEB1AF7C78E00703651 /* 分享circle@2x.png in Resources */,
 				B04D6E281B60C01300E3863E /* 个人中心.png in Resources */,
+				F95F42AB1C8DA341003EDA30 /* SHGConnectionsTableViewCell.xib in Resources */,
 				61E83D461AF7C78E00703651 /* 新三板@3x.png in Resources */,
 				6186DF3A1AFB7F3800960934 /* 帖子@2x.png in Resources */,
 				6152349A1B0D92BA00011EAC /* 我的关注@3x.png in Resources */,
@@ -5692,7 +5692,6 @@
 				6187D2DC1AF1C693008E1D21 /* FacialView.m in Sources */,
 				61D62BEF1ADD1C4D002DD395 /* MOCHTTPResponse.m in Sources */,
 				61D6E7D21AD50FCB0016C13A /* BaseNavigationController.m in Sources */,
-				619027121B233AB100D9EEA2 /* ChatListTableViewCell.m in Sources */,
 				614EFEDA1AEF6B2F00F2BDD1 /* ProdConsulutionViewController.m in Sources */,
 				6187D2E61AF1C693008E1D21 /* EMChatViewBaseCell.m in Sources */,
 				9894C97D1BF5D24200F80577 /* SHGActionSignTableViewCell.m in Sources */,
@@ -5788,6 +5787,7 @@
 				B04D032E1B43F88A009BE7C2 /* ZYExceptionHandler.m in Sources */,
 				F908C1511BFECD2F00CAE018 /* SHGActionCommentTableViewCell.m in Sources */,
 				F9E0488A1BFB151E0027CBC4 /* SHGSelectTagsViewController.m in Sources */,
+				F95F42AA1C8DA341003EDA30 /* SHGConnectionsTableViewCell.m in Sources */,
 				F91778C21BFC240900C535CB /* SHGDatePickerView.m in Sources */,
 				98E3022B1BFB0708001D4A69 /* SHGAuthenticationViewController.m in Sources */,
 				614A597E1AD3AEA1005DAB04 /* Finance.xcdatamodeld in Sources */,

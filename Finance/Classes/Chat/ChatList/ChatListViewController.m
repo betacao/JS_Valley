@@ -29,7 +29,6 @@
 #import "AppDelegate.h"
 #import "MLKMenuPopover.h"
 #import "TabBarViewController.h"
-#import "ChatListTableViewCell.h"
 #import "popObj.h"
 #import "SHGPersonalViewController.h"
 #import "SHGFriendGroupingViewController.h"

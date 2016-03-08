@@ -8,7 +8,7 @@
 
 #import "SHGGropingViewController.h"
 #import "BasePeopleObject.h"
-#import "ChatListTableViewCell.h"
+#import "SHGConnectionsTableViewCell.h"
 #import "SHGPersonalViewController.h"
 
 @interface SHGGropingViewController ()<UITableViewDataSource, UITableViewDelegate>
@@ -91,18 +91,19 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 72.0f;
+    BasePeopleObject *buddy = [self.dataArr objectAtIndex:indexPath.row];
+    return [tableView cellHeightForIndexPath:indexPath model:buddy keyPath:@"object" cellClass:[SHGConnectionsTableViewCell class] contentViewWidth:CGFLOAT_MAX];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"ChatListTableViewCell";
-    ChatListTableViewCell *cell = (ChatListTableViewCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    static NSString *CellIdentifier = @"SHGConnectionsTableViewCell";
+    SHGConnectionsTableViewCell *cell = (SHGConnectionsTableViewCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
         cell = [[[NSBundle mainBundle] loadNibNamed:CellIdentifier owner:self options:nil]objectAtIndex:0];
     }
     BasePeopleObject *buddy = [self.dataArr objectAtIndex:indexPath.row];
-    [cell loadDataWithobj:buddy];
+    cell.object = buddy;
     return cell;
 }
 
