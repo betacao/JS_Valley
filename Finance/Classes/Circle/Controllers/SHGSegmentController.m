@@ -324,7 +324,9 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     NSArray *indexArray = [self indexOfObjectByRid:rid];
     [listArray removeObjectsInArray:objectArray];
     [dataArray removeObjectsInArray:objectArray];
-    [controller deleteCellAtIndexPath:@[[NSIndexPath indexPathForRow:[[indexArray firstObject] integerValue] inSection:0]]];
+    if (indexArray.count > 0) {
+        [controller deleteCellAtIndexPath:@[[NSIndexPath indexPathForRow:[[indexArray firstObject] integerValue] inSection:0]]];
+    }
 }
 
 //发布

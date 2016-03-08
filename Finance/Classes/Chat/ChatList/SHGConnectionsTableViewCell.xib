@@ -40,11 +40,6 @@
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <view contentMode="scaleToFill" id="4mL-UC-R8s">
-                        <rect key="frame" x="-17" y="34" width="326" height="61.5"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="foF-DY-fNS">
                         <rect key="frame" x="243" y="41" width="63" height="22"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -53,6 +48,18 @@
                             <action selector="actionInvite:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="iTo-yq-yLb"/>
                         </connections>
                     </button>
+                    <view contentMode="scaleToFill" id="4mL-UC-R8s">
+                        <rect key="frame" x="-17" y="34" width="326" height="61.5"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="BHg-vq-OHz">
+                        <rect key="frame" x="-7" y="44" width="42" height="21"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
             </tableViewCellContentView>
             <connections>
@@ -61,6 +68,7 @@
                 <outlet property="invateButton" destination="foF-DY-fNS" id="b0p-uF-gpu"/>
                 <outlet property="lineLabel" destination="4mL-UC-R8s" id="iXx-88-KJl"/>
                 <outlet property="nameLabel" destination="YfW-id-WUE" id="RQ9-iF-NDC"/>
+                <outlet property="relationLabel" destination="BHg-vq-OHz" id="FG3-7v-mwb"/>
                 <outlet property="stateLabel" destination="uX6-Gj-dSi" id="DNK-7f-RvF"/>
             </connections>
             <point key="canvasLocation" x="209" y="372"/>

@@ -8,7 +8,7 @@
 
 #import "SHGHomeViewController.h"
 #import "CircleListObj.h"
-#import "CircleSendViewController.h"
+#import "SHGCircleSendViewController.h"
 #import "ChatViewController.h"
 #import "CircleListTwoTableViewCell.h"
 #import "MLEmojiLabel.h"
@@ -413,9 +413,9 @@ const CGFloat kAdButtomMargin = 20.0f;
 //发帖
 - (void)actionPost:(UIButton *)sender
 {
-    CircleSendViewController *postVC = [[CircleSendViewController alloc] initWithNibName:@"CircleSendViewController" bundle:nil];
-    postVC.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:postVC animated:YES];
+    SHGCircleSendViewController *controller = [[SHGCircleSendViewController alloc] init];
+    controller.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:controller animated:YES];
 }
 
 - (void)refreshHeader

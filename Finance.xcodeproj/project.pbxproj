@@ -367,8 +367,6 @@
 		615234B01B0E146B00011EAC /* 二度跳转页面@3x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 615234AD1B0E146B00011EAC /* 二度跳转页面@3x.jpg */; };
 		615234B21B0E146B00011EAC /* 一度跳转页面@3x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 615234AF1B0E146B00011EAC /* 一度跳转页面@3x.jpg */; };
 		615234B41B0EFB6B00011EAC /* sns_icon_1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 615234B31B0EFB6B00011EAC /* sns_icon_1@2x.png */; };
-		6153B9481ADFB4CA0015F6E1 /* CircleSendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6153B9461ADFB4CA0015F6E1 /* CircleSendViewController.m */; };
-		6153B9491ADFB4CA0015F6E1 /* CircleSendViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6153B9471ADFB4CA0015F6E1 /* CircleSendViewController.xib */; };
 		61616FE71B02F29100E5A837 /* 关注按钮@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 61616FD91B02F29100E5A837 /* 关注按钮@2x.png */; };
 		61616FE81B02F29100E5A837 /* 关注按钮@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 61616FDA1B02F29100E5A837 /* 关注按钮@3x.png */; };
 		61616FE91B02F29100E5A837 /* 已关注按钮@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 61616FDB1B02F29100E5A837 /* 已关注按钮@2x.png */; };
@@ -512,7 +510,6 @@
 		61E83CEC1AF7C78E00703651 /* 加关注@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 61E83C101AF7C78E00703651 /* 加关注@2x.png */; };
 		61E83CED1AF7C78E00703651 /* 加关注按钮@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 61E83C111AF7C78E00703651 /* 加关注按钮@2x.png */; };
 		61E83CEE1AF7C78E00703651 /* 发帖传图片@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 61E83C121AF7C78E00703651 /* 发帖传图片@2x.png */; };
-		61E83CEF1AF7C78E00703651 /* 发帖表情@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 61E83C131AF7C78E00703651 /* 发帖表情@2x.png */; };
 		61E83CF01AF7C78E00703651 /* 发起对话按钮@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 61E83C141AF7C78E00703651 /* 发起对话按钮@2x.png */; };
 		61E83CF11AF7C78E00703651 /* 发送按钮-按下@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 61E83C151AF7C78E00703651 /* 发送按钮-按下@2x.png */; };
 		61E83CF21AF7C78E00703651 /* 发送按钮-默认@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 61E83C161AF7C78E00703651 /* 发送按钮-默认@2x.png */; };
@@ -603,7 +600,6 @@
 		61E83D521AF7C78E00703651 /* 加关注@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 61E83C7D1AF7C78E00703651 /* 加关注@3x.png */; };
 		61E83D531AF7C78E00703651 /* 加关注按钮@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 61E83C7E1AF7C78E00703651 /* 加关注按钮@3x.png */; };
 		61E83D541AF7C78E00703651 /* 发帖传图片@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 61E83C7F1AF7C78E00703651 /* 发帖传图片@3x.png */; };
-		61E83D551AF7C78E00703651 /* 发帖表情@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 61E83C801AF7C78E00703651 /* 发帖表情@3x.png */; };
 		61E83D561AF7C78E00703651 /* 发起对话按钮@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 61E83C811AF7C78E00703651 /* 发起对话按钮@3x.png */; };
 		61E83D571AF7C78E00703651 /* 发送按钮-按下@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 61E83C821AF7C78E00703651 /* 发送按钮-按下@3x.png */; };
 		61E83D581AF7C78E00703651 /* 发送按钮-默认@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 61E83C831AF7C78E00703651 /* 发送按钮-默认@3x.png */; };
@@ -799,10 +795,6 @@
 		B09BF7721B7C6C1F008260B3 /* 邀请@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = B09BF7681B7C6C1F008260B3 /* 邀请@3x.png */; };
 		B0BAA36B1B69EAF30036C367 /* CCLocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B0BAA36A1B69EAF30036C367 /* CCLocationManager.m */; };
 		B0BAA36E1B6A059E0036C367 /* TWEmojiKeyBoard.m in Sources */ = {isa = PBXBuildFile; fileRef = B0BAA36D1B6A059E0036C367 /* TWEmojiKeyBoard.m */; };
-		B0CA7C7B1B7A021E0038BABB /* 表情@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B0CA7C751B7A021E0038BABB /* 表情@2x.png */; };
-		B0CA7C7C1B7A021E0038BABB /* 表情@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = B0CA7C761B7A021E0038BABB /* 表情@3x.png */; };
-		B0CA7C7F1B7A021E0038BABB /* url@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B0CA7C791B7A021E0038BABB /* url@2x.png */; };
-		B0CA7C801B7A021E0038BABB /* url@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = B0CA7C7A1B7A021E0038BABB /* url@3x.png */; };
 		B0CA7C881B7A022F0038BABB /* qq@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B0CA7C821B7A022E0038BABB /* qq@2x.png */; };
 		B0CA7C891B7A022F0038BABB /* qq@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = B0CA7C831B7A022E0038BABB /* qq@3x.png */; };
 		B0CA7C8A1B7A022F0038BABB /* wb@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B0CA7C841B7A022F0038BABB /* wb@2x.png */; };
@@ -856,6 +848,8 @@
 		F93FCBCD1C856D5A004E356E /* UIView+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = F93FCBBE1C856D5A004E356E /* UIView+Additions.m */; };
 		F95F42AA1C8DA341003EDA30 /* SHGConnectionsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F95F42A81C8DA341003EDA30 /* SHGConnectionsTableViewCell.m */; };
 		F95F42AB1C8DA341003EDA30 /* SHGConnectionsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F95F42A91C8DA341003EDA30 /* SHGConnectionsTableViewCell.xib */; };
+		F95F42AF1C8E993C003EDA30 /* SHGCircleSendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F95F42AD1C8E993C003EDA30 /* SHGCircleSendViewController.m */; };
+		F95F42B01C8E993C003EDA30 /* SHGCircleSendViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F95F42AE1C8E993C003EDA30 /* SHGCircleSendViewController.xib */; };
 		F9758A631BB002D70085D32C /* ImproveMatiralViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9758A621BB002D70085D32C /* ImproveMatiralViewController.xib */; };
 		F986DE361BFDCBD900E6709F /* SHGActionTotalInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F986DE341BFDCBD900E6709F /* SHGActionTotalInViewController.m */; };
 		F986DE371BFDCBD900E6709F /* SHGActionTotalInViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F986DE351BFDCBD900E6709F /* SHGActionTotalInViewController.xib */; };
@@ -1410,9 +1404,6 @@
 		615234AD1B0E146B00011EAC /* 二度跳转页面@3x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "二度跳转页面@3x.jpg"; sourceTree = "<group>"; };
 		615234AF1B0E146B00011EAC /* 一度跳转页面@3x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "一度跳转页面@3x.jpg"; sourceTree = "<group>"; };
 		615234B31B0EFB6B00011EAC /* sns_icon_1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sns_icon_1@2x.png"; sourceTree = "<group>"; };
-		6153B9451ADFB4CA0015F6E1 /* CircleSendViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CircleSendViewController.h; sourceTree = "<group>"; };
-		6153B9461ADFB4CA0015F6E1 /* CircleSendViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CircleSendViewController.m; sourceTree = "<group>"; wrapsLines = 1; };
-		6153B9471ADFB4CA0015F6E1 /* CircleSendViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CircleSendViewController.xib; sourceTree = "<group>"; };
 		61616FD91B02F29100E5A837 /* 关注按钮@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "关注按钮@2x.png"; sourceTree = "<group>"; };
 		61616FDA1B02F29100E5A837 /* 关注按钮@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "关注按钮@3x.png"; sourceTree = "<group>"; };
 		61616FDB1B02F29100E5A837 /* 已关注按钮@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "已关注按钮@2x.png"; sourceTree = "<group>"; };
@@ -1717,7 +1708,6 @@
 		61E83C101AF7C78E00703651 /* 加关注@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "加关注@2x.png"; sourceTree = "<group>"; };
 		61E83C111AF7C78E00703651 /* 加关注按钮@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "加关注按钮@2x.png"; sourceTree = "<group>"; };
 		61E83C121AF7C78E00703651 /* 发帖传图片@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "发帖传图片@2x.png"; sourceTree = "<group>"; };
-		61E83C131AF7C78E00703651 /* 发帖表情@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "发帖表情@2x.png"; sourceTree = "<group>"; };
 		61E83C141AF7C78E00703651 /* 发起对话按钮@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "发起对话按钮@2x.png"; sourceTree = "<group>"; };
 		61E83C151AF7C78E00703651 /* 发送按钮-按下@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "发送按钮-按下@2x.png"; sourceTree = "<group>"; };
 		61E83C161AF7C78E00703651 /* 发送按钮-默认@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "发送按钮-默认@2x.png"; sourceTree = "<group>"; };
@@ -1808,7 +1798,6 @@
 		61E83C7D1AF7C78E00703651 /* 加关注@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "加关注@3x.png"; sourceTree = "<group>"; };
 		61E83C7E1AF7C78E00703651 /* 加关注按钮@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "加关注按钮@3x.png"; sourceTree = "<group>"; };
 		61E83C7F1AF7C78E00703651 /* 发帖传图片@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "发帖传图片@3x.png"; sourceTree = "<group>"; };
-		61E83C801AF7C78E00703651 /* 发帖表情@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "发帖表情@3x.png"; sourceTree = "<group>"; };
 		61E83C811AF7C78E00703651 /* 发起对话按钮@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "发起对话按钮@3x.png"; sourceTree = "<group>"; };
 		61E83C821AF7C78E00703651 /* 发送按钮-按下@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "发送按钮-按下@3x.png"; sourceTree = "<group>"; };
 		61E83C831AF7C78E00703651 /* 发送按钮-默认@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "发送按钮-默认@3x.png"; sourceTree = "<group>"; };
@@ -2029,10 +2018,6 @@
 		B0BAA36A1B69EAF30036C367 /* CCLocationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCLocationManager.m; sourceTree = "<group>"; };
 		B0BAA36C1B6A059E0036C367 /* TWEmojiKeyBoard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TWEmojiKeyBoard.h; sourceTree = "<group>"; };
 		B0BAA36D1B6A059E0036C367 /* TWEmojiKeyBoard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TWEmojiKeyBoard.m; sourceTree = "<group>"; };
-		B0CA7C751B7A021E0038BABB /* 表情@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "表情@2x.png"; sourceTree = "<group>"; };
-		B0CA7C761B7A021E0038BABB /* 表情@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "表情@3x.png"; sourceTree = "<group>"; };
-		B0CA7C791B7A021E0038BABB /* url@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "url@2x.png"; sourceTree = "<group>"; };
-		B0CA7C7A1B7A021E0038BABB /* url@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "url@3x.png"; sourceTree = "<group>"; };
 		B0CA7C821B7A022E0038BABB /* qq@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "qq@2x.png"; sourceTree = "<group>"; };
 		B0CA7C831B7A022E0038BABB /* qq@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "qq@3x.png"; sourceTree = "<group>"; };
 		B0CA7C841B7A022F0038BABB /* wb@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "wb@2x.png"; sourceTree = "<group>"; };
@@ -2117,6 +2102,9 @@
 		F95F42A71C8DA341003EDA30 /* SHGConnectionsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGConnectionsTableViewCell.h; sourceTree = "<group>"; };
 		F95F42A81C8DA341003EDA30 /* SHGConnectionsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGConnectionsTableViewCell.m; sourceTree = "<group>"; };
 		F95F42A91C8DA341003EDA30 /* SHGConnectionsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGConnectionsTableViewCell.xib; sourceTree = "<group>"; };
+		F95F42AC1C8E993C003EDA30 /* SHGCircleSendViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGCircleSendViewController.h; sourceTree = "<group>"; };
+		F95F42AD1C8E993C003EDA30 /* SHGCircleSendViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGCircleSendViewController.m; sourceTree = "<group>"; };
+		F95F42AE1C8E993C003EDA30 /* SHGCircleSendViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGCircleSendViewController.xib; sourceTree = "<group>"; };
 		F9758A621BB002D70085D32C /* ImproveMatiralViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ImproveMatiralViewController.xib; sourceTree = "<group>"; };
 		F986DE331BFDCBD900E6709F /* SHGActionTotalInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGActionTotalInViewController.h; sourceTree = "<group>"; };
 		F986DE341BFDCBD900E6709F /* SHGActionTotalInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGActionTotalInViewController.m; sourceTree = "<group>"; };
@@ -3019,9 +3007,9 @@
 				F9E2A4B11BE99E1C00ECB234 /* SHGNewsViewController.h */,
 				F9E2A4B21BE99E1C00ECB234 /* SHGNewsViewController.m */,
 				F9E2A4B31BE99E1C00ECB234 /* SHGNewsViewController.xib */,
-				6153B9451ADFB4CA0015F6E1 /* CircleSendViewController.h */,
-				6153B9461ADFB4CA0015F6E1 /* CircleSendViewController.m */,
-				6153B9471ADFB4CA0015F6E1 /* CircleSendViewController.xib */,
+				F95F42AC1C8E993C003EDA30 /* SHGCircleSendViewController.h */,
+				F95F42AD1C8E993C003EDA30 /* SHGCircleSendViewController.m */,
+				F95F42AE1C8E993C003EDA30 /* SHGCircleSendViewController.xib */,
 				6145FF151AE4A3450074AB49 /* CircleDetailViewController.h */,
 				6145FF161AE4A3450074AB49 /* CircleDetailViewController.m */,
 				6145FF171AE4A3450074AB49 /* CircleDetailViewController.xib */,
@@ -4141,7 +4129,6 @@
 				61E83C101AF7C78E00703651 /* 加关注@2x.png */,
 				61E83C111AF7C78E00703651 /* 加关注按钮@2x.png */,
 				61E83C121AF7C78E00703651 /* 发帖传图片@2x.png */,
-				61E83C131AF7C78E00703651 /* 发帖表情@2x.png */,
 				61E83C141AF7C78E00703651 /* 发起对话按钮@2x.png */,
 				61E83C151AF7C78E00703651 /* 发送按钮-按下@2x.png */,
 				61E83C161AF7C78E00703651 /* 发送按钮-默认@2x.png */,
@@ -4295,7 +4282,6 @@
 				61E83C7D1AF7C78E00703651 /* 加关注@3x.png */,
 				61E83C7E1AF7C78E00703651 /* 加关注按钮@3x.png */,
 				61E83C7F1AF7C78E00703651 /* 发帖传图片@3x.png */,
-				61E83C801AF7C78E00703651 /* 发帖表情@3x.png */,
 				61E83C811AF7C78E00703651 /* 发起对话按钮@3x.png */,
 				61E83C821AF7C78E00703651 /* 发送按钮-按下@3x.png */,
 				61E83C831AF7C78E00703651 /* 发送按钮-默认@3x.png */,
@@ -4516,10 +4502,6 @@
 		B0CA7C811B7A02230038BABB /* 发帖 */ = {
 			isa = PBXGroup;
 			children = (
-				B0CA7C751B7A021E0038BABB /* 表情@2x.png */,
-				B0CA7C761B7A021E0038BABB /* 表情@3x.png */,
-				B0CA7C791B7A021E0038BABB /* url@2x.png */,
-				B0CA7C7A1B7A021E0038BABB /* url@3x.png */,
 			);
 			name = "发帖";
 			sourceTree = "<group>";
@@ -4994,7 +4976,6 @@
 				B080FEA41B81E30100426579 /* emoji_icons_bg_separator.png in Resources */,
 				B080FE961B81E30100426579 /* emoji_close_n.png in Resources */,
 				61E83D031AF7C78E00703651 /* 圈子-默认@2x.png in Resources */,
-				B0CA7C7B1B7A021E0038BABB /* 表情@2x.png in Resources */,
 				408D8B001AF8618C0055810C /* VoiceSearchFeedback006@2x.png in Resources */,
 				408D8B2A1AF8618C0055810C /* chatBar_more_cardSelected@2x.png in Resources */,
 				61E83D311AF7C78E00703651 /* 添加群成员@2x.png in Resources */,
@@ -5106,7 +5087,6 @@
 				61616FE71B02F29100E5A837 /* 关注按钮@2x.png in Resources */,
 				408D8B3C1AF8618C0055810C /* messageSendFail@2x.png in Resources */,
 				408D8B611AF8618C0055810C /* chatBar_more_locationSelected.png in Resources */,
-				B0CA7C7F1B7A021E0038BABB /* url@2x.png in Resources */,
 				61D62C091ADE3E85002DD395 /* button_send_comment@2x.png in Resources */,
 				408D8B731AF8618C0055810C /* chat_receiver_bg@2x.png in Resources */,
 				408D8AF31AF8618C0055810C /* chatFire_audioPlaying3.png in Resources */,
@@ -5224,7 +5204,6 @@
 				987184A41C4E51ED006F2946 /* SHGMomentCityViewController.xib in Resources */,
 				569C6D371B7CAB6A00AD59C3 /* 密码@2x.png in Resources */,
 				408D8B4B1AF8618C0055810C /* chatBar_recordBg.png in Resources */,
-				B0CA7C7C1B7A021E0038BABB /* 表情@3x.png in Resources */,
 				408D8B781AF8618C0055810C /* chat_sender_audio_playing_002.png in Resources */,
 				408D8B521AF8618C0055810C /* chatBar_colorMore_audioCallSelected@2x.png in Resources */,
 				408D8AF81AF8618C0055810C /* VoiceSearchFeedback002@2x.png in Resources */,
@@ -5321,7 +5300,6 @@
 				B0CA7C8D1B7A022F0038BABB /* wx@3x.png in Resources */,
 				408D8B701AF8618C0055810C /* chat_receiver_audio_playing_full.png in Resources */,
 				61616FFA1B03346E00E5A837 /* new收藏@3x.png in Resources */,
-				61E83CEF1AF7C78E00703651 /* 发帖表情@2x.png in Resources */,
 				61E83D2D1AF7C78E00703651 /* 拒绝按钮-默认@2x.png in Resources */,
 				61E83D6F1AF7C78E00703651 /* 搜索@3x.png in Resources */,
 				985CBDBB1C03FD0B002B3D9D /* SHGCardTableViewCell.xib in Resources */,
@@ -5411,7 +5389,6 @@
 				615010DD1AD61BD700827F82 /* ZYQAssetPicker.Bundle in Resources */,
 				F9A227BF1BF5ABC60054F8D7 /* SHGActionListViewController.xib in Resources */,
 				61E83D041AF7C78E00703651 /* 我的-选中@2x.png in Resources */,
-				6153B9491ADFB4CA0015F6E1 /* CircleSendViewController.xib in Resources */,
 				408D8B601AF8618C0055810C /* chatBar_more_location@2x.png in Resources */,
 				B03938B31B623F83003A85EC /* 5s.png in Resources */,
 				F90344161C1C192F0063EABB /* SHGMarketDetailViewController.xib in Resources */,
@@ -5439,7 +5416,6 @@
 				61E83D221AF7C78E00703651 /* 行业选择图标@2x.png in Resources */,
 				61E83CE01AF7C78E00703651 /* 新三板@2x.png in Resources */,
 				61E83D701AF7C78E00703651 /* 消息-选中@3x.png in Resources */,
-				B0CA7C801B7A021E0038BABB /* url@3x.png in Resources */,
 				40302B411AF0C31F00F22EB6 /* MyAppointmentViewController.xib in Resources */,
 				61E83CE81AF7C78E00703651 /* 身份验证弹出对话框@2x.png in Resources */,
 				61E83D861AF7C78E00703651 /* 相互关注图标@3x.png in Resources */,
@@ -5534,6 +5510,7 @@
 				6149CFE31B25E5B0006E45FE /* city_code.txt in Resources */,
 				53B40DD01AFBF01800AD2EFE /* 申请头像图标@2x.png in Resources */,
 				614AD1CE1AD7CCD900DDF43E /* edit@3x.png in Resources */,
+				F95F42B01C8E993C003EDA30 /* SHGCircleSendViewController.xib in Resources */,
 				F9DDEFC01BF9EB79001341CF /* SHGActionSendViewController.xib in Resources */,
 				614EFF0A1AF114D800F2BDD1 /* mine.png in Resources */,
 				408D8AFB1AF8618C0055810C /* VoiceSearchFeedback004.png in Resources */,
@@ -5552,7 +5529,6 @@
 				408D8B511AF8618C0055810C /* chatBar_colorMore_audioCall@2x.png in Resources */,
 				408D8B181AF8618C0055810C /* VoiceSearchFeedback018@2x.png in Resources */,
 				61E83CF61AF7C78E00703651 /* 收藏@2x.png in Resources */,
-				61E83D551AF7C78E00703651 /* 发帖表情@3x.png in Resources */,
 				F920570B1C63203600897C8B /* SHGMarketAdvancedSearchViewController.xib in Resources */,
 				F9A997F71C72CAA500355337 /* SHGMarketSearchResultViewController.xib in Resources */,
 				61E83D201AF7C78E00703651 /* 编辑@2x.png in Resources */,
@@ -5750,7 +5726,6 @@
 				610FF0451AD621500027EBA6 /* PopoverListObj.m in Sources */,
 				538964D11AFC6BEB00041548 /* AppDelegate+EaseMob.m in Sources */,
 				F9A997F61C72CAA500355337 /* SHGMarketSearchResultViewController.m in Sources */,
-				6153B9481ADFB4CA0015F6E1 /* CircleSendViewController.m in Sources */,
 				6187D2D91AF1C693008E1D21 /* LocationViewController.m in Sources */,
 				F936DD4B1C3A437500584F53 /* SHGFriendGroupingViewController.m in Sources */,
 				B0BAA36E1B6A059E0036C367 /* TWEmojiKeyBoard.m in Sources */,
@@ -5808,6 +5783,7 @@
 				61425B421AFA7ED600758BCB /* ConfigObj.m in Sources */,
 				F99580C41B9D338B001F8AA6 /* SHGModifyInfoViewController.m in Sources */,
 				6149CFE91B2605FC006E45FE /* TwainContactInfo.m in Sources */,
+				F95F42AF1C8E993C003EDA30 /* SHGCircleSendViewController.m in Sources */,
 				6147AE021B050E7F00DFBD50 /* OBGradientView.m in Sources */,
 				5331DF351AFC224D00E035B8 /* MessageObj.m in Sources */,
 				6187D2E01AF1C693008E1D21 /* EMChatBaseBubbleView.m in Sources */,

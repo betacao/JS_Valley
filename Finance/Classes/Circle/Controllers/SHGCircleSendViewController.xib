@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SHGCircleSendViewController">
+            <connections>
+                <outlet property="accessoryLine1" destination="km9-9D-Vq3" id="Drk-wV-vfI"/>
+                <outlet property="accessoryLine2" destination="vaH-0G-Wv7" id="A7p-GQ-bhN"/>
+                <outlet property="accessory_emoji" destination="JsA-j4-u7W" id="zjE-Fc-iOc"/>
+                <outlet property="accessory_url" destination="UUt-aV-RvI" id="WeC-Ux-8Ht"/>
+                <outlet property="addButton" destination="cbD-g9-Oyt" id="Y56-oS-i44"/>
+                <outlet property="bottomLine1" destination="ZdJ-4N-68f" id="Lre-mj-QeK"/>
+                <outlet property="bottomLine2" destination="tFI-P1-aks" id="V6w-xq-e3s"/>
+                <outlet property="bottomView" destination="qlK-qw-GEA" id="ONX-lc-8oZ"/>
+                <outlet property="bottom_emoji" destination="8Y1-mx-7xj" id="FB9-3w-kGI"/>
+                <outlet property="bottom_url" destination="B1P-e9-z4G" id="yXy-XM-OZh"/>
+                <outlet property="inputAccessoryView" destination="CfY-ZF-Bfr" id="soO-Vo-PlK"/>
+                <outlet property="photoView" destination="8ip-ZD-3oo" id="ANu-ha-KSO"/>
+                <outlet property="scrollView" destination="mGF-Jp-d3g" id="EhP-Yi-MPI"/>
+                <outlet property="textView" destination="MJQ-OL-aZB" id="ozU-Xv-E0g"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" id="qlK-qw-GEA">
+                    <rect key="frame" x="22" y="432" width="240" height="128"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="8Y1-mx-7xj">
+                            <rect key="frame" x="34" y="51" width="25" height="25"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <state key="normal" image="circleSend_emoji"/>
+                            <connections>
+                                <action selector="emojiButtonClick:" destination="-1" eventType="touchUpInside" id="6y7-ue-QXv"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="B1P-e9-z4G">
+                            <rect key="frame" x="104" y="47" width="25" height="25"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <state key="normal" image="circleSend_url"/>
+                            <connections>
+                                <action selector="urlButtonClick:" destination="-1" eventType="touchUpInside" id="K4X-E8-A2w"/>
+                            </connections>
+                        </button>
+                        <view contentMode="scaleToFill" id="ZdJ-4N-68f">
+                            <rect key="frame" x="-38" y="-52" width="240" height="128"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </view>
+                        <view contentMode="scaleToFill" id="tFI-P1-aks">
+                            <rect key="frame" x="-30" y="59" width="240" height="128"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </view>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </view>
+                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="mGF-Jp-d3g">
+                    <rect key="frame" x="8" y="8" width="240" height="128"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" id="MJQ-OL-aZB" customClass="CPTextViewPlaceholder">
+                            <rect key="frame" x="0.0" y="8" width="240" height="128"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            <connections>
+                                <outlet property="delegate" destination="-1" id="VjL-LV-MbB"/>
+                            </connections>
+                        </textView>
+                        <view contentMode="scaleToFill" id="8ip-ZD-3oo">
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="243"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="cbD-g9-Oyt">
+                                    <rect key="frame" x="0.0" y="0.0" width="105" height="105"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <state key="normal" image="circle_plus"/>
+                                    <connections>
+                                        <action selector="plusButtonClick:" destination="-1" eventType="touchUpInside" id="IgL-Tk-WY6"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </view>
+                    </subviews>
+                    <connections>
+                        <outlet property="delegate" destination="-1" id="fp3-Mr-HMP"/>
+                    </connections>
+                </scrollView>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <point key="canvasLocation" x="433" y="202"/>
+        </view>
+        <view contentMode="scaleToFill" id="CfY-ZF-Bfr">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="JsA-j4-u7W">
+                    <rect key="frame" x="34" y="51" width="25" height="25"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <state key="normal" image="circleSend_emoji"/>
+                    <connections>
+                        <action selector="emojiButtonClick:" destination="-1" eventType="touchUpInside" id="x6z-MU-FFK"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="UUt-aV-RvI">
+                    <rect key="frame" x="104" y="47" width="25" height="25"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <state key="normal" image="circleSend_url"/>
+                    <connections>
+                        <action selector="urlButtonClick:" destination="-1" eventType="touchUpInside" id="GUg-SK-V7z"/>
+                    </connections>
+                </button>
+                <view contentMode="scaleToFill" id="km9-9D-Vq3">
+                    <rect key="frame" x="-38" y="-52" width="240" height="128"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </view>
+                <view contentMode="scaleToFill" id="vaH-0G-Wv7">
+                    <rect key="frame" x="-30" y="59" width="240" height="128"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="circleSend_emoji" width="25" height="25"/>
+        <image name="circleSend_url" width="25" height="25"/>
+        <image name="circle_plus" width="105" height="105"/>
+    </resources>
+</document>

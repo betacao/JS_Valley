@@ -26,7 +26,7 @@
 
 - (void)dealloc
 {
-    _delegate = nil;
+    self.delegate = nil;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
@@ -34,8 +34,7 @@
 {
     self = [super initWithFrame:frame superFrame:superFrame isController:isController];
     if (self) {
-        // Initialization code
-         _type=type;
+         _type = type;
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWasChange:) name:UIKeyboardDidChangeFrameNotification object:nil];
         [self initContentView];
     }
@@ -64,12 +63,10 @@
 
     
     UIButton *btnTemp = [UIButton buttonWithType:UIButtonTypeCustom];
-    //[self.viewContainer addSubview:_btnCancel];
     btnTemp = [UIButton buttonWithType:UIButtonTypeCustom];
     [btnTemp setFrame:CGRectMake(SCREENWIDTH - 69, 7, 54, 32)];
     [btnTemp setBackgroundColor:RGB(255, 57, 67)];
     [btnTemp.titleLabel setFont:[UIFont systemFontOfSize:15.0f]];
-    //[btnTemp setBackgroundImage:[UIImage imageNamed:@"comment_btn_ok.png"] forState:UIControlStateNormal];
     [btnTemp setTitle:@"发送" forState:UIControlStateNormal];
     [btnTemp setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [btnTemp addTarget:self action:@selector(btnSendClick:) forControlEvents:UIControlEventTouchUpInside];
@@ -78,8 +75,7 @@
     
     UIButton *emage = [UIButton buttonWithType:UIButtonTypeCustom];
     emage.frame = CGRectMake(10, 7, 30, 27);
-    //emage.backgroundColor = [UIColor redColor];
-    [emage setImage:[UIImage imageNamed:@"表情"] forState:UIControlStateNormal];
+    [emage setImage:[UIImage imageNamed:@"keyBoard_emoji"] forState:UIControlStateNormal];
     [emage addTarget:self action:@selector(btnEmoji:) forControlEvents:UIControlEventTouchUpInside];
     self.btnEmoje = emage;
     [self.viewContainer addSubview:emage];
@@ -146,39 +142,31 @@
     comment = [comment stringByReplacingOccurrencesOfString:@" " withString:@""];
     [_delegate loadCommentState];
     if ([comment validLength].length == 0) {
-        if([_type isEqualToString:@"reply"])
-        {
+        if([_type isEqualToString:@"reply"]){
             [Hud showMessageWithText:@"请输入回复的内容"];
-        }else
-        {
+        } else{
             [Hud showMessageWithText:@"请输入评论的内容"];
         }
         return;
     }
     
     if (comment.length > 300) {
-        if([_type isEqualToString:@"reply"])
-        {
+        if([_type isEqualToString:@"reply"]){
             [Hud showMessageWithText:[NSString stringWithFormat:@"回复字数不能大于%d",300]];
-        }else
-        {
+        } else{
             [Hud showMessageWithText:[NSString stringWithFormat:@"评论字数不能大于%d",300]];
         }
         return;
     }
-    if ([_fid isEqualToString:@"-1"])
-    {
+    if ([_fid isEqualToString:@"-1"]) {
         [_delegate commentViewDidComment:_textVComment.text rid:self.rid];
-    }
-    else
-    {
+    } else{
         [_delegate commentViewDidComment:_textVComment.text reply:_detail fid:_fid rid:self.rid];
     }
 }
-- (void)btnEmoji:(UIButton *)sender{
-    NSLog(@"11");
-    
-    NSLog(@"表情包");
+
+- (void)btnEmoji:(UIButton *)sender
+{
     [textVTemp resignFirstResponder];
     
     if (!isEmojiKeyBoard)

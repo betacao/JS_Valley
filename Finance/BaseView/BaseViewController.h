@@ -18,5 +18,6 @@
 
 @property (nonatomic, assign) NSInteger upDistance;
 
+- (void)btnBackClick:(id)sender;
 - (void)rightItemClick:(id)sender;
 @end

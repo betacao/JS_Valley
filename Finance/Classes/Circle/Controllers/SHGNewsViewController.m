@@ -8,7 +8,6 @@
 
 #import "SHGNewsViewController.h"
 #import "CircleListObj.h"
-#import "CircleSendViewController.h"
 #import "ChatViewController.h"
 #import "CircleListTwoTableViewCell.h"
 #import "MLEmojiLabel.h"
@@ -229,9 +228,6 @@
 //发帖
 - (void)actionPost:(UIButton *)sender
 {
-    CircleSendViewController *postVC = [[CircleSendViewController alloc] initWithNibName:@"CircleSendViewController" bundle:nil];
-    postVC.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:postVC animated:YES];
 }
 
 - (void)refreshLoad
