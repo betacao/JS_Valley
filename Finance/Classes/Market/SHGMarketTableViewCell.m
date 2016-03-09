@@ -19,7 +19,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
 @property (weak, nonatomic) IBOutlet UIView *bottomView;
 @property (weak, nonatomic) IBOutlet UIView *bottomLineView;
-@property (strong ,nonatomic) SHGMarketFirstCategoryObject *obj;
+@property (strong, nonatomic) SHGMarketFirstCategoryObject *obj;
 @end
 
 @implementation SHGMarketTableViewCell
@@ -57,24 +57,24 @@
     .widthIs(SCREENWIDTH/2.0f - MarginFactor(12.0f))
     .heightRatioToView(self.typeLabel, 1.0f);
     
-    [self.collectButton sizeToFit];
-    CGSize size = self.collectButton.frame.size;
+    UIImage *collectImage = [UIImage imageNamed:@"marketListCollection"];
+    CGSize size = collectImage.size;
     self.collectButton.sd_layout
     .rightSpaceToView(self.contentView, MarginFactor(12.0f))
     .centerYEqualToView(self.contactLabel)
     .widthIs(size.width)
     .heightIs(size.height);
     
-    [self.deleteButton sizeToFit];
-    CGSize deleteSize = self.deleteButton.frame.size;
+    UIImage *deleteImage = [UIImage imageNamed:@"home_delete"];
+    CGSize deleteSize = deleteImage.size;
     self.deleteButton.sd_layout
     .rightSpaceToView(self.contentView, MarginFactor(12.0f))
     .centerYEqualToView(self.contactLabel)
     .widthIs(deleteSize.width)
     .heightIs(deleteSize.height);
     
-    [self.editButton sizeToFit];
-    CGSize editeSize = self.deleteButton.frame.size;
+    UIImage * editeImage = [UIImage imageNamed:@"marketEdite"];
+    CGSize editeSize = editeImage.size;
     self.editButton.sd_layout
     .rightSpaceToView(self.deleteButton, MarginFactor(15.0f))
     .centerYEqualToView(self.contactLabel)

@@ -8,33 +8,83 @@
 
 #import "BasePeopleTableViewCell.h"
 @interface BasePeopleTableViewCell()
-@property (weak, nonatomic) IBOutlet UILabel *lineLabel;
-
+@property (weak, nonatomic) IBOutlet UILabel *nameLabel;
+@property (weak, nonatomic) IBOutlet UIButton *followButton;
+@property (weak, nonatomic) IBOutlet headerView *headerView;
+@property (weak, nonatomic) IBOutlet UIView *lineView;
 - (IBAction)followButtonClicked:(id)sender;
 @end
 
 @implementation BasePeopleTableViewCell
 
 - (void)awakeFromNib {
-    // Initialization code
-    self.lineLabel.frame = CGRectMake(self.lineLabel.origin.x, self.lineLabel.origin.y, self.lineLabel.width, 0.5);
+
+    [self loadView];
+}
+
+- (void)loadView
+{
+    self.nameLabel.textAlignment = NSTextAlignmentLeft;
+    self.nameLabel.textColor = [UIColor colorWithHexString:@"161616"];
+    self.nameLabel.font = FontFactor(15.0f);
+    self.lineView.backgroundColor = [UIColor colorWithHexString:@"e6e7e8"];
+    self.headerView.sd_layout
+    .leftSpaceToView(self.contentView, MarginFactor(12.0f))
+    .topSpaceToView(self.contentView, MarginFactor(12.0f))
+    .widthIs(MarginFactor(35.0f))
+    .heightIs(MarginFactor(35.0f));
+    
+    self.nameLabel.sd_layout
+    .leftSpaceToView(self.headerView, MarginFactor(15.0f))
+    .centerYEqualToView(self.headerView)
+    .autoHeightRatio(0.0f);
+    [self.nameLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
+    
+    UIImage *image = [UIImage imageNamed:@"me_follow"];
+    CGSize followSize = image.size;
+    self.followButton.sd_layout
+    .rightSpaceToView(self.contentView, MarginFactor(12.0f))
+    .centerYEqualToView(self.headerView)
+    .widthIs(followSize.width)
+    .heightIs(followSize.height);
+    
+    self.lineView.sd_layout
+    .leftEqualToView(self.headerView)
+    .rightSpaceToView(self.contentView, 0.0f)
+    .bottomSpaceToView(self.contentView, 0.0f)
+    .heightIs(0.5f);
+
+
+}
+
+- (void)setObject:(BasePeopleObject *)object
+{
+    _object = object;
+    self.nameLabel.text = object.name;
+    [self.nameLabel sizeToFit];
+    UIImage *placeHolder = [UIImage imageNamed:@"default_head"];
+    [self.headerView updateHeaderView:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,object.headImageUrl] placeholderImage:placeHolder];
+    [self.headerView updateStatus:[object.userstatus isEqualToString:@"true"]?YES:NO];
+    
+    if (object.followRelation == 0) {
+        [self.followButton setImage:[UIImage imageNamed:@"me_follow"] forState:UIControlStateNormal];
+    } else if (object.followRelation == 1){
+        [self.followButton setImage:[UIImage imageNamed:@"me_followed"] forState:UIControlStateNormal];
+    } else if (object.followRelation == 2){
+        [self.followButton setImage:[UIImage imageNamed:@"me_follow_each"] forState:UIControlStateNormal];
+    }
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
 
-    // Configure the view for the selected state
 }
 
-+(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    return 56.0;
-}
 
 - (IBAction)followButtonClicked:(id)sender
 {
 	if (self.delegate && [self.delegate respondsToSelector:@selector(followButtonClicked:)]) {
-		[self.delegate followButtonClicked:self.obj];
+		[self.delegate followButtonClicked:self.object];
 	}
 }
 @end

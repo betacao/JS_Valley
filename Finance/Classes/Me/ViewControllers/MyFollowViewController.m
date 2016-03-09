@@ -238,13 +238,11 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-	// Return the number of sections.
 	return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-	// Return the number of rows in the section.
 	return self.dataSource.count;
 }
 
@@ -255,41 +253,26 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	return 56.0f;
+	return MarginFactor(55.0f);
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	static NSString *CellIdentifier = @"BasePeopleTableViewCell";
-	BasePeopleTableViewCell *cell = (BasePeopleTableViewCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-	
-	if (cell == nil) {
-		cell = [[[NSBundle mainBundle] loadNibNamed:CellIdentifier owner:self options:nil]objectAtIndex:0];
-	}
-	
-	BasePeopleObject *obj = self.dataSource[indexPath.row];
-	cell.nameLabel.text = obj.name;
-	cell.describtionLabel.text = obj.simpleDescription;
-	cell.delegate = self;
-	cell.obj = obj;
-    UIImage *placeHolder = [UIImage imageNamed:@"default_head"];
-    [cell.headerView updateHeaderView:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,obj.headImageUrl] placeholderImage:placeHolder];
-    [cell.headerView updateStatus:[obj.userstatus isEqualToString:@"true"]?YES:NO];
-    
-    if (obj.followRelation == 0) {
-        cell.followButton.hidden = NO;
-        [cell.followButton setImage:[UIImage imageNamed:@"me_follow"] forState:UIControlStateNormal];
-    }else if (obj.followRelation == 1){
-        cell.followButton.hidden = NO;
-        [cell.followButton setImage:[UIImage imageNamed:@"me_followed"] forState:UIControlStateNormal];
+    NSString *identifier = @"BasePeopleTableViewCell";
+    BasePeopleTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+    if (!cell) {
+        cell = [[[NSBundle mainBundle] loadNibNamed:@"BasePeopleTableViewCell" owner:self options:nil] lastObject];
+        cell.delegate = self;
+    }
 
-
-	}else if (obj.followRelation == 2){
-		cell.followButton.hidden = NO;
-		[cell.followButton setImage:[UIImage imageNamed:@"me_follow_each"] forState:UIControlStateNormal];
-
-	}
-	
+//	BasePeopleTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"BasePeopleTableViewCell"];
+//	if (!cell) {
+//        cell = [[BasePeopleTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"BasePeopleTableViewCell"];
+//	}
+//    cell.delegate = self;
+    BasePeopleObject *obj = self.dataSource[indexPath.row];
+    cell.object = obj;
+   	
 	return cell;
 }
 
@@ -324,32 +307,13 @@
 		[_searchController setCellForRowAtIndexPathCompletion:^UITableViewCell *(UITableView *tableView, NSIndexPath *indexPath) {
 			static NSString *CellIdentifier = @"BasePeopleTableViewCell";
 			BasePeopleTableViewCell *cell = (BasePeopleTableViewCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-			
-			// Configure the cell...
 			if (cell == nil) {
 				cell = [[[NSBundle mainBundle] loadNibNamed:CellIdentifier owner:self options:nil]objectAtIndex:0];
 			}
 			
 			BasePeopleObject *obj = weakSelf.searchController.resultsSource[indexPath.row];
-			cell.nameLabel.text = obj.name;
-			cell.describtionLabel.text = obj.simpleDescription;
+            cell.object = obj;
             cell.delegate = weakSelf;
-            [cell.headerView updateHeaderView:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,obj.headImageUrl] placeholderImage:[UIImage imageNamed:@"default_head"]];
-            [cell.headerView updateStatus:[obj.userstatus isEqualToString:@"true"]?YES:NO];
-			cell.obj = obj;
-			if (obj.followRelation == 0) {
-				cell.followButton.hidden = NO;
-				[cell.followButton setImage:[UIImage imageNamed:@"me_follow"] forState:UIControlStateNormal];
-			}else if (obj.followRelation == 1){
-				cell.followButton.hidden = NO;
-				[cell.followButton setImage:[UIImage imageNamed:@"me_followed"] forState:UIControlStateNormal];
-            
-			}else if (obj.followRelation == 2){
-				cell.followButton.hidden = NO;
-				[cell.followButton setImage:[UIImage imageNamed:@"me_follow_each"] forState:UIControlStateNormal];
-				
-			}
-			
 			return cell;
 
 		}];

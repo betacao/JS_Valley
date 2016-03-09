@@ -18,15 +18,8 @@
 
 @interface BasePeopleTableViewCell : UITableViewCell
 
-@property (nonatomic, strong) IBOutlet UILabel	*nameLabel;
-@property (nonatomic, strong) IBOutlet UILabel	*describtionLabel;
-@property (nonatomic, strong) IBOutlet headerView *headerView;
-@property (nonatomic, strong) IBOutlet UIButton *followButton;
-
-@property (nonatomic, strong) BasePeopleObject *obj;
+@property (nonatomic, strong) BasePeopleObject *object;
 @property (nonatomic, weak) id<BasePeopleTableViewCellDelegate> delegate;
 
-+(CGFloat)tableView:(UITableView *)tableView
-heightForRowAtIndexPath:(NSIndexPath *)indexPath;
 
 @end
