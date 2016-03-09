@@ -12,7 +12,6 @@
 #import "MLEmojiLabel.h"
 #import "LinkViewController.h"
 #import "RecmdFriendObj.h"
-#import "CircleListRecommendViewController.h"
 #import "SHGNoticeView.h"
 #import "SHGHomeTableViewCell.h"
 #import "CircleDetailViewController.h"

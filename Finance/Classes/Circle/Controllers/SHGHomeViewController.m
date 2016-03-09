@@ -13,7 +13,6 @@
 #import "MLEmojiLabel.h"
 #import "LinkViewController.h"
 #import "RecmdFriendObj.h"
-#import "CircleListRecommendViewController.h"
 #import "SHGNoticeView.h"
 #import "SHGHomeTableViewCell.h"
 #import "CircleDetailViewController.h"
@@ -23,6 +22,7 @@
 #import "SHGSelectTagsViewController.h"
 #import "SHGEmptyDataView.h"
 #import "SHGExtendTableViewCell.h"
+#import "SHGRecommendTableViewCell.h"
 
 #define IS_IOS7 ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7)
 #define IS_IOS8 ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8)
@@ -40,8 +40,6 @@
 
 @property (assign, nonatomic) BOOL hasRequestedFirst;
 @property (assign, nonatomic) BOOL hasDataFinished;
-
-@property (strong, nonatomic) CircleListRecommendViewController *recommendViewController;
 
 @property (strong, nonatomic) SHGNoticeView *newFriendNoticeView;
 @property (strong, nonatomic) SHGNoticeView *newMessageNoticeView;
@@ -143,22 +141,6 @@
             [[NSUserDefaults standardUserDefaults] synchronize];
         }];
     }
-}
-
-- (CircleListRecommendViewController *)recommendViewController
-{
-    __weak typeof(self) weakSelf = self;
-    if(!_recommendViewController){
-        _recommendViewController = [[CircleListRecommendViewController alloc] init];
-        _recommendViewController.delegate = [SHGUnifiedTreatment sharedTreatment];
-        _recommendViewController.closeBlock = ^{
-            weakSelf.shouldDisplayRecommend = NO;
-            NSInteger index = [weakSelf.dataArr indexOfObject:weakSelf.recomandArray];
-            [weakSelf.dataArr removeObject:weakSelf.recomandArray];
-            [weakSelf.listTable deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:index inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
-        };
-    }
-    return _recommendViewController;
 }
 
 - (UITableView *)currentTableView
@@ -491,19 +473,14 @@
     if (self.dataArr.count > 0) {
         NSObject *obj = self.dataArr[indexPath.row];
         if(![obj isKindOfClass:[CircleListObj class]]){
-            NSString *cellIdentifier = @"circleListThreeIdentifier";
-            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+            NSString *cellIdentifier = @"SHGRecommendTableViewCell";
+            SHGRecommendTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
             if (!cell){
-                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"circleListThreeIdentifier"];
-                cell.selectionStyle = UITableViewCellSelectionStyleNone;
-
+                cell = [[[NSBundle mainBundle] loadNibNamed:@"SHGRecommendTableViewCell" owner:self options:nil] lastObject];
+                cell.delegate = [SHGUnifiedTreatment sharedTreatment];
             }
-            NSMutableArray *array = self.dataArr[indexPath.row];
-            if(self.recommendViewController.view.superview){
-                [self.recommendViewController.view removeFromSuperview];
-            }
-            [self.recommendViewController loadViewWithData:array];
-            [cell.contentView addSubview:self.recommendViewController.view];
+            NSMutableArray *array = [self.dataArr objectAtIndex:indexPath.row];
+            cell.objectArray = array;
             return cell;
 
         } else{
@@ -613,7 +590,8 @@
             return height;
         }
     } else{
-        return [self.recommendViewController heightOfView];
+        CGFloat height = [tableView cellHeightForIndexPath:indexPath model:obj keyPath:@"objectArray" cellClass:[SHGRecommendTableViewCell class] contentViewWidth:CGFLOAT_MAX];
+        return height;
     }
     return 0.0f;
 }

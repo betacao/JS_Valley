@@ -207,13 +207,6 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     }
 }
 
-- (void)refreshAttaionView
-{
-//    if([[self.viewControllers lastObject] respondsToSelector:@selector(refreshLoad)]){
-//        [[self.viewControllers lastObject] performSelector:@selector(refreshLoad)];
-//    }
-}
-
 - (void)refreshLoad
 {
 

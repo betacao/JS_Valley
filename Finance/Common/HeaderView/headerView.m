@@ -23,12 +23,19 @@
     if(self){
         self.headerImageView = [[UIImageView alloc] initWithFrame:frame];
         [self addSubview:self.headerImageView];
-        
-        self.VImageView = [[UIImageView alloc] initWithFrame:CGRectZero];
-        self.VImageView.image = [UIImage imageNamed:@""];
+
+        self.headerImageView.sd_layout
+        .topSpaceToView(self, 0.0f)
+        .leftSpaceToView(self, 0.0f)
+        .bottomSpaceToView(self, 0.0f)
+        .rightSpaceToView(self, 0.0f);
+
+        self.VImageView = [[UIImageView alloc] init];
+        self.VImageView.contentMode = UIViewContentModeScaleAspectFit;
+        self.VImageView.image = [UIImage imageNamed:@"V"];
         [self.VImageView sizeToFit];
-        self.VImageView.center = CGPointMake(CGRectGetMaxX(frame), CGRectGetMaxY(frame));
         [self addSubview:self.VImageView];
+
         self.VImageView.hidden = YES;
         
     }
@@ -72,6 +79,8 @@
     [request addValue:@"image/*" forHTTPHeaderField:@"Accept"];
     [self.headerImageView setImageWithURLRequest:request placeholderImage:placeImage success:nil failure:nil];
 }
+
+
 
 - (void)updateStatus:(BOOL)status
 {

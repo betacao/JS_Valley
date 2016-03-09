@@ -13,7 +13,10 @@
 @property (weak, nonatomic) IBOutlet UILabel *markLabel;
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *extendImageView;
+//0.5的横线
 @property (weak, nonatomic) IBOutlet UIView *lineView;
+//灰色分割线
+@property (weak, nonatomic) IBOutlet UIView *splitLine;
 
 @end
 
@@ -31,13 +34,15 @@
     self.titleLabel.font = FontFactor(15.0f);
     self.titleLabel.textColor = [UIColor colorWithHexString:@"3c3c3c"];
 
-    self.markLabel.font = FontFactor(11.0f);
-    self.markLabel.textColor = [UIColor colorWithHexString:@"919291"];
+    self.markLabel.font = kMainTimeFont;
+    self.markLabel.textColor = kMainTimeColor;
 
-    self.timeLabel.font = FontFactor(11.0f);
-    self.timeLabel.textColor = [UIColor colorWithHexString:@"919291"];
+    self.timeLabel.font = kMainTimeFont;
+    self.timeLabel.textColor = kMainTimeColor;
 
-    self.lineView.backgroundColor = [UIColor colorWithHexString:@"efeeef"];
+    self.lineView.backgroundColor = kMainLineViewColor;
+
+    self.splitLine.backgroundColor = kMainSplitLineColor;
 
     self.extendImageView.contentMode = UIViewContentModeScaleAspectFit;
 }
@@ -72,8 +77,15 @@
     .leftSpaceToView(self.contentView, 0.0f)
     .rightSpaceToView(self.contentView, 0.0f)
     .topSpaceToView(self.timeLabel, 0.0f)
+    .heightIs(0.5f);
+
+    self.splitLine.sd_layout
+    .leftSpaceToView(self.contentView, 0.0f)
+    .rightSpaceToView(self.contentView, 0.0f)
+    .topSpaceToView(self.lineView, 0.0f)
     .heightIs(kMainCellLineHeight);
-    [self setupAutoHeightWithBottomView:self.lineView bottomMargin:0.0f];
+
+    [self setupAutoHeightWithBottomView:self.splitLine bottomMargin:0.0f];
 }
 
 - (void)setObject:(CircleListObj *)object

@@ -824,8 +824,6 @@
 		F920570B1C63203600897C8B /* SHGMarketAdvancedSearchViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F92057091C63203600897C8B /* SHGMarketAdvancedSearchViewController.xib */; };
 		F928141C1C045F8900C7782D /* SHGItemChooseView.m in Sources */ = {isa = PBXBuildFile; fileRef = F928141B1C045F8900C7782D /* SHGItemChooseView.m */; };
 		F93242BA1BE9EE92003B7F07 /* SHGUnifiedTreatment.m in Sources */ = {isa = PBXBuildFile; fileRef = F93242B91BE9EE92003B7F07 /* SHGUnifiedTreatment.m */; };
-		F932E2551B859DEC00EF2332 /* CircleListRecommendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F932E2531B859DEC00EF2332 /* CircleListRecommendViewController.m */; };
-		F932E2561B859DEC00EF2332 /* CircleListRecommendViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F932E2541B859DEC00EF2332 /* CircleListRecommendViewController.xib */; };
 		F936DD4B1C3A437500584F53 /* SHGFriendGroupingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F936DD491C3A437500584F53 /* SHGFriendGroupingViewController.m */; };
 		F936DD4C1C3A437500584F53 /* SHGFriendGroupingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F936DD4A1C3A437500584F53 /* SHGFriendGroupingViewController.xib */; };
 		F936DD501C3A553800584F53 /* SHGFriendGropingTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F936DD4E1C3A553800584F53 /* SHGFriendGropingTableViewCell.m */; };
@@ -2064,9 +2062,6 @@
 		F93242B81BE9EE92003B7F07 /* SHGUnifiedTreatment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGUnifiedTreatment.h; sourceTree = "<group>"; };
 		F93242B91BE9EE92003B7F07 /* SHGUnifiedTreatment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGUnifiedTreatment.m; sourceTree = "<group>"; };
 		F93242BB1BE9F73E003B7F07 /* CircleActionDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CircleActionDelegate.h; sourceTree = "<group>"; };
-		F932E2521B859DEC00EF2332 /* CircleListRecommendViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CircleListRecommendViewController.h; sourceTree = "<group>"; };
-		F932E2531B859DEC00EF2332 /* CircleListRecommendViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CircleListRecommendViewController.m; sourceTree = "<group>"; };
-		F932E2541B859DEC00EF2332 /* CircleListRecommendViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CircleListRecommendViewController.xib; sourceTree = "<group>"; };
 		F936DD481C3A437500584F53 /* SHGFriendGroupingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGFriendGroupingViewController.h; sourceTree = "<group>"; };
 		F936DD491C3A437500584F53 /* SHGFriendGroupingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGFriendGroupingViewController.m; sourceTree = "<group>"; };
 		F936DD4A1C3A437500584F53 /* SHGFriendGroupingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGFriendGroupingViewController.xib; sourceTree = "<group>"; };
@@ -3085,9 +3080,6 @@
 				F9D296DE1C8FF1E700A1446C /* SHGRecommendTableViewCell.h */,
 				F9D296DF1C8FF1E700A1446C /* SHGRecommendTableViewCell.m */,
 				F9D296E01C8FF1E700A1446C /* SHGRecommendTableViewCell.xib */,
-				F932E2521B859DEC00EF2332 /* CircleListRecommendViewController.h */,
-				F932E2531B859DEC00EF2332 /* CircleListRecommendViewController.m */,
-				F932E2541B859DEC00EF2332 /* CircleListRecommendViewController.xib */,
 				611B8CD41AFD5C09009CB21F /* ReplyTableViewCell.h */,
 				611B8CD51AFD5C09009CB21F /* ReplyTableViewCell.m */,
 				611B8CD61AFD5C09009CB21F /* ReplyTableViewCell.xib */,
@@ -5350,7 +5342,6 @@
 				616405421B29FE920071A18D /* 通讯录更新@2x.png in Resources */,
 				61616FF01B02F29100E5A837 /* new评论@3x.png in Resources */,
 				614EFEC01AEF1FD200F2BDD1 /* myreservation@2x.png in Resources */,
-				F932E2561B859DEC00EF2332 /* CircleListRecommendViewController.xib in Resources */,
 				616405451B2A715E0071A18D /* sns_icon_22.png in Resources */,
 				61E83D961AF7C78E00703651 /* 拒绝按钮-默认@3x.png in Resources */,
 				61E83D8A1AF7C78E00703651 /* 选择行业下拉框@3x.png in Resources */,
@@ -5704,7 +5695,6 @@
 				F9A227BC1BF5ABC60054F8D7 /* SHGActionTableViewCell.m in Sources */,
 				40302B401AF0C31F00F22EB6 /* MyAppointmentViewController.m in Sources */,
 				538964D51AFC6BEB00041548 /* UIResponder+Router.m in Sources */,
-				F932E2551B859DEC00EF2332 /* CircleListRecommendViewController.m in Sources */,
 				6187D2E71AF1C693008E1D21 /* EMChatViewCell.m in Sources */,
 				5331DF1A1AFC017600E035B8 /* AddFriendCell.m in Sources */,
 				9842E9CF1C017FCA0008B6AF /* SHGPersonFriendsViewController.m in Sources */,

@@ -39,8 +39,6 @@ typedef void(^loadViewFinishBlock)(UIView *view);
 @property (strong ,nonatomic, readonly) UIBarButtonItem *leftBarButtonItem;
 
 + (instancetype)sharedSegmentController;
-//刷新关注界面数据
-- (void)refreshAttaionView;
 //刷新动态界面
 - (void)refreshHomeView;
 //简单的tableview刷新

@@ -382,7 +382,6 @@
                     for (CircleListObj *cobj in array) {
                         cobj.isattention = @"Y";
                     }
-                    [[SHGSegmentController sharedSegmentController] refreshAttaionView];
                     [MobClick event:@"ActionAttentionClicked" label:@"onClick"];
                     [Hud showMessageWithText:@"关注成功"];
                 } else{

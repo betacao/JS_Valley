@@ -7,7 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CircleListDelegate.h"
 
-@interface SHGRecommendTableViewCell : UITableViewCell
+@interface SHGRecommendTableViewCell : UITableViewCell<CircleListDelegate>
+
+@property (strong, nonatomic) NSArray *objectArray;
+@property (assign ,nonatomic) id<CircleListDelegate> delegate;
 
 @end

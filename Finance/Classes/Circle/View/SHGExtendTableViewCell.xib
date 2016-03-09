@@ -44,12 +44,18 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <view contentMode="scaleToFill" id="z0w-eF-wPq">
+                        <rect key="frame" x="25" y="-29" width="240" height="128"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
                 </subviews>
             </tableViewCellContentView>
             <connections>
                 <outlet property="extendImageView" destination="dWi-G0-DKL" id="wdh-UA-FQ5"/>
                 <outlet property="lineView" destination="a9N-SO-ofC" id="bsp-V1-R0g"/>
                 <outlet property="markLabel" destination="84z-jZ-3QX" id="W0W-zI-cNO"/>
+                <outlet property="splitLine" destination="z0w-eF-wPq" id="oZg-5X-dG3"/>
                 <outlet property="timeLabel" destination="E6z-b6-GBz" id="13b-uH-H9F"/>
                 <outlet property="titleLabel" destination="SAC-6O-Isp" id="YcB-AY-BKB"/>
             </connections>
