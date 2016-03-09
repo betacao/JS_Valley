@@ -7,15 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "MyMoneyDetailObject.h"
 @interface MyMoneyDetailTableViewCell : UITableViewCell
 
-@property (nonatomic, strong) IBOutlet UILabel *nameLabel;
-@property (nonatomic, strong) IBOutlet UILabel *productLabel;
-@property (nonatomic, strong) IBOutlet UILabel *totalMoney;
-@property (nonatomic, strong) IBOutlet UILabel *commissionMoney;
-@property (weak, nonatomic) IBOutlet UILabel *moneyType;
-@property (weak, nonatomic) IBOutlet UIView *lineView;
+@property (nonatomic, strong)MyMoneyDetailObject *object;
 
 
 @end

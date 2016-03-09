@@ -47,21 +47,20 @@
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    		static NSString *CellIdentifier = @"TeamDetailTableViewCell";
-    		TeamDetailTableViewCell *cell = (TeamDetailTableViewCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    static NSString *CellIdentifier = @"TeamDetailTableViewCell";
+    TeamDetailTableViewCell *cell = (TeamDetailTableViewCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
-    		// Configure the cell...
-    		if (cell == nil) {
-    			cell = [[[NSBundle mainBundle] loadNibNamed:CellIdentifier owner:self options:nil]objectAtIndex:0];
-    		}
-    		TeamDetailObject *obj = self.dataArr[indexPath.row];
-    		cell.nameLabel.text = obj.name;
-    		cell.moneyLabel.text = obj.money;
+    // Configure the cell...
+    if (cell == nil) {
+        cell = [[[NSBundle mainBundle] loadNibNamed:CellIdentifier owner:self options:nil]objectAtIndex:0];
+    }
+    TeamDetailObject *obj = self.dataArr[indexPath.row];
+    cell.object = obj;
     return cell;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 67.0f;
+    return MarginFactor(70.0f);
 }
 
 /*

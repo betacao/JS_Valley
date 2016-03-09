@@ -9,172 +9,166 @@
 #import "MyAppointmentTableViewCell.h"
 @interface MyAppointmentTableViewCell ()
 //股票配资
-@property (nonatomic, strong) IBOutlet UIView *product1;
-@property (nonatomic, strong) IBOutlet UILabel *product1Time;
-@property (nonatomic, strong) IBOutlet UILabel *product1Name;
-@property (nonatomic, strong) IBOutlet UILabel *product1Rate;
-@property (nonatomic, strong) IBOutlet UILabel *product1Status;
+@property (weak, nonatomic) IBOutlet UIImageView *backImageView;
+@property (weak, nonatomic) IBOutlet UILabel *product1Time;
+@property (weak, nonatomic) IBOutlet UILabel *product1TimeLeft;
+@property (weak, nonatomic) IBOutlet UILabel *product1Name;
+@property (weak, nonatomic) IBOutlet UILabel *product1NameLeft;
+@property (weak, nonatomic) IBOutlet UILabel *product1Rate;
+@property (weak, nonatomic) IBOutlet UILabel *product1RateLeft;
+@property (weak, nonatomic) IBOutlet UILabel *product1Status;
+@property (weak, nonatomic) IBOutlet UILabel *product1StatusLeft;
 @property (weak, nonatomic) IBOutlet UIView *viewLine1;
 @property (weak, nonatomic) IBOutlet UILabel *product1Type;
-
-
-//打新股
-@property (nonatomic , strong) IBOutlet UIView *product2;
-@property (nonatomic, strong) IBOutlet UILabel *product2Time;
-@property (nonatomic, strong) IBOutlet UILabel *product2Name;
-@property (nonatomic, strong) IBOutlet UILabel *product2Rate;
-@property (nonatomic, strong) IBOutlet UILabel *product2Cycle;
-@property (nonatomic, strong) IBOutlet UILabel *product2Origin;
-@property (nonatomic, strong) IBOutlet UILabel *product2Status;
-@property (weak, nonatomic) IBOutlet UIView *viewLine2;
-
-
-//定向增发
-@property (nonatomic , strong) IBOutlet UIView *product3;
-@property (nonatomic, strong) IBOutlet UILabel *product3Time;
-@property (nonatomic, strong) IBOutlet UILabel *product3Name;
-@property (nonatomic, strong) IBOutlet UILabel *product3Rate;
-@property (nonatomic, strong) IBOutlet UILabel *product3DetailName;
-@property (nonatomic, strong) IBOutlet UILabel *product3Code;
-@property (nonatomic, strong) IBOutlet UILabel *product3Cycle;
-@property (nonatomic, strong) IBOutlet UILabel *product3SinglePrice;
-@property (nonatomic, strong) IBOutlet UILabel *product3Status;
-@property (weak, nonatomic) IBOutlet UIView *viewLine3;
-
-//新三板
-@property (nonatomic , strong) IBOutlet UIView *product4;
-@property (nonatomic, strong) IBOutlet UILabel *product4Time;
-@property (nonatomic, strong) IBOutlet UILabel *product4Name;
-@property (nonatomic, strong) IBOutlet UILabel *product4Rate;
-@property (nonatomic, strong) IBOutlet UILabel *product4Cycle;
-@property (nonatomic, strong) IBOutlet UILabel *product4Origin;
-@property (nonatomic, strong) IBOutlet UILabel *product4IncreaseUnit;
-@property (nonatomic, strong) IBOutlet UILabel *product4Status;
-@property (weak, nonatomic) IBOutlet UIView *viewLine4;
-
+@property (weak, nonatomic) IBOutlet UILabel *product1TypeLeft;
 
 
 @end
 
 @implementation MyAppointmentTableViewCell
 
-- (void)awakeFromNib {
-    // Initialization code
-    self.viewLine1.size = CGSizeMake(self.viewLine1.width, 0.5f);
-    self.viewLine2.size = CGSizeMake(self.viewLine2.width, 0.5f);
-    self.viewLine3.size = CGSizeMake(self.viewLine3.width, 0.5f);
-    self.viewLine4.size = CGSizeMake(self.viewLine4.width, 0.5f);
-}
-
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
-
-    // Configure the view for the selected state
-}
-
-- (void)setCellWithDic:(NSDictionary *)dic
+- (void)awakeFromNib
 {
-	//NSString *ptype = [dic valueForKey:@"ptype"];
-	//if ([ptype isEqualToString:@"股票配资"]) {
-        self.product1Type.text = [dic valueForKey:@"ptype"];
-		self.product1Time.text = [dic valueForKey:@"time"];
-		self.product1Name.text = [dic valueForKey:@"pname"];
-		self.product1Rate.text = [NSString stringWithFormat:@"%@％",[dic valueForKey:@"crate"]];
-		NSString *status = [dic valueForKey:@"pstate"];
-		if ([status isEqualToString:@"0"]) {
-			self.product1Status.text = @"未支付";
-		}else if ([status isEqualToString:@"1"]){
-			self.product1Status.text = @"已支付";
-		}else{
-			self.product1Status.text = @"";
-		}
-		
-		self.product1Status.textColor = [UIColor redColor];
-		
-		self.height = self.product1.height + 10;
-		self.product1.origin = CGPointMake(12, 5);
-		self.product1.width = self.width -24;
-
-		self.product1.layer.masksToBounds = YES;
-		self.product1.layer.cornerRadius = 5;
-		[self.contentView addSubview:self.product1];
-//	}else if ([ptype isEqualToString:@"打新股"]){
-//		self.product2Time.text = [dic valueForKey:@"time"];
-//		self.product2Name.text = [dic valueForKey:@"pname"];
-//		self.product2Rate.text = [NSString stringWithFormat:@"%@％",[dic valueForKey:@"crate"]];
-//		self.product2Cycle.text = [dic valueForKey:@"holding"];
-//		self.product2Origin.text = [dic valueForKey:@"bline"];
-//		NSString *status = [dic valueForKey:@"pstate"];
-//		if ([status isEqualToString:@"0"]) {
-//			self.product2Status.text = @"未支付";
-//		}else if ([status isEqualToString:@"1"]){
-//			self.product2Status.text = @"已支付";
-//		}else{
-//			self.product2Status.text = @"";
-//		}
-//
-//		self.product2Status.textColor = [UIColor redColor];
-//
-//		self.height = self.product2.height + 10;
-//		self.product2.origin = CGPointMake(12, 5);
-//		self.product2.width = self.width -24;
-//
-//		self.product2.layer.masksToBounds = YES;
-//		self.product2.layer.cornerRadius = 5;
-//		[self.contentView addSubview:self.product2];
-//	}else if ([ptype isEqualToString:@"定向增发"]){
-//		self.product3Time.text = [dic valueForKey:@"time"];
-//		self.product3Name.text = [dic valueForKey:@"pname"];
-//		self.product3Rate.text = [NSString stringWithFormat:@"%@％",[dic valueForKey:@"crate"]];
-//		NSString *status = [dic valueForKey:@"pstate"];
-//		if ([status isEqualToString:@"0"]) {
-//			self.product3Status.text = @"未支付";
-//		}else if ([status isEqualToString:@"1"]){
-//			self.product3Status.text = @"已支付";
-//		}else{
-//			self.product3Status.text = @"";
-//		}
-//		self.product3DetailName.text = [dic valueForKey:@"sname"];
-//		self.product3Code.text = [dic valueForKey:@"recordno"];
-//		self.product3Cycle.text = [dic valueForKey:@"holding"];
-//		self.product3SinglePrice.text = [dic valueForKey:@"sprice"];
-//
-//		self.product3Status.textColor = [UIColor redColor];
-//		
-//		self.height = self.product3.height + 10;
-//		self.product3.origin = CGPointMake(12, 5);
-//		self.product3.width = self.width -24;
-//
-//		self.product3.layer.masksToBounds = YES;
-//		self.product3.layer.cornerRadius = 5;
-//		[self.contentView addSubview:self.product3];
-//	}else if ([ptype isEqualToString:@"新三板"]){
-//		self.product4Time.text = [dic valueForKey:@"time"];
-//		self.product4Name.text = [dic valueForKey:@"pname"];
-//		self.product4Rate.text = [NSString stringWithFormat:@"%@％",[dic valueForKey:@"crate"]];
-//		NSString *status = [dic valueForKey:@"pstate"];
-//		if ([status isEqualToString:@"0"]) {
-//			self.product4Status.text = @"未支付";
-//		}else if ([status isEqualToString:@"1"]){
-//			self.product4Status.text = @"已支付";
-//		}else{
-//			self.product4Status.text = @"";
-//		}
-//		self.product4Cycle.text = [dic valueForKey:@"holding"];
-//		self.product4Origin.text = [dic valueForKey:@"bline"];
-//		self.product4IncreaseUnit.text = [dic valueForKey:@"add"];
-//
-//		self.product4Status.textColor = [UIColor redColor];
-//		
-//		self.height = self.product4.height + 10;
-//		self.product4.origin = CGPointMake(12, 5);
-//		self.product4.width = self.width -24;
-//
-//		self.product4.layer.masksToBounds = YES;
-//		self.product4.layer.cornerRadius = 5;
-//		[self.contentView addSubview:self.product4];
-//	}
-	
+    [self initView];
+    [self addSdLayout];
 }
+
+- (void)initView
+{
+    self.selectionStyle = UITableViewCellSelectionStyleNone;
+    self.product1TimeLeft.font = FontFactor(15.0f);
+    self.product1TimeLeft.textColor = [UIColor colorWithHexString:@"898989"];
+    self.product1TypeLeft.font = FontFactor(15.0f);
+    self.product1TypeLeft.textColor = [UIColor colorWithHexString:@"898989"];
+    self.product1RateLeft.font = FontFactor(15.0f);
+    self.product1RateLeft.textColor = [UIColor colorWithHexString:@"898989"];
+    self.product1NameLeft.font = FontFactor(15.0f);
+    self.product1NameLeft.textColor = [UIColor colorWithHexString:@"898989"];
+    
+    self.product1StatusLeft.font = FontFactor(15.0f);
+    self.product1StatusLeft.textColor = [UIColor colorWithHexString:@"898989"];
+    
+    self.product1Time.font = FontFactor(15.0f);
+    self.product1Time.textColor = [UIColor colorWithHexString:@"161616"];
+    self.product1Type.font = FontFactor(15.0f);
+    self.product1Type.textColor = [UIColor colorWithHexString:@"161616"];
+    self.product1Rate.font = FontFactor(15.0f);
+    self.product1Rate.textColor = [UIColor colorWithHexString:@"161616"];
+    self.product1Name.font = FontFactor(15.0f);
+    self.product1Name.textColor = [UIColor colorWithHexString:@"161616"];
+
+}
+
+- (void)addSdLayout
+{
+    //left
+    self.product1TimeLeft.sd_layout
+    .leftSpaceToView(self.contentView, MarginFactor(24.0f))
+    .topSpaceToView(self.contentView, MarginFactor(40.0f))
+    .autoHeightRatio(0.0f);
+    [self.product1TimeLeft setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
+    
+    self.product1TypeLeft.sd_layout
+    .leftEqualToView(self.product1TimeLeft)
+    .topSpaceToView(self.product1TimeLeft, MarginFactor(30.0f))
+    .autoHeightRatio(0.0f);
+    [self.product1TypeLeft setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
+    
+    self.product1NameLeft.sd_layout
+    .leftEqualToView(self.product1TimeLeft)
+    .topSpaceToView(self.product1TypeLeft, MarginFactor(12.0f))
+    .autoHeightRatio(0.0f);
+    [self.product1NameLeft setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
+    
+    self.product1RateLeft.sd_layout
+    .leftEqualToView(self.product1TimeLeft)
+    .topSpaceToView(self.product1NameLeft, MarginFactor(12.0f))
+    .autoHeightRatio(0.0f);
+    [self.product1RateLeft setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
+    
+    self.product1StatusLeft.sd_layout
+    .leftEqualToView(self.product1TimeLeft)
+    .topSpaceToView(self.product1RateLeft, MarginFactor(12.0f))
+    .autoHeightRatio(0.0f);
+    [self.product1StatusLeft setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
+    
+    //right
+    self.product1Time.sd_layout
+    .leftSpaceToView(self.product1TimeLeft, MarginFactor(35.0f))
+    .rightSpaceToView(self.contentView, MarginFactor(12.0f))
+    .topEqualToView(self.product1TimeLeft)
+    .heightRatioToView(self.product1TimeLeft, 1.0f);
+    
+    self.product1Type.sd_layout
+    .leftEqualToView(self.product1Time)
+    .rightEqualToView(self.product1Time)
+    .topEqualToView(self.product1TypeLeft)
+    .heightRatioToView(self.product1TypeLeft, 1.0f);
+    
+    self.product1Name.sd_layout
+    .leftEqualToView(self.product1Time)
+    .rightEqualToView(self.product1Time)
+    .topEqualToView(self.product1NameLeft)
+    .heightRatioToView(self.product1NameLeft, 1.0f);
+    
+    self.product1Rate.sd_layout
+    .leftEqualToView(self.product1Time)
+    .rightEqualToView(self.product1Time)
+    .topEqualToView(self.product1RateLeft)
+    .heightRatioToView(self.product1RateLeft, 1.0f);
+
+    self.product1Status.sd_layout
+    .leftEqualToView(self.product1Time)
+    .rightEqualToView(self.product1Time)
+    .topEqualToView(self.product1StatusLeft)
+    .heightRatioToView(self.product1StatusLeft, 1.0f);
+    
+    self.backImageView.sd_layout
+    .topSpaceToView(self.contentView, 0.0f)
+    .bottomSpaceToView(self.contentView, 0.0f)
+    .leftSpaceToView(self.contentView, 0.0f)
+    .rightSpaceToView(self.contentView, 0.0f);
+    
+    [self setupAutoHeightWithBottomView:self.product1Status bottomMargin:MarginFactor(15.0f)];
+}
+- (void)setSelected:(BOOL)selected animated:(BOOL)animated
+{
+    [super setSelected:selected animated:animated];
+}
+
+- (void)setModel:(myAppointmentModel *)model
+{
+    _model = model;
+    self.product1TimeLeft.text = @"预约时间";
+    self.product1TypeLeft.text = @"产品类型";
+    self.product1NameLeft.text = @"产品名称";
+    self.product1RateLeft.text = @"返佣费率";
+    self.product1StatusLeft.text = @"状态";
+    self.product1Type.text = model.ptype;
+    self.product1Time.text = model.time;
+    self.product1Name.text = model.pname;
+    self.product1Rate.text = [NSString stringWithFormat:@"%@％", model.crate];
+    NSString *status = model.pstate;
+    if ([status isEqualToString:@"0"]) {
+        self.product1Status.text = @"未支付";
+        self.product1Status.textColor = [UIColor colorWithHexString:@"d43c33"];
+    }else if ([status isEqualToString:@"1"]){
+        self.product1Status.text = @"已支付";
+        self.product1Status.textColor = [UIColor colorWithHexString:@"4277b2"];
+    }else{
+        self.product1Status.text = @"";
+    }
+
+}
+
+@end
+
+@implementation myAppointmentModel
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey
+{
+    return @{ @"ptype":@"ptype",@"time":@"time",@"pname":@"pname",@"crate":@"crate",@"pstate":@"pstate", };
+}
+
 
 @end

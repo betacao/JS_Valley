@@ -10,10 +10,14 @@
 #import "MyMoneyDetailTableViewCell.h"
 #import "MyMoneyDetailObject.h"
 
-@interface MyMoneyViewController ()
-	<UITableViewDataSource, UITableViewDelegate>
+@interface MyMoneyViewController ()<UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, strong) IBOutlet UITableView *tableView;
+@property (strong, nonatomic) IBOutlet UIView *viewHeader;
+@property (weak, nonatomic) IBOutlet UILabel *allLabel;
+@property (weak, nonatomic) IBOutlet UILabel *numLabel;
+@property (weak, nonatomic) IBOutlet UIView *grayView;
+@property (weak, nonatomic) IBOutlet UILabel *detailNameLabel;
 @property (nonatomic, strong) NSString *totalMoney;
 @property (nonatomic, strong) NSMutableArray *dataSource;
 @end
@@ -26,7 +30,7 @@
     [CommonMethod setExtraCellLineHidden:self.tableView];
 
 	self.dataSource = [[NSMutableArray alloc] init];
-
+    [self initView];
 	NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
 	[MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttp,@"user",@"commission"] parameters:@{@"uid":uid}success:^(MOCHTTPResponse *response) {
 		
@@ -46,6 +50,7 @@
 			[self.dataSource addObject:obj];
 		}
         NSLog(@"%@",response.dataDictionary);
+        [self loadData];
 		[self.tableView reloadData];
 		
 		
@@ -58,135 +63,98 @@
 
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (void)initView
+{
+    
+    self.viewHeader.backgroundColor = [UIColor whiteColor];
+    self.allLabel.font = FontFactor(13.0f);
+    self.allLabel.textColor = [UIColor colorWithHexString:@"989898"];
+    self.numLabel.font = FontFactor(25.0f);
+    self.numLabel.textColor = [UIColor colorWithHexString:@"d43c33"];
+    self.grayView.backgroundColor = [UIColor colorWithHexString:@"efeeef"];
+    self.detailNameLabel.font = FontFactor(13.0f);
+    self.detailNameLabel.textColor = [UIColor colorWithHexString:@"989898"];
+    
+    self.tableView.sd_layout
+    .leftSpaceToView(self.view, 0.0f)
+    .rightSpaceToView(self.view, 0.0f)
+    .topSpaceToView(self.view, 0.0f)
+    .bottomSpaceToView(self.view, 0.0f);
+    
+    self.viewHeader.sd_layout
+    .topSpaceToView(self.tableView, 0.0f)
+    .leftSpaceToView(self.tableView, 0.0f)
+    .rightSpaceToView(self.tableView, 0.0f)
+    .heightIs(MarginFactor(142.0f));
+    
+    self.grayView.sd_layout
+    .bottomSpaceToView(self.viewHeader, 0.0f)
+    .leftSpaceToView(self.viewHeader, 0.0f)
+    .rightSpaceToView(self.viewHeader, 0.0f)
+    .heightIs(MarginFactor(37.0f));
+    
+    self.detailNameLabel.sd_layout
+    .leftSpaceToView(self.grayView, MarginFactor(12.0f))
+    .centerYEqualToView(self.grayView)
+    .autoHeightRatio(0.0f);
+    [self.detailNameLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
+    
+    self.allLabel.sd_layout
+    .topSpaceToView(self.viewHeader, MarginFactor(10.0f))
+    .leftSpaceToView(self.viewHeader, MarginFactor(12.0f))
+    .autoHeightRatio(0.0f);
+    [self.allLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
+    
+    self.numLabel.sd_layout
+    .leftEqualToView(self.allLabel)
+    .bottomSpaceToView(self.grayView, MarginFactor(35.0f))
+    .autoHeightRatio(0.0f);
+    [self.numLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
+    self.tableView.tableHeaderView = self.viewHeader;
 }
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+- (void)loadData
 {
-	// Return the number of sections.
-	return 2;
+    self.allLabel.text = @"佣金总计";
+    [self.allLabel sizeToFit];
+    self.detailNameLabel.text = @"佣金明细";
+    [self.detailNameLabel sizeToFit];
+    self.numLabel.text = self.totalMoney;
+    [self.numLabel sizeToFit];
+    [self.viewHeader layoutSubviews];
+    self.tableView.tableHeaderView = self.viewHeader;
+}
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+   
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-	// Return the number of rows in the section.
-	if (section == 0) {
-		return 1;
-	}else if(section == 1){
-		return self.dataSource.count;
-	}
-	return 0;
+	return self.dataSource.count;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-{
-    if (section == 0) {
-        return 40.0f;
-    }else{
-        return 34.0f;
-    }
-	return 0;
-}
-
-//- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
-//{
-//	if (section == 0) {
-//		return @"佣金总和";
-//	}else if(section == 1){
-//		return @"佣金明细";
-//	}
-//	return @"";
-//}
-
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-{
-	UIView *sectionView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 34)];
-	UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(16, 0, 300, 34)];
-     label.textColor = [UIColor colorWithHexString:@"989898"];
-    label.font = [UIFont systemFontOfSize:12];
-	if (section == 0) {
-        sectionView.backgroundColor = [UIColor whiteColor];
-		label.text = @"佣金总计";
-	}else if(section == 1){
-        sectionView.backgroundColor = RGB(240, 240, 240);
-		label.text = @"佣金明细";
-	}
-	[sectionView addSubview:label];
-	return sectionView;
-}
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	if (indexPath.section == 0) {
-		return 60.0f;
-	}else if(indexPath.section == 1){
-        
-		return 125.0f;
-	}
-	return 0;
+    MyMoneyDetailObject *object = self.dataSource[indexPath.row];
+    CGFloat height = [self.tableView cellHeightForIndexPath:indexPath model:object keyPath:@"object" cellClass:[MyMoneyDetailTableViewCell class] contentViewWidth:SCREENWIDTH];
+    return height;
+
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	if (indexPath.section == 0) {
-		UITableViewCell  *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"empty"];
-//        cell.textLabel.textColor = [UIColor colorWithHexString:@"D43C33"];
-//        cell.textLabel.font = [UIFont boldSystemFontOfSize:20];
-//		cell.textLabel.text = [NSString stringWithFormat:@"%@",self.totalMoney];
-        NSInteger toLeft = 16.0f;
-        NSInteger toSeaction = 4.0f;
-        UILabel * label = [[UILabel alloc] initWithFrame:CGRectMake(toLeft, toSeaction, SCREENWIDTH-toLeft, 30.0f)];
-        label.textColor = [UIColor colorWithHexString:@"D43C33"];
-        label.font = [UIFont boldSystemFontOfSize:20];
-        label.text = [NSString stringWithFormat:@"%@",self.totalMoney];
-        [cell.contentView addSubview:label];
-		return cell;
-		
-	}else if(indexPath.section == 1){
 		static NSString *CellIdentifier = @"MyMoneyDetailTableViewCell";
-		MyMoneyDetailTableViewCell *cell = (MyMoneyDetailTableViewCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-		
-		// Configure the cell...
-		if (cell == nil) {
-			cell = [[[NSBundle mainBundle] loadNibNamed:CellIdentifier owner:self options:nil]objectAtIndex:0];
-		}
-		
-		MyMoneyDetailObject *obj = self.dataSource[indexPath.row];
-        cell.lineView.size = CGSizeMake(cell.lineView.width, 0.5f);
-		cell.nameLabel.text = obj.name;
-		cell.productLabel.text = obj.productName;
-		cell.totalMoney.text = obj.totalMoney;
-		cell.commissionMoney.text = obj.commission;
-        switch ([obj.type intValue]) {
-            case 0:
-                cell.moneyType.text=@"我的客户";
-                break;
-            case 1:
-                cell.moneyType.text=@"二级客户";
-            default:
-                cell.moneyType.text=@"三级客户";
-                break;
-        }
-        
+    MyMoneyDetailTableViewCell *cell = (MyMoneyDetailTableViewCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if (cell == nil) {
+        cell = [[[NSBundle mainBundle] loadNibNamed:CellIdentifier owner:self options:nil]objectAtIndex:0];
+    }
+    
+    MyMoneyDetailObject *obj = self.dataSource[indexPath.row];
+    cell.object = obj;
+    return cell;
 
-        
-		
-//		cell.nameLabel.textColor = TEXT_COLOR;
-//		cell.productLabel.textColor = TEXT_COLOR;
-//		cell.totalMoney.textColor = TEXT_COLOR;
-//		cell.commissionMoney.textColor = TEXT_COLOR;
-//        cell.moneyType.textColor = TEXT_COLOR;
-		
-		return cell;
-
-	}
-
-	
-	UITableViewCell  *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"empty"];
-	NSLog(@"empty cell created");
-	return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

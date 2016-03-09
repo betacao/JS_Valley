@@ -8,7 +8,17 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MyAppointmentTableViewCell : UITableViewCell
-- (void)setCellWithDic:(NSDictionary *)dic;
+@interface myAppointmentModel : MTLModel<MTLJSONSerializing>
+@property (nonatomic, strong) NSString *ptype;
+@property (nonatomic, strong) NSString *time;
+@property (nonatomic, strong) NSString *pname;
+@property (nonatomic, strong) NSString *crate;
+@property (nonatomic, strong) NSString *pstate;
 
 @end
+
+@interface MyAppointmentTableViewCell : UITableViewCell
+@property (nonatomic, strong)myAppointmentModel *model;
+
+@end
+

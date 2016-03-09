@@ -7,11 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-
+@class TeamDetailObject;
 @interface TeamDetailTableViewCell : UITableViewCell
+@property (nonatomic, strong) TeamDetailObject *object;
 
-@property (nonatomic, strong) IBOutlet UILabel *nameLabel;
-
-@property (weak, nonatomic) IBOutlet UIView *lineView;
-@property (nonatomic, strong) IBOutlet UILabel *moneyLabel;
 @end

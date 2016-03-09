@@ -20,67 +20,39 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-	
 	self.title = @"我的预约";
-	UIView *view = [[UIView alloc] init];
-	view.backgroundColor = [UIColor clearColor];
-	[_tableView setTableFooterView:view];
+    self.tableView.tableFooterView = [[UIView alloc] init];
 
 	self.dataSource = [[NSMutableArray alloc] init];
 
-	NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
-	[MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"orderlist"] parameters:@{@"uid":uid}success:^(MOCHTTPResponse *response) {
-		for (NSDictionary *dic in response.dataArray) {
-			[self.dataSource addObject:dic];
-		}
-		[self.tableView reloadData];
-		NSLog(@"%@",response.data);
-		NSLog(@"%@",response.errorMessage);
-		
-	} failed:^(MOCHTTPResponse *response) {
-		
-	}];
-	
+    [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"orderlist"] class:[myAppointmentModel class] parameters:@{@"uid":UID} success:^(MOCHTTPResponse *response) {
+      
+        [self.dataSource addObjectsFromArray:response.dataArray];
+        [self.tableView reloadData];
+    } failed:^(MOCHTTPResponse *response) {
+        
+    }];
 
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+- (void)didReceiveMemoryWarning
 {
-	// Return the number of sections.
-//	return self.dataSource.count;
-	return 1;
+    [super didReceiveMemoryWarning];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-	// Return the number of rows in the section.
-//	NSDictionary *dic = self.dataSource[section];
-	
-//	return dic.allKeys.count;
 	return self.dataSource.count;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-{
-	return 5;
-}
 
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
-{
-	return @"";
-	
-}
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	UITableViewCell *cell = [self tableView:tableView cellForRowAtIndexPath:indexPath];
-	return cell.height;
+    myAppointmentModel *object = self.dataSource[indexPath.row];
+    CGFloat height = [tableView cellHeightForIndexPath:indexPath model:object keyPath:@"model" cellClass:[MyAppointmentTableViewCell class] contentViewWidth:CGFLOAT_MAX];
+    return height;
+
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -90,17 +62,12 @@
 		cell = [[[NSBundle mainBundle] loadNibNamed:@"MyAppointmentTableViewCell" owner:self options:nil] objectAtIndex:0];
 	}
 	
-	NSDictionary *dic = self.dataSource[indexPath.row];
-	[cell setCellWithDic:dic];
+	myAppointmentModel *model= self.dataSource[indexPath.row];
+    cell.model = model;
 	
 	return cell;
 	
 	
-}
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-	[tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 

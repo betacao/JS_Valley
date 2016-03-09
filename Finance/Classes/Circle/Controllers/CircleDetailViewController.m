@@ -52,7 +52,6 @@
 @property (strong, nonatomic) BRCommentView *popupView;
 @property (strong, nonatomic) IBOutlet UIView *viewHeader;
 @property (weak, nonatomic) IBOutlet UIView *personView;
-//@property (strong, nonatomic) IBOutlet UIView *navigationView;
 @property (weak, nonatomic) IBOutlet UIImageView *backImageView;
 @property (weak, nonatomic) IBOutlet UIView *lineView;
 @property (strong, nonatomic) UIView *photoView;
