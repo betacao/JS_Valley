@@ -182,15 +182,12 @@ static NSString * const kCommonFNum			= @"commonnum";
             }
             
             BasePeopleObject *buddy = [weakSelf.searchController.resultsSource objectAtIndex:indexPath.row];
-            
-            [cell.headerView updateHeaderView:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,buddy.headImageUrl] placeholderImage:[UIImage imageNamed:@"default_head"]];
-            [cell.headerView updateStatus:[buddy.userstatus isEqualToString:@"true"]?YES:NO];
-            cell.nameLabel.text = buddy.name;
+            cell.object = buddy;
             return cell;
         }];
         
         [_searchController setHeightForRowAtIndexPathCompletion:^CGFloat(UITableView *tableView, NSIndexPath *indexPath) {
-            return [BasePeopleTableViewCell tableView:tableView heightForRowAtIndexPath:indexPath];
+            return MarginFactor(60.0f);
         }];
         
         [_searchController setDidSelectRowAtIndexPathCompletion:^(UITableView *tableView, NSIndexPath *indexPath) {
@@ -250,10 +247,7 @@ static NSString * const kCommonFNum			= @"commonnum";
     }
     
     BasePeopleObject *buddy = [self.contactsSource objectAtIndex:indexPath.row];
-    
-    [cell.headerView updateHeaderView:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,buddy.headImageUrl] placeholderImage:[UIImage imageNamed:@"default_head"]];
-    [cell.headerView updateStatus:[buddy.userstatus isEqualToString:@"true"]?YES:NO];
-    cell.nameLabel.text = buddy.name;
+    cell.object = buddy;
     return cell;
 }
 
@@ -262,7 +256,7 @@ static NSString * const kCommonFNum			= @"commonnum";
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 60;
+    return MarginFactor(55.0f);
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
