@@ -167,12 +167,10 @@ static NSString * const kCommonFNum			= @"commonnum";
 {
     [self.menuPopover dismissMenuPopover];
     
-    if(selectedIndex==0)
-    {
+    if(selectedIndex == 0){
         FriendsListViewController *vc=[[FriendsListViewController alloc] init];
         [self.navigationController pushViewController:vc animated:YES];
-    }else if(selectedIndex==1)
-    {
+    } else if(selectedIndex == 1){
         GroupListViewController *vc = [[GroupListViewController alloc] init];
         [self.navigationController pushViewController:vc animated:YES];
     }

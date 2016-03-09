@@ -1,0 +1,100 @@
+//
+//  SHGExtendTableViewCell.m
+//  Finance
+//
+//  Created by changxicao on 16/3/9.
+//  Copyright © 2016年 HuMin. All rights reserved.
+//
+
+#import "SHGExtendTableViewCell.h"
+
+@interface SHGExtendTableViewCell()
+@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
+@property (weak, nonatomic) IBOutlet UILabel *markLabel;
+@property (weak, nonatomic) IBOutlet UILabel *timeLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *extendImageView;
+@property (weak, nonatomic) IBOutlet UIView *lineView;
+
+@end
+
+@implementation SHGExtendTableViewCell
+
+- (void)awakeFromNib
+{
+    self.selectionStyle = UITableViewCellSelectionStyleNone;
+    [self initView];
+    [self addAutoLayout];
+}
+
+- (void)initView
+{
+    self.titleLabel.font = FontFactor(15.0f);
+    self.titleLabel.textColor = [UIColor colorWithHexString:@"3c3c3c"];
+
+    self.markLabel.font = FontFactor(11.0f);
+    self.markLabel.textColor = [UIColor colorWithHexString:@"919291"];
+
+    self.timeLabel.font = FontFactor(11.0f);
+    self.timeLabel.textColor = [UIColor colorWithHexString:@"919291"];
+
+    self.lineView.backgroundColor = [UIColor colorWithHexString:@"efeeef"];
+
+    self.extendImageView.contentMode = UIViewContentModeScaleAspectFit;
+}
+
+- (void)addAutoLayout
+{
+    self.titleLabel.sd_layout
+    .leftSpaceToView(self.contentView, kMainItemLeftMargin)
+    .topSpaceToView(self.contentView, 0.0f)
+    .rightSpaceToView(self.contentView, kMainItemLeftMargin)
+    .heightIs(MarginFactor(38.0f));
+
+    self.extendImageView.sd_layout
+    .leftEqualToView(self.titleLabel)
+    .topSpaceToView(self.titleLabel, 0.0f)
+    .rightEqualToView(self.titleLabel)
+    .heightIs(MarginFactor(117.0f));
+
+    self.markLabel.sd_layout
+    .leftEqualToView(self.titleLabel)
+    .topSpaceToView(self.extendImageView, 0.0f)
+    .heightIs(MarginFactor(32.0f));
+    [self.markLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
+
+    self.timeLabel.sd_layout
+    .rightEqualToView(self.titleLabel)
+    .topSpaceToView(self.extendImageView, 0.0f)
+    .heightIs(MarginFactor(32.0f));
+    [self.timeLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
+
+    self.lineView.sd_layout
+    .leftSpaceToView(self.contentView, 0.0f)
+    .rightSpaceToView(self.contentView, 0.0f)
+    .topSpaceToView(self.timeLabel, 0.0f)
+    .heightIs(kMainCellLineHeight);
+    [self setupAutoHeightWithBottomView:self.lineView bottomMargin:0.0f];
+}
+
+- (void)setObject:(CircleListObj *)object
+{
+    _object = object;
+    self.titleLabel.text = object.detail;
+
+    NSArray *array = (NSArray *)object.photos;
+    if (array && array.count > 0){
+        [self.extendImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,[array firstObject]]] placeholderImage:[UIImage imageNamed:@"default_image"]];
+    } else{
+        self.extendImageView.image = [UIImage imageNamed:@"default_image"];
+    }
+    self.markLabel.text = @"推广";
+    self.timeLabel.text = object.publishdate;
+
+}
+
+- (void)setSelected:(BOOL)selected animated:(BOOL)animated
+{
+    [super setSelected:selected animated:animated];
+}
+
+@end

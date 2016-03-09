@@ -9,7 +9,6 @@
 #import "SHGNewsViewController.h"
 #import "CircleListObj.h"
 #import "ChatViewController.h"
-#import "CircleListTwoTableViewCell.h"
 #import "MLEmojiLabel.h"
 #import "LinkViewController.h"
 #import "RecmdFriendObj.h"
@@ -228,6 +227,7 @@
 //发帖
 - (void)actionPost:(UIButton *)sender
 {
+    
 }
 
 - (void)refreshLoad

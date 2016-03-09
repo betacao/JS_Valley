@@ -10,7 +10,6 @@
 #import "CircleListObj.h"
 #import "SHGCircleSendViewController.h"
 #import "ChatViewController.h"
-#import "CircleListTwoTableViewCell.h"
 #import "MLEmojiLabel.h"
 #import "LinkViewController.h"
 #import "RecmdFriendObj.h"
@@ -23,12 +22,11 @@
 #import "SHGPersonalViewController.h"
 #import "SHGSelectTagsViewController.h"
 #import "SHGEmptyDataView.h"
+#import "SHGExtendTableViewCell.h"
 
 #define IS_IOS7 ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7)
 #define IS_IOS8 ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8)
 
-const CGFloat kAdTableViewCellHeight = 213.0f;
-const CGFloat kAdButtomMargin = 20.0f;
 
 @interface SHGHomeViewController ()<MLEmojiLabelDelegate,SHGNoticeDelegate,CircleListDelegate>
 {
@@ -509,7 +507,7 @@ const CGFloat kAdButtomMargin = 20.0f;
             return cell;
 
         } else{
-            CircleListObj *obj = self.dataArr[indexPath.row];
+            CircleListObj *obj = [self.dataArr objectAtIndex:indexPath.row];
             NSLog(@"%@",obj.postType);
             if (![obj.postType isEqualToString:@"ad"]){
                 if ([obj.status boolValue]){
@@ -529,30 +527,12 @@ const CGFloat kAdButtomMargin = 20.0f;
                 }
             } else{
                 if ([obj.status boolValue]){
-                    NSString *cellIdentifier = @"circleListTwoIdentifier";
-                    CircleListTwoTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+                    NSString *cellIdentifier = @"SHGExtendTableViewCell";
+                    SHGExtendTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
                     if (!cell){
-                        cell = [[[NSBundle mainBundle] loadNibNamed:@"CircleListTwoTableViewCell" owner:self options:nil] lastObject];
-                        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                        cell = [[[NSBundle mainBundle] loadNibNamed:@"SHGExtendTableViewCell" owner:self options:nil] lastObject];
                     }
-                    cell.popularizeLable.lineBreakMode = NSLineBreakByTruncatingTail;
-                    cell.popularizeLable.textAlignment =  NSTextAlignmentLeft;
-                    cell.popularizeLable.text = obj.detail;
-
-                    NSArray *array = (NSArray *)obj.photos;
-                    if (array && array.count > 0){
-                        [cell.popularizeImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,array[0]]] placeholderImage:[UIImage imageNamed:@"default_image"]];
-                    } else{
-                        [cell.popularizeImage sd_setImageWithURL:nil placeholderImage:[UIImage imageNamed:@"default_image"]];
-                    }
-
-                    //防止图片压缩
-                    cell.popularizeImage.contentMode = UIViewContentModeScaleAspectFit;
-
-                    cell.adLable.text = @"推广";
-                    cell.lableTime.text = obj.publishdate;
-                    cell.lableTime.textAlignment = NSTextAlignmentRight;
-                    
+                    cell.object = obj;
                     return cell;
                 }
             }
@@ -618,24 +598,24 @@ const CGFloat kAdButtomMargin = 20.0f;
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (self.dataArr.count > 0) {
-        CircleListObj *obj = self.dataArr[indexPath.row];
-        if([obj isKindOfClass:[CircleListObj class]]){
-            if (![obj.postType isEqualToString:@"ad"]){
-                if ([obj.status boolValue]){
-                    obj.cellHeight = [obj fetchCellHeight];
-                    return obj.cellHeight;
-                }
-            } else{
-                return kAdTableViewCellHeight;
-            }
-        } else{
-            return [self.recommendViewController heightOfView];
-        }
-        return 44.0f;
-    } else{
+    if (self.dataArr.count == 0) {
         return CGRectGetHeight(self.view.frame) - kTabBarHeight;
     }
+    CircleListObj *obj = self.dataArr[indexPath.row];
+    if([obj isKindOfClass:[CircleListObj class]]){
+        if (![obj.postType isEqualToString:@"ad"]){
+            if ([obj.status boolValue]){
+                obj.cellHeight = [obj fetchCellHeight];
+                return obj.cellHeight;
+            }
+        } else{
+            CGFloat height = [tableView cellHeightForIndexPath:indexPath model:obj keyPath:@"object" cellClass:[SHGExtendTableViewCell class] contentViewWidth:CGFLOAT_MAX];
+            return height;
+        }
+    } else{
+        return [self.recommendViewController heightOfView];
+    }
+    return 0.0f;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -671,16 +651,6 @@ const CGFloat kAdButtomMargin = 20.0f;
                 [self.navigationController pushViewController:viewController animated:YES];
             }
         }
-    }
-}
-
-//处理tableView左边空白
-- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
-    if ([cell respondsToSelector:@selector(setSeparatorInset:)]){
-        [cell setSeparatorInset:UIEdgeInsetsZero];
-    }
-    if ([cell respondsToSelector:@selector(setLayoutMargins:)]){
-        [cell setLayoutMargins:UIEdgeInsetsZero];
     }
 }
 

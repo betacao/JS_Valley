@@ -739,8 +739,6 @@
 		B04D6E421B60F2D500E3863E /* 组-46@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = B04D6E3E1B60F2D500E3863E /* 组-46@3x.png */; };
 		B04D6E451B60F50E00E3863E /* 组-47@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B04D6E431B60F50E00E3863E /* 组-47@2x.png */; };
 		B04D6E461B60F50E00E3863E /* 组-48@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B04D6E441B60F50E00E3863E /* 组-48@2x.png */; };
-		B06D06DA1B4FA2180036A3E3 /* CircleListTwoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B06D06D81B4FA2180036A3E3 /* CircleListTwoTableViewCell.m */; };
-		B06D06DB1B4FA2180036A3E3 /* CircleListTwoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B06D06D91B4FA2180036A3E3 /* CircleListTwoTableViewCell.xib */; };
 		B06F1C161B74B4AE005157A2 /* 矢量智能对象.png in Resources */ = {isa = PBXBuildFile; fileRef = B06F1C151B74B4AE005157A2 /* 矢量智能对象.png */; };
 		B080FE881B81E30100426579 /* btn_publish_face_a@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B080FE5F1B81E30100426579 /* btn_publish_face_a@2x.png */; };
 		B080FE891B81E30100426579 /* btn_publish_face_a@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = B080FE601B81E30100426579 /* btn_publish_face_a@3x.png */; };
@@ -900,6 +898,12 @@
 		F9B0636B1BD7699400471DF4 /* SHGNavigationView.m in Sources */ = {isa = PBXBuildFile; fileRef = F9B0636A1BD7699400471DF4 /* SHGNavigationView.m */; };
 		F9B18C081BA0521600EA0314 /* SHGNoticeView.m in Sources */ = {isa = PBXBuildFile; fileRef = F9B18C071BA0521600EA0314 /* SHGNoticeView.m */; };
 		F9B7CC321B8AD6C000E55EFD /* SHGGloble.m in Sources */ = {isa = PBXBuildFile; fileRef = F9B7CC311B8AD6C000E55EFD /* SHGGloble.m */; };
+		F9D296D61C8F02F100A1446C /* SHGMainPageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F9D296D41C8F02F100A1446C /* SHGMainPageTableViewCell.m */; };
+		F9D296D71C8F02F100A1446C /* SHGMainPageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9D296D51C8F02F100A1446C /* SHGMainPageTableViewCell.xib */; };
+		F9D296DC1C8FCB9C00A1446C /* SHGExtendTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F9D296DA1C8FCB9C00A1446C /* SHGExtendTableViewCell.m */; };
+		F9D296DD1C8FCB9C00A1446C /* SHGExtendTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9D296DB1C8FCB9C00A1446C /* SHGExtendTableViewCell.xib */; };
+		F9D296E11C8FF1E700A1446C /* SHGRecommendTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F9D296DF1C8FF1E700A1446C /* SHGRecommendTableViewCell.m */; };
+		F9D296E21C8FF1E700A1446C /* SHGRecommendTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9D296E01C8FF1E700A1446C /* SHGRecommendTableViewCell.xib */; };
 		F9D9F1571BB51D5F00F94E70 /* SHGUserTagModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F9D9F1561BB51D5F00F94E70 /* SHGUserTagModel.m */; };
 		F9DB81631C1278BB007C63B7 /* SHGEmptyDataView.m in Sources */ = {isa = PBXBuildFile; fileRef = F9DB81621C1278BB007C63B7 /* SHGEmptyDataView.m */; };
 		F9DDEFBF1BF9EB79001341CF /* SHGActionSendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9DDEFBD1BF9EB79001341CF /* SHGActionSendViewController.m */; };
@@ -1957,9 +1961,6 @@
 		B04D6E3E1B60F2D500E3863E /* 组-46@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "组-46@3x.png"; sourceTree = "<group>"; };
 		B04D6E431B60F50E00E3863E /* 组-47@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "组-47@2x.png"; sourceTree = "<group>"; };
 		B04D6E441B60F50E00E3863E /* 组-48@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "组-48@2x.png"; sourceTree = "<group>"; };
-		B06D06D71B4FA2180036A3E3 /* CircleListTwoTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CircleListTwoTableViewCell.h; sourceTree = "<group>"; };
-		B06D06D81B4FA2180036A3E3 /* CircleListTwoTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CircleListTwoTableViewCell.m; sourceTree = "<group>"; };
-		B06D06D91B4FA2180036A3E3 /* CircleListTwoTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CircleListTwoTableViewCell.xib; sourceTree = "<group>"; };
 		B06F1C151B74B4AE005157A2 /* 矢量智能对象.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "矢量智能对象.png"; sourceTree = "<group>"; };
 		B080FE5F1B81E30100426579 /* btn_publish_face_a@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn_publish_face_a@2x.png"; sourceTree = "<group>"; };
 		B080FE601B81E30100426579 /* btn_publish_face_a@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn_publish_face_a@3x.png"; sourceTree = "<group>"; };
@@ -2193,6 +2194,16 @@
 		F9B18C071BA0521600EA0314 /* SHGNoticeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGNoticeView.m; sourceTree = "<group>"; };
 		F9B7CC301B8AD6C000E55EFD /* SHGGloble.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGGloble.h; sourceTree = "<group>"; };
 		F9B7CC311B8AD6C000E55EFD /* SHGGloble.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGGloble.m; sourceTree = "<group>"; };
+		F9D296D31C8F02F100A1446C /* SHGMainPageTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGMainPageTableViewCell.h; sourceTree = "<group>"; };
+		F9D296D41C8F02F100A1446C /* SHGMainPageTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGMainPageTableViewCell.m; sourceTree = "<group>"; };
+		F9D296D51C8F02F100A1446C /* SHGMainPageTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGMainPageTableViewCell.xib; sourceTree = "<group>"; };
+		F9D296D81C8F032800A1446C /* SHGMainPageConst.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SHGMainPageConst.h; sourceTree = "<group>"; };
+		F9D296D91C8FCB9C00A1446C /* SHGExtendTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGExtendTableViewCell.h; sourceTree = "<group>"; };
+		F9D296DA1C8FCB9C00A1446C /* SHGExtendTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGExtendTableViewCell.m; sourceTree = "<group>"; };
+		F9D296DB1C8FCB9C00A1446C /* SHGExtendTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGExtendTableViewCell.xib; sourceTree = "<group>"; };
+		F9D296DE1C8FF1E700A1446C /* SHGRecommendTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGRecommendTableViewCell.h; sourceTree = "<group>"; };
+		F9D296DF1C8FF1E700A1446C /* SHGRecommendTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGRecommendTableViewCell.m; sourceTree = "<group>"; };
+		F9D296E01C8FF1E700A1446C /* SHGRecommendTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGRecommendTableViewCell.xib; sourceTree = "<group>"; };
 		F9D9F1551BB51D5F00F94E70 /* SHGUserTagModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGUserTagModel.h; sourceTree = "<group>"; };
 		F9D9F1561BB51D5F00F94E70 /* SHGUserTagModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGUserTagModel.m; sourceTree = "<group>"; };
 		F9DB81611C1278BB007C63B7 /* SHGEmptyDataView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGEmptyDataView.h; sourceTree = "<group>"; };
@@ -3057,16 +3068,23 @@
 		614AD1BF1AD7AFED00DDF43E /* View */ = {
 			isa = PBXGroup;
 			children = (
+				F9D296D81C8F032800A1446C /* SHGMainPageConst.h */,
 				B0EAB2521B467AB8005A760F /* MLEmojiLabel.h */,
 				B0EAB2511B467AB8005A760F /* MLEmojiLabel.m */,
 				B0EAB2541B467AB8005A760F /* TTTAttributedLabel.h */,
 				B0EAB2531B467AB8005A760F /* TTTAttributedLabel.m */,
+				F9D296D31C8F02F100A1446C /* SHGMainPageTableViewCell.h */,
+				F9D296D41C8F02F100A1446C /* SHGMainPageTableViewCell.m */,
+				F9D296D51C8F02F100A1446C /* SHGMainPageTableViewCell.xib */,
 				61B992F81ADBBE540025BE7B /* SHGHomeTableViewCell.h */,
 				61B992F91ADBBE540025BE7B /* SHGHomeTableViewCell.m */,
 				61B992FA1ADBBE540025BE7B /* SHGHomeTableViewCell.xib */,
-				B06D06D71B4FA2180036A3E3 /* CircleListTwoTableViewCell.h */,
-				B06D06D81B4FA2180036A3E3 /* CircleListTwoTableViewCell.m */,
-				B06D06D91B4FA2180036A3E3 /* CircleListTwoTableViewCell.xib */,
+				F9D296D91C8FCB9C00A1446C /* SHGExtendTableViewCell.h */,
+				F9D296DA1C8FCB9C00A1446C /* SHGExtendTableViewCell.m */,
+				F9D296DB1C8FCB9C00A1446C /* SHGExtendTableViewCell.xib */,
+				F9D296DE1C8FF1E700A1446C /* SHGRecommendTableViewCell.h */,
+				F9D296DF1C8FF1E700A1446C /* SHGRecommendTableViewCell.m */,
+				F9D296E01C8FF1E700A1446C /* SHGRecommendTableViewCell.xib */,
 				F932E2521B859DEC00EF2332 /* CircleListRecommendViewController.h */,
 				F932E2531B859DEC00EF2332 /* CircleListRecommendViewController.m */,
 				F932E2541B859DEC00EF2332 /* CircleListRecommendViewController.xib */,
@@ -5203,6 +5221,7 @@
 				408D8B151AF8618C0055810C /* VoiceSearchFeedback017.png in Resources */,
 				987184A41C4E51ED006F2946 /* SHGMomentCityViewController.xib in Resources */,
 				569C6D371B7CAB6A00AD59C3 /* 密码@2x.png in Resources */,
+				F9D296D71C8F02F100A1446C /* SHGMainPageTableViewCell.xib in Resources */,
 				408D8B4B1AF8618C0055810C /* chatBar_recordBg.png in Resources */,
 				408D8B781AF8618C0055810C /* chat_sender_audio_playing_002.png in Resources */,
 				408D8B521AF8618C0055810C /* chatBar_colorMore_audioCallSelected@2x.png in Resources */,
@@ -5264,7 +5283,6 @@
 				408D8B471AF8618C0055810C /* chatBar_moreSelected.png in Resources */,
 				408D8B031AF8618C0055810C /* VoiceSearchFeedback008.png in Resources */,
 				61E83CE91AF7C78E00703651 /* 配资@2x.png in Resources */,
-				B06D06DB1B4FA2180036A3E3 /* CircleListTwoTableViewCell.xib in Resources */,
 				569C6D3A1B7CAB6A00AD59C3 /* 手机@3x.png in Resources */,
 				61E83CCF1AF7C78E00703651 /* tab下划线@2x.png in Resources */,
 				61E83D181AF7C78E00703651 /* 常见问题@2x.png in Resources */,
@@ -5339,6 +5357,7 @@
 				61E83CFF1AF7C78E00703651 /* 列表向右箭头@2x.png in Resources */,
 				B04D6E241B60C01300E3863E /* 大牛说x@2x.png in Resources */,
 				61E83CD71AF7C78E00703651 /* 微信图标@2x.png in Resources */,
+				F9D296E21C8FF1E700A1446C /* SHGRecommendTableViewCell.xib in Resources */,
 				614BA7E81AE73FDA009480CD /* storeSearch@2x.png in Resources */,
 				61616FEC1B02F29100E5A837 /* 44@3x.png in Resources */,
 				61E83D9E1AF7C78E00703651 /* 选择好友@3x.png in Resources */,
@@ -5417,6 +5436,7 @@
 				61E83CE01AF7C78E00703651 /* 新三板@2x.png in Resources */,
 				61E83D701AF7C78E00703651 /* 消息-选中@3x.png in Resources */,
 				40302B411AF0C31F00F22EB6 /* MyAppointmentViewController.xib in Resources */,
+				F9D296DD1C8FCB9C00A1446C /* SHGExtendTableViewCell.xib in Resources */,
 				61E83CE81AF7C78E00703651 /* 身份验证弹出对话框@2x.png in Resources */,
 				61E83D861AF7C78E00703651 /* 相互关注图标@3x.png in Resources */,
 				61E83D2F1AF7C78E00703651 /* 接受按钮-默认@2x.png in Resources */,
@@ -5622,6 +5642,7 @@
 				6187D2CD1AF1C693008E1D21 /* GroupBansViewController.m in Sources */,
 				569C6D2F1B7CA9EB00AD59C3 /* BindPhoneViewController.m in Sources */,
 				F920570A1C63203600897C8B /* SHGMarketAdvancedSearchViewController.m in Sources */,
+				F9D296DC1C8FCB9C00A1446C /* SHGExtendTableViewCell.m in Sources */,
 				6187D2D31AF1C693008E1D21 /* ChatListCell.m in Sources */,
 				565136D51B834E2F00894B1D /* RecommendModel.m in Sources */,
 				6187D2D71AF1C693008E1D21 /* ChatViewController.m in Sources */,
@@ -5752,6 +5773,7 @@
 				4088DDD21AF1065100393855 /* SettingQuestionCell.m in Sources */,
 				40D6CC0B1B064122005F61C8 /* ProtocolViewController.m in Sources */,
 				408D8B821AF86CF20055810C /* MyMoneyDetailObject.m in Sources */,
+				F9D296D61C8F02F100A1446C /* SHGMainPageTableViewCell.m in Sources */,
 				40302B271AEF78D400F22EB6 /* VerifyIdentityViewController.m in Sources */,
 				F9A227CA1BF5C7E10054F8D7 /* SHGActionSegmentViewController.m in Sources */,
 				F986DE361BFDCBD900E6709F /* SHGActionTotalInViewController.m in Sources */,
@@ -5767,7 +5789,6 @@
 				98E3022B1BFB0708001D4A69 /* SHGAuthenticationViewController.m in Sources */,
 				614A597E1AD3AEA1005DAB04 /* Finance.xcdatamodeld in Sources */,
 				538964D21AFC6BEB00041548 /* NSDate+Category.m in Sources */,
-				B06D06DA1B4FA2180036A3E3 /* CircleListTwoTableViewCell.m in Sources */,
 				F9DB81631C1278BB007C63B7 /* SHGEmptyDataView.m in Sources */,
 				40302B2C1AF07AA500F22EB6 /* MyMoneyViewController.m in Sources */,
 				40302B311AF07DB500F22EB6 /* MyMoneyDetailTableViewCell.m in Sources */,
@@ -5822,6 +5843,7 @@
 				6187D2F21AF1C693008E1D21 /* BaseTableViewCell.m in Sources */,
 				619027491B2359C600D9EEA2 /* popObj.m in Sources */,
 				9894C9781BF5BCE700F80577 /* SHGActionSignViewController.m in Sources */,
+				F9D296E11C8FF1E700A1446C /* SHGRecommendTableViewCell.m in Sources */,
 				F9ADAEB71BF2DB32001366F9 /* SHGPersonalViewController.m in Sources */,
 				614EFECE1AEF594A00F2BDD1 /* ProdConfigTableViewCell.m in Sources */,
 				4088DD8C1AF0FB2B00393855 /* SettingsObj.m in Sources */,
