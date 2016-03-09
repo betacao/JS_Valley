@@ -11,7 +11,7 @@
 
 @interface SHGActionSignTableViewCell()<UITextViewDelegate>
 
-@property (weak, nonatomic) IBOutlet headerView *action_signHeadImage;
+@property (weak, nonatomic) IBOutlet SHGUserHeaderView *action_signHeadImage;
 @property (weak, nonatomic) IBOutlet UILabel *action_signNameLabel;
 
 @property (weak, nonatomic) IBOutlet UILabel *action_signCommpanyLable;

@@ -50,7 +50,7 @@
     for (RecmdFriendObj *object in objectArray) {
         NSInteger index = [objectArray indexOfObject:object];
         UIView *contentView = nil;
-        headerView *header = nil;
+        SHGUserHeaderView *header = nil;
         UILabel *nameLabel = nil;
         UILabel *companyLabel = nil;
         UILabel *departmentLabel = nil;
@@ -61,7 +61,7 @@
             contentView = [[UIView alloc] init];
             [self.contentView addSubview:contentView];
 
-            header = [[headerView alloc] init];
+            header = [[SHGUserHeaderView alloc] init];
             header.tag = 101;
 
             nameLabel = [[UILabel alloc] init];
@@ -148,7 +148,7 @@
     [self setupAutoHeightWithBottomView:self.splitView bottomMargin:0.0f];
 }
 
-- (void)addSubviewsLayout:(UIView *)contentView header:(headerView *)header nameLabel:(UILabel *)nameLabel companyLabel:(UILabel *)companyLabel departmentLabel:(UILabel *)departmentLabel detailLabel:(UILabel *)detailLabel button:(UIButton *)button lineView:(UIView *)lineView
+- (void)addSubviewsLayout:(UIView *)contentView header:(SHGUserHeaderView *)header nameLabel:(UILabel *)nameLabel companyLabel:(UILabel *)companyLabel departmentLabel:(UILabel *)departmentLabel detailLabel:(UILabel *)detailLabel button:(UIButton *)button lineView:(UIView *)lineView
 {
     header.sd_layout
     .topSpaceToView(contentView, MarginFactor(12.0f))

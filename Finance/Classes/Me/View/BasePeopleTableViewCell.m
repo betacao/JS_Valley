@@ -10,7 +10,7 @@
 @interface BasePeopleTableViewCell()
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UIButton *followButton;
-@property (weak, nonatomic) IBOutlet headerView *headerView;
+@property (weak, nonatomic) IBOutlet SHGUserHeaderView *headerView;
 @property (weak, nonatomic) IBOutlet UIView *lineView;
 - (IBAction)followButtonClicked:(id)sender;
 @end

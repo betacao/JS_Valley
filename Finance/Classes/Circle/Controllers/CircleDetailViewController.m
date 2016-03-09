@@ -48,7 +48,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *lblTime;
 @property (weak, nonatomic) IBOutlet UILabel *lbldepartName;
 @property (weak, nonatomic) IBOutlet UILabel *lblCompanyName;
-@property (weak, nonatomic) IBOutlet headerView *imageHeader;
+@property (weak, nonatomic) IBOutlet SHGUserHeaderView *imageHeader;
 @property (strong, nonatomic) BRCommentView *popupView;
 @property (strong, nonatomic) IBOutlet UIView *viewHeader;
 @property (weak, nonatomic) IBOutlet UIView *personView;

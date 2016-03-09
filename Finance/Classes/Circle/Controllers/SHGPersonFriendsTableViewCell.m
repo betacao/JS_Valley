@@ -8,7 +8,7 @@
 
 #import "SHGPersonFriendsTableViewCell.h"
 @interface SHGPersonFriendsTableViewCell()
-@property (weak, nonatomic) IBOutlet headerView *headeimage;
+@property (weak, nonatomic) IBOutlet SHGUserHeaderView *headeimage;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *companyLabel;
 @property (weak, nonatomic) IBOutlet UIView *lineView;

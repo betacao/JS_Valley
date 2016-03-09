@@ -50,7 +50,7 @@
 #import "VerifyIdentityViewController.h"
 #import "CircleDetailViewController.h"
 #import "SHGGloble.h"
-#import "headerView.h"
+#import "SHGUserHeaderView.h"
 #import "DXAlertView.h"
 #import "NSArray+Category.h"
 #import "UIView+SDAutoLayout.h"

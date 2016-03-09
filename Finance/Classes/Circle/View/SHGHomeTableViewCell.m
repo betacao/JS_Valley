@@ -46,7 +46,7 @@
 //好友关系、定位标签
 @property (weak, nonatomic) IBOutlet UIButton *cityNameButton;
 //用户头像
-@property (weak, nonatomic) IBOutlet headerView *imageHeader;
+@property (weak, nonatomic) IBOutlet SHGUserHeaderView *imageHeader;
 //最下层分割线
 @property (weak, nonatomic) IBOutlet UIView *bottomView;
 @property (weak, nonatomic) IBOutlet UIView *bottomLineView;

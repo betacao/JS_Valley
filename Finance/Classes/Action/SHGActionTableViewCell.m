@@ -13,7 +13,7 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *Action_titlelabel;
 @property (weak, nonatomic) IBOutlet UIImageView *Acyion_titleBg;
-@property (weak, nonatomic) IBOutlet headerView *Action_headImage;
+@property (weak, nonatomic) IBOutlet SHGUserHeaderView *Action_headImage;
 @property (weak, nonatomic) IBOutlet UILabel *Action_nameLable;
 @property (weak, nonatomic) IBOutlet UILabel *Action_pubdateLabel;
 @property (weak, nonatomic) IBOutlet UIButton *Action_signButton;

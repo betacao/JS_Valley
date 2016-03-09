@@ -7,11 +7,10 @@
 //
 
 #import "SHGConnectionsTableViewCell.h"
-#import "headerView.h"
 
 @interface SHGConnectionsTableViewCell()
 @property (strong, nonatomic) NSString *uid;
-@property (weak, nonatomic) IBOutlet headerView *headerView;
+@property (weak, nonatomic) IBOutlet SHGUserHeaderView *headerView;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *companyLabel;
 @property (weak, nonatomic) IBOutlet UILabel *stateLabel;

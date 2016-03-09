@@ -1,5 +1,5 @@
 //
-//  headerView.h
+//  SHGUserHeaderView.h
 //  Finance
 //
 //  Created by changxicao on 15/9/7.
@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface headerView : UIView
+@interface SHGUserHeaderView : UIView
 
 - (void)updateHeaderView:(NSString *)sourceUrl placeholderImage:(UIImage *)placeImage;
 

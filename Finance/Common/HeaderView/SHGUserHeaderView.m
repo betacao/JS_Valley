@@ -1,21 +1,21 @@
 //
-//  headerView.m
+//  SHGUserHeaderView.m
 //  Finance
 //
 //  Created by changxicao on 15/9/7.
 //  Copyright (c) 2015年 HuMin. All rights reserved.
 //
 
-#import "headerView.h"
+#import "SHGUserHeaderView.h"
 #import "UIKit+AFNetworking.h"
 
-@interface headerView ()
+@interface SHGUserHeaderView ()
 @property (strong, nonatomic) UIImageView *VImageView;
 @property (strong, nonatomic) UIImageView *headerImageView;
 
 @end
 
-@implementation headerView
+@implementation SHGUserHeaderView
 
 - (instancetype)initWithFrame:(CGRect)frame
 {

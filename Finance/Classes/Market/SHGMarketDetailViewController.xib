@@ -186,7 +186,7 @@
                     <color key="textColor" red="0.53333333333333333" green="0.53333333333333333" blue="0.53333333333333333" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <view contentMode="scaleToFill" id="P9m-ya-r22" customClass="headerView">
+                <view contentMode="scaleToFill" id="P9m-ya-r22" customClass="SHGUserHeaderView">
                     <rect key="frame" x="20" y="15" width="35" height="35"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>

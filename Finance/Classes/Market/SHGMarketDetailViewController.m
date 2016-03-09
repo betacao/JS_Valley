@@ -33,7 +33,7 @@
 //界面
 @property (weak, nonatomic) IBOutlet UITableView *detailTable;
 @property (strong, nonatomic) IBOutlet UIView *viewHeader;
-@property (weak, nonatomic) IBOutlet headerView *headImageView;
+@property (weak, nonatomic) IBOutlet SHGUserHeaderView *headImageView;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *companyLabel;
 @property (weak, nonatomic) IBOutlet UILabel *positionLabel;

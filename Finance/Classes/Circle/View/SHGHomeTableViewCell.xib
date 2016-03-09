@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -11,7 +11,7 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="567"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="567.5"/>
                 <subviews>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="521" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="cgM-W5-Xpb" customClass="MLEmojiLabel">
                         <rect key="frame" x="14" y="55" width="292" height="20"/>
@@ -166,7 +166,7 @@
                                 <color key="textColor" red="0.33725490196078434" green="0.33725490196078434" blue="0.33725490196078434" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <view contentMode="scaleToFill" id="yOZ-57-ofT" customClass="headerView">
+                            <view contentMode="scaleToFill" id="yOZ-57-ofT" customClass="SHGUserHeaderView">
                                 <rect key="frame" x="16" y="13" width="30" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
@@ -203,9 +203,9 @@
     <resources>
         <image name="comment_backimage" width="25" height="25"/>
         <image name="homeShare" width="13" height="12"/>
-        <image name="home_comment" width="12" height="13"/>
-        <image name="home_delete" width="13" height="13"/>
-        <image name="home_weizan" width="13" height="13"/>
-        <image name="newAddAttention" width="46" height="20"/>
+        <image name="home_comment" width="13" height="14"/>
+        <image name="home_delete" width="14" height="14"/>
+        <image name="home_weizan" width="14" height="14"/>
+        <image name="newAddAttention" width="50" height="22"/>
     </resources>
 </document>
