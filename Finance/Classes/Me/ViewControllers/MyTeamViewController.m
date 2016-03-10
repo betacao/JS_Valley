@@ -11,24 +11,25 @@
 #import "TeamDetailTableViewCell.h"
 #import "SHGMyTeamListTableViewController.h"
 @interface MyTeamViewController ()
-	<UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic, strong) NSMutableArray *dataSource;
 
-@property (nonatomic, strong) IBOutlet UITableView *tableView;
-
-@property (nonatomic, strong) IBOutlet UITableViewCell *teamMoneyCell;
-@property (nonatomic, strong) IBOutlet UILabel	*teamMoneyLabel;
-
-@property (nonatomic, strong) IBOutlet UITableViewCell *myMoneyCell;
-@property (nonatomic, strong) IBOutlet UILabel	*myMoneyLabel;
-@property (weak, nonatomic) IBOutlet UILabel *totalLabel;
-
-@property (nonatomic, strong) IBOutlet UITableViewCell *teamEncourageDescriptionCell;
-@property (weak, nonatomic) IBOutlet UIView *teamLine;
-@property (weak, nonatomic) IBOutlet UIView *shuLine;
-@property (weak, nonatomic) IBOutlet UILabel *contentLabel;
-
+@property (weak, nonatomic) IBOutlet UILabel *partenrMoneyLabel;
+@property (weak, nonatomic) IBOutlet UILabel *myMoneyLabel;
+@property (weak, nonatomic) IBOutlet UILabel *partenrMoneyCountLabel;
+@property (weak, nonatomic) IBOutlet UILabel *myMoneyCountLabel;
+@property (weak, nonatomic) IBOutlet UIView *verticalLineView;
+@property (weak, nonatomic) IBOutlet UIView *firstBlackView;
+@property (weak, nonatomic) IBOutlet UIView *secondBlackView;
+@property (weak, nonatomic) IBOutlet UILabel *partenrDetailLabel;
+@property (weak, nonatomic) IBOutlet UILabel *partnerCountLabel;
+@property (weak, nonatomic) IBOutlet UIButton *rightButton;
+@property (weak, nonatomic) IBOutlet UILabel *partnerExplainLabel;
+@property (weak, nonatomic) IBOutlet UILabel *partnerExplainDetailLabel;
+@property (weak, nonatomic) IBOutlet UIView *horizontalLineView;
+@property (weak, nonatomic) IBOutlet UIButton *iniviteButton;
+@property (weak, nonatomic) IBOutlet UIView *tapView;
+@property (strong, nonatomic) NSDictionary *dictionary;
 
 - (IBAction)inviteButtonClicked:(id *)sender;
 
@@ -36,32 +37,23 @@
 
 @implementation MyTeamViewController
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
-	self.title = @"我的合伙人";
-	self.dataSource = [[NSMutableArray alloc] init];
-	UIView *view = [[UIView alloc] init];
-	view.backgroundColor = [UIColor whiteColor];
-    [_tableView setTableFooterView:view];
-    self.teamLine.size = CGSizeMake(self.teamLine.width, 0.5f);
-    self.shuLine.size = CGSizeMake(0.5f, self.shuLine.height);
-    NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
-    
-    [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttp,@"user",@"team"] parameters:@{@"uid":uid}success:^(MOCHTTPResponse *response){
-        
-        self.myMoneyLabel.text = [NSString stringWithFormat:@"%@ ",[response.dataDictionary valueForKey:@"me"]];
-        self.teamMoneyLabel.text = [NSString stringWithFormat:@"%@ ",[response.dataDictionary valueForKey:@"team"]];
+    self.title = @"我的合伙人";
+    self.dataSource = [[NSMutableArray alloc] init];
+    [self initView];
+    [self addSdLayout];
+    [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttp,@"user",@"team"] parameters:@{@"uid":UID}success:^(MOCHTTPResponse *response){
+        self.dictionary = response.dataDictionary;
         NSArray *array = [response.dataDictionary valueForKey:@"detail"];
-        
         for (NSDictionary *dic in array) {
             TeamDetailObject *obj = [[TeamDetailObject alloc] init];
             obj.name = [dic valueForKey:@"name"];
             obj.money = [dic valueForKey:@"commission"];
             [self.dataSource addObject:obj];
         }
-        [self.tableView reloadData];
-        
-        
+        [self loadData];
         NSLog(@"%@",response.data);
         NSLog(@"%@",response.errorMessage);
         
@@ -69,97 +61,186 @@
         
     }];
     
-    [self.tableView reloadData];
+}
+
+- (void)initView
+{
+    self.view.backgroundColor = [UIColor whiteColor];
+    self.partenrMoneyLabel.font = FontFactor(12.0f);
+    self.partenrMoneyLabel.textColor = [UIColor colorWithHexString:@"989898"];
+    self.partenrMoneyLabel.textAlignment = NSTextAlignmentCenter;
+    
+    self.myMoneyLabel.font = FontFactor(12.0f);
+    self.myMoneyLabel.textColor = [UIColor colorWithHexString:@"989898"];
+    self.myMoneyLabel.textAlignment = NSTextAlignmentCenter;
+    
+    self.partenrMoneyCountLabel.font = FontFactor(20.0f);
+    self.partenrMoneyCountLabel.textColor = [UIColor colorWithHexString:@"d43c33"];
+    self.partenrMoneyCountLabel.textAlignment = NSTextAlignmentCenter;
+    
+    self.myMoneyCountLabel.font = FontFactor(20.0f);
+    self.myMoneyCountLabel.textColor = [UIColor colorWithHexString:@"d43c33"];
+    self.myMoneyCountLabel.textAlignment = NSTextAlignmentCenter;
+    
+    self.verticalLineView.backgroundColor = [UIColor colorWithHexString:@"e6e7e8"];
+    self.horizontalLineView.backgroundColor = [UIColor colorWithHexString:@"e6e7e8"];
+    self.firstBlackView.backgroundColor = [UIColor colorWithHexString:@"e6e7e8"];
+    self.secondBlackView.backgroundColor = [UIColor colorWithHexString:@"e6e7e8"];
+    
+    self.partenrDetailLabel.font = FontFactor(15.0f);
+    self.partenrDetailLabel.textAlignment = NSTextAlignmentLeft;
+    self.partenrDetailLabel.textColor = [UIColor colorWithHexString:@"161616"];
+    
+    self.partnerCountLabel.font = FontFactor(15.0f);
+    self.partnerCountLabel.textAlignment = NSTextAlignmentRight;
+    self.partnerCountLabel.textColor = [UIColor colorWithHexString:@"989898"];
+    
+    self.partnerExplainLabel.font = FontFactor(15.0f);
+    self.partnerExplainLabel.textAlignment = NSTextAlignmentLeft;
+    self.partnerExplainLabel.textColor = [UIColor colorWithHexString:@"161616"];
+    
+    self.partnerExplainDetailLabel.font = FontFactor(15.0f);
+    self.partnerExplainDetailLabel.textColor = [UIColor colorWithHexString:@"565656"];
+    
+    [self.iniviteButton setBackgroundColor:[UIColor colorWithHexString:@"f04241"]];
+    [self.iniviteButton setTitleColor:[UIColor colorWithHexString:@"ffffff"] forState:UIControlStateNormal];
+    self.iniviteButton.titleLabel.font = FontFactor(17.0f);
+    
+    self.tapView.backgroundColor = [UIColor clearColor];
+    self.tapView.userInteractionEnabled = YES;
+    UITapGestureRecognizer *tapGes = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapAction:)];
+    [self.tapView addGestureRecognizer:tapGes];
+    
+}
+
+- (void)addSdLayout
+{
+    self.verticalLineView.sd_layout
+    .leftSpaceToView(self.view, SCREENWIDTH / 2.0f)
+    .centerYIs(MarginFactor(59.0f))
+    .widthIs(0.5f)
+    .heightIs(MarginFactor(39.0f));
+    
+    self.partenrMoneyLabel.sd_layout
+    .topEqualToView(self.verticalLineView)
+    .centerXIs(SCREENWIDTH / 4.0f)
+    .autoHeightRatio(0.0f);
+    [self.partenrMoneyLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
+    
+    self.myMoneyLabel.sd_layout
+    .topEqualToView(self.verticalLineView)
+    .centerXIs(3 * SCREENWIDTH / 4.0)
+    .autoHeightRatio(0.0f);
+    [self.myMoneyLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
+  
+    self.partenrMoneyCountLabel.sd_layout
+    .topSpaceToView(self.partenrMoneyLabel, MarginFactor(5.0f))
+    .centerXEqualToView(self.partenrMoneyLabel)
+    .autoHeightRatio(0.0f);
+    [self.partenrMoneyCountLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
+
+    self.myMoneyCountLabel.sd_layout
+    .topSpaceToView(self.myMoneyLabel, MarginFactor(5.0f))
+    .centerXEqualToView(self.myMoneyLabel)
+    .autoHeightRatio(0.0f);
+    [self.myMoneyCountLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
+    
+    self.firstBlackView.sd_layout
+    .leftSpaceToView(self.view, 0.0f)
+    .rightSpaceToView(self.view, 0.0f)
+    .topSpaceToView(self.view, MarginFactor(117.0f))
+    .heightIs(11.0f);
+    
+    self.partenrDetailLabel.sd_layout
+    .leftSpaceToView(self.view, MarginFactor(12.0f))
+    .topSpaceToView(self.firstBlackView, MarginFactor(22.0f))
+    .autoHeightRatio(0.0f);
+    [self.partenrDetailLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
+    
+    UIImage *image = [UIImage imageNamed:@"rightArrowImage"];
+    CGSize size = image.size;
+    
+    self.rightButton.sd_layout
+    .rightSpaceToView(self.view, MarginFactor(12.0f))
+    .centerYEqualToView(self.partenrDetailLabel)
+    .widthIs(size.width)
+    .heightIs(size.height);
+    
+    self.partnerCountLabel.sd_layout
+    .rightSpaceToView(self.rightButton, MarginFactor(8.0f))
+    .centerYEqualToView(self.partenrDetailLabel)
+    .autoHeightRatio(0.0f);
+    [self.partnerCountLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
+    
+    self.secondBlackView.sd_layout
+    .leftSpaceToView(self.view, 0.0f)
+    .rightSpaceToView(self.view, 0.0f)
+    .topSpaceToView(self.partenrDetailLabel, MarginFactor(22.00f))
+    .heightIs(11.0f);
+    
+    self.partnerExplainLabel.sd_layout
+    .leftSpaceToView(self.view, MarginFactor(12.0f))
+    .topSpaceToView(self.secondBlackView, MarginFactor(22.0f))
+    .autoHeightRatio(0.0f);
+    [self.partnerExplainLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
+    
+    self.horizontalLineView.sd_layout
+    .leftSpaceToView(self.view, MarginFactor(12.0f))
+    .rightSpaceToView(self.view, 0.0f)
+    .topSpaceToView(self.partnerExplainLabel, MarginFactor(22.0f))
+    .heightIs(0.5f);
+    
+    self.partnerExplainDetailLabel.sd_layout
+    .leftSpaceToView(self.view, MarginFactor(12.0f))
+    .rightSpaceToView(self.view, MarginFactor(12.0f))
+    .topSpaceToView(self.horizontalLineView, MarginFactor(18.0f))
+    .autoHeightRatio(0.0f);
+    
+    
+    self.iniviteButton.sd_layout
+    .leftSpaceToView(self.view, MarginFactor(12.0f))
+    .rightSpaceToView(self.view, MarginFactor(12.0f))
+    .bottomSpaceToView(self.view, MarginFactor(19.0f))
+    .heightIs(35.0f);
+    
+    self.tapView.sd_layout
+    .leftSpaceToView(self.view, 0.0f)
+    .rightSpaceToView(self.view, 0.0f)
+    .topSpaceToView(self.firstBlackView, 0.0f)
+    .bottomSpaceToView(self.secondBlackView, 0.0f);
+}
+
+- (void)loadData
+{
+    self.partenrMoneyLabel.text = @"合伙人佣金";
+    [self.partenrMoneyLabel sizeToFit];
+    self.myMoneyLabel.text = @"我的佣金";
+    [self.myMoneyLabel sizeToFit];
+    self.partenrMoneyCountLabel.text = [NSString stringWithFormat:@"%@ ",[self.dictionary valueForKey:@"team"]];
+    [self.partenrMoneyCountLabel sizeToFit];
+    self.myMoneyCountLabel.text = [NSString stringWithFormat:@"%@ ",[self.dictionary valueForKey:@"me"]];
+    self.myMoneyCountLabel.text = @"100";
+    [self.myMoneyCountLabel sizeToFit];
+    self.partenrDetailLabel.text = @"合伙人明细";
+    [self.partenrDetailLabel sizeToFit];
+    self.partnerCountLabel.text = [NSString stringWithFormat:@"%ld人",(long)self.dataSource.count];
+    [self.partnerCountLabel sizeToFit];
+    self.partnerExplainLabel.text = @"合伙人激励机制说明";
+    [self.partnerExplainLabel sizeToFit];
+    self.partnerExplainDetailLabel.text = @"1.您邀请的合伙人产生的销售佣金，您可获得其总佣金的5%的额外奖励。\n2.您的合伙人再邀请的成员产生的销售佣金，您也可以获得其总佣金1%的额外奖励。\n3.您每邀请10位好友成功注册且通过认证，将获得50元话费（150元封顶）充值。";
+    [self.partnerExplainDetailLabel sizeToFit];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+- (void)tapAction:(UITapGestureRecognizer *)tap
 {
-	return 3;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-//	if (section == 0) {
-//		return 2;
-//	}else if(section == 1){
-//		return self.dataSource.count;
-//	}else if (section == 2){
-//		return 1;
-//	}
-	
-	return 1;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-{
-	return 0;
-}
-
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-	if (indexPath.section == 0) {
-		return 94.0f;
-	}else if(indexPath.section == 1){
-		return 65.0f;
-	}else if (indexPath.section == 2){
-		return 350.0f;
-	}
-	return 0;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-	if (indexPath.section == 0) {
-		//if (indexPath.row == 0) {
-			return self.teamMoneyCell;
-//		}else if( indexPath.row == 1){
-//			return self.myMoneyCell;
-//		}
-	}else if (indexPath.section == 1){
-//		static NSString *CellIdentifier = @"TeamDetailTableViewCell";
-//		TeamDetailTableViewCell *cell = (TeamDetailTableViewCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-//		
-//		// Configure the cell...
-//		if (cell == nil) {
-//			cell = [[[NSBundle mainBundle] loadNibNamed:CellIdentifier owner:self options:nil]objectAtIndex:0];
-//		}
-//		
-//		TeamDetailObject *obj = self.dataSource[indexPath.row];
-//		cell.nameLabel.text = obj.name;
-//		cell.moneyLabel.text = obj.money;
-        self.totalLabel.text = [NSString stringWithFormat:@"%ld人",(long)self.dataSource.count];
-		return self.myMoneyCell;
-
-	}else if (indexPath.section == 2){
-        self.contentLabel.numberOfLines = 0;
-        NSString * str = @"1.您邀请的合伙人产生的销售佣金，您可获得其总佣金的5%的额外奖励。\n2.您的合伙人再邀请的成员产生的销售佣金，您也可以获得其总佣金1%的额外奖励。\n3.您每邀请10位好友成功注册且通过认证，将获得50元话费（150元封顶）充值。";
-        NSMutableAttributedString *aCircleString = [[NSMutableAttributedString alloc] initWithString:str];
-        NSMutableParagraphStyle * paragraphStyle1 = [[NSMutableParagraphStyle alloc] init];
-        [paragraphStyle1 setLineSpacing:5.0f];
-        [aCircleString addAttributes:@{NSParagraphStyleAttributeName:paragraphStyle1, NSFontAttributeName:[UIFont systemFontOfSize:14.0f], NSForegroundColorAttributeName:[UIColor colorWithHexString:@"565656"]} range:NSMakeRange(0, [aCircleString length])];
-        self.contentLabel.attributedText = aCircleString;
-        
-		return self.teamEncourageDescriptionCell;
-	}
-	
-	
-	UITableViewCell  *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"empty"];
-	return cell;
-}
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-	[tableView deselectRowAtIndexPath:indexPath animated:YES];
-    if (indexPath.section == 1) {
-        SHGMyTeamListTableViewController * vc = [[SHGMyTeamListTableViewController alloc]init];
-        [vc makeDate:self.dataSource];
-        [self.navigationController pushViewController:vc animated:YES];
-    }
+    SHGMyTeamListTableViewController * vc = [[SHGMyTeamListTableViewController alloc]init];
+    [vc makeDate:self.dataSource];
+    [self.navigationController pushViewController:vc animated:YES];
+    
 }
 
 - (IBAction)inviteButtonClicked:(id *)sender

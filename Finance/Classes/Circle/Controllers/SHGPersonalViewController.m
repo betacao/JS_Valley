@@ -13,7 +13,7 @@
 #import "ChatListViewController.h"
 #import "SHGPersonFriendsViewController.h"
 #import "SDPhotoBrowser.h"
-
+#import "SHGPersonalTableViewCell.h"
 #define kTagViewWidth 45.0f * XFACTOR
 #define kTagViewHeight 16.0f * XFACTOR
 #define kBottomViewLeftMargin 14.0f
@@ -38,17 +38,12 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
 @property (weak, nonatomic) IBOutlet UILabel *userNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *departmentLabel;
 @property (weak, nonatomic) IBOutlet UILabel *companyLabel;
-@property (weak, nonatomic) IBOutlet UILabel *positionLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *friendImage;
-@property (weak, nonatomic) IBOutlet UIView *tagViews;
-@property (weak, nonatomic) IBOutlet UIImageView *headerBackImageView;
 @property (weak, nonatomic) IBOutlet UIView *lineView;
 @property (weak, nonatomic) IBOutlet UIView *centerLine;
+@property (weak, nonatomic) IBOutlet UIButton *sendMessageButton;
+@property (weak, nonatomic) IBOutlet UIButton *collectButton;
 
-@property (weak, nonatomic) IBOutlet UIView *attentionAndCollectView;
-//@property (weak, nonatomic) IBOutlet UIView *footerView;
-@property (weak, nonatomic) IBOutlet UIButton *leftButton;
-@property (weak, nonatomic) IBOutlet UIButton *rightButton;
 //数据
 @property (strong, nonatomic) NSString *department;//职称
 @property (strong, nonatomic) NSString *relationShip;//关注
@@ -64,10 +59,12 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
 @property (strong, nonatomic) NSString * position;
 @property (strong, nonatomic) NSString * tags;
 @property (strong, nonatomic) NSString * commonfriends;
+@property (weak, nonatomic) IBOutlet UIView *grayView;
 @property (assign, nonatomic) BOOL isCardChange;
 @end
 
 @implementation SHGPersonalViewController
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -75,21 +72,14 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
     self.isCardChange = YES;
     if ([self.userId isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID]]) {
         self.listArray = [NSMutableArray arrayWithArray:@[@"我的动态", @"我的好友"]];
-        self.headerView.size = CGSizeMake(self.headerView.width, kHeaderViewHeight);
-        self.attentionAndCollectView.hidden = YES;
         self.friendImage.hidden = YES;
         self.lineView.hidden = YES;
     } else{
         self.friendImage.hidden = NO;
         self.listArray = [NSMutableArray arrayWithArray:@[@"他的动态", @"他的好友", @"共同好友"]];
     }
-
-    [self.tableView setTableHeaderView:self.headerView];
-    [self.tableView setTableFooterView:[[UIView alloc] init]];
-    self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     [self initView];
-    self.lineView.frame = CGRectMake(self.lineView.origin.x, self.lineView.origin.y, SCREENWIDTH, 0.5f);
-    self.centerLine.frame = CGRectMake(self.centerLine.origin.x, self.centerLine.origin.y, 0.5f, self.centerLine.height);
+    [self addSdLayout];
     self.tableView.separatorStyle = UITableViewCellSelectionStyleNone;
     [self requestDataWithTarget:@"first" time:@""];
 }
@@ -102,15 +92,97 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
 }
 - (void)initView
 {
-      //1.7.2修改
     self.headerImageView.userInteractionEnabled = YES;
-//    self.headerImageView.layer.masksToBounds = YES;
-//    self.headerImageView.layer.cornerRadius = CGRectGetHeight(self.headerImageView.frame) / 2.0f;
-    //self.headerImageView.hidden = YES;
     UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapHeaderView:)];
     [self.headerImageView addGestureRecognizer:recognizer];
+    
+    self.userNameLabel.font = FontFactor(16.0f);
+    self.userNameLabel.textColor = [UIColor colorWithHexString:@"1d5798"];
+    self.departmentLabel.font = FontFactor(14.0f);
+    self.departmentLabel.textColor = [UIColor colorWithHexString:@"565656"];
+    self.companyLabel.font = FontFactor(14.0f);
+    self.companyLabel.textColor = [UIColor colorWithHexString:@"565656"];
+    self.lineView.backgroundColor = [UIColor colorWithHexString:@"e6e7e8"];
+    self.sendMessageButton.titleLabel.font = FontFactor(15.0f);
+    self.collectButton.titleLabel.font = FontFactor(15.0f);
+    self.grayView.backgroundColor = [UIColor colorWithHexString:@"efeeef"];
 }
 
+- (void)addSdLayout
+{
+    self.tableView.sd_layout
+    .leftSpaceToView(self.view, 0.0f)
+    .rightSpaceToView(self.view, 0.0f)
+    .topSpaceToView(self.view, 0.0f)
+    .bottomSpaceToView(self.view, 0.0f);
+    
+    self.headerImageView.sd_layout
+    .topSpaceToView(self.headerView, MarginFactor(15.0f))
+    .leftSpaceToView(self.headerView, MarginFactor(12.0f))
+    .widthIs(MarginFactor(50.0f))
+    .heightIs(MarginFactor(50.0f));
+    
+    self.userNameLabel.sd_layout
+    .leftSpaceToView(self.headerImageView, MarginFactor(10.0f))
+    .topEqualToView(self.headerImageView)
+    .autoHeightRatio(0.0f);
+    [self.userNameLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
+    
+    self.departmentLabel.sd_layout
+    .leftSpaceToView(self.userNameLabel, MarginFactor(10.0f))
+    .bottomEqualToView(self.userNameLabel)
+    .autoHeightRatio(0.0f);
+    [self.departmentLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
+    
+    self.companyLabel.sd_layout
+    .leftEqualToView(self.userNameLabel)
+    .bottomEqualToView(self.headerImageView)
+    .autoHeightRatio(0.0f);
+    [self.companyLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
+    
+    UIImage *image = [UIImage imageNamed:@"first_friend.png"];
+    CGSize size = image.size;
+    self.friendImage.sd_layout
+    .rightSpaceToView(self.headerView, 0.0f)
+    .topSpaceToView(self.headerView, 0.0f)
+    .widthIs(size.width)
+    .heightIs(size.height);
+    
+    self.lineView.sd_layout
+    .leftSpaceToView(self.headerView, 0.0f)
+    .rightSpaceToView(self.headerView, 0.0f)
+    .topSpaceToView(self.headerImageView, MarginFactor(15.0f))
+    .heightIs(0.5f);
+    
+    self.centerLine.sd_layout
+    .centerXIs(SCREENWIDTH / 2.0f)
+    .topSpaceToView(self.lineView, MarginFactor(13.0f))
+    .widthIs(0.5f)
+    .heightIs(MarginFactor(24.0f));
+    
+    self.sendMessageButton.sd_layout
+    .leftSpaceToView(self.headerView, 0.0f)
+    .rightSpaceToView(self.centerLine, 1.0f)
+    .topSpaceToView(self.lineView, 0.0f)
+    .heightIs(MarginFactor(50.0f));
+    
+    
+    self.collectButton.sd_layout
+    .leftSpaceToView(self.centerLine, 1.0f)
+    .rightSpaceToView(self.headerView, 0.0f)
+    .topEqualToView(self.sendMessageButton)
+    .heightIs(MarginFactor(50.0f));
+
+    self.grayView.sd_layout
+    .leftSpaceToView(self.headerView, 0.0f)
+    .rightSpaceToView(self.headerView, 0.0f)
+    .topSpaceToView(self.sendMessageButton, 0.0f)
+    .heightIs(MarginFactor(10.0f));
+    
+    [self.headerView setupAutoHeightWithBottomView:self.grayView bottomMargin:0.0f];
+    self.tableView.tableHeaderView = self.headerView;
+    
+}
 - (void)tapHeaderView:(UITapGestureRecognizer *)recognizer
 {
     SDPhotoBrowser *browser = [[SDPhotoBrowser alloc] initWithFrame:CGRectMake(0.0f, 0.0f, CGRectGetWidth([UIScreen mainScreen].bounds), CGRectGetHeight([UIScreen mainScreen].bounds))];
@@ -133,7 +205,7 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
         [Hud hideHud];
         NSLog(@"=========data = %@",response.dataDictionary);
         [weakSelf parseDataWithDic:response.dataDictionary];
-        [weakSelf loadUI];
+        [weakSelf loadData];
         [weakSelf.tableView reloadData];
     } failed:^(MOCHTTPResponse *response) {
         [Hud showMessageWithText:response.errorMessage];
@@ -143,17 +215,8 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
     }];
 }
 
-- (void)loadUI
+- (void)loadData
 {
-    CGSize tsize =CGSizeMake(MAXFLOAT,self.userNameLabel.frame.size.height);
-    
-    NSDictionary * tdic = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:14.0f], NSFontAttributeName,nil];
-    
-    CGSize  actualsize =[self.nickName boundingRectWithSize:tsize options:NSStringDrawingUsesLineFragmentOrigin  attributes:tdic context:nil].size;
-    self.userNameLabel.frame =CGRectMake(self.userNameLabel.frame.origin.x,self.userNameLabel.frame.origin.y,actualsize.width ,self.userNameLabel.frame.size.height );
-    
-    self.departmentLabel.frame = CGRectMake(CGRectGetMaxX(self.userNameLabel.frame) + kObjectMargin / 2.0f, self.departmentLabel.frame.origin.y, self.departmentLabel.frame.size.width, self.departmentLabel.frame.size.height);
-    
     [self.headerImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,self.potName]] placeholderImage:[UIImage imageNamed:@"default_head"]];
     if (self.department.length > 6) {
         NSString * str = [self.department substringToIndex:6];
@@ -161,19 +224,12 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
     }else{
         self.departmentLabel.text = self.department;
     }
+    [self.departmentLabel sizeToFit];
     self.companyLabel.text = self.companyName;
+    [self.companyLabel sizeToFit];
     self.userNameLabel.text = self.nickName;
-    self.positionLabel.text =self.position;
-    //1.7.2修改
-    self.positionLabel.hidden = YES;
-    self.tagViews.hidden = YES;
-    
-    if (![self.tags isEqualToString:@""]) {
-        NSArray *arry = [self.tags componentsSeparatedByString:@","];
-        [self.tagViews removeAllSubviews];
-        [self.tagViews addSubview:[self viewForTags:arry]];
-    }
-    //判断好友是一度好友还是二度好友
+    [self.userNameLabel sizeToFit];
+  
     if ([self.friendShip isEqualToString:@"一度"]) {
         self.friendImage.image = [UIImage imageNamed:@"first_friend.png"];
     }
@@ -185,41 +241,67 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
         self.friendImage.image = nil;
     }
 
+    if ([self.userId isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID]]) {
+        self.listArray = [NSMutableArray arrayWithArray:@[@"我的动态", @"我的好友"]];
+        self.friendImage.hidden = YES;
+        self.lineView.hidden = YES;
+        self.centerLine.hidden = YES;
+        self.sendMessageButton.hidden = YES;
+        self.collectButton.hidden = YES;
+        self.grayView.sd_resetLayout
+        .leftSpaceToView(self.headerView, 0.0f)
+        .rightSpaceToView(self.headerView, 0.0f)
+        .topSpaceToView(self.headerImageView, MarginFactor(15.0f))
+        .heightIs(MarginFactor(10.0f));
+    } else{
+        self.lineView.hidden = NO;
+        self.centerLine.hidden = NO;
+        self.friendImage.hidden = NO;
+        self.sendMessageButton.hidden = NO;
+        self.collectButton.hidden = NO;
+        self.grayView.sd_resetLayout
+        .leftSpaceToView(self.headerView, 0.0f)
+        .rightSpaceToView(self.headerView, 0.0f)
+        .topSpaceToView(self.sendMessageButton, 0.0f)
+        .heightIs(MarginFactor(10.0f));
+        self.listArray = [NSMutableArray arrayWithArray:@[@"他的动态", @"他的好友", @"共同好友"]];
+    }
+
     [self refreshFriendShip];
     [self refreshCollection];
 
+    [self.headerView layoutSubviews];
+    self.tableView.tableHeaderView = self.headerView;
 }
 
 - (void)refreshFriendShip
 {
-    if ([self.relationShip integerValue] == 0){         //未关注
-        [self.leftButton setTitle:@"+关注" forState:UIControlStateNormal];
-        [self.leftButton setTitleColor:[UIColor colorWithHexString:@"F7514A"] forState:UIControlStateNormal];
-        //[self.leftButton setBackgroundColor:[UIColor colorWithHexString:@"F7514A"]];
-    } else if ([self.relationShip intValue] == 1){      //已关注
-        [self.leftButton setTitle:@"发消息" forState:UIControlStateNormal];
-        //self.leftButton.enabled = NO;
-        [self.leftButton setTitleColor:[UIColor colorWithHexString:@"919291"] forState:UIControlStateNormal];
-         //[self.leftButton setBackgroundColor:[UIColor colorWithHexString:@"B7B7B7"]];
+    if ([self.relationShip integerValue] == 0){
+        //未关注
+        [self.sendMessageButton setTitle:@"+关注" forState:UIControlStateNormal];
+        [self.sendMessageButton setTitleColor:[UIColor colorWithHexString:@"F7514A"] forState:UIControlStateNormal];
+       
+    } else if ([self.relationShip intValue] == 1){
+        //已关注
+        [self.sendMessageButton setTitle:@"发消息" forState:UIControlStateNormal];
+        [self.sendMessageButton setTitleColor:[UIColor colorWithHexString:@"919291"] forState:UIControlStateNormal];
     } else{
         //互相关注
-        [self.leftButton setTitle:@"发消息" forState:UIControlStateNormal];
-         //[self.leftButton setBackgroundColor:[UIColor colorWithHexString:@"F7514A"]];
-        [self.leftButton setTitleColor:[UIColor colorWithHexString:@"1D5798"] forState:UIControlStateNormal];
+        [self.sendMessageButton setTitle:@"发消息" forState:UIControlStateNormal];
+        [self.sendMessageButton setTitleColor:[UIColor colorWithHexString:@"1D5798"] forState:UIControlStateNormal];
     }
 
 }
 -(void)refreshCollection
 {
     if (self.isCollected) {
-        [self.rightButton setTitle:@"已收藏" forState:UIControlStateNormal];
-        //[self.rightButton setBackgroundColor:[UIColor colorWithHexString:@"B7B7B7"]];
-        [self.rightButton setTitleColor:[UIColor colorWithHexString:@"1D5798"] forState:UIControlStateNormal];
+        [self.collectButton setTitle:@"已收藏" forState:UIControlStateNormal];
+        [self.collectButton setTitleColor:[UIColor colorWithHexString:@"1D5798"] forState:UIControlStateNormal];
     } else{
-        [self.rightButton setTitle:@"收藏名片" forState:UIControlStateNormal];
-        //[self.rightButton setBackgroundColor:[UIColor colorWithHexString:@"474550"]];
-        [self.rightButton setTitleColor:[UIColor colorWithHexString:@"1D5798"] forState:UIControlStateNormal];
+        [self.collectButton setTitle:@"收藏名片" forState:UIControlStateNormal];
+        [self.collectButton setTitleColor:[UIColor colorWithHexString:@"1D5798"] forState:UIControlStateNormal];
     }
+ 
 }
 - (void)parseDataWithDic:(NSDictionary *)dictionary
 {
@@ -256,8 +338,7 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
     self.dataArr = [NSMutableArray arrayWithArray:listArray];
 
 }
-
-- (IBAction)leftButtonClick:(id)sender
+- (IBAction)sendMessageButtonClick:(UIButton *)sender
 {
     if ([self.relationShip integerValue] == 0) {
         [self action];
@@ -275,8 +356,8 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
     } else{
         [self chat];
     }
-}
 
+}
 //关注
 - (void)action
 {
@@ -296,7 +377,7 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
             CircleListObj *cObj = [[CircleListObj alloc] init];
             cObj.userid = weakSelf.userId;
             [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_COLLECT_COLLECT_CLIC object:cObj];
-            [weakSelf loadUI];
+            [weakSelf loadData];
             [weakSelf.tableView reloadData];
 
         }
@@ -312,7 +393,7 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
     [self.navigationController pushViewController:chatVC animated:YES];
 }
 
-- (IBAction)rightButtonClick:(id)sender
+- (IBAction)collectButtonClick:(UIButton *)sender
 {
     if (self.isCollected) {
         [self deleteCollected];
@@ -321,6 +402,7 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
     }
 
 }
+
 -(void)addCollected
 {
     __weak typeof(self) weakSelf = self;
@@ -331,7 +413,7 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
         if ([code isEqualToString:@"000"]){
             weakSelf.isCollected = !weakSelf.isCollected;
             weakSelf.isCardChange = YES;
-            [weakSelf loadUI];
+            [weakSelf loadData];
         }
     } failed:^(MOCHTTPResponse *response) {
         [Hud showMessageWithText:response.errorMessage];
@@ -348,7 +430,7 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
         if ([code isEqualToString:@"000"]){
             weakSelf.isCollected = !weakSelf.isCollected;
             weakSelf.isCardChange = NO;
-            [weakSelf loadUI];
+            [weakSelf loadData];
         }
     } failed:^(MOCHTTPResponse *response) {
         [Hud showMessageWithText:response.errorMessage];
@@ -367,68 +449,44 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
     return self.listArray.count;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return MarginFactor(55.0f);
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSString *identifier = @"personCell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+    NSString *identifier = @"SHGPersonalTableViewCell";
+    SHGPersonalTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
     if (!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
-        
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        cell.textLabel.font = [UIFont systemFontOfSize:14.0f];
-        cell.textLabel.textColor = [UIColor colorWithHexString:@"434343"];
-    }
-
-    UILabel *label = [[UILabel alloc] init];
-    label.font = [UIFont systemFontOfSize:11.0f];
-    label.textColor = [UIColor colorWithHexString:@"919291"];
-    
-    UIView * lineView = [[UIView alloc]init];
-    lineView.frame = CGRectMake(kBottomViewLeftMargin, CGRectGetHeight(cell.contentView.frame) - 1.0f, SCREENWIDTH - kBottomViewLeftMargin, 0.5f);
-    lineView.backgroundColor = [UIColor colorWithHexString:@"E6E7E8"];
-    [cell.contentView addSubview:lineView];
+        cell = [[[NSBundle mainBundle] loadNibNamed:@"SHGPersonalTableViewCell" owner:self options:nil] objectAtIndex:0];
+        }
+    SHGPersonalMode *model = [[SHGPersonalMode alloc]init];
     switch (indexPath.row) {
         case 0:{
             if (self.dynamicNumber) {
-            label.text = [NSString stringWithFormat:@"%@条",self.dynamicNumber];
+                model.count = [NSString stringWithFormat:@"%@条",self.dynamicNumber];
             }
         }
             break;
         case 1:{
             if (self.friendNumber) {
-                label.text = [NSString stringWithFormat:@"%@人",self.friendNumber];
+                model.count = [NSString stringWithFormat:@"%@人",self.friendNumber];
             }
         }
             break;
         case 2:{
             if (self.commonfriends) {
-                label.text = [NSString stringWithFormat:@"%@人",self.commonfriends];
+                model.count  = [NSString stringWithFormat:@"%@人",self.commonfriends];
             }
-
+            
         }
             break;
         default:
             break;
     }
-    [label sizeToFit];
-
-    UIView *view = [[UIView alloc] init];
-    [view addSubview:label];
-
-    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"accessoryView"]];
-    [imageView sizeToFit];
-    [view addSubview:imageView];
-    CGRect frame = imageView.frame;
-    frame.origin.x = CGRectGetMaxX(label.frame) + kObjectMargin;
-    imageView.frame = frame;
-
-    frame = view.frame;
-    frame.size.width = CGRectGetMaxX(imageView.frame);
-    frame.size.height = MAX(CGRectGetMaxY(label.frame), CGRectGetMaxY(imageView.frame));
-    view.frame = frame;
-
-    cell.textLabel.text = [self.listArray objectAtIndex:indexPath.row];
-    cell.accessoryView = view;
+    model.name = [self.listArray objectAtIndex:indexPath.row];
+    cell.model = model;
     return cell;
 }
 
@@ -473,25 +531,6 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
     }
 }
 
-- (UIView *)viewForTags:(NSArray *)array
-{
-    UIView *view = [[UIView alloc] init];
-    for (NSString *model in array){
-        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-        [button setTitle:model forState:UIControlStateNormal];
-        [button setBackgroundColor:[UIColor colorWithHexString:@"f7514b"]];
-        button.titleLabel.font = [UIFont systemFontOfSize:11.0f];
-        CGRect frame = CGRectMake(0.0f, (CGRectGetHeight(self.tagViews.frame) - kTagViewHeight) / 2.0f, kTagViewWidth, kTagViewHeight);
-        frame.origin.x = CGRectGetMaxX(view.frame) + kObjectMargin / 2.0f;
-        button.frame = frame;
-        frame = view.frame;
-        frame.size.width = CGRectGetMaxX(button.frame);
-        frame.size.height = CGRectGetMaxY(button.frame);
-        view.frame = frame;
-        [view addSubview:button];
-    }
-    return view;
-}
 
 #pragma mark ------图片浏览器代理
 - (UIImage *)photoBrowser:(SDPhotoBrowser *)browser placeholderImageForIndex:(NSInteger)index

@@ -22,7 +22,7 @@
     [super viewDidLoad];
 	self.title = @"我的预约";
     self.tableView.tableFooterView = [[UIView alloc] init];
-
+    self.tableView.backgroundColor = [UIColor colorWithHexString:@"e6e7e8"];
 	self.dataSource = [[NSMutableArray alloc] init];
 
     [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"orderlist"] class:[myAppointmentModel class] parameters:@{@"uid":UID} success:^(MOCHTTPResponse *response) {

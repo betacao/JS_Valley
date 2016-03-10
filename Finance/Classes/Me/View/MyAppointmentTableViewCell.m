@@ -68,9 +68,15 @@
     .autoHeightRatio(0.0f);
     [self.product1TimeLeft setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
     
+    self.viewLine1.sd_layout
+    .leftSpaceToView(self.contentView, MarginFactor(12.0f))
+    .rightSpaceToView(self.contentView, MarginFactor(12.0f))
+    .topSpaceToView(self.product1TimeLeft, MarginFactor(15.0f))
+    .heightIs(0.5f);
+    
     self.product1TypeLeft.sd_layout
     .leftEqualToView(self.product1TimeLeft)
-    .topSpaceToView(self.product1TimeLeft, MarginFactor(30.0f))
+    .topSpaceToView(self.viewLine1, MarginFactor(15.0f))
     .autoHeightRatio(0.0f);
     [self.product1TypeLeft setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
     
@@ -123,11 +129,13 @@
     .topEqualToView(self.product1StatusLeft)
     .heightRatioToView(self.product1StatusLeft, 1.0f);
     
+    self.backImageView.backgroundColor = [UIColor whiteColor];
     self.backImageView.sd_layout
-    .topSpaceToView(self.contentView, 0.0f)
+    .topSpaceToView(self.contentView, MarginFactor(20.0f))
     .bottomSpaceToView(self.contentView, 0.0f)
-    .leftSpaceToView(self.contentView, 0.0f)
-    .rightSpaceToView(self.contentView, 0.0f);
+    .leftSpaceToView(self.contentView, MarginFactor(12.0f))
+    .rightSpaceToView(self.contentView, MarginFactor(12.0f));
+    
     
     [self setupAutoHeightWithBottomView:self.product1Status bottomMargin:MarginFactor(15.0f)];
 }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="14F1509" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
@@ -7,16 +7,21 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MyTeamViewController">
             <connections>
-                <outlet property="contentLabel" destination="rkH-zz-85p" id="o7y-TX-hoz"/>
-                <outlet property="myMoneyCell" destination="7bV-Zj-6ac" id="6Eq-2q-HPJ"/>
-                <outlet property="myMoneyLabel" destination="3NC-nK-sVA" id="B2W-k7-pyU"/>
-                <outlet property="shuLine" destination="gFn-Yi-GL7" id="VOB-P5-i8d"/>
-                <outlet property="tableView" destination="PtW-ss-jQf" id="Of8-tw-R0o"/>
-                <outlet property="teamEncourageDescriptionCell" destination="4v6-cq-50l" id="cT7-WJ-1fm"/>
-                <outlet property="teamLine" destination="ee6-N5-ZK3" id="izL-5Y-oah"/>
-                <outlet property="teamMoneyCell" destination="f9n-fx-h9f" id="1vA-m2-jWy"/>
-                <outlet property="teamMoneyLabel" destination="0Q6-nD-cqH" id="h5D-li-W5V"/>
-                <outlet property="totalLabel" destination="Zcq-iv-Ftt" id="YWe-NY-0hu"/>
+                <outlet property="firstBlackView" destination="Ycu-NG-SOZ" id="WwC-AO-hWD"/>
+                <outlet property="horizontalLineView" destination="ZPo-Hc-Zoc" id="aOh-na-wHY"/>
+                <outlet property="iniviteButton" destination="9xI-bV-tO0" id="eld-i7-dJp"/>
+                <outlet property="myMoneyCountLabel" destination="TAS-pt-pu5" id="N3g-hy-o9M"/>
+                <outlet property="myMoneyLabel" destination="kmj-kN-hzL" id="BmT-St-ELI"/>
+                <outlet property="partenrDetailLabel" destination="vDg-Eq-8Rr" id="LtL-2J-2Aq"/>
+                <outlet property="partenrMoneyCountLabel" destination="Upx-45-FbM" id="G5P-oI-JfD"/>
+                <outlet property="partenrMoneyLabel" destination="wDH-QT-N84" id="ETo-wr-AbP"/>
+                <outlet property="partnerCountLabel" destination="7kD-2H-x1X" id="SgK-yB-EGv"/>
+                <outlet property="partnerExplainDetailLabel" destination="6Yf-N1-Jz7" id="BAC-8S-oa8"/>
+                <outlet property="partnerExplainLabel" destination="RDT-ue-fK1" id="CiA-rr-IiL"/>
+                <outlet property="rightButton" destination="VKH-tp-Jo7" id="Ugb-Dg-hq7"/>
+                <outlet property="secondBlackView" destination="eus-fd-iTx" id="xcK-dV-6wK"/>
+                <outlet property="tapView" destination="Dj4-M9-KbW" id="Cbk-DY-V0F"/>
+                <outlet property="verticalLineView" destination="3Qw-3M-83R" id="Tt7-kS-U1D"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -25,153 +30,107 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="PtW-ss-jQf">
-                    <rect key="frame" x="0.0" y="0.0" width="320" height="522"/>
-                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    <connections>
-                        <outlet property="dataSource" destination="-1" id="ZTZ-1p-bDd"/>
-                        <outlet property="delegate" destination="-1" id="jGS-Mr-voS"/>
-                    </connections>
-                </tableView>
-                <view contentMode="scaleToFill" id="DFg-Bs-Igy">
-                    <rect key="frame" x="0.0" y="520" width="320" height="48"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="9xI-bV-tO0">
+                    <rect key="frame" x="14" y="515" width="298" height="35"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                    <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="9xI-bV-tO0">
-                            <rect key="frame" x="11" y="0.0" width="298" height="35"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                            <color key="backgroundColor" red="0.94117647058823528" green="0.25882352941176467" blue="0.25490196078431371" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                            <state key="normal" title="立即邀请">
-                                <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                            </state>
-                            <connections>
-                                <action selector="inviteButtonClicked:" destination="-1" eventType="touchUpInside" id="ZWL-y0-e8H"/>
-                            </connections>
-                        </button>
-                    </subviews>
+                    <color key="backgroundColor" red="0.94117647058823528" green="0.25882352941176467" blue="0.25490196078431371" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <state key="normal" title="立即邀请">
+                        <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="inviteButtonClicked:" destination="-1" eventType="touchUpInside" id="ZWL-y0-e8H"/>
+                    </connections>
+                </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="wDH-QT-N84">
+                    <rect key="frame" x="31" y="32" width="42" height="21"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="kmj-kN-hzL">
+                    <rect key="frame" x="232" y="32" width="42" height="21"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Upx-45-FbM">
+                    <rect key="frame" x="31" y="78" width="42" height="21"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <view contentMode="scaleToFill" id="3Qw-3M-83R">
+                    <rect key="frame" x="160" y="8" width="1" height="128"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="TAS-pt-pu5">
+                    <rect key="frame" x="240" y="78" width="42" height="21"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <view contentMode="scaleToFill" id="Ycu-NG-SOZ">
+                    <rect key="frame" x="0.0" y="107" width="320" height="29"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                </view>
+                <view contentMode="scaleToFill" id="Dj4-M9-KbW">
+                    <rect key="frame" x="24" y="93" width="240" height="128"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </view>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="vDg-Eq-8Rr">
+                    <rect key="frame" x="8" y="154" width="142" height="21"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <view contentMode="scaleToFill" id="eus-fd-iTx">
+                    <rect key="frame" x="0.0" y="183" width="320" height="29"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                </view>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="7kD-2H-x1X">
+                    <rect key="frame" x="205" y="154" width="42" height="21"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="VKH-tp-Jo7">
+                    <rect key="frame" x="272" y="153" width="26" height="22"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <state key="normal" title="Button" image="rightArrowImage"/>
+                </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="RDT-ue-fK1">
+                    <rect key="frame" x="31" y="229" width="142" height="21"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <view contentMode="scaleToFill" id="ZPo-Hc-Zoc">
+                    <rect key="frame" x="8" y="266" width="304" height="1"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                </view>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="6Yf-N1-Jz7">
+                    <rect key="frame" x="19" y="292" width="289" height="69"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
-            <color key="backgroundColor" red="0.94117647058823528" green="0.94117647058823528" blue="0.94117647058823528" alpha="1" colorSpace="calibratedRGB"/>
-            <point key="canvasLocation" x="600" y="274"/>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <point key="canvasLocation" x="254" y="242"/>
         </view>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="f9n-fx-h9f">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="90"/>
-            <autoresizingMask key="autoresizingMask"/>
-            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="f9n-fx-h9f" id="PCk-gX-Wvr">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="89"/>
-                <autoresizingMask key="autoresizingMask"/>
-                <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="合伙人佣金" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="MdQ-BL-Srg">
-                        <rect key="frame" x="0.0" y="21" width="150" height="21"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <fontDescription key="fontDescription" type="system" weight="light" pointSize="12"/>
-                        <color key="textColor" red="0.59607843137254901" green="0.59607843137254901" blue="0.59607843137254901" alpha="1" colorSpace="calibratedRGB"/>
-                        <nil key="highlightedColor"/>
-                    </label>
-                    <view contentMode="scaleToFill" id="gFn-Yi-GL7">
-                        <rect key="frame" x="160" y="29" width="1" height="32"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <color key="backgroundColor" red="0.90196078431372551" green="0.90588235294117647" blue="0.90980392156862744" alpha="1" colorSpace="calibratedRGB"/>
-                    </view>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="我的佣金" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="GmH-fU-YfX">
-                        <rect key="frame" x="170" y="21" width="151" height="21"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxY="YES"/>
-                        <fontDescription key="fontDescription" type="system" weight="light" pointSize="12"/>
-                        <color key="textColor" red="0.59607843140000005" green="0.59607843140000005" blue="0.59607843140000005" alpha="1" colorSpace="calibratedRGB"/>
-                        <nil key="highlightedColor"/>
-                    </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="3NC-nK-sVA">
-                        <rect key="frame" x="170" y="51" width="150" height="20"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxY="YES"/>
-                        <fontDescription key="fontDescription" type="system" weight="light" pointSize="17"/>
-                        <color key="textColor" red="0.83137254901960778" green="0.23529411764705882" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
-                        <nil key="highlightedColor"/>
-                    </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="我的佣金" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="0Q6-nD-cqH">
-                        <rect key="frame" x="0.0" y="50" width="150" height="21"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <fontDescription key="fontDescription" type="system" weight="light" pointSize="17"/>
-                        <color key="textColor" red="0.83137254901960778" green="0.23529411764705882" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
-                        <nil key="highlightedColor"/>
-                    </label>
-                </subviews>
-            </tableViewCellContentView>
-            <point key="canvasLocation" x="210" y="52"/>
-        </tableViewCell>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="65" id="7bV-Zj-6ac">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="65"/>
-            <autoresizingMask key="autoresizingMask"/>
-            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="7bV-Zj-6ac" id="jp2-Ml-yr8">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="64"/>
-                <autoresizingMask key="autoresizingMask"/>
-                <subviews>
-                    <view contentMode="scaleToFill" id="VpE-fK-7Qr">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="10"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                        <color key="backgroundColor" red="0.93333333333333335" green="0.93725490196078431" blue="0.94117647058823528" alpha="1" colorSpace="calibratedRGB"/>
-                    </view>
-                    <view contentMode="scaleToFill" id="pWO-iT-zJg">
-                        <rect key="frame" x="0.0" y="55" width="320" height="10"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                        <color key="backgroundColor" red="0.93333333333333335" green="0.93725490196078431" blue="0.94117647058823528" alpha="1" colorSpace="calibratedRGB"/>
-                    </view>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="合伙人明细" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="cPd-PF-ibb">
-                        <rect key="frame" x="16" y="20" width="88" height="25"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                        <color key="textColor" red="0.086274509803921567" green="0.086274509803921567" blue="0.086274509803921567" alpha="1" colorSpace="calibratedRGB"/>
-                        <nil key="highlightedColor"/>
-                    </label>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="goToNext" id="5nc-Un-mRL">
-                        <rect key="frame" x="290" y="27" width="6" height="11"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
-                    </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Zcq-iv-Ftt">
-                        <rect key="frame" x="240" y="22" width="42" height="21"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                        <color key="textColor" red="0.59607843137254901" green="0.59607843137254901" blue="0.59607843137254901" alpha="1" colorSpace="calibratedRGB"/>
-                        <nil key="highlightedColor"/>
-                    </label>
-                </subviews>
-            </tableViewCellContentView>
-            <point key="canvasLocation" x="210" y="179"/>
-        </tableViewCell>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="350" id="4v6-cq-50l">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="350"/>
-            <autoresizingMask key="autoresizingMask"/>
-            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="4v6-cq-50l" id="Usg-i5-txb">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="349"/>
-                <autoresizingMask key="autoresizingMask"/>
-                <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="合伙人激励机制说明" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="dHC-3f-wQg">
-                        <rect key="frame" x="16" y="14" width="296" height="21"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                        <color key="textColor" red="0.086274509803921567" green="0.086274509803921567" blue="0.086274509803921567" alpha="1" colorSpace="calibratedRGB"/>
-                        <nil key="highlightedColor"/>
-                    </label>
-                    <view contentMode="scaleToFill" id="ee6-N5-ZK3">
-                        <rect key="frame" x="16" y="45" width="304" height="1"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                        <color key="backgroundColor" red="0.90196078431372551" green="0.90588235294117647" blue="0.90980392156862744" alpha="1" colorSpace="calibratedRGB"/>
-                    </view>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="rkH-zz-85p">
-                        <rect key="frame" x="16" y="54" width="288" height="142"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                        <color key="textColor" red="0.33725490196078434" green="0.33725490196078434" blue="0.33725490196078434" alpha="1" colorSpace="calibratedRGB"/>
-                        <nil key="highlightedColor"/>
-                    </label>
-                </subviews>
-            </tableViewCellContentView>
-            <point key="canvasLocation" x="210" y="384.5"/>
-        </tableViewCell>
     </objects>
     <resources>
-        <image name="goToNext" width="5" height="10"/>
+        <image name="rightArrowImage" width="7" height="13"/>
     </resources>
 </document>
