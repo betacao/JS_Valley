@@ -51,7 +51,6 @@
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <state key="normal" title=" 说点什么吧">
                                 <color key="titleColor" red="0.82352941176470584" green="0.81960784313725488" blue="0.81960784313725488" alpha="1" colorSpace="calibratedRGB"/>
-                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
                             <connections>
                                 <action selector="actionComment:" destination="-1" eventType="touchUpInside" id="bvd-Kv-GBB"/>
@@ -72,7 +71,7 @@
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="ys0-he-oJB">
                             <rect key="frame" x="8" y="10" width="30" height="27"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <state key="normal" image="homeDetialFace">
+                            <state key="normal" image="keyBoard_emoji">
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
                             <connections>
@@ -109,6 +108,13 @@
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         </view>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="zks-5y-PN6">
+                            <rect key="frame" x="34" y="5" width="42" height="21"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="0bu-Jl-Pav">
                             <rect key="frame" x="50" y="10" width="26" height="12"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -143,13 +149,6 @@
                                 <action selector="actionAttention:" destination="-1" eventType="touchUpInside" id="2Mh-w5-i7u"/>
                             </connections>
                         </button>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="zks-5y-PN6">
-                            <rect key="frame" x="34" y="5" width="42" height="21"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                            <nil key="highlightedColor"/>
-                        </label>
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                 </view>
@@ -188,6 +187,7 @@
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="OyJ-4H-wTc">
                             <rect key="frame" x="108" y="0.0" width="50" height="34"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="backgroundColor" red="0.0" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <inset key="titleEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
                             <state key="normal" image="home_weizan">
@@ -272,11 +272,11 @@
         <image name="commentWei_zan" width="14" height="13"/>
         <image name="comment_backimage" width="25" height="25"/>
         <image name="homeDetailCollection" width="14" height="13"/>
-        <image name="homeDetialFace" width="25" height="25"/>
         <image name="homeShare" width="13" height="12"/>
         <image name="home_comment" width="13" height="14"/>
         <image name="home_delete" width="14" height="14"/>
         <image name="home_weizan" width="14" height="14"/>
+        <image name="keyBoard_emoji" width="25" height="25"/>
         <image name="newAddAttention" width="50" height="22"/>
     </resources>
 </document>

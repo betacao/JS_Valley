@@ -31,8 +31,8 @@
 
 - (void)initView
 {
-    self.titleLabel.font = FontFactor(15.0f);
-    self.titleLabel.textColor = [UIColor colorWithHexString:@"3c3c3c"];
+    self.titleLabel.font = kMainContentFont;
+    self.titleLabel.textColor = kMainContentColor;
 
     self.markLabel.font = kMainTimeFont;
     self.markLabel.textColor = kMainTimeColor;

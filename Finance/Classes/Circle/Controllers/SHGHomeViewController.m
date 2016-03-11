@@ -14,7 +14,7 @@
 #import "LinkViewController.h"
 #import "RecmdFriendObj.h"
 #import "SHGNoticeView.h"
-#import "SHGHomeTableViewCell.h"
+#import "SHGMainPageTableViewCell.h"
 #import "CircleDetailViewController.h"
 #import "SHGUnifiedTreatment.h"
 #import "SHGUserTagModel.h"
@@ -73,15 +73,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self addHeaderRefresh:self.listTable headerRefesh:YES headerTitle:@{kRefreshStateIdle:@"下拉可以刷新", kRefreshStatePulling:@"释放后查看最新动态", kRefreshStateRefreshing:@"正在努力加载中"} andFooter:YES footerTitle:nil];
-    self.listTable.separatorStyle = NO;
-    //处理tableView左边空白
-    if ([self.listTable respondsToSelector:@selector(setSeparatorInset:)]) {
-        [self.listTable setSeparatorInset:UIEdgeInsetsZero];
-    }
-    if ([self.listTable respondsToSelector:@selector(setLayoutMargins:)]) {
-        [self.listTable setLayoutMargins:UIEdgeInsetsZero];
-    }
-
+    self.listTable.separatorStyle = UITableViewCellSeparatorStyleNone;
+    self.listTable.estimatedRowHeight = SCREENWIDTH;
+    self.listTable.rowHeight = SCREENWIDTH;
     self.hasRequestedFirst = NO;
     self.shouldDisplayRecommend = YES;
     
@@ -473,8 +467,8 @@
     if (self.dataArr.count > 0) {
         NSObject *obj = self.dataArr[indexPath.row];
         if(![obj isKindOfClass:[CircleListObj class]]){
-            NSString *cellIdentifier = @"SHGRecommendTableViewCell";
-            SHGRecommendTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+            NSString *identifier1 = @"SHGRecommendTableViewCell";
+            SHGRecommendTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier1];
             if (!cell){
                 cell = [[[NSBundle mainBundle] loadNibNamed:@"SHGRecommendTableViewCell" owner:self options:nil] lastObject];
                 cell.delegate = [SHGUnifiedTreatment sharedTreatment];
@@ -485,27 +479,22 @@
 
         } else{
             CircleListObj *obj = [self.dataArr objectAtIndex:indexPath.row];
-            NSLog(@"%@",obj.postType);
             if (![obj.postType isEqualToString:@"ad"]){
                 if ([obj.status boolValue]){
-                    NSString *cellIdentifier = @"circleListIdentifier";
-                    SHGHomeTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+                    NSString *identifier2 = @"SHGMainPageTableViewCell";
+                    SHGMainPageTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier2];
                     if (!cell){
-                        cell = [[[NSBundle mainBundle] loadNibNamed:@"SHGHomeTableViewCell" owner:self options:nil] lastObject];
-                        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                        cell = [[[NSBundle mainBundle] loadNibNamed:@"SHGMainPageTableViewCell" owner:self options:nil] lastObject];
+                        cell.delegate = [SHGUnifiedTreatment sharedTreatment];
                     }
                     cell.index = indexPath.row;
-                    cell.delegate = [SHGUnifiedTreatment sharedTreatment];
-                    [cell loadDatasWithObj:obj type:@"normal"];
-
-                    MLEmojiLabel *mlLable = (MLEmojiLabel *)[cell viewWithTag:521];
-                    mlLable.delegate = self;
+                    cell.object = obj;
                     return cell;
                 }
             } else{
                 if ([obj.status boolValue]){
-                    NSString *cellIdentifier = @"SHGExtendTableViewCell";
-                    SHGExtendTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+                    NSString *identifier3 = @"SHGExtendTableViewCell";
+                    SHGExtendTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier3];
                     if (!cell){
                         cell = [[[NSBundle mainBundle] loadNibNamed:@"SHGExtendTableViewCell" owner:self options:nil] lastObject];
                     }
@@ -582,8 +571,8 @@
     if([obj isKindOfClass:[CircleListObj class]]){
         if (![obj.postType isEqualToString:@"ad"]){
             if ([obj.status boolValue]){
-                obj.cellHeight = [obj fetchCellHeight];
-                return obj.cellHeight;
+                CGFloat height = [tableView cellHeightForIndexPath:indexPath model:obj keyPath:@"object" cellClass:[SHGMainPageTableViewCell class] contentViewWidth:SCREENWIDTH];
+                return height;
             }
         } else{
             CGFloat height = [tableView cellHeightForIndexPath:indexPath model:obj keyPath:@"object" cellClass:[SHGExtendTableViewCell class] contentViewWidth:CGFLOAT_MAX];

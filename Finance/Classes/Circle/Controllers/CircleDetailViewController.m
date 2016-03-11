@@ -74,7 +74,6 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self){
-        self.title = @"帖子详情";
     }
     return self;
 }
@@ -86,16 +85,18 @@
 }
 
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
     self.title = @"动态详情";
     [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:KEY_MEMORY];
-    [CommonMethod setExtraCellLineHidden:self.listTable];
+
     [self addHeaderRefresh:self.listTable headerRefesh:NO andFooter:NO];
-    [Hud showLoadingWithMessage:@"加载中"];
     [self initView];
     [self addSdLayout];
+
     __weak typeof(self) weakSelf = self;
+    [Hud showLoadingWithMessage:@"加载中"];
     [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttpCircle,@"circledetail"] class:[CircleListObj class] parameters:@{@"rid":self.rid,@"uid":[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID]} success:^(MOCHTTPResponse *response) {
         [Hud hideHud];
         NSLog(@"%@  arr === %@",response.data,response.dataDictionary);
@@ -109,24 +110,13 @@
         [Hud showMessageWithText:response.errorMessage];
     }];
     [self initData];
-    self.listTable.backgroundColor = [UIColor whiteColor];
-    [self.view bringSubviewToFront:self.viewInput];
-
-    self.btnSend.layer.masksToBounds = YES;
-    self.btnSend.layer.cornerRadius = 4;
-
-    self.lineView.backgroundColor = [UIColor colorWithHexString:@"e6e7e8"];
-    DDTapGestureRecognizer *hdGes = [[DDTapGestureRecognizer alloc] initWithTarget:self action:@selector(didTapHeaderView:)];
-    [self.imageHeader addGestureRecognizer:hdGes];
-    self.imageHeader.userInteractionEnabled = YES;
-
-    UIImage *image = self.backImageView.image;
-    image = [image resizableImageWithCapInsets:UIEdgeInsetsMake(15.0f, 35.0f, 9.0f, 11.0f) resizingMode:UIImageResizingModeStretch];
-    self.backImageView.image = image;
 }
 
 - (void)initView
 {
+    self.listTable.tableFooterView = [[UIView alloc] init];
+    self.listTable.backgroundColor = [UIColor whiteColor];
+
     self.nickName.font = FontFactor(15.0f);
     self.nickName.textAlignment = NSTextAlignmentLeft;
     self.nickName.textColor = [UIColor colorWithHexString:@"1d5798"];
@@ -144,6 +134,7 @@
     self.lblTime.textColor = [UIColor colorWithHexString:@"919291"];
     
     [self.btnComment setTitleColor:[UIColor colorWithHexString:@"b3b3b3"] forState:UIControlStateNormal];
+    self.btnComment.titleEdgeInsets = UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, -10.0f);
     self.btnComment.titleLabel.font = FontFactor(13.0f);
     
     [self.btnShare setTitleColor:[UIColor colorWithHexString:@"b3b3b3"] forState:UIControlStateNormal];
@@ -161,7 +152,18 @@
   
     self.btnSend.titleLabel.font = FontFactor(15.0f);
     self.faSongBtn.titleLabel.font = FontFactor(16.0f);
-    
+
+    self.btnSend.layer.masksToBounds = YES;
+    self.btnSend.layer.cornerRadius = 4;
+
+    self.lineView.backgroundColor = [UIColor colorWithHexString:@"e6e7e8"];
+    DDTapGestureRecognizer *hdGes = [[DDTapGestureRecognizer alloc] initWithTarget:self action:@selector(didTapHeaderView:)];
+    [self.imageHeader addGestureRecognizer:hdGes];
+    self.imageHeader.userInteractionEnabled = YES;
+
+    UIImage *image = self.backImageView.image;
+    image = [image resizableImageWithCapInsets:UIEdgeInsetsMake(15.0f, 35.0f, 9.0f, 11.0f) resizingMode:UIImageResizingModeStretch];
+    self.backImageView.image = image;
 }
 
 - (void)addSdLayout
@@ -253,14 +255,14 @@
     self.photoView = [[UIView alloc]init];
     [self.viewHeader addSubview:self.photoView];
     self.photoView.sd_layout
-    .leftSpaceToView(self.viewHeader, MarginFactor(12.0f))
-    .rightSpaceToView(self.viewHeader, MarginFactor(12.0f))
+    .leftEqualToView(self.imageHeader)
+    .rightEqualToView(self.btnAttention)
     .topSpaceToView(self.lblContent, MarginFactor(16.0f))
     .heightIs(0.0f);
     
     self.actionView.sd_layout
-    .leftSpaceToView(self.viewHeader, MarginFactor(12.0f))
-    .rightSpaceToView(self.viewHeader, MarginFactor(12.0f))
+    .leftEqualToView(self.imageHeader)
+    .rightEqualToView(self.btnAttention)
     .topSpaceToView(self.photoView, 0.0f)
     .heightIs(MarginFactor(49.0f));
     
@@ -328,16 +330,17 @@
     .leftSpaceToView(self.praisebtn, MarginFactor(10.0f))
     .rightSpaceToView(self.viewPraise, MarginFactor(10.0f) + CGRectGetMaxX(self.praisebtn.frame))
     .centerYEqualToView(self.viewPraise);
-    
+
     self.lineView.sd_layout
     .leftSpaceToView(self.viewPraise, 0.0f)
     .rightSpaceToView(self.viewPraise, 0.0f)
     .bottomSpaceToView(self.viewPraise,0.0f)
     .heightIs(1.0f);
-  [self.viewHeader setupAutoHeightWithBottomView:self.viewPraise bottomMargin:0.0f];
+    [self.viewHeader setupAutoHeightWithBottomView:self.viewPraise bottomMargin:0.0f];
     self.listTable.tableHeaderView = self.viewHeader;
-    
+
 }
+
 -(void)parseObjWithDic:(NSDictionary *)dics
 {
     NSDictionary *dic = dics[@"circle"][0];
@@ -382,7 +385,6 @@
     self.obj.title = dic[@"title"];
     self.obj.userstatus = [dic objectForKey:@"userstatus"];
     self.obj.userid = dic[@"userid"];
-//    self.obj.sizes = dic[@"sizes"];
     NSDictionary *link = dic[@"link"];
     if ([self.obj.type isEqualToString:@"link"]){
         linkOBj *linkObj = [[linkOBj alloc] init];
@@ -431,7 +433,7 @@
     }
 }
 
--(void)loadDatasWithObj:(CircleListObj *)obj
+- (void)loadDatasWithObj:(CircleListObj *)obj
 {
     self.viewHeader.hidden = NO;
     self.obj.photoArr = (NSArray *)obj.photos;
@@ -482,17 +484,11 @@
     self.lblTime.text = obj.publishdate;
     [self.btnShare setTitle:obj.sharenum forState:UIControlStateNormal];
     [self.btnShare sizeToFit];
-    [self.btnComment setTitle:obj.cmmtnum forState:UIControlStateNormal];
+    [self.btnComment setTitle:@"100000" forState:UIControlStateNormal];
     [self.btnComment sizeToFit];
     [self.btnPraise setTitle:obj.praisenum forState:UIControlStateNormal];
     [self.btnPraise sizeToFit];
-//[self.btnPraise.titleLabel sizeToFit];
-//    CGSize praiseSize = self.btnPraise.frame.size;
-//    self.btnPraise.sd_resetLayout
-//    .rightSpaceToView(self.btnComment, MarginFactor(12.0f))
-//    .bottomEqualToView(self.btnShare)
-//    .widthIs(praiseSize.width)
-//    .heightIs(praiseSize.height);
+
      if ([obj.isattention isEqualToString:@"Y"]){
         [self.btnAttention setImage:[UIImage imageNamed:@"newAttention"] forState:UIControlStateNormal] ;
     } else{

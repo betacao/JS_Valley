@@ -31,7 +31,6 @@
         .rightSpaceToView(self, 0.0f);
 
         self.VImageView = [[UIImageView alloc] init];
-        self.VImageView.contentMode = UIViewContentModeScaleAspectFit;
         self.VImageView.image = [UIImage imageNamed:@"V"];
         [self.VImageView sizeToFit];
         [self addSubview:self.VImageView];
@@ -56,7 +55,6 @@
     
     
     self.VImageView = [[UIImageView alloc] init];
-    self.VImageView.contentMode = UIViewContentModeScaleAspectFit;
     self.VImageView.image = [UIImage imageNamed:@"V"];
     [self.VImageView sizeToFit];
     [self addSubview:self.VImageView];

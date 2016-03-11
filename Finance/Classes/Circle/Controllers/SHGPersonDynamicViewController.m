@@ -7,7 +7,7 @@
 //
 
 #import "SHGPersonDynamicViewController.h"
-#import "SHGHomeTableViewCell.h"
+#import "SHGMainPageTableViewCell.h"
 #import "MLEmojiLabel.h"
 #import "LinkViewController.h"
 
@@ -20,10 +20,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    if ([self.userId isEqualToString: [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID]]) {
+    if ([self.userId isEqualToString:UID]) {
         self.title = @"我的动态";
-    }else
-    {
+    } else{
         self.title = @"他的动态";
     }
     
@@ -111,20 +110,20 @@
     CircleListObj *obj = self.dataArr[indexPath.row];
 
     if ([obj.status boolValue]) {
-        static NSString *cellIdentifier = @"circleListIdentifier";
-        SHGHomeTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+        NSString *cellIdentifier = @"SHGMainPageTableViewCell";
+        SHGMainPageTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
         if (!cell) {
-            cell = [[[NSBundle mainBundle] loadNibNamed:@"SHGHomeTableViewCell" owner:self options:nil] lastObject];
+            cell = [[[NSBundle mainBundle] loadNibNamed:@"SHGMainPageTableViewCell" owner:self options:nil] lastObject];
         }
         cell.index = indexPath.row;
         cell.delegate = self;
-        [cell loadDatasWithObj:obj type:@"normal"];
+        cell.object = obj;
 
         MLEmojiLabel *mlLable = (MLEmojiLabel *)[cell viewWithTag:521];
         mlLable.delegate = self;
         return cell;
     } else{
-        static NSString *cellIdentifier = @"noListIdentifier";
+        NSString *cellIdentifier = @"noListIdentifier";
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
         if (!cell) {
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
@@ -150,9 +149,9 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    CircleListObj *obj =self.dataArr[indexPath.row];
+    CircleListObj *obj = self.dataArr[indexPath.row];
     if ([obj.status boolValue]){
-        NSInteger height = [obj fetchCellHeight];
+        NSInteger height = [tableView cellHeightForIndexPath:indexPath model:obj keyPath:@"object" cellClass:[SHGMainPageTableViewCell class] contentViewWidth:CGFLOAT_MAX];
         return height;
     } else{
         return 0.0f;

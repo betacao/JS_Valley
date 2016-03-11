@@ -13,7 +13,6 @@
 #import "LinkViewController.h"
 #import "RecmdFriendObj.h"
 #import "SHGNoticeView.h"
-#import "SHGHomeTableViewCell.h"
 #import "CircleDetailViewController.h"
 #import "SHGUnifiedTreatment.h"
 #import "SHGSelectTagsViewController.h"
@@ -329,32 +328,13 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (self.currentArry.count > 0) {
-//        CircleListObj *obj = [self.dataArr objectAtIndex:indexPath.row];
-//        NSLog(@"%@",obj.postType);
-//        if (![obj.postType isEqualToString:@"ad"]){
-//            if ([obj.status boolValue]){
-//                NSString *cellIdentifier = @"circleListIdentifier";
-//                SHGHomeTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-//                if (!cell){
-//                    cell = [[[NSBundle mainBundle] loadNibNamed:@"SHGHomeTableViewCell" owner:self options:nil] lastObject];
-//                    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-//                }
-//                cell.index = indexPath.row;
-//                cell.delegate = [SHGUnifiedTreatment sharedTreatment];
-//               [cell loadDatasWithObj:obj type:@"news"];
-//
-//                MLEmojiLabel *mlLable = (MLEmojiLabel *)[cell viewWithTag:521];
-//                mlLable.delegate = self;
-//                return cell;
-//            }
-//        }
         CircleListObj *obj = [self.currentArry objectAtIndex:indexPath.row];
         NSString * cellIdentifier = @"SHGNewsTableViewCell";
         SHGNewsTableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
         if (!cell) {
             cell = [[[NSBundle mainBundle]loadNibNamed:@"SHGNewsTableViewCell" owner:self options:nil] lastObject];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        
+
         }
         [cell loadUi:obj];
         return cell;

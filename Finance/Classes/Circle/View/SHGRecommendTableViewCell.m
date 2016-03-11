@@ -127,7 +127,7 @@
             detailString = [@"你们都在：" stringByAppendingString:object.area];
         } else if ([flag isEqualToString:@"company"]){
             detailString = [@"你们都在：" stringByAppendingFormat:@"%@",object.company];
-        } else{
+        } else if ([flag isEqualToString:@"attention"]){
             detailString = [[NSString stringWithFormat:@"%@",object.recomfri] stringByAppendingString:@"等人也关注了他"];
         }
         detailLabel.text = detailString;
