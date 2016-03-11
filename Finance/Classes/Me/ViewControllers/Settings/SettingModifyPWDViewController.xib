@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
@@ -8,11 +8,15 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SettingModifyPWDViewController">
             <connections>
                 <outlet property="changeButton" destination="oF9-Ym-0GX" id="9BD-WU-Lbw"/>
+                <outlet property="changeView" destination="leN-J2-QdC" id="DTy-14-1Ix"/>
                 <outlet property="changedPassword" destination="MKA-ED-F7U" id="ENH-0R-XsS"/>
                 <outlet property="confirmButton" destination="kAZ-yt-iJT" id="WS3-gU-gOQ"/>
                 <outlet property="confirmPassword" destination="DKh-qg-aNQ" id="gfz-t4-In2"/>
+                <outlet property="confirmView" destination="hAo-HX-rvN" id="l6L-sU-kZe"/>
                 <outlet property="oldButton" destination="REv-f7-8Ga" id="KA4-ns-42H"/>
                 <outlet property="oldPassword" destination="twH-sg-buh" id="k4V-VT-QQD"/>
+                <outlet property="oldPswView" destination="iP6-UN-JEk" id="UTp-jf-ZBL"/>
+                <outlet property="sureButton" destination="lEZ-WM-J0C" id="e2O-A7-taa"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -23,18 +27,18 @@
             <subviews>
                 <view contentMode="scaleToFill" id="iP6-UN-JEk">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="45"/>
-                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="输入旧密码" clearsOnBeginEditing="YES" minimumFontSize="17" id="twH-sg-buh">
                             <rect key="frame" x="0.0" y="0.0" width="270" height="45"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                         </textField>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="REv-f7-8Ga">
                             <rect key="frame" x="275" y="0.0" width="45" height="45"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <state key="normal" image="me_deleteInput"/>
                             <connections>
                                 <action selector="oldButtonClick:" destination="-1" eventType="touchUpInside" id="0NQ-sN-KOa"/>
@@ -43,33 +47,20 @@
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="lEZ-WM-J0C">
-                    <rect key="frame" x="11" y="525" width="298" height="35"/>
-                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                    <color key="backgroundColor" red="0.97254901959999995" green="0.35686274509999999" blue="0.32549019610000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                    <size key="titleShadowOffset" width="0.0" height="1"/>
-                    <state key="normal" title="确 定">
-                        <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                    </state>
-                    <connections>
-                        <action selector="confirmButtonClicked:" destination="-1" eventType="touchUpInside" id="2Ld-00-Cmr"/>
-                    </connections>
-                </button>
                 <view contentMode="scaleToFill" id="leN-J2-QdC">
                     <rect key="frame" x="0.0" y="53" width="320" height="45"/>
-                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="输入新密码" clearsOnBeginEditing="YES" minimumFontSize="17" id="MKA-ED-F7U">
                             <rect key="frame" x="0.0" y="0.0" width="270" height="45"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                         </textField>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="oF9-Ym-0GX">
                             <rect key="frame" x="275" y="0.0" width="45" height="45"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <state key="normal" image="me_deleteInput"/>
                             <connections>
                                 <action selector="changeButtonClick:" destination="-1" eventType="touchUpInside" id="Fsy-r9-bLr"/>
@@ -80,18 +71,18 @@
                 </view>
                 <view contentMode="scaleToFill" id="hAo-HX-rvN">
                     <rect key="frame" x="0.0" y="106" width="320" height="45"/>
-                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="再次输入新密码" clearsOnBeginEditing="YES" minimumFontSize="17" id="DKh-qg-aNQ">
                             <rect key="frame" x="0.0" y="0.0" width="270" height="45"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                         </textField>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="kAZ-yt-iJT">
                             <rect key="frame" x="275" y="0.0" width="45" height="45"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <state key="normal" image="me_deleteInput">
                                 <color key="titleColor" red="0.086274509803921567" green="0.086274509803921567" blue="0.086274509803921567" alpha="1" colorSpace="calibratedRGB"/>
@@ -103,6 +94,19 @@
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="lEZ-WM-J0C">
+                    <rect key="frame" x="22" y="518" width="298" height="35"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" red="0.97254901959999995" green="0.35686274509999999" blue="0.32549019610000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <size key="titleShadowOffset" width="0.0" height="1"/>
+                    <state key="normal" title="确 定">
+                        <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="confirmButtonClicked:" destination="-1" eventType="touchUpInside" id="2Ld-00-Cmr"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" red="0.93333333333333335" green="0.93725490196078431" blue="0.94117647058823528" alpha="1" colorSpace="calibratedRGB"/>
             <point key="canvasLocation" x="295" y="41"/>

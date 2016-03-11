@@ -14,7 +14,15 @@
 @interface SHGModifyUserInfoViewController ()<UIActionSheetDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, SHGItemChooseDelegate,SHGAreaDelegate>
 
 @property (weak, nonatomic) IBOutlet UIScrollView *bgScrollView;
-@property (weak, nonatomic) IBOutlet UIView *topView;
+@property (weak, nonatomic) IBOutlet UIView *bgView;
+@property (weak, nonatomic) IBOutlet UIView *headView;
+@property (weak, nonatomic) IBOutlet UILabel *headName;
+@property (weak, nonatomic) IBOutlet UIView *nameView;
+@property (weak, nonatomic) IBOutlet UIView *industryView;
+@property (weak, nonatomic) IBOutlet UIView *companyView;
+@property (weak, nonatomic) IBOutlet UIView *departmentView;
+@property (weak, nonatomic) IBOutlet UIView *cityView;
+
 @property (weak, nonatomic) IBOutlet UIImageView *headerImage;
 @property (weak, nonatomic) IBOutlet UITextField *nameField;
 @property (weak, nonatomic) IBOutlet UITextField *industryField;
@@ -24,7 +32,6 @@
 @property (weak, nonatomic) IBOutlet UIButton *industryButton;
 @property (weak, nonatomic) IBOutlet UIButton *companyButton;
 @property (weak, nonatomic) IBOutlet UIButton *departmentButton;
-@property (weak, nonatomic) IBOutlet UIButton *locationButton;
 @property (weak, nonatomic) IBOutlet UIButton *nextButton;
 @property (weak, nonatomic) IBOutlet UIButton *cityButton;
 @property (strong, nonatomic) NSString *nickName;
@@ -46,7 +53,7 @@
 {
     [super viewDidLoad];
     self.title = @"个人信息";
-
+    [self addSdLayout];
     self.nickName = [self.userInfo objectForKey:kNickName];
     self.department = [self.userInfo objectForKey:kDepartment];
     self.company = [self.userInfo objectForKey:kCompany];
@@ -55,13 +62,164 @@
     self.head_img = [self.userInfo objectForKey:kHeaderImage];
 
     UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapTopView:)];
-    [self.topView addGestureRecognizer:recognizer];
+    [self.headView addGestureRecognizer:recognizer];
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardDidShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textFieldDidChange:) name:UITextFieldTextDidChangeNotification object:nil];
     [self initObject];
 }
 
+- (void)initView
+{
+    self.bgView.backgroundColor = [UIColor colorWithHexString:@"efeeef"];
+    self.headName.font = FontFactor(15.0f);
+    self.headName.textColor = [UIColor colorWithHexString:@"161616"];
+    
+    self.nameField.font = FontFactor(15.0f);
+    self.nameField.textColor = [UIColor colorWithHexString:@"161616"];
+    [self.nameField setValue:[UIColor colorWithHexString:@"afafaf"] forKeyPath:@"_placeholderLabel.textColor"];
+    self.industryField.font = FontFactor(15.0f);
+    self.industryField.textColor = [UIColor colorWithHexString:@"161616"];
+    [self.industryField setValue:[UIColor colorWithHexString:@"afafaf"] forKeyPath:@"_placeholderLabel.textColor"];
+    self.companyField.font = FontFactor(15.0f);
+    self.companyField.textColor = [UIColor colorWithHexString:@"161616"];
+    [self.companyField setValue:[UIColor colorWithHexString:@"afafaf"] forKeyPath:@"_placeholderLabel.textColor"];
+    self.departmentField.font = FontFactor(15.0f);
+    self.departmentField.textColor = [UIColor colorWithHexString:@"161616"];
+    [self.departmentField setValue:[UIColor colorWithHexString:@"afafaf"] forKeyPath:@"_placeholderLabel.textColor"];
+    self.cityButton.titleLabel.font = FontFactor(15.0f);
+    [self.cityButton setTitleColor:[UIColor colorWithHexString:@"161616"] forState:UIControlStateNormal];
+    [self.nextButton setTitleColor:[UIColor colorWithHexString:@"ffffff"] forState:UIControlStateNormal];
+    self.nextButton.titleLabel.font = FontFactor(17.0f);
+    [self.nextButton setBackgroundColor:[UIColor colorWithHexString:@"f04241"]];
+    
+}
+
+- (void)addSdLayout
+{
+    UIImage *image = [UIImage imageNamed:@"me_deleteInput"];
+    CGSize size = image.size;
+    self.bgScrollView.sd_layout
+    .leftSpaceToView(self.view, 0.0f)
+    .rightSpaceToView(self.view, 0.0f)
+    .topSpaceToView(self.view, 0.0f)
+    .bottomSpaceToView(self.view, 0.0f);
+    
+    self.bgView.sd_layout
+    .leftSpaceToView(self.bgScrollView, 0.0f)
+    .rightSpaceToView(self.bgScrollView, 0.0f)
+    .topSpaceToView(self.bgScrollView, 0.0f)
+    .bottomSpaceToView(self.bgScrollView, 0.0f);
+    
+    self.headView.sd_layout
+    .topSpaceToView(self.bgView, 0.0f)
+    .leftSpaceToView(self.bgView, 0.0f)
+    .rightSpaceToView(self.bgView, 0.0f)
+    .heightIs(MarginFactor(55.0f));
+    
+    self.headName.sd_layout
+    .topSpaceToView(self.headView, 0.0f)
+    .leftSpaceToView(self.headView, MarginFactor(19.0f))
+    .rightSpaceToView(self.headView, MarginFactor(60.0f))
+    .bottomSpaceToView(self.headView, 0.0f);
+    
+    self.headerImage.sd_layout
+    .rightSpaceToView(self.headView, MarginFactor(19.0f))
+    .centerYEqualToView(self.headView)
+    .widthIs(MarginFactor(35.0f))
+    .heightIs(MarginFactor(35.0f));
+    
+    self.nameView.sd_layout
+    .topSpaceToView(self.headView, MarginFactor(11.0f))
+    .leftSpaceToView(self.bgView, 0.0f)
+    .rightSpaceToView(self.bgView, 0.0f)
+    .heightIs(MarginFactor(55.0f));
+    
+    self.nameField.sd_layout
+    .topSpaceToView(self.nameView, 0.0f)
+    .leftSpaceToView(self.nameView, MarginFactor(19.0f))
+    .rightSpaceToView(self.nameView, MarginFactor(60.0f))
+    .bottomSpaceToView(self.nameView, 0.0f);
+    
+    self.nameButton.sd_layout
+    .rightSpaceToView(self.nameView, MarginFactor(19.0f))
+    .centerYEqualToView(self.nameView)
+    .widthIs(size.width)
+    .heightIs(size.height);
+    
+    self.industryView.sd_layout
+    .topSpaceToView(self.nameView, MarginFactor(11.0f))
+    .leftSpaceToView(self.bgView, 0.0f)
+    .rightSpaceToView(self.bgView, 0.0f)
+    .heightIs(MarginFactor(55.0f));
+    
+    self.industryField.sd_layout
+    .topSpaceToView(self.industryView, 0.0f)
+    .leftSpaceToView(self.industryView, MarginFactor(19.0f))
+    .rightSpaceToView(self.industryView, MarginFactor(60.0f))
+    .bottomSpaceToView(self.industryView, 0.0f);
+    
+    self.industryButton.sd_layout
+    .rightSpaceToView(self.industryView, MarginFactor(19.0f))
+    .centerYEqualToView(self.industryView)
+    .widthIs(size.width)
+    .heightIs(size.height);
+    
+    self.companyView.sd_layout
+    .topSpaceToView(self.industryView, MarginFactor(11.0f))
+    .leftSpaceToView(self.bgView, 0.0f)
+    .rightSpaceToView(self.bgView, 0.0f)
+    .heightIs(MarginFactor(55.0f));
+    
+    self.companyField.sd_layout
+    .topSpaceToView(self.companyView, 0.0f)
+    .leftSpaceToView(self.companyView, MarginFactor(19.0f))
+    .rightSpaceToView(self.companyView, MarginFactor(60.0f))
+    .bottomSpaceToView(self.companyView, 0.0f);
+    
+    self.companyButton.sd_layout
+    .rightSpaceToView(self.companyView, MarginFactor(19.0f))
+    .centerYEqualToView(self.companyView)
+    .widthIs(size.width)
+    .heightIs(size.height);
+
+    self.departmentView.sd_layout
+    .topSpaceToView(self.companyView, MarginFactor(11.0f))
+    .leftSpaceToView(self.bgView, 0.0f)
+    .rightSpaceToView(self.bgView, 0.0f)
+    .heightIs(MarginFactor(55.0f));
+    
+    self.departmentField.sd_layout
+    .topSpaceToView(self.departmentView, 0.0f)
+    .leftSpaceToView(self.departmentView, MarginFactor(19.0f))
+    .rightSpaceToView(self.departmentView, MarginFactor(60.0f))
+    .bottomSpaceToView(self.departmentView, 0.0f);
+    
+    self.departmentButton.sd_layout
+    .rightSpaceToView(self.departmentView, MarginFactor(19.0f))
+    .centerYEqualToView(self.departmentView)
+    .widthIs(size.width)
+    .heightIs(size.height);
+    
+    self.cityView.sd_layout
+    .topSpaceToView(self.departmentView, MarginFactor(11.0f))
+    .leftSpaceToView(self.bgView, 0.0f)
+    .rightSpaceToView(self.bgView, 0.0f)
+    .heightIs(MarginFactor(55.0f));
+    
+    self.cityButton.sd_layout
+    .rightSpaceToView(self.cityView, 0.0f)
+    .leftSpaceToView(self.cityView, MarginFactor(19.0f))
+    .topSpaceToView(self.cityView, 0.0f)
+    .bottomSpaceToView(self.cityView, 0.0f);
+    
+    self.nextButton.sd_layout
+    .leftSpaceToView(self.bgView, MarginFactor(12.0f))
+    .rightSpaceToView(self.bgView, MarginFactor(12.0f))
+    .bottomSpaceToView(self.bgView, MarginFactor(19.0f))
+    .heightIs(MarginFactor(35.0f));
+    
+}
 - (void)initObject
 {
     [self.headerImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,self.head_img]] placeholderImage:[UIImage imageNamed:@"default_head"]];
@@ -71,7 +229,7 @@
     self.departmentField.text = [self.userInfo objectForKey:kDepartment];
     NSString *locationStr = [self.userInfo objectForKey:kLocation];
     if ([locationStr isEqualToString:@""]) {
-        [self.cityButton setTitle:@"城市选择" forState:UIControlStateNormal];
+        [self.cityButton setTitle:@"所在地" forState:UIControlStateNormal];
     } else{
         [self.cityButton setTitle:[NSString stringWithFormat:@"%@",self.location] forState:UIControlStateNormal];
         [self.cityButton setTitleColor:[UIColor colorWithHexString:@"161616"] forState:UIControlStateNormal];
@@ -81,11 +239,7 @@
     [self updateCloseButtonState:self.companyField];
     [self updateCloseButtonState:self.departmentField];
 
-    CGRect frame = self.nextButton.frame;
-    //frame.origin.y *= YFACTOR;
-    frame.origin.y = self.bgScrollView.height - kNextButtonHeight - frame.size.height;
-    self.nextButton.frame = frame;
-
+    [self.view layoutSubviews];
 }
 
 - (IBAction)nextButtonClick:(UIButton *)button

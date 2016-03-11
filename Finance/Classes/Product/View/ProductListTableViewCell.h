@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "ProdListObj.h"
 @interface ProductListTableViewCell : UITableViewCell
--(void)loadDatasWithObj:(ProdListObj *)obj;
+
+@property (nonatomic, strong) ProdListObj *object;
 
 @end

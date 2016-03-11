@@ -31,6 +31,10 @@
 {
     [self initView];
     [self addSdLayout];
+    UIImage *bgImage = self.backImageView.image;
+    bgImage = [bgImage resizableImageWithCapInsets:UIEdgeInsetsMake(20.0f, 20.0f, 0.0f, 20.0f) resizingMode:UIImageResizingModeStretch];
+    self.backImageView.image = bgImage;
+
 }
 
 - (void)initView
@@ -56,7 +60,6 @@
     self.product1Rate.textColor = [UIColor colorWithHexString:@"161616"];
     self.product1Name.font = FontFactor(15.0f);
     self.product1Name.textColor = [UIColor colorWithHexString:@"161616"];
-
 }
 
 - (void)addSdLayout
@@ -129,7 +132,7 @@
     .topEqualToView(self.product1StatusLeft)
     .heightRatioToView(self.product1StatusLeft, 1.0f);
     
-    self.backImageView.backgroundColor = [UIColor whiteColor];
+    self.backImageView.backgroundColor = [UIColor clearColor];
     self.backImageView.sd_layout
     .topSpaceToView(self.contentView, MarginFactor(20.0f))
     .bottomSpaceToView(self.contentView, 0.0f)
@@ -167,7 +170,7 @@
         self.product1Status.text = @"";
     }
 
-}
+  }
 
 @end
 

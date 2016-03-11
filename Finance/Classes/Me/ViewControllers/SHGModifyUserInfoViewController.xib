@@ -8,18 +8,25 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SHGModifyUserInfoViewController">
             <connections>
                 <outlet property="bgScrollView" destination="bxE-1l-oxp" id="90W-GK-Re1"/>
+                <outlet property="bgView" destination="qK0-0b-EP3" id="DQb-JK-idH"/>
                 <outlet property="cityButton" destination="oVW-N8-KqZ" id="J1T-w2-VyT"/>
+                <outlet property="cityView" destination="j6g-6B-JNS" id="gAP-5v-qYL"/>
                 <outlet property="companyButton" destination="UKt-RW-oRA" id="V9i-In-Wa4"/>
                 <outlet property="companyField" destination="hDc-tu-8jc" id="4Wz-FW-o7U"/>
+                <outlet property="companyView" destination="s0n-yx-FCK" id="qvB-ux-vnV"/>
                 <outlet property="departmentButton" destination="x6G-b9-Ajw" id="4h7-bE-BGc"/>
                 <outlet property="departmentField" destination="9UO-9q-EwS" id="8dh-XQ-CQ6"/>
+                <outlet property="departmentView" destination="tNE-iC-itK" id="wZ0-6t-9F6"/>
+                <outlet property="headName" destination="cdh-yl-9G6" id="fCo-Xb-YXx"/>
+                <outlet property="headView" destination="ztV-f1-jcF" id="eND-MI-mET"/>
                 <outlet property="headerImage" destination="ljI-PK-ug1" id="j05-Wv-I3Q"/>
                 <outlet property="industryButton" destination="6mO-pO-fbj" id="dYV-sB-4hb"/>
                 <outlet property="industryField" destination="SSx-R7-gV2" id="HSA-OF-RBB"/>
+                <outlet property="industryView" destination="045-ez-Mtl" id="aRF-sN-qSw"/>
                 <outlet property="nameButton" destination="l93-5c-jjM" id="o4Y-Bd-K4e"/>
                 <outlet property="nameField" destination="YuB-45-Hn0" id="VY1-Lr-rOL"/>
+                <outlet property="nameView" destination="p9Z-h7-nHk" id="RZg-Fj-9vw"/>
                 <outlet property="nextButton" destination="YGg-3m-IxA" id="bBI-pY-RNK"/>
-                <outlet property="topView" destination="ztV-f1-jcF" id="iuq-75-HlD"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -30,15 +37,15 @@
             <subviews>
                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="bxE-1l-oxp">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
                         <view contentMode="scaleToFill" id="qK0-0b-EP3">
                             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <view contentMode="scaleToFill" id="ztV-f1-jcF">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="45"/>
-                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="头像" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="cdh-yl-9G6">
                                             <rect key="frame" x="14" y="0.0" width="100" height="45"/>
@@ -49,18 +56,18 @@
                                         </label>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="ljI-PK-ug1">
                                             <rect key="frame" x="279" y="7" width="31" height="31"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         </imageView>
                                     </subviews>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </view>
                                 <view contentMode="scaleToFill" id="p9Z-h7-nHk">
                                     <rect key="frame" x="0.0" y="53" width="320" height="45"/>
-                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
                                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="姓名" textAlignment="natural" minimumFontSize="17" id="YuB-45-Hn0">
                                             <rect key="frame" x="14" y="8" width="250" height="30"/>
-                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <color key="textColor" red="0.086274509803921567" green="0.086274509803921567" blue="0.086274509803921567" alpha="1" colorSpace="calibratedRGB"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <textInputTraits key="textInputTraits" returnKeyType="done"/>
@@ -70,7 +77,7 @@
                                         </textField>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="l93-5c-jjM">
                                             <rect key="frame" x="275" y="0.0" width="45" height="45"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <state key="normal" image="me_deleteInput"/>
                                             <connections>
                                                 <action selector="clickNameButton:" destination="-1" eventType="touchUpInside" id="VoM-Yv-JUU"/>
@@ -81,11 +88,11 @@
                                 </view>
                                 <view contentMode="scaleToFill" id="045-ez-Mtl">
                                     <rect key="frame" x="0.0" y="106" width="320" height="45"/>
-                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
                                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="行业" textAlignment="natural" minimumFontSize="17" id="SSx-R7-gV2">
                                             <rect key="frame" x="14" y="8" width="250" height="30"/>
-                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <color key="textColor" red="0.086274509803921567" green="0.086274509803921567" blue="0.086274509803921567" alpha="1" colorSpace="calibratedRGB"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <textInputTraits key="textInputTraits" returnKeyType="done"/>
@@ -95,7 +102,7 @@
                                         </textField>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="6mO-pO-fbj">
                                             <rect key="frame" x="275" y="0.0" width="45" height="45"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <state key="normal" image="me_deleteInput"/>
                                             <connections>
                                                 <action selector="clickIndustryButton:" destination="-1" eventType="touchUpInside" id="pbe-ES-6rS"/>
@@ -106,11 +113,11 @@
                                 </view>
                                 <view contentMode="scaleToFill" id="s0n-yx-FCK">
                                     <rect key="frame" x="0.0" y="159" width="320" height="45"/>
-                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
                                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="公司" textAlignment="natural" minimumFontSize="17" id="hDc-tu-8jc">
                                             <rect key="frame" x="14" y="8" width="250" height="30"/>
-                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <color key="textColor" red="0.086274509803921567" green="0.086274509803921567" blue="0.086274509803921567" alpha="1" colorSpace="calibratedRGB"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <textInputTraits key="textInputTraits" returnKeyType="done"/>
@@ -120,7 +127,7 @@
                                         </textField>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="UKt-RW-oRA">
                                             <rect key="frame" x="275" y="0.0" width="45" height="45"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <state key="normal" image="me_deleteInput"/>
                                             <connections>
                                                 <action selector="clickCompanyButton:" destination="-1" eventType="touchUpInside" id="o5O-KK-iFl"/>
@@ -131,11 +138,11 @@
                                 </view>
                                 <view contentMode="scaleToFill" id="tNE-iC-itK">
                                     <rect key="frame" x="0.0" y="212" width="320" height="45"/>
-                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
                                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="职位" textAlignment="natural" minimumFontSize="17" id="9UO-9q-EwS">
                                             <rect key="frame" x="14" y="8" width="250" height="30"/>
-                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <color key="textColor" red="0.086274509803921567" green="0.086274509803921567" blue="0.086274509803921567" alpha="1" colorSpace="calibratedRGB"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <textInputTraits key="textInputTraits" returnKeyType="done"/>
@@ -145,7 +152,7 @@
                                         </textField>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="x6G-b9-Ajw">
                                             <rect key="frame" x="275" y="0.0" width="45" height="45"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <state key="normal" image="me_deleteInput"/>
                                             <connections>
                                                 <action selector="clickDepartmentButton:" destination="-1" eventType="touchUpInside" id="maq-Np-xzu"/>
@@ -156,11 +163,11 @@
                                 </view>
                                 <view contentMode="scaleToFill" id="j6g-6B-JNS">
                                     <rect key="frame" x="0.0" y="265" width="320" height="45"/>
-                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="oVW-N8-KqZ">
                                             <rect key="frame" x="14" y="8" width="273" height="30"/>
-                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <state key="normal">
                                                 <color key="titleColor" red="0.70196078429999997" green="0.70196078429999997" blue="0.70196078429999997" alpha="1" colorSpace="calibratedRGB"/>
@@ -174,7 +181,7 @@
                                 </view>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="YGg-3m-IxA">
                                     <rect key="frame" x="10" y="525" width="300" height="35"/>
-                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <color key="backgroundColor" red="0.94117647059999998" green="0.25882352939999997" blue="0.25490196079999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                     <state key="normal" title="完成">

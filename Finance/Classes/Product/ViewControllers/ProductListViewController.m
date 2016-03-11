@@ -480,13 +480,13 @@
         cell = [[[NSBundle mainBundle] loadNibNamed:@"ProductListTableViewCell" owner:self options:nil] lastObject];
     }
     ProdListObj *obj = self.dataArr[indexPath.row];
-    [cell loadDatasWithObj:obj];
+    cell.object = obj;
     return cell;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 100;
+    return MarginFactor(116.0f);
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section

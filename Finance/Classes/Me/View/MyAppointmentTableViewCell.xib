@@ -14,7 +14,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="142"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="Rgy-sP-iLf">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="myAppointment" id="Rgy-sP-iLf">
                         <rect key="frame" x="40" y="7" width="240" height="128"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     </imageView>
@@ -113,4 +113,7 @@
             <point key="canvasLocation" x="172" y="-118.5"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="myAppointment" width="184" height="164"/>
+    </resources>
 </document>

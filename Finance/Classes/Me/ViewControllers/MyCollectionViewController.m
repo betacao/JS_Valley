@@ -308,11 +308,6 @@
             [Hud showLoadingWithMessage:@"加载中"];
             [self requestCardListWithTarget:@"load" time:updateTime];
         }
-        //1.7.2 资讯隐藏
-//        else if (self.selectType == 4){
-//            [Hud showLoadingWithMessage:@"加载中"];
-//            [self requestNewsListWithTarget:@"load" time:updateTime];
-//        }
 
 	} else{
         [self.tableView.footer endRefreshing];
@@ -962,28 +957,21 @@
         CircleListObj *obj = self.dataSource[indexPath.row];
         if ([obj.status boolValue]) {
             return [obj fetchCellHeight];
-        }
-        else{
+        }  else{
             return 44.0f;
         }
-    }else if (self.selectType == 3)
-    {
-        return 100.0f;
+    } else if (self.selectType == 3){
+        return MarginFactor(116.0f);
         
-    }
-    else if (self.selectType == 4)
-    {
-        return 78.0f;
+    } else if (self.selectType == 4) {
+        return MarginFactor(90.0f);
         
-    }else if (self.selectType == 2)
-    {
-        //return 166.0f;
+    } else if (self.selectType == 2) {
         SHGMarketObject *object = [self.marketList objectAtIndex:indexPath.row];
         CGFloat height = [self.tableView cellHeightForIndexPath:indexPath model:object keyPath:@"object" cellClass:[SHGMarketTableViewCell class] contentViewWidth:SCREENWIDTH];
         return height;
 
-    }else
-    {
+    } else {
         return 0;
     }
 }
@@ -1034,7 +1022,7 @@
                 cell = [[[NSBundle mainBundle] loadNibNamed:@"ProductListTableViewCell" owner:self options:nil] lastObject];
             }
             ProdListObj *obj = self.dataSource[indexPath.row];
-            [cell loadDatasWithObj:obj];
+                cell.object = obj;
             return cell;
             }
             else
@@ -1043,17 +1031,15 @@
             }
         }if (self.selectType == 4) {
             if (self.dataSource > 0) {
-            NSString *cardCellIdentifier = @"circleCellIdentifier";
-            SHGCardTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cardCellIdentifier];
-            if (!cell) {
-                cell = [[[NSBundle mainBundle] loadNibNamed:@"SHGCardTableViewCell" owner:self options:nil] lastObject];
-            }
-            SHGCollectCardClass *obj = self.dataSource[indexPath.row];
-            [cell loadCardDatasWithObj:obj];
-            return cell;
-            }
-            else
-            {
+                NSString *cardCellIdentifier = @"circleCellIdentifier";
+                SHGCardTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cardCellIdentifier];
+                if (!cell) {
+                    cell = [[[NSBundle mainBundle] loadNibNamed:@"SHGCardTableViewCell" owner:self options:nil] lastObject];
+                }
+                SHGCollectCardClass *obj = self.dataSource[indexPath.row];
+                cell.object = obj;
+                return cell;
+            } else{
                 return self.emptyCell;
             }
             

@@ -11,113 +11,91 @@
 #define kTagViewHeight 16.0f * XFACTOR
 @interface SHGCardTableViewCell ()
 @property (weak, nonatomic) IBOutlet UIImageView *headerImageView;
-@property (weak, nonatomic) IBOutlet UIView *headerView;
 @property (weak, nonatomic) IBOutlet UILabel *userNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *departmentLabel;
 @property (weak, nonatomic) IBOutlet UILabel *companyLabel;
 @property (weak, nonatomic) IBOutlet UILabel *positionLabel;
-@property (weak, nonatomic) IBOutlet UIView *tagViews;
-@property (weak, nonatomic) IBOutlet UIImageView *friendImage;
-@property (strong, nonatomic) SHGCollectCardClass *obj;
+@property (weak, nonatomic) IBOutlet UIView *grayView;
 @end
 @implementation SHGCardTableViewCell
 
-- (void)awakeFromNib {
-    // Initialization code
-}
--(void)loadCardDatasWithObj:(SHGCollectCardClass *)obj
+- (void)awakeFromNib
 {
-    [self clearCell];
-    self.obj = obj;
-    self.userNameLabel.text = obj.name;
-    self.companyLabel.text = obj.companyname;
-    self.positionLabel.text = obj.position;
-    self.departmentLabel.text = obj.titles;
-    
-    CGSize nSize = CGSizeMake(MAXFLOAT, self.userNameLabel.frame.size.height);
-    NSDictionary * nDic = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:14],NSFontAttributeName, nil];
-    CGSize nActualsize = [obj.name boundingRectWithSize:nSize options:NSStringDrawingUsesLineFragmentOrigin attributes:nDic context:nil].size;
-    self.userNameLabel.frame = CGRectMake(self.userNameLabel.origin.x, self.userNameLabel.origin.y, nActualsize.width, self.userNameLabel.frame.size.height);
-    
-    CGSize dSize = CGSizeMake(MAXFLOAT, self.departmentLabel.frame.size.height);
-    NSDictionary * dDic = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:12],NSFontAttributeName, nil];
-    CGSize dActualsize = [obj.titles boundingRectWithSize:dSize options:NSStringDrawingUsesLineFragmentOrigin  attributes:dDic context:nil].size;
-    self.departmentLabel.frame = CGRectMake(CGRectGetMaxX(self.userNameLabel.frame) + 10.0f, self.departmentLabel.origin.y, dActualsize.width, self.departmentLabel.height);
-    
-    if (obj.titles.length > 6) {
-        NSString * str = [obj.titles substringToIndex:6];
-        self.departmentLabel.text = [NSString stringWithFormat:@"%@...",str];
-    }else {
-        self.departmentLabel.text = obj.titles;
-    }
-    //判断好友是一度好友还是二度好友
-//    if ([obj.friendShip isEqualToString:@"一度"]) {
-//        self.friendImage.image = [UIImage imageNamed:@"first_friend.png"];
-//    }
-//    if ([obj.friendShip isEqualToString:@"二度"])
-//    {
-//         self.friendImage.image = [UIImage imageNamed:@"second_friend.png"];
-//    }
-//    if ([obj.friendShip isEqualToString:@""]) {
-//         self.friendImage.image = nil;
-//    }
-   
-//    if (![obj.tags isEqualToString:@""]) {
-//        NSArray *arry = [obj.tags componentsSeparatedByString:@","];
-//        [self.tagViews removeAllSubviews];
-//        [self.tagViews addSubview:[self viewForTags:arry]];
-//    }
-    //[self initView];
-    [self.headerImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,self.obj.headerImageUrl]] placeholderImage:[UIImage imageNamed:@"default_head"]];
-  
+    self.selectionStyle = UITableViewCellSelectionStyleNone;
+    [self initView];
 }
-
--(void)clearCell
-{
-    self.userNameLabel.text = @"";
-    self.companyLabel.text = @"";
-    self.positionLabel.text = @"";
-    self.departmentLabel.text = @"";
-    self.positionLabel.text = @"";
-    //self.friendImage.image = nil;
-    //self.tagViews = nil;
-    //[self.headerImageView sd_setImageWithURL:[NSURL URLWithString:ni placeholderImage:[UIImage imageNamed:@"default_head"]];
-    self.headerImageView.image = [UIImage imageNamed:@"default_head"];
-}
-
-- (UIView *)viewForTags:(NSArray *)array
-{
-    
-        UIView *view = [[UIView alloc] init];
-        for (NSString *model in array){
-            UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-            [button setTitle:model forState:UIControlStateNormal];
-            [button setBackgroundColor:[UIColor colorWithHexString:@"f7514b"]];
-            button.titleLabel.font = [UIFont systemFontOfSize:11.0f];
-            CGRect frame = CGRectMake(0.0f, (CGRectGetHeight(self.tagViews.frame) - kTagViewHeight) / 2.0f, kTagViewWidth, kTagViewHeight);
-            frame.origin.x = CGRectGetMaxX(view.frame) + kObjectMargin / 2.0f;
-            button.frame = frame;
-            frame = view.frame;
-            frame.size.width = CGRectGetMaxX(button.frame);
-            frame.size.height = CGRectGetMaxY(button.frame);
-            view.frame = frame;
-            [view addSubview:button];
-        }
-        return view;
-  
-   }
 
 - (void)initView
 {
-    self.headerImageView.userInteractionEnabled = YES;
-    self.headerImageView.layer.masksToBounds = YES;
-    self.headerImageView.layer.cornerRadius = CGRectGetHeight(self.headerImageView.frame) / 2.0f;
+    self.userNameLabel.font = FontFactor(16.0f);
+    self.userNameLabel.textColor = [UIColor colorWithHexString:@"4277b2"];
+    
+    self.departmentLabel.font = FontFactor(14.0f);
+    self.departmentLabel.textColor = [UIColor colorWithHexString:@"565656"];
+    
+    self.companyLabel.font = FontFactor(14.0f);
+    self.companyLabel.textColor = [UIColor colorWithHexString:@"565656"];
+    
+    self.grayView.backgroundColor = [UIColor colorWithHexString:@"efeeef"];
+    
+    self.headerImageView.sd_layout
+    .leftSpaceToView(self.contentView, MarginFactor(12.0f))
+    .topSpaceToView(self.contentView, MarginFactor(15.0f))
+    .widthIs(MarginFactor(50.f))
+    .heightIs(MarginFactor(50.0f));
+    
+    self.userNameLabel.sd_layout
+    .leftSpaceToView(self.headerImageView, MarginFactor(10.0f))
+    .topEqualToView(self.headerImageView)
+    .autoHeightRatio(0.0f);
+    [self.userNameLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
+    
+    self.departmentLabel.sd_layout
+    .leftSpaceToView(self.userNameLabel, MarginFactor(10.0f))
+    .bottomEqualToView(self.userNameLabel)
+    .autoHeightRatio(0.0f);
+    [self.departmentLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
+    
+    self.companyLabel.sd_layout
+    .leftEqualToView(self.userNameLabel)
+    .bottomEqualToView(self.headerImageView)
+    .autoHeightRatio(0.0f);
+    [self.companyLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
+    
+    self.grayView.sd_layout
+    .leftSpaceToView(self.contentView, 0.0f)
+    .rightSpaceToView(self.contentView, 0.0f)
+    .bottomSpaceToView(self.contentView, 0.0f)
+    .heightIs(MarginFactor(10.0f));
+
 }
 
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
+- (void)setObject:(SHGCollectCardClass *)object
+{
+    
+    _object = object;
+    [self.headerImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,self.object.headerImageUrl]] placeholderImage:[UIImage imageNamed:@"default_head"]];
+    
+    self.userNameLabel.text = object.name;
+    [self.userNameLabel sizeToFit];
+    self.companyLabel.text = object.companyname;
+    [self.companyLabel sizeToFit];
+    
+    if (object.titles.length > 6) {
+        NSString * str = [object.titles substringToIndex:6];
+        self.departmentLabel.text = [NSString stringWithFormat:@"%@...",str];
+    } else {
+        self.departmentLabel.text = object.titles;
+    }
+    [self.departmentLabel sizeToFit];
+    
+}
+
+- (void)setSelected:(BOOL)selected animated:(BOOL)animated
+{
     [super setSelected:selected animated:animated];
 
-    // Configure the view for the selected state
+   
 }
 
 @end

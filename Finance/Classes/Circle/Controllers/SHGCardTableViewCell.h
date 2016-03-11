@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "SHGCollectCardClass.h"
 @interface SHGCardTableViewCell : UITableViewCell
--(void)loadCardDatasWithObj:(SHGCollectCardClass *)obj;
+//-(void)loadCardDatasWithObj:(SHGCollectCardClass *)obj;
+@property (nonatomic, strong) SHGCollectCardClass *object;
 @end

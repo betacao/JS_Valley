@@ -10,7 +10,8 @@
 #import "CPTextViewPlaceholder.h"
 
 @interface SettingsSuggestionsViewController ()
-
+@property (weak, nonatomic) IBOutlet UIButton *sureButton;
+@property (weak, nonatomic) IBOutlet UIView *bgView;
 @property (nonatomic, strong) IBOutlet CPTextViewPlaceholder *textView;
 
 - (IBAction)sugguestButtonClicked:(id)sender;
@@ -22,9 +23,44 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
 	self.title = @"意见反馈";
+    [self initView];
     self.textView.delegate = self;
 	self.textView.placeholder = @"请输入反馈，我们将为您不断改进。";
 }
+
+- (void)initView
+{
+    self.view.backgroundColor = [UIColor colorWithHexString:@"efeeef"];
+    self.bgView.backgroundColor = [UIColor whiteColor];
+    self.sureButton.titleLabel.font = FontFactor(15.0f);
+    [self.sureButton setTitleColor:[UIColor colorWithHexString:@"161616"] forState:UIControlStateNormal];
+    [self.sureButton setTitleColor:[UIColor colorWithHexString:@"ffffff"] forState:UIControlStateNormal];
+    self.sureButton.titleLabel.font = FontFactor(17.0f);
+    [self.sureButton setBackgroundColor:[UIColor colorWithHexString:@"f04241"]];
+    self.textView.font = FontFactor(15.0f);
+    self.textView.textColor = [UIColor colorWithHexString:@"161616"];
+    [self.textView setValue:[UIColor colorWithHexString:@"afafaf"] forKeyPath:@"_placeholderLabel.textColor"];
+    
+    self.bgView.sd_layout
+    .leftSpaceToView(self.view, 0.0f)
+    .rightSpaceToView(self.view, 0.0f)
+    .topSpaceToView(self.view, 0.0f)
+    .heightIs(MarginFactor(175.0f));
+    
+    self.textView.sd_layout
+    .topSpaceToView(self.bgView, MarginFactor(19.0f))
+    .bottomSpaceToView(self.bgView, MarginFactor(19.0f))
+    .leftSpaceToView(self.bgView, MarginFactor(19.0f))
+    .rightSpaceToView(self.bgView, MarginFactor(19.0f));
+    
+    self.sureButton.sd_layout
+    .topSpaceToView(self.bgView, MarginFactor(35.0f))
+    .leftSpaceToView(self.view, MarginFactor(12.0f))
+    .rightSpaceToView(self.view, MarginFactor(12.0f))
+    .heightIs(MarginFactor(40.0f));
+    
+}
+
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
@@ -43,21 +79,20 @@
 - (IBAction)sugguestButtonClicked:(id)sender
 {
 	if (IsStrEmpty(self.textView.text)) {
-		[Hud showMessageWithText:@"请输入反馈意见！"];
-		return;
-	}
-	NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
-
-	[MOCHTTPRequestOperationManager postWithURL:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"feedback"]
-									 parameters:@{@"uid":uid,@"method":@"",@"detail":self.textView.text}
-										success:^(MOCHTTPResponse *response) {
-											[Hud showMessageWithText:@"提交成功"];
-											[self.navigationController popViewControllerAnimated:YES];
-										}failed:^(MOCHTTPResponse *response) {
-											
-										}];
-
-	
+        [Hud showMessageWithText:@"请输入反馈意见！"];
+        return;
+    }
+    NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
+    
+    [MOCHTTPRequestOperationManager postWithURL:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"feedback"]parameters:@{@"uid":uid,@"method":@"",@"detail":self.textView.text}success:^(MOCHTTPResponse *response) {
+        [Hud showMessageWithText:@"提交成功"];
+        [self.navigationController popViewControllerAnimated:YES];
+        
+    } failed:^(MOCHTTPResponse *response) {
+        
+    }];
+    
+    
 }
 
 - (void)didReceiveMemoryWarning {
