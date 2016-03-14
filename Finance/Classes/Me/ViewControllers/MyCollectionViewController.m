@@ -563,14 +563,14 @@
     }
     if (obj.detail.length > 15)
     {
-        postContent = [NSString stringWithFormat:@"%@…",[obj.detail substringToIndex:15]];
+        postContent = [NSString stringWithFormat:@"%@...",[obj.detail substringToIndex:15]];
     }
     if (obj.detail.length > 15)
     {
         
         shareTitle = [obj.detail substringToIndex:15];
         
-        shareContent = [NSString stringWithFormat:@"%@…",[obj.detail substringToIndex:15]];
+        shareContent = [NSString stringWithFormat:@"%@...",[obj.detail substringToIndex:15]];
         
     }
     NSString *content = [NSString stringWithFormat:@"%@\"%@\"%@%@",@"Hi，我在金融大牛圈上看到了一个非常棒的帖子,关于",postContent,@"，赶快下载大牛圈查看吧！",[NSString stringWithFormat:@"%@%@",rBaseAddressForHttpShare,obj.rid]];

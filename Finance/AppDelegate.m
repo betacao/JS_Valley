@@ -919,7 +919,7 @@
             NSString *detail = obj.detail;
             if (obj.detail.length > 0) {
                 if (obj.detail.length > 15){
-                    detail = [NSString stringWithFormat:@"%@…",[obj.detail substringToIndex:15]];
+                    detail = [NSString stringWithFormat:@"%@...",[obj.detail substringToIndex:15]];
                 }
             } else{
                 detail = @"大牛圈";

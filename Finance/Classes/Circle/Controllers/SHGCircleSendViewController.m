@@ -255,7 +255,7 @@
     }
     //把发送按钮的变成不可点
 //    self.navigationItem.rightBarButtonItem.userInteractionEnabled = NO;
-    [Hud showLoadingWithMessage:@"正在发帖……"];
+    [Hud showLoadingWithMessage:@"正在发帖......"];
     if (self.imageArray.count == 0){
         //无图片
         [self sendCircleWithPhotos:nil];

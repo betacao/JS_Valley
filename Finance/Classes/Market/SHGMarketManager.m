@@ -442,7 +442,7 @@
     id<ISSCAttachment> image  = [ShareSDK pngImageWithImage:png];
     NSString *theme = object.marketName;
     if (theme.length > 15) {
-        theme = [NSString stringWithFormat:@"%@…",[object.marketName substringToIndex:15]];
+        theme = [NSString stringWithFormat:@"%@...",[object.marketName substringToIndex:15]];
     }
     NSString *postContent = [NSString stringWithFormat:@"【业务】%@", theme];
     NSString *shareContent = [NSString stringWithFormat:@"【业务】%@", theme];

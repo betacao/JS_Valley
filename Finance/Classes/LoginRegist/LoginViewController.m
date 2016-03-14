@@ -128,7 +128,7 @@
 
         return;
     }
-    [Hud showLoadingWithMessage:@"登录验证中……"];
+    [Hud showLoadingWithMessage:@"登录验证中......"];
     [self login];
 }
 

@@ -110,14 +110,14 @@
         NSString *company = object.company;
         if (company.length > 6) {
             company = [company substringToIndex:6];
-            company = [NSString stringWithFormat:@"%@…",company];
+            company = [NSString stringWithFormat:@"%@...",company];
         }
         companyLabel.text = company;
 
         NSString *department = object.title;
         if (department.length > 4) {
             department= [department substringToIndex:4];
-            department = [NSString stringWithFormat:@"%@…",department];
+            department = [NSString stringWithFormat:@"%@...",department];
         }
         departmentLabel.text = department;
 

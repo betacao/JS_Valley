@@ -119,19 +119,15 @@
     self.listTable.backgroundColor = [UIColor whiteColor];
 
     self.nickName.font = FontFactor(15.0f);
-    self.nickName.textAlignment = NSTextAlignmentLeft;
     self.nickName.textColor = [UIColor colorWithHexString:@"1d5798"];
     
     self.lblCompanyName.font = FontFactor(13.0f);
-    self.lblCompanyName.textAlignment = NSTextAlignmentLeft;
     self.lblCompanyName.textColor = [UIColor colorWithHexString:@"565656"];
     
     self.lbldepartName.font = FontFactor(13.0f);
-    self.lbldepartName.textAlignment = NSTextAlignmentLeft;
     self.lbldepartName.textColor = [UIColor colorWithHexString:@"565656"];
 
     self.lblTime.font = FontFactor(11.0f);
-    self.lblTime.textAlignment = NSTextAlignmentLeft;
     self.lblTime.textColor = [UIColor colorWithHexString:@"919291"];
     
     [self.btnComment setTitleColor:[UIColor colorWithHexString:@"b3b3b3"] forState:UIControlStateNormal];
@@ -260,12 +256,7 @@
     .rightEqualToView(self.btnAttention)
     .topSpaceToView(self.lblContent, MarginFactor(16.0f))
     .heightIs(0.0f);
-    
-    self.actionView.sd_layout
-    .leftEqualToView(self.imageHeader)
-    .rightEqualToView(self.btnAttention)
-    .topSpaceToView(self.photoView, 0.0f)
-    .heightIs(MarginFactor(49.0f));
+
     
     [self.btnShare sizeToFit];
     CGSize shareSize = self.btnShare.frame.size;
@@ -306,12 +297,7 @@
     .bottomEqualToView(self.btnShare)
     .widthIs(delteSize.width)
     .heightIs(delteSize.height);
-    
-    self.viewPraise.sd_layout
-    .leftSpaceToView(self.viewHeader, MarginFactor(12.0f))
-    .rightSpaceToView(self.viewHeader, MarginFactor(12.0f))
-    .topSpaceToView(self.actionView, 0.0f)
-    .heightIs(MarginFactor(56.0f));
+
     
     [self.praisebtn sizeToFit];
     CGSize praiseBtnSize = self.praisebtn.frame.size;
@@ -437,20 +423,19 @@
 
 - (void)loadDatasWithObj:(CircleListObj *)obj
 {
-    self.viewHeader.hidden = NO;
     self.obj.photoArr = (NSArray *)obj.photos;
-    if ([obj.userid isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID]] || [obj.userid isEqualToString:CHATID_MANAGER]) {
+    if ([obj.userid isEqualToString:UID] || [obj.userid isEqualToString:CHATID_MANAGER]) {
         self.btnAttention.hidden = YES;
     }
-    if ([obj.userid isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID]]){
-       self.btnDelete.hidden = NO;
+    if ([obj.userid isEqualToString:UID]){
+        self.btnDelete.hidden = NO;
     } else{
         self.btnDelete.hidden = YES;
     }
-    
+
     [self.imageHeader updateHeaderView:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,obj.potname] placeholderImage:[UIImage imageNamed:@"default_head"]];
     [self.imageHeader updateStatus:[obj.userstatus isEqualToString:@"true"] ? YES : NO];
-    
+
     if (![obj.ispraise isEqualToString:@"Y"]) {
         [self.btnPraise setImage:[UIImage imageNamed:@"home_weizan"] forState:UIControlStateNormal];
     } else{
@@ -464,14 +449,14 @@
     NSString *name = obj.nickname;
     if (obj.nickname.length > 4){
         name = [obj.nickname substringToIndex:4];
-        name = [NSString stringWithFormat:@"%@…",name];
+        name = [NSString stringWithFormat:@"%@...",name];
     }
     self.nickName.text = name;
     //设置公司名称
     NSString *comp = obj.company;
     if (obj.company.length > 6) {
         NSString *str = [obj.company substringToIndex:6];
-        comp = [NSString stringWithFormat:@"%@…",str];
+        comp = [NSString stringWithFormat:@"%@...",str];
     }
     self.lblCompanyName.text = comp;
     [self.lblCompanyName sizeToFit];
@@ -479,7 +464,7 @@
     NSString *str = obj.title;
     if (obj.title.length > 4){
         str= [obj.title substringToIndex:4];
-        str = [NSString stringWithFormat:@"%@…",str];
+        str = [NSString stringWithFormat:@"%@...",str];
     }
     self.lbldepartName.text = str;
 
@@ -498,35 +483,8 @@
     }
     
     self.lblContent.text = obj.detail;
-    if ([self.obj.type isEqualToString:@"link"]){
-        self.photoView.backgroundColor = RGB(245, 245, 241);
-        linkOBj *link = obj.linkObj;
-        UIImageView *linkImageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, MarginFactor(5.0f), MarginFactor(40.0f), MarginFactor(40.0f))];
-        if (link.thumbnail){
-            [linkImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,link.thumbnail?:@"a"]] placeholderImage:[UIImage imageNamed:@"default_image"]];
-        } else{
-            linkImageView.image = [UIImage imageNamed:@"default_image"];
-        }
-        UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(MarginFactor(45.0f),MarginFactor(5.0f), SCREENWIDTH -CELLRIGHT_WIDTH - MarginFactor(45.0f),MarginFactor(20.0f))];
-        [titleLabel setFont:FontFactor(13.0f)];
-        [titleLabel setTextColor:TEXT_COLOR];
-        [titleLabel setText:link.title];
-        UILabel *detailLabel = [[UILabel alloc] initWithFrame:CGRectMake(MarginFactor(45.0f), MarginFactor(25.0f), SCREENWIDTH -CELLRIGHT_WIDTH - MarginFactor(45.0f),MarginFactor(20.0f))];
-        [detailLabel setFont:FontFactor(13.0f)];
-        [detailLabel setTextColor:TEXT_COLOR];
-        detailLabel.text = link.desc;
-        [self.photoView addSubview:linkImageView];
-        [self.photoView addSubview:titleLabel];
-        [self.photoView addSubview:detailLabel];
-        self.photoView.sd_resetLayout
-        .leftSpaceToView(self.viewHeader, MarginFactor(60.0f))
-        .topSpaceToView(self.lblContent, MarginFactor(10.0f))
-        .widthIs(SCREENWIDTH - MarginFactor(45.0f))
-        .heightIs(MarginFactor(50.0f));
-        self.photoView.userInteractionEnabled = YES;
-        DDTapGestureRecognizer *ges = [[DDTapGestureRecognizer alloc] initWithTarget:self action:@selector(linkTap:)];
-        [self.photoView addGestureRecognizer:ges];
-    } else if ([self.obj.type isEqualToString:TYPE_PHOTO]){
+    
+    if ([self.obj.type isEqualToString:TYPE_PHOTO]){
         SDPhotoGroup *photoGroup = [[SDPhotoGroup alloc] init];
         NSMutableArray *temp = [NSMutableArray array];
         [obj.photoArr enumerateObjectsUsingBlock:^(NSString *src, NSUInteger idx, BOOL *stop) {
@@ -544,7 +502,7 @@
         .heightIs(CGRectGetHeight(photoGroup.frame));
         
     }
- 
+
     CGFloat praiseWidth = 0;
     if ([self.obj.praisenum intValue] > 0){
         for (UIView *subView in self.scrollPraise.subviews){
@@ -572,6 +530,22 @@
     } else{
         [self.scrollPraise removeAllSubviews];
     }
+
+
+
+    self.actionView.sd_resetLayout
+    .leftEqualToView(self.imageHeader)
+    .rightEqualToView(self.btnAttention)
+    .topSpaceToView(self.photoView, 0.0f)
+    .heightIs(MarginFactor(49.0f));
+
+
+    self.viewPraise.sd_resetLayout
+    .leftSpaceToView(self.viewHeader, MarginFactor(12.0f))
+    .rightSpaceToView(self.viewHeader, MarginFactor(12.0f))
+    .topSpaceToView(self.actionView, 0.0f)
+    .heightIs(MarginFactor(56.0f));
+
     [self.viewHeader layoutSubviews];
     self.listTable.tableHeaderView = self.viewHeader;
     [self.listTable reloadData];
@@ -613,7 +587,7 @@
     NSString *name = obj.nickname;
     if (obj.nickname.length > 4) {
         name = [obj.nickname substringToIndex:4];
-        name = [NSString stringWithFormat:@"%@…",name];
+        name = [NSString stringWithFormat:@"%@...",name];
     }
     self.nickName.text = name;
 
@@ -833,11 +807,11 @@
         shareContent = self.obj.detail;
     }
     if(self.obj.detail.length > 15){
-        postContent = [NSString stringWithFormat:@"%@…",[self.obj.detail substringToIndex:15]];
+        postContent = [NSString stringWithFormat:@"%@...",[self.obj.detail substringToIndex:15]];
     }
     if(self.obj.detail.length > 15){
         shareTitle = [self.obj.detail substringToIndex:15];
-        shareContent = [NSString stringWithFormat:@"%@…",[self.obj.detail substringToIndex:15]];
+        shareContent = [NSString stringWithFormat:@"%@...",[self.obj.detail substringToIndex:15]];
     }
     NSString *content = [NSString stringWithFormat:@"%@\"%@\"%@%@",@"Hi，我在金融大牛圈上看到了一个非常棒的帖子,关于",postContent,@"，赶快下载大牛圈查看吧！",[NSString stringWithFormat:@"%@%@",rBaseAddressForHttpShare,self.obj.rid]];
     id<ISSShareActionSheetItem> item1 = [ShareSDK shareActionSheetItemWithTitle:@"动态" icon:[UIImage imageNamed:@"圈子图标"] clickHandler:^{
@@ -1056,6 +1030,8 @@
     ReplyTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     if (!cell) {
         cell = [[[NSBundle mainBundle] loadNibNamed:@"ReplyTableViewCell" owner:self options:nil] lastObject];
+        UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(longPressGesturecognized:)];
+        [cell.contentView addGestureRecognizer:longPress];
     }
     cell.delegate = self;
     cell.index = indexPath.row;
@@ -1066,9 +1042,6 @@
         type = SHGCommentTypeLast;
     }
     [cell loadUIWithObj:obj commentType:type];
-    
-    UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(longPressGesturecognized:)];
-    [cell.contentView addGestureRecognizer:longPress];
     return cell;
 }
 
@@ -1102,7 +1075,8 @@
     if (indexPath.row == self.obj.comments.count - 1){
         height += kCommentBottomMargin;
     }
-    return height + kCommentMargin;
+    height += kCommentMargin;
+    return height;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -1289,11 +1263,10 @@
 }
 #pragma mark -- sdc
 #pragma mark -- 删除评论
-- (void)longPressGesturecognized:(id)sender{
-    
-    UILongPressGestureRecognizer *longPress = (UILongPressGestureRecognizer *)sender;
-    UIGestureRecognizerState state = longPress.state;//这是长按手势的状态   下面switch用到了
-    CGPoint location = [longPress locationInView:self.listTable];
+- (void)longPressGesturecognized:(UIGestureRecognizer *)recognizer
+{
+    UIGestureRecognizerState state = recognizer.state;//这是长按手势的状态   下面switch用到了
+    CGPoint location = [recognizer locationInView:self.listTable];
     NSIndexPath *indexPath = [self.listTable indexPathForRowAtPoint:location];
     switch (state)
     {

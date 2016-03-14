@@ -206,7 +206,7 @@
 -(void)go
 {
     NSString *url = [NSString stringWithFormat:@"%@/%@",rBaseAddressForHttpProd,@"appointment"];
-    [Hud showLoadingWithMessage:@"正在预约……"];
+    [Hud showLoadingWithMessage:@"正在预约......"];
     NSDictionary *param = @{@"uid":[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID], @"pid":_obj.pid};
     [MOCHTTPRequestOperationManager postWithURL:url class:nil parameters:param success:^(MOCHTTPResponse *response) {
         [Hud hideHud];
@@ -251,7 +251,7 @@
 
     NSString *name = self.obj.name;
     if (self.obj.name.length > 15) {
-        name = [NSString stringWithFormat:@"%@…",[self.obj.name substringToIndex:15]];
+        name = [NSString stringWithFormat:@"%@...",[self.obj.name substringToIndex:15]];
     }
     NSString *detail = [NSString stringWithFormat:@"%@：%@，%@，%@，%@，返佣费率%@%%",name,self.obj.left1,self.obj.right1,self.obj.left2,self.obj.right2,self.obj.commision];
     detail = name;

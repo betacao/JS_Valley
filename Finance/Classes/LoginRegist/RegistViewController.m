@@ -218,7 +218,7 @@ typedef NS_ENUM(NSInteger, RegistType)
         [Hud showMessageWithText:@"密码长度为6-20位"];
         return;
     }
-	[Hud showLoadingWithMessage:@"注册中……"];
+	[Hud showLoadingWithMessage:@"注册中......"];
 
 	NSString *osv = [UIDevice currentDevice].systemVersion;
 	NSString *channelId = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_BPUSH_CHANNELID];

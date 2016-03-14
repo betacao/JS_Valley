@@ -54,7 +54,7 @@
         [Hud showMessageWithText:@"请输入密码"];
         return;
     }
-    [Hud showLoadingWithMessage:@"登录中……"];
+    [Hud showLoadingWithMessage:@"登录中......"];
     NSString *password = [_lblPassward.text md5];
 
     NSString *osv = [UIDevice currentDevice].systemVersion;
