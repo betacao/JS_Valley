@@ -137,11 +137,11 @@
     [AppDelegate currentAppdelegate].window.rootViewController = [[BaseNavigationController alloc] initWithRootViewController:vc];
 }
 
--(void)autoLogin
+- (void)autoLogin
 {
     NSString *key_Uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
     NSString *key_Token = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_TOKEN];
-    if(!key_Uid || !key_Token){
+    if(IsStrEmpty(key_Uid) || IsStrEmpty(key_Token)){
         [self showLoginViewController];
         return;
     }

@@ -12,7 +12,7 @@
 #import "CircleListObj.h"
 #import "SHGCollectCardClass.h"
 #import "BasePeopleObject.h"
-#import "SHGHomeTableViewCell.h"
+#import "SHGMainPageTableViewCell.h"
 #import "ProductListTableViewCell.h"
 #import "SHGPersonalViewController.h"
 #import "SHGCardTableViewCell.h"
@@ -984,14 +984,14 @@
             CircleListObj *obj = self.dataSource[indexPath.row];
             
             if ([obj.status boolValue]) {
-                NSString *cellIdentifier = @"circleListIdentifier";
-                SHGHomeTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+                NSString *cellIdentifier = @"SHGMainPageTableViewCell";
+                SHGMainPageTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
                 if (!cell) {
-                    cell = [[[NSBundle mainBundle] loadNibNamed:@"SHGHomeTableViewCell" owner:self options:nil] lastObject];
+                    cell = [[[NSBundle mainBundle] loadNibNamed:@"SHGMainPageTableViewCell" owner:self options:nil] lastObject];
+                    cell.delegate = self;
                 }
                 cell.index = indexPath.row;
-                cell.delegate = self;
-                [cell loadDatasWithObj:obj type:@"normal"];
+                cell.object = obj;
                 return cell;
             }
             

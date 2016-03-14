@@ -45,7 +45,6 @@
 @property (strong, nonatomic) SHGNoticeView *newMessageNoticeView;
 @property (assign, nonatomic) BOOL isRefreshing;
 @property (strong, nonatomic) NSString *circleType;
-@property (assign, nonatomic) BOOL shouldDisplayRecommend;
 @property (strong, nonatomic) UITableViewCell *emptyCell;
 @property (strong, nonatomic) SHGEmptyDataView *emptyView;
 
@@ -72,12 +71,14 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+
     [self addHeaderRefresh:self.listTable headerRefesh:YES headerTitle:@{kRefreshStateIdle:@"下拉可以刷新", kRefreshStatePulling:@"释放后查看最新动态", kRefreshStateRefreshing:@"正在努力加载中"} andFooter:YES footerTitle:nil];
+
     self.listTable.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.listTable.estimatedRowHeight = SCREENWIDTH;
     self.listTable.rowHeight = SCREENWIDTH;
+
     self.hasRequestedFirst = NO;
-    self.shouldDisplayRecommend = YES;
     
     self.circleType = @"all";
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshData) name:NOTIFI_SENDPOST object:nil];
@@ -236,12 +237,9 @@
     if ([self.dataArr indexOfObject:self.recomandArray] != NSNotFound || self.recomandArray.count == 0) {
         return;
     }
-    //当前允许显示推荐好友 并且是动态页面不是已关注页面
-    if(self.shouldDisplayRecommend){
-        if(self.dataArr.count > 4){
-            if(self.recomandArray.count > 0){
-                [self.dataArr insertObject:self.recomandArray atIndex:3];
-            }
+    if(self.dataArr.count > 4){
+        if(self.recomandArray.count > 0){
+            [self.dataArr insertObject:self.recomandArray atIndex:3];
         }
     }
 }

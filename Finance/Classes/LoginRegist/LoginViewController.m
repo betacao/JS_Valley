@@ -42,12 +42,12 @@
 -(id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    
+
     if (self)
     {
         self.title = @"登录/注册";
     }
-    
+
     return  self;
 }
 
@@ -57,12 +57,12 @@
     self.navigationItem.leftBarButtonItem = nil;
     self.loginLab.textColor = RGB(96, 96, 96);
     if ([[NSUserDefaults standardUserDefaults]objectForKey:KEY_PHONE]){
-         _textUser.text = [[NSUserDefaults standardUserDefaults]objectForKey:KEY_PHONE];
+        _textUser.text = [[NSUserDefaults standardUserDefaults]objectForKey:KEY_PHONE];
     }
     UIView * paddingView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 20.0, 45.0)];
     self.textUser.leftView = paddingView;
     self.textUser.leftViewMode = UITextFieldViewModeAlways;
-    
+
     self.textUser.placeholder = @"请输入手机号码";
     [self.textUser setValue:[UIColor colorWithHexString:@"AFAFAF"] forKeyPath:@"_placeholderLabel.textColor"];
     [self.textUser setValue:[UIFont systemFontOfSize:14] forKeyPath:@"_placeholderLabel.font"];
@@ -72,7 +72,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
+
     [self adjustButtonFrame];
 }
 
@@ -81,16 +81,16 @@
     if(![WXApi isWXAppInstalled]){
         self.weChatButton.hidden = YES;
         CGFloat middle = SCREENWIDTH / 2.0f;
-        
+
         CGRect frame = self.QQButton.frame;
         frame.origin.x = middle - kButtonMargin / 2.0f - CGRectGetWidth(frame);
         self.QQButton.frame = frame;
-        
+
         frame = self.weiBoButton.frame;
         frame.origin.x = middle + kButtonMargin / 2.0f;
         self.weiBoButton.frame = frame;
     }
-    
+
     CGRect frame = self.lineLabel.frame;
     frame.origin.y = CGRectGetMaxY(self.textUser.frame) + 5.0f;
     frame.size.height = 0.5f;
@@ -108,12 +108,12 @@
     NSLog(@"regist");
     RegistViewController *vc = [[RegistViewController alloc] initWithNibName:@"RegistViewController" bundle:nil];
     [self.navigationController pushViewController:vc animated:YES];
-    
+
 }
 
 - (IBAction)actionShowMem:(id)sender {
     NSLog(@"showMem");
-    
+
 }
 
 - (IBAction)actionLogin:(id)sender {
@@ -155,21 +155,21 @@
             id<ISSQZoneApp> app =(id<ISSQZoneApp>)[ShareSDK getClientWithType:ShareTypeQQSpace];
             [app setIsAllowWebAuthorize:YES];
         }
-            
+
             break;
-            
+
         default:
             break;
     }
     [ShareSDK getUserInfoWithType:type authOptions:nil result:^(BOOL result, id<ISSPlatformUser> userInfo, id<ICMErrorInfo> error){
         if (result){
             NSLog(@"%@",[userInfo sourceData]);
-            
+
             NSString *osv = [UIDevice currentDevice].systemVersion;
             NSString *channelId = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_BPUSH_CHANNELID];
             NSString *userId = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_BPUSH_USERID];
             NSDictionary *param = @{@"loginNum":[userInfo uid], @"loginType":logType, @"ctype":@"iphone", @"os":@"ios", @"osv":osv, @"appv":LOCAL_Version, @"yuncid":channelId?:@"", @"yunuid":userId?:@""};
-            
+
             [MOCHTTPRequestOperationManager postWithURL:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"thirdLogin/isThirdLogin"] class:nil parameters:param success:^(MOCHTTPResponse *response){
                 [Hud hideHud];
                 NSString *isthirdlogin = response.dataDictionary[@"isthirdlogin"];
@@ -193,7 +193,7 @@
                 [[NSUserDefaults standardUserDefaults] setObject:@"1" forKey: KEY_AUTOLOGIN];
                 [[NSUserDefaults standardUserDefaults] setObject:pwd forKey:KEY_PASSWORD];
                 [[NSUserDefaults standardUserDefaults] synchronize];
-                
+
                 if ([isthirdlogin isEqualToString:@"false"]){
                     BindPhoneViewController *bindViewCon =[[BindPhoneViewController alloc]init];
                     [self.navigationController pushViewController:bindViewCon animated:YES];
@@ -201,12 +201,12 @@
                     [self chatLoagin];
                     [self loginSuccess];
                 }
-                
+
             } failed:^(MOCHTTPResponse *response) {
                 [Hud showMessageWithText:response.errorMessage];
                 [Hud hideHud];
             }];
-            
+
         } else{
             if  ([error errorCode] == -6004){ //跳转网页版
                 [Hud showMessageWithText:@"请先安装客户端"];
@@ -221,7 +221,7 @@
 - (void)login
 {
     [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttp,@"login",@"validate"] class:[LoginObj class] parameters:@{@"phone":self.textUser.text}success:^(MOCHTTPResponse *response){
-        
+
         [[NSUserDefaults standardUserDefaults] setObject:self.textUser.text forKey:KEY_PHONE];
         [Hud hideHud];
         NSLog(@"%@",response.dataDictionary);
@@ -243,12 +243,12 @@
         [Hud showMessageWithText:response.errorMessage];
         NSLog(@"%@",response.data);
         NSLog(@"%@",response.errorMessage);
-        
+
     }];
 }
 
 - (IBAction)actionFogetPwd:(id)sender {
-    
+
     NSLog(@"goget");
 
 }
@@ -256,7 +256,7 @@
 {
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
     NSString *password = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_PASSWORD];
-    
+
     [[EaseMob sharedInstance].chatManager asyncLoginWithUsername:uid password:password completion: ^(NSDictionary *loginInfo, EMError *error) {
         if (loginInfo && !error) {
             [[EaseMob sharedInstance].chatManager setIsAutoLoginEnabled:NO];
@@ -267,9 +267,9 @@
             if (!error) {
                 error = [[EaseMob sharedInstance].chatManager loadDataFromDatabase];
             }
-            
+
             [[ApplyViewController shareController] loadDataSourceFromLocalDB];
-            
+
         } else{
             switch (error.errorCode){
                 case EMErrorServerNotReachable:
@@ -291,6 +291,12 @@
 {
     [[AppDelegate currentAppdelegate] moveToRootController:self.rid];
 }
+
+- (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+{
+    [self.textUser resignFirstResponder];
+}
+
 - (IBAction)deleteButtonClick:(id)sender {
     self.textUser.text = @"";
     [self.textUser becomeFirstResponder];

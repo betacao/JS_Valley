@@ -97,7 +97,7 @@
 - (void)registerToken
 {
     NSString *channelId = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_BPUSH_CHANNELID];
-    NSString *uid =  [[NSUserDefaults standardUserDefaults]objectForKey:KEY_UID];
+    NSString *uid =  [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
 
     NSString *token = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_TOKEN];
     NSDictionary *param = @{@"uid":uid, @"t":token?:@"", @"channelid":channelId?:@"", @"channeluid":@"getui"};

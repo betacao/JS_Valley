@@ -50,6 +50,9 @@
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="sJ7-tc-eYm">
                         <rect key="frame" x="137" y="267" width="46" height="30"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <connections>
+                            <action selector="attentionButtonClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="J5n-Ko-HYb"/>
+                        </connections>
                     </button>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="S5s-b4-xnG" customClass="MLEmojiLabel">
                         <rect key="frame" x="35" y="136" width="244" height="21"/>
@@ -78,16 +81,25 @@
                                 <rect key="frame" x="83" y="25" width="14" height="22"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" image="home_delete"/>
+                                <connections>
+                                    <action selector="deleteButtonClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="Pd2-Y2-deb"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="1Ri-hV-DCa">
                                 <rect key="frame" x="137" y="33" width="14" height="22"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" image="home_weizan"/>
+                                <connections>
+                                    <action selector="praiseButtonClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="UgH-cU-j42"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="bM6-Pq-J7w">
                                 <rect key="frame" x="200" y="25" width="13" height="22"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" image="home_comment"/>
+                                <connections>
+                                    <action selector="commentButtonClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="DDd-UQ-ON0"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="kmK-Pa-UO9">
                                 <rect key="frame" x="272" y="25" width="13" height="22"/>

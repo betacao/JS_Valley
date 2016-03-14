@@ -285,30 +285,30 @@
 
 - (void)loadPhotoView:(CircleListObj *)object
 {
-//    [self.photoView removeAllSubviews];
-//    if ([object.type isEqualToString:TYPE_PHOTO]){
-//        SDPhotoGroup *photoGroup = [[SDPhotoGroup alloc] init];
-//        NSMutableArray *temp = [NSMutableArray array];
-//        [object.photos enumerateObjectsUsingBlock:^(NSString *src, NSUInteger idx, BOOL *stop) {
-//            SDPhotoItem *item = [[SDPhotoItem alloc] init];
-//            item.thumbnail_pic = [NSString stringWithFormat:@"%@%@",rBaseAddressForImage,src];
-//            [temp addObject:item];
-//        }];
-//        photoGroup.photoItemArray = temp;
-//        [self.photoView addSubview:photoGroup];
-//
-//        self.photoView.sd_resetLayout
-//        .leftEqualToView(self.headerView)
-//        .rightEqualToView(self.attentionButton)
-//        .topSpaceToView(self.contentLabel, kMainContentTopMargin)
-//        .heightIs(CGRectGetHeight(photoGroup.frame));
-//    } else{
+    [self.photoView removeAllSubviews];
+    if ([object.type isEqualToString:TYPE_PHOTO]){
+        SDPhotoGroup *photoGroup = [[SDPhotoGroup alloc] init];
+        NSMutableArray *temp = [NSMutableArray array];
+        [object.photos enumerateObjectsUsingBlock:^(NSString *src, NSUInteger idx, BOOL *stop) {
+            SDPhotoItem *item = [[SDPhotoItem alloc] init];
+            item.thumbnail_pic = [NSString stringWithFormat:@"%@%@",rBaseAddressForImage,src];
+            [temp addObject:item];
+        }];
+        photoGroup.photoItemArray = temp;
+        [self.photoView addSubview:photoGroup];
+
+        self.photoView.sd_resetLayout
+        .leftEqualToView(self.headerView)
+        .rightEqualToView(self.attentionButton)
+        .topSpaceToView(self.contentLabel, kMainContentTopMargin)
+        .heightIs(CGRectGetHeight(photoGroup.frame));
+    } else{
         self.photoView.sd_resetLayout
         .leftEqualToView(self.headerView)
         .rightEqualToView(self.attentionButton)
         .topSpaceToView(self.contentLabel, 0.0f)
         .heightIs(0.0f);
-//    }
+    }
 }
 
 - (void)loadActionView:(CircleListObj *)object
@@ -443,9 +443,33 @@
     .heightIs(kMainCellLineHeight);
 }
 
+- (IBAction)attentionButtonClick:(UIButton *)sender
+{
+    if ([self.object.userid isEqualToString:UID]){
+        [Hud showMessageWithText:@"不能关注自己"];
+        return;
+    }
+    [self.delegate attentionClicked:self.object];
+}
+
+- (IBAction)deleteButtonClick:(UIButton *)sender
+{
+    [self.delegate deleteClicked:self.object];
+}
+
+- (IBAction)praiseButtonClick:(UIButton *)sender
+{
+    [self.delegate praiseClicked:self.object];
+}
+
+- (IBAction)commentButtonClick:(UIButton *)sender
+{
+    [self.delegate clicked:self.index];
+}
+
 - (IBAction)shareButtonClick:(UIButton *)sender
 {
-
+    [self.delegate shareClicked:self.object];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated

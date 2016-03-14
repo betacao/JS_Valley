@@ -137,12 +137,11 @@
 #pragma mark ------ 请求首页数据 ------
 - (void)requestHomePageData
 {
-    NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
-    self.currentUserID = uid;
-    if(!uid || uid.length == 0){
+    self.currentUserID = UID;
+    if(IsStrEmpty(UID)){
         return;
     }
-    NSDictionary *param = @{@"uid":uid, @"type":@"all", @"target":@"first", @"rid":@(0), @"num": rRequestNum, @"tagId": @"-1"};
+    NSDictionary *param = @{@"uid":UID, @"type":@"all", @"target":@"first", @"rid":@(0), @"num": rRequestNum, @"tagId": @"-1"};
     
     __weak typeof(self) weakSelf = self;
     [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,dynamicAndNews] class:[CircleListObj class] parameters:param success:^(MOCHTTPResponse *response){
