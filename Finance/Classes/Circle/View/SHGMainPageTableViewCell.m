@@ -10,6 +10,7 @@
 #import "MLEmojiLabel.h"
 #import "SDPhotoGroup.h"
 #import "SDPhotoItem.h"
+#import "UIButton+EnlargeEdge.h"
 
 @interface SHGMainPageTableViewCell()<MLEmojiLabelDelegate>
 @property (weak, nonatomic) IBOutlet SHGUserHeaderView *headerView;
@@ -73,6 +74,8 @@
 
     self.relationLabel.font = kMainRelationFont;
     self.relationLabel.textColor = kMainRelationColor;
+
+    [self.deleteButton setEnlargeEdgeWithTop:10.0f right:0.0f bottom:10.0f left:20.0f];
 
     self.praiseButton.titleLabel.font = kMainNameFont;
     self.praiseButton.titleEdgeInsets = UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, -1.0f);
@@ -175,6 +178,8 @@
     [self.relationLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
 
 
+    [self.actionView setupAutoHeightWithBottomViewsArray:@[self.relationLabel, self.deleteButton, self.praiseButton, self.commentButton, self.shareButton] bottomMargin:kMainActionBottomMargin];
+    
     [self setupAutoHeightWithBottomView:self.splitView bottomMargin:0.0f];
 
 }
@@ -355,7 +360,6 @@
     .leftEqualToView(self.headerView)
     .rightEqualToView(self.attentionButton)
     .topSpaceToView(self.photoView, 0.0f);
-    [self.actionView setupAutoHeightWithBottomViewsArray:@[self.relationLabel, self.deleteButton, self.praiseButton, self.commentButton, self.shareButton] bottomMargin:kMainActionBottomMargin];
 }
 
 - (void)loadCommentView:(CircleListObj *)object

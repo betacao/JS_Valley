@@ -197,7 +197,6 @@
     static NSString *CellIdentifier = @"GroupCell";
     SHGGroupTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     SHGGroupObject *object = [[SHGGroupObject alloc] init];
-    NSLog(@"%ld, %ld",indexPath.section, indexPath.row);
     switch (indexPath.section) {
         case 0:{
             object.text = @"新建群组";
