@@ -7,7 +7,6 @@
 //
 
 #import "SHGMainPageTableViewCell.h"
-#import "MLEmojiLabel.h"
 #import "SDPhotoGroup.h"
 #import "SDPhotoItem.h"
 #import "UIButton+EnlargeEdge.h"
@@ -68,7 +67,6 @@
     self.contentLabel.lineBreakMode = NSLineBreakByWordWrapping;
     self.contentLabel.font = kMainContentFont;
     self.contentLabel.textColor = kMainContentColor;
-    self.contentLabel.delegate = self;
     self.contentLabel.backgroundColor = [UIColor clearColor];
     self.contentLabel.isAttributedContent = YES;
 
@@ -203,6 +201,12 @@
     [self loadCommentView:object];
 }
 
+- (void)setController:(UIViewController<MLEmojiLabelDelegate> *)controller
+{
+    _controller = controller;
+    self.contentLabel.delegate = controller;
+}
+
 - (void)clearCell
 {
     self.firstCommentLabel.text = @"";
@@ -245,14 +249,14 @@
     NSString *company = object.company;
     if (object.company.length > 6) {
         NSString *str = [object.company substringToIndex:6];
-        company = [NSString stringWithFormat:@"%@…",str];
+        company = [NSString stringWithFormat:@"%@...",str];
     }
     self.companyLabel.text = company;
 
     NSString *str = object.title;
     if (object.title.length > 4) {
         str= [object.title substringToIndex:4];
-        str = [NSString stringWithFormat:@"%@…",str];
+        str = [NSString stringWithFormat:@"%@...",str];
     }
     self.departmentLabel.text = str;
 
@@ -260,6 +264,8 @@
 
     if ([object.userid isEqualToString:UID]) {
         self.attentionButton.hidden = YES;
+    } else{
+        self.attentionButton.hidden = NO;
     }
 
     if ([object.isattention isEqualToString:@"Y"] || [object.userid isEqualToString:CHATID_MANAGER]){

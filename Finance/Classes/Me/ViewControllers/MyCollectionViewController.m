@@ -17,7 +17,6 @@
 #import "SHGPersonalViewController.h"
 #import "SHGCardTableViewCell.h"
 #import "SHGNewsTableViewCell.h"
-#import "CircleNewDetailViewController.h"
 #import "SHGEmptyDataView.h"
 #import "SHGMarketObject.h"
 #import "SHGMarketTableViewCell.h"
@@ -28,7 +27,7 @@
 #import "ProdConfigViewController.h"
 #import "CircleDetailViewController.h"
 #define KButtonWidth 320.f/4.0 * XFACTOR
-@interface MyCollectionViewController ()<SHGMarketTableViewDelegate>
+@interface MyCollectionViewController ()<SHGMarketTableViewDelegate, MLEmojiLabelDelegate>
 {
     UIImageView *imageBttomLine;
     BOOL hasDataFinished;
@@ -956,33 +955,32 @@
     if (self.selectType == 1) {
         CircleListObj *obj = self.dataSource[indexPath.row];
         if ([obj.status boolValue]) {
-            return [obj fetchCellHeight];
+            CGFloat height = [tableView cellHeightForIndexPath:indexPath model:obj keyPath:@"object" cellClass:[SHGMainPageTableViewCell class] contentViewWidth:SCREENWIDTH];
+            return height;
         }  else{
             return 44.0f;
         }
     } else if (self.selectType == 3){
         return MarginFactor(116.0f);
-        
+
     } else if (self.selectType == 4) {
         return MarginFactor(90.0f);
-        
+
     } else if (self.selectType == 2) {
         SHGMarketObject *object = [self.marketList objectAtIndex:indexPath.row];
         CGFloat height = [self.tableView cellHeightForIndexPath:indexPath model:object keyPath:@"object" cellClass:[SHGMarketTableViewCell class] contentViewWidth:SCREENWIDTH];
         return height;
 
     } else {
-        return 0;
+        return 0.0f;
     }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
-        if (self.selectType == 1) {
-            if (self.dataSource.count > 0) {
+    if (self.selectType == 1) {
+        if (self.dataSource.count > 0) {
             CircleListObj *obj = self.dataSource[indexPath.row];
-            
             if ([obj.status boolValue]) {
                 NSString *cellIdentifier = @"SHGMainPageTableViewCell";
                 SHGMainPageTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
@@ -992,11 +990,9 @@
                 }
                 cell.index = indexPath.row;
                 cell.object = obj;
+                cell.controller = self;
                 return cell;
-            }
-            
-            else
-            {
+            } else{
                 NSString *cellIdentifier = @"noListIdentifier";
                 UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
                 if (!cell) {
@@ -1004,66 +1000,60 @@
                 }
                 cell.textLabel.text = @"原帖已删除";
                 cell.textLabel.font = [UIFont systemFontOfSize:16.0f];
-                
+
                 return cell;
             }
-              }else
-              {
-                  return self.emptyCell;
-              }
-        }else if (self.selectType == 3)
-        {
-            if (self.dataSource.count > 0 ) {
-                
-            
+        } else{
+            return self.emptyCell;
+        }
+    } else if(self.selectType == 3){
+        if (self.dataSource.count > 0 ) {
             NSString *prodCellIdentifier = @"circleCellIdentifier";
             ProductListTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:prodCellIdentifier];
             if (!cell) {
                 cell = [[[NSBundle mainBundle] loadNibNamed:@"ProductListTableViewCell" owner:self options:nil] lastObject];
             }
             ProdListObj *obj = self.dataSource[indexPath.row];
-                cell.object = obj;
+            cell.object = obj;
             return cell;
-            }
-            else
-            {
-                return self.emptyCell;
-            }
-        }if (self.selectType == 4) {
-            if (self.dataSource > 0) {
-                NSString *cardCellIdentifier = @"circleCellIdentifier";
-                SHGCardTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cardCellIdentifier];
-                if (!cell) {
-                    cell = [[[NSBundle mainBundle] loadNibNamed:@"SHGCardTableViewCell" owner:self options:nil] lastObject];
-                }
-                SHGCollectCardClass *obj = self.dataSource[indexPath.row];
-                cell.object = obj;
-                return cell;
-            } else{
-                return self.emptyCell;
-            }
-            
+        } else{
+            return self.emptyCell;
         }
-        if (self.selectType == 2) {
-            
-            NSString *identifier = @"SHGMarketTableViewCell";
-            if (self.dataSource.count > 0) {
-                SHGMarketTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
-                if (!cell) {
-                    cell = [[[NSBundle mainBundle] loadNibNamed:@"SHGMarketTableViewCell" owner:self options:nil] lastObject];
-                }
-                cell.delegate = self;
-                SHGMarketObject * obj = [self.dataSource objectAtIndex:indexPath.row];
-                cell.object = obj;
-                 [(SHGMarketTableViewCell *)cell loadNewUiFortype:SHGMarketTableViewCellTypeAll];
-                return cell;
-            } else{
-                return self.emptyCell;
+    } else if(self.selectType == 4) {
+        if (self.dataSource > 0) {
+            NSString *cardCellIdentifier = @"circleCellIdentifier";
+            SHGCardTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cardCellIdentifier];
+            if (!cell) {
+                cell = [[[NSBundle mainBundle] loadNibNamed:@"SHGCardTableViewCell" owner:self options:nil] lastObject];
             }
+            SHGCollectCardClass *obj = self.dataSource[indexPath.row];
+            cell.object = obj;
+            return cell;
+        } else{
+            return self.emptyCell;
         }
+
+    }
+    if (self.selectType == 2) {
+
+        NSString *identifier = @"SHGMarketTableViewCell";
+        if (self.dataSource.count > 0) {
+            SHGMarketTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+            if (!cell) {
+                cell = [[[NSBundle mainBundle] loadNibNamed:@"SHGMarketTableViewCell" owner:self options:nil] lastObject];
+            }
+            cell.delegate = self;
+            SHGMarketObject * obj = [self.dataSource objectAtIndex:indexPath.row];
+            cell.object = obj;
+            [(SHGMarketTableViewCell *)cell loadNewUiFortype:SHGMarketTableViewCellTypeAll];
+            return cell;
+        } else{
+            return self.emptyCell;
+        }
+    }
     
-		return nil;
-		
+    return nil;
+
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

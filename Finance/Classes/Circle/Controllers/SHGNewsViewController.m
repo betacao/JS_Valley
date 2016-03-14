@@ -20,7 +20,6 @@
 //添加分类
 #import "CirclleItemObj.h"
 #import "SHGNewsTableViewCell.h"
-#import "CircleNewDetailViewController.h"
 
 #define ImageBttomLineWidth 32
 @interface SHGNewsViewController ()<MLEmojiLabelDelegate,SHGNoticeDelegate>
@@ -555,17 +554,17 @@
     if ([archiverData writeToFile:filePath atomically:YES]) {
         NSLog(@"archiver success");
     }
-    if (self.currentArry.count > 0) {
-       SHGNewsTableViewCell * cell = [tableView cellForRowAtIndexPath:indexPath];
-        [cell loadTitleLabelChange];
-        CircleListObj *obj = [self.currentArry objectAtIndex:indexPath.row];
-        CircleNewDetailViewController *  viewController =[[CircleNewDetailViewController alloc] initWithNibName:@"CircleNewDetailViewController" bundle:nil];
-        viewController.delegate = [SHGUnifiedTreatment sharedTreatment];
-        viewController.rid = obj.rid;
-        NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:obj.praisenum, kPraiseNum,obj.sharenum,kShareNum,obj.cmmtnum,kCommentNum, nil];
-        viewController.itemInfoDictionary = dictionary;
-        [self.navigationController pushViewController:viewController animated:YES];
-    }
+//    if (self.currentArry.count > 0) {
+//       SHGNewsTableViewCell * cell = [tableView cellForRowAtIndexPath:indexPath];
+//        [cell loadTitleLabelChange];
+//        CircleListObj *obj = [self.currentArry objectAtIndex:indexPath.row];
+//        CircleNewDetailViewController *  viewController =[[CircleNewDetailViewController alloc] initWithNibName:@"CircleNewDetailViewController" bundle:nil];
+//        viewController.delegate = [SHGUnifiedTreatment sharedTreatment];
+//        viewController.rid = obj.rid;
+//        NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:obj.praisenum, kPraiseNum,obj.sharenum,kShareNum,obj.cmmtnum,kCommentNum, nil];
+//        viewController.itemInfoDictionary = dictionary;
+//        [self.navigationController pushViewController:viewController animated:YES];
+//    }
 }
 
 //处理tableView左边空白

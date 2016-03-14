@@ -697,8 +697,6 @@
 		98CB422F1C3262C00023A124 /* SHGSecondCategoryButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 98CB422E1C3262C00023A124 /* SHGSecondCategoryButton.m */; };
 		98D13FD71C3B69E6007CDFCD /* SHGMyTeamListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98D13FD51C3B69E6007CDFCD /* SHGMyTeamListTableViewController.m */; };
 		98D13FD81C3B69E6007CDFCD /* SHGMyTeamListTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98D13FD61C3B69E6007CDFCD /* SHGMyTeamListTableViewController.xib */; };
-		98D65B021C1E607300B65119 /* CircleNewDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98D65B001C1E607300B65119 /* CircleNewDetailViewController.m */; };
-		98D65B031C1E607300B65119 /* CircleNewDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98D65B011C1E607300B65119 /* CircleNewDetailViewController.xib */; };
 		98D73C2D1C194E7E0055AF75 /* SHGNewsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 98D73C2B1C194E7E0055AF75 /* SHGNewsTableViewCell.m */; };
 		98D73C2E1C194E7E0055AF75 /* SHGNewsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98D73C2C1C194E7E0055AF75 /* SHGNewsTableViewCell.xib */; };
 		98DCAF5B1C90B60400C648A4 /* SHGPersonalTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 98DCAF591C90B60400C648A4 /* SHGPersonalTableViewCell.m */; };
@@ -1909,9 +1907,6 @@
 		98D13FD41C3B69E6007CDFCD /* SHGMyTeamListTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGMyTeamListTableViewController.h; sourceTree = "<group>"; };
 		98D13FD51C3B69E6007CDFCD /* SHGMyTeamListTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGMyTeamListTableViewController.m; sourceTree = "<group>"; };
 		98D13FD61C3B69E6007CDFCD /* SHGMyTeamListTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGMyTeamListTableViewController.xib; sourceTree = "<group>"; };
-		98D65AFF1C1E607300B65119 /* CircleNewDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CircleNewDetailViewController.h; sourceTree = "<group>"; };
-		98D65B001C1E607300B65119 /* CircleNewDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CircleNewDetailViewController.m; sourceTree = "<group>"; };
-		98D65B011C1E607300B65119 /* CircleNewDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CircleNewDetailViewController.xib; sourceTree = "<group>"; };
 		98D73C2A1C194E7E0055AF75 /* SHGNewsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGNewsTableViewCell.h; sourceTree = "<group>"; };
 		98D73C2B1C194E7E0055AF75 /* SHGNewsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGNewsTableViewCell.m; sourceTree = "<group>"; };
 		98D73C2C1C194E7E0055AF75 /* SHGNewsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGNewsTableViewCell.xib; sourceTree = "<group>"; };
@@ -3043,9 +3038,6 @@
 				985CBDB71C03FD0B002B3D9D /* SHGCardTableViewCell.h */,
 				985CBDB81C03FD0B002B3D9D /* SHGCardTableViewCell.m */,
 				985CBDB91C03FD0B002B3D9D /* SHGCardTableViewCell.xib */,
-				98D65AFF1C1E607300B65119 /* CircleNewDetailViewController.h */,
-				98D65B001C1E607300B65119 /* CircleNewDetailViewController.m */,
-				98D65B011C1E607300B65119 /* CircleNewDetailViewController.xib */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -5068,7 +5060,6 @@
 				F9A8D28B1BE712B700A2BFB1 /* WeiboSDK.bundle in Resources */,
 				B080FEA61B81E30100426579 /* emoji_recent_n.png in Resources */,
 				408D8B1F1AF8618C0055810C /* call_out_h.png in Resources */,
-				98D65B031C1E607300B65119 /* CircleNewDetailViewController.xib in Resources */,
 				408D8AEB1AF8618C0055810C /* chatListCellHead.png in Resources */,
 				614AD19F1AD75EA000DDF43E /* regist_btn_unselect@2x.png in Resources */,
 				6149CFDF1B259E40006E45FE /* options_pointer@2x.png in Resources */,
@@ -5729,7 +5720,6 @@
 				6187D2D11AF1C693008E1D21 /* PublicGroupDetailViewController.m in Sources */,
 				614AD1AF1AD7AC4D00DDF43E /* RegistViewController.m in Sources */,
 				F9E2A4B01BE99A4C00ECB234 /* SHGSegmentController.m in Sources */,
-				98D65B021C1E607300B65119 /* CircleNewDetailViewController.m in Sources */,
 				B085B5381B749E2000DC592E /* Extend_Description.m in Sources */,
 				4088DDAD1AF102FE00393855 /* DingDQRCodeShareViewController.m in Sources */,
 				6187D2CE1AF1C693008E1D21 /* GroupListViewController.m in Sources */,

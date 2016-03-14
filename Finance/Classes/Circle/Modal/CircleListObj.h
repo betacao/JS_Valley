@@ -54,7 +54,6 @@
 @property (nonatomic,strong) NSString *pcurl;
 @property (nonatomic,strong) NSString *shareTitle;
 
--(CGFloat)fetchCellHeight;
 
 @end
 

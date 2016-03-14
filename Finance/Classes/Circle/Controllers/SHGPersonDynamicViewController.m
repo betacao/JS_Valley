@@ -118,9 +118,7 @@
         cell.index = indexPath.row;
         cell.delegate = self;
         cell.object = obj;
-
-        MLEmojiLabel *mlLable = (MLEmojiLabel *)[cell viewWithTag:521];
-        mlLable.delegate = self;
+        cell.controller = self;
         return cell;
     } else{
         NSString *cellIdentifier = @"noListIdentifier";

@@ -16,13 +16,14 @@
 #import "SHGPersonalViewController.h"
 #import "CircleListDelegate.h"
 #import "CircleLinkViewController.h"
+#import "ReplyTableViewCell.h"
 
 #define PRAISE_SEPWIDTH     10
 #define PRAISE_RIGHTWIDTH     40
 #define PRAISE_WIDTH 28.0f
 #define kItemMargin 7.0f * XFACTOR
 
-@interface CircleDetailViewController ()<MLEmojiLabelDelegate, CircleListDelegate>
+@interface CircleDetailViewController ()<MLEmojiLabelDelegate, CircleListDelegate, ReplyDelegate>
 {
     UIControl *backView;
     UIView *PickerBackView;
@@ -109,11 +110,11 @@
         [Hud hideHud];
         [Hud showMessageWithText:response.errorMessage];
     }];
-    [self initData];
 }
 
 - (void)initView
 {
+    self.viewHeader.clipsToBounds = YES;
     self.listTable.tableFooterView = [[UIView alloc] init];
     self.listTable.backgroundColor = [UIColor whiteColor];
 
@@ -396,11 +397,12 @@
 
 }
 
-- (void)initData
+- (CircleListObj *)obj
 {
-    if (!self.obj) {
-        self.obj = [[CircleListObj alloc] init];
+    if (!_obj) {
+        _obj = [[CircleListObj alloc] init];
     }
+    return _obj;
 }
 
 
@@ -484,7 +486,7 @@
     self.lblTime.text = obj.publishdate;
     [self.btnShare setTitle:obj.sharenum forState:UIControlStateNormal];
     [self.btnShare sizeToFit];
-    [self.btnComment setTitle:@"100000" forState:UIControlStateNormal];
+    [self.btnComment setTitle:obj.cmmtnum forState:UIControlStateNormal];
     [self.btnComment sizeToFit];
     [self.btnPraise setTitle:obj.praisenum forState:UIControlStateNormal];
     [self.btnPraise sizeToFit];
@@ -1102,16 +1104,6 @@
     }
     return height + kCommentMargin;
 }
-
-//-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-//{
-//    return _viewHeader.height;
-//}
-//
-//-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-//{
-//    return _viewHeader;
-//}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {

@@ -487,6 +487,7 @@
                     }
                     cell.index = indexPath.row;
                     cell.object = obj;
+                    cell.controller = self;
                     return cell;
                 }
             } else{
