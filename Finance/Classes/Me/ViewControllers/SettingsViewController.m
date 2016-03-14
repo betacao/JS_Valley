@@ -140,7 +140,7 @@
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    UIView *sectionView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 50)];
+    UIView *sectionView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, MarginFactor(50.0f))];
     sectionView.backgroundColor = RGB(240, 240, 240);
     return sectionView;
 }
@@ -152,7 +152,7 @@
     SHGSettingTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIndentity];
     if (cell == nil) {
         cell = [[[NSBundle mainBundle] loadNibNamed:@"SHGSettingTableViewCell" owner:self options:nil] lastObject];
-        cell.textLabel.font = [UIFont systemFontOfSize:14.0f];
+        cell.textLabel.font = FontFactor(15.0f);
         cell.textLabel.textColor = [UIColor colorWithHexString:@"161616"];
         cell.textLabel.backgroundColor = [UIColor clearColor];
     }
@@ -181,7 +181,7 @@
         UILabel *label = [[UILabel alloc] init];
         label.textAlignment = NSTextAlignmentRight;
         label.text = [NSString stringWithFormat:@"%0.1fM",[self folderSizeAtPath]];
-        label.font = [UIFont systemFontOfSize:12.0f];
+        label.font = FontFactor(14.0f);
         label.textColor = [UIColor colorWithHexString:@"919291"];
         [label sizeToFit];
         label.frame = cell.rightView.bounds;
@@ -195,7 +195,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 45.0f;
+    return MarginFactor(55.0f);
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
@@ -203,7 +203,7 @@
     if (section == 0) {
         return 0.0f;
     }
-    return 10.0f;
+    return MarginFactor(11.0f);
 }
 
 - (void)changeUpdateState

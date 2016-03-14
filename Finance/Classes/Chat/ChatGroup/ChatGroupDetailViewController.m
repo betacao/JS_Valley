@@ -155,7 +155,6 @@
     if (_scrollView == nil) {
         _scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(kScrollViewLeftMargin, 0.0f, CGRectGetWidth(self.view.frame) - 2 * kScrollViewLeftMargin, kContactSize)];
         _scrollView.tag = 0;
-        _scrollView.backgroundColor = [UIColor redColor];
         _addButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, kContactSize, kContactSize)];
         [_addButton setImage:[UIImage imageNamed:@"addImageButton"] forState:UIControlStateNormal];
         [_addButton addTarget:self action:@selector(addContact:) forControlEvents:UIControlEventTouchUpInside];
