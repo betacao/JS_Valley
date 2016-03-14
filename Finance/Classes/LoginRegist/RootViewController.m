@@ -43,7 +43,6 @@
 
 - (void)moveToHomePage
 {
-    [[SHGGloble sharedGloble] requestHomePageData];
     NSString *flagStr = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_AUTOLOGIN];
     BOOL flag = NO;
     if (!IsStrEmpty(flagStr)){

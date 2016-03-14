@@ -1010,6 +1010,7 @@
 
 - (void)moveToRootController:(NSDictionary *)dictionary
 {
+    [[SHGGloble sharedGloble] requestHomePageData];
     TabBarViewController *controller = [TabBarViewController tabBar];
     if ([controller isViewLoaded]) {
         controller.selectedIndex = 0;
