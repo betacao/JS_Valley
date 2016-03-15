@@ -576,8 +576,8 @@
 {
     // 判断是否可以发送短信
     BOOL canSendSMS = [MFMessageComposeViewController canSendText];
-    if (canSendSMS)
-    {
+    if (canSendSMS){
+        [Hud showLoadingWithMessage:@"请稍等..."];
         MFMessageComposeViewController *smsPicker = [[MFMessageComposeViewController alloc] init];
         smsPicker.messageComposeDelegate = self;
         NSString *shareBody = text;
@@ -588,10 +588,10 @@
         }
         
         shareRid = rid;
-        [[AppDelegate currentAppdelegate].window.rootViewController presentViewController:smsPicker animated:YES completion:nil];
-    }
-    else
-    {
+        [[AppDelegate currentAppdelegate].window.rootViewController presentViewController:smsPicker animated:YES completion:^{
+            [Hud hideHud];
+        }];
+    } else{
         [Hud showMessageWithText:@"设备不支持短信"];
     }
 }
@@ -602,55 +602,40 @@
     
     NSString *text ;
     if (shareRid.length > 9) {
-        switch (result)
-        {
+        switch (result){
             case MessageComposeResultCancelled:
                 text = @"发送取消";
-                
                 break;
-                
             case MessageComposeResultSent:
                 text = @"发送成功";
-                
                 break;
-                
             case MessageComposeResultFailed:
                 text = @"发送失败";
-                
                 break;
-                
             default:
                 break;
         }
-    }
-    else
-    {
-        switch (result)
-        {
+        [Hud showMessageWithText:text];
+    } else{
+        switch (result){
             case MessageComposeResultCancelled:
                 text = @"分享取消";
                 [Hud showMessageWithText:text];
-                
                 break;
-                
             case MessageComposeResultSent:
                 text = @"分享成功";
-                if (shareRid.length > 0) {
+                if (shareRid.length > 0){
                     [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_CHANGE_SHARE_TO_SMSSUCCESS object:shareRid];
                 }
                 break;
-
             case MessageComposeResultFailed:
                 text = @"分享失败";
                 [Hud showMessageWithText:text];
-                
                 break;
-                
             default:
                 break;
         }
     }
-    
 }
 
 #pragma mark weibo
@@ -974,8 +959,6 @@
         controller.selectedIndex = 0;
         [controller tabBar:controller.tabBar didSelectItem:[controller.tabBar.items firstObject]];
     }
-    [[SHGHomeViewController sharedController] requestRecommendFriends];
-//    controller.dictionary = dictionary;
     BaseNavigationController *nav = [[BaseNavigationController alloc] initWithRootViewController:controller];
     self.window.rootViewController = nav;
 }

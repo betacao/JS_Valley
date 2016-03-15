@@ -95,8 +95,6 @@ static NSString * const kCommonFNum			= @"commonnum";
     [self loadUI];
     [TabBarViewController tabBar].tabBar.backgroundColor = [UIColor whiteColor];
     [self removeEmptyConversationsFromDB];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(actionInvite:) name:NOTIFI_CHANGE_ACTION_INVITE_FRIEND object:nil];
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshChatList) name:@"refreshFriendList" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshDataSource) name:NOTIFI_CHANGE_UPDATE_FRIEND_LIST object:nil];
@@ -981,18 +979,6 @@ static NSString * const kCommonFNum			= @"commonnum";
     [self.view addSubview:self.tableView];
     [self addHeaderRefresh:self.tableView headerRefesh:YES andFooter:NO];
     self.navigationItem.titleView = self.titleView;
-}
-
-- (void)actionInvite:(NSNotification *)noti
-{
-    NSString *uid = noti.object;
-    NSString *content =[NSString stringWithFormat:@"%@%@",@"诚邀您加入大牛圈APP！金融从业人员的家！这里有干货资讯、人脉嫁接、业务互助！赶快加入吧！",[NSString stringWithFormat:@"%@?uid=%@",SHARE_YAOQING_URL,[[NSUserDefaults standardUserDefaults]objectForKey:KEY_UID]]];
-    [self shareToSMS:content rid:uid];
-}
-
-- (void)shareToSMS:(NSString *)text rid:(NSString *)rid
-{
-    [[AppDelegate currentAppdelegate] sendSmsWithText:text rid:rid];
 }
 
 - (void)reloadGroupView

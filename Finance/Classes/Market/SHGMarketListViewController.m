@@ -36,6 +36,7 @@
 @property (strong, nonatomic) NSString *index;
 @property (strong, nonatomic) NSMutableDictionary *positionDictionary;
 @property (strong, nonatomic) NSArray *selectedArray;
+@property (assign, nonatomic) BOOL refreshing;
 @end
 
 @implementation SHGMarketListViewController
@@ -108,44 +109,57 @@
     if ([target isEqualToString:@"first"]) {
         [self.tableView setContentOffset:CGPointZero];
     }
-    NSString *area = [SHGMarketManager shareManager].cityName;
-
+    if (self.refreshing) {
+        return;
+    }
     NSString *position = [self.positionDictionary objectForKey:[self.scrollView marketName]];
     NSString *redirect = [position isEqualToString:@"0"] ? @"1" : @"0";
-
-    NSDictionary *param = @{@"marketId":marketId ,@"uid":UID ,@"type":@"all" ,@"target":target ,@"pageSize":@"10" ,@"firstCatalog":firstId ,@"secondCatalog":secondId, @"modifyTime":modifyTime, @"city":area, @"redirect":redirect};
-
-    [SHGMarketManager loadTotalMarketList:param block:^(NSArray *dataArray, NSString *index, NSString *total, NSString *tipUrl) {
-
+    NSString *area = [SHGMarketManager shareManager].cityName;
+    if (!area) {
         [weakSelf.tableView.header endRefreshing];
         [weakSelf.tableView.footer endRefreshing];
-        if ([target isEqualToString:@"first"]) {
-            [weakSelf.currentArray removeAllObjects];
-            [weakSelf.currentArray addObjectsFromArray:dataArray];
-            //第一次给服务器的值
-            weakSelf.index = index;
-            [weakSelf.noticeView showWithText:[NSString stringWithFormat:@"为您加载了%ld条新业务",(long)dataArray.count]];
-        } else if([target isEqualToString:@"refresh"]){
-            for (NSInteger i = dataArray.count - 1; i >= 0; i--){
-                SHGMarketObject *obj = [dataArray objectAtIndex:i];
-                [weakSelf.currentArray insertUniqueObject:obj atIndex:0];
-            }
-            //下拉的话如果之前显示了偏少 则下移 否则不管
-            NSInteger position = [[weakSelf.positionDictionary objectForKey:[weakSelf.scrollView marketFirstId]] integerValue];
-            if (position > 0) {
-                weakSelf.index = [NSString stringWithFormat:@"%ld", (long)(position + dataArray.count)];
-            }
-            if (dataArray.count > 0) {
+        return;
+    }
+    NSDictionary *param = @{@"marketId":marketId ,@"uid":UID ,@"type":@"all" ,@"target":target ,@"pageSize":@"10" ,@"firstCatalog":firstId ,@"secondCatalog":secondId, @"modifyTime":modifyTime, @"city":area, @"redirect":redirect};
+    self.refreshing = YES;
+    [SHGMarketManager loadTotalMarketList:param block:^(NSArray *dataArray, NSString *index, NSString *total, NSString *tipUrl) {
+        if (dataArray) {
+            weakSelf.refreshing = NO;
+            if ([target isEqualToString:@"first"]) {
+                [weakSelf.currentArray removeAllObjects];
+                [weakSelf.currentArray addObjectsFromArray:dataArray];
+                //第一次给服务器的值
+                weakSelf.index = index;
                 [weakSelf.noticeView showWithText:[NSString stringWithFormat:@"为您加载了%ld条新业务",(long)dataArray.count]];
-            } else{
-                [weakSelf.noticeView showWithText:@"暂无新业务，休息一会儿"];
+            } else if([target isEqualToString:@"refresh"]){
+                for (NSInteger i = dataArray.count - 1; i >= 0; i--){
+                    SHGMarketObject *obj = [dataArray objectAtIndex:i];
+                    [weakSelf.currentArray insertUniqueObject:obj atIndex:0];
+                }
+                //下拉的话如果之前显示了偏少 则下移 否则不管
+                NSInteger position = [[weakSelf.positionDictionary objectForKey:[weakSelf.scrollView marketFirstId]] integerValue];
+                if (position > 0) {
+                    weakSelf.index = [NSString stringWithFormat:@"%ld", (long)(position + dataArray.count)];
+                }
+                if (dataArray.count > 0) {
+                    [weakSelf.noticeView showWithText:[NSString stringWithFormat:@"为您加载了%ld条新业务",(long)dataArray.count]];
+                } else{
+                    [weakSelf.noticeView showWithText:@"暂无新业务，休息一会儿"];
+                }
+            } else if([target isEqualToString:@"load"]){
+                [weakSelf.currentArray addObjectsFromArray:dataArray];
             }
-        } else if([target isEqualToString:@"load"]){
-            [weakSelf.currentArray addObjectsFromArray:dataArray];
-        }
-        weakSelf.tipUrl = tipUrl;
+            weakSelf.tipUrl = tipUrl;
 
-        [weakSelf.tableView reloadData];
+            [weakSelf.tableView.header endRefreshing];
+            [weakSelf.tableView.footer endRefreshing];
+            
+            [weakSelf.tableView reloadData];
+        } else{
+            [weakSelf.tableView.header endRefreshing];
+            [weakSelf.tableView.footer endRefreshing];
+            weakSelf.refreshing = NO;
+        }
     }];
 }
 

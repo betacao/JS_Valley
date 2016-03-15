@@ -122,15 +122,16 @@
     self.navigationItem.titleView = nil;
     self.navigationItem.rightBarButtonItems = nil;
     if (item.tag == 1000){
-        self.navigationItem.titleView = self.homeSegmentTitleView;
-        self.navigationItem.rightBarButtonItem = self.homeSegmentViewController.rightBarButtonItem;
-        self.navigationItem.leftBarButtonItem = self.homeSegmentViewController.leftBarButtonItem;
-        [MobClick event:@"SHGHomeViewController" label:@"onClick"];
-    } else if (item.tag == 2000){
         self.navigationItem.titleView = self.marketSegmentTitleView;
         self.navigationItem.rightBarButtonItems = self.marketSegmentViewController.rightBarButtonItems;
         self.navigationItem.leftBarButtonItem = self.marketSegmentViewController.leftBarButtonItem;
         [MobClick event:@"EnterMarketController" label:@"onClick"];
+
+    } else if (item.tag == 2000){
+        self.navigationItem.titleView = self.homeSegmentTitleView;
+        self.navigationItem.rightBarButtonItem = self.homeSegmentViewController.rightBarButtonItem;
+        self.navigationItem.leftBarButtonItem = self.homeSegmentViewController.leftBarButtonItem;
+        [MobClick event:@"SHGHomeViewController" label:@"onClick"];
 
     } else if (item.tag == 3000){
         self.navigationItem.leftBarButtonItem=nil;
@@ -150,13 +151,24 @@
 -(void)initSubpage
 {
     //首页
-    UIImage *image = [UIImage imageNamed:@"home"];
+    __weak typeof(self)weakSelf = self;
+    UIImage *image = [UIImage imageNamed:@"business"];
     image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    UIImage *selectedImage = [UIImage imageNamed:@"home_height"];
+    UIImage *selectedImage = [UIImage imageNamed:@"business_height"];
+    selectedImage = [selectedImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    self.marketSegmentViewController.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"业务" image:image selectedImage:selectedImage];
+    self.marketSegmentViewController.tabBarItem.tag = 1000;
+    self.marketSegmentViewController.block = ^(UIView *view){
+        weakSelf.marketSegmentTitleView = view;
+        weakSelf.navigationItem.titleView = weakSelf.marketSegmentTitleView;
+    };
+
+    image = [UIImage imageNamed:@"home"];
+    image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    selectedImage = [UIImage imageNamed:@"home_height"];
     selectedImage = [selectedImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     self.homeSegmentViewController.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"动态" image:image selectedImage:selectedImage];
-    self.homeSegmentViewController.tabBarItem.tag = 1000;
-    __weak typeof(self)weakSelf = self;
+    self.homeSegmentViewController.tabBarItem.tag = 2000;
     self.homeSegmentViewController.block = ^(UIView *view){
         weakSelf.homeSegmentTitleView = view;
         weakSelf.navigationItem.titleView = weakSelf.homeSegmentTitleView;
@@ -164,16 +176,6 @@
     self.navigationItem.rightBarButtonItem = self.homeSegmentViewController.rightBarButtonItem;
     self.navigationItem.leftBarButtonItem = self.homeSegmentViewController.leftBarButtonItem;
     //业务
-    image = [UIImage imageNamed:@"business"];
-    image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    selectedImage = [UIImage imageNamed:@"business_height"];
-    selectedImage = [selectedImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    self.marketSegmentViewController.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"业务" image:image selectedImage:selectedImage];
-    self.marketSegmentViewController.tabBarItem.tag = 2000;
-    self.marketSegmentViewController.block = ^(UIView *view){
-        weakSelf.marketSegmentTitleView = view;
-        weakSelf.navigationItem.titleView = weakSelf.marketSegmentTitleView;
-    };
     //产品
     image = [UIImage imageNamed:@"find"];
     image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
@@ -193,7 +195,7 @@
     [[UITabBarItem appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor colorWithHexString:@"949494"],NSForegroundColorAttributeName, nil] forState:UIControlStateNormal];
     [[UITabBarItem appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor colorWithHexString:@"E21F0D"],NSForegroundColorAttributeName, nil] forState:UIControlStateSelected];
 
-    self.viewControllers = [NSArray arrayWithObjects:self.homeSegmentViewController,self.marketSegmentViewController,self.prodViewController ,self.meViewController ,nil];
+    self.viewControllers = [NSArray arrayWithObjects:self.marketSegmentViewController,self.homeSegmentViewController,self.prodViewController ,self.meViewController ,nil];
     self.selectedIndex = 0;
     
 }

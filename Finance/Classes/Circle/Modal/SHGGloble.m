@@ -191,7 +191,7 @@
 {
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
     if(uid && uid.length != 0 && ![self.currentUserID isEqualToString:uid]){
-//        [self requestHomePageData];
+        self.currentUserID = uid;
         SHGMarketSegmentViewController *controller = [SHGMarketSegmentViewController sharedSegmentController];
         if ([controller isViewLoaded]) {
             [controller refreshListViewController];

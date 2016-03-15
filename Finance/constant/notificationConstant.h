@@ -25,7 +25,6 @@
 #define NOTIFI_CHANGE_UPDATE_FRIEND_LIST     @"notificationUpdateFriendList"
 #define NOTIFI_CHANGE_SHOULD_UPDATE     @"notificationShouldUpdate"
 
-#define NOTIFI_CHANGE_ACTION_INVITE_FRIEND     @"notificationInviteFriend"
 
 #define NOTIFI_CHANGE_SHARE_TO_FRIENDSUCCESS    @"notificationShareToFriendSuccess"
 #define NOTIFI_CHANGE_SHARE_TO_SMSSUCCESS    @"notificationShareToSMSSuccess"

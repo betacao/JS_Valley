@@ -47,6 +47,7 @@
 - (void)setObjectArray:(NSArray *)objectArray
 {
     _objectArray = objectArray;
+    [self clearCell];
     for (RecmdFriendObj *object in objectArray) {
         NSInteger index = [objectArray indexOfObject:object];
         UIView *contentView = nil;
@@ -96,6 +97,7 @@
             [self.viewArray addObject:contentView];
         } else{
             contentView = [self.viewArray objectAtIndex:index];
+            contentView.hidden = NO;
             header = [contentView viewWithTag:101];
             nameLabel = [contentView viewWithTag:102];
             companyLabel = [contentView viewWithTag:103];
@@ -129,6 +131,12 @@
             detailString = [@"你们都在：" stringByAppendingFormat:@"%@",object.company];
         } else if ([flag isEqualToString:@"attention"]){
             detailString = [[NSString stringWithFormat:@"%@",object.recomfri] stringByAppendingString:@"等人也关注了他"];
+        } else if ([flag isEqualToString:@"top"]){
+            detailString = @"top";
+        } else if ([flag isEqualToString:@"vocationcity"]){
+            detailString = @"vocationcity";
+        } else if ([flag isEqualToString:@"gradecity"]){
+            detailString = @"gradecity";
         }
         detailLabel.text = detailString;
 
@@ -140,7 +148,7 @@
     }
 
     self.splitView.sd_layout
-    .topSpaceToView([self.viewArray lastObject], -0.5f)
+    .topSpaceToView([self.viewArray objectAtIndex:objectArray.count - 1], -0.5f)
     .leftSpaceToView(self.contentView, 0.0f)
     .rightSpaceToView(self.contentView, 0.0f)
     .heightIs(kMainCellLineHeight);
@@ -221,6 +229,13 @@
     detailLabel.textColor = kMainTimeColor;
 
     lineView.backgroundColor = kMainLineViewColor;
+}
+
+- (void)clearCell
+{
+    [self.viewArray enumerateObjectsUsingBlock:^(UIView *view, NSUInteger idx, BOOL * _Nonnull stop) {
+        view.hidden = YES;
+    }];
 }
 
 - (void)didClickFocusButton:(UIButton *)sender

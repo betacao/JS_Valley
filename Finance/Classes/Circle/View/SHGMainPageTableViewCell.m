@@ -356,6 +356,12 @@
         self.deleteButton.hidden = YES;
     }
 
+    if (![object.ispraise isEqualToString:@"Y"]) {
+        [self.praiseButton setImage:[UIImage imageNamed:@"home_weizan"] forState:UIControlStateNormal];
+    }else{
+        [self.praiseButton setImage:[UIImage imageNamed:@"home_yizan"] forState:UIControlStateNormal];
+    }
+
     [self.praiseButton setTitle:[@" " stringByAppendingString:object.praisenum]forState:UIControlStateNormal];
     [self.praiseButton sizeToFit];
     [self.commentButton setTitle:[@" " stringByAppendingString:object.cmmtnum]forState:UIControlStateNormal];

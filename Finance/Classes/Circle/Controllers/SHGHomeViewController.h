@@ -14,5 +14,4 @@
 - (NSMutableArray *) currentListArray;
 - (void)deleteCellAtIndexPath:(NSArray *)paths;
 - (void)refreshHeader;
-- (void)requestRecommendFriends;
 @end

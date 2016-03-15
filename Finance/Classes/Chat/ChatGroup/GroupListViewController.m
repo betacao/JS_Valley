@@ -176,17 +176,15 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (isExpand[section] == YES){
+    if (section == 0) {
+        return 1;
+    } else if (isExpand[section] == YES){
         if  (section == 1){
             return [self.dataSource count];
         } else if (section == 2){
             return [self.commonArr count];
         } else if (section == 3){
             return [self.joinArr count];
-        }
-    } else{
-        if (section == 0){
-            return 1;
         }
     }
     return 0;
@@ -286,7 +284,7 @@
     NSInteger index = [self.titleArray indexOfObject:object];
     isExpand[index] = !isExpand[index];
     NSIndexSet *set =[NSIndexSet indexSetWithIndex:index];
-    [self.tableView reloadSections:set withRowAnimation:UITableViewRowAnimationNone];
+    [self.tableView reloadSections:set withRowAnimation:UITableViewRowAnimationAutomatic];
     
 }
 
@@ -294,6 +292,7 @@
 {
     return MarginFactor(55.0f);
 }
+
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     if (section == 0) {
         return 0;
@@ -351,19 +350,6 @@
     
 }
 
-- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
-    if ([cell respondsToSelector:@selector(setSeparatorInset:)]) {
-        
-        [cell setSeparatorInset:UIEdgeInsetsMake(0,15,0,0)];
-        
-    }
-    
-    if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
-        
-        [cell setLayoutMargins:UIEdgeInsetsMake(0,15,0,0)];
-        
-    }
-}
 #pragma mark - UISearchBarDelegate
 - (void)searchDisplayControllerWillBeginSearch:(UISearchDisplayController *)controller
 {

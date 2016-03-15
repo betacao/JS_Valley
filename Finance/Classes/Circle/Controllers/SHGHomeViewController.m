@@ -32,7 +32,7 @@
 
 @property (weak, nonatomic) IBOutlet UITableView *listTable;
 //判断是否已经加载过推荐列表
-@property (strong, nonatomic) NSMutableArray *recomandArray;
+@property (strong, nonatomic) NSMutableArray *recommendArray;
 
 @property (assign, nonatomic) BOOL hasRequestedFirst;
 @property (assign, nonatomic) BOOL hasDataFinished;
@@ -43,6 +43,7 @@
 @property (strong, nonatomic) NSString *circleType;
 @property (strong, nonatomic) UITableViewCell *emptyCell;
 @property (strong, nonatomic) SHGEmptyDataView *emptyView;
+@property (strong, nonatomic) NSMutableDictionary *recommendHeightDictionary;
 
 @end
 
@@ -69,8 +70,6 @@
     [super viewDidLoad];
 
     [self addHeaderRefresh:self.listTable headerRefesh:YES headerTitle:@{kRefreshStateIdle:@"下拉可以刷新", kRefreshStatePulling:@"释放后查看最新动态", kRefreshStateRefreshing:@"正在努力加载中"} andFooter:YES footerTitle:nil];
-
-    self.listTable.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.listTable.estimatedRowHeight = SCREENWIDTH;
     self.listTable.rowHeight = SCREENWIDTH;
 
@@ -98,6 +97,7 @@
         __weak typeof(self) weakSelf = self;
         [SHGGloble sharedGloble].CompletionBlock = ^(NSArray *allArray, NSArray *normalArray, NSArray *adArray){
             [Hud hideHud];
+            [weakSelf requestRecommendFriends];
             if(allArray && [allArray count] > 0){
                 //更新整体数据
                 [weakSelf.dataArr removeAllObjects];
@@ -114,14 +114,13 @@
 
                 [weakSelf.newMessageNoticeView showWithText:[NSString stringWithFormat:@"为您加载了%ld条新动态",(long)allArray.count]];
 
-                [weakSelf insertRecomandArray];
                 dispatch_async(dispatch_get_main_queue(), ^(){
                     [weakSelf.listTable reloadData];
                 });
             } else{
                 [weakSelf.listTable.header endRefreshing];
+                [weakSelf.listTable.footer endRefreshing];
                 [Hud showMessageWithText:@"获取首页数据失败"];
-                [weakSelf performSelector:@selector(endrefresh) withObject:nil afterDelay:1.0];
             }
         };
     }
@@ -149,12 +148,12 @@
     return self.listArray;
 }
 
-- (NSMutableArray *)recomandArray
+- (NSMutableArray *)recommendArray
 {
-    if(!_recomandArray){
-        _recomandArray = [NSMutableArray array];
+    if(!_recommendArray){
+        _recommendArray = [NSMutableArray array];
     }
-    return _recomandArray;
+    return _recommendArray;
 }
 
 - (SHGNoticeView *)newFriendNoticeView
@@ -195,13 +194,20 @@
     return _emptyView;
 }
 
+- (NSMutableDictionary *)recommendHeightDictionary
+{
+    if (!_recommendHeightDictionary) {
+        _recommendHeightDictionary = [NSMutableDictionary dictionary];
+    }
+    return _recommendHeightDictionary;
+}
+
 - (void)requestRecommendFriends
 {
-    NSDictionary *param = @{@"uid":UID, @"area":@""};
+    [self.recommendArray removeAllObjects];
     __weak typeof(self) weakSelf = self;
-    [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/v1/recommended/friends/recommendedFriend",rBaseAddRessHttp] class:[RecmdFriendObj class] parameters:param success:^(MOCHTTPResponse *response){
-        [weakSelf.recomandArray removeAllObjects];
-        [weakSelf.dataArr removeObject:weakSelf.recomandArray];
+    [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/v1/recommended/friends/recommendedFriendGrade",rBaseAddRessHttp] class:[RecmdFriendObj class] parameters:@{@"uid":UID} success:^(MOCHTTPResponse *response){
+        [weakSelf.dataArr removeObject:weakSelf.recommendArray];
         for (int i = 0; i < response.dataArray.count; i++){
             NSDictionary *dic = response.dataArray[i];
             
@@ -215,7 +221,7 @@
             obj.company = [dic valueForKey:@"company"];
             obj.recomfri = [dic valueForKey:@"recomfri"];
             obj.title = [dic valueForKey:@"title"];
-            [weakSelf.recomandArray addObject:obj];
+            [weakSelf.recommendArray addObject:obj];
         }
         [weakSelf insertRecomandArray];
         dispatch_async(dispatch_get_main_queue(), ^(){
@@ -230,12 +236,12 @@
 
 - (void)insertRecomandArray
 {
-    if ([self.dataArr indexOfObject:self.recomandArray] != NSNotFound || self.recomandArray.count == 0) {
+    if ([self.dataArr indexOfObject:self.recommendArray] != NSNotFound || self.recommendArray.count == 0) {
         return;
     }
     if(self.dataArr.count > 4){
-        if(self.recomandArray.count > 0){
-            [self.dataArr insertObject:self.recomandArray atIndex:3];
+        if(self.recommendArray.count > 0){
+            [self.dataArr insertObject:self.recommendArray atIndex:3];
         }
     }
 }
@@ -291,12 +297,12 @@
 
     __weak typeof(self) weakSelf = self;
     [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,dynamicAndNews] class:[CircleListObj class] parameters:param success:^(MOCHTTPResponse *response){
+        [Hud hideHud];
         weakSelf.isRefreshing = NO;
         [weakSelf assembleDictionary:response.dataDictionary target:target];
 
         [weakSelf.listTable.header endRefreshing];
         [weakSelf.listTable.footer endRefreshing];
-        [Hud hideHud];
         dispatch_async(dispatch_get_main_queue(), ^(){
             [weakSelf.listTable reloadData];
         });
@@ -306,7 +312,7 @@
         [Hud showMessageWithText:response.errorMessage];
         NSLog(@"%@",response.errorMessage);
         [weakSelf.listTable.header endRefreshing];
-        [weakSelf performSelector:@selector(endrefresh) withObject:nil afterDelay:1.0];
+        [weakSelf.listTable.footer endRefreshing];
         [Hud hideHud];
     }];
 }
@@ -374,10 +380,6 @@
     }
 }
 
-- (void)endrefresh
-{
-    [self.listTable.footer endRefreshing];
-}
 //发帖
 - (void)actionPost:(UIButton *)sender
 {
@@ -574,7 +576,12 @@
             return height;
         }
     } else{
-        CGFloat height = [tableView cellHeightForIndexPath:indexPath model:obj keyPath:@"objectArray" cellClass:[SHGRecommendTableViewCell class] contentViewWidth:CGFLOAT_MAX];
+        NSString *key = [NSString stringWithFormat:@"recommendHeight%ld",(long)self.recommendArray.count];
+        CGFloat height = [[self.recommendHeightDictionary objectForKey:key] floatValue];
+        if (height == 0.0f) {
+            height = [tableView cellHeightForIndexPath:indexPath model:obj keyPath:@"objectArray" cellClass:[SHGRecommendTableViewCell class] contentViewWidth:CGFLOAT_MAX];
+            [self.recommendHeightDictionary setObject:@(height) forKey:key];
+        }
         return height;
     }
     return 0.0f;

@@ -7,6 +7,7 @@
 //
 
 #import "SHGConnectionsTableViewCell.h"
+#import "UIButton+EnlargeEdge.h"
 
 @interface SHGConnectionsTableViewCell()
 @property (strong, nonatomic) NSString *uid;
@@ -43,6 +44,8 @@
     self.stateLabel.textColor = [UIColor colorWithHexString:@"4277b2"];
 
     self.lineLabel.backgroundColor = [UIColor colorWithHexString:@"e6e7e8"];
+
+    [self.invateButton setEnlargeEdge:20.0f];
 }
 
 - (void)addAutoLayout
@@ -227,7 +230,9 @@
 
 - (IBAction)actionInvite:(id)sender
 {
-    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_CHANGE_ACTION_INVITE_FRIEND object:self.uid];
+    NSString *content =[NSString stringWithFormat:@"%@%@",@"诚邀您加入大牛圈APP！金融从业人员的家！这里有干货资讯、人脉嫁接、业务互助！赶快加入吧！",[NSString stringWithFormat:@"%@?uid=%@",SHARE_YAOQING_URL,[[NSUserDefaults standardUserDefaults]objectForKey:KEY_UID]]];
+
+    [[AppDelegate currentAppdelegate] sendSmsWithText:content rid:self.uid];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
