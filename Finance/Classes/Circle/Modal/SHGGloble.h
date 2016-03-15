@@ -166,8 +166,18 @@ typedef void (^SHHomeDataCompletionBlock)(NSArray *allList, NSArray *normalList,
  */
 - (void)recordUserAction:(NSString *)recordIdStr type:(NSString *)typeStr;
 
-//向服务端传递
+/**
+ @breief  向服务端传递
+
+ @since 1.7
+ */
 
 - (void)registerToken:(NSDictionary *)param block:(void(^)(BOOL success, MOCHTTPResponse *response))block;
 
+/**
+ @breief  获取当前的界面
+
+ @since 1.8
+ */
+- (UIViewController *)getCurrentRootViewController;
 @end

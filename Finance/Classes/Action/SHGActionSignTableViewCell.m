@@ -39,8 +39,6 @@
      self.action_signRightButton.titleLabel.font = [UIFont systemFontOfSize:14];
     self.action_bottomXuXian.hidden = YES;
     self.action_signHeadImage.userInteractionEnabled = YES;
-    UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapUserHeaderImageView:)];
-    [self.action_signHeadImage addGestureRecognizer:recognizer];
 }
 
 
@@ -83,11 +81,9 @@
     self.object = object;
     self.action_signNameLabel.text = object.realname;
     self.action_signCommpanyLable.text = object.company;
-//    [self.action_signHeadImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,object.headimageurl]] placeholderImage:[UIImage imageNamed:@"default_head"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-//
-//    }];
-    [self.action_signHeadImage updateStatus:[object.status isEqualToString:@"1"] ? YES : NO];
-    [self.action_signHeadImage updateHeaderView:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,object.headimageurl] placeholderImage:[UIImage imageNamed:@"default_head"]];
+
+    BOOL status = [object.status isEqualToString:@"1"] ? YES : NO;
+    [self.action_signHeadImage updateHeaderView:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,object.headimageurl] placeholderImage:[UIImage imageNamed:@"default_head"] status:status userID:object.uid];
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
     if ([uid isEqualToString:publisher]) {
         if ([object.state isEqualToString:@"0"]) {
@@ -151,12 +147,5 @@
         return NO;
     }
     return YES;
-}
-
-- (void)tapUserHeaderImageView:(UIGestureRecognizer *)recognizer
-{
-    if (self.delegate && [self.delegate respondsToSelector:@selector(tapUserHeaderImageView:)]) {
-        [self.delegate tapUserHeaderImageView:self.object.uid];
-    }
 }
 @end

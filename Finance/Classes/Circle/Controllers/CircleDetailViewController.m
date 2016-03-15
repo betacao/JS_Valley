@@ -65,7 +65,6 @@
 - (IBAction)actionPraise:(id)sender;
 - (IBAction)actionShare:(id)sender;
 - (IBAction)actionCollection:(id)sender;
-- (IBAction)actionGoSome:(id)sender;
 - (IBAction)actionDelete:(id)sender;
 
 @end
@@ -154,9 +153,6 @@
     self.btnSend.layer.cornerRadius = 4;
 
     self.lineView.backgroundColor = [UIColor colorWithHexString:@"e6e7e8"];
-    DDTapGestureRecognizer *hdGes = [[DDTapGestureRecognizer alloc] initWithTarget:self action:@selector(didTapHeaderView:)];
-    [self.imageHeader addGestureRecognizer:hdGes];
-    self.imageHeader.userInteractionEnabled = YES;
 
     UIImage *image = self.backImageView.image;
     image = [image resizableImageWithCapInsets:UIEdgeInsetsMake(15.0f, 35.0f, 9.0f, 11.0f) resizingMode:UIImageResizingModeStretch];
@@ -433,8 +429,8 @@
         self.btnDelete.hidden = YES;
     }
 
-    [self.imageHeader updateHeaderView:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,obj.potname] placeholderImage:[UIImage imageNamed:@"default_head"]];
-    [self.imageHeader updateStatus:[obj.userstatus isEqualToString:@"true"] ? YES : NO];
+    BOOL status = [obj.userstatus isEqualToString:@"true"] ? YES : NO;
+    [self.imageHeader updateHeaderView:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,obj.potname] placeholderImage:[UIImage imageNamed:@"default_head"] status:status userID:obj.userid];
 
     if (![obj.ispraise isEqualToString:@"Y"]) {
         [self.btnPraise setImage:[UIImage imageNamed:@"home_weizan"] forState:UIControlStateNormal];
@@ -513,15 +509,9 @@
         for (int i = 0; i < self.obj.heads.count; i ++ ) {
             praiseOBj *obj = self.obj.heads[i];
             praiseWidth = MarginFactor(30.0f);
-            NSLog(@"%f",SCREENWIDTH);
             CGRect rect = CGRectMake((praiseWidth + MarginFactor(7.0f)) * i , MarginFactor(13.0f), praiseWidth, praiseWidth);
             UIImageView *head = [[UIImageView alloc] initWithFrame:rect];
-            head.tag = i + 1000;
             [head sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,obj.ppotname]] placeholderImage:[UIImage imageNamed:@"default_head"]];
-            head.userInteractionEnabled = YES;
-            DDTapGestureRecognizer *ges = [[DDTapGestureRecognizer alloc] initWithTarget:self action:@selector(pushSome:)];
-            ges.tag = i + 1000;
-            [head addGestureRecognizer:ges];
             [_scrollPraise addSubview:head];
             
         }
@@ -557,13 +547,7 @@
     [self gotoSomeOneWithId:obj.cid name:obj.cnickname];
     
 }
--(void)pushSome:(DDTapGestureRecognizer *)ges
-{
-    
-    praiseOBj *obj = self.obj.heads[ges.tag-1000];
-    [self gotoSomeOneWithId:obj.puserid name:obj.pnickname];
-    
-}
+
 -(void)gotoSomeOneWithId:(NSString *)uid name:(NSString *)name
 {
     SHGPersonalViewController *controller = [[SHGPersonalViewController alloc] initWithNibName:@"SHGPersonalViewController" bundle:nil];
@@ -572,11 +556,13 @@
     controller.delegate = self;
     [self.navigationController pushViewController:controller animated:YES];
 }
+
 -(void)rnickClick:(NSInteger)index
 {
     commentOBj *obj = self.obj.comments[index];
     [self gotoSomeOneWithId:obj.rid name:obj.rnickname];
 }
+
 -(void)replyClick:(NSInteger )index
 {
     [self replyClicked:self.obj commentIndex:index];
@@ -1007,11 +993,6 @@
     }
 }
 
-- (void)didTapHeaderView:(DDTapGestureRecognizer *)ges
-{
-    [self gotoSomeOneWithId:self.obj.userid name:self.obj.nickname];
-}
-
 -(void)refreshFooter
 {
     
@@ -1102,12 +1083,6 @@
         NSLog(@"%@",obj.cnickname);
         NSLog(@"%@",self.obj.nickname);
     }
-}
-
-
-
-- (IBAction)actionGoSome:(id)sender {
-    [self gotoSomeOneWithId:self.obj.userid name:self.obj.nickname];
 }
 
 -(void)linkTap:(DDTapGestureRecognizer *)ges

@@ -13,7 +13,7 @@
 #import "SHGPersonFriendsTableViewCell.h"
 #import "SHGPersonalViewController.h"
 #define kRowHeight 50;
-@interface SHGPersonFriendsViewController ()<UITableViewDataSource,UITableViewDelegate,SHGPersonFriendsDelegate>
+@interface SHGPersonFriendsViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
 //    NSInteger pageNum;
     
@@ -55,12 +55,7 @@
     
     
 }
-- (void)tapUserHeaderImageView:(NSString *)uid
-{
-    SHGPersonalViewController * vc = [[SHGPersonalViewController alloc]init ];
-    vc.userId = uid;
-    [self.navigationController pushViewController:vc animated:YES];
-}
+
 - (NSMutableArray *)dataSource
 {
     if ((!_dataSource)) {
@@ -246,7 +241,6 @@
     }
     
     [cell loadDatasWithObj:obj];
-    cell.delegate = self;
 
     return cell;
 }

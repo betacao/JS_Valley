@@ -8,12 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "BasePeopleObject.h"
-@protocol SHGPersonFriendsDelegate<NSObject>
-- (void)tapUserHeaderImageView:(NSString *)uid;
-@end
 @interface SHGPersonFriendsTableViewCell : UITableViewCell
 
 @property (strong, nonatomic) NSString *uid;
-@property (assign, nonatomic) id<SHGPersonFriendsDelegate> delegate;
 - (void)loadDatasWithObj:(BasePeopleObject *)obj;
 @end

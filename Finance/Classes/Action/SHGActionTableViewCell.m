@@ -62,9 +62,6 @@
     [self.Action_zanButton setImage:[UIImage imageNamed:@"home_weizan"] forState:UIControlStateNormal];
     //我的活动
     [self.Action_thr_zanButton setImage:[UIImage imageNamed:@"home_weizan"] forState:UIControlStateNormal];
-
-    UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapUserHeaderImageView:)];
-    [self.Action_headImage addGestureRecognizer:recognizer];
 }
 
 - (void)loadDataWithObject:(SHGActionObject *)object index:(NSInteger)index
@@ -76,8 +73,10 @@
     } else{
         self.Acyion_titleBg.hidden = NO;
     }
-    [self.Action_headImage updateStatus:[object.status isEqualToString:@"1"] ? YES : NO];
-    [self.Action_headImage updateHeaderView:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,object.headerImageUrl] placeholderImage:[UIImage imageNamed:@"default_head"]];
+
+    BOOL status = [object.status isEqualToString:@"1"] ? YES : NO;
+    [self.Action_headImage updateHeaderView:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,object.headerImageUrl] placeholderImage:[UIImage imageNamed:@"default_head"] status:status userID:object.publisher];
+    
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
     NSString *theme = object.theme;
     if (theme.length > 15) {
@@ -246,12 +245,6 @@
 {
     if (self.delegate && [self.delegate respondsToSelector:@selector(clickEditButton:)]) {
         [self.delegate clickEditButton:self.object];
-    }
-}
-- (void)tapUserHeaderImageView:(UIGestureRecognizer *)recognizer
-{
-    if (self.delegate && [self.delegate respondsToSelector:@selector(tapUserHeaderImageView:)]) {
-        [self.delegate tapUserHeaderImageView:self.object.publisher];
     }
 }
 

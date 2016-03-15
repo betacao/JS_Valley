@@ -105,7 +105,7 @@
             lineView = [contentView viewWithTag:107];
         }
 
-        [header updateHeaderView:object.headimg placeholderImage:[UIImage imageNamed:@"default_head"]];
+        [header updateHeaderView:object.headimg placeholderImage:[UIImage imageNamed:@"default_head"] status:NO userID:object.uid];
         nameLabel.text = object.username;
         NSString *company = object.company;
         if (company.length > 6) {

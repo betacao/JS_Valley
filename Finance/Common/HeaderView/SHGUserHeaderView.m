@@ -8,10 +8,12 @@
 
 #import "SHGUserHeaderView.h"
 #import "UIKit+AFNetworking.h"
+#import "SHGPersonalViewController.h"
 
 @interface SHGUserHeaderView ()
 @property (strong, nonatomic) UIImageView *VImageView;
 @property (strong, nonatomic) UIImageView *headerImageView;
+@property (strong, nonatomic) NSString *userId;
 
 @end
 
@@ -36,6 +38,9 @@
         [self addSubview:self.VImageView];
 
         self.VImageView.hidden = YES;
+
+        UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapUserHeaderView)];
+        [self addGestureRecognizer:recognizer];
         
     }
     return self;
@@ -60,6 +65,9 @@
     [self addSubview:self.VImageView];
     
     self.VImageView.hidden = YES;
+
+    UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapUserHeaderView)];
+    [self addGestureRecognizer:recognizer];
 }
 
 - (void)layoutSubviews
@@ -70,8 +78,14 @@
 }
 
 
-- (void)updateHeaderView:(NSString *)sourceUrl placeholderImage:(UIImage *)placeImage
+- (void)updateHeaderView:(NSString *)sourceUrl placeholderImage:(UIImage *)placeImage status:(BOOL)status userID:(NSString *)userId
 {
+    if(status){
+        self.VImageView.hidden = NO;
+    } else{
+        self.VImageView.hidden = YES;
+    }
+    self.userId = userId;
     self.headerImageView.image = placeImage;
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:sourceUrl]];
     [request addValue:@"image/*" forHTTPHeaderField:@"Accept"];
@@ -79,17 +93,35 @@
 }
 
 
-
-- (void)updateStatus:(BOOL)status
+- (void)tapUserHeaderView
 {
-    if(status){
-        self.VImageView.hidden = NO;
-    } else{
-        self.VImageView.hidden = YES;
-    }
-//    self.VImageView.hidden = NO;
+    SHGPersonalViewController *personController = [[SHGPersonalViewController alloc] init];
+    personController.userId = self.userId;
+    UIViewController *controller = [[SHGGloble sharedGloble] getCurrentRootViewController];
+//    [controller pushViewController:personController animated:YES];
+    [self pushIntoViewController:controller newViewController:personController];
 }
 
-//- (void)setn
+- (void)pushIntoViewController:(UIViewController*)viewController newViewController:(UIViewController*)newController
+{
+    UINavigationController *navs;
+    if ([viewController isKindOfClass:[UINavigationController class]]) {
+        navs = (UINavigationController *)viewController;
+        if (navs.visibleViewController.navigationController){
+            [navs.visibleViewController.navigationController pushViewController:newController animated:YES];
+        }
+    }else if ([viewController isKindOfClass:[UITabBarController class]]){
+        UITabBarController *tab = (UITabBarController *)viewController;
+        navs = (UINavigationController *)tab.selectedViewController;
+        if (navs.visibleViewController.navigationController) {
+            [navs.visibleViewController.navigationController pushViewController:newController animated:YES];
+        }
+    }else{
+        navs = viewController.navigationController;
+        if (navs.visibleViewController.navigationController) {
+            [navs.visibleViewController.navigationController pushViewController:newController animated:YES];
+        }
+    }
+}
 
 @end

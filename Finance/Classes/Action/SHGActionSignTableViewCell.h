@@ -14,7 +14,6 @@
 
 - (void)meetAttend:(SHGActionAttendObject *)object clickCommitButton:(UIButton *)button;
 - (void)meetAttend:(SHGActionAttendObject *)object clickRejectButton:(UIButton *)button reason:(NSString *)reason ;
-- (void)tapUserHeaderImageView:(NSString *)uid;
 
 @end
 

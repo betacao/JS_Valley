@@ -508,23 +508,6 @@
     }
 }
 
--(void)gotoSomeOne:(NSString *)uid name:(NSString *)name
-{
-    SHGPersonalViewController *controller = [[SHGPersonalViewController alloc] initWithNibName:@"SHGPersonalViewController" bundle:nil];
-    controller.hidesBottomBarWhenPushed = YES;
-    controller.userId = uid;
-    controller.delegate = self;
-    [self.navigationController pushViewController:controller animated:YES];
-    
-}
--(void)headTap:(NSInteger)index
-{
-    
-    CircleListObj *obj = self.dataSource[index];
-    [self gotoSomeOne:obj.userid name:obj.nickname];
-    
-}
-
 - (void)clicked:(NSInteger )index;
 {
     CircleDetailViewController *vc = [[CircleDetailViewController alloc] initWithNibName:@"CircleDetailViewController" bundle:nil];
@@ -1282,15 +1265,6 @@
     controller.object = object;
     controller.delegate = [SHGMarketSegmentViewController sharedSegmentController];
     [self.navigationController pushViewController:controller animated:YES];
-}
-
-
-- (void)tapUserHeaderImageView:(NSString *)uid
-{
-    __weak typeof(self) weakSelf = self;
-    SHGPersonalViewController * controller = [[SHGPersonalViewController alloc] init];
-    controller.userId = uid;
-    [weakSelf.navigationController pushViewController:controller animated:YES];
 }
 
 - (void)clickDeleteButton:(SHGMarketObject *)object

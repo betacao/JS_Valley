@@ -114,8 +114,8 @@
         }
         company = obj.company;
 
-        [self.headerView updateHeaderView:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,obj.headImageUrl] placeholderImage:[UIImage imageNamed:@"default_head"]];
-        [self.headerView updateStatus:[obj.userstatus isEqualToString:@"true"] ? YES : NO];
+        BOOL status = [obj.userstatus isEqualToString:@"true"] ? YES : NO;
+        [self.headerView updateHeaderView:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,obj.headImageUrl] placeholderImage:[UIImage imageNamed:@"default_head"] status:status userID:obj.uid];
 
         if (self.type == SHGContactTypeFirst){
             if([obj.rela integerValue] == 0){
@@ -155,8 +155,8 @@
         company = obj.company;
 
 
-        [self.headerView updateHeaderView:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,obj.headImageUrl] placeholderImage:[UIImage imageNamed:@"default_head"]];
-        [self.headerView updateStatus:[obj.userstatus isEqualToString:@"true"] ? YES : NO];
+        BOOL status = [obj.userstatus isEqualToString:@"true"] ? YES : NO;
+        [self.headerView updateHeaderView:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,obj.headImageUrl] placeholderImage:[UIImage imageNamed:@"default_head"] status:status userID:obj.uid];
 
         if (self.type == SHGContactTypeFirst){
             if([obj.rela integerValue] == 0){

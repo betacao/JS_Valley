@@ -18,25 +18,17 @@
 @implementation SHGPersonFriendsTableViewCell
 
 - (void)awakeFromNib {
+
     
-    UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapUserHeaderImageView:)];
-    [self.headeimage addGestureRecognizer:recognizer];
-    
-}
-- (void)tapUserHeaderImageView:(UIGestureRecognizer *)recognizer
-{
-    if (self.delegate && [self.delegate respondsToSelector:@selector(tapUserHeaderImageView:)]) {
-        [self.delegate tapUserHeaderImageView:self.uid];
-    }
 }
 
 - (void)loadDatasWithObj:(BasePeopleObject *)obj
 {
     [self clearCell];
     self.obj = obj;
-    //[self.headeimage updateHeaderView:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,obj.headImageUrl] placeholderImage:[UIImage imageNamed:@"default_head"]];
-    [self.headeimage updateHeaderView:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,obj.headImageUrl] placeholderImage:[UIImage imageNamed:@"default_head"]];
-    [self.headeimage updateStatus:[obj.userstatus isEqualToString:@"true"] ? YES : NO];
+
+    BOOL status = [obj.userstatus isEqualToString:@"true"] ? YES : NO;
+    [self.headeimage updateHeaderView:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,obj.headImageUrl] placeholderImage:[UIImage imageNamed:@"default_head"] status:status userID:obj.uid];
     self.nameLabel.text = obj.name;
     self.companyLabel.text = obj.company;
     self.uid = obj.uid;

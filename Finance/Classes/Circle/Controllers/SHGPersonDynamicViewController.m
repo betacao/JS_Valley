@@ -25,7 +25,8 @@
     } else{
         self.title = @"他的动态";
     }
-    
+    self.tableView.sd_layout
+    .spaceToSuperView(UIEdgeInsetsZero);
     [self addHeaderRefresh:self.tableView headerRefesh:NO andFooter:YES];
     self.target = @"first";
     [self requestDataWithTarget:@"first" time:@"-1"];
@@ -33,11 +34,10 @@
 
 - (void)requestDataWithTarget:(NSString *)target time:(NSString *)time
 {
-    NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
     [Hud showLoadingWithMessage:@"加载中"];
 
     __weak typeof(self) weakSelf = self;
-    NSDictionary *param = @{@"uid":uid, @"target":target, @"rid":[NSNumber numberWithInt:[time intValue]], @"num":rRequestNum};
+    NSDictionary *param = @{@"uid":UID, @"target":target, @"rid":[NSNumber numberWithInt:[time intValue]], @"num":rRequestNum};
     [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttpCircle,@"queryCircleListById",self.userId] class:[CircleListObj class] parameters:param success:^(MOCHTTPResponse *response) {
         [Hud hideHud];
         [weakSelf.tableView.header endRefreshing];
@@ -149,7 +149,7 @@
 {
     CircleListObj *obj = self.dataArr[indexPath.row];
     if ([obj.status boolValue]){
-        NSInteger height = [tableView cellHeightForIndexPath:indexPath model:obj keyPath:@"object" cellClass:[SHGMainPageTableViewCell class] contentViewWidth:CGFLOAT_MAX];
+        NSInteger height = [tableView cellHeightForIndexPath:indexPath model:obj keyPath:@"object" cellClass:[SHGMainPageTableViewCell class] contentViewWidth:SCREENWIDTH];
         return height;
     } else{
         return 0.0f;
@@ -405,11 +405,6 @@
             [Hud showMessageWithText:error.domain];
         }];
     }
-
-}
-
-- (void)headTap:(NSInteger)index
-{
 
 }
 

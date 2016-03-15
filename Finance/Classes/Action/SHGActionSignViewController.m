@@ -184,20 +184,10 @@
             UIImageView *head = [[UIImageView alloc] initWithFrame:rect];
             head.tag = [obj.puserid integerValue];
             [head sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,obj.ppotname]] placeholderImage:[UIImage imageNamed:@"default_head"]];
-            head.userInteractionEnabled = YES;
-            DDTapGestureRecognizer *recognizer = [[DDTapGestureRecognizer alloc] initWithTarget:self action:@selector(moveToUserCenter:)];
-            [head addGestureRecognizer:recognizer];
             [self.praiseScrollView addSubview:head];
         }
         [self.praiseScrollView setContentSize:CGSizeMake(array.count * (praiseWidth + PRAISE_SEPWIDTH), CGRectGetHeight(self.praiseScrollView.frame))];
     }
-}
-
-- (void)moveToUserCenter:(UITapGestureRecognizer *)recognizer
-{
-    SHGPersonalViewController *controller = [[SHGPersonalViewController alloc] init];
-    controller.userId = [NSString stringWithFormat:@"%ld",(long)recognizer.view.tag];
-    [self.superController.navigationController pushViewController:controller animated:YES];
 }
 
 #pragma mark ------查看全部
@@ -312,14 +302,6 @@
     [[SHGActionManager shareActionManager] userCheckOtherState:object option:@"2" reason:reason finishBlock:^(BOOL success) {
         [weakSelf.tableView reloadData];
     }];
-}
-
-- (void)tapUserHeaderImageView:(NSString *)uid
-{
-    __weak typeof(self) weakSelf = self;
-        SHGPersonalViewController * vc = [[SHGPersonalViewController alloc]init ];
-    vc.userId = uid;
-    [weakSelf.superController.navigationController pushViewController:vc animated:YES];
 }
 
 @end

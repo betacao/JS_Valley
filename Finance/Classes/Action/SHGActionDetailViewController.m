@@ -418,11 +418,4 @@
     return YES;
 }
 
-- (void)tapUserHeaderImageView:(NSString *)uid
-{
-    SHGPersonalViewController * vc = [[SHGPersonalViewController alloc]init ];
-    vc.userId = uid;
-    [self.navigationController pushViewController:vc animated:YES];
-}
-
 @end

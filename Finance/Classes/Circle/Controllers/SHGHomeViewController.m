@@ -29,10 +29,6 @@
 
 
 @interface SHGHomeViewController ()<MLEmojiLabelDelegate,SHGNoticeDelegate,CircleListDelegate>
-{
-    NSInteger photoIndex;
-    BOOL hasRequestFailed;
-}
 
 @property (weak, nonatomic) IBOutlet UITableView *listTable;
 //判断是否已经加载过推荐列表

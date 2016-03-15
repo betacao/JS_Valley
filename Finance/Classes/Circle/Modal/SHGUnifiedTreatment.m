@@ -129,12 +129,6 @@
 
 }
 
-#pragma mark -点击个人头像
-- (void)headTap:(NSInteger)index
-{
-    CircleListObj *obj = [[SHGSegmentController sharedSegmentController] targetObjectByIndex:index];
-    [self gotoSomeOne:obj.userid name:obj.nickname];
-}
 
 #pragma mark -评论
 - (void)clicked:(NSInteger )index;

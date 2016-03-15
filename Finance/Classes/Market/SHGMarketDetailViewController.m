@@ -84,10 +84,6 @@
     self.detailTable.dataSource = self;
     [self.detailTable setTableFooterView:[[UIView alloc] init]];
     [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:KEY_MEMORY];
-
-    DDTapGestureRecognizer *hdGes = [[DDTapGestureRecognizer alloc] initWithTarget:self action:@selector(didTapHeaderView:)];
-    [self.headImageView addGestureRecognizer:hdGes];
-    self.headImageView.userInteractionEnabled = YES;
     
     [self initView];
     [self addLayout];
@@ -350,8 +346,10 @@
 
     NSString * aStr = self.responseObject.position;
     self.addressLabel.text = [NSString stringWithFormat:@"地区： %@",aStr];
-    [self.headImageView updateStatus:[self.responseObject.status isEqualToString:@"1"] ? YES : NO];
-    [self.headImageView updateHeaderView:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,self.responseObject.headimageurl] placeholderImage:[UIImage imageNamed:@"default_head"]];
+
+    BOOL status = [self.responseObject.status isEqualToString:@"1"] ? YES : NO;
+    [self.headImageView updateHeaderView:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,self.responseObject.headimageurl] placeholderImage:[UIImage imageNamed:@"default_head"] status:status userID:self.responseObject.createBy];
+    
     NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc]initWithString:self.responseObject.detail];;
     NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc]init];
     [paragraphStyle setLineSpacing:MarginFactor(5.0f)];
@@ -619,12 +617,6 @@
     }
 
 }
-- (void)moveToUserCenter:(UITapGestureRecognizer *)recognizer
-{
-    SHGPersonalViewController *controller = [[SHGPersonalViewController alloc] init];
-    controller.userId = [NSString stringWithFormat:@"%ld",(long)recognizer.view.tag];
-    [self.navigationController pushViewController:controller animated:YES];
-}
 
 - (IBAction)comment:(id)sender
 {
@@ -760,14 +752,6 @@
     NSMutableString * str=[[NSMutableString alloc] initWithFormat:@"telprompt://%@",tel];
     NSLog(@"str======%@",str);
     return  [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str]];
-}
-
-- (void)didTapHeaderView:(UIGestureRecognizer *)recognizer
-{
-    SHGPersonalViewController *controller = [[SHGPersonalViewController alloc] initWithNibName:@"SHGPersonalViewController" bundle:nil];
-    controller.userId = self.responseObject.createBy;
-    controller.delegate = [SHGUnifiedTreatment sharedTreatment];
-    [self.navigationController pushViewController:controller animated:YES];
 }
 
 - (void)viewWillDisappear:(BOOL)animated

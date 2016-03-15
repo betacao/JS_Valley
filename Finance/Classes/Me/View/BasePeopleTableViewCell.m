@@ -63,8 +63,8 @@
     self.nameLabel.text = object.name;
     [self.nameLabel sizeToFit];
     UIImage *placeHolder = [UIImage imageNamed:@"default_head"];
-    [self.headerView updateHeaderView:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,object.headImageUrl] placeholderImage:placeHolder];
-    [self.headerView updateStatus:[object.userstatus isEqualToString:@"true"]?YES:NO];
+    BOOL status = [object.userstatus isEqualToString:@"true"] ? YES : NO;
+    [self.headerView updateHeaderView:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,object.headImageUrl] placeholderImage:placeHolder status:status userID:object.uid];
     
     if (object.followRelation == 0) {
         [self.followButton setImage:[UIImage imageNamed:@"me_follow"] forState:UIControlStateNormal];

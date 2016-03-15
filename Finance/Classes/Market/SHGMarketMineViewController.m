@@ -212,15 +212,6 @@
     [self.navigationController pushViewController:controller animated:YES];
 }
 
-
-- (void)tapUserHeaderImageView:(NSString *)uid
-{
-    __weak typeof(self) weakSelf = self;
-    SHGPersonalViewController * controller = [[SHGPersonalViewController alloc] init];
-    controller.userId = uid;
-    [weakSelf.navigationController pushViewController:controller animated:YES];
-}
-
 - (void)clickDeleteButton:(SHGMarketObject *)object
 {
     [[SHGMarketSegmentViewController sharedSegmentController] deleteMarket:object];

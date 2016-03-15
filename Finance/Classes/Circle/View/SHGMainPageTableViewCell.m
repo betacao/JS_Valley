@@ -236,8 +236,9 @@
 
 - (void)loadUserInfo:(CircleListObj *)object
 {
-    [self.headerView updateHeaderView:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,object.potname] placeholderImage:[UIImage imageNamed:@"default_head"]];
-    [self.headerView updateStatus:[object.userstatus isEqualToString:@"true"] ? YES : NO];
+
+    BOOL status = [object.userstatus isEqualToString:@"true"] ? YES : NO;
+    [self.headerView updateHeaderView:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,object.potname] placeholderImage:[UIImage imageNamed:@"default_head"] status:status userID:object.userid];
 
     NSString *name = object.nickname;
     if (object.nickname.length > 4){

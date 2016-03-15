@@ -19,7 +19,6 @@
 - (void)moreMessageClicked:(CircleListObj *)obj;
 - (void)pullClicked:(CircleListObj *)obj;
 - (void)clicked:(NSInteger )index;
-- (void)headTap:(NSInteger )index;
 - (void)cnickCLick:(NSString * )userId name:(NSString *)name;
 
 @end
