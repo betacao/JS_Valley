@@ -1,19 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SettingModifyPWDViewController">
             <connections>
-                <outlet property="changeButton" destination="oF9-Ym-0GX" id="9BD-WU-Lbw"/>
                 <outlet property="changeView" destination="leN-J2-QdC" id="DTy-14-1Ix"/>
                 <outlet property="changedPassword" destination="MKA-ED-F7U" id="ENH-0R-XsS"/>
-                <outlet property="confirmButton" destination="kAZ-yt-iJT" id="WS3-gU-gOQ"/>
                 <outlet property="confirmPassword" destination="DKh-qg-aNQ" id="gfz-t4-In2"/>
                 <outlet property="confirmView" destination="hAo-HX-rvN" id="l6L-sU-kZe"/>
-                <outlet property="oldButton" destination="REv-f7-8Ga" id="KA4-ns-42H"/>
                 <outlet property="oldPassword" destination="twH-sg-buh" id="k4V-VT-QQD"/>
                 <outlet property="oldPswView" destination="iP6-UN-JEk" id="UTp-jf-ZBL"/>
                 <outlet property="sureButton" destination="lEZ-WM-J0C" id="e2O-A7-taa"/>
@@ -29,21 +26,13 @@
                     <rect key="frame" x="0.0" y="0.0" width="320" height="45"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
-                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="输入旧密码" clearsOnBeginEditing="YES" minimumFontSize="17" id="twH-sg-buh">
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="输入旧密码" clearsOnBeginEditing="YES" minimumFontSize="17" clearButtonMode="whileEditing" id="twH-sg-buh">
                             <rect key="frame" x="0.0" y="0.0" width="270" height="45"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                         </textField>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="REv-f7-8Ga">
-                            <rect key="frame" x="275" y="0.0" width="45" height="45"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <state key="normal" image="me_deleteInput"/>
-                            <connections>
-                                <action selector="oldButtonClick:" destination="-1" eventType="touchUpInside" id="0NQ-sN-KOa"/>
-                            </connections>
-                        </button>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
@@ -51,21 +40,13 @@
                     <rect key="frame" x="0.0" y="53" width="320" height="45"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
-                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="输入新密码" clearsOnBeginEditing="YES" minimumFontSize="17" id="MKA-ED-F7U">
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="输入新密码" clearsOnBeginEditing="YES" minimumFontSize="17" clearButtonMode="whileEditing" id="MKA-ED-F7U">
                             <rect key="frame" x="0.0" y="0.0" width="270" height="45"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                         </textField>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="oF9-Ym-0GX">
-                            <rect key="frame" x="275" y="0.0" width="45" height="45"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <state key="normal" image="me_deleteInput"/>
-                            <connections>
-                                <action selector="changeButtonClick:" destination="-1" eventType="touchUpInside" id="Fsy-r9-bLr"/>
-                            </connections>
-                        </button>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
@@ -73,24 +54,13 @@
                     <rect key="frame" x="0.0" y="106" width="320" height="45"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
-                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="再次输入新密码" clearsOnBeginEditing="YES" minimumFontSize="17" id="DKh-qg-aNQ">
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="再次输入新密码" clearsOnBeginEditing="YES" minimumFontSize="17" clearButtonMode="whileEditing" id="DKh-qg-aNQ">
                             <rect key="frame" x="0.0" y="0.0" width="270" height="45"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                         </textField>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="kAZ-yt-iJT">
-                            <rect key="frame" x="275" y="0.0" width="45" height="45"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                            <state key="normal" image="me_deleteInput">
-                                <color key="titleColor" red="0.086274509803921567" green="0.086274509803921567" blue="0.086274509803921567" alpha="1" colorSpace="calibratedRGB"/>
-                            </state>
-                            <connections>
-                                <action selector="confirmNumButtonClick:" destination="-1" eventType="touchUpInside" id="csy-oU-44N"/>
-                            </connections>
-                        </button>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
@@ -112,7 +82,4 @@
             <point key="canvasLocation" x="295" y="41"/>
         </view>
     </objects>
-    <resources>
-        <image name="me_deleteInput" width="14" height="14"/>
-    </resources>
 </document>

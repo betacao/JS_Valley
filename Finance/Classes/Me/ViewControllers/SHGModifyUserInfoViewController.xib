@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SHGModifyUserInfoViewController">
@@ -11,19 +11,15 @@
                 <outlet property="bgView" destination="qK0-0b-EP3" id="DQb-JK-idH"/>
                 <outlet property="cityButton" destination="oVW-N8-KqZ" id="J1T-w2-VyT"/>
                 <outlet property="cityView" destination="j6g-6B-JNS" id="gAP-5v-qYL"/>
-                <outlet property="companyButton" destination="UKt-RW-oRA" id="V9i-In-Wa4"/>
                 <outlet property="companyField" destination="hDc-tu-8jc" id="4Wz-FW-o7U"/>
                 <outlet property="companyView" destination="s0n-yx-FCK" id="qvB-ux-vnV"/>
-                <outlet property="departmentButton" destination="x6G-b9-Ajw" id="4h7-bE-BGc"/>
                 <outlet property="departmentField" destination="9UO-9q-EwS" id="8dh-XQ-CQ6"/>
                 <outlet property="departmentView" destination="tNE-iC-itK" id="wZ0-6t-9F6"/>
                 <outlet property="headName" destination="cdh-yl-9G6" id="fCo-Xb-YXx"/>
                 <outlet property="headView" destination="ztV-f1-jcF" id="eND-MI-mET"/>
                 <outlet property="headerImage" destination="ljI-PK-ug1" id="j05-Wv-I3Q"/>
-                <outlet property="industryButton" destination="6mO-pO-fbj" id="dYV-sB-4hb"/>
                 <outlet property="industryField" destination="SSx-R7-gV2" id="HSA-OF-RBB"/>
                 <outlet property="industryView" destination="045-ez-Mtl" id="aRF-sN-qSw"/>
-                <outlet property="nameButton" destination="l93-5c-jjM" id="o4Y-Bd-K4e"/>
                 <outlet property="nameField" destination="YuB-45-Hn0" id="VY1-Lr-rOL"/>
                 <outlet property="nameView" destination="p9Z-h7-nHk" id="RZg-Fj-9vw"/>
                 <outlet property="nextButton" destination="YGg-3m-IxA" id="bBI-pY-RNK"/>
@@ -65,7 +61,7 @@
                                     <rect key="frame" x="0.0" y="53" width="320" height="45"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
-                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="姓名" textAlignment="natural" minimumFontSize="17" id="YuB-45-Hn0">
+                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="姓名" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" id="YuB-45-Hn0">
                                             <rect key="frame" x="14" y="8" width="250" height="30"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <color key="textColor" red="0.086274509803921567" green="0.086274509803921567" blue="0.086274509803921567" alpha="1" colorSpace="calibratedRGB"/>
@@ -75,14 +71,6 @@
                                                 <outlet property="delegate" destination="-1" id="NGm-dF-1jj"/>
                                             </connections>
                                         </textField>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="l93-5c-jjM">
-                                            <rect key="frame" x="275" y="0.0" width="45" height="45"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <state key="normal" image="me_deleteInput"/>
-                                            <connections>
-                                                <action selector="clickNameButton:" destination="-1" eventType="touchUpInside" id="VoM-Yv-JUU"/>
-                                            </connections>
-                                        </button>
                                     </subviews>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </view>
@@ -90,7 +78,7 @@
                                     <rect key="frame" x="0.0" y="106" width="320" height="45"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
-                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="行业" textAlignment="natural" minimumFontSize="17" id="SSx-R7-gV2">
+                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="行业" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" id="SSx-R7-gV2">
                                             <rect key="frame" x="14" y="8" width="250" height="30"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <color key="textColor" red="0.086274509803921567" green="0.086274509803921567" blue="0.086274509803921567" alpha="1" colorSpace="calibratedRGB"/>
@@ -100,14 +88,6 @@
                                                 <outlet property="delegate" destination="-1" id="amA-mB-84J"/>
                                             </connections>
                                         </textField>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="6mO-pO-fbj">
-                                            <rect key="frame" x="275" y="0.0" width="45" height="45"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <state key="normal" image="me_deleteInput"/>
-                                            <connections>
-                                                <action selector="clickIndustryButton:" destination="-1" eventType="touchUpInside" id="pbe-ES-6rS"/>
-                                            </connections>
-                                        </button>
                                     </subviews>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </view>
@@ -115,7 +95,7 @@
                                     <rect key="frame" x="0.0" y="159" width="320" height="45"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
-                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="公司" textAlignment="natural" minimumFontSize="17" id="hDc-tu-8jc">
+                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="公司" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" id="hDc-tu-8jc">
                                             <rect key="frame" x="14" y="8" width="250" height="30"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <color key="textColor" red="0.086274509803921567" green="0.086274509803921567" blue="0.086274509803921567" alpha="1" colorSpace="calibratedRGB"/>
@@ -125,14 +105,6 @@
                                                 <outlet property="delegate" destination="-1" id="ATg-0z-ntM"/>
                                             </connections>
                                         </textField>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="UKt-RW-oRA">
-                                            <rect key="frame" x="275" y="0.0" width="45" height="45"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <state key="normal" image="me_deleteInput"/>
-                                            <connections>
-                                                <action selector="clickCompanyButton:" destination="-1" eventType="touchUpInside" id="o5O-KK-iFl"/>
-                                            </connections>
-                                        </button>
                                     </subviews>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </view>
@@ -140,7 +112,7 @@
                                     <rect key="frame" x="0.0" y="212" width="320" height="45"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
-                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="职位" textAlignment="natural" minimumFontSize="17" id="9UO-9q-EwS">
+                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="职位" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" id="9UO-9q-EwS">
                                             <rect key="frame" x="14" y="8" width="250" height="30"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <color key="textColor" red="0.086274509803921567" green="0.086274509803921567" blue="0.086274509803921567" alpha="1" colorSpace="calibratedRGB"/>
@@ -150,14 +122,6 @@
                                                 <outlet property="delegate" destination="-1" id="yG8-5W-qHb"/>
                                             </connections>
                                         </textField>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="x6G-b9-Ajw">
-                                            <rect key="frame" x="275" y="0.0" width="45" height="45"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <state key="normal" image="me_deleteInput"/>
-                                            <connections>
-                                                <action selector="clickDepartmentButton:" destination="-1" eventType="touchUpInside" id="maq-Np-xzu"/>
-                                            </connections>
-                                        </button>
                                     </subviews>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </view>
@@ -206,7 +170,4 @@
             <point key="canvasLocation" x="180" y="209"/>
         </view>
     </objects>
-    <resources>
-        <image name="me_deleteInput" width="14" height="14"/>
-    </resources>
 </document>

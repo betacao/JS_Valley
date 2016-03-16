@@ -23,13 +23,6 @@
 @property (nonatomic, strong) IBOutlet UITextField *changedPassword;
 
 @property (nonatomic, strong) IBOutlet UITextField *confirmPassword;
-@property (weak, nonatomic) IBOutlet UIButton *changeButton;
-@property (weak, nonatomic) IBOutlet UIButton *oldButton;
-@property (weak, nonatomic) IBOutlet UIButton *confirmButton;
-
-- (IBAction)oldButtonClick:(id)sender;
-- (IBAction)changeButtonClick:(id)sender;
-- (IBAction)confirmNumButtonClick:(id)sender;
 
 - (IBAction)confirmButtonClicked:(id)sender;
 @end
@@ -40,32 +33,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
     self.oldPassword.delegate = self;
     self.changedPassword.delegate = self;
     self.confirmPassword.delegate = self;
     self.title = @"密码修改";
-//    UIView *paddingView1 = [[UIView alloc] initWithFrame:CGRectMake(0, 0,14.0, 30.0f)];
-//    self.oldPassword.leftView = paddingView1;
-//    self.oldPassword.leftViewMode = UITextFieldViewModeAlways;
-//    UIView *paddingView2 = [[UIView alloc] initWithFrame:CGRectMake(0, 0,14.0f, 30.0f)];
-//    self.changedPassword.leftView = paddingView2;
-//    self.changedPassword.leftViewMode = UITextFieldViewModeAlways;
-//    UIView *paddingView3 = [[UIView alloc] initWithFrame:CGRectMake(0, 0,14.0f, 30.0f)];
-//    self.confirmPassword.leftView = paddingView3;
-//    self.confirmPassword.leftViewMode = UITextFieldViewModeAlways;
-//    [self.oldPassword setValue:[UIColor colorWithHexString:@"AFAFAF"] forKeyPath:@"_placeholderLabel.textColor"];
-//    [self.oldPassword setValue:[UIFont systemFontOfSize:14.0f] forKeyPath:@"_placeholderLabel.font"];
-//    
-//    [self.changedPassword setValue:[UIColor colorWithHexString:@"AFAFAF"] forKeyPath:@"_placeholderLabel.textColor"];
-//    [self.changedPassword setValue:[UIFont systemFontOfSize:14.0f] forKeyPath:@"_placeholderLabel.font"];
-//    
-//    [self.confirmPassword setValue:[UIColor colorWithHexString:@"AFAFAF"] forKeyPath:@"_placeholderLabel.textColor"];
-//    [self.confirmPassword setValue:[UIFont systemFontOfSize:14.0f] forKeyPath:@"_placeholderLabel.font"];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textFieldDidChange:) name:UITextFieldTextDidChangeNotification object:nil];
-    [self updateCloseButtonState:self.oldPassword];
-    [self updateCloseButtonState:self.changedPassword];
-    [self updateCloseButtonState:self.confirmPassword];
     [self initView];
 }
 
@@ -87,10 +58,7 @@
     [self.sureButton setTitleColor:[UIColor colorWithHexString:@"ffffff"] forState:UIControlStateNormal];
     self.sureButton.titleLabel.font = FontFactor(17.0f);
     [self.sureButton setBackgroundColor:[UIColor colorWithHexString:@"f04241"]];
-   
-    
-    UIImage *image = [UIImage imageNamed:@"me_deleteInput"];
-    CGSize size = image.size;
+
     self.oldPswView.sd_layout
     .topSpaceToView(self.view, 0.0f)
     .leftSpaceToView(self.view, 0.0f)
@@ -98,16 +66,7 @@
     .heightIs(MarginFactor(55.0f));
     
     self.oldPassword.sd_layout
-    .topSpaceToView(self.oldPswView, 0.0f)
-    .leftSpaceToView(self.oldPswView, MarginFactor(19.0f))
-    .rightSpaceToView(self.oldPswView, MarginFactor(50.0f))
-    .bottomSpaceToView(self.oldPswView, 0.0f);
-    
-    self.oldButton.sd_layout
-    .rightSpaceToView(self.oldPswView, MarginFactor(19.0f))
-    .centerYEqualToView(self.oldPswView)
-    .widthIs(size.width)
-    .heightIs(size.height);
+    .spaceToSuperView(UIEdgeInsetsMake(0.0f, MarginFactor(11.0f), 0.0f, 0.0f));
     
     self.changeView.sd_layout
     .topSpaceToView(self.oldPswView, MarginFactor(11.0f))
@@ -116,16 +75,7 @@
     .heightIs(MarginFactor(55.0f));
     
     self.changedPassword.sd_layout
-    .topSpaceToView(self.changeView, 0.0f)
-    .leftSpaceToView(self.changeView, MarginFactor(19.0f))
-    .rightSpaceToView(self.changeView, MarginFactor(50.0f))
-    .bottomSpaceToView(self.changeView, 0.0f);
-    
-    self.changeButton.sd_layout
-    .rightSpaceToView(self.changeView, MarginFactor(19.0f))
-    .centerYEqualToView(self.changeView)
-    .widthIs(size.width)
-    .heightIs(size.height);
+    .spaceToSuperView(UIEdgeInsetsMake(0.0f, MarginFactor(11.0f), 0.0f, 0.0f));
     
     self.confirmView.sd_layout
     .topSpaceToView(self.changeView, MarginFactor(11.0f))
@@ -134,16 +84,7 @@
     .heightIs(MarginFactor(55.0f));
     
     self.confirmPassword.sd_layout
-    .topSpaceToView(self.confirmView, MarginFactor(11.0f))
-    .leftSpaceToView(self.confirmView, MarginFactor(19.0f))
-    .rightSpaceToView(self.confirmView, MarginFactor(50.0f))
-    .bottomSpaceToView(self.confirmView, 0.0f);
-    
-    self.confirmButton.sd_layout
-    .rightSpaceToView(self.confirmView, MarginFactor(19.0f))
-    .centerYEqualToView(self.confirmView)
-    .widthIs(size.width)
-    .heightIs(size.height);
+    .spaceToSuperView(UIEdgeInsetsMake(0.0f, MarginFactor(11.0f), 0.0f, 0.0f));
     
     self.sureButton.sd_layout
     .leftSpaceToView(self.view, MarginFactor(12.0f))
@@ -164,53 +105,6 @@
     [textField resignFirstResponder];
 
     return YES;
-}
-
-- (void)textFieldDidChange:(NSNotification *)notif
-{
-    UITextField *field = (UITextField *)notif.object;
-    [self updateCloseButtonState:field];
-}
-
-- (void)updateCloseButtonState:(UITextField *)textField
-{
-    if ([textField isEqual:self.oldPassword]) {
-        if (textField.text.length > 0) {
-            self.oldButton.hidden = NO;
-        } else{
-            self.oldButton.hidden = YES;
-        }
-    } else if ([textField isEqual:self.changedPassword]) {
-        if (textField.text.length > 0) {
-            self.changeButton.hidden = NO;
-        } else{
-            self.changeButton.hidden = YES;
-        }
-    } else if ([textField isEqual:self.confirmPassword]) {
-        if (textField.text.length > 0) {
-            self.confirmButton.hidden = NO;
-        } else{
-            self.confirmButton.hidden = YES;
-        }
-    }
-}
-
-- (IBAction)oldButtonClick:(id)sender {
-    self.oldPassword.text = @"";
-    [self updateCloseButtonState:self.oldPassword];
-    [self.oldPassword becomeFirstResponder];
-}
-
-- (IBAction)changeButtonClick:(id)sender {
-    self.changedPassword.text = @"";
-    [self updateCloseButtonState:self.changedPassword];
-    [self.changedPassword becomeFirstResponder];
-}
-
-- (IBAction)confirmNumButtonClick:(id)sender {
-    self.confirmPassword.text = @"";
-    [self updateCloseButtonState:self.confirmPassword];
-    [self.confirmPassword becomeFirstResponder];
 }
 
 - (IBAction)confirmButtonClicked:(id)sender

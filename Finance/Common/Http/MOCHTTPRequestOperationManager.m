@@ -100,7 +100,7 @@ NSString *moc_http_request_operation_manager_token;
 
 + (void)putWithURL:(NSString *)url class:(Class)aclass parameters:(id)parameters success:(MOCResponseBlock)success failed:(MOCResponseBlock)failed
 {
-    [self putWithURL:url class:aclass parameters:parameters success:success failed:false complete:nil];
+    [self putWithURL:url class:aclass parameters:parameters success:success failed:failed complete:nil];
 }
 
 + (void)putWithURL:(NSString *)url class:(Class)aclass parameters:(id)parameters success:(MOCResponseBlock)success failed:(MOCResponseBlock)failed complete:(Block)complete

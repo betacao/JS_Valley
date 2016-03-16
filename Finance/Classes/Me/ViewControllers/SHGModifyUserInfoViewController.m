@@ -28,10 +28,6 @@
 @property (weak, nonatomic) IBOutlet UITextField *industryField;
 @property (weak, nonatomic) IBOutlet UITextField *companyField;
 @property (weak, nonatomic) IBOutlet UITextField *departmentField;
-@property (weak, nonatomic) IBOutlet UIButton *nameButton;
-@property (weak, nonatomic) IBOutlet UIButton *industryButton;
-@property (weak, nonatomic) IBOutlet UIButton *companyButton;
-@property (weak, nonatomic) IBOutlet UIButton *departmentButton;
 @property (weak, nonatomic) IBOutlet UIButton *nextButton;
 @property (weak, nonatomic) IBOutlet UIButton *cityButton;
 @property (strong, nonatomic) NSString *nickName;
@@ -65,7 +61,6 @@
     [self.headView addGestureRecognizer:recognizer];
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardDidShowNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textFieldDidChange:) name:UITextFieldTextDidChangeNotification object:nil];
     [self initObject];
 }
 
@@ -97,8 +92,6 @@
 
 - (void)addSdLayout
 {
-    UIImage *image = [UIImage imageNamed:@"me_deleteInput"];
-    CGSize size = image.size;
     self.bgScrollView.sd_layout
     .leftSpaceToView(self.view, 0.0f)
     .rightSpaceToView(self.view, 0.0f)
@@ -119,12 +112,12 @@
     
     self.headName.sd_layout
     .topSpaceToView(self.headView, 0.0f)
-    .leftSpaceToView(self.headView, MarginFactor(19.0f))
+    .leftSpaceToView(self.headView, MarginFactor(11.0f))
     .rightSpaceToView(self.headView, MarginFactor(60.0f))
     .bottomSpaceToView(self.headView, 0.0f);
     
     self.headerImage.sd_layout
-    .rightSpaceToView(self.headView, MarginFactor(19.0f))
+    .rightSpaceToView(self.headView, MarginFactor(11.0f))
     .centerYEqualToView(self.headView)
     .widthIs(MarginFactor(35.0f))
     .heightIs(MarginFactor(35.0f));
@@ -136,16 +129,7 @@
     .heightIs(MarginFactor(55.0f));
     
     self.nameField.sd_layout
-    .topSpaceToView(self.nameView, 0.0f)
-    .leftSpaceToView(self.nameView, MarginFactor(19.0f))
-    .rightSpaceToView(self.nameView, MarginFactor(60.0f))
-    .bottomSpaceToView(self.nameView, 0.0f);
-    
-    self.nameButton.sd_layout
-    .rightSpaceToView(self.nameView, MarginFactor(19.0f))
-    .centerYEqualToView(self.nameView)
-    .widthIs(size.width)
-    .heightIs(size.height);
+    .spaceToSuperView(UIEdgeInsetsMake(0.0f, MarginFactor(11.0f), 0.0f, 0.0f));
     
     self.industryView.sd_layout
     .topSpaceToView(self.nameView, MarginFactor(11.0f))
@@ -154,16 +138,7 @@
     .heightIs(MarginFactor(55.0f));
     
     self.industryField.sd_layout
-    .topSpaceToView(self.industryView, 0.0f)
-    .leftSpaceToView(self.industryView, MarginFactor(19.0f))
-    .rightSpaceToView(self.industryView, MarginFactor(60.0f))
-    .bottomSpaceToView(self.industryView, 0.0f);
-    
-    self.industryButton.sd_layout
-    .rightSpaceToView(self.industryView, MarginFactor(19.0f))
-    .centerYEqualToView(self.industryView)
-    .widthIs(size.width)
-    .heightIs(size.height);
+    .spaceToSuperView(UIEdgeInsetsMake(0.0f, MarginFactor(11.0f), 0.0f, 0.0f));
     
     self.companyView.sd_layout
     .topSpaceToView(self.industryView, MarginFactor(11.0f))
@@ -172,16 +147,7 @@
     .heightIs(MarginFactor(55.0f));
     
     self.companyField.sd_layout
-    .topSpaceToView(self.companyView, 0.0f)
-    .leftSpaceToView(self.companyView, MarginFactor(19.0f))
-    .rightSpaceToView(self.companyView, MarginFactor(60.0f))
-    .bottomSpaceToView(self.companyView, 0.0f);
-    
-    self.companyButton.sd_layout
-    .rightSpaceToView(self.companyView, MarginFactor(19.0f))
-    .centerYEqualToView(self.companyView)
-    .widthIs(size.width)
-    .heightIs(size.height);
+    .spaceToSuperView(UIEdgeInsetsMake(0.0f, MarginFactor(11.0f), 0.0f, 0.0f));
 
     self.departmentView.sd_layout
     .topSpaceToView(self.companyView, MarginFactor(11.0f))
@@ -190,16 +156,7 @@
     .heightIs(MarginFactor(55.0f));
     
     self.departmentField.sd_layout
-    .topSpaceToView(self.departmentView, 0.0f)
-    .leftSpaceToView(self.departmentView, MarginFactor(19.0f))
-    .rightSpaceToView(self.departmentView, MarginFactor(60.0f))
-    .bottomSpaceToView(self.departmentView, 0.0f);
-    
-    self.departmentButton.sd_layout
-    .rightSpaceToView(self.departmentView, MarginFactor(19.0f))
-    .centerYEqualToView(self.departmentView)
-    .widthIs(size.width)
-    .heightIs(size.height);
+    .spaceToSuperView(UIEdgeInsetsMake(0.0f, MarginFactor(11.0f), 0.0f, 0.0f));
     
     self.cityView.sd_layout
     .topSpaceToView(self.departmentView, MarginFactor(11.0f))
@@ -208,10 +165,7 @@
     .heightIs(MarginFactor(55.0f));
     
     self.cityButton.sd_layout
-    .rightSpaceToView(self.cityView, 0.0f)
-    .leftSpaceToView(self.cityView, MarginFactor(19.0f))
-    .topSpaceToView(self.cityView, 0.0f)
-    .bottomSpaceToView(self.cityView, 0.0f);
+    .spaceToSuperView(UIEdgeInsetsMake(0.0f, MarginFactor(11.0f), 0.0f, 0.0f));
     
     self.nextButton.sd_layout
     .leftSpaceToView(self.bgView, MarginFactor(12.0f))
@@ -234,10 +188,6 @@
         [self.cityButton setTitle:[NSString stringWithFormat:@"%@",self.location] forState:UIControlStateNormal];
         [self.cityButton setTitleColor:[UIColor colorWithHexString:@"161616"] forState:UIControlStateNormal];
     }
-    [self updateCloseButtonState:self.nameField];
-    [self updateCloseButtonState:self.industryField];
-    [self updateCloseButtonState:self.companyField];
-    [self updateCloseButtonState:self.departmentField];
 
     [self.view layoutSubviews];
 }
@@ -334,37 +284,6 @@
     });
 }
 
-
-- (IBAction)clickNameButton:(UIButton *)sender
-{
-    self.nameField.text = @"";
-    [self updateCloseButtonState:self.nameField];
-    [self.nameField becomeFirstResponder];
-}
-
-- (IBAction)clickIndustryButton:(id)sender
-{
-    self.industryField.text = @"";
-    [self updateCloseButtonState:self.industryField];
-    [self.industryField becomeFirstResponder];
-
-}
-
-- (IBAction)clickCompanyButton:(id)sender
-{
-    self.companyField.text = @"";
-    [self updateCloseButtonState:self.companyField];
-    [self.companyField becomeFirstResponder];
-}
-
-- (IBAction)clickDepartmentButton:(id)sender
-{
-    self.departmentField.text = @"";
-    [self updateCloseButtonState:self.departmentField];
-    [self.departmentField becomeFirstResponder];
-
-}
-
 - (void)tapTopView:(UIGestureRecognizer *)recognizer
 {
     UIActionSheet *takeSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"拍照",@"选图", nil];
@@ -436,44 +355,6 @@
 {
     self.currentField = textField;
     [self scrollFieldToVisible];
-}
-
-
-- (void)textFieldDidChange:(NSNotification *)notif
-{
-    UITextField *field = (UITextField *)notif.object;
-    [self updateCloseButtonState:field];
-}
-
-
-
-- (void)updateCloseButtonState:(UITextField *)textField
-{
-    if ([textField isEqual:self.nameField]) {
-        if (textField.text.length > 0) {
-            self.nameButton.hidden = NO;
-        } else{
-            self.nameButton.hidden = YES;
-        }
-    } else if ([textField isEqual:self.industryField]) {
-        if (textField.text.length > 0) {
-            self.industryButton.hidden = NO;
-        } else{
-            self.industryButton.hidden = YES;
-        }
-    } else if ([textField isEqual:self.companyField]) {
-        if (textField.text.length > 0) {
-            self.companyButton.hidden = NO;
-        } else{
-            self.companyButton.hidden = YES;
-        }
-    } else if ([textField isEqual:self.departmentField]) {
-        if (textField.text.length > 0) {
-            self.departmentButton.hidden = NO;
-        } else{
-            self.departmentButton.hidden = YES;
-        }
-    }
 }
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField

@@ -791,12 +791,6 @@
 		B09BF7721B7C6C1F008260B3 /* 邀请@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = B09BF7681B7C6C1F008260B3 /* 邀请@3x.png */; };
 		B0BAA36B1B69EAF30036C367 /* CCLocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B0BAA36A1B69EAF30036C367 /* CCLocationManager.m */; };
 		B0BAA36E1B6A059E0036C367 /* TWEmojiKeyBoard.m in Sources */ = {isa = PBXBuildFile; fileRef = B0BAA36D1B6A059E0036C367 /* TWEmojiKeyBoard.m */; };
-		B0CA7C881B7A022F0038BABB /* qq@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B0CA7C821B7A022E0038BABB /* qq@2x.png */; };
-		B0CA7C891B7A022F0038BABB /* qq@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = B0CA7C831B7A022E0038BABB /* qq@3x.png */; };
-		B0CA7C8A1B7A022F0038BABB /* wb@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B0CA7C841B7A022F0038BABB /* wb@2x.png */; };
-		B0CA7C8B1B7A022F0038BABB /* wb@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = B0CA7C851B7A022F0038BABB /* wb@3x.png */; };
-		B0CA7C8C1B7A022F0038BABB /* wx@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B0CA7C861B7A022F0038BABB /* wx@2x.png */; };
-		B0CA7C8D1B7A022F0038BABB /* wx@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = B0CA7C871B7A022F0038BABB /* wx@3x.png */; };
 		B0EAB2551B467AB8005A760F /* MLEmojiLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = B0EAB2511B467AB8005A760F /* MLEmojiLabel.m */; };
 		B0EAB2561B467AB8005A760F /* TTTAttributedLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = B0EAB2531B467AB8005A760F /* TTTAttributedLabel.m */; };
 		F90344151C1C192F0063EABB /* SHGMarketDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F90344131C1C192F0063EABB /* SHGMarketDetailViewController.m */; };
@@ -2010,12 +2004,6 @@
 		B0BAA36A1B69EAF30036C367 /* CCLocationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCLocationManager.m; sourceTree = "<group>"; };
 		B0BAA36C1B6A059E0036C367 /* TWEmojiKeyBoard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TWEmojiKeyBoard.h; sourceTree = "<group>"; };
 		B0BAA36D1B6A059E0036C367 /* TWEmojiKeyBoard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TWEmojiKeyBoard.m; sourceTree = "<group>"; };
-		B0CA7C821B7A022E0038BABB /* qq@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "qq@2x.png"; sourceTree = "<group>"; };
-		B0CA7C831B7A022E0038BABB /* qq@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "qq@3x.png"; sourceTree = "<group>"; };
-		B0CA7C841B7A022F0038BABB /* wb@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "wb@2x.png"; sourceTree = "<group>"; };
-		B0CA7C851B7A022F0038BABB /* wb@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "wb@3x.png"; sourceTree = "<group>"; };
-		B0CA7C861B7A022F0038BABB /* wx@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "wx@2x.png"; sourceTree = "<group>"; };
-		B0CA7C871B7A022F0038BABB /* wx@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "wx@3x.png"; sourceTree = "<group>"; };
 		B0EAB2511B467AB8005A760F /* MLEmojiLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MLEmojiLabel.m; sourceTree = "<group>"; };
 		B0EAB2521B467AB8005A760F /* MLEmojiLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MLEmojiLabel.h; sourceTree = "<group>"; };
 		B0EAB2531B467AB8005A760F /* TTTAttributedLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTTAttributedLabel.m; sourceTree = "<group>"; };
@@ -4509,12 +4497,6 @@
 				569C6D341B7CAB6A00AD59C3 /* 手机@3x.png */,
 				569C6D351B7CAB6A00AD59C3 /* 验证码@2x.png */,
 				569C6D361B7CAB6A00AD59C3 /* 验证码@3x.png */,
-				B0CA7C821B7A022E0038BABB /* qq@2x.png */,
-				B0CA7C831B7A022E0038BABB /* qq@3x.png */,
-				B0CA7C841B7A022F0038BABB /* wb@2x.png */,
-				B0CA7C851B7A022F0038BABB /* wb@3x.png */,
-				B0CA7C861B7A022F0038BABB /* wx@2x.png */,
-				B0CA7C871B7A022F0038BABB /* wx@3x.png */,
 			);
 			name = "登录";
 			sourceTree = "<group>";
@@ -5067,7 +5049,6 @@
 				61E83D5D1AF7C78E00703651 /* 查看更多@3x.png in Resources */,
 				61E83D941AF7C78E00703651 /* 删除群成员@3x.png in Resources */,
 				61E83CD31AF7C78E00703651 /* 圈内好友图标@2x.png in Resources */,
-				B0CA7C8A1B7A022F0038BABB /* wb@2x.png in Resources */,
 				B03938B41B623F83003A85EC /* 6.png in Resources */,
 				61E83D7F1AF7C78E00703651 /* 常见问题@3x.png in Resources */,
 				61E83D061AF7C78E00703651 /* 按钮-按下@2x.png in Resources */,
@@ -5114,7 +5095,6 @@
 				61E83D7A1AF7C78E00703651 /* 取消-默认@3x.png in Resources */,
 				B080FE931B81E30100426579 /* emoji_characters_n@2x.png in Resources */,
 				569C6D301B7CA9EB00AD59C3 /* BindPhoneViewController.xib in Resources */,
-				B0CA7C891B7A022F0038BABB /* qq@3x.png in Resources */,
 				B04D6E2D1B60C01300E3863E /* 删除x@2x.png in Resources */,
 				B080FE891B81E30100426579 /* btn_publish_face_a@3x.png in Resources */,
 				F9F349CA1C1968310090F111 /* SHGMarketTableViewCell.xib in Resources */,
@@ -5220,7 +5200,6 @@
 				B080FE8B1B81E30100426579 /* btn_publish_face_b@3x.png in Resources */,
 				61E83D3D1AF7C78E00703651 /* 微信图标@3x.png in Resources */,
 				61E83D8D1AF7C78E00703651 /* 删除@3x.png in Resources */,
-				B0CA7C8C1B7A022F0038BABB /* wx@2x.png in Resources */,
 				61E83D8B1AF7C78E00703651 /* 邀请好友、身份认证按钮@3x.png in Resources */,
 				61E83D931AF7C78E00703651 /* 删除图标@3x.png in Resources */,
 				53BD2BE31B04764000342B2E /* PublicGroupListViewController.xib in Resources */,
@@ -5229,7 +5208,6 @@
 				61E83D801AF7C78E00703651 /* 弹出行业框背景@3x.png in Resources */,
 				61E83CE11AF7C78E00703651 /* 朋友圈图标@2x.png in Resources */,
 				61E83D471AF7C78E00703651 /* 朋友圈图标@3x.png in Resources */,
-				B0CA7C8B1B7A022F0038BABB /* wb@3x.png in Resources */,
 				53B40DD71AFBF02100AD2EFE /* 消息通知@3x.png in Resources */,
 				61E83CEE1AF7C78E00703651 /* 发帖传图片@2x.png in Resources */,
 				61E83CF51AF7C78E00703651 /* 弹出对话框背景@2x.png in Resources */,
@@ -5288,7 +5266,6 @@
 				98D13FD81C3B69E6007CDFCD /* SHGMyTeamListTableViewController.xib in Resources */,
 				408D8AFF1AF8618C0055810C /* VoiceSearchFeedback006.png in Resources */,
 				408D8B201AF8618C0055810C /* call_out_h@2x.png in Resources */,
-				B0CA7C8D1B7A022F0038BABB /* wx@3x.png in Resources */,
 				408D8B701AF8618C0055810C /* chat_receiver_audio_playing_full.png in Resources */,
 				61616FFA1B03346E00E5A837 /* new收藏@3x.png in Resources */,
 				61E83D2D1AF7C78E00703651 /* 拒绝按钮-默认@2x.png in Resources */,
@@ -5352,7 +5329,6 @@
 				40302B1B1AEF61B600F22EB6 /* MyTeamViewController.xib in Resources */,
 				613CAC521AFFFFDE00EA8C23 /* CircleLinkViewController.xib in Resources */,
 				61E83D121AF7C78E00703651 /* 取消-按下@2x.png in Resources */,
-				B0CA7C881B7A022F0038BABB /* qq@2x.png in Resources */,
 				61E83D9D1AF7C78E00703651 /* 选中好友@3x.png in Resources */,
 				614A59891AD3AEA1005DAB04 /* Images.xcassets in Resources */,
 				408D8AF61AF8618C0055810C /* VoiceSearchFeedback001@2x.png in Resources */,

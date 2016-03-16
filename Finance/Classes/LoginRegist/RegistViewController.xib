@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="RegistViewController">
@@ -14,7 +14,6 @@
                 <outlet property="passwordTextField" destination="OY1-FQ-nIG" id="M1j-fc-tEY"/>
                 <outlet property="protocolButton" destination="dfa-rM-vxv" id="Z4O-O2-dC5"/>
                 <outlet property="protocolCheckButton" destination="o8A-dg-KLP" id="j9u-jd-yFW"/>
-                <outlet property="pswDeleteButton" destination="CoZ-cA-06Q" id="CcU-hA-Tvd"/>
                 <outlet property="verifyCodeTextField" destination="o20-DY-M5t" id="Ee7-t9-BcE"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -80,22 +79,14 @@
                             <color key="textColor" red="0.68627450980392157" green="0.68627450980392157" blue="0.68627450980392157" alpha="1" colorSpace="calibratedRGB"/>
                             <color key="highlightedColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         </label>
-                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="123456" placeholder="登录密码" minimumFontSize="17" id="OY1-FQ-nIG">
-                            <rect key="frame" x="0.0" y="0.0" width="279" height="45"/>
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="123456" placeholder="登录密码" minimumFontSize="17" clearButtonMode="whileEditing" id="OY1-FQ-nIG">
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="45"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                         </textField>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="CoZ-cA-06Q">
-                            <rect key="frame" x="275" y="0.0" width="45" height="45"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
-                            <state key="normal" image="me_deleteInput"/>
-                            <connections>
-                                <action selector="pswDeleteButton:" destination="-1" eventType="touchUpInside" id="dbc-vX-dfp"/>
-                            </connections>
-                        </button>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
@@ -158,7 +149,6 @@
         </view>
     </objects>
     <resources>
-        <image name="me_deleteInput" width="14" height="14"/>
         <image name="regist_check_box" width="15" height="15"/>
         <image name="regist_checked_box" width="15" height="15"/>
     </resources>

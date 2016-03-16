@@ -41,13 +41,11 @@ typedef NS_ENUM(NSInteger, RegistType)
 @property (nonatomic, assign) NSInteger             remainTime;
 //重新发送的定时器
 @property (nonatomic, strong) NSTimer               *remainTimer;
-@property (weak, nonatomic) IBOutlet UIButton *pswDeleteButton;
 
 - (IBAction)getverifyCodeButtonClicked:(id)sender;
 - (IBAction)nextStepButtonClicked:(id)sender;
 - (IBAction)protocolCheckButtonClicked:(id)sender;
 - (IBAction)protocolButtonClicked:(id)sender;
-- (IBAction)pswDeleteButton:(id)sender;
 
 @property (nonatomic, assign) BOOL isAgree;
 @end
@@ -287,14 +285,11 @@ typedef NS_ENUM(NSInteger, RegistType)
          }
      } onQueue:nil];
 }
+
 - (IBAction)protocolButtonClicked:(id)sender
 {
 	ProtocolViewController *vc = [[ProtocolViewController alloc] init];
 	[self.navigationController pushViewController:vc animated:YES];
 }
 
-- (IBAction)pswDeleteButton:(id)sender {
-    self.passwordTextField.text = @"";
-    [self.passwordTextField becomeFirstResponder];
-}
 @end

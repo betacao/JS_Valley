@@ -11,12 +11,10 @@
 #import "ApplyViewController.h"
 
 @interface LoginNextViewController ()
-- (IBAction)actionFogetPwd:(id)sender;
-- (IBAction)actionLogin:(id)sender;
-- (IBAction)deleteButton:(id)sender;
-@property (weak, nonatomic) IBOutlet UIButton *deleteButton;
+
 @property (weak, nonatomic) IBOutlet UITextField *lblPassward;
 @property (nonatomic, strong) NSString *isFull;
+
 @end
 
 @implementation LoginNextViewController
@@ -87,11 +85,6 @@
          [Hud showMessageWithText:response.errorMessage];
          [Hud hideHud];
      }];
-}
-
-- (IBAction)deleteButton:(id)sender {
-    self.lblPassward.text = @"";
-    [self.lblPassward becomeFirstResponder];
 }
 
 - (void)registerToken

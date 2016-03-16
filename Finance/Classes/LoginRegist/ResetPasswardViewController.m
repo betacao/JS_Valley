@@ -17,14 +17,11 @@
 @property (weak, nonatomic) IBOutlet UITextField *txtPwd;
 @property (weak, nonatomic) IBOutlet UITextField *txtCode;
 @property (nonatomic, assign) NSInteger remainTime;
-@property (weak, nonatomic) IBOutlet UIButton *psdButton;
-@property (weak, nonatomic) IBOutlet UIButton *againPsdButton;
 
 //重新发送的定时器
 @property (nonatomic, strong) NSTimer	*remainTimer;
 @property (nonatomic, assign) CodeType registType;
-- (IBAction)psdButtonClick:(id)sender;
-- (IBAction)againPsdButtonClick:(id)sender;
+
 @end
 
 @implementation ResetPasswardViewController
@@ -178,13 +175,5 @@
     }];
     
 }
-- (IBAction)psdButtonClick:(id)sender {
-    self.txtPwd.text = @"";
-    [self.txtPwd becomeFirstResponder];
-}
 
-- (IBAction)againPsdButtonClick:(id)sender {
-    self.txtPwdVery.text = @"";
-    [self.txtPwdVery becomeFirstResponder];
-}
 @end

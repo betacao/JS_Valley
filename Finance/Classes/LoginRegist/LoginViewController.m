@@ -15,87 +15,146 @@
 #import "ApplyViewController.h"
 #import <QZoneConnection/ISSQZoneApp.h>
 
-#define kButtonMargin 44.0f//第三方按钮之间的距离
-
 @interface LoginViewController ()
-- (IBAction)actionShowMem:(id)sender;
-- (IBAction)actionLogin:(id)sender;
-- (IBAction)actionFogetPwd:(id)sender;
-@property (weak, nonatomic) IBOutlet UITextField *textPwd;
+
 @property (weak, nonatomic) IBOutlet UITextField *textUser;
-@property (weak, nonatomic) IBOutlet UILabel *loginLab;
+@property (weak, nonatomic) IBOutlet UILabel *introduceLabel;
+@property (weak, nonatomic) IBOutlet UIButton *nextButton;
+@property (weak, nonatomic) IBOutlet UILabel *leftLine;
+@property (weak, nonatomic) IBOutlet UILabel *middleLabel;
+@property (weak, nonatomic) IBOutlet UILabel *rightLine;
 @property (weak, nonatomic) IBOutlet UIButton *weChatButton;
 @property (weak, nonatomic) IBOutlet UIButton *QQButton;
 @property (weak, nonatomic) IBOutlet UIButton *weiBoButton;
-@property (weak, nonatomic) IBOutlet UILabel *lineLabel;
-@property (weak, nonatomic) IBOutlet UIButton *deleteButton;
-@property (weak, nonatomic) IBOutlet UILabel *leftLine;
-@property (weak, nonatomic) IBOutlet UILabel *rightLine;
-
-- (IBAction)deleteButtonClick:(id)sender;
-
 
 @end
 
 @implementation LoginViewController
 
--(id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-
-    if (self)
-    {
+    if (self){
         self.title = @"登录/注册";
     }
-
     return  self;
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.navigationItem.leftBarButtonItem = nil;
-    self.loginLab.textColor = RGB(96, 96, 96);
+    [self initView];
+    [self addAutoLayout];
     if ([[NSUserDefaults standardUserDefaults]objectForKey:KEY_PHONE]){
-        _textUser.text = [[NSUserDefaults standardUserDefaults]objectForKey:KEY_PHONE];
+        self.textUser.text = [[NSUserDefaults standardUserDefaults]objectForKey:KEY_PHONE];
     }
-    UIView * paddingView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 20.0, 45.0)];
-    self.textUser.leftView = paddingView;
+}
+
+- (void)initView
+{
+    self.navigationItem.leftBarButtonItem = nil;
+    self.view.backgroundColor = Color(@"efeeef");
+    
+    self.textUser.font = FontFactor(16.0f);
+    self.textUser.textColor = Color(@"161616");
+
+    UIView *leftView = [[UIView alloc]initWithFrame:CGRectMake(0.0f, 0.0f, MarginFactor(12.0f), MarginFactor(55.0f))];
+    self.textUser.leftView = leftView;
     self.textUser.leftViewMode = UITextFieldViewModeAlways;
 
-    self.textUser.placeholder = @"请输入手机号码";
-    [self.textUser setValue:[UIColor colorWithHexString:@"AFAFAF"] forKeyPath:@"_placeholderLabel.textColor"];
-    [self.textUser setValue:[UIFont systemFontOfSize:14] forKeyPath:@"_placeholderLabel.font"];
-    self.leftLine.size = CGSizeMake(self.leftLine.width, 0.5f);
-    self.rightLine.size = CGSizeMake(self.rightLine.width, 0.5f);
-}
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
+    self.textUser.placeholder = @"请输入手机号";
+    [self.textUser setValue:Color(@"afafaf") forKeyPath:@"_placeholderLabel.textColor"];
+    [self.textUser setValue:FontFactor(16.0f) forKeyPath:@"_placeholderLabel.font"];
 
-    [self adjustButtonFrame];
+    self.introduceLabel.font = FontFactor(12.0f);
+    self.introduceLabel.textColor = Color(@"989898");
+
+    self.nextButton.titleLabel.font = FontFactor(16.0f);
+
+    self.middleLabel.textColor = Color(@"9d9d9d");
+    self.middleLabel.font = FontFactor(13.0f);
 }
 
-- (void)adjustButtonFrame
+
+- (void)addAutoLayout
 {
+    self.textUser.sd_layout
+    .leftSpaceToView(self.view, 0.0f)
+    .rightSpaceToView(self.view, 0.0f)
+    .topSpaceToView(self.view, 0.0f)
+    .heightIs(55.0f);
+
+    self.introduceLabel.sd_layout
+    .topSpaceToView(self.textUser, MarginFactor(10.0f))
+    .leftSpaceToView(self.view, MarginFactor(12.0f))
+    .rightSpaceToView(self.view, MarginFactor(12.0f))
+    .autoHeightRatio(0.0f);
+
+    self.nextButton.sd_layout
+    .topSpaceToView(self.textUser, MarginFactor(181.0f))
+    .leftEqualToView(self.introduceLabel)
+    .rightEqualToView(self.introduceLabel)
+    .heightIs(40.0f);
+
+    CGFloat margin = 0.0f;
+    CGSize size = self.weChatButton.currentImage.size;
     if(![WXApi isWXAppInstalled]){
         self.weChatButton.hidden = YES;
-        CGFloat middle = SCREENWIDTH / 2.0f;
+        margin = ceilf((SCREENWIDTH - 2 * size.width) / 3.0f);
 
-        CGRect frame = self.QQButton.frame;
-        frame.origin.x = middle - kButtonMargin / 2.0f - CGRectGetWidth(frame);
-        self.QQButton.frame = frame;
+        self.QQButton.sd_layout
+        .bottomSpaceToView(self.view, MarginFactor(50.0f))
+        .leftSpaceToView(self.view, margin)
+        .widthIs(size.width)
+        .heightIs(size.height);
 
-        frame = self.weiBoButton.frame;
-        frame.origin.x = middle + kButtonMargin / 2.0f;
-        self.weiBoButton.frame = frame;
+        self.weiBoButton.sd_layout
+        .centerYEqualToView(self.QQButton)
+        .leftSpaceToView(self.QQButton, margin)
+        .widthIs(size.width)
+        .heightIs(size.height);
+
+    } else{
+        margin = ceilf((SCREENWIDTH - 3 * size.width) / 4.0f);
+
+        self.QQButton.sd_layout
+        .bottomSpaceToView(self.view, MarginFactor(50.0f))
+        .centerXEqualToView(self.view)
+        .widthIs(size.width)
+        .heightIs(size.height);
+
+        self.weChatButton.sd_layout
+        .centerYEqualToView(self.QQButton)
+        .rightSpaceToView(self.QQButton, margin)
+        .widthIs(size.width)
+        .heightIs(size.height);
+
+        self.weiBoButton.sd_layout
+        .centerYEqualToView(self.QQButton)
+        .leftSpaceToView(self.QQButton, margin)
+        .widthIs(size.width)
+        .heightIs(size.height);
     }
 
-    CGRect frame = self.lineLabel.frame;
-    frame.origin.y = CGRectGetMaxY(self.textUser.frame) + 5.0f;
-    frame.size.height = 0.5f;
-    self.lineLabel.frame = frame;
+    self.middleLabel.sd_layout
+    .centerXEqualToView(self.view)
+    .bottomSpaceToView(self.QQButton, MarginFactor(21.0f));
+    [self.middleLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
+
+    self.leftLine.sd_layout
+    .rightSpaceToView(self.middleLabel, MarginFactor(14.0f))
+    .centerYEqualToView(self.middleLabel)
+    .widthIs(MarginFactor(125.0f))
+    .heightIs(0.5f);
+
+    self.rightLine.sd_layout
+    .leftSpaceToView(self.middleLabel, MarginFactor(14.0f))
+    .centerYEqualToView(self.middleLabel)
+    .widthIs(MarginFactor(125.0f))
+    .heightIs(0.5f);
+
 }
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -111,14 +170,9 @@
 
 }
 
-- (IBAction)actionShowMem:(id)sender {
-    NSLog(@"showMem");
-
-}
-
-- (IBAction)actionLogin:(id)sender {
+- (IBAction)actionLogin:(id)sender
+{
     NSLog(@"login");
-
     if (IsStrEmpty(_textUser.text)) {
         [Hud showMessageWithText:@"手机号不能为空"];
         return;
@@ -247,11 +301,6 @@
     }];
 }
 
-- (IBAction)actionFogetPwd:(id)sender {
-
-    NSLog(@"goget");
-
-}
 - (void)chatLoagin
 {
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
@@ -297,8 +346,4 @@
     [self.textUser resignFirstResponder];
 }
 
-- (IBAction)deleteButtonClick:(id)sender {
-    self.textUser.text = @"";
-    [self.textUser becomeFirstResponder];
-}
 @end
