@@ -135,6 +135,7 @@
         _searchBar = [[EMSearchBar alloc] init];
         _searchBar.delegate = self;
         _searchBar.placeholder = NSLocalizedString(@"search", @"Search");
+        _searchBar.cancelButtonTitleColor = Color(@"bebebe");
     }
     
     return _searchBar;

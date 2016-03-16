@@ -142,6 +142,7 @@ static NSString * const kCommonFNum			= @"commonnum";
         _searchBar = [[EMSearchBar alloc] init];
         _searchBar.delegate = self;
         _searchBar.placeholder = @"搜索";
+        _searchBar.cancelButtonTitleColor = Color(@"bebebe");
     }
     
     return _searchBar;

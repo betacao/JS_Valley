@@ -120,6 +120,7 @@
         _searchBar = [[EMSearchBar alloc] init];
         _searchBar.delegate = self;
         _searchBar.placeholder = @"请输入姓名/公司名/职位";
+        _searchBar.cancelButtonTitleColor = Color(@"bebebe");
     }
 
     return _searchBar;

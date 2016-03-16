@@ -10,10 +10,12 @@
 #import "SHGMarketManager.h"
 #import "SHGMarketAdvancedSearchViewController.h"
 #import "SHGMarketSearchResultViewController.h"
+#import "EMSearchBar.h"
 
 #define kItemLeftMargin MarginFactor(12.0f)
 #define kItemHorizontalMargin MarginFactor(16.0f)
 #define kItemVerticalMargin MarginFactor(11.0f)
+
 
 @interface SHGMarketSearchViewController ()<UISearchBarDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
@@ -21,7 +23,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *moreLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *moreImageView;
 
-@property (strong, nonatomic) UISearchBar *searchBar;
+@property (strong, nonatomic) EMSearchBar *searchBar;
 @property (strong, nonatomic) UIButton *backButton;
 
 @property (strong, nonatomic) NSArray *dataArray;
@@ -59,40 +61,18 @@
     [self.searchBar resignFirstResponder];
 }
 
-- (UISearchBar *)searchBar
+- (EMSearchBar *)searchBar
 {
     if (!_searchBar) {
-        _searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0.0f, 0.0f, SCREENWIDTH, 44.0f)];
-        _searchBar.delegate = self;
-        _searchBar.layer.masksToBounds = YES;
-        _searchBar.layer.cornerRadius = 3.0f;
+        _searchBar = [[EMSearchBar alloc] init];
         _searchBar.showsCancelButton = YES;
-        _searchBar.tintColor = [UIColor whiteColor];
-        _searchBar.barTintColor = [UIColor whiteColor];
-        _searchBar.searchBarStyle = UISearchBarStyleDefault;
+        _searchBar.delegate = self;
+        _searchBar.needLineView = NO;
         _searchBar.placeholder = @"请输入业务名称/类型/地区关键字";
-        [_searchBar setImage:[UIImage imageNamed:@"market_search"] forSearchBarIcon:UISearchBarIconSearch state:UIControlStateNormal];
-        UIView *view = [_searchBar.subviews firstObject];
-        for (id object in view.subviews) {
-            if ([object isKindOfClass:NSClassFromString(@"UISearchBarTextField")]) {
-                UITextField *textField = (UITextField *)object;
-                textField.textColor = [UIColor whiteColor];
-                textField.font = FontFactor(15.0f);
-                [textField setValue:[UIColor colorWithHexString:@"F67070"] forKeyPath:@"_placeholderLabel.textColor"];
-                textField.enablesReturnKeyAutomatically = NO;
-            } else if ([object isKindOfClass:NSClassFromString(@"UISearchBarBackground")]){
-            } else{
-                UIButton *button = (UIButton *)object;
-                self.backButton = button;
-                [button setTitle:@"取消" forState:UIControlStateNormal];
-                button.titleLabel.font = FontFactor(15.0f);
-                button.enabled = YES;
-            }
-        }
-        [_searchBar setSearchFieldBackgroundImage:[[UIImage imageNamed:@"market_searchBorder"] resizableImageWithCapInsets:UIEdgeInsetsMake(0.0f, 10.0f, 0.0f, 10.0f) resizingMode:UIImageResizingModeStretch] forState:UIControlStateNormal];
     }
     return _searchBar;
 }
+
 
 - (NSMutableArray *)buttonArray
 {

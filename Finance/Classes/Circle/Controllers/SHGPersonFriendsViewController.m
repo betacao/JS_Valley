@@ -35,25 +35,18 @@
     return self;
 }
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
     self.tableView.dataSource =self;
     self.tableView.delegate = self;
     self.pageNum = 1;
-    
+    [self requestContact];
 }
--(void)friendStatus:(NSString *)status
+
+- (void)friendStatus:(NSString *)status
 {
     self.friend_status = status;
-  
-}
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:YES];
-    [self friendStatus:self.friend_status];
-    [self requestContact];
-    
-    
 }
 
 - (NSMutableArray *)dataSource

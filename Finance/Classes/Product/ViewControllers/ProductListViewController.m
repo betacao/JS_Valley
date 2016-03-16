@@ -12,6 +12,8 @@
 #import "ProductListTableViewCell.h"
 #import "AppDelegate.h"
 #import "VerifyIdentityViewController.h"
+#import "EMSearchBar.h"
+
 @interface ProductListViewController ()
 {
     NSMutableArray *itemArr;
@@ -24,7 +26,7 @@
 }
 @property (weak, nonatomic) IBOutlet UILabel *noDataLabel;
 @property (weak, nonatomic) IBOutlet UITableView *listTable;
-@property (strong, nonatomic) UISearchBar *searchBar;
+@property (strong, nonatomic) EMSearchBar *searchBar;
 
 @property (strong, nonatomic) UIBarButtonItem *searchItem;
 @property (strong, nonatomic) UIBarButtonItem *addItem;
@@ -36,6 +38,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.navigationItem.titleView = self.searchBar;
     if (!itemArr)
     {
         itemArr = [NSMutableArray array];
@@ -43,38 +46,29 @@
     _noDataLabel.hidden = YES;
     [self.view bringSubviewToFront:_noDataLabel];
     index = 0;
-    [self initSearch];
-    self.navigationItem.rightBarButtonItem = self.addItem;
     self.listTable.tag = 1002;
     [self requestType];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshHeader) name:NOTIFI_CHANGE_UPDATE_AUTO_STATUE object:nil];
     [CommonMethod setExtraCellLineHidden:self.listTable];
     [self addHeaderRefresh:self.listTable headerRefesh:YES andFooter:YES];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self initSearch];
+        self.navigationItem.rightBarButtonItem = self.addItem;
+    });
 }
 
-- (UISearchBar *)searchBar
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [self.searchBar resignFirstResponder];
+}
+- (EMSearchBar *)searchBar
 {
     if (!_searchBar) {
-        _searchBar = [[UISearchBar alloc] init];
+        _searchBar = [[EMSearchBar alloc] init];
         _searchBar.delegate = self;
-        _searchBar.tintColor = [UIColor whiteColor];
-        _searchBar.barTintColor = [UIColor colorWithHexString:@"d43c33"];
-        _searchBar.searchBarStyle = UISearchBarStyleDefault;
+        _searchBar.needLineView = NO;
         _searchBar.placeholder = @"输入产品名称";
-        [_searchBar setImage:[UIImage imageNamed:@"market_search"] forSearchBarIcon:UISearchBarIconSearch state:UIControlStateNormal];
-        UIView *view = [_searchBar.subviews firstObject];
-        for (id object in view.subviews) {
-            if ([object isKindOfClass:NSClassFromString(@"UISearchBarTextField")]) {
-                UITextField *textField = (UITextField *)object;
-                textField.textColor = [UIColor whiteColor];
-                textField.enablesReturnKeyAutomatically = NO;
-                [textField setValue:[UIColor colorWithHexString:@"F67070"] forKeyPath:@"_placeholderLabel.textColor"];
-            } else if ([object isKindOfClass:NSClassFromString(@"UISearchBarBackground")]){
-            } else{
-
-            }
-        }
-        [_searchBar setSearchFieldBackgroundImage:[[UIImage imageNamed:@"market_searchBorder"] resizableImageWithCapInsets:UIEdgeInsetsMake(0.0f, 10.0f, 0.0f, 10.0f) resizingMode:UIImageResizingModeStretch] forState:UIControlStateNormal];
     }
     return _searchBar;
 }
@@ -186,12 +180,6 @@
          [self performSelector:@selector(endrefresh) withObject:nil afterDelay:1.0];
     }];
   
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    self.navigationItem.titleView = self.searchBar;
 }
 
 - (void)initSearch
@@ -429,6 +417,7 @@
     [UIView commitAnimations];
 }
 
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -541,7 +530,6 @@
     }
     NSString *transString = [NSString stringWithString:[searchBar.text stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
     [self requestDataWithtcode:tcode isHot:ishot target:@"first" name:transString time:@""];
-//    return YES;
 }
 
 @end

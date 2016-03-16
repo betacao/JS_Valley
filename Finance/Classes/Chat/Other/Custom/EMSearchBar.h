@@ -20,5 +20,6 @@
  *  @param title 自定义文字
  */
 - (void)setCancelButtonTitle:(NSString *)title;
-
+@property (assign, nonatomic) BOOL needLineView;
+@property (strong, nonatomic) UIColor *cancelButtonTitleColor;
 @end

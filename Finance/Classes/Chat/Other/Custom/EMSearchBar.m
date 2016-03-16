@@ -17,9 +17,9 @@
 - (instancetype)initWithFrame:(CGRect)frame
 {
     frame = CGRectMake(0.0f, 0.0f, SCREENWIDTH, 44.0f);
+    self.needLineView = YES;
     self = [super initWithFrame:frame];
     if (self) {
-        self.tintColor = [UIColor colorWithHexString:@"161616"];
         self.translucent = NO;
         self.barTintColor = [UIColor colorWithHexString:@"E8E8E8"];
         self.searchBarStyle = UISearchBarStyleDefault;
@@ -27,13 +27,16 @@
         for (id object in view.subviews) {
             if ([object isKindOfClass:NSClassFromString(@"UISearchBarTextField")]) {
                 UITextField *textField = (UITextField *)object;
-                textField.textColor = [UIColor colorWithHexString:@"161616"];
+                textField.textColor = Color(@"3c3c3c");
+                [textField setValue:Color(@"bebebe") forKeyPath:@"_placeholderLabel.textColor"];
+                [textField setValue:FontFactor(15.0f) forKeyPath:@"_placeholderLabel.font"];
+                textField.enablesReturnKeyAutomatically = NO;
+
             } else if ([object isKindOfClass:NSClassFromString(@"UISearchBarBackground")]){
             } else{
             }
         }
         [self setImage:[UIImage imageNamed:@"emsearch_icon"] forSearchBarIcon:UISearchBarIconSearch state:UIControlStateNormal];
-        [self setSearchFieldBackgroundImage:[[UIImage imageNamed:@"search_background"] resizableImageWithCapInsets:UIEdgeInsetsMake(0.0f, 10.0f, 0.0f, 10.0f) resizingMode:UIImageResizingModeStretch] forState:UIControlStateNormal];
         self.backgroundImage = [UIImage imageWithColor:[UIColor colorWithHexString:@"F8F9F9"] andSize:frame.size];
         UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, CGRectGetHeight(frame) - 1.0f, SCREENWIDTH, 0.5f)];
         lineView.backgroundColor = [UIColor colorWithHexString:@"E6E7E8"];
@@ -50,16 +53,22 @@
     for (id object in view.subviews) {
         if ([object isKindOfClass:NSClassFromString(@"UISearchBarBackground")]) {
         } else if ([object isKindOfClass:NSClassFromString(@"UISearchBarTextField")]) {
-            UITextField *textField = (UITextField *)object;
-            [textField setValue:[UIColor colorWithHexString:@"BEBEBE"] forKeyPath:@"_placeholderLabel.textColor"];
-            [textField setValue:[UIFont systemFontOfSize:14] forKeyPath:@"_placeholderLabel.font"];
-            textField.enablesReturnKeyAutomatically = NO;
+
         } else if ([object isKindOfClass:NSClassFromString(@"UINavigationButton")]){
             UIButton *button = (UIButton *)object;
             [button setTitle:@"取消" forState:UIControlStateNormal];
-            [button setTitleColor:[UIColor colorWithHexString:@"BEBEBE"] forState:UIControlStateNormal];
-            button.titleLabel.font = [UIFont systemFontOfSize:14.0f];
+            if (!self.cancelButtonTitleColor) {
+                [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+            } else{
+                [button setTitleColor:self.cancelButtonTitleColor forState:UIControlStateNormal];
+            }
+            button.titleLabel.font = FontFactor(15.0f);
             button.enabled = YES;
+        } else{
+            if (!self.needLineView) {
+                UIView *view = (UIView *)object;
+                [view removeFromSuperview];
+            }
         }
     }
 
