@@ -916,6 +916,8 @@
 		F9EDD5F81BABFBCF00506C0C /* SDPhotoGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = F9EDD5F11BABFBCF00506C0C /* SDPhotoGroup.m */; };
 		F9EDD5F91BABFBCF00506C0C /* SDPhotoItem.m in Sources */ = {isa = PBXBuildFile; fileRef = F9EDD5F31BABFBCF00506C0C /* SDPhotoItem.m */; };
 		F9EDD5FA1BABFBCF00506C0C /* SDWaitingView.m in Sources */ = {isa = PBXBuildFile; fileRef = F9EDD5F51BABFBCF00506C0C /* SDWaitingView.m */; };
+		F9F332691C993658009156BA /* SHGNewFriendTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F9F332671C993658009156BA /* SHGNewFriendTableViewCell.m */; };
+		F9F3326A1C993658009156BA /* SHGNewFriendTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9F332681C993658009156BA /* SHGNewFriendTableViewCell.xib */; };
 		F9F349B11C1921900090F111 /* SHGMarketSegmentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9F349B01C1921900090F111 /* SHGMarketSegmentViewController.m */; };
 		F9F349B71C1945920090F111 /* SHGBadgeStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = F9F349B41C1945920090F111 /* SHGBadgeStyle.m */; };
 		F9F349B81C1945920090F111 /* SHGBadgeView.m in Sources */ = {isa = PBXBuildFile; fileRef = F9F349B61C1945920090F111 /* SHGBadgeView.m */; };
@@ -2217,6 +2219,9 @@
 		F9EDD5F31BABFBCF00506C0C /* SDPhotoItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDPhotoItem.m; sourceTree = "<group>"; };
 		F9EDD5F41BABFBCF00506C0C /* SDWaitingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDWaitingView.h; sourceTree = "<group>"; };
 		F9EDD5F51BABFBCF00506C0C /* SDWaitingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDWaitingView.m; sourceTree = "<group>"; };
+		F9F332661C993658009156BA /* SHGNewFriendTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGNewFriendTableViewCell.h; sourceTree = "<group>"; };
+		F9F332671C993658009156BA /* SHGNewFriendTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGNewFriendTableViewCell.m; sourceTree = "<group>"; };
+		F9F332681C993658009156BA /* SHGNewFriendTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGNewFriendTableViewCell.xib; sourceTree = "<group>"; };
 		F9F349AF1C1921900090F111 /* SHGMarketSegmentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGMarketSegmentViewController.h; sourceTree = "<group>"; };
 		F9F349B01C1921900090F111 /* SHGMarketSegmentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGMarketSegmentViewController.m; sourceTree = "<group>"; };
 		F9F349B31C1945920090F111 /* SHGBadgeStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGBadgeStyle.h; sourceTree = "<group>"; };
@@ -3055,6 +3060,9 @@
 				F9D296DE1C8FF1E700A1446C /* SHGRecommendTableViewCell.h */,
 				F9D296DF1C8FF1E700A1446C /* SHGRecommendTableViewCell.m */,
 				F9D296E01C8FF1E700A1446C /* SHGRecommendTableViewCell.xib */,
+				F9F332661C993658009156BA /* SHGNewFriendTableViewCell.h */,
+				F9F332671C993658009156BA /* SHGNewFriendTableViewCell.m */,
+				F9F332681C993658009156BA /* SHGNewFriendTableViewCell.xib */,
 				611B8CD41AFD5C09009CB21F /* ReplyTableViewCell.h */,
 				611B8CD51AFD5C09009CB21F /* ReplyTableViewCell.m */,
 				611B8CD61AFD5C09009CB21F /* ReplyTableViewCell.xib */,
@@ -5319,6 +5327,7 @@
 				61E83D1F1AF7C78E00703651 /* 相互关注图标@2x.png in Resources */,
 				614EFF091AF114D800F2BDD1 /* mine_press.png in Resources */,
 				B04D6E351B60C01300E3863E /* 指定人圈子2.jpg in Resources */,
+				F9F3326A1C993658009156BA /* SHGNewFriendTableViewCell.xib in Resources */,
 				408D8B451AF8618C0055810C /* chatBar_more.png in Resources */,
 				408D8B491AF8618C0055810C /* chatBar_record.png in Resources */,
 				F9A8D2891BE712B700A2BFB1 /* TencentOpenApi_IOS_Bundle.bundle in Resources */,
@@ -5614,6 +5623,7 @@
 				615010E21AD61C1800827F82 /* CPTextViewPlaceholder.m in Sources */,
 				F9ED07EA1C3B59EC0079A1A9 /* SHGSettingTableViewCell.m in Sources */,
 				B0BAA36B1B69EAF30036C367 /* CCLocationManager.m in Sources */,
+				F9F332691C993658009156BA /* SHGNewFriendTableViewCell.m in Sources */,
 				6187D3101AF1C693008E1D21 /* SRSlimeView.m in Sources */,
 				61647AF61AE8F33000B52544 /* LoginObj.m in Sources */,
 				532AF6AD1AFC3499007D3E4B /* FriendsListViewController.m in Sources */,

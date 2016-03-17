@@ -23,16 +23,16 @@
 #import "SHGEmptyDataView.h"
 #import "SHGExtendTableViewCell.h"
 #import "SHGRecommendTableViewCell.h"
+#import "EMSearchBar.h"
+#import "SHGNewFriendTableViewCell.h"
 
-#define IS_IOS7 ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7)
-#define IS_IOS8 ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8)
 
-
-@interface SHGHomeViewController ()<MLEmojiLabelDelegate,SHGNoticeDelegate,CircleListDelegate>
+@interface SHGHomeViewController ()<MLEmojiLabelDelegate,SHGNoticeDelegate,CircleListDelegate, UISearchBarDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *listTable;
 //判断是否已经加载过推荐列表
 @property (strong, nonatomic) NSMutableArray *recommendArray;
+@property (strong, nonatomic) SHGNewFriendObject *friendObject;
 
 @property (assign, nonatomic) BOOL hasRequestedFirst;
 @property (assign, nonatomic) BOOL hasDataFinished;
@@ -43,8 +43,9 @@
 @property (strong, nonatomic) NSString *circleType;
 @property (strong, nonatomic) UITableViewCell *emptyCell;
 @property (strong, nonatomic) SHGEmptyDataView *emptyView;
+@property (strong, nonatomic) EMSearchBar *searchBar;
 @property (strong, nonatomic) NSMutableDictionary *recommendHeightDictionary;
-
+@property (assign, nonatomic) BOOL needRefreshTableView;
 @end
 
 @implementation SHGHomeViewController
@@ -69,16 +70,14 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    [self addHeaderRefresh:self.listTable headerRefesh:YES headerTitle:@{kRefreshStateIdle:@"下拉可以刷新", kRefreshStatePulling:@"释放后查看最新动态", kRefreshStateRefreshing:@"正在努力加载中"} andFooter:YES footerTitle:nil];
     self.listTable.estimatedRowHeight = SCREENWIDTH;
     self.listTable.rowHeight = SCREENWIDTH;
-
     self.hasRequestedFirst = NO;
-    
     self.circleType = @"all";
+    self.needShowNewFriend = YES;
+    [self addHeaderRefresh:self.listTable headerRefesh:YES headerTitle:@{kRefreshStateIdle:@"下拉可以刷新", kRefreshStatePulling:@"释放后查看最新动态", kRefreshStateRefreshing:@"正在努力加载中"} andFooter:YES footerTitle:nil];
+    self.listTable.tableHeaderView = self.searchBar;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshData) name:NOTIFI_SENDPOST object:nil];
-    [self loadRegisterPushFriend];
-
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -97,7 +96,6 @@
         __weak typeof(self) weakSelf = self;
         [SHGGloble sharedGloble].CompletionBlock = ^(NSArray *allArray, NSArray *normalArray, NSArray *adArray){
             [Hud hideHud];
-            [weakSelf requestRecommendFriends];
             if(allArray && [allArray count] > 0){
                 //更新整体数据
                 [weakSelf.dataArr removeAllObjects];
@@ -113,10 +111,9 @@
                 [weakSelf.listTable.footer endRefreshing];
 
                 [weakSelf.newMessageNoticeView showWithText:[NSString stringWithFormat:@"为您加载了%ld条新动态",(long)allArray.count]];
-
-                dispatch_async(dispatch_get_main_queue(), ^(){
-                    [weakSelf.listTable reloadData];
-                });
+                [weakSelf insertRecomandArray];
+                [weakSelf insertNewFriendArray];
+                weakSelf.needRefreshTableView = YES;
             } else{
                 [weakSelf.listTable.header endRefreshing];
                 [weakSelf.listTable.footer endRefreshing];
@@ -202,6 +199,17 @@
     return _recommendHeightDictionary;
 }
 
+- (EMSearchBar *)searchBar
+{
+    if (!_searchBar) {
+        _searchBar = [[EMSearchBar alloc] init];
+        _searchBar.delegate = self;
+        _searchBar.placeholder = @"大家都在搜：";
+    }
+    return _searchBar;
+}
+
+
 - (void)requestRecommendFriends
 {
     [self.recommendArray removeAllObjects];
@@ -224,9 +232,6 @@
             [weakSelf.recommendArray addObject:obj];
         }
         [weakSelf insertRecomandArray];
-        dispatch_async(dispatch_get_main_queue(), ^(){
-            [weakSelf.listTable reloadData];
-        });
 
     } failed:^(MOCHTTPResponse *response){
         NSLog(@"%@",response.error);
@@ -236,13 +241,35 @@
 
 - (void)insertRecomandArray
 {
-    if ([self.dataArr indexOfObject:self.recommendArray] != NSNotFound || self.recommendArray.count == 0) {
+    if (self.recommendArray.count == 0 || [self.dataArr indexOfObject:self.recommendArray] != NSNotFound) {
         return;
     }
     if(self.dataArr.count > 4){
-        if(self.recommendArray.count > 0){
-            [self.dataArr insertObject:self.recommendArray atIndex:3];
-        }
+        [self.dataArr insertObject:self.recommendArray atIndex:3];
+        self.needRefreshTableView = YES;
+    }
+}
+
+- (void)insertNewFriendArray
+{
+    if (!self.friendObject || [self.dataArr indexOfObject:self.friendObject] != NSNotFound) {
+        return;
+    }
+    if(self.dataArr.count > 5 && self.needShowNewFriend){
+        [self.dataArr insertObject:self.friendObject atIndex:4];
+        self.needRefreshTableView = YES;
+    }
+}
+
+- (void)setNeedRefreshTableView:(BOOL)needRefreshTableView
+{
+    __weak typeof(self) weakSelf = self;
+    if (needRefreshTableView && !_needRefreshTableView) {
+        _needRefreshTableView = YES;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [weakSelf.listTable reloadData];
+            _needRefreshTableView = NO;
+        });
     }
 }
 
@@ -264,19 +291,19 @@
 - (void)loadRegisterPushFriend
 {
     __weak typeof(self) weakSelf = self;
-    NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
-    [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@%@",rBaseAddressForHttp,@"/recommended/friends/registerPushFriend"] parameters:@{@"uid":uid} success:^(MOCHTTPResponse *response) {
+    [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@%@",rBaseAddressForHttp,@"/recommended/friends/registerPushFriendGrade"] parameters:@{@"uid":UID} success:^(MOCHTTPResponse *response) {
         NSDictionary *dictionary = response.dataDictionary;
-        if(dictionary){
-            NSString *message = [dictionary objectForKey:@"message"];
-            NSString *uid = [dictionary objectForKey:@"uid"];
-            if(message && message.length > 0){
-                [weakSelf.newFriendNoticeView showWithText:message];
-                [weakSelf.newFriendNoticeView loadUserUid:uid];
+        if (dictionary) {
+            NSArray *array = [[SHGGloble sharedGloble] parseServerJsonArrayToJSONModel:@[dictionary] class:[SHGNewFriendObject class]];
+            if (array.count > 0) {
+                self.friendObject = [array firstObject];
+            } else{
+                self.friendObject = nil;
             }
         }
+        [weakSelf insertNewFriendArray];
     } failed:^(MOCHTTPResponse *response) {
-        
+
     }];
 }
 
@@ -300,12 +327,9 @@
         [Hud hideHud];
         weakSelf.isRefreshing = NO;
         [weakSelf assembleDictionary:response.dataDictionary target:target];
-
+        weakSelf.needRefreshTableView = YES;
         [weakSelf.listTable.header endRefreshing];
         [weakSelf.listTable.footer endRefreshing];
-        dispatch_async(dispatch_get_main_queue(), ^(){
-            [weakSelf.listTable reloadData];
-        });
       
     } failed:^(MOCHTTPResponse *response){
         weakSelf.isRefreshing = NO;
@@ -343,6 +367,7 @@
             [self.dataArr addObjectsFromArray:self.adArray];
         }
         [self insertRecomandArray];
+        [self insertNewFriendArray];
         [self.newMessageNoticeView showWithText:[NSString stringWithFormat:@"为您加载了%ld条新动态",(long)self.dataArr.count]];
     } else if ([target isEqualToString:@"refresh"]){
         if (normalArray.count > 0){
@@ -368,7 +393,7 @@
             [self.dataArr addObjectsFromArray:self.adArray];
         }
         [self insertRecomandArray];
-
+        [self insertNewFriendArray];
     } else if ([target isEqualToString:@"load"]){
         [self.listArray addObjectsFromArray:normalArray];
         [self.dataArr addObjectsFromArray:normalArray];
@@ -461,8 +486,8 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (self.dataArr.count > 0) {
-        NSObject *obj = self.dataArr[indexPath.row];
-        if(![obj isKindOfClass:[CircleListObj class]]){
+        NSObject *obj = [self.dataArr objectAtIndex: indexPath.row];
+        if([obj isKindOfClass:[NSArray class]]){
             NSString *identifier1 = @"SHGRecommendTableViewCell";
             SHGRecommendTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier1];
             if (!cell){
@@ -473,12 +498,23 @@
             cell.objectArray = array;
             return cell;
 
+        } else if ([obj isKindOfClass:[SHGNewFriendObject class]]){
+
+            NSString *identifier2 = @"SHGNewFriendTableViewCell";
+            SHGNewFriendTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier2];
+            if (!cell){
+                cell = [[[NSBundle mainBundle] loadNibNamed:@"SHGNewFriendTableViewCell" owner:self options:nil] lastObject];
+            }
+            SHGNewFriendObject *object = [self.dataArr objectAtIndex:indexPath.row];
+            cell.object = object;
+            return cell;
+
         } else{
             CircleListObj *obj = [self.dataArr objectAtIndex:indexPath.row];
             if (![obj.postType isEqualToString:@"ad"]){
                 if ([obj.status boolValue]){
-                    NSString *identifier2 = @"SHGMainPageTableViewCell";
-                    SHGMainPageTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier2];
+                    NSString *identifier3 = @"SHGMainPageTableViewCell";
+                    SHGMainPageTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier3];
                     if (!cell){
                         cell = [[[NSBundle mainBundle] loadNibNamed:@"SHGMainPageTableViewCell" owner:self options:nil] lastObject];
                         cell.delegate = [SHGUnifiedTreatment sharedTreatment];
@@ -490,8 +526,8 @@
                 }
             } else{
                 if ([obj.status boolValue]){
-                    NSString *identifier3 = @"SHGExtendTableViewCell";
-                    SHGExtendTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier3];
+                    NSString *identifier4 = @"SHGExtendTableViewCell";
+                    SHGExtendTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier4];
                     if (!cell){
                         cell = [[[NSBundle mainBundle] loadNibNamed:@"SHGExtendTableViewCell" owner:self options:nil] lastObject];
                     }
@@ -559,6 +595,9 @@
     }
 }
 
+
+#pragma mark =============  UITableView Delegate  =============
+
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (self.dataArr.count == 0) {
@@ -575,13 +614,16 @@
             CGFloat height = [tableView cellHeightForIndexPath:indexPath model:obj keyPath:@"object" cellClass:[SHGExtendTableViewCell class] contentViewWidth:CGFLOAT_MAX];
             return height;
         }
-    } else{
+    } else if([obj isKindOfClass:[NSArray class]]){
         NSString *key = [NSString stringWithFormat:@"recommendHeight%ld",(long)self.recommendArray.count];
         CGFloat height = [[self.recommendHeightDictionary objectForKey:key] floatValue];
         if (height == 0.0f) {
             height = [tableView cellHeightForIndexPath:indexPath model:obj keyPath:@"objectArray" cellClass:[SHGRecommendTableViewCell class] contentViewWidth:CGFLOAT_MAX];
             [self.recommendHeightDictionary setObject:@(height) forKey:key];
         }
+        return height;
+    } else if ([obj isKindOfClass:[SHGNewFriendObject class]]){
+        CGFloat height = [tableView cellHeightForIndexPath:indexPath model:obj keyPath:@"object" cellClass:[SHGNewFriendTableViewCell class] contentViewWidth:CGFLOAT_MAX];
         return height;
     }
     return 0.0f;
@@ -597,8 +639,6 @@
     }
 
 }
-
-#pragma mark =============  UITableView Delegate  =============
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -623,11 +663,13 @@
     }
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-}
+#pragma mark ------searchBarDelegate
 
+- (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar
+{
+    
+    return NO;
+}
 #pragma mark cellDelegate
 
 - (void)gotoSomeOne:(NSString *)uid name:(NSString *)name
@@ -638,6 +680,12 @@
     controller.delegate = [SHGUnifiedTreatment sharedTreatment];
     [self.navigationController pushViewController:controller animated:YES];
 }
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+}
+
 
 @end
 

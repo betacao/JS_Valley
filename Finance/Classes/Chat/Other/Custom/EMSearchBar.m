@@ -31,18 +31,25 @@
                 [textField setValue:Color(@"bebebe") forKeyPath:@"_placeholderLabel.textColor"];
                 [textField setValue:FontFactor(15.0f) forKeyPath:@"_placeholderLabel.font"];
                 textField.enablesReturnKeyAutomatically = NO;
-
             } else if ([object isKindOfClass:NSClassFromString(@"UISearchBarBackground")]){
+
             } else{
+
             }
         }
         [self setImage:[UIImage imageNamed:@"emsearch_icon"] forSearchBarIcon:UISearchBarIconSearch state:UIControlStateNormal];
-        self.backgroundImage = [UIImage imageWithColor:[UIColor colorWithHexString:@"F8F9F9"] andSize:frame.size];
+        [self setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithHexString:@"F8F9F9"]] forBarPosition:UIBarPositionAny barMetrics:UIBarMetricsDefault];
         UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, CGRectGetHeight(frame) - 1.0f, SCREENWIDTH, 0.5f)];
         lineView.backgroundColor = [UIColor colorWithHexString:@"E6E7E8"];
         [self addSubview:lineView];
     }
     return self;
+}
+
+- (void)setBackgroundImageColor:(UIColor *)backgroundImageColor
+{
+    _backgroundImageColor = backgroundImageColor;
+    [self setBackgroundImage:[UIImage imageWithColor:_backgroundImageColor] forBarPosition:UIBarPositionAny barMetrics:UIBarMetricsDefault];
 }
 
 - (void)layoutSubviews

@@ -22,9 +22,9 @@
 
 #define kStatusBarHeight CGRectGetHeight([UIApplication sharedApplication].statusBarFrame)
 
-#define kNavigationBarHeight  44.0f
+#define kNavigationBarHeight CGRectGetHeight([TabBarViewController tabBar].navigationController.navigationBar.frame)
 
-#define kTabBarHeight  49.0f
+#define kTabBarHeight CGRectGetHeight([TabBarViewController tabBar].tabBar.frame)
 
 #define CURRENT_VERSION [[UIDevice currentDevice].systemVersion floatValue]
 

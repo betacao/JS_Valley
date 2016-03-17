@@ -69,6 +69,7 @@
         _searchBar.delegate = self;
         _searchBar.needLineView = NO;
         _searchBar.placeholder = @"请输入业务名称/类型/地区关键字";
+        _searchBar.backgroundImageColor = Color(@"d43c33");
     }
     return _searchBar;
 }

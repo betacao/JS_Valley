@@ -69,6 +69,7 @@
         _searchBar.delegate = self;
         _searchBar.needLineView = NO;
         _searchBar.placeholder = @"输入产品名称";
+        _searchBar.backgroundImageColor = Color(@"d43c33");
     }
     return _searchBar;
 }
@@ -418,17 +419,20 @@
 }
 
 
-- (void)didReceiveMemoryWarning {
+- (void)didReceiveMemoryWarning
+{
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
-// called when scroll view grinds to a halt
+
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    [self.searchBar resignFirstResponder];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.searchBar resignFirstResponder];
+    });
 }
+
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
     [self.searchBar resignFirstResponder];

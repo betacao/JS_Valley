@@ -22,4 +22,5 @@
 - (void)setCancelButtonTitle:(NSString *)title;
 @property (assign, nonatomic) BOOL needLineView;
 @property (strong, nonatomic) UIColor *cancelButtonTitleColor;
+@property (strong, nonatomic) UIColor *backgroundImageColor;
 @end

@@ -141,6 +141,8 @@
     if(IsStrEmpty(UID)){
         return;
     }
+    [[SHGHomeViewController sharedController] requestRecommendFriends];
+    [[SHGHomeViewController sharedController] loadRegisterPushFriend];
     NSDictionary *param = @{@"uid":UID, @"type":@"all", @"target":@"first", @"rid":@(0), @"num": rRequestNum, @"tagId": @"-1"};
     
     __weak typeof(self) weakSelf = self;

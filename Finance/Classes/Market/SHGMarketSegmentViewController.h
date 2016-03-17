@@ -19,8 +19,7 @@ typedef void(^loadViewFinishBlock)(UIView *view);
 @property (nonatomic, weak) UIViewController *selectedViewController;
 @property (nonatomic, assign) NSUInteger selectedIndex;
 
-@property (strong ,nonatomic, readonly) NSArray *rightBarButtonItems;
-@property (strong ,nonatomic, readonly) UIBarButtonItem *leftBarButtonItem;
+@property (strong ,nonatomic) UIBarButtonItem *leftBarButtonItem;
 @property (nonatomic, copy) loadViewFinishBlock block;
 
 + (instancetype)sharedSegmentController;

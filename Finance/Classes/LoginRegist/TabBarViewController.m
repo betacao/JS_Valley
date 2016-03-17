@@ -61,8 +61,7 @@
 
 - (instancetype)init
 {
-    if (self=[super init]){
-        
+    if (self = [super init]){
     }
     return self;
 }
@@ -80,12 +79,12 @@
     
     self.navigationController.delegate = self;
 
-
+    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     EMPushNotificationOptions *options = [[EaseMob sharedInstance].chatManager pushNotificationOptions];
     options.displayStyle = ePushNotificationDisplayStyle_messageSummary;
     [[EaseMob sharedInstance].chatManager asyncUpdatePushOptions:options completion:^(EMPushNotificationOptions *options, EMError *error) {
 
-    } onQueue:dispatch_get_main_queue()];
+    } onQueue:queue];
 
     
     [self initSubpage];
@@ -123,7 +122,6 @@
     self.navigationItem.rightBarButtonItems = nil;
     if (item.tag == 1000){
         self.navigationItem.titleView = self.marketSegmentTitleView;
-        self.navigationItem.rightBarButtonItems = self.marketSegmentViewController.rightBarButtonItems;
         self.navigationItem.leftBarButtonItem = self.marketSegmentViewController.leftBarButtonItem;
         [MobClick event:@"EnterMarketController" label:@"onClick"];
 
@@ -150,7 +148,7 @@
 #pragma mark - 子页面初始化
 -(void)initSubpage
 {
-    //首页
+    //业务
     __weak typeof(self)weakSelf = self;
     UIImage *image = [UIImage imageNamed:@"business"];
     image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
@@ -163,6 +161,7 @@
         weakSelf.navigationItem.titleView = weakSelf.marketSegmentTitleView;
     };
 
+    //首页
     image = [UIImage imageNamed:@"home"];
     image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     selectedImage = [UIImage imageNamed:@"home_height"];
@@ -173,9 +172,7 @@
         weakSelf.homeSegmentTitleView = view;
         weakSelf.navigationItem.titleView = weakSelf.homeSegmentTitleView;
     };
-    self.navigationItem.rightBarButtonItem = self.homeSegmentViewController.rightBarButtonItem;
-    self.navigationItem.leftBarButtonItem = self.homeSegmentViewController.leftBarButtonItem;
-    //业务
+
     //产品
     image = [UIImage imageNamed:@"find"];
     image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];

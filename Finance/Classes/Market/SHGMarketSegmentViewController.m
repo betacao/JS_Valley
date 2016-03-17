@@ -14,13 +14,14 @@
 #import "SHGMomentCityViewController.h"
 #import "SHGMarketSearchResultViewController.h"
 #import "SHGMarketListViewController.h"
+#import "EMSearchBar.h"
 
-@interface SHGMarketSegmentViewController ()
-@property (nonatomic, strong) NSArray *rightBarButtonItems;
-@property (nonatomic, strong) UIBarButtonItem *leftBarButtonItem;
-@property (nonatomic, strong) UIButton *titleButton;
-@property (nonatomic, strong) UILabel *titleLabel;
-@property (nonatomic, strong) UIImageView *titleImageView;
+@interface SHGMarketSegmentViewController ()<UISearchBarDelegate>
+
+@property (strong, nonatomic) UIButton *titleButton;
+@property (strong, nonatomic) UILabel *titleLabel;
+@property (strong, nonatomic) UIImageView *titleImageView;
+@property (strong, nonatomic) EMSearchBar *searchBar;
 @end
 
 @implementation SHGMarketSegmentViewController
@@ -70,7 +71,6 @@
 
     [tabButtonsContainerView setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithHexString:@"d53432"] andSize:CGSizeMake(85, 26)] forState:UIControlStateHighlighted barMetrics:UIBarMetricsDefault];
 
-
     tabButtonsContainerView.selected = NO;
     tabButtonsContainerView.selectedSegmentIndex = 0;
 
@@ -83,7 +83,7 @@
     [self reloadTabButtons];
 
     if(self.block){
-        self.block(self.titleButton);
+        self.block(self.searchBar);
     }
 }
 
@@ -95,7 +95,7 @@
         [_titleButton addTarget:self action:@selector(moveToProvincesViewController:) forControlEvents:UIControlEventTouchUpInside];
 
         self.titleLabel = [[UILabel alloc] init];
-        self.titleLabel.font = [UIFont systemFontOfSize:kNavBarTitleFontSize];
+        self.titleLabel.font = FontFactor(15.0f);
         self.titleLabel.textColor = [UIColor whiteColor];
         [_titleButton addSubview:self.titleLabel];
 
@@ -105,6 +105,18 @@
         [_titleButton addSubview:self.titleImageView];
     }
     return _titleButton;
+}
+
+- (EMSearchBar *)searchBar
+{
+    if (!_searchBar) {
+        _searchBar = [[EMSearchBar alloc] init];
+        _searchBar.delegate = self;
+        _searchBar.needLineView = NO;
+        _searchBar.placeholder = @"请输入业务名称";
+        _searchBar.backgroundImageColor = Color(@"d43c33");
+    }
+    return _searchBar;
 }
 
 #pragma mark ------变更城市代理
@@ -129,35 +141,11 @@
     }
 }
 
-- (NSArray *)rightBarButtonItems
-{
-    if (!_rightBarButtonItems) {
-        UIButton *sendButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        [sendButton setTitle:@"发布" forState:UIControlStateNormal];
-        sendButton.titleLabel.font = [UIFont systemFontOfSize:14.0f];
-        [sendButton sizeToFit];
-        [sendButton addTarget:self action:@selector(addNewMarket:) forControlEvents:UIControlEventTouchUpInside];
-        UIBarButtonItem *sendItem = [[UIBarButtonItem alloc] initWithCustomView:sendButton];
-        _rightBarButtonItems = @[sendItem];
-    }
-    return  _rightBarButtonItems;
-
-}
-
 - (UIBarButtonItem *)leftBarButtonItem
 {
     if (!_leftBarButtonItem) {
-        UIView *leftView = [[UIView alloc] init];
-        leftView.userInteractionEnabled = YES;
-        UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        UIImage *image = [UIImage imageNamed:@"marketSearch"];
-        [leftButton setImage:image forState:UIControlStateNormal];
-        [leftButton addTarget:self action:@selector(searchMarket:) forControlEvents:UIControlEventTouchUpInside];
-        [leftButton sizeToFit];
 
-        leftView.frame = leftButton.bounds;
-        [leftView addSubview:leftButton];
-        _leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:leftView];
+        _leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.titleButton];
     }
     return _leftBarButtonItem;
 }
@@ -168,26 +156,11 @@
     [self.navigationController pushViewController:controller animated:YES];
 }
 
-- (void)searchMarket:(UIButton *)button
+- (void)searchMarket:(id)sender
 {
     [MobClick event:@"ActionMarketSearchClicked" label:@"onClick"];
     SHGMarketSearchViewController *controller = [[SHGMarketSearchViewController alloc] init];
     [self.navigationController pushViewController:controller animated:YES];
-}
-
-- (void)addNewMarket:(UIButton *)button
-{
-    __weak typeof(self)weakSelf = self;
-    [[SHGGloble sharedGloble] requsetUserVerifyStatus:^(BOOL status) {
-        if (status) {
-            SHGMarketSendViewController *controller = [[SHGMarketSendViewController alloc] init];
-            controller.delegate = [SHGMarketSegmentViewController sharedSegmentController];
-            [weakSelf.navigationController pushViewController:controller animated:YES];
-        } else{
-            VerifyIdentityViewController *controller = [[VerifyIdentityViewController alloc] init];
-            [weakSelf.navigationController pushViewController:controller animated:YES];
-        }
-    } failString:@"认证后才能发起业务哦～"];
 }
 
 - (void)reloadTabButtons
@@ -526,6 +499,14 @@
 - (void)clearAndReloadData
 {
     
+}
+
+#pragma mark ------searBarDelegate
+
+- (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar
+{
+    [self searchMarket:searchBar];
+    return NO;
 }
 
 - (void)viewDidUnload

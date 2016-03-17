@@ -24,6 +24,9 @@
 @interface SHGMarketListViewController ()<UITabBarDelegate, UITableViewDataSource, SHGCategoryScrollViewDelegate,SHGMarketSecondCategoryViewControllerDelegate, SHGMarketTableViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet UIImageView *addMarketImageView;
+@property (assign, nonatomic) CGSize addMarketSize;
+
 @property (strong, nonatomic) UIView *headerView;
 @property (strong, nonatomic) SHGCategoryScrollView *scrollView;
 @property (strong, nonatomic) UITableViewCell *emptyCell;
@@ -47,6 +50,7 @@
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     [self addHeaderRefresh:self.tableView headerRefesh:YES andFooter:YES];
+    [self initAddMarketImageView];
     [self loadData];
 }
 
@@ -62,6 +66,22 @@
         weakSelf.currentArray = [weakSelf.dataArr firstObject];
         [weakSelf loadMarketList:@"first" firstId:[weakSelf.scrollView marketFirstId] second:[weakSelf.scrollView marketSecondId] marketId:@"-1" modifyTime:@""];
     }];
+}
+
+- (void)initAddMarketImageView
+{
+    self.addMarketSize = self.addMarketImageView.image.size;
+    CGRect frame = self.addMarketImageView.frame;
+    frame.size = self.addMarketSize;
+    frame.origin.x = SCREENWIDTH - MarginFactor(17.0f) - self.addMarketSize.width;
+    frame.origin.y = CGRectGetHeight(self.view.frame) - kTabBarHeight - MarginFactor(45.0f) - self.addMarketSize.height;
+    self.addMarketImageView.frame = frame;
+
+    UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapImageView:)];
+    UIPanGestureRecognizer *panRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panImageView:)];
+    [self.addMarketImageView addGestureRecognizer:panRecognizer];
+    [self.addMarketImageView addGestureRecognizer:tapRecognizer];
+    self.addMarketImageView.userInteractionEnabled = YES;
 }
 
 - (NSMutableArray *)currentDataArray
@@ -84,6 +104,7 @@
 {
     [self loadData];
 }
+
 
 - (void)scrollToCategory:(SHGMarketFirstCategoryObject *)object
 {
@@ -446,6 +467,57 @@
             [self loadMarketList:@"first" firstId:[self.scrollView marketFirstId] second:[self.scrollView marketSecondId] marketId:@"-1" modifyTime:@""];
         }
     }
+}
+
+- (void)panImageView:(UIPanGestureRecognizer *)recognizer
+{
+    UIView *touchedView = recognizer.view;
+    if (recognizer.state == UIGestureRecognizerStateBegan) {
+
+    } else if (recognizer.state == UIGestureRecognizerStateChanged) {
+        CGPoint point = [recognizer locationInView:self.view];
+        if (point.x - self.addMarketSize.width / 2.0f < 0.0f) {
+            point.x = self.addMarketSize.width / 2.0f;
+        }
+        if (point.x + self.addMarketSize.width / 2.0f > SCREENWIDTH) {
+            point.x = SCREENWIDTH - self.addMarketSize.width / 2.0f;
+        }
+        if (point.y + self.addMarketSize.height / 2.0f > CGRectGetHeight(self.view.frame) - kTabBarHeight) {
+            point.y = CGRectGetHeight(self.view.frame) - kTabBarHeight - self.addMarketSize.height / 2.0f;
+        }
+        if (point.y - self.addMarketSize.height / 2.0f  < kCategoryScrollViewHeight) {
+            point.y = kCategoryScrollViewHeight + self.addMarketSize.height / 2.0f;
+        }
+        touchedView.center = point;
+    } else if (recognizer.state == UIGestureRecognizerStateEnded) {
+
+    }
+
+}
+
+- (void)tapImageView:(UIPanGestureRecognizer *)recognizer
+{
+    if (recognizer.state == UIGestureRecognizerStateEnded) {
+        [self addNewMarket:recognizer];
+    }
+    
+}
+
+
+
+- (void)addNewMarket:(id)sender
+{
+    __weak typeof(self)weakSelf = self;
+    [[SHGGloble sharedGloble] requsetUserVerifyStatus:^(BOOL status) {
+        if (status) {
+            SHGMarketSendViewController *controller = [[SHGMarketSendViewController alloc] init];
+            controller.delegate = [SHGMarketSegmentViewController sharedSegmentController];
+            [weakSelf.navigationController pushViewController:controller animated:YES];
+        } else{
+            VerifyIdentityViewController *controller = [[VerifyIdentityViewController alloc] init];
+            [weakSelf.navigationController pushViewController:controller animated:YES];
+        }
+    } failString:@"认证后才能发起业务哦～"];
 }
 
 #pragma mark -----二级分类返回代理
