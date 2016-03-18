@@ -458,6 +458,7 @@
 
 - (void)goToMyCircle
 {
+    [[SHGGloble sharedGloble] recordUserAction:@"" type:@"user_dynamic"];
     SHGPersonalViewController *controller = [[SHGPersonalViewController alloc] initWithNibName:@"SHGPersonalViewController" bundle:nil];
     controller.hidesBottomBarWhenPushed = YES;
     controller.userId = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
@@ -588,12 +589,14 @@
     id<ISSShareActionSheetItem> item3 = [ShareSDK shareActionSheetItemWithTitle:@"短信" icon:[UIImage imageNamed:@"sns_icon_19"] clickHandler:^{
         [weakSelf shareToSMS:content];
     }];
-
+   
     NSString *shareUrl =[NSString stringWithFormat:@"%@?uid=%@",SHARE_YAOQING_URL,[[NSUserDefaults standardUserDefaults]objectForKey:KEY_UID]];
     id<ISSShareActionSheetItem> item4 = [ShareSDK shareActionSheetItemWithTitle:@"微信朋友圈" icon:[UIImage imageNamed:@"sns_icon_23"] clickHandler:^{
+         [[SHGGloble sharedGloble] recordUserAction:@"" type:@"user_inviteMicroCircle"];
         [[AppDelegate currentAppdelegate] wechatShareWithText:contentOther shareUrl:shareUrl shareType:1];
     }];
     id<ISSShareActionSheetItem> item5 = [ShareSDK shareActionSheetItemWithTitle:@"微信好友" icon:[UIImage imageNamed:@"sns_icon_22"] clickHandler:^{
+         [[SHGGloble sharedGloble] recordUserAction:@"" type:@"user_inviteMicroFriend"];
         [[AppDelegate currentAppdelegate] wechatShareWithText:contentOther shareUrl:shareUrl shareType:0];
     }];
 
@@ -635,6 +638,7 @@
 
 -(void)shareToSMS:(NSString *)text
 {
+    [[SHGGloble sharedGloble] recordUserAction:@"" type:@"user_inviteSms"];
     [[AppDelegate currentAppdelegate] sendSmsWithText:text rid:@""];
 }
 
@@ -840,48 +844,6 @@
 
     }
     
-//    if (indexPath.row == 0){
-//
-//        MyTeamViewController *controller = [[MyTeamViewController alloc] init];
-//        controller.hidesBottomBarWhenPushed = YES;
-//        [MobClick event:@"MyTeamViewController" label:@"onClick"];
-//        [self.navigationController pushViewController:controller animated:YES];
-//
-//    } else if (indexPath.row == 1) {
-//        MyMoneyViewController *controller = [[MyMoneyViewController alloc] init];
-//        controller.hidesBottomBarWhenPushed = YES;
-//        [MobClick event:@"MyMoneyViewController" label:@"onClick"];
-//        [self.navigationController pushViewController:controller animated:YES];
-//
-//    } else if (indexPath.row == 2) {
-//
-//        MyAppointmentViewController *controller = [[MyAppointmentViewController alloc] init];
-//        controller.hidesBottomBarWhenPushed = YES;
-//        [MobClick event:@"MyAppointmentViewController" label:@"onClick"];
-//        [self.navigationController pushViewController:controller animated:YES];
-//
-//    } else if (indexPath.row == 3) {
-//
-//        SHGMarketMineViewController *controller = [[SHGMarketMineViewController alloc] init];
-//        controller.hidesBottomBarWhenPushed = YES;
-//        [self.navigationController pushViewController:controller animated:YES];
-//
-//    } else if (indexPath.row == 4) {
-//
-//        MyCollectionViewController *controller = [[MyCollectionViewController alloc] init];
-//        controller.hidesBottomBarWhenPushed = YES;
-//        [MobClick event:@"MyCollectionViewController" label:@"onClick"];
-//        [self.navigationController pushViewController:controller animated:YES];
-//
-//    } else if (indexPath.row == 5) {
-//
-//        if (self.nickName.length > 0){
-//            SettingsViewController *controller = [[SettingsViewController alloc] init];
-//            controller.hidesBottomBarWhenPushed = YES;
-//            controller.userInfo = @{kNickName:self.nickName, kDepartment:self.department, kCompany:self.company, kLocation:self.location, kIndustry:self.industry, kHeaderImage:self.imageUrl};
-//            [self.navigationController	pushViewController:controller animated:YES];
-//        }
-//    }
 }
 
 - (void)changeUpdateState
@@ -891,6 +853,7 @@
 
 - (void)uploadContact
 {
+    [[SHGGloble sharedGloble] recordUserAction:@"" type:@"user_setting_updateFriend"];
     [[SHGGloble sharedGloble] getUserAddressList:^(BOOL finished) {
         if(finished){
             [[SHGGloble sharedGloble] uploadPhonesWithPhone:^(BOOL finish) {

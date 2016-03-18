@@ -253,11 +253,11 @@
     NSString *request = [rBaseAddressForHttp stringByAppendingString:@"/market/saveMarket"];
     [MOCHTTPRequestOperationManager postWithURL:request class:[SHGMarketFirstCategoryObject class] parameters:param success:^(MOCHTTPResponse *response) {
         [Hud hideHud];
-        [Hud showMessageWithText:@"创建业务成功"];
+        [Hud showMessageWithText:@"发布业务成功"];
         block(YES);
     } failed:^(MOCHTTPResponse *response) {
         [Hud hideHud];
-        [Hud showMessageWithText:@"创建业务失败"];
+        [Hud showMessageWithText:@"发布业务失败"];
     }];
 }
 
@@ -303,7 +303,7 @@
         }
     } failed:^(MOCHTTPResponse *response) {
         [Hud hideHud];
-        [Hud showMessageWithText:@"收藏失败"];
+        [Hud showMessageWithText:@"收藏失败！"];
     }];
 
 }

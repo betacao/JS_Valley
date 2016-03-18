@@ -171,10 +171,12 @@
     NSString *content = [NSString stringWithFormat:@"%@\"%@\"%@%@",@"Hi，我在金融大牛圈上看到了一个非常棒的帖子,关于",postContent,@"，赶快下载大牛圈查看吧！",[NSString stringWithFormat:@"%@%@",rBaseAddressForHttpShare,obj.rid]];
 
     id<ISSShareActionSheetItem> item1 = [ShareSDK shareActionSheetItemWithTitle:@"动态" icon:[UIImage imageNamed:@"圈子图标"] clickHandler:^{
+        [[SHGGloble sharedGloble] recordUserAction:obj.rid type:@"dynamic_shareDynamic"];
         [self circleShareWithObj:obj];
     }];
 
     id<ISSShareActionSheetItem> item2 = [ShareSDK shareActionSheetItemWithTitle:@"圈内好友" icon:[UIImage imageNamed:@"圈内好友图标"] clickHandler:^{
+        [[SHGGloble sharedGloble] recordUserAction:obj.rid type:@"dynamic_shareSystemUser"];
         [self shareToFriendWithObj:obj];
     }];
 
@@ -183,9 +185,11 @@
     }];
 
     id<ISSShareActionSheetItem> item4 = [ShareSDK shareActionSheetItemWithTitle:@"朋友圈" icon:[UIImage imageNamed:@"sns_icon_23"] clickHandler:^{
+        [[SHGGloble sharedGloble] recordUserAction:obj.rid type:@"dynamic_shareMicroCircle"];
         [[AppDelegate currentAppdelegate]wechatShare:obj shareType:1];
     }];
     id<ISSShareActionSheetItem> item5 = [ShareSDK shareActionSheetItemWithTitle:@"微信好友" icon:[UIImage imageNamed:@"sns_icon_22"] clickHandler:^{
+         [[SHGGloble sharedGloble] recordUserAction:obj.rid type:@"dynamic_shareMicroFriend"];
         [[AppDelegate currentAppdelegate]wechatShare:obj shareType:0];
     }];
     NSArray *shareArray = nil;
@@ -197,6 +201,7 @@
         }
     } else{
         if ([QQApiInterface isQQSupportApi]) {
+            //[[SHGGloble sharedGloble] recordUserAction:obj.rid type:@"dynamic_shareQQ"];
             shareArray = [ShareSDK customShareListWithType: SHARE_TYPE_NUMBER(ShareTypeQQ), item3, item1,item2,nil];
         } else{
             shareArray = [ShareSDK customShareListWithType: item3, item1,item2,nil];
@@ -331,6 +336,7 @@
 //短信分享
 - (void)shareToSMS:(NSString *)text rid:(NSString *)rid
 {
+     [[SHGGloble sharedGloble] recordUserAction:rid type:@"dynamic_shareSms"];
     [[AppDelegate currentAppdelegate] sendSmsWithText:text rid:rid];
 }
 
@@ -368,6 +374,7 @@
         NSString *url = [NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"friends"];
         NSDictionary *param = @{@"uid":[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID], @"oid":obj.userid};
         if (![obj.isattention isEqualToString:@"Y"]) {
+            [[SHGGloble sharedGloble] recordUserAction:obj.rid type:@"dynamic_indexAttention"];
             [MOCHTTPRequestOperationManager postWithURL:url class:nil parameters:param success:^(MOCHTTPResponse *response) {
                 [Hud hideHud];
                 NSString *code = [response.data valueForKey:@"code"];
@@ -424,6 +431,7 @@
         NSString *url = [NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"friends"];
         NSDictionary *param = @{@"uid":[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID], @"oid":friend.uid};
         if(!friend.isFocus){
+            [[SHGGloble sharedGloble] recordUserAction:friend.uid type:@"dynamic_indexAttention"];
             [MOCHTTPRequestOperationManager postWithURL:url class:nil parameters:param success:^(MOCHTTPResponse *response) {
                 [Hud hideHud];
                 NSString *code = [response.data valueForKey:@"code"];

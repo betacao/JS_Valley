@@ -397,7 +397,7 @@
 - (void)addContacts:(id)sender
 {
     if (self.textField.text.length == 0) {
-        [Hud showMessageWithText:NSLocalizedString(@"group.create.inputName", @"please enter the group name")];
+        [Hud showMessageWithText:@"群组名称不能为空"];
         return;
     }
     

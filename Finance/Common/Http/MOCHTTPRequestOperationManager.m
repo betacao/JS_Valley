@@ -11,9 +11,9 @@
 #import <Mantle/Mantle.h>
 #import "MOCNetworkReachabilityManager.h"
 
-NSString * const moc_http_request_operation_manager_response_server_error_message = @"亲，您的网络不给力哦，请您稍后重试。";
+NSString * const moc_http_request_operation_manager_response_server_error_message = @"亲，您现在的网络不给力哦，请您稍后重试。";
 NSString * const moc_http_request_operation_manager_response_server_error_code = @"-9989";
-NSString * const moc_http_request_operation_manager_response_network_error_message = @"本地网络异常，请检查你的网络";
+NSString * const moc_http_request_operation_manager_response_network_error_message = @"网络异常\n请检查您的网络";
 NSString * const moc_http_request_operation_manager_response_network_error_code = @"-9998";
 NSString * const moc_http_request_operation_manager_response_token_error_message = @"token错误";
 NSString * const moc_http_request_operation_manager_response_token_error_code = @"-9899";

@@ -688,7 +688,7 @@
                 messages = @"取消分享";
                 break;
             case -2:
-                message = @"发送失败";
+                message = @"发送失败，请稍后再试";
                 break;
             case -3:
                 message = @"授权失败";
@@ -825,7 +825,7 @@
 }
 
 - (void)wechatShareWithText:(NSString *)text shareUrl:(NSString *)shareUrl shareType:(NSInteger)scene
-{
+{    
     if([WXApi isWXAppInstalled ]){
         if ([WXApi isWXAppSupportApi]){
             WXMediaMessage *message = [WXMediaMessage message];

@@ -268,10 +268,13 @@
         object.image = [UIImage imageNamed:@"message_arrowRight"];
     }
     if (section == 1) {
+        [[SHGGloble sharedGloble] recordUserAction:@"" type:@"msg_recommendGroup"];
         object.count = self.dataSource.count;
     } else if (section == 2){
+        [[SHGGloble sharedGloble] recordUserAction:@"" type:@"msg_createGroup"];
         object.count = self.commonArr.count;
     } else{
+        [[SHGGloble sharedGloble] recordUserAction:@"" type:@"msg_joinGroup"];
         object.count = self.joinArr.count;
     }
     view.object = object;

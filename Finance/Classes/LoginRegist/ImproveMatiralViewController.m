@@ -297,7 +297,7 @@
 - (BOOL)checkInputMessageValid
 {
     if (IsStrEmpty(self.nameTextField.text)) {
-        [Hud showMessageWithText:@"请输入名字"];
+        [Hud showMessageWithText:@"用户名不能为空"];
         return NO;
     }
     if (self.nameTextField.text.length > 12) {
@@ -305,15 +305,15 @@
         return NO;
     }
     if (IsStrEmpty(self.industrycodeTextField.text)) {
-        [Hud showMessageWithText:@"请输入行业"];
+        [Hud showMessageWithText:@"行业不能为空"];
         return NO;
     }
     if (IsStrEmpty(self.companyTextField.text)) {
-        [Hud showMessageWithText:@"请输入公司名"];
+        [Hud showMessageWithText:@"公司不能为空"];
         return NO;
     }
     if (IsStrEmpty(self.titleTextField.text)) {
-        [Hud showMessageWithText:@"请输入职务"];
+        [Hud showMessageWithText:@"职位不能为空"];
         return NO;
     }
     return YES;
@@ -446,7 +446,7 @@
 {
     [self.activityView removeFromSuperview];
     if(cityName.length == 0){
-        self.locationLabel.text = @"未定位到您的位置  ";
+        self.locationLabel.text = @"无法获取您的位置信息";
     } else{
         self.userLocation = cityName;
         NSMutableString *string = [NSMutableString stringWithString:@"地点：大牛圈猜你在，没猜对？"];

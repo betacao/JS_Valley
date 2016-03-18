@@ -74,7 +74,7 @@
         if ([target isEqualToString:@"first"]) {
             [self.dataArr removeAllObjects];
             [self.dataArr addObjectsFromArray:response.dataArray];
-            
+            [self.tableView reloadData];
         }
         if ([target isEqualToString:@"refresh"]) {
              [self.dataArr removeAllObjects];
@@ -83,13 +83,14 @@
                     SHGCollectCardClass *obj = response.dataArray[i];
                     [self.dataArr insertObject:obj atIndex:0];
                 }
-                
+                [self.tableView reloadData];
             }
             
         }
         if ([target isEqualToString:@"load"]) {
             [self.dataArr addObjectsFromArray:response.dataArray];
-            
+            [self.tableView.footer endRefreshingWithNoMoreData];
+            [self.tableView reloadData];
         }
         [self.tableView reloadData];
         [self.tableView.header endRefreshing];
@@ -118,12 +119,23 @@
 
 - (void)refreshHeader
 {
+    if (self.dataArr.count > 0) {
         [self requestCardListWithTarget:@"refresh" time:@""];
+    } else{
+        [self requestCardListWithTarget:@"first" time:@""];
+    }
+
 }
 
 - (void)refreshFooter
 {
+    if (self.dataArr.count > 0) {
         [self requestCardListWithTarget:@"load" time:@""];
+        
+    } else{
+        [self requestCardListWithTarget:@"first" time:@""];
+    }
+
 
 }
 #pragma mark ------tableview代理
@@ -144,15 +156,12 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-//    if (self.dataArr.count > 0) {
-//        
-//        SHGCollectCardClass *object = [self.dataArr objectAtIndex:indexPath.row];
-//        CGFloat height = [self.tableView cellHeightForIndexPath:indexPath model:object keyPath:@"object" cellClass:[SHGCardTableViewCell class] contentViewWidth:SCREENWIDTH];
-//        return height;
-//    } else{
-//        return CGRectGetHeight(self.view.frame);
-//    }
-     return MarginFactor(90.0f);
+    if (self.dataArr.count > 0) {
+        return MarginFactor(90.0f);
+    } else{
+        return CGRectGetHeight(self.view.frame);
+    }
+    
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath

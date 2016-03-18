@@ -327,7 +327,7 @@
 - (IBAction)plusButtonClick:(UIButton *)sender
 {
     if (self.imageArray.count >= 6) {
-        [Hud showMessageWithText:@"图片不能超过6张"];
+        [Hud showMessageWithText:@"亲最多只能选6张哦~"];
         return;
     }
     [self.textView resignFirstResponder];

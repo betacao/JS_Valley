@@ -181,6 +181,7 @@
         [self.navigationController pushViewController:detailVC animated:YES];
 
     } else if ([object.content isEqualToString:@"清除缓存"]){
+         [[SHGGloble sharedGloble] recordUserAction:@"" type:@"user_setting_clearCache"];
         DXAlertView *alert = [[DXAlertView alloc] initWithTitle:@"提示" contentText:@"是否确认清除本地缓存？" leftButtonTitle:@"取消" rightButtonTitle:@"确定"];
         __weak typeof(self) weakSelf = self;
         alert.rightBlock = ^{
@@ -198,6 +199,7 @@
         [self.navigationController pushViewController:vc animated:YES];
 
     } else if([object.content isEqualToString:@"关于我们"]){
+        [[SHGGloble sharedGloble] recordUserAction:@"" type:@"user_setting_aboutUs"];
         SettingAboutUsViewController *detailVC = [[SettingAboutUsViewController alloc] initWithNibName:@"SettingAboutUsViewController" bundle:nil];
         [self.navigationController pushViewController:detailVC animated:YES];
 
@@ -214,6 +216,7 @@
 
 - (IBAction)logout:(id)sender
 {
+    [[SHGGloble sharedGloble] recordUserAction:@"" type:@"user_setting_exit"];
     //注销登录
     DXAlertView *alert = [[DXAlertView alloc] initWithTitle:@"提示" contentText:@"是否退出该账号?" leftButtonTitle:@"取消" rightButtonTitle:@"确定"];
     alert.rightBlock = ^{

@@ -465,6 +465,7 @@ static NSString * const kCommonFNum			= @"commonnum";
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if(indexPath.row==0){
+        [[SHGGloble sharedGloble] recordUserAction:@"" type:@"msg_groupApply"];
         ApplyViewController *vc=[ApplyViewController shareController];
         [self.navigationController pushViewController:vc animated:YES];
     } else if(indexPath.row==1){

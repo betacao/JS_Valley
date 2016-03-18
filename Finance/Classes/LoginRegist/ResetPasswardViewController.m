@@ -143,15 +143,15 @@
         return;
     }
     if (IsStrEmpty(_txtPwd.text)) {
-        [Hud showMessageWithText:@"请输入密码"];
+        [Hud showMessageWithText:@"密码不能为空！"];
         return;
     }
     if (IsStrEmpty(_txtPwdVery.text)) {
-        [Hud showMessageWithText:@"请输入确认密码"];
+        [Hud showMessageWithText:@"确认密码不能为空！"];
         return;
     }
     if (![_txtPwdVery.text isEqualToString:_txtPwd.text]) {
-        [Hud showMessageWithText:@"两次密码不一致"];
+        [Hud showMessageWithText:@"两次输入的密码不一致，请重新输入！"];
         return;
     }
     if (_txtPwdVery.text.length > 20)

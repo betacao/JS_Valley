@@ -78,6 +78,7 @@
 
 - (void)imageViewDidTap:(UITapGestureRecognizer *)recognizer
 {
+    [[SHGGloble sharedGloble] recordUserAction:@"" type:@"dynamic_clickImg"];
     SDPhotoBrowser *browser = [[SDPhotoBrowser alloc] initWithFrame:CGRectMake(0.0f, 0.0f, CGRectGetWidth([UIScreen mainScreen].bounds), CGRectGetHeight([UIScreen mainScreen].bounds))];
     browser.imageCount = self.photoItemArray.count;
     browser.currentImageIndex = recognizer.view.tag;

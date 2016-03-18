@@ -204,19 +204,19 @@
 - (BOOL)checkInputMessageValid
 {
     if (IsStrEmpty(self.nameField.text)) {
-        [Hud showMessageWithText:@"请输入名字"];
+        [Hud showMessageWithText:@"用户名不能为空"];
         return NO;
     }
     if (IsStrEmpty(self.industryField.text)) {
-        [Hud showMessageWithText:@"请输入行业"];
+        [Hud showMessageWithText:@"行业名不能为空"];
         return NO;
     }
     if (IsStrEmpty(self.companyField.text)) {
-        [Hud showMessageWithText:@"请输入公司名"];
+        [Hud showMessageWithText:@"公司名不能为空"];
         return NO;
     }
     if (IsStrEmpty(self.departmentField.text)) {
-        [Hud showMessageWithText:@"请输入职务"];
+        [Hud showMessageWithText:@"职位不能为空"];
         return NO;
     }
     if ([self.cityButton.titleLabel.text isEqualToString:@"所选城市"]) {

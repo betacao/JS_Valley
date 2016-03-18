@@ -49,7 +49,7 @@
     }
     
     if (![passWordText.text isEqualToString:confirmWordText.text]){
-        [Hud showMessageWithText:@"两次输入的密码不同，重新输入"];
+        [Hud showMessageWithText:@"两次密码不一致"];
         return;
     }
     

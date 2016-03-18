@@ -175,7 +175,7 @@
 {
     NSLog(@"login");
     if (IsStrEmpty(_textUser.text)) {
-        [Hud showMessageWithText:@"手机号不能为空"];
+        [Hud showMessageWithText:@"手机号码不能为空"];
         return;
     }
     if (![_textUser.text isValidateMobile]) {

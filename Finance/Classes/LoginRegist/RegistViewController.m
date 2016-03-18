@@ -163,11 +163,10 @@ typedef NS_ENUM(NSInteger, RegistType)
 
 - (IBAction)protocolCheckButtonClicked:(id)sender
 {
+    self.protocolCheckButton.selected = !self.protocolCheckButton.selected;
 	if (self.protocolCheckButton.selected) {
-		self.protocolCheckButton.selected = NO;
 		self.isAgree = NO;
 	}else{
-		self.protocolCheckButton.selected = YES;
 		self.isAgree = YES;
 	}
 }
@@ -323,10 +322,7 @@ typedef NS_ENUM(NSInteger, RegistType)
 {
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
 
-    [[EaseMob sharedInstance].chatManager asyncRegisterNewAccount:uid
-                                                         password:[_passwordTextField.text md5]
-                                                   withCompletion:
-     ^(NSString *username, NSString *password, EMError *error) {
+    [[EaseMob sharedInstance].chatManager asyncRegisterNewAccount:uid password:[_passwordTextField.text md5] withCompletion: ^(NSString *username, NSString *password, EMError *error) {
          
          if (!error) {
             // TTAlertNoTitle(NSLocalizedString(@"register.success", @"Registered successfully, please log in"));
@@ -336,18 +332,21 @@ typedef NS_ENUM(NSInteger, RegistType)
              {
                  case EMErrorServerNotReachable:
                      //TTAlertNoTitle(NSLocalizedString(@"error.connectServerFail", @"Connect to the server failed!"));
+                     [Hud showMessageWithText:NSLocalizedString(@"error.connectServerFail", @"Connect to the server failed!")];
                      break;
                  case EMErrorServerDuplicatedAccount:
-                    // TTAlertNoTitle(NSLocalizedString(@"register.repeat", @"You registered user already exists!"));
+                    // TTAlertNoTitle(NSLocalizedString("@register.repeat", @"You registered user already exists!"));
+                     [Hud showMessageWithText:NSLocalizedString(@"register.repeat", @"You registered user already exists!")];
                      break;
                  case EMErrorServerTimeout:
                      //TTAlertNoTitle(NSLocalizedString(@"error.connectServerTimeout", @"Connect to the server timed out!"));
+                     [Hud showMessageWithText:NSLocalizedString(@"error.connectServerTimeout", @"Connect to the server timed out!")];
                      break;
                  default:
                     // TTAlertNoTitle(NSLocalizedString(@"register.fail", @"Registration failed"));
+                      [Hud showMessageWithText:NSLocalizedString(@"register.fail", @"Registration failed")];
                      break;
              }
-             [Hud showMessageWithText:@"注册失败"];
          }
      } onQueue:nil];
 }

@@ -143,7 +143,7 @@ typedef NS_ENUM(NSInteger, RegistType)
 - (IBAction)getAuthCode:(id)sender
 {
     if (IsStrEmpty(phoneText.text)) {
-        [Hud showMessageWithText:@"手机号不能为空"];
+        [Hud showMessageWithText:@"手机号码不能为空"];
         return;
     }
     [self getverifyCodeRequest];

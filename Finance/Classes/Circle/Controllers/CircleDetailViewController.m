@@ -149,9 +149,11 @@
     self.btnSend.titleLabel.font = FontFactor(15.0f);
     self.btnSend.layer.masksToBounds = YES;
     self.btnSend.layer.cornerRadius = 3.0f;
-
+    
     self.faSongBtn.titleLabel.font = FontFactor(16.0f);
-
+    self.faSongBtn.layer.masksToBounds = YES;
+    self.faSongBtn.layer.cornerRadius = 3.0f;
+    
     self.lineView.backgroundColor = [UIColor colorWithHexString:@"e6e7e8"];
 
     UIImage *image = self.backImageView.image;
@@ -847,7 +849,7 @@
         if (state == SSResponseStateSuccess){
             [self otherShareWithObj:self.obj];
         } else if (state == SSResponseStateFail){
-            NSLog(NSLocalizedString(@"TEXT_ShARE_FAI", @"分享失败,错误码:%d,错误描述:%@"), [error errorCode], [error errorDescription]);
+            NSLog(NSLocalizedString(@"TEXT_ShARE_FAI", @"帖子分享失败,错误码:%d,错误描述:%@"), [error errorCode], [error errorDescription]);
         }
     }];
 }
@@ -886,7 +888,7 @@
             
             [weakSelf loadDatasWithObj:obj];
             [weakSelf.listTable reloadData];
-            [Hud showMessageWithText:@"分享成功"];
+            [Hud showMessageWithText:@"帖子分享成功"];
         }
     } failed:^(MOCHTTPResponse *response) {
         [Hud showMessageWithText:response.errorMessage];
@@ -903,7 +905,7 @@
         if ([code isEqualToString:@"000"]) {
             self.obj.sharenum = [NSString stringWithFormat:@"%ld",(long)([self.obj.sharenum integerValue] + 1)];
             [self loadDatasWithObj:self.obj];
-            [Hud showMessageWithText:@"分享成功"];
+            [Hud showMessageWithText:@"帖子分享成功"];
             [self.delegate detailShareWithRid:obj.rid shareNum:obj.sharenum];
             [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_COLLECT_SHARE_CLIC object:obj];
         }

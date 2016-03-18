@@ -182,7 +182,7 @@
                 <outlet property="thirdCommentLabel" destination="nQh-th-STQ" id="139-9f-zyU"/>
                 <outlet property="timeLabel" destination="eGv-gi-Bah" id="2aa-3e-2EF"/>
             </connections>
-            <point key="canvasLocation" x="10" y="58"/>
+            <point key="canvasLocation" x="164" y="66"/>
         </tableViewCell>
     </objects>
     <resources>

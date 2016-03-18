@@ -640,8 +640,10 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    
     if (self.dataArr.count > 0) {
         CircleListObj *obj = self.dataArr[indexPath.row];
+        [[SHGGloble sharedGloble] recordUserAction:obj.rid type:@"dynamic_viewAllComment"];
         if([obj isKindOfClass:[CircleListObj class]]){
             if (!IsStrEmpty(obj.feedhtml)){
                 NSLog(@"%@",obj.feedhtml);
