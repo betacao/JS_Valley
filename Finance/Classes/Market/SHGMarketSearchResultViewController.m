@@ -217,7 +217,6 @@
         cell.delegate = self;
     }
     cell.object = [self.dataArr objectAtIndex:indexPath.row];
-    [cell loadNewUiFortype:SHGMarketTableViewCellTypeAll];
     return cell;
 }
 

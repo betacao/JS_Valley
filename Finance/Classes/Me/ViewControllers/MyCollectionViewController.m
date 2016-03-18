@@ -1029,7 +1029,6 @@
             cell.delegate = self;
             SHGMarketObject * obj = [self.dataSource objectAtIndex:indexPath.row];
             cell.object = obj;
-            [(SHGMarketTableViewCell *)cell loadNewUiFortype:SHGMarketTableViewCellTypeAll];
             return cell;
         } else{
             return self.emptyCell;

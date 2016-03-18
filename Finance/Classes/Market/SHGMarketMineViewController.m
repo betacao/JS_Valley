@@ -168,7 +168,6 @@
         }
         cell.delegate = self;
         cell.object = [self.dataArr objectAtIndex:indexPath.row];
-        [cell loadNewUiFortype:SHGMarketTableViewCellTypeMine];
         return cell;
     } else{
         return self.emptyCell;

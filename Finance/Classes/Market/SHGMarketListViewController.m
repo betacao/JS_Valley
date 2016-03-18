@@ -397,7 +397,6 @@
         }
 
         cell.object = [self.currentArray objectAtIndex:indexPath.row];
-        [cell loadNewUiFortype:SHGMarketTableViewCellTypeAll];
         return cell;
     }
 }
