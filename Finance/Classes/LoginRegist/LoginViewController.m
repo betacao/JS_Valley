@@ -82,7 +82,7 @@
     .leftSpaceToView(self.view, 0.0f)
     .rightSpaceToView(self.view, 0.0f)
     .topSpaceToView(self.view, 0.0f)
-    .heightIs(55.0f);
+    .heightIs(MarginFactor(55.0f));
 
     self.introduceLabel.sd_layout
     .topSpaceToView(self.textUser, MarginFactor(10.0f))
@@ -94,7 +94,7 @@
     .topSpaceToView(self.textUser, MarginFactor(181.0f))
     .leftEqualToView(self.introduceLabel)
     .rightEqualToView(self.introduceLabel)
-    .heightIs(40.0f);
+    .heightIs(MarginFactor(35.0f));
 
     CGFloat margin = 0.0f;
     CGSize size = self.weChatButton.currentImage.size;
@@ -138,7 +138,8 @@
 
     self.middleLabel.sd_layout
     .centerXEqualToView(self.view)
-    .bottomSpaceToView(self.QQButton, MarginFactor(21.0f));
+    .bottomSpaceToView(self.QQButton, MarginFactor(21.0f))
+    .autoHeightRatio(0.0f);
     [self.middleLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
 
     self.leftLine.sd_layout

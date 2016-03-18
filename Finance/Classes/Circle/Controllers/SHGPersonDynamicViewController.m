@@ -245,13 +245,13 @@
     NSArray *shareArray = nil;
     if ([WXApi isWXAppSupportApi]) {
         if ([QQApiInterface isQQSupportApi]) {
-            shareArray = [ShareSDK customShareListWithType: item3, item5, item4, SHARE_TYPE_NUMBER(ShareTypeQQ), item1,item2,nil];
+            shareArray = [ShareSDK customShareListWithType:  item5, item4, SHARE_TYPE_NUMBER(ShareTypeQQ), item3,item1,item2,nil];
         } else{
-            shareArray = [ShareSDK customShareListWithType: item3, item5, item4, item1, item2, nil];
+            shareArray = [ShareSDK customShareListWithType:  item5, item4, item3, item1, item2, nil];
         }
     } else{
         if ([QQApiInterface isQQSupportApi]) {
-            shareArray = [ShareSDK customShareListWithType: item3, SHARE_TYPE_NUMBER(ShareTypeQQ), item1, item2, nil];
+            shareArray = [ShareSDK customShareListWithType: SHARE_TYPE_NUMBER(ShareTypeQQ), item3, item1, item2, nil];
         } else{
             shareArray = [ShareSDK customShareListWithType: item3, item1, item2, nil];
         }

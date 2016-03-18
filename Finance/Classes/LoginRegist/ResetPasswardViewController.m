@@ -17,6 +17,10 @@
 @property (weak, nonatomic) IBOutlet UITextField *txtPwd;
 @property (weak, nonatomic) IBOutlet UITextField *txtCode;
 @property (nonatomic, assign) NSInteger remainTime;
+@property (weak, nonatomic) IBOutlet UIView *firstView;
+@property (weak, nonatomic) IBOutlet UIView *secondView;
+@property (weak, nonatomic) IBOutlet UIView *thirdView;
+@property (weak, nonatomic) IBOutlet UIButton *sureButton;
 
 //重新发送的定时器
 @property (nonatomic, strong) NSTimer	*remainTimer;
@@ -31,31 +35,31 @@
     _lblCode.hidden = YES;
     NSString *phone;
     self.title = @"密码找回";
+    [self addSdLayout];
     phone = [NSString stringWithFormat:@"%@****%@",[self.phone substringToIndex:2],[self.phone substringFromIndex:7]];
     _lblCode.text = [NSString stringWithFormat:@"已向您的手机%@发送了短信验证码，验证为本人使用",phone];
     _lblCode.textColor = [UIColor colorWithHexString:@"AFAFAF"];
-    _lblCode.font = [UIFont systemFontOfSize:12];
-    // Do any additional setup after loading the view from its nib.
-    UIView *paddingView1 = [[UIView alloc] initWithFrame:CGRectMake(0, 0,20, 45)];
+    _lblCode.font = FontFactor(12.0f);
+    UIView *paddingView1 = [[UIView alloc] initWithFrame:CGRectMake(0, 0,MarginFactor(19.0f), MarginFactor(55.0f))];
     self.txtCode.leftView = paddingView1;
     self.txtCode.leftViewMode = UITextFieldViewModeAlways;
     self.txtCode.placeholder = @"验证码";
     [self.txtCode setValue:[UIColor colorWithHexString:@"AFAFAF"] forKeyPath:@"_placeholderLabel.textColor"];
-    [self.txtCode setValue:[UIFont systemFontOfSize:14] forKeyPath:@"_placeholderLabel.font"];
+    [self.txtCode setValue:FontFactor(15.0f) forKeyPath:@"_placeholderLabel.font"];
     
-    UIView *paddingView2 = [[UIView alloc] initWithFrame:CGRectMake(0, 0,20, 45)];
+    UIView *paddingView2 = [[UIView alloc] initWithFrame:CGRectMake(0, 0,MarginFactor(19.0f), MarginFactor(55.0f))];
     self.txtPwd.leftView = paddingView2;
     self.txtPwd.leftViewMode = UITextFieldViewModeAlways;
     self.txtPwd.placeholder = @"输入新密码";
     [self.txtPwd setValue:[UIColor colorWithHexString:@"AFAFAF"] forKeyPath:@"_placeholderLabel.textColor"];
-    [self.txtPwd setValue:[UIFont systemFontOfSize:14] forKeyPath:@"_placeholderLabel.font"];
+    [self.txtPwd setValue:FontFactor(15.0f)  forKeyPath:@"_placeholderLabel.font"];
     
-    UIView *paddingView3 = [[UIView alloc] initWithFrame:CGRectMake(0, 0,20, 45)];
+    UIView *paddingView3 = [[UIView alloc] initWithFrame:CGRectMake(0, 0,MarginFactor(19.0f), MarginFactor(55.0f))];
     self.txtPwdVery.leftView = paddingView3;
     self.txtPwdVery.leftViewMode = UITextFieldViewModeAlways;
     self.txtPwdVery.placeholder = @"再次输入新密码";
     [self.txtPwdVery setValue:[UIColor colorWithHexString:@"AFAFAF"] forKeyPath:@"_placeholderLabel.textColor"];
-    [self.txtPwdVery setValue:[UIFont systemFontOfSize:14] forKeyPath:@"_placeholderLabel.font"];
+    [self.txtPwdVery setValue:FontFactor(15.0f) forKeyPath:@"_placeholderLabel.font"];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -63,6 +67,63 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)addSdLayout
+{
+    self.firstView.sd_layout
+    .topSpaceToView(self.view, 0.0f)
+    .leftSpaceToView(self.view, 0.0f)
+    .rightSpaceToView(self.view, 0.0f)
+    .heightIs(MarginFactor(55.0f));
+    
+    self.txtCode.sd_layout
+    .leftSpaceToView(self.firstView, 0.0f)
+    .topSpaceToView(self.firstView, 0.0f)
+    .widthIs(MarginFactor(100.0f))
+    .heightIs(MarginFactor(55.0f));
+    
+    self.btnCode.sd_layout
+    .rightSpaceToView(self.firstView, 19.0f)
+    .topSpaceToView(self.firstView, 0.0f)
+    .widthIs(MarginFactor(150.0f))
+    .heightIs(MarginFactor(55.0f));
+    
+    self.secondView.sd_layout
+    .leftSpaceToView(self.view, 0.0f)
+    .rightSpaceToView(self.view, 0.0f)
+    .topSpaceToView(self.firstView, MarginFactor(10.0f))
+    .heightIs(MarginFactor(55.0f));
+    
+    self.txtPwd.sd_layout
+    .leftSpaceToView(self.secondView, 0.0f)
+    .rightSpaceToView(self.secondView, 0.0f)
+    .topSpaceToView(self.secondView, 0.0f)
+    .heightIs(MarginFactor(55.0f));
+    
+    self.thirdView.sd_layout
+    .topSpaceToView(self.secondView, MarginFactor(10.0f))
+    .leftSpaceToView(self.view, 0.0f)
+    .rightSpaceToView(self.view, 0.0f)
+    .heightIs(MarginFactor(55.0f));
+    
+    self.txtPwdVery.sd_layout
+    .leftSpaceToView(self.thirdView, 0.0f)
+    .rightSpaceToView(self.thirdView, 0.0f)
+    .topSpaceToView(self.thirdView, 0.0f)
+    .heightIs(MarginFactor(55.0f));
+    
+    self.lblCode.sd_layout
+    .leftSpaceToView(self.view, MarginFactor(12.0f))
+    .rightSpaceToView(self.view, MarginFactor(12.0f))
+    .topSpaceToView(self.thirdView, MarginFactor(35.0f))
+    .autoHeightRatio(0.0f);
+    
+    self.sureButton.sd_layout
+    .leftSpaceToView(self.view, MarginFactor(12.0f))
+    .rightSpaceToView(self.view, MarginFactor(12.0f))
+    .topSpaceToView(self.lblCode, MarginFactor(5.0f))
+    .heightIs(MarginFactor(40.0f));
+    
+}
 
 - (void)refreshButtonCount
 {

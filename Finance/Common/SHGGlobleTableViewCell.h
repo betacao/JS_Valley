@@ -17,8 +17,8 @@
 
 @end
 
-@interface SHGGlobleModel : NSObject
+@interface SHGGlobleModel : MTLModel<MTLJSONSerializing>
 
 @property (strong, nonatomic) NSString *text;
-
+@property (assign, nonatomic) BOOL lineViewHidden;
 @end

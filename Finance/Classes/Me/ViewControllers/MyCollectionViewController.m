@@ -59,6 +59,7 @@
 
 @property (strong, nonatomic) UITableViewCell *emptyCell;
 @property (strong, nonatomic) SHGEmptyDataView *emptyView;
+
 @end
 
 @implementation MyCollectionViewController
@@ -584,13 +585,13 @@
     NSArray *shareArray = nil;
     if ([WXApi isWXAppSupportApi]) {
         if ([WeiboSDK isCanShareInWeiboAPP]) {
-            shareArray = [ShareSDK customShareListWithType: item3, item5, item4, item0, item1, item2, nil];
+            shareArray = [ShareSDK customShareListWithType: item5, item4, item0, item3, item1, item2, nil];
         } else{
-            shareArray = [ShareSDK customShareListWithType: item3, item5, item4, item1, item2, nil];
+            shareArray = [ShareSDK customShareListWithType: item5, item4, item3, item1, item2, nil];
         }
     } else{
         if ([WeiboSDK isCanShareInWeiboAPP]) {
-            shareArray = [ShareSDK customShareListWithType: item3, item0, item1, item2, nil];
+            shareArray = [ShareSDK customShareListWithType: item0, item3, item1, item2, nil];
         } else{
             shareArray = [ShareSDK customShareListWithType: item3, item1, item2, nil];
         }
@@ -1047,8 +1048,7 @@
         vc.delegate = self;
         vc.rid = obj.rid;
         [self.navigationController pushViewController:vc animated:YES];
-    }else if (self.selectType == 3)
-    {
+    } else if (self.selectType == 3){
         ProdListObj *obj = self.dataSource[indexPath.row];
         ProdConfigViewController *vc = [[ProdConfigViewController alloc] initWithNibName:@"ProdConfigViewController" bundle:nil];
         vc.controller = self;
@@ -1067,23 +1067,21 @@
         }
         vc.type = type;
         [self.navigationController pushViewController:vc animated:YES];
-    }else if (self.selectType == 4)
-    { 
+    } else if (self.selectType == 4){
        
         SHGCollectCardClass * obj = self.dataSource[indexPath.row];
         SHGPersonalViewController * vc = [[SHGPersonalViewController alloc]init];
-        vc.controller = self;
+        //vc.controller = self;
         vc.userId = obj.uid;
         [self.navigationController pushViewController:vc animated:YES];
     
 
-    }else if (self.selectType == 2)
-    {
+    } else if (self.selectType == 2) {
         if (self.marketList.count > 0) {
             
             SHGMarketObject *obj = [self.marketList objectAtIndex:indexPath.row];
             SHGMarketDetailViewController *  viewController =[[SHGMarketDetailViewController alloc] initWithNibName:@"SHGMarketDetailViewController" bundle:nil];
-            viewController.controller = self;
+           // viewController.controller = self;
             viewController.object = obj;
             [self.navigationController pushViewController:viewController animated:YES];
         }

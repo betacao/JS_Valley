@@ -18,7 +18,7 @@
 
 - (void)awakeFromNib
 {
-
+    
 }
 
 - (void)loadUIWithObj:(commentOBj *)comobj commentType:(SHGCommentType)type
@@ -37,6 +37,7 @@
             frame = CGRectMake(CELLRIGHT_COMMENT_WIDTH,0.0f, SCREENWIDTH - kPhotoViewLeftMargin - kPhotoViewRightMargin - CELLRIGHT_COMMENT_WIDTH, 0.0f);
             break;
     }
+    
     UILabel *replyLabel = [[UILabel alloc] initWithFrame:frame];
     replyLabel.numberOfLines = 0;
     replyLabel.lineBreakMode = NSLineBreakByWordWrapping;
@@ -117,6 +118,18 @@
     [self.bgView addSubview:replyLabel];
 
 }
+
+- (void)layoutSubviews
+{
+    [super layoutSubviews];
+    CGRect bgFrame = self.bgView.frame;
+    bgFrame.origin.x = MarginFactor(12.0f);
+    bgFrame.size.width = SCREENWIDTH - 2 * MarginFactor(12.0f);
+    
+    self.bgView.frame = bgFrame;
+
+}
+
 -(void)makeFirstCell
 {
     self.bgView.backgroundColor = [UIColor clearColor];
@@ -125,17 +138,18 @@
     image = [image resizableImageWithCapInsets:UIEdgeInsetsMake(15.0f, 35.0f, 9.0f, 11.0f) resizingMode:UIImageResizingModeStretch];
     self.imageBgView.image = image;
    
-    
-
 }
+
 -(void)cnickClick:(UIButton *)sender
 {
     [self.delegate cnickClick:self.index];
 }
+
 -(void)rnickClick:(UIButton *)sender
 {
     [self.delegate rnickClick:self.index];
 }
+
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
 

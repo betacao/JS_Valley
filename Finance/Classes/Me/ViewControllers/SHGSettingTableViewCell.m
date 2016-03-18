@@ -16,12 +16,12 @@
 
 - (void)awakeFromNib
 {
-    CGRect frame = self.lineView.frame;
-    frame.size.height = 0.5f;
-    self.lineView.frame = frame;
+    self.lineView.sd_layout
+    .leftEqualToView(self.textLabel)
+    .rightSpaceToView(self.contentView, 0.0f)
+    .bottomSpaceToView(self.contentView, 1.0f)
+    .heightIs(0.5f);
 }
-
-//- (void)load
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {

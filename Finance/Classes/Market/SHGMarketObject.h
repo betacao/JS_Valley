@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @interface SHGMarketObject : MTLModel<MTLJSONSerializing>
+@property (strong, nonatomic) NSString *browernum;
 @property (strong, nonatomic) NSString *loginuserstate;
 @property (strong, nonatomic) NSString *price;
 @property (strong, nonatomic) NSString *url;

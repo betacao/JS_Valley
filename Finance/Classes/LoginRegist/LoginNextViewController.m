@@ -14,6 +14,9 @@
 
 @property (weak, nonatomic) IBOutlet UITextField *lblPassward;
 @property (nonatomic, strong) NSString *isFull;
+@property (weak, nonatomic) IBOutlet UIView *bgView;
+@property (weak, nonatomic) IBOutlet UIButton *forgetPassward;
+@property (weak, nonatomic) IBOutlet UIButton *loginButton;
 
 @end
 
@@ -24,15 +27,50 @@
     [self.lblPassward becomeFirstResponder];
 
     self.title = @"输入密码";
-    
-    UIView * padView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 20.0, 45.0)];
-    self.lblPassward.leftView = padView;
+    [self addSdLayout];
+    UIView *leftView = [[UIView alloc]initWithFrame:CGRectMake(0.0f, 0.0f, MarginFactor(12.0f), MarginFactor(55.0f))];
+    self.lblPassward.leftView = leftView;
     self.lblPassward.leftViewMode = UITextFieldViewModeAlways;
-
+    self.bgView.backgroundColor = [UIColor whiteColor];
+    [self.forgetPassward setTitleColor:[UIColor colorWithHexString:@"989898"] forState:UIControlStateNormal];
+    self.forgetPassward.titleLabel.font = FontFactor(12.0f);
     [self.lblPassward setValue:[UIColor colorWithHexString:@"AFAFAF"] forKeyPath:@"_placeholderLabel.textColor"];
-    [self.lblPassward setValue:[UIFont systemFontOfSize:14.0f] forKeyPath:@"_placeholderLabel.font"];
+    [self.lblPassward setValue:FontFactor(16.0f) forKeyPath:@"_placeholderLabel.font"];
+    self.lblPassward.textColor = [UIColor colorWithHexString:@"161616"];
     
-    NSLog(@"phonephone=%@",self.phone);
+    [self.loginButton setTitleColor:[UIColor colorWithHexString:@"ffffff"] forState:UIControlStateNormal];
+    [self.loginButton setBackgroundColor:[UIColor colorWithHexString:@"f04241"]];
+    self.loginButton.titleLabel.font = FontFactor(17.0f);
+
+}
+
+- (void)addSdLayout
+{
+    self.bgView.sd_layout
+    .topSpaceToView(self.view, 0.0f)
+    .leftSpaceToView(self.view, 0.0f)
+    .rightSpaceToView(self.view, 0.0f)
+    .heightIs(MarginFactor(55.0f));
+    
+    self.lblPassward.sd_layout
+    .leftSpaceToView(self.bgView, 0.0f)
+    .rightSpaceToView(self.bgView, 0.0f)
+    .topSpaceToView(self.bgView, 0.0f)
+    .heightRatioToView(self.bgView, 1.0f);
+    
+    
+    self.forgetPassward.sd_layout
+    .topSpaceToView(self.bgView, MarginFactor(10.0f))
+    .rightSpaceToView(self.view, 0.0f)
+    .widthIs(MarginFactor(80.0f))
+    .heightIs(MarginFactor(15.0f));
+
+    self.loginButton.sd_layout
+    .leftSpaceToView(self.view, MarginFactor(12.0f))
+    .rightSpaceToView(self.view, MarginFactor(12.0f))
+    .topSpaceToView(self.bgView, MarginFactor(213.0f))
+    .heightIs(MarginFactor(40.0f));
+    
 }
 
 - (void)didReceiveMemoryWarning {

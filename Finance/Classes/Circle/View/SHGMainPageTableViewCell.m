@@ -72,9 +72,12 @@
 
     self.relationLabel.font = kMainRelationFont;
     self.relationLabel.textColor = kMainRelationColor;
-
+    
     [self.deleteButton setEnlargeEdgeWithTop:10.0f right:0.0f bottom:10.0f left:20.0f];
-
+    [self.praiseButton setEnlargeEdgeWithTop:10.0f right:0.0f bottom:10.0f left:10.0f];
+    [self.commentButton setEnlargeEdgeWithTop:10.0f right:0.0f bottom:10.0f left:10.0f];
+    [self.shareButton setEnlargeEdgeWithTop:10.0f right:0.0f bottom:10.0f left:10.0f];
+    
     self.praiseButton.titleLabel.font = kMainNameFont;
     self.praiseButton.titleEdgeInsets = UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, -1.0f);
     [self.praiseButton setTitleColor:kMainActionColor forState:UIControlStateNormal];

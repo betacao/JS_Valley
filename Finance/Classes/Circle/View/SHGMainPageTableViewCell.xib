@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -11,7 +11,7 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="564"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="563.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="563"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" id="wny-XQ-u6x" customClass="SHGUserHeaderView">
@@ -85,14 +85,6 @@
                                     <action selector="deleteButtonClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="Pd2-Y2-deb"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="1Ri-hV-DCa">
-                                <rect key="frame" x="137" y="33" width="14" height="22"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" image="home_weizan"/>
-                                <connections>
-                                    <action selector="praiseButtonClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="UgH-cU-j42"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="bM6-Pq-J7w">
                                 <rect key="frame" x="200" y="25" width="13" height="22"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -107,6 +99,14 @@
                                 <state key="normal" image="homeShare"/>
                                 <connections>
                                     <action selector="shareButtonClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="sOI-uZ-OBF"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="1Ri-hV-DCa">
+                                <rect key="frame" x="137" y="25" width="13" height="22"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="home_weizan"/>
+                                <connections>
+                                    <action selector="praiseButtonClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="UgH-cU-j42"/>
                                 </connections>
                             </button>
                         </subviews>

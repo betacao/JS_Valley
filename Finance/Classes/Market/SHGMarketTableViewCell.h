@@ -27,6 +27,5 @@ typedef NS_ENUM(NSInteger, SHGMarketTableViewCellType) {
 @interface SHGMarketTableViewCell : UITableViewCell
 @property (strong ,nonatomic) SHGMarketObject *object;
 @property (assign, nonatomic) id<SHGMarketTableViewDelegate> delegate;
-- (void)loadNewUiFortype:(SHGMarketTableViewCellType)type;
 
 @end

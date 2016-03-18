@@ -38,14 +38,6 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" red="0.94509803921568625" green="0.94509803921568625" blue="0.94117647058823528" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="gC0-8f-Xe9">
-                        <rect key="frame" x="285" y="78" width="35" height="22"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <state key="normal" image="marketListNoCollection"/>
-                        <connections>
-                            <action selector="clickCollectButton:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="UhI-sP-Z12"/>
-                        </connections>
-                    </button>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="类型：" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="UpF-MN-MAq">
                         <rect key="frame" x="20" y="18" width="136" height="15"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -67,20 +59,17 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="cgZ-wJ-VwV">
-                        <rect key="frame" x="285" y="76" width="33" height="22"/>
+                        <rect key="frame" x="279" y="50" width="33" height="22"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <state key="normal" image="home_delete"/>
                         <connections>
                             <action selector="clickDeleteButton:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="TwG-BC-1pw"/>
                         </connections>
                     </button>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="kAF-DP-D5I">
-                        <rect key="frame" x="266" y="75" width="13" height="22"/>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="ith-O9-Lue">
+                        <rect key="frame" x="284" y="75" width="22" height="22"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <state key="normal" image="marketEdite"/>
-                        <connections>
-                            <action selector="clickEditButton:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="C3s-g7-HLY"/>
-                        </connections>
+                        <state key="normal" image="marketBrowse"/>
                     </button>
                 </subviews>
                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -89,10 +78,9 @@
                 <outlet property="amountLabel" destination="Zkx-XR-VWp" id="Cro-NZ-zuS"/>
                 <outlet property="bottomLineView" destination="rwg-se-Zyd" id="XPJ-Lv-6Tv"/>
                 <outlet property="bottomView" destination="9Uc-bp-6fC" id="M0J-qe-Zue"/>
-                <outlet property="collectButton" destination="gC0-8f-Xe9" id="GE1-US-j0r"/>
+                <outlet property="browseButton" destination="ith-O9-Lue" id="bis-3T-6dQ"/>
                 <outlet property="contactLabel" destination="No8-Zf-DKw" id="XL2-K5-Ohc"/>
                 <outlet property="deleteButton" destination="cgZ-wJ-VwV" id="GNf-gs-na1"/>
-                <outlet property="editButton" destination="kAF-DP-D5I" id="6LQ-nV-tGi"/>
                 <outlet property="timeLabel" destination="MQb-3d-Lzb" id="xIR-T7-r37"/>
                 <outlet property="titleLabel" destination="UpF-MN-MAq" id="Fjh-Cf-Gef"/>
                 <outlet property="typeLabel" destination="IKv-Q7-PLj" id="hKQ-dy-usv"/>
@@ -101,8 +89,7 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="home_delete" width="13" height="13"/>
-        <image name="marketEdite" width="13" height="13"/>
-        <image name="marketListNoCollection" width="14" height="13"/>
+        <image name="home_delete" width="14" height="14"/>
+        <image name="marketBrowse" width="17" height="11"/>
     </resources>
 </document>

@@ -17,7 +17,7 @@
 #import "CircleListDelegate.h"
 #import "CircleLinkViewController.h"
 #import "ReplyTableViewCell.h"
-
+#import "UIButton+EnlargeEdge.h"
 #define PRAISE_SEPWIDTH     10
 #define PRAISE_RIGHTWIDTH     40
 #define PRAISE_WIDTH 28.0f
@@ -74,6 +74,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self){
+        
     }
     return self;
 }
@@ -90,11 +91,11 @@
     [super viewDidLoad];
     self.title = @"动态详情";
     [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:KEY_MEMORY];
-
+    
     [self addHeaderRefresh:self.listTable headerRefesh:NO andFooter:NO];
     [self initView];
     [self addSdLayout];
-
+    
     __weak typeof(self) weakSelf = self;
     [Hud showLoadingWithMessage:@"加载中"];
     [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttpCircle,@"circledetail"] class:[CircleListObj class] parameters:@{@"rid":self.rid,@"uid":[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID]} success:^(MOCHTTPResponse *response) {
@@ -116,47 +117,44 @@
     self.viewHeader.clipsToBounds = YES;
     self.listTable.tableFooterView = [[UIView alloc] init];
     self.listTable.backgroundColor = [UIColor whiteColor];
-
-    self.nickName.font = FontFactor(15.0f);
-    self.nickName.textColor = [UIColor colorWithHexString:@"1d5798"];
-    
-    self.lblCompanyName.font = FontFactor(13.0f);
-    self.lblCompanyName.textColor = [UIColor colorWithHexString:@"565656"];
-    
-    self.lbldepartName.font = FontFactor(13.0f);
-    self.lbldepartName.textColor = [UIColor colorWithHexString:@"565656"];
-
-    self.lblTime.font = FontFactor(11.0f);
-    self.lblTime.textColor = [UIColor colorWithHexString:@"919291"];
-    
-    [self.btnComment setTitleColor:[UIColor colorWithHexString:@"b3b3b3"] forState:UIControlStateNormal];
+    self.nickName.font = kMainNameFont;
+    self.nickName.textColor = kMainNameColor;
+    self.lblCompanyName.font = kMainCompanyFont;
+    self.lblCompanyName.textColor = kMainCompanyColor;
+    self.lbldepartName.font = kMainCompanyFont;
+    self.lbldepartName.textColor = kMainCompanyColor;
+    self.lblTime.font = kMainTimeFont;
+    self.lblTime.textColor = kMainNameColor;
+    [self.btnComment setTitleColor:kMainActionColor forState:UIControlStateNormal];
     self.btnComment.titleEdgeInsets = UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, -10.0f);
-    self.btnComment.titleLabel.font = FontFactor(13.0f);
-    
-    [self.btnShare setTitleColor:[UIColor colorWithHexString:@"b3b3b3"] forState:UIControlStateNormal];
-    self.btnShare.titleLabel.font = FontFactor(13.0f);
-    
-    [self.btnPraise setTitleColor:[UIColor colorWithHexString:@"b3b3b3"] forState:UIControlStateNormal];
-    self.btnPraise.titleLabel.font = FontFactor(13.0f);
-
-    self.lblContent.textColor = [UIColor colorWithHexString:@"3c3c3c"];
-    self.lblContent.font = FontFactor(15.0f);
+    self.btnComment.titleLabel.font = kMainActionFont;
+    [self.btnShare setTitleColor:kMainActionColor forState:UIControlStateNormal];
+    self.btnShare.titleLabel.font = kMainActionFont;
+    [self.btnPraise setTitleColor:kMainActionColor forState:UIControlStateNormal];
+    self.btnPraise.titleLabel.font = kMainActionFont;
+    self.lblContent.textColor = kMainContentColor;
+    self.lblContent.font = kMainContentFont;
     self.lblContent.numberOfLines = 0;
     self.lblContent.lineBreakMode = NSLineBreakByWordWrapping;
     self.lblContent.delegate = self;
     self.lblContent.backgroundColor = [UIColor clearColor];
-  
     self.btnSend.titleLabel.font = FontFactor(15.0f);
     self.faSongBtn.titleLabel.font = FontFactor(16.0f);
-
     self.btnSend.layer.masksToBounds = YES;
     self.btnSend.layer.cornerRadius = 4;
-
     self.lineView.backgroundColor = [UIColor colorWithHexString:@"e6e7e8"];
-
+    DDTapGestureRecognizer *hdGes = [[DDTapGestureRecognizer alloc] initWithTarget:self action:@selector(didTapHeaderView:)];
+    [self.imageHeader addGestureRecognizer:hdGes];
+    self.imageHeader.userInteractionEnabled = YES;
     UIImage *image = self.backImageView.image;
     image = [image resizableImageWithCapInsets:UIEdgeInsetsMake(15.0f, 35.0f, 9.0f, 11.0f) resizingMode:UIImageResizingModeStretch];
     self.backImageView.image = image;
+    
+    [self.btnDelete setEnlargeEdgeWithTop:10.0f right:10.0f bottom:10.0f left:0.0f];
+    [self.btnCollet setEnlargeEdgeWithTop:10.0f right:10.0f bottom:10.0f left:0.0f];
+    [self.btnPraise setEnlargeEdgeWithTop:10.0f right:10.0f bottom:10.0f left:0.0f];
+    [self.btnComment setEnlargeEdgeWithTop:10.0f right:10.0f bottom:10.0f left:0.0f];
+    [self.btnShare setEnlargeEdgeWithTop:10.0f right:10.0f bottom:10.0f left:0.0f];
 }
 
 - (void)addSdLayout
@@ -252,12 +250,12 @@
     .rightEqualToView(self.btnAttention)
     .topSpaceToView(self.lblContent, MarginFactor(16.0f))
     .heightIs(0.0f);
-
+    
     
     [self.btnShare sizeToFit];
     CGSize shareSize = self.btnShare.frame.size;
     self.btnShare.sd_layout
-    .rightSpaceToView(self.actionView, 12.0f)
+    .rightSpaceToView(self.actionView, 0.0f)
     .centerYEqualToView(self.actionView)
     .widthIs(shareSize.width)
     .heightIs(shareSize.height);
@@ -266,7 +264,7 @@
     CGSize commentSize = self.btnComment.frame.size;
     self.btnComment.sd_layout
     .rightSpaceToView(self.btnShare, MarginFactor(24.0f))
-    .bottomEqualToView(self.btnShare)
+    .centerYEqualToView(self.btnShare)
     .widthIs(commentSize.width)
     .heightIs(commentSize.height);
     
@@ -274,7 +272,7 @@
     CGSize praiseSize = self.btnPraise.frame.size;
     self.btnPraise.sd_layout
     .rightSpaceToView(self.btnComment, MarginFactor(24.0f))
-    .bottomEqualToView(self.btnShare)
+    .centerYEqualToView(self.btnShare)
     .widthIs(praiseSize.width)
     .heightIs(praiseSize.height);
     
@@ -282,7 +280,7 @@
     CGSize colletSize = self.btnCollet.frame.size;
     self.btnCollet.sd_layout
     .rightSpaceToView(self.btnPraise, MarginFactor(24.0f))
-    .bottomEqualToView(self.btnShare)
+    .centerYEqualToView(self.btnShare)
     .widthIs(colletSize.width)
     .heightIs(colletSize.height);
     
@@ -290,16 +288,16 @@
     CGSize delteSize = self.btnDelete.frame.size;
     self.btnDelete.sd_layout
     .rightSpaceToView(self.btnCollet, MarginFactor(24.0f))
-    .bottomEqualToView(self.btnShare)
+    .centerYEqualToView(self.btnShare)
     .widthIs(delteSize.width)
     .heightIs(delteSize.height);
-
+    
     
     [self.praisebtn sizeToFit];
     CGSize praiseBtnSize = self.praisebtn.frame.size;
     self.praisebtn.sd_layout
     .leftSpaceToView(self.viewPraise, MarginFactor(11.0f))
-    .centerYEqualToView(self.viewPraise)
+    .centerYEqualToView(self.btnShare)
     .widthIs(praiseBtnSize.width)
     .heightIs(praiseBtnSize.height);
     
@@ -313,7 +311,7 @@
     .leftSpaceToView(self.praisebtn, MarginFactor(10.0f))
     .rightSpaceToView(self.viewPraise, MarginFactor(10.0f) + CGRectGetMaxX(self.praisebtn.frame))
     .centerYEqualToView(self.viewPraise);
-
+    
     self.lineView.sd_layout
     .leftSpaceToView(self.viewPraise, 0.0f)
     .rightSpaceToView(self.viewPraise, 0.0f)
@@ -321,7 +319,7 @@
     .heightIs(1.0f);
     [self.viewHeader setupAutoHeightWithBottomView:self.viewPraise bottomMargin:0.0f];
     self.listTable.tableHeaderView = self.viewHeader;
-
+    
 }
 
 -(void)parseObjWithDic:(NSDictionary *)dics
@@ -339,7 +337,6 @@
             obj.rid = cmt[@"rid"];
             [self.obj.comments addObject:obj];
         }
-
     }
     self.obj.ispraise = dic[@"ispraise"];
     self.obj.iscollection = dics[@"iscollection"];
@@ -351,7 +348,6 @@
         obj.puserid = head[@"puserid"];
         [self.obj.heads addObject:obj];
     }
-
     self.obj.cmmtnum = [NSString stringWithFormat:@"%@",dic[@"cmmtnum"]];
     self.obj.company = dic[@"company"];
     self.obj.detail = dic[@"detail"];
@@ -376,7 +372,7 @@
         linkObj.thumbnail = link[@"thumbnail"];
         self.obj.linkObj = linkObj;
     }
-
+    
 }
 
 - (CircleListObj *)obj
@@ -396,8 +392,7 @@
 - (void)smsShareSuccess:(NSNotification *)noti
 {
     id obj = noti.object;
-    if ([obj isKindOfClass:[NSString class]])
-    {
+    if ([obj isKindOfClass:[NSString class]]) {
         NSString *rid = obj;
         if ([self.obj.rid isEqualToString:rid]) {
             [self otherShareWithObj:self.obj];
@@ -463,7 +458,7 @@
         str = [NSString stringWithFormat:@"%@...",str];
     }
     self.lbldepartName.text = str;
-
+    
     self.lblTime.text = obj.publishdate;
     [self.btnShare setTitle:obj.sharenum forState:UIControlStateNormal];
     [self.btnShare sizeToFit];
@@ -471,8 +466,8 @@
     [self.btnComment sizeToFit];
     [self.btnPraise setTitle:obj.praisenum forState:UIControlStateNormal];
     [self.btnPraise sizeToFit];
-
-     if ([obj.isattention isEqualToString:@"Y"]){
+    
+    if ([obj.isattention isEqualToString:@"Y"]){
         [self.btnAttention setImage:[UIImage imageNamed:@"newAttention"] forState:UIControlStateNormal] ;
     } else{
         [self.btnAttention setImage:[UIImage imageNamed:@"newAddAttention"] forState:UIControlStateNormal];
@@ -490,7 +485,6 @@
         }];
         photoGroup.photoItemArray = temp;
         [self.photoView addSubview:photoGroup];
-
         self.photoView.sd_resetLayout
         .leftSpaceToView(self.viewHeader, MarginFactor(12.0f))
         .topSpaceToView(self.lblContent, MarginFactor(16.0f))
@@ -498,7 +492,7 @@
         .heightIs(CGRectGetHeight(photoGroup.frame));
         
     }
-
+    
     CGFloat praiseWidth = 0;
     if ([self.obj.praisenum intValue] > 0){
         for (UIView *subView in self.scrollPraise.subviews){
@@ -513,29 +507,24 @@
             UIImageView *head = [[UIImageView alloc] initWithFrame:rect];
             [head sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,obj.ppotname]] placeholderImage:[UIImage imageNamed:@"default_head"]];
             [_scrollPraise addSubview:head];
-            
         }
         [self.scrollPraise setContentSize:CGSizeMake(self.obj.heads.count *(praiseWidth+PRAISE_SEPWIDTH), CGRectGetHeight(self.scrollPraise.frame))];
         self.viewPraise.hidden = NO;
     } else{
         [self.scrollPraise removeAllSubviews];
     }
-
-
-
     self.actionView.sd_resetLayout
     .leftEqualToView(self.imageHeader)
     .rightEqualToView(self.btnAttention)
     .topSpaceToView(self.photoView, 0.0f)
     .heightIs(MarginFactor(49.0f));
-
-
+    
     self.viewPraise.sd_resetLayout
     .leftSpaceToView(self.viewHeader, MarginFactor(12.0f))
     .rightSpaceToView(self.viewHeader, MarginFactor(12.0f))
     .topSpaceToView(self.actionView, 0.0f)
     .heightIs(MarginFactor(56.0f));
-
+    
     [self.viewHeader layoutSubviews];
     self.listTable.tableHeaderView = self.viewHeader;
     [self.listTable reloadData];
@@ -545,6 +534,13 @@
 {
     commentOBj *obj = self.obj.comments[index];
     [self gotoSomeOneWithId:obj.cid name:obj.cnickname];
+    
+}
+
+-(void)pushSome:(DDTapGestureRecognizer *)ges
+{
+    praiseOBj *obj = self.obj.heads[ges.tag-1000];
+    [self gotoSomeOneWithId:obj.puserid name:obj.pnickname];
     
 }
 
@@ -576,8 +572,8 @@
         name = [NSString stringWithFormat:@"%@...",name];
     }
     self.nickName.text = name;
-
-   
+    
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -601,7 +597,7 @@
             [self.navigationController pushViewController:controller animated:YES];
         }
     } failString:@"认证后才能发起评论哦～"];
-   
+    
 }
 
 #pragma mark -- sdc
@@ -609,7 +605,7 @@
 - (void)loadCommentBtnState
 {
     NSString *memory = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_MEMORY];
-    if ([memory isEqualToString:@""]) {
+    if ([memory isEqualToString:@""]){
         [self.btnSend setTitle:@"说点什么吧" forState:UIControlStateNormal];
         [self.btnSend setTitleColor:[UIColor colorWithHexString:@"a5a5a5"] forState:UIControlStateNormal];
     } else{
@@ -622,7 +618,6 @@
 {
     [_popupView hideWithAnimated:YES];
     NSString *nickName = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_USER_NAME];
-
     NSDictionary *param = @{@"uid":[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID], @"rid":rid, @"fid":@"-1", @"detail":comment};
     NSString *url = [NSString stringWithFormat:@"%@/%@",rBaseAddressForHttpCircle,@"comments"];
     [MOCHTTPRequestOperationManager postWithURL:url class:nil parameters:param success:^(MOCHTTPResponse *response) {
@@ -642,12 +637,12 @@
         [self.listTable reloadData];
         [self loadDatasWithObj:self.obj];
         [self.delegate detailCommentWithRid:self.obj.rid commentNum:self.obj.cmmtnum comments:self.obj.comments];
-         [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:KEY_MEMORY];
-         [self loadCommentBtnState];
+        [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:KEY_MEMORY];
+        [self loadCommentBtnState];
     } failed:^(MOCHTTPResponse *response) {
         [Hud showMessageWithText:response.errorMessage];
     }];
-   
+    
 }
 
 - (void)commentViewDidComment:(NSString *)comment reply:(NSString *) reply fid:(NSString *) fid rid:(NSString *)rid
@@ -667,8 +662,7 @@
     [MOCHTTPRequestOperationManager postWithURL:url class:nil parameters:param success:^(MOCHTTPResponse *response) {
         NSLog(@"%@",response.data);
         NSString *code = [response.data valueForKey:@"code"];
-        if ([code isEqualToString:@"000"])
-        {
+        if ([code isEqualToString:@"000"]){
             commentOBj *obj = [[commentOBj alloc] init];
             obj.cnickname = nickName;
             obj.cdetail = comment;
@@ -719,7 +713,7 @@
     
     if (![self.obj.ispraise isEqualToString:@"Y"]) {
         [Hud showLoadingWithMessage:@"正在点赞"];
-
+        
         [MOCHTTPRequestOperationManager postWithURL:url class:nil parameters:param success:^(MOCHTTPResponse *response) {
             NSLog(@"%@",response.data);
             NSString *code = [response.data valueForKey:@"code"];
@@ -731,12 +725,12 @@
                 obj.ppotname = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_HEAD_IMAGE];
                 obj.puserid =[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
                 [self.obj.heads addObject:obj];
-
+                
                 [Hud showMessageWithText:@"赞成功"];
                 [MobClick event:@"ActionPraiseClicked_On" label:@"onClick"];
                 [self loadDatasWithObj:self.obj];
                 [self.listTable reloadData];
-
+                
                 [self.delegate detailPraiseWithRid:self.obj.rid praiseNum:self.obj.praisenum isPraised:@"Y"];
                 [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_COLLECT_PRAISE_CLICK object:self.obj];
             }
@@ -764,10 +758,9 @@
                 [MobClick event:@"ActionPraiseClicked_Off" label:@"onClick"];
                 [weakSelf loadDatasWithObj:self.obj];
                 [weakSelf.listTable reloadData];
-
+                
                 [weakSelf.delegate detailPraiseWithRid:self.obj.rid praiseNum:self.obj.praisenum isPraised:@"N"];
                 [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_COLLECT_PRAISE_CLICK object:weakSelf.obj];
-
             }
             [Hud hideHud];
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
@@ -777,8 +770,8 @@
     }
 }
 
-- (IBAction)actionShare:(id)sender {
-
+- (IBAction)actionShare:(id)sender
+{
     id<ISSCAttachment> image  = [ShareSDK pngImageWithImage:[UIImage imageNamed:@"80"]];
     NSString *postContent = @"";
     NSString *shareContent = @"";
@@ -822,13 +815,13 @@
     NSArray *shareArray = nil;
     if ([WXApi isWXAppSupportApi]) {
         if ([QQApiInterface isQQSupportApi]) {
-            shareArray = [ShareSDK customShareListWithType: item3, item5, item4, SHARE_TYPE_NUMBER(ShareTypeQQ), item1, item2, nil];
+            shareArray = [ShareSDK customShareListWithType: item5, item4, SHARE_TYPE_NUMBER(ShareTypeQQ), item3,item1, item2, nil];
         } else{
-            shareArray = [ShareSDK customShareListWithType: item3, item5, item4, item1, item2, nil];
+            shareArray = [ShareSDK customShareListWithType:  item5, item4, item3, item1, item2, nil];
         }
     } else{
         if ([QQApiInterface isQQSupportApi]) {
-            shareArray = [ShareSDK customShareListWithType: item3, SHARE_TYPE_NUMBER(ShareTypeQQ), item1, item2, nil];
+            shareArray = [ShareSDK customShareListWithType: SHARE_TYPE_NUMBER(ShareTypeQQ), item3, item1, item2, nil];
         } else{
             shareArray = [ShareSDK customShareListWithType: item3, item1, item2, nil];
         }
@@ -851,6 +844,7 @@
         }
     }];
 }
+
 -(void)shareToSMS:(NSString *)text rid:(NSString *)rid
 {
     [[AppDelegate currentAppdelegate] sendSmsWithText:text rid:rid];
@@ -882,7 +876,7 @@
             obj.sharenum = [NSString stringWithFormat:@"%ld",(long)([obj.sharenum integerValue] + 1)];
             [weakSelf.delegate detailShareWithRid:obj.rid shareNum:obj.sharenum];
             [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_COLLECT_SHARE_CLIC object:obj];
-
+            
             [weakSelf loadDatasWithObj:obj];
             [weakSelf.listTable reloadData];
             [Hud showMessageWithText:@"分享成功"];
@@ -891,6 +885,7 @@
         [Hud showMessageWithText:response.errorMessage];
     }];
 }
+
 -(void)circleShareWithObj:(CircleListObj *)obj
 {
     NSString *url = [NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttpCircle,@"circle",obj.rid];
@@ -904,7 +899,6 @@
             [Hud showMessageWithText:@"分享成功"];
             [self.delegate detailShareWithRid:obj.rid shareNum:obj.sharenum];
             [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_COLLECT_SHARE_CLIC object:obj];
-
         }
     } failed:^(MOCHTTPResponse *response) {
         [Hud showMessageWithText:response.errorMessage];
@@ -912,12 +906,12 @@
 }
 
 #pragma mark -收藏
-- (IBAction)actionCollection:(id)sender {
+- (IBAction)actionCollection:(id)sender
+{
     NSString *url = [NSString stringWithFormat:@"%@/%@",rBaseAddressForHttpCircle,@"circlestore"];
     NSDictionary *param = @{@"uid":[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID],
                             @"rid":self.obj.rid};
-    if (![self.obj.iscollection isEqualToString:@"Y"])
-    {
+    if (![self.obj.iscollection isEqualToString:@"Y"]){
         [MOCHTTPRequestOperationManager postWithURL:url class:nil parameters:param success:^(MOCHTTPResponse *response) {
             NSString *code = [response.data valueForKey:@"code"];
             if ([code isEqualToString:@"000"]) {
@@ -945,12 +939,13 @@
             }
             [MobClick event:@"ActionCollection_Off" label:@"onClick"];
             [Hud showMessageWithText:@"取消收藏"];
-
+            
         } failure:^(NSURLSessionDataTask *operation, NSError *error) {
             [Hud showMessageWithText:error.domain];
         }];
     }
 }
+
 - (IBAction)actionAttention:(id)sender
 {
     NSString *url = [NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"friends"];
@@ -960,11 +955,9 @@
         [MOCHTTPRequestOperationManager postWithURL:url class:nil parameters:param success:^(MOCHTTPResponse *response) {
             [Hud hideHud];
             NSString *code = [response.data valueForKey:@"code"];
-            if ([code isEqualToString:@"000"])
-            {
+            if ([code isEqualToString:@"000"]){
                 self.obj.isattention = @"Y";
                 [Hud showMessageWithText:@"关注成功"];
-
             }
             [self loadDatasWithObj:self.obj];
             
@@ -997,6 +990,7 @@
 {
     
 }
+
 #pragma mark =============  UITableView DataSource  =============
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -1033,9 +1027,9 @@
     
     NSString *text;
     if (IsStrEmpty(obj.rnickname)){
-      text = [NSString stringWithFormat:@"%@:x%@",obj.cnickname,obj.cdetail];
+        text = [NSString stringWithFormat:@"%@:x%@",obj.cnickname,obj.cdetail];
     } else{
-      text = [NSString stringWithFormat:@"%@回复%@:x%@",obj.cnickname,obj.rnickname,obj.cdetail];
+        text = [NSString stringWithFormat:@"%@回复%@:x%@",obj.cnickname,obj.rnickname,obj.cdetail];
     }
     NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:text];
     [string addAttribute:NSFontAttributeName value:font range:NSMakeRange(0, text.length)];
@@ -1078,7 +1072,7 @@
         NSLog(@"%@",obj.cnickname);
         //复制删除试图
         [self createPickerView];
-    }else{
+    } else{
         [self replyClick:indexPath.row];
         NSLog(@"%@",obj.cnickname);
         NSLog(@"%@",self.obj.nickname);
@@ -1104,7 +1098,7 @@
     [self.delegate detailDeleteWithRid:rid];
     [self loadDatasWithObj:self.obj];
     [self.listTable reloadData];
-
+    
 }
 
 -(void)detailPraiseWithRid:(NSString *)rid praiseNum:(NSString *)num isPraised:(NSString *)isPrased
@@ -1113,12 +1107,12 @@
         self.obj.praisenum = num;
         self.obj.ispraise = isPrased;
     }
-
+    
     [self loadDatasWithObj:self.obj];
-
+    
     [self.listTable reloadData];
     [self.delegate detailPraiseWithRid:rid praiseNum:num isPraised:isPrased];
-
+    
 }
 
 -(void)detailShareWithRid:(NSString *)rid shareNum:(NSString *)num
@@ -1138,7 +1132,7 @@
         self.obj.isattention = atten;
     }
     [self loadDatasWithObj:self.obj];
-
+    
     [self.listTable reloadData];
     [self.delegate detailAttentionWithRid:rid attention:atten];
     
@@ -1153,7 +1147,7 @@
     [self loadDatasWithObj:self.obj];
     [self.listTable reloadData];
     [self.delegate detailCommentWithRid:rid commentNum:num comments:comments];
-
+    
 }
 
 -(void)deleteSelf
@@ -1172,8 +1166,10 @@
         [Hud showMessageWithText:error.domain];
     }];
 }
-- (IBAction)actionDelete:(id)sender {
-        //删除
+
+- (IBAction)actionDelete:(id)sender
+{
+    //删除
     __weak typeof(self)weakSelf = self;
     DXAlertView *alert = [[DXAlertView alloc] initWithTitle:@"提示" contentText:@"确认删除吗?" leftButtonTitle:@"取消" rightButtonTitle:@"删除"];
     alert.rightBlock = ^{
@@ -1183,6 +1179,7 @@
     [alert show];
     
 }
+
 #pragma mark -- sdc
 #pragma mark -- url点击
 - (void)mlEmojiLabel:(MLEmojiLabel*)emojiLabel didSelectLink:(NSString*)link withType:(MLEmojiLabelLinkType)type
@@ -1214,14 +1211,16 @@
     }
     
 }
+
 #pragma mark -- sdc
 #pragma mark -- 拨打电话
 - (BOOL)openTel:(NSString *)tel
 {
     NSMutableString * str=[[NSMutableString alloc] initWithFormat:@"telprompt://%@",tel];
     NSLog(@"str======%@",str);
-   return  [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str]];
+    return  [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str]];
 }
+
 #pragma mark -- sdc
 #pragma mark -- 打开url
 - (BOOL)openURL:(NSURL *)url
@@ -1236,6 +1235,7 @@
         return NO;
     }
 }
+
 #pragma mark -- sdc
 #pragma mark -- 删除评论
 - (void)longPressGesturecognized:(UIGestureRecognizer *)recognizer
@@ -1243,8 +1243,7 @@
     UIGestureRecognizerState state = recognizer.state;//这是长按手势的状态   下面switch用到了
     CGPoint location = [recognizer locationInView:self.listTable];
     NSIndexPath *indexPath = [self.listTable indexPathForRowAtPoint:location];
-    switch (state)
-    {
+    switch (state){
         case UIGestureRecognizerStateBegan:{
             if (indexPath){
                 //判断是否是自己
@@ -1284,8 +1283,10 @@
         }
     }
 }
+
 //创建删除试图
-- (void)createPickerView{
+- (void)createPickerView
+{
     PickerBackView = [[UIView alloc] initWithFrame:self.view.bounds];
     PickerBackView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.4];
     
@@ -1321,10 +1322,12 @@
     [self.view addSubview:PickerBackView];
     [self.view bringSubviewToFront:PickerBackView];
 }
+
 - (void)closeView
 {
     [PickerBackView removeFromSuperview];
 }
+
 //复制
 - (void)copyButton
 {
@@ -1333,32 +1336,29 @@
     self.listTable.frame = CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT);
     [self.view sendSubviewToBack:PickerBackView];
 }
+
 //删除
 - (void)deleteButton
 {
     NSDictionary *param = @{@"rid":commentRid};
     NSString *url = [NSString stringWithFormat:@"%@/%@",rBaseAddressForHttpCircle,@"deleteComments"];
-    [MOCHTTPRequestOperationManager postWithURL:url class:nil parameters:param success:^(MOCHTTPResponse *response)
-     {
-         [Hud hideHud];
-         NSLog(@"%@",response.dataDictionary);
-         for (commentOBj *obj in self.obj.comments)
-         {
-             if ([obj.rid  isEqualToString:commentRid])
-             {
-                 [self.obj.comments removeObject:obj];
-                 self.obj.cmmtnum = [NSString stringWithFormat:@"%ld",(long)([self.obj.cmmtnum integerValue] - 1)];
-                 break;
-             }
-         }
-         [self loadDatasWithObj:self.obj];
-         [self.listTable reloadData];
-         [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_COLLECT_COMMENT_CLIC object:self.obj];
-     } failed:^(MOCHTTPResponse *response)
-     {
-         [Hud showMessageWithText:response.errorMessage];
-         NSLog(@"response.errorMessage==%@",response.errorMessage);
-     }];
+    [MOCHTTPRequestOperationManager postWithURL:url class:nil parameters:param success:^(MOCHTTPResponse *response) {
+        [Hud hideHud];
+        NSLog(@"%@",response.dataDictionary);
+        for (commentOBj *obj in self.obj.comments){
+            if ([obj.rid  isEqualToString:commentRid]){
+                [self.obj.comments removeObject:obj];
+                self.obj.cmmtnum = [NSString stringWithFormat:@"%ld",(long)([self.obj.cmmtnum integerValue] - 1)];
+                break;
+            }
+        }
+        [self loadDatasWithObj:self.obj];
+        [self.listTable reloadData];
+        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_COLLECT_COMMENT_CLIC object:self.obj];
+    } failed:^(MOCHTTPResponse *response){
+        [Hud showMessageWithText:response.errorMessage];
+        NSLog(@"response.errorMessage==%@",response.errorMessage);
+    }];
     //listTable适应屏幕
     self.listTable.frame = CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT);
     [self.view sendSubviewToBack:PickerBackView];

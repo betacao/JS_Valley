@@ -27,8 +27,7 @@ typedef NS_ENUM(NSInteger, RegistType)
 @property (nonatomic, strong) IBOutlet UIButton		*getVerfyCodeButton;
 //已经发送短信的文本框
 @property (nonatomic, strong) IBOutlet UILabel		*messageSendedLabel;
-//底部整个view
-@property (nonatomic, strong) IBOutlet UIView		*footerView;
+
 //同意协议的button
 @property (nonatomic, strong) IBOutlet UIButton		*protocolCheckButton;
 //下一步
@@ -41,6 +40,8 @@ typedef NS_ENUM(NSInteger, RegistType)
 @property (nonatomic, assign) NSInteger             remainTime;
 //重新发送的定时器
 @property (nonatomic, strong) NSTimer               *remainTimer;
+@property (weak, nonatomic) IBOutlet UIView *firstView;
+@property (weak, nonatomic) IBOutlet UIView *secondView;
 
 - (IBAction)getverifyCodeButtonClicked:(id)sender;
 - (IBAction)nextStepButtonClicked:(id)sender;
@@ -62,9 +63,11 @@ typedef NS_ENUM(NSInteger, RegistType)
     return self;
 }
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
     self.title = @"注册";
+    [self addSdLayout];
     NSLog(@"phoneNumberphoneNumber%@",self.phoneNumber);
     self.protocolButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     NSString *btnStr = @"我已阅读并同意《大牛圈用户协议》";
@@ -74,28 +77,88 @@ typedef NS_ENUM(NSInteger, RegistType)
     NSDictionary *dic =@{NSForegroundColorAttributeName:[UIColor colorWithHexString:@"D43C33"]};
     [attrString setAttributes:dic range:range];
     [attrString addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"AFAFAF"] range:NSMakeRange(0, 7)];
-    [attrString addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:12] range:NSMakeRange(0, attrString.length)];
+    [attrString addAttribute:NSFontAttributeName value:FontFactor(12.0f) range:NSMakeRange(0, attrString.length)];
     [self.protocolButton setAttributedTitle:attrString forState:UIControlStateNormal];
     
 	[self reloadView:RegistInit];
 	
 	self.isAgree = YES;
     
-    UIView * padView1 = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 20, 45)];
+    UIView * padView1 = [[UIView alloc]initWithFrame:CGRectMake(0, 0, MarginFactor(19.0f), MarginFactor(55.0f))];
     self.verifyCodeTextField.leftView = padView1;
     self.verifyCodeTextField.leftViewMode = UITextFieldViewModeAlways;
     
-    UIView * padView2 = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 20, 45)];
+    UIView * padView2 = [[UIView alloc]initWithFrame:CGRectMake(0, 0, MarginFactor(19.0f), MarginFactor(55.0f))];
     self.passwordTextField.leftView = padView2;
     self.passwordTextField.leftViewMode = UITextFieldViewModeAlways;
     
     self.verifyCodeTextField.placeholder = @"验证码";
     [self.verifyCodeTextField setValue:[UIColor colorWithHexString:@"AFAFAF"] forKeyPath:@"_placeholderLabel.textColor"];
-    [self.verifyCodeTextField setValue:[UIFont systemFontOfSize:14] forKeyPath:@"_placeholderLabel.font"];
+    [self.verifyCodeTextField setValue:FontFactor(15.0f) forKeyPath:@"_placeholderLabel.font"];
     
     self.passwordTextField.placeholder = @"登录密码";
     [self.passwordTextField setValue:[UIColor colorWithHexString:@"AFAFAF"] forKeyPath:@"_placeholderLabel.textColor"];
-    [self.passwordTextField setValue:[UIFont systemFontOfSize:14] forKeyPath:@"_placeholderLabel.font"];
+    [self.passwordTextField setValue:FontFactor(15.0f) forKeyPath:@"_placeholderLabel.font"];
+}
+
+- (void)addSdLayout
+{
+    self.firstView.sd_layout
+    .leftSpaceToView(self.view, 0.0f)
+    .topSpaceToView(self.view, 0.0f)
+    .rightSpaceToView(self.view, 0.0f)
+    .heightIs(MarginFactor(55.0f));
+    
+    self.verifyCodeTextField.sd_layout
+    .leftSpaceToView(self.firstView, 0.0f)
+    .topSpaceToView(self.firstView, 0.0f)
+    .widthIs(MarginFactor(100.0f))
+    .heightIs(MarginFactor(55.0f));
+    
+    self.getVerfyCodeButton.sd_layout
+    .rightSpaceToView(self.firstView, MarginFactor(19.0f))
+    .topSpaceToView(self.firstView, 0.0f)
+    .widthIs(MarginFactor(150.0f))
+    .heightIs(MarginFactor(55.0f));
+    
+    self.secondView.sd_layout
+    .topSpaceToView(self.firstView, MarginFactor(10.0f))
+    .leftSpaceToView(self.view, 0.0f)
+    .rightSpaceToView(self.view, 0.0f)
+    .heightIs(MarginFactor(55.0f));
+    
+    self.passwordTextField.sd_layout
+    .leftSpaceToView(self.secondView, 0.0f)
+    .topSpaceToView(self.secondView, 0.0f)
+    .rightSpaceToView(self.secondView, 0.0f)
+    .heightIs(MarginFactor(55.0f));
+    
+    UIImage * image = [UIImage imageNamed:@"regist_check_box"];
+    CGSize checkSize = image.size;
+    self.protocolCheckButton.sd_layout
+    .topSpaceToView(self.secondView, MarginFactor(5.0f))
+    .leftSpaceToView(self.view, MarginFactor(19.0f))
+    .widthIs(checkSize.width)
+    .heightIs(checkSize.height);
+    
+    self.protocolButton.sd_layout
+    .leftSpaceToView(self.protocolCheckButton, MarginFactor(3.0f))
+    .rightSpaceToView(self.view, MarginFactor(0.0f))
+    .topEqualToView(self.protocolCheckButton)
+    .bottomEqualToView(self.protocolCheckButton);
+    
+    self.messageSendedLabel.sd_layout
+    .leftSpaceToView(self.view, MarginFactor(12.0f))
+    .rightSpaceToView(self.view, MarginFactor(12.0f))
+    .topSpaceToView(self.protocolCheckButton, MarginFactor(83.0f))
+    .autoHeightRatio(0.0f);
+    
+    self.nextStepButton.sd_layout
+    .leftSpaceToView(self.view, MarginFactor(12.0f))
+    .rightSpaceToView(self.view, MarginFactor(12.0f))
+    .topSpaceToView(self.messageSendedLabel, MarginFactor(5.0f))
+    .heightIs(MarginFactor(40.0f));
+    
 }
 
 - (IBAction)protocolCheckButtonClicked:(id)sender
@@ -108,10 +171,13 @@ typedef NS_ENUM(NSInteger, RegistType)
 		self.isAgree = YES;
 	}
 }
-- (void)didReceiveMemoryWarning {
+
+- (void)didReceiveMemoryWarning
+{
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+
 }
+
 - (void)reloadView:(RegistType)registType
 {
 	self.registType = registType;
@@ -122,10 +188,10 @@ typedef NS_ENUM(NSInteger, RegistType)
         [self.getVerfyCodeButton setTitleColor:[UIColor colorWithHexString:@"4482C8"] forState:UIControlStateHighlighted];
         [self.getVerfyCodeButton setTitle:@"获取验证码" forState:UIControlStateNormal];
 		[self.getVerfyCodeButton setTitle:@"获取验证码" forState:UIControlStateHighlighted];
-        self.getVerfyCodeButton.titleLabel.font = [UIFont systemFontOfSize:12.0f];
+        self.getVerfyCodeButton.titleLabel.font = FontFactor(12.0f);
 		self.getVerfyCodeButton.userInteractionEnabled = YES;
 		self.messageSendedLabel.hidden = YES;
-		self.footerView.origin  = CGPointMake(self.footerView.origin.x, 180);
+		//self.footerView.origin  = CGPointMake(self.footerView.origin.x, 180);
         registType = RegistInTime;
 	}else if (registType == RegistInTime){
         [self.getVerfyCodeButton setTitleColor:[UIColor colorWithHexString:@"AFAFAF"] forState:UIControlStateNormal];
@@ -135,7 +201,7 @@ typedef NS_ENUM(NSInteger, RegistType)
 		
 		self.messageSendedLabel.hidden = NO;
 
-		self.footerView.origin  = CGPointMake(self.footerView.origin.x, 180);
+		//self.footerView.origin  = CGPointMake(self.footerView.origin.x, 180);
 
 	}else if (registType == RegistOverTime){
         [self.getVerfyCodeButton setTitleColor:[UIColor colorWithHexString:@"4482C8"] forState:UIControlStateNormal];
@@ -146,7 +212,7 @@ typedef NS_ENUM(NSInteger, RegistType)
 		
 		self.messageSendedLabel.hidden = YES;
 		
-		self.footerView.origin  = CGPointMake(self.footerView.origin.x, 180);
+		//self.footerView.origin  = CGPointMake(self.footerView.origin.x, 180);
 	}else{
 		return;
 	}

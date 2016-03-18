@@ -19,6 +19,7 @@
 #import "SHGEmptyDataView.h"
 #import "MLEmojiLabel.h"
 #import "SHGUnifiedTreatment.h"
+#import "UIButton+EnlargeEdge.h"
 #define k_FirstToTop 5.0f * XFACTOR
 #define k_SecondToTop 10.0f * XFACTOR
 #define k_ThirdToTop 15.0f * XFACTOR
@@ -44,6 +45,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UIButton *collectionButton;
+@property (weak, nonatomic) IBOutlet UIButton *editButton;
 @property (weak, nonatomic) IBOutlet UILabel *typeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *capitalLabel;
 @property (weak, nonatomic) IBOutlet UILabel *addressLabel;
@@ -100,6 +102,21 @@
     }];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    __weak typeof(self) weakSelf = self;
+    NSDictionary *param = @{@"marketId":self.object.marketId ,@"uid":UID};
+    [SHGMarketManager loadMarketDetail:param block:^(SHGMarketObject *object) {
+        weakSelf.responseObject = object;
+        weakSelf.responseObject.commentList = [NSMutableArray arrayWithArray:[[SHGGloble sharedGloble] parseServerJsonArrayToJSONModel:weakSelf.responseObject.commentList class:[SHGMarketCommentObject class]]];
+        weakSelf.responseObject.praiseList = [NSMutableArray arrayWithArray:[[SHGGloble sharedGloble] parseServerJsonArrayToJSONModel:weakSelf.responseObject.praiseList class:[praiseOBj class]]];
+        [weakSelf loadData];
+        [weakSelf.detailTable reloadData];
+    }];
+
+}
+
 - (SHGEmptyDataView *)emptyView
 {
     if (!_emptyView) {
@@ -108,15 +125,6 @@
     }
     return _emptyView;
 }
-//
-//- (UIView *)photoView
-//{
-//    if (!_photoView) {
-//        _photoView = [[UIView alloc]init];
-//        [self.viewHeader addSubview:_photoView];
-//    }
-//    return _photoView;
-//}
 
 - (void)initView
 {
@@ -145,6 +153,10 @@
     self.speakButton.layer.masksToBounds = YES;
     self.speakButton.layer.cornerRadius = 4;
     self.timeLabel.hidden = YES;
+    
+    [self.collectionButton setEnlargeEdgeWithTop:10.0f right:10.0f bottom:10.0f left:0.0f];
+    [self.editButton setEnlargeEdgeWithTop:10.0f right:10.0f bottom:10.0f left:0.0f];
+    [self.btnShare  setEnlargeEdgeWithTop:10.0f right:10.0f bottom:10.0f left:0.0f];
 }
 
 - (void)addLayout
@@ -182,6 +194,15 @@
     .centerYEqualToView(self.speakButton)
     .widthIs(collectSize.width)
     .heightIs(collectSize.height);
+    
+    [self.editButton sizeToFit];
+    CGSize editSize = self.editButton.frame.size;
+    self.editButton.sd_layout
+    .rightSpaceToView(self.btnShare, MarginFactor(25.0f))
+    .centerYEqualToView(self.speakButton)
+    .widthIs(editSize.width)
+    .heightIs(editSize.height);
+
     
     //headerView
     self.headImageView.sd_layout
@@ -294,6 +315,14 @@
     [self addEmptyViewIfNeeded];
     [self loadShareButtonState];
     
+    if ([UID isEqualToString:self.responseObject.createBy]) {
+        self.editButton.hidden = NO;
+        self.collectionButton.hidden = YES;
+    } else{
+        self.editButton.hidden = YES;
+        self.collectionButton.hidden = NO;
+    }
+    
     if (self.responseObject.mode.length == 0) {
          self.modelLabel.text = @"模式： 找资金";
     } else{
@@ -362,9 +391,9 @@
 
     
     if (self.responseObject.isCollection) {
-        [self.collectionButton setImage:[UIImage imageNamed:@"marketDetailCollection"] forState:UIControlStateNormal];
+        [self.collectionButton setImage:[UIImage imageNamed:@"redMarketDetailCollection"] forState:UIControlStateNormal];
     } else{
-        [self.collectionButton setImage:[UIImage imageNamed:@"marketDetailNoCollection"] forState:UIControlStateNormal];
+        [self.collectionButton setImage:[UIImage imageNamed:@"redMarketDetailNoCollection"] forState:UIControlStateNormal];
     }
     if (self.responseObject.url.length > 0) {
         self.photoView.sd_resetLayout
@@ -384,6 +413,15 @@
 
     [self.viewHeader layoutSubviews];
     self.detailTable.tableHeaderView = self.viewHeader;
+
+}
+
+- (IBAction)editButtonClick:(UIButton *)sender
+{
+    SHGMarketSendViewController *controller = [[SHGMarketSendViewController alloc] init];
+    controller.object = self.responseObject;
+    controller.delegate = [SHGMarketSegmentViewController sharedSegmentController];
+    [self.navigationController pushViewController:controller animated:YES];
 
 }
 
@@ -600,7 +638,7 @@
 
 - (void)loadShareButtonState
 {
-    [self.btnShare setImage:[UIImage imageNamed:@"marketShareImage"] forState:UIControlStateNormal];
+    [self.btnShare setImage:[UIImage imageNamed:@"blueMarketDetailShare"] forState:UIControlStateNormal];
 }
 
 - (void)loadCommentBtnState
@@ -706,10 +744,10 @@
 - (void)loadCollectButtonState
 {
     if (self.responseObject.isCollection ) {
-        [self.collectionButton setImage:[UIImage imageNamed:@"marketDetailCollection"] forState:UIControlStateNormal];
+        [self.collectionButton setImage:[UIImage imageNamed:@"redMarketDetailCollection"] forState:UIControlStateNormal];
          self.isCollectionChange = YES;
     } else{
-        [self.collectionButton setImage:[UIImage imageNamed:@"marketDetailNoCollection"] forState:UIControlStateNormal];
+        [self.collectionButton setImage:[UIImage imageNamed:@"redMarketDetailNoCollection"] forState:UIControlStateNormal];
         self.isCollectionChange = NO;
     }
 //  [self.btnZan setTitle:self.responseObject.praiseNum forState:UIControlStateNormal];

@@ -16,7 +16,9 @@
 #import "MyCollectionViewController.h"
 #import "SettingsViewController.h"
 #import "UIButton+EnlargeEdge.h" 
-
+#import "SHGMarketCollectionViewController.h"
+#import "SHGCardCollectionViewController.h"
+#import "SHGCircleCollectionViewController.h"
 #define kLabelWidth ceilf(SCREENWIDTH / 4.0f)
 
 @interface SHGUserCenterViewController ()<UITableViewDataSource, UITableViewDelegate, UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
@@ -47,7 +49,7 @@
 @property (strong, nonatomic) NSString      *location;
 @property (strong, nonatomic) NSString      *imageUrl;
 
-
+@property (assign, nonatomic) BOOL hasUpdatedContacts;
 @property (assign, nonatomic) BOOL shouldRefresh;
 @property (strong, nonatomic) NSString *auditState;
 @property (strong, nonatomic) NSArray *titleArray;
@@ -60,9 +62,16 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
-    self.titleArray = @[@"我的合伙人", @"我的佣金", @"我的预约", @"我的业务", @"我的收藏", @"设置"];
+    NSArray *array0 = @[@"邀请好友加入大牛圈",@"更新通讯录到大牛圈"];
+    NSArray *array1 = @[@"我的业务"];
+    NSArray *array2 = @[@"业务收藏",@"动态收藏",@"名片收藏"];
+    NSArray *array3 = @[@"设置"];
+    
+    self.titleArray = @[array0, array1, array2, array3];
+    
     [self addHeaderRefresh:self.tableView headerRefesh:YES andFooter:NO];
     self.tableHeaderView.backgroundColor = [UIColor whiteColor];
+    self.tableView.backgroundColor = [UIColor colorWithHexString:@"efeeef"];
     UIImage * editImage = [UIImage imageNamed:@"userCenterEdit"];
     CGSize editSize = editImage.size;
     //tableView
@@ -221,8 +230,8 @@
     if (!_rightBarButtonItem) {
 
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-        [button addTarget:self action:@selector(actionInvite:) forControlEvents:UIControlEventTouchUpInside];
-        [button setTitle:@"邀请" forState:UIControlStateNormal];
+        //[button addTarget:self action:@selector(actionInvite:) forControlEvents:UIControlEventTouchUpInside];
+        [button setTitle:@"" forState:UIControlStateNormal];
         button.titleLabel.font = FontFactor(15.0f);
         [button sizeToFit];
         _rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:button];
@@ -429,18 +438,18 @@
     return _bottomView;
 }
 
-- (NSMutableArray *)modelsArray
-{
-    if (!_modelsArray) {
-        _modelsArray = [NSMutableArray array];
-        for (NSInteger i = 0; i < 6; i++) {
-            SHGGlobleModel *model = [[SHGGlobleModel alloc] init];
-            model.text = [self.titleArray objectAtIndex:i];
-            [_modelsArray addObject:model];
-        }
-    }
-    return _modelsArray;
-}
+//- (NSMutableArray *)modelsArray
+//{
+//    if (!_modelsArray) {
+//        _modelsArray = [NSMutableArray array];
+//        for (NSInteger i = 0; i < 6; i++) {
+//            SHGGlobleModel *model = [[SHGGlobleModel alloc] init];
+//            model.text = [self.titleArray objectAtIndex:i];
+//            [_modelsArray addObject:model];
+//        }
+//    }
+//    return _modelsArray;
+//}
 
 - (void)refreshHeader
 {
@@ -570,7 +579,7 @@
 }
 
 #pragma mark -邀请好友
-- (void)actionInvite:(id)sender
+- (void)actionInvite
 {
     __weak typeof(self) weakSelf = self;
     id<ISSCAttachment> image  = [ShareSDK pngImageWithImage:[UIImage imageNamed:@"80"]];
@@ -591,13 +600,13 @@
     NSArray *shareArray = nil;
     if ([WXApi isWXAppSupportApi]) {
         if ([QQApiInterface isQQSupportApi]) {
-            shareArray = [ShareSDK customShareListWithType: item3, item5, item4, SHARE_TYPE_NUMBER(ShareTypeQQ), nil];
+            shareArray = [ShareSDK customShareListWithType: item5, item4, SHARE_TYPE_NUMBER(ShareTypeQQ), item3, nil];
         } else{
-            shareArray = [ShareSDK customShareListWithType: item3, item5, item4, nil];
+            shareArray = [ShareSDK customShareListWithType: item5, item4, item3, nil];
         }
     } else{
         if ([QQApiInterface isQQSupportApi]) {
-            shareArray = [ShareSDK customShareListWithType: item3, SHARE_TYPE_NUMBER(ShareTypeQQ), nil];
+            shareArray = [ShareSDK customShareListWithType: SHARE_TYPE_NUMBER(ShareTypeQQ), item3, nil];
         } else{
             shareArray = [ShareSDK customShareListWithType: item3, nil];
         }
@@ -723,13 +732,31 @@
 #pragma mark - TableView Delegate
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 1;
+    return self.titleArray.count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 6;
+    return [[self.titleArray objectAtIndex:section]  count];
 }
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+   
+        UIView *sectionView = [[UIView alloc]initWithFrame:CGRectMake(0.0f, 0.0f, SCREENWIDTH, MarginFactor(11.0f))];
+        sectionView.backgroundColor = [UIColor colorWithHexString:@"edeeef"];
+        return sectionView;
+    
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    if (section == 0) {
+        return 0.0f;
+    }
+    return MarginFactor(9.0f);
+}
+
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -746,55 +773,141 @@
         cell = [[SHGGlobleTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         [cell setupNeedShowAccessorView:NO];
     }
-    cell.model = [self.modelsArray objectAtIndex:indexPath.row];
+    SHGGlobleModel *model = [[SHGGlobleModel alloc] init];
+    model.text = [[self.titleArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
+    cell.model = model;
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    if (indexPath.row == 0){
+    if (indexPath.section == 0) {
+        if (indexPath.row == 0) {
+            
+            [self actionInvite];
+            
+        } else{
+            if (self.hasUpdatedContacts){
+                [Hud showMessageWithText:@"您刚刚更新过好友"];
+            } else{
+                DXAlertView *alert = [[DXAlertView alloc] initWithTitle:@"提示" contentText:@"更新好友将更新您一度人脉中手机通讯录，将有效拓展您的人脉。" leftButtonTitle:@"取消" rightButtonTitle:@"更新"];
+                __weak typeof(self) weakSelf = self;
+                alert.rightBlock = ^{
+                    [weakSelf uploadContact];
+                };
+                alert.leftBlock = ^{
+                    self.hasUpdatedContacts = NO;
+                };
+                [alert show];
+                self.hasUpdatedContacts = YES;
+                [self performSelector:@selector(changeUpdateState) withObject:nil afterDelay:60.0f];
+            }
 
-        MyTeamViewController *controller = [[MyTeamViewController alloc] init];
-        controller.hidesBottomBarWhenPushed = YES;
-        [MobClick event:@"MyTeamViewController" label:@"onClick"];
-        [self.navigationController pushViewController:controller animated:YES];
-
-    } else if (indexPath.row == 1) {
-        MyMoneyViewController *controller = [[MyMoneyViewController alloc] init];
-        controller.hidesBottomBarWhenPushed = YES;
-        [MobClick event:@"MyMoneyViewController" label:@"onClick"];
-        [self.navigationController pushViewController:controller animated:YES];
-
-    } else if (indexPath.row == 2) {
-
-        MyAppointmentViewController *controller = [[MyAppointmentViewController alloc] init];
-        controller.hidesBottomBarWhenPushed = YES;
-        [MobClick event:@"MyAppointmentViewController" label:@"onClick"];
-        [self.navigationController pushViewController:controller animated:YES];
-
-    } else if (indexPath.row == 3) {
+        }
+    } else if (indexPath.section == 1){
 
         SHGMarketMineViewController *controller = [[SHGMarketMineViewController alloc] init];
         controller.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:controller animated:YES];
 
-    } else if (indexPath.row == 4) {
+    } else if (indexPath.section == 2){
+        if (indexPath.row == 0) {
+            SHGMarketCollectionViewController *controller = [[SHGMarketCollectionViewController alloc] init];
+            controller.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:controller animated:YES];
 
-        MyCollectionViewController *controller = [[MyCollectionViewController alloc] init];
-        controller.hidesBottomBarWhenPushed = YES;
-        [MobClick event:@"MyCollectionViewController" label:@"onClick"];
-        [self.navigationController pushViewController:controller animated:YES];
+        } else if (indexPath.row == 1){
+            
+            SHGCircleCollectionViewController *controller = [[SHGCircleCollectionViewController alloc] init];
+            controller.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:controller animated:YES];
+        } else if (indexPath.row == 2){
+            
+            SHGCardCollectionViewController *controller = [[SHGCardCollectionViewController alloc] init];
+            controller.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:controller animated:YES];
 
-    } else if (indexPath.row == 5) {
-
+        }
+    } else if (indexPath.section == 3){
+        
         if (self.nickName.length > 0){
             SettingsViewController *controller = [[SettingsViewController alloc] init];
             controller.hidesBottomBarWhenPushed = YES;
             controller.userInfo = @{kNickName:self.nickName, kDepartment:self.department, kCompany:self.company, kLocation:self.location, kIndustry:self.industry, kHeaderImage:self.imageUrl};
             [self.navigationController	pushViewController:controller animated:YES];
         }
+
     }
+    
+//    if (indexPath.row == 0){
+//
+//        MyTeamViewController *controller = [[MyTeamViewController alloc] init];
+//        controller.hidesBottomBarWhenPushed = YES;
+//        [MobClick event:@"MyTeamViewController" label:@"onClick"];
+//        [self.navigationController pushViewController:controller animated:YES];
+//
+//    } else if (indexPath.row == 1) {
+//        MyMoneyViewController *controller = [[MyMoneyViewController alloc] init];
+//        controller.hidesBottomBarWhenPushed = YES;
+//        [MobClick event:@"MyMoneyViewController" label:@"onClick"];
+//        [self.navigationController pushViewController:controller animated:YES];
+//
+//    } else if (indexPath.row == 2) {
+//
+//        MyAppointmentViewController *controller = [[MyAppointmentViewController alloc] init];
+//        controller.hidesBottomBarWhenPushed = YES;
+//        [MobClick event:@"MyAppointmentViewController" label:@"onClick"];
+//        [self.navigationController pushViewController:controller animated:YES];
+//
+//    } else if (indexPath.row == 3) {
+//
+//        SHGMarketMineViewController *controller = [[SHGMarketMineViewController alloc] init];
+//        controller.hidesBottomBarWhenPushed = YES;
+//        [self.navigationController pushViewController:controller animated:YES];
+//
+//    } else if (indexPath.row == 4) {
+//
+//        MyCollectionViewController *controller = [[MyCollectionViewController alloc] init];
+//        controller.hidesBottomBarWhenPushed = YES;
+//        [MobClick event:@"MyCollectionViewController" label:@"onClick"];
+//        [self.navigationController pushViewController:controller animated:YES];
+//
+//    } else if (indexPath.row == 5) {
+//
+//        if (self.nickName.length > 0){
+//            SettingsViewController *controller = [[SettingsViewController alloc] init];
+//            controller.hidesBottomBarWhenPushed = YES;
+//            controller.userInfo = @{kNickName:self.nickName, kDepartment:self.department, kCompany:self.company, kLocation:self.location, kIndustry:self.industry, kHeaderImage:self.imageUrl};
+//            [self.navigationController	pushViewController:controller animated:YES];
+//        }
+//    }
+}
+
+- (void)changeUpdateState
+{
+    self.hasUpdatedContacts = NO;
+}
+
+- (void)uploadContact
+{
+    [[SHGGloble sharedGloble] getUserAddressList:^(BOOL finished) {
+        if(finished){
+            [[SHGGloble sharedGloble] uploadPhonesWithPhone:^(BOOL finish) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    if(finished){
+                        [Hud showMessageWithText:@"通讯录更新成功"];
+                    } else{
+                        [Hud showMessageWithText:@"上传通讯录列表失败"];
+                    }
+                });
+            }];
+        } else{
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [Hud showMessageWithLongText:@"获取通讯录列表失败，请到系统设置设置权限"];
+            });
+        }
+    }];
 }
 
 #pragma mark ------actionSheetDelegate

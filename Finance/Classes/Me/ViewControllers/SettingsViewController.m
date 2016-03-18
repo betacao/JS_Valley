@@ -91,7 +91,7 @@
     SettingsObj *obj10 = [[SettingsObj alloc] init];
     obj10.imageInfo = nil;
     obj10.isShowSwith = NO;
-    obj10.content = @"更新好友";
+    obj10.content = @"更新版本";
     [array1 addObject:obj10];
 
     NSMutableArray *array2 = [NSMutableArray array];
@@ -189,8 +189,7 @@
         cell.rightArrowView.hidden = YES;
         cell.rightView.hidden = NO;
     }
-    
-    return cell;
+     return cell;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath

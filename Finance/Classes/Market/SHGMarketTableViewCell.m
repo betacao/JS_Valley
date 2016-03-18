@@ -7,18 +7,18 @@
 //
 
 #import "SHGMarketTableViewCell.h"
-
+#import "UIButton+EnlargeEdge.h"
 @interface SHGMarketTableViewCell ()
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *typeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *amountLabel;
 @property (weak, nonatomic) IBOutlet UILabel *contactLabel;
-@property (weak, nonatomic) IBOutlet UIButton *collectButton;
+//@property (weak, nonatomic) IBOutlet UIButton *collectButton;
 @property (weak, nonatomic) IBOutlet UIButton *deleteButton;
-@property (weak, nonatomic) IBOutlet UIButton *editButton;
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
 @property (weak, nonatomic) IBOutlet UIView *bottomView;
 @property (weak, nonatomic) IBOutlet UIView *bottomLineView;
+@property (weak, nonatomic) IBOutlet UIButton *browseButton;
 @property (strong, nonatomic) SHGMarketFirstCategoryObject *obj;
 @end
 
@@ -36,9 +36,12 @@
     self.amountLabel.font = FontFactor(13.0f);
     self.timeLabel.font = FontFactor(13.0f);
     self.contactLabel.font = FontFactor(13.0f);
+    self.browseButton.titleLabel.font = FontFactor(12.0f);
+    [self.browseButton setTitleColor:[UIColor colorWithHexString:@"d3d3d3"] forState:UIControlStateNormal];
+    self.browseButton.titleEdgeInsets = UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, -1.0f);
     CGFloat titleHeight = [@" " sizeWithAttributes:@{NSFontAttributeName : self.titleLabel.font}].height;
     CGFloat height = [@" " sizeWithAttributes:@{NSFontAttributeName : self.typeLabel.font}].height;
-
+    [self.deleteButton setEnlargeEdgeWithTop:10.0f right:10.0f bottom:10.0f left:10.0f];
     self.titleLabel.sd_layout
     .topSpaceToView(self.contentView, MarginFactor(18.0f))
     .leftSpaceToView(self.contentView, MarginFactor(12.0f))
@@ -57,9 +60,9 @@
     .widthIs(SCREENWIDTH/2.0f - MarginFactor(12.0f))
     .heightRatioToView(self.typeLabel, 1.0f);
     
-    UIImage *collectImage = [UIImage imageNamed:@"marketListCollection"];
-    CGSize size = collectImage.size;
-    self.collectButton.sd_layout
+    UIImage *browseImage = [UIImage imageNamed:@"marketBrowse"];
+    CGSize size = browseImage.size;
+    self.browseButton.sd_layout
     .rightSpaceToView(self.contentView, MarginFactor(12.0f))
     .centerYEqualToView(self.contactLabel)
     .widthIs(size.width)
@@ -69,28 +72,20 @@
     CGSize deleteSize = deleteImage.size;
     self.deleteButton.sd_layout
     .rightSpaceToView(self.contentView, MarginFactor(12.0f))
-    .centerYEqualToView(self.contactLabel)
+    .centerYEqualToView(self.typeLabel)
     .widthIs(deleteSize.width)
     .heightIs(deleteSize.height);
     
-    UIImage * editeImage = [UIImage imageNamed:@"marketEdite"];
-    CGSize editeSize = editeImage.size;
-    self.editButton.sd_layout
-    .rightSpaceToView(self.deleteButton, MarginFactor(15.0f))
-    .centerYEqualToView(self.contactLabel)
-    .widthIs(editeSize.width)
-    .heightIs(editeSize.height);
-    
     self.timeLabel.sd_layout
     .centerYEqualToView(self.contactLabel)
-    .rightSpaceToView(self.editButton, MarginFactor(12.0f))
-    .heightRatioToView(self.typeLabel, 1.0f);
-    [self.timeLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
+    .rightSpaceToView(self.browseButton, MarginFactor(12.0f))
+    .heightRatioToView(self.typeLabel, 1.0f)
+    .leftSpaceToView(self.contentView, SCREENWIDTH / 2.0f);
     
     self.amountLabel.sd_layout
     .centerYEqualToView(self.typeLabel)
     .leftEqualToView(self.timeLabel)
-    .rightSpaceToView(self.contentView, MarginFactor(12.0f))
+    .rightSpaceToView(self.deleteButton, MarginFactor(12.0f))
     .heightRatioToView(self.typeLabel, 1.0f);
     
     self.bottomLineView.sd_layout
@@ -112,7 +107,8 @@
 {
     _object = object;
     [self clearCell];
-    
+    [self.browseButton setTitle:object.browernum forState:UIControlStateNormal];
+    [self.browseButton sizeToFit];
     if (object.marketName.length == 0) {
         self.titleLabel.text = @" ";
     } else{
@@ -142,26 +138,12 @@
         self.timeLabel.text = @"时间：";
     }
     
-    [self loadCollectionState];
-    
-}
-- (void)loadNewUiFortype:(SHGMarketTableViewCellType)type
-{
-    if (type == SHGMarketTableViewCellTypeAll) {
-        self.editButton.hidden = YES;
-        self.deleteButton.hidden = YES;
-    } else if (type == SHGMarketTableViewCellTypeMine){
-        self.collectButton.hidden = YES;
-        
-    }
-}
-- (void)loadCollectionState
-{
-    if (self.object.isCollection ) {
-        [self.collectButton setImage:[UIImage imageNamed:@"marketListCollection"] forState:UIControlStateNormal];
+    if ([UID isEqualToString:object.createBy]) {
+        self.deleteButton.hidden = NO;
     } else{
-        [self.collectButton setImage:[UIImage imageNamed:@"marketListNoCollection"] forState:UIControlStateNormal];
+        self.deleteButton.hidden = YES;
     }
+    
 }
 
 - (void)clearCell
@@ -171,8 +153,9 @@
     self.amountLabel.text = @" ";
     self.contactLabel.text = @" ";
     self.timeLabel.text = @" ";
-    [self.collectButton setImage:[UIImage imageNamed:@"marketListNoCollection"] forState:UIControlStateNormal];
+    [self.browseButton setTitle:@"" forState:UIControlStateNormal];
 }
+
 //收藏
 - (IBAction)clickCollectButton:(UIButton *)sender
 {

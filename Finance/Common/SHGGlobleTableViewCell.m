@@ -99,4 +99,9 @@
 
 @implementation SHGGlobleModel
 
++(NSDictionary *)JSONKeyPathsByPropertyKey
+{
+    return @{@"text":@"text", @"lineViewHidden":@"lineViewHidden"};
+}
+
 @end
