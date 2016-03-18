@@ -173,7 +173,6 @@
             weakSelf.CompletionBlock(weakSelf.homeArray, weakSelf.homeListArray, weakSelf.homeAdArray);
         }
     } failed:^(MOCHTTPResponse *response){
-        NSLog(@"首页预加载数据失败");
         [weakSelf.homeListArray removeAllObjects];
         if(weakSelf.CompletionBlock){
             weakSelf.CompletionBlock(weakSelf.homeArray, weakSelf.homeListArray, weakSelf.homeAdArray);
@@ -184,9 +183,7 @@
 - (void)setCompletionBlock:(SHHomeDataCompletionBlock)CompletionBlock
 {
     _CompletionBlock = CompletionBlock;
-    if(self.homeArray && [self.homeArray count] > 0){
-        _CompletionBlock(self.homeArray, self.homeListArray, self.homeAdArray);
-    }
+    _CompletionBlock(self.homeArray, self.homeListArray, self.homeAdArray);
 }
 
 - (void)userDefaultsDidChange:(NSNotification *)notification

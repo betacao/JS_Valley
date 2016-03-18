@@ -29,12 +29,11 @@
 
 @interface SHGHomeViewController ()<MLEmojiLabelDelegate,SHGNoticeDelegate,CircleListDelegate, UISearchBarDelegate>
 
-@property (weak, nonatomic) IBOutlet UITableView *listTable;
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
 //判断是否已经加载过推荐列表
 @property (strong, nonatomic) NSMutableArray *recommendArray;
 @property (strong, nonatomic) SHGNewFriendObject *friendObject;
 
-@property (assign, nonatomic) BOOL hasRequestedFirst;
 @property (assign, nonatomic) BOOL hasDataFinished;
 
 @property (strong, nonatomic) SHGNoticeView *newFriendNoticeView;
@@ -70,14 +69,50 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    self.listTable.estimatedRowHeight = SCREENWIDTH;
-    self.listTable.rowHeight = SCREENWIDTH;
-    self.hasRequestedFirst = NO;
     self.circleType = @"all";
     self.needShowNewFriend = YES;
-    [self addHeaderRefresh:self.listTable headerRefesh:YES headerTitle:@{kRefreshStateIdle:@"下拉可以刷新", kRefreshStatePulling:@"释放后查看最新动态", kRefreshStateRefreshing:@"正在努力加载中"} andFooter:YES footerTitle:nil];
-    self.listTable.tableHeaderView = self.searchBar;
+    self.tableView.estimatedRowHeight = SCREENWIDTH;
+    self.tableView.rowHeight = SCREENWIDTH;
+    self.tableView.sd_layout
+    .spaceToSuperView(UIEdgeInsetsZero);
+    
+    [self loadPreLoadingData];
+    [self addHeaderRefresh:self.tableView headerRefesh:YES headerTitle:@{kRefreshStateIdle:@"下拉可以刷新", kRefreshStatePulling:@"释放后查看最新动态", kRefreshStateRefreshing:@"正在努力加载中"} andFooter:YES footerTitle:nil];
+    self.tableView.tableHeaderView = self.searchBar;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshData) name:NOTIFI_SENDPOST object:nil];
+
+}
+
+- (void)loadPreLoadingData
+{
+    [Hud showLoadingWithMessage:@"加载中"];
+    __weak typeof(self) weakSelf = self;
+    [SHGGloble sharedGloble].CompletionBlock = ^(NSArray *allArray, NSArray *normalArray, NSArray *adArray){
+        [Hud hideHud];
+        if(allArray && [allArray count] > 0){
+            //更新整体数据
+            [weakSelf.dataArr removeAllObjects];
+            [weakSelf.dataArr addObjectsFromArray:allArray];
+            //更新normal数据
+            [weakSelf.listArray removeAllObjects];
+            [weakSelf.listArray addObjectsFromArray:normalArray];
+            //更新推广数据
+            [weakSelf.adArray removeAllObjects];
+            [weakSelf.adArray addObjectsFromArray:adArray];
+
+            [weakSelf.tableView.header endRefreshing];
+            [weakSelf.tableView.footer endRefreshing];
+
+            [weakSelf.newMessageNoticeView showWithText:[NSString stringWithFormat:@"为您加载了%ld条新动态",(long)allArray.count]];
+            [weakSelf insertRecomandArray];
+            [weakSelf insertNewFriendArray];
+            weakSelf.needRefreshTableView = YES;
+        } else{
+            [weakSelf.tableView.header endRefreshing];
+            [weakSelf.tableView.footer endRefreshing];
+            [Hud showMessageWithText:@"获取首页数据失败"];
+        }
+    };
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -89,38 +124,6 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    if(!self.hasRequestedFirst){
-        self.hasRequestedFirst = YES;
-        [Hud showLoadingWithMessage:@"加载中"];
-
-        __weak typeof(self) weakSelf = self;
-        [SHGGloble sharedGloble].CompletionBlock = ^(NSArray *allArray, NSArray *normalArray, NSArray *adArray){
-            [Hud hideHud];
-            if(allArray && [allArray count] > 0){
-                //更新整体数据
-                [weakSelf.dataArr removeAllObjects];
-                [weakSelf.dataArr addObjectsFromArray:allArray];
-                //更新normal数据
-                [weakSelf.listArray removeAllObjects];
-                [weakSelf.listArray addObjectsFromArray:normalArray];
-                //更新推广数据
-                [weakSelf.adArray removeAllObjects];
-                [weakSelf.adArray addObjectsFromArray:adArray];
-
-                [weakSelf.listTable.header endRefreshing];
-                [weakSelf.listTable.footer endRefreshing];
-
-                [weakSelf.newMessageNoticeView showWithText:[NSString stringWithFormat:@"为您加载了%ld条新动态",(long)allArray.count]];
-                [weakSelf insertRecomandArray];
-                [weakSelf insertNewFriendArray];
-                weakSelf.needRefreshTableView = YES;
-            } else{
-                [weakSelf.listTable.header endRefreshing];
-                [weakSelf.listTable.footer endRefreshing];
-                [Hud showMessageWithText:@"获取首页数据失败"];
-            }
-        };
-    }
     BOOL needUploadContact = [[NSUserDefaults standardUserDefaults] boolForKey:KEY_USER_NEEDUPLOADCONTACT];
     if(needUploadContact){
         [[SHGGloble sharedGloble] uploadPhonesWithPhone:^(BOOL finish) {
@@ -132,7 +135,7 @@
 
 - (UITableView *)currentTableView
 {
-    return self.listTable;
+    return self.tableView;
 }
 
 - (NSMutableArray *)currentDataArray
@@ -267,7 +270,7 @@
     if (needRefreshTableView && !_needRefreshTableView) {
         _needRefreshTableView = YES;
         dispatch_async(dispatch_get_main_queue(), ^{
-            [weakSelf.listTable reloadData];
+            [weakSelf.tableView reloadData];
             _needRefreshTableView = NO;
         });
     }
@@ -275,9 +278,9 @@
 
 - (void)deleteCellAtIndexPath:(NSArray *)paths
 {
-    [self.listTable beginUpdates];
-    [self.listTable deleteRowsAtIndexPaths:paths withRowAnimation:UITableViewRowAnimationAutomatic];
-    [self.listTable endUpdates];
+    [self.tableView beginUpdates];
+    [self.tableView deleteRowsAtIndexPaths:paths withRowAnimation:UITableViewRowAnimationAutomatic];
+    [self.tableView endUpdates];
 }
 
 - (void)refreshData
@@ -313,7 +316,7 @@
     self.isRefreshing = YES;
 
     if ([target isEqualToString:@"first"]){
-        [self.listTable.footer resetNoMoreData];
+        [self.tableView.footer resetNoMoreData];
         self.hasDataFinished = NO;
     } else if([target isEqualToString:@"load"]){
     }
@@ -328,15 +331,15 @@
         weakSelf.isRefreshing = NO;
         [weakSelf assembleDictionary:response.dataDictionary target:target];
         weakSelf.needRefreshTableView = YES;
-        [weakSelf.listTable.header endRefreshing];
-        [weakSelf.listTable.footer endRefreshing];
+        [weakSelf.tableView.header endRefreshing];
+        [weakSelf.tableView.footer endRefreshing];
       
     } failed:^(MOCHTTPResponse *response){
         weakSelf.isRefreshing = NO;
         [Hud showMessageWithText:response.errorMessage];
         NSLog(@"%@",response.errorMessage);
-        [weakSelf.listTable.header endRefreshing];
-        [weakSelf.listTable.footer endRefreshing];
+        [weakSelf.tableView.header endRefreshing];
+        [weakSelf.tableView.footer endRefreshing];
         [Hud hideHud];
     }];
 }
@@ -430,7 +433,7 @@
 - (void)refreshFooter
 {
     if (self.hasDataFinished){
-        [self.listTable.footer endRefreshingWithNoMoreData];
+        [self.tableView.footer endRefreshingWithNoMoreData];
         return;
     }
     NSLog(@"refreshFooter");
@@ -632,9 +635,11 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if (self.dataArr.count > 0) {
+        tableView.showsVerticalScrollIndicator = YES;
         NSInteger count = self.dataArr.count;
         return count;
     } else{
+        tableView.showsVerticalScrollIndicator = NO;
         return 1;
     }
 
