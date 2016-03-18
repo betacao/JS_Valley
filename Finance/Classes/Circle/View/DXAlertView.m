@@ -10,9 +10,6 @@
 #import <QuartzCore/QuartzCore.h>
 
 @interface DXAlertView ()
-{
-    BOOL _leftLeave;
-}
 
 @property (strong, nonatomic) UILabel *alertTitleLabel;
 @property (strong, nonatomic) UILabel *alertContentLabel;
@@ -132,7 +129,7 @@
         [self addSubview:self.lineLabel];
 
         CGRect frame = customView.frame;
-        frame.origin.y = CGRectGetMaxY(self.lineLabel.frame);
+        frame.origin.y += CGRectGetMaxY(self.lineLabel.frame);
         customView.frame = frame;
         [self addSubview:customView];
         self.customView = customView;
@@ -140,7 +137,7 @@
         CGRect leftBtnFrame = CGRectZero;
         CGRect rightBtnFrame = CGRectZero;
         if (!leftTitle) {
-            rightBtnFrame = CGRectMake((kAlertWidth - kSingleButtonWidth) * 0.5, kAlertHeight - kButtonBottomOffset - kButtonHeight, kSingleButtonWidth, kButtonHeight);
+            rightBtnFrame = CGRectMake((kAlertWidth - kSingleButtonWidth) * 0.5, CGRectGetMaxY(customView.frame) + kCustomViewButtomMargin, kSingleButtonWidth, kButtonHeight);
             self.rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
             self.rightBtn.frame = rightBtnFrame;
 
@@ -227,7 +224,6 @@
 
 - (void)leftBtnClicked:(id)sender
 {
-    _leftLeave = YES;
     if (self.leftBlock) {
         self.leftBlock();
     }
@@ -236,8 +232,6 @@
 
 - (void)rightBtnClicked:(id)sender
 {
-    _leftLeave = NO;
-
     if (self.rightBlock) {
         self.rightBlock();
     }
@@ -300,7 +294,7 @@
     [topVC.view addSubview:self.backImageView];
     CGRect afterFrame = CGRectZero;
     if(self.customView){
-        CGFloat height = CGRectGetMaxY(self.leftBtn.frame) + kButtonBottomOffset;
+        CGFloat height = CGRectGetMaxY(self.rightBtn.frame) + kButtonBottomOffset;
         afterFrame = CGRectMake((CGRectGetWidth(topVC.view.bounds) - kAlertWidth) * 0.5, (CGRectGetHeight(topVC.view.bounds) - height) * 0.5, kAlertWidth, height);
     } else{
         afterFrame = CGRectMake((CGRectGetWidth(topVC.view.bounds) - kAlertWidth) * 0.5, (CGRectGetHeight(topVC.view.bounds) - kAlertHeight) * 0.5, kAlertWidth, kAlertHeight);

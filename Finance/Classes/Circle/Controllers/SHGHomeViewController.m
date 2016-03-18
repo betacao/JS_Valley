@@ -27,7 +27,7 @@
 #import "SHGNewFriendTableViewCell.h"
 
 
-@interface SHGHomeViewController ()<MLEmojiLabelDelegate,SHGNoticeDelegate,CircleListDelegate, UISearchBarDelegate>
+@interface SHGHomeViewController ()<MLEmojiLabelDelegate,CircleListDelegate, UISearchBarDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 //判断是否已经加载过推荐列表
@@ -161,7 +161,6 @@
     if(!_newFriendNoticeView){
         _newFriendNoticeView = [[SHGNoticeView alloc] initWithFrame:CGRectZero type:SHGNoticeTypeNewFriend];
         _newFriendNoticeView.superView = self.view;
-        _newFriendNoticeView.delegate = self;
     }
     return _newFriendNoticeView;
 }
@@ -473,12 +472,6 @@
     return rid;
 }
 
-#pragma mark ------ SHGNoticeDelegate ------
--(void)didClickNoticeViewWithUid:(NSString *)uid
-{
-    [self gotoSomeOne:uid name:nil];
-}
-
 #pragma mark =============  UITableView DataSource  =============
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -672,18 +665,7 @@
 
 - (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar
 {
-    
     return NO;
-}
-#pragma mark cellDelegate
-
-- (void)gotoSomeOne:(NSString *)uid name:(NSString *)name
-{
-    SHGPersonalViewController *controller = [[SHGPersonalViewController alloc] initWithNibName:@"SHGPersonalViewController" bundle:nil];
-    controller.hidesBottomBarWhenPushed = YES;
-    controller.userId = uid;
-    controller.delegate = [SHGUnifiedTreatment sharedTreatment];
-    [self.navigationController pushViewController:controller animated:YES];
 }
 
 - (void)didReceiveMemoryWarning

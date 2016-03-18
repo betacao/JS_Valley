@@ -18,20 +18,14 @@
 #import "SettingsSuggestionsViewController.h"
 #import "SHGSettingTableViewCell.h"
 
-@interface SettingsViewController ()
-<UIAlertViewDelegate>
-{
-    BOOL  hasUpdatedContacts;
-}
+@interface SettingsViewController ()<UIAlertViewDelegate>
+
 @property (nonatomic, strong) NSArray *arrValues;
 @property (nonatomic, strong) NSIndexPath *curIndexPath;
 
 @property (nonatomic, weak) IBOutlet UISwitch *switchView;
 @property (nonatomic, weak) IBOutlet UITableView *tableView;
 @property (nonatomic, weak) IBOutlet UIView *footerView;
-
-- (IBAction)logout:(id)sender;
-- (IBAction)messageSwitch:(id)sender;
 
 @end
 
@@ -49,29 +43,6 @@
     [super viewWillAppear:animated];
     [MobClick event:@"SettingsViewController" label:@"onClick"];
 }
-
-- (void)uploadContact
-{
-    [[SHGGloble sharedGloble] getUserAddressList:^(BOOL finished) {
-        if(finished){
-            [[SHGGloble sharedGloble] uploadPhonesWithPhone:^(BOOL finish) {
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    if(finished){
-                        [Hud showMessageWithText:@"通讯录更新成功"];
-                    } else{
-                        [Hud showMessageWithText:@"上传通讯录列表失败"];
-                    }
-                });
-            }];
-        } else{
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [Hud showMessageWithLongText:@"获取通讯录列表失败，请到系统设置设置权限"];
-            });
-        }
-    }];
-}
-
-
 
 - (void)initArrContents
 {
@@ -118,7 +89,15 @@
     [array3 addObject:obj30];
     [array3 addObject:obj31];
 
-    self.arrValues = @[array0, array1, array2, array3];
+    self.arrValues = @[array0, array2, array3];
+
+    __weak typeof(self)weakSelf = self;
+    [[SHGGloble sharedGloble] checkForUpdate:^(BOOL state) {
+        if (state) {
+            weakSelf.arrValues = @[array0, array1, array2, array3];
+            [weakSelf.tableView reloadData];
+        }
+    }];
     
 }
 
@@ -140,7 +119,7 @@
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    UIView *sectionView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, MarginFactor(50.0f))];
+    UIView *sectionView = [[UIView alloc] init];
     sectionView.backgroundColor = RGB(240, 240, 240);
     return sectionView;
 }
@@ -152,15 +131,10 @@
     SHGSettingTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIndentity];
     if (cell == nil) {
         cell = [[[NSBundle mainBundle] loadNibNamed:@"SHGSettingTableViewCell" owner:self options:nil] lastObject];
-        cell.textLabel.font = FontFactor(15.0f);
-        cell.textLabel.textColor = [UIColor colorWithHexString:@"161616"];
-        cell.textLabel.backgroundColor = [UIColor clearColor];
     }
+    cell.accessoryView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"rightArrowImage"]];
     SettingsObj *obj = [[self.arrValues objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
-    cell.textLabel.text = obj.content;
-    cell.imageView.image = [UIImage imageNamed:obj.imageInfo];
-    cell.rightArrowView.hidden = NO;
-    cell.rightView.hidden = YES;
+    cell.titleLabel.text = obj.content;
 
     if (indexPath.row == ((NSArray *)[self.arrValues objectAtIndex:indexPath.section]).count - 1) {
         cell.lineView.hidden = YES;
@@ -168,28 +142,17 @@
         cell.lineView.hidden = NO;
     }
     if (obj.isShowSwith){
-        [cell.rightView removeAllSubviews];
-        [cell.rightView addSubview:self.switchView];
-        CGRect frame = self.switchView.frame;
-        frame.origin.x = (cell.rightView.width - CGRectGetWidth(frame)) / 2.0f;
-        frame.origin.y = (cell.rightView.height - CGRectGetHeight(frame)) / 2.0f;
-        self.switchView.frame = frame;
-        cell.rightArrowView.hidden = YES;
-        cell.rightView.hidden = NO;
+        cell.accessoryView = self.switchView;
     } else if ([obj.content isEqualToString:@"清除缓存"]){
-        [cell.rightView removeAllSubviews];
         UILabel *label = [[UILabel alloc] init];
         label.textAlignment = NSTextAlignmentRight;
         label.text = [NSString stringWithFormat:@"%0.1fM",[self folderSizeAtPath]];
         label.font = FontFactor(14.0f);
         label.textColor = [UIColor colorWithHexString:@"919291"];
         [label sizeToFit];
-        label.frame = cell.rightView.bounds;
-        [cell.rightView addSubview:label];
-        cell.rightArrowView.hidden = YES;
-        cell.rightView.hidden = NO;
+        cell.accessoryView = label;
     }
-     return cell;
+    return cell;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -205,35 +168,18 @@
     return MarginFactor(11.0f);
 }
 
-- (void)changeUpdateState
-{
-    hasUpdatedContacts = NO;
-}
-
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     self.curIndexPath = indexPath;
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     SettingsObj *object = [[self.arrValues objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
-    if ([object.content isEqualToString:@"更新好友"]) {
-        if (hasUpdatedContacts){
-            [Hud showMessageWithText:@"您刚刚更新过好友"];
-        } else{
-            DXAlertView *alert = [[DXAlertView alloc] initWithTitle:@"提示" contentText:@"更新好友将更新您一度人脉中手机通讯录，将有效拓展您的人脉。" leftButtonTitle:@"取消" rightButtonTitle:@"更新"];
-            __weak typeof(self) weakSelf = self;
-            alert.rightBlock = ^{
-                [weakSelf uploadContact];
-            };
-            alert.leftBlock = ^{
-                hasUpdatedContacts = NO;
-            };
-            [alert show];
-            hasUpdatedContacts = YES;
-            [self performSelector:@selector(changeUpdateState) withObject:nil afterDelay:60.0f];
-        }
+    if ([object.content isEqualToString:@"更新版本"]) {
+        [[SHGGloble sharedGloble] checkForUpdate:nil];
+        
     } else if ([object.content isEqualToString:@"密码修改"]){
         SettingModifyPWDViewController *detailVC = [[SettingModifyPWDViewController alloc] initWithNibName:@"SettingModifyPWDViewController" bundle:nil];
         [self.navigationController pushViewController:detailVC animated:YES];
+
     } else if ([object.content isEqualToString:@"清除缓存"]){
         DXAlertView *alert = [[DXAlertView alloc] initWithTitle:@"提示" contentText:@"是否确认清除本地缓存？" leftButtonTitle:@"取消" rightButtonTitle:@"确定"];
         __weak typeof(self) weakSelf = self;
@@ -246,6 +192,7 @@
             }];
         };
         [alert show];
+
     } else if([object.content isEqualToString:@"意见反馈"]){
         SettingsSuggestionsViewController *vc = [[SettingsSuggestionsViewController alloc] init];
         [self.navigationController pushViewController:vc animated:YES];
@@ -253,6 +200,7 @@
     } else if([object.content isEqualToString:@"关于我们"]){
         SettingAboutUsViewController *detailVC = [[SettingAboutUsViewController alloc] initWithNibName:@"SettingAboutUsViewController" bundle:nil];
         [self.navigationController pushViewController:detailVC animated:YES];
+
     } else if([object.content isEqualToString:@"个人信息"]){
         SHGModifyUserInfoViewController *controller = [[SHGModifyUserInfoViewController alloc] init];
         controller.userInfo = self.userInfo;
@@ -270,7 +218,6 @@
     DXAlertView *alert = [[DXAlertView alloc] initWithTitle:@"提示" contentText:@"是否退出该账号?" leftButtonTitle:@"取消" rightButtonTitle:@"确定"];
     alert.rightBlock = ^{
         [self performSelector:@selector(initUserInfo) withObject:nil afterDelay:0.25];
-        
     };
     [alert show];
     
@@ -287,12 +234,7 @@
                 LoginViewController *splitViewController =[[[LoginViewController alloc] init] initWithNibName:@"LoginViewController" bundle:nil];
                 BaseNavigationController *nav = [[BaseNavigationController alloc] initWithRootViewController:splitViewController];
                 //设置导航title字体
-                [[UINavigationBar appearance] setTitleTextAttributes:
-                 
-                 @{NSFontAttributeName:[UIFont systemFontOfSize:kNavBarTitleFontSize],
-                   
-                   NSForegroundColorAttributeName:NavRTitleColor}];
-                
+                [[UINavigationBar appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:kNavBarTitleFontSize], NSForegroundColorAttributeName:NavRTitleColor}];
                 //清楚配置信息
                 [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:KEY_UID];
                 [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:KEY_PASSWORD];

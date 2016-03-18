@@ -98,7 +98,6 @@
     SHGPersonalViewController *personController = [[SHGPersonalViewController alloc] init];
     personController.userId = self.userId;
     UIViewController *controller = [[SHGGloble sharedGloble] getCurrentRootViewController];
-//    [controller pushViewController:personController animated:YES];
     [self pushIntoViewController:controller newViewController:personController];
 }
 

@@ -438,39 +438,72 @@
 - (UIViewController *)getCurrentRootViewController
 {
     UIViewController *result;
-    // Try to find the root view controller programmically
-    // Find the top window (that is not an alert view or other window)
-
     UIWindow *topWindow = [[UIApplication sharedApplication] keyWindow];
-
-    if (topWindow.windowLevel != UIWindowLevelNormal)
-    {
-
+    if (topWindow.windowLevel != UIWindowLevelNormal){
         NSArray *windows = [[UIApplication sharedApplication] windows];
-
-        for(topWindow in windows)
-        {
+        for(topWindow in windows){
             if (topWindow.windowLevel == UIWindowLevelNormal)
                 break;
         }
     }
-
     UIView *rootView = [[topWindow subviews] objectAtIndex:0];
-
     id nextResponder = [rootView nextResponder];
-
-    if ([nextResponder isKindOfClass:[UIViewController class]])
-
+    if ([nextResponder isKindOfClass:[UIViewController class]]){
         result = nextResponder;
-
-    else if ([topWindow respondsToSelector:@selector(rootViewController)] && topWindow.rootViewController != nil)
-
+    } else if ([topWindow respondsToSelector:@selector(rootViewController)] && topWindow.rootViewController != nil){
         result = topWindow.rootViewController;
-
-    else
-
+    } else{
         NSAssert(NO, @"ShareKit: Could not find a root view controller.  You can assign one manually by calling [[SHK currentHelper] setRootViewController:YOURROOTVIEWCONTROLLER].");
-
+    }
     return result;
 }
+
+- (void)checkForUpdate:(void (^)(BOOL state))block
+{
+    NSString *request = [NSString stringWithFormat:@"%@%@",rBaseAddressForHttp,@"/version"];
+    [MOCHTTPRequestOperationManager getWithURL:request parameters:@{@"os":@"iOS"} success:^(MOCHTTPResponse *response) {
+        NSDictionary *dictionary = response.dataDictionary;
+        NSString *version = [dictionary objectForKey:@"version"];
+        BOOL force = [[dictionary objectForKey:@"force"] isEqualToString:@"Y"] ? YES : NO;
+        NSString *detail = [dictionary objectForKey:@"detail"];
+
+        NSString *localVersion = [[NSBundle mainBundle] infoDictionary][@"CFBundleShortVersionString"];
+        if ([localVersion compare:version options:NSNumericSearch] == NSOrderedAscending) {
+            if (block) {
+                block(YES);
+            } else{
+                DXAlertView *alert = nil;
+                UILabel *label = [[UILabel alloc] init];
+                label.text = detail;
+                label.numberOfLines = 0;
+                label.textColor = [UIColor colorWithRed:141.0/255.0 green:141.0/255.0 blue:141.0/255.0 alpha:1];
+                label.font = FontFactor(13.0f);
+                label.origin = CGPointMake(kLineViewLeftMargin, kCustomViewButtomMargin);
+                CGSize size = [label sizeThatFits:CGSizeMake(kAlertWidth - 2 * kLineViewLeftMargin, CGFLOAT_MAX)];
+                label.size = size;
+                if (!force){
+                    alert = [[DXAlertView alloc] initWithTitle:@"提示" customView:label leftButtonTitle:@"以后再说" rightButtonTitle:@"立即更新"];
+                } else{
+                    alert = [[DXAlertView alloc] initWithTitle:@"提示" customView:label leftButtonTitle:nil rightButtonTitle:@"立即更新"];
+                }
+                alert.rightBlock = ^{
+                    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://itunes.apple.com/cn/app/da-niu-quan-jin-rong-zheng/id984379568?mt=8"]];
+                };
+                alert.shouldDismiss = NO;
+                [alert customShow];
+            }
+        } else{
+            if (block) {
+                block(NO);
+            }
+        }
+
+    } failed:^(MOCHTTPResponse *response) {
+        if (block) {
+            block(NO);
+        }
+    }];
+}
+
+
 @end

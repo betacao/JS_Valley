@@ -22,7 +22,7 @@
 #import "SHGNewsTableViewCell.h"
 
 #define ImageBttomLineWidth 32
-@interface SHGNewsViewController ()<MLEmojiLabelDelegate,SHGNoticeDelegate>
+@interface SHGNewsViewController ()<MLEmojiLabelDelegate>
 {
      UIImageView *imageBttomLine;
      NSInteger width;

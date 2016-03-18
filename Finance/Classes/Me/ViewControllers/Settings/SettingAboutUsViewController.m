@@ -66,15 +66,15 @@
     .leftSpaceToView(self.view, 0.0f)
     .rightSpaceToView(self.view, 0.0f)
     .autoHeightRatio(0.0f);
-    
+
     self.companyLabel.sd_layout
     .leftSpaceToView(self.view, 0.0f)
     .rightSpaceToView(self.view, 0.0f)
     .bottomSpaceToView(self.timeLabel, MarginFactor(7.0f))
     .autoHeightRatio(0.0f);
-    
 
-     self.lblVersion.text = [NSString stringWithFormat:@"V%@",[[NSBundle mainBundle] infoDictionary][@"CFBundleShortVersionString"]];
+
+    self.lblVersion.text = [NSString stringWithFormat:@"V%@",[[NSBundle mainBundle] infoDictionary][@"CFBundleShortVersionString"]];
     [self.lblVersion sizeToFit];
     self.companyLabel.text = @"江苏生活谷信息科技有限责任公司";
     [self.companyLabel sizeToFit];

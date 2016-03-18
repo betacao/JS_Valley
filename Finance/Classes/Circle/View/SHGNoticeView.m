@@ -132,11 +132,4 @@
     self.uid = uid;
 }
 
-- (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
-{
-    if(self.delegate && [self.delegate respondsToSelector:@selector(didClickNoticeViewWithUid:)]){
-        [self.delegate didClickNoticeViewWithUid:self.uid];
-    }
-}
-
 @end

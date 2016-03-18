@@ -16,10 +16,20 @@
 
 - (void)awakeFromNib
 {
+    self.titleLabel.font = FontFactor(15.0f);
+    self.titleLabel.textColor = [UIColor colorWithHexString:@"161616"];
+    self.titleLabel.backgroundColor = [UIColor clearColor];
+
+    self.titleLabel.sd_layout
+    .leftSpaceToView(self.contentView, MarginFactor(19.0f))
+    .centerYEqualToView(self.contentView)
+    .autoHeightRatio(0.0f);
+    [self.titleLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
+
     self.lineView.sd_layout
-    .leftEqualToView(self.textLabel)
-    .rightSpaceToView(self.contentView, 0.0f)
-    .bottomSpaceToView(self.contentView, 1.0f)
+    .leftEqualToView(self.titleLabel)
+    .widthIs(SCREENWIDTH - MarginFactor(19.0f))
+    .bottomSpaceToView(self.contentView, 0.5f)
     .heightIs(0.5f);
 }
 

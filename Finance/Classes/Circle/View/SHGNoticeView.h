@@ -14,16 +14,8 @@ typedef NS_ENUM(NSInteger, SHGNoticeType)
     SHGNoticeTypeNewMessage = 1
 };
 
-@protocol SHGNoticeDelegate <NSObject>
-
-@optional
-- (void)didClickNoticeViewWithUid:(NSString *)uid;
-
-@end
-
 @interface SHGNoticeView : UIView
 
-@property (assign, nonatomic) id<SHGNoticeDelegate> delegate;
 @property (weak, nonatomic) UIView *superView;
 - (void)loadUserUid:(NSString *)uid;
 - (void)showWithText:(NSString *)string;

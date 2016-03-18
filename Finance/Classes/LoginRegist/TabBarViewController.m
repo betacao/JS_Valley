@@ -59,13 +59,6 @@
     return tabBar;
 }
 
-- (instancetype)init
-{
-    if (self = [super init]){
-    }
-    return self;
-}
-
 -(void)viewDidLoad
 {
     [super viewDidLoad];
@@ -86,7 +79,9 @@
 
     } onQueue:queue];
 
-    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.2f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [[SHGGloble sharedGloble] checkForUpdate:nil];
+    });
     [self initSubpage];
 }
 

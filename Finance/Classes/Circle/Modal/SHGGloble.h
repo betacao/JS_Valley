@@ -174,10 +174,23 @@ typedef void (^SHHomeDataCompletionBlock)(NSArray *allList, NSArray *normalList,
 
 - (void)registerToken:(NSDictionary *)param block:(void(^)(BOOL success, MOCHTTPResponse *response))block;
 
+
 /**
- @breief  获取当前的界面
+ @brief  获取当前的界面
+
+ @return 获取当前的界面
 
  @since 1.8
  */
 - (UIViewController *)getCurrentRootViewController;
+
+/**
+ @brief  检查更新并提示
+
+ @param state 是否有新版本
+ @param block 有新版本的操作
+
+ @since 1.8
+ */
+- (void)checkForUpdate:(void(^)(BOOL state))block;;
 @end

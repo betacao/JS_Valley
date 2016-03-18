@@ -114,38 +114,46 @@
 
 - (void)initView
 {
-    self.viewHeader.clipsToBounds = YES;
     self.listTable.tableFooterView = [[UIView alloc] init];
     self.listTable.backgroundColor = [UIColor whiteColor];
+
     self.nickName.font = kMainNameFont;
     self.nickName.textColor = kMainNameColor;
+
     self.lblCompanyName.font = kMainCompanyFont;
     self.lblCompanyName.textColor = kMainCompanyColor;
+
     self.lbldepartName.font = kMainCompanyFont;
     self.lbldepartName.textColor = kMainCompanyColor;
+
     self.lblTime.font = kMainTimeFont;
     self.lblTime.textColor = kMainNameColor;
+
     [self.btnComment setTitleColor:kMainActionColor forState:UIControlStateNormal];
     self.btnComment.titleEdgeInsets = UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, -10.0f);
     self.btnComment.titleLabel.font = kMainActionFont;
+
     [self.btnShare setTitleColor:kMainActionColor forState:UIControlStateNormal];
     self.btnShare.titleLabel.font = kMainActionFont;
+
     [self.btnPraise setTitleColor:kMainActionColor forState:UIControlStateNormal];
     self.btnPraise.titleLabel.font = kMainActionFont;
+
     self.lblContent.textColor = kMainContentColor;
     self.lblContent.font = kMainContentFont;
     self.lblContent.numberOfLines = 0;
     self.lblContent.lineBreakMode = NSLineBreakByWordWrapping;
     self.lblContent.delegate = self;
     self.lblContent.backgroundColor = [UIColor clearColor];
+
     self.btnSend.titleLabel.font = FontFactor(15.0f);
-    self.faSongBtn.titleLabel.font = FontFactor(16.0f);
     self.btnSend.layer.masksToBounds = YES;
-    self.btnSend.layer.cornerRadius = 4;
+    self.btnSend.layer.cornerRadius = 3.0f;
+
+    self.faSongBtn.titleLabel.font = FontFactor(16.0f);
+
     self.lineView.backgroundColor = [UIColor colorWithHexString:@"e6e7e8"];
-    DDTapGestureRecognizer *hdGes = [[DDTapGestureRecognizer alloc] initWithTarget:self action:@selector(didTapHeaderView:)];
-    [self.imageHeader addGestureRecognizer:hdGes];
-    self.imageHeader.userInteractionEnabled = YES;
+
     UIImage *image = self.backImageView.image;
     image = [image resizableImageWithCapInsets:UIEdgeInsetsMake(15.0f, 35.0f, 9.0f, 11.0f) resizingMode:UIImageResizingModeStretch];
     self.backImageView.image = image;
@@ -317,6 +325,9 @@
     .rightSpaceToView(self.viewPraise, 0.0f)
     .bottomSpaceToView(self.viewPraise,0.0f)
     .heightIs(1.0f);
+
+    self.viewHeader.hidden = YES;
+
     [self.viewHeader setupAutoHeightWithBottomView:self.viewPraise bottomMargin:0.0f];
     self.listTable.tableHeaderView = self.viewHeader;
     
@@ -513,6 +524,7 @@
     } else{
         [self.scrollPraise removeAllSubviews];
     }
+    
     self.actionView.sd_resetLayout
     .leftEqualToView(self.imageHeader)
     .rightEqualToView(self.btnAttention)
@@ -524,23 +536,18 @@
     .rightSpaceToView(self.viewHeader, MarginFactor(12.0f))
     .topSpaceToView(self.actionView, 0.0f)
     .heightIs(MarginFactor(56.0f));
-    
+
+    self.viewHeader.hidden = NO;
     [self.viewHeader layoutSubviews];
     self.listTable.tableHeaderView = self.viewHeader;
+
     [self.listTable reloadData];
 }
 
--(void)cnickClick:(NSInteger)index
+- (void)cnickClick:(NSInteger)index
 {
     commentOBj *obj = self.obj.comments[index];
     [self gotoSomeOneWithId:obj.cid name:obj.cnickname];
-    
-}
-
--(void)pushSome:(DDTapGestureRecognizer *)ges
-{
-    praiseOBj *obj = self.obj.heads[ges.tag-1000];
-    [self gotoSomeOneWithId:obj.puserid name:obj.pnickname];
     
 }
 

@@ -10,8 +10,7 @@
 
 @interface SHGSettingTableViewCell : UITableViewCell
 
-@property (weak, nonatomic) IBOutlet UIImageView *rightArrowView;
-@property (weak, nonatomic) IBOutlet UIView *rightView;
 @property (weak, nonatomic) IBOutlet UIView *lineView;
+@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 
 @end
