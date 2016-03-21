@@ -87,16 +87,22 @@
 {
     _model = model;
     self.titleLabel.text = model.text;
-
-}
-
-- (void)setupNeedShowAccessorView:(BOOL)hidden
-{
-    self.rightArrowView.hidden = hidden;
+    self.lineView.hidden = model.lineViewHidden;
+    self.rightArrowView.hidden = model.accessoryViewHidden;
 }
 
 @end
 
 @implementation SHGGlobleModel
+
+- (instancetype)initWithText:(NSString *)text lineViewHidden:(BOOL)lineViewHidden
+{
+    self = [super init];
+    if (self) {
+        self.text = text;
+        self.lineViewHidden = lineViewHidden;
+    }
+    return self;
+}
 
 @end

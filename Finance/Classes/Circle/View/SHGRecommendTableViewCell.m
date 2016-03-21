@@ -138,7 +138,7 @@
         } else if ([flag isEqualToString:@"gradecity"]){
             detailString = @"gradecity";
         }
-        detailLabel.text = detailString;
+        detailLabel.text = [detailString stringByReplacingOccurrencesOfString:@"\n" withString:@""];
 
         if(!object.isFocus){
             [button setImage:[UIImage imageNamed:@"newAddAttention"] forState:UIControlStateNormal];

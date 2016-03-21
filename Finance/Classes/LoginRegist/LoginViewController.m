@@ -266,7 +266,7 @@
             if  ([error errorCode] == -6004){ //跳转网页版
                 [Hud showMessageWithText:@"请先安装客户端"];
             } else if ([error errorCode] == -22003){
-                [Hud showMessageWithLongText:@"当前您未安装微信，请使用手机号，QQ或微博登录"];
+//                [Hud showMessageWithLongText:@"当前您未安装微信，请使用手机号，QQ或微博登录"];
             }
             NSLog(@"登陆失败,错误码:%ld,错误描述:%@", (long)[error errorCode], [error errorDescription]);
         }

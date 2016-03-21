@@ -67,7 +67,7 @@
     NSString *request = [rBaseAddressForHttp stringByAppendingString:@"/meetingactivity/saveMeetingActivity"];
     [MOCHTTPRequestOperationManager postWithURL:request parameters:param success:^(MOCHTTPResponse *response) {
         [Hud hideHud];
-        [Hud showMessageWithLongText:@"提交成功，大牛圈会在一个工作日内完成审核！"];
+//        [Hud showMessageWithLongText:@"提交成功，大牛圈会在一个工作日内完成审核！"];
         if (block) {
             block(YES);
         }
@@ -89,7 +89,7 @@
             DXAlertView *alert = [[DXAlertView alloc] initWithTitle:@"提示" contentText:@"您当前有活动正在审核中，请等待审核后再提交，谢谢。" leftButtonTitle:nil rightButtonTitle:@"确定"];
             [alert show];
         } else{
-            [Hud showMessageWithLongText:@"提交成功，大牛圈会在一个工作日内完成审核！"];
+//            [Hud showMessageWithLongText:@"提交成功，大牛圈会在一个工作日内完成审核！"];
             if (block) {
                 block(YES);
             }

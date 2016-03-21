@@ -9,119 +9,55 @@
 #import "Hud.h"
 #import "AppDelegate.h"
 #import "VerifyIdentityViewController.h"
+#import "SHGProgressHUD.h"
+
+#define kTagWaitView 10099
+
 @implementation Hud
 
 +(void)showMessageWithText:(NSString *)text
 {
+    UILabel *label = [[UILabel alloc] init];
+    label.text = text;
+    label.textColor = [UIColor whiteColor];
+    label.textAlignment = NSTextAlignmentCenter;
+    label.font = FontFactor(15.0f);
+    label.backgroundColor = [UIColor clearColor];
+    label.numberOfLines = 0;
+    [label sizeToFit];
+
     UIView *view = [AppDelegate currentAppdelegate].window;
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:view animated:YES];
-    hud.yOffset = -50;
 
-    [view bringSubviewToFront:hud];
-    hud.mode = MBProgressHUDModeText;
-    hud.labelText = text;
-    hud.removeFromSuperViewOnHide = YES;
-    [hud hide:YES afterDelay:1.2];
-}
-
-+ (void)showMessageWithLongText:(NSString *)text
-{
-    UIView *view = [AppDelegate currentAppdelegate].window;
-    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:view animated:YES];
-    hud.yOffset = -50;
-    
-    [view bringSubviewToFront:hud];
-    hud.mode = MBProgressHUDModeText;
-    hud.labelText = text;
-    [hud adjustFontToWidth];
-    hud.removeFromSuperViewOnHide = YES;
-    [hud hide:YES afterDelay:1.2];
-}
-
-+ (void)showMessageWithCustomView:(UIView *)customView
-{
-    UIView *view = [AppDelegate currentAppdelegate].window;
-    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:view animated:YES];
-    hud.yOffset = -50;
-    
     [view bringSubviewToFront:hud];
     hud.mode = MBProgressHUDModeCustomView;
-    hud.customView = customView;
+    hud.customView = label;
     hud.removeFromSuperViewOnHide = YES;
+    hud.opacity = 0.85f;
+    hud.margin = MarginFactor(18.0f);
     [hud hide:YES afterDelay:1.2];
+
 }
 
-+ (void)showLoadingWithMessage:(NSString *)message{
-    
-    BOOL hasShow = NO;
-    UIView *superView = [AppDelegate currentAppdelegate].window;
-    
-    for (UIView *subView in superView.subviews) {
-        if ([subView isKindOfClass:[MBProgressHUD class]]) {
-            hasShow = YES;
-        }
-    }
-    if (!hasShow) {
-        if ([NSThread currentThread].isMainThread)
-        {
-       
-            if ([[AppDelegate currentAppdelegate].window.rootViewController isKindOfClass:[UINavigationController class]])
-            {
-                UINavigationController *nav = (UINavigationController *)[AppDelegate currentAppdelegate].window.rootViewController;
-                UIViewController *topView = [nav.viewControllers lastObject];
-                MBProgressHUD  *HUD = [[MBProgressHUD alloc] initWithView:topView.view];
-                HUD.yOffset = -50;
-
-                [topView.view addSubview:HUD];
-                HUD.mode = MBProgressHUDModeIndeterminate;
-                HUD.labelText = message;
-                // [HUD showWhileExecuting:selector onTarget:target withObject:nil animated:YES];
-                [HUD show:YES];
-            }
-         
-            
-        }else{
-            [self performSelectorOnMainThread:@selector(showHudWithMessage:) withObject:message waitUntilDone:YES];
-        }
-        
-    }
-    
- 
-}
--(void)showHudWithMessage:(NSString *)message
++ (void)showLoadingWithMessage:(NSString *)message
 {
-    if ([[AppDelegate currentAppdelegate].window.rootViewController isKindOfClass:[UINavigationController class]])
-    {
-        UINavigationController *nav = (UINavigationController *)[AppDelegate currentAppdelegate].window.rootViewController;
-        UIViewController *topView = [nav.viewControllers lastObject];
-        MBProgressHUD  *HUD = [[MBProgressHUD alloc] initWithView:topView.view];
-        HUD.yOffset = -50;
-
-        [topView.view addSubview:HUD];
-        HUD.mode = MBProgressHUDModeIndeterminate;
-        HUD.labelText = message;
-        // [HUD showWhileExecuting:selector onTarget:target withObject:nil animated:YES];
-        [HUD show:YES];
+    UIView *view = [AppDelegate currentAppdelegate].window;
+    SHGProgressHUD *hud = (SHGProgressHUD *)[view viewWithTag:kTagWaitView];
+    if(!hud) {
+        hud = [[SHGProgressHUD alloc] initWithFrame:view.bounds];
     }
+    [hud setTag: kTagWaitView];
+    [view addSubview:hud];
+    [view bringSubviewToFront:hud];
 }
+
 + (void)hideHud
 {
-    if ([NSThread currentThread].isMainThread) {
-        [self hidesHud];
-    }else{
-        [self performSelectorOnMainThread:@selector(hidesHud) withObject:nil waitUntilDone:NO];
-    }
-}
-+ (void)hidesHud
-{
-    if ([[AppDelegate currentAppdelegate].window.rootViewController isKindOfClass:[UINavigationController class]]){
-        UINavigationController *nav = (UINavigationController *)[AppDelegate currentAppdelegate].window.rootViewController;
-        UIViewController *topView = [nav.viewControllers lastObject];
-        for (UIView *subView in topView.view.subviews) {
-            if ([subView isKindOfClass:[MBProgressHUD class]]) {
-                [subView removeFromSuperview];
-            }
-        }
+    UIView *view = [AppDelegate currentAppdelegate].window;
+    SHGProgressHUD *hud = (SHGProgressHUD *)[view viewWithTag:kTagWaitView];
+    if(hud) {
+        [hud stopAnimation];
+        [hud removeFromSuperview];
     }
 }
 

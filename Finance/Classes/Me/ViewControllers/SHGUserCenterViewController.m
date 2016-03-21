@@ -62,11 +62,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
-    NSArray *array0 = @[@"邀请好友加入大牛圈",@"更新通讯录到大牛圈"];
-    NSArray *array1 = @[@"我的业务"];
-    NSArray *array2 = @[@"业务收藏",@"动态收藏",@"名片收藏"];
-    NSArray *array3 = @[@"设置"];
-    
+    NSArray *array0 = @[[[SHGGlobleModel alloc] initWithText:@"邀请好友加入大牛圈" lineViewHidden:NO], [[SHGGlobleModel alloc] initWithText:@"更新通讯录到大牛圈" lineViewHidden:YES]];
+    NSArray *array1 = @[[[SHGGlobleModel alloc] initWithText:@"我的业务" lineViewHidden:YES]];
+    NSArray *array2 = @[[[SHGGlobleModel alloc] initWithText:@"业务收藏" lineViewHidden:NO], [[SHGGlobleModel alloc] initWithText:@"动态收藏" lineViewHidden:NO], [[SHGGlobleModel alloc] initWithText:@"名片收藏" lineViewHidden:YES]];
+    NSArray *array3 = @[[[SHGGlobleModel alloc] initWithText:@"设置" lineViewHidden:YES]];
     self.titleArray = @[array0, array1, array2, array3];
     
     [self addHeaderRefresh:self.tableView headerRefesh:YES andFooter:NO];
@@ -223,20 +222,6 @@
         [_titleLabel sizeToFit];
     }
     return _titleLabel;
-}
-
-- (UIBarButtonItem *)rightBarButtonItem
-{
-    if (!_rightBarButtonItem) {
-
-        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-        //[button addTarget:self action:@selector(actionInvite:) forControlEvents:UIControlEventTouchUpInside];
-        [button setTitle:@"" forState:UIControlStateNormal];
-        button.titleLabel.font = FontFactor(15.0f);
-        [button sizeToFit];
-        _rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:button];
-    }
-    return _rightBarButtonItem;
 }
 
 - (UITableView *)tableView
@@ -437,19 +422,6 @@
     }
     return _bottomView;
 }
-
-//- (NSMutableArray *)modelsArray
-//{
-//    if (!_modelsArray) {
-//        _modelsArray = [NSMutableArray array];
-//        for (NSInteger i = 0; i < 6; i++) {
-//            SHGGlobleModel *model = [[SHGGlobleModel alloc] init];
-//            model.text = [self.titleArray objectAtIndex:i];
-//            [_modelsArray addObject:model];
-//        }
-//    }
-//    return _modelsArray;
-//}
 
 - (void)refreshHeader
 {
@@ -741,16 +713,14 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [[self.titleArray objectAtIndex:section]  count];
+    return [[self.titleArray objectAtIndex:section] count];
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-   
-        UIView *sectionView = [[UIView alloc]initWithFrame:CGRectMake(0.0f, 0.0f, SCREENWIDTH, MarginFactor(11.0f))];
-        sectionView.backgroundColor = [UIColor colorWithHexString:@"edeeef"];
-        return sectionView;
-    
+    UIView *sectionView = [[UIView alloc] init];
+    sectionView.backgroundColor = [UIColor colorWithHexString:@"edeeef"];
+    return sectionView;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
@@ -775,10 +745,8 @@
 
     if (cell == nil){
         cell = [[SHGGlobleTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-        [cell setupNeedShowAccessorView:NO];
     }
-    SHGGlobleModel *model = [[SHGGlobleModel alloc] init];
-    model.text = [[self.titleArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
+    SHGGlobleModel *model = [[self.titleArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
     cell.model = model;
     return cell;
 }
@@ -788,9 +756,7 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if (indexPath.section == 0) {
         if (indexPath.row == 0) {
-            
             [self actionInvite];
-            
         } else{
             if (self.hasUpdatedContacts){
                 [Hud showMessageWithText:@"您刚刚更新过好友"];
@@ -843,7 +809,6 @@
         }
 
     }
-    
 }
 
 - (void)changeUpdateState
@@ -867,7 +832,7 @@
             }];
         } else{
             dispatch_async(dispatch_get_main_queue(), ^{
-                [Hud showMessageWithLongText:@"获取通讯录列表失败，请到系统设置设置权限"];
+                [Hud showMessageWithText:@"获取通讯录列表失败，请到系统设置设置权限"];
             });
         }
     }];

@@ -892,6 +892,7 @@
 		F9B0636B1BD7699400471DF4 /* SHGNavigationView.m in Sources */ = {isa = PBXBuildFile; fileRef = F9B0636A1BD7699400471DF4 /* SHGNavigationView.m */; };
 		F9B18C081BA0521600EA0314 /* SHGNoticeView.m in Sources */ = {isa = PBXBuildFile; fileRef = F9B18C071BA0521600EA0314 /* SHGNoticeView.m */; };
 		F9B7CC321B8AD6C000E55EFD /* SHGGloble.m in Sources */ = {isa = PBXBuildFile; fileRef = F9B7CC311B8AD6C000E55EFD /* SHGGloble.m */; };
+		F9C41F901C9FBB0400962A49 /* SHGProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = F9C41F8F1C9FBB0400962A49 /* SHGProgressHUD.m */; };
 		F9D296D61C8F02F100A1446C /* SHGMainPageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F9D296D41C8F02F100A1446C /* SHGMainPageTableViewCell.m */; };
 		F9D296D71C8F02F100A1446C /* SHGMainPageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9D296D51C8F02F100A1446C /* SHGMainPageTableViewCell.xib */; };
 		F9D296DC1C8FCB9C00A1446C /* SHGExtendTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F9D296DA1C8FCB9C00A1446C /* SHGExtendTableViewCell.m */; };
@@ -2184,6 +2185,8 @@
 		F9B18C071BA0521600EA0314 /* SHGNoticeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGNoticeView.m; sourceTree = "<group>"; };
 		F9B7CC301B8AD6C000E55EFD /* SHGGloble.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGGloble.h; sourceTree = "<group>"; };
 		F9B7CC311B8AD6C000E55EFD /* SHGGloble.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGGloble.m; sourceTree = "<group>"; };
+		F9C41F8E1C9FBB0400962A49 /* SHGProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGProgressHUD.h; sourceTree = "<group>"; };
+		F9C41F8F1C9FBB0400962A49 /* SHGProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGProgressHUD.m; sourceTree = "<group>"; };
 		F9D296D31C8F02F100A1446C /* SHGMainPageTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGMainPageTableViewCell.h; sourceTree = "<group>"; };
 		F9D296D41C8F02F100A1446C /* SHGMainPageTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGMainPageTableViewCell.m; sourceTree = "<group>"; };
 		F9D296D51C8F02F100A1446C /* SHGMainPageTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGMainPageTableViewCell.xib; sourceTree = "<group>"; };
@@ -3194,6 +3197,8 @@
 			children = (
 				614EFEDD1AEF8F7300F2BDD1 /* Hud.h */,
 				614EFEDE1AEF8F7300F2BDD1 /* Hud.m */,
+				F9C41F8E1C9FBB0400962A49 /* SHGProgressHUD.h */,
+				F9C41F8F1C9FBB0400962A49 /* SHGProgressHUD.m */,
 			);
 			path = Hud;
 			sourceTree = "<group>";
@@ -5750,6 +5755,7 @@
 				613CAC511AFFFFDE00EA8C23 /* CircleLinkViewController.m in Sources */,
 				615234781B0D8A6400011EAC /* DiscoverViewController.m in Sources */,
 				5331DF311AFC21BF00E035B8 /* MessageTableViewCell.m in Sources */,
+				F9C41F901C9FBB0400962A49 /* SHGProgressHUD.m in Sources */,
 				F93FCBC51C856D5A004E356E /* NSString+Check.m in Sources */,
 				F9F349DB1C199E730090F111 /* SHGComBoxView.m in Sources */,
 				6145FF181AE4A3450074AB49 /* CircleDetailViewController.m in Sources */,

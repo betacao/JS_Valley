@@ -9,9 +9,10 @@
 #import <Foundation/Foundation.h>
 
 @interface Hud : NSObject
+
 + (void)showLoadingWithMessage:(NSString *)message;
-+ (void)showMessageWithText:(NSString *)text;
-+ (void)showMessageWithLongText:(NSString *)text;
-+ (void)showMessageWithCustomView:(UIView *)customView;
 + (void)hideHud;
+
++ (void)showMessageWithText:(NSString *)text;
+
 @end

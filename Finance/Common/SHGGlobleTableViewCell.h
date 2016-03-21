@@ -13,12 +13,12 @@
 
 @property (strong, nonatomic) SHGGlobleModel *model;
 
-- (void)setupNeedShowAccessorView:(BOOL)hidden;
-
 @end
 
 @interface SHGGlobleModel : NSObject
+- (instancetype)initWithText:(NSString *)text lineViewHidden:(BOOL)lineViewHidden;
 
 @property (strong, nonatomic) NSString *text;
-
+@property (assign, nonatomic) BOOL lineViewHidden;
+@property (assign, nonatomic) BOOL accessoryViewHidden;
 @end

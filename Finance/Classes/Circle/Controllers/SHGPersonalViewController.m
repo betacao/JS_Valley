@@ -344,15 +344,7 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
         [self action];
     } else if ([self.relationShip integerValue] == 1){
         [Hud hideHud];
-        UILabel *label = [[UILabel alloc] init];
-        label.text = @"您与对方还不是好友,对方关注您后\n可进行对话";
-        label.textColor = [UIColor whiteColor];
-        label.textAlignment = NSTextAlignmentCenter;
-        label.font = FontFactor(15.0f);
-        label.backgroundColor = [UIColor clearColor];
-        label.numberOfLines = 0;
-        [label sizeToFit];
-        [Hud showMessageWithCustomView:label];
+        [Hud showMessageWithText:@"您与对方还不是好友,对方关注您后\n可进行对话"];
     } else{
         [self chat];
     }

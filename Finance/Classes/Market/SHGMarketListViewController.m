@@ -50,8 +50,13 @@
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     [self addHeaderRefresh:self.tableView headerRefesh:YES andFooter:YES];
-    [self initAddMarketImageView];
     [self loadData];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [self initAddMarketImageView];
 }
 
 - (void)loadData

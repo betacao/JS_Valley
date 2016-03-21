@@ -135,7 +135,6 @@
     } else if (item.tag == 4000){
         self.navigationItem.titleView = self.meViewController.titleLabel;
         self.navigationItem.leftBarButtonItem = nil;
-        self.navigationItem.rightBarButtonItems = @[self.meViewController.rightBarButtonItem];
         [MobClick event:@"MeViewController" label:@"onClick"];
     }
 }
