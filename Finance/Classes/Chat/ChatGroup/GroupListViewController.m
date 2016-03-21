@@ -70,19 +70,19 @@
 
         SHGGroupHeaderObject *object0 = [[SHGGroupHeaderObject alloc] init];
         object0.image = [UIImage imageNamed:@"message_arrowRight"];
-        object0.text = @"推荐群组(%ld)";
+        object0.text = @"推荐群组 (%ld)";
 
         SHGGroupHeaderObject *object1 = [[SHGGroupHeaderObject alloc] init];
         object1.image = [UIImage imageNamed:@"message_arrowRight"];
-        object1.text = @"推荐群组(%ld)";
+        object1.text = @"推荐群组 (%ld)";
 
         SHGGroupHeaderObject *object2 = [[SHGGroupHeaderObject alloc] init];
         object2.image = [UIImage imageNamed:@"message_arrowRight"];
-        object2.text = @"我创建的群组(%ld)";
+        object2.text = @"我创建的群组 (%ld)";
 
         SHGGroupHeaderObject *object3 = [[SHGGroupHeaderObject alloc] init];
         object3.image = [UIImage imageNamed:@"message_arrowRight"];
-        object3.text = @"我加入的群组(%ld)";
+        object3.text = @"我加入的群组 (%ld)";
 
         _titleArray = @[object0, object1, object2, object3];
     }

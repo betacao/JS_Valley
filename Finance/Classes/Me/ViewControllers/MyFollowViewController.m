@@ -264,12 +264,6 @@
         cell = [[[NSBundle mainBundle] loadNibNamed:@"BasePeopleTableViewCell" owner:self options:nil] lastObject];
         cell.delegate = self;
     }
-
-//	BasePeopleTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"BasePeopleTableViewCell"];
-//	if (!cell) {
-//        cell = [[BasePeopleTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"BasePeopleTableViewCell"];
-//	}
-//    cell.delegate = self;
     BasePeopleObject *obj = self.dataSource[indexPath.row];
     cell.object = obj;
    	

@@ -466,10 +466,12 @@
         [SHGMarketManager deleteMarket:object success:^(BOOL success) {
             //我的业务被移动到个人中心后 要刷新
             for (UIViewController *controller in self.navigationController.viewControllers) {
-                if ([NSStringFromClass([controller class]) isEqualToString:@"SHGMarketMineViewController"] || [NSStringFromClass([controller class]) isEqualToString:@"SHGMarketListViewController"]) {
+                if ([NSStringFromClass([controller class]) isEqualToString:@"SHGMarketMineViewController"]) {
                     [controller performSelector:@selector(refreshData) withObject:object];
                 }
             }
+            UIViewController *controller = [self.viewControllers firstObject];
+            [controller performSelector:@selector(refreshData) withObject:object];
         }];
     };
     [alertView show];
