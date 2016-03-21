@@ -34,7 +34,7 @@
 
 - (void)requestDataWithTarget:(NSString *)target time:(NSString *)time
 {
-    [Hud showLoadingWithMessage:@"加载中"];
+    [Hud showWait];
 
     __weak typeof(self) weakSelf = self;
     NSDictionary *param = @{@"uid":UID, @"target":target, @"rid":[NSNumber numberWithInt:[time intValue]], @"num":rRequestNum};
@@ -353,7 +353,7 @@
 #pragma mark ------ 关注
 - (void)attentionClicked:(CircleListObj *)obj
 {
-    [Hud showLoadingWithMessage:@"请稍等..."];
+    [Hud showWait];
     __weak typeof (self) weakSelf = self;
     NSString *url = [NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"friends"];
     NSDictionary *param = @{@"uid":[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID], @"oid":obj.userid};
@@ -459,7 +459,7 @@
     NSDictionary *param = @{@"uid":[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID],@"rid":obj.rid};
 
     if (![obj.ispraise isEqualToString:@"Y"]) {
-        [Hud showLoadingWithMessage:@"正在点赞"];
+        [Hud showWait];
         [MOCHTTPRequestOperationManager postWithURL:url class:nil parameters:param success:^(MOCHTTPResponse *response) {
             NSLog(@"%@",response.data);
             NSString *code = [response.data valueForKey:@"code"];
@@ -478,7 +478,7 @@
             [Hud hideHud];
         }];
     } else{
-        [Hud showLoadingWithMessage:@"正在取消点赞"];
+        [Hud showWait];
         [[AFHTTPSessionManager manager] DELETE:url parameters:param success:^(NSURLSessionDataTask *operation, id responseObject) {
             NSLog(@"%@",responseObject);
             NSString *code = [responseObject valueForKey:@"code"];

@@ -577,7 +577,7 @@
     // 判断是否可以发送短信
     BOOL canSendSMS = [MFMessageComposeViewController canSendText];
     if (canSendSMS){
-        [Hud showLoadingWithMessage:@"请稍等..."];
+        [Hud showWait];
         MFMessageComposeViewController *smsPicker = [[MFMessageComposeViewController alloc] init];
         smsPicker.messageComposeDelegate = self;
         NSString *shareBody = text;

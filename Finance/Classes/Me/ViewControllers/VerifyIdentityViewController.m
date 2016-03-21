@@ -224,7 +224,7 @@
 	}
     if (self.identifyImage) {
         __weak typeof(self) weakSelf = self;
-        [Hud showLoadingWithMessage:@"正在上传图片..."];
+        [Hud showWait];
         [[AFHTTPSessionManager manager] POST:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"image/base"] parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
             NSData *imageData = UIImageJPEGRepresentation(self.identifyImage, 0.1);
             [formData appendPartWithFileData:imageData name:@"haha.jpg" fileName:@"haha.jpg" mimeType:@"image/jpeg"];

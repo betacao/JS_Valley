@@ -180,7 +180,7 @@
             [Hud showMessageWithText:[response.data objectForKey:@"msg"]];
         }
     } failed:^(MOCHTTPResponse *response) {
-        [Hud showLoadingWithMessage:response.errorMessage];
+        [Hud showMessageWithText:response.errorMessage];
     }];
 
 }

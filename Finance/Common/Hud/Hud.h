@@ -10,7 +10,7 @@
 
 @interface Hud : NSObject
 
-+ (void)showLoadingWithMessage:(NSString *)message;
++ (void)showWait;
 + (void)hideHud;
 
 + (void)showMessageWithText:(NSString *)text;

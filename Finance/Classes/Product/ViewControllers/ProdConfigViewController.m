@@ -203,10 +203,11 @@
         }
     }
 }
--(void)go
+
+- (void)go
 {
     NSString *url = [NSString stringWithFormat:@"%@/%@",rBaseAddressForHttpProd,@"appointment"];
-    [Hud showLoadingWithMessage:@"正在预约......"];
+    [Hud showWait];
     NSDictionary *param = @{@"uid":[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID], @"pid":_obj.pid};
     [MOCHTTPRequestOperationManager postWithURL:url class:nil parameters:param success:^(MOCHTTPResponse *response) {
         [Hud hideHud];

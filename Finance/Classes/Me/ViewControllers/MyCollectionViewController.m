@@ -74,7 +74,7 @@
     [self addHeaderRefresh:self.tableView headerRefesh:YES andFooter:YES];
     self.tableView.backgroundColor = [UIColor colorWithHexString:@"efefef"];
     [CommonMethod setExtraCellLineHidden:self.tableView];
-    [Hud showLoadingWithMessage:@"加载中"];
+    [Hud showWait];
 	[self requestPostListWithTarget:@"first" time:@"0"];
 
 }
@@ -160,7 +160,7 @@
             [btn setTitleColor:[UIColor colorWithHexString:@"D82626"] forState:UIControlStateNormal];
              btn.titleLabel.font = [UIFont systemFontOfSize:14];
             [self.tableView reloadData];
-            [Hud showLoadingWithMessage:@"加载中"];
+            [Hud showWait];
             [self requestPostListWithTarget:@"first" time:@"-1"];
         }
             break;
@@ -178,7 +178,7 @@
             [btn setTitleColor:[UIColor colorWithHexString:@"D82626"] forState:UIControlStateNormal];
              btn.titleLabel.font = [UIFont systemFontOfSize:14];
             [self.tableView reloadData];
-            [Hud showLoadingWithMessage:@"加载中"];
+            [Hud showWait];
             [self requestProductListWithTarget:@"first" time:@""];
             
         }
@@ -197,7 +197,7 @@
             [btn setTitleColor:[UIColor colorWithHexString:@"D82626"] forState:UIControlStateNormal];
              btn.titleLabel.font = [UIFont systemFontOfSize:14];
             [self.tableView reloadData];
-            [Hud showLoadingWithMessage:@"加载中"];
+            [Hud showWait];
             [self requestCardListWithTarget:@"first" time:@"-1" ];
             
             
@@ -217,7 +217,7 @@
             [btn setTitleColor:[UIColor colorWithHexString:@"D82626"] forState:UIControlStateNormal];
             btn.titleLabel.font = [UIFont systemFontOfSize:14];
             [self.tableView reloadData];
-            [Hud showLoadingWithMessage:@"加载中"];
+            [Hud showWait];
             [self requestMarketCollectWithTarget:@"first" time:@"" ];
             
             
@@ -260,7 +260,7 @@
 		if (self.selectType == 1) {
             CircleListObj *obj = self.dataSource[0];
             updateTime = obj.publishdate;
-            [Hud showLoadingWithMessage:@"加载中"];
+            [Hud showWait];
 			[self requestPostListWithTarget:target time:updateTime];
 		} else if (self.selectType == 3){
             ProdListObj *obj = self.dataSource[0];
@@ -296,16 +296,16 @@
     }
 	if (self.dataSource.count > 0){
 		NSString *updateTime = @"";
-		if (self.selectType == 1) {
-            [Hud showLoadingWithMessage:@"加载中"];
+        if (self.selectType == 1) {
+            [Hud showWait];
 			[self requestPostListWithTarget:@"load" time:updateTime];
 		} else if (self.selectType == 3){
 			[self requestProductListWithTarget:@"load" time:updateTime];
         } else if (self.selectType == 4){
-             [Hud showLoadingWithMessage:@"加载中"];
+            [Hud showWait];
             [self requestCardListWithTarget:@"load" time:updateTime];
         } else if (self.selectType == 2){
-            [Hud showLoadingWithMessage:@"加载中"];
+            [Hud showWait];
             [self requestCardListWithTarget:@"load" time:updateTime];
         }
 
@@ -381,7 +381,7 @@
     }
     
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
-    [Hud showLoadingWithMessage:@"加载中"];
+    [Hud showWait];
     NSDictionary *param = @{@"uid":uid,@"target":target,@"time":time,@"num":@"100"};
     [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttp,@"market",@"collection"] class:[SHGMarketObject class] parameters:param success:^(MOCHTTPResponse *response) {
         NSDictionary *dictionary = response.dataDictionary;
@@ -471,7 +471,7 @@
     NSDictionary *param = @{@"uid":[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID],@"rid":obj.rid};
     __weak typeof(self) weakSelf = self;
     if (![obj.ispraise isEqualToString:@"Y"]) {
-        [Hud showLoadingWithMessage:@"正在点赞"];
+        [Hud showWait];
         [MOCHTTPRequestOperationManager postWithURL:url class:nil parameters:param success:^(MOCHTTPResponse *response) {
             NSLog(@"%@",response.data);
             NSString *code = [response.data valueForKey:@"code"];
@@ -490,7 +490,7 @@
         }];
         
     } else{
-        [Hud showLoadingWithMessage:@"正在取消点赞"];
+        [Hud showWait];
         [[AFHTTPSessionManager manager] DELETE:url parameters:param success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
             NSString *code = [responseObject valueForKey:@"code"];
             if ([code isEqualToString:@"000"]) {
@@ -680,7 +680,7 @@
 
 - (void)attentionClicked:(CircleListObj *)obj
 {
-    [Hud showLoadingWithMessage:@"请稍等..."];
+    [Hud showWait];
     __weak typeof(self) weakSelf = self;
     NSString *url = [NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"friends"];
     NSDictionary *param = @{@"uid":[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID], @"oid":obj.userid};
@@ -737,7 +737,7 @@
     }
 
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
-    [Hud showLoadingWithMessage:@"加载中"];
+    [Hud showWait];
     NSDictionary *param = @{@"uid":uid,
                            @"target":target,
                             @"time":time,
@@ -796,7 +796,7 @@
     }
     
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
-    [Hud showLoadingWithMessage:@"加载中"];
+    [Hud showWait];
     NSDictionary *param = @{@"uid":uid,
                             @"target":target,
                             @"time":time,
@@ -849,8 +849,8 @@
 
 - (void)requestProductListWithTarget:(NSString *)target time:(NSString *)time
 {
-	NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
-    [Hud showLoadingWithMessage:@"加载中"];
+    NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
+    [Hud showWait];
 
 	NSDictionary *param;
 	if (IsStrEmpty(time)) {

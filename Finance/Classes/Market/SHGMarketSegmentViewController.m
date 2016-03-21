@@ -465,11 +465,8 @@
     alertView.rightBlock = ^{
         [SHGMarketManager deleteMarket:object success:^(BOOL success) {
             //我的业务被移动到个人中心后 要刷新
-            NSInteger count = self.navigationController.viewControllers.count;
-            if (count >= 1) {
-                UIViewController *controller = [self.navigationController.viewControllers objectAtIndex:count - 1];
-
-                if ([NSStringFromClass([controller class]) isEqualToString:@"SHGMarketMineViewController"]) {
+            for (UIViewController *controller in self.navigationController.viewControllers) {
+                if ([NSStringFromClass([controller class]) isEqualToString:@"SHGMarketMineViewController"] || [NSStringFromClass([controller class]) isEqualToString:@"SHGMarketListViewController"]) {
                     [controller performSelector:@selector(refreshData) withObject:object];
                 }
             }

@@ -594,7 +594,7 @@ typedef NS_ENUM(NSInteger, SHGMarketSendType){
 
 - (void)uploadImage:(void(^)(BOOL success))block
 {
-    [Hud showLoadingWithMessage:@"请稍等..."];
+    [Hud showWait];
     if (self.hasImage) {
         __weak typeof(self) weakSelf = self;
         [[AFHTTPSessionManager manager] POST:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"image/uploadPhotoCompress"] parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {

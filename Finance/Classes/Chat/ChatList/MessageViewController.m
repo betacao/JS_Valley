@@ -51,7 +51,7 @@
 
 -(void)requestDataWithTarget:(NSString *)target time:(NSString *)time
 {
-    [Hud showLoadingWithMessage:@"加载中"];
+    [Hud showWait];
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
     
     NSDictionary *param;

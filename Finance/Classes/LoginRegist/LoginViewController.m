@@ -183,7 +183,7 @@
 
         return;
     }
-    [Hud showLoadingWithMessage:@"登录验证中......"];
+    [Hud showWait];
     [self login];
 }
 

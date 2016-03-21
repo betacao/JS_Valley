@@ -229,50 +229,50 @@
 - (void)uploadHeadImage:(UIImage *)image
 {
     //头像需要压缩 跟其他的上传图片接口不一样了
-     if([self checkInputMessageValid]){
-    __weak typeof(self) weakSelf = self;
-    [Hud showLoadingWithMessage:@"正在上传图片..."];
-    [[AFHTTPSessionManager manager] POST:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"image/basephoto"] parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
-        NSData *imageData = UIImageJPEGRepresentation(image, 0.1f);
-        [formData appendPartWithFileData:imageData name:@"hahaggg.jpg" fileName:@"hahaggg.jpg" mimeType:@"image/jpeg"];
-    } progress:^(NSProgress * _Nonnull uploadProgress) {
+    if([self checkInputMessageValid]){
+        __weak typeof(self) weakSelf = self;
+        [Hud showWait];
+        [[AFHTTPSessionManager manager] POST:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"image/basephoto"] parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+            NSData *imageData = UIImageJPEGRepresentation(image, 0.1f);
+            [formData appendPartWithFileData:imageData name:@"hahaggg.jpg" fileName:@"hahaggg.jpg" mimeType:@"image/jpeg"];
+        } progress:^(NSProgress * _Nonnull uploadProgress) {
 
-    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        NSLog(@"%@",responseObject);
-        NSDictionary *dic = [(NSString *)[responseObject valueForKey:@"data"] parseToArrayOrNSDictionary];
-        NSString *newHeadIamgeName = [(NSArray *)[dic valueForKey:@"pname"] objectAtIndex:0];
-        weakSelf.head_img = newHeadIamgeName;
-        [[NSUserDefaults standardUserDefaults] setObject:newHeadIamgeName forKey:KEY_HEAD_IMAGE];
-        [Hud hideHud];
-        [weakSelf uploadUserInfo];
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        NSLog(@"%@",error);
-        [Hud hideHud];
-        [Hud showMessageWithText:@"上传图片失败"];
-    }];
-     }
+        } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+            NSLog(@"%@",responseObject);
+            NSDictionary *dic = [(NSString *)[responseObject valueForKey:@"data"] parseToArrayOrNSDictionary];
+            NSString *newHeadIamgeName = [(NSArray *)[dic valueForKey:@"pname"] objectAtIndex:0];
+            weakSelf.head_img = newHeadIamgeName;
+            [[NSUserDefaults standardUserDefaults] setObject:newHeadIamgeName forKey:KEY_HEAD_IMAGE];
+            [Hud hideHud];
+            [weakSelf uploadUserInfo];
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+            NSLog(@"%@",error);
+            [Hud hideHud];
+            [Hud showMessageWithText:@"上传图片失败"];
+        }];
+    }
 }
 
 - (void)uploadUserInfo
 {
-     if([self checkInputMessageValid]){
-    [Hud showLoadingWithMessage:@"请稍等..."];
-    __weak typeof(self) weakSelf = self;
-    NSDictionary *param = @{@"uid":UID,@"picName":self.head_img,@"realName":self.nameField.text, @"industrycode":self.industry, @"company":self.companyField.text, @"city":self.cityButton.titleLabel.text, @"title":self.departmentField.text};
-    [MOCHTTPRequestOperationManager postWithURL:[NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttp,@"user",@"editUser"] parameters:param success:^(MOCHTTPResponse *response) {
-        [Hud hideHud];
-        if (weakSelf.block) {
-            weakSelf.block(@{kHeaderImage:weakSelf.head_img,kNickName:weakSelf.nameField.text, kIndustry:weakSelf.industry, kCompany:weakSelf.companyField.text, kLocation:weakSelf.cityButton.titleLabel.text, kDepartment:weakSelf.departmentField.text});
-        }
-        [[NSUserDefaults standardUserDefaults] setObject:weakSelf.nameField.text forKey:KEY_USER_NAME];
-        [[NSUserDefaults standardUserDefaults] setObject:weakSelf.cityButton.titleLabel.text forKey:KEY_USER_AREA];
-        [weakSelf performSelector:@selector(delayPostNotification) withObject:nil afterDelay:1.2f];
-        [Hud showMessageWithText:@"修改个人信息成功"];
-    }failed:^(MOCHTTPResponse *response) {
-        [Hud hideHud];
-        [Hud showMessageWithText:@"修改个人信息失败"];
-    }];
-     }
+    if([self checkInputMessageValid]){
+        [Hud showWait];
+        __weak typeof(self) weakSelf = self;
+        NSDictionary *param = @{@"uid":UID,@"picName":self.head_img,@"realName":self.nameField.text, @"industrycode":self.industry, @"company":self.companyField.text, @"city":self.cityButton.titleLabel.text, @"title":self.departmentField.text};
+        [MOCHTTPRequestOperationManager postWithURL:[NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttp,@"user",@"editUser"] parameters:param success:^(MOCHTTPResponse *response) {
+            [Hud hideHud];
+            if (weakSelf.block) {
+                weakSelf.block(@{kHeaderImage:weakSelf.head_img,kNickName:weakSelf.nameField.text, kIndustry:weakSelf.industry, kCompany:weakSelf.companyField.text, kLocation:weakSelf.cityButton.titleLabel.text, kDepartment:weakSelf.departmentField.text});
+            }
+            [[NSUserDefaults standardUserDefaults] setObject:weakSelf.nameField.text forKey:KEY_USER_NAME];
+            [[NSUserDefaults standardUserDefaults] setObject:weakSelf.cityButton.titleLabel.text forKey:KEY_USER_AREA];
+            [weakSelf performSelector:@selector(delayPostNotification) withObject:nil afterDelay:1.2f];
+            [Hud showMessageWithText:@"修改个人信息成功"];
+        }failed:^(MOCHTTPResponse *response) {
+            [Hud hideHud];
+            [Hud showMessageWithText:@"修改个人信息失败"];
+        }];
+    }
 }
 
 - (void)delayPostNotification

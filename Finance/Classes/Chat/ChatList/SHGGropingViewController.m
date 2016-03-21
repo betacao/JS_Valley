@@ -39,7 +39,7 @@
 
 - (void)loadDataWithPage:(NSString *)page module:(NSString *)module type:(NSString *)type
 {
-    [Hud showLoadingWithMessage:@"请稍等..."];
+    [Hud showWait];
     __weak typeof(self) weakSelf = self;
     NSDictionary *param = @{@"pagenum":page, @"uid":UID, @"pagesize":@"20", @"module":module, @"type":type, @"condition":self.condition};
     [MOCHTTPRequestOperationManager getWithURL:[rBaseAddressForHttp stringByAppendingString:@"/friends/searchFriendsAsModuleName"] class:[BasePeopleObject class] parameters:param success:^(MOCHTTPResponse *response) {

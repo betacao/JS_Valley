@@ -63,7 +63,7 @@
     }
     
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
-    [Hud showLoadingWithMessage:@"加载中"];
+    [Hud showWait];
     NSDictionary *param = @{@"uid":uid,
                             @"target":target,
                             @"time":time,

@@ -514,7 +514,7 @@
 - (void)uploadHeadImage:(UIImage *)image
 {
     //头像需要压缩 跟其他的上传图片接口不一样了
-    [Hud showLoadingWithMessage:@"正在上传图片..."];
+    [Hud showWait];
     __weak typeof(self) weakSelf = self;
     [[AFHTTPSessionManager manager] POST:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"image/basephoto"] parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
         NSData *imageData = UIImageJPEGRepresentation(image, 0.1);

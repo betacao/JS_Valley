@@ -39,7 +39,7 @@
 -(void)webViewDidStartLoad:(UIWebView *)webView{
     
     NSLog(@"webViewDidStartLoad");
-    [Hud showLoadingWithMessage:@"加载中"];
+    [Hud showWait];
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)web{

@@ -390,7 +390,7 @@
 
 - (void)requsetUserVerifyStatus:(void (^)(BOOL))block failString:(NSString *)string
 {
-    [Hud showLoadingWithMessage:@"请稍等..."];
+    [Hud showWait];
     NSString *request = [rBaseAddressForHttp stringByAppendingString:@"/auth/isAuth"];
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
     [MOCHTTPRequestOperationManager postWithURL:request parameters:@{@"uid":uid} success:^(MOCHTTPResponse *response) {

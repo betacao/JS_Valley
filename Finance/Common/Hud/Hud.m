@@ -15,7 +15,7 @@
 
 @implementation Hud
 
-+(void)showMessageWithText:(NSString *)text
++ (void)showMessageWithText:(NSString *)text
 {
     UILabel *label = [[UILabel alloc] init];
     label.text = text;
@@ -39,7 +39,7 @@
 
 }
 
-+ (void)showLoadingWithMessage:(NSString *)message
++ (void)showWait
 {
     UIView *view = [AppDelegate currentAppdelegate].window;
     SHGProgressHUD *hud = (SHGProgressHUD *)[view viewWithTag:kTagWaitView];

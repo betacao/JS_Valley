@@ -149,7 +149,7 @@
 - (void)loadFriendList:(NSDictionary *)param block:(void (^)(NSArray *array))block
 {
     __weak typeof(self) weakSelf = self;
-    [Hud showLoadingWithMessage:@"请稍等..."];
+    [Hud showWait];
     NSString *request = @"";
     switch (self.type) {
         case SHGFriendTypeFirst:
@@ -175,7 +175,7 @@
 - (void)searchFriendList:(NSDictionary *)param block:(void (^)(NSArray *array))block
 {
     __weak typeof(self) weakSelf = self;
-    [Hud showLoadingWithMessage:@"请稍等..."];
+    [Hud showWait];
     NSString *request =[rBaseAddressForHttp stringByAppendingString:@"/friends/searchFriends"];
 
     [MOCHTTPRequestOperationManager getWithURL:request class:[SHGPeopleObject class] parameters:param success:^(MOCHTTPResponse *response) {

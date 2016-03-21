@@ -224,7 +224,7 @@
 - (void)uploadHeadImage:(UIImage *)image
 {
     if([self checkInputMessageValid]){
-        [Hud showLoadingWithMessage:@"正在上传图片..."];
+        [Hud showWait];
         __weak typeof(self) weakSelf = self;
         //头像需要压缩 跟其他的上传图片接口不一样了
         [[AFHTTPSessionManager manager] POST:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"image/basephoto"] parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
@@ -275,7 +275,7 @@
         NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
 
         NSDictionary *param = @{@"uid":uid, @"head_img":self.headImageName ? self.headImageName : @"", @"name":self.nameTextField.text, @"industrycode":self.instustryCode, @"company":self.companyTextField.text, @"title":self.titleTextField.text, @"position":self.userLocation ? self.userLocation : @""};
-        [Hud showLoadingWithMessage:@"完善信息中"];
+        [Hud showWait];
         [MOCHTTPRequestOperationManager putWithURL:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"register"] class:nil parameters:param success:^(MOCHTTPResponse *response) {
             NSString *code = [response.data valueForKey:@"code"];
             if ([code isEqualToString:@"000"]) {

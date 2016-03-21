@@ -23,7 +23,7 @@
 //加载活动详情
 - (void)loadActionDetail:(SHGActionObject *)object finishBlock:(void (^)(NSArray *))block
 {
-    [Hud showLoadingWithMessage:@"请稍等..."];
+    [Hud showWait];
     NSString *request = [rBaseAddressForHttp stringByAppendingString:@"/meetingactivity/getMeetingActivityById"];
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
     NSDictionary *param = @{@"meetId":object.meetId, @"uid":uid};
@@ -45,7 +45,7 @@
 
 - (void)loadUserPermissionState:(void (^)(NSString *))block
 {
-    [Hud showLoadingWithMessage:@"请稍等..."];
+    [Hud showWait];
     NSString *request = [rBaseAddressForHttp stringByAppendingString:@"/meetingactivity/isCreateMeetingActivity"];
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
     NSDictionary *param = @{@"uid":uid};
@@ -63,7 +63,7 @@
 //新建活动
 - (void)createNewAction:(NSDictionary *)param finishBlock:(void (^)(BOOL))block
 {
-    [Hud showLoadingWithMessage:@"请稍等..."];
+    [Hud showWait];
     NSString *request = [rBaseAddressForHttp stringByAppendingString:@"/meetingactivity/saveMeetingActivity"];
     [MOCHTTPRequestOperationManager postWithURL:request parameters:param success:^(MOCHTTPResponse *response) {
         [Hud hideHud];
@@ -105,7 +105,7 @@
 //点赞
 - (void)addPraiseWithObject:(SHGActionObject *)object finishBlock:(void (^)(BOOL))block
 {
-    [Hud showLoadingWithMessage:@"请稍等..."];
+    [Hud showWait];
     NSString *request = [rBaseAddressForHttp stringByAppendingString:@"/meetingactivity/praise/savePraise"];
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
     NSDictionary *param = @{@"uid":uid, @"meetId":object.meetId};
@@ -127,7 +127,7 @@
 //取消点赞
 - (void)deletePraiseWithObject:(SHGActionObject *)object finishBlock:(void (^)(BOOL))block
 {
-    [Hud showLoadingWithMessage:@"请稍等..."];
+    [Hud showWait];
     NSString *request = [rBaseAddressForHttp stringByAppendingString:@"/meetingactivity/praise/deletePraise"];
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
     NSDictionary *param = @{@"uid":uid, @"meetId":object.meetId};
@@ -162,7 +162,7 @@
             break;
         }
     }
-    [Hud showLoadingWithMessage:@"请稍等..."];
+    [Hud showWait];
     NSString *request = [rBaseAddressForHttp stringByAppendingString:@"/meetingactivity/comment/saveComments"];
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
     NSString *userName = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_USER_NAME];
@@ -193,7 +193,7 @@
 //删除评论
 - (void)deleteCommentWithID:(NSString *)commentId finishBlock:(void (^)(BOOL))block
 {
-    [Hud showLoadingWithMessage:@"请稍等..."];
+    [Hud showWait];
     NSString *request = [rBaseAddressForHttp stringByAppendingString:@"/meetingactivity/comment/deleteComments"];
     NSDictionary *param = @{@"commentId":commentId};
     [MOCHTTPRequestOperationManager postWithURL:request parameters:param success:^(MOCHTTPResponse *response) {
@@ -214,7 +214,7 @@
 //参加活动
 - (void)enterForActionObject:(SHGActionObject *)object reason:(NSString *)reason finishBlock:(void (^)(BOOL))block
 {
-    [Hud showLoadingWithMessage:@"请稍等..."];
+    [Hud showWait];
     NSString *request = [rBaseAddressForHttp stringByAppendingString:@"/meetingactivity/attend/saveAttend"];
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
     NSDictionary *param = @{@"meetId":object.meetId, @"uid":uid, @"detail":reason};

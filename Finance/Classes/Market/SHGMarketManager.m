@@ -150,7 +150,7 @@
 //列表
 + (void)loadTotalMarketList:(NSDictionary *)param block:(void (^)(NSArray *, NSString *, NSString *, NSString *))block
 {
-    [Hud showLoadingWithMessage:@"请稍等..."];
+    [Hud showWait];
     NSString *request = [rBaseAddressForHttp stringByAppendingString:@"/market/queryMarketList"];
     [MOCHTTPRequestOperationManager postWithURL:request class:nil parameters:param success:^(MOCHTTPResponse *response) {
         [Hud hideHud];
@@ -170,7 +170,7 @@
 //我的
 + (void)loadMineMarketList:(NSDictionary *)param block:(void (^)(NSArray *array))block
 {
-    [Hud showLoadingWithMessage:@"请稍等..."];
+    [Hud showWait];
     NSString *request = [rBaseAddressForHttp stringByAppendingString:@"/market/queryMarketList"];
     [MOCHTTPRequestOperationManager postWithURL:request class:[SHGMarketObject class] parameters:param success:^(MOCHTTPResponse *response) {
         [Hud hideHud];
@@ -187,7 +187,7 @@
 //上传用户选择的市场标签
 + (void)uploadUserMarket:(NSDictionary *)param block:(void (^)(void))block
 {
-    [Hud showLoadingWithMessage:@"请稍等..."];
+    [Hud showWait];
     NSString *request = [rBaseAddressForHttp stringByAppendingString:@"/market/editUserMarket"];
     [MOCHTTPRequestOperationManager postWithURL:request class:[SHGMarketObject class] parameters:param success:^(MOCHTTPResponse *response) {
         [Hud hideHud];
@@ -200,7 +200,7 @@
 //详情
 + (void)loadMarketDetail:(NSDictionary *)param block:(void (^)(SHGMarketObject *))block
 {
-    [Hud showLoadingWithMessage:@"请稍等..."];
+    [Hud showWait];
     NSString *request = [rBaseAddressForHttp stringByAppendingString:@"/market/getMarketById"];
     [MOCHTTPRequestOperationManager postWithURL:request class:nil parameters:param success:^(MOCHTTPResponse *response) {
         [Hud hideHud];
@@ -216,7 +216,7 @@
 //搜索
 + (void)searchNormalMarketList:(NSDictionary *)param block:(void (^)(NSString *, NSArray *))block
 {
-    [Hud showLoadingWithMessage:@"请稍等..."];
+    [Hud showWait];
     NSString *request = [rBaseAddressForHttp stringByAppendingString:@"/market/queryMarketList"];
     [MOCHTTPRequestOperationManager postWithURL:request class:[SHGMarketObject class] parameters:param success:^(MOCHTTPResponse *response) {
         [Hud hideHud];
@@ -233,7 +233,7 @@
 //高级搜索
 + (void)searchAdvancedMarketList:(NSDictionary *)param block:(void (^)(NSString *, NSArray *))block
 {
-    [Hud showLoadingWithMessage:@"请稍等..."];
+    [Hud showWait];
     NSString *request = [rBaseAddressForHttp stringByAppendingString:@"/market/searchWithMoreCondition"];
     [MOCHTTPRequestOperationManager postWithURL:request class:[SHGMarketObject class] parameters:param success:^(MOCHTTPResponse *response) {
         [Hud hideHud];
@@ -291,7 +291,7 @@
 //收藏
 + (void)addCollectWithObject:(SHGMarketObject *)object finishBlock:(void (^)(void))block
 {
-    [Hud showLoadingWithMessage:@"请稍等..."];
+    [Hud showWait];
     NSString *request = [rBaseAddressForHttp stringByAppendingString:@"/market/collection"];
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
     NSDictionary *param = @{@"uid":uid, @"marketId":object.marketId};
@@ -310,7 +310,7 @@
 //取消收藏
 + (void)deleteCollectWithObject:(SHGMarketObject *)object finishBlock:(void (^)(void))block
 {
-    [Hud showLoadingWithMessage:@"请稍等..."];
+    [Hud showWait];
     NSString *request = [rBaseAddressForHttp stringByAppendingString:@"/market/collection"];
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
     NSDictionary *param = @{@"uid":uid, @"marketId":object.marketId};
@@ -329,7 +329,7 @@
 //赞
 + (void)addPraiseWithObject:(SHGMarketObject *)object finishBlock:(void (^)(BOOL))block
 {
-    [Hud showLoadingWithMessage:@"请稍等..."];
+    [Hud showWait];
     NSString *request = [rBaseAddressForHttp stringByAppendingString:@"/market/praise/savePraise"];
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
     NSDictionary *param = @{@"uid":uid, @"marketId":object.marketId};
@@ -351,7 +351,7 @@
 //取消点赞
 + (void)deletePraiseWithObject:(SHGMarketObject *)object finishBlock:(void (^)(BOOL))block
 {
-    [Hud showLoadingWithMessage:@"请稍等..."];
+    [Hud showWait];
     NSString *request = [rBaseAddressForHttp stringByAppendingString:@"/market/praise/deletePraise"];
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
     NSDictionary *param = @{@"uid":uid, @"marketId":object.marketId};
@@ -386,7 +386,7 @@
             break;
         }
     }
-    [Hud showLoadingWithMessage:@"请稍等..."];
+    [Hud showWait];
     NSString *request = [rBaseAddressForHttp stringByAppendingString:@"/market/comment/saveComments"];
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
     NSString *userName = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_USER_NAME];
@@ -418,7 +418,7 @@
 //删除评论
 + (void)deleteCommentWithID:(NSString *)commentId finishBlock:(void (^)(BOOL))block
 {
-    [Hud showLoadingWithMessage:@"请稍等..."];
+    [Hud showWait];
     NSString *request = [rBaseAddressForHttp stringByAppendingString:@"/market/comment/deleteComments"];
     NSDictionary *param = @{@"commentId":commentId};
     [MOCHTTPRequestOperationManager postWithURL:request parameters:param success:^(MOCHTTPResponse *response) {

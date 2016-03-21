@@ -60,7 +60,7 @@
     }
 
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
-    [Hud showLoadingWithMessage:@"加载中"];
+    [Hud showWait];
     NSDictionary *param = @{@"uid":uid,@"target":target,@"time":time,@"num":@"100"};
     [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttp,@"market",@"collection"] class:[SHGMarketObject class] parameters:param success:^(MOCHTTPResponse *response) {
         NSDictionary *dictionary = response.dataDictionary;

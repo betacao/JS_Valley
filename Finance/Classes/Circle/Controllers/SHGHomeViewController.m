@@ -85,7 +85,7 @@
 
 - (void)loadPreLoadingData
 {
-    [Hud showLoadingWithMessage:@"加载中"];
+    [Hud showWait];
     __weak typeof(self) weakSelf = self;
     [SHGGloble sharedGloble].CompletionBlock = ^(NSArray *allArray, NSArray *normalArray, NSArray *adArray){
         [Hud hideHud];
@@ -311,7 +311,7 @@
 
 - (void)requestDataWithTarget:(NSString *)target time:(NSString *)time
 {
-    [Hud showLoadingWithMessage:@"加载中"];
+    [Hud showWait];
     self.isRefreshing = YES;
 
     if ([target isEqualToString:@"first"]){

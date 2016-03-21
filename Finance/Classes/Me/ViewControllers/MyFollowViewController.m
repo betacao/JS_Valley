@@ -38,8 +38,8 @@
     [super viewDidLoad];
 	[self addHeaderRefresh:self.tableView headerRefesh:YES andFooter:YES];
 
-	_dataSource = [[NSMutableArray alloc] init];
-    [Hud showLoadingWithMessage:@"正在加载"];
+    _dataSource = [[NSMutableArray alloc] init];
+    [Hud showWait];
     [self requestData];
 	
     self.view.backgroundColor = [UIColor whiteColor];
@@ -79,8 +79,8 @@
 -(void)refreshHeader
 {
 	if (self.dataSource.count > 0)
-	{
-        [Hud showLoadingWithMessage:@"正在加载"];
+    {
+        [Hud showWait];
 
 		BasePeopleObject *obj = self.dataSource[0];
 		if (self.relationShip == 1) {
@@ -98,8 +98,8 @@
 		return;
 	}
 	if (self.dataSource.count > 0)
-	{
-        [Hud showLoadingWithMessage:@"正在加载"];
+    {
+        [Hud showWait];
 
 		BasePeopleObject *obj = [self.dataSource lastObject];
 		if (self.relationShip == 1) {
@@ -394,8 +394,8 @@
 	NSDictionary *param = @{@"uid":[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID],
 							@"oid":obj.uid};
 
-	if (obj.followRelation == 0) {
-        [Hud showLoadingWithMessage:@"正在关注"];
+    if (obj.followRelation == 0) {
+        [Hud showWait];
 		[MOCHTTPRequestOperationManager postWithURL:url class:nil parameters:param success:^(MOCHTTPResponse *response) {
             obj.followRelation = [response.dataDictionary[@"state"] integerValue];
 			[self.tableView reloadData];
@@ -413,8 +413,8 @@
             [Hud hideHud];
 		}];
 
-	}else if (obj.followRelation == 1){
-        [Hud showLoadingWithMessage:@"正在取消关注"];
+    }else if (obj.followRelation == 1){
+        [Hud showWait];
 
 		[[AFHTTPSessionManager manager] DELETE:url parameters:param success:^(NSURLSessionDataTask *operation, id responseObject) {
 			NSString *code = [responseObject valueForKey:@"code"];
@@ -444,8 +444,8 @@
             [Hud hideHud];
 		}];
 
-	}else if (obj.followRelation == 2){
-        [Hud showLoadingWithMessage:@"正在取消关注"];
+    }else if (obj.followRelation == 2){
+        [Hud showWait];
 
 		[[AFHTTPSessionManager manager] DELETE:url parameters:param success:^(NSURLSessionDataTask *operation, id responseObject) {
 			NSString *code = [responseObject valueForKey:@"code"];

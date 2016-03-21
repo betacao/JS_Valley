@@ -97,7 +97,7 @@
     [self addSdLayout];
     
     __weak typeof(self) weakSelf = self;
-    [Hud showLoadingWithMessage:@"加载中"];
+    [Hud showWait];
     [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttpCircle,@"circledetail"] class:[CircleListObj class] parameters:@{@"rid":self.rid,@"uid":[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID]} success:^(MOCHTTPResponse *response) {
         [Hud hideHud];
         NSLog(@"%@  arr === %@",response.data,response.dataDictionary);
@@ -721,7 +721,7 @@
     NSDictionary *param = @{@"uid":[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID],@"rid":self.obj.rid};
     
     if (![self.obj.ispraise isEqualToString:@"Y"]) {
-        [Hud showLoadingWithMessage:@"正在点赞"];
+        [Hud showWait];
         
         [MOCHTTPRequestOperationManager postWithURL:url class:nil parameters:param success:^(MOCHTTPResponse *response) {
             NSLog(@"%@",response.data);
@@ -750,7 +750,7 @@
         }];
         
     } else{
-        [Hud showLoadingWithMessage:@"正在取消点赞"];
+        [Hud showWait];
         __weak typeof(self) weakSelf = self;
         [[AFHTTPSessionManager manager] DELETE:url parameters:param success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
             NSString *code = [responseObject valueForKey:@"code"];
@@ -959,7 +959,7 @@
 {
     NSString *url = [NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"friends"];
     NSDictionary *param = @{@"uid":[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID], @"oid":self.obj.userid};
-    [Hud showLoadingWithMessage:@"请稍等..."];
+    [Hud showWait];
     if ([self.obj.isattention isEqualToString:@"N"]) {
         [MOCHTTPRequestOperationManager postWithURL:url class:nil parameters:param success:^(MOCHTTPResponse *response) {
             [Hud hideHud];

@@ -185,7 +185,7 @@
         DXAlertView *alert = [[DXAlertView alloc] initWithTitle:@"提示" contentText:@"是否确认清除本地缓存？" leftButtonTitle:@"取消" rightButtonTitle:@"确定"];
         __weak typeof(self) weakSelf = self;
         alert.rightBlock = ^{
-            [Hud showLoadingWithMessage:@"正在清除缓存..."];
+            [Hud showWait];
             [[SDImageCache sharedImageCache] clearDiskOnCompletion:^{
                 [Hud hideHud];
                 [Hud showMessageWithText:@"清除缓存成功"];
@@ -229,7 +229,7 @@
 - (void)initUserInfo
 {
     [[SDImageCache sharedImageCache] clearDiskOnCompletion:^{
-        [Hud showLoadingWithMessage:@"正在注销"];
+        [Hud showWait];
         [[EaseMob sharedInstance].chatManager asyncLogoffWithUnbindDeviceToken:YES completion:^(NSDictionary *info, EMError *error) {
             [Hud hideHud];
             if (error && error.errorCode != EMErrorServerNotLogin){
@@ -279,7 +279,7 @@
         __weak typeof(self)weakSelf = self;
         NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
         NSString *pushFlag = @"1";
-        [Hud showLoadingWithMessage:@"正在打开通知"];
+        [Hud showWait];
         [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"pushApp/pushSwitch"] parameters:@{@"uid":uid, @"pushFlag":pushFlag} success:^(MOCHTTPResponse *response) {
             [weakSelf.switchView setOn:YES animated:YES];
             [Hud hideHud];
@@ -292,7 +292,7 @@
         __weak typeof(self)weakSelf = self;
         NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
         NSString *pushFlag = @"0";
-        [Hud showLoadingWithMessage:@"正在关闭通知"];
+        [Hud showWait];
         [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"pushApp/pushSwitch"] parameters:@{@"uid":uid, @"pushFlag":pushFlag} success:^(MOCHTTPResponse *response) {
             [weakSelf.switchView setOn:NO animated:YES];
             [Hud hideHud];

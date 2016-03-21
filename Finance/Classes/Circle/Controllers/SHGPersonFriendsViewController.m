@@ -69,7 +69,7 @@
 
 -(void)requestContact
 {
-     [Hud showLoadingWithMessage:@"加载中"];
+    [Hud showWait];
     
     if ([self.friend_status isEqualToString:@"me"]) {
         self.title = @"我的好友";

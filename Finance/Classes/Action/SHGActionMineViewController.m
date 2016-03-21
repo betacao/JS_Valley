@@ -91,7 +91,7 @@
     NSString *type = @"my";
     NSDictionary *dictionary = @{@"uid":uid, @"meetId":meetID, @"pageSize":pageSize, @"target":target, @"type":type};
     __weak typeof(self) weakSelf = self;
-    [Hud showLoadingWithMessage:@"请稍等..."];
+    [Hud showWait];
     [MOCHTTPRequestOperationManager postWithURL:request class:[SHGActionObject class] parameters:dictionary success:^(MOCHTTPResponse *response) {
         [Hud hideHud];
         [weakSelf.listTable.header endRefreshing];

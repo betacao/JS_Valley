@@ -86,7 +86,7 @@
     NSString *url = [NSString stringWithFormat:@"%@/%@",rBaseAddressForHttpCircle,@"praisesend"];
     NSDictionary *param = @{@"uid":[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID],@"rid":obj.rid};
     if (![obj.ispraise isEqualToString:@"Y"]){
-        [Hud showLoadingWithMessage:@"正在点赞"];
+        [Hud showWait];
         [MOCHTTPRequestOperationManager postWithURL:url class:nil parameters:param success:^(MOCHTTPResponse *response){
             NSLog(@"%@",response.data);
             NSString *code = [response.data valueForKey:@"code"];
@@ -106,7 +106,7 @@
             [Hud showMessageWithText:response.errorMessage];
         }];
     } else{
-        [Hud showLoadingWithMessage:@"正在取消点赞"];
+        [Hud showWait];
         [[AFHTTPSessionManager manager] DELETE:url parameters:param success:^(NSURLSessionDataTask *operation, id responseObject) {
             NSLog(@"%@",responseObject);
             NSString *code = [responseObject valueForKey:@"code"];
@@ -368,7 +368,7 @@
 #pragma mark -关注
 - (void)attentionClicked:(CircleListObj *)obj
 {
-    [Hud showLoadingWithMessage:@"请稍等..."];
+    [Hud showWait];
     if([obj isKindOfClass:[CircleListObj class]]){
         //普通好友加关注的方法
         NSString *url = [NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"friends"];

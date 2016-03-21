@@ -432,7 +432,7 @@
 - (void)reloadDataSource
 {
     //增加点击进入增加群组
-    [Hud showLoadingWithMessage:NSLocalizedString(@"loadData", @"Load data...")];
+    [Hud showWait];
     [[EaseMob sharedInstance].chatManager asyncFetchAllPublicGroups];
     NSDictionary *loginInfo = [[[EaseMob sharedInstance] chatManager] loginInfo];
     [[EaseMob sharedInstance].chatManager asyncFetchMyGroupsListWithCompletion:^(NSArray *groups, EMError *error){

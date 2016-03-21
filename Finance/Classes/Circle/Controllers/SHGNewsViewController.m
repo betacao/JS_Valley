@@ -64,7 +64,7 @@
     }
     [self requestType];
     self.circleType = @"attation";
-    [Hud showLoadingWithMessage:@"加载中"];
+    [Hud showWait];
     //[self requestDataWithTarget:@"first" time:0 tagId:self.currentTagId];
    
    }
@@ -242,11 +242,11 @@
         return;
     }
     if (self.currentArry.count > 0){
-        [Hud showLoadingWithMessage:@"加载中"];
+        [Hud showWait];
         //[self requestDataWithTarget:@"refresh" time:[self refreshMaxRid]];
         [self requestDataWithTarget:@"refresh" time:[self refreshMaxRid] tagId:self.currentTagId];
     } else{
-        [Hud showLoadingWithMessage:@"加载中"];
+        [Hud showWait];
         //[self requestDataWithTarget:@"first" time:@""];
         [self requestDataWithTarget:@"first" time:0 tagId:self.currentTagId];
     }
@@ -261,7 +261,7 @@
     }
     NSLog(@"refreshFooter");
     if (self.currentArry.count > 0){
-        [Hud showLoadingWithMessage:@"加载中"];
+        [Hud showWait];
         //[self requestDataWithTarget:@"load" time:[self refreshMinRid]];
         [self requestDataWithTarget:@"load" time:[self refreshMinRid] tagId:self.currentTagId];
     }

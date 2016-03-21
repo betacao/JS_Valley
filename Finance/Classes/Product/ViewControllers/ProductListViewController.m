@@ -103,7 +103,7 @@
         [self.listTable.footer resetNoMoreData];
         hasDataFinished = NO;
     }
-    [Hud showLoadingWithMessage:@"加载中"];
+    [Hud showWait];
     if (IsStrEmpty(name)) {
         self.searchBar.text = @"";
     }
@@ -241,7 +241,7 @@
             DXAlertView *alert = [[DXAlertView alloc] initWithTitle:@"提示" contentText:@"是否需要发布产品?" leftButtonTitle:@"否" rightButtonTitle:@"是"];
             alert.rightBlock = ^{
                 NSString *url = [NSString stringWithFormat:@"%@/%@",rBaseAddressForHttpProd,@"publish"];
-                [Hud showLoadingWithMessage:@"加载中"];
+                [Hud showWait];
                 NSDictionary *param = @{@"uid":[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID]};
                 [MOCHTTPRequestOperationManager postWithURL:url class:nil parameters:param success:^(MOCHTTPResponse *response) {
                     [Hud hideHud];
