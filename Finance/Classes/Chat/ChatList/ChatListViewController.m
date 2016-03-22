@@ -90,10 +90,10 @@ static NSString * const kCommonFNum			= @"commonnum";
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.view.backgroundColor = [UIColor whiteColor];
-    
-    [self loadUI];
-    [TabBarViewController tabBar].tabBar.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:self.tableView];
+    [self addHeaderRefresh:self.tableView headerRefesh:YES andFooter:NO];
+    self.navigationItem.titleView = self.titleView;
+
     [self removeEmptyConversationsFromDB];
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshChatList) name:@"refreshFriendList" object:nil];
@@ -101,6 +101,10 @@ static NSString * const kCommonFNum			= @"commonnum";
     [self networkStateView];
     [self refreshDataSource];
 
+    __weak typeof(self) weakSelf = self;
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        [weakSelf.groupVC reloadDataSource];
+    });
 }
 
 - (void)refreshHeader
@@ -973,13 +977,6 @@ static NSString * const kCommonFNum			= @"commonnum";
             break;
     }
     [self refreshDataSource];
-}
-
-- (void)loadUI
-{
-    [self.view addSubview:self.tableView];
-    [self addHeaderRefresh:self.tableView headerRefesh:YES andFooter:NO];
-    self.navigationItem.titleView = self.titleView;
 }
 
 - (void)reloadGroupView

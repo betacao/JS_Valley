@@ -19,4 +19,5 @@
 @property (nonatomic, strong) NSString *recomfri;
 @property (nonatomic, strong) NSString *title;
 @property (nonatomic, assign) BOOL isFocus;
+@property (nonatomic, strong) NSString *commonCount;
 @end

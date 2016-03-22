@@ -19,12 +19,6 @@
 }
 +(NSDictionary *)JSONKeyPathsByPropertyKey
 {
-    return @{@"flag":@"flag",
-             @"username":@"username",
-             @"phone":@"phone",
-             @"area":@"area",
-             @"company":@"company",
-             @"uid":@"uid",
-             @"headImg":@"headImg"};
+    return @{@"flag":@"flag", @"username":@"username", @"phone":@"phone", @"area":@"area", @"company":@"company", @"uid":@"uid", @"headImg":@"headImg"};
 }
 @end

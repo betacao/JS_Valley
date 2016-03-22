@@ -39,7 +39,7 @@
 
 }
 
-+ (void)showWait
++ (void)showOnMainThread
 {
     UIView *view = [AppDelegate currentAppdelegate].window;
     SHGProgressHUD *hud = (SHGProgressHUD *)[view viewWithTag:kTagWaitView];
@@ -49,6 +49,11 @@
     [hud setTag: kTagWaitView];
     [view addSubview:hud];
     [view bringSubviewToFront:hud];
+}
+
++ (void)showWait
+{
+    [self performSelectorOnMainThread:@selector(showOnMainThread) withObject:nil waitUntilDone:YES];
 }
 
 + (void)hideHud

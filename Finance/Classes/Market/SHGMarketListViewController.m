@@ -53,9 +53,9 @@
     [self loadData];
 }
 
-- (void)viewDidAppear:(BOOL)animated
+- (void)viewWillAppear:(BOOL)animated
 {
-    [super viewDidAppear:animated];
+    [super viewWillAppear:animated];
     [self initAddMarketImageView];
 }
 
@@ -75,18 +75,20 @@
 
 - (void)initAddMarketImageView
 {
-    self.addMarketSize = self.addMarketImageView.image.size;
-    CGRect frame = self.addMarketImageView.frame;
-    frame.size = self.addMarketSize;
-    frame.origin.x = SCREENWIDTH - MarginFactor(17.0f) - self.addMarketSize.width;
-    frame.origin.y = CGRectGetHeight(self.view.frame) - kTabBarHeight - MarginFactor(45.0f) - self.addMarketSize.height;
-    self.addMarketImageView.frame = frame;
+    if (!self.addMarketImageView.userInteractionEnabled) {
+        self.addMarketSize = self.addMarketImageView.image.size;
+        CGRect frame = self.addMarketImageView.frame;
+        frame.size = self.addMarketSize;
+        frame.origin.x = SCREENWIDTH - MarginFactor(17.0f) - self.addMarketSize.width;
+        frame.origin.y = CGRectGetHeight(self.view.frame) - kTabBarHeight - MarginFactor(45.0f) - self.addMarketSize.height;
+        self.addMarketImageView.frame = frame;
 
-    UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapImageView:)];
-    UIPanGestureRecognizer *panRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panImageView:)];
-    [self.addMarketImageView addGestureRecognizer:panRecognizer];
-    [self.addMarketImageView addGestureRecognizer:tapRecognizer];
-    self.addMarketImageView.userInteractionEnabled = YES;
+        UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapImageView:)];
+        UIPanGestureRecognizer *panRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panImageView:)];
+        [self.addMarketImageView addGestureRecognizer:panRecognizer];
+        [self.addMarketImageView addGestureRecognizer:tapRecognizer];
+        self.addMarketImageView.userInteractionEnabled = YES;
+    }
 }
 
 - (NSMutableArray *)currentDataArray
@@ -492,11 +494,13 @@
         if (point.y - self.addMarketSize.height / 2.0f  < kCategoryScrollViewHeight) {
             point.y = kCategoryScrollViewHeight + self.addMarketSize.height / 2.0f;
         }
-        touchedView.center = point;
+        [UIView animateWithDuration:0.01f animations:^{
+            touchedView.center = point;
+        }];
     } else if (recognizer.state == UIGestureRecognizerStateEnded) {
 
     }
-
+    [recognizer setTranslation:CGPointZero inView:self.view];
 }
 
 - (void)tapImageView:(UIPanGestureRecognizer *)recognizer

@@ -130,7 +130,7 @@
         } else if ([flag isEqualToString:@"company"]){
             detailString = [@"你们都在：" stringByAppendingFormat:@"%@",object.company];
         } else if ([flag isEqualToString:@"attention"]){
-            detailString = [[NSString stringWithFormat:@"%@",object.recomfri] stringByAppendingString:@"等人也关注了他"];
+            detailString = [[NSString stringWithFormat:@"%@",object.recomfri] stringByAppendingFormat:@"等%@人也关注了他",object.commonCount];
         } else if ([flag isEqualToString:@"top"]){
             detailString = @"top";
         } else if ([flag isEqualToString:@"vocationcity"]){

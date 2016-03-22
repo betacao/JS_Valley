@@ -44,15 +44,13 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.dataSource = [NSMutableArray array];
-    self.commonArr = [NSMutableArray array];
-    self.joinArr = [NSMutableArray array];
     [[EaseMob sharedInstance].chatManager removeDelegate:self];
     [[EaseMob sharedInstance].chatManager addDelegate:self delegateQueue:nil];
     [self addHeaderRefresh:self.tableView headerRefesh:YES andFooter:NO];
 
-    [self reloadDataSource];
+    [[EaseMob sharedInstance].chatManager asyncFetchAllPublicGroups];
 }
+
 
 - (void)viewWillAppear:(BOOL)animated
 {
@@ -62,6 +60,30 @@
     self.tableView.tableHeaderView = self.searchBar;
     [self searchController];
     [MobClick event:@"GroupListViewController" label:@"onClick"];
+}
+
+- (NSMutableArray *)dataSource
+{
+    if (!_dataSource) {
+        _dataSource = [NSMutableArray array];
+    }
+    return _dataSource;
+}
+
+- (NSMutableArray *)commonArr
+{
+    if (!_commonArr) {
+        _commonArr = [NSMutableArray array];
+    }
+    return _commonArr;
+}
+
+- (NSMutableArray *)joinArr
+{
+    if (!_joinArr) {
+        _joinArr = [NSMutableArray array];
+    }
+    return _joinArr;
 }
 
 - (NSArray *)titleArray
@@ -92,6 +114,8 @@
 - (void)refreshHeader
 {
     [self reloadDataSource];
+
+    [[EaseMob sharedInstance].chatManager asyncFetchAllPublicGroups];
 }
 
 - (void)returnClick
@@ -409,15 +433,18 @@
 
 - (void)groupDidUpdateInfo:(EMGroup *)group error:(EMError *)error
 {
-    if (!error)
-    {
+    if (!error){
         [self reloadDataSource];
+
+        [[EaseMob sharedInstance].chatManager asyncFetchAllPublicGroups];
     }
 }
 
 - (void)didUpdateGroupList:(NSArray *)allGroups error:(EMError *)error
 {
     [self reloadDataSource];
+
+    [[EaseMob sharedInstance].chatManager asyncFetchAllPublicGroups];
 }
 
 #pragma mark - data
@@ -433,7 +460,6 @@
 {
     //增加点击进入增加群组
     [Hud showWait];
-    [[EaseMob sharedInstance].chatManager asyncFetchAllPublicGroups];
     NSDictionary *loginInfo = [[[EaseMob sharedInstance] chatManager] loginInfo];
     [[EaseMob sharedInstance].chatManager asyncFetchMyGroupsListWithCompletion:^(NSArray *groups, EMError *error){
         for (EMGroup *group in groups){
@@ -477,9 +503,15 @@
     }else{
         [self.navigationController pushViewController:createChatroom animated:YES];
     }
-    
+
 }
 
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    self.searchBar.text = @"";
+    [self.searchBar resignFirstResponder];
+}
 
 @end
 

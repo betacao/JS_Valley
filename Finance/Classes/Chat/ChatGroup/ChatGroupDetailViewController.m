@@ -442,7 +442,7 @@
 
                     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url]];
                     [request addValue:@"image/*" forHTTPHeaderField:@"Accept"];
-                    [contactView.imageView setImageWithURLRequest:request placeholderImage:nil success:nil failure:nil];
+                    [contactView.imageView setImageWithURLRequest:request placeholderImage:[UIImage imageNamed:@"default_head"] success:nil failure:nil];
 
                     if (![[dictionary objectForKey:@"userid"] isEqualToString:loginUsername]) {
                         contactView.editing = isEditing;

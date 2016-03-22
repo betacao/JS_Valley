@@ -15,12 +15,10 @@
 #import "ChatViewController.h"
 #import "EMSearchDisplayController.h"
 #import "ConvertToCommonEmoticonsHelper.h"
-#import "GroupListViewController.h"
 #import "BasePeopleObject.h"
 #import "BasePeopleTableViewCell.h"
 #import "ApplyViewController.h"
 #import "MessageViewController.h"
-//#import "ContactsViewController.h"
 #import "ChatListViewController.h"
 #import "HeadImage.h"
 
