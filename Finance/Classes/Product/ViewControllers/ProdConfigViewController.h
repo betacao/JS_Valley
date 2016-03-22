@@ -11,10 +11,8 @@
 #import "SubDetailViewController.h"
 #import "ProdConsulutionViewController.h"
 #import "CinfigView.h"
-#import "MyCollectionViewController.h"
 @interface ProdConfigViewController : BaseTableViewController<UIActionSheetDelegate,UIAlertViewDelegate>
 
 @property (nonatomic, strong) ProdListObj *obj;
 @property (nonatomic, strong) NSString *type;
-@property (weak, nonatomic) MyCollectionViewController * controller;
 @end

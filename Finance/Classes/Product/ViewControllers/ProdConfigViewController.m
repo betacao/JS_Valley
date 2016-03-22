@@ -10,7 +10,6 @@
 #import "ProdConfigTableViewCell.h"
 #import "ConfigObj.h"
 #import "AppDelegate.h"
-#import "MyCollectionViewController.h"
 #define kNumberOfRows 1
 #define kHeightForNormalCell 44.0f
 
@@ -104,14 +103,6 @@
 
     }];
     [self initView];
-}
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-    if (!self.isProductChange) {
-        [self.controller changeProductCollection];
-    }
 }
 
 - (NSMutableArray *)heightArray

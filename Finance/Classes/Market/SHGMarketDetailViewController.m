@@ -89,22 +89,17 @@
     
     [self initView];
     [self addLayout];
+    [self initData];
     
-
-    __weak typeof(self) weakSelf = self;
-    NSDictionary *param = @{@"marketId":self.object.marketId ,@"uid":UID};
-    [SHGMarketManager loadMarketDetail:param block:^(SHGMarketObject *object) {
-        weakSelf.responseObject = object;
-        weakSelf.responseObject.commentList = [NSMutableArray arrayWithArray:[[SHGGloble sharedGloble] parseServerJsonArrayToJSONModel:weakSelf.responseObject.commentList class:[SHGMarketCommentObject class]]];
-        weakSelf.responseObject.praiseList = [NSMutableArray arrayWithArray:[[SHGGloble sharedGloble] parseServerJsonArrayToJSONModel:weakSelf.responseObject.praiseList class:[praiseOBj class]]];
-        [weakSelf loadData];
-        [weakSelf.detailTable reloadData];
-    }];
 }
 
-- (void)viewWillAppear:(BOOL)animated
+- (void)editMarket
 {
-    [super viewWillAppear:animated];
+    [self initData];
+}
+
+- (void)initData
+{
     __weak typeof(self) weakSelf = self;
     NSDictionary *param = @{@"marketId":self.object.marketId ,@"uid":UID};
     [SHGMarketManager loadMarketDetail:param block:^(SHGMarketObject *object) {
@@ -420,6 +415,7 @@
 {
     SHGMarketSendViewController *controller = [[SHGMarketSendViewController alloc] init];
     controller.object = self.responseObject;
+    controller.controller = self;
     controller.delegate = [SHGMarketSegmentViewController sharedSegmentController];
     [self.navigationController pushViewController:controller animated:YES];
 

@@ -266,7 +266,7 @@ typedef NS_ENUM(NSInteger, RegistType)
 	}
     
     if(self.verifyCodeTextField.text.length == 0){
-        [Hud showMessageWithText:@"验证不能为空"];
+        [Hud showMessageWithText:@"验证码不能为空"];
         return;
     } else if (self.verifyCodeTextField.text.length > 4){
         [Hud showMessageWithText:@"验证码格式不正确"];
@@ -278,7 +278,7 @@ typedef NS_ENUM(NSInteger, RegistType)
         return;
         
     } else if (_passwordTextField.text.length > 20 || _passwordTextField.text.length < 6) {
-        [Hud showMessageWithText:@"密码长度为6-20位"];
+        [Hud showMessageWithText:@"密码长度不能少于6位"];
         return;
     }
     [Hud showWait];

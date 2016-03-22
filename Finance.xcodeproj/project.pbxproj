@@ -30,10 +30,6 @@
 		40302B2D1AF07AA500F22EB6 /* MyMoneyViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 40302B2B1AF07AA500F22EB6 /* MyMoneyViewController.xib */; };
 		40302B311AF07DB500F22EB6 /* MyMoneyDetailTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 40302B2F1AF07DB500F22EB6 /* MyMoneyDetailTableViewCell.m */; };
 		40302B321AF07DB500F22EB6 /* MyMoneyDetailTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 40302B301AF07DB500F22EB6 /* MyMoneyDetailTableViewCell.xib */; };
-		40302B361AF0B7F500F22EB6 /* MyCollectionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 40302B341AF0B7F500F22EB6 /* MyCollectionTableViewCell.m */; };
-		40302B371AF0B7F500F22EB6 /* MyCollectionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 40302B351AF0B7F500F22EB6 /* MyCollectionTableViewCell.xib */; };
-		40302B3B1AF0BDF300F22EB6 /* MyCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 40302B391AF0BDF300F22EB6 /* MyCollectionViewController.m */; };
-		40302B3C1AF0BDF300F22EB6 /* MyCollectionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 40302B3A1AF0BDF300F22EB6 /* MyCollectionViewController.xib */; };
 		40302B401AF0C31F00F22EB6 /* MyAppointmentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 40302B3E1AF0C31F00F22EB6 /* MyAppointmentViewController.m */; };
 		40302B411AF0C31F00F22EB6 /* MyAppointmentViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 40302B3F1AF0C31F00F22EB6 /* MyAppointmentViewController.xib */; };
 		40302B451AF0C67F00F22EB6 /* MyAppointmentTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 40302B431AF0C67F00F22EB6 /* MyAppointmentTableViewCell.m */; };
@@ -980,12 +976,6 @@
 		40302B2E1AF07DB500F22EB6 /* MyMoneyDetailTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyMoneyDetailTableViewCell.h; sourceTree = "<group>"; };
 		40302B2F1AF07DB500F22EB6 /* MyMoneyDetailTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyMoneyDetailTableViewCell.m; sourceTree = "<group>"; };
 		40302B301AF07DB500F22EB6 /* MyMoneyDetailTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MyMoneyDetailTableViewCell.xib; sourceTree = "<group>"; };
-		40302B331AF0B7F500F22EB6 /* MyCollectionTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MyCollectionTableViewCell.h; path = Finance/Classes/Me/ViewControllers/MyCollectionTableViewCell.h; sourceTree = SOURCE_ROOT; };
-		40302B341AF0B7F500F22EB6 /* MyCollectionTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MyCollectionTableViewCell.m; path = Finance/Classes/Me/ViewControllers/MyCollectionTableViewCell.m; sourceTree = SOURCE_ROOT; };
-		40302B351AF0B7F500F22EB6 /* MyCollectionTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MyCollectionTableViewCell.xib; path = Finance/Classes/Me/ViewControllers/MyCollectionTableViewCell.xib; sourceTree = SOURCE_ROOT; };
-		40302B381AF0BDF300F22EB6 /* MyCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyCollectionViewController.h; sourceTree = "<group>"; };
-		40302B391AF0BDF300F22EB6 /* MyCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyCollectionViewController.m; sourceTree = "<group>"; };
-		40302B3A1AF0BDF300F22EB6 /* MyCollectionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MyCollectionViewController.xib; sourceTree = "<group>"; };
 		40302B3D1AF0C31F00F22EB6 /* MyAppointmentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyAppointmentViewController.h; sourceTree = "<group>"; };
 		40302B3E1AF0C31F00F22EB6 /* MyAppointmentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyAppointmentViewController.m; sourceTree = "<group>"; };
 		40302B3F1AF0C31F00F22EB6 /* MyAppointmentViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MyAppointmentViewController.xib; sourceTree = "<group>"; };
@@ -3619,9 +3609,6 @@
 				40302B2E1AF07DB500F22EB6 /* MyMoneyDetailTableViewCell.h */,
 				40302B2F1AF07DB500F22EB6 /* MyMoneyDetailTableViewCell.m */,
 				40302B301AF07DB500F22EB6 /* MyMoneyDetailTableViewCell.xib */,
-				40302B331AF0B7F500F22EB6 /* MyCollectionTableViewCell.h */,
-				40302B341AF0B7F500F22EB6 /* MyCollectionTableViewCell.m */,
-				40302B351AF0B7F500F22EB6 /* MyCollectionTableViewCell.xib */,
 				40302B421AF0C67F00F22EB6 /* MyAppointmentTableViewCell.h */,
 				40302B431AF0C67F00F22EB6 /* MyAppointmentTableViewCell.m */,
 				40302B441AF0C67F00F22EB6 /* MyAppointmentTableViewCell.xib */,
@@ -3662,9 +3649,6 @@
 				40302B291AF07AA500F22EB6 /* MyMoneyViewController.h */,
 				40302B2A1AF07AA500F22EB6 /* MyMoneyViewController.m */,
 				40302B2B1AF07AA500F22EB6 /* MyMoneyViewController.xib */,
-				40302B381AF0BDF300F22EB6 /* MyCollectionViewController.h */,
-				40302B391AF0BDF300F22EB6 /* MyCollectionViewController.m */,
-				40302B3A1AF0BDF300F22EB6 /* MyCollectionViewController.xib */,
 				40302B3D1AF0C31F00F22EB6 /* MyAppointmentViewController.h */,
 				40302B3E1AF0C31F00F22EB6 /* MyAppointmentViewController.m */,
 				40302B3F1AF0C31F00F22EB6 /* MyAppointmentViewController.xib */,
@@ -5107,7 +5091,6 @@
 				B080FEAF1B81E30100426579 /* emoji_unselected_center_bg@2x.png in Resources */,
 				56F2D50C1B5A5B77008E2855 /* 编辑1.png in Resources */,
 				61E83D451AF7C78E00703651 /* 收起箭头@3x.png in Resources */,
-				40302B3C1AF0BDF300F22EB6 /* MyCollectionViewController.xib in Resources */,
 				B080FE951B81E30100426579 /* emoji_characters_s@2x.png in Resources */,
 				61046C6F1AE0A53B0065F59D /* recommed_takephotos@2x.png in Resources */,
 				B080FE9F1B81E30100426579 /* emoji_corner_right@2x.png in Resources */,
@@ -5514,7 +5497,6 @@
 				61E83D1C1AF7C78E00703651 /* 检查更新@2x.png in Resources */,
 				61E83D021AF7C78E00703651 /* 圈子-选中@2x.png in Resources */,
 				61E83D6B1AF7C78E00703651 /* 我的-默认@3x.png in Resources */,
-				40302B371AF0B7F500F22EB6 /* MyCollectionTableViewCell.xib in Resources */,
 				408D8B751AF8618C0055810C /* chat_sender_audio_playing_000@2x.png in Resources */,
 				B080FEAE1B81E30100426579 /* emoji_unselected_center_bg.png in Resources */,
 				6149CFE31B25E5B0006E45FE /* city_code.txt in Resources */,
@@ -5668,7 +5650,6 @@
 				6187D2F81AF1C693008E1D21 /* EMNavigationController.m in Sources */,
 				61D6E7D41AD50FCB0016C13A /* BaseViewController.m in Sources */,
 				532AF6B01AFC432A007D3E4B /* HeadImage.m in Sources */,
-				40302B3B1AF0BDF300F22EB6 /* MyCollectionViewController.m in Sources */,
 				538964D61AFC6BEB00041548 /* UIViewController+DismissKeyboard.m in Sources */,
 				40302B1A1AEF61B600F22EB6 /* MyTeamViewController.m in Sources */,
 				F9ED07F41C3B6A530079A1A9 /* SHGModifyUserInfoViewController.m in Sources */,
@@ -5711,7 +5692,6 @@
 				980D0D9C1C9A41BC00351F8C /* SHGCircleCollectionViewController.m in Sources */,
 				F9A227C21BF5AF8D0054F8D7 /* SHGActionObject.m in Sources */,
 				4088DDCE1AF105FD00393855 /* SettingQuestionObj.m in Sources */,
-				40302B361AF0B7F500F22EB6 /* MyCollectionTableViewCell.m in Sources */,
 				61D62BF01ADD1C4D002DD395 /* MOCNetworkReachabilityManager.m in Sources */,
 				B082D6631B82EF1C00BB6C20 /* RecmdFriendObj.m in Sources */,
 				614EFEC91AEF2DF800F2BDD1 /* ProdConfigViewController.m in Sources */,

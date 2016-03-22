@@ -44,7 +44,7 @@
     }
     
     if (passWordText.text.length > 20 || passWordText.text.length < 6) {
-        [Hud showMessageWithText:@"密码长度为6-20位"];
+        [Hud showMessageWithText:@"密码长度不能少于6位"];
         return;
     }
     

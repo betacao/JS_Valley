@@ -179,7 +179,7 @@
         return;
     }
     if (![_textUser.text isValidateMobile]) {
-        [Hud showMessageWithText:@"手机号非法"];
+        [Hud showMessageWithText:@"手机号码不合法"];
 
         return;
     }

@@ -113,7 +113,7 @@
         _searchBar = [[EMSearchBar alloc] init];
         _searchBar.delegate = self;
         _searchBar.needLineView = NO;
-        _searchBar.placeholder = @"请输入业务名称";
+        _searchBar.placeholder = @"请填写业务名称";
         _searchBar.backgroundImageColor = Color(@"d43c33");
     }
     return _searchBar;
@@ -438,10 +438,7 @@
     }
 
     //我的业务被移动到个人中心后 要刷新
-    NSInteger count = self.navigationController.viewControllers.count;
-    if (count >= 2) {
-        UIViewController *controller = [self.navigationController.viewControllers objectAtIndex:count - 2];
-
+    for (UIViewController *controller in self.navigationController.viewControllers) {
         if ([NSStringFromClass([controller class]) isEqualToString:@"SHGMarketMineViewController"]) {
             [controller performSelector:@selector(refreshData) withObject:object];
         }

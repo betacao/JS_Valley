@@ -127,7 +127,7 @@
 
 	
 	if (![self.changedPassword.text isEqualToString:self.confirmPassword.text]) {
-		[Hud showMessageWithText:@"两次密码输入不一致"];
+		[Hud showMessageWithText:@"两次密码不一致"];
 		return;
 	}
 	

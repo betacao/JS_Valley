@@ -56,7 +56,7 @@ typedef NS_ENUM(NSInteger, SHGMarketSendType){
 @property (strong, nonatomic) NSMutableArray *categoryArray;
 @property (strong, nonatomic) NSString *imageName;
 @property (assign, nonatomic) BOOL hasImage;
-
+@property (assign, nonatomic) BOOL detailEdit;
 @property (strong, nonatomic) NSString *mode;
 
 @end
@@ -87,6 +87,7 @@ typedef NS_ENUM(NSInteger, SHGMarketSendType){
 
             if (weakSelf.object) {
                 weakSelf.title = @"编辑业务信息";
+                [self.nextButton setTitle:@"修改" forState:UIControlStateNormal];
                 [weakSelf editObject:self.object];
                 weakSelf.sendType = SHGMarketSendTypeReSet;
             }
@@ -98,6 +99,13 @@ typedef NS_ENUM(NSInteger, SHGMarketSendType){
 
     [self.bgView layoutSubviews];
     [self.tableView setTableHeaderView:self.bgView];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    if (self.detailEdit) {
+        [self.controller editMarket];
+    }
 }
 
 - (void)initView
@@ -560,6 +568,7 @@ typedef NS_ENUM(NSInteger, SHGMarketSendType){
                         }
                         [SHGMarketManager modifyMarket:mParam success:^(BOOL success) {
                             if (success) {
+                                weakSelf.detailEdit = YES;
                                 if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(didModifyMarket:)]) {
                                     [weakSelf.delegate didModifyMarket:firstObject];
                                 }
@@ -578,15 +587,15 @@ typedef NS_ENUM(NSInteger, SHGMarketSendType){
 - (BOOL)checkInputMessage
 {
     if (self.marketNameField.text.length == 0) {
-        [Hud showMessageWithText:@"请输入业务名称"];
+        [Hud showMessageWithText:@"请填写业务名称"];
         return NO;
     }
     if (self.contactField.text.length == 0) {
-        [Hud showMessageWithText:@"请输入联系方式"];
+        [Hud showMessageWithText:@"请填写联系方式"];
         return NO;
     }
     if (self.locationField.text.length == 0) {
-        [Hud showMessageWithText:@"请输入业务地区"];
+        [Hud showMessageWithText:@"请填写业务地区"];
         return NO;
     }
     return YES;

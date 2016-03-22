@@ -8,7 +8,7 @@
 
 #import "BaseTableViewController.h"
 #import "SHGMarketObject.h"
-
+#import "SHGMarketDetailViewController.h"
 @protocol SHGMarketSendDelegate <NSObject>
 
 - (void)didCreateNewMarket:(SHGMarketFirstCategoryObject *)object;
@@ -20,5 +20,5 @@
 
 @property (strong, nonatomic) SHGMarketObject *object;
 @property (assign, nonatomic) id<SHGMarketSendDelegate> delegate;
-
+@property (strong, nonatomic) SHGMarketDetailViewController *controller;
 @end

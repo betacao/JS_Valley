@@ -65,19 +65,6 @@
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
-                <button opaque="NO" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="o8A-dg-KLP">
-                    <rect key="frame" x="19" y="106" width="11" height="22"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                    <state key="normal" image="regist_check_box">
-                        <color key="titleColor" red="0.97254901959999995" green="0.35686274509999999" blue="0.32549019610000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                    <state key="selected" image="regist_checked_box"/>
-                    <connections>
-                        <action selector="protocolCheckButtonClicked:" destination="-1" eventType="touchUpInside" id="F2g-NH-BIN"/>
-                    </connections>
-                </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="dfa-rM-vxv">
                     <rect key="frame" x="40" y="110" width="361" height="15"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -108,6 +95,19 @@
                     </state>
                     <connections>
                         <action selector="nextStepButtonClicked:" destination="-1" eventType="touchUpInside" id="Q1o-45-mTw"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="o8A-dg-KLP">
+                    <rect key="frame" x="21" y="106" width="11" height="22"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <state key="normal" image="regist_check_box">
+                        <color key="titleColor" red="0.97254901959999995" green="0.35686274509999999" blue="0.32549019610000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <state key="selected" image="regist_checked_box"/>
+                    <connections>
+                        <action selector="protocolCheckButtonClicked:" destination="-1" eventType="touchUpInside" id="F2g-NH-BIN"/>
                     </connections>
                 </button>
             </subviews>

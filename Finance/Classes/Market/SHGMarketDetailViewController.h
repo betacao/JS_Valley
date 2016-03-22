@@ -13,4 +13,5 @@
 @interface SHGMarketDetailViewController : BaseTableViewController
 @property (strong, nonatomic) SHGMarketObject *object;
 @property (weak, nonatomic) SHGMarketCollectionViewController *controller;
+- (void)editMarket;
 @end

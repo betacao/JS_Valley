@@ -13,7 +13,6 @@
 #import "MyMoneyViewController.h"
 #import "MyAppointmentViewController.h"
 #import "SHGMarketMineViewController.h"
-#import "MyCollectionViewController.h"
 #import "SettingsViewController.h"
 #import "UIButton+EnlargeEdge.h" 
 #import "SHGMarketCollectionViewController.h"
