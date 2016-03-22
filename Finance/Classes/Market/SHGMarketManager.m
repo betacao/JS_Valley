@@ -488,6 +488,7 @@
     [ShareSDK showShareActionSheet:container shareList:shareArray content:publishContent statusBarTips:YES authOptions:nil shareOptions:nil result:^(ShareType type, SSResponseState state, id<ISSPlatformShareInfo> statusInfo, id<ICMErrorInfo> error, BOOL end) {
         if (state == SSResponseStateSuccess){
             [Hud showMessageWithText:@"分享成功"];
+            [[SHGGloble sharedGloble] recordUserAction:object.marketId type:@"dynamic_shareQQ"];
         } else if (state == SSResponseStateFail){
             [Hud showMessageWithText:@"分享失败"];
         }

@@ -675,9 +675,7 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
         NSArray *headUrl = [HeadImage queryAll:title];
         if(headUrl.count > 0){
             HeadImage *hi = (HeadImage*)([headUrl firstObject]);
-            if(![hi.headimg isEqual:@""]){
-                title = hi.nickname;
-            }
+            title = hi.nickname;
         }
 
         id<IEMMessageBody> messageBody = [message.messageBodies firstObject];
@@ -725,12 +723,9 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     notification.timeZone = [NSTimeZone defaultTimeZone];
     notification.soundName = UILocalNotificationDefaultSoundName;
     //发送通知
-    [[UIApplication sharedApplication] scheduleLocalNotification:notification];
     UIApplication *application = [UIApplication sharedApplication];
     application.applicationIconBadgeNumber += 1;
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.4f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [[UIApplication sharedApplication] cancelLocalNotification:notification];
-    });
+    [application scheduleLocalNotification:notification];
 }
 
 #pragma mark - IChatManagerDelegate 登陆回调（主要用于监听自动登录是否成功）

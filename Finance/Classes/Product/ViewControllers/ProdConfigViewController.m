@@ -296,6 +296,7 @@
 
         if (state == SSResponseStateSuccess){
             [self otherShareWithObj:_obj];
+            [[SHGGloble sharedGloble] recordUserAction:_obj.pid type:@"dynamic_shareQQ"];
             NSLog(NSLocalizedString(@"TEXT_ShARE_SUC", @"分享成功"));
 
         } else if (state == SSResponseStateFail){

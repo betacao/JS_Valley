@@ -309,6 +309,7 @@
         if (state == SSResponseStateSuccess){
             NSLog(NSLocalizedString(@"TEXT_ShARE_SUC", @"分享成功"));
             [self otherShareWithObj:obj];
+            [[SHGGloble sharedGloble] recordUserAction:obj.rid type:@"dynamic_shareQQ"];
         } else if (state == SSResponseStateFail){
             NSLog(NSLocalizedString(@"TEXT_ShARE_FAI", @"分享失败,错误码:%d,错误描述:%@"), [error errorCode], [error errorDescription]);
         }

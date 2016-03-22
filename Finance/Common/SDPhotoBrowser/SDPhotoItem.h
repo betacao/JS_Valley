@@ -7,9 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "CircleListObj.h"
 
 @interface SDPhotoItem : NSObject
 
-@property (nonatomic, copy) NSString *thumbnail_pic;
+@property (nonatomic, strong) NSString *thumbnail_pic;
 
+@property (strong, nonatomic) CircleListObj *object;
 @end

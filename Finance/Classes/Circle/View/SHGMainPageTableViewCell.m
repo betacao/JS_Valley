@@ -307,6 +307,7 @@
         [object.photos enumerateObjectsUsingBlock:^(NSString *src, NSUInteger idx, BOOL *stop) {
             SDPhotoItem *item = [[SDPhotoItem alloc] init];
             item.thumbnail_pic = [NSString stringWithFormat:@"%@%@",rBaseAddressForImage,src];
+            item.object = object;
             [temp addObject:item];
         }];
         photoGroup.photoItemArray = temp;

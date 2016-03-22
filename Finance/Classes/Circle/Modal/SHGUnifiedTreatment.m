@@ -201,7 +201,6 @@
         }
     } else{
         if ([QQApiInterface isQQSupportApi]) {
-            //[[SHGGloble sharedGloble] recordUserAction:obj.rid type:@"dynamic_shareQQ"];
             shareArray = [ShareSDK customShareListWithType: SHARE_TYPE_NUMBER(ShareTypeQQ), item3, item1,item2,nil];
         } else{
             shareArray = [ShareSDK customShareListWithType: item3, item1,item2,nil];
@@ -219,6 +218,7 @@
     [ShareSDK showShareActionSheet:container shareList:shareArray content:publishContent statusBarTips:YES authOptions:nil shareOptions:nil result:^(ShareType type, SSResponseState state, id<ISSPlatformShareInfo> statusInfo, id<ICMErrorInfo> error, BOOL end) {
         if (state == SSResponseStateSuccess){
             [self otherShareWithObj:obj];
+            [[SHGGloble sharedGloble] recordUserAction:obj.rid type:@"dynamic_shareQQ"];
             NSLog(NSLocalizedString(@"TEXT_ShARE_SUC", @"分享成功"));
         } else if (state == SSResponseStateFail){
             NSLog(NSLocalizedString(@"TEXT_ShARE_FAI", @"分享失败,错误码:%d,错误描述:%@"), [error errorCode], [error errorDescription]);
@@ -267,6 +267,7 @@
     //弹出分享菜单
     [ShareSDK showShareActionSheet:container shareList:shareArray content:publishContent statusBarTips:YES authOptions:nil shareOptions:nil result:^(ShareType type, SSResponseState state, id<ISSPlatformShareInfo> statusInfo, id<ICMErrorInfo> error, BOOL end) {
         if (state == SSResponseStateSuccess){
+            [[SHGGloble sharedGloble] recordUserAction:object.rid type:@"dynamic_shareQQ"];
             [Hud showMessageWithText:@"分享成功"];
         } else if (state == SSResponseStateFail){
             [Hud showMessageWithText:@"分享失败"];
