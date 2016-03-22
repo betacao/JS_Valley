@@ -10,6 +10,6 @@
 
 @interface SHGMarketMineViewController : BaseTableViewController
 - (NSMutableArray *) currentDataArray;
+- (void)tableViewReloadData;
 - (void)reloadData;
-- (void)refreshData;
 @end

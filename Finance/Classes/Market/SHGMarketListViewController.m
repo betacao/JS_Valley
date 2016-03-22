@@ -102,9 +102,14 @@
     return array;
 }
 
-- (void)reloadData
+- (void)tableViewReloadData
 {
     [self.tableView reloadData];
+}
+
+- (void)reloadData
+{
+    [self loadMarketList:@"first" firstId:[self.scrollView marketFirstId] second:[self.scrollView marketSecondId] marketId:@"-1" modifyTime:@""];
 }
 
 - (void)refreshData

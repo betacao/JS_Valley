@@ -36,6 +36,7 @@
 
     self.markLabel.font = kMainTimeFont;
     self.markLabel.textColor = kMainTimeColor;
+    self.markLabel.text = @"推广";
 
     self.timeLabel.font = kMainTimeFont;
     self.timeLabel.textColor = kMainTimeColor;
@@ -91,6 +92,8 @@
 - (void)setObject:(CircleListObj *)object
 {
     _object = object;
+    [self clearCell];
+
     self.titleLabel.text = object.detail;
 
     NSArray *array = (NSArray *)object.photos;
@@ -99,9 +102,14 @@
     } else{
         self.extendImageView.image = [UIImage imageNamed:@"default_image"];
     }
-    self.markLabel.text = @"推广";
     self.timeLabel.text = object.publishdate;
 
+}
+
+- (void)clearCell
+{
+    self.timeLabel.text = @"";
+    self.timeLabel.width = 0.0f;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated

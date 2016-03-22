@@ -327,7 +327,7 @@
                 obj.isCollection = iscollection;
             }
         }
-        [controller performSelector:@selector(reloadData)];
+        [controller performSelector:@selector(tableViewReloadData)];
     }
 
     for (BaseTableViewController *controller in self.navigationController.viewControllers) {
@@ -338,7 +338,7 @@
                     obj.isCollection = iscollection;
                 }
             }
-            [controller performSelector:@selector(reloadData)];
+            [controller performSelector:@selector(tableViewReloadData)];
         }
         
     }
@@ -383,7 +383,7 @@
                 }
             }
         }
-        [controller performSelector:@selector(reloadData)];
+        [controller performSelector:@selector(tableViewReloadData)];
     }
 
     NSInteger count = self.navigationController.viewControllers.count;
@@ -405,7 +405,7 @@
                     }
                 }
             }
-            [controller performSelector:@selector(reloadData)];
+            [controller performSelector:@selector(tableViewReloadData)];
         }
     }
 
@@ -428,19 +428,13 @@
     UIViewController *firstController = [self.viewControllers firstObject];
     if ([firstController isViewLoaded]) {
         [firstController performSelector:@selector(scrollToCategory:) withObject:object];
-        [firstController performSelector:@selector(refreshData) withObject:nil];
-    }
-
-    //重新请求
-    UIViewController *secondController = [self.viewControllers lastObject];
-    if ([secondController isViewLoaded]) {
-        [secondController performSelector:@selector(refreshData) withObject:object];
+        [firstController performSelector:@selector(reloadData) withObject:nil];
     }
 
     //我的业务被移动到个人中心后 要刷新
     for (UIViewController *controller in self.navigationController.viewControllers) {
         if ([NSStringFromClass([controller class]) isEqualToString:@"SHGMarketMineViewController"]) {
-            [controller performSelector:@selector(refreshData) withObject:object];
+            [controller performSelector:@selector(reloadData) withObject:object];
         }
     }
 
@@ -464,11 +458,11 @@
             //我的业务被移动到个人中心后 要刷新
             for (UIViewController *controller in self.navigationController.viewControllers) {
                 if ([NSStringFromClass([controller class]) isEqualToString:@"SHGMarketMineViewController"]) {
-                    [controller performSelector:@selector(refreshData) withObject:object];
+                    [controller performSelector:@selector(reloadData) withObject:object];
                 }
             }
             UIViewController *controller = [self.viewControllers firstObject];
-            [controller performSelector:@selector(refreshData) withObject:object];
+            [controller performSelector:@selector(reloadData) withObject:object];
         }];
     };
     [alertView show];

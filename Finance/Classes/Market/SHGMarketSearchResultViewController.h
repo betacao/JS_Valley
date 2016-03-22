@@ -24,7 +24,7 @@ typedef NS_ENUM(NSInteger, SHGMarketSearchType)
 
 - (instancetype)initWithType:(SHGMarketSearchType)type;
 
-- (void)reloadData;
+- (void)tableViewReloadData;
 @end
 
 @interface SHGMarketSearchResultHeaderView : UIView

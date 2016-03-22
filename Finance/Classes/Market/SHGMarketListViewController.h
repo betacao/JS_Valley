@@ -11,7 +11,10 @@
 
 @interface SHGMarketListViewController : BaseTableViewController
 - (NSMutableArray *) currentDataArray;
+- (void)tableViewReloadData;
+//拉取当前分类下的
 - (void)reloadData;
+//全部重新拉取
 - (void)refreshData;
 - (void)clearAndReloadData;
 //移动到某个分类

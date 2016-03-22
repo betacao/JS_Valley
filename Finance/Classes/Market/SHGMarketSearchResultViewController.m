@@ -53,7 +53,7 @@
     }
 }
 
-- (void)reloadData
+- (void)tableViewReloadData
 {
     [self.tableView reloadData];
 }

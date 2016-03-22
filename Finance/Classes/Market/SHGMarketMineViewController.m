@@ -43,12 +43,12 @@
     return self.dataArr;
 }
 
-- (void)reloadData
+- (void)tableViewReloadData
 {
     [self.tableView reloadData];
 }
 
-- (void)refreshData
+- (void)reloadData
 {
     [self loadMarketList:@"first" firstId:@"" second:@"" marketId:@"-1"];
 }
