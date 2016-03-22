@@ -63,14 +63,12 @@
 
         } else if ([object isKindOfClass:NSClassFromString(@"UINavigationButton")]){
             UIButton *button = (UIButton *)object;
-            [button setTitle:@"取消" forState:UIControlStateNormal];
+            button.enabled = YES;
             if (!self.cancelButtonTitleColor) {
                 [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
             } else{
                 [button setTitleColor:self.cancelButtonTitleColor forState:UIControlStateNormal];
             }
-            button.titleLabel.font = FontFactor(15.0f);
-            button.enabled = YES;
         } else{
             if (!self.needLineView) {
                 UIView *view = (UIView *)object;
@@ -78,24 +76,17 @@
             }
         }
     }
-
 }
 
-/**
- *  自定义控件自带的取消按钮的文字（默认为“取消”/“Cancel”）
- *
- *  @param title 自定义文字
- */
-- (void)setCancelButtonTitle:(NSString *)title
+- (void)setFrame:(CGRect)frame
 {
-    for (UIView *searchbuttons in self.subviews)
-    {
-        if ([searchbuttons isKindOfClass:[UIButton class]])
-        {
-            UIButton *cancelButton = (UIButton*)searchbuttons;
-//            cancelButton.titleLabel.textColor=[UIColor redColor];
-            [cancelButton setTitle:title forState:UIControlStateNormal];
-            break;
+    [super setFrame:frame];
+    UIView *view = [self.subviews firstObject];
+    for (id object in view.subviews) {
+        if ([object isKindOfClass:NSClassFromString(@"UINavigationButton")]){
+            UIButton *button = (UIButton *)object;
+            [button setTitle:@"取消" forState:UIControlStateNormal];
+            button.titleLabel.font = FontFactor(15.0f);
         }
     }
 }

@@ -10,12 +10,11 @@
 @interface SHGHomeViewController : BaseTableViewController
 
 @property (assign, nonatomic) BOOL needShowNewFriend;
+@property (assign, nonatomic) BOOL needRefreshTableView;
 
 + (instancetype)sharedController;
-- (UITableView *)currentTableView;
 - (NSMutableArray *) currentDataArray;
 - (NSMutableArray *) currentListArray;
-- (void)deleteCellAtIndexPath:(NSArray *)paths;
 - (void)refreshHeader;
 - (void)requestRecommendFriends;
 - (void)loadRegisterPushFriend;

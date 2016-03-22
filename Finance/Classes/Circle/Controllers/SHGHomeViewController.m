@@ -44,7 +44,6 @@
 @property (strong, nonatomic) SHGEmptyDataView *emptyView;
 @property (strong, nonatomic) EMSearchBar *searchBar;
 @property (strong, nonatomic) NSMutableDictionary *recommendHeightDictionary;
-@property (assign, nonatomic) BOOL needRefreshTableView;
 @end
 
 @implementation SHGHomeViewController
@@ -131,11 +130,6 @@
             [[NSUserDefaults standardUserDefaults] synchronize];
         }];
     }
-}
-
-- (UITableView *)currentTableView
-{
-    return self.tableView;
 }
 
 - (NSMutableArray *)currentDataArray
@@ -257,8 +251,8 @@
     if (!self.friendObject || [self.dataArr indexOfObject:self.friendObject] != NSNotFound) {
         return;
     }
-    if(self.dataArr.count > 5 && self.needShowNewFriend){
-        [self.dataArr insertObject:self.friendObject atIndex:4];
+    if(self.dataArr.count > 3 && self.needShowNewFriend){
+        [self.dataArr insertObject:self.friendObject atIndex:2];
         self.needRefreshTableView = YES;
     }
 }
@@ -275,17 +269,20 @@
     }
 }
 
-- (void)deleteCellAtIndexPath:(NSArray *)paths
+- (void)setNeedShowNewFriend:(BOOL)needShowNewFriend
 {
-    [self.tableView beginUpdates];
-    [self.tableView deleteRowsAtIndexPaths:paths withRowAnimation:UITableViewRowAnimationAutomatic];
-    [self.tableView endUpdates];
+    _needShowNewFriend = needShowNewFriend;
+    if (!needShowNewFriend && [self.dataArr indexOfObject:self.friendObject] != NSNotFound) {
+        [self.dataArr removeObject:self.friendObject];
+        [self.dataArr removeObject:self.recommendArray];
+        [self insertRecomandArray];
+    }
 }
 
 - (void)refreshData
 {
     __weak typeof(self) weakSelf = self;
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [weakSelf refreshHeader];
     });
 }

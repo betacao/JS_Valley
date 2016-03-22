@@ -101,7 +101,7 @@
 
         self.titleImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"market_locationArrow"]];
         [self.titleImageView sizeToFit];
-        self.titleImageView.origin = CGPointMake(CGRectGetMaxX(self.titleLabel.frame) + 4.0f, (CGRectGetHeight(self.titleLabel.frame) - CGRectGetHeight(self.titleImageView.frame)) / 2.0f);
+        self.titleImageView.origin = CGPointMake(CGRectGetMaxX(self.titleLabel.frame) + MarginFactor(4.0f), (CGRectGetHeight(self.titleLabel.frame) - CGRectGetHeight(self.titleImageView.frame)) / 2.0f);
         [_titleButton addSubview:self.titleImageView];
     }
     return _titleButton;
@@ -113,7 +113,7 @@
         _searchBar = [[EMSearchBar alloc] init];
         _searchBar.delegate = self;
         _searchBar.needLineView = NO;
-        _searchBar.placeholder = @"请填写业务名称";
+        _searchBar.placeholder = @"请输入业务名称/类型/地区关键字";
         _searchBar.backgroundImageColor = Color(@"d43c33");
     }
     return _searchBar;
@@ -130,8 +130,8 @@
         self.titleButton.frame = CGRectZero;
         self.titleLabel.text = city;
         [self.titleLabel sizeToFit];
-        self.titleImageView.origin = CGPointMake(CGRectGetMaxX(self.titleLabel.frame) + 4.0f, (CGRectGetHeight(self.titleLabel.frame) - CGRectGetHeight(self.titleImageView.frame)) / 2.0f);
-        self.titleButton.size = CGSizeMake(CGRectGetMaxX(self.titleImageView.frame), CGRectGetHeight(self.titleLabel.frame));
+        self.titleImageView.origin = CGPointMake(CGRectGetMaxX(self.titleLabel.frame) + MarginFactor(4.0f), (CGRectGetHeight(self.titleLabel.frame) - CGRectGetHeight(self.titleImageView.frame)) / 2.0f);
+        self.titleButton.size = CGSizeMake(CGRectGetMaxX(self.titleImageView.frame) + MarginFactor(17.0f), CGRectGetHeight(self.titleLabel.frame));
 
         UIViewController *controller = [self.viewControllers firstObject];
         [controller performSelector:@selector(clearAndReloadData) withObject:nil];

@@ -823,6 +823,7 @@
 		F936DD511C3A553800584F53 /* SHGFriendGropingTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F936DD4F1C3A553800584F53 /* SHGFriendGropingTableViewCell.xib */; };
 		F936DD551C3A6C9700584F53 /* SHGGropingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F936DD531C3A6C9700584F53 /* SHGGropingViewController.m */; };
 		F936DD561C3A6C9700584F53 /* SHGGropingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F936DD541C3A6C9700584F53 /* SHGGropingViewController.xib */; };
+		F93891BE1CA11B2900B182F7 /* UINavigationItem+Custom.m in Sources */ = {isa = PBXBuildFile; fileRef = F93891BD1CA11B2900B182F7 /* UINavigationItem+Custom.m */; };
 		F93D55D21CA0EA24008845C5 /* MessageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F93D55D11CA0EA24008845C5 /* MessageTableViewCell.xib */; };
 		F93FCBC11C856D5A004E356E /* DDTapGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = F93FCBA61C856D5A004E356E /* DDTapGestureRecognizer.m */; };
 		F93FCBC21C856D5A004E356E /* NSArray+Category.m in Sources */ = {isa = PBXBuildFile; fileRef = F93FCBA81C856D5A004E356E /* NSArray+Category.m */; };
@@ -834,7 +835,6 @@
 		F93FCBC81C856D5A004E356E /* UIColor+extend.m in Sources */ = {isa = PBXBuildFile; fileRef = F93FCBB41C856D5A004E356E /* UIColor+extend.m */; };
 		F93FCBCA1C856D5A004E356E /* UIImage+Customized.m in Sources */ = {isa = PBXBuildFile; fileRef = F93FCBB81C856D5A004E356E /* UIImage+Customized.m */; };
 		F93FCBCB1C856D5A004E356E /* UIImage+Rotation.m in Sources */ = {isa = PBXBuildFile; fileRef = F93FCBBA1C856D5A004E356E /* UIImage+Rotation.m */; };
-		F93FCBCC1C856D5A004E356E /* UINavigationBar+Awesome.m in Sources */ = {isa = PBXBuildFile; fileRef = F93FCBBC1C856D5A004E356E /* UINavigationBar+Awesome.m */; };
 		F93FCBCD1C856D5A004E356E /* UIView+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = F93FCBBE1C856D5A004E356E /* UIView+Additions.m */; };
 		F95F42AA1C8DA341003EDA30 /* SHGConnectionsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F95F42A81C8DA341003EDA30 /* SHGConnectionsTableViewCell.m */; };
 		F95F42AB1C8DA341003EDA30 /* SHGConnectionsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F95F42A91C8DA341003EDA30 /* SHGConnectionsTableViewCell.xib */; };
@@ -2059,6 +2059,8 @@
 		F936DD521C3A6C9700584F53 /* SHGGropingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGGropingViewController.h; sourceTree = "<group>"; };
 		F936DD531C3A6C9700584F53 /* SHGGropingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGGropingViewController.m; sourceTree = "<group>"; };
 		F936DD541C3A6C9700584F53 /* SHGGropingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGGropingViewController.xib; sourceTree = "<group>"; };
+		F93891BC1CA11B2900B182F7 /* UINavigationItem+Custom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationItem+Custom.h"; sourceTree = "<group>"; };
+		F93891BD1CA11B2900B182F7 /* UINavigationItem+Custom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationItem+Custom.m"; sourceTree = "<group>"; };
 		F93D55D11CA0EA24008845C5 /* MessageTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MessageTableViewCell.xib; sourceTree = "<group>"; };
 		F93FCBA51C856D5A004E356E /* DDTapGestureRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDTapGestureRecognizer.h; sourceTree = "<group>"; };
 		F93FCBA61C856D5A004E356E /* DDTapGestureRecognizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDTapGestureRecognizer.m; sourceTree = "<group>"; };
@@ -2080,8 +2082,6 @@
 		F93FCBB81C856D5A004E356E /* UIImage+Customized.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Customized.m"; sourceTree = "<group>"; };
 		F93FCBB91C856D5A004E356E /* UIImage+Rotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Rotation.h"; sourceTree = "<group>"; };
 		F93FCBBA1C856D5A004E356E /* UIImage+Rotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Rotation.m"; sourceTree = "<group>"; };
-		F93FCBBB1C856D5A004E356E /* UINavigationBar+Awesome.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationBar+Awesome.h"; sourceTree = "<group>"; };
-		F93FCBBC1C856D5A004E356E /* UINavigationBar+Awesome.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationBar+Awesome.m"; sourceTree = "<group>"; };
 		F93FCBBD1C856D5A004E356E /* UIView+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Additions.h"; sourceTree = "<group>"; };
 		F93FCBBE1C856D5A004E356E /* UIView+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Additions.m"; sourceTree = "<group>"; };
 		F95F42A71C8DA341003EDA30 /* SHGConnectionsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGConnectionsTableViewCell.h; sourceTree = "<group>"; };
@@ -4564,10 +4564,10 @@
 				F93FCBB81C856D5A004E356E /* UIImage+Customized.m */,
 				F93FCBB91C856D5A004E356E /* UIImage+Rotation.h */,
 				F93FCBBA1C856D5A004E356E /* UIImage+Rotation.m */,
-				F93FCBBB1C856D5A004E356E /* UINavigationBar+Awesome.h */,
-				F93FCBBC1C856D5A004E356E /* UINavigationBar+Awesome.m */,
 				F93FCBBD1C856D5A004E356E /* UIView+Additions.h */,
 				F93FCBBE1C856D5A004E356E /* UIView+Additions.m */,
+				F93891BC1CA11B2900B182F7 /* UINavigationItem+Custom.h */,
+				F93891BD1CA11B2900B182F7 /* UINavigationItem+Custom.m */,
 			);
 			name = Category;
 			path = Finance/Category;
@@ -5618,7 +5618,6 @@
 				6187D2D31AF1C693008E1D21 /* ChatListCell.m in Sources */,
 				565136D51B834E2F00894B1D /* RecommendModel.m in Sources */,
 				6187D2D71AF1C693008E1D21 /* ChatViewController.m in Sources */,
-				F93FCBCC1C856D5A004E356E /* UINavigationBar+Awesome.m in Sources */,
 				F9F349B11C1921900090F111 /* SHGMarketSegmentViewController.m in Sources */,
 				6187D2DE1AF1C693008E1D21 /* DXRecordView.m in Sources */,
 				61425B3D1AFA7CDD00758BCB /* CinfigView.m in Sources */,
@@ -5795,6 +5794,7 @@
 				6187D2DB1AF1C693008E1D21 /* DXFaceView.m in Sources */,
 				6145FF251AE4FCFE0074AB49 /* ProductListViewController.m in Sources */,
 				F9F349D41C1993F90090F111 /* SHGMarketSendViewController.m in Sources */,
+				F93891BE1CA11B2900B182F7 /* UINavigationItem+Custom.m in Sources */,
 				6187D2F51AF1C693008E1D21 /* RealtimeSearchUtil.m in Sources */,
 				F9EBB7D41BB3F4A00023E84E /* SHGProvincesViewController.m in Sources */,
 				F9F349D01C1975910090F111 /* SHGMarketManager.m in Sources */,

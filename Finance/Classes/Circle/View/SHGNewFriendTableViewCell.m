@@ -132,7 +132,7 @@
     self.companyLabel.text = object.company;
     self.departmentLabel.text = object.title;
 
-    NSString *string = [NSString stringWithFormat:@"您的通讯录联系人%@假如大牛圈啦,快去跟TA 打个招呼 吧！",object.realName];
+    NSString *string = [NSString stringWithFormat:@"您的通讯录联系人%@假如大牛圈啦，快去跟TA 打个招呼 吧！",object.realName];
     NSRange range = [string rangeOfString:@"打个招呼"];
     NSMutableAttributedString *content = [[NSMutableAttributedString alloc] initWithString:string];
     [content addAttributes:@{NSFontAttributeName:FontFactor(16.0f), NSForegroundColorAttributeName:Color(@"4277b2")} range:range];
@@ -168,16 +168,8 @@
 
 - (IBAction)closeButtonClick:(UIButton *)sender
 {
-    NSMutableArray *array = [SHGHomeViewController sharedController].dataArr;
-    NSInteger index = [array indexOfObject:self.object];
-    if (index != NSNotFound) {
-        [array removeObject:self.object];
-        [SHGHomeViewController sharedController].needShowNewFriend = NO;
-        UITableView *tableView = [[SHGHomeViewController sharedController] currentTableView];
-        [tableView beginUpdates];
-        [tableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:index inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
-        [tableView endUpdates];
-    }
+    [SHGHomeViewController sharedController].needShowNewFriend = NO;
+    [SHGHomeViewController sharedController].needRefreshTableView = YES;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated

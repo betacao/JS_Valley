@@ -22,7 +22,6 @@
 #import "SHGMarketSegmentViewController.h"
 #import "SHGMarketListViewController.h"
 #import "SHGMarketMineViewController.h"
-#import "UINavigationBar+Awesome.h"
 
 @interface TabBarViewController()<SHGSegmentControllerDelegate>
 @property (strong, nonatomic) SHGSegmentController *homeSegmentViewController;

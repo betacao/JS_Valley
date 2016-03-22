@@ -192,24 +192,8 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
 
 - (void)reloadData
 {
-    for (UIViewController *controller in self.viewControllers) {
-        UITableView *listTable = [controller performSelector:@selector(currentTableView)];
-        [listTable reloadData];
-    }
-}
-
-- (void)reloadDataAtIndexPaths:(NSArray *)indexPaths
-{
-    for (NSInteger i = 0; i < indexPaths.count; i++) {
-        UIViewController *controller =[self.viewControllers objectAtIndex:i];
-        UITableView *listTable = [controller performSelector:@selector(currentTableView)];
-        [listTable reloadRowsAtIndexPaths:@[[indexPaths objectAtIndex:i]] withRowAnimation:UITableViewRowAnimationAutomatic];
-    }
-}
-
-- (void)refreshLoad
-{
-
+    SHGHomeViewController *controller = [SHGHomeViewController sharedController];
+    controller.needRefreshTableView = YES;
 }
 
 - (void)refreshHomeView
@@ -312,13 +296,13 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     SHGHomeViewController *controller = [self.viewControllers firstObject];
     NSMutableArray *listArray = [controller currentListArray];
     NSMutableArray *dataArray = [controller currentDataArray];
-//    listArray remove
+
     NSArray *objectArray = [self targetObjectsByRid:rid];
     NSArray *indexArray = [self indexOfObjectByRid:rid];
     [listArray removeObjectsInArray:objectArray];
     [dataArray removeObjectsInArray:objectArray];
     if (indexArray.count > 0) {
-        [controller deleteCellAtIndexPath:@[[NSIndexPath indexPathForRow:[[indexArray firstObject] integerValue] inSection:0]]];
+        controller.needRefreshTableView = YES;
     }
 }
 

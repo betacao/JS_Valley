@@ -572,17 +572,13 @@
     if(array.count != indexArray.count){
         return;
     }
-    NSMutableArray *pathArray = [NSMutableArray array];
     for(CircleListObj *obj in array){
         obj.sharenum = currentObj.sharenum;
         obj.cmmtnum = currentObj.cmmtnum;
         obj.praisenum = currentObj.praisenum;
-        NSInteger index = [array indexOfObject:obj];
-        NSIndexPath *path = [NSIndexPath indexPathForRow: [[indexArray objectAtIndex: index] integerValue] inSection:0];
-        [pathArray addObject:path];
     }
 
-    [[SHGSegmentController sharedSegmentController] reloadDataAtIndexPaths:pathArray];
+    [[SHGSegmentController sharedSegmentController] reloadData];
 }
 
 @end

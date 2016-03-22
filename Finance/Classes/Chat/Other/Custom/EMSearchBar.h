@@ -13,13 +13,6 @@
 #import <UIKit/UIKit.h>
 
 @interface EMSearchBar : UISearchBar
-
-/**
- *  自定义控件自带的取消按钮的文字（默认为“取消”/“Cancel”）
- *
- *  @param title 自定义文字
- */
-- (void)setCancelButtonTitle:(NSString *)title;
 @property (assign, nonatomic) BOOL needLineView;
 @property (strong, nonatomic) UIColor *cancelButtonTitleColor;
 @property (strong, nonatomic) UIColor *backgroundImageColor;

@@ -10,11 +10,9 @@
 
 @interface SHGNewsViewController : BaseTableViewController
 
-- (UITableView *)currentTableView;
 
 - (NSMutableArray *)currentDataArray;
 
 - (void)refreshHeader;
 
-- (void)refreshLoad;
 @end

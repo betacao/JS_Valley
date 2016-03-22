@@ -81,11 +81,6 @@
     [super viewDidAppear:animated];
 }
 
-- (UITableView *)currentTableView
-{
-    return self.listTable;
-}
-
 - (NSMutableArray *) currentDataArray
 {
     return self.currentArry;
@@ -227,13 +222,6 @@
     
 }
 
-- (void)refreshLoad
-{
-    if (self.isRefreshing) {
-        return;
-    }
-   [self requestDataWithTarget:@"load" time:[self refreshMinRid] tagId:self.currentTagId];
-}
 
 - (void)refreshHeader
 {

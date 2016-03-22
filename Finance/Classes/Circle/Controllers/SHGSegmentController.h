@@ -43,8 +43,6 @@ typedef void(^loadViewFinishBlock)(UIView *view);
 - (void)refreshHomeView;
 //简单的tableview刷新
 - (void)reloadData;
-//tableview刷新某些行
-- (void)reloadDataAtIndexPaths:(NSArray *)indexPaths;
 //删除对象（只有动态界面才会有删除 已关注界面不存在删除）
 - (void)removeObject:(CircleListObj *)object;
 //删除一组对象 主要用于取消关注时候 已关注界面删掉数组
