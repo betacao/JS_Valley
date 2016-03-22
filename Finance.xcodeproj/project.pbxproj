@@ -218,7 +218,6 @@
 		5331DF2C1AFC20A600E035B8 /* MessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5331DF2A1AFC20A600E035B8 /* MessageViewController.m */; };
 		5331DF2D1AFC20A600E035B8 /* MessageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5331DF2B1AFC20A600E035B8 /* MessageViewController.xib */; };
 		5331DF311AFC21BF00E035B8 /* MessageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5331DF2F1AFC21BF00E035B8 /* MessageTableViewCell.m */; };
-		5331DF321AFC21BF00E035B8 /* MessageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5331DF301AFC21BF00E035B8 /* MessageTableViewCell.xib */; };
 		5331DF351AFC224D00E035B8 /* MessageObj.m in Sources */ = {isa = PBXBuildFile; fileRef = 5331DF341AFC224D00E035B8 /* MessageObj.m */; };
 		538964D11AFC6BEB00041548 /* AppDelegate+EaseMob.m in Sources */ = {isa = PBXBuildFile; fileRef = 538964C41AFC6BEB00041548 /* AppDelegate+EaseMob.m */; };
 		538964D21AFC6BEB00041548 /* NSDate+Category.m in Sources */ = {isa = PBXBuildFile; fileRef = 538964C61AFC6BEB00041548 /* NSDate+Category.m */; };
@@ -824,6 +823,7 @@
 		F936DD511C3A553800584F53 /* SHGFriendGropingTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F936DD4F1C3A553800584F53 /* SHGFriendGropingTableViewCell.xib */; };
 		F936DD551C3A6C9700584F53 /* SHGGropingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F936DD531C3A6C9700584F53 /* SHGGropingViewController.m */; };
 		F936DD561C3A6C9700584F53 /* SHGGropingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F936DD541C3A6C9700584F53 /* SHGGropingViewController.xib */; };
+		F93D55D21CA0EA24008845C5 /* MessageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F93D55D11CA0EA24008845C5 /* MessageTableViewCell.xib */; };
 		F93FCBC11C856D5A004E356E /* DDTapGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = F93FCBA61C856D5A004E356E /* DDTapGestureRecognizer.m */; };
 		F93FCBC21C856D5A004E356E /* NSArray+Category.m in Sources */ = {isa = PBXBuildFile; fileRef = F93FCBA81C856D5A004E356E /* NSArray+Category.m */; };
 		F93FCBC31C856D5A004E356E /* NSDate+Customized.m in Sources */ = {isa = PBXBuildFile; fileRef = F93FCBAA1C856D5A004E356E /* NSDate+Customized.m */; };
@@ -1189,7 +1189,6 @@
 		5331DF2B1AFC20A600E035B8 /* MessageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MessageViewController.xib; sourceTree = "<group>"; };
 		5331DF2E1AFC21BF00E035B8 /* MessageTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageTableViewCell.h; sourceTree = "<group>"; };
 		5331DF2F1AFC21BF00E035B8 /* MessageTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageTableViewCell.m; sourceTree = "<group>"; };
-		5331DF301AFC21BF00E035B8 /* MessageTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MessageTableViewCell.xib; sourceTree = "<group>"; };
 		5331DF331AFC224D00E035B8 /* MessageObj.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageObj.h; sourceTree = "<group>"; };
 		5331DF341AFC224D00E035B8 /* MessageObj.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageObj.m; sourceTree = "<group>"; };
 		538964C31AFC6BEB00041548 /* AppDelegate+EaseMob.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AppDelegate+EaseMob.h"; sourceTree = "<group>"; };
@@ -2060,6 +2059,7 @@
 		F936DD521C3A6C9700584F53 /* SHGGropingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGGropingViewController.h; sourceTree = "<group>"; };
 		F936DD531C3A6C9700584F53 /* SHGGropingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGGropingViewController.m; sourceTree = "<group>"; };
 		F936DD541C3A6C9700584F53 /* SHGGropingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGGropingViewController.xib; sourceTree = "<group>"; };
+		F93D55D11CA0EA24008845C5 /* MessageTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MessageTableViewCell.xib; sourceTree = "<group>"; };
 		F93FCBA51C856D5A004E356E /* DDTapGestureRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDTapGestureRecognizer.h; sourceTree = "<group>"; };
 		F93FCBA61C856D5A004E356E /* DDTapGestureRecognizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDTapGestureRecognizer.m; sourceTree = "<group>"; };
 		F93FCBA71C856D5A004E356E /* NSArray+Category.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+Category.h"; sourceTree = "<group>"; };
@@ -3355,7 +3355,7 @@
 				5331DF2B1AFC20A600E035B8 /* MessageViewController.xib */,
 				5331DF2E1AFC21BF00E035B8 /* MessageTableViewCell.h */,
 				5331DF2F1AFC21BF00E035B8 /* MessageTableViewCell.m */,
-				5331DF301AFC21BF00E035B8 /* MessageTableViewCell.xib */,
+				F93D55D11CA0EA24008845C5 /* MessageTableViewCell.xib */,
 				5331DF331AFC224D00E035B8 /* MessageObj.h */,
 				5331DF341AFC224D00E035B8 /* MessageObj.m */,
 				532AF6AB1AFC3499007D3E4B /* FriendsListViewController.h */,
@@ -5386,7 +5386,6 @@
 				408D8B0F1AF8618C0055810C /* VoiceSearchFeedback014.png in Resources */,
 				408D8B011AF8618C0055810C /* VoiceSearchFeedback007.png in Resources */,
 				B080FEB01B81E30100426579 /* EmojisList.plist in Resources */,
-				5331DF321AFC21BF00E035B8 /* MessageTableViewCell.xib in Resources */,
 				408D8B391AF8618C0055810C /* faceDelete.png in Resources */,
 				408D8AF21AF8618C0055810C /* chatFire_audioPlaying2@2x.png in Resources */,
 				61E83D771AF7C78E00703651 /* 关于我们@3x.png in Resources */,
@@ -5424,6 +5423,7 @@
 				408D8B4E1AF8618C0055810C /* chatBar_recordSelected@2x.png in Resources */,
 				61E83CF21AF7C78E00703651 /* 发送按钮-默认@2x.png in Resources */,
 				61E83D731AF7C78E00703651 /* 设置@3x.png in Resources */,
+				F93D55D21CA0EA24008845C5 /* MessageTableViewCell.xib in Resources */,
 				61E83CFE1AF7C78E00703651 /* 产品-默认@2x.png in Resources */,
 				F9E2A4B51BE99E1C00ECB234 /* SHGNewsViewController.xib in Resources */,
 				61E83D231AF7C78E00703651 /* 选择行业下拉框@2x.png in Resources */,

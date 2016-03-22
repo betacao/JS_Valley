@@ -95,11 +95,13 @@
 
 - (void)tapUserHeaderView
 {
-    [[SHGGloble sharedGloble] recordUserAction:self.userId type:@"personalDynamic_index"];
-    SHGPersonalViewController *personController = [[SHGPersonalViewController alloc] init];
-    personController.userId = self.userId;
-    UIViewController *controller = [[SHGGloble sharedGloble] getCurrentRootViewController];
-    [self pushIntoViewController:controller newViewController:personController];
+    if (self.userId) {
+        [[SHGGloble sharedGloble] recordUserAction:self.userId type:@"personalDynamic_index"];
+        SHGPersonalViewController *personController = [[SHGPersonalViewController alloc] init];
+        personController.userId = self.userId;
+        UIViewController *controller = [[SHGGloble sharedGloble] getCurrentRootViewController];
+        [self pushIntoViewController:controller newViewController:personController];
+    }
 }
 
 - (void)pushIntoViewController:(UIViewController*)viewController newViewController:(UIViewController*)newController

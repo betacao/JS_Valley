@@ -16,8 +16,6 @@
 @property (strong, nonatomic) NSString *code;
 @property (strong, nonatomic) NSString *oid;
 @property (strong, nonatomic) NSString *feedHtml;
-
-- (CGFloat)heightForCell;
 @end
 
 

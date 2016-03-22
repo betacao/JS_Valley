@@ -7,9 +7,6 @@
 //
 
 #import "MessageObj.h"
-#define contentLabelFont [UIFont systemFontOfSize:13.0f]
-const CGFloat kContentWidth = 212.0f;
-const CGFloat kMargin = 128.0f;
 
 
 
@@ -17,12 +14,6 @@ const CGFloat kMargin = 128.0f;
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey{
     return  @{@"title": @"title", @"content":@"content", @"time":@"time", @"code":@"code", @"oid":@"oid", @"feedHtml":@"feedhtml"};
-}
-
-- (CGFloat)heightForCell
-{
-    CGSize size = [self.content sizeWithSize:CGSizeMake(kContentWidth * XFACTOR, CGFLOAT_MAX) font:contentLabelFont];
-    return size.height + kMargin;
 }
 
 @end

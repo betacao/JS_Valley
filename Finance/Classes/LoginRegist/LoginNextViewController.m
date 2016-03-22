@@ -198,4 +198,9 @@
     [[AppDelegate currentAppdelegate] moveToRootController:self.rid];
     //重新登录时刷新我的页面数据
 }
+
+- (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+{
+    [self.lblPassward resignFirstResponder];
+}
 @end

@@ -21,7 +21,6 @@
 }
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property (strong, nonatomic) MessageTableViewCell *prototypeCell;
 @end
 
 @implementation MessageViewController
@@ -35,10 +34,7 @@
 {
     [super viewDidLoad];
     self.title = @"通知";
-    UINib *cellNib = [UINib nibWithNibName:@"MessageTableViewCell" bundle:nil];
-    [self.tableView registerNib:cellNib forCellReuseIdentifier:@"Cell"];
     self.tableView.tableFooterView = [[UIView alloc] init];
-    self.prototypeCell  = [self.tableView dequeueReusableCellWithIdentifier:@"Cell"];
     [self addHeaderRefresh:self.tableView headerRefesh:YES andFooter:YES];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshData) name:NOTIFI_SENDPOST object:nil];
     [self refreshData];
@@ -127,7 +123,7 @@
     hasRequestFailed = NO;
 }
 
--(void)refreshFooter
+- (void)refreshFooter
 {
     if (hasDataFinished){
         [self.tableView.footer endRefreshingWithNoMoreData];
@@ -150,20 +146,19 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     MessageObj *obj = self.dataArr[indexPath.row];
-    
-    return  [obj heightForCell];
+    CGFloat height = [tableView cellHeightForIndexPath:indexPath model:obj keyPath:@"object" cellClass:[MessageTableViewCell class] contentViewWidth:SCREENWIDTH];
+    return  height;
     
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *cellIdentifier = @"messageTableViewCellIdentifier";
+    NSString *cellIdentifier = @"MessageTableViewCell";
     MessageTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     if (!cell) {
         cell = [[[NSBundle mainBundle] loadNibNamed:@"MessageTableViewCell" owner:self options:nil] lastObject];
     }
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    [cell loadDatasWithObj:self.dataArr[indexPath.row]];
+    cell.object = [self.dataArr objectAtIndex:indexPath.row];
     return cell;
 }
 

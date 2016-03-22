@@ -15,12 +15,7 @@ typedef NS_ENUM(NSInteger, MessageType){
 };
 
 @interface MessageTableViewCell : UITableViewCell
-@property (strong, nonatomic) IBOutlet UILabel *title;
-@property (strong, nonatomic) IBOutlet UILabel *content;
-@property (strong, nonatomic) IBOutlet UILabel *time;
-@property (strong, nonatomic) IBOutlet UIView *lineView;
-@property (strong, nonatomic) IBOutlet UIView *bgView;
 
-- (void)loadDatasWithObj:(MessageObj *)obj;
+@property (strong, nonatomic) MessageObj *object;
 
 @end
