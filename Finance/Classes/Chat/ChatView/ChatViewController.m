@@ -394,23 +394,27 @@
             timeCell.textLabel.text = (NSString *)obj;
             
             return timeCell;
-        }
-        else{
+        } else{
             MessageModel *model = (MessageModel *)obj;
-            if([[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID]!=nil){
-                if([[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID] isEqual:model.username]){
-                    model.headImageURL=[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,[[NSUserDefaults standardUserDefaults] objectForKey:KEY_HEAD_IMAGE]]];
-                    model.nickName=[[NSUserDefaults standardUserDefaults] objectForKey:KEY_USER_NAME];
-                } else{
-                    NSArray *headUrl=[HeadImage queryAll:model.username];
-                    if(headUrl.count > 0){
-                        HeadImage *hi=(HeadImage*)headUrl[0];
-                        if(![hi.headimg isEqual:@""])
-                        {
-                            model.headImageURL=[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,hi.headimg]];
-                            model.nickName=hi.nickname;
-                        }
+            if([UID isEqual:model.username]){
+                model.headImageURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,[[NSUserDefaults standardUserDefaults] objectForKey:KEY_HEAD_IMAGE]]];
+                model.nickName = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_USER_NAME];
+            } else{
+                NSArray *headUrl = [HeadImage queryAll:model.username];
+                if(headUrl.count > 0){
+                    HeadImage *hi = (HeadImage*)headUrl[0];
+                    if(![hi.headimg isEqual:@""]) {
+                        model.headImageURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,hi.headimg]];
                     }
+                    model.nickName = hi.nickname;
+                } else{
+                    __weak typeof(self) weakSelf = self;
+                    [[SHGGloble sharedGloble] refreshFriendListWithUid:model.username finishBlock:^(BasePeopleObject *object) {
+                        model.headImageURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,object.headImageUrl]];
+                        model.nickName = object.name;
+                        NSInteger index = [weakSelf.dataSource indexOfObject:model];
+                        [weakSelf.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForItem:index inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
+                    }];
                 }
             }
             NSString *cellIdentifier = [EMChatViewCell cellIdentifierForMessageModel:model];

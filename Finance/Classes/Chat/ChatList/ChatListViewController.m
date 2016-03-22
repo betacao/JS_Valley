@@ -407,10 +407,13 @@ static NSString * const kCommonFNum			= @"commonnum";
                 }
                 model.name = hi.nickname;
             } else{
-                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-                    [self refreshFriendListWithUid:conversation.chatter];
-                });
-
+                __weak typeof(self) weakSelf = self;
+                [[SHGGloble sharedGloble] refreshFriendListWithUid:conversation.chatter finishBlock:^(BasePeopleObject *object) {
+                    [weakSelf.contactsSource addObject:object];
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [weakSelf.tableView reloadData];
+                    });
+                }];
                 model.name = @"";
                 model.imageURL = nil;
                 model.placeholderImage = [UIImage imageNamed:@"default_head"];
@@ -427,32 +430,6 @@ static NSString * const kCommonFNum			= @"commonnum";
 
 }
 
--(void)refreshFriendListWithUid:(NSString *)userId
-{
-    [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/user/%@",rBaseAddressForHttp,userId] parameters:nil success:^(MOCHTTPResponse *response) {
-        NSMutableArray *arr = [NSMutableArray array];
-        NSDictionary *dic = response.dataDictionary;
-
-        BasePeopleObject *obj = [[BasePeopleObject alloc] init];
-        obj.name = [dic valueForKey:@"nick"];
-        obj.headImageUrl = [dic valueForKey:@"avatar"];
-        obj.uid = [dic valueForKey:@"username"];
-        obj.rela = [dic valueForKey:@"rela"];
-        obj.company = [dic valueForKey:@"company"];
-        obj.commonfriend = @"";
-        obj.commonfriendnum = @"";
-        [self.contactsSource addObject:obj];
-        [arr addObject:obj];
-        [HeadImage inertWithArr:arr];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self.tableView reloadData];
-            
-        });
-        
-    } failed:^(MOCHTTPResponse *response) {
-        
-    }];
-}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {

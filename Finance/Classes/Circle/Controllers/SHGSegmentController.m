@@ -596,20 +596,24 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     NSArray *user = [HeadImage queryAll];
     BOOL hasExsist = NO;
     NSString *uid  = message.conversationChatter;
-    for (NSManagedObject *obj in user)
-    {
+    for (NSManagedObject *obj in user){
         uid  =  [obj valueForKey:@"uid"];
-        if ([uid isEqualToString:message.conversationChatter])
-        {
+        if ([uid isEqualToString:message.conversationChatter]){
             hasExsist = YES;
             break;
         }
     }
-    if (!hasExsist)
-    {
-        //
-        [self refreshFriendListWithUid:uid];
+    
+    if (!hasExsist){
+        __weak typeof(self) weakSelf = self;
+        [[SHGGloble sharedGloble] refreshFriendListWithUid:uid finishBlock:^(BasePeopleObject *object) {
+            [weakSelf.chatViewController.contactsSource addObject:object];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"refreshFriendList" object:nil];
+            });
+        }];
     }
+
     BOOL needShowNotification = message.isGroup ? [self needShowNotification:message.conversationChatter] : YES;
     if (needShowNotification)
     {
@@ -625,30 +629,7 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
 #endif
     }
 }
--(void)refreshFriendListWithUid:(NSString *)userId
-{
-    [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/user/%@",rBaseAddressForHttp,userId] parameters:nil success:^(MOCHTTPResponse *response) {
-        NSMutableArray *arr = [NSMutableArray array];
-        NSDictionary *dic = response.dataDictionary;
-        BasePeopleObject *obj = [[BasePeopleObject alloc] init];
-        obj.name = [dic valueForKey:@"nick"];
-        obj.headImageUrl = [dic valueForKey:@"avatar"];
-        obj.uid = [dic valueForKey:@"username"];
-        obj.rela = [dic valueForKey:@"rela"];
-        obj.company = [dic valueForKey:@"company"];
-        obj.commonfriend = @"";
-        obj.commonfriendnum = @"";
-        [self.chatViewController.contactsSource addObject:obj];
-        [arr addObject:obj];
-        [HeadImage inertWithArr:arr];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"refreshFriendList" object:nil];
 
-        });
-    } failed:^(MOCHTTPResponse *response) {
-
-    }];
-}
 -(void)didReceiveCmdMessage:(EMMessage *)message
 {
     [self showHint:NSLocalizedString(@"receiveCmd", @"receive cmd message")];

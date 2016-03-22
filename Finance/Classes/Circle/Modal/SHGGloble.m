@@ -9,7 +9,7 @@
 #import "SHGGloble.h"
 #import "SHGUserTagModel.h"
 #import "SHGMarketSegmentViewController.h"
-
+#import "HeadImage.h"
 
 @interface SHGGloble ()
 
@@ -505,5 +505,30 @@
     }];
 }
 
+
+- (void)refreshFriendListWithUid:(NSString *)userId finishBlock:(void (^)(BasePeopleObject *))block
+{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+        [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/user/%@",rBaseAddressForHttp,userId] parameters:nil success:^(MOCHTTPResponse *response) {
+            NSMutableArray *arr = [NSMutableArray array];
+            NSDictionary *dic = response.dataDictionary;
+
+            BasePeopleObject *obj = [[BasePeopleObject alloc] init];
+            obj.name = [dic valueForKey:@"nick"];
+            obj.headImageUrl = [dic valueForKey:@"avatar"];
+            obj.uid = [dic valueForKey:@"username"];
+            obj.rela = [dic valueForKey:@"rela"];
+            obj.company = [dic valueForKey:@"company"];
+            obj.commonfriend = @"";
+            obj.commonfriendnum = @"";
+            [arr addObject:obj];
+            [HeadImage inertWithArr:arr];
+            block(obj);
+            
+        } failed:^(MOCHTTPResponse *response) {
+            
+        }];
+    });
+}
 
 @end

@@ -65,8 +65,6 @@ static NSString * const kCommonFNum			= @"commonnum";
         
         
     }
-//    for (BasePeopleObject *obj in arr) {
-//    }
 }
 + (void)insertAll:(BasePeopleObject *) hImage
 {

@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "BasePeopleObject.h"
 
 typedef void (^SHHomeDataCompletionBlock)(NSArray *allList, NSArray *normalList, NSArray *adList);
 
@@ -192,5 +193,12 @@ typedef void (^SHHomeDataCompletionBlock)(NSArray *allList, NSArray *normalList,
 
  @since 1.8
  */
-- (void)checkForUpdate:(void(^)(BOOL state))block;;
+- (void)checkForUpdate:(void(^)(BOOL state))block;
+
+/**
+ @brief  向服务端请求用户信息
+
+ @since 1.8.0
+ */
+- (void)refreshFriendListWithUid:(NSString *)userId finishBlock:(void (^)(BasePeopleObject *object))block;
 @end
