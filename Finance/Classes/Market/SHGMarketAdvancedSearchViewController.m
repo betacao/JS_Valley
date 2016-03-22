@@ -57,6 +57,10 @@
     self.city = @"";
     self.mode = @"";
 
+    UITapGestureRecognizer *tapGes = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapAction:)];
+    [tapGes setCancelsTouchesInView:NO];
+    [self.view addGestureRecognizer:tapGes];
+    
     [self initView];
     [self addAutoLayout];
 
@@ -395,6 +399,14 @@
     }];
 
 }
+
+- (void)tapAction:(UITapGestureRecognizer *)gesture
+{
+    [self.leftComBox closeOtherCombox];
+    [self.rightCombox closeOtherCombox];
+    
+}
+
 
 #pragma mark ------combox代理
 - (void)selectAtIndex:(NSInteger)index inCombox:(SHGComBoxView *)combox

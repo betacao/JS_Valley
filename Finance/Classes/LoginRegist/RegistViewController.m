@@ -156,7 +156,7 @@ typedef NS_ENUM(NSInteger, RegistType)
     self.nextStepButton.sd_layout
     .leftSpaceToView(self.view, MarginFactor(12.0f))
     .rightSpaceToView(self.view, MarginFactor(12.0f))
-    .topSpaceToView(self.messageSendedLabel, MarginFactor(5.0f))
+    .topSpaceToView(self.firstView, MarginFactor(181.0f))
     .heightIs(MarginFactor(40.0f));
     
 }

@@ -10,10 +10,13 @@
 #import "SHGMainPageTableViewCell.h"
 #import "MLEmojiLabel.h"
 #import "LinkViewController.h"
-
+#import "SHGEmptyDataView.h"
 @interface SHGPersonDynamicViewController ()<UITableViewDataSource, UITableViewDelegate, MLEmojiLabelDelegate, CircleListDelegate, CircleActionDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) NSString *target;
+@property (strong, nonatomic) UITableViewCell *emptyCell;
+@property (strong, nonatomic) SHGEmptyDataView *emptyView;
+
 @end
 
 @implementation SHGPersonDynamicViewController
@@ -98,61 +101,96 @@
     }
 }
 
+- (UITableViewCell *)emptyCell
+{
+    if (!_emptyCell) {
+        _emptyCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+        _emptyCell.selectionStyle = UITableViewCellSelectionStyleNone;
+        [_emptyCell.contentView addSubview:self.emptyView];
+    }
+    return _emptyCell;
+}
+
+
+- (SHGEmptyDataView *)emptyView
+{
+    if (!_emptyView) {
+        _emptyView = [[SHGEmptyDataView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, SCREENWIDTH, SCREENHEIGHT)];
+    }
+    return _emptyView;
+}
+
 #pragma mark ------ tableviewdelegate
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.dataArr.count;
+    if (self.dataArr.count > 0) {
+        return self.dataArr.count;
+    } else{
+        return 1;
+    }
+    
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    CircleListObj *obj = self.dataArr[indexPath.row];
-
-    if ([obj.status boolValue]) {
-        NSString *cellIdentifier = @"SHGMainPageTableViewCell";
-        SHGMainPageTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-        if (!cell) {
-            cell = [[[NSBundle mainBundle] loadNibNamed:@"SHGMainPageTableViewCell" owner:self options:nil] lastObject];
+    if (self.dataArr.count > 0) {
+        CircleListObj *obj = self.dataArr[indexPath.row];
+        
+        if ([obj.status boolValue]) {
+            NSString *cellIdentifier = @"SHGMainPageTableViewCell";
+            SHGMainPageTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+            if (!cell) {
+                cell = [[[NSBundle mainBundle] loadNibNamed:@"SHGMainPageTableViewCell" owner:self options:nil] lastObject];
+            }
+            cell.index = indexPath.row;
+            cell.delegate = self;
+            cell.object = obj;
+            cell.controller = self;
+            return cell;
+        } else{
+            NSString *cellIdentifier = @"noListIdentifier";
+            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+            if (!cell) {
+                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+            }
+            cell.textLabel.text = @"原帖已删除";
+            cell.textLabel.font = [UIFont systemFontOfSize:16.0f];
+            
+            return cell;
         }
-        cell.index = indexPath.row;
-        cell.delegate = self;
-        cell.object = obj;
-        cell.controller = self;
-        return cell;
+
     } else{
-        NSString *cellIdentifier = @"noListIdentifier";
-        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-        if (!cell) {
-            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
-        }
-        cell.textLabel.text = @"原帖已删除";
-        cell.textLabel.font = [UIFont systemFontOfSize:16.0f];
-
-        return cell;
+        return self.emptyCell;
     }
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    CircleListObj *obj = self.dataArr[indexPath.row];
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    CircleDetailViewController *vc = [[CircleDetailViewController alloc] initWithNibName:@"CircleDetailViewController" bundle:nil];
-    vc.rid = obj.rid;
-    vc.delegate = self;
-    [self.navigationController pushViewController:vc animated:YES];
-    NSLog(@"You Click At Section: %ld Row: %ld",(long)indexPath.section,(long)indexPath.row);
+    if (self.dataArr.count > 0) {
+        CircleListObj *obj = self.dataArr[indexPath.row];
+        [tableView deselectRowAtIndexPath:indexPath animated:YES];
+        CircleDetailViewController *vc = [[CircleDetailViewController alloc] initWithNibName:@"CircleDetailViewController" bundle:nil];
+        vc.rid = obj.rid;
+        vc.delegate = self;
+        [self.navigationController pushViewController:vc animated:YES];
+    }
 }
 
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    CircleListObj *obj = self.dataArr[indexPath.row];
-    if ([obj.status boolValue]){
-        NSInteger height = [tableView cellHeightForIndexPath:indexPath model:obj keyPath:@"object" cellClass:[SHGMainPageTableViewCell class] contentViewWidth:SCREENWIDTH];
-        return height;
+    if (self.dataArr.count > 0) {
+        CircleListObj *obj = self.dataArr[indexPath.row];
+        if ([obj.status boolValue]){
+            NSInteger height = [tableView cellHeightForIndexPath:indexPath model:obj keyPath:@"object" cellClass:[SHGMainPageTableViewCell class] contentViewWidth:SCREENWIDTH];
+            return height;
+        } else{
+            return 0.0f;
+        }
+
     } else{
-        return 0.0f;
+         return CGRectGetHeight(self.view.frame);
     }
 }
 

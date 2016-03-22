@@ -132,11 +132,11 @@
         } else if ([flag isEqualToString:@"attention"]){
             detailString = [[NSString stringWithFormat:@"%@",object.recomfri] stringByAppendingFormat:@"等%@人也关注了他",object.commonCount];
         } else if ([flag isEqualToString:@"top"]){
-            detailString = @"top";
+            detailString = @"您行业里最受欢迎的人";
         } else if ([flag isEqualToString:@"vocationcity"]){
-            detailString = @"vocationcity";
+            detailString = [NSString stringWithFormat:@"您同地区的%@从业者",object.vocation];
         } else if ([flag isEqualToString:@"gradecity"]){
-            detailString = @"gradecity";
+            detailString = [NSString stringWithFormat:@"您同地区的%@从业者",object.vocation];
         }
         detailLabel.text = [detailString stringByReplacingOccurrencesOfString:@"\n" withString:@""];
 

@@ -94,7 +94,7 @@
     .topSpaceToView(self.textUser, MarginFactor(181.0f))
     .leftEqualToView(self.introduceLabel)
     .rightEqualToView(self.introduceLabel)
-    .heightIs(MarginFactor(35.0f));
+    .heightIs(MarginFactor(40.0f));
 
     CGFloat margin = 0.0f;
     CGSize size = self.weChatButton.currentImage.size;

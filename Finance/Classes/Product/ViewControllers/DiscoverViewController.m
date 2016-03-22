@@ -115,18 +115,24 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return MarginFactor(60.0f);
+    if (indexPath.section == 0) {
+        return 0.0f;
+    } else{
+        return MarginFactor(60.0f);
+    }
+    
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    if (section == 0) {
-        return 0.1;
-    } else if (section == 1){
-        return  MarginFactor(10.0f);
-    } else{
-        return 0.0f;
-    }
+//    if (section == 0) {
+//        return 0.0f;
+//    } else if (section == 1){
+//        return  0.0f;
+//    } else{
+//        return 0.0f;
+//    }
+    return 0.0f;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {

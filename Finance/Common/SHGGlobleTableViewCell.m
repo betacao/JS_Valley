@@ -95,12 +95,13 @@
 
 @implementation SHGGlobleModel
 
-- (instancetype)initWithText:(NSString *)text lineViewHidden:(BOOL)lineViewHidden
+- (instancetype)initWithText:(NSString *)text lineViewHidden:(BOOL)lineViewHidden accessoryViewHidden:(BOOL)accessoryViewHidden
 {
     self = [super init];
     if (self) {
         self.text = text;
         self.lineViewHidden = lineViewHidden;
+        self.accessoryViewHidden = accessoryViewHidden;
     }
     return self;
 }

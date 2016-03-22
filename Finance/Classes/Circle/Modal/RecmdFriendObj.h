@@ -18,6 +18,7 @@
 @property (nonatomic, strong) NSString *company;
 @property (nonatomic, strong) NSString *recomfri;
 @property (nonatomic, strong) NSString *title;
+@property (nonatomic, strong) NSString *vocation;
 @property (nonatomic, assign) BOOL isFocus;
 @property (nonatomic, strong) NSString *commonCount;
 @end

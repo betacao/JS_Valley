@@ -158,6 +158,11 @@
     return YES;
 }
 
+- (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+{
+    [self.subjectField resignFirstResponder];
+}
+
 #pragma mark - action
 - (void)back
 {

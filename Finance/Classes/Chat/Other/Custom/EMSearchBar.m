@@ -38,7 +38,7 @@
             }
         }
         [self setImage:[UIImage imageNamed:@"emsearch_icon"] forSearchBarIcon:UISearchBarIconSearch state:UIControlStateNormal];
-        [self setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithHexString:@"F8F9F9"]] forBarPosition:UIBarPositionAny barMetrics:UIBarMetricsDefault];
+        [self setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithHexString:@"efeeef"]] forBarPosition:UIBarPositionAny barMetrics:UIBarMetricsDefault];
         UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, CGRectGetHeight(frame) - 1.0f, SCREENWIDTH, 0.5f)];
         lineView.backgroundColor = [UIColor colorWithHexString:@"E6E7E8"];
         [self addSubview:lineView];

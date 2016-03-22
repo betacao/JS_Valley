@@ -141,6 +141,13 @@
     } else{
         cell.lineView.hidden = NO;
     }
+    
+    if (![obj.content isEqualToString:@"更新版本"]) {
+        cell.accessoryView.hidden = YES;
+    } else{
+        cell.accessoryView.hidden = NO;
+    }
+    
     if (obj.isShowSwith){
         cell.accessoryView = self.switchView;
     } else if ([obj.content isEqualToString:@"清除缓存"]){

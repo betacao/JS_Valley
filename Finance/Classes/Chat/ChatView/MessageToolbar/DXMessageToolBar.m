@@ -106,7 +106,7 @@
 {
     if (_toolbarBackgroundImageView == nil) {
         _toolbarBackgroundImageView = [[UIImageView alloc] init];
-        _toolbarBackgroundImageView.backgroundColor = [UIColor clearColor];
+        _toolbarBackgroundImageView.backgroundColor = [UIColor colorWithHexString:@"f6f6f6"];
         _toolbarBackgroundImageView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     }
     
@@ -283,8 +283,8 @@
     //转变输入样式
     self.styleChangeButton = [[UIButton alloc] initWithFrame:CGRectMake(kHorizontalPadding, kVerticalPadding, kInputTextViewMinHeight, kInputTextViewMinHeight)];
     self.styleChangeButton.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
-    [self.styleChangeButton setImage:[UIImage imageNamed:@"chatBar_record"] forState:UIControlStateNormal];
-    [self.styleChangeButton setImage:[UIImage imageNamed:@"chatBar_keyboard"] forState:UIControlStateSelected];
+    [self.styleChangeButton setImage:[UIImage imageNamed:@"messageRecord"] forState:UIControlStateNormal];
+    [self.styleChangeButton setImage:[UIImage imageNamed:@"messageKeyBord"] forState:UIControlStateSelected];
     [self.styleChangeButton addTarget:self action:@selector(buttonAction:) forControlEvents:UIControlEventTouchUpInside];
     self.styleChangeButton.tag = 0;
     allButtonWidth += CGRectGetMaxX(self.styleChangeButton.frame);
@@ -293,9 +293,9 @@
     //更多
     self.moreButton = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.bounds) - kHorizontalPadding - kInputTextViewMinHeight, kVerticalPadding, kInputTextViewMinHeight, kInputTextViewMinHeight)];
     self.moreButton.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleLeftMargin;
-    [self.moreButton setImage:[UIImage imageNamed:@"chatBar_more"] forState:UIControlStateNormal];
-    [self.moreButton setImage:[UIImage imageNamed:@"chatBar_moreSelected"] forState:UIControlStateHighlighted];
-    [self.moreButton setImage:[UIImage imageNamed:@"chatBar_keyboard"] forState:UIControlStateSelected];
+    [self.moreButton setImage:[UIImage imageNamed:@"messageMore"] forState:UIControlStateNormal];
+    [self.moreButton setImage:[UIImage imageNamed:@"messageMoreSelected"] forState:UIControlStateHighlighted];
+    [self.moreButton setImage:[UIImage imageNamed:@"messageKeyBord"] forState:UIControlStateSelected];
     [self.moreButton addTarget:self action:@selector(buttonAction:) forControlEvents:UIControlEventTouchUpInside];
     self.moreButton.tag = 2;
     allButtonWidth += CGRectGetWidth(self.moreButton.frame) + kHorizontalPadding * 2.5;
@@ -303,9 +303,9 @@
     //表情
     self.faceButton = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetMinX(self.moreButton.frame) - kInputTextViewMinHeight - kHorizontalPadding, kVerticalPadding, kInputTextViewMinHeight, kInputTextViewMinHeight)];
     self.faceButton.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleLeftMargin;
-    [self.faceButton setImage:[UIImage imageNamed:@"chatBar_face"] forState:UIControlStateNormal];
-    [self.faceButton setImage:[UIImage imageNamed:@"chatBar_faceSelected"] forState:UIControlStateHighlighted];
-    [self.faceButton setImage:[UIImage imageNamed:@"chatBar_keyboard"] forState:UIControlStateSelected];
+    [self.faceButton setImage:[UIImage imageNamed:@"messageFace"] forState:UIControlStateNormal];
+    [self.faceButton setImage:[UIImage imageNamed:@"messageFaceSelected"] forState:UIControlStateHighlighted];
+    [self.faceButton setImage:[UIImage imageNamed:@"messageKeyBord"] forState:UIControlStateSelected];
     [self.faceButton addTarget:self action:@selector(buttonAction:) forControlEvents:UIControlEventTouchUpInside];
     self.faceButton.tag = 1;
     allButtonWidth += CGRectGetWidth(self.faceButton.frame) + kHorizontalPadding * 1.5;
@@ -322,20 +322,27 @@
     _inputTextView.enablesReturnKeyAutomatically = YES; // UITextView内部判断send按钮是否可以用
     _inputTextView.placeHolder = @"";
     _inputTextView.delegate = self;
-    _inputTextView.backgroundColor = [UIColor clearColor];
+    _inputTextView.backgroundColor = [UIColor whiteColor];
     _inputTextView.layer.borderColor = [UIColor colorWithWhite:0.8f alpha:1.0f].CGColor;
     _inputTextView.layer.borderWidth = 0.65f;
     _inputTextView.layer.cornerRadius = 6.0f;
     _previousTextViewContentHeight = [self getTextViewContentH:_inputTextView];
     
     //录制
+   
     self.recordButton = [[UIButton alloc] initWithFrame:CGRectMake(textViewLeftMargin, kVerticalPadding, width, kInputTextViewMinHeight)];
-    self.recordButton.titleLabel.font = [UIFont systemFontOfSize:15.0];
-    [self.recordButton setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
-    [self.recordButton setBackgroundImage:[[UIImage imageNamed:@"chatBar_recordBg"] stretchableImageWithLeftCapWidth:10 topCapHeight:10] forState:UIControlStateNormal];
-    [self.recordButton setBackgroundImage:[[UIImage imageNamed:@"chatBar_recordSelectedBg"] stretchableImageWithLeftCapWidth:10 topCapHeight:10] forState:UIControlStateHighlighted];
+    self.recordButton.layer.cornerRadius = 6.0f;
+    self.recordButton.clipsToBounds = YES;
+    self.recordButton.titleLabel.font = [UIFont boldSystemFontOfSize:15.0];
+//    [self.recordButton setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
+//    [self.recordButton setBackgroundImage:[[UIImage imageNamed:@"chatBar_recordBg"] stretchableImageWithLeftCapWidth:10 topCapHeight:10] forState:UIControlStateNormal];
+    [self.recordButton setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithHexString:@"d7d7d7"]] forState:UIControlStateNormal];
+//    [self.recordButton setBackgroundImage:[[UIImage imageNamed:@"chatBar_recordSelectedBg"] stretchableImageWithLeftCapWidth:10 topCapHeight:10] forState:UIControlStateHighlighted];
+     [self.recordButton setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithHexString:@"bdbdbd"]] forState:UIControlStateHighlighted];
     [self.recordButton setTitle:kTouchToRecord forState:UIControlStateNormal];
+    [self.recordButton setTitleColor:[UIColor colorWithHexString:@"6a6a6a"] forState:UIControlStateNormal];
     [self.recordButton setTitle:kTouchToFinish forState:UIControlStateHighlighted];
+    [self.recordButton setTitleColor:[UIColor colorWithHexString:@"6a6a6a"] forState:UIControlStateHighlighted];
     self.recordButton.hidden = YES;
     [self.recordButton addTarget:self action:@selector(recordButtonTouchDown) forControlEvents:UIControlEventTouchDown];
     [self.recordButton addTarget:self action:@selector(recordButtonTouchUpOutside) forControlEvents:UIControlEventTouchUpOutside];

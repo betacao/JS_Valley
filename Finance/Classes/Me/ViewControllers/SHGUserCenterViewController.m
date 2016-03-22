@@ -61,10 +61,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
-    NSArray *array0 = @[[[SHGGlobleModel alloc] initWithText:@"邀请好友加入大牛圈" lineViewHidden:NO], [[SHGGlobleModel alloc] initWithText:@"更新通讯录到大牛圈" lineViewHidden:YES]];
-    NSArray *array1 = @[[[SHGGlobleModel alloc] initWithText:@"我的业务" lineViewHidden:YES]];
-    NSArray *array2 = @[[[SHGGlobleModel alloc] initWithText:@"业务收藏" lineViewHidden:NO], [[SHGGlobleModel alloc] initWithText:@"动态收藏" lineViewHidden:NO], [[SHGGlobleModel alloc] initWithText:@"名片收藏" lineViewHidden:YES]];
-    NSArray *array3 = @[[[SHGGlobleModel alloc] initWithText:@"设置" lineViewHidden:YES]];
+    NSArray *array0 = @[[[SHGGlobleModel alloc] initWithText:@"邀请好友加入大牛圈" lineViewHidden:NO accessoryViewHidden:YES], [[SHGGlobleModel alloc] initWithText:@"更新通讯录到大牛圈" lineViewHidden:YES accessoryViewHidden:YES]];
+    NSArray *array1 = @[[[SHGGlobleModel alloc] initWithText:@"我的业务" lineViewHidden:YES accessoryViewHidden:NO]];
+    NSArray *array2 = @[[[SHGGlobleModel alloc] initWithText:@"业务收藏" lineViewHidden:NO accessoryViewHidden:NO], [[SHGGlobleModel alloc] initWithText:@"动态收藏" lineViewHidden:NO accessoryViewHidden:NO], [[SHGGlobleModel alloc] initWithText:@"名片收藏" lineViewHidden:YES accessoryViewHidden:NO]];
+    NSArray *array3 = @[[[SHGGlobleModel alloc] initWithText:@"设置" lineViewHidden:YES accessoryViewHidden:NO]];
     self.titleArray = @[array0, array1, array2, array3];
     
     [self addHeaderRefresh:self.tableView headerRefesh:YES andFooter:NO];

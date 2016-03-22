@@ -68,7 +68,7 @@
     self.loginButton.sd_layout
     .leftSpaceToView(self.view, MarginFactor(12.0f))
     .rightSpaceToView(self.view, MarginFactor(12.0f))
-    .topSpaceToView(self.bgView, MarginFactor(213.0f))
+    .topSpaceToView(self.bgView, MarginFactor(181.0f))
     .heightIs(MarginFactor(40.0f));
     
 }
@@ -203,4 +203,5 @@
 {
     [self.lblPassward resignFirstResponder];
 }
+
 @end

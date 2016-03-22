@@ -108,7 +108,7 @@
     .leftSpaceToView(self.switchView, MarginFactor(12.0f))
     .topSpaceToView(self.switchView, 0.0f)
     .widthIs(MarginFactor(160.0f))
-    .heightIs(45.0f);
+    .heightIs(MarginFactor(45.0f));
     
     UIImage *image = [UIImage imageNamed:@"switchOn"];
     CGSize size = image.size;
@@ -301,6 +301,12 @@
     {
         return YES;
     }
+}
+
+- (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+{
+    [self.textView resignFirstResponder];
+    [self.textField resignFirstResponder];
 }
 
 #pragma mark - EMChooseViewDelegate

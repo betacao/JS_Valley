@@ -225,6 +225,7 @@
             obj.company = [dic valueForKey:@"company"];
             obj.recomfri = [dic valueForKey:@"recomfri"];
             obj.title = [dic valueForKey:@"title"];
+            obj.vocation = [dic valueForKey:@"vocation"];
             [weakSelf.recommendArray addObject:obj];
         }
         [weakSelf insertRecomandArray];
@@ -640,7 +641,7 @@
     
     if (self.dataArr.count > 0) {
         CircleListObj *obj = self.dataArr[indexPath.row];
-        [[SHGGloble sharedGloble] recordUserAction:obj.rid type:@"dynamic_viewAllComment"];
+   
         if([obj isKindOfClass:[CircleListObj class]]){
             if (!IsStrEmpty(obj.feedhtml)){
                 NSLog(@"%@",obj.feedhtml);
@@ -649,6 +650,7 @@
                 controller.object = obj;
                 [self.navigationController pushViewController:controller animated:YES];
             } else{
+                [[SHGGloble sharedGloble] recordUserAction:obj.rid type:@"dynamic_viewAllComment"];
                 CircleDetailViewController *viewController = [[CircleDetailViewController alloc] initWithNibName:@"CircleDetailViewController" bundle:nil];
                 viewController.delegate = [SHGUnifiedTreatment sharedTreatment];
                 viewController.rid = obj.rid;

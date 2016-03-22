@@ -12,16 +12,16 @@
 #import "SHGUserTagModel.h"
 #import "SHGPersonFriendsTableViewCell.h"
 #import "SHGPersonalViewController.h"
+#import "SHGEmptyDataView.h"
 #define kRowHeight 50;
+
 @interface SHGPersonFriendsViewController ()<UITableViewDataSource,UITableViewDelegate>
-{
-//    NSInteger pageNum;
-    
-}
 @property (assign,nonatomic)NSInteger  pageNum;
 @property (strong,nonatomic)NSString *   friend_status;
 @property (strong, nonatomic) NSMutableArray    *dataSource;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (strong, nonatomic) UITableViewCell *emptyCell;
+@property (strong, nonatomic) SHGEmptyDataView *emptyView;
 
 @end
 
@@ -212,7 +212,28 @@
 
     }
     
-        }
+}
+
+- (UITableViewCell *)emptyCell
+{
+    if (!_emptyCell) {
+        _emptyCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+        _emptyCell.selectionStyle = UITableViewCellSelectionStyleNone;
+        [_emptyCell.contentView addSubview:self.emptyView];
+    }
+    return _emptyCell;
+}
+
+
+- (SHGEmptyDataView *)emptyView
+{
+    if (!_emptyView) {
+        _emptyView = [[SHGEmptyDataView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, SCREENWIDTH, SCREENHEIGHT)];
+    }
+    return _emptyView;
+}
+
+
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return 1;
@@ -220,30 +241,43 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.contactsSource.count;
+    if (self.contactsSource.count > 0) {
+         return self.contactsSource.count;
+    } else{
+        return 1;
+    }
+   
 }
 -(UITableViewCell * )tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    BasePeopleObject * obj = self.contactsSource[indexPath.row];
-    NSString *cellIdentifier = @"SHGPersonFriendsTableViewCell";
-    SHGPersonFriendsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-    if (!cell) {
-        cell = [[[NSBundle mainBundle] loadNibNamed:@"SHGPersonFriendsTableViewCell" owner:self options:nil] lastObject];
+    if (self.contactsSource.count > 0) {
+        BasePeopleObject * obj = self.contactsSource[indexPath.row];
+        NSString *cellIdentifier = @"SHGPersonFriendsTableViewCell";
+        SHGPersonFriendsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+        if (!cell) {
+            cell = [[[NSBundle mainBundle] loadNibNamed:@"SHGPersonFriendsTableViewCell" owner:self options:nil] lastObject];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            
+        }
         
+        [cell loadDatasWithObj:obj];
+        
+        return cell;
+    } else{
+        return self.emptyCell;
     }
-    
-    [cell loadDatasWithObj:obj];
-
-    return cell;
 }
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    BasePeopleObject * obj = self.contactsSource[indexPath.row];
-    SHGPersonalViewController * vc = [[SHGPersonalViewController alloc]init];
-    vc.userId = obj.uid;
-    [self.navigationController pushViewController:vc animated:YES];
+    if (self.contactsSource.count > 0) {
+        BasePeopleObject * obj = self.contactsSource[indexPath.row];
+        SHGPersonalViewController * vc = [[SHGPersonalViewController alloc]init];
+        vc.userId = obj.uid;
+        [self.navigationController pushViewController:vc animated:YES];
+    }
 }
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -251,7 +285,12 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return kRowHeight;
+    if (self.contactsSource.count > 0) {
+         return kRowHeight;
+    } else{
+        return CGRectGetHeight(self.view.frame);
+    }
+   
     
 }
 

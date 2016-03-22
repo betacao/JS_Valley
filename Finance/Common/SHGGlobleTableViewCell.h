@@ -16,7 +16,7 @@
 @end
 
 @interface SHGGlobleModel : NSObject
-- (instancetype)initWithText:(NSString *)text lineViewHidden:(BOOL)lineViewHidden;
+- (instancetype)initWithText:(NSString *)text lineViewHidden:(BOOL)lineViewHidden accessoryViewHidden:(BOOL)accessoryViewHidden;
 
 @property (strong, nonatomic) NSString *text;
 @property (assign, nonatomic) BOOL lineViewHidden;

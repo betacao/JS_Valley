@@ -8,8 +8,8 @@
 
 #import "SHGItemChooseView.h"
 
-#define kBgViewLeftMargin 35.0f * XFACTOR
-#define kCellHeight 37.0f
+#define kCellHeight MarginFactor(56.0f)
+#define kBgViewLeftMargin MarginFactor(35.0f)
 #define kCellLabelLeftMargin 15.0f
 
 @interface SHGItemChooseView ()<UITableViewDataSource, UITableViewDelegate>
@@ -27,7 +27,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         self.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.6];
-        self.bgView = [[UIView alloc] initWithFrame:CGRectInset(frame, kBgViewLeftMargin, (CGRectGetHeight(frame) - (number > 5 ? 5 : number) * kCellHeight) / 2.0f)];
+        self.bgView = [[UIView alloc] initWithFrame:CGRectInset(frame, kBgViewLeftMargin, (CGRectGetHeight(frame) - (number > 6 ? 6 : number) * kCellHeight) / 2.0f)];
         self.bgView.layer.masksToBounds = YES;
         self.bgView.layer.cornerRadius = 5.0f;
         self.tableView = [[UITableView alloc] initWithFrame:self.bgView.bounds];
@@ -46,7 +46,7 @@
     if (!_modelsArray) {
         _modelsArray = [NSMutableArray array];
         for (NSInteger i = 0; i < self.dataArray.count; i++) {
-            SHGGlobleModel *model = [[SHGGlobleModel alloc] initWithText:[self.dataArray objectAtIndex:i] lineViewHidden:NO];
+            SHGGlobleModel *model = [[SHGGlobleModel alloc] initWithText:[self.dataArray objectAtIndex:i] lineViewHidden:NO accessoryViewHidden:NO];
             model.accessoryViewHidden = YES;
             [_modelsArray addObject:model];
         }
@@ -84,7 +84,8 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-   return [self.tableView cellHeightForIndexPath:indexPath model:self.modelsArray[indexPath.row] keyPath:@"model" cellClass:[SHGGlobleTableViewCell class] contentViewWidth:SCREENWIDTH];
+    CGFloat height = [self.tableView cellHeightForIndexPath:indexPath model:self.modelsArray[indexPath.row] keyPath:@"model" cellClass:[SHGGlobleTableViewCell class] contentViewWidth:SCREENWIDTH];
+    return height;
 }
 
 - (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
