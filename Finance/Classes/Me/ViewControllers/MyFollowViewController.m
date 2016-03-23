@@ -14,8 +14,7 @@
 #import "RealtimeSearchUtil.h"
 #import "SHGPersonalViewController.h"
 
-@interface MyFollowViewController ()
-	<UITableViewDelegate, UITableViewDataSource, UISearchDisplayDelegate, UISearchBarDelegate,BasePeopleTableViewCellDelegate>
+@interface MyFollowViewController ()<UITableViewDelegate, UITableViewDataSource, UISearchDisplayDelegate, UISearchBarDelegate,BasePeopleTableViewCellDelegate>
 @property (nonatomic, strong) IBOutlet	UITableView *tableView;
 //关注
 @property (nonatomic, strong) NSMutableArray *followArray;
@@ -26,7 +25,7 @@
 
 @property (nonatomic, strong) NSMutableArray *dataSource;
 @property (strong, nonatomic) EMSearchDisplayController *searchController;
-@property (strong,nonatomic) EMSearchBar *searchBar;
+@property (strong, nonatomic) EMSearchBar *searchBar;
 
 @property (nonatomic, assign) BOOL hasMoreData;
 @property (nonatomic, assign) BOOL searchBarIsEdite;
@@ -36,39 +35,33 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-	[self addHeaderRefresh:self.tableView headerRefesh:YES andFooter:YES];
-
-    _dataSource = [[NSMutableArray alloc] init];
     [Hud showWait];
+	[self addHeaderRefresh:self.tableView headerRefesh:YES andFooter:YES];
+    self.dataSource = [[NSMutableArray alloc] init];
     [self requestData];
 	
     self.view.backgroundColor = [UIColor whiteColor];
-    [CommonMethod setExtraCellLineHidden:self.tableView];
-	[self.tableView reloadData];
-	UIView *view = [[UIView alloc] init];
-	view.backgroundColor = [UIColor clearColor];
-	[_tableView setTableFooterView:view];
+    self.tableView.tableHeaderView = self.searchBar;
+    self.tableView.tableFooterView = [[UIView alloc] init];
  
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(attentionChanged:) name:NOTIFI_COLLECT_COLLECT_CLIC object:nil];
-
-
-	self.tableView.tableHeaderView = self.searchBar;
 	[self searchController];
 }
+
 - (void)requestData
 {
     if (self.relationShip == 1) {
         [self requestFollowListWithTarget:@"first" time:@"-1"];
         self.title = @"我的关注";
-    }else if (self.relationShip == 2){
+    } else if (self.relationShip == 2){
         [self requestFansListWithTarget:@"first" time:@"-1"];
         self.title = @"我的粉丝";
     }
 }
--(void)detailAttentionWithRid:(NSString *)rid attention:(NSString *)atten
+
+- (void)detailAttentionWithRid:(NSString *)rid attention:(NSString *)atten
 {
     [self requestData];
-    
 }
 
 -(void)attentionChanged:(NSNotification *)noti
@@ -76,19 +69,18 @@
     CircleListObj *obj = noti.object;
     [self detailAttentionWithRid:obj.userid attention:obj.isattention];
 }
+
 -(void)refreshHeader
 {
-	if (self.dataSource.count > 0)
-    {
+    if (self.dataSource.count > 0){
         [Hud showWait];
-
-		BasePeopleObject *obj = self.dataSource[0];
-		if (self.relationShip == 1) {
-			[self requestFollowListWithTarget:@"refresh" time:obj.updateTime];
-		}else if (self.relationShip == 2){
-			[self requestFansListWithTarget:@"refresh" time:obj.updateTime];
-		}
-	}
+        BasePeopleObject *obj = self.dataSource[0];
+        if (self.relationShip == 1) {
+            [self requestFollowListWithTarget:@"refresh" time:obj.updateTime];
+        }else if (self.relationShip == 2){
+            [self requestFansListWithTarget:@"refresh" time:obj.updateTime];
+        }
+    }
 }
 
 -(void)refreshFooter
@@ -97,8 +89,7 @@
         [self.tableView.footer endRefreshingWithNoMoreData];
 		return;
 	}
-	if (self.dataSource.count > 0)
-    {
+	if (self.dataSource.count > 0){
         [Hud showWait];
 
 		BasePeopleObject *obj = [self.dataSource lastObject];
@@ -111,18 +102,16 @@
 }
 
 
-- (void)didReceiveMemoryWarning {
+- (void)didReceiveMemoryWarning
+{
     [super didReceiveMemoryWarning];
 }
 
--(void)requestFollowListWithTarget:(NSString *)target time:(NSString *)time
+- (void)requestFollowListWithTarget:(NSString *)target time:(NSString *)time
 {
-	NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
-	NSDictionary *param = @{@"uid":uid,
-							@"target":target,
-							@"time":time,
-							@"num":@"100"};
+	NSDictionary *param = @{@"uid":UID, @"target":target, @"time":time, @"num":@"100"};
 	[MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttp,@"attention",@"myattentionlist"] class:[BasePeopleObject class] parameters:param success:^(MOCHTTPResponse *response) {
+
 		NSLog(@"=data = %@",response.dataArray);
         NSMutableArray *array = [NSMutableArray array];
 		for (int i = 0; i<response.dataArray.count; i++) {
@@ -134,7 +123,7 @@
 			obj.updateTime = [dic valueForKey:@"time"];
 			obj.followRelation = [[dic valueForKey:@"state"] integerValue];
             obj.userstatus = [dic objectForKey:@"userstatus"];
-            if (![obj.uid isEqualToString:uid]) {
+            if (![obj.uid isEqualToString:UID]) {
                 [array addObject:obj];
             }
 		}
@@ -178,8 +167,7 @@
 -(void)requestFansListWithTarget:(NSString *)target time:(NSString *)time
 {
 	NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
-	NSDictionary *param = @{@"uid":uid,
-							@"target":target,
+	NSDictionary *param = @{@"uid":uid, @"target":target,
 							@"time":time,
 							@"num":@"100"};
 	[MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttp,@"attention",@"myfanslist"] class:nil parameters:param success:^(MOCHTTPResponse *response) {

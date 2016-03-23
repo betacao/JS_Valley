@@ -451,7 +451,7 @@
 
     //描边
     self.lineView.sd_resetLayout
-    .topSpaceToView(self.commentView, kMainCommentContentTopMargin)
+    .topSpaceToView(self.commentView, margin)
     .leftSpaceToView(self.contentView, 0.0f)
     .rightSpaceToView(self.contentView, 0.0f)
     .heightIs(0.5f);

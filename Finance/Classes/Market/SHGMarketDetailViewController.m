@@ -325,7 +325,7 @@
     }
     
     self.timeLabel.text = self.responseObject.createTime;
-    if (!self.responseObject.price.length == 0) {
+    if (self.responseObject.price.length > 0) {
         NSString * zjStr = self.responseObject.price;
         self.capitalLabel.text = [NSString stringWithFormat:@"金额： %@",zjStr];
     } else {

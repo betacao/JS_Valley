@@ -14,6 +14,8 @@
 
 @interface GroupListViewController : BaseTableViewController
 
++ (instancetype)shareGroupListController;
+
 @property (weak, nonatomic) UIViewController *parnetVC;
 
 - (void)reloadDataSource;

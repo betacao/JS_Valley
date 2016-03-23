@@ -81,7 +81,7 @@ static NSString * const kCommonFNum			= @"commonnum";
 -(GroupListViewController*)groupVC
 {
     if (!_groupVC){
-        _groupVC = [[GroupListViewController alloc] init];
+        _groupVC = [GroupListViewController shareGroupListController];
         _groupVC.parnetVC = self;
     }
     return _groupVC;
@@ -100,11 +100,6 @@ static NSString * const kCommonFNum			= @"commonnum";
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshDataSource) name:NOTIFI_CHANGE_UPDATE_FRIEND_LIST object:nil];
     [self networkStateView];
     [self refreshDataSource];
-
-    __weak typeof(self) weakSelf = self;
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        [weakSelf.groupVC reloadDataSource];
-    });
 }
 
 - (void)refreshHeader
@@ -360,19 +355,19 @@ static NSString * const kCommonFNum			= @"commonnum";
     if(indexPath.row == 0){
         ChatModel *model = [[ChatModel alloc] init];
         model.placeholderImage = [UIImage imageNamed:@"申请头像图标"];
-        model.name=@"群申请与通知";
-        model.imageURL=nil;
-        model.detailMsg=@"";
-        model.time=@"";
+        model.name = @"群申请与通知";
+        model.imageURL = nil;
+        model.detailMsg = @"";
+        model.time = @"";
         cell.model = model;
         [cell.contentView addSubview:self.unapplyCountLabel];
-    } else if(indexPath.row==1){
+    } else if(indexPath.row == 1){
         ChatModel *model = [[ChatModel alloc] init];
         model.placeholderImage = [UIImage imageNamed:@"消息通知"];
-        model.imageURL=nil;
-        model.name =@"通知";
-        model.detailMsg=@"";
-        model.time=@"";
+        model.imageURL = nil;
+        model.name = @"通知";
+        model.detailMsg = @"";
+        model.time = @"";
         cell.model = model;
     } else{
         ChatModel *model = [[ChatModel alloc] init];
@@ -625,7 +620,7 @@ static NSString * const kCommonFNum			= @"commonnum";
 
     NSDictionary *param = @{@"uid":uid, @"pagenum":[NSNumber numberWithInteger:pageNum], @"pagesize":@15};
     [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"friends/level/one"] parameters:param success:^(MOCHTTPResponse *response) {
-        if(!response.dataArray.count>0){
+        if(response.dataArray.count == 0){
             hasMoreData = NO;
         } else{
             hasMoreData = YES;
@@ -678,21 +673,13 @@ static NSString * const kCommonFNum			= @"commonnum";
 {
     
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
-    NSDictionary *param = @{@"uid":uid,
-                            @"pagenum":[NSNumber numberWithInteger:pageNum],
-                            @"pagesize":@15};
-    if (!IsStrEmpty(area))
-    {
-        param = @{@"uid":uid,
-                  @"area":area,
-                  @"pagenum":[NSNumber numberWithInteger:pageNum],
-                  @"pagesize":@15};
+    NSDictionary *param = @{@"uid":uid, @"pagenum":[NSNumber numberWithInteger:pageNum], @"pagesize":@15};
+    if (!IsStrEmpty(area)){
+        param = @{@"uid":uid, @"area":area, @"pagenum":[NSNumber numberWithInteger:pageNum], @"pagesize":@15};
     }
-    
-    // [Hud showLoadingWithMessage:@"正在加载"];
     [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"friends/level/two"] parameters:param success:^(MOCHTTPResponse *response){
         NSLog(@"%@",response.dataArray);
-        if(!response.dataArray.count > 0){
+        if(response.dataArray.count == 0){
             hasMoreData = NO;
         } else{
             hasMoreData = YES;

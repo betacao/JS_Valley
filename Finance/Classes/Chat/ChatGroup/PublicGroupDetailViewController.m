@@ -155,7 +155,7 @@
 {
     __weak typeof(self) weakSelf = self;
     NSString * uid = weakSelf.group.owner;
-    if (!uid.length == 0) {
+    if (uid.length > 0) {
         [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttp,@"user",@"personaluser"] parameters:@{@"uid":uid}success:^(MOCHTTPResponse *response) {
             self.nameDetailLabel.text = [response.dataDictionary objectForKey:@"name"];
         }failed:^(MOCHTTPResponse *response) {

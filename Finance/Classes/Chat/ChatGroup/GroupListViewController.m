@@ -41,6 +41,16 @@
 
 @implementation GroupListViewController
 
++ (instancetype)shareGroupListController
+{
+    static GroupListViewController *shareGroupListController = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        shareGroupListController = [[GroupListViewController alloc] init];
+    });
+    return shareGroupListController;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -459,6 +469,9 @@
 - (void)reloadDataSource
 {
     //增加点击进入增加群组
+    [self.dataSource removeAllObjects];
+    [self.joinArr removeAllObjects];
+    [self.commonArr removeAllObjects];
     [Hud showWait];
     NSDictionary *loginInfo = [[[EaseMob sharedInstance] chatManager] loginInfo];
     [[EaseMob sharedInstance].chatManager asyncFetchMyGroupsListWithCompletion:^(NSArray *groups, EMError *error){
@@ -480,9 +493,6 @@
         }
     }
     onQueue:nil];
-    [self.dataSource removeAllObjects];
-    [self.joinArr removeAllObjects];
-    [self.commonArr removeAllObjects];
 }
 
 #pragma mark - action

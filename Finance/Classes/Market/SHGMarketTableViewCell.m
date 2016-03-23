@@ -114,12 +114,12 @@
     } else{
         self.titleLabel.text = object.marketName;
     }
-    if (!object.catalog.length == 0) {
-         self.typeLabel.text = [@"类型：" stringByAppendingString:object.catalog];
+    if (object.catalog.length > 0) {
+        self.typeLabel.text = [@"类型：" stringByAppendingString:object.catalog];
     } else{
         self.typeLabel.text = [@"类型：" stringByAppendingString:object.firstcatalog];
     }
-   
+
     if ([object.price isEqualToString:@""]) {
         self.amountLabel.text = @"金额：暂未说明";
     } else{

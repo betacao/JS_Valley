@@ -413,7 +413,9 @@
                         model.headImageURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,object.headImageUrl]];
                         model.nickName = object.name;
                         NSInteger index = [weakSelf.dataSource indexOfObject:model];
-                        [weakSelf.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForItem:index inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
+                        if (object.headImageUrl.length > 0) {
+                            [weakSelf.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForItem:index inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
+                        }
                     }];
                 }
             }
