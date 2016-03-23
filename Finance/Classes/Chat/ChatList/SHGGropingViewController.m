@@ -103,6 +103,7 @@
         cell = [[[NSBundle mainBundle] loadNibNamed:CellIdentifier owner:self options:nil]objectAtIndex:0];
     }
     BasePeopleObject *buddy = [self.dataArr objectAtIndex:indexPath.row];
+    cell.type = [self.type isEqualToString:@"once"] ? SHGContactTypeFirst : SHGContactTypeSecond;
     cell.object = buddy;
     return cell;
 }

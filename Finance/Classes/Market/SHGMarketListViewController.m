@@ -156,8 +156,10 @@
     NSDictionary *param = @{@"marketId":marketId ,@"uid":UID ,@"type":@"all" ,@"target":target ,@"pageSize":@"10" ,@"firstCatalog":firstId ,@"secondCatalog":secondId, @"modifyTime":modifyTime, @"city":area, @"redirect":redirect};
     self.refreshing = YES;
     [SHGMarketManager loadTotalMarketList:param block:^(NSArray *dataArray, NSString *index, NSString *total, NSString *tipUrl) {
+        weakSelf.refreshing = NO;
+        [weakSelf.tableView.header endRefreshing];
+        [weakSelf.tableView.footer endRefreshing];
         if (dataArray) {
-            weakSelf.refreshing = NO;
             if ([target isEqualToString:@"first"]) {
                 [weakSelf.currentArray removeAllObjects];
                 [weakSelf.currentArray addObjectsFromArray:dataArray];
@@ -183,15 +185,8 @@
                 [weakSelf.currentArray addObjectsFromArray:dataArray];
             }
             weakSelf.tipUrl = tipUrl;
-
-            [weakSelf.tableView.header endRefreshing];
-            [weakSelf.tableView.footer endRefreshing];
             
             [weakSelf.tableView reloadData];
-        } else{
-            [weakSelf.tableView.header endRefreshing];
-            [weakSelf.tableView.footer endRefreshing];
-            weakSelf.refreshing = NO;
         }
     }];
 }

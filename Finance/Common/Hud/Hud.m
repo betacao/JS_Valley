@@ -11,7 +11,6 @@
 #import "VerifyIdentityViewController.h"
 #import "SHGProgressHUD.h"
 
-#define kTagWaitView 10099
 
 @implementation Hud
 
@@ -41,14 +40,17 @@
 
 + (void)showOnMainThread
 {
-    UIView *view = [AppDelegate currentAppdelegate].window;
-    SHGProgressHUD *hud = (SHGProgressHUD *)[view viewWithTag:kTagWaitView];
-    if(!hud) {
-        hud = [[SHGProgressHUD alloc] initWithFrame:view.bounds];
+    if ([[AppDelegate currentAppdelegate].window.rootViewController isKindOfClass:[UINavigationController class]]){
+        UINavigationController *nav = (UINavigationController *)[AppDelegate currentAppdelegate].window.rootViewController;
+        UIViewController *topController = [nav.viewControllers lastObject];
+        UIView *view = topController.view;
+
+        MBProgressHUD *HUD = [MBProgressHUD showHUDAddedTo:view animated:YES];
+        SHGProgressHUD *progressHud = [[SHGProgressHUD alloc] initWithFrame:view.bounds];
+        HUD.opacity = 0.0f;
+        HUD.mode = MBProgressHUDModeCustomView;
+        HUD.customView = progressHud;
     }
-    [hud setTag: kTagWaitView];
-    [view addSubview:hud];
-    [view bringSubviewToFront:hud];
 }
 
 + (void)showWait
@@ -58,11 +60,14 @@
 
 + (void)hideHud
 {
-    UIView *view = [AppDelegate currentAppdelegate].window;
-    SHGProgressHUD *hud = (SHGProgressHUD *)[view viewWithTag:kTagWaitView];
-    if(hud) {
-        [hud stopAnimation];
-        [hud removeFromSuperview];
+    if ([[AppDelegate currentAppdelegate].window.rootViewController isKindOfClass:[UINavigationController class]]){
+        UINavigationController *nav = (UINavigationController *)[AppDelegate currentAppdelegate].window.rootViewController;
+        UIViewController *topController = [nav.viewControllers lastObject];
+        for (UIView *subView in topController.view.subviews) {
+            if ([subView isKindOfClass:[MBProgressHUD class]]) {
+                [((MBProgressHUD *)subView) hide:YES];
+            }
+        }
     }
 }
 

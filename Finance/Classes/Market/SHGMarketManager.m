@@ -161,8 +161,8 @@
         NSString *tipUrl = [dictionary objectForKey:@"tipurl"];
         block(dataArray, positon, total, tipUrl);
     } failed:^(MOCHTTPResponse *response) {
-        block(nil, nil, nil, nil);
         [Hud hideHud];
+        block(nil, nil, nil, nil);
         [Hud showMessageWithText:@"获取列表数据失败"];
     }];
 }
