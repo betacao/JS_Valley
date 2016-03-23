@@ -33,12 +33,13 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self initArrContents];
-    [self loadSwitchInfo];
     self.title = @"设置";
     self.bottomButton.titleLabel.font = FontFactor(17.0f);
     self.bottomButton.backgroundColor = [UIColor colorWithHexString:@"f04241"];
-    self.bottomButton.frame = CGRectMake(MarginFactor(12.0f), SCREENHEIGHT - MarginFactor(19.0f) - MarginFactor(40.0f), SCREENWIDTH - 2 * MarginFactor(12.0f), MarginFactor(40.0f));
+    self.bottomButton.frame = CGRectMake(MarginFactor(12.0f), self.view.height - MarginFactor(19.0f) - MarginFactor(40.0f) , self.view.width - 2 * MarginFactor(12.0f), MarginFactor(40.0f));
+    [self initArrContents];
+    [self loadSwitchInfo];
+    [self.bottomButton layoutSubviews];
 }
 
 -(void)viewWillAppear:(BOOL)animated
