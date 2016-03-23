@@ -420,10 +420,10 @@ static NSString * const kCommonFNum			= @"commonnum";
                 if (hasMoreData) {
                     [self.tableView reloadData];
                 } else{
-                    [_tableView.footer endRefreshingWithNoMoreData];
+                    [self.tableView.footer endRefreshingWithNoMoreData];
                 }
 
-                [self.tableView.header endRefreshing];
+                [self.tableView.mj_header endRefreshing];
                 [self.tableView.footer endRefreshing];
             });
         });
@@ -431,7 +431,7 @@ static NSString * const kCommonFNum			= @"commonnum";
     } failed:^(MOCHTTPResponse *response) {
         [Hud hideHud];
         [Hud showMessageWithText:response.errorMessage];
-        [self.tableView.header endRefreshing];
+        [self.tableView.mj_header endRefreshing];
         [self.tableView.footer endRefreshing];
     }];
     

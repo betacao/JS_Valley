@@ -477,7 +477,7 @@
     [[EaseMob sharedInstance].chatManager asyncFetchMyGroupsListWithCompletion:^(NSArray *groups, EMError *error){
         for (EMGroup *group in groups){
             [Hud hideHud];
-            [self.tableView.header endRefreshing];
+            [self.tableView.mj_header endRefreshing];
             [[EaseMob sharedInstance].chatManager asyncFetchGroupInfo:group.groupId completion:^(EMGroup *group, EMError *error) {
                 if (!error){
                     if (![group.owner isEqualToString:loginInfo[@"username"]]){

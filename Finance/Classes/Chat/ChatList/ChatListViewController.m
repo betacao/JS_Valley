@@ -106,7 +106,7 @@ static NSString * const kCommonFNum			= @"commonnum";
 {
     pageNum = 1;
     [self refreshDataSource];
-    [self.tableView.header endRefreshing];
+    [self.tableView.mj_header endRefreshing];
 }
 
 - (void)refreshFooter
@@ -115,7 +115,7 @@ static NSString * const kCommonFNum			= @"commonnum";
         pageNum ++;
         [self refreshDataSource];
     } else{
-        [self.tableView.footer endRefreshingWithNoMoreData];
+        [self.tableView.mj_footer endRefreshingWithNoMoreData];
     }
 }
 
@@ -654,18 +654,18 @@ static NSString * const kCommonFNum			= @"commonnum";
                     _tableView.hidden=NO;
                     [self.tableView reloadData];
                 } else{
-                    [_tableView.footer endRefreshingWithNoMoreData];
+                    [_tableView.mj_footer endRefreshingWithNoMoreData];
                 }
-                [self.tableView.header endRefreshing];
-                [self.tableView.footer endRefreshing];
+                [self.tableView.mj_header endRefreshing];
+                [self.tableView.mj_footer endRefreshing];
             });
         });
 
     } failed:^(MOCHTTPResponse *response) {
         [Hud hideHud];
         [Hud showMessageWithText:response.errorMessage];
-        [self.tableView.header endRefreshing];
-        [self.tableView.footer endRefreshing];
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
     }];
 }
 #pragma mark -- 我的好友的好友
@@ -710,18 +710,18 @@ static NSString * const kCommonFNum			= @"commonnum";
             if(response.dataArray.count > 0){
                 _tableView.hidden=NO;
             } else{
-                [_tableView.footer endRefreshingWithNoMoreData];
+                [_tableView.mj_footer endRefreshingWithNoMoreData];
             }
             [self.tableView reloadData];
             
-            [self.tableView.header endRefreshing];
-            [self.tableView.footer endRefreshing];
+            [self.tableView.mj_header endRefreshing];
+            [self.tableView.mj_footer endRefreshing];
         });
         
     } failed:^(MOCHTTPResponse *response) {
         [Hud hideHud];
-        [self.tableView.header endRefreshing];
-        [self.tableView.footer endRefreshing];
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
         [Hud showMessageWithText:response.errorMessage];
     }];
 }

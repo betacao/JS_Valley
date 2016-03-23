@@ -59,13 +59,14 @@
             [header setTitle:[headerTitle objectForKey:kRefreshStatePulling] forState:MJRefreshStatePulling];
             [header setTitle:[headerTitle objectForKey:kRefreshStateRefreshing] forState:MJRefreshStateRefreshing];
         }
+        header.backgroundColor = [UIColor whiteColor];
         // 设置字体
         header.stateLabel.font = [UIFont systemFontOfSize:12.0f];
         header.lastUpdatedTimeLabel.font = [UIFont systemFontOfSize:12.0f];
         // 设置颜色
         header.stateLabel.textColor = [UIColor colorWithHexString:@"606060"];
         header.lastUpdatedTimeLabel.textColor = [UIColor colorWithHexString:@"D2D1D1"];
-        tableView.header = header;
+        tableView.mj_header = header;
     }
     if (isFooterRefresh){
         MJRefreshAutoStateFooter *footer = [MJRefreshAutoStateFooter footerWithRefreshingTarget:self refreshingAction:@selector(refreshFooter)];

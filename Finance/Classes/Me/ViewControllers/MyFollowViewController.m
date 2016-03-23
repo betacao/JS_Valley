@@ -151,14 +151,14 @@
             }
         }
 
-		[self.tableView.header endRefreshing];
+		[self.tableView.mj_header endRefreshing];
 		[self.tableView.footer endRefreshing];
         [Hud hideHud];
 		[self.tableView reloadData];
 	} failed:^(MOCHTTPResponse *response) {
 		NSLog(@"%@",response.errorMessage);
         [Hud hideHud];
-		[self.tableView.header endRefreshing];
+		[self.tableView.mj_header endRefreshing];
 		[self.tableView.footer endRefreshing];
 		
 	}];
@@ -210,13 +210,13 @@
             [self.dataSource addObjectsFromArray:array];
             
         }
-        [self.tableView.header endRefreshing];
+        [self.tableView.mj_header endRefreshing];
         [self.tableView.footer endRefreshing];
         [Hud hideHud];
 		[self.tableView reloadData];
 	} failed:^(MOCHTTPResponse *response) {
 		NSLog(@"%@",response.errorMessage);
-		[self.tableView.header endRefreshing];
+		[self.tableView.mj_header endRefreshing];
 		[self.tableView.footer endRefreshing];
         [Hud hideHud];
 	}];

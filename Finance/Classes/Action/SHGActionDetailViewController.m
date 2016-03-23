@@ -57,7 +57,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shareToFriendSuccess:) name:NOTIFI_ACTION_SHARE_TO_FRIENDSUCCESS object:nil];
     self.replyTable.delegate = self;
     self.replyTable.dataSource = self;
-    self.replyTable.header.backgroundColor = [UIColor colorWithHexString:@"efefef"];
+    self.replyTable.mj_header.backgroundColor = [UIColor colorWithHexString:@"efefef"];
     [self.replyTable setTableFooterView:[[UIView alloc] init]];
     self.leftButton.hidden = YES;
     self.rightButton.hidden = YES;

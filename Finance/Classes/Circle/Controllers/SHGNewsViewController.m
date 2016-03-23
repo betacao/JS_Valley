@@ -162,7 +162,7 @@
         
         [weakSelf assembleDictionary:response.dataDictionary target:target];
 
-        [weakSelf.listTable.header endRefreshing];
+        [weakSelf.listTable.mj_header endRefreshing];
         [weakSelf.listTable.footer endRefreshing];
         [Hud hideHud];
         dispatch_async(dispatch_get_main_queue(), ^(){
@@ -173,7 +173,7 @@
         weakSelf.isRefreshing = NO;
         [Hud showMessageWithText:response.errorMessage];
         NSLog(@"%@",response.errorMessage);
-        [weakSelf.listTable.header endRefreshing];
+        [weakSelf.listTable.mj_header endRefreshing];
         [weakSelf performSelector:@selector(endrefresh) withObject:nil afterDelay:1.0];
 
     }];

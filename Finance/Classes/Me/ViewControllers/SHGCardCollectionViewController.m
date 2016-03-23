@@ -93,13 +93,13 @@
             [self.tableView reloadData];
         }
         [self.tableView reloadData];
-        [self.tableView.header endRefreshing];
+        [self.tableView.mj_header endRefreshing];
         [self.tableView.footer endRefreshing];
         [Hud hideHud];
         
     } failed:^(MOCHTTPResponse *response) {
         NSLog(@"%@",response.errorMessage);
-        [self.tableView.header endRefreshing];
+        [self.tableView.mj_header endRefreshing];
         [self.tableView.footer endRefreshing];
         [Hud hideHud];
         

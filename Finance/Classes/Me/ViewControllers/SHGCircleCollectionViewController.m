@@ -102,7 +102,7 @@
             [self.dataArr addObjectsFromArray:response.dataArray];
         }
         [self.tableView reloadData];
-        [self.tableView.header endRefreshing];
+        [self.tableView.mj_header endRefreshing];
         [self.tableView.footer endRefreshing];
         [Hud hideHud];
         
@@ -110,7 +110,7 @@
         NSLog(@"%@",response.errorMessage);
         [Hud hideHud];
         [Hud showMessageWithText:response.errorMessage];
-        [self.tableView.header endRefreshing];
+        [self.tableView.mj_header endRefreshing];
         [self performSelector:@selector(endFoot) withObject:nil afterDelay:1.0];
     }];
     

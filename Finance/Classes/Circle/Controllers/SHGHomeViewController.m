@@ -99,16 +99,16 @@
             [weakSelf.adArray removeAllObjects];
             [weakSelf.adArray addObjectsFromArray:adArray];
 
-            [weakSelf.tableView.header endRefreshing];
-            [weakSelf.tableView.footer endRefreshing];
+            [weakSelf.tableView.mj_header endRefreshing];
+            [weakSelf.tableView.mj_footer endRefreshing];
 
             [weakSelf.newMessageNoticeView showWithText:[NSString stringWithFormat:@"为您加载了%ld条新动态",(long)allArray.count]];
             [weakSelf insertRecomandArray];
             [weakSelf insertNewFriendArray];
             weakSelf.needRefreshTableView = YES;
         } else{
-            [weakSelf.tableView.header endRefreshing];
-            [weakSelf.tableView.footer endRefreshing];
+            [weakSelf.tableView.mj_header endRefreshing];
+            [weakSelf.tableView.mj_footer endRefreshing];
             [Hud showMessageWithText:@"获取首页数据失败"];
         }
     };
@@ -313,7 +313,7 @@
     self.isRefreshing = YES;
 
     if ([target isEqualToString:@"first"]){
-        [self.tableView.footer resetNoMoreData];
+        [self.tableView.mj_footer resetNoMoreData];
         self.hasDataFinished = NO;
     } else if([target isEqualToString:@"load"]){
     }
@@ -328,15 +328,15 @@
         weakSelf.isRefreshing = NO;
         [weakSelf assembleDictionary:response.dataDictionary target:target];
         weakSelf.needRefreshTableView = YES;
-        [weakSelf.tableView.header endRefreshing];
-        [weakSelf.tableView.footer endRefreshing];
+        [weakSelf.tableView.mj_header endRefreshing];
+        [weakSelf.tableView.mj_footer endRefreshing];
       
     } failed:^(MOCHTTPResponse *response){
         weakSelf.isRefreshing = NO;
         [Hud showMessageWithText:response.errorMessage];
         NSLog(@"%@",response.errorMessage);
-        [weakSelf.tableView.header endRefreshing];
-        [weakSelf.tableView.footer endRefreshing];
+        [weakSelf.tableView.mj_header endRefreshing];
+        [weakSelf.tableView.mj_footer endRefreshing];
         [Hud hideHud];
     }];
 }
@@ -430,7 +430,7 @@
 - (void)refreshFooter
 {
     if (self.hasDataFinished){
-        [self.tableView.footer endRefreshingWithNoMoreData];
+        [self.tableView.mj_footer endRefreshingWithNoMoreData];
         return;
     }
     NSLog(@"refreshFooter");

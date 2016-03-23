@@ -162,11 +162,11 @@
     }
     [MOCHTTPRequestOperationManager getWithURL:request class:[SHGPeopleObject class] parameters:param success:^(MOCHTTPResponse *response) {
         [Hud hideHud];
-        [weakSelf.tableView.footer endRefreshing];
+        [weakSelf.tableView.mj_footer endRefreshing];
         block(response.dataArray);
     } failed:^(MOCHTTPResponse *response) {
         [Hud hideHud];
-        [weakSelf.tableView.footer endRefreshing];
+        [weakSelf.tableView.mj_footer endRefreshing];
         block(nil);
         [Hud showMessageWithText:@"获取好友信息失败"];
     }];
@@ -180,11 +180,11 @@
 
     [MOCHTTPRequestOperationManager getWithURL:request class:[SHGPeopleObject class] parameters:param success:^(MOCHTTPResponse *response) {
         [Hud hideHud];
-        [weakSelf.tableView.footer endRefreshing];
+        [weakSelf.tableView.mj_footer endRefreshing];
         block(response.dataArray);
     } failed:^(MOCHTTPResponse *response) {
         [Hud hideHud];
-        [weakSelf.tableView.footer endRefreshing];
+        [weakSelf.tableView.mj_footer endRefreshing];
         block(nil);
         [Hud showMessageWithText:@"获取好友信息失败"];
     }];
@@ -273,7 +273,7 @@
         if (searchText.length == 0) {
             [self addHeaderRefresh:self.tableView headerRefesh:NO andFooter:YES];
         } else{
-            self.tableView.footer = nil;
+            self.tableView.mj_footer = nil;
         }
 
         if (self.type == SHGFriendTypeFirst) {

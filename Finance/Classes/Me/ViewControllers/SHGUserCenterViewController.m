@@ -68,8 +68,7 @@
     self.titleArray = @[array0, array1, array2, array3];
     
     [self addHeaderRefresh:self.tableView headerRefesh:YES andFooter:NO];
-    self.tableHeaderView.backgroundColor = [UIColor whiteColor];
-    self.tableView.backgroundColor = [UIColor colorWithHexString:@"efeeef"];
+    self.tableHeaderView.backgroundColor = [UIColor whiteColor];;
     UIImage * editImage = [UIImage imageNamed:@"userCenterEdit"];
     CGSize editSize = editImage.size;
     //tableView
@@ -695,12 +694,12 @@
                 [weakSelf.authButton setImage:[UIImage imageNamed:@"me_rejected"] forState:UIControlStateNormal];
             }
         }
-        [weakSelf.tableView.header endRefreshing];
+        [weakSelf.tableView.mj_header endRefreshing];
         [weakSelf.tableHeaderView layoutSubviews];
 
     } failed:^(MOCHTTPResponse *response) {
 
-        [weakSelf.tableView.header endRefreshing];
+        [weakSelf.tableView.mj_header endRefreshing];
         
     }];
 }

@@ -169,7 +169,7 @@
 
         }
         [self.listTable reloadData];
-        [self.listTable.header endRefreshing];
+        [self.listTable.mj_header endRefreshing];
         [self.listTable.footer endRefreshing];
         [Hud hideHud];
 
@@ -177,7 +177,7 @@
         [Hud hideHud];
         hasRequestFailed = YES;
         NSLog(@"%@",response.errorMessage);
-        [self.listTable.header endRefreshing];
+        [self.listTable.mj_header endRefreshing];
          [self performSelector:@selector(endrefresh) withObject:nil afterDelay:1.0];
     }];
   
@@ -270,7 +270,7 @@
 {
     if (IsArrEmpty(itemArr)) {
         [self requestType];
-        [self.listTable.header endRefreshing];
+        [self.listTable.mj_header endRefreshing];
         return;
 
     }

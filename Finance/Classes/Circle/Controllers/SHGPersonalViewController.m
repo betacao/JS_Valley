@@ -195,7 +195,7 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
 - (void)requestDataWithTarget:(NSString *)target time:(NSString *)time
 {
     if ([target isEqualToString:@"first"]) {
-        [self.tableView.footer resetNoMoreData];
+        [self.tableView.mj_footer resetNoMoreData];
     }
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
     [Hud showWait];

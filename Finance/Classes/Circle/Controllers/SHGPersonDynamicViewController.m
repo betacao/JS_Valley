@@ -43,8 +43,8 @@
     NSDictionary *param = @{@"uid":UID, @"target":target, @"rid":[NSNumber numberWithInt:[time intValue]], @"num":rRequestNum};
     [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttpCircle,@"queryCircleListById",self.userId] class:[CircleListObj class] parameters:param success:^(MOCHTTPResponse *response) {
         [Hud hideHud];
-        [weakSelf.tableView.header endRefreshing];
-        [weakSelf.tableView.footer endRefreshing];
+        [weakSelf.tableView.mj_header endRefreshing];
+        [weakSelf.tableView.mj_footer endRefreshing];
         NSLog(@"=data = %@",response.dataDictionary);
         [weakSelf parseDataWithDic:response.dataDictionary];
         [weakSelf.tableView reloadData];
@@ -52,8 +52,8 @@
         [Hud showMessageWithText:response.errorMessage];
         [Hud hideHud];
         NSLog(@"%@",response.errorMessage);
-        [weakSelf.tableView.header endRefreshing];
-        [weakSelf.tableView.footer endRefreshing];
+        [weakSelf.tableView.mj_header endRefreshing];
+        [weakSelf.tableView.mj_footer endRefreshing];
 
     }];
 }
@@ -75,7 +75,7 @@
     if ([self.target isEqualToString:@"load"] && listArray.count > 0) {
         [self.dataArr addObjectsFromArray:listArray];
         if (listArray.count < 10) {
-            [self.tableView.footer endRefreshingWithNoMoreData];
+            [self.tableView.mj_footer endRefreshingWithNoMoreData];
         }
 
     }}

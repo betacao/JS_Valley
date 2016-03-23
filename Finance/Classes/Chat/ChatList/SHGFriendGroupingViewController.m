@@ -206,7 +206,7 @@
     NSDictionary *param = @{@"pagenum":page, @"uid":UID, @"pagesize":@"20", @"module":module, @"type":type};
     [MOCHTTPRequestOperationManager getWithURL:[rBaseAddressForHttp stringByAppendingString:@"/friends/searchModuleCategroy"] class:[SHGFriendGropingObject class] parameters:param success:^(MOCHTTPResponse *response) {
         [Hud hideHud];
-        [weakSelf.tableView.header endRefreshing];
+        [weakSelf.tableView.mj_header endRefreshing];
         [weakSelf.tableView.footer endRefreshing];
 
         if (response.dataArray.count < 10) {
@@ -216,7 +216,7 @@
         [weakSelf.tableView reloadData];
     } failed:^(MOCHTTPResponse *response) {
         [Hud hideHud];
-        [weakSelf.tableView.header endRefreshing];
+        [weakSelf.tableView.mj_header endRefreshing];
         [weakSelf.tableView.footer endRefreshing];
         [Hud showMessageWithText:@"获取数据失败"];
     }];

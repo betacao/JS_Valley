@@ -106,7 +106,7 @@
                     } else{
                         [_tableView.footer endRefreshingWithNoMoreData];
                     }
-                    [self.tableView.header endRefreshing];
+                    [self.tableView.mj_header endRefreshing];
                     [self.tableView.footer endRefreshing];
                 });
             });
@@ -114,7 +114,7 @@
         } failed:^(MOCHTTPResponse *response) {
             [Hud hideHud];
             [Hud showMessageWithText:response.errorMessage];
-            [self.tableView.header endRefreshing];
+            [self.tableView.mj_header endRefreshing];
             [self.tableView.footer endRefreshing];
         }];
         
@@ -153,7 +153,7 @@
                     } else{
                         [_tableView.footer endRefreshingWithNoMoreData];
                     }
-                    [self.tableView.header endRefreshing];
+                    [self.tableView.mj_header endRefreshing];
                     [self.tableView.footer endRefreshing];
                 });
             });
@@ -161,7 +161,7 @@
         } failed:^(MOCHTTPResponse *response) {
             [Hud hideHud];
             [Hud showMessageWithText:response.errorMessage];
-            [self.tableView.header endRefreshing];
+            [self.tableView.mj_header endRefreshing];
             [self.tableView.footer endRefreshing];
         }];
 
@@ -198,7 +198,7 @@
                     } else{
                         [_tableView.footer endRefreshingWithNoMoreData];
                     }
-                    [self.tableView.header endRefreshing];
+                    [self.tableView.mj_header endRefreshing];
                     [self.tableView.footer endRefreshing];
                 });
             });
@@ -206,7 +206,7 @@
         } failed:^(MOCHTTPResponse *response) {
             [Hud hideHud];
             [Hud showMessageWithText:response.errorMessage];
-            [self.tableView.header endRefreshing];
+            [self.tableView.mj_header endRefreshing];
             [self.tableView.footer endRefreshing];
         }];
 

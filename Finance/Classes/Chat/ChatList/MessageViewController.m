@@ -84,7 +84,7 @@
             hasDataFinished = NO;
         }
         
-        [self.tableView.header endRefreshing];
+        [self.tableView.mj_header endRefreshing];
         [self.tableView.footer endRefreshing];
         self.tableView.footer.hidden = NO;
         [self.tableView reloadData];
@@ -93,7 +93,7 @@
         self.tableView.footer.hidden = NO;
         [Hud showMessageWithText:response.errorMessage];
         NSLog(@"%@",response.errorMessage);
-        [self.tableView.header endRefreshing];
+        [self.tableView.mj_header endRefreshing];
         [self performSelector:@selector(endrefresh) withObject:nil afterDelay:0.5];
         [Hud hideHud];
 

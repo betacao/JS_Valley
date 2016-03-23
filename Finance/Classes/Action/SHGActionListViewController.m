@@ -98,8 +98,8 @@
     [Hud showWait];
     [MOCHTTPRequestOperationManager postWithURL:request class:nil parameters:dictionary success:^(MOCHTTPResponse *response) {
         [Hud hideHud];
-        [weakSelf.listTable.header endRefreshing];
-        [weakSelf.listTable.footer endRefreshing];
+        [weakSelf.listTable.mj_header endRefreshing];
+        [weakSelf.listTable.mj_footer endRefreshing];
         NSArray *normalArray = [response.dataDictionary objectForKey:@"normallist"];
         normalArray = [[SHGGloble sharedGloble] parseServerJsonArrayToJSONModel:normalArray class:[SHGActionObject class]];
 
@@ -131,15 +131,15 @@
             [weakSelf.dataArr addObjectsFromArray:weakSelf.adArray];
             [weakSelf.dataArr addObjectsFromArray:weakSelf.listArray];
             if (weakSelf.listArray.count < 10) {
-                [weakSelf.listTable.footer endRefreshingWithNoMoreData];
+                [weakSelf.listTable.mj_footer endRefreshingWithNoMoreData];
             }
         }
         [weakSelf.listTable reloadData];
     } failed:^(MOCHTTPResponse *response) {
         [Hud hideHud];
         [Hud showMessageWithText:@"网络连接失败"];
-        [weakSelf.listTable.header endRefreshing];
-        [weakSelf.listTable.footer endRefreshing];
+        [weakSelf.listTable.mj_header endRefreshing];
+        [weakSelf.listTable.mj_footer endRefreshing];
     }];
 }
 

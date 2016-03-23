@@ -91,8 +91,6 @@
     [super viewDidLoad];
     self.title = @"动态详情";
     [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:KEY_MEMORY];
-    
-    [self addHeaderRefresh:self.listTable headerRefesh:NO andFooter:NO];
     [self initView];
     [self addSdLayout];
     

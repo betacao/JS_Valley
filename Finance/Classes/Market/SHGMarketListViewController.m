@@ -149,7 +149,7 @@
     NSString *redirect = [position isEqualToString:@"0"] ? @"1" : @"0";
     NSString *area = [SHGMarketManager shareManager].cityName;
     if (!area) {
-        [weakSelf.tableView.header endRefreshing];
+        [weakSelf.tableView.mj_header endRefreshing];
         [weakSelf.tableView.footer endRefreshing];
         return;
     }
@@ -157,7 +157,7 @@
     self.refreshing = YES;
     [SHGMarketManager loadTotalMarketList:param block:^(NSArray *dataArray, NSString *index, NSString *total, NSString *tipUrl) {
         weakSelf.refreshing = NO;
-        [weakSelf.tableView.header endRefreshing];
+        [weakSelf.tableView.mj_header endRefreshing];
         [weakSelf.tableView.footer endRefreshing];
         if (dataArray) {
             if ([target isEqualToString:@"first"]) {

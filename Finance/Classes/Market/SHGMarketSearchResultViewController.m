@@ -127,7 +127,7 @@
     [dictionary setObject:marketId forKey:@"marketId"];
 
     [SHGMarketManager searchNormalMarketList:dictionary block:^(NSString *count, NSArray *array) {
-        [weakSelf.tableView.header endRefreshing];
+        [weakSelf.tableView.mj_header endRefreshing];
         [weakSelf.tableView.footer endRefreshing];
         weakSelf.sectionView.totalCount = count;
         if ([target isEqualToString:@"first"]) {
@@ -156,7 +156,7 @@
 
     [SHGMarketManager searchAdvancedMarketList:dictionary block:^(NSString *count, NSArray *array) {
 
-        [weakSelf.tableView.header endRefreshing];
+        [weakSelf.tableView.mj_header endRefreshing];
         [weakSelf.tableView.footer endRefreshing];
         weakSelf.sectionView.totalCount = count;
         if ([target isEqualToString:@"first"]) {
