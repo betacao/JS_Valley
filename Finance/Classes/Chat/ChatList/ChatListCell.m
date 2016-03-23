@@ -119,7 +119,7 @@
     if (!_timeLabel) {
         _timeLabel = [[UILabel alloc] init];
         _timeLabel.font = FontFactor(12.0f);
-        _timeLabel.textColor = [UIColor colorWithHexString:@"919291"];
+        _timeLabel.textColor = [UIColor colorWithHexString:@"d2d1d1"];
         _timeLabel.backgroundColor = [UIColor clearColor];
         _timeLabel.textAlignment = NSTextAlignmentRight;
         [self.contentView addSubview:_timeLabel];

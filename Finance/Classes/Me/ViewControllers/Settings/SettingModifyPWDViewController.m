@@ -37,6 +37,7 @@
     self.changedPassword.delegate = self;
     self.confirmPassword.delegate = self;
     self.title = @"密码修改";
+    [self addSdLayout];
     [self initView];
 }
 
@@ -54,11 +55,15 @@
     [self.confirmPassword setValue:[UIColor colorWithHexString:@"afafaf"] forKeyPath:@"_placeholderLabel.textColor"];
     
     self.sureButton.titleLabel.font = FontFactor(15.0f);
-    [self.sureButton setTitleColor:[UIColor colorWithHexString:@"161616"] forState:UIControlStateNormal];
     [self.sureButton setTitleColor:[UIColor colorWithHexString:@"ffffff"] forState:UIControlStateNormal];
     self.sureButton.titleLabel.font = FontFactor(17.0f);
     [self.sureButton setBackgroundColor:[UIColor colorWithHexString:@"f04241"]];
 
+   
+}
+
+- (void)addSdLayout
+{
     self.oldPswView.sd_layout
     .topSpaceToView(self.view, 0.0f)
     .leftSpaceToView(self.view, 0.0f)
@@ -90,8 +95,8 @@
     .leftSpaceToView(self.view, MarginFactor(12.0f))
     .rightSpaceToView(self.view, MarginFactor(12.0f))
     .bottomSpaceToView(self.view, MarginFactor(19.0f))
-    .heightIs(MarginFactor(35.0f));
-
+    .heightIs(MarginFactor(40.0f));
+    
 
 }
 -(void)viewWillAppear:(BOOL)animated
@@ -160,6 +165,13 @@
     } failed:^(MOCHTTPResponse *response) {
         [Hud showMessageWithText:@"修改失败"];
     }];
+}
+
+- (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+{
+    [self.oldPassword resignFirstResponder];
+    [self.changedPassword resignFirstResponder];
+    [self.confirmPassword resignFirstResponder];
 }
 
 @end

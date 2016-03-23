@@ -638,13 +638,13 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
     if (self.dataArr.count > 0) {
         CircleListObj *obj = self.dataArr[indexPath.row];
    
         if([obj isKindOfClass:[CircleListObj class]]){
             if (!IsStrEmpty(obj.feedhtml)){
                 NSLog(@"%@",obj.feedhtml);
+                [[SHGGloble sharedGloble] recordUserAction:obj.rid type:@"dynamic_spread"];
                 LinkViewController *controller = [[LinkViewController alloc]init];
                 controller.url = obj.feedhtml;
                 controller.object = obj;

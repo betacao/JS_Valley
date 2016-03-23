@@ -9,7 +9,7 @@
 #import "SHGNewFriendTableViewCell.h"
 #import "UIButton+EnlargeEdge.h"
 #import "SHGHomeViewController.h"
-
+#import "ChatSendHelper.h"
 @interface SHGNewFriendTableViewCell()
 
 @property (weak, nonatomic) IBOutlet SHGUserHeaderView *headerView;
@@ -34,27 +34,30 @@
 - (void)initView
 {
     [self.contentView bringSubviewToFront:self.headerView];
-
+    
     self.nameLabel.font = kMainNameFont;
     self.nameLabel.textColor = kMainNameColor;
-
+    
     self.companyLabel.font = kMainTimeFont;
     self.companyLabel.textColor = kMainTimeColor;
-
+    
     self.departmentLabel.font = kMainCompanyFont;
     self.departmentLabel.textColor = kMainCompanyColor;
-
+    
     self.contentLabel.font = kMainContentFont;
     self.contentLabel.textColor = Color(@"545454");
     self.contentLabel.isAttributedContent = YES;
-
+    self.contentLabel.userInteractionEnabled = YES;
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapAction:)];
+    [self.contentLabel addGestureRecognizer:tap];
+    
     self.relationLabel.font = FontFactor(14.0f);
     self.relationLabel.textColor = Color(@"919291");
-
+    
     self.lineView.backgroundColor = kMainLineViewColor;
-
+    
     self.splitView.backgroundColor = kMainSplitLineColor;
-
+    
     [self.closeButton setEnlargeEdge:20.0f];
 }
 
@@ -137,7 +140,6 @@
     NSMutableAttributedString *content = [[NSMutableAttributedString alloc] initWithString:string];
     [content addAttributes:@{NSFontAttributeName:FontFactor(16.0f), NSForegroundColorAttributeName:Color(@"4277b2")} range:range];
     self.contentLabel.attributedText = content;
-
     __block NSString *relation = @"";
     [object.commonFriendList enumerateObjectsUsingBlock:^(NSString *obj, NSUInteger idx, BOOL * _Nonnull stop) {
         relation = [relation stringByAppendingFormat:@"%@、",obj];
@@ -145,9 +147,17 @@
     relation = [relation substringToIndex:relation.length - 1];
     relation = [NSString stringWithFormat:@"你们共同拥有%@等%@位好友！",relation, object.commonFriendCount];
     self.relationLabel.text = relation;
-
 }
 
+- (void)tapAction:(UITapGestureRecognizer *)tap
+{
+    [Hud showWait];
+    [Hud showMessageWithText:[NSString stringWithFormat:@"小信鸽大牛助手已将您的问候传达给%@!",_object.realName]];
+    [Hud hideHud];
+    [SHGHomeViewController sharedController].needShowNewFriend = NO;
+    [SHGHomeViewController sharedController].needRefreshTableView = YES;
+    [ChatSendHelper sendTextMessageWithString:@"原来你也在这里啊～" toUsername:_object.realName isChatGroup:NO requireEncryption:NO ext:nil];
+}
 - (void)clearCell
 {
     self.nameLabel.text = @"";

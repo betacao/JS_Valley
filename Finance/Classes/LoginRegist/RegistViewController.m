@@ -353,8 +353,14 @@ typedef NS_ENUM(NSInteger, RegistType)
 
 - (IBAction)protocolButtonClicked:(id)sender
 {
-	ProtocolViewController *vc = [[ProtocolViewController alloc] init];
-	[self.navigationController pushViewController:vc animated:YES];
+    ProtocolViewController *vc = [[ProtocolViewController alloc] init];
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
+- (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+{
+    [self.verifyCodeTextField resignFirstResponder];
+    [self.passwordTextField resignFirstResponder];
 }
 
 @end

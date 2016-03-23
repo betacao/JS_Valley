@@ -17,7 +17,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *stateLabel;
 @property (weak, nonatomic) IBOutlet UILabel *relationLabel;
 @property (weak, nonatomic) IBOutlet UIButton *invateButton;
-@property (weak, nonatomic) IBOutlet UIView *lineLabel;
+@property (weak, nonatomic) IBOutlet UIView *lineView;
+
 
 @end
 
@@ -43,7 +44,7 @@
     self.stateLabel.font = FontFactor(13.0f);
     self.stateLabel.textColor = [UIColor colorWithHexString:@"4277b2"];
 
-    self.lineLabel.backgroundColor = [UIColor colorWithHexString:@"e6e7e8"];
+    self.lineView.backgroundColor = [UIColor colorWithHexString:@"e6e7e8"];
 
     [self.invateButton setEnlargeEdge:20.0f];
 }
@@ -89,13 +90,13 @@
     .widthIs(size.width)
     .heightIs(size.height);
 
-    self.lineLabel.sd_layout
+    self.lineView.sd_layout
     .leftEqualToView(self.headerView)
     .topSpaceToView(self.headerView, MarginFactor(14.0f))
-    .heightIs(0.5f)
-    .rightSpaceToView(self.contentView, 0.0f);
+    .rightSpaceToView(self.contentView, 0.0f)
+    .heightIs(0.5f);
 
-    [self setupAutoHeightWithBottomView:self.lineLabel bottomMargin:0.0f];
+    [self setupAutoHeightWithBottomView:self.lineView bottomMargin:0.0f];
 
 }
 

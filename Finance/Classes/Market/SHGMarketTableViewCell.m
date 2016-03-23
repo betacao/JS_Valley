@@ -38,7 +38,7 @@
     self.contactLabel.font = FontFactor(13.0f);
     self.browseButton.titleLabel.font = FontFactor(12.0f);
     [self.browseButton setTitleColor:[UIColor colorWithHexString:@"d3d3d3"] forState:UIControlStateNormal];
-    self.browseButton.titleEdgeInsets = UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, -1.0f);
+    self.browseButton.titleEdgeInsets = UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, -5.0f);
     CGFloat titleHeight = [@" " sizeWithAttributes:@{NSFontAttributeName : self.titleLabel.font}].height;
     CGFloat height = [@" " sizeWithAttributes:@{NSFontAttributeName : self.typeLabel.font}].height;
     [self.deleteButton setEnlargeEdgeWithTop:10.0f right:10.0f bottom:10.0f left:10.0f];

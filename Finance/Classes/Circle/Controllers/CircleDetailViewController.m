@@ -151,6 +151,7 @@
     self.faSongBtn.titleLabel.font = FontFactor(16.0f);
     self.faSongBtn.layer.masksToBounds = YES;
     self.faSongBtn.layer.cornerRadius = 3.0f;
+    self.faSongBtn.backgroundColor = [UIColor colorWithHexString:@"f04241"];
     
     self.lineView.backgroundColor = [UIColor colorWithHexString:@"e6e7e8"];
 
@@ -324,7 +325,7 @@
     .leftSpaceToView(self.viewPraise, 0.0f)
     .rightSpaceToView(self.viewPraise, 0.0f)
     .bottomSpaceToView(self.viewPraise,0.0f)
-    .heightIs(1.0f);
+    .heightIs(0.5f);
 
     self.viewHeader.hidden = YES;
 

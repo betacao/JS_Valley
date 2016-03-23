@@ -27,7 +27,7 @@
 #define kColOfRow 5
 #define kContactSize 60 * XFACTOR
 #define kScrollViewLeftMargin MarginFactor(12.0f)
-
+#define kScrollViewTopMargin MarginFactor(5.0f)
 @interface ChatGroupDetailViewController ()<IChatManagerDelegate, EMChooseViewDelegate, ChatListContactViewDelegate,CircleActionDelegate, UIActionSheetDelegate,UIAlertViewDelegate>
 
 - (void)unregisterNotifications;
@@ -45,7 +45,7 @@
 @property (strong, nonatomic) UIButton *configureButton;
 @property (strong, nonatomic) UILongPressGestureRecognizer *longPress;
 @property (strong, nonatomic) ContactView *selectedContact;
-
+@property (strong, nonatomic) UIView *topLineView;
 @property (strong, nonatomic) UITableViewCell *firstCell;
 
 - (void)dissolveAction;
@@ -116,7 +116,6 @@
     [leftButton addTarget:self action:@selector(returnClick) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:leftButton];
     self.navigationItem.leftBarButtonItem = leftItem;
-    
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.tableFooterView = self.footerView;
     
@@ -158,7 +157,6 @@
         _addButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, kContactSize, kContactSize)];
         [_addButton setImage:[UIImage imageNamed:@"addImageButton"] forState:UIControlStateNormal];
         [_addButton addTarget:self action:@selector(addContact:) forControlEvents:UIControlEventTouchUpInside];
-        
         _longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(deleteContactBegin:)];
         _longPress.minimumPressDuration = 0.1;
     }
@@ -236,9 +234,14 @@
         cell.textLabel.font = FontFactor(15.0f);
         cell.textLabel.textColor = [UIColor colorWithHexString:@"111111"];
         UIView * lineView = [[UIView alloc]init];
-        lineView.frame = CGRectMake(kScrollViewLeftMargin, MarginFactor(50.0f) - 1.0f, SCREENWIDTH - kScrollViewLeftMargin, 0.5f);
+        lineView.frame = CGRectMake(kScrollViewLeftMargin, MarginFactor(55.0f) - 1.0f, SCREENWIDTH - kScrollViewLeftMargin, 0.5f);
         lineView.backgroundColor = [UIColor colorWithHexString:@"e6e7e8"];
         [cell addSubview:lineView];
+        self.topLineView = [[UIView alloc]init];
+        self.topLineView.frame = CGRectMake(kScrollViewLeftMargin,0.0f, SCREENWIDTH - kScrollViewLeftMargin, 0.5f);
+        self.topLineView.backgroundColor = [UIColor colorWithHexString:@"e6e7e8"];
+        self.topLineView.hidden = YES;
+        [cell addSubview:self.topLineView];
 
     }
     UIImage * image = [UIImage imageNamed:@"rightArrowImage"];
@@ -250,6 +253,7 @@
     if (indexPath.row == 0) {
         return self.firstCell;
     } else if (indexPath.row == 1){
+        self.topLineView.hidden = NO;
         cell.textLabel.text = NSLocalizedString(@"title.groupSetting", @"Group Setting");
     } else if (indexPath.row == 2){
          if (self.occupantType == GroupOccupantTypeOwner) {
@@ -274,7 +278,7 @@
 {
     int row = (int)indexPath.row;
     if (row == 0) {
-        return self.scrollView.frame.size.height + MarginFactor(30.f);
+        return self.scrollView.frame.size.height + MarginFactor(10.0f);
     } else {
         return MarginFactor(55.0f);
     }
@@ -411,7 +415,7 @@
         NSInteger row = (NSInteger)(array.count + 1) / kColOfRow;
         row += tmp == 0 ? 0 : 1;
         weakSelf.scrollView.tag = row;
-        weakSelf.scrollView.frame = CGRectMake(8, kScrollViewLeftMargin, weakSelf.tableView.frame.size.width - 16, row * kContactSize+10);
+        weakSelf.scrollView.frame = CGRectMake(8, kScrollViewTopMargin, weakSelf.tableView.frame.size.width - 16, row * kContactSize + 10);
         weakSelf.scrollView.contentSize = CGSizeMake(weakSelf.scrollView.frame.size.width, row * kContactSize);
         
         NSDictionary *loginInfo = [[[EaseMob sharedInstance] chatManager] loginInfo];
@@ -465,7 +469,7 @@
                     [weakSelf.scrollView addSubview:contactView];
                 } else{
                     if(showAddButton && index <= self.dataSource.count){
-                        weakSelf.addButton.frame = CGRectMake(j * kContactSize + 5, i * kContactSize + 10, kContactSize - 10, kContactSize - 10);
+                        weakSelf.addButton.frame = CGRectMake(j * kContactSize + 5, i * kContactSize + 10, kContactSize -10, kContactSize - 10);
                     }
                     isEnd = YES;
                     break;

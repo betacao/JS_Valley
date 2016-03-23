@@ -52,7 +52,7 @@
     
     self.departmentLabel.sd_layout
     .leftSpaceToView(self.userNameLabel, MarginFactor(10.0f))
-    .bottomEqualToView(self.userNameLabel)
+    .centerYEqualToView(self.userNameLabel)
     .autoHeightRatio(0.0f);
     [self.departmentLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
     

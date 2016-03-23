@@ -48,9 +48,9 @@
     .heightIs(MarginFactor(175.0f));
     
     self.textView.sd_layout
-    .topSpaceToView(self.bgView, MarginFactor(19.0f))
+    .topSpaceToView(self.bgView, MarginFactor(10.0f))
     .bottomSpaceToView(self.bgView, MarginFactor(19.0f))
-    .leftSpaceToView(self.bgView, MarginFactor(19.0f))
+    .leftSpaceToView(self.bgView, MarginFactor(12.0f))
     .rightSpaceToView(self.bgView, MarginFactor(19.0f));
     
     self.sureButton.sd_layout

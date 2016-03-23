@@ -78,7 +78,7 @@
     self.txtCode.sd_layout
     .leftSpaceToView(self.firstView, 0.0f)
     .topSpaceToView(self.firstView, 0.0f)
-    .widthIs(MarginFactor(100.0f))
+    .widthIs(MarginFactor(150.0f))
     .heightIs(MarginFactor(55.0f));
     
     self.btnCode.sd_layout
@@ -235,6 +235,13 @@
         }
     }];
     
+}
+
+- (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+{
+    [self.txtCode resignFirstResponder];
+    [self.txtPwd resignFirstResponder];
+    [self.txtPwdVery resignFirstResponder];
 }
 
 @end

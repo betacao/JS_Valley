@@ -19,6 +19,7 @@
 
 - (void)awakeFromNib
 {
+    self.contentView.backgroundColor = Color(@"f4f4f4");
     [self initView];
     [self addAutoLayout];
 }

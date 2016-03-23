@@ -44,6 +44,7 @@
 
 - (void)initView
 {
+    self.tableView.backgroundColor = [UIColor colorWithHexString:@"f4f4f4"];
     self.tableView.tableFooterView = [[UIView alloc] init];
     [self addHeaderRefresh:self.tableView headerRefesh:NO andFooter:YES];
 

@@ -249,7 +249,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+   [tableView deselectRowAtIndexPath:indexPath animated:YES];
     self.isOpen = YES;
     [self tapAction];
     [self moveToIndex:indexPath.row];

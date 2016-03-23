@@ -171,7 +171,7 @@
     .leftSpaceToView(self.bgView, MarginFactor(12.0f))
     .rightSpaceToView(self.bgView, MarginFactor(12.0f))
     .bottomSpaceToView(self.bgView, MarginFactor(19.0f))
-    .heightIs(MarginFactor(35.0f));
+    .heightIs(MarginFactor(40.0f));
     
 }
 - (void)initObject

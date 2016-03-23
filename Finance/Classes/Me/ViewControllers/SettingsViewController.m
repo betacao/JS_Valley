@@ -25,7 +25,7 @@
 
 @property (nonatomic, weak) IBOutlet UISwitch *switchView;
 @property (nonatomic, weak) IBOutlet UITableView *tableView;
-@property (nonatomic, weak) IBOutlet UIView *footerView;
+@property (weak, nonatomic) IBOutlet UIButton *bottomButton;
 
 @end
 
@@ -36,6 +36,9 @@
     [self initArrContents];
     [self loadSwitchInfo];
     self.title = @"设置";
+    self.bottomButton.titleLabel.font = FontFactor(17.0f);
+    self.bottomButton.backgroundColor = [UIColor colorWithHexString:@"f04241"];
+    self.bottomButton.frame = CGRectMake(MarginFactor(12.0f), SCREENHEIGHT - MarginFactor(19.0f) - MarginFactor(40.0f), SCREENWIDTH - 2 * MarginFactor(12.0f), MarginFactor(40.0f));
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -143,9 +146,9 @@
     }
     
     if (![obj.content isEqualToString:@"更新版本"]) {
-        cell.accessoryView.hidden = YES;
-    } else{
         cell.accessoryView.hidden = NO;
+    } else{
+        cell.accessoryView.hidden = YES;
     }
     
     if (obj.isShowSwith){
