@@ -128,7 +128,7 @@
 
     [SHGMarketManager searchNormalMarketList:dictionary block:^(NSString *count, NSArray *array) {
         [weakSelf.tableView.mj_header endRefreshing];
-        [weakSelf.tableView.footer endRefreshing];
+        [weakSelf.tableView.mj_footer endRefreshing];
         weakSelf.sectionView.totalCount = count;
         if ([target isEqualToString:@"first"]) {
             [weakSelf.dataArr removeAllObjects];
@@ -140,7 +140,7 @@
         } else if([target isEqualToString:@"load"]){
             [weakSelf.dataArr addObjectsFromArray:array];
             if (array.count < 10) {
-                [weakSelf.tableView.footer endRefreshingWithNoMoreData];
+                [weakSelf.tableView.mj_footer endRefreshingWithNoMoreData];
             }
             [weakSelf.tableView reloadData];
         }
@@ -157,7 +157,7 @@
     [SHGMarketManager searchAdvancedMarketList:dictionary block:^(NSString *count, NSArray *array) {
 
         [weakSelf.tableView.mj_header endRefreshing];
-        [weakSelf.tableView.footer endRefreshing];
+        [weakSelf.tableView.mj_footer endRefreshing];
         weakSelf.sectionView.totalCount = count;
         if ([target isEqualToString:@"first"]) {
             [weakSelf.dataArr removeAllObjects];
@@ -169,7 +169,7 @@
         } else if([target isEqualToString:@"load"]){
             [weakSelf.dataArr addObjectsFromArray:array];
             if (array.count < 10) {
-                [weakSelf.tableView.footer endRefreshingWithNoMoreData];
+                [weakSelf.tableView.mj_footer endRefreshingWithNoMoreData];
             }
             [weakSelf.tableView reloadData];
         }

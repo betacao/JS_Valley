@@ -150,7 +150,7 @@
     NSString *area = [SHGMarketManager shareManager].cityName;
     if (!area) {
         [weakSelf.tableView.mj_header endRefreshing];
-        [weakSelf.tableView.footer endRefreshing];
+        [weakSelf.tableView.mj_footer endRefreshing];
         return;
     }
     NSDictionary *param = @{@"marketId":marketId ,@"uid":UID ,@"type":@"all" ,@"target":target ,@"pageSize":@"10" ,@"firstCatalog":firstId ,@"secondCatalog":secondId, @"modifyTime":modifyTime, @"city":area, @"redirect":redirect};
@@ -158,7 +158,7 @@
     [SHGMarketManager loadTotalMarketList:param block:^(NSArray *dataArray, NSString *index, NSString *total, NSString *tipUrl) {
         weakSelf.refreshing = NO;
         [weakSelf.tableView.mj_header endRefreshing];
-        [weakSelf.tableView.footer endRefreshing];
+        [weakSelf.tableView.mj_footer endRefreshing];
         if (dataArray) {
             if ([target isEqualToString:@"first"]) {
                 [weakSelf.currentArray removeAllObjects];

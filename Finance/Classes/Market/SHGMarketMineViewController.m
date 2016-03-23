@@ -60,7 +60,7 @@
     NSDictionary *param = @{@"marketId":marketId ,@"uid":uid ,@"type":@"my" ,@"target":target ,@"pageSize":@"10" ,@"firstCatalog":firstId ,@"secondCatalog":secondId};
     [SHGMarketManager loadMineMarketList:param block:^(NSArray *array) {
         [weakSelf.tableView.mj_header endRefreshing];
-        [weakSelf.tableView.footer endRefreshing];
+        [weakSelf.tableView.mj_footer endRefreshing];
         if ([target isEqualToString:@"first"]) {
             [weakSelf.dataArr removeAllObjects];
             [weakSelf.dataArr addObjectsFromArray:array];
@@ -74,7 +74,7 @@
         } else if([target isEqualToString:@"load"]){
             [weakSelf.dataArr addObjectsFromArray:array];
             if (array.count < 10) {
-                [weakSelf.tableView.footer endRefreshingWithNoMoreData];
+                [weakSelf.tableView.mj_footer endRefreshingWithNoMoreData];
             }
             [weakSelf.tableView reloadData];
         }

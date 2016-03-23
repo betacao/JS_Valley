@@ -45,10 +45,10 @@
     [MOCHTTPRequestOperationManager getWithURL:[rBaseAddressForHttp stringByAppendingString:@"/friends/searchFriendsAsModuleName"] class:[BasePeopleObject class] parameters:param success:^(MOCHTTPResponse *response) {
         [Hud hideHud];
         [weakSelf.tableView.mj_header endRefreshing];
-        [weakSelf.tableView.footer endRefreshing];
+        [weakSelf.tableView.mj_footer endRefreshing];
 
         if (response.dataArray.count < 10) {
-            [weakSelf.tableView.footer endRefreshingWithNoMoreData];
+            [weakSelf.tableView.mj_footer endRefreshingWithNoMoreData];
         }
         for (NSDictionary *dic in response.dataArray) {
             BasePeopleObject *obj = [[BasePeopleObject alloc] init];
@@ -78,7 +78,7 @@
     } failed:^(MOCHTTPResponse *response) {
         [Hud hideHud];
         [weakSelf.tableView.mj_header endRefreshing];
-        [weakSelf.tableView.footer endRefreshing];
+        [weakSelf.tableView.mj_footer endRefreshing];
         [Hud showMessageWithText:@"获取数据失败"];
     }];
 }

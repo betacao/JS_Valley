@@ -103,7 +103,7 @@
         }
         [self.tableView reloadData];
         [self.tableView.mj_header endRefreshing];
-        [self.tableView.footer endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
         [Hud hideHud];
         
     } failed:^(MOCHTTPResponse *response) {
@@ -118,7 +118,7 @@
 
 -(void)endFoot
 {
-    [self.tableView.footer endRefreshing];
+    [self.tableView.mj_footer endRefreshing];
     
 }
 

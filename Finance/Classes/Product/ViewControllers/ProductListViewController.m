@@ -100,7 +100,7 @@
 {
     if ([target isEqualToString:@"first"])
     {
-        [self.listTable.footer resetNoMoreData];
+        [self.listTable.mj_footer resetNoMoreData];
         hasDataFinished = NO;
     }
     [Hud showWait];
@@ -170,7 +170,7 @@
         }
         [self.listTable reloadData];
         [self.listTable.mj_header endRefreshing];
-        [self.listTable.footer endRefreshing];
+        [self.listTable.mj_footer endRefreshing];
         [Hud hideHud];
 
     } failed:^(MOCHTTPResponse *response) {
@@ -300,18 +300,18 @@
 
 -(void)endrefresh
 {
-    [self.listTable.footer endRefreshing];
+    [self.listTable.mj_footer endRefreshing];
 
 }
 -(void)refreshFooter
 {
     if (hasDataFinished) {
-        [self.listTable.footer endRefreshingWithNoMoreData];
+        [self.listTable.mj_footer endRefreshingWithNoMoreData];
         return;
     }
     NSLog(@"freshFooter");
     if (IsArrEmpty(itemArr)) {
-        [self.listTable.footer endRefreshing];
+        [self.listTable.mj_footer endRefreshing];
         return;
 
     }

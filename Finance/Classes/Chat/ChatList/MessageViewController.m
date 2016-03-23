@@ -85,12 +85,12 @@
         }
         
         [self.tableView.mj_header endRefreshing];
-        [self.tableView.footer endRefreshing];
-        self.tableView.footer.hidden = NO;
+        [self.tableView.mj_footer endRefreshing];
+        self.tableView.mj_footer.hidden = NO;
         [self.tableView reloadData];
         
     } failed:^(MOCHTTPResponse *response) {
-        self.tableView.footer.hidden = NO;
+        self.tableView.mj_footer.hidden = NO;
         [Hud showMessageWithText:response.errorMessage];
         NSLog(@"%@",response.errorMessage);
         [self.tableView.mj_header endRefreshing];
@@ -103,7 +103,7 @@
 
 - (void)endrefresh
 {
-    [self.tableView.footer endRefreshing];
+    [self.tableView.mj_footer endRefreshing];
 }
 
 - (void)refreshHeader
@@ -126,7 +126,7 @@
 - (void)refreshFooter
 {
     if (hasDataFinished){
-        [self.tableView.footer endRefreshingWithNoMoreData];
+        [self.tableView.mj_footer endRefreshingWithNoMoreData];
         return;
     }
     _target = @"load";

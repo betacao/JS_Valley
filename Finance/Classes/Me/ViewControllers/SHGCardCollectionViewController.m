@@ -58,7 +58,7 @@
 {
     if ([target isEqualToString:@"first"])
     {
-        [self.tableView.footer resetNoMoreData];
+        [self.tableView.mj_footer resetNoMoreData];
         
     }
     
@@ -89,18 +89,18 @@
         }
         if ([target isEqualToString:@"load"]) {
             [self.dataArr addObjectsFromArray:response.dataArray];
-            [self.tableView.footer endRefreshingWithNoMoreData];
+            [self.tableView.mj_footer endRefreshingWithNoMoreData];
             [self.tableView reloadData];
         }
         [self.tableView reloadData];
         [self.tableView.mj_header endRefreshing];
-        [self.tableView.footer endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
         [Hud hideHud];
         
     } failed:^(MOCHTTPResponse *response) {
         NSLog(@"%@",response.errorMessage);
         [self.tableView.mj_header endRefreshing];
-        [self.tableView.footer endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
         [Hud hideHud];
         
     }];

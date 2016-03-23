@@ -86,7 +86,7 @@
 -(void)refreshFooter
 {
 	if (!self.hasMoreData) {
-        [self.tableView.footer endRefreshingWithNoMoreData];
+        [self.tableView.mj_footer endRefreshingWithNoMoreData];
 		return;
 	}
 	if (self.dataSource.count > 0){
@@ -152,14 +152,14 @@
         }
 
 		[self.tableView.mj_header endRefreshing];
-		[self.tableView.footer endRefreshing];
+		[self.tableView.mj_footer endRefreshing];
         [Hud hideHud];
 		[self.tableView reloadData];
 	} failed:^(MOCHTTPResponse *response) {
 		NSLog(@"%@",response.errorMessage);
         [Hud hideHud];
 		[self.tableView.mj_header endRefreshing];
-		[self.tableView.footer endRefreshing];
+		[self.tableView.mj_footer endRefreshing];
 		
 	}];
 }
@@ -211,13 +211,13 @@
             
         }
         [self.tableView.mj_header endRefreshing];
-        [self.tableView.footer endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
         [Hud hideHud];
 		[self.tableView reloadData];
 	} failed:^(MOCHTTPResponse *response) {
 		NSLog(@"%@",response.errorMessage);
 		[self.tableView.mj_header endRefreshing];
-		[self.tableView.footer endRefreshing];
+		[self.tableView.mj_footer endRefreshing];
         [Hud hideHud];
 	}];
 }
