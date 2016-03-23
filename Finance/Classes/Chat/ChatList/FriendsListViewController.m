@@ -373,7 +373,7 @@ static NSString * const kCommonFNum			= @"commonnum";
         pageNum ++;
         [self refreshDataSource];
     } else{
-        [self.tableView.footer endRefreshingWithNoMoreData];
+        [self.tableView.mj_footer endRefreshingWithNoMoreData];
     }
 }
 
@@ -420,11 +420,11 @@ static NSString * const kCommonFNum			= @"commonnum";
                 if (hasMoreData) {
                     [self.tableView reloadData];
                 } else{
-                    [self.tableView.footer endRefreshingWithNoMoreData];
+                    [self.tableView.mj_footer endRefreshingWithNoMoreData];
                 }
 
                 [self.tableView.mj_header endRefreshing];
-                [self.tableView.footer endRefreshing];
+                [self.tableView.mj_footer endRefreshing];
             });
         });
         
@@ -432,7 +432,7 @@ static NSString * const kCommonFNum			= @"commonnum";
         [Hud hideHud];
         [Hud showMessageWithText:response.errorMessage];
         [self.tableView.mj_header endRefreshing];
-        [self.tableView.footer endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
     }];
     
 }

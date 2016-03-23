@@ -146,7 +146,7 @@
 {
     self.isRefreshing = YES;
     if ([target isEqualToString:@"first"]){
-        [self.listTable.footer resetNoMoreData];
+        [self.listTable.mj_footer resetNoMoreData];
         self.hasDataFinished = NO;
     } else if([target isEqualToString:@"load"]){
     }
@@ -163,7 +163,7 @@
         [weakSelf assembleDictionary:response.dataDictionary target:target];
 
         [weakSelf.listTable.mj_header endRefreshing];
-        [weakSelf.listTable.footer endRefreshing];
+        [weakSelf.listTable.mj_footer endRefreshing];
         [Hud hideHud];
         dispatch_async(dispatch_get_main_queue(), ^(){
             [weakSelf.listTable reloadData];
@@ -213,7 +213,7 @@
 
 - (void)endrefresh
 {
-    [self.listTable.footer endRefreshing];
+    [self.listTable.mj_footer endRefreshing];
 }
 
 //发帖
@@ -244,7 +244,7 @@
 - (void)refreshFooter
 {
     if (self.hasDataFinished){
-        [self.listTable.footer endRefreshingWithNoMoreData];
+        [self.listTable.mj_footer endRefreshingWithNoMoreData];
         return;
     }
     NSLog(@"refreshFooter");

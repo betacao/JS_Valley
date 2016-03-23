@@ -104,10 +104,10 @@
                         _tableView.hidden=NO;
                         [self.tableView reloadData];
                     } else{
-                        [_tableView.footer endRefreshingWithNoMoreData];
+                        [_tableView.mj_footer endRefreshingWithNoMoreData];
                     }
                     [self.tableView.mj_header endRefreshing];
-                    [self.tableView.footer endRefreshing];
+                    [self.tableView.mj_footer endRefreshing];
                 });
             });
             
@@ -115,7 +115,7 @@
             [Hud hideHud];
             [Hud showMessageWithText:response.errorMessage];
             [self.tableView.mj_header endRefreshing];
-            [self.tableView.footer endRefreshing];
+            [self.tableView.mj_footer endRefreshing];
         }];
         
     }else if ([self.friend_status isEqualToString:@"his"]) {
@@ -151,10 +151,10 @@
                         _tableView.hidden=NO;
                         [self.tableView reloadData];
                     } else{
-                        [_tableView.footer endRefreshingWithNoMoreData];
+                        [_tableView.mj_footer endRefreshingWithNoMoreData];
                     }
                     [self.tableView.mj_header endRefreshing];
-                    [self.tableView.footer endRefreshing];
+                    [self.tableView.mj_footer endRefreshing];
                 });
             });
             
@@ -162,7 +162,7 @@
             [Hud hideHud];
             [Hud showMessageWithText:response.errorMessage];
             [self.tableView.mj_header endRefreshing];
-            [self.tableView.footer endRefreshing];
+            [self.tableView.mj_footer endRefreshing];
         }];
 
     }else if([self.friend_status isEqualToString:@"all"])
@@ -196,10 +196,10 @@
                         _tableView.hidden=NO;
                         [self.tableView reloadData];
                     } else{
-                        [_tableView.footer endRefreshingWithNoMoreData];
+                        [_tableView.mj_footer endRefreshingWithNoMoreData];
                     }
                     [self.tableView.mj_header endRefreshing];
-                    [self.tableView.footer endRefreshing];
+                    [self.tableView.mj_footer endRefreshing];
                 });
             });
             
@@ -207,7 +207,7 @@
             [Hud hideHud];
             [Hud showMessageWithText:response.errorMessage];
             [self.tableView.mj_header endRefreshing];
-            [self.tableView.footer endRefreshing];
+            [self.tableView.mj_footer endRefreshing];
         }];
 
     }

@@ -91,8 +91,8 @@
         return;
     }
     [Hud showWait];
+    __weak typeof(self) weakSelf = self;
     NSString *password = [_lblPassward.text md5];
-
     NSString *osv = [UIDevice currentDevice].systemVersion;
     NSString *channelId = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_BPUSH_CHANNELID];
     NSString *userId = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_BPUSH_USERID];
@@ -102,12 +102,11 @@
         NSString *uid = response.dataDictionary[@"uid"];
         NSString *token = response.dataDictionary[@"token"];
         NSString *state = response.dataDictionary[@"state"];
-
         NSString *name = response.dataDictionary[@"name"];
         NSString *head_img = response.dataDictionary[@"head_img"];
-        NSString *isfull = response.dataDictionary[@"isfull"];
         NSString *area = response.dataDictionary[@"area"];
-        self.isFull = isfull;
+        weakSelf.isFull = response.dataDictionary[@"isfull"];
+
         [[NSUserDefaults standardUserDefaults] setObject:uid forKey:KEY_UID];
         [[NSUserDefaults standardUserDefaults] setObject:password forKey:KEY_PASSWORD];
         [[NSUserDefaults standardUserDefaults] setObject:state forKey:KEY_AUTHSTATE];
@@ -118,7 +117,7 @@
         [[NSUserDefaults standardUserDefaults] setObject:@"1" forKey: KEY_AUTOLOGIN];
         [[NSUserDefaults standardUserDefaults] synchronize];
         //环信登录
-        [self registerToken];
+        [weakSelf registerToken];
     } failed:^(MOCHTTPResponse *response){
          [Hud showMessageWithText:response.errorMessage];
          [Hud hideHud];
@@ -152,11 +151,6 @@
     }];
 }
 
--(void)gotoImprove
-{
-    ImproveMatiralViewController *vc = [[ImproveMatiralViewController alloc] init];
-    [self.navigationController pushViewController:vc animated:YES];
-}
 - (void) chatLoagin
 {
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];

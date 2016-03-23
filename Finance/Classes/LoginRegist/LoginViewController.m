@@ -26,6 +26,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *weChatButton;
 @property (weak, nonatomic) IBOutlet UIButton *QQButton;
 @property (weak, nonatomic) IBOutlet UIButton *weiBoButton;
+@property (strong, nonatomic) NSString *isFull;
 
 @end
 
@@ -216,10 +217,12 @@
         default:
             break;
     }
+    [Hud showWait];
     [ShareSDK getUserInfoWithType:type authOptions:nil result:^(BOOL result, id<ISSPlatformUser> userInfo, id<ICMErrorInfo> error){
+        [Hud hideHud];
         if (result){
-            NSLog(@"%@",[userInfo sourceData]);
-
+            [Hud showWait];
+            __weak typeof(self) weakSelf = self;
             NSString *osv = [UIDevice currentDevice].systemVersion;
             NSString *channelId = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_BPUSH_CHANNELID];
             NSString *userId = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_BPUSH_USERID];
@@ -233,12 +236,12 @@
                 NSString *state = response.dataDictionary[@"state"];
                 NSString *name = response.dataDictionary[@"name"];
                 NSString *head_img = response.dataDictionary[@"head_img"];
-                NSString *isfull = response.dataDictionary[@"isfull"];
                 NSString *pwd = response.dataDictionary[@"pwd"];
                 NSString *area = response.dataDictionary[@"area"];
+                weakSelf.isFull = response.dataDictionary[@"isfull"];
                 [[NSUserDefaults standardUserDefaults] setObject:uid forKey:KEY_UID];
                 [[NSUserDefaults standardUserDefaults] setObject:[userInfo uid] forKey:KEY_THIRDPARTY_UID];
-                [[NSUserDefaults standardUserDefaults] setObject:isfull forKey:KEY_ISFULL];
+                [[NSUserDefaults standardUserDefaults] setObject:weakSelf.isFull forKey:KEY_ISFULL];
                 [[NSUserDefaults standardUserDefaults] setObject:logType forKey:KEY_THIRDPARTY_TYPE];
                 [[NSUserDefaults standardUserDefaults] setObject:state forKey:KEY_AUTHSTATE];
                 [[NSUserDefaults standardUserDefaults] setObject:name forKey:KEY_USER_NAME];
@@ -251,10 +254,9 @@
 
                 if ([isthirdlogin isEqualToString:@"false"]){
                     BindPhoneViewController *bindViewCon =[[BindPhoneViewController alloc]init];
-                    [self.navigationController pushViewController:bindViewCon animated:YES];
+                    [weakSelf.navigationController pushViewController:bindViewCon animated:YES];
                 } else{
-                    [self chatLoagin];
-                    [self loginSuccess];
+                    [weakSelf registerToken];
                 }
 
             } failed:^(MOCHTTPResponse *response) {
@@ -262,16 +264,40 @@
                 [Hud hideHud];
             }];
 
-        } else{
-            if  ([error errorCode] == -6004){ //跳转网页版
-                [Hud showMessageWithText:@"请先安装客户端"];
-            } else if ([error errorCode] == -22003){
-//                [Hud showMessageWithLongText:@"当前您未安装微信，请使用手机号，QQ或微博登录"];
-            }
-            NSLog(@"登陆失败,错误码:%ld,错误描述:%@", (long)[error errorCode], [error errorDescription]);
         }
     }];
 }
+
+- (void)registerToken
+{
+    [Hud showWait];
+    NSString *channelId = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_BPUSH_CHANNELID];
+    NSString *uid =  [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
+
+    NSString *token = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_TOKEN];
+    NSDictionary *param = @{@"uid":uid, @"t":token?:@"", @"channelid":channelId?:@"", @"channeluid":@"getui"};
+    __weak typeof(self) weakSelf = self;
+
+    [[SHGGloble sharedGloble] registerToken:param block:^(BOOL success, MOCHTTPResponse *response) {
+        if (success) {
+            [Hud hideHud];
+            NSString *code = [response.data valueForKey:@"code"];
+            if ([code isEqualToString:@"000"]){
+                if ([weakSelf.isFull isEqualToString:@"1"]){
+                    [weakSelf chatLoagin];
+                    [weakSelf loginSuccess];
+                } else{
+                    ImproveMatiralViewController *vc = [[ImproveMatiralViewController alloc] init];
+                    [weakSelf.navigationController pushViewController:vc animated:YES];
+                }
+            }
+        } else{
+            [Hud hideHud];
+            [Hud showMessageWithText:response.errorMessage];
+        }
+    }];
+}
+
 
 - (void)login
 {
