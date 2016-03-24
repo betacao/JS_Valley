@@ -296,7 +296,7 @@
 
 - (void)fetchGroupInfo
 {
-    [self showHudInView:self.view hint:NSLocalizedString(@"loadData", @"Load data...")];
+    [Hud showWait];
     __weak PublicGroupDetailViewController *weakSelf = self;
     [[EaseMob sharedInstance].chatManager asyncFetchGroupInfo:_groupId completion:^(EMGroup *group, EMError *error) {
         weakSelf.group = group;
@@ -305,7 +305,7 @@
         [self.introductionDetailLabel sizeToFit];
         [weakSelf reloadSubviewsInfo];
         [weakSelf getGroupManagerName];
-        [weakSelf hideHud];
+        [Hud hideHud];
     } onQueue:nil];
 }
 

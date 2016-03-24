@@ -291,8 +291,7 @@ static BOOL isFetchingPublicGroupList = NO;
 
 - (void)reloadDataSource
 {
-    [self hideHud];
-    [self showHudInView:self.view hint:NSLocalizedString(@"loadData", @"Load data...")];
+    [Hud showWait];
 
     if (isFetchingPublicGroupList)
     {
@@ -302,7 +301,7 @@ static BOOL isFetchingPublicGroupList = NO;
     isFetchingPublicGroupList = YES;
     [[EaseMob sharedInstance].chatManager asyncFetchAllPublicGroupsWithCompletion:^(NSArray *groups, EMError *error) {
         PublicGroupListViewController *controller = [ObjectWeakContainer sharedInstance].obj;
-        [controller hideHud];
+        [Hud hideHud];
         [controller.dataSource removeAllObjects];
         [controller.dataSource addObjectsFromArray:groups];
         [controller.tableView reloadData];

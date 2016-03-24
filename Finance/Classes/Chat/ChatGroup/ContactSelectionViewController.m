@@ -397,43 +397,32 @@
 
 - (void)loadDataSource
 {
-    [self showHudInView:self.view hint:NSLocalizedString(@"loadData", @"Load data...")];
     [_dataSource removeAllObjects];
     [_contactsSource removeAllObjects];
-    
-//    NSArray *buddyList = [[EaseMob sharedInstance].chatManager buddyList];
-//    for (EMBuddy *buddy in buddyList) {
-//        if (buddy.followState != eEMBuddyFollowState_NotFollowed) {
-//            [self.contactsSource addObject:buddy];
-//        }
-//    }
-    
+    [Hud showWait];
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
     NSMutableArray *array=[NSMutableArray arrayWithCapacity:1];
-    [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"friends"] parameters:@{@"uid":uid}success:^(MOCHTTPResponse *response) {
+    [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"friends"] parameters:@{@"uid":uid} success:^(MOCHTTPResponse *response) {
+        [Hud hideHud];
         for (int i = 0; i<response.dataArray.count; i++) {
             NSDictionary *dic = response.dataArray[i];
             BasePeopleObject *obj = [[BasePeopleObject alloc] init];
             obj.name = [dic valueForKey:@"nick"];
             obj.headImageUrl = [dic valueForKey:@"avatar"];
             obj.uid = [dic valueForKey:@"username"];
-            
             [array addObject:obj];
         }
         
-        self.contactsSource=array;
+        self.contactsSource = array;
         
         [_dataSource addObjectsFromArray:[self sortRecords:self.contactsSource]];
         
-        if(_dataSource.count>0)
-        {
+        if(_dataSource.count > 0){
             [self.tableView reloadData];
         }
     } failed:^(MOCHTTPResponse *response) {
-        
+        [Hud hideHud];
     }];
-    
-    [self hideHud];
 }
 
 - (void)doneAction:(id)sender

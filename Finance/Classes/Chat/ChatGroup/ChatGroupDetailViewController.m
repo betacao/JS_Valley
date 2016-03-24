@@ -339,10 +339,10 @@
 - (void)fetchGroupInfo
 {
     __weak typeof(self) weakSelf = self;
-    [self showHudInView:self.view hint:NSLocalizedString(@"loadData", @"Load data...")];
+    [Hud showWait];
     [[EaseMob sharedInstance].chatManager asyncFetchGroupInfo:_chatGroup.groupId completion:^(EMGroup *group, EMError *error) {
         dispatch_async(dispatch_get_main_queue(), ^{
-            [weakSelf hideHud];
+            [Hud hideHud];
             if (!error) {
                 weakSelf.chatGroup = group;
                 [weakSelf reloadDataSource];

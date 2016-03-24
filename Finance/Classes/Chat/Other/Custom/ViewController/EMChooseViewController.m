@@ -309,12 +309,10 @@
 - (void)loadDataSource
 {
     if (_delegate && [_delegate respondsToSelector:@selector(viewControllerLoadDataSource:)]) {
-        [self showHudInView:self.view hint:NSLocalizedString(@"loadData", @"Load data...")];
-        
+        [Hud showWait];
         NSArray *array = [_delegate viewControllerLoadDataSource:self];
         [self.dataSource addObjectsFromArray:[self sortRecords:array]];
-        
-        [self hideHud];
+        [Hud hideHud];
         [self.tableView reloadData];
     }
 }
