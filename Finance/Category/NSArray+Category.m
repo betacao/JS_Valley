@@ -151,4 +151,13 @@
     NSArray *objectsToAppend = [otherArray arrayByRemovingObjectsFromArray:self];
     [self addObjectsFromArray:objectsToAppend];
 }
+
+- (void)moveObjectAtIndex:(NSUInteger)fromIdx toIndex:(NSUInteger)toIdx
+{
+    if(self.count > fromIdx && self.count > toIdx){
+        NSObject *object = [self objectAtIndex:fromIdx];
+        [self removeObjectAtIndex:fromIdx];
+        [self insertObject:object atIndex:toIdx];
+    }
+}
 @end

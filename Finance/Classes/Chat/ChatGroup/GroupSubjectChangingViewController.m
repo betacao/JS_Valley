@@ -7,7 +7,6 @@
 //
 
 #import "GroupSubjectChangingViewController.h"
-#import "UIButton+EnlargeEdge.h"
 
 @interface GroupSubjectChangingViewController () <UITextFieldDelegate>
 {

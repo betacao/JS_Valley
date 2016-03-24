@@ -241,8 +241,10 @@
     if (self.recommendArray.count == 0 || [self.dataArr indexOfObject:self.recommendArray] != NSNotFound) {
         return;
     }
-    if(self.dataArr.count > 4){
-        [self.dataArr insertObject:self.recommendArray atIndex:3];
+    //第三个帖子后面
+    if(self.dataArr.count > 5){
+        [self.dataArr addObject:self.recommendArray];
+        [self adjustAdditionalObject];
         self.needRefreshTableView = YES;
     }
 }
@@ -252,9 +254,33 @@
     if (!self.friendObject || [self.dataArr indexOfObject:self.friendObject] != NSNotFound) {
         return;
     }
-    if(self.dataArr.count > 3 && self.needShowNewFriend){
-        [self.dataArr insertObject:self.friendObject atIndex:2];
+    if(self.dataArr.count > 2 && self.needShowNewFriend){
+        [self.dataArr addObject:self.friendObject];
+        [self adjustAdditionalObject];
         self.needRefreshTableView = YES;
+    }
+}
+
+//调整推荐好友和好友提醒的位置
+- (void)adjustAdditionalObject
+{
+    if (self.dataArr.count > 5) {
+        //移动提醒的位置
+        if ([self.dataArr containsObject:self.friendObject]) {
+            NSInteger index = [self.dataArr indexOfObject:self.friendObject];
+            [self.dataArr moveObjectAtIndex:index toIndex:1];
+        }
+
+        //移动推荐的位置
+        if ([self.dataArr containsObject:self.recommendArray]) {
+            NSInteger index = [self.dataArr indexOfObject:self.recommendArray];
+            if ([self.dataArr containsObject:self.friendObject]) {
+                [self.dataArr moveObjectAtIndex:index toIndex:4];
+            } else{
+                [self.dataArr moveObjectAtIndex:index toIndex:3];
+            }
+        }
+
     }
 }
 
@@ -296,9 +322,9 @@
         if (dictionary) {
             NSArray *array = [[SHGGloble sharedGloble] parseServerJsonArrayToJSONModel:@[dictionary] class:[SHGNewFriendObject class]];
             if (array.count > 0) {
-                self.friendObject = [array firstObject];
+                weakSelf.friendObject = [array firstObject];
             } else{
-                self.friendObject = nil;
+                weakSelf.friendObject = nil;
             }
         }
         [weakSelf insertNewFriendArray];
@@ -315,7 +341,6 @@
     if ([target isEqualToString:@"first"]){
         [self.tableView.mj_footer resetNoMoreData];
         self.hasDataFinished = NO;
-    } else if([target isEqualToString:@"load"]){
     }
 
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];

@@ -464,7 +464,7 @@
     [MOCHTTPRequestOperationManager getWithURL:request parameters:@{@"os":@"iOS"} success:^(MOCHTTPResponse *response) {
         NSDictionary *dictionary = response.dataDictionary;
         NSString *version = [dictionary objectForKey:@"version"];
-//        BOOL force = [[dictionary objectForKey:@"force"] isEqualToString:@"Y"] ? YES : NO;
+        BOOL force = [[dictionary objectForKey:@"force"] isEqualToString:@"Y"] ? YES : NO;
         NSString *detail = [dictionary objectForKey:@"detail"];
 
         NSString *localVersion = [[NSBundle mainBundle] infoDictionary][@"CFBundleShortVersionString"];
@@ -486,7 +486,11 @@
                     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://itunes.apple.com/cn/app/da-niu-quan-jin-rong-zheng/id984379568?mt=8"]];
                 };
                 alert.shouldDismiss = NO;
-                [alert showWithClose];
+                if(force){
+                    [alert show];
+                } else{
+                    [alert showWithClose];
+                }
             }
         } else{
             if (block) {

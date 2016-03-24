@@ -229,6 +229,7 @@
         UIImage *image = [UIImage imageNamed:@"alert_Close"];
         [_closeButton setImage:image forState:UIControlStateNormal];
         [_closeButton addTarget:self action:@selector(leftBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+        [_closeButton setEnlargeEdge:20.0f];
         _closeButton.hidden = YES;
         [self addSubview:_closeButton];
         _closeButton.sd_layout

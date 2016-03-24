@@ -43,11 +43,7 @@
     // SDK获取结束后，会回调
     // - (void)didFetchedBuddyList:(NSArray *)buddyList error:(EMError *)error方法。
     [[EaseMob sharedInstance].chatManager setIsAutoFetchBuddyList:YES];
-    
-    // 注册环信监听
-    [self registerEaseMobNotification];
-    [[EaseMob sharedInstance] application:application
-            didFinishLaunchingWithOptions:launchOptions];
+    [[EaseMob sharedInstance] application:application didFinishLaunchingWithOptions:launchOptions];
     
     [self setupNotifiers];
 }
@@ -191,17 +187,6 @@
         [[UIApplication sharedApplication] registerForRemoteNotificationTypes:notificationTypes];
     }
 #endif
-}
-
-#pragma mark - registerEaseMobNotification
-- (void)registerEaseMobNotification{
-    [self unRegisterEaseMobNotification];
-    // 将self 添加到SDK回调中，以便本类可以收到SDK回调
-    [[EaseMob sharedInstance].chatManager addDelegate:self delegateQueue:nil];
-}
-
-- (void)unRegisterEaseMobNotification{
-    [[EaseMob sharedInstance].chatManager removeDelegate:self];
 }
 
 #pragma mark - IChatManagerDelegate

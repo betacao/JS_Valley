@@ -235,6 +235,12 @@
 {
     [self.viewArray enumerateObjectsUsingBlock:^(UIView *view, NSUInteger idx, BOOL * _Nonnull stop) {
         view.hidden = YES;
+        [view.subviews enumerateObjectsUsingBlock:^(__kindof UIView * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            if ([obj isKindOfClass:[UILabel class]]) {
+                ((UILabel *)obj).text = @"";
+                obj.frame = CGRectZero;
+            }
+        }];
     }];
 }
 

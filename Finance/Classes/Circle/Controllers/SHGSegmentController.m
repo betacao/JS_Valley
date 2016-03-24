@@ -26,7 +26,6 @@
 #import "ChatListViewController.h"
 #import "ApplyViewController.h"
 #import "HeadImage.h"
-#import "UIButton+EnlargeEdge.h"
 
 //两次提示的默认间隔
 static const CGFloat kDefaultPlaySoundInterval = 3.0;
@@ -309,6 +308,7 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     [listArray removeObjectsInArray:objectArray];
     [dataArray removeObjectsInArray:objectArray];
     if (indexArray.count > 0) {
+        [controller adjustAdditionalObject];
         controller.needRefreshTableView = YES;
     }
 }
@@ -736,7 +736,6 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     notification.soundName = UILocalNotificationDefaultSoundName;
     //发送通知
     UIApplication *application = [UIApplication sharedApplication];
-    application.applicationIconBadgeNumber += 1;
     [application scheduleLocalNotification:notification];
 }
 

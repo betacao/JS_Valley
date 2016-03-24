@@ -18,4 +18,6 @@
 - (void)refreshHeader;
 - (void)requestRecommendFriends;
 - (void)loadRegisterPushFriend;
+//调整推荐好友和好友提醒的位置
+- (void)adjustAdditionalObject;
 @end

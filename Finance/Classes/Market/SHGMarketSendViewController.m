@@ -11,7 +11,6 @@
 #import "SHGMarketManager.h"
 #import "UIButton+WebCache.h"
 #import "SHGItemChooseView.h"
-#import "UIButton+EnlargeEdge.h"
 #import "EMTextView.h"
 
 typedef NS_ENUM(NSInteger, SHGMarketSendType){

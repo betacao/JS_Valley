@@ -7,7 +7,6 @@
 //
 
 #import "SHGNoticeView.h"
-#import "UIButton+EnlargeEdge.h"
 
 #define kNoticeFriendViewHeight 30.0f * XFACTOR
 #define kCloseButtonMargin 25.0f

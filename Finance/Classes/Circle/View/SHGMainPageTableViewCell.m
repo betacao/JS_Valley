@@ -9,7 +9,6 @@
 #import "SHGMainPageTableViewCell.h"
 #import "SDPhotoGroup.h"
 #import "SDPhotoItem.h"
-#import "UIButton+EnlargeEdge.h"
 
 @interface SHGMainPageTableViewCell()<MLEmojiLabelDelegate>
 @property (weak, nonatomic) IBOutlet SHGUserHeaderView *headerView;

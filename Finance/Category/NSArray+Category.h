@@ -30,5 +30,5 @@
 - (void)insertUniqueObject:(id)anObject atIndex:(NSInteger)index;
 - (void)insertUniqueObjectsFromArray:(NSArray *)otherArray;
 - (void)appendUniqueObjectsFromArray:(NSArray *)otherArray;
-
+- (void)moveObjectAtIndex:(NSUInteger)fromIdx toIndex:(NSUInteger)toIdx;
 @end

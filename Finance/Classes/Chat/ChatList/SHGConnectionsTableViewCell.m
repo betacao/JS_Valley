@@ -7,7 +7,6 @@
 //
 
 #import "SHGConnectionsTableViewCell.h"
-#import "UIButton+EnlargeEdge.h"
 
 @interface SHGConnectionsTableViewCell()
 @property (strong, nonatomic) NSString *uid;

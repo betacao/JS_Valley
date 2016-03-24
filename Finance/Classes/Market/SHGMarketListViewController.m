@@ -20,7 +20,7 @@
 #import "SHGMomentCityViewController.h"
 #import "SHGMarketImageTableViewCell.h"
 #import "SHGNoticeView.h"
-#import "UIButton+EnlargeEdge.h"
+
 @interface SHGMarketListViewController ()<UITabBarDelegate, UITableViewDataSource, SHGCategoryScrollViewDelegate,SHGMarketSecondCategoryViewControllerDelegate, SHGMarketTableViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
