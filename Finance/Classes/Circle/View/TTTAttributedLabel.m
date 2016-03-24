@@ -328,7 +328,6 @@ static inline CGSize CTFramesetterSuggestFrameSizeForAttributedStringWithConstra
 @property (readwrite, nonatomic, copy) NSAttributedString *renderedAttributedText;
 @property (readwrite, atomic, strong) NSDataDetector *dataDetector;
 @property (readwrite, nonatomic, strong) NSArray *linkModels;
-@property (readwrite, nonatomic, strong) TTTAttributedLabelLink *activeLink;
 @property (readwrite, nonatomic, strong) NSArray *accessibilityElements;
 
 - (void) longPressGestureDidFire:(UILongPressGestureRecognizer *)sender;

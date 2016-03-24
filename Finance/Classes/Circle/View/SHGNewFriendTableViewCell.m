@@ -9,13 +9,14 @@
 #import "SHGNewFriendTableViewCell.h"
 #import "SHGHomeViewController.h"
 #import "ChatSendHelper.h"
+#import "TTTAttributedLabel.h"
 @interface SHGNewFriendTableViewCell()
 
 @property (weak, nonatomic) IBOutlet SHGUserHeaderView *headerView;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *companyLabel;
 @property (weak, nonatomic) IBOutlet UILabel *departmentLabel;
-@property (weak, nonatomic) IBOutlet UILabel *contentLabel;
+@property (weak, nonatomic) IBOutlet TTTAttributedLabel *contentLabel;
 @property (weak, nonatomic) IBOutlet UILabel *relationLabel;
 @property (weak, nonatomic) IBOutlet UIView *lineView;
 @property (weak, nonatomic) IBOutlet UIView *splitView;
@@ -26,6 +27,7 @@
 
 - (void)awakeFromNib
 {
+    [self.contentLabel addObserver:self forKeyPath:@"activeLink" options:NSKeyValueObservingOptionNew context:nil];
     [self initView];
     [self addAutoLayout];
 }
@@ -43,12 +45,8 @@
     self.departmentLabel.font = kMainCompanyFont;
     self.departmentLabel.textColor = kMainCompanyColor;
     
-    self.contentLabel.font = kMainContentFont;
-    self.contentLabel.textColor = Color(@"545454");
     self.contentLabel.isAttributedContent = YES;
     self.contentLabel.userInteractionEnabled = YES;
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapAction:)];
-    [self.contentLabel addGestureRecognizer:tap];
     
     self.relationLabel.font = FontFactor(14.0f);
     self.relationLabel.textColor = Color(@"919291");
@@ -133,12 +131,18 @@
     self.nameLabel.text = object.realName;
     self.companyLabel.text = object.company;
     self.departmentLabel.text = object.title;
-
+    
     NSString *string = [NSString stringWithFormat:@"您的通讯录联系人%@加入大牛圈啦，快去跟TA 打个招呼 吧！",object.realName];
-    NSRange range = [string rangeOfString:@"打个招呼"];
+    
     NSMutableAttributedString *content = [[NSMutableAttributedString alloc] initWithString:string];
-    [content addAttributes:@{NSFontAttributeName:FontFactor(16.0f), NSForegroundColorAttributeName:Color(@"4277b2")} range:range];
+    [content addAttributes:@{NSFontAttributeName:kMainContentFont, NSForegroundColorAttributeName:Color(@"545454")} range:NSMakeRange(0, content.length)];
+    [content addAttributes:@{NSFontAttributeName:FontFactor(16.0f), NSForegroundColorAttributeName:Color(@"4277b2")} range:[string rangeOfString:@"打个招呼"]];
     self.contentLabel.attributedText = content;
+    self.contentLabel.linkAttributes = nil;
+    self.contentLabel.activeLinkAttributes = nil;
+    [self.contentLabel addLinkToURL:[NSURL URLWithString:@"打个招呼"] withRange:[self.contentLabel.text rangeOfString:@"打个招呼"]];
+    
+    
     __block NSString *relation = @"";
     [object.commonFriendList enumerateObjectsUsingBlock:^(NSString *obj, NSUInteger idx, BOOL * _Nonnull stop) {
         relation = [relation stringByAppendingFormat:@"%@、",obj];
@@ -146,14 +150,6 @@
     relation = [relation substringToIndex:relation.length - 1];
     relation = [NSString stringWithFormat:@"你们共同拥有%@等%@位好友！",relation, object.commonFriendCount];
     self.relationLabel.text = relation;
-}
-
-- (void)tapAction:(UITapGestureRecognizer *)tap
-{
-    [ChatSendHelper sendTextMessageWithString:@"原来你也在这里啊～" toUsername:_object.realName isChatGroup:NO requireEncryption:NO ext:nil];
-    [Hud showMessageWithText:[NSString stringWithFormat:@"小信鸽大牛助手已将您的问候传达给%@!",_object.realName]];
-    [SHGHomeViewController sharedController].needShowNewFriend = NO;
-    [SHGHomeViewController sharedController].needRefreshTableView = YES;
 }
 
 - (void)clearCell
@@ -180,9 +176,29 @@
     [SHGHomeViewController sharedController].needRefreshTableView = YES;
 }
 
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context
+{
+    if ([keyPath isEqualToString:@"activeLink"]) {
+        TTTAttributedLabelLink *link = [change objectForKey:@"new"];
+        if (link && ![link isEqual:[NSNull null]]) {
+            link.linkTapBlock = ^(TTTAttributedLabel *label, TTTAttributedLabelLink *labelLink){
+                [ChatSendHelper sendTextMessageWithString:@"原来你也在这里啊～" toUsername:self.object.uid isChatGroup:NO requireEncryption:NO ext:nil];
+                [Hud showMessageWithText:[NSString stringWithFormat:@"小信鸽大牛助手已将您的问候传达给%@!",self.object.realName]];
+                [SHGHomeViewController sharedController].needShowNewFriend = NO;
+                [SHGHomeViewController sharedController].needRefreshTableView = YES;
+            };
+        }
+    }
+}
+
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
     [super setSelected:selected animated:animated];
+}
+
+- (void)dealloc
+{
+    [self.contentLabel removeObserver:self forKeyPath:@"activeLink"];
 }
 
 @end
