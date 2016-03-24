@@ -18,7 +18,7 @@ typedef NS_ENUM(NSInteger, SHGMarketSendType){
     SHGMarketSendTypeReSet = 1
 };
 
-@interface SHGMarketSendViewController ()<UITextFieldDelegate, UITextViewDelegate, UITableViewDataSource, UITableViewDelegate, SHGComBoxViewDelegate, UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, SHGItemChooseDelegate>
+@interface SHGMarketSendViewController ()<UITextFieldDelegate, UITextViewDelegate, UITableViewDataSource, UITableViewDelegate, SHGComBoxViewDelegate, UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, SHGItemChooseDelegate, UIGestureRecognizerDelegate>
 
 @property (strong, nonatomic) IBOutlet UIView *bgView;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -69,9 +69,10 @@ typedef NS_ENUM(NSInteger, SHGMarketSendType){
     self.sendType = SHGMarketSendTypeNew;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardDidShow:) name:UIKeyboardDidShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textFieldDidChange:) name:UITextFieldTextDidChangeNotification object:nil];
-    UITapGestureRecognizer *tapGes = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapAction:)];
-    [tapGes setCancelsTouchesInView:NO];
-    [self.bgView addGestureRecognizer:tapGes];
+    UITapGestureRecognizer *tapGes = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(touchView:)];
+    tapGes.delegate = self;
+
+    [self.view addGestureRecognizer:tapGes];
     __weak typeof(self)weakSelf = self;
     [[SHGMarketManager shareManager] userListArray:^(NSArray *array) {
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -712,12 +713,29 @@ typedef NS_ENUM(NSInteger, SHGMarketSendType){
     }
 }
 
-- (void)tapAction:(UITapGestureRecognizer *)gesture
+- (void)touchView:(UITapGestureRecognizer *)gesture
 {
+    if (gesture.state == UIGestureRecognizerStateEnded) {
         [self.firstCategoryBox closeOtherCombox];
         [self.secondCategoryBox closeOtherCombox];
-
+    }
 }
+
+- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer
+{
+
+    CGPoint point = [gestureRecognizer locationInView:self.view];
+    for (UIView *view in self.bgView.subviews) {
+        if ([view isKindOfClass:[UITableView class]] || [view isKindOfClass:[SHGComBoxView class]]) {
+            CGRect frame = view.frame;
+            if (CGRectContainsPoint(frame, point)) {
+                return NO;
+            }
+        }
+    }
+    return YES;
+}
+
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];

@@ -441,12 +441,21 @@
     .topSpaceToView(self.thirdCommentLabel, 0.0f)
     .autoHeightRatio(0.0f);
 
-
+    UIView *lastView = nil;
+    if ([object.cmmtnum integerValue] > 3) {
+        lastView = self.fourthCommentLabel;
+    } else if (count == 0 || count == 1) {
+        lastView = self.firstCommentLabel;
+    } else if (count == 2) {
+        lastView = self.secondCommentLabel;
+    } else if (count == 3) {
+        lastView = self.thirdCommentLabel;
+    }
     self.commentView.sd_resetLayout
     .topSpaceToView(self.actionView, 0.0f)
     .leftEqualToView(self.headerView)
     .rightEqualToView(self.attentionButton);
-    [self.commentView setupAutoHeightWithBottomViewsArray:@[self.firstCommentLabel, self.secondCommentLabel, self.thirdCommentLabel, self.fourthCommentLabel] bottomMargin:margin];
+    [self.commentView setupAutoHeightWithBottomView:lastView bottomMargin:margin];
 
     //描边
     self.lineView.sd_resetLayout

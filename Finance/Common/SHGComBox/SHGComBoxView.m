@@ -44,7 +44,7 @@
         _bgButton = [UIButton buttonWithType:UIButtonTypeCustom];
         _bgButton.layer.masksToBounds = YES;
         _bgButton.layer.cornerRadius = 3.0f;
-        [_bgButton addTarget:self action:@selector(tapAction) forControlEvents:UIControlEventTouchUpInside];
+        [_bgButton addTarget:self action:@selector(clickButton) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:_bgButton];
     }
     return _bgButton;
@@ -161,7 +161,7 @@
 }
 
 //点击事件
-- (void)tapAction
+- (void)clickButton
 {
     //关闭其他combox
     [self closeOtherCombox];
@@ -251,7 +251,7 @@
 {
    [tableView deselectRowAtIndexPath:indexPath animated:YES];
     self.isOpen = YES;
-    [self tapAction];
+    [self clickButton];
     [self moveToIndex:indexPath.row];
 }
 

@@ -30,7 +30,6 @@
 
 - (void)reloadData;
 - (void)closeOtherCombox;
-- (void)tapAction;
 - (NSInteger)currentIndex;
 @end
 

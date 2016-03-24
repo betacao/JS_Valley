@@ -12,7 +12,7 @@
 #import "SHGItemChooseView.h"
 #import "SHGMarketSearchResultViewController.h"
 
-@interface SHGMarketAdvancedSearchViewController ()<SHGComBoxViewDelegate, SHGItemChooseDelegate>
+@interface SHGMarketAdvancedSearchViewController ()<SHGComBoxViewDelegate, SHGItemChooseDelegate, UIGestureRecognizerDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *firstLabel;
 @property (weak, nonatomic) IBOutlet UIView *firstContentView;
@@ -56,10 +56,6 @@
     self.recentUpdate = @"";
     self.city = @"";
     self.mode = @"";
-
-    UITapGestureRecognizer *tapGes = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapAction:)];
-    [tapGes setCancelsTouchesInView:NO];
-    [self.view addGestureRecognizer:tapGes];
     
     [self initView];
     [self addAutoLayout];
@@ -400,14 +396,11 @@
 
 }
 
-- (void)tapAction:(UITapGestureRecognizer *)gesture
+- (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
     [self.leftComBox closeOtherCombox];
     [self.rightCombox closeOtherCombox];
-    
 }
-
-
 #pragma mark ------combox代理
 - (void)selectAtIndex:(NSInteger)index inCombox:(SHGComBoxView *)combox
 {
