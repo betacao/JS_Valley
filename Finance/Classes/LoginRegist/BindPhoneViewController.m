@@ -36,6 +36,7 @@ typedef NS_ENUM(NSInteger, RegistType)
 @property (nonatomic, strong) NSTimer	*remainTimer;
 //定制view的类型
 @property (nonatomic, assign) RegistType registType;
+@property (nonatomic, strong) NSString *isFull;
 @end
 
 @implementation BindPhoneViewController
@@ -165,6 +166,7 @@ typedef NS_ENUM(NSInteger, RegistType)
     NSString *userId = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_BPUSH_USERID];
 
     NSDictionary *param = @{@"loginNum":thirdUid, @"loginType":logType, @"ctype":@"iphone", @"phone":phoneText.text, @"validateCode":authCodeText.text, @"os":@"ios", @"osv":osv, @"appv":LOCAL_Version, @"yuncid":channelId?:@"", @"yunuid":userId?:@""};
+    __weak typeof(self) weakSelf = self;
     [MOCHTTPRequestOperationManager postWithURL:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"thirdLogin/bindingPhone"] class:nil parameters:param success:^(MOCHTTPResponse *response){
         [Hud hideHud];
         NSString *isthirdlogin = response.dataDictionary[@"bindresult"];
@@ -173,11 +175,11 @@ typedef NS_ENUM(NSInteger, RegistType)
         NSString *state = response.dataDictionary[@"state"];
         NSString *name = response.dataDictionary[@"name"];
         NSString *head_img = response.dataDictionary[@"head_img"];
-        NSString *isfull = response.dataDictionary[@"isfull"];
+        weakSelf.isFull = response.dataDictionary[@"isfull"];
         NSString *pwd =response.dataDictionary[@"pwd"];
         NSString *area =response.dataDictionary[@"area"];
         [[NSUserDefaults standardUserDefaults] setObject:uid forKey:KEY_UID];
-        [[NSUserDefaults standardUserDefaults] setObject:isfull forKey:KEY_ISFULL];
+        [[NSUserDefaults standardUserDefaults] setObject:weakSelf.isFull forKey:KEY_ISFULL];
         [[NSUserDefaults standardUserDefaults] setObject:state forKey:KEY_AUTHSTATE];
         [[NSUserDefaults standardUserDefaults] setObject:name forKey:KEY_USER_NAME];
         [[NSUserDefaults standardUserDefaults] setObject:head_img forKey:KEY_HEAD_IMAGE];
@@ -191,10 +193,9 @@ typedef NS_ENUM(NSInteger, RegistType)
 
         if ([isthirdlogin isEqualToString:@"false"]){ //输入密码
             SetPassWordViewController *detaiVC = [[SetPassWordViewController alloc]init];
-            [self.navigationController pushViewController:detaiVC animated:YES];
-        }else{ //跳转至大牛圈
-            [self chatLoagin];
-            [self loginSuccess];
+            [weakSelf.navigationController pushViewController:detaiVC animated:YES];
+        } else{
+            [weakSelf registerToken];
         }
     } failed:^(MOCHTTPResponse *response) {
         [Hud showMessageWithText:response.errorMessage];
@@ -202,6 +203,37 @@ typedef NS_ENUM(NSInteger, RegistType)
     }];
 
 }
+
+- (void)registerToken
+{
+    [Hud showWait];
+    NSString *channelId = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_BPUSH_CHANNELID];
+    NSString *uid =  [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
+
+    NSString *token = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_TOKEN];
+    NSDictionary *param = @{@"uid":uid, @"t":token?:@"", @"channelid":channelId?:@"", @"channeluid":@"getui"};
+    __weak typeof(self) weakSelf = self;
+
+    [[SHGGloble sharedGloble] registerToken:param block:^(BOOL success, MOCHTTPResponse *response) {
+        if (success) {
+            [Hud hideHud];
+            NSString *code = [response.data valueForKey:@"code"];
+            if ([code isEqualToString:@"000"]){
+                if ([weakSelf.isFull isEqualToString:@"1"]){
+                    [weakSelf chatLoagin];
+                    [weakSelf loginSuccess];
+                } else{
+                    ImproveMatiralViewController *vc = [[ImproveMatiralViewController alloc] init];
+                    [weakSelf.navigationController pushViewController:vc animated:YES];
+                }
+            }
+        } else{
+            [Hud hideHud];
+            [Hud showMessageWithText:response.errorMessage];
+        }
+    }];
+}
+
 - (void)chatLoagin
 {
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
