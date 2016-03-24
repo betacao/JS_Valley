@@ -316,7 +316,7 @@
     // 初始化输入框
     self.inputTextView = [[XHMessageTextView  alloc] initWithFrame:CGRectMake(textViewLeftMargin, kVerticalPadding, width, kInputTextViewMinHeight)];
     self.inputTextView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
-//    self.inputTextView.contentMode = UIViewContentModeCenter;
+    self.inputTextView.contentMode = UIViewContentModeCenter;
     _inputTextView.scrollEnabled = YES;
     _inputTextView.returnKeyType = UIReturnKeySend;
     _inputTextView.enablesReturnKeyAutomatically = YES; // UITextView内部判断send按钮是否可以用
@@ -334,10 +334,7 @@
     self.recordButton.layer.cornerRadius = 6.0f;
     self.recordButton.clipsToBounds = YES;
     self.recordButton.titleLabel.font = [UIFont boldSystemFontOfSize:15.0];
-//    [self.recordButton setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
-//    [self.recordButton setBackgroundImage:[[UIImage imageNamed:@"chatBar_recordBg"] stretchableImageWithLeftCapWidth:10 topCapHeight:10] forState:UIControlStateNormal];
     [self.recordButton setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithHexString:@"d7d7d7"]] forState:UIControlStateNormal];
-//    [self.recordButton setBackgroundImage:[[UIImage imageNamed:@"chatBar_recordSelectedBg"] stretchableImageWithLeftCapWidth:10 topCapHeight:10] forState:UIControlStateHighlighted];
      [self.recordButton setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithHexString:@"bdbdbd"]] forState:UIControlStateHighlighted];
     [self.recordButton setTitle:kTouchToRecord forState:UIControlStateNormal];
     [self.recordButton setTitleColor:[UIColor colorWithHexString:@"6a6a6a"] forState:UIControlStateNormal];

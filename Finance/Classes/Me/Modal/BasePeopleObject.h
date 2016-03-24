@@ -15,6 +15,7 @@
 @property (nonatomic, strong) NSString *simpleDescription;
 @property (nonatomic, strong) NSString *uid;
 @property (nonatomic, strong) NSString *updateTime;
+@property (nonatomic, assign) BOOL followRelationHiden;
 // 0为关注 1为粉丝 2为互相关注
 @property (nonatomic, assign) NSInteger followRelation;
 

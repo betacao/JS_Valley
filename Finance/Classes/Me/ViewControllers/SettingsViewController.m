@@ -34,8 +34,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"设置";
+    self.view.backgroundColor = [UIColor clearColor];
+    self.tableView.backgroundColor = Color(@"efeeef");
     self.bottomButton.titleLabel.font = FontFactor(17.0f);
-    self.bottomButton.backgroundColor = [UIColor colorWithHexString:@"f04241"];
+    self.bottomButton.backgroundColor = Color(@"f04241");
     self.bottomButton.frame = CGRectMake(MarginFactor(12.0f), self.view.height - MarginFactor(19.0f) - MarginFactor(40.0f) , self.view.width - 2 * MarginFactor(12.0f), MarginFactor(40.0f));
     [self initArrContents];
     [self loadSwitchInfo];
@@ -124,7 +126,7 @@
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     UIView *sectionView = [[UIView alloc] init];
-    sectionView.backgroundColor = RGB(240, 240, 240);
+    sectionView.backgroundColor = Color(@"efeeef");
     return sectionView;
 }
 

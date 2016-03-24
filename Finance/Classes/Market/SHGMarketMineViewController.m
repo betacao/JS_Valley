@@ -30,6 +30,7 @@
     self.title = @"我的业务";
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
+    self.tableView.backgroundColor = [UIColor colorWithHexString:@"efeeef"];
     [self addHeaderRefresh:self.tableView headerRefesh:YES andFooter:YES];
     __weak typeof(self) weakSelf = self;
     [[SHGMarketManager shareManager] userTotalArray:^(NSArray *array) {

@@ -24,6 +24,7 @@
     self.title = @"名片收藏";
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
+    self.tableView.backgroundColor = [UIColor colorWithHexString:@"efeeef"];
     [self addHeaderRefresh:self.tableView headerRefesh:YES andFooter:YES];
     [self requestCardListWithTarget:@"first" time:@"0"];
 }

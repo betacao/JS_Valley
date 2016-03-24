@@ -253,6 +253,7 @@
         cell.delegate = self;
     }
     BasePeopleObject *obj = self.dataSource[indexPath.row];
+    obj.followRelationHiden = NO;
     cell.object = obj;
    	
 	return cell;
@@ -295,6 +296,7 @@
 			}
 			
 			BasePeopleObject *obj = weakSelf.searchController.resultsSource[indexPath.row];
+            obj.followRelationHiden = NO;
             cell.object = obj;
             cell.delegate = weakSelf;
 			return cell;
@@ -411,7 +413,6 @@
                 CircleListObj *robj = [[CircleListObj alloc] init];
                 robj.userid = obj.uid;
                 robj.isattention = @"N";
-               // obj.followRelation = [response.dataDictionary[@"state"] integerValue];
                 [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_COLLECT_COLLECT_CLIC object:robj];
 
                 

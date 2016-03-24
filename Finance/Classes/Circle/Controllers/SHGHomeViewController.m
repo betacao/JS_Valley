@@ -226,6 +226,7 @@
             obj.recomfri = [dic valueForKey:@"recomfri"];
             obj.title = [dic valueForKey:@"title"];
             obj.vocation = [dic valueForKey:@"vocation"];
+            obj.commonCount = [dic valueForKey:@"commonCount"];
             [weakSelf.recommendArray addObject:obj];
         }
         [weakSelf insertRecomandArray];
@@ -486,6 +487,7 @@
             SHGRecommendTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier1];
             if (!cell){
                 cell = [[[NSBundle mainBundle] loadNibNamed:@"SHGRecommendTableViewCell" owner:self options:nil] lastObject];
+                cell.controller = self;
                 cell.delegate = [SHGUnifiedTreatment sharedTreatment];
             }
             NSMutableArray *array = [self.dataArr objectAtIndex:indexPath.row];

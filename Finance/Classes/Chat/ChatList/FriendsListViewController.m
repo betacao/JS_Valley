@@ -62,6 +62,7 @@ static NSString * const kCommonFNum			= @"commonnum";
     [super viewDidLoad];
     self.title = @"选择好友";
     [self removeEmptyConversationsFromDB];
+    self.tableView.backgroundColor = [UIColor colorWithHexString:@"efeeef"];
     [self addHeaderRefresh:self.tableView headerRefesh:YES andFooter:YES];
 
 
@@ -181,6 +182,7 @@ static NSString * const kCommonFNum			= @"commonnum";
             }
             
             BasePeopleObject *buddy = [weakSelf.searchController.resultsSource objectAtIndex:indexPath.row];
+            buddy.followRelationHiden = YES;
             cell.object = buddy;
             return cell;
         }];
@@ -246,6 +248,7 @@ static NSString * const kCommonFNum			= @"commonnum";
     }
     
     BasePeopleObject *buddy = [self.contactsSource objectAtIndex:indexPath.row];
+    buddy.followRelationHiden = YES;
     cell.object = buddy;
     return cell;
 }

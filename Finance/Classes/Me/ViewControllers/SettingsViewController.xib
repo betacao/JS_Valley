@@ -21,7 +21,7 @@
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="71p-m6-Vom">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                    <color key="backgroundColor" red="0.94117647059999998" green="0.94117647059999998" blue="0.94117647059999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <connections>
                         <outlet property="dataSource" destination="-1" id="sAv-my-Mye"/>
                         <outlet property="delegate" destination="-1" id="iCp-HM-OQm"/>
@@ -43,14 +43,18 @@
             <color key="backgroundColor" red="0.94117647059999998" green="0.94117647059999998" blue="0.94117647059999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <point key="canvasLocation" x="646" y="222"/>
         </view>
-        <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" id="RND-oW-lER">
+        <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" onImage="switchOn" offImage="switchOf" id="RND-oW-lER">
             <rect key="frame" x="0.0" y="0.0" width="51" height="31"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <color key="onTintColor" red="0.52156862745098043" green="0.76862745098039209" blue="0.38039215686274508" alpha="1" colorSpace="calibratedRGB"/>
             <connections>
                 <action selector="messageSwitch:" destination="-1" eventType="valueChanged" id="ktO-1r-gYO"/>
             </connections>
-            <point key="canvasLocation" x="766.5" y="130.5"/>
+            <point key="canvasLocation" x="743.5" y="134.5"/>
         </switch>
     </objects>
+    <resources>
+        <image name="switchOf" width="46" height="26"/>
+        <image name="switchOn" width="46" height="26"/>
+    </resources>
 </document>

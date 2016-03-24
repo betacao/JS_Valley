@@ -57,7 +57,7 @@
     [[EaseMob sharedInstance].chatManager removeDelegate:self];
     [[EaseMob sharedInstance].chatManager addDelegate:self delegateQueue:nil];
     [self addHeaderRefresh:self.tableView headerRefesh:YES andFooter:NO];
-
+    self.tableView.backgroundColor = [UIColor colorWithHexString:@"efeeef"];
     [[EaseMob sharedInstance].chatManager asyncFetchAllPublicGroups];
 }
 

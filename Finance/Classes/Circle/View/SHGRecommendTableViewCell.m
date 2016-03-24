@@ -9,6 +9,7 @@
 #import "SHGRecommendTableViewCell.h"
 #import "RecmdFriendObj.h"
 
+#import "SHGPersonalViewController.h"
 @interface SHGRecommendTableViewCell()
 @property (weak, nonatomic) IBOutlet UIImageView *topImageView;
 @property (weak, nonatomic) IBOutlet UIView *splitView;
@@ -60,6 +61,8 @@
         UIView *lineView = nil;
         if (self.viewArray.count <= index) {
             contentView = [[UIView alloc] init];
+            UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapContentViewAction:)];
+            [contentView addGestureRecognizer:tap];
             [self.contentView addSubview:contentView];
 
             header = [[SHGUserHeaderView alloc] init];
@@ -154,6 +157,15 @@
     .heightIs(kMainCellLineHeight);
 
     [self setupAutoHeightWithBottomView:self.splitView bottomMargin:0.0f];
+}
+
+- (void)tapContentViewAction:(UITapGestureRecognizer *)sender
+{
+    RecmdFriendObj *object = [self.objectArray objectAtIndex:[self.viewArray indexOfObject:sender.view]];
+    SHGPersonalViewController *controller = [[SHGPersonalViewController alloc] init];
+    controller.userId = object.uid;
+    [self.controller.navigationController pushViewController:controller animated:YES];
+    
 }
 
 - (void)addSubviewsLayout:(UIView *)contentView header:(SHGUserHeaderView *)header nameLabel:(UILabel *)nameLabel companyLabel:(UILabel *)companyLabel departmentLabel:(UILabel *)departmentLabel detailLabel:(UILabel *)detailLabel button:(UIButton *)button lineView:(UIView *)lineView
