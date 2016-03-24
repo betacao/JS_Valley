@@ -43,7 +43,7 @@
 @property (strong, nonatomic) UITableViewCell *emptyCell;
 @property (strong, nonatomic) SHGEmptyDataView *emptyView;
 @property (strong, nonatomic) EMSearchBar *searchBar;
-@property (strong, nonatomic) NSMutableDictionary *recommendHeightDictionary;
+@property (strong, nonatomic) NSMutableDictionary *heightDictionary;
 @end
 
 @implementation SHGHomeViewController
@@ -187,12 +187,12 @@
     return _emptyView;
 }
 
-- (NSMutableDictionary *)recommendHeightDictionary
+- (NSMutableDictionary *)heightDictionary
 {
-    if (!_recommendHeightDictionary) {
-        _recommendHeightDictionary = [NSMutableDictionary dictionary];
+    if (!_heightDictionary) {
+        _heightDictionary = [NSMutableDictionary dictionary];
     }
-    return _recommendHeightDictionary;
+    return _heightDictionary;
 }
 
 - (EMSearchBar *)searchBar
@@ -625,27 +625,45 @@
         return CGRectGetHeight(self.view.frame) - kTabBarHeight;
     }
     CircleListObj *obj = self.dataArr[indexPath.row];
+
     if([obj isKindOfClass:[CircleListObj class]]){
+
         if (![obj.postType isEqualToString:@"ad"]){
             if ([obj.status boolValue]){
                 CGFloat height = [tableView cellHeightForIndexPath:indexPath model:obj keyPath:@"object" cellClass:[SHGMainPageTableViewCell class] contentViewWidth:SCREENWIDTH];
                 return height;
             }
         } else{
-            CGFloat height = [tableView cellHeightForIndexPath:indexPath model:obj keyPath:@"object" cellClass:[SHGExtendTableViewCell class] contentViewWidth:CGFLOAT_MAX];
+
+            NSString *key = @"SHGExtendTableViewCell";
+            CGFloat height = [[self.heightDictionary objectForKey:key] floatValue];
+            if (height == 0.0f) {
+                height = [tableView cellHeightForIndexPath:indexPath model:obj keyPath:@"object" cellClass:[SHGExtendTableViewCell class] contentViewWidth:SCREENWIDTH];
+                [self.heightDictionary setObject:@(height) forKey:key];
+            }
             return height;
         }
+
     } else if([obj isKindOfClass:[NSArray class]]){
-        NSString *key = [NSString stringWithFormat:@"recommendHeight%ld",(long)self.recommendArray.count];
-        CGFloat height = [[self.recommendHeightDictionary objectForKey:key] floatValue];
+
+        NSString *key = [NSString stringWithFormat:@"height%ld",(long)self.recommendArray.count];
+        CGFloat height = [[self.heightDictionary objectForKey:key] floatValue];
         if (height == 0.0f) {
-            height = [tableView cellHeightForIndexPath:indexPath model:obj keyPath:@"objectArray" cellClass:[SHGRecommendTableViewCell class] contentViewWidth:CGFLOAT_MAX];
-            [self.recommendHeightDictionary setObject:@(height) forKey:key];
+            height = [tableView cellHeightForIndexPath:indexPath model:obj keyPath:@"objectArray" cellClass:[SHGRecommendTableViewCell class] contentViewWidth:SCREENWIDTH];
+            [self.heightDictionary setObject:@(height) forKey:key];
         }
         return height;
+
     } else if ([obj isKindOfClass:[SHGNewFriendObject class]]){
-        CGFloat height = [tableView cellHeightForIndexPath:indexPath model:obj keyPath:@"object" cellClass:[SHGNewFriendTableViewCell class] contentViewWidth:CGFLOAT_MAX];
+
+        NSString *key = @"SHGNewFriendTableViewCell";
+        CGFloat height = [[self.heightDictionary objectForKey:key] floatValue];
+        if (height == 0.0f) {
+            height = [tableView cellHeightForIndexPath:indexPath model:obj keyPath:@"object" cellClass:[SHGNewFriendTableViewCell class] contentViewWidth:SCREENWIDTH];
+            [self.heightDictionary setObject:@(height) forKey:key];
+        }
         return height;
+
     }
     return 0.0f;
 }

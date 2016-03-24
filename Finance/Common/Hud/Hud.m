@@ -55,6 +55,7 @@
 
 + (void)showWait
 {
+    [self performSelectorOnMainThread:@selector(hideHud) withObject:nil waitUntilDone:YES];
     [self performSelectorOnMainThread:@selector(showOnMainThread) withObject:nil waitUntilDone:YES];
 }
 
@@ -62,7 +63,7 @@
 {
     if ([[AppDelegate currentAppdelegate].window.rootViewController isKindOfClass:[UINavigationController class]]){
         UINavigationController *nav = (UINavigationController *)[AppDelegate currentAppdelegate].window.rootViewController;
-        UIViewController *topController = [nav.viewControllers lastObject];
+        UIViewController *topController = nav.topViewController;
         for (UIView *subView in topController.view.subviews) {
             if ([subView isKindOfClass:[MBProgressHUD class]]) {
                 [((MBProgressHUD *)subView) hide:YES];

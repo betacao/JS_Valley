@@ -111,7 +111,14 @@
         }
 
         [header updateHeaderView:object.headimg placeholderImage:[UIImage imageNamed:@"default_head"] status:NO userID:object.uid];
-        nameLabel.text = object.username;
+
+        NSString *name = object.username;
+        if (object.username.length > 4){
+            name = [object.username substringToIndex:4];
+            name = [NSString stringWithFormat:@"%@...",name];
+        }
+        nameLabel.text = name;
+
         NSString *company = object.company;
         if (company.length > 6) {
             company = [company substringToIndex:6];
