@@ -27,7 +27,7 @@
 - (instancetype)initWithTitle:(NSString *)title customView:(UIView *)customView leftButtonTitle:(NSString *)leftTitle rightButtonTitle:(NSString *)rigthTitle;
 - (instancetype)initWithCustomView:(UIView *)customView leftButtonTitle:(NSString *)leftTitle rightButtonTitle:(NSString *)rigthTitle;
 - (void)show;
-- (void)customShow;
+- (void)showWithClose;
 
 @property (nonatomic, copy) dispatch_block_t leftBlock;
 @property (nonatomic, copy) dispatch_block_t rightBlock;

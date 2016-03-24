@@ -7,7 +7,6 @@
 //
 
 #import "SHGNewFriendTableViewCell.h"
-#import "UIButton+EnlargeEdge.h"
 #import "SHGHomeViewController.h"
 #import "ChatSendHelper.h"
 @interface SHGNewFriendTableViewCell()
@@ -135,7 +134,7 @@
     self.companyLabel.text = object.company;
     self.departmentLabel.text = object.title;
 
-    NSString *string = [NSString stringWithFormat:@"您的通讯录联系人%@假如大牛圈啦，快去跟TA 打个招呼 吧！",object.realName];
+    NSString *string = [NSString stringWithFormat:@"您的通讯录联系人%@加入大牛圈啦，快去跟TA 打个招呼 吧！",object.realName];
     NSRange range = [string rangeOfString:@"打个招呼"];
     NSMutableAttributedString *content = [[NSMutableAttributedString alloc] initWithString:string];
     [content addAttributes:@{NSFontAttributeName:FontFactor(16.0f), NSForegroundColorAttributeName:Color(@"4277b2")} range:range];
@@ -151,13 +150,12 @@
 
 - (void)tapAction:(UITapGestureRecognizer *)tap
 {
-    [Hud showWait];
+    [ChatSendHelper sendTextMessageWithString:@"原来你也在这里啊～" toUsername:_object.realName isChatGroup:NO requireEncryption:NO ext:nil];
     [Hud showMessageWithText:[NSString stringWithFormat:@"小信鸽大牛助手已将您的问候传达给%@!",_object.realName]];
-    [Hud hideHud];
     [SHGHomeViewController sharedController].needShowNewFriend = NO;
     [SHGHomeViewController sharedController].needRefreshTableView = YES;
-    [ChatSendHelper sendTextMessageWithString:@"原来你也在这里啊～" toUsername:_object.realName isChatGroup:NO requireEncryption:NO ext:nil];
 }
+
 - (void)clearCell
 {
     self.nameLabel.text = @"";

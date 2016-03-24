@@ -260,8 +260,8 @@
                 }
 
             } failed:^(MOCHTTPResponse *response) {
-                [Hud showMessageWithText:response.errorMessage];
                 [Hud hideHud];
+                [Hud showMessageWithText:response.errorMessage];
             }];
 
         }

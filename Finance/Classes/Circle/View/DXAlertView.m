@@ -18,7 +18,7 @@
 @property (strong, nonatomic) UIButton *rightBtn;
 @property (strong, nonatomic) UIView *backImageView;
 @property (strong, nonatomic) UIView *customView;
-
+@property (strong, nonatomic) UIButton *closeButton;
 @end
 
 @implementation DXAlertView
@@ -222,6 +222,25 @@
     return self;
 }
 
+- (UIButton *)closeButton
+{
+    if (!_closeButton) {
+        _closeButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        UIImage *image = [UIImage imageNamed:@"alert_Close"];
+        [_closeButton setImage:image forState:UIControlStateNormal];
+        [_closeButton addTarget:self action:@selector(leftBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+        [_closeButton setEnlargeEdge:20.0f];
+        _closeButton.hidden = YES;
+        [self addSubview:_closeButton];
+        _closeButton.sd_layout
+        .leftSpaceToView(self, MarginFactor(28.0f))
+        .topSpaceToView(self, MarginFactor(20.0f))
+        .widthIs(image.size.width)
+        .heightIs(image.size.height);
+    }
+    return _closeButton;
+}
+
 - (void)leftBtnClicked:(id)sender
 {
     if (self.leftBlock) {
@@ -246,8 +265,9 @@
     [topVC.view addSubview:self];
 }
 
-- (void)customShow
+- (void)showWithClose
 {
+    self.closeButton.hidden = NO;
     UIViewController *topVC = [self appRootViewController];
     [topVC.view addSubview:self];
 }

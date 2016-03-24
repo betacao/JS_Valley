@@ -17,7 +17,6 @@
 #import "CircleListDelegate.h"
 #import "CircleLinkViewController.h"
 #import "ReplyTableViewCell.h"
-#import "UIButton+EnlargeEdge.h"
 #define PRAISE_SEPWIDTH     10
 #define PRAISE_RIGHTWIDTH     40
 #define PRAISE_WIDTH 28.0f

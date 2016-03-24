@@ -7,7 +7,7 @@
 //
 
 #import "SHGMarketTableViewCell.h"
-#import "UIButton+EnlargeEdge.h"
+
 @interface SHGMarketTableViewCell ()
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *typeLabel;

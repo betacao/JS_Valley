@@ -26,7 +26,6 @@
 #import "ChatListViewController.h"
 #import "ApplyViewController.h"
 #import "HeadImage.h"
-#import "UIButton+EnlargeEdge.h"
 
 //两次提示的默认间隔
 static const CGFloat kDefaultPlaySoundInterval = 3.0;
@@ -60,6 +59,15 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
         sharedGlobleInstance = [[self alloc] init];
     });
     return sharedGlobleInstance;
+}
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        [self initMessageObject];
+    }
+    return self;
 }
 
 - (void)reloadTabButtons
@@ -107,8 +115,6 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     if(self.block){
         self.block(self.titleLabel);
     }
-
-    [self initMessageObject];
 }
 
 -(UILabel *)titleLabel
@@ -302,6 +308,7 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     [listArray removeObjectsInArray:objectArray];
     [dataArray removeObjectsInArray:objectArray];
     if (indexArray.count > 0) {
+        [controller adjustAdditionalObject];
         controller.needRefreshTableView = YES;
     }
 }
@@ -591,14 +598,19 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
 }
 
 // 收到消息回调
--(void)didReceiveMessage:(EMMessage *)message
+- (void)didReceiveMessage:(EMMessage *)message
 {
     NSArray *user = [HeadImage queryAll];
     BOOL hasExsist = NO;
-    NSString *uid  = message.conversationChatter;
+    NSString *fromUser = @"";
+    if (message.isGroup) {
+        fromUser = message.groupSenderName;
+    } else{
+        fromUser = message.from;
+    }
     for (NSManagedObject *obj in user){
-        uid  =  [obj valueForKey:@"uid"];
-        if ([uid isEqualToString:message.conversationChatter]){
+        NSString *uid = [obj valueForKey:@"uid"];
+        if ([uid isEqualToString:fromUser]){
             hasExsist = YES;
             break;
         }
@@ -606,7 +618,7 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     
     if (!hasExsist){
         __weak typeof(self) weakSelf = self;
-        [[SHGGloble sharedGloble] refreshFriendListWithUid:uid finishBlock:^(BasePeopleObject *object) {
+        [[SHGGloble sharedGloble] refreshFriendListWithUid:fromUser finishBlock:^(BasePeopleObject *object) {
             [weakSelf.chatViewController.contactsSource addObject:object];
             dispatch_async(dispatch_get_main_queue(), ^{
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"refreshFriendList" object:nil];
@@ -724,7 +736,6 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     notification.soundName = UILocalNotificationDefaultSoundName;
     //发送通知
     UIApplication *application = [UIApplication sharedApplication];
-    application.applicationIconBadgeNumber += 1;
     [application scheduleLocalNotification:notification];
 }
 

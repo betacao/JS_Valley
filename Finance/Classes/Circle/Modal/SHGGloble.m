@@ -481,16 +481,16 @@
                 label.origin = CGPointMake(kLineViewLeftMargin, kCustomViewButtomMargin);
                 CGSize size = [label sizeThatFits:CGSizeMake(kAlertWidth - 2 * kLineViewLeftMargin, CGFLOAT_MAX)];
                 label.size = size;
-                if (!force){
-                    alert = [[DXAlertView alloc] initWithTitle:@"提示" customView:label leftButtonTitle:@"以后再说" rightButtonTitle:@"立即更新"];
-                } else{
-                    alert = [[DXAlertView alloc] initWithTitle:@"提示" customView:label leftButtonTitle:nil rightButtonTitle:@"立即更新"];
-                }
+                alert = [[DXAlertView alloc] initWithTitle:@"提示" customView:label leftButtonTitle:nil rightButtonTitle:@"立即更新"];
                 alert.rightBlock = ^{
                     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://itunes.apple.com/cn/app/da-niu-quan-jin-rong-zheng/id984379568?mt=8"]];
                 };
                 alert.shouldDismiss = NO;
-                [alert customShow];
+                if(force){
+                    [alert show];
+                } else{
+                    [alert showWithClose];
+                }
             }
         } else{
             if (block) {

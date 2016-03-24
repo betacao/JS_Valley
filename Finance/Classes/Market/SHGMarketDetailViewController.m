@@ -19,7 +19,7 @@
 #import "SHGEmptyDataView.h"
 #import "MLEmojiLabel.h"
 #import "SHGUnifiedTreatment.h"
-#import "UIButton+EnlargeEdge.h"
+
 #define k_FirstToTop 5.0f * XFACTOR
 #define k_SecondToTop 10.0f * XFACTOR
 #define k_ThirdToTop 15.0f * XFACTOR

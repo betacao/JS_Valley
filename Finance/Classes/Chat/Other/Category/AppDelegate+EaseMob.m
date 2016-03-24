@@ -28,7 +28,7 @@
     _connectionState = eEMConnectionConnected;
     
     [self registerRemoteNotification];
-    
+
 //  #warning SDK注册 APNS文件的名字, 需要与后台上传证书时的名字一一对应
     NSString *apnsCertName = nil;
 #if DEBUG
@@ -37,19 +37,13 @@
     apnsCertName = @"daniuquan";
 #endif
 
-    [[EaseMob sharedInstance] registerSDKWithAppKey:KEY_HUANXIN
-                                       apnsCertName:apnsCertName
-                                        otherConfig:@{kSDKConfigEnableConsoleLogger:[NSNumber numberWithBool:YES]}];
+    [[EaseMob sharedInstance] registerSDKWithAppKey:KEY_HUANXIN apnsCertName:apnsCertName otherConfig:@{kSDKConfigEnableConsoleLogger:[NSNumber numberWithBool:YES]}];
     
     // 登录成功后，自动去取好友列表
     // SDK获取结束后，会回调
     // - (void)didFetchedBuddyList:(NSArray *)buddyList error:(EMError *)error方法。
     [[EaseMob sharedInstance].chatManager setIsAutoFetchBuddyList:YES];
-    
-    // 注册环信监听
-    [self registerEaseMobNotification];
-    [[EaseMob sharedInstance] application:application
-            didFinishLaunchingWithOptions:launchOptions];
+    [[EaseMob sharedInstance] application:application didFinishLaunchingWithOptions:launchOptions];
     
     [self setupNotifiers];
 }
@@ -169,7 +163,9 @@
 }
 
 // 注册推送
-- (void)registerRemoteNotification{
+- (void)registerRemoteNotification
+{
+
     UIApplication *application = [UIApplication sharedApplication];
     application.applicationIconBadgeNumber = 0;
 
@@ -184,24 +180,13 @@
     //iOS8 注册APNS
     if ([application respondsToSelector:@selector(registerForRemoteNotifications)]) {
         [application registerForRemoteNotifications];
-    }else{
+    } else{
         UIRemoteNotificationType notificationTypes = UIRemoteNotificationTypeBadge |
         UIRemoteNotificationTypeSound |
         UIRemoteNotificationTypeAlert;
         [[UIApplication sharedApplication] registerForRemoteNotificationTypes:notificationTypes];
     }
 #endif
-}
-
-#pragma mark - registerEaseMobNotification
-- (void)registerEaseMobNotification{
-    [self unRegisterEaseMobNotification];
-    // 将self 添加到SDK回调中，以便本类可以收到SDK回调
-    [[EaseMob sharedInstance].chatManager addDelegate:self delegateQueue:nil];
-}
-
-- (void)unRegisterEaseMobNotification{
-    [[EaseMob sharedInstance].chatManager removeDelegate:self];
 }
 
 #pragma mark - IChatManagerDelegate
