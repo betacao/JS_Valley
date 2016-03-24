@@ -93,7 +93,7 @@
                 }];
             }];
         };
-        [alert customShow];
+        [alert show];
     } else{
         [Hud showMessageWithText:@"正在拉取标签列表"];
     }

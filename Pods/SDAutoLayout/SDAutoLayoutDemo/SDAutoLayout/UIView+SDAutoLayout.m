@@ -655,6 +655,9 @@
 
 - (void)setFixedWith:(NSNumber *)fixedWith
 {
+    if (fixedWith) {
+        self.width = [fixedWith floatValue];
+    }
     objc_setAssociatedObject(self, @selector(fixedWith), fixedWith, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
@@ -665,6 +668,9 @@
 
 - (void)setFixedHeight:(NSNumber *)fixedHeight
 {
+    if (fixedHeight) {
+        self.height = [fixedHeight floatValue];
+    }
     objc_setAssociatedObject(self, @selector(fixedHeight), fixedHeight, OBJC_ASSOCIATION_RETAIN);
 }
 
@@ -688,6 +694,32 @@
     objc_setAssociatedObject(self, @selector(sd_maxWidth), sd_maxWidth, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
+- (UITableView *)sd_tableView
+{
+    return self.sd_categoryManager.sd_tableView;
+}
+
+- (void)setSd_tableView:(UITableView *)sd_tableView
+{
+    if ([self isKindOfClass:[UITableViewCell class]]) {
+        [(UITableViewCell *)self contentView].sd_tableView = sd_tableView;
+    }
+    self.sd_categoryManager.sd_tableView = sd_tableView;
+}
+
+- (NSIndexPath *)sd_indexPath
+{
+    return self.sd_categoryManager.sd_indexPath;
+}
+
+- (void)setSd_indexPath:(NSIndexPath *)sd_indexPath
+{
+    if ([self isKindOfClass:[UITableViewCell class]]) {
+        [(UITableViewCell *)self contentView].sd_indexPath = sd_indexPath;
+    }
+    self.sd_categoryManager.sd_indexPath = sd_indexPath;
+}
+
 - (SDAutoLayoutModel *)ownLayoutModel
 {
     return objc_getAssociatedObject(self, _cmd);
@@ -703,11 +735,11 @@
     
 #ifdef SDDebugWithAssert
     /*
-    卡在这里说明你的要自动布局的view在没有添加到父view的情况下就开始设置布局,你需要这样：
-    1.  UIView *view = [UIView new];
-    2.  [superView addSubview:view];
-    3.  view.sd_layout
-        .leftEqualToView()...
+     卡在这里说明你的要自动布局的view在没有添加到父view的情况下就开始设置布局,你需要这样：
+     1.  UIView *view = [UIView new];
+     2.  [superView addSubview:view];
+     3.  view.sd_layout
+     .leftEqualToView()...
      */
     NSAssert(self.superview, @">>>>>>>>>在加入父view之后才可以做自动布局设置");
     
@@ -726,7 +758,32 @@
 
 - (SDAutoLayoutModel *)sd_resetLayout
 {
+    /*
+     * 方案待定
+     [self sd_clearAutoLayoutSettings];
+     return [self sd_layout];
+     */
+    
+    SDAutoLayoutModel *model = [self ownLayoutModel];
+    SDAutoLayoutModel *newModel = [SDAutoLayoutModel new];
+    newModel.needsAutoResizeView = self;
+    [self sd_clearViewFrameCache];
+    NSInteger index = 0;
+    if (model) {
+        index = [self.superview.autoLayoutModelsArray indexOfObject:model];
+        [self.superview.autoLayoutModelsArray replaceObjectAtIndex:index withObject:newModel];
+    } else {
+        [self.superview.autoLayoutModelsArray addObject:newModel];
+    }
+    [self setOwnLayoutModel:newModel];
+    [self sd_clearExtraAutoLayoutItems];
+    return newModel;
+}
+
+- (SDAutoLayoutModel *)sd_resetNewLayout
+{
     [self sd_clearAutoLayoutSettings];
+    [self sd_clearExtraAutoLayoutItems];
     return [self sd_layout];
 }
 
@@ -737,9 +794,30 @@
         [self.superview.autoLayoutModelsArray removeObject:model];
         [self setOwnLayoutModel:nil];
     }
+    [self sd_clearExtraAutoLayoutItems];
+}
+
+- (void)sd_clearExtraAutoLayoutItems
+{
     if (self.autoHeightRatioValue) {
         self.autoHeightRatioValue = nil;
     }
+    self.fixedHeight = nil;
+    self.fixedWith = nil;
+}
+
+- (void)sd_clearViewFrameCache
+{
+    self.frame = CGRectZero;
+}
+
+- (void)sd_clearSubviewsAutoLayoutFrameCaches
+{
+    if (self.autoLayoutModelsArray.count == 0) return;
+    
+    [self.autoLayoutModelsArray enumerateObjectsUsingBlock:^(SDAutoLayoutModel *model, NSUInteger idx, BOOL *stop) {
+        model.needsAutoResizeView.frame = CGRectZero;
+    }];
 }
 
 - (void)sd_layoutSubviews
@@ -761,8 +839,19 @@
     }
     
     if (self.autoLayoutModelsArray.count) {
+        
+        NSMutableArray *caches = nil;
+        
+        if ([self isKindOfClass:NSClassFromString(@"UITableViewCellContentView")] && self.sd_tableView) {
+            caches = [self.sd_tableView.cellAutoHeightManager subviewFrameCachesWithIndexPath:self.sd_indexPath];
+        }
+
         [self.autoLayoutModelsArray enumerateObjectsUsingBlock:^(SDAutoLayoutModel *model, NSUInteger idx, BOOL *stop) {
-            [self sd_resizeWithModel:model];
+            if (caches) {
+                model.needsAutoResizeView.frame = [[caches objectAtIndex:idx] CGRectValue];
+            } else {
+                [self sd_resizeWithModel:model];
+            }
         }];
     }
     
@@ -992,7 +1081,7 @@
             }
         }
     }
-
+    
     
     if (model.top) {
         if (view.superview == model.top.refView) {

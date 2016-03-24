@@ -62,6 +62,15 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     return sharedGlobleInstance;
 }
 
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        [self initMessageObject];
+    }
+    return self;
+}
+
 - (void)reloadTabButtons
 {
 	NSUInteger lastIndex = _selectedIndex;
@@ -107,8 +116,6 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     if(self.block){
         self.block(self.titleLabel);
     }
-
-    [self initMessageObject];
 }
 
 -(UILabel *)titleLabel
@@ -591,14 +598,19 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
 }
 
 // 收到消息回调
--(void)didReceiveMessage:(EMMessage *)message
+- (void)didReceiveMessage:(EMMessage *)message
 {
     NSArray *user = [HeadImage queryAll];
     BOOL hasExsist = NO;
-    NSString *uid  = message.conversationChatter;
+    NSString *fromUser = @"";
+    if (message.isGroup) {
+        fromUser = message.groupSenderName;
+    } else{
+        fromUser = message.from;
+    }
     for (NSManagedObject *obj in user){
-        uid  =  [obj valueForKey:@"uid"];
-        if ([uid isEqualToString:message.conversationChatter]){
+        NSString *uid = [obj valueForKey:@"uid"];
+        if ([uid isEqualToString:fromUser]){
             hasExsist = YES;
             break;
         }
@@ -606,7 +618,7 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     
     if (!hasExsist){
         __weak typeof(self) weakSelf = self;
-        [[SHGGloble sharedGloble] refreshFriendListWithUid:uid finishBlock:^(BasePeopleObject *object) {
+        [[SHGGloble sharedGloble] refreshFriendListWithUid:fromUser finishBlock:^(BasePeopleObject *object) {
             [weakSelf.chatViewController.contactsSource addObject:object];
             dispatch_async(dispatch_get_main_queue(), ^{
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"refreshFriendList" object:nil];

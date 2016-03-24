@@ -92,7 +92,6 @@
     [MagicalRecord setupCoreDataStackWithAutoMigratingSqliteStoreNamed:@"Finance.sqlite"];
     [self addObserver:self forKeyPath:@"pushInfo" options:NSKeyValueObservingOptionNew context:nil];
     [self startSdkWith:kAppId appKey:kAppKey appSecret:kAppSecret];
-    [self registerForRemoteNotification];
 
     // App 是用户点击推送消息启动
     NSDictionary *userInfo = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
@@ -136,21 +135,6 @@
 - (void)GeTuiSdkDidSetPushMode:(BOOL)isModeOff error:(NSError *)error
 {
 
-}
-
-- (void)registerForRemoteNotification
-{
-    // iOS8 下需要使用新的 API
-    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0){
-        UIUserNotificationType myTypes = UIUserNotificationTypeBadge | UIUserNotificationTypeSound | UIUserNotificationTypeAlert;
-
-        UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:myTypes categories:nil];
-        [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
-    } else{
-        UIRemoteNotificationType myTypes = UIRemoteNotificationTypeBadge|UIRemoteNotificationTypeAlert|UIRemoteNotificationTypeSound;
-        [[UIApplication sharedApplication] registerForRemoteNotificationTypes:myTypes];
-    }
-    
 }
 
 - (void)setupShare
