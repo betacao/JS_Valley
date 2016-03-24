@@ -150,13 +150,12 @@
 
 - (void)tapAction:(UITapGestureRecognizer *)tap
 {
-    [Hud showWait];
+    [ChatSendHelper sendTextMessageWithString:@"原来你也在这里啊～" toUsername:_object.realName isChatGroup:NO requireEncryption:NO ext:nil];
     [Hud showMessageWithText:[NSString stringWithFormat:@"小信鸽大牛助手已将您的问候传达给%@!",_object.realName]];
-    [Hud hideHud];
     [SHGHomeViewController sharedController].needShowNewFriend = NO;
     [SHGHomeViewController sharedController].needRefreshTableView = YES;
-    [ChatSendHelper sendTextMessageWithString:@"原来你也在这里啊～" toUsername:_object.realName isChatGroup:NO requireEncryption:NO ext:nil];
 }
+
 - (void)clearCell
 {
     self.nameLabel.text = @"";

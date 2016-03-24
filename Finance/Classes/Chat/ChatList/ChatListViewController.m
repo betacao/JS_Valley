@@ -121,6 +121,8 @@ static NSString * const kCommonFNum			= @"commonnum";
 
 -(void)btnBackClick:(UIButton *)sender
 {
+
+    [self.groupVC.searchController setActive:NO animated:YES];
     [self.navigationController popViewControllerAnimated:YES];
 }
 
@@ -495,21 +497,6 @@ static NSString * const kCommonFNum			= @"commonnum";
         [[EaseMob sharedInstance].chatManager removeConversationByChatter:converation.chatter deleteMessages:YES append2Chat:YES];
         [self.dataSource removeObjectAtIndex:indexPath.row];
         [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }
-}
-
-
-- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
-    if ([cell respondsToSelector:@selector(setSeparatorInset:)]) {
-        
-        [cell setSeparatorInset:UIEdgeInsetsMake(0,15,0,0)];
-        
-    }
-    
-    if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
-        
-        [cell setLayoutMargins:UIEdgeInsetsMake(0,15,0,0)];
-        
     }
 }
 

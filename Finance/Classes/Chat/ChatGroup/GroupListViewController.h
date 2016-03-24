@@ -11,6 +11,8 @@
   */
 
 #import <UIKit/UIKit.h>
+#import "EMSearchBar.h"
+#import "EMSearchDisplayController.h"
 
 @interface GroupListViewController : BaseTableViewController
 
@@ -18,6 +20,7 @@
 
 @property (weak, nonatomic) UIViewController *parnetVC;
 
+@property (strong, nonatomic) EMSearchDisplayController *searchController;
 - (void)reloadDataSource;
 
 @end

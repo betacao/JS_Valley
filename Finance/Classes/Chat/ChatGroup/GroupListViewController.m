@@ -11,10 +11,8 @@
   */
 
 #import "GroupListViewController.h"
-#import "EMSearchBar.h"
 #import "SRRefreshView.h"
 #import "BaseTableViewCell.h"
-#import "EMSearchDisplayController.h"
 #import "ChatViewController.h"
 #import "CreateGroupViewController.h"
 #import "PublicGroupListViewController.h"
@@ -34,7 +32,6 @@
 @property (strong, nonatomic) NSMutableArray *joinArr; // 我加入的群组
 @property (strong, nonatomic) NSArray *titleArray;
 @property (strong, nonatomic) EMSearchBar *searchBar;
-@property (strong, nonatomic) EMSearchDisplayController *searchController;
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 
 @end
@@ -472,11 +469,9 @@
     [self.dataSource removeAllObjects];
     [self.joinArr removeAllObjects];
     [self.commonArr removeAllObjects];
-    [Hud showWait];
     NSDictionary *loginInfo = [[[EaseMob sharedInstance] chatManager] loginInfo];
     [[EaseMob sharedInstance].chatManager asyncFetchMyGroupsListWithCompletion:^(NSArray *groups, EMError *error){
         for (EMGroup *group in groups){
-            [Hud hideHud];
             [self.tableView.mj_header endRefreshing];
             [[EaseMob sharedInstance].chatManager asyncFetchGroupInfo:group.groupId completion:^(EMGroup *group, EMError *error) {
                 if (!error){
@@ -520,7 +515,6 @@
 {
     [super viewWillDisappear:animated];
     self.searchBar.text = @"";
-    [self.searchBar resignFirstResponder];
 }
 
 @end

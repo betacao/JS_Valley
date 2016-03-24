@@ -34,7 +34,7 @@
     hud.removeFromSuperViewOnHide = YES;
     hud.opacity = 0.85f;
     hud.margin = MarginFactor(18.0f);
-    [hud hide:YES afterDelay:1.2];
+    [hud hide:YES afterDelay:2.0f];
 
 }
 
