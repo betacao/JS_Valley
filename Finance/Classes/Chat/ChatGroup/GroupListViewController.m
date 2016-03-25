@@ -231,7 +231,7 @@
         case 0:{
             object.text = @"新建群组";
             object.rightViewHidden = NO;
-            object.lineViewHidden = YES;
+            object.lineViewHidden = NO;
             object.imageViewHidden = YES;
         }break;
         case 1:{
@@ -325,7 +325,8 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return MarginFactor(55.0f);
+    CGFloat height = MarginFactor(55.0f);
+    return height;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
@@ -593,7 +594,7 @@
     .leftEqualToView(self.leftButton)
     .rightSpaceToView(self.contentView, 0.0f)
     .heightIs(0.5f)
-    .topSpaceToView(self.leftButton, MarginFactor(9.0f));
+    .bottomSpaceToView(self.contentView, 0.0f);
 
     size = [UIImage imageNamed:@"rightArrowImage"].size;
     self.rightArrowView.sd_layout

@@ -142,14 +142,28 @@
     self.contentLabel.activeLinkAttributes = nil;
     [self.contentLabel addLinkToURL:[NSURL URLWithString:@"打个招呼"] withRange:[self.contentLabel.text rangeOfString:@"打个招呼"]];
     
-    
     __block NSString *relation = @"";
     [object.commonFriendList enumerateObjectsUsingBlock:^(NSString *obj, NSUInteger idx, BOOL * _Nonnull stop) {
         relation = [relation stringByAppendingFormat:@"%@、",obj];
     }];
-    relation = [relation substringToIndex:relation.length - 1];
-    relation = [NSString stringWithFormat:@"你们共同拥有%@等%@位好友！",relation, object.commonFriendCount];
-    self.relationLabel.text = relation;
+    if (relation.length > 0) {
+        relation = [relation substringToIndex:relation.length - 1];
+        if ([object.commonFriendCount intValue] > 4) {
+            relation = [NSString stringWithFormat:@"你们共同拥有%@等%@位好友！",relation, object.commonFriendCount];
+        } else{
+            relation = [NSString stringWithFormat:@"你们共同拥有%@%@位好友！",relation, object.commonFriendCount];
+        }
+        self.relationLabel.text = relation;
+    } else{
+        self.relationLabel.text = @"";
+        self.lineView.sd_resetLayout
+        .topSpaceToView(self.contentLabel, kMainHeaderViewTopMargin)
+        .leftSpaceToView(self.contentView, 0.0f)
+        .rightSpaceToView(self.contentView, 0.0f)
+        .heightIs(0.5f);
+    }
+
+   
 }
 
 - (void)clearCell

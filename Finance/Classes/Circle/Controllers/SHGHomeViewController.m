@@ -319,6 +319,15 @@
 {
     __weak typeof(self) weakSelf = self;
     [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@%@",rBaseAddressForHttp,@"/recommended/friends/registerPushFriendGrade"] parameters:@{@"uid":UID} success:^(MOCHTTPResponse *response) {
+//        weakSelf.friendObject = [[SHGNewFriendObject alloc] init];
+//        weakSelf.friendObject.commonFriendCount = @"10";
+//        weakSelf.friendObject.commonFriendList = @[@"1",@"wwwwwwwwww",@"fsadasasd",@"eee",];
+//        weakSelf.friendObject.company = @"w";
+//        weakSelf.friendObject.picName = @"";
+//        weakSelf.friendObject.position = @"南京";
+//        weakSelf.friendObject.realName = @"w";
+//        weakSelf.friendObject.title = @"w";
+//        weakSelf.friendObject.uid = @"9975";
         NSDictionary *dictionary = response.dataDictionary;
         if (dictionary) {
             NSArray *array = [[SHGGloble sharedGloble] parseServerJsonArrayToJSONModel:@[dictionary] class:[SHGNewFriendObject class]];
