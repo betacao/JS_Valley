@@ -62,8 +62,7 @@
     self.timeLabel.font = kMainTimeFont;
     self.timeLabel.textColor = kMainTimeColor;
 
-    self.contentLabel.numberOfLines = 5;
-    self.contentLabel.lineBreakMode = NSLineBreakByWordWrapping;
+    self.contentLabel.lineBreakMode = NSLineBreakByTruncatingTail;
     self.contentLabel.font = kMainContentFont;
     self.contentLabel.textColor = kMainContentColor;
     self.contentLabel.backgroundColor = [UIColor clearColor];
@@ -287,13 +286,14 @@
         .topSpaceToView(self.headerView, kMainContentTopMargin)
         .leftEqualToView(self.headerView)
         .rightEqualToView(self.attentionButton)
+        .maxHeightIs(ceilf(self.contentLabel.lineSpacing + self.contentLabel.font.lineHeight) * 5.0f)
         .autoHeightRatio(0.0);
     } else{
         self.contentLabel.sd_resetLayout
         .topSpaceToView(self.headerView, 0.0f)
         .leftEqualToView(self.headerView)
         .rightEqualToView(self.attentionButton)
-        .autoHeightRatio(0.0);
+        .heightIs(0.0);
     }
 }
 
@@ -380,7 +380,7 @@
 
 - (void)loadCommentView:(CircleListObj *)object
 {
-    NSInteger count = [object.cmmtnum integerValue] > 3 ? 3 : [object.cmmtnum integerValue];
+    NSInteger count = self.object.comments.count;
     for(NSInteger i = 0; i < count; i++){
         UILabel *label = [self.commentLabelArray objectAtIndex:i];
 
