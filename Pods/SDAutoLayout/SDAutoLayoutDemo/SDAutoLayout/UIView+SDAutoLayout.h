@@ -218,6 +218,51 @@ typedef void (^SpaceToSuperView)(UIEdgeInsets insets);
 @end
 
 
+@interface UIView (SDAutoLayout)
+
+/** 开始自动布局  */
+- (SDAutoLayoutModel *)sd_layout;
+
+/** 清空之前的自动布局设置，重新开始自动布局(重新生成布局约束并使其在父view的布局序列数组中位置保持不变)  */
+- (SDAutoLayoutModel *)sd_resetLayout;
+
+/** 清空之前的自动布局设置，重新开始自动布局(重新生成布局约束并添加到父view布局序列数组中的最后一个位置)  */
+- (SDAutoLayoutModel *)sd_resetNewLayout;
+
+/** 清空之前的自动布局设置  */
+- (void)sd_clearAutoLayoutSettings;
+
+/** 将自身frame清零（一般在cell内部控件重用前调用）  */
+- (void)sd_clearViewFrameCache;
+
+/** 将自己的需要自动布局的subviews的frame清零（一般在cell内部控件重用前调用）  */
+- (void)sd_clearSubviewsAutoLayoutFrameCaches;
+
+/** 设置固定宽度保证宽度不在自动布局过程再做中调整  */
+@property (nonatomic, strong) NSNumber *fixedWith;
+
+/** 设置固定高度保证高度不在自动布局过程中再做调整  */
+@property (nonatomic, strong) NSNumber *fixedHeight;
+
+
+/** 所属tableview（目前为cell专用属性，后期会扩展到其他view） */
+@property (nonatomic) UITableView *sd_tableView;
+
+/** cell的indexPath（目前为cell专用属性，后期会扩展到cell的其他子view） */
+@property (nonatomic) NSIndexPath *sd_indexPath;
+
+
+// -------------------库内部使用-----------------------
+- (NSMutableArray *)autoLayoutModelsArray;
+- (void)addAutoLayoutModel:(SDAutoLayoutModel *)model;
+@property (nonatomic) SDAutoLayoutModel *ownLayoutModel;
+@property (nonatomic, strong) NSNumber *sd_maxWidth;
+@property (nonatomic, strong) NSNumber *autoHeightRatioValue;
+// -------------------库内部使用-----------------------
+
+@end
+
+
 @interface UIScrollView (SDAutoContentSize)
 
 /** 设置scrollview内容竖向自适应 */
@@ -282,31 +327,7 @@ typedef void (^SpaceToSuperView)(UIEdgeInsets insets);
 
 @end
 
-@interface UIView (SDAutoLayout)
 
-/** 开始自动布局  */
-- (SDAutoLayoutModel *)sd_layout;
-
-/** 清空之前的自动布局设置，重新开始自动布局  */
-- (SDAutoLayoutModel *)sd_resetLayout;
-
-/** 清空之前的自动布局设置  */
-- (void)sd_clearAutoLayoutSettings;
-
-- (NSMutableArray *)autoLayoutModelsArray;
-
-- (void)addAutoLayoutModel:(SDAutoLayoutModel *)model;
-
-@property (nonatomic) SDAutoLayoutModel *ownLayoutModel;
-
-@property (nonatomic, strong) NSNumber *fixedWith;
-@property (nonatomic, strong) NSNumber *fixedHeight;
-
-@property (nonatomic, strong) NSNumber *sd_maxWidth;
-
-@property (nonatomic, strong) NSNumber *autoHeightRatioValue;
-
-@end
 
 
 @interface UIView (SDChangeFrame)
@@ -332,6 +353,9 @@ typedef void (^SpaceToSuperView)(UIEdgeInsets insets);
 
 @property (nonatomic, strong) NSArray *rightViewsArray;
 @property (nonatomic, assign) CGFloat rightViewRightMargin;
+
+@property (nonatomic, weak) UITableView *sd_tableView;
+@property (nonatomic, strong) NSIndexPath *sd_indexPath;
 
 @end
 

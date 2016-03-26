@@ -403,6 +403,8 @@
             cell.delegate = self;
         }
 
+        cell.sd_tableView = tableView;
+        cell.sd_indexPath = indexPath;
         cell.object = [self.currentArray objectAtIndex:indexPath.row];
         return cell;
     }

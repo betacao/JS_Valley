@@ -70,8 +70,6 @@
 
     self.circleType = @"all";
     self.needShowNewFriend = YES;
-    self.tableView.estimatedRowHeight = SCREENWIDTH;
-    self.tableView.rowHeight = SCREENWIDTH;
     self.tableView.sd_layout
     .spaceToSuperView(UIEdgeInsetsZero);
     
@@ -521,11 +519,13 @@
             SHGRecommendTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier1];
             if (!cell){
                 cell = [[[NSBundle mainBundle] loadNibNamed:@"SHGRecommendTableViewCell" owner:self options:nil] lastObject];
-                cell.controller = self;
-                cell.delegate = [SHGUnifiedTreatment sharedTreatment];
             }
             NSMutableArray *array = [self.dataArr objectAtIndex:indexPath.row];
             cell.objectArray = array;
+            cell.sd_tableView = tableView;
+            cell.sd_indexPath = indexPath;
+            cell.controller = self;
+            cell.delegate = [SHGUnifiedTreatment sharedTreatment];
             return cell;
 
         } else if ([obj isKindOfClass:[SHGNewFriendObject class]]){
@@ -537,6 +537,8 @@
             }
             SHGNewFriendObject *object = [self.dataArr objectAtIndex:indexPath.row];
             cell.object = object;
+            cell.sd_tableView = tableView;
+            cell.sd_indexPath = indexPath;
             return cell;
 
         } else{
@@ -547,11 +549,13 @@
                     SHGMainPageTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier3];
                     if (!cell){
                         cell = [[[NSBundle mainBundle] loadNibNamed:@"SHGMainPageTableViewCell" owner:self options:nil] lastObject];
-                        cell.delegate = [SHGUnifiedTreatment sharedTreatment];
                     }
                     cell.index = indexPath.row;
                     cell.object = obj;
                     cell.controller = self;
+                    cell.delegate = [SHGUnifiedTreatment sharedTreatment];
+                    cell.sd_tableView = tableView;
+                    cell.sd_indexPath = indexPath;
                     return cell;
                 }
             } else{
@@ -562,6 +566,8 @@
                         cell = [[[NSBundle mainBundle] loadNibNamed:@"SHGExtendTableViewCell" owner:self options:nil] lastObject];
                     }
                     cell.object = obj;
+                    cell.sd_tableView = tableView;
+                    cell.sd_indexPath = indexPath;
                     return cell;
                 }
             }
@@ -627,6 +633,29 @@
 
 
 #pragma mark =============  UITableView Delegate  =============
+
+- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    id object = [self.dataArr objectAtIndex:indexPath.row];
+    if([object isKindOfClass:[CircleListObj class]]){
+
+        if (![((CircleListObj *)object).postType isEqualToString:@"ad"]){
+            return SCREENWIDTH;
+        } else{
+            return MarginFactor(198.0f);
+        }
+
+    } else if([object isKindOfClass:[NSArray class]]){
+
+        return MarginFactor(60.0f) * ((NSArray *)object).count;
+
+    } else if ([object isKindOfClass:[SHGNewFriendObject class]]){
+
+        return MarginFactor(140.0f);
+        
+    }
+    return SCREENWIDTH;
+}
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
