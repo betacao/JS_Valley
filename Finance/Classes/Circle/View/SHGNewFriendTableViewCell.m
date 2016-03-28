@@ -148,7 +148,7 @@
     }];
     if (relation.length > 0) {
         relation = [relation substringToIndex:relation.length - 1];
-        if ([object.commonFriendCount intValue] > 4) {
+        if ([object.commonFriendCount intValue] > 3) {
             relation = [NSString stringWithFormat:@"你们共同拥有%@等%@位好友！",relation, object.commonFriendCount];
         } else{
             relation = [NSString stringWithFormat:@"你们共同拥有%@%@位好友！",relation, object.commonFriendCount];

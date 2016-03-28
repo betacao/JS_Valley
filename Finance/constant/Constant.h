@@ -40,6 +40,7 @@
 #define YFACTOR SCREENHEIGHT / 568.0f
 
 #define FontFactor(font)  [UIFont systemFontOfSize:(SCREENWIDTH >= 375.0f ? font : (font - 1.0f))]
+#define BoldFontFactor(font)  [UIFont boldSystemFontOfSize:(SCREENWIDTH >= 375.0f ? font : (font - 1.0f))]
 #define MarginFactor(x) floorf(SCREENWIDTH / 375.0f * x)
 
 #define Color(color) [UIColor colorWithHexString: color]
