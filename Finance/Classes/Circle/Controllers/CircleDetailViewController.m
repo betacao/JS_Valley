@@ -131,7 +131,7 @@
     self.btnComment.titleLabel.font = kMainActionFont;
 
     [self.btnShare setTitleColor:kMainActionColor forState:UIControlStateNormal];
-    self.btnPraise.titleEdgeInsets = UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, -10.0f);
+    self.btnShare.titleEdgeInsets = UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, -10.0f);
     self.btnShare.titleLabel.font = kMainActionFont;
 
     [self.btnPraise setTitleColor:kMainActionColor forState:UIControlStateNormal];

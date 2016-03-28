@@ -206,6 +206,7 @@
 
 - (void)requestRecommendFriends
 {
+    [self.dataArr removeObject:self.recommendArray];
     [self.recommendArray removeAllObjects];
     __weak typeof(self) weakSelf = self;
     [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/v1/recommended/friends/recommendedFriendGrade",rBaseAddRessHttp] class:[RecmdFriendObj class] parameters:@{@"uid":UID} success:^(MOCHTTPResponse *response){
@@ -315,11 +316,13 @@
 
 - (void)loadRegisterPushFriend
 {
+    [self.dataArr removeObject:self.friendObject];
+    self.friendObject = nil;
     __weak typeof(self) weakSelf = self;
     [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@%@",rBaseAddressForHttp,@"/recommended/friends/registerPushFriendGrade"] parameters:@{@"uid":UID} success:^(MOCHTTPResponse *response) {
 //        weakSelf.friendObject = [[SHGNewFriendObject alloc] init];
 //        weakSelf.friendObject.commonFriendCount = @"10";
-//        weakSelf.friendObject.commonFriendList = @[@"1",@"wwwwwwwwww",@"fsadasasd",@"eee",];
+//        weakSelf.friendObject.commonFriendList = @[@"1wqekjqwe",@"wwwwww",@"fsadasasd",@"eee",];
 //        weakSelf.friendObject.company = @"w";
 //        weakSelf.friendObject.picName = @"";
 //        weakSelf.friendObject.position = @"南京";
