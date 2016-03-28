@@ -350,7 +350,22 @@
 
 - (IBAction)urlButtonClick:(UIButton *)sender
 {
-    [self.textView resignFirstResponder];
+    UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:nil message:@"将您复制的信息粘贴在此" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+    alertView.alertViewStyle = UIAlertViewStylePlainTextInput;
+    [alertView show];
+
+    UITextField *textfield = [alertView textFieldAtIndex:0];
+    textfield.placeholder = @"粘贴地址";
+
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if (buttonIndex == 0){
+        return;
+    } else {
+        UITextField *textfield = [alertView textFieldAtIndex:0];
+        [self.textView insertText:textfield.text];
+    }
 }
 
 - (void)takePhoto
