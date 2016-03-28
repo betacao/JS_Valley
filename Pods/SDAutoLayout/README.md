@@ -1,19 +1,28 @@
 # SDAutoLayout（一行代码搞定自动布局！）
-### QQ交流群：497140713（一群）519489682（二群）
+一行代码搞定自动布局！致力于做最简单易用的Autolayout库。The most easy way for autolayout.
+
+支持pod：  pod 'SDAutoLayout', '~> 1.31'
+
+如果发现pod search SDAutoLayout 搜索出来的不是最新版本，需要在终端执行cd转换文件路径命令退回到desktop，然后执行pod setup命令更新本地spec缓存（可能需要几分钟），然后再搜索就可以了
+
+### QQ交流群：519489682（已满）497140713
 
 ☆☆ SDAutoLayout 基础版视频教程：http://www.letv.com/ptv/vplay/24038772.html ☆☆
 
 ☆☆ SDAutoLayout 进阶版视频教程：http://www.letv.com/ptv/vplay/24381390.html ☆☆
 
+☆☆ SDAutoLayout 原理简介视频教程：http://www.iqiyi.com/w_19rt0tec4p.html ☆☆
 
+## 部分SDAutoLayout的DEMO
+### SDAutoLayout使用者开发的部分app截图 http://www.jianshu.com/p/9bc04d3effb8
+### 完整微信Demo https://github.com/gsdios/GSD_WeiXin
 
+![](http://ww3.sinaimg.cn/mw690/9b8146edgw1f1nm3pziawg205u0a0qv5.gif)![](http://ww1.sinaimg.cn/bmiddle/9b8146edgw1f06aoe2umhg206e0b4u0x.gif)![](http://ww4.sinaimg.cn/bmiddle/9b8146edgw1ezal3smihcg206y0ciqv5.gif)![](http://ww3.sinaimg.cn/mw690/9b8146edgw1f1nm3lweg3g207s0dcu0x.gif)![](http://ww2.sinaimg.cn/mw690/9b8146edgw1f23irukb0qg207i0dwu0x.gif)![](http://ww2.sinaimg.cn/bmiddle/9b8146edgw1eya1jv951ig208c0etqv5.gif)
 
-
-一行代码搞定自动布局！致力于做最简单易用的Autolayout库。The most easy way for autolayout.
-
-支持pod：  pod 'SDAutoLayout', '~> 1.3'
 
 ## 更新记录：
+
+2016.03.23 -- 升级了缓存机制，新版本在tableview滑动cell时候流畅度和性能提升20%以上
 
 2016.01.23 -- 增加label对attributedString的内容自适应
 
@@ -37,7 +46,6 @@
 
 
 #    ☆新增：cell高度自适应 + label文字自适应☆
-![](http://ww1.sinaimg.cn/bmiddle/9b8146edgw1f06aoe2umhg206e0b4u0x.gif)![](http://ww4.sinaimg.cn/bmiddle/9b8146edgw1ezal3smihcg206y0ciqv5.gif)![](http://ww2.sinaimg.cn/bmiddle/9b8146edgw1eya1jv951ig208c0etqv5.gif)
 
 
 ##    >> 普通（简化）版【推荐使用】：tableview 高度自适应设置只需要2步
@@ -142,4 +150,3 @@
 
 
 ![](http://ww3.sinaimg.cn/bmiddle/9b8146edgw1ex4mukixr6g209g07lhdt.gif)
-
