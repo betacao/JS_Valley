@@ -413,17 +413,20 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    SHGMarketObject *object = [self.currentArray objectAtIndex:indexPath.row];
-    if ([object isKindOfClass:[SHGMarketNoticeObject class]]) {
-        //点击图片才去跳转
-        if (((SHGMarketNoticeObject *)object).type == SHGMarketNoticeTypePositionTop) {
-            SHGMomentCityViewController *controller = [[SHGMomentCityViewController alloc] init];
+    if (self.currentArray.count > 0) {
+
+        SHGMarketObject *object = [self.currentArray objectAtIndex:indexPath.row];
+        if ([object isKindOfClass:[SHGMarketNoticeObject class]]) {
+            //点击图片才去跳转
+            if (((SHGMarketNoticeObject *)object).type == SHGMarketNoticeTypePositionTop) {
+                SHGMomentCityViewController *controller = [[SHGMomentCityViewController alloc] init];
+                [self.navigationController pushViewController:controller animated:YES];
+            }
+        } else{
+            SHGMarketDetailViewController *controller = [[SHGMarketDetailViewController alloc]init];
+            controller.object = object;
             [self.navigationController pushViewController:controller animated:YES];
         }
-    } else{
-        SHGMarketDetailViewController *controller = [[SHGMarketDetailViewController alloc]init];
-        controller.object = object;
-        [self.navigationController pushViewController:controller animated:YES];
     }
 }
 

@@ -176,9 +176,33 @@
     .autoHeightRatio(0.0f);
     [self.relationLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
 
-
     [self.actionView setupAutoHeightWithBottomViewsArray:@[self.relationLabel, self.deleteButton, self.praiseButton, self.commentButton, self.shareButton] bottomMargin:kMainActionBottomMargin];
-    
+
+    //评论区域
+    self.firstCommentLabel.sd_layout
+    .leftSpaceToView(self.commentView, kMainCommentContentLeftMargin)
+    .rightSpaceToView(self.commentView, kMainCommentContentLeftMargin)
+    .topSpaceToView(self.commentView, 0.0f)
+    .autoHeightRatio(0.0f);
+
+    self.secondCommentLabel.sd_layout
+    .leftSpaceToView(self.commentView, kMainCommentContentLeftMargin)
+    .rightSpaceToView(self.commentView, kMainCommentContentLeftMargin)
+    .topSpaceToView(self.firstCommentLabel, 0.0f)
+    .autoHeightRatio(0.0f);
+
+    self.thirdCommentLabel.sd_layout
+    .leftSpaceToView(self.commentView, kMainCommentContentLeftMargin)
+    .rightSpaceToView(self.commentView, kMainCommentContentLeftMargin)
+    .topSpaceToView(self.secondCommentLabel, 0.0f)
+    .autoHeightRatio(0.0f);
+
+    self.fourthCommentLabel.sd_layout
+    .leftSpaceToView(self.commentView, kMainCommentContentLeftMargin)
+    .rightSpaceToView(self.commentView, kMainCommentContentLeftMargin)
+    .topSpaceToView(self.thirdCommentLabel, 0.0f)
+    .autoHeightRatio(0.0f);
+
     [self setupAutoHeightWithBottomView:self.splitView bottomMargin:0.0f];
 
 }
@@ -416,29 +440,13 @@
     if ([object.cmmtnum integerValue] > 3) {
         self.fourthCommentLabel.text = [NSString stringWithFormat:@"查看全部%@条评论",object.cmmtnum];
     }
+
     CGFloat margin = count == 0 ? 0.0f : kMainCommentContentTopMargin;
+
     self.firstCommentLabel.sd_resetLayout
     .leftSpaceToView(self.commentView, kMainCommentContentLeftMargin)
     .rightSpaceToView(self.commentView, kMainCommentContentLeftMargin)
     .topSpaceToView(self.commentView, margin)
-    .autoHeightRatio(0.0f);
-
-    self.secondCommentLabel.sd_resetLayout
-    .leftSpaceToView(self.commentView, kMainCommentContentLeftMargin)
-    .rightSpaceToView(self.commentView, kMainCommentContentLeftMargin)
-    .topSpaceToView(self.firstCommentLabel, 0.0f)
-    .autoHeightRatio(0.0f);
-
-    self.thirdCommentLabel.sd_resetLayout
-    .leftSpaceToView(self.commentView, kMainCommentContentLeftMargin)
-    .rightSpaceToView(self.commentView, kMainCommentContentLeftMargin)
-    .topSpaceToView(self.secondCommentLabel, 0.0f)
-    .autoHeightRatio(0.0f);
-
-    self.fourthCommentLabel.sd_resetLayout
-    .leftSpaceToView(self.commentView, kMainCommentContentLeftMargin)
-    .rightSpaceToView(self.commentView, kMainCommentContentLeftMargin)
-    .topSpaceToView(self.thirdCommentLabel, 0.0f)
     .autoHeightRatio(0.0f);
 
     UIView *lastView = nil;
@@ -451,6 +459,7 @@
     } else if (count == 3) {
         lastView = self.thirdCommentLabel;
     }
+
     self.commentView.sd_resetLayout
     .topSpaceToView(self.actionView, 0.0f)
     .leftEqualToView(self.headerView)

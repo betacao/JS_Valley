@@ -124,7 +124,7 @@
     self.lbldepartName.textColor = kMainCompanyColor;
 
     self.lblTime.font = kMainTimeFont;
-    self.lblTime.textColor = kMainNameColor;
+    self.lblTime.textColor = kMainTimeColor;
 
     [self.btnComment setTitleColor:kMainActionColor forState:UIControlStateNormal];
     self.btnComment.titleEdgeInsets = UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, -10.0f);

@@ -636,25 +636,28 @@
 
 - (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    id object = [self.dataArr objectAtIndex:indexPath.row];
-    if([object isKindOfClass:[CircleListObj class]]){
+    if (self.dataArr.count > 0) {
+        id object = [self.dataArr objectAtIndex:indexPath.row];
+        if([object isKindOfClass:[CircleListObj class]]){
 
-        if (![((CircleListObj *)object).postType isEqualToString:@"ad"]){
-            return SCREENWIDTH;
-        } else{
-            return MarginFactor(198.0f);
+            if (![((CircleListObj *)object).postType isEqualToString:@"ad"]){
+                return SCREENWIDTH;
+            } else{
+                return MarginFactor(198.0f);
+            }
+
+        } else if([object isKindOfClass:[NSArray class]]){
+
+            return MarginFactor(60.0f) * ((NSArray *)object).count;
+
+        } else if ([object isKindOfClass:[SHGNewFriendObject class]]){
+            
+            return MarginFactor(140.0f);
+            
         }
-
-    } else if([object isKindOfClass:[NSArray class]]){
-
-        return MarginFactor(60.0f) * ((NSArray *)object).count;
-
-    } else if ([object isKindOfClass:[SHGNewFriendObject class]]){
-
-        return MarginFactor(140.0f);
-        
+        return SCREENWIDTH;
     }
-    return SCREENWIDTH;
+    return SCREENHEIGHT;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath

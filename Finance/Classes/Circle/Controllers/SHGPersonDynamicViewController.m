@@ -132,6 +132,24 @@
     
 }
 
+- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (self.dataArr.count > 0) {
+        id object = [self.dataArr objectAtIndex:indexPath.row];
+        if([object isKindOfClass:[CircleListObj class]]){
+
+            if (![((CircleListObj *)object).postType isEqualToString:@"ad"]){
+                return SCREENWIDTH;
+            } else{
+                return MarginFactor(198.0f);
+            }
+
+        }
+        return SCREENWIDTH;
+    }
+    return SCREENHEIGHT;
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (self.dataArr.count > 0) {
@@ -147,6 +165,8 @@
             cell.delegate = self;
             cell.object = obj;
             cell.controller = self;
+            cell.sd_tableView = tableView;
+            cell.sd_indexPath = indexPath;
             return cell;
         } else{
             NSString *cellIdentifier = @"noListIdentifier";

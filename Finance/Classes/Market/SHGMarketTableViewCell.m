@@ -148,11 +148,12 @@
 
 - (void)clearCell
 {
-    self.titleLabel.text = @" ";
-    self.typeLabel.text = @" ";
-    self.amountLabel.text = @" ";
-    self.contactLabel.text = @" ";
-    self.timeLabel.text = @" ";
+    self.titleLabel.text = @"";
+    self.typeLabel.text = @"";
+    self.amountLabel.text = @"";
+    self.contactLabel.text = @"";
+    self.timeLabel.text = @"";
+    self.timeLabel.frame = CGRectZero;
     [self.browseButton setTitle:@"" forState:UIControlStateNormal];
 }
 
