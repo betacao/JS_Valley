@@ -35,29 +35,29 @@
     self.typeLabel.font = FontFactor(13.0f);
     self.amountLabel.font = FontFactor(13.0f);
     self.timeLabel.font = FontFactor(13.0f);
+    self.timeLabel.lineBreakMode = NSLineBreakByWordWrapping;
     self.contactLabel.font = FontFactor(13.0f);
     self.browseButton.titleLabel.font = FontFactor(12.0f);
     [self.browseButton setTitleColor:[UIColor colorWithHexString:@"d3d3d3"] forState:UIControlStateNormal];
     self.browseButton.titleEdgeInsets = UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, -5.0f);
-    CGFloat titleHeight = [@" " sizeWithAttributes:@{NSFontAttributeName : self.titleLabel.font}].height;
-    CGFloat height = [@" " sizeWithAttributes:@{NSFontAttributeName : self.typeLabel.font}].height;
+    
     [self.deleteButton setEnlargeEdgeWithTop:10.0f right:10.0f bottom:10.0f left:10.0f];
     self.titleLabel.sd_layout
     .topSpaceToView(self.contentView, MarginFactor(18.0f))
     .leftSpaceToView(self.contentView, MarginFactor(12.0f))
     .rightSpaceToView(self.contentView, MarginFactor(12.0f))
-    .heightIs(titleHeight);
+    .heightIs(self.titleLabel.font.lineHeight);
 
     self.typeLabel.sd_layout
     .topSpaceToView(self.titleLabel, MarginFactor(14.0f))
     .leftSpaceToView(self.contentView, MarginFactor(12.0f))
-    .widthIs(SCREENWIDTH/2.0f - MarginFactor(12.0f))
-    .heightIs(height);
+    .widthIs(SCREENWIDTH / 2.0f - MarginFactor(12.0f))
+    .heightIs(self.typeLabel.font.lineHeight);
     
     self.contactLabel.sd_layout
     .topSpaceToView(self.typeLabel, MarginFactor(11.0f))
     .leftSpaceToView(self.contentView, MarginFactor(12.0f))
-    .widthIs(SCREENWIDTH/2.0f - MarginFactor(12.0f))
+    .widthIs(SCREENWIDTH / 2.0f - MarginFactor(12.0f))
     .heightRatioToView(self.typeLabel, 1.0f);
     
     UIImage *browseImage = [UIImage imageNamed:@"marketBrowse"];
@@ -78,9 +78,9 @@
     
     self.timeLabel.sd_layout
     .centerYEqualToView(self.contactLabel)
-    .rightSpaceToView(self.browseButton, MarginFactor(12.0f))
     .heightRatioToView(self.typeLabel, 1.0f)
     .leftSpaceToView(self.contentView, SCREENWIDTH / 2.0f);
+    [self.timeLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
     
     self.amountLabel.sd_layout
     .centerYEqualToView(self.typeLabel)

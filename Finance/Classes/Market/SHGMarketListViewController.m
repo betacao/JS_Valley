@@ -382,16 +382,16 @@
             SHGMarketLabelTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SHGMarketLabelTableViewCell"];
             if (!cell) {
                 cell = [[SHGMarketLabelTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"SHGMarketLabelTableViewCell"];
-                cell.text = @"本地区该业务较少，现为您推荐其他地区同业务信息";
             }
+            cell.text = @"本地区该业务较少，现为您推荐其他地区同业务信息";
             return cell;
         } else{
 
             SHGMarketImageTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SHGMarketImageTableViewCell"];
             if (!cell) {
                 cell = [[SHGMarketImageTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"SHGMarketImageTableViewCell"];
-                cell.tipUrl = self.tipUrl;
             }
+            cell.tipUrl = self.tipUrl;
             return cell;
         }
 
@@ -400,9 +400,8 @@
         SHGMarketTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
         if (!cell) {
             cell = [[[NSBundle mainBundle] loadNibNamed:@"SHGMarketTableViewCell" owner:self options:nil] lastObject];
-            cell.delegate = self;
         }
-
+        cell.delegate = self;
         cell.sd_tableView = tableView;
         cell.sd_indexPath = indexPath;
         cell.object = [self.currentArray objectAtIndex:indexPath.row];
