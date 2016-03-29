@@ -71,12 +71,15 @@
     CGSize imageSize = image.size;
     //以最大的图片大小 作为self的frame大小
     CGSize maxSize = (ringSize.width >= imageSize.width ? ringSize : imageSize);
-
+    CGRect selfFrame = CGRectZero;
     //self的frame计算
-
-    CGRect selfFrame = CGRectInset(bounds, (CGRectGetWidth(bounds) - maxSize.width)/2.0f, (CGRectGetHeight(bounds) - maxSize.height)/2.0f);
-    selfFrame = [self.window convertRect:selfFrame toView:self.superview];
-    if(self.shouldAutoMediate){
+    if (!self.shouldAutoMediate) {
+        bounds = self.superview.bounds;
+        selfFrame = CGRectInset(bounds, (CGRectGetWidth(bounds) - maxSize.width)/2.0f, (CGRectGetHeight(bounds) - maxSize.height)/2.0f);
+        [self setFrame:selfFrame];
+    } else{
+        selfFrame = CGRectInset(bounds, (CGRectGetWidth(bounds) - maxSize.width)/2.0f, (CGRectGetHeight(bounds) - maxSize.height)/2.0f);
+        selfFrame = [self.window convertRect:selfFrame toView:self.superview];
         [self setFrame:selfFrame];
     }
     //转圈的frame计算

@@ -455,7 +455,6 @@
 		61D62BEE1ADD1C4D002DD395 /* MOCHTTPRequestOperationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 61D62BE31ADD1C4D002DD395 /* MOCHTTPRequestOperationManager.m */; };
 		61D62BEF1ADD1C4D002DD395 /* MOCHTTPResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 61D62BE51ADD1C4D002DD395 /* MOCHTTPResponse.m */; };
 		61D62BF01ADD1C4D002DD395 /* MOCNetworkReachabilityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 61D62BE71ADD1C4D002DD395 /* MOCNetworkReachabilityManager.m */; };
-		61D62BF31ADD1C4D002DD395 /* WSHHTTPTestModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 61D62BED1ADD1C4D002DD395 /* WSHHTTPTestModel.m */; };
 		61D62BFA1ADDFF53002DD395 /* prompt@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 61D62BF71ADDFF53002DD395 /* prompt@2x.png */; };
 		61D62BFE1ADE035C002DD395 /* CircleListObj.m in Sources */ = {isa = PBXBuildFile; fileRef = 61D62BFD1ADE035C002DD395 /* CircleListObj.m */; };
 		61D62C061ADE3E85002DD395 /* 1.png in Resources */ = {isa = PBXBuildFile; fileRef = 61D62BFF1ADE3E85002DD395 /* 1.png */; };
@@ -836,6 +835,7 @@
 		F93FCBCA1C856D5A004E356E /* UIImage+Customized.m in Sources */ = {isa = PBXBuildFile; fileRef = F93FCBB81C856D5A004E356E /* UIImage+Customized.m */; };
 		F93FCBCB1C856D5A004E356E /* UIImage+Rotation.m in Sources */ = {isa = PBXBuildFile; fileRef = F93FCBBA1C856D5A004E356E /* UIImage+Rotation.m */; };
 		F93FCBCD1C856D5A004E356E /* UIView+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = F93FCBBE1C856D5A004E356E /* UIView+Additions.m */; };
+		F95A88C71CAA784100D7F9BD /* SHGGifHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = F95A88C61CAA784100D7F9BD /* SHGGifHeader.m */; };
 		F95F42AA1C8DA341003EDA30 /* SHGConnectionsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F95F42A81C8DA341003EDA30 /* SHGConnectionsTableViewCell.m */; };
 		F95F42AB1C8DA341003EDA30 /* SHGConnectionsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F95F42A91C8DA341003EDA30 /* SHGConnectionsTableViewCell.xib */; };
 		F95F42AF1C8E993C003EDA30 /* SHGCircleSendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F95F42AD1C8E993C003EDA30 /* SHGCircleSendViewController.m */; };
@@ -1542,8 +1542,6 @@
 		61D62BE51ADD1C4D002DD395 /* MOCHTTPResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MOCHTTPResponse.m; sourceTree = "<group>"; };
 		61D62BE61ADD1C4D002DD395 /* MOCNetworkReachabilityManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOCNetworkReachabilityManager.h; sourceTree = "<group>"; };
 		61D62BE71ADD1C4D002DD395 /* MOCNetworkReachabilityManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MOCNetworkReachabilityManager.m; sourceTree = "<group>"; };
-		61D62BEC1ADD1C4D002DD395 /* WSHHTTPTestModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WSHHTTPTestModel.h; sourceTree = "<group>"; };
-		61D62BED1ADD1C4D002DD395 /* WSHHTTPTestModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WSHHTTPTestModel.m; sourceTree = "<group>"; };
 		61D62BF71ADDFF53002DD395 /* prompt@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "prompt@2x.png"; sourceTree = "<group>"; };
 		61D62BFC1ADE035C002DD395 /* CircleListObj.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CircleListObj.h; sourceTree = "<group>"; };
 		61D62BFD1ADE035C002DD395 /* CircleListObj.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CircleListObj.m; sourceTree = "<group>"; };
@@ -2084,6 +2082,8 @@
 		F93FCBBA1C856D5A004E356E /* UIImage+Rotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Rotation.m"; sourceTree = "<group>"; };
 		F93FCBBD1C856D5A004E356E /* UIView+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Additions.h"; sourceTree = "<group>"; };
 		F93FCBBE1C856D5A004E356E /* UIView+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Additions.m"; sourceTree = "<group>"; };
+		F95A88C51CAA784100D7F9BD /* SHGGifHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGGifHeader.h; sourceTree = "<group>"; };
+		F95A88C61CAA784100D7F9BD /* SHGGifHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGGifHeader.m; sourceTree = "<group>"; };
 		F95F42A71C8DA341003EDA30 /* SHGConnectionsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGConnectionsTableViewCell.h; sourceTree = "<group>"; };
 		F95F42A81C8DA341003EDA30 /* SHGConnectionsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGConnectionsTableViewCell.m; sourceTree = "<group>"; };
 		F95F42A91C8DA341003EDA30 /* SHGConnectionsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGConnectionsTableViewCell.xib; sourceTree = "<group>"; };
@@ -3144,6 +3144,7 @@
 		614DC8891AD65F6900F610D4 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				F95A88C41CAA782200D7F9BD /* SHGGifHeader */,
 				F918EF341C1ACEDA008C0335 /* SHGCategoryScrollView */,
 				F9F349D61C199E730090F111 /* SHGComBox */,
 				F9F349B21C1945920090F111 /* SHGBadgeView */,
@@ -3671,8 +3672,6 @@
 				61D62BE51ADD1C4D002DD395 /* MOCHTTPResponse.m */,
 				61D62BE61ADD1C4D002DD395 /* MOCNetworkReachabilityManager.h */,
 				61D62BE71ADD1C4D002DD395 /* MOCNetworkReachabilityManager.m */,
-				61D62BEC1ADD1C4D002DD395 /* WSHHTTPTestModel.h */,
-				61D62BED1ADD1C4D002DD395 /* WSHHTTPTestModel.m */,
 			);
 			path = Http;
 			sourceTree = "<group>";
@@ -4572,6 +4571,15 @@
 			name = Category;
 			path = Finance/Category;
 			sourceTree = SOURCE_ROOT;
+		};
+		F95A88C41CAA782200D7F9BD /* SHGGifHeader */ = {
+			isa = PBXGroup;
+			children = (
+				F95A88C51CAA784100D7F9BD /* SHGGifHeader.h */,
+				F95A88C61CAA784100D7F9BD /* SHGGifHeader.m */,
+			);
+			path = SHGGifHeader;
+			sourceTree = "<group>";
 		};
 		F98B16EA1BC7947D000A577C /* GeTui */ = {
 			isa = PBXGroup;
@@ -5597,7 +5605,6 @@
 				F9DDEFBF1BF9EB79001341CF /* SHGActionSendViewController.m in Sources */,
 				6147AE011B050E7F00DFBD50 /* MPNotificationView.m in Sources */,
 				F9AAC1A71C51F0F800E92B7A /* SHGMarketImageTableViewCell.m in Sources */,
-				61D62BF31ADD1C4D002DD395 /* WSHHTTPTestModel.m in Sources */,
 				614AD1AD1AD7AC4D00DDF43E /* LoginViewController.m in Sources */,
 				61D62BFE1ADE035C002DD395 /* CircleListObj.m in Sources */,
 				6187D2E91AF1C693008E1D21 /* MessageModelManager.m in Sources */,
@@ -5777,6 +5784,7 @@
 				61425B421AFA7ED600758BCB /* ConfigObj.m in Sources */,
 				6149CFE91B2605FC006E45FE /* TwainContactInfo.m in Sources */,
 				F95F42AF1C8E993C003EDA30 /* SHGCircleSendViewController.m in Sources */,
+				F95A88C71CAA784100D7F9BD /* SHGGifHeader.m in Sources */,
 				6147AE021B050E7F00DFBD50 /* OBGradientView.m in Sources */,
 				5331DF351AFC224D00E035B8 /* MessageObj.m in Sources */,
 				6187D2E01AF1C693008E1D21 /* EMChatBaseBubbleView.m in Sources */,

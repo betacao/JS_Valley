@@ -12,6 +12,8 @@
 
 @property (assign, nonatomic) BOOL shouldAutoMediate;
 
+- (void)startAnimation;
+
 - (void)stopAnimation;
 
 - (CGSize)SHGProgressHUDSize;

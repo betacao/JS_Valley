@@ -7,6 +7,7 @@
 //
 
 #import "BaseTableViewController.h"
+#import "SHGGifHeader.h"
 
 @interface BaseTableViewController ()
 
@@ -53,19 +54,8 @@
 {
     tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     if (isHeaderFresh){
-        MJRefreshNormalHeader *header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(refreshHeader)];
-        if(headerTitle){
-            [header setTitle:[headerTitle objectForKey:kRefreshStateIdle] forState:MJRefreshStateIdle];
-            [header setTitle:[headerTitle objectForKey:kRefreshStatePulling] forState:MJRefreshStatePulling];
-            [header setTitle:[headerTitle objectForKey:kRefreshStateRefreshing] forState:MJRefreshStateRefreshing];
-        }
+        SHGGifHeader *header = [SHGGifHeader headerWithRefreshingTarget:self refreshingAction:@selector(refreshHeader)];
         header.backgroundColor = [UIColor whiteColor];
-        // 设置字体
-        header.stateLabel.font = [UIFont systemFontOfSize:12.0f];
-        header.lastUpdatedTimeLabel.font = [UIFont systemFontOfSize:12.0f];
-        // 设置颜色
-        header.stateLabel.textColor = [UIColor colorWithHexString:@"606060"];
-        header.lastUpdatedTimeLabel.textColor = [UIColor colorWithHexString:@"D2D1D1"];
         tableView.mj_header = header;
     }
     if (isFooterRefresh){
