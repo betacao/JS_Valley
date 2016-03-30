@@ -209,7 +209,7 @@
     [self.dataArr removeObject:self.recommendArray];
     [self.recommendArray removeAllObjects];
     __weak typeof(self) weakSelf = self;
-    [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/v1/recommended/friends/recommendedFriendGrade",rBaseAddRessHttp] class:[RecmdFriendObj class] parameters:@{@"uid":UID} success:^(MOCHTTPResponse *response){
+    [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/recommended/friends/recommendedFriendGrade",rBaseAddressForHttp] class:[RecmdFriendObj class] parameters:@{@"uid":UID} success:^(MOCHTTPResponse *response){
         [weakSelf.dataArr removeObject:weakSelf.recommendArray];
         for (int i = 0; i < response.dataArray.count; i++){
             NSDictionary *dic = response.dataArray[i];

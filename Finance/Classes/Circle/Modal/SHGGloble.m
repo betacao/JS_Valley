@@ -207,7 +207,7 @@
         return;
     }
     __weak typeof(self) weakSelf = self;
-    [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/v1/user/tag/baseUserTag",rBaseAddRessHttp] class:[SHGUserTagModel class] parameters:nil success:^(MOCHTTPResponse *response) {
+    [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/user/tag/baseUserTag",rBaseAddressForHttp] class:[SHGUserTagModel class] parameters:nil success:^(MOCHTTPResponse *response) {
         [weakSelf.tagsArray removeAllObjects];
         [weakSelf.tagsArray addObjectsFromArray:response.dataArray];
         block();
@@ -220,7 +220,7 @@
 {
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
     __weak typeof(self) weakSelf = self;
-    [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/v1/user/tag/getUserSelectedTags",rBaseAddRessHttp] class:[SHGUserTagModel class] parameters:@{@"uid":uid} success:^(MOCHTTPResponse *response) {
+    [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/user/tag/getUserSelectedTags",rBaseAddressForHttp] class:[SHGUserTagModel class] parameters:@{@"uid":uid} success:^(MOCHTTPResponse *response) {
         [weakSelf.selectedTagsArray removeAllObjects];
         [weakSelf.selectedTagsArray addObjectsFromArray:response.dataArray];
         block();
@@ -246,7 +246,7 @@
     __weak typeof(self) weakSelf = self;
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
     NSDictionary *param = [NSDictionary dictionaryWithObjectsAndKeys:uid,@"uid",string,@"tagIds",@"edit",@"flag", nil];
-    [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/v1/user/tag/saveOrUpdateUserTag",rBaseAddRessHttp] parameters:param success:^(MOCHTTPResponse *response) {
+    [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/user/tag/saveOrUpdateUserTag",rBaseAddressForHttp] parameters:param success:^(MOCHTTPResponse *response) {
         [weakSelf.selectedTagsArray removeAllObjects];
         [weakSelf.selectedTagsArray addObjectsFromArray:array];
         block(YES);
