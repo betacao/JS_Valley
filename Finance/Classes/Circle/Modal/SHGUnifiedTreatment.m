@@ -57,16 +57,16 @@
     __weak typeof(self)weakSelf = self;
     NSString *url = [NSString stringWithFormat:@"%@/%@",rBaseAddressForHttpCircle,@"circle"];
     NSDictionary *dic = @{@"rid":obj.rid, @"uid":obj.userid};
-    [[AFHTTPSessionManager manager] DELETE:url parameters:dic success:^(NSURLSessionDataTask *operation, id responseObject){
-        NSLog(@"%@",responseObject);
-        NSString *code = [responseObject valueForKey:@"code"];
+
+    [MOCHTTPRequestOperationManager deleteWithURL:url parameters:dic success:^(MOCHTTPResponse *response) {
+        NSString *code = [response.data valueForKey:@"code"];
         if ([code isEqualToString:@"000"]){
             [MobClick event:@"ActionDeletepost" label:@"onClick"];
             [weakSelf detailDeleteWithRid:obj.rid];
         }
-    } failure:^(NSURLSessionDataTask *operation, NSError *error){
-         [Hud showMessageWithText:error.domain];
-     }];
+    } failed:^(MOCHTTPResponse *response) {
+        [Hud showMessageWithText:response.errorMessage];
+    }];
 }
 
 #pragma mark -点击查看更多
@@ -107,9 +107,9 @@
         }];
     } else{
         [Hud showWait];
-        [[AFHTTPSessionManager manager] DELETE:url parameters:param success:^(NSURLSessionDataTask *operation, id responseObject) {
-            NSLog(@"%@",responseObject);
-            NSString *code = [responseObject valueForKey:@"code"];
+        [MOCHTTPRequestOperationManager deleteWithURL:url parameters:param success:^(MOCHTTPResponse *response) {
+            [Hud hideHud];
+            NSString *code = [response.data valueForKey:@"code"];
             if ([code isEqualToString:@"000"]) {
                 NSArray *array = [[SHGSegmentController sharedSegmentController] targetObjectsByRid:obj.rid];
                 for (CircleListObj *object in array) {
@@ -120,11 +120,11 @@
             }
             [MobClick event:@"ActionPraiseClicked_Off" label:@"onClick"];
             [[SHGSegmentController sharedSegmentController] reloadData];
+        } failed:^(MOCHTTPResponse *response) {
             [Hud hideHud];
-        } failure:^(NSURLSessionDataTask *operation, NSError *error) {
-            [Hud showMessageWithText:error.domain];
-            [Hud hideHud];
+            [Hud showMessageWithText:response.errorMessage];
         }];
+
     }
 
 }
@@ -395,9 +395,9 @@
                 [Hud showMessageWithText:response.errorMessage];
             }];
         } else{
-            [[AFHTTPSessionManager manager] DELETE:url parameters:param success:^(NSURLSessionDataTask *operation, id responseObject) {
+            [MOCHTTPRequestOperationManager deleteWithURL:url parameters:param success:^(MOCHTTPResponse *response) {
                 [Hud hideHud];
-                NSString *code = [responseObject valueForKey:@"code"];
+                NSString *code = [response.data valueForKey:@"code"];
                 if ([code isEqualToString:@"000"]) {
                     NSArray *array = [[SHGSegmentController sharedSegmentController] targetObjectsByUserID:obj.userid];
                     for (CircleListObj *cobj in array) {
@@ -417,10 +417,12 @@
                 } else{
                     [Hud showMessageWithText:@"取消关注失败"];
                 }
-            } failure:^(NSURLSessionDataTask *operation, NSError *error) {
+            } failed:^(MOCHTTPResponse *response) {
                 [Hud hideHud];
-                [Hud showMessageWithText:error.domain];
+                [Hud showMessageWithText:response.errorMessage];
             }];
+
+
         }
     } else{
         //这个是推荐栏目加关注的方法 因为不是同一个类 不得已多写一个else
@@ -449,9 +451,10 @@
                 [Hud showMessageWithText:response.errorMessage];
             }];
         } else{
-            [[AFHTTPSessionManager manager] DELETE:url parameters:param success:^(NSURLSessionDataTask *operation, id responseObject) {
+
+            [MOCHTTPRequestOperationManager deleteWithURL:url parameters:param success:^(MOCHTTPResponse *response) {
                 [Hud hideHud];
-                NSString *code = [responseObject valueForKey:@"code"];
+                NSString *code = [response.data valueForKey:@"code"];
                 if ([code isEqualToString:@"000"]) {
                     friend.isFocus = NO;
                     [MobClick event:@"ActionAttentionClickedFalse" label:@"onClick"];
@@ -461,9 +464,11 @@
                     [Hud hideHud];
                     [Hud showMessageWithText:@"取消关注失败"];
                 }
-            } failure:^(NSURLSessionDataTask *operation, NSError *error) {
-                [Hud showMessageWithText:error.domain];
+            } failed:^(MOCHTTPResponse *response) {
+                [Hud hideHud];
+                [Hud showMessageWithText:response.errorMessage];
             }];
+
         }
     }
 

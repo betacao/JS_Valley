@@ -375,89 +375,80 @@
 {
 
 	NSString *url = [NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"friends"];
-	NSDictionary *param = @{@"uid":[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID],
-							@"oid":obj.uid};
+	NSDictionary *param = @{@"uid":UID, @"oid":obj.uid};
 
+    __weak typeof(self)weakSelf = self;
     if (obj.followRelation == 0) {
         [Hud showWait];
-		[MOCHTTPRequestOperationManager postWithURL:url class:nil parameters:param success:^(MOCHTTPResponse *response) {
+        [MOCHTTPRequestOperationManager postWithURL:url class:nil parameters:param success:^(MOCHTTPResponse *response) {
+            [Hud hideHud];
             obj.followRelation = [response.dataDictionary[@"state"] integerValue];
-			[self.tableView reloadData];
-            if (self.searchBarIsEdite) {
-                [self.searchController.searchResultsTableView reloadData];
+            [weakSelf.tableView reloadData];
+            if (weakSelf.searchBarIsEdite) {
+                [weakSelf.searchController.searchResultsTableView reloadData];
             }
-			[Hud showMessageWithText:@"关注成功"];
+            [Hud showMessageWithText:@"关注成功"];
             CircleListObj *robj = [[CircleListObj alloc] init];
             robj.userid = obj.uid;
             robj.isattention = @"Y";
             [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_COLLECT_COLLECT_CLIC object:robj];
+        } failed:^(MOCHTTPResponse *response) {
             [Hud hideHud];
-            		} failed:^(MOCHTTPResponse *response) {
-			[Hud showMessageWithText:response.errorMessage];
-            [Hud hideHud];
-		}];
-
-    }else if (obj.followRelation == 1){
+            [Hud showMessageWithText:response.errorMessage];
+        }];
+        
+    } else if (obj.followRelation == 1){
         [Hud showWait];
-
-		[[AFHTTPSessionManager manager] DELETE:url parameters:param success:^(NSURLSessionDataTask *operation, id responseObject) {
-			NSString *code = [responseObject valueForKey:@"code"];
-			if ([code isEqualToString:@"000"])
-			{
-				[self.dataSource removeObject:obj];
-				[self.tableView reloadData];
-                if (self.searchBarIsEdite) {
-                    [self.searchController.searchResultsTableView reloadData];
+        [MOCHTTPRequestOperationManager deleteWithURL:url parameters:param success:^(MOCHTTPResponse *response) {
+            [Hud hideHud];
+            NSString *code = [response.data valueForKey:@"code"];
+            if ([code isEqualToString:@"000"]){
+                [weakSelf.dataSource removeObject:obj];
+                [weakSelf.tableView reloadData];
+                if (weakSelf.searchBarIsEdite) {
+                    [weakSelf.searchController.searchResultsTableView reloadData];
                 }
-				[Hud showMessageWithText:@"取消关注成功"];
+                [Hud showMessageWithText:@"取消关注成功"];
                 CircleListObj *robj = [[CircleListObj alloc] init];
                 robj.userid = obj.uid;
                 robj.isattention = @"N";
                 [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_COLLECT_COLLECT_CLIC object:robj];
-
-                
-			}else{
-				[Hud showMessageWithText:[responseObject valueForKey:@"msg"]];
-			}
+            } else{
+                [Hud showMessageWithText:[response.data valueForKey:@"msg"]];
+            }
+        } failed:^(MOCHTTPResponse *response) {
             [Hud hideHud];
+            [Hud showMessageWithText:response.errorMessage];
+        }];
 
-			
-		} failure:^(NSURLSessionDataTask *operation, NSError *error) {
-			[Hud showMessageWithText:error.domain];
-            [Hud hideHud];
-		}];
-
-    }else if (obj.followRelation == 2){
+    } else if (obj.followRelation == 2){
         [Hud showWait];
+        [MOCHTTPRequestOperationManager deleteWithURL:url parameters:param success:^(MOCHTTPResponse *response) {
+            [Hud hideHud];
+            NSString *code = [response.data valueForKey:@"code"];
+            if ([code isEqualToString:@"000"]) {
+                if (weakSelf.relationShip == 1) {
+                    obj.followRelation = 0;
+                } else if (weakSelf.relationShip == 2){
+                    obj.followRelation = 0;
+                }
 
-		[[AFHTTPSessionManager manager] DELETE:url parameters:param success:^(NSURLSessionDataTask *operation, id responseObject) {
-			NSString *code = [responseObject valueForKey:@"code"];
-			if ([code isEqualToString:@"000"])
-			{
-				if (self.relationShip == 1) {
-					obj.followRelation = 0;
-				}else if (self.relationShip == 2){
-					obj.followRelation = 0;
-				}
-				
-				[self.tableView reloadData];
-                if (self.searchBarIsEdite) {
-                    [self.searchController.searchResultsTableView reloadData];
+                [weakSelf.tableView reloadData];
+                if (weakSelf.searchBarIsEdite) {
+                    [weakSelf.searchController.searchResultsTableView reloadData];
                 }
                 CircleListObj *robj = [[CircleListObj alloc] init];
                 robj.userid = obj.uid;
                 robj.isattention = @"N";
                 [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_COLLECT_COLLECT_CLIC object:robj];
-				[Hud showMessageWithText:@"取消关注成功"];
-			}else{
-				[Hud showMessageWithText:[responseObject valueForKey:@"msg"]];
-			}
+                [Hud showMessageWithText:@"取消关注成功"];
+            } else{
+                [Hud showMessageWithText:[response.data valueForKey:@"msg"]];
+            }
+        } failed:^(MOCHTTPResponse *response) {
             [Hud hideHud];
-		} failure:^(NSURLSessionDataTask *operation, NSError *error) {
-			[Hud showMessageWithText:error.domain];
-            [Hud hideHud];
-		}];
+            [Hud showMessageWithText:response.errorMessage];
+        }];
 	}
-
 }
 @end

@@ -56,6 +56,7 @@ NSString *moc_http_request_operation_manager_token;
 }
 
 #pragma mark -
+
 + (void)postWithURL:(NSString *)url parameters:(id)parameters success:(MOCResponseBlock)success failed:(MOCResponseBlock)failed{
     [MOCHTTPRequestOperationManager postWithURL:url class:nil parameters:parameters success:success failed:failed complete:nil];
 }
@@ -133,7 +134,34 @@ NSString *moc_http_request_operation_manager_token;
 
 
 #pragma mark -
-+ (void )requestWithURL:(NSString *)url method:(NSString *)method class:(Class)class parameters:(id)parameters success:(MOCResponseBlock)success failed:(MOCResponseBlock)failed complete:(Block)complete {
++ (NSURLSessionTask *)POST:(NSString *)URLString parameters:(id)parameters constructingBodyWithBlock:(void (^)(id <AFMultipartFormData> formData))block progress:(nullable void (^)(NSProgress * _Nonnull))uploadProgress success:(void (^)(NSURLSessionDataTask *task, id responseObject))success failure:(void (^)(NSURLSessionDataTask *task, NSError *error))failure
+{
+    NSAssert(URLString, @"请求地址不能为空");
+    MOCHTTPRequestOperationManager *client = [MOCHTTPRequestOperationManager manager];
+    if (![MOCNetworkReachabilityManager isReachable]) {//网络不可达
+        // [Hud showMessageWithText:@"断网了~"];
+        [client parseResponseFailed:nil failed:nil logInfo:@"网络不可达"];
+        return nil;
+    }
+    NSMutableDictionary *param = [NSMutableDictionary dictionaryWithDictionary:parameters];
+    [param setObject:@([[NSDate date] timeIntervalSince1970]) forKey:@"time"];
+    NSString *secret = [client sortParameter:param];
+
+    NSString *code = signCode;
+    for (NSInteger i = 0; i < 3; i++) {
+        code = [SHGEncryptionAlgorithm textFromBase64String:code];
+    }
+    secret = [secret stringByAppendingString:code];
+    for (NSInteger i = 0; i < 3; i++) {
+        secret = [secret md5];
+    }
+    [param setObject:secret forKey:@"sign"];
+    parameters = [client packageParameters:param];
+    NSLog(@"%@   parameters:%@", URLString, param);
+    return [client.manager POST:URLString parameters:parameters constructingBodyWithBlock:block progress:uploadProgress success:success failure:failure];
+}
+
++ (void)requestWithURL:(NSString *)url method:(NSString *)method class:(Class)class parameters:(id)parameters success:(MOCResponseBlock)success failed:(MOCResponseBlock)failed complete:(Block)complete {
 
     NSAssert(url, @"请求地址不能为空");
     MOCHTTPRequestOperationManager *client = [MOCHTTPRequestOperationManager manager];
@@ -340,10 +368,8 @@ NSString *moc_http_request_operation_manager_token;
     }];
     if (!IsStrEmpty(result)) {
         result = [result substringToIndex:result.length - 1];
-        result = [result stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-        result = [result stringByReplacingOccurrencesOfString:@"+" withString:@"%20"];
-        result = [result stringByReplacingOccurrencesOfString:@"*" withString:@"%2A"];
-        result = [result stringByReplacingOccurrencesOfString:@":" withString:@"%3A"];
+        result = (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault,(CFStringRef)result,NULL,CFSTR(":/?#[]@!$ '()*+,;\"<>%{}|\\^~`"),kCFStringEncodingUTF8));
+
     }
     return result;
 }

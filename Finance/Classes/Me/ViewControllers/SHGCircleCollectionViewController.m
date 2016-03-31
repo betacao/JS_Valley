@@ -250,21 +250,22 @@
         [self deleteSele:_deleteObj];
     }
 }
+
 -(void)deleteSele:(CircleListObj *)obj
 {
-    
     //删除
     NSString *url = [NSString stringWithFormat:@"%@/%@",rBaseAddressForHttpCircle,@"circle"];
     NSDictionary *dic = @{@"rid":obj.rid, @"uid":obj.userid};
     __weak typeof(self) weakSelf = self;
-    [[AFHTTPSessionManager manager] DELETE:url parameters:dic success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        NSString *code = [responseObject valueForKey:@"code"];
+
+    [MOCHTTPRequestOperationManager deleteWithURL:url parameters:dic success:^(MOCHTTPResponse *response) {
+        NSString *code = [response.data valueForKey:@"code"];
         if ([code isEqualToString:@"000"]){
             [weakSelf detailDeleteWithRid:obj.rid];
             [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_COLLECT_DELETE_CLICK object:obj];
         }
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        [Hud showMessageWithText:error.domain];
+    } failed:^(MOCHTTPResponse *response) {
+        [Hud showMessageWithText:response.errorMessage];
     }];
 }
 
@@ -294,20 +295,20 @@
         
     } else{
         [Hud showWait];
-        [[AFHTTPSessionManager manager] DELETE:url parameters:param success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-            NSString *code = [responseObject valueForKey:@"code"];
+        [MOCHTTPRequestOperationManager deleteWithURL:url parameters:param success:^(MOCHTTPResponse *response) {
+            [Hud hideHud];
+            NSString *code = [response.data valueForKey:@"code"];
             if ([code isEqualToString:@"000"]) {
                 obj.ispraise = @"N";
                 obj.praisenum = [NSString stringWithFormat:@"%ld",(long)[obj.praisenum integerValue] -1];
                 [Hud showMessageWithText:@"取消点赞"];
                 [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_COLLECT_PRAISE_CLICK object:obj];
-                
+
             }
             [weakSelf.tableView reloadData];
+        } failed:^(MOCHTTPResponse *response) {
             [Hud hideHud];
-        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-            [Hud showMessageWithText:error.domain];
-            [Hud hideHud];
+            [Hud showMessageWithText:response.errorMessage];
         }];
     }
 }
@@ -509,9 +510,10 @@
             [Hud showMessageWithText:response.errorMessage];
         }];
     } else{
-        [[AFHTTPSessionManager manager] DELETE:url parameters:param success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+
+        [MOCHTTPRequestOperationManager deleteWithURL:url parameters:param success:^(MOCHTTPResponse *response) {
             [Hud hideHud];
-            NSString *code = [responseObject valueForKey:@"code"];
+            NSString *code = [response.data valueForKey:@"code"];
             if ([code isEqualToString:@"000"]){
                 for (CircleListObj *cobj in self.dataArr) {
                     if ([cobj.userid isEqualToString:obj.userid]) {
@@ -524,10 +526,11 @@
                 [Hud showMessageWithText:@"失败"];
             }
             [weakSelf.tableView reloadData];
-        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        } failed:^(MOCHTTPResponse *response) {
             [Hud hideHud];
-            [Hud showMessageWithText:error.domain];
+            [Hud showMessageWithText:response.errorMessage];
         }];
+
     }
 }
 
