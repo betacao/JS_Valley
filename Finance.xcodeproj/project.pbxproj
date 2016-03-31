@@ -814,6 +814,12 @@
 		F91982CC1C59F9FA00A450B9 /* SHGUserCenterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F91982CA1C59F9FA00A450B9 /* SHGUserCenterViewController.m */; };
 		F920570A1C63203600897C8B /* SHGMarketAdvancedSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F92057081C63203600897C8B /* SHGMarketAdvancedSearchViewController.m */; };
 		F920570B1C63203600897C8B /* SHGMarketAdvancedSearchViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F92057091C63203600897C8B /* SHGMarketAdvancedSearchViewController.xib */; };
+		F924C2B41CACC1400070286F /* SHGBusinessListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F924C2B21CACC1400070286F /* SHGBusinessListViewController.m */; };
+		F924C2B51CACC1400070286F /* SHGBusinessListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F924C2B31CACC1400070286F /* SHGBusinessListViewController.xib */; };
+		F924C2B91CACC1620070286F /* SHGBusinessMineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F924C2B71CACC1620070286F /* SHGBusinessMineViewController.m */; };
+		F924C2BA1CACC1620070286F /* SHGBusinessMineViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F924C2B81CACC1620070286F /* SHGBusinessMineViewController.xib */; };
+		F924C2BE1CACC1860070286F /* SHGBusinessDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F924C2BC1CACC1860070286F /* SHGBusinessDetailViewController.m */; };
+		F924C2BF1CACC1860070286F /* SHGBusinessDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F924C2BD1CACC1860070286F /* SHGBusinessDetailViewController.xib */; };
 		F928141C1C045F8900C7782D /* SHGItemChooseView.m in Sources */ = {isa = PBXBuildFile; fileRef = F928141B1C045F8900C7782D /* SHGItemChooseView.m */; };
 		F93242BA1BE9EE92003B7F07 /* SHGUnifiedTreatment.m in Sources */ = {isa = PBXBuildFile; fileRef = F93242B91BE9EE92003B7F07 /* SHGUnifiedTreatment.m */; };
 		F936DD4B1C3A437500584F53 /* SHGFriendGroupingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F936DD491C3A437500584F53 /* SHGFriendGroupingViewController.m */; };
@@ -2043,6 +2049,15 @@
 		F92057071C63203600897C8B /* SHGMarketAdvancedSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGMarketAdvancedSearchViewController.h; sourceTree = "<group>"; };
 		F92057081C63203600897C8B /* SHGMarketAdvancedSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGMarketAdvancedSearchViewController.m; sourceTree = "<group>"; };
 		F92057091C63203600897C8B /* SHGMarketAdvancedSearchViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGMarketAdvancedSearchViewController.xib; sourceTree = "<group>"; };
+		F924C2B11CACC1400070286F /* SHGBusinessListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGBusinessListViewController.h; sourceTree = "<group>"; };
+		F924C2B21CACC1400070286F /* SHGBusinessListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGBusinessListViewController.m; sourceTree = "<group>"; };
+		F924C2B31CACC1400070286F /* SHGBusinessListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGBusinessListViewController.xib; sourceTree = "<group>"; };
+		F924C2B61CACC1620070286F /* SHGBusinessMineViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGBusinessMineViewController.h; sourceTree = "<group>"; };
+		F924C2B71CACC1620070286F /* SHGBusinessMineViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGBusinessMineViewController.m; sourceTree = "<group>"; };
+		F924C2B81CACC1620070286F /* SHGBusinessMineViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGBusinessMineViewController.xib; sourceTree = "<group>"; };
+		F924C2BB1CACC1860070286F /* SHGBusinessDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGBusinessDetailViewController.h; sourceTree = "<group>"; };
+		F924C2BC1CACC1860070286F /* SHGBusinessDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGBusinessDetailViewController.m; sourceTree = "<group>"; };
+		F924C2BD1CACC1860070286F /* SHGBusinessDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGBusinessDetailViewController.xib; sourceTree = "<group>"; };
 		F928141A1C045F8900C7782D /* SHGItemChooseView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGItemChooseView.h; sourceTree = "<group>"; };
 		F928141B1C045F8900C7782D /* SHGItemChooseView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGItemChooseView.m; sourceTree = "<group>"; };
 		F93242B81BE9EE92003B7F07 /* SHGUnifiedTreatment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGUnifiedTreatment.h; sourceTree = "<group>"; };
@@ -3725,6 +3740,7 @@
 		61D6E73D1AD50FCA0016C13A /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				F924C2B01CACBFCF0070286F /* Business */,
 				F9F349AE1C19216D0090F111 /* Market */,
 				F9A227B51BF5ABC60054F8D7 /* Action */,
 				614AD1B21AD7ACAF00DDF43E /* Circle */,
@@ -4540,6 +4556,23 @@
 			path = SHGCategoryScrollView;
 			sourceTree = "<group>";
 		};
+		F924C2B01CACBFCF0070286F /* Business */ = {
+			isa = PBXGroup;
+			children = (
+				F924C2B11CACC1400070286F /* SHGBusinessListViewController.h */,
+				F924C2B21CACC1400070286F /* SHGBusinessListViewController.m */,
+				F924C2B31CACC1400070286F /* SHGBusinessListViewController.xib */,
+				F924C2B61CACC1620070286F /* SHGBusinessMineViewController.h */,
+				F924C2B71CACC1620070286F /* SHGBusinessMineViewController.m */,
+				F924C2B81CACC1620070286F /* SHGBusinessMineViewController.xib */,
+				F924C2BB1CACC1860070286F /* SHGBusinessDetailViewController.h */,
+				F924C2BC1CACC1860070286F /* SHGBusinessDetailViewController.m */,
+				F924C2BD1CACC1860070286F /* SHGBusinessDetailViewController.xib */,
+			);
+			name = Business;
+			path = Finance/Business;
+			sourceTree = SOURCE_ROOT;
+		};
 		F93FCBA41C856D5A004E356E /* Category */ = {
 			isa = PBXGroup;
 			children = (
@@ -5087,6 +5120,7 @@
 				408D8B6D1AF8618C0055810C /* chat_receiver_audio_playing002@2x.png in Resources */,
 				408D8B4C1AF8618C0055810C /* chatBar_recordBg@2x.png in Resources */,
 				408D8B7F1AF8618C0055810C /* chat_sender_bg@2x.png in Resources */,
+				F924C2BA1CACC1620070286F /* SHGBusinessMineViewController.xib in Resources */,
 				61616FE71B02F29100E5A837 /* 关注按钮@2x.png in Resources */,
 				408D8B3C1AF8618C0055810C /* messageSendFail@2x.png in Resources */,
 				408D8B611AF8618C0055810C /* chatBar_more_locationSelected.png in Resources */,
@@ -5124,6 +5158,7 @@
 				61E83D7A1AF7C78E00703651 /* 取消-默认@3x.png in Resources */,
 				B080FE931B81E30100426579 /* emoji_characters_n@2x.png in Resources */,
 				569C6D301B7CA9EB00AD59C3 /* BindPhoneViewController.xib in Resources */,
+				F924C2B51CACC1400070286F /* SHGBusinessListViewController.xib in Resources */,
 				B04D6E2D1B60C01300E3863E /* 删除x@2x.png in Resources */,
 				B080FE891B81E30100426579 /* btn_publish_face_a@3x.png in Resources */,
 				F9F349CA1C1968310090F111 /* SHGMarketTableViewCell.xib in Resources */,
@@ -5357,6 +5392,7 @@
 				408D8AFA1AF8618C0055810C /* VoiceSearchFeedback003@2x.png in Resources */,
 				61E83D981AF7C78E00703651 /* 接受按钮-默认@3x.png in Resources */,
 				40302B1B1AEF61B600F22EB6 /* MyTeamViewController.xib in Resources */,
+				F924C2BF1CACC1860070286F /* SHGBusinessDetailViewController.xib in Resources */,
 				613CAC521AFFFFDE00EA8C23 /* CircleLinkViewController.xib in Resources */,
 				61E83D121AF7C78E00703651 /* 取消-按下@2x.png in Resources */,
 				61E83D9D1AF7C78E00703651 /* 选中好友@3x.png in Resources */,
@@ -5610,6 +5646,7 @@
 				6187D2E91AF1C693008E1D21 /* MessageModelManager.m in Sources */,
 				619027481B2359C600D9EEA2 /* MLKMenuPopover1.m in Sources */,
 				6149CFDD1B259E40006E45FE /* MLKMenuPopover.m in Sources */,
+				F924C2B41CACC1400070286F /* SHGBusinessListViewController.m in Sources */,
 				61909FD21AF90D1F0023935F /* ProdSubViewController.m in Sources */,
 				6187D2CC1AF1C693008E1D21 /* CreateGroupViewController.m in Sources */,
 				40302B221AEF673200F22EB6 /* TeamDetailTableViewCell.m in Sources */,
@@ -5630,6 +5667,7 @@
 				61425B3D1AFA7CDD00758BCB /* CinfigView.m in Sources */,
 				F9D9F1571BB51D5F00F94E70 /* SHGUserTagModel.m in Sources */,
 				985CBDBA1C03FD0B002B3D9D /* SHGCardTableViewCell.m in Sources */,
+				F924C2BE1CACC1860070286F /* SHGBusinessDetailViewController.m in Sources */,
 				6187D2F71AF1C693008E1D21 /* EMChooseViewController.m in Sources */,
 				F93FCBC41C856D5A004E356E /* NSString+Base64.m in Sources */,
 				6187D2CF1AF1C693008E1D21 /* GroupSettingViewController.m in Sources */,
@@ -5819,6 +5857,7 @@
 				61425B7B1AFAB75E00758BCB /* ResetPasswardViewController.m in Sources */,
 				F9B7CC321B8AD6C000E55EFD /* SHGGloble.m in Sources */,
 				6187D2F41AF1C693008E1D21 /* EMTextView.m in Sources */,
+				F924C2B91CACC1620070286F /* SHGBusinessMineViewController.m in Sources */,
 				6187D2E31AF1C693008E1D21 /* EMChatTextBubbleView.m in Sources */,
 				F986DE3A1BFDE65200E6709F /* SHGActionManager.m in Sources */,
 				6187D2F21AF1C693008E1D21 /* BaseTableViewCell.m in Sources */,
