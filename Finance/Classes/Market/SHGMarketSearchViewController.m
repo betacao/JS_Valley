@@ -35,10 +35,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
     self.navigationItem.titleView = self.searchBar;
-    self.navigationItem.leftBarButtonItem = nil;
-    self.navigationItem.hidesBackButton = YES;
 
     [self initView];
     [self addAutoLayout];
@@ -47,6 +44,13 @@
         weakSelf.dataArray = [NSArray arrayWithArray:array];
         [weakSelf addHotItem];
     }];
+}
+
+- (void)initUI
+{
+    UIView *emptyView = [[UIView alloc] init];
+    UIBarButtonItem *emptyButton = [[UIBarButtonItem alloc] initWithCustomView:emptyView];
+    [self.navigationItem setLeftBarButtonItem:emptyButton];
 }
 
 - (void)viewDidAppear:(BOOL)animated

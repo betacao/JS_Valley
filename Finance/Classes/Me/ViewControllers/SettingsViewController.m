@@ -241,36 +241,34 @@
 
 - (void)initUserInfo
 {
-    [[SDImageCache sharedImageCache] clearDiskOnCompletion:^{
-        [Hud showWait];
-        [[EaseMob sharedInstance].chatManager asyncLogoffWithUnbindDeviceToken:YES completion:^(NSDictionary *info, EMError *error) {
-            [Hud hideHud];
-            if (error && error.errorCode != EMErrorServerNotLogin){
-            } else{
-                LoginViewController *splitViewController =[[[LoginViewController alloc] init] initWithNibName:@"LoginViewController" bundle:nil];
-                BaseNavigationController *nav = [[BaseNavigationController alloc] initWithRootViewController:splitViewController];
-                //设置导航title字体
-                [[UINavigationBar appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:kNavBarTitleFontSize], NSForegroundColorAttributeName:NavRTitleColor}];
-                //清楚配置信息
-                [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:KEY_UID];
-                [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:KEY_PASSWORD];
-                [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:KEY_USER_NAME];
-                [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:KEY_USER_AREA];
-                [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:KEY_TOKEN];
-                [[NSUserDefaults standardUserDefaults] setObject:@"0" forKey:KEY_AUTOLOGIN];
-                [[NSUserDefaults standardUserDefaults]synchronize];
-                //退出shareSDK的登录
-                
-                [ShareSDK cancelAuthWithType:ShareTypeSinaWeibo];
-                [ShareSDK cancelAuthWithType:ShareTypeWeixiSession];
-                [ShareSDK cancelAuthWithType:ShareTypeQQSpace];
-                
-                [AppDelegate currentAppdelegate].window.rootViewController = nav;
-                
-            }
-        } onQueue:nil];
-        
-    }];
+    [Hud showWait];
+    [[EaseMob sharedInstance].chatManager asyncLogoffWithUnbindDeviceToken:YES completion:^(NSDictionary *info, EMError *error) {
+        [Hud hideHud];
+        if (error && error.errorCode != EMErrorServerNotLogin){
+            [Hud showMessageWithText:error.description];
+        } else{
+            LoginViewController *splitViewController =[[[LoginViewController alloc] init] initWithNibName:@"LoginViewController" bundle:nil];
+            BaseNavigationController *nav = [[BaseNavigationController alloc] initWithRootViewController:splitViewController];
+            //设置导航title字体
+            [[UINavigationBar appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:kNavBarTitleFontSize], NSForegroundColorAttributeName:NavRTitleColor}];
+            //清楚配置信息
+            [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:KEY_UID];
+            [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:KEY_PASSWORD];
+            [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:KEY_USER_NAME];
+            [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:KEY_USER_AREA];
+            [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:KEY_TOKEN];
+            [[NSUserDefaults standardUserDefaults] setObject:@"0" forKey:KEY_AUTOLOGIN];
+            [[NSUserDefaults standardUserDefaults]synchronize];
+            //退出shareSDK的登录
+
+            [ShareSDK cancelAuthWithType:ShareTypeSinaWeibo];
+            [ShareSDK cancelAuthWithType:ShareTypeWeixiSession];
+            [ShareSDK cancelAuthWithType:ShareTypeQQSpace];
+
+            [AppDelegate currentAppdelegate].window.rootViewController = nav;
+
+        }
+    } onQueue:dispatch_get_main_queue()];
 }
 
 - (void)loadSwitchInfo
