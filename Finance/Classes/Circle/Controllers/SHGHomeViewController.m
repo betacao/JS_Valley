@@ -206,6 +206,7 @@
 
 - (void)requestRecommendFriends
 {
+    [self.heightDictionary removeAllObjects];
     [self.dataArr removeObject:self.recommendArray];
     [self.recommendArray removeAllObjects];
     __weak typeof(self) weakSelf = self;
@@ -238,7 +239,7 @@
 
 - (void)insertRecomandArray
 {
-    if (self.recommendArray.count == 0 || [self.dataArr indexOfObject:self.recommendArray] != NSNotFound) {
+    if (self.recommendArray.count == 0 || [self.dataArr containsObject:self.recommendArray]) {
         return;
     }
     //第三个帖子后面
@@ -251,7 +252,7 @@
 
 - (void)insertNewFriendArray
 {
-    if (!self.friendObject || [self.dataArr indexOfObject:self.friendObject] != NSNotFound) {
+    if (!self.friendObject || [self.dataArr containsObject:self.friendObject]) {
         return;
     }
     if(self.dataArr.count > 2 && self.needShowNewFriend){
@@ -280,7 +281,7 @@
                 [self.dataArr moveObjectAtIndex:index toIndex:3];
             }
         }
-
+        
     }
 }
 
