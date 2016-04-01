@@ -262,7 +262,7 @@
         [MOCHTTPRequestOperationManager postWithURL:[NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttp,@"user",@"editUser"] parameters:param success:^(MOCHTTPResponse *response) {
             [Hud hideHud];
             if (weakSelf.block) {
-                weakSelf.block(@{kHeaderImage:weakSelf.head_img,kNickName:weakSelf.nameField.text, kIndustry:weakSelf.industry, kCompany:weakSelf.companyField.text, kLocation:weakSelf.cityButton.titleLabel.text, kDepartment:weakSelf.departmentField.text});
+                weakSelf.block(@{kHeaderImage:IsStrEmpty(weakSelf.head_img) ?@"":weakSelf.head_img,kNickName:weakSelf.nameField.text, kIndustry:weakSelf.industry, kCompany:weakSelf.companyField.text, kLocation:weakSelf.cityButton.titleLabel.text, kDepartment:weakSelf.departmentField.text});
             }
             [[NSUserDefaults standardUserDefaults] setObject:weakSelf.nameField.text forKey:KEY_USER_NAME];
             [[NSUserDefaults standardUserDefaults] setObject:weakSelf.cityButton.titleLabel.text forKey:KEY_USER_AREA];

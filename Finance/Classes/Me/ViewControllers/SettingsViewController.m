@@ -245,7 +245,7 @@
     [[EaseMob sharedInstance].chatManager asyncLogoffWithUnbindDeviceToken:YES completion:^(NSDictionary *info, EMError *error) {
         [Hud hideHud];
         if (error && error.errorCode != EMErrorServerNotLogin){
-            [Hud showMessageWithText:error.description];
+            [Hud showMessageWithText:@"网络异常，请重新操作"];
         } else{
             LoginViewController *splitViewController =[[[LoginViewController alloc] init] initWithNibName:@"LoginViewController" bundle:nil];
             BaseNavigationController *nav = [[BaseNavigationController alloc] initWithRootViewController:splitViewController];

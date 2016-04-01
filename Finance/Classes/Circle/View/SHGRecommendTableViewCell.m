@@ -26,6 +26,8 @@
 {
     if (!_firstContentView) {
         _firstContentView = [[UIView alloc] init];
+        UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapContentViewAction:)];
+        [_firstContentView addGestureRecognizer:tap];
     }
     return _firstContentView;
 }
@@ -34,6 +36,8 @@
 {
     if (!_secondContentView) {
         _secondContentView = [[UIView alloc] init];
+        UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapContentViewAction:)];
+        [_secondContentView addGestureRecognizer:tap];
     }
     return _secondContentView;
 }
@@ -42,6 +46,8 @@
 {
     if (!_thirdContentView) {
         _thirdContentView = [[UIView alloc] init];
+        UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapContentViewAction:)];
+        [_thirdContentView addGestureRecognizer:tap];
     }
     return _thirdContentView;
 }
@@ -50,6 +56,8 @@
 {
     if (!_fourthContentView) {
         _fourthContentView = [[UIView alloc] init];
+        UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapContentViewAction:)];
+        [_fourthContentView addGestureRecognizer:tap];
     }
     return _fourthContentView;
 }
