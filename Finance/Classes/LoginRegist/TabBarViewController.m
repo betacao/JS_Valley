@@ -19,9 +19,7 @@
 #import "SHGSegmentController.h"
 #import "SHGNewsViewController.h"
 #import "SHGPersonalViewController.h"
-#import "SHGMarketSegmentViewController.h"
-#import "SHGMarketListViewController.h"
-#import "SHGMarketMineViewController.h"
+#import "SHGBusinessListViewController.h"
 #import "GroupListViewController.h"
 
 @interface TabBarViewController()<SHGSegmentControllerDelegate>
@@ -30,12 +28,10 @@
 @property (strong, nonatomic) SHGNewsViewController *newsViewController;
 @property (strong, nonatomic) DiscoverViewController *prodViewController;
 @property (strong, nonatomic) SHGUserCenterViewController *meViewController;
-@property (strong, nonatomic) SHGMarketSegmentViewController *marketSegmentViewController;
-@property (strong, nonatomic) SHGMarketListViewController *marketListViewController;
-@property (strong, nonatomic) SHGMarketMineViewController *marketMineViewController;
+@property (strong, nonatomic) SHGBusinessListViewController *businessListViewController;
 @property (strong, nonatomic) NSDate *lastPlaySoundDate;
 @property (strong, nonatomic) UIView *homeSegmentTitleView;
-@property (strong, nonatomic) UIView *marketSegmentTitleView;
+@property (strong, nonatomic) UIView *businessSegmentTitleView;
 @end
 
 @implementation TabBarViewController
@@ -107,8 +103,8 @@
     self.navigationItem.titleView = nil;
     self.navigationItem.rightBarButtonItems = nil;
     if (item.tag == 1000){
-        self.navigationItem.titleView = self.marketSegmentTitleView;
-        self.navigationItem.leftBarButtonItem = self.marketSegmentViewController.leftBarButtonItem;
+        self.navigationItem.titleView = self.businessSegmentTitleView;
+        self.navigationItem.leftBarButtonItem = self.businessListViewController.leftBarButtonItem;
         [MobClick event:@"EnterMarketController" label:@"onClick"];
 
     } else if (item.tag == 2000){
@@ -131,7 +127,7 @@
 }
 
 #pragma mark - 子页面初始化
--(void)initSubpage
+- (void)initSubpage
 {
     //业务
     __weak typeof(self)weakSelf = self;
@@ -139,13 +135,12 @@
     image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     UIImage *selectedImage = [UIImage imageNamed:@"business_height"];
     selectedImage = [selectedImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    self.marketSegmentViewController.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"业务" image:image selectedImage:selectedImage];
-    self.marketSegmentViewController.tabBarItem.tag = 1000;
-    self.marketSegmentViewController.block = ^(UIView *view){
-        weakSelf.marketSegmentTitleView = view;
-        weakSelf.navigationItem.titleView = weakSelf.marketSegmentTitleView;
+    self.businessListViewController.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"业务" image:image selectedImage:selectedImage];
+    self.businessListViewController.tabBarItem.tag = 1000;
+    self.businessListViewController.block = ^(UIView *view){
+        weakSelf.businessSegmentTitleView = view;
+        weakSelf.navigationItem.titleView = weakSelf.businessSegmentTitleView;
     };
-
     //首页
     image = [UIImage imageNamed:@"home"];
     image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
@@ -177,7 +172,7 @@
     [[UITabBarItem appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor colorWithHexString:@"949494"],NSForegroundColorAttributeName, nil] forState:UIControlStateNormal];
     [[UITabBarItem appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor colorWithHexString:@"E21F0D"],NSForegroundColorAttributeName, nil] forState:UIControlStateSelected];
 
-    self.viewControllers = [NSArray arrayWithObjects:self.marketSegmentViewController,self.homeSegmentViewController,self.prodViewController ,self.meViewController ,nil];
+    self.viewControllers = [NSArray arrayWithObjects:self.businessListViewController,self.homeSegmentViewController,self.prodViewController ,self.meViewController ,nil];
     self.selectedIndex = 0;
     
 }
@@ -208,31 +203,13 @@
     return _newsViewController;
 }
 
-- (SHGMarketSegmentViewController *)marketSegmentViewController
+- (SHGBusinessListViewController *)businessListViewController
 {
-    if(!_marketSegmentViewController){
-        _marketSegmentViewController = [SHGMarketSegmentViewController sharedSegmentController];
-        _marketSegmentViewController.viewControllers = @[self.marketListViewController, self.marketMineViewController];
+    if(!_businessListViewController){
+        _businessListViewController = [SHGBusinessListViewController sharedController];
     }
-    return _marketSegmentViewController;
+    return _businessListViewController;
 }
-
-- (SHGMarketListViewController *)marketListViewController
-{
-    if (!_marketListViewController){
-        _marketListViewController = [[SHGMarketListViewController alloc] init];
-    }
-    return _marketListViewController;
-}
-
-- (SHGMarketMineViewController *)marketMineViewController
-{
-    if(!_marketMineViewController){
-        _marketMineViewController = [[SHGMarketMineViewController alloc] init];
-    }
-    return _marketMineViewController;
-}
-
 
 - (DiscoverViewController *)prodViewController
 {

@@ -7,7 +7,10 @@
 //
 
 #import "BaseTableViewController.h"
-
+typedef void(^loadViewFinishBlock)(UIView *view);
 @interface SHGBusinessListViewController : BaseTableViewController
++ (instancetype)sharedController;
+@property (nonatomic, copy) loadViewFinishBlock block;
+@property (strong, nonatomic) UIBarButtonItem *leftBarButtonItem;
 
 @end
