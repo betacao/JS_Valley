@@ -144,7 +144,7 @@ NSString *moc_http_request_operation_manager_token;
         return nil;
     }
     NSMutableDictionary *param = [NSMutableDictionary dictionaryWithDictionary:parameters];
-    [param setObject:@([[NSDate date] timeIntervalSince1970]) forKey:@"time"];
+    [param setObject:@([[NSDate date] timeIntervalSince1970] * 1000) forKey:@"authTimestamp"];
     NSString *secret = [client sortParameter:param];
 
     NSString *code = signCode;
@@ -173,7 +173,7 @@ NSString *moc_http_request_operation_manager_token;
     }
 
     NSMutableDictionary *param = [NSMutableDictionary dictionaryWithDictionary:parameters];
-    [param setObject:@([[NSDate date] timeIntervalSince1970]) forKey:@"time"];
+    [param setObject:@([[NSDate date] timeIntervalSince1970] * 1000) forKey:@"authTimestamp"];
     NSString *secret = [client sortParameter:param];
 
     NSString *code = signCode;
@@ -359,6 +359,7 @@ NSString *moc_http_request_operation_manager_token;
     NSMutableArray *sortedValues = [NSMutableArray array];
     for(id key in sortedArray) {
         id object = [param objectForKey:key];
+        object = (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault,(CFStringRef)[NSString stringWithFormat:@"%@",object],NULL,CFSTR(":/=？：?#[]@!$ '()*+,;\"<>%{}|\\^~`"),kCFStringEncodingUTF8));
         [sortedValues addObject:object];
     }
 
@@ -368,7 +369,6 @@ NSString *moc_http_request_operation_manager_token;
     }];
     if (!IsStrEmpty(result)) {
         result = [result substringToIndex:result.length - 1];
-        result = (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault,(CFStringRef)result,NULL,CFSTR(":/?#[]@!$ '()*+,;\"<>%{}|\\^~`"),kCFStringEncodingUTF8));
 
     }
     return result;

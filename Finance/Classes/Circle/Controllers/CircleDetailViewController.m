@@ -518,8 +518,8 @@
             praiseOBj *obj = self.obj.heads[i];
             praiseWidth = MarginFactor(30.0f);
             CGRect rect = CGRectMake((praiseWidth + MarginFactor(7.0f)) * i , MarginFactor(13.0f), praiseWidth, praiseWidth);
-            UIImageView *head = [[UIImageView alloc] initWithFrame:rect];
-            [head sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,obj.ppotname]] placeholderImage:[UIImage imageNamed:@"default_head"]];
+            SHGUserHeaderView *head = [[SHGUserHeaderView alloc] initWithFrame:rect];
+            [head updateHeaderView:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,obj.ppotname] placeholderImage:[UIImage imageNamed:@"default_head"] status:NO userID:obj.puserid];
             [_scrollPraise addSubview:head];
         }
         [self.scrollPraise setContentSize:CGSizeMake(self.obj.heads.count *(praiseWidth+PRAISE_SEPWIDTH), CGRectGetHeight(self.scrollPraise.frame))];

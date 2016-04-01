@@ -211,24 +211,7 @@
     [self.recommendArray removeAllObjects];
     __weak typeof(self) weakSelf = self;
     [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/recommended/friends/recommendedFriendGrade",rBaseAddressForHttp] class:[RecmdFriendObj class] parameters:@{@"uid":UID} success:^(MOCHTTPResponse *response){
-        [weakSelf.dataArr removeObject:weakSelf.recommendArray];
-        for (int i = 0; i < response.dataArray.count; i++){
-            NSDictionary *dic = response.dataArray[i];
-            
-            RecmdFriendObj *obj = [[RecmdFriendObj alloc]init];
-            obj.flag = [dic valueForKey:@"flag"];
-            obj.username = [dic valueForKey:@"username"];
-            obj.uid = [dic valueForKey:@"uid"];
-            obj.headimg =[NSString stringWithFormat:@"%@/%@",rBaseAddressForImage,[dic valueForKey:@"headimg"]];
-            obj.phone = [dic valueForKey:@"phone"];
-            obj.area = [dic valueForKey:@"area"];
-            obj.company = [dic valueForKey:@"company"];
-            obj.recomfri = [dic valueForKey:@"recomfri"];
-            obj.title = [dic valueForKey:@"title"];
-            obj.vocation = [dic valueForKey:@"vocation"];
-            obj.commonCount = [dic valueForKey:@"commonCount"];
-            [weakSelf.recommendArray addObject:obj];
-        }
+        [weakSelf.recommendArray addObjectsFromArray:response.dataArray];
         [weakSelf insertRecomandArray];
 
     } failed:^(MOCHTTPResponse *response){
@@ -526,8 +509,6 @@
             }
             NSMutableArray *array = [self.dataArr objectAtIndex:indexPath.row];
             cell.objectArray = array;
-            cell.sd_tableView = tableView;
-            cell.sd_indexPath = indexPath;
             cell.controller = self;
             cell.delegate = [SHGUnifiedTreatment sharedTreatment];
             return cell;
