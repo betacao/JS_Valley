@@ -324,7 +324,7 @@
 - (void)shareToFriendWithText:(NSString *)text
 {
     __weak typeof(self) weakSelf = self;
-    [[SHGGloble sharedGloble] requsetUserVerifyStatus:^(BOOL status) {
+    [[SHGGloble sharedGloble] requsetUserVerifyStatus:@"" completion:^(BOOL status) {
         if (status) {
             FriendsListViewController *vc=[[FriendsListViewController alloc] init];
             vc.isShare = YES;

@@ -433,7 +433,7 @@
         }
 
     } else{
-        [[SHGGloble sharedGloble] requsetUserVerifyStatus:^(BOOL status) {
+        [[SHGGloble sharedGloble] requsetUserVerifyStatus:@"market" completion:^(BOOL status) {
             if (status) {
 
             } else{

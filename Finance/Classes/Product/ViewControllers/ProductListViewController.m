@@ -235,7 +235,7 @@
 
 - (void)addSelect
 {
-    [[SHGGloble sharedGloble] requsetUserVerifyStatus:^(BOOL status) {
+    [[SHGGloble sharedGloble] requsetUserVerifyStatus:@"" completion:^(BOOL status) {
         if (status) {
             __weak typeof(self)weakSelf = self;
             DXAlertView *alert = [[DXAlertView alloc] initWithTitle:@"提示" contentText:@"是否需要发布产品?" leftButtonTitle:@"否" rightButtonTitle:@"是"];
@@ -492,7 +492,8 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     __weak typeof(self) weakSelf = self;
-    [[SHGGloble sharedGloble] requsetUserVerifyStatus:^(BOOL status) {
+    [[SHGGloble sharedGloble] requsetUserVerifyStatus:@"" completion:^(BOOL status) {
+
         if (status) {
             ProdListObj *obj = self.dataArr[indexPath.row];
             ProdConfigViewController *vc = [[ProdConfigViewController alloc] initWithNibName:@"ProdConfigViewController" bundle:nil];
