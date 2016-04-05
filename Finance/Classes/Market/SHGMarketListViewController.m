@@ -422,6 +422,7 @@
                 [self.navigationController pushViewController:controller animated:YES];
             }
         } else{
+            [[SHGGloble sharedGloble] recordUserAction:object.marketId type:@"market"];
             SHGMarketDetailViewController *controller = [[SHGMarketDetailViewController alloc]init];
             controller.object = object;
             [self.navigationController pushViewController:controller animated:YES];
@@ -520,12 +521,13 @@
 - (void)addNewMarket:(id)sender
 {
     __weak typeof(self)weakSelf = self;
-    [[SHGGloble sharedGloble] requsetUserVerifyStatus:^(BOOL status) {
+    [[SHGGloble sharedGloble] requsetUserVerifyStatus:@"market" completion:^(BOOL status) {
         if (status) {
             SHGMarketSendViewController *controller = [[SHGMarketSendViewController alloc] init];
             controller.delegate = [SHGMarketSegmentViewController sharedSegmentController];
             [weakSelf.navigationController pushViewController:controller animated:YES];
         } else{
+            
             VerifyIdentityViewController *controller = [[VerifyIdentityViewController alloc] init];
             [weakSelf.navigationController pushViewController:controller animated:YES];
         }

@@ -365,6 +365,7 @@
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
+    [[SHGGloble sharedGloble] recordUserAction:@"" type:@"systemExit"];
     [MagicalRecord cleanUp];
     [self saveContext];
 }
