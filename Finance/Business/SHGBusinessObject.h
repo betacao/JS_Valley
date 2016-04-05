@@ -8,6 +8,18 @@
 
 #import <Mantle/Mantle.h>
 
-@interface SHGBusinessObject : MTLModel
+@interface SHGBusinessObject : MTLModel<MTLJSONSerializing>
+
+@end
+
+@interface SHGBusinessFirstObject : NSObject
+
+@property (strong, nonatomic) NSString *name;
+
+- (instancetype)initWithName:(NSString *)name;
+
+@end
+
+@interface SHGBusinessSecondObject : MTLModel<MTLJSONSerializing>
 
 @end

@@ -21,6 +21,10 @@
                     <rect key="frame" x="13" y="15" width="240" height="128"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <connections>
+                        <outlet property="dataSource" destination="-1" id="0Ec-eb-DYq"/>
+                        <outlet property="delegate" destination="-1" id="Ld9-8z-Jqo"/>
+                    </connections>
                 </tableView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="mIO-BH-fuS">
                     <rect key="frame" x="60" y="191" width="54" height="54"/>

@@ -7,18 +7,22 @@
 //
 
 #import "SHGBusinessListViewController.h"
+#import "SHGBusinessScrollView.h"
+#import "SHGBusinessObject.h"
 #import "EMSearchBar.h"
 
-@interface SHGBusinessListViewController ()<UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate>
+@interface SHGBusinessListViewController ()<UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, SHGBusinessScrollViewDelegate>
 //
 @property (strong, nonatomic) UIButton *titleButton;
 @property (strong, nonatomic) UILabel *titleLabel;
 @property (strong, nonatomic) UIImageView *titleImageView;
 @property (strong, nonatomic) EMSearchBar *searchBar;
+@property (strong, nonatomic) SHGBusinessScrollView *scrollView;
+@property (strong, nonatomic) NSMutableArray *categoryArray;
+@property (assign, nonatomic) CGSize addBusinessSize;
 //
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIButton *addBusinessButton;
-@property (assign, nonatomic) CGSize addBusinessSize;
 
 @end
 
@@ -37,33 +41,45 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.tableView.sd_layout
-    .spaceToSuperView(UIEdgeInsetsZero);
 
     if (self.block) {
         self.block(self.searchBar);
     }
+
+    self.tableView.sd_layout
+    .spaceToSuperView(UIEdgeInsetsZero);
+
+    [self addHeaderRefresh:self.tableView headerRefesh:YES andFooter:YES];
+
+    NSArray *array = @[@"推荐", @"债权融资", @"股权融资", @"资金方", @"同业混业"];
+    [array enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        [self.categoryArray addObject:[[SHGBusinessFirstObject alloc] initWithName:obj]];
+    }];
+    self.scrollView.categoryArray = self.categoryArray;
 }
+
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-
     [self initAddMarketButton];
 }
 
-- (void)initAddMarketButton
+- (NSMutableArray *)categoryArray
 {
-    if (CGSizeEqualToSize(CGSizeZero, self.addBusinessSize)) {
-        self.addBusinessSize = self.addBusinessButton.currentImage.size;
-        CGRect frame = self.addBusinessButton.frame;
-        frame.size = self.addBusinessSize;
-        frame.origin.x = SCREENWIDTH - MarginFactor(17.0f) - self.addBusinessSize.width;
-        frame.origin.y = CGRectGetHeight(self.view.frame) - kTabBarHeight - MarginFactor(45.0f) - self.addBusinessSize.height;
-        self.addBusinessButton.frame = frame;
-            UIPanGestureRecognizer *panRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panImageButton:)];
-            [self.addBusinessButton addGestureRecognizer:panRecognizer];
+    if (!_categoryArray) {
+        _categoryArray = [NSMutableArray array];
     }
+    return _categoryArray;
+}
+
+- (SHGBusinessScrollView *)scrollView
+{
+    if (!_scrollView) {
+        _scrollView = [[SHGBusinessScrollView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, SCREENWIDTH, kBusinessScrollViewHeight)];
+        _scrollView.categoryDelegate = self;
+    }
+    return _scrollView;
 }
 
 - (UIButton *)titleButton
@@ -86,6 +102,15 @@
     return _titleButton;
 }
 
+- (UIBarButtonItem *)leftBarButtonItem
+{
+    if (!_leftBarButtonItem) {
+
+        _leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.titleButton];
+    }
+    return _leftBarButtonItem;
+}
+
 - (EMSearchBar *)searchBar
 {
     if (!_searchBar) {
@@ -96,6 +121,22 @@
         _searchBar.backgroundImageColor = Color(@"d43c33");
     }
     return _searchBar;
+}
+
+
+
+- (void)initAddMarketButton
+{
+    if (CGSizeEqualToSize(CGSizeZero, self.addBusinessSize)) {
+        self.addBusinessSize = self.addBusinessButton.currentImage.size;
+        CGRect frame = self.addBusinessButton.frame;
+        frame.size = self.addBusinessSize;
+        frame.origin.x = SCREENWIDTH - MarginFactor(17.0f) - self.addBusinessSize.width;
+        frame.origin.y = CGRectGetHeight(self.view.frame) - kTabBarHeight - MarginFactor(45.0f) - self.addBusinessSize.height;
+        self.addBusinessButton.frame = frame;
+        UIPanGestureRecognizer *panRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panImageButton:)];
+        [self.addBusinessButton addGestureRecognizer:panRecognizer];
+    }
 }
 
 - (void)panImageButton:(UIPanGestureRecognizer *)recognizer
@@ -114,8 +155,8 @@
         if (point.y + self.addBusinessSize.height / 2.0f > CGRectGetHeight(self.view.frame) - kTabBarHeight) {
             point.y = CGRectGetHeight(self.view.frame) - kTabBarHeight - self.addBusinessSize.height / 2.0f;
         }
-        if (point.y - self.addBusinessSize.height / 2.0f  < MarginFactor(45.0f)) {
-            point.y = MarginFactor(45.0f) + self.addBusinessSize.height / 2.0f;
+        if (point.y - self.addBusinessSize.height / 2.0f  < kBusinessScrollViewHeight) {
+            point.y = kBusinessScrollViewHeight + self.addBusinessSize.height / 2.0f;
         }
         [UIView animateWithDuration:0.01f animations:^{
             touchedView.center = point;
@@ -124,6 +165,30 @@
 
     }
     [recognizer setTranslation:CGPointZero inView:self.view];
+}
+
+
+
+- (void)moveToProvincesViewController:(UIButton *)button
+{
+
+}
+
+#pragma mark ------tableViewDelegate
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return self.dataArr.count;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    return self.scrollView;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return CGRectGetHeight(self.scrollView.frame);
 }
 
 #pragma mark ------变更城市代理
@@ -140,28 +205,18 @@
         self.titleImageView.origin = CGPointMake(CGRectGetMaxX(self.titleLabel.frame) + MarginFactor(4.0f), (CGRectGetHeight(self.titleLabel.frame) - CGRectGetHeight(self.titleImageView.frame)) / 2.0f);
         self.titleButton.size = CGSizeMake(CGRectGetMaxX(self.titleImageView.frame) + MarginFactor(17.0f), CGRectGetHeight(self.titleLabel.frame));
 
-//        UIViewController *controller = [self.viewControllers firstObject];
-//        [controller performSelector:@selector(clearAndReloadData) withObject:nil];
+        //        [self cle
     } else if (city.length == 0){
         self.titleLabel.text = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_USER_AREA];
         [self.titleLabel sizeToFit];
     }
 }
 
-- (void)moveToProvincesViewController:(UIButton *)button
+- (void)didChangeToIndex:(NSInteger)index firstId:(NSString *)firstId secondId:(NSString *)secondId
 {
 
 }
 
-
-- (UIBarButtonItem *)leftBarButtonItem
-{
-    if (!_leftBarButtonItem) {
-
-        _leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.titleButton];
-    }
-    return _leftBarButtonItem;
-}
 
 
 - (void)didReceiveMemoryWarning

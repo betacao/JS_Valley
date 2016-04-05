@@ -9,5 +9,28 @@
 #import "SHGBusinessObject.h"
 
 @implementation SHGBusinessObject
++ (NSDictionary *)JSONKeyPathsByPropertyKey
+{
+    return nil;
+}
+@end
 
+@implementation SHGBusinessFirstObject
+
+- (instancetype)initWithName:(NSString *)name
+{
+    self = [super init];
+    if (self) {
+        self.name = name;
+    }
+    return self;
+}
+
+@end
+
+@implementation SHGBusinessSecondObject
++ (NSDictionary *)JSONKeyPathsByPropertyKey
+{
+    return nil;
+}
 @end

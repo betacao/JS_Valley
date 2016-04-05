@@ -905,6 +905,7 @@
 		F9D296DD1C8FCB9C00A1446C /* SHGExtendTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9D296DB1C8FCB9C00A1446C /* SHGExtendTableViewCell.xib */; };
 		F9D296E11C8FF1E700A1446C /* SHGRecommendTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F9D296DF1C8FF1E700A1446C /* SHGRecommendTableViewCell.m */; };
 		F9D296E21C8FF1E700A1446C /* SHGRecommendTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9D296E01C8FF1E700A1446C /* SHGRecommendTableViewCell.xib */; };
+		F9D809961CB3A32900C59E0A /* SHGBusinessScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = F9D809951CB3A32900C59E0A /* SHGBusinessScrollView.m */; };
 		F9D9F1571BB51D5F00F94E70 /* SHGUserTagModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F9D9F1561BB51D5F00F94E70 /* SHGUserTagModel.m */; };
 		F9DB81631C1278BB007C63B7 /* SHGEmptyDataView.m in Sources */ = {isa = PBXBuildFile; fileRef = F9DB81621C1278BB007C63B7 /* SHGEmptyDataView.m */; };
 		F9DDEFBF1BF9EB79001341CF /* SHGActionSendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9DDEFBD1BF9EB79001341CF /* SHGActionSendViewController.m */; };
@@ -2213,6 +2214,8 @@
 		F9D296DE1C8FF1E700A1446C /* SHGRecommendTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGRecommendTableViewCell.h; sourceTree = "<group>"; };
 		F9D296DF1C8FF1E700A1446C /* SHGRecommendTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGRecommendTableViewCell.m; sourceTree = "<group>"; };
 		F9D296E01C8FF1E700A1446C /* SHGRecommendTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGRecommendTableViewCell.xib; sourceTree = "<group>"; };
+		F9D809941CB3A32900C59E0A /* SHGBusinessScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGBusinessScrollView.h; sourceTree = "<group>"; };
+		F9D809951CB3A32900C59E0A /* SHGBusinessScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGBusinessScrollView.m; sourceTree = "<group>"; };
 		F9D9F1551BB51D5F00F94E70 /* SHGUserTagModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGUserTagModel.h; sourceTree = "<group>"; };
 		F9D9F1561BB51D5F00F94E70 /* SHGUserTagModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGUserTagModel.m; sourceTree = "<group>"; };
 		F9DB81611C1278BB007C63B7 /* SHGEmptyDataView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGEmptyDataView.h; sourceTree = "<group>"; };
@@ -4572,6 +4575,8 @@
 			children = (
 				F924C2C51CACCC5F0070286F /* SHGBusinessObject.h */,
 				F924C2C61CACCC5F0070286F /* SHGBusinessObject.m */,
+				F9D809941CB3A32900C59E0A /* SHGBusinessScrollView.h */,
+				F9D809951CB3A32900C59E0A /* SHGBusinessScrollView.m */,
 				F924C2C81CACCC780070286F /* SHGBusinessManager.h */,
 				F924C2C91CACCC780070286F /* SHGBusinessManager.m */,
 				F924C2C01CACCBE50070286F /* SHGBusinessTableViewCell.h */,
@@ -5731,6 +5736,7 @@
 				6187D2E41AF1C693008E1D21 /* EMChatVideoBubbleView.m in Sources */,
 				614DC88C1AD65F9C00F610D4 /* CommonMethod.m in Sources */,
 				614EFEE21AF1126100F2BDD1 /* TabBarViewController.m in Sources */,
+				F9D809961CB3A32900C59E0A /* SHGBusinessScrollView.m in Sources */,
 				98D13FD71C3B69E6007CDFCD /* SHGMyTeamListTableViewController.m in Sources */,
 				98DCAF5B1C90B60400C648A4 /* SHGPersonalTableViewCell.m in Sources */,
 				6187D2D61AF1C693008E1D21 /* ChatViewController+Category.m in Sources */,
