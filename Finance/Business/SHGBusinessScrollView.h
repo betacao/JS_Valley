@@ -26,3 +26,6 @@
 
 @end
 
+@interface SHGBusinessFilterView : UIView
+
+@end

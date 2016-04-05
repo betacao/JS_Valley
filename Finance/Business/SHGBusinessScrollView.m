@@ -19,6 +19,7 @@
 @property (strong, nonatomic) NSMutableArray *buttonArrays;
 @property (strong, nonatomic) UIView *underLineView;
 @property (weak, nonatomic) UIButton *selectedButton;
+@property (strong, nonatomic) SHGBusinessFilterView *filterView;
 @end
 
 @implementation SHGBusinessScrollView
@@ -32,7 +33,12 @@
         self.scrollView = [[UIScrollView alloc] initWithFrame:frame];
         self.scrollView.backgroundColor = [UIColor clearColor];
         self.scrollView.delegate = self;
+
         [self addSubview:self.scrollView];
+
+        UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, kBusinessScrollViewHeight - 0.5f, SCREENWIDTH, 0.5f)];
+        lineView.backgroundColor = [UIColor colorWithHexString:@"d9dadb"];
+        [self addSubview:lineView];
     }
     return self;
 }
@@ -156,5 +162,47 @@
     self.selectedIndex = index;
 }
 
+
+@end
+
+
+@interface SHGBusinessFilterView()
+
+@property (strong, nonatomic) UIButton *leftButton;
+@property (strong, nonatomic) UIButton *rightButton;
+@property (strong, nonatomic) NSArray *buttonArray;
+
+@end
+
+@implementation SHGBusinessFilterView
+
+- (instancetype)initWithFrame:(CGRect)frame
+{
+    self = [super initWithFrame:frame];
+    if (self) {
+        [self initView];
+        [self addAutoLayout];
+    }
+    return self;
+}
+
+- (void)initView
+{
+    self.leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.leftButton setTitle:@"更多筛选条件" forState:UIControlStateNormal];
+    self.leftButton.titleLabel.font = FontFactor(15.0f);
+    [self.leftButton setTitleColor:Color(@"256ebf") forState:UIControlStateNormal];
+
+    self.leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.leftButton setTitle:@"更多筛选条件" forState:UIControlStateNormal];
+    self.leftButton.titleLabel.font = FontFactor(15.0f);
+    [self.leftButton setTitleColor:Color(@"256ebf") forState:UIControlStateNormal];
+    
+}
+
+- (void)addAutoLayout
+{
+
+}
 
 @end
