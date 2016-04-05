@@ -359,7 +359,7 @@ NSString *moc_http_request_operation_manager_token;
     NSMutableArray *sortedValues = [NSMutableArray array];
     for(id key in sortedArray) {
         id object = [param objectForKey:key];
-        object = (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault,(CFStringRef)[NSString stringWithFormat:@"%@",object],NULL,CFSTR(":/=？：?#[]@!$ '()*+,;\"<>%{}|\\^~`"),kCFStringEncodingUTF8));
+        object = (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault,(CFStringRef)[NSString stringWithFormat:@"%@",object],NULL,CFSTR(":/=？：?#[]@!$ '()*+,;\"<>%&{}|\\^~`"),kCFStringEncodingUTF8));
         [sortedValues addObject:object];
     }
 
