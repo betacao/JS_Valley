@@ -423,7 +423,9 @@
 
 - (void)tapContactLabelToIdentification:(UITapGestureRecognizer *)rescognizer
 {
+    
     if([self.responseObject.loginuserstate isEqualToString:@"1" ]){
+        
         NSString *phoneNum = self.responseObject.contactInfo;
         NSString *num = [[NSString alloc] initWithFormat:@"telprompt://%@",phoneNum];
         if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:num]]) {
@@ -433,7 +435,7 @@
         }
 
     } else{
-        [[SHGGloble sharedGloble] requsetUserVerifyStatus:^(BOOL status) {
+        [[SHGGloble sharedGloble] requsetUserVerifyStatus:@"market" completion:^(BOOL status) {
             if (status) {
 
             } else{

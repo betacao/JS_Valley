@@ -592,7 +592,7 @@
 
 - (IBAction)actionComment:(id)sender
 {
-    [[SHGGloble  sharedGloble] requsetUserVerifyStatus:^(BOOL status) {
+    [[SHGGloble  sharedGloble] requsetUserVerifyStatus:@"circle" completion:^(BOOL status) {
         if (status) {
             _popupView = [[BRCommentView alloc] initWithFrame:self.view.bounds superFrame:CGRectZero isController:YES type:@"comment"];
             _popupView.delegate = self;
@@ -697,7 +697,7 @@
 
 - (void)replyClicked:(CircleListObj *)obj commentIndex:(NSInteger)index;
 {
-    [[SHGGloble sharedGloble] requsetUserVerifyStatus:^(BOOL status) {
+    [[SHGGloble sharedGloble] requsetUserVerifyStatus:@"circle" completion:^(BOOL status) {
         if (status) {
             commentOBj *cmbObj = obj.comments[index];
             _popupView = [[BRCommentView alloc] initWithFrame:self.view.bounds superFrame:CGRectZero isController:YES type:@"reply" name:cmbObj.cnickname];

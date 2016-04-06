@@ -388,7 +388,7 @@
 }
 
 
-- (void)requsetUserVerifyStatus:(void (^)(BOOL))block failString:(NSString *)string
+- (void)requsetUserVerifyStatus:(NSString *)str completion:(void (^)(BOOL))block failString:(NSString *)string
 {
     [Hud showWait];
     NSString *request = [rBaseAddressForHttp stringByAppendingString:@"/auth/isAuth"];
@@ -401,7 +401,23 @@
             alert.rightBlock = ^{
                 if (block) {
                     block(NO);
+                    [[SHGGloble sharedGloble] recordUserAction:@"" type:@"market_identity"];
+                    if ([str isEqualToString:@"market"]){
+                        
+                    } else if ([str isEqualToString:@"circle"]){
+                        [[SHGGloble sharedGloble] recordUserAction:@"" type:@"dynamic_identity"];
+                    }
+                    
                 }
+            };
+
+            alert.leftBlock = ^{
+                if ([str isEqualToString:@"market"]){
+                    [[SHGGloble sharedGloble] recordUserAction:@"" type:@"market_identity_cancel"];
+                } else if ([str isEqualToString:@"circle"]){
+                    [[SHGGloble sharedGloble] recordUserAction:@"" type:@"dynamic_identity_cancel"];
+                }
+                
             };
             [alert show];
         } else{

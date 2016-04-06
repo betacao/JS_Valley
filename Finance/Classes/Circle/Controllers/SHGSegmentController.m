@@ -317,7 +317,7 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
 - (void)actionPost:(UIButton *)button
 {
     __weak typeof(self)weakSelf = self;
-    [[SHGGloble sharedGloble] requsetUserVerifyStatus:^(BOOL status) {
+    [[SHGGloble sharedGloble] requsetUserVerifyStatus:@"market" completion:^(BOOL status) {
         if (status) {
             if([weakSelf.selectedViewController respondsToSelector:@selector(actionPost:)]){
                 [weakSelf.selectedViewController performSelector:@selector(actionPost:) withObject:button];

@@ -677,11 +677,32 @@
 		980D0D5C1C99026E00351F8C /* SHGMarketCollectionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 980D0D581C99026E00351F8C /* SHGMarketCollectionViewController.xib */; };
 		980D0D9C1C9A41BC00351F8C /* SHGCircleCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 980D0D9A1C9A41BC00351F8C /* SHGCircleCollectionViewController.m */; };
 		980D0D9D1C9A41BC00351F8C /* SHGCircleCollectionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 980D0D9B1C9A41BC00351F8C /* SHGCircleCollectionViewController.xib */; };
+		982EB7E61CB38707003EEBE6 /* SHGBondFinanceSendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 982EB7E41CB38707003EEBE6 /* SHGBondFinanceSendViewController.m */; };
+		982EB7E71CB38707003EEBE6 /* SHGBondFinanceSendViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 982EB7E51CB38707003EEBE6 /* SHGBondFinanceSendViewController.xib */; };
+		982EB7EB1CB38734003EEBE6 /* SHGBondFinanceNextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 982EB7E91CB38734003EEBE6 /* SHGBondFinanceNextViewController.m */; };
+		982EB7EC1CB38734003EEBE6 /* SHGBondFinanceNextViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 982EB7EA1CB38734003EEBE6 /* SHGBondFinanceNextViewController.xib */; };
+		982EB7F01CB3903D003EEBE6 /* SHGEquityInvestSendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 982EB7EE1CB3903D003EEBE6 /* SHGEquityInvestSendViewController.m */; };
+		982EB7F11CB3903D003EEBE6 /* SHGEquityInvestSendViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 982EB7EF1CB3903D003EEBE6 /* SHGEquityInvestSendViewController.xib */; };
+		982EB7F51CB39062003EEBE6 /* SHGEquityInvestNextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 982EB7F31CB39062003EEBE6 /* SHGEquityInvestNextViewController.m */; };
+		982EB7F61CB39062003EEBE6 /* SHGEquityInvestNextViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 982EB7F41CB39062003EEBE6 /* SHGEquityInvestNextViewController.xib */; };
+		982EB7FA1CB3A248003EEBE6 /* SHGEquityFinanceSendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 982EB7F81CB3A248003EEBE6 /* SHGEquityFinanceSendViewController.m */; };
+		982EB7FB1CB3A248003EEBE6 /* SHGEquityFinanceSendViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 982EB7F91CB3A248003EEBE6 /* SHGEquityFinanceSendViewController.xib */; };
+		982EB7FF1CB3A269003EEBE6 /* SHGEquityFinanceNextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 982EB7FD1CB3A269003EEBE6 /* SHGEquityFinanceNextViewController.m */; };
+		982EB8001CB3A269003EEBE6 /* SHGEquityFinanceNextViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 982EB7FE1CB3A269003EEBE6 /* SHGEquityFinanceNextViewController.xib */; };
+		982EB8041CB3AD24003EEBE6 /* SHGSameAndCommixtureSendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 982EB8021CB3AD24003EEBE6 /* SHGSameAndCommixtureSendViewController.m */; };
+		982EB8051CB3AD24003EEBE6 /* SHGSameAndCommixtureSendViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 982EB8031CB3AD24003EEBE6 /* SHGSameAndCommixtureSendViewController.xib */; };
+		982EB8091CB3AD47003EEBE6 /* SHGSameAndCommixtureNextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 982EB8071CB3AD47003EEBE6 /* SHGSameAndCommixtureNextViewController.m */; };
+		982EB80A1CB3AD47003EEBE6 /* SHGSameAndCommixtureNextViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 982EB8081CB3AD47003EEBE6 /* SHGSameAndCommixtureNextViewController.xib */; };
 		9842E9CF1C017FCA0008B6AF /* SHGPersonFriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9842E9CD1C017FCA0008B6AF /* SHGPersonFriendsViewController.m */; };
 		9842E9D01C017FCA0008B6AF /* SHGPersonFriendsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9842E9CE1C017FCA0008B6AF /* SHGPersonFriendsViewController.xib */; };
 		9842E9D41C0180240008B6AF /* SHGPersonFriendsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9842E9D21C0180240008B6AF /* SHGPersonFriendsTableViewCell.m */; };
 		9842E9D51C0180240008B6AF /* SHGPersonFriendsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9842E9D31C0180240008B6AF /* SHGPersonFriendsTableViewCell.xib */; };
 		985088191BF424F800FE9B04 /* SHGTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 985088181BF424F800FE9B04 /* SHGTableHeaderView.m */; };
+		9855F02A1CACFD72006F760F /* SHGBondInvestSendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9855F0281CACFD72006F760F /* SHGBondInvestSendViewController.m */; };
+		9855F02B1CACFD72006F760F /* SHGBondInvestSendViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9855F0291CACFD72006F760F /* SHGBondInvestSendViewController.xib */; };
+		985A0FD71CABA49400880DB5 /* MarketArea.plist in Resources */ = {isa = PBXBuildFile; fileRef = 985A0FD61CABA49400880DB5 /* MarketArea.plist */; };
+		985A0FDB1CABAB1400880DB5 /* SHGBusinessLoactionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 985A0FD91CABAB1400880DB5 /* SHGBusinessLoactionViewController.m */; };
+		985A0FDC1CABAB1400880DB5 /* SHGBusinessLoactionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 985A0FDA1CABAB1400880DB5 /* SHGBusinessLoactionViewController.xib */; };
 		985CBDBA1C03FD0B002B3D9D /* SHGCardTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 985CBDB81C03FD0B002B3D9D /* SHGCardTableViewCell.m */; };
 		985CBDBB1C03FD0B002B3D9D /* SHGCardTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 985CBDB91C03FD0B002B3D9D /* SHGCardTableViewCell.xib */; };
 		985CBDC31C04042C002B3D9D /* SHGCollectCardClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 985CBDC21C04042C002B3D9D /* SHGCollectCardClass.m */; };
@@ -701,6 +722,8 @@
 		98D73C2E1C194E7E0055AF75 /* SHGNewsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98D73C2C1C194E7E0055AF75 /* SHGNewsTableViewCell.xib */; };
 		98DCAF5B1C90B60400C648A4 /* SHGPersonalTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 98DCAF591C90B60400C648A4 /* SHGPersonalTableViewCell.m */; };
 		98DCAF5C1C90B60400C648A4 /* SHGPersonalTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98DCAF5A1C90B60400C648A4 /* SHGPersonalTableViewCell.xib */; };
+		98E04A061CAE11DF006A8773 /* SHGBondInvestNextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98E04A041CAE11DF006A8773 /* SHGBondInvestNextViewController.m */; };
+		98E04A071CAE11DF006A8773 /* SHGBondInvestNextViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98E04A051CAE11DF006A8773 /* SHGBondInvestNextViewController.xib */; };
 		98E3022B1BFB0708001D4A69 /* SHGAuthenticationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98E302291BFB0708001D4A69 /* SHGAuthenticationViewController.m */; };
 		98E3022C1BFB0708001D4A69 /* SHGAuthenticationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98E3022A1BFB0708001D4A69 /* SHGAuthenticationViewController.xib */; };
 		98FA41C31BF5E1B40058A4EF /* SHGActionDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98FA41C11BF5E1B40058A4EF /* SHGActionDetailViewController.m */; };
@@ -1883,6 +1906,31 @@
 		980D0D991C9A41BC00351F8C /* SHGCircleCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGCircleCollectionViewController.h; sourceTree = "<group>"; };
 		980D0D9A1C9A41BC00351F8C /* SHGCircleCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGCircleCollectionViewController.m; sourceTree = "<group>"; };
 		980D0D9B1C9A41BC00351F8C /* SHGCircleCollectionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGCircleCollectionViewController.xib; sourceTree = "<group>"; };
+		982EB7E31CB38707003EEBE6 /* SHGBondFinanceSendViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGBondFinanceSendViewController.h; sourceTree = "<group>"; };
+		982EB7E41CB38707003EEBE6 /* SHGBondFinanceSendViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGBondFinanceSendViewController.m; sourceTree = "<group>"; };
+		982EB7E51CB38707003EEBE6 /* SHGBondFinanceSendViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGBondFinanceSendViewController.xib; sourceTree = "<group>"; };
+		982EB7E81CB38734003EEBE6 /* SHGBondFinanceNextViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGBondFinanceNextViewController.h; sourceTree = "<group>"; };
+		982EB7E91CB38734003EEBE6 /* SHGBondFinanceNextViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGBondFinanceNextViewController.m; sourceTree = "<group>"; };
+		982EB7EA1CB38734003EEBE6 /* SHGBondFinanceNextViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGBondFinanceNextViewController.xib; sourceTree = "<group>"; };
+		982EB7ED1CB3903D003EEBE6 /* SHGEquityInvestSendViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGEquityInvestSendViewController.h; sourceTree = "<group>"; };
+		982EB7EE1CB3903D003EEBE6 /* SHGEquityInvestSendViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGEquityInvestSendViewController.m; sourceTree = "<group>"; };
+		982EB7EF1CB3903D003EEBE6 /* SHGEquityInvestSendViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGEquityInvestSendViewController.xib; sourceTree = "<group>"; };
+		982EB7F21CB39062003EEBE6 /* SHGEquityInvestNextViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGEquityInvestNextViewController.h; sourceTree = "<group>"; };
+		982EB7F31CB39062003EEBE6 /* SHGEquityInvestNextViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGEquityInvestNextViewController.m; sourceTree = "<group>"; };
+		982EB7F41CB39062003EEBE6 /* SHGEquityInvestNextViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGEquityInvestNextViewController.xib; sourceTree = "<group>"; };
+		982EB7F71CB3A248003EEBE6 /* SHGEquityFinanceSendViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGEquityFinanceSendViewController.h; sourceTree = "<group>"; };
+		982EB7F81CB3A248003EEBE6 /* SHGEquityFinanceSendViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGEquityFinanceSendViewController.m; sourceTree = "<group>"; };
+		982EB7F91CB3A248003EEBE6 /* SHGEquityFinanceSendViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGEquityFinanceSendViewController.xib; sourceTree = "<group>"; };
+		982EB7FC1CB3A269003EEBE6 /* SHGEquityFinanceNextViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGEquityFinanceNextViewController.h; sourceTree = "<group>"; };
+		982EB7FD1CB3A269003EEBE6 /* SHGEquityFinanceNextViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGEquityFinanceNextViewController.m; sourceTree = "<group>"; };
+		982EB7FE1CB3A269003EEBE6 /* SHGEquityFinanceNextViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGEquityFinanceNextViewController.xib; sourceTree = "<group>"; };
+		982EB8011CB3AD24003EEBE6 /* SHGSameAndCommixtureSendViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGSameAndCommixtureSendViewController.h; sourceTree = "<group>"; };
+		982EB8021CB3AD24003EEBE6 /* SHGSameAndCommixtureSendViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGSameAndCommixtureSendViewController.m; sourceTree = "<group>"; };
+		982EB8031CB3AD24003EEBE6 /* SHGSameAndCommixtureSendViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGSameAndCommixtureSendViewController.xib; sourceTree = "<group>"; };
+		982EB8061CB3AD47003EEBE6 /* SHGSameAndCommixtureNextViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGSameAndCommixtureNextViewController.h; sourceTree = "<group>"; };
+		982EB8071CB3AD47003EEBE6 /* SHGSameAndCommixtureNextViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGSameAndCommixtureNextViewController.m; sourceTree = "<group>"; };
+		982EB8081CB3AD47003EEBE6 /* SHGSameAndCommixtureNextViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGSameAndCommixtureNextViewController.xib; sourceTree = "<group>"; };
+		982EB80B1CB49DBD003EEBE6 /* SHGBusinessMargin.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SHGBusinessMargin.h; sourceTree = "<group>"; };
 		9842E9CC1C017FCA0008B6AF /* SHGPersonFriendsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGPersonFriendsViewController.h; sourceTree = "<group>"; };
 		9842E9CD1C017FCA0008B6AF /* SHGPersonFriendsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGPersonFriendsViewController.m; sourceTree = "<group>"; };
 		9842E9CE1C017FCA0008B6AF /* SHGPersonFriendsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGPersonFriendsViewController.xib; sourceTree = "<group>"; };
@@ -1891,6 +1939,13 @@
 		9842E9D31C0180240008B6AF /* SHGPersonFriendsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGPersonFriendsTableViewCell.xib; sourceTree = "<group>"; };
 		985088171BF424F800FE9B04 /* SHGTableHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGTableHeaderView.h; sourceTree = "<group>"; };
 		985088181BF424F800FE9B04 /* SHGTableHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGTableHeaderView.m; sourceTree = "<group>"; };
+		9855F0271CACFD72006F760F /* SHGBondInvestSendViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGBondInvestSendViewController.h; sourceTree = "<group>"; };
+		9855F0281CACFD72006F760F /* SHGBondInvestSendViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGBondInvestSendViewController.m; sourceTree = "<group>"; };
+		9855F0291CACFD72006F760F /* SHGBondInvestSendViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGBondInvestSendViewController.xib; sourceTree = "<group>"; };
+		985A0FD61CABA49400880DB5 /* MarketArea.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = MarketArea.plist; path = ../Classes/Market/MarketArea.plist; sourceTree = "<group>"; };
+		985A0FD81CABAB1400880DB5 /* SHGBusinessLoactionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SHGBusinessLoactionViewController.h; path = ../Classes/Market/SHGBusinessLoactionViewController.h; sourceTree = "<group>"; };
+		985A0FD91CABAB1400880DB5 /* SHGBusinessLoactionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SHGBusinessLoactionViewController.m; path = ../Classes/Market/SHGBusinessLoactionViewController.m; sourceTree = "<group>"; };
+		985A0FDA1CABAB1400880DB5 /* SHGBusinessLoactionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SHGBusinessLoactionViewController.xib; path = ../Classes/Market/SHGBusinessLoactionViewController.xib; sourceTree = "<group>"; };
 		985CBDB71C03FD0B002B3D9D /* SHGCardTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGCardTableViewCell.h; sourceTree = "<group>"; };
 		985CBDB81C03FD0B002B3D9D /* SHGCardTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGCardTableViewCell.m; sourceTree = "<group>"; };
 		985CBDB91C03FD0B002B3D9D /* SHGCardTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGCardTableViewCell.xib; sourceTree = "<group>"; };
@@ -1921,6 +1976,9 @@
 		98DCAF581C90B60400C648A4 /* SHGPersonalTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGPersonalTableViewCell.h; sourceTree = "<group>"; };
 		98DCAF591C90B60400C648A4 /* SHGPersonalTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGPersonalTableViewCell.m; sourceTree = "<group>"; };
 		98DCAF5A1C90B60400C648A4 /* SHGPersonalTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGPersonalTableViewCell.xib; sourceTree = "<group>"; };
+		98E04A031CAE11DF006A8773 /* SHGBondInvestNextViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGBondInvestNextViewController.h; sourceTree = "<group>"; };
+		98E04A041CAE11DF006A8773 /* SHGBondInvestNextViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGBondInvestNextViewController.m; sourceTree = "<group>"; };
+		98E04A051CAE11DF006A8773 /* SHGBondInvestNextViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGBondInvestNextViewController.xib; sourceTree = "<group>"; };
 		98E302281BFB0708001D4A69 /* SHGAuthenticationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGAuthenticationViewController.h; sourceTree = "<group>"; };
 		98E302291BFB0708001D4A69 /* SHGAuthenticationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGAuthenticationViewController.m; sourceTree = "<group>"; };
 		98E3022A1BFB0708001D4A69 /* SHGAuthenticationViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGAuthenticationViewController.xib; sourceTree = "<group>"; };
@@ -3258,6 +3316,7 @@
 				615010E51AD61DB200827F82 /* pathConstant.h */,
 				615010E61AD61DFD00827F82 /* ipConstant.h */,
 				615010E71AD61F5A00827F82 /* notificationConstant.h */,
+				982EB80B1CB49DBD003EEBE6 /* SHGBusinessMargin.h */,
 			);
 			path = constant;
 			sourceTree = "<group>";
@@ -4412,6 +4471,65 @@
 			path = "消息";
 			sourceTree = "<group>";
 		};
+		9855F0221CACF6C0006F760F /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				985A0FD61CABA49400880DB5 /* MarketArea.plist */,
+			);
+			name = Resource;
+			sourceTree = "<group>";
+		};
+		9855F0231CACF6F8006F760F /* Bond */ = {
+			isa = PBXGroup;
+			children = (
+				9855F0271CACFD72006F760F /* SHGBondInvestSendViewController.h */,
+				9855F0281CACFD72006F760F /* SHGBondInvestSendViewController.m */,
+				9855F0291CACFD72006F760F /* SHGBondInvestSendViewController.xib */,
+				98E04A031CAE11DF006A8773 /* SHGBondInvestNextViewController.h */,
+				98E04A041CAE11DF006A8773 /* SHGBondInvestNextViewController.m */,
+				98E04A051CAE11DF006A8773 /* SHGBondInvestNextViewController.xib */,
+				982EB7E31CB38707003EEBE6 /* SHGBondFinanceSendViewController.h */,
+				982EB7E41CB38707003EEBE6 /* SHGBondFinanceSendViewController.m */,
+				982EB7E51CB38707003EEBE6 /* SHGBondFinanceSendViewController.xib */,
+				982EB7E81CB38734003EEBE6 /* SHGBondFinanceNextViewController.h */,
+				982EB7E91CB38734003EEBE6 /* SHGBondFinanceNextViewController.m */,
+				982EB7EA1CB38734003EEBE6 /* SHGBondFinanceNextViewController.xib */,
+			);
+			name = Bond;
+			sourceTree = "<group>";
+		};
+		9855F0241CACF731006F760F /* Equity */ = {
+			isa = PBXGroup;
+			children = (
+				982EB7ED1CB3903D003EEBE6 /* SHGEquityInvestSendViewController.h */,
+				982EB7EE1CB3903D003EEBE6 /* SHGEquityInvestSendViewController.m */,
+				982EB7EF1CB3903D003EEBE6 /* SHGEquityInvestSendViewController.xib */,
+				982EB7F21CB39062003EEBE6 /* SHGEquityInvestNextViewController.h */,
+				982EB7F31CB39062003EEBE6 /* SHGEquityInvestNextViewController.m */,
+				982EB7F41CB39062003EEBE6 /* SHGEquityInvestNextViewController.xib */,
+				982EB7F71CB3A248003EEBE6 /* SHGEquityFinanceSendViewController.h */,
+				982EB7F81CB3A248003EEBE6 /* SHGEquityFinanceSendViewController.m */,
+				982EB7F91CB3A248003EEBE6 /* SHGEquityFinanceSendViewController.xib */,
+				982EB7FC1CB3A269003EEBE6 /* SHGEquityFinanceNextViewController.h */,
+				982EB7FD1CB3A269003EEBE6 /* SHGEquityFinanceNextViewController.m */,
+				982EB7FE1CB3A269003EEBE6 /* SHGEquityFinanceNextViewController.xib */,
+			);
+			name = Equity;
+			sourceTree = "<group>";
+		};
+		9855F0261CACF7DB006F760F /* SameAndCommixture */ = {
+			isa = PBXGroup;
+			children = (
+				982EB8011CB3AD24003EEBE6 /* SHGSameAndCommixtureSendViewController.h */,
+				982EB8021CB3AD24003EEBE6 /* SHGSameAndCommixtureSendViewController.m */,
+				982EB8031CB3AD24003EEBE6 /* SHGSameAndCommixtureSendViewController.xib */,
+				982EB8061CB3AD47003EEBE6 /* SHGSameAndCommixtureNextViewController.h */,
+				982EB8071CB3AD47003EEBE6 /* SHGSameAndCommixtureNextViewController.m */,
+				982EB8081CB3AD47003EEBE6 /* SHGSameAndCommixtureNextViewController.xib */,
+			);
+			name = SameAndCommixture;
+			sourceTree = "<group>";
+		};
 		B04D6E361B60C01E00E3863E /* 1.3图 */ = {
 			isa = PBXGroup;
 			children = (
@@ -4573,6 +4691,10 @@
 		F924C2B01CACBFCF0070286F /* Business */ = {
 			isa = PBXGroup;
 			children = (
+				9855F0221CACF6C0006F760F /* Resource */,
+				9855F0231CACF6F8006F760F /* Bond */,
+				9855F0241CACF731006F760F /* Equity */,
+				9855F0261CACF7DB006F760F /* SameAndCommixture */,
 				F924C2C51CACCC5F0070286F /* SHGBusinessObject.h */,
 				F924C2C61CACCC5F0070286F /* SHGBusinessObject.m */,
 				F9D809941CB3A32900C59E0A /* SHGBusinessScrollView.h */,
@@ -4591,6 +4713,9 @@
 				F924C2BB1CACC1860070286F /* SHGBusinessDetailViewController.h */,
 				F924C2BC1CACC1860070286F /* SHGBusinessDetailViewController.m */,
 				F924C2BD1CACC1860070286F /* SHGBusinessDetailViewController.xib */,
+				985A0FD81CABAB1400880DB5 /* SHGBusinessLoactionViewController.h */,
+				985A0FD91CABAB1400880DB5 /* SHGBusinessLoactionViewController.m */,
+				985A0FDA1CABAB1400880DB5 /* SHGBusinessLoactionViewController.xib */,
 			);
 			name = Business;
 			path = Finance/Business;
@@ -4990,6 +5115,7 @@
 				61E83D831AF7C78E00703651 /* 检查更新@3x.png in Resources */,
 				61E83CE41AF7C78E00703651 /* 电话咨询按钮-按下@2x.png in Resources */,
 				61E83D951AF7C78E00703651 /* 拒绝按钮-按下@3x.png in Resources */,
+				982EB7F11CB3903D003EEBE6 /* SHGEquityInvestSendViewController.xib in Resources */,
 				B080FEA51B81E30100426579 /* emoji_icons_bg_separator@2x.png in Resources */,
 				61E83D991AF7C78E00703651 /* 搜索好友输入框@3x.png in Resources */,
 				61E83D431AF7C78E00703651 /* 搜索框@3x.png in Resources */,
@@ -5034,6 +5160,7 @@
 				40302B231AEF673200F22EB6 /* TeamDetailTableViewCell.xib in Resources */,
 				B09BF7721B7C6C1F008260B3 /* 邀请@3x.png in Resources */,
 				B080FEA41B81E30100426579 /* emoji_icons_bg_separator.png in Resources */,
+				982EB80A1CB3AD47003EEBE6 /* SHGSameAndCommixtureNextViewController.xib in Resources */,
 				B080FE961B81E30100426579 /* emoji_close_n.png in Resources */,
 				61E83D031AF7C78E00703651 /* 圈子-默认@2x.png in Resources */,
 				408D8B001AF8618C0055810C /* VoiceSearchFeedback006@2x.png in Resources */,
@@ -5083,6 +5210,7 @@
 				61E83D8C1AF7C78E00703651 /* 邀请好友图片.png in Resources */,
 				61E83D241AF7C78E00703651 /* 邀请好友、身份认证按钮@2x.png in Resources */,
 				61909FD31AF90D1F0023935F /* ProdSubViewController.xib in Resources */,
+				982EB7EC1CB38734003EEBE6 /* SHGBondFinanceNextViewController.xib in Resources */,
 				4088DDBE1AF102FE00393855 /* SettingQuestionViewController.xib in Resources */,
 				6149CFDE1B259E40006E45FE /* options_pointer.png in Resources */,
 				56F2D5121B5A67DB008E2855 /* 删除.png in Resources */,
@@ -5154,6 +5282,7 @@
 				408D8AF91AF8618C0055810C /* VoiceSearchFeedback003.png in Resources */,
 				61E83D0A1AF7C78E00703651 /* 消息-默认@2x.png in Resources */,
 				B080FEAF1B81E30100426579 /* emoji_unselected_center_bg@2x.png in Resources */,
+				982EB7F61CB39062003EEBE6 /* SHGEquityInvestNextViewController.xib in Resources */,
 				56F2D50C1B5A5B77008E2855 /* 编辑1.png in Resources */,
 				61E83D451AF7C78E00703651 /* 收起箭头@3x.png in Resources */,
 				B080FE951B81E30100426579 /* emoji_characters_s@2x.png in Resources */,
@@ -5163,6 +5292,7 @@
 				F936DD511C3A553800584F53 /* SHGFriendGropingTableViewCell.xib in Resources */,
 				B080FE8D1B81E30100426579 /* btn_publish_keyboard_a@3x.png in Resources */,
 				53BD2BDF1B04452100342B2E /* 新增群组@3x.png in Resources */,
+				98E04A071CAE11DF006A8773 /* SHGBondInvestNextViewController.xib in Resources */,
 				408D8B571AF8618C0055810C /* chatBar_colorMore_photo@2x.png in Resources */,
 				61E83D4C1AF7C78E00703651 /* 短信图标@3x.png in Resources */,
 				40302AFC1AEE6CE900F22EB6 /* MyFollowViewController.xib in Resources */,
@@ -5228,6 +5358,7 @@
 				6149CFDC1B259E40006E45FE /* DefaultLine.png in Resources */,
 				61E83D2C1AF7C78E00703651 /* 拒绝按钮-按下@2x.png in Resources */,
 				4088DDB21AF102FE00393855 /* SettingAboutUsViewController.xib in Resources */,
+				985A0FD71CABA49400880DB5 /* MarketArea.plist in Resources */,
 				56F2D5101B5A5CB3008E2855 /* 邀请.png in Resources */,
 				408D8B481AF8618C0055810C /* chatBar_moreSelected@2x.png in Resources */,
 				61E83D691AF7C78E00703651 /* 圈子-默认@3x.png in Resources */,
@@ -5287,6 +5418,7 @@
 				B080FE8B1B81E30100426579 /* btn_publish_face_b@3x.png in Resources */,
 				61E83D3D1AF7C78E00703651 /* 微信图标@3x.png in Resources */,
 				61E83D8D1AF7C78E00703651 /* 删除@3x.png in Resources */,
+				982EB7FB1CB3A248003EEBE6 /* SHGEquityFinanceSendViewController.xib in Resources */,
 				61E83D8B1AF7C78E00703651 /* 邀请好友、身份认证按钮@3x.png in Resources */,
 				61E83D931AF7C78E00703651 /* 删除图标@3x.png in Resources */,
 				53BD2BE31B04764000342B2E /* PublicGroupListViewController.xib in Resources */,
@@ -5344,6 +5476,7 @@
 				408D8B6C1AF8618C0055810C /* chat_receiver_audio_playing002.png in Resources */,
 				408D8B3B1AF8618C0055810C /* imageDownloadFail@2x.png in Resources */,
 				408D8B7A1AF8618C0055810C /* chat_sender_audio_playing_003.png in Resources */,
+				982EB8001CB3A269003EEBE6 /* SHGEquityFinanceNextViewController.xib in Resources */,
 				F90F7B6A1BF48C4C00555F49 /* SHGPersonalViewController.xib in Resources */,
 				408D8B431AF8618C0055810C /* chatBar_keyboardSelected.png in Resources */,
 				615234AA1B0E144F00011EAC /* 二度跳转页面@2x.jpg in Resources */,
@@ -5388,6 +5521,7 @@
 				61616FF01B02F29100E5A837 /* new评论@3x.png in Resources */,
 				614EFEC01AEF1FD200F2BDD1 /* myreservation@2x.png in Resources */,
 				616405451B2A715E0071A18D /* sns_icon_22.png in Resources */,
+				9855F02B1CACFD72006F760F /* SHGBondInvestSendViewController.xib in Resources */,
 				61E83D961AF7C78E00703651 /* 拒绝按钮-默认@3x.png in Resources */,
 				61E83D8A1AF7C78E00703651 /* 选择行业下拉框@3x.png in Resources */,
 				61E83CFF1AF7C78E00703651 /* 列表向右箭头@2x.png in Resources */,
@@ -5499,6 +5633,7 @@
 				980D0D5A1C99026E00351F8C /* SHGCardCollectionViewController.xib in Resources */,
 				61D62BFA1ADDFF53002DD395 /* prompt@2x.png in Resources */,
 				F9ED07F51C3B6A530079A1A9 /* SHGModifyUserInfoViewController.xib in Resources */,
+				982EB8051CB3AD24003EEBE6 /* SHGSameAndCommixtureSendViewController.xib in Resources */,
 				408D8B2B1AF8618C0055810C /* chatBar_more_face.png in Resources */,
 				408D8B261AF8618C0055810C /* chat_video_play.png in Resources */,
 				61425B7C1AFAB75E00758BCB /* ResetPasswardViewController.xib in Resources */,
@@ -5550,6 +5685,7 @@
 				6186DF3B1AFB7F3800960934 /* 帖子@3x.png in Resources */,
 				616170031B03670200E5A837 /* 80.png in Resources */,
 				61425B3F1AFA7CFF00758BCB /* ConfigView.xib in Resources */,
+				982EB7E71CB38707003EEBE6 /* SHGBondFinanceSendViewController.xib in Resources */,
 				61E83D1B1AF7C78E00703651 /* 推送消息@2x.png in Resources */,
 				61E83D541AF7C78E00703651 /* 发帖传图片@3x.png in Resources */,
 				61E83D501AF7C78E00703651 /* 不能发起对话按钮@3x.png in Resources */,
@@ -5575,6 +5711,7 @@
 				614EFF0A1AF114D800F2BDD1 /* mine.png in Resources */,
 				408D8AFB1AF8618C0055810C /* VoiceSearchFeedback004.png in Resources */,
 				61E83D391AF7C78E00703651 /* 圈内好友图标@3x.png in Resources */,
+				985A0FDC1CABAB1400880DB5 /* SHGBusinessLoactionViewController.xib in Resources */,
 				B080FE9A1B81E30100426579 /* emoji_close_s@2x.png in Resources */,
 				614EFEBF1AEF1FD200F2BDD1 /* mycrowd@2x.png in Resources */,
 				B04D6E2E1B60C01300E3863E /* 我的m@2x.png in Resources */,
@@ -5655,6 +5792,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6187D2F91AF1C693008E1D21 /* EMSearchDisplayController.m in Sources */,
+				982EB7FA1CB3A248003EEBE6 /* SHGEquityFinanceSendViewController.m in Sources */,
 				614AD1C01AD7AFED00DDF43E /* SHGHomeViewController.m in Sources */,
 				6187D2DD1AF1C693008E1D21 /* DXChatBarMoreView.m in Sources */,
 				40302B1E1AEF657300F22EB6 /* TeamDetailObject.m in Sources */,
@@ -5667,6 +5805,7 @@
 				F9AAC1A71C51F0F800E92B7A /* SHGMarketImageTableViewCell.m in Sources */,
 				614AD1AD1AD7AC4D00DDF43E /* LoginViewController.m in Sources */,
 				61D62BFE1ADE035C002DD395 /* CircleListObj.m in Sources */,
+				982EB7E61CB38707003EEBE6 /* SHGBondFinanceSendViewController.m in Sources */,
 				6187D2E91AF1C693008E1D21 /* MessageModelManager.m in Sources */,
 				619027481B2359C600D9EEA2 /* MLKMenuPopover1.m in Sources */,
 				6149CFDD1B259E40006E45FE /* MLKMenuPopover.m in Sources */,
@@ -5688,6 +5827,7 @@
 				565136D51B834E2F00894B1D /* RecommendModel.m in Sources */,
 				6187D2D71AF1C693008E1D21 /* ChatViewController.m in Sources */,
 				F9F349B11C1921900090F111 /* SHGMarketSegmentViewController.m in Sources */,
+				982EB8041CB3AD24003EEBE6 /* SHGSameAndCommixtureSendViewController.m in Sources */,
 				6187D2DE1AF1C693008E1D21 /* DXRecordView.m in Sources */,
 				61425B3D1AFA7CDD00758BCB /* CinfigView.m in Sources */,
 				F9D9F1571BB51D5F00F94E70 /* SHGUserTagModel.m in Sources */,
@@ -5696,6 +5836,7 @@
 				6187D2F71AF1C693008E1D21 /* EMChooseViewController.m in Sources */,
 				F93FCBC41C856D5A004E356E /* NSString+Base64.m in Sources */,
 				6187D2CF1AF1C693008E1D21 /* GroupSettingViewController.m in Sources */,
+				982EB7EB1CB38734003EEBE6 /* SHGBondFinanceNextViewController.m in Sources */,
 				6145FF0E1AE49D180074AB49 /* BasePopupView.m in Sources */,
 				F99580C81B9D7F39001F8AA6 /* DXAlertView.m in Sources */,
 				6187D2DA1AF1C693008E1D21 /* DXMessageToolBar.m in Sources */,
@@ -5715,6 +5856,7 @@
 				4088DDB31AF102FE00393855 /* SettingModifyPWDViewController.m in Sources */,
 				615010DE1AD61BD700827F82 /* ZYQAssetPickerController.m in Sources */,
 				40302B0C1AEF578700F22EB6 /* AddressObject.m in Sources */,
+				982EB7F51CB39062003EEBE6 /* SHGEquityInvestNextViewController.m in Sources */,
 				6187D2D81AF1C693008E1D21 /* ConvertToCommonEmoticonsHelper.m in Sources */,
 				6187D2F81AF1C693008E1D21 /* EMNavigationController.m in Sources */,
 				61D6E7D41AD50FCB0016C13A /* BaseViewController.m in Sources */,
@@ -5743,6 +5885,7 @@
 				614BA7F11AE77AFA009480CD /* ProdListObj.m in Sources */,
 				6187D2D51AF1C693008E1D21 /* ChatSendHelper.m in Sources */,
 				614EFEC41AEF278A00F2BDD1 /* SubDetailViewController.m in Sources */,
+				985A0FDB1CABAB1400880DB5 /* SHGBusinessLoactionViewController.m in Sources */,
 				538964D31AFC6BEB00041548 /* NSDateFormatter+Category.m in Sources */,
 				F9A227BC1BF5ABC60054F8D7 /* SHGActionTableViewCell.m in Sources */,
 				40302B401AF0C31F00F22EB6 /* MyAppointmentViewController.m in Sources */,
@@ -5751,6 +5894,7 @@
 				5331DF1A1AFC017600E035B8 /* AddFriendCell.m in Sources */,
 				9842E9CF1C017FCA0008B6AF /* SHGPersonFriendsViewController.m in Sources */,
 				F90344151C1C192F0063EABB /* SHGMarketDetailViewController.m in Sources */,
+				982EB8091CB3AD47003EEBE6 /* SHGSameAndCommixtureNextViewController.m in Sources */,
 				F93FCBCB1C856D5A004E356E /* UIImage+Rotation.m in Sources */,
 				98FA41C31BF5E1B40058A4EF /* SHGActionDetailViewController.m in Sources */,
 				F9DF86121C34FCE900D42DBE /* SHGMarketCommentTableViewCell.m in Sources */,
@@ -5759,6 +5903,7 @@
 				F93FCBC31C856D5A004E356E /* NSDate+Customized.m in Sources */,
 				6187D2FA1AF1C693008E1D21 /* XHMessageTextView.m in Sources */,
 				F9F349C11C1952CC0090F111 /* SHGMarketMineViewController.m in Sources */,
+				98E04A061CAE11DF006A8773 /* SHGBondInvestNextViewController.m in Sources */,
 				980D0D9C1C9A41BC00351F8C /* SHGCircleCollectionViewController.m in Sources */,
 				F9A227C21BF5AF8D0054F8D7 /* SHGActionObject.m in Sources */,
 				4088DDCE1AF105FD00393855 /* SettingQuestionObj.m in Sources */,
@@ -5864,6 +6009,7 @@
 				614DC8931AD66B3200F610D4 /* BRCommonPopup.m in Sources */,
 				F99503A01C4675700050562F /* SHGConnectionsViewController.m in Sources */,
 				F9EDD5F71BABFBCF00506C0C /* SDPhotoBrowser.m in Sources */,
+				9855F02A1CACFD72006F760F /* SHGBondInvestSendViewController.m in Sources */,
 				6187D2DB1AF1C693008E1D21 /* DXFaceView.m in Sources */,
 				6145FF251AE4FCFE0074AB49 /* ProductListViewController.m in Sources */,
 				F9F349D41C1993F90090F111 /* SHGMarketSendViewController.m in Sources */,
@@ -5885,6 +6031,7 @@
 				F9B7CC321B8AD6C000E55EFD /* SHGGloble.m in Sources */,
 				6187D2F41AF1C693008E1D21 /* EMTextView.m in Sources */,
 				F924C2B91CACC1620070286F /* SHGBusinessMineViewController.m in Sources */,
+				982EB7F01CB3903D003EEBE6 /* SHGEquityInvestSendViewController.m in Sources */,
 				6187D2E31AF1C693008E1D21 /* EMChatTextBubbleView.m in Sources */,
 				F986DE3A1BFDE65200E6709F /* SHGActionManager.m in Sources */,
 				F924C2C31CACCBE50070286F /* SHGBusinessTableViewCell.m in Sources */,
@@ -5898,6 +6045,7 @@
 				F908C8421C30FA83004DD99A /* SHGMarketSecondCategoryViewController.m in Sources */,
 				6187D2C91AF1C693008E1D21 /* ChatGroupDetailViewController.m in Sources */,
 				F928141C1C045F8900C7782D /* SHGItemChooseView.m in Sources */,
+				982EB7FF1CB3A269003EEBE6 /* SHGEquityFinanceNextViewController.m in Sources */,
 				614EFEDF1AEF8F7300F2BDD1 /* Hud.m in Sources */,
 				F9F349C91C1968310090F111 /* SHGMarketTableViewCell.m in Sources */,
 				4088DDB01AF102FE00393855 /* SettingAboutUsViewController.m in Sources */,
@@ -5972,7 +6120,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "3b4c57bc-975c-4398-bc1f-d24521a36dd1";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -6009,7 +6157,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "3b4c57bc-975c-4398-bc1f-d24521a36dd1";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -6049,7 +6197,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.danniuquan.apptest;
 				PRODUCT_NAME = "大牛圈";
-				PROVISIONING_PROFILE = "5c3015a2-16f5-4ce4-a2a4-5d0abd67d0db";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -6087,7 +6235,7 @@
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.danniuquan.apptest;
 				PRODUCT_NAME = "大牛圈";
-				PROVISIONING_PROFILE = "5c3015a2-16f5-4ce4-a2a4-5d0abd67d0db";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -6124,7 +6272,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "3b4c57bc-975c-4398-bc1f-d24521a36dd1";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -6163,7 +6311,7 @@
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.danniuquan.apptest;
 				PRODUCT_NAME = "大牛圈";
-				PROVISIONING_PROFILE = "5c3015a2-16f5-4ce4-a2a4-5d0abd67d0db";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 			};

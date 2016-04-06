@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SHGEquityInvestNextViewController">
+            <connections>
+                <outlet property="addImageButton" destination="zfa-Ll-qWO" id="BDA-bG-Rna"/>
+                <outlet property="addImageTitleLabel" destination="YbN-c8-Ln7" id="Qhg-p2-jHl"/>
+                <outlet property="addImageView" destination="8Wo-Lr-nA4" id="Ynv-ll-DjO"/>
+                <outlet property="authorizeButton" destination="ddG-Qy-Q5q" id="FCs-Xo-NNB"/>
+                <outlet property="capitalSourceButtonView" destination="FJv-mV-sho" id="ZrL-WB-BGY"/>
+                <outlet property="capitalSourceLabel" destination="7N4-3c-kXq" id="WE8-xI-jro"/>
+                <outlet property="capitalSourceSelectImage" destination="MZD-vY-6wK" id="AKi-HN-2S1"/>
+                <outlet property="capitalSourceView" destination="a9F-7C-NCj" id="hmI-9q-Ys7"/>
+                <outlet property="investTimeButtonView" destination="MqN-dk-N7a" id="BZ5-8e-0HZ"/>
+                <outlet property="investTimeTitleLabel" destination="30I-HW-v24" id="cqu-LU-NZt"/>
+                <outlet property="investTimeView" destination="dZY-gR-31y" id="m6T-uV-t4R"/>
+                <outlet property="marketExplainSelectImage" destination="HPD-h8-4yV" id="nAd-kF-wh5"/>
+                <outlet property="marketExplainTextView" destination="7HQ-xA-KT2" id="7C5-4Z-VPv"/>
+                <outlet property="marketExplainTitleLabel" destination="4bl-8A-wYG" id="tny-pb-kqh"/>
+                <outlet property="marketExplainView" destination="x0D-eJ-XFP" id="6zg-OO-Ijq"/>
+                <outlet property="retributionNumLabel" destination="gVY-mL-LGt" id="hKf-kD-DCk"/>
+                <outlet property="retributionTextField" destination="Y9n-6l-MJ9" id="jmg-LG-NwS"/>
+                <outlet property="retributionTitleLabel" destination="qTe-ps-4yF" id="I8j-M2-LyJ"/>
+                <outlet property="retributionView" destination="Idn-c9-Glq" id="2QC-Ob-IoH"/>
+                <outlet property="scrollView" destination="pj2-NB-bRO" id="3ab-7c-hFr"/>
+                <outlet property="sureButton" destination="hZ6-yR-ZM8" id="iit-GG-Fh2"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="hZ6-yR-ZM8">
+                    <rect key="frame" x="8" y="528" width="304" height="36"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" red="0.94117647059999998" green="0.25882352939999997" blue="0.25490196079999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <state key="normal" title="发布"/>
+                    <connections>
+                        <action selector="sureButtonClick:" destination="-1" eventType="touchUpInside" id="amW-8q-4zX"/>
+                    </connections>
+                </button>
+                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="pj2-NB-bRO">
+                    <rect key="frame" x="0.0" y="4" width="320" height="523"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" red="0.93725490199999995" green="0.93333333330000001" blue="0.93725490199999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                </scrollView>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <point key="canvasLocation" x="218" y="239"/>
+        </view>
+        <view contentMode="scaleToFill" id="a9F-7C-NCj">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="117"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="资金来源" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="7N4-3c-kXq">
+                    <rect key="frame" x="8" y="8" width="151" height="21"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <view contentMode="scaleToFill" id="FJv-mV-sho">
+                    <rect key="frame" x="0.0" y="43" width="320" height="66"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" red="0.97254901959999995" green="0.97254901959999995" blue="0.97254901959999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                </view>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="biXuan" id="MZD-vY-6wK">
+                    <rect key="frame" x="179" y="-1" width="30" height="30"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                </imageView>
+            </subviews>
+            <color key="backgroundColor" red="0.97254901959999995" green="0.97254901959999995" blue="0.97254901959999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="-526" y="198.5"/>
+        </view>
+        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="ddG-Qy-Q5q">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="22"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+            <state key="normal" title="  委托大牛助手发布" image="market_select">
+                <color key="titleColor" red="0.94117647059999998" green="0.25882352939999997" blue="0.25490196079999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            </state>
+            <point key="canvasLocation" x="-241" y="326"/>
+        </button>
+        <view contentMode="scaleToFill" id="8Wo-Lr-nA4">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="246"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="添加图片" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="YbN-c8-Ln7">
+                    <rect key="frame" x="21" y="16" width="147" height="21"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="zfa-Ll-qWO">
+                    <rect key="frame" x="8" y="87" width="94" height="72"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <state key="normal" image="addImageButton"/>
+                </button>
+            </subviews>
+            <color key="backgroundColor" red="0.97254901959999995" green="0.97254901959999995" blue="0.97254901959999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="-241" y="159"/>
+        </view>
+        <view contentMode="scaleToFill" id="dZY-gR-31y">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="117"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="投资期限" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="30I-HW-v24">
+                    <rect key="frame" x="8" y="8" width="151" height="21"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <view contentMode="scaleToFill" id="MqN-dk-N7a">
+                    <rect key="frame" x="0.0" y="43" width="320" height="66"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" red="0.97254901959999995" green="0.97254901959999995" blue="0.97254901959999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                </view>
+            </subviews>
+            <color key="backgroundColor" red="0.97254901959999995" green="0.97254901959999995" blue="0.97254901959999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="-602" y="104.5"/>
+        </view>
+        <view contentMode="scaleToFill" id="Idn-c9-Glq">
+            <rect key="frame" x="0.0" y="0.0" width="321" height="74"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="%" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="gVY-mL-LGt">
+                    <rect key="frame" x="279" y="39" width="42" height="21"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="参股比例" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="qTe-ps-4yF">
+                    <rect key="frame" x="0.0" y="7" width="147" height="21"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入参股比例" textAlignment="natural" minimumFontSize="17" id="Y9n-6l-MJ9">
+                    <rect key="frame" x="8" y="35" width="230" height="30"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits"/>
+                </textField>
+            </subviews>
+            <color key="backgroundColor" red="0.97254901959999995" green="0.97254901959999995" blue="0.97254901959999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="-593.5" y="239"/>
+        </view>
+        <view contentMode="scaleToFill" id="x0D-eJ-XFP">
+            <rect key="frame" x="0.0" y="0.0" width="340" height="208"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="业务说明" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="4bl-8A-wYG">
+                    <rect key="frame" x="0.0" y="8" width="147" height="21"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="7HQ-xA-KT2" customClass="EMTextView">
+                    <rect key="frame" x="0.0" y="51" width="320" height="128"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                </textView>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="biXuan" id="HPD-h8-4yV">
+                    <rect key="frame" x="175" y="8" width="30" height="30"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                </imageView>
+            </subviews>
+            <color key="backgroundColor" red="0.97254901959999995" green="0.97254901959999995" blue="0.97254901959999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="-564" y="433"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="addImageButton" width="60" height="60"/>
+        <image name="biXuan" width="8" height="8"/>
+        <image name="market_select" width="11" height="11"/>
+    </resources>
+</document>
