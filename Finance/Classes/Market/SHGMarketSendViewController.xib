@@ -49,7 +49,7 @@
                 </tableView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-            <point key="canvasLocation" x="174" y="332"/>
+            <point key="canvasLocation" x="373" y="245"/>
         </view>
         <view contentMode="scaleToFill" id="DET-hF-114">
             <rect key="frame" x="0.0" y="0.0" width="320" height="694"/>
@@ -116,10 +116,6 @@
                         <outlet property="delegate" destination="-1" id="LtG-wP-WcO"/>
                     </connections>
                 </textField>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="biXuan" id="6UJ-ww-h0V">
-                    <rect key="frame" x="292" y="77" width="5" height="5"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                </imageView>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="biXuan" id="GPr-nD-WyF">
                     <rect key="frame" x="292" y="179" width="5" height="5"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -225,6 +221,10 @@
                         <action selector="addNewImage:" destination="-1" eventType="touchUpInside" id="fK1-mQ-6Yr"/>
                     </connections>
                 </button>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="biXuan" id="6UJ-ww-h0V">
+                    <rect key="frame" x="292" y="79" width="5" height="5"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                </imageView>
             </subviews>
             <color key="backgroundColor" red="0.93725490199999995" green="0.93333333330000001" blue="0.93725490199999995" alpha="1" colorSpace="calibratedRGB"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
@@ -232,7 +232,7 @@
         </view>
     </objects>
     <resources>
-        <image name="addImageButton" width="50" height="50"/>
+        <image name="addImageButton" width="60" height="60"/>
         <image name="biXuan" width="5" height="5"/>
         <image name="market_select" width="11" height="11"/>
     </resources>
