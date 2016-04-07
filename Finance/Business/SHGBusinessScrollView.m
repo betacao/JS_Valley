@@ -9,17 +9,15 @@
 #import "SHGBusinessScrollView.h"
 #import "SHGBusinessObject.h"
 
-#define kBusinessNormalFont  FontFactor(14.0f)
-#define kBusinessSelectedFont  FontFactor(15.0f)
+#define kBusinessNormalFont  FontFactor(16.0f)
 
 @interface SHGBusinessScrollView()<UIScrollViewDelegate>
 @property (strong, nonatomic) UIScrollView *scrollView;
 @property (assign, nonatomic) CGFloat categoryWidth;
 @property (assign, nonatomic) NSInteger selectedIndex;
 @property (strong, nonatomic) NSMutableArray *buttonArrays;
-@property (strong, nonatomic) UIView *underLineView;
+@property (strong, nonatomic) UIView *redLineView;
 @property (weak, nonatomic) UIButton *selectedButton;
-@property (strong, nonatomic) SHGBusinessFilterView *filterView;
 @end
 
 @implementation SHGBusinessScrollView
@@ -37,7 +35,7 @@
         [self addSubview:self.scrollView];
 
         UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, kBusinessScrollViewHeight - 0.5f, SCREENWIDTH, 0.5f)];
-        lineView.backgroundColor = [UIColor colorWithHexString:@"d9dadb"];
+        lineView.backgroundColor = [UIColor colorWithHexString:@"e7e7e6"];
         [self addSubview:lineView];
     }
     return self;
@@ -61,16 +59,16 @@
     return _buttonArrays;
 }
 
-- (UIView *)underLineView
+- (UIView *)redLineView
 {
-    if (!_underLineView) {
-        _underLineView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, kBusinessScrollViewHeight - 1.5f, 0.0f, 1.5f)];
-        _underLineView.backgroundColor = [UIColor colorWithHexString:@"D82626"];
+    if (!_redLineView) {
+        _redLineView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, kBusinessScrollViewHeight - 1.5f, 0.0f, 1.5f)];
+        _redLineView.backgroundColor = [UIColor colorWithHexString:@"D82626"];
     }
-    if (!_underLineView.superview) {
-        [self.scrollView addSubview:_underLineView];
+    if (!_redLineView.superview) {
+        [self.scrollView addSubview:_redLineView];
     }
-    return _underLineView;
+    return _redLineView;
 }
 
 
@@ -93,24 +91,22 @@
     UIButton *button = [self.buttonArrays objectAtIndex:selectedIndex];
     if (self.selectedButton && ![button isEqual:self.selectedButton]) {
         [self.selectedButton setTitleColor:[UIColor colorWithHexString:@"333333"] forState:UIControlStateNormal];
-        self.selectedButton.titleLabel.font = kBusinessNormalFont;
     }
     self.selectedButton = button;
-    [button setTitleColor:[UIColor colorWithHexString:@"DB2626"] forState:UIControlStateNormal];
-    button.titleLabel.font = kBusinessSelectedFont;
+    [button setTitleColor:[UIColor colorWithHexString:@"D82626"] forState:UIControlStateNormal];
 
     [UIView animateWithDuration:0.25f animations:^{
-        CGRect frame = self.underLineView.frame;
+        CGRect frame = self.redLineView.frame;
         frame.origin.x = CGRectGetMinX(button.frame);
         frame.size.width = CGRectGetWidth(button.frame);
-        self.underLineView.frame = frame;
+        self.redLineView.frame = frame;
     } completion:^(BOOL finished) {
 
     }];
 
-//    if (self.categoryDelegate && [self.categoryDelegate respondsToSelector:@selector(didChangeToIndex:firstId:secondId:)] && isChanged) {
-//        [self.categoryDelegate didChangeToIndex:selectedIndex firstId:[self marketFirstId] secondId:[self marketSecondId]];
-//    }
+    if (self.categoryDelegate && [self.categoryDelegate respondsToSelector:@selector(didMoveToIndex:)] && isChanged) {
+        [self.categoryDelegate didMoveToIndex:selectedIndex];
+    }
 
     //移动scrollview到相应的位置
     [self.scrollView scrollRectToVisible:button.frame animated:YES];
@@ -162,47 +158,5 @@
     self.selectedIndex = index;
 }
 
-
-@end
-
-
-@interface SHGBusinessFilterView()
-
-@property (strong, nonatomic) UIButton *leftButton;
-@property (strong, nonatomic) UIButton *rightButton;
-@property (strong, nonatomic) NSArray *buttonArray;
-
-@end
-
-@implementation SHGBusinessFilterView
-
-- (instancetype)initWithFrame:(CGRect)frame
-{
-    self = [super initWithFrame:frame];
-    if (self) {
-        [self initView];
-        [self addAutoLayout];
-    }
-    return self;
-}
-
-- (void)initView
-{
-    self.leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [self.leftButton setTitle:@"更多筛选条件" forState:UIControlStateNormal];
-    self.leftButton.titleLabel.font = FontFactor(15.0f);
-    [self.leftButton setTitleColor:Color(@"256ebf") forState:UIControlStateNormal];
-
-    self.leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [self.leftButton setTitle:@"更多筛选条件" forState:UIControlStateNormal];
-    self.leftButton.titleLabel.font = FontFactor(15.0f);
-    [self.leftButton setTitleColor:Color(@"256ebf") forState:UIControlStateNormal];
-    
-}
-
-- (void)addAutoLayout
-{
-
-}
 
 @end

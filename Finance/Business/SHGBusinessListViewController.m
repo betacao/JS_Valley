@@ -8,6 +8,7 @@
 
 #import "SHGBusinessListViewController.h"
 #import "SHGBusinessScrollView.h"
+#import "SHGBusinessFilterView.h"
 #import "SHGBusinessObject.h"
 #import "EMSearchBar.h"
 
@@ -18,11 +19,11 @@
 @property (strong, nonatomic) UIImageView *titleImageView;
 @property (strong, nonatomic) EMSearchBar *searchBar;
 @property (strong, nonatomic) SHGBusinessScrollView *scrollView;
+@property (strong, nonatomic) SHGBusinessFilterView *filterView;
 @property (strong, nonatomic) NSMutableArray *categoryArray;
 @property (assign, nonatomic) CGSize addBusinessSize;
+@property (assign, nonatomic) CGRect filterViewFrame;
 //
-@property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property (weak, nonatomic) IBOutlet UIButton *addBusinessButton;
 
 @end
 
@@ -41,21 +42,33 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
+    
     if (self.block) {
         self.block(self.searchBar);
     }
-
-    self.tableView.sd_layout
-    .spaceToSuperView(UIEdgeInsetsZero);
-
-    [self addHeaderRefresh:self.tableView headerRefesh:YES andFooter:YES];
 
     NSArray *array = @[@"推荐", @"债权融资", @"股权融资", @"资金方", @"同业混业"];
     [array enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         [self.categoryArray addObject:[[SHGBusinessFirstObject alloc] initWithName:obj]];
     }];
     self.scrollView.categoryArray = self.categoryArray;
+
+    self.filterView.sd_layout
+    .topSpaceToView(self.scrollView, 0.0f)
+    .leftSpaceToView(self.view, 0.0f)
+    .rightSpaceToView(self.view, 0.0f);
+
+    __weak typeof(self)weakSelf = self;
+    self.filterView.didFinishAutoLayoutBlock = ^(CGRect frame){
+        weakSelf.filterViewFrame = frame;
+        weakSelf.tableView.sd_resetNewLayout
+        .topSpaceToView(weakSelf.view, CGRectGetMinY(frame))
+        .leftSpaceToView(weakSelf.view, 0.0f)
+        .rightSpaceToView(weakSelf.view, 0.0f)
+        .bottomSpaceToView(weakSelf.view, 0.0f);
+    };
+
+    [self addHeaderRefresh:self.tableView headerRefesh:YES andFooter:YES];
 }
 
 
@@ -63,6 +76,14 @@
 {
     [super viewWillAppear:animated];
     [self initAddMarketButton];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    self.filterView.dataArray = [NSMutableArray arrayWithArray:@[@"哈哈", @"哈哈", @"哈哈", @"哈哈", @"哈哈", @"哈哈", @"哈哈", @"哈哈"]];
+
+    self.filterView.didFinishAutoLayoutBlock = nil;
 }
 
 - (NSMutableArray *)categoryArray
@@ -78,9 +99,21 @@
     if (!_scrollView) {
         _scrollView = [[SHGBusinessScrollView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, SCREENWIDTH, kBusinessScrollViewHeight)];
         _scrollView.categoryDelegate = self;
+        [self.view addSubview:_scrollView];
     }
     return _scrollView;
 }
+
+- (SHGBusinessFilterView *)filterView
+{
+    if (!_filterView) {
+        _filterView = [[SHGBusinessFilterView alloc] init];
+        _filterView.hidden = YES;
+        [self.view addSubview:_filterView];
+    }
+    return _filterView;
+}
+
 
 - (UIButton *)titleButton
 {
@@ -181,16 +214,6 @@
     return self.dataArr.count;
 }
 
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-{
-    return self.scrollView;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-{
-    return CGRectGetHeight(self.scrollView.frame);
-}
-
 #pragma mark ------变更城市代理
 
 - (void)changeTitleCityName:(NSString *)city
@@ -212,9 +235,24 @@
     }
 }
 
-- (void)didChangeToIndex:(NSInteger)index firstId:(NSString *)firstId secondId:(NSString *)secondId
+- (void)didMoveToIndex:(NSInteger)index
 {
-
+    if (index == 0) {
+        self.filterView.hidden = YES;
+        self.tableView.sd_resetNewLayout
+        .topSpaceToView(self.view, CGRectGetMinY(self.filterViewFrame))
+        .leftSpaceToView(self.view, 0.0f)
+        .rightSpaceToView(self.view, 0.0f)
+        .bottomSpaceToView(self.view, 0.0f);
+    } else{
+        self.filterView.hidden = NO;
+        self.tableView.sd_resetNewLayout
+        .topSpaceToView(self.view, CGRectGetMaxY(self.filterViewFrame))
+        .leftSpaceToView(self.view, 0.0f)
+        .rightSpaceToView(self.view, 0.0f)
+        .bottomSpaceToView(self.view, 0.0f);
+    }
+    [self.tableView updateLayout];
 }
 
 

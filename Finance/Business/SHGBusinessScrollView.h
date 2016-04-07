@@ -8,11 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-#define kBusinessScrollViewHeight MarginFactor(45.0f)
+#define kBusinessScrollViewHeight MarginFactor(42.0f)
 
 @protocol SHGBusinessScrollViewDelegate <NSObject>
 
-
+- (void)didMoveToIndex:(NSInteger)index;
 
 @end
 
@@ -23,9 +23,5 @@
 
 - (NSInteger)currentIndex;
 - (void)moveToIndex:(NSInteger)index;
-
-@end
-
-@interface SHGBusinessFilterView : UIView
 
 @end

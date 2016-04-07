@@ -12,5 +12,6 @@ typedef void(^loadViewFinishBlock)(UIView *view);
 + (instancetype)sharedController;
 @property (nonatomic, copy) loadViewFinishBlock block;
 @property (strong, nonatomic) UIBarButtonItem *leftBarButtonItem;
-
+@property (weak, nonatomic) IBOutlet UIButton *addBusinessButton;
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
 @end

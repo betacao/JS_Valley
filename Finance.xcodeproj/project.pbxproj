@@ -921,6 +921,7 @@
 		F9B0636B1BD7699400471DF4 /* SHGNavigationView.m in Sources */ = {isa = PBXBuildFile; fileRef = F9B0636A1BD7699400471DF4 /* SHGNavigationView.m */; };
 		F9B18C081BA0521600EA0314 /* SHGNoticeView.m in Sources */ = {isa = PBXBuildFile; fileRef = F9B18C071BA0521600EA0314 /* SHGNoticeView.m */; };
 		F9B7CC321B8AD6C000E55EFD /* SHGGloble.m in Sources */ = {isa = PBXBuildFile; fileRef = F9B7CC311B8AD6C000E55EFD /* SHGGloble.m */; };
+		F9BF4E8A1CB5F4B100D0155C /* SHGBusinessMainSendView.m in Sources */ = {isa = PBXBuildFile; fileRef = F9BF4E891CB5F4B100D0155C /* SHGBusinessMainSendView.m */; };
 		F9C41F901C9FBB0400962A49 /* SHGProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = F9C41F8F1C9FBB0400962A49 /* SHGProgressHUD.m */; };
 		F9D296D61C8F02F100A1446C /* SHGMainPageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F9D296D41C8F02F100A1446C /* SHGMainPageTableViewCell.m */; };
 		F9D296D71C8F02F100A1446C /* SHGMainPageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9D296D51C8F02F100A1446C /* SHGMainPageTableViewCell.xib */; };
@@ -929,6 +930,7 @@
 		F9D296E11C8FF1E700A1446C /* SHGRecommendTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F9D296DF1C8FF1E700A1446C /* SHGRecommendTableViewCell.m */; };
 		F9D296E21C8FF1E700A1446C /* SHGRecommendTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9D296E01C8FF1E700A1446C /* SHGRecommendTableViewCell.xib */; };
 		F9D809961CB3A32900C59E0A /* SHGBusinessScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = F9D809951CB3A32900C59E0A /* SHGBusinessScrollView.m */; };
+		F9D94BB11CB4D4FC00B37A4A /* SHGBusinessFilterView.m in Sources */ = {isa = PBXBuildFile; fileRef = F9D94BB01CB4D4FC00B37A4A /* SHGBusinessFilterView.m */; };
 		F9D9F1571BB51D5F00F94E70 /* SHGUserTagModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F9D9F1561BB51D5F00F94E70 /* SHGUserTagModel.m */; };
 		F9DB81631C1278BB007C63B7 /* SHGEmptyDataView.m in Sources */ = {isa = PBXBuildFile; fileRef = F9DB81621C1278BB007C63B7 /* SHGEmptyDataView.m */; };
 		F9DDEFBF1BF9EB79001341CF /* SHGActionSendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9DDEFBD1BF9EB79001341CF /* SHGActionSendViewController.m */; };
@@ -2260,6 +2262,8 @@
 		F9B18C071BA0521600EA0314 /* SHGNoticeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGNoticeView.m; sourceTree = "<group>"; };
 		F9B7CC301B8AD6C000E55EFD /* SHGGloble.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGGloble.h; sourceTree = "<group>"; };
 		F9B7CC311B8AD6C000E55EFD /* SHGGloble.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGGloble.m; sourceTree = "<group>"; };
+		F9BF4E881CB5F4B100D0155C /* SHGBusinessMainSendView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGBusinessMainSendView.h; sourceTree = "<group>"; };
+		F9BF4E891CB5F4B100D0155C /* SHGBusinessMainSendView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGBusinessMainSendView.m; sourceTree = "<group>"; };
 		F9C41F8E1C9FBB0400962A49 /* SHGProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGProgressHUD.h; sourceTree = "<group>"; };
 		F9C41F8F1C9FBB0400962A49 /* SHGProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGProgressHUD.m; sourceTree = "<group>"; };
 		F9D296D31C8F02F100A1446C /* SHGMainPageTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGMainPageTableViewCell.h; sourceTree = "<group>"; };
@@ -2274,6 +2278,8 @@
 		F9D296E01C8FF1E700A1446C /* SHGRecommendTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGRecommendTableViewCell.xib; sourceTree = "<group>"; };
 		F9D809941CB3A32900C59E0A /* SHGBusinessScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGBusinessScrollView.h; sourceTree = "<group>"; };
 		F9D809951CB3A32900C59E0A /* SHGBusinessScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGBusinessScrollView.m; sourceTree = "<group>"; };
+		F9D94BAF1CB4D4FC00B37A4A /* SHGBusinessFilterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGBusinessFilterView.h; sourceTree = "<group>"; };
+		F9D94BB01CB4D4FC00B37A4A /* SHGBusinessFilterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGBusinessFilterView.m; sourceTree = "<group>"; };
 		F9D9F1551BB51D5F00F94E70 /* SHGUserTagModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGUserTagModel.h; sourceTree = "<group>"; };
 		F9D9F1561BB51D5F00F94E70 /* SHGUserTagModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGUserTagModel.m; sourceTree = "<group>"; };
 		F9DB81611C1278BB007C63B7 /* SHGEmptyDataView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGEmptyDataView.h; sourceTree = "<group>"; };
@@ -4695,10 +4701,14 @@
 				9855F0231CACF6F8006F760F /* Bond */,
 				9855F0241CACF731006F760F /* Equity */,
 				9855F0261CACF7DB006F760F /* SameAndCommixture */,
-				F924C2C51CACCC5F0070286F /* SHGBusinessObject.h */,
-				F924C2C61CACCC5F0070286F /* SHGBusinessObject.m */,
 				F9D809941CB3A32900C59E0A /* SHGBusinessScrollView.h */,
 				F9D809951CB3A32900C59E0A /* SHGBusinessScrollView.m */,
+				F9D94BAF1CB4D4FC00B37A4A /* SHGBusinessFilterView.h */,
+				F9D94BB01CB4D4FC00B37A4A /* SHGBusinessFilterView.m */,
+				F9BF4E881CB5F4B100D0155C /* SHGBusinessMainSendView.h */,
+				F9BF4E891CB5F4B100D0155C /* SHGBusinessMainSendView.m */,
+				F924C2C51CACCC5F0070286F /* SHGBusinessObject.h */,
+				F924C2C61CACCC5F0070286F /* SHGBusinessObject.m */,
 				F924C2C81CACCC780070286F /* SHGBusinessManager.h */,
 				F924C2C91CACCC780070286F /* SHGBusinessManager.m */,
 				F924C2C01CACCBE50070286F /* SHGBusinessTableViewCell.h */,
@@ -5808,6 +5818,7 @@
 				982EB7E61CB38707003EEBE6 /* SHGBondFinanceSendViewController.m in Sources */,
 				6187D2E91AF1C693008E1D21 /* MessageModelManager.m in Sources */,
 				619027481B2359C600D9EEA2 /* MLKMenuPopover1.m in Sources */,
+				F9D94BB11CB4D4FC00B37A4A /* SHGBusinessFilterView.m in Sources */,
 				6149CFDD1B259E40006E45FE /* MLKMenuPopover.m in Sources */,
 				F924C2B41CACC1400070286F /* SHGBusinessListViewController.m in Sources */,
 				61909FD21AF90D1F0023935F /* ProdSubViewController.m in Sources */,
@@ -5994,6 +6005,7 @@
 				61425B421AFA7ED600758BCB /* ConfigObj.m in Sources */,
 				6149CFE91B2605FC006E45FE /* TwainContactInfo.m in Sources */,
 				F95F42AF1C8E993C003EDA30 /* SHGCircleSendViewController.m in Sources */,
+				F9BF4E8A1CB5F4B100D0155C /* SHGBusinessMainSendView.m in Sources */,
 				F95A88C71CAA784100D7F9BD /* SHGGifHeader.m in Sources */,
 				6147AE021B050E7F00DFBD50 /* OBGradientView.m in Sources */,
 				5331DF351AFC224D00E035B8 /* MessageObj.m in Sources */,
