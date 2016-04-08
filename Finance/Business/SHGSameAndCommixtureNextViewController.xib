@@ -30,6 +30,9 @@
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" red="0.94117647059999998" green="0.25882352939999997" blue="0.25490196079999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <state key="normal" title="发布"/>
+                    <connections>
+                        <action selector="sureButtonClick:" destination="-1" eventType="touchUpInside" id="qXf-dh-9ZW"/>
+                    </connections>
                 </button>
                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="yBU-i8-BSj">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="523"/>
@@ -47,6 +50,9 @@
             <state key="normal" title="  委托大牛助手发布" image="market_select">
                 <color key="titleColor" red="0.94117647059999998" green="0.25882352939999997" blue="0.25490196079999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             </state>
+            <connections>
+                <action selector="authorizeButtonClick:" destination="-1" eventType="touchUpInside" id="vU7-YY-E2J"/>
+            </connections>
             <point key="canvasLocation" x="-82" y="438"/>
         </button>
         <view contentMode="scaleToFill" id="IoO-p2-m3Z">

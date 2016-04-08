@@ -693,6 +693,7 @@
 		982EB8051CB3AD24003EEBE6 /* SHGSameAndCommixtureSendViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 982EB8031CB3AD24003EEBE6 /* SHGSameAndCommixtureSendViewController.xib */; };
 		982EB8091CB3AD47003EEBE6 /* SHGSameAndCommixtureNextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 982EB8071CB3AD47003EEBE6 /* SHGSameAndCommixtureNextViewController.m */; };
 		982EB80A1CB3AD47003EEBE6 /* SHGSameAndCommixtureNextViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 982EB8081CB3AD47003EEBE6 /* SHGSameAndCommixtureNextViewController.xib */; };
+		982EB8111CB6023E003EEBE6 /* SHGBusinessSelectView.m in Sources */ = {isa = PBXBuildFile; fileRef = 982EB8101CB6023E003EEBE6 /* SHGBusinessSelectView.m */; };
 		9842E9CF1C017FCA0008B6AF /* SHGPersonFriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9842E9CD1C017FCA0008B6AF /* SHGPersonFriendsViewController.m */; };
 		9842E9D01C017FCA0008B6AF /* SHGPersonFriendsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9842E9CE1C017FCA0008B6AF /* SHGPersonFriendsViewController.xib */; };
 		9842E9D41C0180240008B6AF /* SHGPersonFriendsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9842E9D21C0180240008B6AF /* SHGPersonFriendsTableViewCell.m */; };
@@ -1933,6 +1934,8 @@
 		982EB8071CB3AD47003EEBE6 /* SHGSameAndCommixtureNextViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGSameAndCommixtureNextViewController.m; sourceTree = "<group>"; };
 		982EB8081CB3AD47003EEBE6 /* SHGSameAndCommixtureNextViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGSameAndCommixtureNextViewController.xib; sourceTree = "<group>"; };
 		982EB80B1CB49DBD003EEBE6 /* SHGBusinessMargin.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SHGBusinessMargin.h; sourceTree = "<group>"; };
+		982EB80F1CB6023E003EEBE6 /* SHGBusinessSelectView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGBusinessSelectView.h; sourceTree = "<group>"; };
+		982EB8101CB6023E003EEBE6 /* SHGBusinessSelectView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGBusinessSelectView.m; sourceTree = "<group>"; };
 		9842E9CC1C017FCA0008B6AF /* SHGPersonFriendsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGPersonFriendsViewController.h; sourceTree = "<group>"; };
 		9842E9CD1C017FCA0008B6AF /* SHGPersonFriendsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGPersonFriendsViewController.m; sourceTree = "<group>"; };
 		9842E9CE1C017FCA0008B6AF /* SHGPersonFriendsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGPersonFriendsViewController.xib; sourceTree = "<group>"; };
@@ -4481,6 +4484,8 @@
 			isa = PBXGroup;
 			children = (
 				985A0FD61CABA49400880DB5 /* MarketArea.plist */,
+				982EB80F1CB6023E003EEBE6 /* SHGBusinessSelectView.h */,
+				982EB8101CB6023E003EEBE6 /* SHGBusinessSelectView.m */,
 			);
 			name = Resource;
 			sourceTree = "<group>";
@@ -5975,6 +5980,7 @@
 				F9D296D61C8F02F100A1446C /* SHGMainPageTableViewCell.m in Sources */,
 				40302B271AEF78D400F22EB6 /* VerifyIdentityViewController.m in Sources */,
 				F9A227CA1BF5C7E10054F8D7 /* SHGActionSegmentViewController.m in Sources */,
+				982EB8111CB6023E003EEBE6 /* SHGBusinessSelectView.m in Sources */,
 				F986DE361BFDCBD900E6709F /* SHGActionTotalInViewController.m in Sources */,
 				6190274A1B2359C600D9EEA2 /* popTableViewCell.m in Sources */,
 				F9F349BC1C1952B00090F111 /* SHGMarketListViewController.m in Sources */,

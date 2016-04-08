@@ -9,7 +9,8 @@
 #import "SHGEquityFinanceNextViewController.h"
 #import "EMTextView.h"
 #import "SHGBusinessMargin.h"
-@interface SHGEquityFinanceNextViewController ()
+#import "UIButton+EnlargeEdge.h"
+@interface SHGEquityFinanceNextViewController ()<UITextFieldDelegate,UIScrollViewDelegate,UITextViewDelegate>
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UIButton *sureButton;
 //投资期限
@@ -35,6 +36,12 @@
 @property (weak, nonatomic) IBOutlet UIButton *addImageButton;
 
 @property (strong, nonatomic) IBOutlet UIButton *authorizeButton;
+@property (strong, nonatomic) UIImage *buttonBgImage;
+@property (strong, nonatomic) UIImage *buttonSelectBgImage;
+
+@property (strong, nonatomic) UIButton *timeCurrentButton;
+
+@property (strong, nonatomic) id currentContext;
 @end
 
 @implementation SHGEquityFinanceNextViewController
@@ -43,6 +50,15 @@
 {
     [super viewDidLoad];
     self.title = @"发布股权融资";
+    self.scrollView.delegate = self;
+    self.retributionTextField.delegate = self;
+    self.marketExplainTextView.delegate = self;
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardDidShow:) name:UIKeyboardDidShowNotification object:nil];
+    self.buttonBgImage = [UIImage imageNamed:@"businessSendButtonBg"];
+    self.buttonBgImage = [self.buttonBgImage resizableImageWithCapInsets:UIEdgeInsetsMake(10.0f, 10.0f, 10.0f, 10.0f) resizingMode:UIImageResizingModeStretch];
+    
+    self.buttonSelectBgImage = [UIImage imageNamed:@"businessSendButtonSelectBg"];
+    self.buttonSelectBgImage = [self.buttonSelectBgImage resizableImageWithCapInsets:UIEdgeInsetsMake(10.0f, 10.0f, 10.0f, 10.0f) resizingMode:UIImageResizingModeStretch];
     [self.scrollView addSubview:self.investTimeView];
     [self.scrollView addSubview:self.retributionView];
     [self.scrollView addSubview:self.marketExplainView];
@@ -204,13 +220,15 @@
     [self.retributionTextField setValue:[UIColor colorWithHexString:@"bebebe"] forKeyPath:@"_placeholderLabel.textColor"];
     
     NSArray *investTimeArray = @[@"3年以上",@"3~5年",@"5年以上"];
-    for (int i = 0; i < investTimeArray.count; i ++) {
+    for (NSInteger i = 0; i < investTimeArray.count; i ++) {
         UIButton * button = [UIButton buttonWithType:UIButtonTypeCustom];
         button.titleLabel.font = FontFactor(15.0f);
         button.adjustsImageWhenHighlighted = NO;
         [button setTitle:[investTimeArray objectAtIndex:i] forState:UIControlStateNormal];
         [button setTitleColor:Color(@"161616") forState:UIControlStateNormal];
-        [button setBackgroundImage:[UIImage imageNamed:@"marketSendButtonBg"] forState:UIControlStateNormal];
+        [button setBackgroundImage:self.buttonBgImage forState:UIControlStateNormal];
+        [button setTitleColor:Color(@"ff8d65") forState:UIControlStateSelected];
+        [button setBackgroundImage:self.buttonSelectBgImage forState:UIControlStateSelected];
         button.frame = CGRectMake(kLeftToView + i * (kThreeButtonWidth + kButtonLeftMargin), 0.0f, kThreeButtonWidth, kCategoryButtonHeight);
         [button addTarget:self action:@selector(investTimeButtonClick:) forControlEvents:UIControlEventTouchUpInside];
         [self.investTimeButtonView addSubview:button];
@@ -226,22 +244,83 @@
     self.authorizeButton.backgroundColor = [UIColor clearColor];
     self.authorizeButton.titleLabel.font = FontFactor(14.0f);
     [self.authorizeButton setTitleColor:Color(@"8b8b8b") forState:UIControlStateNormal];
-    [self.authorizeButton setImage:[UIImage imageNamed:@"market_unselect"] forState:UIControlStateNormal];
-    [self.authorizeButton setImage:[UIImage imageNamed:@"market_select"] forState:UIControlStateSelected];
+    [self.authorizeButton setImage:[UIImage imageNamed:@"business_authorizeUnselect"] forState:UIControlStateNormal];
+    [self.authorizeButton setImage:[UIImage imageNamed:@"business_authorizeSelect"] forState:UIControlStateSelected];
+    [self.authorizeButton setEnlargeEdgeWithTop:10.0f right:10.0f bottom:10.0f left:10.0f];
 }
 
 - (void)investTimeButtonClick:(UIButton *)btn
 {
-    if (!btn.selected) {
-        [btn setTitleColor:Color(@"ff8d65") forState:UIControlStateNormal];
-        [btn setBackgroundImage:[UIImage imageNamed:@"marketSendButtonSelectBg"] forState:UIControlStateNormal];
+    if(btn != self.timeCurrentButton){
+        self.timeCurrentButton.selected = NO;
+        self.timeCurrentButton = btn;
     }
+    self.timeCurrentButton.selected = YES;
 }
 
+- (IBAction)authorizeButtonClick:(UIButton *)sender
+{
+    sender.selected = !sender.selected;
+}
 
 - (IBAction)sureButtonClick:(UIButton *)sender
 {
-    
+    if ([self checkInputMessage]) {
+        
+    }
+}
+
+- (BOOL)checkInputMessage
+{
+    if (self.marketExplainTextView.text.length == 0) {
+        [Hud showMessageWithText:@"请填写业务说明"];
+        return NO;
+    }
+    return YES;
+}
+
+//键盘消失
+
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
+{
+    return YES;
+}
+
+- (void)textFieldDidBeginEditing:(UITextField *)textField
+{
+    self.currentContext = textField;
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [textField resignFirstResponder];
+    return YES;
+}
+
+- (void)textViewDidBeginEditing:(UITextView *)textView
+{
+    self.currentContext = textView;
+}
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
+{
+    [self.currentContext resignFirstResponder];
+}
+
+- (void)keyBoardDidShow:(NSNotification *)notificaiton
+{
+    NSDictionary* info = [notificaiton userInfo];
+    NSValue* aValue = [info objectForKey:UIKeyboardFrameBeginUserInfoKey];
+    CGSize keyboardSize = [aValue CGRectValue].size;
+    CGRect viewFrame = [self.scrollView frame];
+    viewFrame.size.height -= keyboardSize.height;
+    self.scrollView.frame = viewFrame;
+    CGRect textFieldRect = [self.currentContext frame];
+    [self.scrollView scrollRectToVisible:textFieldRect animated:YES];
+}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)didReceiveMemoryWarning {

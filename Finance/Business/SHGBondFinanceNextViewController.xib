@@ -15,7 +15,8 @@
                 <outlet property="addRequireTitleLabel" destination="AB2-mX-Q90" id="Oi3-Tc-lyf"/>
                 <outlet property="addRequireView" destination="YEF-GC-3sJ" id="vRj-Td-gxh"/>
                 <outlet property="authorizeButton" destination="lZG-P3-zkR" id="I4p-ea-OWV"/>
-                <outlet property="investTimeButtonView" destination="5cR-lY-Ten" id="zRt-UU-zsa"/>
+                <outlet property="investTimeButtonView" destination="5cR-lY-Ten" id="ZCl-5s-b99"/>
+                <outlet property="investTimeSelectImage" destination="wZI-0Q-4Ej" id="hTH-rg-s0E"/>
                 <outlet property="investTimeTitleLabel" destination="Fmw-xj-XTV" id="wFq-92-wD0"/>
                 <outlet property="investTimeView" destination="R7m-aI-7Ki" id="NJq-9S-7mZ"/>
                 <outlet property="marketExplainSelectImage" destination="iVi-Rp-7tR" id="Mi7-9z-M81"/>
@@ -70,6 +71,10 @@
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" red="0.97254901959999995" green="0.97254901959999995" blue="0.97254901959999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                 </view>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="biXuan" id="wZI-0Q-4Ej">
+                    <rect key="frame" x="181" y="4" width="30" height="30"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                </imageView>
             </subviews>
             <color key="backgroundColor" red="0.97254901959999995" green="0.97254901959999995" blue="0.97254901959999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
@@ -185,6 +190,9 @@
             <state key="normal" title="  委托大牛助手发布" image="market_select">
                 <color key="titleColor" red="0.94117647059999998" green="0.25882352939999997" blue="0.25490196079999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             </state>
+            <connections>
+                <action selector="authorizeButtonClick:" destination="-1" eventType="touchUpInside" id="iwF-Kx-0a0"/>
+            </connections>
             <point key="canvasLocation" x="-82" y="438"/>
         </button>
     </objects>

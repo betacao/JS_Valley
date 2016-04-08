@@ -14,6 +14,7 @@
 @interface SHGBusinessLoactionViewController ()
 //topView
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
+@property (weak, nonatomic) IBOutlet UIButton *sureButton;
 @property (strong, nonatomic) IBOutlet UIView *locationView;
 @property (weak, nonatomic) IBOutlet UILabel *locationTitleLabel;
 @property (weak, nonatomic) IBOutlet UIView *locationBottonView;
@@ -71,6 +72,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.title = @"当前定位";
     self.allCity = [NSMutableArray array];
     self.provinces = [[NSArray alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"MarketArea" ofType:@"plist"]];
     

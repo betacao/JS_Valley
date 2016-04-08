@@ -9,7 +9,8 @@
 #import "SHGSameAndCommixtureNextViewController.h"
 #import "EMTextView.h"
 #import "SHGBusinessMargin.h"
-@interface SHGSameAndCommixtureNextViewController ()
+#import "UIButton+EnlargeEdge.h"
+@interface SHGSameAndCommixtureNextViewController ()<UIScrollViewDelegate,UITextViewDelegate>
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UIButton *sureButton;
 //业务说明
@@ -24,6 +25,8 @@
 @property (weak, nonatomic) IBOutlet UIButton *addImageButton;
 
 @property (strong, nonatomic) IBOutlet UIButton *authorizeButton;
+@property (strong, nonatomic) id currentContext;
+
 @end
 
 @implementation SHGSameAndCommixtureNextViewController
@@ -32,6 +35,10 @@
 {
     [super viewDidLoad];
     self.title = @"发布同业混业";
+    self.scrollView.delegate = self;
+    self.marketExplainTextView.delegate = self;
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardDidShow:) name:UIKeyboardDidShowNotification object:nil];
+
     [self.scrollView addSubview:self.marketExplainView];
     [self.scrollView addSubview:self.addImageView];
     [self.scrollView addSubview:self.authorizeButton];
@@ -139,9 +146,53 @@
     [self.authorizeButton setTitleColor:Color(@"8b8b8b") forState:UIControlStateNormal];
     [self.authorizeButton setImage:[UIImage imageNamed:@"market_unselect"] forState:UIControlStateNormal];
     [self.authorizeButton setImage:[UIImage imageNamed:@"market_select"] forState:UIControlStateSelected];
+    [self.authorizeButton setEnlargeEdgeWithTop:10.0f right:10.0f bottom:10.0f left:10.0f];
+}
+
+- (IBAction)authorizeButtonClick:(UIButton *)sender
+{
+    sender.selected = !sender.selected;
 }
 
 
+- (IBAction)sureButtonClick:(UIButton *)sender
+{
+    
+}
+- (BOOL)checkInputMessage
+{
+    if (self.marketExplainTextView.text.length == 0) {
+        [Hud showMessageWithText:@"请填写业务说明"];
+        return NO;
+    }
+    return YES;
+}
+
+- (void)textViewDidBeginEditing:(UITextView *)textView
+{
+    self.currentContext = textView;
+}
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
+{
+    [self.currentContext resignFirstResponder];
+}
+
+- (void)keyBoardDidShow:(NSNotification *)notificaiton
+{
+    NSDictionary* info = [notificaiton userInfo];
+    NSValue* aValue = [info objectForKey:UIKeyboardFrameBeginUserInfoKey];
+    CGSize keyboardSize = [aValue CGRectValue].size;
+    CGRect viewFrame = [self.scrollView frame];
+    viewFrame.size.height -= keyboardSize.height;
+    self.scrollView.frame = viewFrame;
+    CGRect textFieldRect = [self.currentContext frame];
+    [self.scrollView scrollRectToVisible:textFieldRect animated:YES];
+}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];

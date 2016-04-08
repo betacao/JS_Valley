@@ -16,7 +16,8 @@
 #define ktopToView MarginFactor(15.0f)
 #define kButtonLeftMargin MarginFactor(10.0f)
 #define kButtonTopMargin MarginFactor(13.0f)
-#define kFourButtonWidth (SCREENWIDTH - 2 * MarginFactor(12.0f) - 3 * MarginFactor(10.0f)) / 4.0
-#define kThreeButtonWidth (SCREENWIDTH - 2 * MarginFactor(12.0f) - 2 * MarginFactor(10.0f)) / 3.0
-#define kTwoButtonWidth (SCREENWIDTH - 2 * MarginFactor(12.0f) -MarginFactor(10.0f)) / 2.0
+#define kFourButtonWidth ceilf((SCREENWIDTH - 2 * MarginFactor(12.0f) - 3 * MarginFactor(10.0f)) / 4.0)
+#define kThreeButtonWidth ceilf((SCREENWIDTH - 2 * MarginFactor(12.0f) - 2 * MarginFactor(10.0f)) / 3.0)
+#define kTwoButtonWidth ceilf((SCREENWIDTH - 2 * MarginFactor(12.0f) -MarginFactor(10.0f)) / 2.0)
+
 #endif 
