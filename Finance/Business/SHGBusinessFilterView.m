@@ -10,6 +10,8 @@
 #import "SHGBusinessMargin.h"
 #import "SHGBusinessListViewController.h"
 #import "UIButton+EnlargeEdge.h"
+#import "SHGBusinessSelectCategoryViewController.h"
+#import "SHGBusinessObject.h"
 
 @interface SHGBusinessFilterView()
 
@@ -121,6 +123,9 @@
 
 - (void)setExpand:(BOOL)expand
 {
+    if (_expand == expand) {
+        return;
+    }
     _expand = expand;
 
     if (expand) {
@@ -183,7 +188,13 @@
 
 - (void)leftButtonClicked:(UIButton *)button
 {
+    SHGBusinessSelectCategoryViewController *controller = [[SHGBusinessSelectCategoryViewController alloc] init];
+    SHGBusinessSecondObject *object1 = [[SHGBusinessSecondObject alloc] init];
+    object1.title = @"类型";
+    object1.subTitleArray = @[@"不限"];
 
+    controller.dataArray = @[object1, object1, object1, object1, object1, object1, object1, object1];
+    [[SHGBusinessListViewController sharedController].navigationController pushViewController:controller animated:YES];
 }
 
 - (void)rightButtonClicked:(UIButton *)button

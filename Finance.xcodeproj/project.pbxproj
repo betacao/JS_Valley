@@ -923,6 +923,8 @@
 		F9B18C081BA0521600EA0314 /* SHGNoticeView.m in Sources */ = {isa = PBXBuildFile; fileRef = F9B18C071BA0521600EA0314 /* SHGNoticeView.m */; };
 		F9B7CC321B8AD6C000E55EFD /* SHGGloble.m in Sources */ = {isa = PBXBuildFile; fileRef = F9B7CC311B8AD6C000E55EFD /* SHGGloble.m */; };
 		F9BF4E8A1CB5F4B100D0155C /* SHGBusinessMainSendView.m in Sources */ = {isa = PBXBuildFile; fileRef = F9BF4E891CB5F4B100D0155C /* SHGBusinessMainSendView.m */; };
+		F9BF4E8E1CB6332700D0155C /* SHGBusinessSelectCategoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9BF4E8C1CB6332700D0155C /* SHGBusinessSelectCategoryViewController.m */; };
+		F9BF4E8F1CB6332700D0155C /* SHGBusinessSelectCategoryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9BF4E8D1CB6332700D0155C /* SHGBusinessSelectCategoryViewController.xib */; };
 		F9C41F901C9FBB0400962A49 /* SHGProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = F9C41F8F1C9FBB0400962A49 /* SHGProgressHUD.m */; };
 		F9D296D61C8F02F100A1446C /* SHGMainPageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F9D296D41C8F02F100A1446C /* SHGMainPageTableViewCell.m */; };
 		F9D296D71C8F02F100A1446C /* SHGMainPageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9D296D51C8F02F100A1446C /* SHGMainPageTableViewCell.xib */; };
@@ -2267,6 +2269,9 @@
 		F9B7CC311B8AD6C000E55EFD /* SHGGloble.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGGloble.m; sourceTree = "<group>"; };
 		F9BF4E881CB5F4B100D0155C /* SHGBusinessMainSendView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGBusinessMainSendView.h; sourceTree = "<group>"; };
 		F9BF4E891CB5F4B100D0155C /* SHGBusinessMainSendView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGBusinessMainSendView.m; sourceTree = "<group>"; };
+		F9BF4E8B1CB6332700D0155C /* SHGBusinessSelectCategoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGBusinessSelectCategoryViewController.h; sourceTree = "<group>"; };
+		F9BF4E8C1CB6332700D0155C /* SHGBusinessSelectCategoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGBusinessSelectCategoryViewController.m; sourceTree = "<group>"; };
+		F9BF4E8D1CB6332700D0155C /* SHGBusinessSelectCategoryViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGBusinessSelectCategoryViewController.xib; sourceTree = "<group>"; };
 		F9C41F8E1C9FBB0400962A49 /* SHGProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGProgressHUD.h; sourceTree = "<group>"; };
 		F9C41F8F1C9FBB0400962A49 /* SHGProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGProgressHUD.m; sourceTree = "<group>"; };
 		F9D296D31C8F02F100A1446C /* SHGMainPageTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGMainPageTableViewCell.h; sourceTree = "<group>"; };
@@ -4712,6 +4717,9 @@
 				F9D94BB01CB4D4FC00B37A4A /* SHGBusinessFilterView.m */,
 				F9BF4E881CB5F4B100D0155C /* SHGBusinessMainSendView.h */,
 				F9BF4E891CB5F4B100D0155C /* SHGBusinessMainSendView.m */,
+				F9BF4E8B1CB6332700D0155C /* SHGBusinessSelectCategoryViewController.h */,
+				F9BF4E8C1CB6332700D0155C /* SHGBusinessSelectCategoryViewController.m */,
+				F9BF4E8D1CB6332700D0155C /* SHGBusinessSelectCategoryViewController.xib */,
 				F924C2C51CACCC5F0070286F /* SHGBusinessObject.h */,
 				F924C2C61CACCC5F0070286F /* SHGBusinessObject.m */,
 				F924C2C81CACCC780070286F /* SHGBusinessManager.h */,
@@ -5290,6 +5298,7 @@
 				61616FE71B02F29100E5A837 /* 关注按钮@2x.png in Resources */,
 				408D8B3C1AF8618C0055810C /* messageSendFail@2x.png in Resources */,
 				408D8B611AF8618C0055810C /* chatBar_more_locationSelected.png in Resources */,
+				F9BF4E8F1CB6332700D0155C /* SHGBusinessSelectCategoryViewController.xib in Resources */,
 				61D62C091ADE3E85002DD395 /* button_send_comment@2x.png in Resources */,
 				408D8B731AF8618C0055810C /* chat_receiver_bg@2x.png in Resources */,
 				408D8AF31AF8618C0055810C /* chatFire_audioPlaying3.png in Resources */,
@@ -6048,6 +6057,7 @@
 				61425B7B1AFAB75E00758BCB /* ResetPasswardViewController.m in Sources */,
 				F9B7CC321B8AD6C000E55EFD /* SHGGloble.m in Sources */,
 				6187D2F41AF1C693008E1D21 /* EMTextView.m in Sources */,
+				F9BF4E8E1CB6332700D0155C /* SHGBusinessSelectCategoryViewController.m in Sources */,
 				F924C2B91CACC1620070286F /* SHGBusinessMineViewController.m in Sources */,
 				982EB7F01CB3903D003EEBE6 /* SHGEquityInvestSendViewController.m in Sources */,
 				6187D2E31AF1C693008E1D21 /* EMChatTextBubbleView.m in Sources */,

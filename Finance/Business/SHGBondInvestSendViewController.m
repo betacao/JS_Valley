@@ -78,9 +78,9 @@
     self.phoneNumTextField.delegate = self;
     self.monenyTextField.delegate = self;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardDidShow:) name:UIKeyboardDidShowNotification object:nil];
-    self.buttonBgImage = [[UIImage imageNamed:@"businessSendButtonBg"] resizableImageWithCapInsets:UIEdgeInsetsMake(10.0f, 10.0f, 10.0f, 10.0f) resizingMode:UIImageResizingModeStretch];
+    self.buttonBgImage = [[UIImage imageNamed:@"business_SendButtonBg"] resizableImageWithCapInsets:UIEdgeInsetsMake(10.0f, 10.0f, 10.0f, 10.0f) resizingMode:UIImageResizingModeStretch];
     
-    self.buttonSelectBgImage = [[UIImage imageNamed:@"businessSendButtonSelectBg"] resizableImageWithCapInsets:UIEdgeInsetsMake(10.0f, 10.0f, 10.0f, 10.0f) resizingMode:UIImageResizingModeStretch];
+    self.buttonSelectBgImage = [[UIImage imageNamed:@"business_SendButtonSelectBg"] resizableImageWithCapInsets:UIEdgeInsetsMake(10.0f, 10.0f, 10.0f, 10.0f) resizingMode:UIImageResizingModeStretch];
 
     [self.scrollView addSubview:self.nameView];
     [self.scrollView addSubview:self.phoneNumView];

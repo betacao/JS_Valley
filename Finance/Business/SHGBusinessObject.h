@@ -22,4 +22,8 @@
 
 @interface SHGBusinessSecondObject : MTLModel<MTLJSONSerializing>
 
+@property (strong, nonatomic) NSString *title;
+@property (strong, nonatomic) NSArray *subTitleArray;
+
 @end
+

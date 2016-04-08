@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface SHGBusinessMainSendView : UIView
-
++ (SHGBusinessMainSendView *)sharedView;
 @end

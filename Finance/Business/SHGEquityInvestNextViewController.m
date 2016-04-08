@@ -61,10 +61,10 @@
     self.retributionTextField.delegate = self;
     self.marketExplainTextView.delegate = self;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardDidShow:) name:UIKeyboardDidShowNotification object:nil];
-    self.buttonBgImage = [UIImage imageNamed:@"businessSendButtonBg"];
+    self.buttonBgImage = [UIImage imageNamed:@"business_SendButtonBg"];
     self.buttonBgImage = [self.buttonBgImage resizableImageWithCapInsets:UIEdgeInsetsMake(10.0f, 10.0f, 10.0f, 10.0f) resizingMode:UIImageResizingModeStretch];
     
-    self.buttonSelectBgImage = [UIImage imageNamed:@"businessSendButtonSelectBg"];
+    self.buttonSelectBgImage = [UIImage imageNamed:@"business_SendButtonSelectBg"];
     self.buttonSelectBgImage = [self.buttonSelectBgImage resizableImageWithCapInsets:UIEdgeInsetsMake(10.0f, 10.0f, 10.0f, 10.0f) resizingMode:UIImageResizingModeStretch];
 
     [self.scrollView addSubview:self.capitalSourceView];

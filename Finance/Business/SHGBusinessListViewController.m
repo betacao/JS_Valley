@@ -11,6 +11,7 @@
 #import "SHGBusinessFilterView.h"
 #import "SHGBusinessObject.h"
 #import "EMSearchBar.h"
+#import "SHGBusinessMainSendView.h"
 
 @interface SHGBusinessListViewController ()<UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, SHGBusinessScrollViewDelegate>
 //
@@ -156,8 +157,6 @@
     return _searchBar;
 }
 
-
-
 - (void)initAddMarketButton
 {
     if (CGSizeEqualToSize(CGSizeZero, self.addBusinessSize)) {
@@ -169,6 +168,8 @@
         self.addBusinessButton.frame = frame;
         UIPanGestureRecognizer *panRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panImageButton:)];
         [self.addBusinessButton addGestureRecognizer:panRecognizer];
+
+        [self.addBusinessButton addTarget:self action:@selector(addBusinessButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     }
 }
 
@@ -200,6 +201,16 @@
     [recognizer setTranslation:CGPointZero inView:self.view];
 }
 
+- (void)addBusinessButtonClicked:(UIButton *)button
+{
+    SHGBusinessMainSendView *view = [SHGBusinessMainSendView sharedView];
+    view.alpha = 0.0f;
+    [self.view.window addSubview:view];
+
+    [UIView animateWithDuration:0.25f animations:^{
+        view.alpha = 1.0f;
+    }];
+}
 
 
 - (void)moveToProvincesViewController:(UIButton *)button
@@ -253,6 +264,8 @@
         .bottomSpaceToView(self.view, 0.0f);
     }
     [self.tableView updateLayout];
+
+    self.filterView.expand = NO;
 }
 
 
