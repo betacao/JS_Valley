@@ -191,7 +191,7 @@
     SHGBusinessSelectCategoryViewController *controller = [[SHGBusinessSelectCategoryViewController alloc] init];
     SHGBusinessSecondObject *object1 = [[SHGBusinessSecondObject alloc] init];
     object1.title = @"类型";
-    object1.subTitleArray = @[@"不限"];
+    object1.subTitleArray = @[@"不限",@"1",@"2",@"3",@"4"];
 
     controller.dataArray = @[object1, object1, object1, object1, object1, object1, object1, object1];
     [[SHGBusinessListViewController sharedController].navigationController pushViewController:controller animated:YES];

@@ -9,6 +9,7 @@
 #import "SHGBusinessSelectCategoryViewController.h"
 #import "SHGBusinessObject.h"
 #import "SHGBusinessMargin.h"
+#import "SHGBusinessButtonContentView.h"
 
 @interface SHGBusinessSelectCategoryViewController ()
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
@@ -32,7 +33,7 @@
     [self.nextButton setTitle:@"确定" forState:UIControlStateNormal];
 
     [self.dataArray enumerateObjectsUsingBlock:^(SHGBusinessSecondObject *obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        SHGBusinessCategoryContentView *contentView = [[SHGBusinessCategoryContentView alloc] init];
+        SHGBusinessButtonContentView *contentView = [[SHGBusinessButtonContentView alloc] init];
         [self.scrollView addSubview:contentView];
 
         UILabel *titleLabel = [[UILabel alloc] init];
@@ -65,7 +66,6 @@
             lastButton = button;
 
             [contentView addSubview:button];
-            [contentView.buttonArray addObject:button];
         }];
 
         UIView *spliteView = [[UIView alloc] init];
@@ -113,14 +113,8 @@
 
 - (void)buttonClicked:(UIButton *)button
 {
-    SHGBusinessCategoryContentView *superView = (SHGBusinessCategoryContentView *)button.superview;
-    if ([superView.buttonArray indexOfObject:button] == 0) {
-        //全部重置为非选
-        [superView.buttonArray enumerateObjectsUsingBlock:^(UIButton *obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            obj.selected = NO;
-        }];
-    }
-    button.selected = !button.selected;
+    SHGBusinessButtonContentView *superView = (SHGBusinessButtonContentView *)button.superview;
+    [superView didClickButton:button];
 }
 
 - (IBAction)nextButtonClicked:(UIButton *)sender
@@ -135,19 +129,3 @@
 
 @end
 
-
-@interface SHGBusinessCategoryContentView()
-
-@end
-
-@implementation SHGBusinessCategoryContentView
-
-- (NSMutableArray *)buttonArray
-{
-    if (!_buttonArray) {
-        _buttonArray = [NSMutableArray array];
-    }
-    return _buttonArray;
-}
-
-@end

@@ -14,6 +14,3 @@
 
 @end
 
-@interface SHGBusinessCategoryContentView : UIView
-@property (strong, nonatomic) NSMutableArray *buttonArray;
-@end
