@@ -822,6 +822,7 @@
 		F908C1511BFECD2F00CAE018 /* SHGActionCommentTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F908C14F1BFECD2F00CAE018 /* SHGActionCommentTableViewCell.m */; };
 		F908C8421C30FA83004DD99A /* SHGMarketSecondCategoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F908C8401C30FA83004DD99A /* SHGMarketSecondCategoryViewController.m */; };
 		F908C8431C30FA83004DD99A /* SHGMarketSecondCategoryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F908C8411C30FA83004DD99A /* SHGMarketSecondCategoryViewController.xib */; };
+		F90EAF491CAB772700B58E75 /* SHGEncryptionAlgorithm.m in Sources */ = {isa = PBXBuildFile; fileRef = F90EAF481CAB772700B58E75 /* SHGEncryptionAlgorithm.m */; };
 		F90F7B6A1BF48C4C00555F49 /* SHGPersonalViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F90F7B691BF48C4C00555F49 /* SHGPersonalViewController.xib */; };
 		F91778C21BFC240900C535CB /* SHGDatePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = F91778C01BFC240900C535CB /* SHGDatePickerView.m */; };
 		F91778C31BFC240900C535CB /* SHGDatePickerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F91778C11BFC240900C535CB /* SHGDatePickerView.xib */; };
@@ -862,7 +863,6 @@
 		F93FCBC11C856D5A004E356E /* DDTapGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = F93FCBA61C856D5A004E356E /* DDTapGestureRecognizer.m */; };
 		F93FCBC21C856D5A004E356E /* NSArray+Category.m in Sources */ = {isa = PBXBuildFile; fileRef = F93FCBA81C856D5A004E356E /* NSArray+Category.m */; };
 		F93FCBC31C856D5A004E356E /* NSDate+Customized.m in Sources */ = {isa = PBXBuildFile; fileRef = F93FCBAA1C856D5A004E356E /* NSDate+Customized.m */; };
-		F93FCBC41C856D5A004E356E /* NSString+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = F93FCBAC1C856D5A004E356E /* NSString+Base64.m */; };
 		F93FCBC51C856D5A004E356E /* NSString+Check.m in Sources */ = {isa = PBXBuildFile; fileRef = F93FCBAE1C856D5A004E356E /* NSString+Check.m */; };
 		F93FCBC61C856D5A004E356E /* NSString+Customized.m in Sources */ = {isa = PBXBuildFile; fileRef = F93FCBB01C856D5A004E356E /* NSString+Customized.m */; };
 		F93FCBC71C856D5A004E356E /* UIButton+EnlargeEdge.m in Sources */ = {isa = PBXBuildFile; fileRef = F93FCBB21C856D5A004E356E /* UIButton+EnlargeEdge.m */; };
@@ -2097,6 +2097,8 @@
 		F908C83F1C30FA83004DD99A /* SHGMarketSecondCategoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGMarketSecondCategoryViewController.h; sourceTree = "<group>"; };
 		F908C8401C30FA83004DD99A /* SHGMarketSecondCategoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGMarketSecondCategoryViewController.m; sourceTree = "<group>"; };
 		F908C8411C30FA83004DD99A /* SHGMarketSecondCategoryViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGMarketSecondCategoryViewController.xib; sourceTree = "<group>"; };
+		F90EAF471CAB772700B58E75 /* SHGEncryptionAlgorithm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGEncryptionAlgorithm.h; sourceTree = "<group>"; };
+		F90EAF481CAB772700B58E75 /* SHGEncryptionAlgorithm.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGEncryptionAlgorithm.m; sourceTree = "<group>"; };
 		F90F7B691BF48C4C00555F49 /* SHGPersonalViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGPersonalViewController.xib; sourceTree = "<group>"; };
 		F91778BF1BFC240900C535CB /* SHGDatePickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGDatePickerView.h; sourceTree = "<group>"; };
 		F91778C01BFC240900C535CB /* SHGDatePickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGDatePickerView.m; sourceTree = "<group>"; };
@@ -2159,8 +2161,6 @@
 		F93FCBA81C856D5A004E356E /* NSArray+Category.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+Category.m"; sourceTree = "<group>"; };
 		F93FCBA91C856D5A004E356E /* NSDate+Customized.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+Customized.h"; sourceTree = "<group>"; };
 		F93FCBAA1C856D5A004E356E /* NSDate+Customized.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Customized.m"; sourceTree = "<group>"; };
-		F93FCBAB1C856D5A004E356E /* NSString+Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Base64.h"; sourceTree = "<group>"; };
-		F93FCBAC1C856D5A004E356E /* NSString+Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Base64.m"; sourceTree = "<group>"; };
 		F93FCBAD1C856D5A004E356E /* NSString+Check.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Check.h"; sourceTree = "<group>"; };
 		F93FCBAE1C856D5A004E356E /* NSString+Check.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Check.m"; sourceTree = "<group>"; };
 		F93FCBAF1C856D5A004E356E /* NSString+Customized.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Customized.h"; sourceTree = "<group>"; };
@@ -4754,12 +4754,12 @@
 			children = (
 				F93FCBA51C856D5A004E356E /* DDTapGestureRecognizer.h */,
 				F93FCBA61C856D5A004E356E /* DDTapGestureRecognizer.m */,
+				F90EAF471CAB772700B58E75 /* SHGEncryptionAlgorithm.h */,
+				F90EAF481CAB772700B58E75 /* SHGEncryptionAlgorithm.m */,
 				F93FCBA71C856D5A004E356E /* NSArray+Category.h */,
 				F93FCBA81C856D5A004E356E /* NSArray+Category.m */,
 				F93FCBA91C856D5A004E356E /* NSDate+Customized.h */,
 				F93FCBAA1C856D5A004E356E /* NSDate+Customized.m */,
-				F93FCBAB1C856D5A004E356E /* NSString+Base64.h */,
-				F93FCBAC1C856D5A004E356E /* NSString+Base64.m */,
 				F93FCBAD1C856D5A004E356E /* NSString+Check.h */,
 				F93FCBAE1C856D5A004E356E /* NSString+Check.m */,
 				F93FCBAF1C856D5A004E356E /* NSString+Customized.h */,
@@ -5863,7 +5863,6 @@
 				985CBDBA1C03FD0B002B3D9D /* SHGCardTableViewCell.m in Sources */,
 				F924C2BE1CACC1860070286F /* SHGBusinessDetailViewController.m in Sources */,
 				6187D2F71AF1C693008E1D21 /* EMChooseViewController.m in Sources */,
-				F93FCBC41C856D5A004E356E /* NSString+Base64.m in Sources */,
 				6187D2CF1AF1C693008E1D21 /* GroupSettingViewController.m in Sources */,
 				982EB7EB1CB38734003EEBE6 /* SHGBondFinanceNextViewController.m in Sources */,
 				6145FF0E1AE49D180074AB49 /* BasePopupView.m in Sources */,
@@ -5922,6 +5921,7 @@
 				6187D2E71AF1C693008E1D21 /* EMChatViewCell.m in Sources */,
 				5331DF1A1AFC017600E035B8 /* AddFriendCell.m in Sources */,
 				9842E9CF1C017FCA0008B6AF /* SHGPersonFriendsViewController.m in Sources */,
+				F90EAF491CAB772700B58E75 /* SHGEncryptionAlgorithm.m in Sources */,
 				F90344151C1C192F0063EABB /* SHGMarketDetailViewController.m in Sources */,
 				982EB8091CB3AD47003EEBE6 /* SHGSameAndCommixtureNextViewController.m in Sources */,
 				F93FCBCB1C856D5A004E356E /* UIImage+Rotation.m in Sources */,

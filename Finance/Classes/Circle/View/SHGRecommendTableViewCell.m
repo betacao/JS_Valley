@@ -12,15 +12,61 @@
 #import "SHGPersonalViewController.h"
 @interface SHGRecommendTableViewCell()
 @property (weak, nonatomic) IBOutlet UIImageView *topImageView;
+@property (strong, nonatomic) UIView *firstContentView;
+@property (strong, nonatomic) UIView *secondContentView;
+@property (strong, nonatomic) UIView *thirdContentView;
+@property (strong, nonatomic) UIView *fourthContentView;
 @property (weak, nonatomic) IBOutlet UIView *splitView;
-@property (strong, nonatomic) NSMutableArray *viewArray;
+@property (strong, nonatomic) NSArray *viewArray;
 @end
 
 @implementation SHGRecommendTableViewCell
 
+- (UIView *)firstContentView
+{
+    if (!_firstContentView) {
+        _firstContentView = [[UIView alloc] init];
+        UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapContentViewAction:)];
+        [_firstContentView addGestureRecognizer:tap];
+    }
+    return _firstContentView;
+}
+
+- (UIView *)secondContentView
+{
+    if (!_secondContentView) {
+        _secondContentView = [[UIView alloc] init];
+        UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapContentViewAction:)];
+        [_secondContentView addGestureRecognizer:tap];
+    }
+    return _secondContentView;
+}
+
+- (UIView *)thirdContentView
+{
+    if (!_thirdContentView) {
+        _thirdContentView = [[UIView alloc] init];
+        UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapContentViewAction:)];
+        [_thirdContentView addGestureRecognizer:tap];
+    }
+    return _thirdContentView;
+}
+
+- (UIView *)fourthContentView
+{
+    if (!_fourthContentView) {
+        _fourthContentView = [[UIView alloc] init];
+        UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapContentViewAction:)];
+        [_fourthContentView addGestureRecognizer:tap];
+    }
+    return _fourthContentView;
+}
+
+
 - (void)awakeFromNib
 {
-    self.viewArray = [NSMutableArray array];
+    self.viewArray = @[self.firstContentView, self.secondContentView, self.thirdContentView, self.fourthContentView];
+    [self.contentView sd_addSubviews:self.viewArray];
     [self initView];
     [self addAutoLayout];
 }
@@ -31,6 +77,52 @@
     image = [image resizableImageWithCapInsets:UIEdgeInsetsMake(0.0f, 145.0f, 0.0f, 0.0f) resizingMode:UIImageResizingModeStretch];
     self.topImageView.image = image;
     self.splitView.backgroundColor = kMainSplitLineColor;
+
+    [self.viewArray enumerateObjectsUsingBlock:^(__kindof UIView * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        SHGUserHeaderView *headerView = [[SHGUserHeaderView alloc] init];
+        headerView.tag = 101;
+
+        UILabel *nameLabel = [[UILabel alloc] init];
+        nameLabel.tag = 102;
+
+        UILabel *companyLabel = [[UILabel alloc] init];
+        companyLabel.tag = 103;
+
+        UILabel *departmentLabel = [[UILabel alloc] init];
+        departmentLabel.tag = 104;
+
+        UILabel *detailLabel = [[UILabel alloc] init];
+        detailLabel.tag = 105;
+
+        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+        button.tag = 106;
+        [button addTarget:self action:@selector(didClickFocusButton:) forControlEvents:UIControlEventTouchUpInside];
+
+        UIView *lineView = [[UIView alloc] init];
+        lineView.tag = 107;
+
+        nameLabel.font = kMainNameFont;
+        nameLabel.textColor = kMainNameColor;
+
+        companyLabel.font = kMainCompanyFont;
+        companyLabel.textColor = kMainCompanyColor;
+
+        departmentLabel.font = kMainCompanyFont;
+        departmentLabel.textColor = kMainCompanyColor;
+
+        detailLabel.font = kMainTimeFont;
+        detailLabel.textColor = kMainTimeColor;
+        
+        lineView.backgroundColor = kMainLineViewColor;
+
+        [obj addSubview:headerView];
+        [obj addSubview:nameLabel];
+        [obj addSubview:companyLabel];
+        [obj addSubview:departmentLabel];
+        [obj addSubview:detailLabel];
+        [obj addSubview:button];
+        [obj addSubview:lineView];
+    }];
 }
 
 - (void)addAutoLayout
@@ -43,6 +135,87 @@
     .rightSpaceToView(self.contentView, 0.0f)
     .heightIs(size.height);
 
+    [self.viewArray enumerateObjectsUsingBlock:^(__kindof UIView * _Nonnull view, NSUInteger idx, BOOL * _Nonnull stop) {
+
+        UIView *header = [view viewWithTag:101];
+        UILabel *nameLabel = [view viewWithTag:102];
+        UILabel *companyLabel = [view viewWithTag:103];
+        UILabel *departmentLabel = [view viewWithTag:104];
+        UILabel *detailLabel = [view viewWithTag:105];
+        UIView *button = [view viewWithTag:106];
+        UIView *lineView = [view viewWithTag:107];
+
+        header.sd_layout
+        .topSpaceToView(view, MarginFactor(12.0f))
+        .leftSpaceToView(view, kMainItemLeftMargin)
+        .widthIs(kMainHeaderViewWidth)
+        .heightIs(kMainHeaderViewHeight);
+
+        nameLabel.sd_layout
+        .topEqualToView(header)
+        .leftSpaceToView(header, kMainNameToHeaderViewLeftMargin)
+        .autoHeightRatio(0.0f);
+        [nameLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
+
+        detailLabel.sd_layout
+        .bottomEqualToView(header)
+        .leftEqualToView(nameLabel)
+        .autoHeightRatio(0.0f);
+        [detailLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
+
+        companyLabel.sd_layout
+        .bottomEqualToView(nameLabel)
+        .leftSpaceToView(nameLabel, kMainCompanyToNameLeftMargin)
+        .autoHeightRatio(0.0f);
+        [companyLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
+
+        departmentLabel.sd_layout
+        .bottomEqualToView(nameLabel)
+        .leftSpaceToView(companyLabel, 0.0f)
+        .autoHeightRatio(0.0f);
+        [departmentLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
+
+        UIImage *image = [UIImage imageNamed:@"newAddAttention"];
+        button.sd_layout
+        .topEqualToView(header)
+        .rightSpaceToView(view, kMainItemLeftMargin)
+        .widthIs(image.size.width)
+        .heightIs(image.size.height);
+        
+        lineView.sd_layout
+        .topSpaceToView(header, MarginFactor(12.0f))
+        .rightSpaceToView(view, 0.0f)
+        .leftEqualToView(header)
+        .heightIs(0.5f);
+
+        if ([view isEqual:self.firstContentView]) {
+            view.sd_layout
+            .topSpaceToView(self.topImageView, 0.0f)
+            .leftSpaceToView(self.contentView, 0.0f)
+            .rightSpaceToView(self.contentView, 0.0f);
+            [view setupAutoHeightWithBottomView:lineView bottomMargin:0.0f];
+        } else if ([view isEqual:self.secondContentView]) {
+            view.sd_layout
+            .topSpaceToView(self.firstContentView, 0.0f)
+            .leftSpaceToView(self.contentView, 0.0f)
+            .rightSpaceToView(self.contentView, 0.0f);
+            [view setupAutoHeightWithBottomView:lineView bottomMargin:0.0f];
+        } else if ([view isEqual:self.thirdContentView]) {
+            view.sd_layout
+            .topSpaceToView(self.secondContentView, 0.0f)
+            .leftSpaceToView(self.contentView, 0.0f)
+            .rightSpaceToView(self.contentView, 0.0f);
+            [view setupAutoHeightWithBottomView:lineView bottomMargin:0.0f];
+        } else if ([view isEqual:self.fourthContentView]) {
+            view.sd_layout
+            .topSpaceToView(self.thirdContentView, 0.0f)
+            .leftSpaceToView(self.contentView, 0.0f)
+            .rightSpaceToView(self.contentView, 0.0f);
+            [view setupAutoHeightWithBottomView:lineView bottomMargin:0.0f];
+        }
+
+    }];
+
 }
 
 - (void)setObjectArray:(NSArray *)objectArray
@@ -51,66 +224,17 @@
     [self clearCell];
     for (RecmdFriendObj *object in objectArray) {
         NSInteger index = [objectArray indexOfObject:object];
-        UIView *contentView = nil;
-        SHGUserHeaderView *header = nil;
-        UILabel *nameLabel = nil;
-        UILabel *companyLabel = nil;
-        UILabel *departmentLabel = nil;
-        UILabel *detailLabel = nil;
-        UIButton *button = nil;
-        UIView *lineView = nil;
-        if (self.viewArray.count <= index) {
-            contentView = [[UIView alloc] init];
-            UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapContentViewAction:)];
-            [contentView addGestureRecognizer:tap];
-            [self.contentView addSubview:contentView];
+        UIView *view = [self.viewArray objectAtIndex:index];
+        view.alpha = 1.0f;
+        SHGUserHeaderView *header = [view viewWithTag:101];
+        UILabel *nameLabel = [view viewWithTag:102];
+        UILabel *companyLabel = [view viewWithTag:103];
+        UILabel *departmentLabel = [view viewWithTag:104];
+        UILabel *detailLabel = [view viewWithTag:105];
+        UIButton *button = [view viewWithTag:106];
 
-            header = [[SHGUserHeaderView alloc] init];
-            header.tag = 101;
+        [header updateHeaderView:[rBaseAddressForImage stringByAppendingString: object.headimg] placeholderImage:[UIImage imageNamed:@"default_head"] status:NO userID:object.uid];
 
-            nameLabel = [[UILabel alloc] init];
-            nameLabel.tag = 102;
-
-            companyLabel = [[UILabel alloc] init];
-            companyLabel.tag = 103;
-
-            departmentLabel = [[UILabel alloc] init];
-            departmentLabel.tag = 104;
-
-            detailLabel = [[UILabel alloc] init];
-            detailLabel.tag = 105;
-
-            button = [UIButton buttonWithType:UIButtonTypeCustom];
-            button.tag = 106;
-
-            [button addTarget:self action:@selector(didClickFocusButton:) forControlEvents:UIControlEventTouchUpInside];
-            lineView = [[UIView alloc] init];
-            lineView.tag = 107;
-
-            [contentView addSubview:header];
-            [contentView addSubview:nameLabel];
-            [contentView addSubview:companyLabel];
-            [contentView addSubview:departmentLabel];
-            [contentView addSubview:detailLabel];
-            [contentView addSubview:button];
-            [contentView addSubview:lineView];
-
-            [self addSubviewsLayout:contentView header:header nameLabel:nameLabel companyLabel:companyLabel departmentLabel:departmentLabel detailLabel:detailLabel button:button lineView:lineView];
-
-            [self.viewArray addObject:contentView];
-        } else{
-            contentView = [self.viewArray objectAtIndex:index];
-            contentView.hidden = NO;
-            header = [contentView viewWithTag:101];
-            nameLabel = [contentView viewWithTag:102];
-            companyLabel = [contentView viewWithTag:103];
-            departmentLabel = [contentView viewWithTag:104];
-            detailLabel = [contentView viewWithTag:105];
-            button = [contentView viewWithTag:106];
-            lineView = [contentView viewWithTag:107];
-        }
-
-        [header updateHeaderView:object.headimg placeholderImage:[UIImage imageNamed:@"default_head"] status:NO userID:object.uid];
 
         NSString *name = object.username;
         if (object.username.length > 4){
@@ -157,7 +281,7 @@
         }
     }
 
-    self.splitView.sd_layout
+    self.splitView.sd_resetLayout
     .topSpaceToView([self.viewArray objectAtIndex:objectArray.count - 1], -0.5f)
     .leftSpaceToView(self.contentView, 0.0f)
     .rightSpaceToView(self.contentView, 0.0f)
@@ -175,85 +299,10 @@
     
 }
 
-- (void)addSubviewsLayout:(UIView *)contentView header:(SHGUserHeaderView *)header nameLabel:(UILabel *)nameLabel companyLabel:(UILabel *)companyLabel departmentLabel:(UILabel *)departmentLabel detailLabel:(UILabel *)detailLabel button:(UIButton *)button lineView:(UIView *)lineView
-{
-    header.sd_layout
-    .topSpaceToView(contentView, MarginFactor(12.0f))
-    .leftSpaceToView(contentView, kMainItemLeftMargin)
-    .widthIs(kMainHeaderViewWidth)
-    .heightIs(kMainHeaderViewHeight);
-
-    nameLabel.sd_layout
-    .topEqualToView(header)
-    .leftSpaceToView(header, kMainNameToHeaderViewLeftMargin)
-    .autoHeightRatio(0.0f);
-    [nameLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
-
-    detailLabel.sd_layout
-    .bottomEqualToView(header)
-    .leftEqualToView(nameLabel)
-    .autoHeightRatio(0.0f);
-    [detailLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
-
-    companyLabel.sd_layout
-    .bottomEqualToView(nameLabel)
-    .leftSpaceToView(nameLabel, kMainCompanyToNameLeftMargin)
-    .autoHeightRatio(0.0f);
-    [companyLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
-
-    departmentLabel.sd_layout
-    .bottomEqualToView(nameLabel)
-    .leftSpaceToView(companyLabel, 0.0f)
-    .autoHeightRatio(0.0f);
-    [departmentLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
-
-    UIImage *image = [UIImage imageNamed:@"newAddAttention"];
-    button.sd_layout
-    .topEqualToView(header)
-    .rightSpaceToView(contentView, kMainItemLeftMargin)
-    .widthIs(image.size.width)
-    .heightIs(image.size.height);
-
-
-    lineView.sd_layout
-    .topSpaceToView(header, MarginFactor(12.0f))
-    .rightSpaceToView(contentView, 0.0f)
-    .leftEqualToView(header)
-    .heightIs(0.5f);
-
-    if ([self.viewArray lastObject]) {
-        contentView.sd_layout
-        .topSpaceToView([self.viewArray lastObject], 0.0f)
-        .leftSpaceToView(self.contentView, 0.0f)
-        .rightSpaceToView(self.contentView, 0.0f);
-        [contentView setupAutoHeightWithBottomView:lineView bottomMargin:0.0f];
-    } else{
-        contentView.sd_layout
-        .topSpaceToView(self.topImageView, 0.0f)
-        .leftSpaceToView(self.contentView, 0.0f)
-        .rightSpaceToView(self.contentView, 0.0f);
-        [contentView setupAutoHeightWithBottomView:lineView bottomMargin:0.0f];
-    }
-
-    nameLabel.font = kMainNameFont;
-    nameLabel.textColor = kMainNameColor;
-
-    companyLabel.font = kMainCompanyFont;
-    companyLabel.textColor = kMainCompanyColor;
-
-    departmentLabel.font = kMainCompanyFont;
-    departmentLabel.textColor = kMainCompanyColor;
-
-    detailLabel.font = kMainTimeFont;
-    detailLabel.textColor = kMainTimeColor;
-
-    lineView.backgroundColor = kMainLineViewColor;
-}
-
 - (void)clearCell
 {
     [self.viewArray enumerateObjectsUsingBlock:^(UIView *view, NSUInteger idx, BOOL * _Nonnull stop) {
-        view.hidden = YES;
+        view.alpha = 0.0f;
         [view.subviews enumerateObjectsUsingBlock:^(__kindof UIView * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             if ([obj isKindOfClass:[UILabel class]]) {
                 ((UILabel *)obj).text = @"";

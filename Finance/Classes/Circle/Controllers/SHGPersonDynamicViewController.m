@@ -440,9 +440,10 @@
             [Hud showMessageWithText:response.errorMessage];
         }];
     } else{
-        [[AFHTTPSessionManager manager] DELETE:url parameters:param success:^(NSURLSessionDataTask *operation, id responseObject) {
+
+        [MOCHTTPRequestOperationManager deleteWithURL:url parameters:param success:^(MOCHTTPResponse *response) {
             [Hud hideHud];
-            NSString *code = [responseObject valueForKey:@"code"];
+            NSString *code = [response.data valueForKey:@"code"];
             if ([code isEqualToString:@"000"]) {
                 for (CircleListObj *cobj in self.dataArr) {
                     if ([cobj.userid isEqualToString:obj.userid]) {
@@ -451,7 +452,7 @@
                 }
                 [weakSelf.delegate detailAttentionWithRid:obj.userid attention:obj.isattention];
                 [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_COLLECT_COLLECT_CLIC object:obj];
-                NSDictionary *data = [[responseObject valueForKey:@"data"] parseToArrayOrNSDictionary];
+                NSDictionary *data = [[response.data valueForKey:@"data"] parseToArrayOrNSDictionary];
                 NSString *state = [data valueForKey:@"state"];
                 if (weakSelf.block) {
                     weakSelf.block(state);
@@ -459,9 +460,9 @@
                 [Hud showMessageWithText:@"取消关注成功"];
             }
             [weakSelf.tableView reloadData];
-        } failure:^(NSURLSessionDataTask *operation, NSError *error) {
+        } failed:^(MOCHTTPResponse *response) {
             [Hud hideHud];
-            [Hud showMessageWithText:error.domain];
+            [Hud showMessageWithText:response.errorMessage];
         }];
     }
 
@@ -486,16 +487,17 @@
     alert.rightBlock = ^{
         NSString *url = [NSString stringWithFormat:@"%@/%@",rBaseAddressForHttpCircle,@"circle"];
         NSDictionary *dic = @{@"rid":obj.rid, @"uid":obj.userid};
-        [[AFHTTPSessionManager manager] DELETE:url parameters:dic success:^(NSURLSessionDataTask *operation, id responseObject) {
-            NSLog(@"%@",responseObject);
-            NSString *code = [responseObject valueForKey:@"code"];
+
+        [MOCHTTPRequestOperationManager deleteWithURL:url parameters:dic success:^(MOCHTTPResponse *response) {
+            NSString *code = [response.data valueForKey:@"code"];
             if ([code isEqualToString:@"000"]){
                 [weakSelf detailDeleteWithRid:obj.rid];
                 [weakSelf.delegate detailDeleteWithRid:obj.rid];
             }
-        } failure:^(NSURLSessionDataTask *operation, NSError *error) {
-            [Hud showMessageWithText:error.domain];
+        } failed:^(MOCHTTPResponse *response) {
+            [Hud showMessageWithText:response.errorMessage];
         }];
+
     };
     [alert show];
 }
@@ -538,9 +540,10 @@
         }];
     } else{
         [Hud showWait];
-        [[AFHTTPSessionManager manager] DELETE:url parameters:param success:^(NSURLSessionDataTask *operation, id responseObject) {
-            NSLog(@"%@",responseObject);
-            NSString *code = [responseObject valueForKey:@"code"];
+
+        [MOCHTTPRequestOperationManager deleteWithURL:url parameters:param success:^(MOCHTTPResponse *response) {
+            [Hud hideHud];
+            NSString *code = [response.data valueForKey:@"code"];
             if ([code isEqualToString:@"000"]) {
                 obj.ispraise = @"N";
                 obj.praisenum = [NSString stringWithFormat:@"%ld",(long)[obj.praisenum integerValue] -1];
@@ -551,9 +554,9 @@
             [weakSelf.tableView reloadData];
             [weakSelf.delegate detailPraiseWithRid:obj.rid praiseNum:obj.praisenum isPraised:@"N"];
             [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_COLLECT_PRAISE_CLICK object:obj];
-        } failure:^(NSURLSessionDataTask *operation, NSError *error){
+        } failed:^(MOCHTTPResponse *response) {
             [Hud hideHud];
-            [Hud showMessageWithText:error.domain];
+            [Hud showMessageWithText:response.errorMessage];
         }];
     }
     

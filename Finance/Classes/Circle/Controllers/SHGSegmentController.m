@@ -317,7 +317,7 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
 - (void)actionPost:(UIButton *)button
 {
     __weak typeof(self)weakSelf = self;
-    [[SHGGloble sharedGloble] requsetUserVerifyStatus:@"market" completion:^(BOOL status) {
+    [[SHGGloble sharedGloble] requsetUserVerifyStatus:@"circle" completion:^(BOOL status) {
         if (status) {
             if([weakSelf.selectedViewController respondsToSelector:@selector(actionPost:)]){
                 [weakSelf.selectedViewController performSelector:@selector(actionPost:) withObject:button];
@@ -883,14 +883,14 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     } onQueue:nil];
 }
 
-- (void)didRemovedFromServer
-{
-    [[EaseMob sharedInstance].chatManager asyncLogoffWithUnbindDeviceToken:NO completion:^(NSDictionary *info, EMError *error) {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"prompt", @"Prompt") message:NSLocalizedString(@"loginUserRemoveFromServer", @"your account has been removed from the server side") delegate:self cancelButtonTitle:NSLocalizedString(@"ok", @"OK") otherButtonTitles:nil, nil];
-        alertView.tag = 101;
-        [alertView show];
-    } onQueue:nil];
-}
+//- (void)didRemovedFromServer
+//{
+//    [[EaseMob sharedInstance].chatManager asyncLogoffWithUnbindDeviceToken:NO completion:^(NSDictionary *info, EMError *error) {
+//        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"prompt", @"Prompt") message:NSLocalizedString(@"loginUserRemoveFromServer", @"your account has been removed from the server side") delegate:self cancelButtonTitle:NSLocalizedString(@"ok", @"OK") otherButtonTitles:nil, nil];
+//        alertView.tag = 101;
+//        [alertView show];
+//    } onQueue:nil];
+//}
 
 #pragma mark - 自动登录回调
 

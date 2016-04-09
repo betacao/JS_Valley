@@ -267,7 +267,7 @@
 - (void)sendPhotos
 {
     __weak typeof(self) weakSelf = self;
-    [[AFHTTPSessionManager manager] POST:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"image/base"] parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+    [MOCHTTPRequestOperationManager POST:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"image/base"] parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
         for (NSInteger i = 0; i < weakSelf.imageArray.count; i++){
             RecommendTypeObj *obj = weakSelf.imageArray[i];
             NSData *imgData = obj.content;

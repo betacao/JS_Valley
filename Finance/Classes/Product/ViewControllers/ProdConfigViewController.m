@@ -341,17 +341,18 @@
 - (IBAction)actionCollet:(id)sender {
     NSString *url = [NSString stringWithFormat:@"%@/%@",rBaseAddressForHttpProd,@"collection"];
     NSDictionary *param = @{@"uid":[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID], @"pid":self.obj.pid};
+    __weak typeof(self)weakSelf = self;
     if ([self.obj.iscollected boolValue]){
-        [[AFHTTPSessionManager manager] DELETE:url parameters:param success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-            NSString *code = [responseObject valueForKey:@"code"];
+        [MOCHTTPRequestOperationManager deleteWithURL:url parameters:param success:^(MOCHTTPResponse *response) {
+            NSString *code = [response.data valueForKey:@"code"];
             if ([code isEqualToString:@"000"]) {
-                self.obj.iscollected = @"0";
-                [self.btnCollet setImage:[UIImage imageNamed:@"收藏prod"] forState:UIControlStateNormal];
+                weakSelf.obj.iscollected = @"0";
+                [weakSelf.btnCollet setImage:[UIImage imageNamed:@"收藏prod"] forState:UIControlStateNormal];
             }
-            self.isProductChange = NO;
+            weakSelf.isProductChange = NO;
             [Hud showMessageWithText:@"取消收藏"];
-        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-            [Hud showMessageWithText:error.domain];
+        } failed:^(MOCHTTPResponse *response) {
+            [Hud showMessageWithText:response.errorMessage];
         }];
     } else{
         [MOCHTTPRequestOperationManager postWithURL:url class:nil parameters:param success:^(MOCHTTPResponse *response) {
@@ -359,10 +360,10 @@
             if ([code isEqualToString:@"000"]){
                 ProdListObj *obj = _obj;
                 obj.iscollected = @"1";
-                self.obj = obj;
-                [self.btnCollet setImage:[UIImage imageNamed:@"已收藏prod"] forState:UIControlStateNormal];
+                weakSelf.obj = obj;
+                [weakSelf.btnCollet setImage:[UIImage imageNamed:@"已收藏prod"] forState:UIControlStateNormal];
             }
-            self.isProductChange = YES;
+            weakSelf.isProductChange = YES;
             [Hud showMessageWithText:@"收藏成功"];
 
         } failed:^(MOCHTTPResponse *response) {

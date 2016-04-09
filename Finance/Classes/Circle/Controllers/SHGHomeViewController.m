@@ -205,28 +205,12 @@
 
 - (void)requestRecommendFriends
 {
+    [self.heightDictionary removeAllObjects];
     [self.dataArr removeObject:self.recommendArray];
     [self.recommendArray removeAllObjects];
     __weak typeof(self) weakSelf = self;
-    [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/v1/recommended/friends/recommendedFriendGrade",rBaseAddRessHttp] class:[RecmdFriendObj class] parameters:@{@"uid":UID} success:^(MOCHTTPResponse *response){
-        [weakSelf.dataArr removeObject:weakSelf.recommendArray];
-        for (int i = 0; i < response.dataArray.count; i++){
-            NSDictionary *dic = response.dataArray[i];
-            
-            RecmdFriendObj *obj = [[RecmdFriendObj alloc]init];
-            obj.flag = [dic valueForKey:@"flag"];
-            obj.username = [dic valueForKey:@"username"];
-            obj.uid = [dic valueForKey:@"uid"];
-            obj.headimg =[NSString stringWithFormat:@"%@/%@",rBaseAddressForImage,[dic valueForKey:@"headimg"]];
-            obj.phone = [dic valueForKey:@"phone"];
-            obj.area = [dic valueForKey:@"area"];
-            obj.company = [dic valueForKey:@"company"];
-            obj.recomfri = [dic valueForKey:@"recomfri"];
-            obj.title = [dic valueForKey:@"title"];
-            obj.vocation = [dic valueForKey:@"vocation"];
-            obj.commonCount = [dic valueForKey:@"commonCount"];
-            [weakSelf.recommendArray addObject:obj];
-        }
+    [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/recommended/friends/recommendedFriendGrade",rBaseAddressForHttp] class:[RecmdFriendObj class] parameters:@{@"uid":UID} success:^(MOCHTTPResponse *response){
+        [weakSelf.recommendArray addObjectsFromArray:response.dataArray];
         [weakSelf insertRecomandArray];
 
     } failed:^(MOCHTTPResponse *response){
@@ -237,7 +221,7 @@
 
 - (void)insertRecomandArray
 {
-    if (self.recommendArray.count == 0 || [self.dataArr indexOfObject:self.recommendArray] != NSNotFound) {
+    if (self.recommendArray.count == 0 || [self.dataArr containsObject:self.recommendArray]) {
         return;
     }
     //第三个帖子后面
@@ -250,7 +234,7 @@
 
 - (void)insertNewFriendArray
 {
-    if (!self.friendObject || [self.dataArr indexOfObject:self.friendObject] != NSNotFound) {
+    if (!self.friendObject || [self.dataArr containsObject:self.friendObject]) {
         return;
     }
     if(self.dataArr.count > 2 && self.needShowNewFriend){
@@ -279,7 +263,7 @@
                 [self.dataArr moveObjectAtIndex:index toIndex:3];
             }
         }
-
+        
     }
 }
 
@@ -524,8 +508,6 @@
             }
             NSMutableArray *array = [self.dataArr objectAtIndex:indexPath.row];
             cell.objectArray = array;
-            cell.sd_tableView = tableView;
-            cell.sd_indexPath = indexPath;
             cell.controller = self;
             cell.delegate = [SHGUnifiedTreatment sharedTreatment];
             return cell;

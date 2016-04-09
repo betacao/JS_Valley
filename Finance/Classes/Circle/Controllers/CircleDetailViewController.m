@@ -518,8 +518,8 @@
             praiseOBj *obj = self.obj.heads[i];
             praiseWidth = MarginFactor(30.0f);
             CGRect rect = CGRectMake((praiseWidth + MarginFactor(7.0f)) * i , MarginFactor(13.0f), praiseWidth, praiseWidth);
-            UIImageView *head = [[UIImageView alloc] initWithFrame:rect];
-            [head sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,obj.ppotname]] placeholderImage:[UIImage imageNamed:@"default_head"]];
+            SHGUserHeaderView *head = [[SHGUserHeaderView alloc] initWithFrame:rect];
+            [head updateHeaderView:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,obj.ppotname] placeholderImage:[UIImage imageNamed:@"default_head"] status:NO userID:obj.puserid];
             [_scrollPraise addSubview:head];
         }
         [self.scrollPraise setContentSize:CGSizeMake(self.obj.heads.count *(praiseWidth+PRAISE_SEPWIDTH), CGRectGetHeight(self.scrollPraise.frame))];
@@ -592,7 +592,7 @@
 
 - (IBAction)actionComment:(id)sender
 {
-    [[SHGGloble  sharedGloble] requsetUserVerifyStatus:@"circle" completion:^(BOOL status) {
+    [[SHGGloble sharedGloble] requsetUserVerifyStatus:@"circle" completion:^(BOOL status) {
         if (status) {
             _popupView = [[BRCommentView alloc] initWithFrame:self.view.bounds superFrame:CGRectZero isController:YES type:@"comment"];
             _popupView.delegate = self;
@@ -753,8 +753,10 @@
     } else{
         [Hud showWait];
         __weak typeof(self) weakSelf = self;
-        [[AFHTTPSessionManager manager] DELETE:url parameters:param success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-            NSString *code = [responseObject valueForKey:@"code"];
+
+        [MOCHTTPRequestOperationManager deleteWithURL:url parameters:param success:^(MOCHTTPResponse *response) {
+            [Hud hideHud];
+            NSString *code = [response.data valueForKey:@"code"];
             if ([code isEqualToString:@"000"]){
                 weakSelf.obj.ispraise = @"N";
                 weakSelf.obj.praisenum = [NSString stringWithFormat:@"%ld",(long)([self.obj.praisenum integerValue] - 1)];
@@ -768,14 +770,13 @@
                 [MobClick event:@"ActionPraiseClicked_Off" label:@"onClick"];
                 [weakSelf loadDatasWithObj:self.obj];
                 [weakSelf.listTable reloadData];
-                
+
                 [weakSelf.delegate detailPraiseWithRid:self.obj.rid praiseNum:self.obj.praisenum isPraised:@"N"];
                 [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_COLLECT_PRAISE_CLICK object:weakSelf.obj];
             }
+        } failed:^(MOCHTTPResponse *response) {
             [Hud hideHud];
-        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-            [Hud showMessageWithText:error.domain];
-            [Hud hideHud];
+            [Hud showMessageWithText:response.errorMessage];
         }];
     }
 }
@@ -919,28 +920,32 @@
 #pragma mark -收藏
 - (IBAction)actionCollection:(id)sender
 {
+    [Hud showWait];
+    __weak typeof(self) weakSelf = self;
     NSString *url = [NSString stringWithFormat:@"%@/%@",rBaseAddressForHttpCircle,@"circlestore"];
-    NSDictionary *param = @{@"uid":[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID],
-                            @"rid":self.obj.rid};
+    NSDictionary *param = @{@"uid":UID, @"rid":self.obj.rid};
     if (![self.obj.iscollection isEqualToString:@"Y"]){
         [MOCHTTPRequestOperationManager postWithURL:url class:nil parameters:param success:^(MOCHTTPResponse *response) {
+            [Hud hideHud];
             NSString *code = [response.data valueForKey:@"code"];
             if ([code isEqualToString:@"000"]) {
-                self.obj.iscollection = @"Y";
+                weakSelf.obj.iscollection = @"Y";
             }
-            [self loadDatasWithObj:self.obj];
+            [weakSelf loadDatasWithObj:weakSelf.obj];
             [Hud showMessageWithText:@"收藏成功"];
             [MobClick event:@"ActionCollection_On" label:@"onClick"];
-            if (self.delegate && [self.delegate respondsToSelector:@selector(detailCollectionWithRid:collected:)]){
-                [self.delegate detailCollectionWithRid:self.obj.rid collected:self.obj.iscollection];
+            if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(detailCollectionWithRid:collected:)]){
+                [weakSelf.delegate detailCollectionWithRid:weakSelf.obj.rid collected:weakSelf.obj.iscollection];
             }
         } failed:^(MOCHTTPResponse *response) {
+            [Hud hideHud];
             [Hud showMessageWithText:response.errorMessage];
         }];
     } else{
-        __weak typeof(self)weakSelf = self;
-        [[AFHTTPSessionManager manager] DELETE:url parameters:param success:^(NSURLSessionDataTask *operation, id responseObject){
-            NSString *code = [responseObject valueForKey:@"code"];
+
+        [MOCHTTPRequestOperationManager deleteWithURL:url parameters:param success:^(MOCHTTPResponse *response) {
+            [Hud hideHud];
+            NSString *code = [response.data valueForKey:@"code"];
             if ([code isEqualToString:@"000"]) {
                 weakSelf.obj.iscollection = @"N";
             }
@@ -950,9 +955,9 @@
             }
             [MobClick event:@"ActionCollection_Off" label:@"onClick"];
             [Hud showMessageWithText:@"取消收藏"];
-            
-        } failure:^(NSURLSessionDataTask *operation, NSError *error) {
-            [Hud showMessageWithText:error.domain];
+        } failed:^(MOCHTTPResponse *response) {
+            [Hud hideHud];
+            [Hud showMessageWithText:response.errorMessage];
         }];
     }
 }
@@ -980,20 +985,24 @@
         }];
     } else{
         __weak typeof(self) weakSelf = self;
-        [[AFHTTPSessionManager manager] DELETE:url parameters:param success:^(NSURLSessionDataTask *operation, id responseObject) {
+        [MOCHTTPRequestOperationManager deleteWithURL:url parameters:param success:^(MOCHTTPResponse *response) {
+
             [Hud hideHud];
-            NSString *code = [responseObject valueForKey:@"code"];
+            NSString *code = [response.data valueForKey:@"code"];
             if ([code isEqualToString:@"000"]){
                 weakSelf.obj.isattention = @"N";
                 [Hud showMessageWithText:@"取消关注成功"];
             }
-            [weakSelf loadDatasWithObj:self.obj];
+            [weakSelf loadDatasWithObj:weakSelf.obj];
             [weakSelf.delegate detailAttentionWithRid:weakSelf.obj.userid attention:weakSelf.obj.isattention];
             [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_COLLECT_COLLECT_CLIC object:weakSelf.obj];
-        } failure:^(NSURLSessionDataTask *operation, NSError *error) {
+
+        } failed:^(MOCHTTPResponse *response) {
+
             [Hud hideHud];
-            [Hud showMessageWithText:error.domain];
+            [Hud showMessageWithText:response.errorMessage];
         }];
+
     }
 }
 
@@ -1161,20 +1170,20 @@
     
 }
 
--(void)deleteSelf
+- (void)deleteSelf
 {
     NSString *url = [NSString stringWithFormat:@"%@/%@",rBaseAddressForHttpCircle,@"circle"];
     NSDictionary *dic = @{@"rid":self.obj.rid, @"uid":self.obj.userid};
     __weak typeof(self) weakSelf = self;
-    [[AFHTTPSessionManager manager] DELETE:url parameters:dic success:^(NSURLSessionDataTask *operation, id responseObject) {
-        NSLog(@"%@",responseObject);
-        NSString *code = [responseObject valueForKey:@"code"];
+    [MOCHTTPRequestOperationManager deleteWithURL:url parameters:dic success:^(MOCHTTPResponse *response) {
+
+        NSString *code = [response.data valueForKey:@"code"];
         if ([code isEqualToString:@"000"]){
             [weakSelf.delegate detailDeleteWithRid:weakSelf.obj.rid];
             [weakSelf.navigationController popViewControllerAnimated:YES];
         }
-    } failure:^(NSURLSessionDataTask *operation, NSError *error) {
-        [Hud showMessageWithText:error.domain];
+    } failed:^(MOCHTTPResponse *response) {
+        [Hud showMessageWithText:response.errorMessage];
     }];
 }
 

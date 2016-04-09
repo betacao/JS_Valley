@@ -10,6 +10,7 @@
 #import "AFNetworking.h"
 #import <Mantle/Mantle.h>
 #import "MOCNetworkReachabilityManager.h"
+#import "SHGEncryptionAlgorithm.h"
 
 NSString * const moc_http_request_operation_manager_response_server_error_message = @"亲，您现在的网络不给力哦，请您稍后重试";
 NSString * const moc_http_request_operation_manager_response_server_error_code = @"-9989";
@@ -55,6 +56,7 @@ NSString *moc_http_request_operation_manager_token;
 }
 
 #pragma mark -
+
 + (void)postWithURL:(NSString *)url parameters:(id)parameters success:(MOCResponseBlock)success failed:(MOCResponseBlock)failed{
     [MOCHTTPRequestOperationManager postWithURL:url class:nil parameters:parameters success:success failed:failed complete:nil];
 }
@@ -132,10 +134,36 @@ NSString *moc_http_request_operation_manager_token;
 
 
 #pragma mark -
-+ (void )requestWithURL:(NSString *)url method:(NSString *)method class:(Class)class parameters:(id)parameters success:(MOCResponseBlock)success failed:(MOCResponseBlock)failed complete:(Block)complete {
++ (NSURLSessionTask *)POST:(NSString *)URLString parameters:(id)parameters constructingBodyWithBlock:(void (^)(id <AFMultipartFormData> formData))block progress:(nullable void (^)(NSProgress * _Nonnull))uploadProgress success:(void (^)(NSURLSessionDataTask *task, id responseObject))success failure:(void (^)(NSURLSessionDataTask *task, NSError *error))failure
+{
+    NSAssert(URLString, @"请求地址不能为空");
+    MOCHTTPRequestOperationManager *client = [MOCHTTPRequestOperationManager manager];
+    if (![MOCNetworkReachabilityManager isReachable]) {//网络不可达
+        // [Hud showMessageWithText:@"断网了~"];
+        [client parseResponseFailed:nil failed:nil logInfo:@"网络不可达"];
+        return nil;
+    }
+    NSMutableDictionary *param = [NSMutableDictionary dictionaryWithDictionary:parameters];
+    [param setObject:@([[NSDate date] timeIntervalSince1970] * 1000) forKey:@"authTimestamp"];
+    NSString *secret = [client sortParameter:param];
+
+    NSString *code = signCode;
+    for (NSInteger i = 0; i < 3; i++) {
+        code = [SHGEncryptionAlgorithm textFromBase64String:code];
+    }
+    secret = [secret stringByAppendingString:code];
+    for (NSInteger i = 0; i < 3; i++) {
+        secret = [secret md5];
+    }
+    [param setObject:secret forKey:@"sign"];
+    parameters = [client packageParameters:param];
+    NSLog(@"%@   parameters:%@", URLString, param);
+    return [client.manager POST:URLString parameters:parameters constructingBodyWithBlock:block progress:uploadProgress success:success failure:failure];
+}
+
++ (void)requestWithURL:(NSString *)url method:(NSString *)method class:(Class)class parameters:(id)parameters success:(MOCResponseBlock)success failed:(MOCResponseBlock)failed complete:(Block)complete {
 
     NSAssert(url, @"请求地址不能为空");
-
     MOCHTTPRequestOperationManager *client = [MOCHTTPRequestOperationManager manager];
 
     if (![MOCNetworkReachabilityManager isReachable]) {//网络不可达
@@ -143,8 +171,23 @@ NSString *moc_http_request_operation_manager_token;
         [client parseResponseFailed:nil failed:failed logInfo:@"网络不可达"];
         return;
     }
-    parameters = [client packageParameters:parameters];
-    NSLog(@"%@   parameters:%@", url,parameters);
+
+    NSMutableDictionary *param = [NSMutableDictionary dictionaryWithDictionary:parameters];
+    [param setObject:@([[NSDate date] timeIntervalSince1970] * 1000) forKey:@"authTimestamp"];
+    NSString *secret = [client sortParameter:param];
+
+    NSString *code = signCode;
+    for (NSInteger i = 0; i < 3; i++) {
+        code = [SHGEncryptionAlgorithm textFromBase64String:code];
+    }
+    secret = [secret stringByAppendingString:code];
+    for (NSInteger i = 0; i < 3; i++) {
+        secret = [secret md5];
+    }
+    [param setObject:secret forKey:@"sign"];
+    parameters = [client packageParameters:param];
+    NSLog(@"%@   parameters:%@", url,param);
+
     if([method isEqualToString:@"post"]){
         [client.manager POST:url parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
 
@@ -307,6 +350,28 @@ NSString *moc_http_request_operation_manager_token;
     self.manager.requestSerializer.timeoutInterval = 30;
     self.manager.responseSerializer = [AFJSONResponseSerializer serializer];
     self.manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"text/html",@"application/json", nil];
+}
+
+- (NSString *)sortParameter:(id)param
+{
+    NSArray *keys = [param allKeys];
+    NSArray *sortedArray = [keys sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
+    NSMutableArray *sortedValues = [NSMutableArray array];
+    for(id key in sortedArray) {
+        id object = [param objectForKey:key];
+        object = (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault,(CFStringRef)[NSString stringWithFormat:@"%@",object],NULL,CFSTR(":/=？：?#[]@!$ '()*+,;\"<>%&{}|\\^~`"),kCFStringEncodingUTF8));
+        [sortedValues addObject:object];
+    }
+
+    __block NSString *result = @"";
+    [sortedArray enumerateObjectsUsingBlock:^(id  _Nonnull key, NSUInteger idx, BOOL * _Nonnull stop) {
+        result = [result stringByAppendingString:[NSString stringWithFormat:@"%@=%@&",key, [sortedValues objectAtIndex:idx]]];
+    }];
+    if (!IsStrEmpty(result)) {
+        result = [result substringToIndex:result.length - 1];
+
+    }
+    return result;
 }
 
 #pragma mark -

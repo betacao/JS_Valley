@@ -523,21 +523,17 @@
 
 - (void)addNewMarket:(id)sender
 {
-    
-    SHGEquityInvestSendViewController *vc = [[SHGEquityInvestSendViewController alloc] init];
-    [self.navigationController pushViewController:vc animated:YES];
-//    __weak typeof(self)weakSelf = self;
-//    [[SHGGloble sharedGloble] requsetUserVerifyStatus:@"market" completion:^(BOOL status) {
-//        if (status) {
-//            SHGMarketSendViewController *controller = [[SHGMarketSendViewController alloc] init];
-//            controller.delegate = [SHGMarketSegmentViewController sharedSegmentController];
-//            [weakSelf.navigationController pushViewController:controller animated:YES];
-//        } else{
-//            
-//            VerifyIdentityViewController *controller = [[VerifyIdentityViewController alloc] init];
-//            [weakSelf.navigationController pushViewController:controller animated:YES];
-//        }
-//    } failString:@"认证后才能发起业务哦～"];
+    __weak typeof(self)weakSelf = self;
+    [[SHGGloble sharedGloble] requsetUserVerifyStatus:@"market" completion:^(BOOL status) {
+        if (status) {
+            SHGMarketSendViewController *controller = [[SHGMarketSendViewController alloc] init];
+            controller.delegate = [SHGMarketSegmentViewController sharedSegmentController];
+            [weakSelf.navigationController pushViewController:controller animated:YES];
+        } else{
+            VerifyIdentityViewController *controller = [[VerifyIdentityViewController alloc] init];
+            [weakSelf.navigationController pushViewController:controller animated:YES];
+        }
+    } failString:@"认证后才能发起业务哦～"];
 }
 
 #pragma mark -----二级分类返回代理
