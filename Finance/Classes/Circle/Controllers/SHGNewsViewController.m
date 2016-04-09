@@ -15,7 +15,6 @@
 #import "SHGNoticeView.h"
 #import "CircleDetailViewController.h"
 #import "SHGUnifiedTreatment.h"
-#import "SHGSelectTagsViewController.h"
 #import "SHGEmptyDataView.h"
 //添加分类
 #import "CirclleItemObj.h"
@@ -35,7 +34,6 @@
 @property (strong, nonatomic) NSString *circleType;
 @property (strong, nonatomic) SHGNoticeView *messageNoticeView;
 @property (assign, nonatomic) BOOL hasDataFinished;
-@property (strong, nonatomic) SHGSelectTagsViewController *tagsController;
 @property (strong, nonatomic) UITableViewCell *emptyCell;
 @property (strong, nonatomic) SHGEmptyDataView *emptyView;
 @property (strong, nonatomic) UIScrollView *backScrollView;

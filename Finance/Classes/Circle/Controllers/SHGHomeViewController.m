@@ -19,7 +19,6 @@
 #import "SHGUnifiedTreatment.h"
 #import "SHGUserTagModel.h"
 #import "SHGPersonalViewController.h"
-#import "SHGSelectTagsViewController.h"
 #import "SHGEmptyDataView.h"
 #import "SHGExtendTableViewCell.h"
 #import "SHGRecommendTableViewCell.h"

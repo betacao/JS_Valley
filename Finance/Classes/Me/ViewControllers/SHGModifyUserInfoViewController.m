@@ -30,6 +30,11 @@
 @property (weak, nonatomic) IBOutlet UITextField *departmentField;
 @property (weak, nonatomic) IBOutlet UIButton *nextButton;
 @property (weak, nonatomic) IBOutlet UIButton *cityButton;
+
+@property (weak, nonatomic) IBOutlet UIView *authView;
+@property (weak, nonatomic) IBOutlet UIImageView *authImageView;
+@property (weak, nonatomic) IBOutlet UIButton *authButton;
+
 @property (strong, nonatomic) NSString *nickName;
 @property (strong, nonatomic) NSString *department;
 @property (strong, nonatomic) NSString *company;
@@ -61,7 +66,20 @@
     [self.headView addGestureRecognizer:recognizer];
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardDidShowNotification object:nil];
-    [self initObject];
+    [self initView];
+    //请求状态
+    __weak typeof(self)weakSelf = self;
+    [[SHGGloble sharedGloble] requsetUserVerifyStatus:@"" completion:^(BOOL state) {
+        if (state) {
+            [weakSelf.authView removeFromSuperview];
+        }
+    } failString:@""];
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)initView
@@ -86,8 +104,17 @@
     [self.cityButton setTitleColor:[UIColor colorWithHexString:@"161616"] forState:UIControlStateNormal];
     [self.nextButton setTitleColor:[UIColor colorWithHexString:@"ffffff"] forState:UIControlStateNormal];
     self.nextButton.titleLabel.font = FontFactor(17.0f);
-    [self.nextButton setBackgroundColor:[UIColor colorWithHexString:@"f04241"]];
-    
+    self.nextButton.backgroundColor = Color(@"f04241");
+
+    //认证界面
+
+    [self.authButton setTitle:@"立即认证" forState:UIControlStateNormal];
+    [self.authButton setTitleColor:[UIColor colorWithHexString:@"ffffff"] forState:UIControlStateNormal];
+    self.authButton.titleLabel.font = FontFactor(17.0f);
+    self.authButton.backgroundColor = Color(@"f04241");
+
+    [self initObject];
+
 }
 
 - (void)addSdLayout
@@ -172,8 +199,26 @@
     .rightSpaceToView(self.bgView, MarginFactor(12.0f))
     .bottomSpaceToView(self.bgView, MarginFactor(19.0f))
     .heightIs(MarginFactor(40.0f));
+
+    //认证界面
+
+    self.authImageView.sd_layout
+    .topSpaceToView(self.authView, 0.0f)
+    .centerXEqualToView(self.authView)
+    .widthIs(self.authImageView.image.size.width)
+    .heightIs(self.authImageView.image.size.height);
+
+    self.authButton.sd_layout
+    .leftSpaceToView(self.authView, MarginFactor(12.0f))
+    .rightSpaceToView(self.authView, MarginFactor(12.0f))
+    .bottomSpaceToView(self.authView, MarginFactor(19.0f))
+    .heightIs(MarginFactor(40.0f));
+
+    self.authView.sd_layout
+    .spaceToSuperView(UIEdgeInsetsZero);
     
 }
+
 - (void)initObject
 {
     [self.headerImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,self.head_img]] placeholderImage:[UIImage imageNamed:@"default_head"]];
@@ -188,8 +233,6 @@
         [self.cityButton setTitle:[NSString stringWithFormat:@"%@",self.location] forState:UIControlStateNormal];
         [self.cityButton setTitleColor:[UIColor colorWithHexString:@"161616"] forState:UIControlStateNormal];
     }
-
-    [self.view layoutSubviews];
 }
 
 - (IBAction)nextButtonClick:(UIButton *)button
@@ -459,19 +502,6 @@
     return nil;
 }
 
-
-- (void)viewDidDisappear:(BOOL)animated
-{
-    [super viewDidDisappear:animated];
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-}
-
-
 - (IBAction)citySelect:(UIButton *)sender {
     SHGProvincesViewController *controller = [[SHGProvincesViewController alloc] initWithNibName:@"SHGProvincesViewController" bundle:nil];
     if(controller){
@@ -480,10 +510,17 @@
     }
 
 }
+
 - (void)didSelectCity:(NSString *)city
 {
     [self.cityButton setTitle:city forState:UIControlStateNormal];
     [self.cityButton setTitleColor:[UIColor colorWithHexString:@"161616"] forState:UIControlStateNormal];
+}
+
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
 }
 
 @end

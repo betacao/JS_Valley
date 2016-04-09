@@ -497,7 +497,9 @@
                 label.origin = CGPointMake(kLineViewLeftMargin, kCustomViewButtomMargin);
                 CGSize size = [label sizeThatFits:CGSizeMake(kAlertWidth - 2 * kLineViewLeftMargin, CGFLOAT_MAX)];
                 label.size = size;
-                alert = [[DXAlertView alloc] initWithTitle:@"提示" customView:label leftButtonTitle:nil rightButtonTitle:@"立即更新"];
+                UIView *contentView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, kAlertWidth, size.height + kCustomViewButtomMargin)];
+                [contentView addSubview:label];
+                alert = [[DXAlertView alloc] initWithTitle:@"提示" customView:contentView leftButtonTitle:nil rightButtonTitle:@"立即更新"];
                 alert.rightBlock = ^{
                     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://itunes.apple.com/cn/app/da-niu-quan-jin-rong-zheng/id984379568?mt=8"]];
                 };

@@ -38,6 +38,9 @@
 @property (strong, nonatomic) UIView	*breakLine3;
 @property (strong, nonatomic) UIView	*bottomView;
 
+@property (strong, nonatomic) UIImageView *authMaskImageView;
+@property (strong, nonatomic) UIButton *authMaskButton;
+@property (strong, nonatomic) DXAlertView *authAlertView;
 
 @property (strong, nonatomic) UIButton      *authButton;
 @property (strong, nonatomic) NSString      *nickName;
@@ -184,6 +187,14 @@
     [self.tableView setTableHeaderView:self.tableHeaderView];
     [self initData];
 
+    //认证的maskView
+
+    self.authMaskButton.sd_layout
+    .topSpaceToView(self.authMaskImageView, 221.0f)
+    .centerXEqualToView(self.authMaskImageView)
+    .widthIs(self.authMaskButton.currentImage.size.width)
+    .heightIs(self.authMaskButton.currentImage.size.height);
+
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -194,6 +205,12 @@
     } else{
         self.shouldRefresh = YES;
     }
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [self.authAlertView show];
 }
 
 - (void)initData
@@ -382,6 +399,45 @@
     }
 
     return _authButton;
+}
+
+- (UIImageView *)authMaskImageView
+{
+    if (!_authMaskImageView) {
+        _authMaskImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"me_authMask"]];
+        [_authMaskImageView sizeToFit];
+        _authMaskImageView.userInteractionEnabled = YES;
+    }
+
+    return _authMaskImageView;
+}
+
+- (UIButton *)authMaskButton
+{
+    if (!_authMaskButton) {
+        _authMaskButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [_authMaskButton setImage:[UIImage imageNamed:@"me_authButton"] forState:UIControlStateNormal];
+        #pragma clang diagnostic ignored"-Wundeclared-selector"
+        [_authMaskButton addTarget:self.authAlertView action:@selector(leftBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+        [self.authMaskImageView addSubview:self.authMaskButton];
+    }
+
+    return _authMaskButton;
+}
+
+- (DXAlertView *)authAlertView
+{
+    if (!_authAlertView) {
+        _authAlertView = [[DXAlertView alloc] initWithCustomView:self.authMaskImageView leftButtonTitle:nil rightButtonTitle:nil];
+        _authAlertView.touchOtherDismiss = YES;
+        __weak typeof(self) weakSelf = self;
+        _authAlertView.leftBlock = ^{
+            VerifyIdentityViewController *controller = [[VerifyIdentityViewController alloc] init];
+            controller.hidesBottomBarWhenPushed = YES;
+            [weakSelf.navigationController pushViewController:controller animated:YES];
+        };
+    }
+    return _authAlertView;
 }
 
 - (UIView *)breakLine1

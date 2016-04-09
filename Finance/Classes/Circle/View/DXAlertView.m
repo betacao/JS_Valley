@@ -177,45 +177,8 @@
     self = [super init];
     if(self){
         self.shouldDismiss = YES;
-        self.layer.cornerRadius = 8.0f;
-        self.backgroundColor = [UIColor whiteColor];
-
-        CGRect frame = customView.frame;
-        frame.origin.y = kCustomViewTopMargin;
-        customView.frame = frame;
         [self addSubview:customView];
         self.customView = customView;
-
-        CGRect leftBtnFrame = CGRectZero;
-        CGRect rightBtnFrame = CGRectZero;
-        if (!leftTitle) {
-            rightBtnFrame = CGRectMake((kAlertWidth - kSingleButtonWidth) * 0.5, kAlertHeight - kButtonBottomOffset - kButtonHeight, kSingleButtonWidth, kButtonHeight);
-            self.rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-            self.rightBtn.frame = rightBtnFrame;
-
-        }else {
-            leftBtnFrame = CGRectMake(kLineViewLeftMargin, CGRectGetMaxY(customView.frame) + kCustomViewButtomMargin, kCoupleButtonWidth, kButtonHeight);
-            rightBtnFrame = CGRectMake(kAlertWidth - kLineViewLeftMargin - kCoupleButtonWidth, CGRectGetMaxY(customView.frame) + kCustomViewButtomMargin, kCoupleButtonWidth, kButtonHeight);
-            self.leftBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-            self.rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-            self.leftBtn.frame = leftBtnFrame;
-            self.rightBtn.frame = rightBtnFrame;
-        }
-
-        [self.rightBtn setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithHexString:@"F04241"]] forState:UIControlStateNormal];
-        [self.leftBtn setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithHexString:@"C5C5C5"]] forState:UIControlStateNormal];
-        [self.rightBtn setTitle:rigthTitle forState:UIControlStateNormal];
-        [self.leftBtn setTitle:leftTitle forState:UIControlStateNormal];
-        self.leftBtn.titleLabel.font = self.rightBtn.titleLabel.font = FontFactor(16.0f);
-        [self.leftBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        [self.rightBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-
-        [self.leftBtn addTarget:self action:@selector(leftBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
-        [self.rightBtn addTarget:self action:@selector(rightBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
-        self.leftBtn.layer.masksToBounds = self.rightBtn.layer.masksToBounds = YES;
-        self.leftBtn.layer.cornerRadius = self.rightBtn.layer.cornerRadius = 3.0;
-        [self addSubview:self.leftBtn];
-        [self addSubview:self.rightBtn];
 
         self.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin;
     }
@@ -310,12 +273,14 @@
         self.backImageView.backgroundColor = [UIColor blackColor];
         self.backImageView.alpha = 0.6f;
         self.backImageView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+        UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(backImageViewTaped:)];
+        [self.backImageView addGestureRecognizer:recognizer];
     }
     [topVC.view addSubview:self.backImageView];
     CGRect afterFrame = CGRectZero;
     if(self.customView){
-        CGFloat height = CGRectGetMaxY(self.rightBtn.frame) + kButtonBottomOffset;
-        afterFrame = CGRectMake((CGRectGetWidth(topVC.view.bounds) - kAlertWidth) * 0.5, (CGRectGetHeight(topVC.view.bounds) - height) * 0.5, kAlertWidth, height);
+        CGFloat height = MAX(CGRectGetMaxY(self.rightBtn.frame), CGRectGetMaxY(self.customView.frame)) + kButtonBottomOffset;
+        afterFrame = CGRectMake((CGRectGetWidth(topVC.view.bounds) - CGRectGetWidth(self.customView.frame)) * 0.5, (CGRectGetHeight(topVC.view.bounds) - height) * 0.5, CGRectGetWidth(self.customView.frame), height);
     } else{
         afterFrame = CGRectMake((CGRectGetWidth(topVC.view.bounds) - kAlertWidth) * 0.5, (CGRectGetHeight(topVC.view.bounds) - kAlertHeight) * 0.5, kAlertWidth, kAlertHeight);
     }
@@ -335,6 +300,13 @@
     } completion:^(BOOL finished) {
     }];
     [super willMoveToSuperview:newSuperview];
+}
+
+- (void)backImageViewTaped:(UITapGestureRecognizer *)recognizer
+{
+    if (self.touchOtherDismiss) {
+        [self dismissAlert];
+    }
 }
 
 @end

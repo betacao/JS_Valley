@@ -33,7 +33,7 @@
 @property (nonatomic, copy) dispatch_block_t rightBlock;
 @property (nonatomic, copy) dispatch_block_t dismissBlock;
 @property (nonatomic, assign) BOOL shouldDismiss;
-
+@property (nonatomic, assign) BOOL touchOtherDismiss;//点击黑色区域是否也消失
 @end
 
 @interface UIImage (colorful)
