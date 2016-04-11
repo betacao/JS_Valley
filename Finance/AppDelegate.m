@@ -21,7 +21,6 @@
 #import "UncaughtExceptionHandler.h"
 #import "MessageViewController.h"
 #import "SHGPersonalViewController.h"
-#import "VerifyIdentityViewController.h"
 #import "SHGActionDetailViewController.h"
 #import "GeTuiSdk.h"
 #import "GeTuiSdkError.h"
@@ -461,8 +460,8 @@
             [[NSUserDefaults standardUserDefaults] setObject:@"0" forKey:KEY_AUTHSTATE];
         }
 
-        VerifyIdentityViewController *meControl =[[VerifyIdentityViewController alloc]init];
-        [self pushIntoViewController:TopVC newViewController:meControl];
+        SHGAuthenticationViewController *controller =[[SHGAuthenticationViewController alloc]init];
+        [self pushIntoViewController:TopVC newViewController:controller];
     } else if ([ridCode isEqualToString:@"1010"] || [ridCode isEqualToString:@"1011"]){
         SHGActionDetailViewController *controller = [[SHGActionDetailViewController alloc] init];
         SHGActionObject *object = [[SHGActionObject alloc] init];

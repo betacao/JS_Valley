@@ -188,10 +188,10 @@
         
     } else if ([obj.code isEqualToString:@"1005"] || [obj.code isEqualToString:@"1006"]){
         //进入认证页面
-        VerifyIdentityViewController *vc = [[VerifyIdentityViewController alloc] init];
-        vc.hidesBottomBarWhenPushed = YES;
+        SHGAuthenticationViewController *controller = [[SHGAuthenticationViewController alloc] init];
+        controller.hidesBottomBarWhenPushed = YES;
         UINavigationController *nav = (UINavigationController *)[AppDelegate currentAppdelegate].window.rootViewController;
-        [nav pushViewController:vc animated:YES];
+        [nav pushViewController:controller animated:YES];
     } else if ([obj.code isEqualToString:@"1010"] || [obj.code isEqualToString:@"1011"]){
         SHGActionDetailViewController *controller = [[SHGActionDetailViewController alloc] init];
         SHGActionObject *object = [[SHGActionObject alloc] init];

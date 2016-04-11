@@ -13,7 +13,6 @@
 #import "SHGActionMineViewController.h"
 #import "SHGActionSegmentViewController.h"
 #import "SHGActionDetailViewController.h"
-#import "SHGAuthenticationViewController.h"
 
 @interface DiscoverViewController ()
 {

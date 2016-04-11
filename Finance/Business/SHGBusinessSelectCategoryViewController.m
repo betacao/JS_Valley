@@ -9,6 +9,7 @@
 #import "SHGBusinessSelectCategoryViewController.h"
 #import "SHGBusinessObject.h"
 #import "SHGBusinessMargin.h"
+#import "SHGBusinessManager.h"
 #import "SHGBusinessButtonContentView.h"
 
 @interface SHGBusinessSelectCategoryViewController ()
@@ -23,16 +24,26 @@
 {
     [super viewDidLoad];
     self.title = @"选择分类";
-    [self initView];
-    [self addAutoLayout];
+    [self loadData];
 }
 
-- (void)initView
+- (void)loadData
+{
+    __weak typeof(self)weakSelf = self;
+    [[SHGBusinessManager shareManager] getSecondListWithType:self.firstType block:^(NSArray *array) {
+        if (array) {
+            [weakSelf initViewWithArray:array];
+            [weakSelf addAutoLayout];
+        }
+    }];
+}
+
+- (void)initViewWithArray:(NSArray *)array
 {
     self.nextButton.backgroundColor = Color(@"f04241");
     [self.nextButton setTitle:@"确定" forState:UIControlStateNormal];
 
-    [self.dataArray enumerateObjectsUsingBlock:^(SHGBusinessSecondObject *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+    [array enumerateObjectsUsingBlock:^(SHGBusinessSecondObject *obj, NSUInteger idx, BOOL * _Nonnull stop) {
         SHGBusinessButtonContentView *contentView = [[SHGBusinessButtonContentView alloc] init];
         [self.scrollView addSubview:contentView];
 

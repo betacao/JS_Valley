@@ -317,15 +317,19 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
 - (void)actionPost:(UIButton *)button
 {
     __weak typeof(self)weakSelf = self;
-    [[SHGGloble sharedGloble] requsetUserVerifyStatus:@"circle" completion:^(BOOL status) {
-        if (status) {
+
+    [[SHGGloble sharedGloble] requsetUserVerifyStatusCompletion:^(BOOL state) {
+        if (state) {
             if([weakSelf.selectedViewController respondsToSelector:@selector(actionPost:)]){
                 [weakSelf.selectedViewController performSelector:@selector(actionPost:) withObject:button];
             }
         } else{
-            VerifyIdentityViewController *controller = [[VerifyIdentityViewController alloc] init];
+            SHGAuthenticationViewController *controller = [[SHGAuthenticationViewController alloc] init];
             [self.selectedViewController.navigationController pushViewController:controller animated:YES];
+            [[SHGGloble sharedGloble] recordUserAction:@"" type:@"dynamic_identity"];
         }
+    } showAlert:YES leftBlock:^{
+        [[SHGGloble sharedGloble] recordUserAction:@"" type:@"dynamic_identity_cancel"];
     } failString:@"认证后才能发起动态哦～"];
     
 }

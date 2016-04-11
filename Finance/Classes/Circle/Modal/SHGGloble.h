@@ -157,7 +157,7 @@ typedef void (^SHHomeDataCompletionBlock)(NSArray *allList, NSArray *normalList,
 
  @since 1.6.0
  */
-- (void)requsetUserVerifyStatus:(NSString *)str completion:(void (^)(BOOL))block failString:(NSString *)string;
+- (void)requsetUserVerifyStatusCompletion:(void (^)(BOOL state))completionblock showAlert:(BOOL)showAlert leftBlock:(void(^)())leftblock failString:(NSString *)string;
 
 
 /**

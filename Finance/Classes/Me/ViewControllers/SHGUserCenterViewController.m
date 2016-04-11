@@ -210,7 +210,6 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    [self.authAlertView show];
 }
 
 - (void)initData
@@ -432,7 +431,7 @@
         _authAlertView.touchOtherDismiss = YES;
         __weak typeof(self) weakSelf = self;
         _authAlertView.leftBlock = ^{
-            VerifyIdentityViewController *controller = [[VerifyIdentityViewController alloc] init];
+            SHGAuthenticationViewController *controller = [[SHGAuthenticationViewController alloc] init];
             controller.hidesBottomBarWhenPushed = YES;
             [weakSelf.navigationController pushViewController:controller animated:YES];
         };
@@ -506,8 +505,9 @@
     [self.navigationController pushViewController:controller animated:YES];
 }
 
-- (void)actionAuth:(id)sender {
-    VerifyIdentityViewController *controller = [[VerifyIdentityViewController alloc] init];
+- (void)actionAuth:(id)sender
+{
+    SHGAuthenticationViewController *controller = [[SHGAuthenticationViewController alloc] init];
     controller.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:controller animated:YES];
 }
@@ -741,6 +741,8 @@
             weakSelf.auditState = [response.dataDictionary objectForKey:@"auditstate"];
             if ([weakSelf.auditState isEqualToString:@"0"]) {
                 [weakSelf.authButton setImage:[UIImage imageNamed:@"me_unAuth"] forState:UIControlStateNormal];
+                //弹出提示框
+                [weakSelf.authAlertView show];
             } else if ([weakSelf.auditState isEqualToString:@"1"]){
                 [weakSelf.authButton setImage:[UIImage imageNamed:@"me_authed"] forState:UIControlStateNormal];
             } else if ([weakSelf.auditState isEqualToString:@"2"]){

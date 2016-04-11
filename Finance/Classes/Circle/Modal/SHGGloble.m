@@ -388,46 +388,34 @@
 }
 
 
-- (void)requsetUserVerifyStatus:(NSString *)str completion:(void (^)(BOOL))block failString:(NSString *)string
+- (void)requsetUserVerifyStatusCompletion:(void (^)(BOOL))completionblock showAlert:(BOOL)showAlert leftBlock:(void(^)())leftblock failString:(NSString *)string
 {
     [Hud showWait];
     NSString *request = [rBaseAddressForHttp stringByAppendingString:@"/auth/isAuth"];
-    NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
-    [MOCHTTPRequestOperationManager postWithURL:request parameters:@{@"uid":uid} success:^(MOCHTTPResponse *response) {
+    [MOCHTTPRequestOperationManager postWithURL:request parameters:@{@"uid":UID} success:^(MOCHTTPResponse *response) {
         [Hud hideHud];
         //未认证
         if ([[response.dataDictionary objectForKey:@"status"] isEqualToString:@"0"]) {
-            DXAlertView *alert = [[DXAlertView alloc] initWithTitle:@"提示" contentText:string leftButtonTitle:@"取消" rightButtonTitle:@"去认证"];
-            alert.rightBlock = ^{
-                if (block) {
-                    block(NO);
-                    if ([str isEqualToString:@"market"]){
-                        [[SHGGloble sharedGloble] recordUserAction:@"" type:@"market_identity"];
-                    } else if ([str isEqualToString:@"circle"]){
-                        [[SHGGloble sharedGloble] recordUserAction:@"" type:@"dynamic_identity"];
-                    }
-                }
-            };
-
-            alert.leftBlock = ^{
-                if ([str isEqualToString:@"market"]){
-                    [[SHGGloble sharedGloble] recordUserAction:@"" type:@"market_identity_cancel"];
-                } else if ([str isEqualToString:@"circle"]){
-                    [[SHGGloble sharedGloble] recordUserAction:@"" type:@"dynamic_identity_cancel"];
-                }
-            };
-            [alert show];
-
-        } else{
-            if (block) {
-                block(YES);
+            if (showAlert) {
+                DXAlertView *alert = [[DXAlertView alloc] initWithTitle:@"提示" contentText:string leftButtonTitle:@"取消" rightButtonTitle:@"去认证"];
+                alert.leftBlock = leftblock;
+                alert.rightBlock = ^{
+                    completionblock(NO);
+                };
+                [alert show];
+            } else {
+                completionblock(NO);
             }
+        } else {
+            completionblock(YES);
         }
     } failed:^(MOCHTTPResponse *response) {
         [Hud hideHud];
         [Hud showMessageWithText:@"获取用户认证状态失败"];
     }];
+
 }
+
 
 - (void)recordUserAction:(NSString *)recordIdStr type:(NSString *)typeStr
 {

@@ -77,6 +77,21 @@
     return self.selectedIndex;
 }
 
+- (NSString *)currentType
+{
+    NSString *type = @"";
+    if ([self currentIndex] == 0) {
+        type = @"bondfinancing";
+    } else if ([self currentIndex] == 0) {
+        type = @"equityfinancing";
+    } else if ([self currentIndex] == 0) {
+        type = @"moneyside";
+    } else if ([self currentIndex] == 0) {
+        type = @"trademixed";
+    }
+    return type;
+}
+
 
 - (void)moveToIndex:(NSInteger)index
 {

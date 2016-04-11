@@ -9,7 +9,8 @@
 #import <Mantle/Mantle.h>
 
 @interface SHGBusinessObject : MTLModel<MTLJSONSerializing>
-
+@property (strong, nonatomic) NSString *businessID;
+@property (strong, nonatomic) NSString *modifyTime;
 @end
 
 @interface SHGBusinessFirstObject : NSObject

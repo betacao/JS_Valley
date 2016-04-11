@@ -15,7 +15,6 @@
 #import "SHGMarketSegmentViewController.h"
 #import "SHGPersonalViewController.h"
 #import "SHGMarketCommentTableViewCell.h"
-#import "VerifyIdentityViewController.h"
 #import "SHGEmptyDataView.h"
 #import "MLEmojiLabel.h"
 #import "SHGUnifiedTreatment.h"
@@ -435,13 +434,14 @@
         }
 
     } else{
-        [[SHGGloble sharedGloble] requsetUserVerifyStatus:@"market" completion:^(BOOL status) {
-            if (status) {
-
-            } else{
-                VerifyIdentityViewController * vc = [[VerifyIdentityViewController alloc]init];
-                [self.navigationController pushViewController:vc animated:YES];
+        [[SHGGloble sharedGloble] requsetUserVerifyStatusCompletion:^(BOOL state) {
+            if (!state) {
+                SHGAuthenticationViewController *controller = [[SHGAuthenticationViewController alloc]init];
+                [self.navigationController pushViewController:controller animated:YES];
+                [[SHGGloble sharedGloble] recordUserAction:@"" type:@"market_identity"];
             }
+        } showAlert:YES leftBlock:^{
+            [[SHGGloble sharedGloble] recordUserAction:@"" type:@"market_identity_cancel"];
         } failString:@"认证后才能查看联系方式～"];
     }
 }

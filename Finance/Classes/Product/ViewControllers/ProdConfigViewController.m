@@ -324,17 +324,18 @@
 - (void)shareToFriendWithText:(NSString *)text
 {
     __weak typeof(self) weakSelf = self;
-    [[SHGGloble sharedGloble] requsetUserVerifyStatus:@"" completion:^(BOOL status) {
-        if (status) {
+    [[SHGGloble sharedGloble] requsetUserVerifyStatusCompletion:^(BOOL state) {
+        if (state) {
             FriendsListViewController *vc=[[FriendsListViewController alloc] init];
             vc.isShare = YES;
             vc.shareContent = text;
             [weakSelf.navigationController pushViewController:vc animated:YES];
         } else{
-            VerifyIdentityViewController *controller = [[VerifyIdentityViewController alloc] init];
+            SHGAuthenticationViewController *controller = [[SHGAuthenticationViewController alloc] init];
             [weakSelf.navigationController pushViewController:controller animated:YES];
         }
-    } failString:@"认证后才能进行操作哦～"];
+    } showAlert:YES leftBlock:nil failString:@"认证后才能进行操作哦～"];
+
 
 }
 

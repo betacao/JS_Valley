@@ -8,7 +8,6 @@
 
 #import "SHGActionSegmentViewController.h"
 #import "SHGActionManager.h"
-#import "VerifyIdentityViewController.h"
 
 @interface SHGActionSegmentViewController ()
 
@@ -104,21 +103,6 @@
 
 - (void)addNewAction:(UIButton *)button
 {
-    [self loadUserPermissionStatefinishBlock:^(BOOL success) {
-        if (success) {
-            __weak typeof(self)weakSelf = self;
-            [[SHGGloble sharedGloble] requsetUserVerifyStatus:@"" completion:^(BOOL status) {
-                if (status) {
-                    if([weakSelf.selectedViewController respondsToSelector:@selector(addNewAction:)]){
-                        [weakSelf.selectedViewController performSelector:@selector(addNewAction:) withObject:button];
-                    }
-                } else{
-                    VerifyIdentityViewController *controller = [[VerifyIdentityViewController alloc] init];
-                    [weakSelf.navigationController pushViewController:controller animated:YES];
-                }
-            } failString:@"认证后才能发起活动哦～"];
-        }
-    }];
 }
 
 - (void)reloadTabButtons

@@ -22,6 +22,6 @@
 @property (assign, nonatomic) id<SHGBusinessScrollViewDelegate>categoryDelegate;
 
 - (NSInteger)currentIndex;
+- (NSString *)currentType;
 - (void)moveToIndex:(NSInteger)index;
-
 @end

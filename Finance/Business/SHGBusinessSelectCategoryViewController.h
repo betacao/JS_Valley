@@ -10,7 +10,7 @@
 
 @interface SHGBusinessSelectCategoryViewController : BaseViewController
 
-@property (strong, nonatomic) NSArray *dataArray;
+@property (strong, nonatomic) NSString *firstType;
 
 @end
 

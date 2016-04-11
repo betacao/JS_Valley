@@ -8,7 +8,8 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SHGModifyUserInfoViewController">
             <connections>
                 <outlet property="authButton" destination="etx-an-jHY" id="eO0-xP-4Ha"/>
-                <outlet property="authImageView" destination="t9h-m1-Wos" id="0FX-2v-g4J"/>
+                <outlet property="authTipView" destination="Bob-U7-AqQ" id="HZH-Zc-Ozf"/>
+                <outlet property="authTitleTipView" destination="t9h-m1-Wos" id="ToP-DT-BUH"/>
                 <outlet property="authView" destination="PIm-zR-urS" id="QJC-Oc-7Ut"/>
                 <outlet property="bgScrollView" destination="bxE-1l-oxp" id="90W-GK-Re1"/>
                 <outlet property="bgView" destination="qK0-0b-EP3" id="DQb-JK-idH"/>
@@ -168,8 +169,12 @@
                     <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="me_authTipView" id="t9h-m1-Wos">
+                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="me_authTitletip" id="t9h-m1-Wos">
                             <rect key="frame" x="59" y="112" width="240" height="128"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        </imageView>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="me_authTip" id="Bob-U7-AqQ">
+                            <rect key="frame" x="25" y="246" width="240" height="128"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         </imageView>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="etx-an-jHY">
@@ -187,6 +192,7 @@
         </view>
     </objects>
     <resources>
-        <image name="me_authTipView" width="375" height="603"/>
+        <image name="me_authTip" width="375" height="50"/>
+        <image name="me_authTitletip" width="375" height="55"/>
     </resources>
 </document>

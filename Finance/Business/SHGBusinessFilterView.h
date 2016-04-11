@@ -12,5 +12,5 @@
 
 @property (assign, nonatomic) BOOL expand;
 @property (strong, nonatomic) NSMutableArray *dataArray;
-
+@property (strong, nonatomic) NSString *firstType;//一级分类的类型
 @end

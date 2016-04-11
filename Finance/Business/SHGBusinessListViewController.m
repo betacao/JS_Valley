@@ -11,6 +11,7 @@
 #import "SHGBusinessFilterView.h"
 #import "SHGBusinessObject.h"
 #import "EMSearchBar.h"
+#import "SHGBusinessManager.h"
 #import "SHGBusinessMainSendView.h"
 
 @interface SHGBusinessListViewController ()<UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, SHGBusinessScrollViewDelegate>
@@ -21,15 +22,16 @@
 @property (strong, nonatomic) EMSearchBar *searchBar;
 @property (strong, nonatomic) SHGBusinessScrollView *scrollView;
 @property (strong, nonatomic) SHGBusinessFilterView *filterView;
-@property (strong, nonatomic) NSMutableArray *categoryArray;
 @property (assign, nonatomic) CGSize addBusinessSize;
 @property (assign, nonatomic) CGRect filterViewFrame;
+@property (weak, nonatomic) NSMutableArray *currentArray;
 //
 
 @end
 
 @implementation SHGBusinessListViewController
 
+#pragma mark ------ 初始化部分
 + (instancetype)sharedController
 {
     static SHGBusinessListViewController *sharedGlobleInstance = nil;
@@ -43,17 +45,24 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+    [self addHeaderRefresh:self.tableView headerRefesh:YES andFooter:YES];
     if (self.block) {
         self.block(self.searchBar);
     }
 
     NSArray *array = @[@"推荐", @"债权融资", @"股权融资", @"资金方", @"同业混业"];
+    NSMutableArray *categoryArray = [NSMutableArray array];
     [array enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        [self.categoryArray addObject:[[SHGBusinessFirstObject alloc] initWithName:obj]];
+        [categoryArray addObject:[[SHGBusinessFirstObject alloc] initWithName:obj]];
     }];
-    self.scrollView.categoryArray = self.categoryArray;
+    self.scrollView.categoryArray = categoryArray;
 
+    for (NSInteger i = 0; i < array.count; i++) {
+        NSMutableArray *subArray = [NSMutableArray array];
+        [self.dataArr addObject:subArray];
+    }
+
+    self.currentArray = [self.dataArr firstObject];
     self.filterView.sd_layout
     .topSpaceToView(self.scrollView, 0.0f)
     .leftSpaceToView(self.view, 0.0f)
@@ -68,8 +77,8 @@
         .rightSpaceToView(weakSelf.view, 0.0f)
         .bottomSpaceToView(weakSelf.view, 0.0f);
     };
-
-    [self addHeaderRefresh:self.tableView headerRefesh:YES andFooter:YES];
+    //请求数据
+    [self loadDataWithTarget:@"first" modifyTime:@""];
 }
 
 
@@ -82,17 +91,7 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    self.filterView.dataArray = [NSMutableArray arrayWithArray:@[@"哈哈", @"哈哈", @"哈哈", @"哈哈", @"哈哈", @"哈哈", @"哈哈", @"哈哈"]];
-
     self.filterView.didFinishAutoLayoutBlock = nil;
-}
-
-- (NSMutableArray *)categoryArray
-{
-    if (!_categoryArray) {
-        _categoryArray = [NSMutableArray array];
-    }
-    return _categoryArray;
 }
 
 - (SHGBusinessScrollView *)scrollView
@@ -139,7 +138,6 @@
 - (UIBarButtonItem *)leftBarButtonItem
 {
     if (!_leftBarButtonItem) {
-
         _leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.titleButton];
     }
     return _leftBarButtonItem;
@@ -173,6 +171,62 @@
     }
 }
 
+#pragma mark ------刷新用到的
+- (void)refreshHeader
+{
+
+}
+
+- (void)refreshFooter
+{
+    
+}
+
+- (NSString *)maxBusinessID
+{
+    NSString *businessID = @"";
+    for (SHGBusinessObject *object in self.currentArray) {
+        if ([object.businessID compare:businessID options:NSNumericSearch] == NSOrderedDescending && ![object.businessID isEqualToString:[NSString stringWithFormat:@"%ld",NSIntegerMax]]) {
+            businessID = object.businessID;
+        }
+    }
+    return businessID;
+}
+
+- (NSString *)minBusinessID
+{
+    NSString *businessID = [NSString stringWithFormat:@"%ld",NSIntegerMax];
+    for (SHGBusinessObject *object in self.currentArray) {
+        NSString *objectMarketId = object.businessID;
+        if ([objectMarketId compare:businessID options:NSNumericSearch] == NSOrderedAscending) {
+            businessID = object.businessID;
+        }
+    }
+    return businessID;
+}
+
+- (NSString *)maxModifyTime
+{
+    NSString *modifyTime = @"";
+    for (SHGBusinessObject *object in self.currentArray) {
+        if ([object.modifyTime compare:modifyTime options:NSNumericSearch] == NSOrderedDescending) {
+            modifyTime = object.modifyTime;
+        }
+    }
+    return modifyTime;
+}
+#pragma mark ------网络请求部分
+
+- (void)loadDataWithTarget:(NSString *)target modifyTime:(NSString *)time
+{
+    
+    NSDictionary *param = @{@"type":[self.scrollView currentType], @"target":target, @"pageSize":@"10", @"modifyTime":time};
+    [SHGBusinessManager getListDataWithParam:param block:^(NSArray *array) {
+
+    }];
+}
+
+#pragma mark ------其他函数部分
 - (void)panImageButton:(UIPanGestureRecognizer *)recognizer
 {
     UIView *touchedView = recognizer.view;
@@ -218,7 +272,7 @@
 
 }
 
-#pragma mark ------tableViewDelegate
+#pragma mark ------tableview代理
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -248,6 +302,8 @@
 
 - (void)didMoveToIndex:(NSInteger)index
 {
+    self.filterView.expand = NO;
+    self.filterView.firstType = [self.scrollView currentType];
     if (index == 0) {
         self.filterView.hidden = YES;
         self.tableView.sd_resetNewLayout
@@ -264,8 +320,6 @@
         .bottomSpaceToView(self.view, 0.0f);
     }
     [self.tableView updateLayout];
-
-    self.filterView.expand = NO;
 }
 
 

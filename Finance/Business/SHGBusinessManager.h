@@ -9,5 +9,9 @@
 #import <Foundation/Foundation.h>
 
 @interface SHGBusinessManager : NSObject
++ (instancetype)shareManager;
 
++ (void)getListDataWithParam:(NSDictionary *)param block:(void (^)(NSArray *array))block;
+
+- (void)getSecondListWithType:(NSString *)type block:(void (^)(NSArray *array))block;
 @end

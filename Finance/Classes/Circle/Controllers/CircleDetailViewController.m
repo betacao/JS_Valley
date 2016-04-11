@@ -592,8 +592,8 @@
 
 - (IBAction)actionComment:(id)sender
 {
-    [[SHGGloble sharedGloble] requsetUserVerifyStatus:@"circle" completion:^(BOOL status) {
-        if (status) {
+    [[SHGGloble sharedGloble] requsetUserVerifyStatusCompletion:^(BOOL state) {
+        if (state) {
             _popupView = [[BRCommentView alloc] initWithFrame:self.view.bounds superFrame:CGRectZero isController:YES type:@"comment"];
             _popupView.delegate = self;
             _popupView.fid = @"-1";//评论
@@ -603,10 +603,14 @@
             [self.navigationController.view addSubview:_popupView];
             [_popupView showWithAnimated:YES];
         } else{
-            VerifyIdentityViewController *controller = [[VerifyIdentityViewController alloc] init];
+            SHGAuthenticationViewController *controller = [[SHGAuthenticationViewController alloc] init];
             [self.navigationController pushViewController:controller animated:YES];
+            [[SHGGloble sharedGloble] recordUserAction:@"" type:@"dynamic_identity"];
         }
+    } showAlert:YES leftBlock:^{
+        [[SHGGloble sharedGloble] recordUserAction:@"" type:@"dynamic_identity_cancel"];
     } failString:@"认证后才能发起评论哦～"];
+
     
 }
 
@@ -697,8 +701,8 @@
 
 - (void)replyClicked:(CircleListObj *)obj commentIndex:(NSInteger)index;
 {
-    [[SHGGloble sharedGloble] requsetUserVerifyStatus:@"circle" completion:^(BOOL status) {
-        if (status) {
+    [[SHGGloble sharedGloble] requsetUserVerifyStatusCompletion:^(BOOL state) {
+        if (state) {
             commentOBj *cmbObj = obj.comments[index];
             _popupView = [[BRCommentView alloc] initWithFrame:self.view.bounds superFrame:CGRectZero isController:YES type:@"reply" name:cmbObj.cnickname];
             _popupView.delegate = self;
@@ -709,9 +713,12 @@
             [self.navigationController.view addSubview:_popupView];
             [_popupView showWithAnimated:YES];
         } else{
-            VerifyIdentityViewController *controller = [[VerifyIdentityViewController alloc] init];
+            SHGAuthenticationViewController *controller = [[SHGAuthenticationViewController alloc] init];
             [self.navigationController pushViewController:controller animated:YES];
+            [[SHGGloble sharedGloble] recordUserAction:@"" type:@"dynamic_identity"];
         }
+    } showAlert:YES leftBlock:^{
+        [[SHGGloble sharedGloble] recordUserAction:@"" type:@"dynamic_identity_cancel"];
     } failString:@"认证后才能发起评论哦～"];
     
 }

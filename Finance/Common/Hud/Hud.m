@@ -8,7 +8,6 @@
 
 #import "Hud.h"
 #import "AppDelegate.h"
-#import "VerifyIdentityViewController.h"
 #import "SHGProgressHUD.h"
 
 

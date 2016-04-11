@@ -10,7 +10,7 @@
 #import "SHGItemChooseView.h"
 #import "SHGMarketManager.h"
 #import "SHGProvincesViewController.h"
-#define kNextButtonHeight 8.0f *  XFACTOR
+
 @interface SHGModifyUserInfoViewController ()<UIActionSheetDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, SHGItemChooseDelegate,SHGAreaDelegate>
 
 @property (weak, nonatomic) IBOutlet UIScrollView *bgScrollView;
@@ -32,7 +32,8 @@
 @property (weak, nonatomic) IBOutlet UIButton *cityButton;
 
 @property (weak, nonatomic) IBOutlet UIView *authView;
-@property (weak, nonatomic) IBOutlet UIImageView *authImageView;
+@property (weak, nonatomic) IBOutlet UIImageView *authTitleTipView;
+@property (weak, nonatomic) IBOutlet UIImageView *authTipView;
 @property (weak, nonatomic) IBOutlet UIButton *authButton;
 
 @property (strong, nonatomic) NSString *nickName;
@@ -65,15 +66,20 @@
     UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapTopView:)];
     [self.headView addGestureRecognizer:recognizer];
 
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardDidShowNotification object:nil];
     [self initView];
     //请求状态
     __weak typeof(self)weakSelf = self;
-    [[SHGGloble sharedGloble] requsetUserVerifyStatus:@"" completion:^(BOOL state) {
+    [[SHGGloble sharedGloble] requsetUserVerifyStatusCompletion:^(BOOL state) {
         if (state) {
             [weakSelf.authView removeFromSuperview];
         }
-    } failString:@""];
+    } showAlert:NO leftBlock:nil failString:nil];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardDidShowNotification object:nil];
 }
 
 - (void)viewDidDisappear:(BOOL)animated
@@ -107,12 +113,12 @@
     self.nextButton.backgroundColor = Color(@"f04241");
 
     //认证界面
-
+    self.authView.backgroundColor = Color(@"f6f7f8");
     [self.authButton setTitle:@"立即认证" forState:UIControlStateNormal];
     [self.authButton setTitleColor:[UIColor colorWithHexString:@"ffffff"] forState:UIControlStateNormal];
     self.authButton.titleLabel.font = FontFactor(17.0f);
     self.authButton.backgroundColor = Color(@"f04241");
-
+    [self.authButton addTarget:self action:@selector(authButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     [self initObject];
 
 }
@@ -202,11 +208,18 @@
 
     //认证界面
 
-    self.authImageView.sd_layout
-    .topSpaceToView(self.authView, 0.0f)
+    self.authTitleTipView.sd_layout
+    .topSpaceToView(self.authView, 75.0f)
     .centerXEqualToView(self.authView)
-    .widthIs(self.authImageView.image.size.width)
-    .heightIs(self.authImageView.image.size.height);
+    .widthIs(self.authTitleTipView.image.size.width)
+    .heightIs(self.authTitleTipView.image.size.height);
+
+    //不用margin
+    self.authTipView.sd_layout
+    .topSpaceToView(self.authTitleTipView, 95.0f)
+    .centerXEqualToView(self.authView)
+    .widthIs(self.authTipView.image.size.width)
+    .heightIs(self.authTipView.image.size.height);
 
     self.authButton.sd_layout
     .leftSpaceToView(self.authView, MarginFactor(12.0f))
@@ -235,9 +248,14 @@
     }
 }
 
+- (void)authButtonClicked:(UIButton *)button
+{
+    SHGAuthenticationViewController *controller = [[SHGAuthenticationViewController alloc] init];
+    [self.navigationController pushViewController:controller animated:YES];
+}
+
 - (IBAction)nextButtonClick:(UIButton *)button
 {
-    
     if (self.imageChanged) {
         [self uploadHeadImage:self.headerImage.image];
     } else{

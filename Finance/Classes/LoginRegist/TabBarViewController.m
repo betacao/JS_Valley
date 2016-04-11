@@ -15,7 +15,6 @@
 #import "DiscoverViewController.h"
 #import "headImage.h"
 #import "MessageViewController.h"
-#import "VerifyIdentityViewController.h"
 #import "SHGSegmentController.h"
 #import "SHGNewsViewController.h"
 #import "SHGPersonalViewController.h"

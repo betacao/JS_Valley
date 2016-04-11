@@ -24,8 +24,6 @@
 		40302B1E1AEF657300F22EB6 /* TeamDetailObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 40302B1D1AEF657300F22EB6 /* TeamDetailObject.m */; };
 		40302B221AEF673200F22EB6 /* TeamDetailTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 40302B201AEF673100F22EB6 /* TeamDetailTableViewCell.m */; };
 		40302B231AEF673200F22EB6 /* TeamDetailTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 40302B211AEF673100F22EB6 /* TeamDetailTableViewCell.xib */; };
-		40302B271AEF78D400F22EB6 /* VerifyIdentityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 40302B251AEF78D400F22EB6 /* VerifyIdentityViewController.m */; };
-		40302B281AEF78D400F22EB6 /* VerifyIdentityViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 40302B261AEF78D400F22EB6 /* VerifyIdentityViewController.xib */; };
 		40302B2C1AF07AA500F22EB6 /* MyMoneyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 40302B2A1AF07AA500F22EB6 /* MyMoneyViewController.m */; };
 		40302B2D1AF07AA500F22EB6 /* MyMoneyViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 40302B2B1AF07AA500F22EB6 /* MyMoneyViewController.xib */; };
 		40302B311AF07DB500F22EB6 /* MyMoneyDetailTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 40302B2F1AF07DB500F22EB6 /* MyMoneyDetailTableViewCell.m */; };
@@ -1005,9 +1003,6 @@
 		40302B1F1AEF673100F22EB6 /* TeamDetailTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TeamDetailTableViewCell.h; sourceTree = "<group>"; };
 		40302B201AEF673100F22EB6 /* TeamDetailTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TeamDetailTableViewCell.m; sourceTree = "<group>"; };
 		40302B211AEF673100F22EB6 /* TeamDetailTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TeamDetailTableViewCell.xib; sourceTree = "<group>"; };
-		40302B241AEF78D400F22EB6 /* VerifyIdentityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VerifyIdentityViewController.h; sourceTree = "<group>"; };
-		40302B251AEF78D400F22EB6 /* VerifyIdentityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VerifyIdentityViewController.m; sourceTree = "<group>"; };
-		40302B261AEF78D400F22EB6 /* VerifyIdentityViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VerifyIdentityViewController.xib; sourceTree = "<group>"; };
 		40302B291AF07AA500F22EB6 /* MyMoneyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyMoneyViewController.h; sourceTree = "<group>"; };
 		40302B2A1AF07AA500F22EB6 /* MyMoneyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyMoneyViewController.m; sourceTree = "<group>"; };
 		40302B2B1AF07AA500F22EB6 /* MyMoneyViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MyMoneyViewController.xib; sourceTree = "<group>"; };
@@ -3741,9 +3736,6 @@
 				40302B171AEF61B600F22EB6 /* MyTeamViewController.h */,
 				40302B181AEF61B600F22EB6 /* MyTeamViewController.m */,
 				40302B191AEF61B600F22EB6 /* MyTeamViewController.xib */,
-				40302B241AEF78D400F22EB6 /* VerifyIdentityViewController.h */,
-				40302B251AEF78D400F22EB6 /* VerifyIdentityViewController.m */,
-				40302B261AEF78D400F22EB6 /* VerifyIdentityViewController.xib */,
 				40302B291AF07AA500F22EB6 /* MyMoneyViewController.h */,
 				40302B2A1AF07AA500F22EB6 /* MyMoneyViewController.m */,
 				40302B2B1AF07AA500F22EB6 /* MyMoneyViewController.xib */,
@@ -5678,7 +5670,6 @@
 				61E83D291AF7C78E00703651 /* 手机图标@2x.png in Resources */,
 				B04D6E3F1B60F2D500E3863E /* 组-45@2x.png in Resources */,
 				61616FEB1B02F29100E5A837 /* 44@2x.png in Resources */,
-				40302B281AEF78D400F22EB6 /* VerifyIdentityViewController.xib in Resources */,
 				61E83D7D1AF7C78E00703651 /* 对话设置@3x.png in Resources */,
 				61E83D3A1AF7C78E00703651 /* 圈子图标@3x.png in Resources */,
 				61E83D5E1AF7C78E00703651 /* 评论@3x.png in Resources */,
@@ -5991,7 +5982,6 @@
 				40D6CC0B1B064122005F61C8 /* ProtocolViewController.m in Sources */,
 				408D8B821AF86CF20055810C /* MyMoneyDetailObject.m in Sources */,
 				F9D296D61C8F02F100A1446C /* SHGMainPageTableViewCell.m in Sources */,
-				40302B271AEF78D400F22EB6 /* VerifyIdentityViewController.m in Sources */,
 				F9A227CA1BF5C7E10054F8D7 /* SHGActionSegmentViewController.m in Sources */,
 				982EB8111CB6023E003EEBE6 /* SHGBusinessSelectView.m in Sources */,
 				F986DE361BFDCBD900E6709F /* SHGActionTotalInViewController.m in Sources */,
