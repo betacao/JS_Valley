@@ -18,10 +18,13 @@
 
 @interface SHGBusinessScrollView : UIView
 
++ (instancetype)sharedBusinessScrollView;
+
 @property (strong, nonatomic) NSMutableArray *categoryArray;
 @property (assign, nonatomic) id<SHGBusinessScrollViewDelegate>categoryDelegate;
 
 - (NSInteger)currentIndex;
 - (NSString *)currentType;
+- (NSString *)currentName;
 - (void)moveToIndex:(NSInteger)index;
 @end

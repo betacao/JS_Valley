@@ -9,8 +9,16 @@
 #import <Mantle/Mantle.h>
 
 @interface SHGBusinessObject : MTLModel<MTLJSONSerializing>
-@property (strong, nonatomic) NSString *businessID;
+
+@property (strong, nonatomic) NSString *businessId;
 @property (strong, nonatomic) NSString *modifyTime;
+@property (strong, nonatomic) NSString *area;
+@property (strong, nonatomic) NSString *browseNum;
+@property (strong, nonatomic) NSString *title;
+@property (strong, nonatomic) NSString *modifyNum;
+@property (strong, nonatomic) NSString *businessShow;
+@property (strong, nonatomic) NSString *investAmount;
+@property (strong, nonatomic) NSString *createTime;
 @end
 
 @interface SHGBusinessFirstObject : NSObject
@@ -24,7 +32,13 @@
 @interface SHGBusinessSecondObject : MTLModel<MTLJSONSerializing>
 
 @property (strong, nonatomic) NSString *title;
-@property (strong, nonatomic) NSArray *subTitleArray;
+@property (strong, nonatomic) NSString *key;
+@property (strong, nonatomic) NSArray *subArray;
 
+@end
+
+@interface SHGBusinessSecondsubObject : MTLModel<MTLJSONSerializing>
+@property (strong, nonatomic) NSString *code;
+@property (strong, nonatomic) NSString *value;
 @end
 

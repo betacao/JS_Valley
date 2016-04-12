@@ -873,6 +873,7 @@
 		F95F42AB1C8DA341003EDA30 /* SHGConnectionsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F95F42A91C8DA341003EDA30 /* SHGConnectionsTableViewCell.xib */; };
 		F95F42AF1C8E993C003EDA30 /* SHGCircleSendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F95F42AD1C8E993C003EDA30 /* SHGCircleSendViewController.m */; };
 		F95F42B01C8E993C003EDA30 /* SHGCircleSendViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F95F42AE1C8E993C003EDA30 /* SHGCircleSendViewController.xib */; };
+		F96E10A31CBB9875006710A0 /* SHGCategoryButton.m in Sources */ = {isa = PBXBuildFile; fileRef = F96E10A21CBB9875006710A0 /* SHGCategoryButton.m */; };
 		F9758A631BB002D70085D32C /* ImproveMatiralViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9758A621BB002D70085D32C /* ImproveMatiralViewController.xib */; };
 		F986DE361BFDCBD900E6709F /* SHGActionTotalInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F986DE341BFDCBD900E6709F /* SHGActionTotalInViewController.m */; };
 		F986DE371BFDCBD900E6709F /* SHGActionTotalInViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F986DE351BFDCBD900E6709F /* SHGActionTotalInViewController.xib */; };
@@ -2178,6 +2179,8 @@
 		F95F42AC1C8E993C003EDA30 /* SHGCircleSendViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGCircleSendViewController.h; sourceTree = "<group>"; };
 		F95F42AD1C8E993C003EDA30 /* SHGCircleSendViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGCircleSendViewController.m; sourceTree = "<group>"; };
 		F95F42AE1C8E993C003EDA30 /* SHGCircleSendViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGCircleSendViewController.xib; sourceTree = "<group>"; };
+		F96E10A11CBB9875006710A0 /* SHGCategoryButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGCategoryButton.h; sourceTree = "<group>"; };
+		F96E10A21CBB9875006710A0 /* SHGCategoryButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGCategoryButton.m; sourceTree = "<group>"; };
 		F9758A621BB002D70085D32C /* ImproveMatiralViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ImproveMatiralViewController.xib; sourceTree = "<group>"; };
 		F986DE331BFDCBD900E6709F /* SHGActionTotalInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGActionTotalInViewController.h; sourceTree = "<group>"; };
 		F986DE341BFDCBD900E6709F /* SHGActionTotalInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGActionTotalInViewController.m; sourceTree = "<group>"; };
@@ -3257,6 +3260,8 @@
 				F9DB81621C1278BB007C63B7 /* SHGEmptyDataView.m */,
 				9896F1211C50CB0A00E10A53 /* SHGGlobleTableViewCell.h */,
 				9896F1221C50CB0A00E10A53 /* SHGGlobleTableViewCell.m */,
+				F96E10A11CBB9875006710A0 /* SHGCategoryButton.h */,
+				F96E10A21CBB9875006710A0 /* SHGCategoryButton.m */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -4691,7 +4696,7 @@
 			path = SHGCategoryScrollView;
 			sourceTree = "<group>";
 		};
-		F91D3A431CB7524100E3419D /* SHHBusinessView */ = {
+		F91D3A431CB7524100E3419D /* SHGBusinessView */ = {
 			isa = PBXGroup;
 			children = (
 				F9D809941CB3A32900C59E0A /* SHGBusinessScrollView.h */,
@@ -4703,7 +4708,7 @@
 				F91D3A441CB7528200E3419D /* SHGBusinessButtonContentView.h */,
 				F91D3A451CB7528200E3419D /* SHGBusinessButtonContentView.m */,
 			);
-			name = SHHBusinessView;
+			name = SHGBusinessView;
 			sourceTree = "<group>";
 		};
 		F924C2B01CACBFCF0070286F /* Business */ = {
@@ -4713,7 +4718,7 @@
 				9855F0231CACF6F8006F760F /* Bond */,
 				9855F0241CACF731006F760F /* Equity */,
 				9855F0261CACF7DB006F760F /* SameAndCommixture */,
-				F91D3A431CB7524100E3419D /* SHHBusinessView */,
+				F91D3A431CB7524100E3419D /* SHGBusinessView */,
 				F9BF4E8B1CB6332700D0155C /* SHGBusinessSelectCategoryViewController.h */,
 				F9BF4E8C1CB6332700D0155C /* SHGBusinessSelectCategoryViewController.m */,
 				F9BF4E8D1CB6332700D0155C /* SHGBusinessSelectCategoryViewController.xib */,
@@ -5930,6 +5935,7 @@
 				61D62BF01ADD1C4D002DD395 /* MOCNetworkReachabilityManager.m in Sources */,
 				B082D6631B82EF1C00BB6C20 /* RecmdFriendObj.m in Sources */,
 				614EFEC91AEF2DF800F2BDD1 /* ProdConfigViewController.m in Sources */,
+				F96E10A31CBB9875006710A0 /* SHGCategoryButton.m in Sources */,
 				6187D2E81AF1C693008E1D21 /* MessageModel.m in Sources */,
 				F9B0636B1BD7699400471DF4 /* SHGNavigationView.m in Sources */,
 				F93FCBC21C856D5A004E356E /* NSArray+Category.m in Sources */,

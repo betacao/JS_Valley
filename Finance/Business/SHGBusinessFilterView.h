@@ -7,10 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SHGBusinessSelectCategoryViewController.h"
 
 @interface SHGBusinessFilterView : UIView
 
 @property (assign, nonatomic) BOOL expand;
 @property (strong, nonatomic) NSMutableArray *dataArray;
-@property (strong, nonatomic) NSString *firstType;//一级分类的类型
+
+@property (copy, nonatomic) SHGBusinessSelectCategoryBlock selectedBlock;
 @end

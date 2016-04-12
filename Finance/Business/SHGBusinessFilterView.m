@@ -10,7 +10,6 @@
 #import "SHGBusinessMargin.h"
 #import "SHGBusinessListViewController.h"
 #import "UIButton+EnlargeEdge.h"
-#import "SHGBusinessSelectCategoryViewController.h"
 #import "SHGBusinessObject.h"
 
 @interface SHGBusinessFilterView()
@@ -189,7 +188,7 @@
 - (void)leftButtonClicked:(UIButton *)button
 {
     SHGBusinessSelectCategoryViewController *controller = [[SHGBusinessSelectCategoryViewController alloc] init];
-    controller.firstType = self.firstType;
+    controller.selectedBlock = self.selectedBlock;
     [[SHGBusinessListViewController sharedController].navigationController pushViewController:controller animated:YES];
 }
 

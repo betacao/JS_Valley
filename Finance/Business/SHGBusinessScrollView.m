@@ -21,6 +21,18 @@
 @end
 
 @implementation SHGBusinessScrollView
+
++ (instancetype)sharedBusinessScrollView
+{
+    static SHGBusinessScrollView *sharedScollView = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        sharedScollView = [[self alloc] initWithFrame:CGRectMake(0.0f, 0.0f, SCREENWIDTH, kBusinessScrollViewHeight)];
+
+    });
+    return sharedScollView;
+}
+
 - (instancetype)initWithFrame:(CGRect)frame
 {
 
@@ -82,14 +94,19 @@
     NSString *type = @"";
     if ([self currentIndex] == 0) {
         type = @"bondfinancing";
-    } else if ([self currentIndex] == 0) {
+    } else if ([self currentIndex] == 1) {
         type = @"equityfinancing";
-    } else if ([self currentIndex] == 0) {
+    } else if ([self currentIndex] == 2) {
         type = @"moneyside";
-    } else if ([self currentIndex] == 0) {
+    } else if ([self currentIndex] == 3) {
         type = @"trademixed";
     }
     return type;
+}
+
+- (NSString *)currentName
+{
+    return ((UIButton *)[self.buttonArrays objectAtIndex:[self currentIndex]]).titleLabel.text;
 }
 
 

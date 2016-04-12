@@ -11,7 +11,8 @@
 @implementation SHGBusinessObject
 + (NSDictionary *)JSONKeyPathsByPropertyKey
 {
-    return nil;
+    return @{@"area" : @"area", @"browseNum" : @"browsenum", @"title" : @"title", @"modifyNum" : @"modifyNum", @"businessShow" : @"businessshow", @"investAmount" : @"investamount", @"createTime" : @"createtime", @"businessId" : @"businessid", @"modifyTime" : @"modifytime"};
+
 }
 @end
 
@@ -31,6 +32,20 @@
 @implementation SHGBusinessSecondObject
 + (NSDictionary *)JSONKeyPathsByPropertyKey
 {
-    return nil;
+    return @{@"title":@"title",@"key":@"key",@"subArray":@"list"};
 }
+
++ (NSValueTransformer *)subArrayJSONTransformer
+{
+    return [MTLJSONAdapter arrayTransformerWithModelClass:[SHGBusinessSecondsubObject class]];
+}
+@end
+
+@implementation SHGBusinessSecondsubObject
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey
+{
+    return @{@"code":@"code",@"value":@"value"};
+}
+
 @end

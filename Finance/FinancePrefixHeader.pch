@@ -58,5 +58,6 @@
 #import "SHGGlobleTableViewCell.h"
 #import "SHGMainPageConst.h"
 #import "UIButton+EnlargeEdge.h"
+#import "SHGCategoryButton.h"
 #endif
 #endif

@@ -13,6 +13,8 @@
 #import "EMSearchBar.h"
 #import "SHGBusinessManager.h"
 #import "SHGBusinessMainSendView.h"
+#import "SHGNoticeView.h"
+#import "SHGEmptyDataView.h"
 
 @interface SHGBusinessListViewController ()<UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, SHGBusinessScrollViewDelegate>
 //
@@ -22,11 +24,18 @@
 @property (strong, nonatomic) EMSearchBar *searchBar;
 @property (strong, nonatomic) SHGBusinessScrollView *scrollView;
 @property (strong, nonatomic) SHGBusinessFilterView *filterView;
+@property (strong, nonatomic) SHGNoticeView *noticeView;
+@property (strong, nonatomic) UITableViewCell *emptyCell;
+@property (strong, nonatomic) SHGEmptyDataView *emptyView;
 @property (assign, nonatomic) CGSize addBusinessSize;
 @property (assign, nonatomic) CGRect filterViewFrame;
-@property (weak, nonatomic) NSMutableArray *currentArray;
 //
-
+@property (weak, nonatomic) NSMutableArray *currentArray;
+@property (strong, nonatomic) NSMutableDictionary *paramDictionary;
+@property (assign, nonatomic) BOOL refreshing;
+@property (strong, nonatomic) NSString *tipUrl;
+@property (strong, nonatomic) NSString *index;
+@property (strong, nonatomic) NSMutableDictionary *positionDictionary;
 @end
 
 @implementation SHGBusinessListViewController
@@ -77,8 +86,10 @@
         .rightSpaceToView(weakSelf.view, 0.0f)
         .bottomSpaceToView(weakSelf.view, 0.0f);
     };
-    //请求数据
-    [self loadDataWithTarget:@"first" modifyTime:@""];
+//    请求数据
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self loadDataWithTarget:@"first"];
+    });
 }
 
 
@@ -97,7 +108,7 @@
 - (SHGBusinessScrollView *)scrollView
 {
     if (!_scrollView) {
-        _scrollView = [[SHGBusinessScrollView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, SCREENWIDTH, kBusinessScrollViewHeight)];
+        _scrollView = [SHGBusinessScrollView sharedBusinessScrollView];
         _scrollView.categoryDelegate = self;
         [self.view addSubview:_scrollView];
     }
@@ -106,14 +117,54 @@
 
 - (SHGBusinessFilterView *)filterView
 {
+    __weak typeof(self)weakSelf = self;
     if (!_filterView) {
         _filterView = [[SHGBusinessFilterView alloc] init];
         _filterView.hidden = YES;
+        _filterView.selectedBlock = ^(NSDictionary *param){
+            [weakSelf.paramDictionary setObject:param forKey:[weakSelf.scrollView currentName]];
+            [weakSelf.tableView reloadData];
+        };
         [self.view addSubview:_filterView];
     }
     return _filterView;
 }
 
+- (UITableViewCell *)emptyCell
+{
+    if (!_emptyCell) {
+        _emptyCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+        _emptyCell.selectionStyle = UITableViewCellSelectionStyleNone;
+        [_emptyCell.contentView addSubview:self.emptyView];
+    }
+    return _emptyCell;
+}
+
+
+- (SHGEmptyDataView *)emptyView
+{
+    if (!_emptyView) {
+        _emptyView = [[SHGEmptyDataView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, SCREENWIDTH, SCREENHEIGHT)];
+    }
+    return _emptyView;
+}
+
+- (SHGNoticeView *)noticeView
+{
+    if (!_noticeView) {
+        _noticeView = [[SHGNoticeView alloc] initWithFrame:CGRectZero type:SHGNoticeTypeNewMessage];
+        _noticeView.superView = self.view;
+    }
+    return _noticeView;
+}
+
+- (NSMutableDictionary *)positionDictionary
+{
+    if (!_positionDictionary) {
+        _positionDictionary = [NSMutableDictionary dictionary];
+    }
+    return _positionDictionary;
+}
 
 - (UIButton *)titleButton
 {
@@ -155,39 +206,39 @@
     return _searchBar;
 }
 
-- (void)initAddMarketButton
+- (NSMutableDictionary *)paramDictionary
 {
-    if (CGSizeEqualToSize(CGSizeZero, self.addBusinessSize)) {
-        self.addBusinessSize = self.addBusinessButton.currentImage.size;
-        CGRect frame = self.addBusinessButton.frame;
-        frame.size = self.addBusinessSize;
-        frame.origin.x = SCREENWIDTH - MarginFactor(17.0f) - self.addBusinessSize.width;
-        frame.origin.y = CGRectGetHeight(self.view.frame) - kTabBarHeight - MarginFactor(45.0f) - self.addBusinessSize.height;
-        self.addBusinessButton.frame = frame;
-        UIPanGestureRecognizer *panRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panImageButton:)];
-        [self.addBusinessButton addGestureRecognizer:panRecognizer];
-
-        [self.addBusinessButton addTarget:self action:@selector(addBusinessButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    if (!_paramDictionary) {
+        _paramDictionary = [NSMutableDictionary dictionary];
     }
+    return _paramDictionary;
 }
 
 #pragma mark ------刷新用到的
 - (void)refreshHeader
 {
-
+    if (self.currentArray.count == 0) {
+        [self loadDataWithTarget:@"first"];
+    } else {
+        [self loadDataWithTarget:@"refresh"];
+    }
 }
 
 - (void)refreshFooter
 {
-    
+    if (self.currentArray.count == 0) {
+        [self loadDataWithTarget:@"load"];
+    } else {
+        [self loadDataWithTarget:@"refresh"];
+    }
 }
 
 - (NSString *)maxBusinessID
 {
     NSString *businessID = @"";
     for (SHGBusinessObject *object in self.currentArray) {
-        if ([object.businessID compare:businessID options:NSNumericSearch] == NSOrderedDescending && ![object.businessID isEqualToString:[NSString stringWithFormat:@"%ld",NSIntegerMax]]) {
-            businessID = object.businessID;
+        if ([object.businessId compare:businessID options:NSNumericSearch] == NSOrderedDescending && ![object.businessId isEqualToString:[NSString stringWithFormat:@"%ld",NSIntegerMax]]) {
+            businessID = object.businessId;
         }
     }
     return businessID;
@@ -197,9 +248,9 @@
 {
     NSString *businessID = [NSString stringWithFormat:@"%ld",NSIntegerMax];
     for (SHGBusinessObject *object in self.currentArray) {
-        NSString *objectMarketId = object.businessID;
+        NSString *objectMarketId = object.businessId;
         if ([objectMarketId compare:businessID options:NSNumericSearch] == NSOrderedAscending) {
-            businessID = object.businessID;
+            businessID = object.businessId;
         }
     }
     return businessID;
@@ -217,12 +268,60 @@
 }
 #pragma mark ------网络请求部分
 
-- (void)loadDataWithTarget:(NSString *)target modifyTime:(NSString *)time
+- (void)loadDataWithTarget:(NSString *)target
 {
     
-    NSDictionary *param = @{@"type":[self.scrollView currentType], @"target":target, @"pageSize":@"10", @"modifyTime":time};
-    [SHGBusinessManager getListDataWithParam:param block:^(NSArray *array) {
+    __weak typeof(self) weakSelf = self;
+    if ([target isEqualToString:@"first"]) {
+        [self.tableView setContentOffset:CGPointZero];
+    }
+    if (self.refreshing) {
+        return;
+    }
+    NSString *position = [self.positionDictionary objectForKey:[self.scrollView currentName]];
+    NSString *redirect = [position isEqualToString:@"0"] ? @"1" : @"0";
+//    NSString *area = [SHGMarketManager shareManager].cityName;
+//    if (!area) {
+//        [weakSelf.tableView.mj_header endRefreshing];
+//        [weakSelf.tableView.mj_footer endRefreshing];
+//        return;
+//    }
+    NSMutableDictionary *param = [NSMutableDictionary dictionaryWithDictionary:@{@"businessId":[self maxBusinessID] ,@"uid":UID ,@"type":[self.scrollView currentType] ,@"target":target ,@"pageSize":@"10" , @"modifyTime":[self maxModifyTime], @"city":@"", @"redirect":redirect}];
+    [param addEntriesFromDictionary:self.paramDictionary];
+    self.refreshing = YES;
+    [SHGBusinessManager getListDataWithParam:param block:^(NSArray *dataArray, NSString *index, NSString *tipUrl) {
+        weakSelf.refreshing = NO;
+        [weakSelf.tableView.mj_header endRefreshing];
+        [weakSelf.tableView.mj_footer endRefreshing];
+        if (dataArray) {
+            if ([target isEqualToString:@"first"]) {
+                [weakSelf.currentArray removeAllObjects];
+                [weakSelf.currentArray addObjectsFromArray:dataArray];
+                //第一次给服务器的值
+                weakSelf.index = index;
+                [weakSelf.noticeView showWithText:[NSString stringWithFormat:@"为您加载了%ld条新业务",(long)dataArray.count]];
+            } else if([target isEqualToString:@"refresh"]){
+                for (NSInteger i = dataArray.count - 1; i >= 0; i--){
+                    SHGBusinessObject *obj = [dataArray objectAtIndex:i];
+                    [weakSelf.currentArray insertUniqueObject:obj atIndex:0];
+                }
+                //下拉的话如果之前显示了偏少 则下移 否则不管
+                NSInteger position = [[weakSelf.positionDictionary objectForKey:[weakSelf.scrollView currentName]] integerValue];
+                if (position > 0) {
+                    weakSelf.index = [NSString stringWithFormat:@"%ld", (long)(position + dataArray.count)];
+                }
+                if (dataArray.count > 0) {
+                    [weakSelf.noticeView showWithText:[NSString stringWithFormat:@"为您加载了%ld条新业务",(long)dataArray.count]];
+                } else{
+                    [weakSelf.noticeView showWithText:@"暂无新业务，休息一会儿"];
+                }
+            } else if([target isEqualToString:@"load"]){
+                [weakSelf.currentArray addObjectsFromArray:dataArray];
+            }
+            weakSelf.tipUrl = tipUrl;
 
+            [weakSelf.tableView reloadData];
+        }
     }];
 }
 
@@ -255,6 +354,22 @@
     [recognizer setTranslation:CGPointZero inView:self.view];
 }
 
+- (void)initAddMarketButton
+{
+    if (CGSizeEqualToSize(CGSizeZero, self.addBusinessSize)) {
+        self.addBusinessSize = self.addBusinessButton.currentImage.size;
+        CGRect frame = self.addBusinessButton.frame;
+        frame.size = self.addBusinessSize;
+        frame.origin.x = SCREENWIDTH - MarginFactor(17.0f) - self.addBusinessSize.width;
+        frame.origin.y = CGRectGetHeight(self.view.frame) - kTabBarHeight - MarginFactor(45.0f) - self.addBusinessSize.height;
+        self.addBusinessButton.frame = frame;
+        UIPanGestureRecognizer *panRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panImageButton:)];
+        [self.addBusinessButton addGestureRecognizer:panRecognizer];
+
+        [self.addBusinessButton addTarget:self action:@selector(addBusinessButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    }
+}
+
 - (void)addBusinessButtonClicked:(UIButton *)button
 {
     SHGBusinessMainSendView *view = [SHGBusinessMainSendView sharedView];
@@ -273,10 +388,32 @@
 }
 
 #pragma mark ------tableview代理
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (self.currentArray.count == 0) {
+        return self.emptyCell;
+    } else {
+
+    }
+    return nil;
+}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.dataArr.count;
+    if (self.currentArray.count == 0) {
+        return 1;
+    } else {
+        return self.currentArray.count;
+    }
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (self.currentArray.count == 0) {
+        return CGRectGetHeight(self.view.frame);
+    } else {
+        return 100.0f;
+    }
 }
 
 #pragma mark ------变更城市代理
@@ -303,7 +440,6 @@
 - (void)didMoveToIndex:(NSInteger)index
 {
     self.filterView.expand = NO;
-    self.filterView.firstType = [self.scrollView currentType];
     if (index == 0) {
         self.filterView.hidden = YES;
         self.tableView.sd_resetNewLayout

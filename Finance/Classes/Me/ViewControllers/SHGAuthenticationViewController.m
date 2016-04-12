@@ -9,8 +9,9 @@
 #import "SHGAuthenticationViewController.h"
 #import "UIButton+WebCache.h"
 #import "SHGItemChooseView.h"
+#import "SHGProvincesViewController.h"
 
-@interface SHGAuthenticationViewController ()<UITextFieldDelegate, UIActionSheetDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, SHGItemChooseDelegate>
+@interface SHGAuthenticationViewController ()<UITextFieldDelegate, UIActionSheetDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, SHGItemChooseDelegate, SHGAreaDelegate>
 //
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UIView *topView;
@@ -29,8 +30,10 @@
 @property (weak, nonatomic) IBOutlet UILabel *tipLabel;
 @property (weak, nonatomic) UIButton *currentButton;
 //
+@property (strong, nonatomic) UIImage *headerImage;
 @property (strong, nonatomic) NSString *state;//认证状态
-@property (strong, nonatomic) NSString *authImage;//认证的图片
+@property (strong, nonatomic) NSString *authImageUrl;//已经上传的图片链接
+@property (strong, nonatomic) UIImage *authImage;//认证的图片
 @property (strong, nonatomic) NSString *departmentCode;
 @end
 
@@ -172,6 +175,13 @@
     [self.authScrollView setupAutoContentSizeWithBottomView:self.roundCornerView bottomMargin:MarginFactor(10.0f)];
 }
 
+- (NSString *)departmentCode
+{
+    NSString *string = [self.departmentField.text stringByReplacingOccurrencesOfString:@" " withString:@""];
+    string = [self industryToCode:string];
+    return string;
+}
+
 - (void)resetView
 {
     self.authScrollView.alpha = [self.state isEqualToString:@"0"] ? 1.0f : 0.0f;
@@ -195,8 +205,12 @@
 
     }
     [self.stateLabel updateLayout];
-    if (!IsStrEmpty(self.authImage)) {
-        [self.authImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,self.authImage]] placeholderImage:[UIImage imageNamed:@"default_head"]];
+    __weak typeof(self) weakSelf = self;
+    if (!IsStrEmpty(self.authImageUrl)) {
+        [self.authImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,self.authImageUrl]] placeholderImage:[UIImage imageNamed:@"default_head"]completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+            weakSelf.authImage = image;
+            [weakSelf.plusButton setImage:image forState:UIControlStateNormal];
+        }];
     }
 }
 
@@ -207,7 +221,7 @@
     [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttp,@"user",@"myidentity"] parameters:@{@"uid":UID}success:^(MOCHTTPResponse *response) {
         [Hud hideHud];
         weakSelf.state = [response.dataDictionary valueForKey:@"state"];
-        weakSelf.authImage = [response.dataDictionary valueForKey:@"potname"];
+        weakSelf.authImageUrl = [response.dataDictionary valueForKey:@"potname"];
         [weakSelf loadUserInfo];
         [weakSelf resetView];
 
@@ -224,7 +238,9 @@
         weakSelf.locationField.text = [response.dataDictionary objectForKey:@"position"];
         weakSelf.departmentField.text = [self codeToIndustry:[response.dataDictionary objectForKey:@"industrycode"]];
         NSString *head_img = [response.dataDictionary objectForKey:@"head_img"];
-        [weakSelf.headerButton sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,head_img]] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"default_head"]];
+        [weakSelf.headerButton sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,head_img]] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"default_head"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+            weakSelf.headerImage = image;
+        }];
     }failed:^(MOCHTTPResponse *response) {
 
     }];
@@ -260,22 +276,100 @@
 
 - (BOOL)checkInputMessage
 {
+    NSString *string = [self.locationField.text stringByReplacingOccurrencesOfString:@" " withString:@""];
+    if (string.length == 0) {
+        [Hud showMessageWithText:@"请输入地理位置信息"];
+        return NO;
+    }
+    string = [self.departmentField.text stringByReplacingOccurrencesOfString:@" " withString:@""];
+    if (string.length == 0) {
+        [Hud showMessageWithText:@"请输入职位信息"];
+        return NO;
+    }
+    if (!self.headerImage) {
+        [Hud showMessageWithText:@"请选择头像"];
+        return NO;
+    }
+    if (!self.authImage) {
+        [Hud showMessageWithText:@"请选择认证图片"];
+        return NO;
+    }
     return YES;
 }
 
 - (void)uploadHeaderImage
 {
+    //头像需要压缩 跟其他的上传图片接口不一样了
+    [Hud showWait];
+    __weak typeof(self) weakSelf = self;
+    [MOCHTTPRequestOperationManager POST:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"image/basephoto"] parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+        NSData *imageData = UIImageJPEGRepresentation(weakSelf.headerImage, 0.1);
+        [formData appendPartWithFileData:imageData name:@"hahaggg.jpg" fileName:@"hahaggg.jpg" mimeType:@"image/jpeg"];
+    } progress:^(NSProgress * _Nonnull uploadProgress) {
 
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        NSLog(@"%@",responseObject);
+        NSDictionary *dic = [(NSString *)[responseObject valueForKey:@"data"] parseToArrayOrNSDictionary];
+        NSString *newHeadImageName = [(NSArray *)[dic valueForKey:@"pname"] objectAtIndex:0];
+        [[NSUserDefaults standardUserDefaults] setObject:newHeadImageName forKey:KEY_HEAD_IMAGE];
+        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_SENDPOST object:nil];
+
+        [weakSelf putHeadImage:newHeadImageName];
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        NSLog(@"%@",error);
+        [Hud hideHud];
+        [Hud showMessageWithText:@"上传图片失败"];
+    }];
+}
+
+
+//更新服务器端
+- (void)putHeadImage:(NSString *)headImageName
+{
+    __weak typeof(self) weakSelf = self;
+    [MOCHTTPRequestOperationManager putWithURL:[rBaseAddressForHttp stringByAppendingString:@"/user/identityAuth"] class:nil parameters:@{@"uid":UID, @"potname":headImageName, @"industrycode": self.departmentCode, @"area":self.locationField.text} success:^(MOCHTTPResponse *response) {
+        NSString *code = [response.data valueForKey:@"code"];
+        if ([code isEqualToString:@"000"]) {
+            [weakSelf uploadAuthImage];
+        }
+    } failed:^(MOCHTTPResponse *response) {
+
+    }];
 }
 
 - (void)uploadAuthImage
 {
+    __weak typeof(self) weakSelf = self;
+    [MOCHTTPRequestOperationManager POST:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"image/base"] parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+        NSData *imageData = UIImageJPEGRepresentation(self.authImage, 0.1);
+        [formData appendPartWithFileData:imageData name:@"haha.jpg" fileName:@"haha.jpg" mimeType:@"image/jpeg"];
+    } progress:^(NSProgress * _Nonnull uploadProgress) {
 
+    } success:^(NSURLSessionDataTask *operation, id responseObject) {
+        NSLog(@"%@",responseObject);
+        NSDictionary *dic = [(NSString *)[responseObject valueForKey:@"data"] parseToArrayOrNSDictionary];
+        weakSelf.authImageUrl = [(NSArray *)[dic valueForKey:@"pname"] objectAtIndex:0];
+        [weakSelf submitMaterial];
+    } failure:^(NSURLSessionDataTask *operation, NSError *error) {
+        NSLog(@"%@",error);
+        [Hud hideHud];
+        [Hud showMessageWithText:@"上传认证图片失败"];
+    }];
 }
 
 - (void)submitMaterial
 {
-
+    __weak typeof(self)weakSelf = self;
+    [MOCHTTPRequestOperationManager putWithURL:[NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttp,@"user",@"identity"] class:nil parameters:@{@"uid":UID,@"potname":self.authImageUrl} success:^(MOCHTTPResponse *response) {
+        NSString *code = [response.data valueForKey:@"code"];
+        if ([code isEqualToString:@"000"]) {
+            [Hud hideHud];
+            [Hud showMessageWithText:@"上传成功"];
+            [weakSelf.navigationController performSelector:@selector(popViewControllerAnimated:) withObject:@(YES) afterDelay:1.20f];
+        }
+    } failed:^(MOCHTTPResponse *response) {
+        [Hud hideHud];
+    }];
 }
 
 
@@ -285,6 +379,15 @@
     view.delegate = self;
     view.dataArray = @[@"银行机构", @"证券公司", @"PE/VC",@"公募基金",@"信托公司",@"三方理财", @"担保小贷", @"上市公司", @"其他"];
     [self.view.window addSubview:view];
+}
+
+- (void)showLocationChoiceView
+{
+    SHGProvincesViewController *controller = [[SHGProvincesViewController alloc] initWithNibName:@"SHGProvincesViewController" bundle:nil];
+    if(controller){
+        controller.delegate = self;
+        [self.navigationController pushViewController:controller animated:YES];
+    }
 }
 
 
@@ -348,6 +451,7 @@
         pickerImage.mediaTypes = [UIImagePickerController availableMediaTypesForSourceType:pickerImage.sourceType];
     }
     pickerImage.delegate = self;
+    pickerImage.allowsEditing = YES;
     [self presentViewController:pickerImage animated:YES completion:nil];
 }
 
@@ -360,6 +464,7 @@
         pickerImage.mediaTypes = [UIImagePickerController availableMediaTypesForSourceType:pickerImage.sourceType];
     }
     pickerImage.delegate = self;
+    pickerImage.allowsEditing = YES;
     [self.navigationController presentViewController:pickerImage animated:YES completion:nil];
 }
 
@@ -382,6 +487,7 @@
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
 {
     if ([textField isEqual:self.locationField]) {
+        [self showLocationChoiceView];
     } else {
         [self showIndustryChoiceView];
     }
@@ -392,16 +498,25 @@
 - (void)didSelectItem:(NSString *)item
 {
     self.departmentField.text = item;
-    self.departmentCode = [self industryToCode:item];
+}
 
+#pragma mark ------ 选择城市代理
+- (void)didSelectCity:(NSString *)city
+{
+    self.locationField.text = city;
 }
 
 #pragma mark ------选图代理
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
     [picker dismissViewControllerAnimated:YES completion:nil];
-    UIImage *image = info[UIImagePickerControllerOriginalImage];
+    UIImage *image = info[UIImagePickerControllerEditedImage];
     [self.currentButton setImage:image forState:UIControlStateNormal];
+    if ([self.currentButton isEqual:self.plusButton]) {
+        self.authImage = image;
+    } else {
+        self.headerImage = image;
+    }
 }
 
 - (void)didReceiveMemoryWarning
