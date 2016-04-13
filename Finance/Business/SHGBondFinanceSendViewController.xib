@@ -12,14 +12,14 @@
                 <outlet property="areaSelectImage" destination="w5J-5U-5fl" id="Jdz-ET-Y2p"/>
                 <outlet property="areaTitleLabel" destination="Gh4-kz-6VP" id="YwZ-go-dTd"/>
                 <outlet property="areaView" destination="weu-JA-4ZB" id="QEI-xv-yug"/>
+                <outlet property="businessCategoryButtonView" destination="ziQ-hK-gVx" id="EnY-2S-GWX"/>
+                <outlet property="businessCategoryLabel" destination="fbN-4r-aFq" id="mJh-7I-8SK"/>
+                <outlet property="businessCategorySelctImage" destination="Jlu-Oz-u2s" id="bqK-fD-m4b"/>
+                <outlet property="businessCategoryView" destination="hbt-qg-YwS" id="uJv-o3-Dqs"/>
                 <outlet property="industryLabel" destination="3Fl-2o-wUo" id="VzK-Kn-hxs"/>
                 <outlet property="industrySelectButton" destination="ejc-v7-BCL" id="4Kv-rj-5Cj"/>
                 <outlet property="industrySelectImage" destination="8GS-2K-GLW" id="tui-ho-uab"/>
                 <outlet property="industryView" destination="6Ku-5Q-yls" id="mlp-5g-z3z"/>
-                <outlet property="marketCategoryButtonView" destination="ziQ-hK-gVx" id="57r-ni-UHh"/>
-                <outlet property="marketCategoryLabel" destination="fbN-4r-aFq" id="KD3-h6-9TC"/>
-                <outlet property="marketCategorySelctImage" destination="Jlu-Oz-u2s" id="sha-77-dGK"/>
-                <outlet property="marketCategoryView" destination="hbt-qg-YwS" id="cYD-Mc-OR8"/>
                 <outlet property="monenyLabel" destination="EOh-hN-gYu" id="kWx-HI-yof"/>
                 <outlet property="monenyTextField" destination="d28-12-bQ3" id="XlV-0j-nmg"/>
                 <outlet property="monenyView" destination="hOg-al-NmA" id="NJB-eo-jzB"/>
@@ -106,7 +106,7 @@
                     <rect key="frame" x="157" y="12" width="23" height="23"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 </imageView>
-                <view contentMode="scaleToFill" id="ziQ-hK-gVx">
+                <view contentMode="scaleToFill" id="ziQ-hK-gVx" customClass="SHGBusinessButtonContentView">
                     <rect key="frame" x="0.0" y="43" width="320" height="66"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" red="0.97254901959999995" green="0.97254901959999995" blue="0.97254901959999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -193,6 +193,9 @@
                     <state key="normal" title="江苏">
                         <color key="titleColor" red="0.086274509799999996" green="0.086274509799999996" blue="0.086274509799999996" alpha="1" colorSpace="calibratedRGB"/>
                     </state>
+                    <connections>
+                        <action selector="areaSelectButtonClick:" destination="-1" eventType="touchUpInside" id="1KZ-RF-Yii"/>
+                    </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="yQq-AD-xZX">
                     <rect key="frame" x="177" y="46" width="121" height="30"/>
@@ -200,6 +203,9 @@
                     <state key="normal" title="重新选择">
                         <color key="titleColor" red="0.086274509799999996" green="0.086274509799999996" blue="0.086274509799999996" alpha="1" colorSpace="calibratedRGB"/>
                     </state>
+                    <connections>
+                        <action selector="areaSelectButtonClick:" destination="-1" eventType="touchUpInside" id="1hu-kq-L0n"/>
+                    </connections>
                 </button>
             </subviews>
             <color key="backgroundColor" red="0.97254901959999995" green="0.97254901959999995" blue="0.97254901959999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

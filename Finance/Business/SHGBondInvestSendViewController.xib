@@ -178,7 +178,7 @@
                         <color key="titleColor" red="0.086274509799999996" green="0.086274509799999996" blue="0.086274509799999996" alpha="1" colorSpace="calibratedRGB"/>
                     </state>
                     <connections>
-                        <action selector="locationSelectClick:" destination="-1" eventType="touchUpInside" id="bHy-Ik-c78"/>
+                        <action selector="locationSelectClick:" destination="-1" eventType="touchUpInside" id="3Iw-W4-ha8"/>
                     </connections>
                 </button>
             </subviews>
@@ -231,7 +231,7 @@
                     <rect key="frame" x="157" y="12" width="23" height="23"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 </imageView>
-                <view contentMode="scaleToFill" id="ofd-YR-ixr">
+                <view contentMode="scaleToFill" id="ofd-YR-ixr" customClass="SHGBusinessButtonContentView">
                     <rect key="frame" x="0.0" y="43" width="320" height="66"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" red="0.97254901960784312" green="0.97254901960784312" blue="0.97254901960784312" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -252,7 +252,7 @@
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <view contentMode="scaleToFill" id="wM3-dK-6kV">
+                <view contentMode="scaleToFill" id="wM3-dK-6kV" customClass="SHGBusinessButtonContentView">
                     <rect key="frame" x="0.0" y="43" width="320" height="66"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" red="0.97254901960784312" green="0.97254901960784312" blue="0.97254901960784312" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

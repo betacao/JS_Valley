@@ -10,7 +10,7 @@
 
 @interface SHGBusinessButtonContentView()
 
-@property (assign, nonatomic) SHGBusinessButtonShowMode showMode;
+
 
 @end
 
@@ -25,6 +25,7 @@
     return self;
 }
 
+
 - (NSMutableArray *)buttonArray
 {
     if (!_buttonArray) {
@@ -32,6 +33,7 @@
     }
     return _buttonArray;
 }
+
 
 - (void)didAddSubview:(UIView *)subview
 {
@@ -83,6 +85,7 @@
         }
     }];
     return result;
+
 }
 
 @end

@@ -21,4 +21,10 @@
 #define kThreeButtonWidth floor((SCREENWIDTH - 2 * MarginFactor(12.0f) - 2 * MarginFactor(10.0f)) / 3.0)
 #define kTwoButtonWidth floor((SCREENWIDTH - 2 * MarginFactor(12.0f) -MarginFactor(10.0f)) / 2.0)
 
+//定位界面
+#define kLocationButtonLeftMargin floorf((SCREENWIDTH - 3 * MarginFactor(111.0f) - 2 * MarginFactor(12.0f)) / 2.0f)
+#define kLocationButtonTopMargin MarginFactor(15.0f)
+#define kLocationButtonWidth MarginFactor(111.0f)
+#define kLocationButtonHeight MarginFactor(26.0f)
+
 #endif 

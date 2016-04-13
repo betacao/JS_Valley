@@ -18,10 +18,9 @@ typedef NS_ENUM(NSInteger, SHGBusinessButtonShowMode){
 
 @interface SHGBusinessButtonContentView : UIView
 - (instancetype)initWithMode:(SHGBusinessButtonShowMode)mode;
-
+@property (assign, nonatomic) SHGBusinessButtonShowMode showMode;
 @property (strong, nonatomic) NSMutableArray *buttonArray;
 @property (assign, nonatomic) NSInteger exclusiveIndex;
-
 - (void)didClickButton:(UIButton *)button;
 - (NSMutableArray *)selectedArray;
 @end

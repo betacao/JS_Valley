@@ -106,6 +106,9 @@
                     <rect key="frame" x="8" y="87" width="94" height="72"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <state key="normal" image="addImageButton"/>
+                    <connections>
+                        <action selector="addNewImage:" destination="-1" eventType="touchUpInside" id="QXw-rj-Gtj"/>
+                    </connections>
                 </button>
             </subviews>
             <color key="backgroundColor" red="0.97254901959999995" green="0.97254901959999995" blue="0.97254901959999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -123,7 +126,7 @@
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <view contentMode="scaleToFill" id="MqN-dk-N7a">
+                <view contentMode="scaleToFill" id="MqN-dk-N7a" customClass="SHGBusinessButtonContentView">
                     <rect key="frame" x="0.0" y="43" width="320" height="66"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" red="0.97254901959999995" green="0.97254901959999995" blue="0.97254901959999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -131,7 +134,7 @@
             </subviews>
             <color key="backgroundColor" red="0.97254901959999995" green="0.97254901959999995" blue="0.97254901959999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <point key="canvasLocation" x="-602" y="104.5"/>
+            <point key="canvasLocation" x="-476" y="94.5"/>
         </view>
         <view contentMode="scaleToFill" id="Idn-c9-Glq">
             <rect key="frame" x="0.0" y="0.0" width="321" height="74"/>

@@ -7,10 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-typedef void (^SHGReturnTextBlock)(NSString *showText);
+typedef void (^SHGReturnTextBlock)(NSString *showText, NSMutableArray *array);
 
 @interface SHGBusinessSelectView : UIView
-- (instancetype)initWithFrame:(CGRect)frame array:(NSArray *)array;
+- (instancetype)initWithFrame:(CGRect)frame array:(NSArray *)array statu:(BOOL) statu;
 
 @property (nonatomic, copy) SHGReturnTextBlock returnTextBlock;
 

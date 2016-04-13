@@ -9,5 +9,5 @@
 #import "BaseViewController.h"
 
 @interface SHGSameAndCommixtureSendViewController : BaseViewController
-
+@property (strong, nonatomic) NSDictionary *firstDic;
 @end

@@ -11,8 +11,9 @@
 @implementation SHGBusinessObject
 + (NSDictionary *)JSONKeyPathsByPropertyKey
 {
-    return @{@"area" : @"area", @"browseNum" : @"browsenum", @"title" : @"title", @"modifyNum" : @"modifyNum", @"businessShow" : @"businessshow", @"investAmount" : @"investamount", @"createTime" : @"createtime", @"businessId" : @"businessid", @"modifyTime" : @"modifytime"};
 
+    return @{ @"browseNum" : @"browsenum", @"modifyNum" : @"modifyNum", @"businessShow" : @"businessshow",@"createTime" : @"createtime", @"businessID" : @"businessid", @"modifyTime" : @"modifytime", @"anonymous" : @"anonymous",@"type":@"type",@"area":@"area",@"bondType":@"bondtype",@"clarifyingWay":@"clarifyingway",@"contact":@"contact",@"detail":@"detail", @"fundUsetime":@"fundusetime", @"highestRate":@"highestrate",@"industry":@"industry",@"investAmount":@"investamount", @"investModel":@"investmodel", @"title":@"title", @"uid":@"uid", @"photo":@"photo",@"businessType":@"businesstype",@"clarifyingRequire":@"clarifyingrequire",@"lowestPaybackRate":@"lowestpaybackrate",@"financingStage":@"financingstage",@"fundSource":@"fundsource",@"moneysideType":@"moneysidetype",@"totalshareRate":@"totalsharerate",@"vestYears":@"vestyears"};
+    
 }
 @end
 

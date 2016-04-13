@@ -70,11 +70,14 @@
                     <rect key="frame" x="8" y="87" width="94" height="72"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <state key="normal" image="addImageButton"/>
+                    <connections>
+                        <action selector="addNewImage:" destination="-1" eventType="touchUpInside" id="K4a-i3-CVg"/>
+                    </connections>
                 </button>
             </subviews>
             <color key="backgroundColor" red="0.97254901959999995" green="0.97254901959999995" blue="0.97254901959999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <point key="canvasLocation" x="-82" y="271"/>
+            <point key="canvasLocation" x="-14" y="270"/>
         </view>
         <view contentMode="scaleToFill" id="vmd-dp-DqM">
             <rect key="frame" x="0.0" y="0.0" width="340" height="208"/>

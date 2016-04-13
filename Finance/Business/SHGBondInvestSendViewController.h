@@ -9,5 +9,5 @@
 #import "BaseViewController.h"
 
 @interface SHGBondInvestSendViewController : BaseViewController
-
+@property (strong, nonatomic) NSDictionary *firstDic;
 @end

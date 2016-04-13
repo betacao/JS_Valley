@@ -9,5 +9,6 @@
 #import "BaseViewController.h"
 
 @interface SHGBusinessLoactionViewController : BaseViewController
++ (instancetype)sharedController;
 
 @end

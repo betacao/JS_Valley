@@ -77,11 +77,14 @@
                     <rect key="frame" x="8" y="87" width="94" height="72"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <state key="normal" image="addImageButton"/>
+                    <connections>
+                        <action selector="addNewImage:" destination="-1" eventType="touchUpInside" id="g2f-0R-vO8"/>
+                    </connections>
                 </button>
             </subviews>
             <color key="backgroundColor" red="0.97254901959999995" green="0.97254901959999995" blue="0.97254901959999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <point key="canvasLocation" x="-82" y="271"/>
+            <point key="canvasLocation" x="159" y="259"/>
         </view>
         <view contentMode="scaleToFill" id="20T-QY-WxU">
             <rect key="frame" x="0.0" y="0.0" width="321" height="74"/>
@@ -124,17 +127,17 @@
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="biXuan" id="U4g-Sc-tjw">
+                    <rect key="frame" x="175" y="8" width="30" height="30"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                </imageView>
                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="d6M-AM-55v" customClass="EMTextView">
-                    <rect key="frame" x="0.0" y="51" width="320" height="128"/>
+                    <rect key="frame" x="12" y="56" width="320" height="128"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                 </textView>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="biXuan" id="U4g-Sc-tjw">
-                    <rect key="frame" x="175" y="8" width="30" height="30"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                </imageView>
             </subviews>
             <color key="backgroundColor" red="0.97254901959999995" green="0.97254901959999995" blue="0.97254901959999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
@@ -165,6 +168,6 @@
     <resources>
         <image name="addImageButton" width="60" height="60"/>
         <image name="biXuan" width="8" height="8"/>
-        <image name="market_select" width="11" height="11"/>
+        <image name="market_select" width="8" height="8"/>
     </resources>
 </document>

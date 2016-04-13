@@ -1,166 +1,155 @@
 //
-//  SHGLoactionViewController.m
+//  SHGBusinessLocationView.m
 //  Finance
 //
-//  Created by weiqiankun on 16/3/30.
+//  Created by weiqiankun on 16/4/12.
 //  Copyright © 2016年 HuMin. All rights reserved.
 //
 
-#import "SHGBusinessLoactionViewController.h"
+#import "SHGBusinessLocationView.h"
 #import "SHGBusinessMargin.h"
+@interface SHGBusinessLocationView ()
 
-@interface SHGBusinessLoactionViewController ()
 //topView
-@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
-@property (weak, nonatomic) IBOutlet UIButton *sureButton;
-@property (strong, nonatomic) IBOutlet UIView *locationView;
-@property (weak, nonatomic) IBOutlet UILabel *locationTitleLabel;
-@property (weak, nonatomic) IBOutlet UIView *locationBottonView;
-@property (weak, nonatomic) IBOutlet UIButton *locationButton;
+@property (strong, nonatomic)  UIScrollView *scrollView;
+@property (strong, nonatomic)  UIButton *quiteButton;
+@property (strong, nonatomic)  UIView *locationView;
+@property (strong, nonatomic)  UILabel *locationTitleLabel;
+@property (strong, nonatomic)  UIView *locationBottonView;
+@property (strong, nonatomic)  UIButton *locationButton;
 
 //全国
-@property (strong, nonatomic) IBOutlet UIView *municipalityView;
-@property (weak, nonatomic) IBOutlet UIButton *nationWideButton;
-@property (weak, nonatomic) IBOutlet UILabel *municipalityTitleLabel;
-@property (weak, nonatomic) IBOutlet UIView *municipalityBottomView;
-@property (weak, nonatomic) IBOutlet UIView *municipalityButtonView;
+@property (strong, nonatomic)  UIView *municipalityView;
+@property (strong, nonatomic)  UILabel *municipalityTitleLabel;
+@property (strong, nonatomic)  UIView *municipalityBottomView;
+@property (strong, nonatomic)  UIView *municipalityButtonView;
 
 //华东地区
-@property (strong, nonatomic) IBOutlet UIView *eastChinaView;
-@property (weak, nonatomic) IBOutlet UILabel *eastChinaTitleLabel;
-@property (weak, nonatomic) IBOutlet UIView *eastChinaButtonView;
-@property (weak, nonatomic) IBOutlet UIView *eastChinaBottomView;
+@property (strong, nonatomic)  UIView *eastChinaView;
+@property (strong, nonatomic)  UILabel *eastChinaTitleLabel;
+@property (strong, nonatomic)  UIView *eastChinaButtonView;
+@property (strong, nonatomic)  UIView *eastChinaBottomView;
 //华北地区
-@property (strong, nonatomic) IBOutlet UIView *northChinaView;
-@property (weak, nonatomic) IBOutlet UILabel *northChinaTitleLabel;
-@property (weak, nonatomic) IBOutlet UIView *northChinaButtonView;
-@property (weak, nonatomic) IBOutlet UIView *northChinaBottomView;
+@property (strong, nonatomic)  UIView *northChinaView;
+@property (strong, nonatomic)  UILabel *northChinaTitleLabel;
+@property (strong, nonatomic)  UIView *northChinaButtonView;
+@property (strong, nonatomic)  UIView *northChinaBottomView;
 //东北地区
-@property (strong, nonatomic) IBOutlet UIView *northeastView;
-@property (weak, nonatomic) IBOutlet UILabel *northeastTitleLabel;
-@property (weak, nonatomic) IBOutlet UIView *northeastButtonView;
-@property (weak, nonatomic) IBOutlet UIView *northeastBottom;
+@property (strong, nonatomic)  UIView *northeastView;
+@property (strong, nonatomic)  UILabel *northeastTitleLabel;
+@property (strong, nonatomic)  UIView *northeastButtonView;
+@property (strong, nonatomic)  UIView *northeastBottom;
 //华南地区
-@property (strong, nonatomic) IBOutlet UIView *southChinaView;
-@property (weak, nonatomic) IBOutlet UILabel *southChinaTitleLabel;
-@property (weak, nonatomic) IBOutlet UIView *southChinaButtonView;
-@property (weak, nonatomic) IBOutlet UIView *southChinaBottomView;
+@property (strong, nonatomic)  UIView *southChinaView;
+@property (strong, nonatomic)  UILabel *southChinaTitleLabel;
+@property (strong, nonatomic)  UIView *southChinaButtonView;
+@property (strong, nonatomic)  UIView *southChinaBottomView;
 //华中地区
-@property (strong, nonatomic) IBOutlet UIView *centerView;
-@property (weak, nonatomic) IBOutlet UILabel *centerTitleLabel;
-@property (weak, nonatomic) IBOutlet UIView *centerButtonView;
-@property (weak, nonatomic) IBOutlet UIView *centerBottomView;
+@property (strong, nonatomic)  UIView *centerView;
+@property (strong, nonatomic)  UILabel *centerTitleLabel;
+@property (strong, nonatomic)  UIView *centerButtonView;
+@property (strong, nonatomic)  UIView *centerBottomView;
 //西南地区
-@property (strong, nonatomic) IBOutlet UIView *southwestView;
-@property (weak, nonatomic) IBOutlet UILabel *southwestTitleLabel;
-@property (weak, nonatomic) IBOutlet UIView *southwestButtonView;
-@property (weak, nonatomic) IBOutlet UIView *southwestBottomView;
+@property (strong, nonatomic)  UIView *southwestView;
+@property (strong, nonatomic)  UILabel *southwestTitleLabel;
+@property (strong, nonatomic)  UIView *southwestButtonView;
+@property (strong, nonatomic)  UIView *southwestBottomView;
 //西北地区
-@property (strong, nonatomic) IBOutlet UIView *northwestView;
-@property (weak, nonatomic) IBOutlet UILabel *northwestTitleLabel;
-@property (weak, nonatomic) IBOutlet UIView *northwestButtonView;
-@property (weak, nonatomic) IBOutlet UIView *northwestBottomView;
+@property (strong, nonatomic)  UIView *northwestView;
+@property (strong, nonatomic)  UILabel *northwestTitleLabel;
+@property (strong, nonatomic)  UIView *northwestButtonView;
+@property (strong, nonatomic)  UIView *northwestBottomView;
 
 @property (strong, nonatomic) NSArray *provinces;
 @property (strong, nonatomic) NSMutableArray *allCity;
 @property (strong, nonatomic) UIButton *locationCurrentButton;
 
-@property (assign, nonatomic)  BOOL statu;
 @end
+@implementation SHGBusinessLocationView
 
-@implementation SHGBusinessLoactionViewController
-+ (instancetype)sharedController
+
+- (id)initWithFrame:(CGRect)frame
 {
-    static SHGBusinessLoactionViewController *sharedGlobleInstance = nil;
-    static dispatch_once_t predicate;
-    dispatch_once(&predicate, ^{
-        sharedGlobleInstance = [[self alloc] init];
-    });
-    return sharedGlobleInstance;
-}
-
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    self.title = @"当前定位";
-    self.allCity = [NSMutableArray array];
-    self.provinces = [[NSArray alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"MarketArea" ofType:@"plist"]];
-    
-    [[self.provinces objectAtIndex:1] objectForKey:@"areas"];
-    
-
-    // [self.scrollView addSubview:self.locationView];
-    [self.scrollView addSubview:self.municipalityView];
-    [self.scrollView addSubview:self.eastChinaView];
-    [self.scrollView addSubview:self.northChinaView];
-    [self.scrollView addSubview:self.northeastView];
-    [self.scrollView addSubview:self.southChinaView];
-    [self.scrollView addSubview:self.centerView];
-    [self.scrollView addSubview:self.southwestView];
-    [self.scrollView addSubview:self.northwestView];
-    [self addSdLayout];
-    [self initView];
-
+    if (self = [super initWithFrame:frame]) {
+        self.backgroundColor = Color(@"efeeef");
+        self.allCity = [NSMutableArray array];
+        self.provinces = [[NSArray alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"MarketArea" ofType:@"plist"]];
+        
+        [[self.provinces objectAtIndex:1] objectForKey:@"areas"];
+        
+        [self addSubview:self.scrollView];
+        [self addSubview:self.quiteButton];
+        [self.scrollView addSubview:self.locationView];
+        [self.scrollView addSubview:self.municipalityView];
+        [self.scrollView addSubview:self.eastChinaView];
+        [self.scrollView addSubview:self.northChinaView];
+        [self.scrollView addSubview:self.northeastView];
+        [self.scrollView addSubview:self.southChinaView];
+        [self.scrollView addSubview:self.centerView];
+        [self.scrollView addSubview:self.southwestView];
+        [self.scrollView addSubview:self.northwestView];
+        
+        [self addSdLayout];
+        [self initView];
+    }
+    return self;
 }
 
 - (void)addSdLayout
 {
+    UIImage *image = [UIImage imageNamed:@"business_quit"];
+    CGSize imageSize = image.size;
+
     self.scrollView.sd_layout
-    .topSpaceToView(self.view, 0.0f)
-    .leftSpaceToView(self.view, 0.0f)
-    .rightSpaceToView(self.view, 0.0f)
-    .bottomSpaceToView(self.view, MarginFactor(50.0f));
+    .topSpaceToView(self, 0.0f)
+    .leftSpaceToView(self, 0.0f)
+    .rightSpaceToView(self, 0.0f)
+    .bottomSpaceToView(self, MarginFactor(20.0f) + imageSize.height);
     
-    self.sureButton.sd_layout
-    .leftSpaceToView(self.view, 0.0f)
-    .rightSpaceToView(self.view, 0.0f)
-    .bottomSpaceToView(self.view, 0.0f)
-    .heightIs(MarginFactor(50.0f));
+    self.quiteButton.sd_layout
+    .centerXIs(SCREENWIDTH / 2.0f)
+    .bottomSpaceToView(self, MarginFactor(20.0f))
+    .widthIs(imageSize.width)
+    .heightIs(imageSize.height);
     
-//    //topView
-//    self.locationView.sd_layout
-//    .topSpaceToView(self.scrollView, 0.0f)
-//    .leftSpaceToView(self.scrollView, 0.0f)
-//    .rightSpaceToView(self.scrollView, 0.0f);
-//    
-//    self.locationTitleLabel.sd_layout
-//    .leftSpaceToView(self.locationView, MarginFactor(24.0f))
-//    .topSpaceToView(self.locationView, 0.0f)
-//    .heightIs(MarginFactor(50.0f))
-//    .widthIs(MarginFactor(150.0f));
-//    
-//    self.locationButton.sd_layout
-//    .rightSpaceToView(self.locationView, MarginFactor(17.0f))
-//    .centerYEqualToView(self.locationTitleLabel)
-//    .heightIs(MarginFactor(50.0f))
-//    .widthIs(MarginFactor(150.0f));
-//    
-//    self.locationBottonView.sd_layout
-//    .leftSpaceToView(self.locationView, 0.0f)
-//    .rightSpaceToView(self.locationView, 0.0f)
-//    .topSpaceToView(self.locationTitleLabel, 0.0f)
-//    .heightIs(MarginFactor(12.0f));
-//    
-//    [self.locationView setupAutoHeightWithBottomView:self.locationBottonView bottomMargin:0.0f];
-    //全国直辖市
- 
-    self.municipalityView.sd_layout
+    //topView
+    self.locationView.sd_layout
     .topSpaceToView(self.scrollView, 0.0f)
     .leftSpaceToView(self.scrollView, 0.0f)
     .rightSpaceToView(self.scrollView, 0.0f);
     
-    self.nationWideButton.sd_layout
-    .topSpaceToView(self.municipalityView, MarginFactor(15.0f))
-    .leftSpaceToView(self.municipalityView, MarginFactor(12.0f))
-    .widthIs(MarginFactor(111))
-    .heightIs(MarginFactor(26.0f));
+    self.locationTitleLabel.sd_layout
+    .leftSpaceToView(self.locationView, MarginFactor(24.0f))
+    .topSpaceToView(self.locationView, 0.0f)
+    .heightIs(MarginFactor(50.0f))
+    .widthIs(MarginFactor(150.0f));
     
+    self.locationButton.sd_layout
+    .rightSpaceToView(self.locationView, MarginFactor(17.0f))
+    .centerYEqualToView(self.locationTitleLabel)
+    .heightIs(MarginFactor(50.0f))
+    .widthIs(MarginFactor(100.0f));
+    
+    self.locationBottonView.sd_layout
+    .leftSpaceToView(self.locationView, 0.0f)
+    .rightSpaceToView(self.locationView, 0.0f)
+    .topSpaceToView(self.locationTitleLabel, 0.0f)
+    .heightIs(MarginFactor(12.0f));
+    
+    [self.locationView setupAutoHeightWithBottomView:self.locationBottonView bottomMargin:0.0f];
+    //全国直辖市
+    
+    self.municipalityView.sd_layout
+    .topSpaceToView(self.locationView, 0.0f)
+    .leftSpaceToView(self.scrollView, 0.0f)
+    .rightSpaceToView(self.scrollView, 0.0f);
+
     self.municipalityTitleLabel.sd_layout
     .leftSpaceToView(self.municipalityView, MarginFactor(24.0f))
-    .topSpaceToView(self.nationWideButton, MarginFactor(15.0f))
+    .topSpaceToView(self.municipalityView, MarginFactor(15.0f))
     .autoHeightRatio(0.0f);
     [self.municipalityTitleLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
-
+    
     self.municipalityButtonView.sd_layout
     .leftSpaceToView(self.municipalityView, 0.0f)
     .rightSpaceToView(self.municipalityView, 0.0f)
@@ -248,7 +237,7 @@
     .rightSpaceToView(self.northeastView, 0.0f)
     .heightIs(MarginFactor(12.0f))
     .topSpaceToView(self.northeastButtonView, 0.0f);
-
+    
     [self.northeastView setupAutoHeightWithBottomView:self.northeastBottom bottomMargin:0.0f];
     
     //华南地区
@@ -274,8 +263,8 @@
     .rightSpaceToView(self.southChinaView, 0.0f)
     .heightIs(MarginFactor(12.0f))
     .topSpaceToView(self.southChinaButtonView, 0.0f);
-
-     [self.southChinaView setupAutoHeightWithBottomView:self.southChinaBottomView bottomMargin:0.0f];
+    
+    [self.southChinaView setupAutoHeightWithBottomView:self.southChinaBottomView bottomMargin:0.0f];
     //华中地区
     self.centerView.sd_layout
     .topSpaceToView(self.southChinaView, 0.0f)
@@ -299,7 +288,7 @@
     .rightSpaceToView(self.centerView, 0.0f)
     .heightIs(MarginFactor(12.0f))
     .topSpaceToView(self.centerButtonView, 0.0f);
-
+    
     [self.centerView setupAutoHeightWithBottomView:self.centerBottomView bottomMargin:0.0f];
     //西南地区
     self.southwestView.sd_layout
@@ -331,7 +320,7 @@
     .topSpaceToView(self.southwestView, 0.0f)
     .leftSpaceToView(self.scrollView, 0.0f)
     .rightSpaceToView(self.scrollView, 0.0f);
-
+    
     self.northwestTitleLabel.sd_layout
     .leftSpaceToView(self.northwestView, MarginFactor(24.0f))
     .topSpaceToView(self.northwestView, MarginFactor(15.0f))
@@ -349,18 +338,15 @@
     .rightSpaceToView(self.northwestView, 0.0f)
     .heightIs(MarginFactor(12.0f))
     .topSpaceToView(self.northwestButtonView, 0.0f);
-
+    
     [self.northwestView setupAutoHeightWithBottomView:self.northwestBottomView bottomMargin:0.0f];
     
-     [self.scrollView setupAutoHeightWithBottomView:self.northwestView bottomMargin:0.0f];
+    [self.scrollView setupAutoHeightWithBottomView:self.northwestView bottomMargin:0.0f];
 }
 
 - (void)initView
 {
-    self.sureButton.titleLabel.font = FontFactor(19.0f);
-    [self.sureButton setTitleColor:Color(@"ffffff") forState:UIControlStateNormal];
-    [self.sureButton setBackgroundColor:Color(@"f04241")];
-//    self.locationBottonView.backgroundColor = Color(@"efeeef");
+    self.locationBottonView.backgroundColor = Color(@"efeeef");
     self.municipalityBottomView.backgroundColor = Color(@"efeeef");
     self.eastChinaBottomView.backgroundColor = Color(@"efeeef");
     self.northChinaBottomView.backgroundColor = Color(@"efeeef");
@@ -386,19 +372,16 @@
     self.northwestTitleLabel.font = FontFactor(13.0f);
     self.northwestTitleLabel.textColor = Color(@"858585");
     
-//    self.locationTitleLabel.font = FontFactor(16.0f);
-//    self.locationTitleLabel.textColor = Color(@"161616");
-//    
-//    self.locationButton.titleLabel.font = FontFactor(15.0f);
-//    [self.locationButton setTitle:@"重新定位" forState:UIControlStateNormal];
-//    [self.locationButton setTitleColor:Color(@"2b7fdc") forState:UIControlStateNormal];
-    self.nationWideButton.titleLabel.font = FontFactor(14.0f);
-    [self.nationWideButton setBackgroundImage:[[UIImage imageNamed:@"locationButtonBg"] resizableImageWithCapInsets:UIEdgeInsetsMake(10.0f, 10.0f, 10.0f, 10.0f) resizingMode:UIImageResizingModeStretch] forState:UIControlStateNormal];
-    [self.nationWideButton setBackgroundImage:[[UIImage imageNamed:@"locationButtonBgHigh"] resizableImageWithCapInsets:UIEdgeInsetsMake(10.0f, 10.0f, 10.0f, 10.0f) resizingMode:UIImageResizingModeStretch] forState:UIControlStateSelected];
-    [self.nationWideButton setTitleColor:Color(@"161616") forState:UIControlStateNormal];
-    [self.nationWideButton setTitleColor:Color(@"f33300") forState:UIControlStateSelected];
-    [self.nationWideButton addTarget:self action:@selector(locationButtonClick:) forControlEvents:UIControlEventTouchUpInside];
-
+    self.locationTitleLabel.font = FontFactor(16.0f);
+    self.locationTitleLabel.textColor = Color(@"161616");
+    
+    self.locationButton.titleLabel.font = FontFactor(15.0f);
+    [self.locationButton setTitle:@"重新定位" forState:UIControlStateNormal];
+    [self.locationButton setTitleColor:Color(@"2b7fdc") forState:UIControlStateNormal];
+    [self.locationButton setImage:[UIImage imageNamed:@"location"] forState:UIControlStateNormal];
+    self.locationButton.imageEdgeInsets = UIEdgeInsetsMake(0.0f, -7.0f, 0.0f, 0.0f);
+    [self.locationButton addTarget:self action:@selector(locationButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+    
     
     
     NSArray *locationArry = @[self.municipalityButtonView,self.eastChinaButtonView,self.northChinaButtonView,self.northeastButtonView,self.southChinaButtonView,self.centerButtonView,self.southwestButtonView,self.northwestButtonView,self.eastChinaButtonView];
@@ -419,7 +402,7 @@
             button.frame = CGRectMake(MarginFactor(12.0f) + i%3 * (kLocationButtonLeftMargin + kLocationButtonWidth), i/3 * (kLocationButtonTopMargin + kLocationButtonHeight), kLocationButtonWidth, kLocationButtonHeight);
             [[locationArry objectAtIndex:j] addSubview:button];
         }
-
+        
     }
 }
 
@@ -428,19 +411,212 @@
     if(btn != self.locationCurrentButton){
         self.locationCurrentButton.selected = NO;
         self.locationCurrentButton = btn;
+        self.currentButtonString = self.locationCurrentButton.titleLabel.text;
     }
     self.locationCurrentButton.selected = YES;
 }
 
-- (IBAction)sureButtonClick:(UIButton *)sender
+- (void)quiteClick:(UIButton *)btn
 {
+    if (self.returnLocationBlock) {
+        self.returnLocationBlock(self.currentButtonString);
+    }
+       [self removeFromSuperview];
     
 }
 
-- (void)didReceiveMemoryWarning
+- (UIScrollView *)scrollView
 {
-    [super didReceiveMemoryWarning];
+    if (!_scrollView) {
+        _scrollView = [[UIScrollView alloc]init];
+        _scrollView.backgroundColor = [UIColor whiteColor];
+    }
+    return _scrollView;
+}
+
+- (UIButton *)quiteButton
+{
+    if (!_quiteButton) {
+        _quiteButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [_quiteButton setImage:[UIImage imageNamed:@"business_quit"] forState:UIControlStateNormal];
+        [_quiteButton addTarget:self action:@selector(quiteClick:) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _quiteButton;
+}
+
+//topView
+- (UIView *)locationView
+{
+    if (!_locationView) {
+        _locationView = [[UIView alloc]init];
+        _locationTitleLabel = [[UILabel alloc] init];
+        _locationTitleLabel.text = @"江苏";
+        [_locationView addSubview:_locationTitleLabel];
     
+        _locationBottonView = [[UIView alloc] init];
+        [_locationView addSubview:_locationBottonView];
+        
+        _locationButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        _locationButton.titleLabel.textAlignment = NSTextAlignmentRight;
+        [_locationView addSubview:_locationButton];
+    }
+    return _locationView;
+}
+
+//全国
+- (UIView *)municipalityView
+{
+    if (!_municipalityView) {
+        _municipalityView = [[UIView alloc]init];
+        _municipalityTitleLabel = [[UILabel alloc] init];
+        _municipalityTitleLabel.text = @"直辖市";
+        [_municipalityView addSubview:_municipalityTitleLabel];
+        
+        _municipalityBottomView = [[UIView alloc] init];
+        [_municipalityView addSubview:_municipalityBottomView];
+        
+        _municipalityButtonView = [[UIView alloc] init];
+        [_municipalityView addSubview:_municipalityButtonView];
+    }
+    return _municipalityView;
+}
+
+//华东地区
+- (UIView *)eastChinaView
+{
+    if (!_eastChinaView) {
+        _eastChinaView = [[UIView alloc]init];
+        _eastChinaTitleLabel = [[UILabel alloc] init];
+        _eastChinaTitleLabel.text = @"华东地区";
+        [_eastChinaView addSubview:_eastChinaTitleLabel];
+        
+        _eastChinaButtonView = [[UIView alloc] init];
+        [_eastChinaView addSubview:_eastChinaButtonView];
+        
+        _eastChinaBottomView = [[UIView alloc] init];
+        [_eastChinaView addSubview:_eastChinaBottomView];
+    }
+    return _eastChinaView;
+}
+
+//华北地区
+- (UIView *)northChinaView
+{
+    if (!_northChinaView) {
+        _northChinaView = [[UIView alloc]init];
+        
+        _northChinaTitleLabel = [[UILabel alloc] init];
+        _northChinaTitleLabel.text = @"华北地区";
+        [_northChinaView addSubview:_northChinaTitleLabel];
+        
+        _northChinaBottomView = [[UIView alloc] init];
+        [_northChinaView addSubview:_northChinaBottomView];
+        
+        _northChinaButtonView = [[UIView alloc] init];
+        [_northChinaView addSubview:_northChinaButtonView];
+        
+    }
+    return _northChinaView;
+}
+
+//东北地区
+- (UIView *)northeastView
+{
+    if (!_northeastView) {
+        _northeastView = [[UIView alloc]init];
+        
+        _northeastTitleLabel = [[UILabel alloc] init];
+        _northeastTitleLabel.text = @"东北地区";
+        [_northeastView addSubview:_northeastTitleLabel];
+        
+        _northeastBottom = [[UIView alloc] init];
+        [_northeastView addSubview:_northeastBottom];
+        
+        _northeastButtonView = [[UIView alloc] init];
+        [_northeastView addSubview:_northeastButtonView];
+    }
+    return _northeastView;
+}
+
+//华南地区
+- (UIView *)southChinaView
+{
+    if (!_southChinaView) {
+        _southChinaView = [[UIView alloc]init];
+        
+        _southChinaTitleLabel = [[UILabel alloc] init];
+        _southChinaTitleLabel.text = @"华南地区";
+        [_southChinaView addSubview:_southChinaTitleLabel];
+        
+        _southChinaBottomView = [[UIView alloc] init];
+        [_southChinaView addSubview:_southChinaBottomView];
+        
+        _southChinaButtonView = [[UIView alloc] init];
+        [_southChinaView addSubview:_southChinaButtonView];
+    }
+    return _southChinaView;
+}
+
+//华中地区
+- (UIView *)centerView
+{
+    if (!_centerView) {
+        _centerView = [[UIView alloc]init];
+        
+        _centerTitleLabel = [[UILabel alloc] init];
+        _centerTitleLabel.text = @"华中地区";
+        [_centerView addSubview:_centerTitleLabel];
+        
+        _centerBottomView = [[UIView alloc] init];
+        [_centerView addSubview:_centerBottomView];
+        
+        _centerButtonView = [[UIView alloc] init];
+        [_centerView addSubview:_centerButtonView];
+        
+    }
+    return _centerView;
+}
+
+//西南地区
+- (UIView *)southwestView
+{
+    if (!_southwestView) {
+        _southwestView = [[UIView alloc]init];
+        
+        _southwestTitleLabel = [[UILabel alloc] init];
+        _southwestTitleLabel.text = @"西南地区";
+        [_southwestView addSubview:_southwestTitleLabel];
+        
+        _southwestBottomView = [[UIView alloc] init];
+        [_southwestView addSubview:_southwestBottomView];
+        
+        _southwestButtonView = [[UIView alloc] init];
+        [_southwestView addSubview:_southwestButtonView];
+
+        
+    }
+    return _southwestView;
+}
+
+//西北地区
+- (UIView *)northwestView
+{
+    if (!_northwestView) {
+        _northwestView = [[UIView alloc]init];
+        
+        _northwestTitleLabel = [[UILabel alloc] init];
+        _northwestTitleLabel.text = @"西北地区";
+        [_northwestView addSubview:_northwestTitleLabel];
+        
+        _northwestButtonView = [[UIView alloc] init];
+        [_northwestView addSubview:_northwestButtonView];
+        
+        _northwestBottomView = [[UIView alloc] init];
+        [_northwestView addSubview:_northwestBottomView];
+        
+
+    }
+    return _northwestView;
 }
 
 

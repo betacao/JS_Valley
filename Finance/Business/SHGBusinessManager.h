@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-
+#import "SHGBusinessObject.h"
 @interface SHGBusinessManager : NSObject
 
 + (instancetype)shareManager;
@@ -16,4 +16,5 @@
 
 - (void)getSecondListBlock:(void (^)(NSArray *array))block;
 
++ (void)createNewBusiness:(NSDictionary *)param success:(void (^)(BOOL success))block;
 @end

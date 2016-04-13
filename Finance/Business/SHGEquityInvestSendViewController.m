@@ -10,7 +10,8 @@
 #import "SHGEquityInvestNextViewController.h"
 #import "SHGBusinessMargin.h"
 #import "SHGBusinessSelectView.h"
-
+#import "SHGBusinessButtonContentView.h"
+#import "SHGBusinessLocationView.h"
 @interface SHGEquityInvestSendViewController ()<UITextFieldDelegate,UIScrollViewDelegate>
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UIButton *nextButton;
@@ -30,7 +31,7 @@
 //投资阶段
 @property (strong, nonatomic) IBOutlet UIView *bondStageView;
 @property (weak, nonatomic) IBOutlet UILabel *bondStageLabel;
-@property (weak, nonatomic) IBOutlet UIView *bondStageButtonView;
+@property (weak, nonatomic) IBOutlet SHGBusinessButtonContentView *bondStageButtonView;
 @property (weak, nonatomic) IBOutlet UIImageView *bondStageSelctImage;
 
 //金额
@@ -58,6 +59,10 @@
 @property (strong, nonatomic) UIButton *categoryCurrentButton;
 
 @property (strong, nonatomic) id currentContext;
+@property (assign, nonatomic) CGFloat keyBoardOrginY;
+@property (strong, nonatomic) SHGEquityInvestNextViewController *equityInvestNextViewController;
+@property (strong, nonatomic) SHGBusinessSelectView *selectViewController;
+@property (strong, nonatomic) SHGBusinessLocationView *locationView;
 @end
 
 @implementation SHGEquityInvestSendViewController
@@ -70,7 +75,6 @@
     self.nameTextField.delegate = self;
     self.phoneNumTextField.delegate = self;
     self.monenyTextField.delegate = self;
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardDidShow:) name:UIKeyboardDidShowNotification object:nil];
     self.buttonBgImage = [UIImage imageNamed:@"business_SendButtonBg"];
     self.buttonBgImage = [self.buttonBgImage resizableImageWithCapInsets:UIEdgeInsetsMake(10.0f, 10.0f, 10.0f, 10.0f) resizingMode:UIImageResizingModeStretch];
     
@@ -86,6 +90,17 @@
     [self initView];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:YES];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardDidShow:) name:UIKeyboardDidShowNotification object:nil];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:YES];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
 - (void)addSdLayout
 {
     UIImage *image = [UIImage imageNamed:@"biXuan"];
@@ -267,6 +282,7 @@
     
 }
 
+
 - (void)initView
 {
     self.nextButton.titleLabel.font = FontFactor(19.0f);
@@ -316,8 +332,7 @@
     
     self.industrySelectButton.titleLabel.font = FontFactor(15.0f);
     [self.industrySelectButton setTitleColor:Color(@"bebebe") forState:UIControlStateNormal];
-    [self.industrySelectButton setTitleColor:Color(@"161616") forState:UIControlStateSelected];
-    
+
     self.nameTextField.layer.borderColor = Color(@"cecece").CGColor;
     self.nameTextField.layer.borderWidth = 0.5f;
     
@@ -353,22 +368,23 @@
 
 - (void)categoryButtonClick:(UIButton *)btn
 {
-    if(btn != self.categoryCurrentButton){
-        self.categoryCurrentButton.selected = NO;
-        self.categoryCurrentButton = btn;
-    }
-    self.categoryCurrentButton.selected = YES;
+    SHGBusinessButtonContentView *superView = (SHGBusinessButtonContentView *)btn.superview;
+    [superView didClickButton:btn];
 }
 
 
 - (IBAction)nextButtonClick:(UIButton *)sender
 {
-//    if ([self checkInputMessage]) {
-    SHGEquityInvestNextViewController *vc = [[SHGEquityInvestNextViewController alloc] init];
-    [self.navigationController pushViewController:vc animated:YES];
+    if ([self checkInputMessage]) {
+        self.firstDic = @{@"uid":UID, @"type": @"moneyside", @"contact": self.phoneNumTextField.text, @"investAmount": self.monenyTextField.text, @"area": self.areaSelectButton.titleLabel.text,@"industry":self.industrySelectButton.titleLabel.text,@"title":self.nameTextField.text ,@"financingStage":@"angel"};
+        if (!self.equityInvestNextViewController) {
+            self.equityInvestNextViewController = [[SHGEquityInvestNextViewController alloc] init];
+        }
+        self.equityInvestNextViewController.superController = self;
+        [self.navigationController pushViewController:self.equityInvestNextViewController animated:YES];
 
-//    }
-  }
+   }
+}
 
 - (BOOL)checkInputMessage
 {
@@ -395,15 +411,31 @@
     return YES;
 }
 
+- (IBAction)locationSelectClick:(UIButton *)sender
+{
+    if (!self.locationView) {
+        self.locationView = [[SHGBusinessLocationView alloc]initWithFrame:CGRectMake(0.0f, 0.0f, SCREENWIDTH, SCREENHEIGHT)];
+    }
+    __weak typeof (self)weakSelf = self;
+    self.locationView.returnLocationBlock = ^(NSString *string){
+        [weakSelf.areaSelectButton setTitle:string forState:UIControlStateNormal];
+        [weakSelf.areaSelectButton setTitleColor:Color(@"161616") forState:UIControlStateNormal];
+    };
+    [self.view.window addSubview:self.locationView];
+}
 - (IBAction)businessClick:(UIButton *)sender
 {
-    NSArray *array =  @[@"不限",@"金融投资",@"能源化工",@"互联网",@"房地产",@"基建工程",@"制造业",@"大健康",@"TMT",@"服务业",@"冶金采掘",@"农林牧渔",@"其他行业"];
-    SHGBusinessSelectView *selectView = [[SHGBusinessSelectView alloc]initWithFrame:CGRectMake(0.0f, 0.0f, SCREENWIDTH, SCREENHEIGHT) array:array];
+    NSArray *array =  @[@"不限",@"金融投资",@"能源化工",@"互联网",@"地产基建",@"制造业",@"大健康",@"TMT",@"服务业",@"冶金采掘",@"农林牧渔",@"其他行业"];
+    if (!self.selectViewController) {
+        self.selectViewController = [[SHGBusinessSelectView alloc]initWithFrame:CGRectMake(0.0f, 0.0f, SCREENWIDTH, SCREENHEIGHT) array:array statu:YES];
+    }
+    
     __weak typeof (self) weakSelf = self;
-    selectView.returnTextBlock = ^(NSString *showText){
-        weakSelf.industrySelectButton.titleLabel.text = showText;
+    self.selectViewController.returnTextBlock = ^(NSString *string, NSMutableArray *array){
+        [weakSelf.industrySelectButton setTitle:string forState:UIControlStateNormal];
+        [weakSelf.industrySelectButton setTitleColor:Color(@"161616") forState:UIControlStateNormal];
     };
-    [self.view.window addSubview:selectView];
+    [self.view.window addSubview:self.selectViewController];
 }
 //键盘消失
 
@@ -431,18 +463,14 @@
 - (void)keyBoardDidShow:(NSNotification *)notificaiton
 {
     NSDictionary* info = [notificaiton userInfo];
-    NSValue* aValue = [info objectForKey:UIKeyboardFrameBeginUserInfoKey];
-    CGSize keyboardSize = [aValue CGRectValue].size;
-    CGRect viewFrame = [self.scrollView frame];
-    viewFrame.size.height -= keyboardSize.height;
-    self.scrollView.frame = viewFrame;
-    CGRect textFieldRect = [self.currentContext frame];
-    [self.scrollView scrollRectToVisible:textFieldRect animated:YES];
-}
-
-- (void)dealloc
-{
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    NSValue *value = [info objectForKey:UIKeyboardFrameEndUserInfoKey];
+    CGPoint keyboardOrigin = [value CGRectValue].origin;
+    self.keyBoardOrginY = keyboardOrigin.y;
+    UIView *view = (UIView *)self.currentContext;
+    CGPoint point = CGPointMake(0.0f, CGRectGetMinX(view.frame));
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.scrollView setContentOffset:point animated:YES];
+    });
 }
 
 - (void)didReceiveMemoryWarning

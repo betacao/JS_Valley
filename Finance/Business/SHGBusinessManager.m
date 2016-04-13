@@ -18,6 +18,19 @@
 @property (strong, nonatomic) NSArray *equityFinancingArray;
 @end
 @implementation SHGBusinessManager
+//创建新业务
++ (void)createNewBusiness:(NSDictionary *)param success:(void (^)(BOOL))block
+{
+    NSString *request = [rBaseAddressForHttp stringByAppendingString:@"/business/saveBusiness"];
+    [MOCHTTPRequestOperationManager postWithURL:request class:[SHGBusinessObject class] parameters:param success:^(MOCHTTPResponse *response) {
+        [Hud hideHud];
+        [Hud showMessageWithText:@"发布业务成功"];
+        block(YES);
+    } failed:^(MOCHTTPResponse *response) {
+        [Hud hideHud];
+        [Hud showMessageWithText:@"发布业务失败"];
+    }];
+}
 
 + (instancetype)shareManager
 {

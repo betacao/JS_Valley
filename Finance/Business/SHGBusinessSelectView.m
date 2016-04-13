@@ -8,34 +8,63 @@
 
 #import "SHGBusinessSelectView.h"
 #import "SHGBusinessMargin.h"
+#import "SHGBusinessButtonContentView.h"
 @interface SHGBusinessSelectView ()
 @property (nonatomic, strong) UIButton *quitButton;
-@property (nonatomic, strong) UIView *buttonView;
+@property (nonatomic, strong) SHGBusinessButtonContentView *buttonView;
+@property (nonatomic, strong) SHGBusinessButtonContentView *radioButtonView;
 @property (nonatomic, strong) NSArray *businessArry;
 @property (nonatomic, strong) NSString *businessName;
+@property (nonatomic, assign) BOOL statu;
+@property (nonatomic, strong) UIButton *currentButton;
+@property (nonatomic, strong) NSString *buttonString;
+@property (nonatomic, strong) NSMutableArray *buttonStrongArray;
 @end
 
 @implementation SHGBusinessSelectView
 
-- (instancetype)initWithFrame:(CGRect)frame array:(NSArray *)array
+- (instancetype)initWithFrame:(CGRect)frame array:(NSArray *)array statu:(BOOL)statu
 {
     if (self = [super initWithFrame:frame]) {
-        self.backgroundColor = [UIColor whiteColor];        
+        self.backgroundColor = [UIColor whiteColor];
         self.businessArry = array;
-        [self addSubview:self.buttonView];
+        self.statu = statu;
+        if (statu) {
+            [self addSubview:self.buttonView];
+        } else{
+            [self addSubview:self.radioButtonView];
+        }
+        
         [self addSubview:self.quitButton];
         [self addSdlayout];
     }
     return self;
 }
 
-- (UIView *)buttonView
+- (NSMutableArray *)buttonStrongArray
+{
+    if (!_buttonStrongArray) {
+        _buttonStrongArray = [[NSMutableArray alloc] init];
+    }
+    return _buttonStrongArray;
+}
+- (SHGBusinessButtonContentView *)buttonView
 {
     if (!_buttonView) {
-        _buttonView = [[UIView alloc] init];
+        
+             _buttonView = [[SHGBusinessButtonContentView alloc] initWithMode:SHGBusinessButtonShowModeExclusiveChoice];
         
     }
     return _buttonView;
+}
+
+- (SHGBusinessButtonContentView *)radioButtonView
+{
+    if (!_radioButtonView) {
+        _radioButtonView = [[SHGBusinessButtonContentView alloc] initWithMode:SHGBusinessButtonShowModeSingleChoice];
+        
+    }
+    return _radioButtonView;
 }
 
 - (UIButton *)quitButton
@@ -50,13 +79,37 @@
 
 - (void)buttonClick:(UIButton *)btn
 {
-    btn.selected = !btn.selected;
+    if (self.statu) {
+        SHGBusinessButtonContentView *superView =(SHGBusinessButtonContentView *)btn.superview;
+        [superView didClickButton:btn];
+        self.buttonStrongArray = superView.selectedArray;
+        if (superView.selectedArray.count > 0) {
+            self.buttonString = [superView.selectedArray objectAtIndex:0];
+            for (NSInteger i = 1; i < self.buttonStrongArray.count; i ++ ) {
+                self.buttonString = [NSString stringWithFormat:@"%@/%@",self.buttonString,[superView.selectedArray objectAtIndex:i]];
+            }
+            
+        } else{
+            self.buttonString = @"";
+        }
+        
+    } else{
+        SHGBusinessButtonContentView *superView =(SHGBusinessButtonContentView *)btn.superview;
+        [superView didClickButton:btn];
+        if (superView.selectedArray.count > 0) {
+            self.buttonString = [superView.selectedArray objectAtIndex:0];
+        } else{
+            self.buttonString = @"";
+        }
+       
+
+  }
 }
 
 - (void)quiteClick:(UIButton *)btn
 {
     if (self.returnTextBlock) {
-        self.returnTextBlock(@"wryweu");
+        self.returnTextBlock(self.buttonString,self.buttonStrongArray);
     }
     [self removeFromSuperview];
     
@@ -79,6 +132,12 @@
     .topSpaceToView(self, MarginFactor(165.0f))
     .bottomSpaceToView(self.quitButton, MarginFactor(10.0f));
     
+    self.radioButtonView.sd_layout
+    .leftSpaceToView(self, 0.0f)
+    .rightSpaceToView(self, 0.0f)
+    .topSpaceToView(self, MarginFactor(165.0f))
+    .bottomSpaceToView(self.quitButton, MarginFactor(10.0f));
+    
     for (int i = 0; i < self.businessArry.count; i ++ ) {
         UIImage *buttonBgImage = [UIImage imageNamed:@"business_unSelected"];
         buttonBgImage = [buttonBgImage resizableImageWithCapInsets:UIEdgeInsetsMake(5.0f, 5.0f, 5.0f, 5.0f) resizingMode:UIImageResizingModeStretch];
@@ -95,7 +154,12 @@
         [button setBackgroundImage:buttonSelectBgImage forState:UIControlStateSelected];
         button.frame = CGRectMake(kLeftToView + i%3 * (kThreeButtonWidth + MarginFactor(9.0f)), i/3 * (kButtonHeight + MarginFactor(30.0f)), kThreeButtonWidth, kCategoryButtonHeight);
         [button addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchUpInside];
-        [self.buttonView addSubview:button];
+        if (self.statu) {
+            [self.buttonView addSubview:button];
+        } else{
+            [self.radioButtonView addSubview:button];
+        }
+        
 
     }
 }

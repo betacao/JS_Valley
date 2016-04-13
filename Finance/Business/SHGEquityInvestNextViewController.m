@@ -10,7 +10,9 @@
 #import "EMTextView.h"
 #import "SHGBusinessMargin.h"
 #import "UIButton+EnlargeEdge.h"
-@interface SHGEquityInvestNextViewController ()<UITextFieldDelegate,UIScrollViewDelegate,UITextViewDelegate>
+#import "SHGBusinessButtonContentView.h"
+#import "SHGBusinessManager.h"
+@interface SHGEquityInvestNextViewController ()<UITextFieldDelegate,UIScrollViewDelegate,UITextViewDelegate,UIImagePickerControllerDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UIButton *sureButton;
 //资金来源
@@ -22,7 +24,7 @@
 //投资期限
 @property (strong, nonatomic) IBOutlet UIView *investTimeView;
 @property (weak, nonatomic) IBOutlet UILabel *investTimeTitleLabel;
-@property (weak, nonatomic) IBOutlet UIView *investTimeButtonView;
+@property (weak, nonatomic) IBOutlet SHGBusinessButtonContentView *investTimeButtonView;
 
 //参股比例
 @property (strong, nonatomic) IBOutlet UIView *retributionView;
@@ -45,10 +47,13 @@
 @property (strong, nonatomic) UIImage *buttonBgImage;
 @property (strong, nonatomic) UIImage *buttonSelectBgImage;
 
-@property (strong, nonatomic) UIButton *timeCurrentButton;
 @property (strong, nonatomic) UIButton *requireCurrentButton;
 
 @property (strong, nonatomic) id currentContext;
+@property (assign, nonatomic) BOOL hasImage;
+@property (assign, nonatomic) CGFloat keyBoardOrginY;
+
+@property (strong, nonatomic) NSString *imageName;
 @end
 
 @implementation SHGEquityInvestNextViewController
@@ -60,7 +65,6 @@
     self.scrollView.delegate = self;
     self.retributionTextField.delegate = self;
     self.marketExplainTextView.delegate = self;
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardDidShow:) name:UIKeyboardDidShowNotification object:nil];
     self.buttonBgImage = [UIImage imageNamed:@"business_SendButtonBg"];
     self.buttonBgImage = [self.buttonBgImage resizableImageWithCapInsets:UIEdgeInsetsMake(10.0f, 10.0f, 10.0f, 10.0f) resizingMode:UIImageResizingModeStretch];
     
@@ -78,6 +82,19 @@
 
  
 }
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:YES];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardDidShow:) name:UIKeyboardDidShowNotification object:nil];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:YES];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 
 - (void)addSdLayout
 {
@@ -263,7 +280,7 @@
     self.retributionTextField.leftViewMode = UITextFieldViewModeAlways;
     [self.retributionTextField setValue:[UIColor colorWithHexString:@"bebebe"] forKeyPath:@"_placeholderLabel.textColor"];
     
-    NSArray *investTimeArray = @[@"不限",@"3年以上",@"3~5年",@"5年以上"];
+    NSArray *investTimeArray = @[@"不限",@"3年以内",@"3~5年",@"5年以上"];
     for (NSInteger i = 0; i < investTimeArray.count; i ++) {
         UIButton * button = [UIButton buttonWithType:UIButtonTypeCustom];
         button.titleLabel.font = FontFactor(15.0f);
@@ -307,11 +324,9 @@
 
 - (void)investTimeButtonClick:(UIButton *)btn
 {
-    if(btn != self.timeCurrentButton){
-        self.timeCurrentButton.selected = NO;
-        self.timeCurrentButton = btn;
-    }
-    self.timeCurrentButton.selected = YES;}
+    SHGBusinessButtonContentView *superView = (SHGBusinessButtonContentView *)btn.superview;
+    [superView didClickButton:btn];
+}
 
 - (void)addRequireButtonClick:(UIButton *)btn
 {
@@ -329,8 +344,65 @@
 
 - (IBAction)sureButtonClick:(UIButton *)sender
 {
+    __weak typeof(self) weakSelf = self;
+    [self uploadImage:^(BOOL success) {
+        if (success) {
+            NSDictionary *businessDic = ((SHGEquityInvestSendViewController *)self.superController).firstDic;
+            NSString *anonymous = weakSelf.authorizeButton.isSelected ? @"1" : @"0";
+            SHGBusinessObject *object = [[SHGBusinessObject alloc]init];
+            NSString *type = [businessDic objectForKey:@"type"];
+            NSString *contact = [businessDic objectForKey:@"contact"];
+            NSString *investAmount = [businessDic objectForKey:@"investAmount"];
+            NSString *financingStage = [businessDic objectForKey:@"financingStage"];
+            NSString *area = [businessDic objectForKey:@"area"];
+            NSString *industry = [businessDic objectForKey:@"industry"];
+            NSString *title = [businessDic objectForKey:@"title"];
+            
+            NSDictionary *param = @{@"uid":UID, @"type": type, @"contact":contact,@"financingStage":financingStage, @"investAmount": investAmount, @"area": area, @"industry": industry,@"fundSource":@"personalCapital" ,@"totalshareRate":self.retributionTextField.text, @"vestYears": @"threeYear",@"detail": weakSelf.marketExplainTextView.text,@"photo": weakSelf.imageName,@"anonymous": anonymous,@"title": title};
+            [SHGBusinessManager createNewBusiness:param success:^(BOOL success) {
+                if (success) {
+                    if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(didCreateNewBusiness:)]) {
+                        [weakSelf.delegate didCreateNewBusiness:object];
+                    }
+                    [weakSelf.navigationController performSelector:@selector(popToRootViewControllerAnimated:) withObject:@(YES) afterDelay:1.2f];
+                }
+            }];
+            
+        }
+    }];
+    
     
 }
+
+
+- (void)uploadImage:(void(^)(BOOL success))block
+{
+    [Hud showWait];
+    if (self.hasImage) {
+        __weak typeof(self) weakSelf = self;
+        [MOCHTTPRequestOperationManager POST:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"image/uploadPhotoCompress"] parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+            NSData *imageData = UIImageJPEGRepresentation(self.addImageButton.imageView.image, 0.1);
+            [formData appendPartWithFileData:imageData name:@"market.jpg" fileName:@"market.jpg" mimeType:@"image/jpeg"];
+        } progress:^(NSProgress * _Nonnull uploadProgress) {
+            
+        } success:^(NSURLSessionDataTask *operation, id responseObject) {
+            NSLog(@"%@",responseObject);
+            [Hud hideHud];
+            NSDictionary *dic = [(NSString *)[responseObject valueForKey:@"data"] parseToArrayOrNSDictionary];
+            weakSelf.imageName = [(NSArray *)[dic valueForKey:@"pname"] objectAtIndex:0];
+            block(YES);
+        } failure:^(NSURLSessionDataTask *operation, NSError *error) {
+            NSLog(@"%@",error);
+            [Hud hideHud];
+            [Hud showMessageWithText:@"上传图片失败"];
+        }];
+    } else{
+        self.imageName = @"";
+        block(YES);
+    }
+    
+}
+
 - (BOOL)checkInputMessage
 {
     if (self.requireCurrentButton.selected  == YES) {
@@ -345,6 +417,52 @@
     return YES;
 }
 
+- (IBAction)addNewImage:(id)sender
+{
+    [self.currentContext resignFirstResponder];
+    if (!self.hasImage) {
+        UIActionSheet *takeSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"拍照", @"选图", nil];
+        [takeSheet showInView:self.view];
+    } else{
+        UIActionSheet *takeSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"删除", nil];
+        [takeSheet showInView:self.view];
+    }
+}
+#pragma mark ------actionSheet代理
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    UIImagePickerController *pickerImage = [[UIImagePickerController alloc] init];
+    NSString *title = [actionSheet buttonTitleAtIndex:buttonIndex];
+    if ([title isEqualToString:@"拍照"]) {
+        if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+            pickerImage.sourceType = UIImagePickerControllerSourceTypeCamera;
+            pickerImage.mediaTypes = [UIImagePickerController availableMediaTypesForSourceType:pickerImage.sourceType];
+            pickerImage.delegate = self;
+            pickerImage.allowsEditing = YES;
+            [self presentViewController:pickerImage animated:YES completion:nil];
+        }
+    } else if ([title isEqualToString:@"选图"]){
+        if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]) {
+            pickerImage.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+            pickerImage.mediaTypes = [UIImagePickerController availableMediaTypesForSourceType:pickerImage.sourceType];
+            pickerImage.delegate = self;
+            pickerImage.allowsEditing = YES;
+            [self presentViewController:pickerImage animated:YES completion:nil];
+        }
+    } else if ([title isEqualToString:@"删除"]){
+        self.hasImage = NO;
+        [self.addImageButton setImage:[UIImage imageNamed:@"addImageButton"] forState:UIControlStateNormal];
+    }
+}
+
+#pragma mark ------pickviewcontroller代理
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info
+{
+    [picker dismissViewControllerAnimated:YES completion:nil];
+    UIImage *image = [info objectForKey:UIImagePickerControllerEditedImage];
+    [self.addImageButton setImage:image forState:UIControlStateNormal];
+    self.hasImage = YES;
+}
 
 //键盘消失
 
@@ -373,22 +491,21 @@
     [self.currentContext resignFirstResponder];
 }
 
+
 - (void)keyBoardDidShow:(NSNotification *)notificaiton
 {
-    NSDictionary* info = [notificaiton userInfo];
-    NSValue* aValue = [info objectForKey:UIKeyboardFrameBeginUserInfoKey];
-    CGSize keyboardSize = [aValue CGRectValue].size;
-    CGRect viewFrame = [self.scrollView frame];
-    viewFrame.size.height -= keyboardSize.height;
-    self.scrollView.frame = viewFrame;
-    CGRect textFieldRect = [self.currentContext frame];
-    [self.scrollView scrollRectToVisible:textFieldRect animated:YES];
+    NSDictionary *info = [notificaiton userInfo];
+    NSValue *value = [info objectForKey:UIKeyboardFrameEndUserInfoKey];
+    CGPoint keyboardOrigin = [value CGRectValue].origin;
+    self.keyBoardOrginY = keyboardOrigin.y;
+    UIView *view = (UIView *)self.currentContext;
+    CGPoint point = CGPointMake(0.0f, CGRectGetMinY(view.frame));
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.scrollView setContentOffset:point animated:YES];
+    });
+    
 }
 
-- (void)dealloc
-{
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];

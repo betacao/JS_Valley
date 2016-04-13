@@ -7,7 +7,12 @@
 //
 
 #import "BaseViewController.h"
+#import "SHGBusinessObject.h"
+#import "SHGSameAndCommixtureSendViewController.h"
+#import "SHGBusinessDelegate.h"
 
 @interface SHGSameAndCommixtureNextViewController : BaseViewController
-
+@property (strong, nonatomic) SHGBusinessObject *object;
+@property (assign, nonatomic) id<SHGBusinessDelegate> delegate;
+@property (weak, nonatomic) UIViewController *superController;
 @end

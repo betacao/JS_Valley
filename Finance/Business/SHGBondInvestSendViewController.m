@@ -10,7 +10,8 @@
 #import "SHGBondInvestNextViewController.h"
 #import "SHGBusinessMargin.h"
 #import "SHGBusinessSelectView.h"
-#import "SHGBusinessLoactionViewController.h"
+#import "SHGBusinessLocationView.h"
+#import "SHGBusinessButtonContentView.h"
 @interface SHGBondInvestSendViewController ()<UITextFieldDelegate,UIScrollViewDelegate>
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UIButton *nextButton;
@@ -30,7 +31,7 @@
 //业务类型
 @property (strong, nonatomic) IBOutlet UIView *marketCategoryView;
 @property (weak, nonatomic) IBOutlet UILabel *marketCategoryLabel;
-@property (weak, nonatomic) IBOutlet UIView *marketCategoryButtonView;
+@property (weak, nonatomic) IBOutlet SHGBusinessButtonContentView *marketCategoryButtonView;
 @property (weak, nonatomic) IBOutlet UIImageView *marketCategorySelctImage;
 
 //金额
@@ -55,15 +56,20 @@
 //资金来源
 @property (strong, nonatomic) IBOutlet UIView *capitalSourceView;
 @property (weak, nonatomic) IBOutlet UILabel *capitalSourceLabel;
-@property (weak, nonatomic) IBOutlet UIView *capitalSourceButtonView;
+@property (weak, nonatomic) IBOutlet SHGBusinessButtonContentView *capitalSourceButtonView;
 
 @property (strong, nonatomic) UIImage *buttonBgImage;
 @property (strong, nonatomic) UIImage *buttonSelectBgImage;
 
-@property (strong, nonatomic) UIButton *categoryCurrentButton;
-@property (strong, nonatomic) UIButton *moneyCurrentButton;
-
 @property (strong, nonatomic) id currentContext;
+@property (assign, nonatomic) CGFloat keyBoardOrginY;
+@property (strong, nonatomic) SHGBondInvestNextViewController *bondInvestNextViewController;
+@property (strong, nonatomic) SHGBusinessLocationView *locationView;
+@property (strong, nonatomic) SHGBusinessSelectView *selectViewController;
+
+@property (strong, nonatomic) NSDictionary *businessSelectDic;
+@property (strong, nonatomic) NSMutableArray *industrySelectArray;
+@property (strong, nonatomic) NSString *moneyButtonString;
 
 @end
 
@@ -77,11 +83,14 @@
     self.nameTextField.delegate = self;
     self.phoneNumTextField.delegate = self;
     self.monenyTextField.delegate = self;
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardDidShow:) name:UIKeyboardDidShowNotification object:nil];
+    self.marketCategoryButtonView.showMode = 2;
+    self.capitalSourceButtonView.showMode = 1;
+    self.businessSelectDic = [[NSDictionary alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"BusinessSelectString" ofType:@"plist"]];
+    
     self.buttonBgImage = [[UIImage imageNamed:@"business_SendButtonBg"] resizableImageWithCapInsets:UIEdgeInsetsMake(10.0f, 10.0f, 10.0f, 10.0f) resizingMode:UIImageResizingModeStretch];
     
     self.buttonSelectBgImage = [[UIImage imageNamed:@"business_SendButtonSelectBg"] resizableImageWithCapInsets:UIEdgeInsetsMake(10.0f, 10.0f, 10.0f, 10.0f) resizingMode:UIImageResizingModeStretch];
-
+    
     [self.scrollView addSubview:self.nameView];
     [self.scrollView addSubview:self.phoneNumView];
     [self.scrollView addSubview:self.marketCategoryView];
@@ -91,6 +100,54 @@
     [self.scrollView addSubview:self.capitalSourceView];
     [self addSdLayout];
     [self initView];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:YES];
+     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardDidShow:) name:UIKeyboardDidShowNotification object:nil];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:YES];
+     [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (NSMutableArray *)industrySelectArray
+{
+    if (!_industrySelectArray) {
+        _industrySelectArray = [[NSMutableArray alloc] init];
+    }
+    return _industrySelectArray;
+}
+
+- (NSDictionary *)firstDic
+{
+    NSDictionary *dictionary = [NSDictionary dictionary];
+    
+    //行业多选字段
+    NSString *industry = [self.businessSelectDic objectForKey:[self.industrySelectArray objectAtIndex:0]];
+    if ([[self.industrySelectArray objectAtIndex:0] isEqualToString:@"不限"]) {
+        industry = @"";
+    } else{
+        for (NSInteger i = 1 ;i < self.industrySelectArray.count ; i ++) {
+            industry = [NSString stringWithFormat:@"%@;%@",industry,[self.businessSelectDic objectForKey:[self.industrySelectArray objectAtIndex:i]]];
+        }
+        
+    }
+    NSArray *array = [self.marketCategoryButtonView selectedArray];
+    //业务类型多选字段
+    NSString *businesstype = [self.businessSelectDic objectForKey:[array firstObject]];
+    if ([businesstype isEqualToString:@"不限"]) {
+        businesstype = @"";
+    } else{
+        for (NSInteger i = 0 ;i < array.count ; i++) {
+            businesstype = [NSString stringWithFormat:@"%@;%@",businesstype,[self.businessSelectDic objectForKey:[array objectAtIndex:i]]];
+        }
+    }
+    dictionary = @{@"uid":UID, @"type": @"moneyside", @"contact": self.phoneNumTextField.text, @"investAmount": self.monenyTextField.text, @"area": self.areaSelectButton.titleLabel.text, @"industry":industry ,@"title":self.nameTextField.text ,@"businessType":businesstype,@"fundSource":self.moneyButtonString};
+    return dictionary;
 }
 
 - (void)addSdLayout
@@ -238,7 +295,7 @@
     .topSpaceToView(self.areaTitleLabel, ktopToView)
     .leftSpaceToView(self.areaSelectButton, kLeftToView)
     .widthIs(MarginFactor(70.0f))
-    .centerYEqualToView(self.areaSelectButton);
+    .heightRatioToView(self.areaSelectButton, 1.0f);
     
     
     [self.areaView setupAutoHeightWithBottomView:self.areaSelectButton bottomMargin:ktopToView];
@@ -346,7 +403,6 @@
     
     self.industrySelectButton.titleLabel.font = FontFactor(15.0f);
     [self.industrySelectButton setTitleColor:Color(@"bebebe") forState:UIControlStateNormal];
-    [self.industrySelectButton setTitleColor:Color(@"161616") forState:UIControlStateSelected];
     
     self.nameTextField.layer.borderColor = Color(@"cecece").CGColor;
     self.nameTextField.layer.borderWidth = 0.5f;
@@ -395,52 +451,68 @@
     }
 }
 
+
 - (void)categoryButtonClick:(UIButton *)btn
 {
-    if(btn != self.categoryCurrentButton){
-        self.categoryCurrentButton.selected = NO;
-        self.categoryCurrentButton = btn;
-    }
-    self.categoryCurrentButton.selected = YES;
-    
+    SHGBusinessButtonContentView *superView = (SHGBusinessButtonContentView *)btn.superview;
+    [superView didClickButton:btn];
 }
+
 - (IBAction)locationSelectClick:(UIButton *)sender
 {
-    SHGBusinessLoactionViewController *vc = [[SHGBusinessLoactionViewController alloc] init];
-    [self.navigationController pushViewController:vc animated:YES];
+    if (!self.locationView) {
+        self.locationView = [[SHGBusinessLocationView alloc]initWithFrame:CGRectMake(0.0f, 0.0f, SCREENWIDTH, SCREENHEIGHT)];
+    }
+    __weak typeof (self)weakSelf = self;
+    self.locationView.returnLocationBlock = ^(NSString *string){
+        [weakSelf.areaSelectButton setTitle:string forState:UIControlStateNormal];
+        [weakSelf.areaSelectButton setTitleColor:Color(@"161616") forState:UIControlStateNormal];
+    };
+    [self.view.window addSubview:self.locationView];
 }
 
 - (void)capitalButtonClick:(UIButton *)btn
 {
-   
-    if(btn != self.moneyCurrentButton){
-        self.moneyCurrentButton.selected = NO;
-        self.moneyCurrentButton = btn;
+    SHGBusinessButtonContentView *superView = (SHGBusinessButtonContentView *)btn.superview;
+    [superView didClickButton:btn];
+    if (superView.selectedArray.count > 0) {
+        self.moneyButtonString = [superView.selectedArray objectAtIndex:0];
+    } else{
+        self.moneyButtonString = @"";
     }
-    self.moneyCurrentButton.selected = YES;
 
 }
 
 
 - (IBAction)businessClick:(UIButton *)sender
 {
-    NSArray *array =  @[@"不限",@"金融投资",@"能源化工",@"互联网",@"房地产",@"基建工程",@"制造业",@"大健康",@"TMT",@"服务业",@"冶金采掘",@"农林牧渔",@"其他行业"];
-    SHGBusinessSelectView *selectView = [[SHGBusinessSelectView alloc]initWithFrame:CGRectMake(0.0f, 0.0f, SCREENWIDTH, SCREENHEIGHT) array:array];
+    NSArray *array =  @[@"不限",@"金融投资",@"能源化工",@"互联网",@"地产基建",@"制造业",@"大健康",@"TMT",@"服务业",@"冶金采掘",@"农林牧渔",@"其他行业"];
+    if (!self.selectViewController) {
+        self.selectViewController = [[SHGBusinessSelectView alloc]initWithFrame:CGRectMake(0.0f, 0.0f, SCREENWIDTH, SCREENHEIGHT) array:array statu:YES];
+        
+    }
     __weak typeof(self)weakSelf = self;
-    selectView.returnTextBlock = ^(NSString *string){
+    weakSelf.selectViewController.returnTextBlock = ^(NSString *string, NSMutableArray *array){
+        weakSelf.industrySelectArray = array;
         weakSelf.industrySelectButton.titleLabel.text = string;
+        [weakSelf.industrySelectButton setTitle:string forState:UIControlStateNormal];
+        [weakSelf.industrySelectButton setTitleColor:Color(@"161616") forState:UIControlStateNormal];
     };
-    [self.view.window addSubview:selectView];
+    [self.view.window addSubview:self.selectViewController];
 }
 
 
 - (IBAction)nextButtonClick:(UIButton *)sender
 {
     [self.currentContext resignFirstResponder];
-//    if ([self checkInputMessage]) {
-        SHGBondInvestNextViewController *vc = [[SHGBondInvestNextViewController alloc] init];
-        [self.navigationController pushViewController:vc animated:YES];
-//    }
+    if ([self checkInputMessage]) {
+        [self firstDic];
+        if (!self.bondInvestNextViewController) {
+            self.bondInvestNextViewController = [[SHGBondInvestNextViewController alloc] init];
+        }
+        self.bondInvestNextViewController.superController = self;
+        [self.navigationController pushViewController:self.bondInvestNextViewController animated:YES];
+    }
 }
 
 - (BOOL)checkInputMessage
@@ -453,7 +525,7 @@
         [Hud showMessageWithText:@"请填写联系方式"];
         return NO;
     }
-    if (self.categoryCurrentButton.selected == YES) {
+    if ([self.marketCategoryButtonView selectedArray].count == 0) {
         [Hud showMessageWithText:@"请选择业务类型"];
         return NO;
     }
@@ -461,7 +533,7 @@
         [Hud showMessageWithText:@"请选择业务地区"];
         return NO;
     }
-    if (self.industrySelectButton.titleLabel.text.length == 0) {
+    if (self.industrySelectArray.count == 0 || [self.industrySelectButton.titleLabel.text isEqualToString:@"请选择行业"]) {
         [Hud showMessageWithText:@"请填写意向行业"];
         return NO;
     }
@@ -486,6 +558,7 @@
     return YES;
 }
 
+
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
 {
      [self.currentContext resignFirstResponder];
@@ -494,19 +567,17 @@
 - (void)keyBoardDidShow:(NSNotification *)notificaiton
 {
     NSDictionary* info = [notificaiton userInfo];
-    NSValue* aValue = [info objectForKey:UIKeyboardFrameBeginUserInfoKey];
-    CGSize keyboardSize = [aValue CGRectValue].size;
-    CGRect viewFrame = [self.scrollView frame];
-    viewFrame.size.height -= keyboardSize.height;
-    self.scrollView.frame = viewFrame;
-    CGRect textFieldRect = [self.currentContext frame];
-    [self.scrollView scrollRectToVisible:textFieldRect animated:YES];
+    NSValue *value = [info objectForKey:UIKeyboardFrameEndUserInfoKey];
+    CGPoint keyboardOrigin = [value CGRectValue].origin;
+    self.keyBoardOrginY = keyboardOrigin.y;
+    UIView *view = (UIView *)self.currentContext;
+    CGPoint point = CGPointMake(0.0f, CGRectGetMinX(view.frame));
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.scrollView setContentOffset:point animated:YES];
+    });
 }
 
-- (void)dealloc
-{
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];

@@ -7,7 +7,13 @@
 //
 
 #import "BaseViewController.h"
+#import "SHGBondInvestSendViewController.h"
+#import "SHGBusinessObject.h"
+#import "SHGBusinessDelegate.h"
 
 @interface SHGBondInvestNextViewController : BaseViewController
+@property (strong, nonatomic) SHGBusinessObject *object;
+@property (assign, nonatomic) id<SHGBusinessDelegate> delegate;
+@property (weak, nonatomic) UIViewController *superController;
 
 @end

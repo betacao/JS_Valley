@@ -9,7 +9,7 @@
 #import "SHGSameAndCommixtureSendViewController.h"
 #import "SHGSameAndCommixtureNextViewController.h"
 #import "SHGBusinessMargin.h"
-
+#import "SHGBusinessLocationView.h"
 @interface SHGSameAndCommixtureSendViewController ()<UITextFieldDelegate,UIScrollViewDelegate>
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UIButton *nextButton;
@@ -51,6 +51,9 @@
 @property (strong, nonatomic) UIButton *categoryCurrentButton;
 
 @property (strong, nonatomic) id currentContext;
+@property (assign, nonatomic) CGFloat keyBoardOrginY;
+@property (strong, nonatomic) SHGSameAndCommixtureNextViewController *sameAndCommixtureNextViewController;
+@property (strong, nonatomic) SHGBusinessLocationView *locationView;
 @end
 
 @implementation SHGSameAndCommixtureSendViewController
@@ -63,7 +66,6 @@
     self.nameTextField.delegate = self;
     self.phoneNumTextField.delegate = self;
     self.monenyTextField.delegate = self;
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardDidShow:) name:UIKeyboardDidShowNotification object:nil];
     self.buttonBgImage = [UIImage imageNamed:@"business_SendButtonBg"];
     self.buttonBgImage = [self.buttonBgImage resizableImageWithCapInsets:UIEdgeInsetsMake(10.0f, 10.0f, 10.0f, 10.0f) resizingMode:UIImageResizingModeStretch];
     
@@ -77,6 +79,18 @@
     [self addSdLayout];
     [self initView];
 
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:YES];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardDidShow:) name:UIKeyboardDidShowNotification object:nil];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:YES];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)addSdLayout
@@ -315,13 +329,29 @@
 
 }
 
+- (IBAction)locationSelectClick:(UIButton *)sender
+{
+    if (!self.locationView) {
+        self.locationView = [[SHGBusinessLocationView alloc]initWithFrame:CGRectMake(0.0f, 0.0f, SCREENWIDTH, SCREENHEIGHT)];
+    }
+    __weak typeof (self)weakSelf = self;
+    self.locationView.returnLocationBlock = ^(NSString *string){
+        [weakSelf.areaSelectButton setTitle:string forState:UIControlStateNormal];
+        [weakSelf.areaSelectButton setTitleColor:Color(@"161616") forState:UIControlStateNormal];
+    };
+    [self.view.window addSubview:self.locationView];
+}
 
 - (IBAction)nextButtonClick:(UIButton *)sender
 {
-//    if ([self checkInputMessage]) {
-    SHGSameAndCommixtureNextViewController *vc = [[SHGSameAndCommixtureNextViewController alloc] init];
-    [self.navigationController pushViewController:vc animated:YES];
-//    }
+    if ([self checkInputMessage]) {
+        self.firstDic = @{@"uid":UID, @"type": @"trademixed", @"contact": self.phoneNumTextField.text, @"investAmount": self.monenyTextField.text, @"area": self.areaSelectButton.titleLabel.text,@"title":self.nameTextField.text ,@"businessType":@"sameIndustry"};
+        if (!self.sameAndCommixtureNextViewController) {
+            self.sameAndCommixtureNextViewController = [[SHGSameAndCommixtureNextViewController alloc] init];
+        }
+        self.sameAndCommixtureNextViewController.superController = self;
+        [self.navigationController pushViewController:self.sameAndCommixtureNextViewController animated:YES];
+    }
    
 }
 
@@ -335,7 +365,7 @@
         [Hud showMessageWithText:@"请填写联系方式"];
         return NO;
     }
-    if (self.categoryCurrentButton.selected == YES) {
+    if (self.categoryCurrentButton.selected == NO) {
         [Hud showMessageWithText:@"请选择业务类型"];
         return NO;
     }
@@ -373,13 +403,14 @@
 - (void)keyBoardDidShow:(NSNotification *)notificaiton
 {
     NSDictionary* info = [notificaiton userInfo];
-    NSValue* aValue = [info objectForKey:UIKeyboardFrameBeginUserInfoKey];
-    CGSize keyboardSize = [aValue CGRectValue].size;
-    CGRect viewFrame = [self.scrollView frame];
-    viewFrame.size.height -= keyboardSize.height;
-    self.scrollView.frame = viewFrame;
-    CGRect textFieldRect = [self.currentContext frame];
-    [self.scrollView scrollRectToVisible:textFieldRect animated:YES];
+    NSValue *value = [info objectForKey:UIKeyboardFrameEndUserInfoKey];
+    CGPoint keyboardOrigin = [value CGRectValue].origin;
+    self.keyBoardOrginY = keyboardOrigin.y;
+    UIView *view = (UIView *)self.currentContext;
+    CGPoint point = CGPointMake(0.0f, CGRectGetMinX(view.frame));
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.scrollView setContentOffset:point animated:YES];
+    });
 }
 
 - (void)dealloc

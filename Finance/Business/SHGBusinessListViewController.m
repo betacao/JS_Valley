@@ -237,8 +237,8 @@
 {
     NSString *businessID = @"";
     for (SHGBusinessObject *object in self.currentArray) {
-        if ([object.businessId compare:businessID options:NSNumericSearch] == NSOrderedDescending && ![object.businessId isEqualToString:[NSString stringWithFormat:@"%ld",NSIntegerMax]]) {
-            businessID = object.businessId;
+        if ([object.businessID compare:businessID options:NSNumericSearch] == NSOrderedDescending && ![object.businessID isEqualToString:[NSString stringWithFormat:@"%ld",NSIntegerMax]]) {
+            businessID = object.businessID;
         }
     }
     return businessID;
@@ -248,9 +248,9 @@
 {
     NSString *businessID = [NSString stringWithFormat:@"%ld",NSIntegerMax];
     for (SHGBusinessObject *object in self.currentArray) {
-        NSString *objectMarketId = object.businessId;
+        NSString *objectMarketId = object.businessID;
         if ([objectMarketId compare:businessID options:NSNumericSearch] == NSOrderedAscending) {
-            businessID = object.businessId;
+            businessID = object.businessID;
         }
     }
     return businessID;

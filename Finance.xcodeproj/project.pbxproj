@@ -705,6 +705,8 @@
 		985CBDBA1C03FD0B002B3D9D /* SHGCardTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 985CBDB81C03FD0B002B3D9D /* SHGCardTableViewCell.m */; };
 		985CBDBB1C03FD0B002B3D9D /* SHGCardTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 985CBDB91C03FD0B002B3D9D /* SHGCardTableViewCell.xib */; };
 		985CBDC31C04042C002B3D9D /* SHGCollectCardClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 985CBDC21C04042C002B3D9D /* SHGCollectCardClass.m */; };
+		986FFF101CBB7B0C00D9FE04 /* BusinessSelectString.plist in Resources */ = {isa = PBXBuildFile; fileRef = 986FFF0F1CBB7B0C00D9FE04 /* BusinessSelectString.plist */; };
+		986FFF131CBC857200D9FE04 /* SHGBusinessLocationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 986FFF121CBC857200D9FE04 /* SHGBusinessLocationView.m */; };
 		987184A31C4E51ED006F2946 /* SHGMomentCityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 987184A11C4E51ED006F2946 /* SHGMomentCityViewController.m */; };
 		987184A41C4E51ED006F2946 /* SHGMomentCityViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 987184A21C4E51ED006F2946 /* SHGMomentCityViewController.xib */; };
 		9894C9781BF5BCE700F80577 /* SHGActionSignViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9894C9761BF5BCE700F80577 /* SHGActionSignViewController.m */; };
@@ -1953,9 +1955,13 @@
 		985CBDB91C03FD0B002B3D9D /* SHGCardTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGCardTableViewCell.xib; sourceTree = "<group>"; };
 		985CBDC11C04042C002B3D9D /* SHGCollectCardClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGCollectCardClass.h; sourceTree = "<group>"; };
 		985CBDC21C04042C002B3D9D /* SHGCollectCardClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGCollectCardClass.m; sourceTree = "<group>"; };
+		986FFF0F1CBB7B0C00D9FE04 /* BusinessSelectString.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = BusinessSelectString.plist; sourceTree = "<group>"; };
+		986FFF111CBC857200D9FE04 /* SHGBusinessLocationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGBusinessLocationView.h; sourceTree = "<group>"; };
+		986FFF121CBC857200D9FE04 /* SHGBusinessLocationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGBusinessLocationView.m; sourceTree = "<group>"; };
 		987184A01C4E51ED006F2946 /* SHGMomentCityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGMomentCityViewController.h; sourceTree = "<group>"; };
 		987184A11C4E51ED006F2946 /* SHGMomentCityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGMomentCityViewController.m; sourceTree = "<group>"; };
 		987184A21C4E51ED006F2946 /* SHGMomentCityViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGMomentCityViewController.xib; sourceTree = "<group>"; };
+		987A7E9D1CBB4E9600EA7450 /* SHGBusinessDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SHGBusinessDelegate.h; sourceTree = "<group>"; };
 		9894C9751BF5BCE700F80577 /* SHGActionSignViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGActionSignViewController.h; sourceTree = "<group>"; };
 		9894C9761BF5BCE700F80577 /* SHGActionSignViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGActionSignViewController.m; sourceTree = "<group>"; };
 		9894C9771BF5BCE700F80577 /* SHGActionSignViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGActionSignViewController.xib; sourceTree = "<group>"; };
@@ -4481,8 +4487,8 @@
 			isa = PBXGroup;
 			children = (
 				985A0FD61CABA49400880DB5 /* MarketArea.plist */,
-				982EB80F1CB6023E003EEBE6 /* SHGBusinessSelectView.h */,
-				982EB8101CB6023E003EEBE6 /* SHGBusinessSelectView.m */,
+				987A7E9D1CBB4E9600EA7450 /* SHGBusinessDelegate.h */,
+				986FFF0F1CBB7B0C00D9FE04 /* BusinessSelectString.plist */,
 			);
 			name = Resource;
 			sourceTree = "<group>";
@@ -4699,6 +4705,10 @@
 		F91D3A431CB7524100E3419D /* SHGBusinessView */ = {
 			isa = PBXGroup;
 			children = (
+				986FFF111CBC857200D9FE04 /* SHGBusinessLocationView.h */,
+				986FFF121CBC857200D9FE04 /* SHGBusinessLocationView.m */,
+				982EB80F1CB6023E003EEBE6 /* SHGBusinessSelectView.h */,
+				982EB8101CB6023E003EEBE6 /* SHGBusinessSelectView.m */,
 				F9D809941CB3A32900C59E0A /* SHGBusinessScrollView.h */,
 				F9D809951CB3A32900C59E0A /* SHGBusinessScrollView.m */,
 				F9D94BAF1CB4D4FC00B37A4A /* SHGBusinessFilterView.h */,
@@ -5162,6 +5172,7 @@
 				614EFEFF1AF1146C00F2BDD1 /* circle_press.png in Resources */,
 				B09BF76D1B7C6C1F008260B3 /* 4@2x.png in Resources */,
 				408D8B3E1AF8618C0055810C /* chatBar_face@2x.png in Resources */,
+				986FFF101CBB7B0C00D9FE04 /* BusinessSelectString.plist in Resources */,
 				408D8B1A1AF8618C0055810C /* VoiceSearchFeedback019@2x.png in Resources */,
 				B04D6E231B60C01300E3863E /* 大牛说m@2x.png in Resources */,
 				61E83CDE1AF7C78E00703651 /* 收藏prod@2x.png in Resources */,
@@ -5944,6 +5955,7 @@
 				F91982CC1C59F9FA00A450B9 /* SHGUserCenterViewController.m in Sources */,
 				B04355CE1B4BD3560033BBBF /* LinkViewController.m in Sources */,
 				6187D2E51AF1C693008E1D21 /* EMChatTimeCell.m in Sources */,
+				986FFF131CBC857200D9FE04 /* SHGBusinessLocationView.m in Sources */,
 				F93FCBC81C856D5A004E356E /* UIColor+extend.m in Sources */,
 				F9B18C081BA0521600EA0314 /* SHGNoticeView.m in Sources */,
 				F93FCBCD1C856D5A004E356E /* UIView+Additions.m in Sources */,
@@ -6200,7 +6212,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer: xie jian (A35C7Q22SB)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -6239,6 +6251,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer: xie jian (A35C7Q22SB)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
