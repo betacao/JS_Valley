@@ -36,6 +36,9 @@
 @property (strong, nonatomic) NSString *tipUrl;
 @property (strong, nonatomic) NSString *index;
 @property (strong, nonatomic) NSMutableDictionary *positionDictionary;
+@property (strong, nonatomic) NSMutableDictionary *paramDictionary;
+
+@property (strong, nonatomic) NSMutableDictionary *titleDictionary;
 @end
 
 @implementation SHGBusinessListViewController
@@ -120,10 +123,9 @@
         _filterView = [[SHGBusinessFilterView alloc] init];
         _filterView.hidden = YES;
         _filterView.selectedBlock = ^(NSDictionary *param, NSArray *titleArray){
-            [weakSelf.paramDictionary setObject:param forKey:[NSString stringWithFormat:@"code%@",[weakSelf.scrollView currentName]]];
-            [weakSelf.paramDictionary setObject:titleArray forKey:[NSString stringWithFormat:@"title%@",[weakSelf.scrollView currentName]]];
+            [weakSelf.paramDictionary setObject:param forKey:[weakSelf.scrollView currentName]];
+            [weakSelf setFilterTitleArray:titleArray];
             weakSelf.filterView.expand = YES;
-            [weakSelf.tableView reloadData];
         };
         [self.view addSubview:_filterView];
     }
@@ -214,6 +216,25 @@
     return _paramDictionary;
 }
 
+- (NSMutableDictionary *)titleDictionary
+{
+    if (!_titleDictionary) {
+        _titleDictionary = [NSMutableDictionary dictionary];
+    }
+    return _titleDictionary;
+}
+
+- (void)setFilterTitleArray:(NSArray *)array
+{
+    [self.titleDictionary setObject:array forKey:[[SHGBusinessScrollView sharedBusinessScrollView] currentName]];
+    [self loadDataWithTarget:@"first"];
+}
+
+- (NSArray *)getFilterTitleArray
+{
+    return [self.titleDictionary objectForKey:[[SHGBusinessScrollView sharedBusinessScrollView] currentName]];
+}
+
 - (void)setCityName:(NSString *)cityName
 {
     if (cityName.length == 0) {
@@ -247,9 +268,9 @@
 - (void)refreshFooter
 {
     if (self.currentArray.count == 0) {
-        [self loadDataWithTarget:@"load"];
+        [self loadDataWithTarget:@"first"];
     } else {
-        [self loadDataWithTarget:@"refresh"];
+        [self loadDataWithTarget:@"load"];
     }
 }
 
@@ -276,16 +297,6 @@
     return businessID;
 }
 
-- (NSString *)maxModifyTime
-{
-    NSString *modifyTime = @"";
-    for (SHGBusinessObject *object in self.currentArray) {
-        if ([object.modifyTime compare:modifyTime options:NSNumericSearch] == NSOrderedDescending) {
-            modifyTime = object.modifyTime;
-        }
-    }
-    return modifyTime;
-}
 #pragma mark ------网络请求部分
 
 - (void)loadDataWithTarget:(NSString *)target
@@ -293,15 +304,17 @@
     
     __weak typeof(self) weakSelf = self;
     if ([target isEqualToString:@"first"]) {
-        [self.tableView setContentOffset:CGPointZero];
+        [self.tableView setContentOffset:CGPointZero animated:YES];
     }
     if (self.refreshing) {
         return;
     }
     NSString *position = [self.positionDictionary objectForKey:[self.scrollView currentName]];
+    NSString *city = [self.cityName isEqualToString:@"全国"] ? @"" : self.cityName;
     NSString *redirect = [position isEqualToString:@"0"] ? @"1" : @"0";
-    NSMutableDictionary *param = [NSMutableDictionary dictionaryWithDictionary:@{@"businessId":[self maxBusinessID] ,@"uid":UID ,@"type":[self.scrollView currentType] ,@"target":target ,@"pageSize":@"10" , @"modifyTime":[self maxModifyTime], @"city":self.cityName, @"redirect":redirect}];
-    [param addEntriesFromDictionary:self.paramDictionary];
+    NSString *businessId = [target isEqualToString:@"refresh"] ? [self maxBusinessID] : [self minBusinessID];
+    NSMutableDictionary *param = [NSMutableDictionary dictionaryWithDictionary:@{@"businessId":businessId ,@"uid":UID ,@"type":[self.scrollView currentType] ,@"target":target ,@"pageSize":@"10" , @"city":city, @"redirect":redirect}];
+    [param addEntriesFromDictionary:[self.paramDictionary objectForKey:[weakSelf.scrollView currentName]]];
     self.refreshing = YES;
     [SHGBusinessManager getListDataWithParam:param block:^(NSArray *dataArray, NSString *index, NSString *tipUrl) {
         weakSelf.refreshing = NO;
@@ -475,6 +488,15 @@
         .bottomSpaceToView(self.view, 0.0f);
     }
     [self.tableView updateLayout];
+
+    NSMutableArray *subArray = [self.dataArr objectAtIndex:index];
+    if (!subArray || subArray.count == 0) {
+        self.currentArray = subArray;
+        [self loadDataWithTarget:@"first"];
+    } else{
+        self.currentArray = subArray;
+        [self.tableView reloadData];
+    }
 }
 
 

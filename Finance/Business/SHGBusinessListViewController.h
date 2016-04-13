@@ -20,6 +20,6 @@ typedef void(^loadViewFinishBlock)(UIView *view);
 @property (nonatomic, copy) loadViewFinishBlock block;
 @property (strong, nonatomic) UIBarButtonItem *leftBarButtonItem;
 @property (strong, nonatomic) NSString *cityName;
-
-@property (strong, nonatomic) NSMutableDictionary *paramDictionary;
+- (void)setFilterTitleArray:(NSArray *)array;
+- (NSArray *)getFilterTitleArray;
 @end

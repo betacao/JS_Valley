@@ -46,7 +46,7 @@
 
 - (void)initViewWithArray:(NSArray *)array
 {
-    NSArray *selectedArray = [[SHGBusinessListViewController sharedController].paramDictionary objectForKey:[NSString stringWithFormat:@"title%@", [[SHGBusinessScrollView sharedBusinessScrollView] currentName]]];
+    NSArray *selectedArray = [[SHGBusinessListViewController sharedController] getFilterTitleArray];
 
     [array enumerateObjectsUsingBlock:^(SHGBusinessSecondObject *secondObject, NSUInteger idx, BOOL * _Nonnull stop) {
         SHGBusinessButtonContentView *contentView = [[SHGBusinessButtonContentView alloc] initWithMode:SHGBusinessButtonShowModeExclusiveChoice];

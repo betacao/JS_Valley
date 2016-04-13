@@ -201,4 +201,12 @@ typedef void (^SHHomeDataCompletionBlock)(NSArray *allList, NSArray *normalList,
  @since 1.8.0
  */
 - (void)refreshFriendListWithUid:(NSString *)userId finishBlock:(void (^)(BasePeopleObject *object))block;
+
+/**
+ @brief 获取业务的key和value值
+
+ @since 1.8.04
+ */
+
+- (NSDictionary *)getBusinessKeysAndValues;
 @end

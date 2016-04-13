@@ -73,6 +73,7 @@
 //列表
 + (void)getListDataWithParam:(NSDictionary *)param block:(void (^)(NSArray *dataArray, NSString *position, NSString *tipUrl))block;
 {
+    [Hud showWait];
     [MOCHTTPRequestOperationManager postWithURL:[rBaseAddressForHttp stringByAppendingString:@"/business/getBusinessList"] class:nil parameters:param success:^(MOCHTTPResponse *response) {
         NSDictionary *dictionary = response.dataDictionary;
 
@@ -80,7 +81,7 @@
         NSString *positon = [dictionary objectForKey:@"position"];
         NSString *tipUrl = [dictionary objectForKey:@"tipurl"];
         block(dataArray, positon, tipUrl);
-
+        [Hud hideHud];
     } failed:^(MOCHTTPResponse *response) {
         [Hud hideHud];
         block(nil, nil, nil);
@@ -118,6 +119,7 @@
             if (block) {
                 block(array, weakSelf.cityName);
             }
+            [Hud hideHud];
         } failed:^(MOCHTTPResponse *response) {
             [Hud hideHud];
             [Hud showMessageWithText:@"获取分类错误"];

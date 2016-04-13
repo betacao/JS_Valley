@@ -40,6 +40,12 @@
  */
 @property (strong, nonatomic) NSMutableArray *homeArray;
 
+/**
+ @brief 业务key和value对应的值
+
+ @since 1.8.0
+ */
+@property (strong, nonatomic) NSDictionary *businessDictionary;
 
 @end
 
@@ -533,6 +539,14 @@
             
         }];
     });
+}
+
+- (NSDictionary *)getBusinessKeysAndValues
+{
+    if (!self.businessDictionary) {
+        self.businessDictionary = [NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"BusinessSelectString" ofType:@"plist"]];
+    }
+    return self.businessDictionary;
 }
 
 @end

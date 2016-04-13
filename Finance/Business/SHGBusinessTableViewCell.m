@@ -129,14 +129,32 @@
     _object = object;
 
     self.titleLabel.text = object.title;
-    self.firstLabel.text = object.businessShow;
-    self.secondLabel.text = object.investAmount;
+    self.firstLabel.text = [self valuesForKeys:object.businessShow];
+    self.secondLabel.text = [self valuesForKeys:object.investAmount];
     self.thirdLabel.text = object.area;
     self.fourthLabel.text = object.createTime;
     self.browseLabel.text = object.browseNum;
     if ([object.uid isEqualToString:UID]) {
         self.deleteButton.hidden = NO;
     }
+}
+
+
+- (NSString *)valuesForKeys:(NSString *)key
+{
+    __block NSString *value = @"";
+    // 遍历字符串，按字符来遍历。每个字符将通过block参数中的substring传出
+    [key enumerateSubstringsInRange:NSMakeRange(0, key.length) options:NSStringEnumerationByWords usingBlock:^(NSString * _Nullable substring, NSRange substringRange, NSRange enclosingRange, BOOL * _Nonnull stop) {
+        NSArray *keyArray = [[[SHGGloble sharedGloble] getBusinessKeysAndValues] allKeys];
+        NSArray *valueArray = [[[SHGGloble sharedGloble] getBusinessKeysAndValues] allValues];
+        NSString *string = substring;
+        if ([valueArray containsObject:substring]) {
+            string = [keyArray objectAtIndex:[valueArray indexOfObject:substring]];
+        }
+        value = [value stringByAppendingString: string];
+    }];
+
+    return value;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated

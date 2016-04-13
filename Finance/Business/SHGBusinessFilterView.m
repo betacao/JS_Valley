@@ -126,7 +126,8 @@
     _expand = expand;
 
     if (expand) {
-        self.dataArray = [[SHGBusinessListViewController sharedController].paramDictionary objectForKey:[NSString stringWithFormat:@"title%@", [[SHGBusinessScrollView sharedBusinessScrollView ] currentName]]];
+        self.dataArray = [[SHGBusinessListViewController sharedController] getFilterTitleArray];
+
         [self.contentView setupAutoHeightWithBottomView:[self.buttonArray lastObject] bottomMargin:MarginFactor(10.0f)];
         [UIView animateWithDuration:0.25f animations:^{
             [self.contentView updateLayout];
@@ -143,7 +144,7 @@
             [self.contentView updateLayout];
             self.rightButton.layer.transform = CATransform3DIdentity;
         } completion:^(BOOL finished) {
-            self.dataArray = [[SHGBusinessListViewController sharedController].paramDictionary objectForKey:[NSString stringWithFormat:@"title%@", [[SHGBusinessScrollView sharedBusinessScrollView ] currentName]]];
+            self.dataArray = [[SHGBusinessListViewController sharedController] getFilterTitleArray];
         }];
 
         [self.backgroundView removeFromSuperview];
@@ -205,6 +206,7 @@
     [array addObjectsFromArray:self.dataArray];
     [array removeObjectAtIndex:index];
     self.dataArray = array;
+    [[SHGBusinessListViewController sharedController] setFilterTitleArray:array];
     if (self.buttonArray.count > 0) {
         [self.contentView setupAutoHeightWithBottomView:[self.buttonArray lastObject] bottomMargin:MarginFactor(10.0f)];
     } else{
