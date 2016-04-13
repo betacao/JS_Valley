@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SHGBusinessObject.h"
 
 @interface SHGBusinessTableViewCell : UITableViewCell
-
+@property (strong, nonatomic) SHGBusinessObject *object;
 @end

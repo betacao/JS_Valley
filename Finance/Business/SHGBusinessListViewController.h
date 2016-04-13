@@ -7,11 +7,19 @@
 //
 
 #import "BaseTableViewController.h"
+
 typedef void(^loadViewFinishBlock)(UIView *view);
+
 @interface SHGBusinessListViewController : BaseTableViewController
+
 + (instancetype)sharedController;
-@property (nonatomic, copy) loadViewFinishBlock block;
-@property (strong, nonatomic) UIBarButtonItem *leftBarButtonItem;
+
 @property (weak, nonatomic) IBOutlet UIButton *addBusinessButton;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+
+@property (nonatomic, copy) loadViewFinishBlock block;
+@property (strong, nonatomic) UIBarButtonItem *leftBarButtonItem;
+@property (strong, nonatomic) NSString *cityName;
+
+@property (strong, nonatomic) NSMutableDictionary *paramDictionary;
 @end

@@ -15,6 +15,7 @@
 #import "SHGBusinessMainSendView.h"
 #import "SHGNoticeView.h"
 #import "SHGEmptyDataView.h"
+#import "SHGBusinessTableViewCell.h"
 
 @interface SHGBusinessListViewController ()<UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, SHGBusinessScrollViewDelegate>
 //
@@ -31,7 +32,6 @@
 @property (assign, nonatomic) CGRect filterViewFrame;
 //
 @property (weak, nonatomic) NSMutableArray *currentArray;
-@property (strong, nonatomic) NSMutableDictionary *paramDictionary;
 @property (assign, nonatomic) BOOL refreshing;
 @property (strong, nonatomic) NSString *tipUrl;
 @property (strong, nonatomic) NSString *index;
@@ -87,9 +87,7 @@
         .bottomSpaceToView(weakSelf.view, 0.0f);
     };
 //    请求数据
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [self loadDataWithTarget:@"first"];
-    });
+    [[SHGBusinessManager shareManager] getSecondListBlock:nil];
 }
 
 
@@ -121,8 +119,10 @@
     if (!_filterView) {
         _filterView = [[SHGBusinessFilterView alloc] init];
         _filterView.hidden = YES;
-        _filterView.selectedBlock = ^(NSDictionary *param){
-            [weakSelf.paramDictionary setObject:param forKey:[weakSelf.scrollView currentName]];
+        _filterView.selectedBlock = ^(NSDictionary *param, NSArray *titleArray){
+            [weakSelf.paramDictionary setObject:param forKey:[NSString stringWithFormat:@"code%@",[weakSelf.scrollView currentName]]];
+            [weakSelf.paramDictionary setObject:titleArray forKey:[NSString stringWithFormat:@"title%@",[weakSelf.scrollView currentName]]];
+            weakSelf.filterView.expand = YES;
             [weakSelf.tableView reloadData];
         };
         [self.view addSubview:_filterView];
@@ -214,6 +214,26 @@
     return _paramDictionary;
 }
 
+- (void)setCityName:(NSString *)cityName
+{
+    if (cityName.length == 0) {
+        cityName = @"全国";
+    }
+
+    _cityName = cityName;
+    
+    if (![cityName isEqualToString:self.titleLabel.text]) {
+        self.titleButton.frame = CGRectZero;
+        self.titleLabel.text = cityName;
+        self.titleLabel.frame = CGRectMake(MarginFactor(4.0f), 0.0f, 0.0f, 0.0f);
+        [self.titleLabel sizeToFit];
+        self.titleImageView.origin = CGPointMake(CGRectGetMaxX(self.titleLabel.frame) + MarginFactor(4.0f), (CGRectGetHeight(self.titleLabel.frame) - CGRectGetHeight(self.titleImageView.frame)) / 2.0f);
+        self.titleButton.size = CGSizeMake(CGRectGetMaxX(self.titleImageView.frame) + MarginFactor(12.0f), CGRectGetHeight(self.titleLabel.frame));
+
+        [self clearAndReloadData];
+    }
+}
+
 #pragma mark ------刷新用到的
 - (void)refreshHeader
 {
@@ -280,13 +300,7 @@
     }
     NSString *position = [self.positionDictionary objectForKey:[self.scrollView currentName]];
     NSString *redirect = [position isEqualToString:@"0"] ? @"1" : @"0";
-//    NSString *area = [SHGMarketManager shareManager].cityName;
-//    if (!area) {
-//        [weakSelf.tableView.mj_header endRefreshing];
-//        [weakSelf.tableView.mj_footer endRefreshing];
-//        return;
-//    }
-    NSMutableDictionary *param = [NSMutableDictionary dictionaryWithDictionary:@{@"businessId":[self maxBusinessID] ,@"uid":UID ,@"type":[self.scrollView currentType] ,@"target":target ,@"pageSize":@"10" , @"modifyTime":[self maxModifyTime], @"city":@"", @"redirect":redirect}];
+    NSMutableDictionary *param = [NSMutableDictionary dictionaryWithDictionary:@{@"businessId":[self maxBusinessID] ,@"uid":UID ,@"type":[self.scrollView currentType] ,@"target":target ,@"pageSize":@"10" , @"modifyTime":[self maxModifyTime], @"city":self.cityName, @"redirect":redirect}];
     [param addEntriesFromDictionary:self.paramDictionary];
     self.refreshing = YES;
     [SHGBusinessManager getListDataWithParam:param block:^(NSArray *dataArray, NSString *index, NSString *tipUrl) {
@@ -387,13 +401,35 @@
 
 }
 
+- (void)clearAndReloadData
+{
+    [self.positionDictionary removeAllObjects];
+    if (self.dataArr.count > 0) {
+
+        [self.dataArr enumerateObjectsUsingBlock:^(NSMutableArray *array, NSUInteger idx, BOOL * _Nonnull stop) {
+            [array removeAllObjects];
+        }];
+        NSMutableArray *subArray = [self.dataArr objectAtIndex:[self.scrollView currentIndex]];
+        if (!subArray || subArray.count == 0) {
+            self.currentArray = subArray;
+            [self loadDataWithTarget:@"first"];
+        }
+    }
+}
+
 #pragma mark ------tableview代理
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (self.currentArray.count == 0) {
         return self.emptyCell;
     } else {
-
+        SHGBusinessTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SHGBusinessTableViewCell"];
+        if (!cell) {
+            cell = [[[NSBundle mainBundle] loadNibNamed:@"SHGBusinessTableViewCell" owner:self options:nil] lastObject];
+        }
+        [cell useCellFrameCacheWithIndexPath:indexPath tableView:tableView];
+        cell.object = [self.currentArray objectAtIndex:indexPath.row];
+        return cell;
     }
     return nil;
 }
@@ -412,30 +448,13 @@
     if (self.currentArray.count == 0) {
         return CGRectGetHeight(self.view.frame);
     } else {
-        return 100.0f;
+        SHGBusinessObject *object = [self.currentArray objectAtIndex:indexPath.row];
+        CGFloat height = [tableView cellHeightForIndexPath:indexPath model:object keyPath:@"object" cellClass:[SHGBusinessTableViewCell class] contentViewWidth:SCREENWIDTH];
+        return height;
     }
 }
 
-#pragma mark ------变更城市代理
-
-- (void)changeTitleCityName:(NSString *)city
-{
-    if ([city isEqualToString:@"其他城市"]) {
-        city = @"其他";
-    }
-    if (![city isEqualToString:self.titleLabel.text] && city.length > 0) {
-        self.titleButton.frame = CGRectZero;
-        self.titleLabel.text = city;
-        [self.titleLabel sizeToFit];
-        self.titleImageView.origin = CGPointMake(CGRectGetMaxX(self.titleLabel.frame) + MarginFactor(4.0f), (CGRectGetHeight(self.titleLabel.frame) - CGRectGetHeight(self.titleImageView.frame)) / 2.0f);
-        self.titleButton.size = CGSizeMake(CGRectGetMaxX(self.titleImageView.frame) + MarginFactor(17.0f), CGRectGetHeight(self.titleLabel.frame));
-
-        //        [self cle
-    } else if (city.length == 0){
-        self.titleLabel.text = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_USER_AREA];
-        [self.titleLabel sizeToFit];
-    }
-}
+#pragma mark ------变更标签代理
 
 - (void)didMoveToIndex:(NSInteger)index
 {

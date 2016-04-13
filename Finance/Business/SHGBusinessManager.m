@@ -9,6 +9,7 @@
 #import "SHGBusinessManager.h"
 #import "SHGBusinessObject.h"
 #import "SHGBusinessScrollView.h"
+#import "SHGBusinessListViewController.h"
 
 @interface SHGBusinessManager()
 @property (strong, nonatomic) NSArray *secondListArray;
@@ -16,8 +17,45 @@
 @property (strong, nonatomic) NSArray *bondFinancingArray;
 @property (strong, nonatomic) NSArray *moneySideArray;
 @property (strong, nonatomic) NSArray *equityFinancingArray;
+@property (strong, nonatomic) NSString *cityName;
 @end
 @implementation SHGBusinessManager
+
++ (instancetype)shareManager
+{
+    static SHGBusinessManager *sharedManager = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        sharedManager = [[self alloc] init];
+    });
+    return sharedManager;
+}
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        [self addObserver:self forKeyPath:@"cityName" options:NSKeyValueObservingOptionNew context:nil];
+    }
+    return self;
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context
+{
+    if ([keyPath isEqualToString:@"cityName"]) {
+        NSString *newValue = [change objectForKey:@"new"];
+        [SHGBusinessListViewController sharedController].cityName = newValue;
+    }
+}
+
+- (NSArray *)secondListArray
+{
+    if (!_secondListArray) {
+        _secondListArray = [NSArray array];
+    }
+    return _secondListArray;
+}
+
 //创建新业务
 + (void)createNewBusiness:(NSDictionary *)param success:(void (^)(BOOL))block
 {
@@ -32,24 +70,6 @@
     }];
 }
 
-+ (instancetype)shareManager
-{
-    static SHGBusinessManager *sharedManager = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        sharedManager = [[self alloc] init];
-    });
-    return sharedManager;
-}
-
-- (NSArray *)secondListArray
-{
-    if (!_secondListArray) {
-        _secondListArray = [NSArray array];
-    }
-    return _secondListArray;
-}
-
 //列表
 + (void)getListDataWithParam:(NSDictionary *)param block:(void (^)(NSArray *dataArray, NSString *position, NSString *tipUrl))block;
 {
@@ -59,7 +79,7 @@
         NSArray *dataArray = [[SHGGloble sharedGloble] parseServerJsonArrayToJSONModel:[dictionary objectForKey:@"businesslist"] class:[SHGBusinessObject class]];
         NSString *positon = [dictionary objectForKey:@"position"];
         NSString *tipUrl = [dictionary objectForKey:@"tipurl"];
-//        block(dataArray, positon, tipUrl);
+        block(dataArray, positon, tipUrl);
 
     } failed:^(MOCHTTPResponse *response) {
         [Hud hideHud];
@@ -68,12 +88,13 @@
     }];
 }
 //二级分类
-- (void)getSecondListBlock:(void (^)(NSArray *))block
+- (void)getSecondListBlock:(void (^)(NSArray *, NSString *))block
 {
     __weak typeof(self) weakSelf = self;
     if (self.secondListArray.count > 0) {
-        NSArray *array = [NSArray arrayWithArray:[self.secondListArray objectAtIndex:[[SHGBusinessScrollView sharedBusinessScrollView] currentIndex] - 1]];
-        block(array);
+        NSInteger index = [[SHGBusinessScrollView sharedBusinessScrollView] currentIndex] == 0 ? 1 : [[SHGBusinessScrollView sharedBusinessScrollView] currentIndex];
+        NSArray *array = [NSArray arrayWithArray:[self.secondListArray objectAtIndex:index - 1]];
+        block(array, self.cityName);
     } else {
         [Hud showWait];
         [MOCHTTPRequestOperationManager postWithURL:[rBaseAddressForHttp stringByAppendingString:@"/business/getBusinessCondition"] parameters:nil success:^(MOCHTTPResponse *response) {
@@ -82,6 +103,7 @@
             weakSelf.bondFinancingArray = [response.dataDictionary objectForKey:@"bondfinancing"];
             weakSelf.moneySideArray = [response.dataDictionary objectForKey:@"moneyside"];
             weakSelf.equityFinancingArray = [response.dataDictionary objectForKey:@"equityfinancing"];
+            weakSelf.cityName = [response.dataDictionary objectForKey:@"areaname"];
 
             weakSelf.trademixedArray = [[SHGGloble sharedGloble] parseServerJsonArrayToJSONModel:weakSelf.trademixedArray class:[SHGBusinessSecondObject class]];
             weakSelf.bondFinancingArray = [[SHGGloble sharedGloble] parseServerJsonArrayToJSONModel:weakSelf.bondFinancingArray class:[SHGBusinessSecondObject class]];
@@ -90,8 +112,12 @@
 
             weakSelf.secondListArray = @[weakSelf.bondFinancingArray, weakSelf.equityFinancingArray, weakSelf.moneySideArray, weakSelf.trademixedArray];
 
-            NSArray *array = [NSArray arrayWithArray:[self.secondListArray objectAtIndex:[[SHGBusinessScrollView sharedBusinessScrollView] currentIndex] - 1]];
-            block(array);
+            NSInteger index = [[SHGBusinessScrollView sharedBusinessScrollView] currentIndex] == 0 ? 1 : [[SHGBusinessScrollView sharedBusinessScrollView] currentIndex];
+            NSArray *array = [NSArray arrayWithArray:[self.secondListArray objectAtIndex:index - 1]];
+
+            if (block) {
+                block(array, weakSelf.cityName);
+            }
         } failed:^(MOCHTTPResponse *response) {
             [Hud hideHud];
             [Hud showMessageWithText:@"获取分类错误"];

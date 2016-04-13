@@ -14,7 +14,7 @@
 
 + (void)getListDataWithParam:(NSDictionary *)param block:(void (^)(NSArray *dataArray, NSString *position, NSString *tipUrl))block;
 
-- (void)getSecondListBlock:(void (^)(NSArray *array))block;
+- (void)getSecondListBlock:(void (^)(NSArray *array, NSString *cityName))block;
 
 + (void)createNewBusiness:(NSDictionary *)param success:(void (^)(BOOL success))block;
 @end

@@ -11,6 +11,8 @@
 #import "SHGBusinessMargin.h"
 #import "SHGBusinessManager.h"
 #import "SHGBusinessButtonContentView.h"
+#import "SHGBusinessScrollView.h"
+#import "SHGBusinessListViewController.h"
 
 @interface SHGBusinessSelectCategoryViewController ()
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
@@ -25,13 +27,15 @@
 {
     [super viewDidLoad];
     self.title = @"选择分类";
+    self.nextButton.backgroundColor = Color(@"f04241");
+    [self.nextButton setTitle:@"确定" forState:UIControlStateNormal];
     [self loadData];
 }
 
 - (void)loadData
 {
     __weak typeof(self)weakSelf = self;
-    [[SHGBusinessManager shareManager] getSecondListBlock:^(NSArray *array) {
+    [[SHGBusinessManager shareManager] getSecondListBlock:^(NSArray *array, NSString *cityName) {
         if (array) {
             weakSelf.listArray = array;
             [weakSelf initViewWithArray:array];
@@ -42,8 +46,7 @@
 
 - (void)initViewWithArray:(NSArray *)array
 {
-    self.nextButton.backgroundColor = Color(@"f04241");
-    [self.nextButton setTitle:@"确定" forState:UIControlStateNormal];
+    NSArray *selectedArray = [[SHGBusinessListViewController sharedController].paramDictionary objectForKey:[NSString stringWithFormat:@"title%@", [[SHGBusinessScrollView sharedBusinessScrollView] currentName]]];
 
     [array enumerateObjectsUsingBlock:^(SHGBusinessSecondObject *secondObject, NSUInteger idx, BOOL * _Nonnull stop) {
         SHGBusinessButtonContentView *contentView = [[SHGBusinessButtonContentView alloc] initWithMode:SHGBusinessButtonShowModeExclusiveChoice];
@@ -80,6 +83,9 @@
             lastButton = button;
 
             [contentView addSubview:button];
+            if ([selectedArray containsObject:subObject.value]) {
+                button.selected = YES;
+            }
         }];
 
         UIView *spliteView = [[UIView alloc] init];
@@ -137,25 +143,29 @@
 
 - (IBAction)nextButtonClicked:(UIButton *)sender
 {
-    NSMutableDictionary *param = [NSMutableDictionary dictionary];
+    NSMutableDictionary *codeParam = [NSMutableDictionary dictionary];
+    NSMutableArray *titleArray = [NSMutableArray array];
     [self.scrollView.subviews enumerateObjectsUsingBlock:^(SHGBusinessButtonContentView *contentView, NSUInteger idx, BOOL * _Nonnull stop) {
         if ([contentView isKindOfClass:[SHGBusinessButtonContentView class]]) {
             NSString *key = ((SHGBusinessSecondObject *)[self.listArray objectAtIndex:idx]).key;
-            __block NSString *value = @"";
+            __block NSString *codeValue = @"";
+
             NSArray *array = [contentView selectedArray];
             [array enumerateObjectsUsingBlock:^(SHGBusinessSecondsubObject *subObject, NSUInteger idx, BOOL * _Nonnull stop) {
-                value = [value stringByAppendingFormat:@"%@;",subObject.code];
+                codeValue = [codeValue stringByAppendingFormat:@"%@;",subObject.code];
+                [titleArray addObject:subObject.value];
             }];
-            if (value.length > 0) {
-                value = [value substringToIndex:value.length - 1];
+            if (codeValue.length > 0) {
+                codeValue = [codeValue substringToIndex:codeValue.length - 1];
             }
-            [param setObject:value forKey:key];
+            [codeParam setObject:codeValue forKey:key];
         }
 
     }];
     if (self.selectedBlock) {
-        self.selectedBlock(param);
+        self.selectedBlock(codeParam, titleArray);
     }
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)didReceiveMemoryWarning
