@@ -52,6 +52,7 @@
 @property (weak, nonatomic) IBOutlet MLEmojiLabel *phoneNumLabel;
 @property (weak, nonatomic) IBOutlet UILabel *marketDetialLabel;
 @property (weak, nonatomic) IBOutlet UILabel *detailContentLabel;
+
 @property (weak, nonatomic) IBOutlet UIButton *btnShare;
 @property (weak, nonatomic) IBOutlet UIView *viewInput;
 @property (weak, nonatomic) IBOutlet UIButton *speakButton;
