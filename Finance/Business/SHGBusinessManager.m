@@ -156,4 +156,35 @@
     }];
 }
 
++ (void)getMyorSearchDataWithParam:(NSDictionary *)param block:(void (^)(NSArray *, NSString *))block
+{
+    [Hud showWait];
+    NSString *request = [rBaseAddressForHttp stringByAppendingString:@"/business/getAllTypeBusinessList"];
+    [MOCHTTPRequestOperationManager postWithURL:request class:nil parameters:param success:^(MOCHTTPResponse *response) {
+        [Hud hideHud];
+        NSDictionary *dictionary = response.dataDictionary;
+        NSArray *dataArray = [[SHGGloble sharedGloble] parseServerJsonArrayToJSONModel:[dictionary objectForKey:@"businesslist"] class:[SHGBusinessObject class]];
+        NSString *total = [dictionary objectForKey:@"total"];
+        block(dataArray, total);
+    } failed:^(MOCHTTPResponse *response) {
+        [Hud hideHud];
+        block(nil, @"0");
+        [Hud showMessageWithText:@"获取列表数据失败"];
+    }];
+}
+
++ (void)loadHotSearchWordFinishBlock:(void (^)(NSArray *))block
+{
+    NSString *request = [rBaseAddressForHttp stringByAppendingString:@"/market/getHotSearchWord"];
+    [MOCHTTPRequestOperationManager postWithURL:request parameters:nil success:^(MOCHTTPResponse *response) {
+        NSArray *hotwords = [response.dataDictionary objectForKey:@"hotwords"];
+        if (block) {
+            block(hotwords);
+        }
+    } failed:^(MOCHTTPResponse *response) {
+        if (block) {
+            block(nil);
+        }
+    }];
+}
 @end

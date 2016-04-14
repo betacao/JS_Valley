@@ -67,8 +67,8 @@
 
 typedef NS_ENUM(NSInteger, SHGBusinessNoticeType)
 {
-    SHGMarketBusinessTypePositionTop = 0,
-    SHGMarketBusinessTypePositionAny
+    SHGBusinessTypePositionTop = 0,
+    SHGBusinessTypePositionAny
 };
 
 

@@ -12,7 +12,7 @@
 #import "MyTeamViewController.h"
 #import "MyMoneyViewController.h"
 #import "MyAppointmentViewController.h"
-#import "SHGMarketMineViewController.h"
+#import "SHGBusinessMineViewController.h"
 #import "SettingsViewController.h"
 #import "SHGMarketCollectionViewController.h"
 #import "SHGCardCollectionViewController.h"
@@ -832,7 +832,7 @@
         }
     } else if (indexPath.section == 1){
 
-        SHGMarketMineViewController *controller = [[SHGMarketMineViewController alloc] init];
+        SHGBusinessMineViewController *controller = [[SHGBusinessMineViewController alloc] init];
         controller.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:controller animated:YES];
 

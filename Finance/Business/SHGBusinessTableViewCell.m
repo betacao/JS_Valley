@@ -70,13 +70,13 @@
     self.firstLabel.sd_layout
     .leftEqualToView(self.titleLabel)
     .topSpaceToView(self.titleLabel, MarginFactor(14.0f))
-    .heightIs(self.titleLabel.font.lineHeight);
+    .heightIs(self.firstLabel.font.lineHeight);
     [self.firstLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
 
     self.thirdLabel.sd_layout
     .leftEqualToView(self.titleLabel)
     .topSpaceToView(self.firstLabel, MarginFactor(11.0f))
-    .heightIs(self.titleLabel.font.lineHeight);
+    .heightIs(self.thirdLabel.font.lineHeight);
     [self.thirdLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
     
     self.browseLabel.sd_layout
@@ -131,7 +131,7 @@
     self.titleLabel.text = object.title;
     self.firstLabel.text = [self valuesForKeys:object.businessShow];
     self.secondLabel.text = [self valuesForKeys:object.investAmount];
-    self.thirdLabel.text = object.area;
+    self.thirdLabel.text = [object.area isEqualToString:@""] ? @"全国" : object.area;
     self.fourthLabel.text = object.createTime;
     self.browseLabel.text = object.browseNum;
     if ([object.uid isEqualToString:UID]) {

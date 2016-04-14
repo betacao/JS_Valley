@@ -819,6 +819,10 @@
 		B0EAB2561B467AB8005A760F /* TTTAttributedLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = B0EAB2531B467AB8005A760F /* TTTAttributedLabel.m */; };
 		F90344151C1C192F0063EABB /* SHGMarketDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F90344131C1C192F0063EABB /* SHGMarketDetailViewController.m */; };
 		F90344161C1C192F0063EABB /* SHGMarketDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F90344141C1C192F0063EABB /* SHGMarketDetailViewController.xib */; };
+		F90684921CBF33F00003B123 /* SHGBusinessSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F90684901CBF33F00003B123 /* SHGBusinessSearchViewController.m */; };
+		F90684931CBF33F00003B123 /* SHGBusinessSearchViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F90684911CBF33F00003B123 /* SHGBusinessSearchViewController.xib */; };
+		F90684971CBF34560003B123 /* SHGBusinessSearchResultViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F90684951CBF34560003B123 /* SHGBusinessSearchResultViewController.m */; };
+		F90684981CBF34570003B123 /* SHGBusinessSearchResultViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F90684961CBF34560003B123 /* SHGBusinessSearchResultViewController.xib */; };
 		F908C1511BFECD2F00CAE018 /* SHGActionCommentTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F908C14F1BFECD2F00CAE018 /* SHGActionCommentTableViewCell.m */; };
 		F908C8421C30FA83004DD99A /* SHGMarketSecondCategoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F908C8401C30FA83004DD99A /* SHGMarketSecondCategoryViewController.m */; };
 		F908C8431C30FA83004DD99A /* SHGMarketSecondCategoryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F908C8411C30FA83004DD99A /* SHGMarketSecondCategoryViewController.xib */; };
@@ -2095,6 +2099,12 @@
 		F90344121C1C192F0063EABB /* SHGMarketDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGMarketDetailViewController.h; sourceTree = "<group>"; };
 		F90344131C1C192F0063EABB /* SHGMarketDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGMarketDetailViewController.m; sourceTree = "<group>"; };
 		F90344141C1C192F0063EABB /* SHGMarketDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGMarketDetailViewController.xib; sourceTree = "<group>"; };
+		F906848F1CBF33F00003B123 /* SHGBusinessSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGBusinessSearchViewController.h; sourceTree = "<group>"; };
+		F90684901CBF33F00003B123 /* SHGBusinessSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGBusinessSearchViewController.m; sourceTree = "<group>"; };
+		F90684911CBF33F00003B123 /* SHGBusinessSearchViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGBusinessSearchViewController.xib; sourceTree = "<group>"; };
+		F90684941CBF34560003B123 /* SHGBusinessSearchResultViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGBusinessSearchResultViewController.h; sourceTree = "<group>"; };
+		F90684951CBF34560003B123 /* SHGBusinessSearchResultViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGBusinessSearchResultViewController.m; sourceTree = "<group>"; };
+		F90684961CBF34560003B123 /* SHGBusinessSearchResultViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGBusinessSearchResultViewController.xib; sourceTree = "<group>"; };
 		F908C14E1BFECD2F00CAE018 /* SHGActionCommentTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGActionCommentTableViewCell.h; sourceTree = "<group>"; };
 		F908C14F1BFECD2F00CAE018 /* SHGActionCommentTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGActionCommentTableViewCell.m; sourceTree = "<group>"; };
 		F908C83F1C30FA83004DD99A /* SHGMarketSecondCategoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGMarketSecondCategoryViewController.h; sourceTree = "<group>"; };
@@ -4756,6 +4766,12 @@
 				985A0FD81CABAB1400880DB5 /* SHGBusinessLocationViewController.h */,
 				985A0FD91CABAB1400880DB5 /* SHGBusinessLocationViewController.m */,
 				985A0FDA1CABAB1400880DB5 /* SHGBusinessLocationViewController.xib */,
+				F906848F1CBF33F00003B123 /* SHGBusinessSearchViewController.h */,
+				F90684901CBF33F00003B123 /* SHGBusinessSearchViewController.m */,
+				F90684911CBF33F00003B123 /* SHGBusinessSearchViewController.xib */,
+				F90684941CBF34560003B123 /* SHGBusinessSearchResultViewController.h */,
+				F90684951CBF34560003B123 /* SHGBusinessSearchResultViewController.m */,
+				F90684961CBF34560003B123 /* SHGBusinessSearchResultViewController.xib */,
 			);
 			name = Business;
 			path = Finance/Business;
@@ -5385,6 +5401,7 @@
 				F908C8431C30FA83004DD99A /* SHGMarketSecondCategoryViewController.xib in Resources */,
 				B080FEAD1B81E30100426579 /* emoji_touch@2x.png in Resources */,
 				61E83D281AF7C78E00703651 /* 密码图标@2x.png in Resources */,
+				F90684981CBF34570003B123 /* SHGBusinessSearchResultViewController.xib in Resources */,
 				B04D6E3A1B60D5CA00E3863E /* 会话.png in Resources */,
 				61E83D371AF7C78E00703651 /* 免费预约按钮@3x.png in Resources */,
 				4088DDAF1AF102FE00393855 /* DingDQRCodeShareViewController.xib in Resources */,
@@ -5685,6 +5702,7 @@
 				61E83D2B1AF7C78E00703651 /* 删除群成员@2x.png in Resources */,
 				B09BF76A1B7C6C1F008260B3 /* 1度@3x.png in Resources */,
 				B04D6E271B60C01300E3863E /* 分享x@2x.png in Resources */,
+				F90684931CBF33F00003B123 /* SHGBusinessSearchViewController.xib in Resources */,
 				61E83D6C1AF7C78E00703651 /* 按钮-按下@3x.png in Resources */,
 				61E83D441AF7C78E00703651 /* 收藏prod@3x.png in Resources */,
 				9842E9D51C0180240008B6AF /* SHGPersonFriendsTableViewCell.xib in Resources */,
@@ -6026,6 +6044,7 @@
 				5331DF221AFC029300E035B8 /* InvitationManager.m in Sources */,
 				F9A227C61BF5C2140054F8D7 /* SHGActionMineViewController.m in Sources */,
 				F91D3A461CB7528200E3419D /* SHGBusinessButtonContentView.m in Sources */,
+				F90684921CBF33F00003B123 /* SHGBusinessSearchViewController.m in Sources */,
 				6187D30F1AF1C693008E1D21 /* SRRefreshView.m in Sources */,
 				40302B151AEF5C3500F22EB6 /* AddAddressViewController.m in Sources */,
 				6187D2E21AF1C693008E1D21 /* EMChatLocationBubbleView.m in Sources */,
@@ -6084,6 +6103,7 @@
 				6187D2F21AF1C693008E1D21 /* BaseTableViewCell.m in Sources */,
 				619027491B2359C600D9EEA2 /* popObj.m in Sources */,
 				9894C9781BF5BCE700F80577 /* SHGActionSignViewController.m in Sources */,
+				F90684971CBF34560003B123 /* SHGBusinessSearchResultViewController.m in Sources */,
 				F9D296E11C8FF1E700A1446C /* SHGRecommendTableViewCell.m in Sources */,
 				F9ADAEB71BF2DB32001366F9 /* SHGPersonalViewController.m in Sources */,
 				614EFECE1AEF594A00F2BDD1 /* ProdConfigTableViewCell.m in Sources */,

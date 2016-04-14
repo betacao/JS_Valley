@@ -14,6 +14,8 @@
 
 + (void)getListDataWithParam:(NSDictionary *)param block:(void (^)(NSArray *dataArray, NSString *position, NSString *tipUrl))block;
 
++ (void)getMyorSearchDataWithParam:(NSDictionary *)param block:(void (^)(NSArray *dataArray, NSString *total))block;
+
 - (void)getSecondListBlock:(void (^)(NSArray *array, NSString *cityName))block;
 
 + (void)createNewBusiness:(NSDictionary *)param success:(void (^)(BOOL success))block;
@@ -24,4 +26,5 @@
 
 + (void)unCollectBusiness:(NSString *)businessId success:(void (^)(BOOL success))block;
 
++ (void)loadHotSearchWordFinishBlock:(void (^)(NSArray *array))block;
 @end

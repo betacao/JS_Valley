@@ -18,6 +18,8 @@
 #import "SHGBusinessTableViewCell.h"
 #import "SHGBusinessNoticeTableViewCell.h"
 #import "SHGBusinessLocationViewController.h"
+#import "SHGBusinessSearchViewController.h"
+#import "SHGBusinessDetailViewController.h"
 
 @interface SHGBusinessListViewController ()<UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, SHGBusinessScrollViewDelegate>
 //
@@ -243,9 +245,9 @@
     otherObject.businessID = [NSString stringWithFormat:@"%ld",NSIntegerMax];
     NSString *position = [self.positionDictionary objectForKey:[self.scrollView currentName]];
     if ([position isEqualToString:@"0"]) {
-        otherObject.noticeType = SHGMarketBusinessTypePositionTop;
+        otherObject.noticeType = SHGBusinessTypePositionTop;
     } else if ([position integerValue] > 0){
-        otherObject.noticeType = SHGMarketBusinessTypePositionAny;
+        otherObject.noticeType = SHGBusinessTypePositionAny;
     }
     return otherObject;
 }
@@ -473,11 +475,11 @@
     SHGBusinessObject *object = [self.currentArray objectAtIndex:indexPath.row];
     if ([object isKindOfClass:[SHGBusinessNoticeObject class]]) {
         SHGBusinessNoticeObject *obj = (SHGBusinessNoticeObject *)object;
-        if (obj.noticeType == SHGMarketBusinessTypePositionAny) {
+        if (obj.noticeType == SHGBusinessTypePositionAny) {
 
-            SHGBusinessLabelTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SHGMarketLabelTableViewCell"];
+            SHGBusinessLabelTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SHGBusinessLabelTableViewCell"];
             if (!cell) {
-                cell = [[SHGBusinessLabelTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"SHGMarketLabelTableViewCell"];
+                cell = [[SHGBusinessLabelTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"SHGBusinessLabelTableViewCell"];
             }
             cell.text = @"本地区该业务较少，现为您推荐其他地区同业务信息";
             return cell;
@@ -492,7 +494,7 @@
         }
 
     } else{
-        NSString *identifier = @"SHGMarketTableViewCell";
+        NSString *identifier = @"SHGBusinessTableViewCell";
         SHGBusinessTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
         if (!cell) {
             cell = [[[NSBundle mainBundle] loadNibNamed:@"SHGBusinessTableViewCell" owner:self options:nil] lastObject];
@@ -518,7 +520,7 @@
         SHGBusinessObject *object = [self.currentArray objectAtIndex:indexPath.row];
         if ([object isKindOfClass:[SHGBusinessNoticeObject class]]) {
             SHGBusinessNoticeObject *obj = (SHGBusinessNoticeObject *)object;
-            if (obj.noticeType == SHGMarketBusinessTypePositionTop) {
+            if (obj.noticeType == SHGBusinessTypePositionTop) {
                 return kImageTableViewCellHeight;
             } else{
                 CGFloat height = [self.tableView cellHeightForIndexPath:indexPath model:@"本地区该业务较少，现为您推荐其他地区同业务信息" keyPath:@"text" cellClass:[SHGBusinessLabelTableViewCell class] contentViewWidth:SCREENWIDTH];
@@ -540,15 +542,14 @@
         SHGBusinessObject *object = [self.currentArray objectAtIndex:indexPath.row];
         if ([object isKindOfClass:[SHGBusinessNoticeObject class]]) {
             //点击图片才去跳转
-            if (((SHGBusinessNoticeObject *)object).noticeType == SHGMarketBusinessTypePositionTop) {
+            if (((SHGBusinessNoticeObject *)object).noticeType == SHGBusinessTypePositionTop) {
                 SHGBusinessLocationViewController *controller = [[SHGBusinessLocationViewController alloc] init];
                 [self.navigationController pushViewController:controller animated:YES];
             }
         } else{
-//            [[SHGGloble sharedGloble] recordUserAction:object.businessID type:@"market"];
-//            SHGMarketDetailViewController *controller = [[SHGMarketDetailViewController alloc]init];
-//            controller.object = object;
-//            [self.navigationController pushViewController:controller animated:YES];
+            SHGBusinessDetailViewController *controller = [[SHGBusinessDetailViewController alloc]init];
+            controller.object = object;
+            [self.navigationController pushViewController:controller animated:YES];
         }
     }
 }
@@ -584,7 +585,14 @@
         [self.tableView reloadData];
     }
 }
+#pragma mark ------搜索框的代理
 
+- (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar
+{
+    SHGBusinessSearchViewController *controller = [[SHGBusinessSearchViewController alloc] init];
+    [self.navigationController pushViewController:controller animated:YES];
+    return NO;
+}
 
 
 - (void)didReceiveMemoryWarning

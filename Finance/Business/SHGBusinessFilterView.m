@@ -126,7 +126,7 @@
     _expand = expand;
 
     if (expand) {
-        self.dataArray = [[SHGBusinessListViewController sharedController] getFilterTitleArray];
+        self.dataArray = [NSMutableArray arrayWithArray:[[SHGBusinessListViewController sharedController] getFilterTitleArray]];
 
         [self.contentView setupAutoHeightWithBottomView:[self.buttonArray lastObject] bottomMargin:MarginFactor(10.0f)];
         [UIView animateWithDuration:0.25f animations:^{
@@ -144,7 +144,7 @@
             [self.contentView updateLayout];
             self.rightButton.layer.transform = CATransform3DIdentity;
         } completion:^(BOOL finished) {
-            self.dataArray = [[SHGBusinessListViewController sharedController] getFilterTitleArray];
+            self.dataArray = [NSMutableArray arrayWithArray:[[SHGBusinessListViewController sharedController] getFilterTitleArray]];
         }];
 
         [self.backgroundView removeFromSuperview];
