@@ -42,6 +42,18 @@
 @property (strong, nonatomic) NSString *totalshareRate;
 @property (strong, nonatomic) NSString *vestYears;
 
+@property (strong, nonatomic) NSMutableArray *commentList;//评论列表
+@property (strong, nonatomic) NSString *userState;//用户的认证状态
+@property (strong, nonatomic) NSString *middleContent;//中间的连串
+@property (strong, nonatomic) NSString *isDeleted;//是否已经在服务端删除了
+@property (assign, nonatomic) BOOL isCollection;//是否收藏
+@property (strong, nonatomic) NSString *createBy;//创建者
+@property (strong, nonatomic) NSString *realName;
+@property (strong, nonatomic) NSString *company;
+@property (strong, nonatomic) NSString *status;
+@property (strong, nonatomic) NSString *headImageUrl;
+@property (strong, nonatomic) NSString *url;
+@property (strong, nonatomic) NSString *businessTitle;
 @end
 
 @interface SHGBusinessFirstObject : NSObject
@@ -76,5 +88,17 @@ typedef NS_ENUM(NSInteger, SHGBusinessNoticeType)
 
 @property (strong, nonatomic) NSString *tipUrl;
 @property (assign, nonatomic) SHGBusinessNoticeType noticeType;
+
+@end
+
+@interface SHGBusinessCommentObject : MTLModel<MTLJSONSerializing>
+
+@property (strong, nonatomic) NSString *commentId;
+@property (strong, nonatomic) NSString *commentUserId;
+@property (strong, nonatomic) NSString *commentDetail;
+@property (strong, nonatomic) NSString *commentUserName;
+@property (strong, nonatomic) NSString *commentOtherName;
+
+- (CGFloat)heightForCell;
 
 @end

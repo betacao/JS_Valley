@@ -128,8 +128,8 @@
     [SHGBusinessManager getMyorSearchDataWithParam:dictionary block:^(NSArray *dataArray, NSString *total) {
         [weakSelf.tableView.mj_header endRefreshing];
         [weakSelf.tableView.mj_footer endRefreshing];
-        weakSelf.sectionView.totalCount = total;
         if ([target isEqualToString:@"first"]) {
+            weakSelf.sectionView.totalCount = total;
             [weakSelf.dataArr removeAllObjects];
             [weakSelf.dataArr addObjectsFromArray:dataArray];
             [weakSelf.tableView reloadData];

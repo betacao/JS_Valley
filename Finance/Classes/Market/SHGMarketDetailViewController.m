@@ -749,7 +749,6 @@
         [self.collectionButton setImage:[UIImage imageNamed:@"redMarketDetailNoCollection"] forState:UIControlStateNormal];
         self.isCollectionChange = NO;
     }
-//  [self.btnZan setTitle:self.responseObject.praiseNum forState:UIControlStateNormal];
 }
 
 

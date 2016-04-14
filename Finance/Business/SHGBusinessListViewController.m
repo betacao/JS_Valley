@@ -101,7 +101,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [self initAddMarketButton];
+    [self initAddBusinessButton];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -326,8 +326,8 @@
 {
     NSString *businessID = [NSString stringWithFormat:@"%ld",NSIntegerMax];
     for (SHGBusinessObject *object in self.currentArray) {
-        NSString *objectMarketId = object.businessID;
-        if ([objectMarketId compare:businessID options:NSNumericSearch] == NSOrderedAscending) {
+        NSString *objectBusinessId = object.businessID;
+        if ([objectBusinessId compare:businessID options:NSNumericSearch] == NSOrderedAscending) {
             businessID = object.businessID;
         }
     }
@@ -415,7 +415,7 @@
     [recognizer setTranslation:CGPointZero inView:self.view];
 }
 
-- (void)initAddMarketButton
+- (void)initAddBusinessButton
 {
     if (CGSizeEqualToSize(CGSizeZero, self.addBusinessSize)) {
         self.addBusinessSize = self.addBusinessButton.currentImage.size;

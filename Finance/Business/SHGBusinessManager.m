@@ -138,21 +138,31 @@
     }];
 }
 
-+ (void)collectBusiness:(NSString *)businessId success:(void (^)(BOOL))block
++ (void)collectBusiness:(SHGBusinessObject *)object success:(void (^)(BOOL))block
 {
-    [MOCHTTPRequestOperationManager postWithURL:[rBaseAddressForHttp stringByAppendingString:@"/business/saveBusinessCollect"] parameters:@{@"uid":UID, @"businessId": businessId} success:^(MOCHTTPResponse *response) {
-
+    [MOCHTTPRequestOperationManager postWithURL:[rBaseAddressForHttp stringByAppendingString:@"/business/collection/saveBusinessCollect"] parameters:@{@"uid":UID, @"businessId": object.businessID, @"type":object.type} success:^(MOCHTTPResponse *response) {
+        NSString *result = [response.dataDictionary objectForKey:@"result"];
+        if (!IsStrEmpty(result) && [result integerValue] > 0) {
+            block(YES);
+        } else {
+            block(NO);
+        }
     } failed:^(MOCHTTPResponse *response) {
-        
+        block(NO);
     }];
 }
 
-+ (void)unCollectBusiness:(NSString *)businessId success:(void (^)(BOOL))block
++ (void)unCollectBusiness:(SHGBusinessObject *)object success:(void (^)(BOOL))block
 {
-    [MOCHTTPRequestOperationManager postWithURL:[rBaseAddressForHttp stringByAppendingString:@"/business/deleteBusinessCollect"] parameters:@{@"uid":UID, @"businessId": businessId} success:^(MOCHTTPResponse *response) {
-
+    [MOCHTTPRequestOperationManager postWithURL:[rBaseAddressForHttp stringByAppendingString:@"/business/collection/deleteBusinessCollect"] parameters:@{@"uid":UID, @"businessId": object.businessID, @"type":object.type} success:^(MOCHTTPResponse *response) {
+        NSString *result = [response.dataDictionary objectForKey:@"result"];
+        if (!IsStrEmpty(result) && [result integerValue] > 0) {
+            block(YES);
+        } else {
+            block(NO);
+        }
     } failed:^(MOCHTTPResponse *response) {
-        
+        block(NO);
     }];
 }
 
@@ -187,4 +197,169 @@
         }
     }];
 }
+
++ (void)getBusinessDetail:(SHGBusinessObject *)object success:(void (^)(SHGBusinessObject *))block
+{
+    NSString *request = [rBaseAddressForHttp stringByAppendingString:@"/business/getBusinessById"];
+    NSDictionary *param = @{@"uid":UID, @"type":object.type, @"businessId":object.businessID };
+    [MOCHTTPRequestOperationManager postWithURL:request parameters:param success:^(MOCHTTPResponse *response) {
+        SHGBusinessObject *otherObject = [[[SHGGloble sharedGloble] parseServerJsonArrayToJSONModel:@[response.dataDictionary] class:[SHGBusinessObject class]] firstObject];
+        if (block) {
+            block(otherObject);
+        }
+    } failed:^(MOCHTTPResponse *response) {
+        if (block) {
+            block(nil);
+        }
+    }];
+}
+
+//评论
++ (void)addCommentWithObject:(SHGBusinessObject *)object content:(NSString *)content toOther:(NSString *)otherId finishBlock:(void (^)(BOOL))block
+{
+    if (!otherId) {
+        otherId = @"-1";
+    }
+    if (!content) {
+        content = @"";
+    }
+    SHGBusinessCommentObject *targetCommentObject = nil;
+    for (SHGBusinessCommentObject *obj in object.commentList) {
+        if ([obj.commentUserId isEqualToString:otherId]) {
+            targetCommentObject = obj;
+            break;
+        }
+    }
+    [Hud showWait];
+    NSString *request = [rBaseAddressForHttp stringByAppendingString:@"/common/comment/business/saveComment"];
+    NSString *userName = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_USER_NAME];
+    NSDictionary *param = @{@"uid":UID, @"businessId":object.businessID, @"content":content, @"replyId":otherId, @"type":object.type,};
+
+    [MOCHTTPRequestOperationManager postWithURL:request parameters:param success:^(MOCHTTPResponse *response) {
+        [Hud hideHud];
+        SHGBusinessCommentObject *newObject = [[SHGBusinessCommentObject alloc] init];
+        newObject.commentDetail = content;
+        newObject.commentId = [response.dataDictionary objectForKey:@"result"];
+        newObject.commentOtherName = targetCommentObject.commentUserName;
+        newObject.commentUserId = UID;
+        newObject.commentUserName = userName;
+        [object.commentList addObject:newObject];
+        [Hud showMessageWithText:@"评论成功"];
+        [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:KEY_MEMORY];
+        if (block) {
+            block(YES);
+        }
+    } failed:^(MOCHTTPResponse *response) {
+        [Hud hideHud];
+        [Hud showMessageWithText:@"评论失败"];
+        if (block) {
+            block(NO);
+        }
+    }];
+}
+
+//删除评论
++ (void)deleteCommentWithID:(NSString *)commentId finishBlock:(void (^)(BOOL))block
+{
+    [Hud showWait];
+    NSString *request = [rBaseAddressForHttp stringByAppendingString:@"/common/comment/deleteComment"];
+    NSDictionary *param = @{@"commentId":commentId, @"type":@"business"};
+    [MOCHTTPRequestOperationManager postWithURL:request parameters:param success:^(MOCHTTPResponse *response) {
+        [Hud hideHud];
+        [Hud showMessageWithText:@"删除评论成功"];
+        if (block) {
+            block(YES);
+        }
+    } failed:^(MOCHTTPResponse *response) {
+        [Hud hideHud];
+        [Hud showMessageWithText:@"删除评论失败"];
+
+    }];
+}
+
+//分享业务
+- (void)shareAction:(SHGBusinessObject *)object baseController:(UIViewController *)controller finishBlock:(void (^)(BOOL))block
+{
+    NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
+    NSString *request = [rBaseAddressForHttp stringByAppendingFormat:@"/business/share/businessDetail?rowId=%@&uid=%@&businessType=%@",object.businessID, uid, object.type];
+    UIImage *png = [UIImage imageNamed:@"80.png"];
+    id<ISSCAttachment> image  = [ShareSDK pngImageWithImage:png];
+    NSString *theme = object.title;
+    if (theme.length > 15) {
+        theme = [NSString stringWithFormat:@"%@...",[object.title substringToIndex:15]];
+    }
+    NSString *postContent = [NSString stringWithFormat:@"【业务】%@", theme];
+    NSString *shareContent = [NSString stringWithFormat:@"【业务】%@", theme];
+    NSString *friendContent = [NSString stringWithFormat:@"%@\"%@\"%@%@",@"Hi，我看到了一个非常棒的业务,关于",theme,@"，赶快去业务版块查看吧！",request];
+
+    NSString *messageContent = [NSString stringWithFormat:@"%@\"%@\"%@%@",@"Hi，我在金融大牛圈上看到了一个非常棒的业务,关于",theme,@"，赶快下载大牛圈查看吧！",@"https://itunes.apple.com/cn/app/da-niu-quan-jin-rong-zheng/id984379568?mt=8"];
+    id<ISSShareActionSheetItem> item0 = [ShareSDK shareActionSheetItemWithTitle:@"微信好友" icon:[UIImage imageNamed:@"sns_icon_22"] clickHandler:^{
+        [[AppDelegate currentAppdelegate] shareActionToWeChat:0 content:postContent url:request];
+    }];
+    id<ISSShareActionSheetItem> item1 = [ShareSDK shareActionSheetItemWithTitle:@"朋友圈" icon:[UIImage imageNamed:@"sns_icon_23"] clickHandler:^{
+        [[AppDelegate currentAppdelegate] shareActionToWeChat:1 content:postContent url:request];
+    }];
+    id<ISSShareActionSheetItem> item2 = [ShareSDK shareActionSheetItemWithTitle:@"短信" icon:[UIImage imageNamed:@"sns_icon_19"] clickHandler:^{
+        [[AppDelegate currentAppdelegate] shareActionToSMS:messageContent];
+    }];
+    id<ISSShareActionSheetItem> item3 = [ShareSDK shareActionSheetItemWithTitle:@"圈内好友" icon:[UIImage imageNamed:@"圈内好友图标"] clickHandler:^{
+        [self shareToFriendController:controller content:friendContent];
+    }];
+    NSArray *shareArray = nil;
+    if ([WXApi isWXAppSupportApi]) {
+        if ([QQApiInterface isQQSupportApi]) {
+            shareArray = [ShareSDK customShareListWithType: item0, item1, SHARE_TYPE_NUMBER(ShareTypeQQ), item2, item3, nil];
+        } else{
+            shareArray = [ShareSDK customShareListWithType: item0, item1, item2, item3, nil];
+        }
+    } else{
+        if ([QQApiInterface isQQSupportApi]) {
+            shareArray = [ShareSDK customShareListWithType: SHARE_TYPE_NUMBER(ShareTypeQQ), item2, item3, nil];
+        } else{
+            shareArray = [ShareSDK customShareListWithType: item2, item3, nil];
+        }
+    }
+    NSString *shareUrl = request;
+
+    //构造分享内容
+    id<ISSContent> publishContent = [ShareSDK content:shareContent defaultContent:shareContent image:image title:SHARE_TITLE url:shareUrl description:shareContent mediaType:SHARE_TYPE];
+    //创建弹出菜单容器
+    id<ISSContainer> container = [ShareSDK container];
+    [container setIPadContainerWithView:controller.view arrowDirect:UIPopoverArrowDirectionUp];
+
+    //弹出分享菜单
+    [ShareSDK showShareActionSheet:container shareList:shareArray content:publishContent statusBarTips:YES authOptions:nil shareOptions:nil result:^(ShareType type, SSResponseState state, id<ISSPlatformShareInfo> statusInfo, id<ICMErrorInfo> error, BOOL end) {
+        if (state == SSResponseStateSuccess){
+            [Hud showMessageWithText:@"分享成功"];
+            [[SHGGloble sharedGloble] recordUserAction:object.businessID type:@"dynamic_shareQQ"];
+        } else if (state == SSResponseStateFail){
+            [Hud showMessageWithText:@"分享失败"];
+        }
+    }];
+}
+//分享给好友
+- (void)shareToFriendController:(UIViewController *)controller content:(NSString *)content
+{
+    FriendsListViewController *vc = [[FriendsListViewController alloc] init];
+    vc.isShare = YES;
+    vc.shareContent = content;
+    [controller.navigationController pushViewController:vc animated:YES];
+}
+
+//分享成功后通知服务端+1
++ (void)shareSuccessCallBack:(SHGBusinessObject *)object finishBlock:(void (^)(BOOL))block
+{
+    NSString *request = [rBaseAddressForHttp stringByAppendingString:@"/business/shareBusiness"];
+    NSDictionary *param = @{@"businessId":object.businessID, @"type":object.type};
+    [MOCHTTPRequestOperationManager postWithURL:request parameters:param success:^(MOCHTTPResponse *response) {
+        if (block) {
+            block(YES);
+        }
+    } failed:^(MOCHTTPResponse *response) {
+        if (block) {
+            block(NO);
+        }
+    }];
+}
+
 @end

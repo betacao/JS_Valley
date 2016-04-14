@@ -45,6 +45,11 @@
             self.imageView.image = [UIImage imageNamed:@"deleted_market"];
             [self.imageView sizeToFit];
             break;
+        case SHGEmptyDateTypeBusinessDeleted:
+            self.actionButton.hidden = YES;
+            self.imageView.image = [UIImage imageNamed:@"deleted_market"];
+            [self.imageView sizeToFit];
+            break;
         case SHGEmptyDateTypeMarketEmptyRecommended:
             self.actionButton.hidden = NO ;
             self.backgroundColor = [UIColor whiteColor];

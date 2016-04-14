@@ -823,6 +823,8 @@
 		F90684931CBF33F00003B123 /* SHGBusinessSearchViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F90684911CBF33F00003B123 /* SHGBusinessSearchViewController.xib */; };
 		F90684971CBF34560003B123 /* SHGBusinessSearchResultViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F90684951CBF34560003B123 /* SHGBusinessSearchResultViewController.m */; };
 		F90684981CBF34570003B123 /* SHGBusinessSearchResultViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F90684961CBF34560003B123 /* SHGBusinessSearchResultViewController.xib */; };
+		F906849C1CBF64FC0003B123 /* SHGBusinessCommentTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F906849A1CBF64FC0003B123 /* SHGBusinessCommentTableViewCell.m */; };
+		F906849D1CBF64FC0003B123 /* SHGBusinessCommentTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F906849B1CBF64FC0003B123 /* SHGBusinessCommentTableViewCell.xib */; };
 		F908C1511BFECD2F00CAE018 /* SHGActionCommentTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F908C14F1BFECD2F00CAE018 /* SHGActionCommentTableViewCell.m */; };
 		F908C8421C30FA83004DD99A /* SHGMarketSecondCategoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F908C8401C30FA83004DD99A /* SHGMarketSecondCategoryViewController.m */; };
 		F908C8431C30FA83004DD99A /* SHGMarketSecondCategoryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F908C8411C30FA83004DD99A /* SHGMarketSecondCategoryViewController.xib */; };
@@ -2105,6 +2107,9 @@
 		F90684941CBF34560003B123 /* SHGBusinessSearchResultViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGBusinessSearchResultViewController.h; sourceTree = "<group>"; };
 		F90684951CBF34560003B123 /* SHGBusinessSearchResultViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGBusinessSearchResultViewController.m; sourceTree = "<group>"; };
 		F90684961CBF34560003B123 /* SHGBusinessSearchResultViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGBusinessSearchResultViewController.xib; sourceTree = "<group>"; };
+		F90684991CBF64FC0003B123 /* SHGBusinessCommentTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGBusinessCommentTableViewCell.h; sourceTree = "<group>"; };
+		F906849A1CBF64FC0003B123 /* SHGBusinessCommentTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGBusinessCommentTableViewCell.m; sourceTree = "<group>"; };
+		F906849B1CBF64FC0003B123 /* SHGBusinessCommentTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGBusinessCommentTableViewCell.xib; sourceTree = "<group>"; };
 		F908C14E1BFECD2F00CAE018 /* SHGActionCommentTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGActionCommentTableViewCell.h; sourceTree = "<group>"; };
 		F908C14F1BFECD2F00CAE018 /* SHGActionCommentTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGActionCommentTableViewCell.m; sourceTree = "<group>"; };
 		F908C83F1C30FA83004DD99A /* SHGMarketSecondCategoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGMarketSecondCategoryViewController.h; sourceTree = "<group>"; };
@@ -4763,6 +4768,9 @@
 				F924C2BB1CACC1860070286F /* SHGBusinessDetailViewController.h */,
 				F924C2BC1CACC1860070286F /* SHGBusinessDetailViewController.m */,
 				F924C2BD1CACC1860070286F /* SHGBusinessDetailViewController.xib */,
+				F90684991CBF64FC0003B123 /* SHGBusinessCommentTableViewCell.h */,
+				F906849A1CBF64FC0003B123 /* SHGBusinessCommentTableViewCell.m */,
+				F906849B1CBF64FC0003B123 /* SHGBusinessCommentTableViewCell.xib */,
 				985A0FD81CABAB1400880DB5 /* SHGBusinessLocationViewController.h */,
 				985A0FD91CABAB1400880DB5 /* SHGBusinessLocationViewController.m */,
 				985A0FDA1CABAB1400880DB5 /* SHGBusinessLocationViewController.xib */,
@@ -5712,6 +5720,7 @@
 				61E83D7D1AF7C78E00703651 /* 对话设置@3x.png in Resources */,
 				61E83D3A1AF7C78E00703651 /* 圈子图标@3x.png in Resources */,
 				61E83D5E1AF7C78E00703651 /* 评论@3x.png in Resources */,
+				F906849D1CBF64FC0003B123 /* SHGBusinessCommentTableViewCell.xib in Resources */,
 				4088DDB51AF102FE00393855 /* SettingModifyPWDViewController.xib in Resources */,
 				408D8AF11AF8618C0055810C /* chatFire_audioPlaying2.png in Resources */,
 				408D8AFE1AF8618C0055810C /* VoiceSearchFeedback005@2x.png in Resources */,
@@ -6063,6 +6072,7 @@
 				6187D2E01AF1C693008E1D21 /* EMChatBaseBubbleView.m in Sources */,
 				56F2D50A1B5A45E6008E2855 /* UncaughtExceptionHandler.m in Sources */,
 				F9A6C68C1CBE5FAB00AFEE49 /* SHGBusinessNoticeTableViewCell.m in Sources */,
+				F906849C1CBF64FC0003B123 /* SHGBusinessCommentTableViewCell.m in Sources */,
 				6187D2DF1AF1C693008E1D21 /* EMChatAudioBubbleView.m in Sources */,
 				6145FF111AE49D4A0074AB49 /* BRCommentView.m in Sources */,
 				5331DF2C1AFC20A600E035B8 /* MessageViewController.m in Sources */,
