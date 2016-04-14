@@ -129,12 +129,19 @@
     }
 }
 
-+ (void)deleteBusiness:(NSString *)businessId success:(void (^)(BOOL))block
++ (void)deleteBusiness:(SHGBusinessObject *)object success:(void (^)(BOOL))block
 {
-    [MOCHTTPRequestOperationManager postWithURL:[rBaseAddressForHttp stringByAppendingString:@"/business/deleteBusiness"] parameters:@{@"businessId": businessId} success:^(MOCHTTPResponse *response) {
-
+    block (YES);
+    return;
+    [MOCHTTPRequestOperationManager postWithURL:[rBaseAddressForHttp stringByAppendingString:@"/business/deleteBusiness"] parameters:@{@"businessId": object.businessID, @"type":object.type} success:^(MOCHTTPResponse *response) {
+        NSString *result = [response.dataDictionary objectForKey:@"result"];
+        if (!IsStrEmpty(result) && [result integerValue] > 0) {
+            block(YES);
+        } else {
+            block(NO);
+        }
     } failed:^(MOCHTTPResponse *response) {
-
+        block(NO);
     }];
 }
 

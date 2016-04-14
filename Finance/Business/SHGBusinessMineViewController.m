@@ -145,6 +145,18 @@
     }];
 }
 
+#pragma mark ------其他函数部分
+- (void)deleteBusinessWithBusinessID:(NSString *)businessID
+{
+    [self.dataArr enumerateObjectsUsingBlock:^(SHGBusinessObject *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if ([obj.businessID isEqualToString:businessID]) {
+            [self.dataArr removeObject:obj];
+        }
+    }];
+    [self.tableView reloadData];
+}
+
+
 #pragma mark ------tableview代理
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -152,11 +164,12 @@
         self.emptyView.type = SHGEmptyDateTypeNormal;
         return self.emptyCell;
     }
-    NSString *identifier = @"SHGMarketTableViewCell";
+    NSString *identifier = @"SHGBusinessTableViewCell";
     SHGBusinessTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
     if (!cell) {
-        cell = [[[NSBundle mainBundle] loadNibNamed:@"SHGBusinessTableViewCell" owner:self options:nil] lastObject];
+        cell = [[[NSBundle mainBundle] loadNibNamed:identifier owner:self options:nil] lastObject];
     }
+    cell.style = SHGBusinessTableViewCellStyleMine;
     cell.object = [self.dataArr objectAtIndex:indexPath.row];
     [cell useCellFrameCacheWithIndexPath:indexPath tableView:tableView];
     return cell;

@@ -465,6 +465,18 @@
     }
 }
 
+- (void)deleteBusinessWithBusinessID:(NSString *)businessID
+{
+    [self.dataArr enumerateObjectsUsingBlock:^(NSMutableArray *subArray, NSUInteger idx, BOOL * _Nonnull stop) {
+        [subArray enumerateObjectsUsingBlock:^(SHGBusinessObject *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            if ([obj.businessID isEqualToString:businessID]) {
+                [subArray removeObject:obj];
+            }
+        }];
+    }];
+    [self.tableView reloadData];
+}
+
 #pragma mark ------tableview代理
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {

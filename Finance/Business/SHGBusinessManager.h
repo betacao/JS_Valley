@@ -20,7 +20,7 @@
 
 + (void)createNewBusiness:(NSDictionary *)param success:(void (^)(BOOL success))block;
 
-+ (void)deleteBusiness:(NSString *)businessId success:(void (^)(BOOL success))block;
++ (void)deleteBusiness:(SHGBusinessObject *)object success:(void (^)(BOOL success))block;
 
 + (void)collectBusiness:(SHGBusinessObject *)object success:(void (^)(BOOL success))block;
 

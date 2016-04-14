@@ -22,4 +22,6 @@ typedef void(^loadViewFinishBlock)(UIView *view);
 @property (strong, nonatomic) NSString *cityName;
 - (void)setFilterTitleArray:(NSArray *)array;
 - (NSArray *)getFilterTitleArray;
+
+- (void)deleteBusinessWithBusinessID:(NSString *)businessID;
 @end

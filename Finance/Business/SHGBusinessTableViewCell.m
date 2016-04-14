@@ -7,6 +7,9 @@
 //
 
 #import "SHGBusinessTableViewCell.h"
+#import "SHGBusinessManager.h"
+#import "SHGBusinessListViewController.h"
+#import "SHGBusinessMineViewController.h"
 
 @interface SHGBusinessTableViewCell()
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
@@ -55,6 +58,8 @@
 
     self.deleteButton.hidden = YES;
     [self.deleteButton setImage:[UIImage imageNamed:@"home_delete"] forState:UIControlStateNormal];
+    [self.deleteButton setEnlargeEdge:20.0f];
+
     self.lineView.backgroundColor = Color(@"F1F1F0");
     self.spliteView.backgroundColor = Color(@"EFEEEF");
 }
@@ -134,8 +139,16 @@
     self.thirdLabel.text = [object.area isEqualToString:@""] ? @"全国" : object.area;
     self.fourthLabel.text = object.createTime;
     self.browseLabel.text = object.browseNum;
-    if ([object.uid isEqualToString:UID]) {
+
+}
+
+- (void)setStyle:(SHGBusinessTableViewCellStyle)style
+{
+    _style = style;
+    if (style == SHGBusinessTableViewCellStyleMine) {
         self.deleteButton.hidden = NO;
+    } else{
+        self.deleteButton.hidden = YES;
     }
 }
 
@@ -155,6 +168,26 @@
     }];
 
     return value;
+}
+
+- (IBAction)deleteBusiness:(UIButton *)button
+{
+    __weak typeof(self)weakSelf = self;
+    DXAlertView *alertView = [[DXAlertView alloc] initWithTitle:@"提示" contentText:@"确认删除吗?" leftButtonTitle:@"取消" rightButtonTitle:@"删除"];
+    alertView.rightBlock = ^{
+        [SHGBusinessManager deleteBusiness:weakSelf.object success:^(BOOL success) {
+            if (success) {
+                for (SHGBusinessMineViewController *controller in [SHGBusinessListViewController sharedController].navigationController.viewControllers) {
+                    if ([controller isKindOfClass:[SHGBusinessMineViewController class]]) {
+                        [controller deleteBusinessWithBusinessID:weakSelf.object.businessID];
+                    }
+                }
+                [[SHGBusinessListViewController sharedController] deleteBusinessWithBusinessID:weakSelf.object.businessID];
+            }
+        }];
+    };
+    [alertView show];
+
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated

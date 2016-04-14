@@ -7,7 +7,6 @@
 //
 
 #import "SHGBusinessDetailViewController.h"
-#import "SHGBusinessTableViewCell.h"
 #import "CircleLinkViewController.h"
 #import "SHGBusinessManager.h"
 #import "SDPhotoGroup.h"
@@ -40,6 +39,7 @@
 @property (weak, nonatomic) IBOutlet UIView *firstHorizontalLine;
 @property (weak, nonatomic) IBOutlet UIView *secondHorizontalLine;
 @property (weak, nonatomic) IBOutlet UIView *thirdHorizontalLine;
+@property (weak, nonatomic) IBOutlet MLEmojiLabel *propertyLabel;
 
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UIButton *collectionButton;
@@ -119,6 +119,14 @@
     self.companyLabel.font = FontFactor(13.0f);
     self.positionLabel.font = FontFactor(13.0f);
     self.titleLabel.font = FontFactor(15.0f);
+
+    self.propertyLabel.font = FontFactor(13.0f);
+    self.propertyLabel.numberOfLines = 0;
+    self.propertyLabel.lineBreakMode = NSLineBreakByWordWrapping;
+    self.propertyLabel.textColor = [UIColor colorWithHexString:@"888888"];
+    self.propertyLabel.delegate = self;
+    self.propertyLabel.isAttributedContent = YES;
+
     self.businessDetialLabel.font = FontFactor(15.0f);
     self.detailContentLabel.font = FontFactor(15.0f);
     [self loadCommentBtnState];
@@ -215,10 +223,16 @@
     .topSpaceToView(self.firstHorizontalLine, MarginFactor(12.0f))
     .autoHeightRatio(0.0f);
 
+    self.propertyLabel.sd_layout
+    .leftSpaceToView(self.viewHeader, MarginFactor(12.0f))
+    .rightSpaceToView(self.viewHeader, MarginFactor(12.0f))
+    .topSpaceToView(self.titleLabel, MarginFactor(12.0f))
+    .autoHeightRatio(0.0f);
+
     self.secondHorizontalLine.sd_layout
     .leftSpaceToView(self.viewHeader, 0.0f)
     .rightSpaceToView(self.viewHeader, 0.0f)
-    .topSpaceToView(self.titleLabel, MarginFactor(12.0f))
+    .topSpaceToView(self.propertyLabel, MarginFactor(12.0f))
     .heightIs(0.5f);
 
     self.businessDetialLabel.sd_layout
@@ -279,13 +293,13 @@
     } else{
         self.positionLabel.text = self.responseObject.title;
     }
+
+    NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:[self valuesForKeys:[self.responseObject.middleContent componentsSeparatedByString:@"#"]] attributes:@{NSFontAttributeName:FontFactor(13.0f), NSForegroundColorAttributeName: Color(@"888888")}];
+    NSMutableParagraphStyle * paragraphStyle1 = [[NSMutableParagraphStyle alloc] init];
+    [paragraphStyle1 setLineSpacing:5.0f];
+    [string addAttribute:NSParagraphStyleAttributeName value:paragraphStyle1 range:NSMakeRange(0, [string length])];
+    self.propertyLabel.text = string;
     //****************************//
-    if ([self.responseObject.userState isEqualToString:@"0"]) {
-
-
-    } else if([self.responseObject.userState isEqualToString:@"1"]){
-
-    }
 
     self.businessDetialLabel.text = @"业务描述：";
     NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc]initWithString:self.responseObject.detail];;
@@ -318,7 +332,7 @@
     if ([UID isEqualToString:self.responseObject.createBy]) {
         self.editButton.hidden = NO;
         self.collectionButton.hidden = YES;
-    } else{
+    } else {
         self.editButton.hidden = YES;
         self.collectionButton.hidden = NO;
     }
@@ -326,6 +340,29 @@
     [self.viewHeader layoutSubviews];
     self.detailTable.tableHeaderView = self.viewHeader;
 
+}
+
+- (NSString *)valuesForKeys:(NSArray *)keys
+{
+    __block NSString *key = @"";
+    __block NSString *value = @"";
+    __block NSString *result = @"";
+    NSArray *keyArray = [[[SHGGloble sharedGloble] getBusinessKeysAndValues] allKeys];
+    NSArray *valueArray = [[[SHGGloble sharedGloble] getBusinessKeysAndValues] allValues];
+
+    [keys enumerateObjectsUsingBlock:^(NSString *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        key = [[obj componentsSeparatedByString:@":"] firstObject];
+        value = [[obj componentsSeparatedByString:@":"] lastObject];
+        if ([key isEqualToString:@"联系方式"] && [self.responseObject.userState isEqualToString:@"0"]) {
+            value = @"认证可见";
+        }
+        if ([valueArray containsObject:value]) {
+            value = [keyArray objectAtIndex:[valueArray indexOfObject:value]];
+        }
+        NSString *string = [key stringByAppendingFormat:@"：%@\n", value];
+        result = [result stringByAppendingString:string];
+    }];
+    return  result;
 }
 
 - (IBAction)editButtonClick:(UIButton *)sender

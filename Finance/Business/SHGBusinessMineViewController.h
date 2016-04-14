@@ -9,5 +9,5 @@
 #import "BaseTableViewController.h"
 
 @interface SHGBusinessMineViewController : BaseTableViewController
-
+- (void)deleteBusinessWithBusinessID:(NSString *)businessID;
 @end

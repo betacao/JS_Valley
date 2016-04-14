@@ -18,6 +18,7 @@
                 <outlet property="headImageView" destination="9jW-eX-RZK" id="Y8N-Qt-5J2"/>
                 <outlet property="nameLabel" destination="LMs-Z9-aK0" id="gzr-Pa-DfM"/>
                 <outlet property="positionLabel" destination="6L9-zk-Yza" id="L91-rC-p3M"/>
+                <outlet property="propertyLabel" destination="U1o-NM-TA7" id="puM-Vn-mQy"/>
                 <outlet property="secondHorizontalLine" destination="mpP-C0-I5f" id="ZJi-XV-gW7"/>
                 <outlet property="speakButton" destination="fsP-Ds-d7D" id="pSq-43-0UT"/>
                 <outlet property="thirdHorizontalLine" destination="16p-lI-B28" id="kbe-du-ROg"/>
@@ -113,6 +114,13 @@
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                     <color key="textColor" red="0.2274509804" green="0.2274509804" blue="0.2274509804" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="U1o-NM-TA7" customClass="MLEmojiLabel">
+                    <rect key="frame" x="139" y="290" width="42" height="21"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" red="0.53333333333333333" green="0.53333333333333333" blue="0.53333333333333333" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <view contentMode="scaleToFill" id="BEb-0C-VH5">
