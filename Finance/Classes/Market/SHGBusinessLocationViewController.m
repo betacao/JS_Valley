@@ -1,15 +1,16 @@
 //
-//  SHGLoactionViewController.m
+//  SHGBusinessLocationViewController.m
 //  Finance
 //
 //  Created by weiqiankun on 16/3/30.
 //  Copyright © 2016年 HuMin. All rights reserved.
 //
 
-#import "SHGBusinessLoactionViewController.h"
+#import "SHGBusinessLocationViewController.h"
 #import "SHGBusinessMargin.h"
+#import "SHGBusinessListViewController.h"
 
-@interface SHGBusinessLoactionViewController ()
+@interface SHGBusinessLocationViewController ()
 //topView
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UIButton *sureButton;
@@ -65,13 +66,13 @@
 @property (strong, nonatomic) NSMutableArray *allCity;
 @property (strong, nonatomic) UIButton *locationCurrentButton;
 
-@property (assign, nonatomic)  BOOL statu;
+@property (assign, nonatomic)  BOOL status;
 @end
 
-@implementation SHGBusinessLoactionViewController
+@implementation SHGBusinessLocationViewController
 + (instancetype)sharedController
 {
-    static SHGBusinessLoactionViewController *sharedGlobleInstance = nil;
+    static SHGBusinessLocationViewController *sharedGlobleInstance = nil;
     static dispatch_once_t predicate;
     dispatch_once(&predicate, ^{
         sharedGlobleInstance = [[self alloc] init];
@@ -434,7 +435,8 @@
 
 - (IBAction)sureButtonClick:(UIButton *)sender
 {
-    
+    [SHGBusinessListViewController sharedController].cityName = @"江苏";
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)didReceiveMemoryWarning

@@ -700,8 +700,8 @@
 		9855F02A1CACFD72006F760F /* SHGBondInvestSendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9855F0281CACFD72006F760F /* SHGBondInvestSendViewController.m */; };
 		9855F02B1CACFD72006F760F /* SHGBondInvestSendViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9855F0291CACFD72006F760F /* SHGBondInvestSendViewController.xib */; };
 		985A0FD71CABA49400880DB5 /* MarketArea.plist in Resources */ = {isa = PBXBuildFile; fileRef = 985A0FD61CABA49400880DB5 /* MarketArea.plist */; };
-		985A0FDB1CABAB1400880DB5 /* SHGBusinessLoactionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 985A0FD91CABAB1400880DB5 /* SHGBusinessLoactionViewController.m */; };
-		985A0FDC1CABAB1400880DB5 /* SHGBusinessLoactionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 985A0FDA1CABAB1400880DB5 /* SHGBusinessLoactionViewController.xib */; };
+		985A0FDB1CABAB1400880DB5 /* SHGBusinessLocationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 985A0FD91CABAB1400880DB5 /* SHGBusinessLocationViewController.m */; };
+		985A0FDC1CABAB1400880DB5 /* SHGBusinessLocationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 985A0FDA1CABAB1400880DB5 /* SHGBusinessLocationViewController.xib */; };
 		985CBDBA1C03FD0B002B3D9D /* SHGCardTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 985CBDB81C03FD0B002B3D9D /* SHGCardTableViewCell.m */; };
 		985CBDBB1C03FD0B002B3D9D /* SHGCardTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 985CBDB91C03FD0B002B3D9D /* SHGCardTableViewCell.xib */; };
 		985CBDC31C04042C002B3D9D /* SHGCollectCardClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 985CBDC21C04042C002B3D9D /* SHGCollectCardClass.m */; };
@@ -896,6 +896,7 @@
 		F9A227C61BF5C2140054F8D7 /* SHGActionMineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9A227C41BF5C2140054F8D7 /* SHGActionMineViewController.m */; };
 		F9A227C71BF5C2140054F8D7 /* SHGActionMineViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9A227C51BF5C2140054F8D7 /* SHGActionMineViewController.xib */; };
 		F9A227CA1BF5C7E10054F8D7 /* SHGActionSegmentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9A227C91BF5C7E10054F8D7 /* SHGActionSegmentViewController.m */; };
+		F9A6C68C1CBE5FAB00AFEE49 /* SHGBusinessNoticeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F9A6C68B1CBE5FAB00AFEE49 /* SHGBusinessNoticeTableViewCell.m */; };
 		F9A8D27E1BE712B700A2BFB1 /* QQConnection.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9A8D2541BE712B700A2BFB1 /* QQConnection.framework */; };
 		F9A8D27F1BE712B700A2BFB1 /* QZoneConnection.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9A8D2551BE712B700A2BFB1 /* QZoneConnection.framework */; };
 		F9A8D2801BE712B700A2BFB1 /* SinaWeiboConnection.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9A8D2561BE712B700A2BFB1 /* SinaWeiboConnection.framework */; };
@@ -1947,9 +1948,9 @@
 		9855F0281CACFD72006F760F /* SHGBondInvestSendViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGBondInvestSendViewController.m; sourceTree = "<group>"; };
 		9855F0291CACFD72006F760F /* SHGBondInvestSendViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGBondInvestSendViewController.xib; sourceTree = "<group>"; };
 		985A0FD61CABA49400880DB5 /* MarketArea.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = MarketArea.plist; path = ../Classes/Market/MarketArea.plist; sourceTree = "<group>"; };
-		985A0FD81CABAB1400880DB5 /* SHGBusinessLoactionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SHGBusinessLoactionViewController.h; path = ../Classes/Market/SHGBusinessLoactionViewController.h; sourceTree = "<group>"; };
-		985A0FD91CABAB1400880DB5 /* SHGBusinessLoactionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SHGBusinessLoactionViewController.m; path = ../Classes/Market/SHGBusinessLoactionViewController.m; sourceTree = "<group>"; };
-		985A0FDA1CABAB1400880DB5 /* SHGBusinessLoactionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SHGBusinessLoactionViewController.xib; path = ../Classes/Market/SHGBusinessLoactionViewController.xib; sourceTree = "<group>"; };
+		985A0FD81CABAB1400880DB5 /* SHGBusinessLocationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SHGBusinessLocationViewController.h; path = ../Classes/Market/SHGBusinessLocationViewController.h; sourceTree = "<group>"; };
+		985A0FD91CABAB1400880DB5 /* SHGBusinessLocationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SHGBusinessLocationViewController.m; path = ../Classes/Market/SHGBusinessLocationViewController.m; sourceTree = "<group>"; };
+		985A0FDA1CABAB1400880DB5 /* SHGBusinessLocationViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SHGBusinessLocationViewController.xib; path = ../Classes/Market/SHGBusinessLocationViewController.xib; sourceTree = "<group>"; };
 		985CBDB71C03FD0B002B3D9D /* SHGCardTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGCardTableViewCell.h; sourceTree = "<group>"; };
 		985CBDB81C03FD0B002B3D9D /* SHGCardTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGCardTableViewCell.m; sourceTree = "<group>"; };
 		985CBDB91C03FD0B002B3D9D /* SHGCardTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGCardTableViewCell.xib; sourceTree = "<group>"; };
@@ -2220,6 +2221,8 @@
 		F9A227C51BF5C2140054F8D7 /* SHGActionMineViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGActionMineViewController.xib; sourceTree = "<group>"; };
 		F9A227C81BF5C7E10054F8D7 /* SHGActionSegmentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGActionSegmentViewController.h; sourceTree = "<group>"; };
 		F9A227C91BF5C7E10054F8D7 /* SHGActionSegmentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGActionSegmentViewController.m; sourceTree = "<group>"; };
+		F9A6C68A1CBE5FAB00AFEE49 /* SHGBusinessNoticeTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGBusinessNoticeTableViewCell.h; sourceTree = "<group>"; };
+		F9A6C68B1CBE5FAB00AFEE49 /* SHGBusinessNoticeTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGBusinessNoticeTableViewCell.m; sourceTree = "<group>"; };
 		F9A8D2541BE712B700A2BFB1 /* QQConnection.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = QQConnection.framework; sourceTree = "<group>"; };
 		F9A8D2551BE712B700A2BFB1 /* QZoneConnection.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = QZoneConnection.framework; sourceTree = "<group>"; };
 		F9A8D2561BE712B700A2BFB1 /* SinaWeiboConnection.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SinaWeiboConnection.framework; sourceTree = "<group>"; };
@@ -4739,6 +4742,8 @@
 				F924C2C01CACCBE50070286F /* SHGBusinessTableViewCell.h */,
 				F924C2C11CACCBE50070286F /* SHGBusinessTableViewCell.m */,
 				F924C2C21CACCBE50070286F /* SHGBusinessTableViewCell.xib */,
+				F9A6C68A1CBE5FAB00AFEE49 /* SHGBusinessNoticeTableViewCell.h */,
+				F9A6C68B1CBE5FAB00AFEE49 /* SHGBusinessNoticeTableViewCell.m */,
 				F924C2B11CACC1400070286F /* SHGBusinessListViewController.h */,
 				F924C2B21CACC1400070286F /* SHGBusinessListViewController.m */,
 				F924C2B31CACC1400070286F /* SHGBusinessListViewController.xib */,
@@ -4748,9 +4753,9 @@
 				F924C2BB1CACC1860070286F /* SHGBusinessDetailViewController.h */,
 				F924C2BC1CACC1860070286F /* SHGBusinessDetailViewController.m */,
 				F924C2BD1CACC1860070286F /* SHGBusinessDetailViewController.xib */,
-				985A0FD81CABAB1400880DB5 /* SHGBusinessLoactionViewController.h */,
-				985A0FD91CABAB1400880DB5 /* SHGBusinessLoactionViewController.m */,
-				985A0FDA1CABAB1400880DB5 /* SHGBusinessLoactionViewController.xib */,
+				985A0FD81CABAB1400880DB5 /* SHGBusinessLocationViewController.h */,
+				985A0FD91CABAB1400880DB5 /* SHGBusinessLocationViewController.m */,
+				985A0FDA1CABAB1400880DB5 /* SHGBusinessLocationViewController.xib */,
 			);
 			name = Business;
 			path = Finance/Business;
@@ -5746,7 +5751,7 @@
 				614EFF0A1AF114D800F2BDD1 /* mine.png in Resources */,
 				408D8AFB1AF8618C0055810C /* VoiceSearchFeedback004.png in Resources */,
 				61E83D391AF7C78E00703651 /* 圈内好友图标@3x.png in Resources */,
-				985A0FDC1CABAB1400880DB5 /* SHGBusinessLoactionViewController.xib in Resources */,
+				985A0FDC1CABAB1400880DB5 /* SHGBusinessLocationViewController.xib in Resources */,
 				B080FE9A1B81E30100426579 /* emoji_close_s@2x.png in Resources */,
 				614EFEBF1AEF1FD200F2BDD1 /* mycrowd@2x.png in Resources */,
 				B04D6E2E1B60C01300E3863E /* 我的m@2x.png in Resources */,
@@ -5920,7 +5925,7 @@
 				614BA7F11AE77AFA009480CD /* ProdListObj.m in Sources */,
 				6187D2D51AF1C693008E1D21 /* ChatSendHelper.m in Sources */,
 				614EFEC41AEF278A00F2BDD1 /* SubDetailViewController.m in Sources */,
-				985A0FDB1CABAB1400880DB5 /* SHGBusinessLoactionViewController.m in Sources */,
+				985A0FDB1CABAB1400880DB5 /* SHGBusinessLocationViewController.m in Sources */,
 				538964D31AFC6BEB00041548 /* NSDateFormatter+Category.m in Sources */,
 				F9A227BC1BF5ABC60054F8D7 /* SHGActionTableViewCell.m in Sources */,
 				40302B401AF0C31F00F22EB6 /* MyAppointmentViewController.m in Sources */,
@@ -6038,6 +6043,7 @@
 				5331DF351AFC224D00E035B8 /* MessageObj.m in Sources */,
 				6187D2E01AF1C693008E1D21 /* EMChatBaseBubbleView.m in Sources */,
 				56F2D50A1B5A45E6008E2855 /* UncaughtExceptionHandler.m in Sources */,
+				F9A6C68C1CBE5FAB00AFEE49 /* SHGBusinessNoticeTableViewCell.m in Sources */,
 				6187D2DF1AF1C693008E1D21 /* EMChatAudioBubbleView.m in Sources */,
 				6145FF111AE49D4A0074AB49 /* BRCommentView.m in Sources */,
 				5331DF2C1AFC20A600E035B8 /* MessageViewController.m in Sources */,

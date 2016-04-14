@@ -16,6 +16,8 @@
 #import "SHGNoticeView.h"
 #import "SHGEmptyDataView.h"
 #import "SHGBusinessTableViewCell.h"
+#import "SHGBusinessNoticeTableViewCell.h"
+#import "SHGBusinessLocationViewController.h"
 
 @interface SHGBusinessListViewController ()<UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, SHGBusinessScrollViewDelegate>
 //
@@ -235,6 +237,39 @@
     return [self.titleDictionary objectForKey:[[SHGBusinessScrollView sharedBusinessScrollView] currentName]];
 }
 
+- (SHGBusinessNoticeObject *)otherObject
+{
+    SHGBusinessNoticeObject *otherObject = [[SHGBusinessNoticeObject alloc] init];
+    otherObject.businessID = [NSString stringWithFormat:@"%ld",NSIntegerMax];
+    NSString *position = [self.positionDictionary objectForKey:[self.scrollView currentName]];
+    if ([position isEqualToString:@"0"]) {
+        otherObject.noticeType = SHGMarketBusinessTypePositionTop;
+    } else if ([position integerValue] > 0){
+        otherObject.noticeType = SHGMarketBusinessTypePositionAny;
+    }
+    return otherObject;
+}
+
+- (void)setIndex:(NSString *)index
+{
+    [self.positionDictionary setObject:index forKey:[self.scrollView currentName]];
+    SHGBusinessNoticeObject *object = nil;
+    for (NSInteger i = 0; i < self.currentArray.count; i++) {
+        id obj = [self.currentArray objectAtIndex:i];
+        if ([obj isKindOfClass:[SHGBusinessNoticeObject class]]) {
+            object = (SHGBusinessNoticeObject *)obj;
+            break;
+        }
+    }
+    if (object) {
+        [self.currentArray removeObject:object];
+    }
+    if ([index integerValue] >= 0){
+        [self.currentArray insertUniqueObject:[self otherObject] atIndex:[index integerValue]];
+    }
+}
+
+
 - (void)setCityName:(NSString *)cityName
 {
     if (cityName.length == 0) {
@@ -301,11 +336,7 @@
 
 - (void)loadDataWithTarget:(NSString *)target
 {
-    
     __weak typeof(self) weakSelf = self;
-    if ([target isEqualToString:@"first"]) {
-        [self.tableView setContentOffset:CGPointZero animated:YES];
-    }
     if (self.refreshing) {
         return;
     }
@@ -326,6 +357,7 @@
                 [weakSelf.currentArray addObjectsFromArray:dataArray];
                 //第一次给服务器的值
                 weakSelf.index = index;
+                [weakSelf.tableView setContentOffset:CGPointZero];
                 [weakSelf.noticeView showWithText:[NSString stringWithFormat:@"为您加载了%ld条新业务",(long)dataArray.count]];
             } else if([target isEqualToString:@"refresh"]){
                 for (NSInteger i = dataArray.count - 1; i >= 0; i--){
@@ -411,7 +443,8 @@
 
 - (void)moveToProvincesViewController:(UIButton *)button
 {
-
+    SHGBusinessLocationViewController *controller = [[SHGBusinessLocationViewController alloc] init];
+    [self.navigationController pushViewController:controller animated:YES];
 }
 
 - (void)clearAndReloadData
@@ -434,17 +467,40 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (self.currentArray.count == 0) {
+        self.emptyView.type = SHGEmptyDateTypeNormal;
         return self.emptyCell;
-    } else {
-        SHGBusinessTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SHGBusinessTableViewCell"];
+    }
+    SHGBusinessObject *object = [self.currentArray objectAtIndex:indexPath.row];
+    if ([object isKindOfClass:[SHGBusinessNoticeObject class]]) {
+        SHGBusinessNoticeObject *obj = (SHGBusinessNoticeObject *)object;
+        if (obj.noticeType == SHGMarketBusinessTypePositionAny) {
+
+            SHGBusinessLabelTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SHGMarketLabelTableViewCell"];
+            if (!cell) {
+                cell = [[SHGBusinessLabelTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"SHGMarketLabelTableViewCell"];
+            }
+            cell.text = @"本地区该业务较少，现为您推荐其他地区同业务信息";
+            return cell;
+        } else{
+
+            SHGBusinessImageTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SHGBusinessImageTableViewCell"];
+            if (!cell) {
+                cell = [[SHGBusinessImageTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"SHGBusinessImageTableViewCell"];
+            }
+            cell.tipUrl = self.tipUrl;
+            return cell;
+        }
+
+    } else{
+        NSString *identifier = @"SHGMarketTableViewCell";
+        SHGBusinessTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
         if (!cell) {
             cell = [[[NSBundle mainBundle] loadNibNamed:@"SHGBusinessTableViewCell" owner:self options:nil] lastObject];
         }
-        [cell useCellFrameCacheWithIndexPath:indexPath tableView:tableView];
         cell.object = [self.currentArray objectAtIndex:indexPath.row];
+        [cell useCellFrameCacheWithIndexPath:indexPath tableView:tableView];
         return cell;
     }
-    return nil;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -458,12 +514,42 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (self.currentArray.count == 0) {
-        return CGRectGetHeight(self.view.frame);
-    } else {
+    if (self.currentArray.count > 0) {
         SHGBusinessObject *object = [self.currentArray objectAtIndex:indexPath.row];
-        CGFloat height = [tableView cellHeightForIndexPath:indexPath model:object keyPath:@"object" cellClass:[SHGBusinessTableViewCell class] contentViewWidth:SCREENWIDTH];
-        return height;
+        if ([object isKindOfClass:[SHGBusinessNoticeObject class]]) {
+            SHGBusinessNoticeObject *obj = (SHGBusinessNoticeObject *)object;
+            if (obj.noticeType == SHGMarketBusinessTypePositionTop) {
+                return kImageTableViewCellHeight;
+            } else{
+                CGFloat height = [self.tableView cellHeightForIndexPath:indexPath model:@"本地区该业务较少，现为您推荐其他地区同业务信息" keyPath:@"text" cellClass:[SHGBusinessLabelTableViewCell class] contentViewWidth:SCREENWIDTH];
+                return height;
+            }
+        } else{
+            CGFloat height = [self.tableView cellHeightForIndexPath:indexPath model:object keyPath:@"object" cellClass:[SHGBusinessTableViewCell class] contentViewWidth:SCREENWIDTH];
+            return height;
+        }
+    } else{
+        return CGRectGetHeight(self.view.frame);
+    }
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (self.currentArray.count > 0) {
+
+        SHGBusinessObject *object = [self.currentArray objectAtIndex:indexPath.row];
+        if ([object isKindOfClass:[SHGBusinessNoticeObject class]]) {
+            //点击图片才去跳转
+            if (((SHGBusinessNoticeObject *)object).noticeType == SHGMarketBusinessTypePositionTop) {
+                SHGBusinessLocationViewController *controller = [[SHGBusinessLocationViewController alloc] init];
+                [self.navigationController pushViewController:controller animated:YES];
+            }
+        } else{
+//            [[SHGGloble sharedGloble] recordUserAction:object.businessID type:@"market"];
+//            SHGMarketDetailViewController *controller = [[SHGMarketDetailViewController alloc]init];
+//            controller.object = object;
+//            [self.navigationController pushViewController:controller animated:YES];
+        }
     }
 }
 

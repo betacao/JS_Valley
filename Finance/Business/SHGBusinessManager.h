@@ -17,4 +17,11 @@
 - (void)getSecondListBlock:(void (^)(NSArray *array, NSString *cityName))block;
 
 + (void)createNewBusiness:(NSDictionary *)param success:(void (^)(BOOL success))block;
+
++ (void)deleteBusiness:(NSString *)businessId success:(void (^)(BOOL success))block;
+
++ (void)collectBusiness:(NSString *)businessId success:(void (^)(BOOL success))block;
+
++ (void)unCollectBusiness:(NSString *)businessId success:(void (^)(BOOL success))block;
+
 @end

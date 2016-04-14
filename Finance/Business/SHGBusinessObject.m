@@ -50,3 +50,9 @@
 }
 
 @end
+
+@implementation SHGBusinessNoticeObject
+
+
+
+@end

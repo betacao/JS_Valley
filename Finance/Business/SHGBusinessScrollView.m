@@ -92,13 +92,13 @@
 - (NSString *)currentType
 {
     NSString *type = @"";
-    if ([self currentIndex] == 0) {
+    if ([self currentIndex] == 1) {
         type = @"bondfinancing";
-    } else if ([self currentIndex] == 1) {
-        type = @"equityfinancing";
     } else if ([self currentIndex] == 2) {
-        type = @"moneyside";
+        type = @"equityfinancing";
     } else if ([self currentIndex] == 3) {
+        type = @"moneyside";
+    } else if ([self currentIndex] == 4) {
         type = @"trademixed";
     }
     return type;

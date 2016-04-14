@@ -95,7 +95,9 @@
     if (self.secondListArray.count > 0) {
         NSInteger index = [[SHGBusinessScrollView sharedBusinessScrollView] currentIndex] == 0 ? 1 : [[SHGBusinessScrollView sharedBusinessScrollView] currentIndex];
         NSArray *array = [NSArray arrayWithArray:[self.secondListArray objectAtIndex:index - 1]];
-        block(array, self.cityName);
+        if (block) {
+            block(array, self.cityName);
+        }
     } else {
         [Hud showWait];
         [MOCHTTPRequestOperationManager postWithURL:[rBaseAddressForHttp stringByAppendingString:@"/business/getBusinessCondition"] parameters:nil success:^(MOCHTTPResponse *response) {
@@ -125,6 +127,33 @@
             [Hud showMessageWithText:@"获取分类错误"];
         }];
     }
+}
+
++ (void)deleteBusiness:(NSString *)businessId success:(void (^)(BOOL))block
+{
+    [MOCHTTPRequestOperationManager postWithURL:[rBaseAddressForHttp stringByAppendingString:@"/business/deleteBusiness"] parameters:@{@"businessId": businessId} success:^(MOCHTTPResponse *response) {
+
+    } failed:^(MOCHTTPResponse *response) {
+
+    }];
+}
+
++ (void)collectBusiness:(NSString *)businessId success:(void (^)(BOOL))block
+{
+    [MOCHTTPRequestOperationManager postWithURL:[rBaseAddressForHttp stringByAppendingString:@"/business/saveBusinessCollect"] parameters:@{@"uid":UID, @"businessId": businessId} success:^(MOCHTTPResponse *response) {
+
+    } failed:^(MOCHTTPResponse *response) {
+        
+    }];
+}
+
++ (void)unCollectBusiness:(NSString *)businessId success:(void (^)(BOOL))block
+{
+    [MOCHTTPRequestOperationManager postWithURL:[rBaseAddressForHttp stringByAppendingString:@"/business/deleteBusinessCollect"] parameters:@{@"uid":UID, @"businessId": businessId} success:^(MOCHTTPResponse *response) {
+
+    } failed:^(MOCHTTPResponse *response) {
+        
+    }];
 }
 
 @end

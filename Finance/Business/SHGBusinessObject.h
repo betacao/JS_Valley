@@ -65,3 +65,16 @@
 @property (strong, nonatomic) NSString *value;
 @end
 
+typedef NS_ENUM(NSInteger, SHGBusinessNoticeType)
+{
+    SHGMarketBusinessTypePositionTop = 0,
+    SHGMarketBusinessTypePositionAny
+};
+
+
+@interface SHGBusinessNoticeObject : SHGBusinessObject
+
+@property (strong, nonatomic) NSString *tipUrl;
+@property (assign, nonatomic) SHGBusinessNoticeType noticeType;
+
+@end

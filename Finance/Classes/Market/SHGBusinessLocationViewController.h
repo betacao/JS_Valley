@@ -1,5 +1,5 @@
 //
-//  SHGLoactionViewController.h
+//  SHGBusinessLocationViewController.h
 //  Finance
 //
 //  Created by weiqiankun on 16/3/30.
@@ -8,7 +8,7 @@
 
 #import "BaseViewController.h"
 
-@interface SHGBusinessLoactionViewController : BaseViewController
+@interface SHGBusinessLocationViewController : BaseViewController
 + (instancetype)sharedController;
 
 @end
