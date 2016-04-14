@@ -50,9 +50,9 @@
 
 @property (assign, nonatomic) BOOL hasImage;
 @property (strong, nonatomic) NSString *imageName;
-@property (strong, nonatomic) NSDictionary *businessSelectDic;
-@property (strong, nonatomic) NSMutableArray *investTimeButtonSelectArray;
-@property (strong, nonatomic) NSMutableArray *addRequireButtonSelectArray;
+
+@property (strong, nonatomic) SHGBusinessObject *obj;
+@property (strong, nonatomic) NSArray *clarifyingWaybuttonArray;
 @end
 
 @implementation SHGBondInvestNextViewController
@@ -60,7 +60,15 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.title = @"发布债权投资";
+    if (((SHGBondInvestSendViewController *)self.superController).object) {
+        self.title = @"修改债权投资";
+        ((SHGBondInvestSendViewController *)self.superController).sendType = 1;
+        self.obj = ((SHGBondInvestSendViewController *)self.superController).object;
+        NSLog(@"%@",self.obj);
+    } else{
+        self.title = @"发布债权投资";
+        ((SHGBondInvestSendViewController *)self.superController).sendType = 0;
+    }
     self.hasImage = NO;
     self.scrollView.delegate = self;
     self.retributionTextField.delegate = self;
@@ -68,7 +76,7 @@
     self.addRequireButtonView.showMode = 2;
     self.investTimeButtonView.showMode = 2;
     self.buttonBgImage = [UIImage imageNamed:@"business_SendButtonBg"];
-    self.businessSelectDic = [[NSDictionary alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"BusinessSelectString" ofType:@"plist"]];
+
     self.buttonBgImage = [self.buttonBgImage resizableImageWithCapInsets:UIEdgeInsetsMake(10.0f, 10.0f, 10.0f, 10.0f) resizingMode:UIImageResizingModeStretch];
     
     self.buttonSelectBgImage = [UIImage imageNamed:@"business_SendButtonSelectBg"];
@@ -94,10 +102,6 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-//- (void)makeFirstDictionary:(NSDictionary *)firstDic
-//{
-//    self.businessDic = firstDic;
-//}
 
 - (void)addSdLayout
 {
@@ -243,6 +247,47 @@
 
 - (void)initView
 {
+    NSString *clarifyingWay = @"";//增信方式
+    NSString *vestYears = @"";
+    NSArray *clarifyingWayArray = [NSArray array];
+    NSArray *vestYearsWayArray = [NSArray array];
+
+    if (((SHGBondInvestSendViewController *)self.superController).sendType == 1) {
+        self.marketExplainTextView.text = self.obj.detail;
+        if ([self.obj.anonymous isEqualToString:@"1"]) {
+            self.authorizeButton.selected = YES;
+        } else{
+            self.authorizeButton.selected = NO;
+        }
+        
+        if (self.obj.photo && self.obj.photo.length > 0) {
+            self.hasImage = YES;
+            __weak typeof(self) weakSelf = self;
+            [[SDWebImageManager sharedManager] downloadImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,self.obj.photo]] options:SDWebImageRetryFailed|SDWebImageLowPriority progress:^(NSInteger receivedSize, NSInteger expectedSize) {
+                
+            } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
+                [weakSelf.addImageButton setImage:image forState:UIControlStateNormal];
+            }];
+        }
+        
+        clarifyingWay = self.obj.clarifyingWay;
+        if (clarifyingWay.length == 0) {
+            clarifyingWay = @"不限";
+        } else{
+            clarifyingWayArray = [clarifyingWay componentsSeparatedByString:@";"];
+            
+        }
+
+        
+        vestYears = self.obj.vestYears;
+        if (vestYears.length == 0) {
+             vestYears = @"不限";
+        } else{
+           vestYearsWayArray = [vestYears componentsSeparatedByString:@";"];
+        }
+        
+        
+    }
     self.sureButton.titleLabel.font = FontFactor(19.0f);
     [self.sureButton setTitleColor:Color(@"ffffff") forState:UIControlStateNormal];
     [self.sureButton setBackgroundColor:Color(@"f04241")];
@@ -283,6 +328,21 @@
         [button setTitleColor:Color(@"ff8d65") forState:UIControlStateSelected];
         [button setBackgroundImage:self.buttonSelectBgImage forState:UIControlStateSelected];
         button.frame = CGRectMake(kLeftToView + i * (kFourButtonWidth + kButtonLeftMargin), 0.0f, kFourButtonWidth, kCategoryButtonHeight);
+        if (((SHGBondInvestSendViewController *)self.superController).sendType == 1) {
+            if ([vestYears isEqualToString:@"不限"]) {
+                if ([button.titleLabel.text isEqualToString:vestYears]) {
+                    button.selected = YES;
+                }
+                
+            } else{
+                for (NSInteger i = 0; i < vestYearsWayArray.count; i ++) {
+                    if ([button.titleLabel.text isEqualToString:[vestYearsWayArray objectAtIndex:i]]) {
+                        button.selected = YES;
+                    }
+                }
+            }
+            
+        }
         [button addTarget:self action:@selector(investTimeButtonClick:) forControlEvents:UIControlEventTouchUpInside];
         [self.investTimeButtonView addSubview:button];
     }
@@ -298,6 +358,21 @@
         [button setTitleColor:Color(@"ff8d65") forState:UIControlStateSelected];
         [button setBackgroundImage:self.buttonSelectBgImage forState:UIControlStateSelected];
         button.frame = CGRectMake(kLeftToView + j%3 * (kThreeButtonWidth + kButtonLeftMargin), j/3 * (kButtonHeight + kButtonTopMargin), kThreeButtonWidth, kCategoryButtonHeight);
+        if (((SHGBondInvestSendViewController *)self.superController).sendType == 1) {
+            if ([clarifyingWay isEqualToString:@"不限"]) {
+                if ([button.titleLabel.text isEqualToString:clarifyingWay]) {
+                     button.selected = YES;
+                }
+               
+            } else{
+                for (NSInteger i = 0; i < clarifyingWayArray.count; i ++) {
+                    if ([button.titleLabel.text isEqualToString:[clarifyingWayArray objectAtIndex:i]]) {
+                        button.selected = YES;
+                    }
+                }
+            }
+            
+        }
         [button addTarget:self action:@selector(addRequireButtonClick:) forControlEvents:UIControlEventTouchUpInside];
         [self.addRequireButtonView addSubview:button];
     }
@@ -319,14 +394,13 @@
 {
     SHGBusinessButtonContentView *superView = (SHGBusinessButtonContentView *)btn.superview;
     [superView didClickButton:btn];
-    self.investTimeButtonSelectArray = superView.selectedArray;
+
 }
 
 - (void)addRequireButtonClick:(UIButton *)btn
 {
     SHGBusinessButtonContentView *superView = (SHGBusinessButtonContentView *)btn.superview;
     [superView didClickButton:btn];
-    self.addRequireButtonSelectArray = superView.selectedArray;
 }
 
 - (IBAction)addNewImage:(id)sender
@@ -349,52 +423,117 @@
 {
     if ([self checkInputMessage]) {
         __weak typeof(self) weakSelf = self;
+        NSDictionary *businessSelectDic = [[SHGGloble sharedGloble]getBusinessKeysAndValues];
+        NSDictionary *businessDic = ((SHGBondInvestSendViewController *)weakSelf.superController).firstDic;
         [self uploadImage:^(BOOL success) {
             if (success) {
-                //增信选择字段
-                NSString *clarifyingRequire = nil;
-                if ([[weakSelf.addRequireButtonSelectArray objectAtIndex:0] isEqualToString:@"不限"]) {
-                    clarifyingRequire = @"";
-                } else{
-                    clarifyingRequire = [weakSelf.businessSelectDic objectForKey:clarifyingRequire];
-                }
-                for (NSInteger i = 1 ;i < weakSelf.addRequireButtonSelectArray.count ; i ++) {
-                    clarifyingRequire = [NSString stringWithFormat:@"%@;%@",clarifyingRequire,[weakSelf.businessSelectDic objectForKey:[weakSelf.addRequireButtonSelectArray objectAtIndex:i]]];
-                }
-                //投资期限选择字段
-                NSString *vestYears = nil;
-                if ([[weakSelf.investTimeButtonSelectArray objectAtIndex:0] isEqualToString:@"不限"]) {
-                    vestYears = @"";
-                } else{
-                    vestYears = [weakSelf.businessSelectDic objectForKey:vestYears];
-                }
-                for (NSInteger i = 1 ;i < weakSelf.investTimeButtonSelectArray.count ; i ++) {
-                    vestYears = [NSString stringWithFormat:@"%@;%@",vestYears,[weakSelf.businessSelectDic objectForKey:[weakSelf.investTimeButtonSelectArray objectAtIndex:i]]];
-                }
-                
-                NSDictionary *businessDic = ((SHGBondInvestSendViewController *)weakSelf.superController).firstDic;
-                NSString *anonymous = weakSelf.authorizeButton.isSelected ? @"1" : @"0";
-                SHGBusinessObject *object = [[SHGBusinessObject alloc]init];
-                NSString *type = [businessDic objectForKey:@"type"];
-                NSString *contact = [businessDic objectForKey:@"contact"];
-                NSString *investAmount = [businessDic objectForKey:@"investAmount"];
-                NSString *businessType = [businessDic objectForKey:@"businessType"];
-                NSString *fundSource = [businessDic objectForKey:@"fundSource"];
-                NSString *area = [businessDic objectForKey:@"area"];
-                NSString *industry = [businessDic objectForKey:@"industry"];
-                NSString *title = [businessDic objectForKey:@"title"];
-                
-                NSDictionary *param = @{@"uid":UID, @"type": type, @"contact":contact, @"businessType":businessType,@"fundSource":fundSource, @"investAmount": investAmount, @"area": area, @"industry": industry, @"clarifyingRequire":clarifyingRequire,@"lowestPaybackRate":self.retributionTextField.text, @"vestYears": vestYears,@"detail": weakSelf.marketExplainTextView.text,@"photo": weakSelf.imageName,@"anonymous": anonymous,@"title": title};
-                [SHGBusinessManager createNewBusiness:param success:^(BOOL success) {
-                    if (success) {
-                        if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(didCreateNewBusiness:)]) {
-                            [weakSelf.delegate didCreateNewBusiness:object];
+                switch (((SHGBondInvestSendViewController *)weakSelf.superController).sendType) {
+                        
+                    case 0:{
+                        //增信选择字段
+                        NSString *clarifyingRequire = @"";
+                        if ([[weakSelf.addRequireButtonView.selectedArray objectAtIndex:0] isEqualToString:@"不限"]) {
+                            clarifyingRequire = @"";
+                        } else{
+                            for (NSInteger i = 1 ;i < weakSelf.addRequireButtonView.selectedArray .count ; i ++) {
+                                clarifyingRequire = [NSString stringWithFormat:@"%@;%@",[businessSelectDic objectForKey:[weakSelf.addRequireButtonView.selectedArray  objectAtIndex:0] ],[businessSelectDic objectForKey:[weakSelf.addRequireButtonView.selectedArray  objectAtIndex:i]]];
+                            }
+                            
                         }
-                        [weakSelf.navigationController performSelector:@selector(popToRootViewControllerAnimated:) withObject:@(YES) afterDelay:1.2f];
+                            //投资期限选择字段
+                        NSString *vestYears = @"";
+                        if ([[weakSelf.investTimeButtonView.selectedArray objectAtIndex:0] isEqualToString:@"不限"]) {
+                            vestYears = @"";
+                        } else{
+                           // vestYears = [businessSelectDic objectForKey:vestYears];
+                            for (NSInteger i = 1 ;i < weakSelf.investTimeButtonView.selectedArray.count ; i ++) {
+                                vestYears = [NSString stringWithFormat:@"%@;%@",[businessSelectDic objectForKey:[weakSelf.investTimeButtonView.selectedArray objectAtIndex:0]],[businessSelectDic objectForKey:[weakSelf.investTimeButtonView.selectedArray objectAtIndex:i]]];
+                            }
+
+                        }
+                        
+                        NSString *anonymous = weakSelf.authorizeButton.isSelected ? @"1" : @"0";
+                        SHGBusinessObject *object = [[SHGBusinessObject alloc]init];
+                        NSString *type = [businessDic objectForKey:@"type"];
+                        NSString *contact = [businessDic objectForKey:@"contact"];
+                        NSString *investAmount = [businessDic objectForKey:@"investAmount"];
+                        NSString *businessType = [businessDic objectForKey:@"businessType"];
+                        NSString *fundSource = [businessDic objectForKey:@"fundSource"];
+                        NSString *area = [businessDic objectForKey:@"area"];
+                        NSString *industry = [businessDic objectForKey:@"industry"];
+                        NSString *title = [businessDic objectForKey:@"title"];
+                        NSString *moneysideType = @"bondInvest";
+                        NSLog(@"%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@",type,contact,businessType,fundSource,investAmount,area,industry,clarifyingRequire,weakSelf.retributionTextField.text,vestYears,weakSelf.marketExplainTextView.text,weakSelf.imageName,anonymous,title);
+
+                        NSDictionary *param = @{@"uid":UID, @"type": type, @"moneysideType":moneysideType ,@"contact":contact, @"businessType":businessType,@"fundSource":fundSource, @"investAmount": investAmount, @"area": area, @"industry": industry, @"clarifyingRequire":clarifyingRequire,@"lowestPaybackRate":weakSelf.retributionTextField.text, @"vestYears": vestYears,@"detail": weakSelf.marketExplainTextView.text,@"photo": weakSelf.imageName,@"anonymous": anonymous,@"title": title};
+                        [SHGBusinessManager createNewBusiness:param success:^(BOOL success) {
+                            if (success) {
+                                if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(didCreateNewBusiness:)]) {
+                                    [weakSelf.delegate didCreateNewBusiness:object];
+                                }
+                                [weakSelf.navigationController performSelector:@selector(popToRootViewControllerAnimated:) withObject:@(YES) afterDelay:1.2f];
+                            }
+                        }];
+                        
                     }
-                }];
-                
+                        break;
+                        
+                    case 1:{
+                        
+                        //增信选择字段
+                        //增信选择字段
+                        NSString *clarifyingRequire = @"";
+                        if ([[weakSelf.addRequireButtonView.selectedArray objectAtIndex:0] isEqualToString:@"不限"]) {
+                            clarifyingRequire = @"";
+                        } else{
+                            for (NSInteger i = 1 ;i < weakSelf.addRequireButtonView.selectedArray .count ; i ++) {
+                                clarifyingRequire = [NSString stringWithFormat:@"%@;%@",[businessSelectDic objectForKey:[weakSelf.addRequireButtonView.selectedArray  objectAtIndex:0] ],[businessSelectDic objectForKey:[weakSelf.addRequireButtonView.selectedArray  objectAtIndex:i]]];
+                            }
+                            
+                        }
+                        //投资期限选择字段
+                        NSString *vestYears = @"";
+                        if ([[weakSelf.investTimeButtonView.selectedArray objectAtIndex:0] isEqualToString:@"不限"]) {
+                            vestYears = @"";
+                        } else{
+                            // vestYears = [businessSelectDic objectForKey:vestYears];
+                            for (NSInteger i = 1 ;i < weakSelf.investTimeButtonView.selectedArray.count ; i ++) {
+                                vestYears = [NSString stringWithFormat:@"%@;%@",[businessSelectDic objectForKey:[weakSelf.investTimeButtonView.selectedArray objectAtIndex:0]],[businessSelectDic objectForKey:[weakSelf.investTimeButtonView.selectedArray objectAtIndex:i]]];
+                            }
+                            
+                        }
+                        NSString * businessId = self.obj.businessID;
+                        
+                        NSString *anonymous = weakSelf.authorizeButton.isSelected ? @"1" : @"0";
+                        //SHGBusinessObject *object = [[SHGBusinessObject alloc]init];
+                        NSString *type = [businessDic objectForKey:@"type"];
+                        NSString *contact = [businessDic objectForKey:@"contact"];
+                        NSString *investAmount = [businessDic objectForKey:@"investAmount"];
+                        NSString *businessType = [businessDic objectForKey:@"businessType"];
+                        NSString *fundSource = [businessDic objectForKey:@"fundSource"];
+                        NSString *area = [businessDic objectForKey:@"area"];
+                        NSString *industry = [businessDic objectForKey:@"industry"];
+                        NSString *title = [businessDic objectForKey:@"title"];
+                        
+                        
+                        NSDictionary *param = @{@"uid":UID,@"businessId":businessId, @"type": type,@"moneysideType": @"bondInvest",@"contact":contact, @"businessType":businessType,@"fundSource":fundSource, @"investAmount": investAmount, @"area": area, @"industry": industry, @"clarifyingRequire":clarifyingRequire,@"lowestPaybackRate":self.retributionTextField.text, @"vestYears": vestYears,@"detail": weakSelf.marketExplainTextView.text,@"photo": weakSelf.imageName,@"anonymous": anonymous,@"title": title};
+                        [SHGBusinessManager editBusiness:param success:^(BOOL success) {
+                            if (success) {
+                                if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(didCreateNewBusiness:)]) {
+                                    [weakSelf.delegate didCreateNewBusiness:self.obj];
+                                }
+                                [weakSelf.navigationController performSelector:@selector(popToRootViewControllerAnimated:) withObject:@(YES) afterDelay:1.2f];
+                            }
+                        }];
+                        
+                    }
+                        
+                        break;
+                    default:
+                        break;
+                }
             }
+            
         }];
         
         

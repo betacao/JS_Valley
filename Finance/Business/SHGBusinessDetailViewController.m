@@ -16,7 +16,11 @@
 #import "SHGEmptyDataView.h"
 #import "MLEmojiLabel.h"
 #import "SHGUnifiedTreatment.h"
-
+#import "SHGBondInvestSendViewController.h"
+#import "SHGBondFinanceSendViewController.h"
+#import "SHGEquityFinanceSendViewController.h"
+#import "SHGEquityInvestSendViewController.h"
+#import "SHGSameAndCommixtureSendViewController.h"
 #define k_FirstToTop 5.0f * XFACTOR
 #define k_SecondToTop 10.0f * XFACTOR
 #define k_ThirdToTop 15.0f * XFACTOR
@@ -98,6 +102,7 @@
     __weak typeof(self) weakSelf = self;
     [SHGBusinessManager getBusinessDetail:self.object success:^(SHGBusinessObject *detailObject) {
         weakSelf.responseObject = detailObject;
+        NSLog(@"%@",weakSelf.responseObject);
         [weakSelf loadData];
         [weakSelf.detailTable reloadData];
     }];
@@ -367,7 +372,32 @@
 
 - (IBAction)editButtonClick:(UIButton *)sender
 {
-
+    NSLog(@"111");
+    if ([self.responseObject.type isEqualToString:@"moneyside"]) {
+        if ([self.responseObject.moneysideType isEqualToString:@"equityInvest"]) {
+            SHGEquityInvestSendViewController *viewController = [[SHGEquityInvestSendViewController alloc] init];
+            viewController.object = self.responseObject;
+            [self.navigationController pushViewController:viewController animated:YES];
+            
+        } else if ([self.responseObject.moneysideType isEqualToString:@"bondInvest"]){
+            SHGBondInvestSendViewController *viewController = [[SHGBondInvestSendViewController alloc] init];
+            viewController.object = self.responseObject;
+            [self.navigationController pushViewController:viewController animated:YES];
+        }
+    } else if ([self.responseObject.type isEqualToString:@"bondfinancing"]){
+        SHGBondFinanceSendViewController *viewController = [[SHGBondFinanceSendViewController alloc] init];
+        viewController.object = self.responseObject;
+        [self.navigationController pushViewController:viewController animated:YES];
+    } else if ([self.responseObject.type isEqualToString:@"equityfinancing"]){
+        SHGEquityFinanceSendViewController *viewController = [[SHGEquityFinanceSendViewController alloc] init];
+        viewController.object = self.responseObject;
+        [self.navigationController pushViewController:viewController animated:YES];
+    } else if ([self.responseObject.type isEqualToString:@"trademixed"]){
+        SHGSameAndCommixtureSendViewController *viewController = [[SHGSameAndCommixtureSendViewController alloc] init];
+        viewController.object = self.responseObject;
+        [self.navigationController pushViewController:viewController animated:YES];
+    }
+    
 }
 
 - (void)tapContactLabelToIdentification:(UITapGestureRecognizer *)rescognizer

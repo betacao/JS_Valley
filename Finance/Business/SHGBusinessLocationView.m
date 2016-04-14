@@ -8,6 +8,7 @@
 
 #import "SHGBusinessLocationView.h"
 #import "SHGBusinessMargin.h"
+#import "CCLocationManager.h"
 @interface SHGBusinessLocationView ()
 
 //topView
@@ -68,10 +69,9 @@
 @implementation SHGBusinessLocationView
 
 
-- (id)initWithFrame:(CGRect)frame
+- (instancetype)initWithFrame:(CGRect)frame locationString:(NSString *)locationString
 {
     if (self = [super initWithFrame:frame]) {
-        self.backgroundColor = Color(@"efeeef");
         self.allCity = [NSMutableArray array];
         self.provinces = [[NSArray alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"MarketArea" ofType:@"plist"]];
         
@@ -89,6 +89,7 @@
         [self.scrollView addSubview:self.southwestView];
         [self.scrollView addSubview:self.northwestView];
         
+        self.locationTitleLabel.text = locationString;
         [self addSdLayout];
         [self initView];
     }
@@ -104,7 +105,7 @@
     .topSpaceToView(self, 0.0f)
     .leftSpaceToView(self, 0.0f)
     .rightSpaceToView(self, 0.0f)
-    .bottomSpaceToView(self, MarginFactor(20.0f) + imageSize.height);
+    .bottomSpaceToView(self,0.0f);
     
     self.quiteButton.sd_layout
     .centerXIs(SCREENWIDTH / 2.0f)
@@ -116,7 +117,8 @@
     self.locationView.sd_layout
     .topSpaceToView(self.scrollView, 0.0f)
     .leftSpaceToView(self.scrollView, 0.0f)
-    .rightSpaceToView(self.scrollView, 0.0f);
+    .rightSpaceToView(self.scrollView, 0.0f)
+    .heightIs(MarginFactor(55.0f));
     
     self.locationTitleLabel.sd_layout
     .leftSpaceToView(self.locationView, MarginFactor(24.0f))
@@ -136,7 +138,7 @@
     .topSpaceToView(self.locationTitleLabel, 0.0f)
     .heightIs(MarginFactor(12.0f));
     
-    [self.locationView setupAutoHeightWithBottomView:self.locationBottonView bottomMargin:0.0f];
+
     //全国直辖市
     
     self.municipalityView.sd_layout
@@ -341,7 +343,7 @@
     
     [self.northwestView setupAutoHeightWithBottomView:self.northwestBottomView bottomMargin:0.0f];
     
-    [self.scrollView setupAutoHeightWithBottomView:self.northwestView bottomMargin:0.0f];
+    [self.scrollView setupAutoContentSizeWithBottomView:self.northwestView bottomMargin:2 * MarginFactor(20.0f) + image.size.height];
 }
 
 - (void)initView
@@ -380,7 +382,7 @@
     [self.locationButton setTitleColor:Color(@"2b7fdc") forState:UIControlStateNormal];
     [self.locationButton setImage:[UIImage imageNamed:@"location"] forState:UIControlStateNormal];
     self.locationButton.imageEdgeInsets = UIEdgeInsetsMake(0.0f, -7.0f, 0.0f, 0.0f);
-    [self.locationButton addTarget:self action:@selector(locationButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+//    [self.locationButton addTarget:self action:@selector(locationButtonClick:) forControlEvents:UIControlEventTouchUpInside];
     
     
     
@@ -398,6 +400,10 @@
             [button setBackgroundImage:[[UIImage imageNamed:@"locationButtonBgHigh"] resizableImageWithCapInsets:UIEdgeInsetsMake(10.0f, 10.0f, 10.0f, 10.0f) resizingMode:UIImageResizingModeStretch] forState:UIControlStateSelected];
             [button setTitleColor:Color(@"161616") forState:UIControlStateNormal];
             [button setTitleColor:Color(@"f33300") forState:UIControlStateSelected];
+            if ([button.titleLabel.text isEqualToString:self.locationTitleLabel.text]) {
+                button.selected = YES;
+                self.locationCurrentButton = button;
+            }
             [button addTarget:self action:@selector(locationButtonClick:) forControlEvents:UIControlEventTouchUpInside];
             button.frame = CGRectMake(MarginFactor(12.0f) + i%3 * (kLocationButtonLeftMargin + kLocationButtonWidth), i/3 * (kLocationButtonTopMargin + kLocationButtonHeight), kLocationButtonWidth, kLocationButtonHeight);
             [[locationArry objectAtIndex:j] addSubview:button];
@@ -450,7 +456,6 @@
     if (!_locationView) {
         _locationView = [[UIView alloc]init];
         _locationTitleLabel = [[UILabel alloc] init];
-        _locationTitleLabel.text = @"江苏";
         [_locationView addSubview:_locationTitleLabel];
     
         _locationBottonView = [[UIView alloc] init];
@@ -458,11 +463,19 @@
         
         _locationButton = [UIButton buttonWithType:UIButtonTypeCustom];
         _locationButton.titleLabel.textAlignment = NSTextAlignmentRight;
+        [_locationButton addTarget:self action:@selector(newSelectLocationClick:) forControlEvents:UIControlEventTouchUpInside];
         [_locationView addSubview:_locationButton];
     }
     return _locationView;
 }
 
+- (void)newSelectLocationClick:(UIButton *)btn
+{
+    __weak typeof(self) weakSelf = self;
+    [[CCLocationManager shareLocation] getCity:^{
+        weakSelf.locationTitleLabel.text = [SHGGloble sharedGloble].provinceName;
+    }];
+}
 //全国
 - (UIView *)municipalityView
 {

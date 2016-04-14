@@ -66,5 +66,9 @@
 	<string>threeToFiveYear</string>
 	<key>5年以上</key>
 	<string>moreFiveYear</string>
+	<key>同业</key>
+	<string>sameIndustry</string>
+	<key>混业</key>
+	<string>commixtureIndustry</string>
 </dict>
 </plist>

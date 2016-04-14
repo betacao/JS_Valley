@@ -10,6 +10,8 @@
 #import "SHGSameAndCommixtureNextViewController.h"
 #import "SHGBusinessMargin.h"
 #import "SHGBusinessLocationView.h"
+#import "SHGBusinessButtonContentView.h"
+#import "CCLocationManager.h"
 @interface SHGSameAndCommixtureSendViewController ()<UITextFieldDelegate,UIScrollViewDelegate>
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UIButton *nextButton;
@@ -29,7 +31,7 @@
 //业务类型
 @property (strong, nonatomic) IBOutlet UIView *marketCategoryView;
 @property (weak, nonatomic) IBOutlet UILabel *marketCategoryLabel;
-@property (weak, nonatomic) IBOutlet UIView *marketCategoryButtonView;
+@property (weak, nonatomic) IBOutlet SHGBusinessButtonContentView *marketCategoryButtonView;
 @property (weak, nonatomic) IBOutlet UIImageView *marketCategorySelctImage;
 
 //金额
@@ -48,8 +50,6 @@
 @property (strong, nonatomic) UIImage *buttonBgImage;
 @property (strong, nonatomic) UIImage *buttonSelectBgImage;
 
-@property (strong, nonatomic) UIButton *categoryCurrentButton;
-
 @property (strong, nonatomic) id currentContext;
 @property (assign, nonatomic) CGFloat keyBoardOrginY;
 @property (strong, nonatomic) SHGSameAndCommixtureNextViewController *sameAndCommixtureNextViewController;
@@ -61,11 +61,26 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.title = @"发布同业混业";
+    if (self.object) {
+        self.title = @"编辑同业混业";
+        self.sendType = 1;
+        [self.areaSelectButton setTitle:self.object.area forState:UIControlStateNormal];
+        [self.areaSelectButton setTitleColor:Color(@"161616") forState:UIControlStateNormal];
+    } else{
+        self.title = @"发布同业混业";
+        __weak typeof(self) weakSelf = self;
+        [[CCLocationManager shareLocation] getCity:^{
+            NSString * provinceName = [SHGGloble sharedGloble].provinceName;
+            [weakSelf.areaSelectButton setTitle:provinceName forState:UIControlStateNormal];
+            [weakSelf.areaSelectButton setTitleColor:Color(@"161616") forState:UIControlStateNormal];
+        }];
+        self.sendType = 0;
+    }
     self.scrollView.delegate = self;
     self.nameTextField.delegate = self;
     self.phoneNumTextField.delegate = self;
     self.monenyTextField.delegate = self;
+    self.marketCategoryButtonView.showMode = 1;
     self.buttonBgImage = [UIImage imageNamed:@"business_SendButtonBg"];
     self.buttonBgImage = [self.buttonBgImage resizableImageWithCapInsets:UIEdgeInsetsMake(10.0f, 10.0f, 10.0f, 10.0f) resizingMode:UIImageResizingModeStretch];
     
@@ -93,6 +108,15 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
+- (NSDictionary *)firstDic
+{
+    NSDictionary *dictonary = [NSDictionary dictionary];
+    NSString *businessType = [[[SHGGloble sharedGloble] getBusinessKeysAndValues] objectForKey:[self.marketCategoryButtonView.selectedArray firstObject]];
+    NSLog(@"%@",businessType);
+    dictonary = @{@"uid":UID, @"type": @"trademixed", @"contact": self.phoneNumTextField.text, @"investAmount": self.monenyTextField.text, @"area":self.areaSelectButton.titleLabel.text,@"title":self.nameTextField.text ,@"businessType":businessType};
+
+    return dictonary;
+}
 - (void)addSdLayout
 {
     UIImage *image = [UIImage imageNamed:@"biXuan"];
@@ -249,6 +273,22 @@
 
 - (void)initView
 {
+    NSString * category = @"";
+    NSArray *key = [[[SHGGloble sharedGloble] getBusinessKeysAndValues] allKeys];
+    NSArray *value = [[[SHGGloble sharedGloble] getBusinessKeysAndValues] allValues];
+    
+    if (self.sendType == 1) {
+        self.nameTextField.text = self.object.businessTitle;
+        self.phoneNumTextField.text = self.object.contact;
+        self.monenyTextField.text = self.object.investAmount;
+        category = self.object.businessType;
+        if (self.object.businessType.length == 0) {
+            category = @"";
+        } else{
+            category = [key objectAtIndex:[value indexOfObject:category]];
+        }
+    }
+    self.phoneNumTextField.keyboardType = UIKeyboardTypeNumberPad;
     self.nextButton.titleLabel.font = FontFactor(19.0f);
     [self.nextButton setTitleColor:Color(@"ffffff") forState:UIControlStateNormal];
     [self.nextButton setBackgroundColor:Color(@"f04241")];
@@ -312,6 +352,9 @@
         [button setBackgroundImage:self.buttonBgImage forState:UIControlStateNormal];
         [button setTitleColor:Color(@"ff8d65") forState:UIControlStateSelected];
         [button setBackgroundImage:self.buttonSelectBgImage forState:UIControlStateSelected];
+//        if ([button.titleLabel.text isEqualToString:category]) {
+//            button.selected = YES;
+//        }
         button.frame = CGRectMake(kLeftToView + i * (kTwoButtonWidth + kButtonLeftMargin), 0.0f, kTwoButtonWidth, kCategoryButtonHeight);
         [button addTarget:self action:@selector(categoryButtonClick:) forControlEvents:UIControlEventTouchUpInside];
         [self.marketCategoryButtonView addSubview:button];
@@ -321,18 +364,15 @@
 
 - (void)categoryButtonClick:(UIButton *)btn
 {
-    if(btn != self.categoryCurrentButton){
-        self.categoryCurrentButton.selected = NO;
-        self.categoryCurrentButton = btn;
-    }
-    self.categoryCurrentButton.selected = YES;
+    SHGBusinessButtonContentView *superView = (SHGBusinessButtonContentView *)btn.superview;
+    [superView didClickButton:btn];
 
 }
 
 - (IBAction)locationSelectClick:(UIButton *)sender
 {
     if (!self.locationView) {
-        self.locationView = [[SHGBusinessLocationView alloc]initWithFrame:CGRectMake(0.0f, 0.0f, SCREENWIDTH, SCREENHEIGHT)];
+        self.locationView = [[SHGBusinessLocationView alloc]initWithFrame:CGRectMake(0.0f, 0.0f, SCREENWIDTH, SCREENHEIGHT) locationString:self.areaSelectButton.titleLabel.text];
     }
     __weak typeof (self)weakSelf = self;
     self.locationView.returnLocationBlock = ^(NSString *string){
@@ -345,13 +385,13 @@
 - (IBAction)nextButtonClick:(UIButton *)sender
 {
     if ([self checkInputMessage]) {
-        self.firstDic = @{@"uid":UID, @"type": @"trademixed", @"contact": self.phoneNumTextField.text, @"investAmount": self.monenyTextField.text, @"area": self.areaSelectButton.titleLabel.text,@"title":self.nameTextField.text ,@"businessType":@"sameIndustry"};
+
         if (!self.sameAndCommixtureNextViewController) {
             self.sameAndCommixtureNextViewController = [[SHGSameAndCommixtureNextViewController alloc] init];
         }
         self.sameAndCommixtureNextViewController.superController = self;
         [self.navigationController pushViewController:self.sameAndCommixtureNextViewController animated:YES];
-    }
+   }
    
 }
 
@@ -365,7 +405,7 @@
         [Hud showMessageWithText:@"请填写联系方式"];
         return NO;
     }
-    if (self.categoryCurrentButton.selected == NO) {
+    if (self.marketCategoryButtonView.selectedArray.count == 0) {
         [Hud showMessageWithText:@"请选择业务类型"];
         return NO;
     }

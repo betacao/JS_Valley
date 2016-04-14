@@ -31,6 +31,7 @@
 
 @property (assign, nonatomic) BOOL hasImage;
 @property (strong, nonatomic) NSString *imageName;
+@property (nonatomic, strong) SHGBusinessObject *obj;
 @end
 
 @implementation SHGSameAndCommixtureNextViewController
@@ -38,7 +39,15 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.title = @"发布同业混业";
+   // self.title = @"发布同业混业";
+    if (((SHGSameAndCommixtureSendViewController *)self.superController).object) {
+        self.title = @"修改同业混业";
+        ((SHGSameAndCommixtureSendViewController *)self.superController).sendType = 1;
+        self.obj = ((SHGSameAndCommixtureSendViewController *)self.superController).object;
+    } else{
+        self.title = @"发布同业混业";
+        ((SHGSameAndCommixtureSendViewController *)self.superController).sendType = 0;
+    }
     self.scrollView.delegate = self;
     self.marketExplainTextView.delegate = self;
     [self.scrollView addSubview:self.marketExplainView];
@@ -142,6 +151,26 @@
 
 - (void)initView
 {
+   if (((SHGSameAndCommixtureSendViewController *)self.superController).sendType == 1)
+   {
+       self.marketExplainTextView.text = self.obj.detail;
+       if ([self.obj.anonymous isEqualToString:@"1"]) {
+           self.authorizeButton.selected = YES;
+       } else{
+           self.authorizeButton.selected = NO;
+       }
+       
+       if (self.obj.photo && self.obj.photo.length > 0) {
+           self.hasImage = YES;
+           __weak typeof(self) weakSelf = self;
+           [[SDWebImageManager sharedManager] downloadImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,self.obj.photo]] options:SDWebImageRetryFailed|SDWebImageLowPriority progress:^(NSInteger receivedSize, NSInteger expectedSize) {
+               
+           } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
+               [weakSelf.addImageButton setImage:image forState:UIControlStateNormal];
+           }];
+       }
+
+   }
     self.sureButton.titleLabel.font = FontFactor(19.0f);
     [self.sureButton setTitleColor:Color(@"ffffff") forState:UIControlStateNormal];
     [self.sureButton setBackgroundColor:Color(@"f04241")];
@@ -174,27 +203,61 @@
  
     if ([self checkInputMessage]) {
         __weak typeof(self) weakSelf = self;
+           NSDictionary *businessDic = ((SHGSameAndCommixtureSendViewController *)weakSelf.superController).firstDic;
         [self uploadImage:^(BOOL success) {
             if (success) {
-                NSDictionary *businessDic = ((SHGSameAndCommixtureSendViewController *)weakSelf.superController).firstDic;
-                NSString *anonymous = weakSelf.authorizeButton.isSelected ? @"1" : @"0";
-                SHGBusinessObject *object = [[SHGBusinessObject alloc]init];
-                NSString *type = [businessDic objectForKey:@"type"];
-                NSString *contact = [businessDic objectForKey:@"contact"];
-                NSString *businessType = [businessDic objectForKey:@"businessType"];
-                NSString *investAmount = [businessDic objectForKey:@"investAmount"];
-                NSString *area = [businessDic objectForKey:@"area"];
-                NSString *title = [businessDic objectForKey:@"title"];
-                NSDictionary *param = @{@"uid":UID, @"type": type, @"contact":contact, @"businessType":businessType, @"investAmount": investAmount, @"area": area, @"detail": weakSelf.marketExplainTextView.text,@"photo": weakSelf.imageName,@"anonymous": anonymous,@"title": title};
-                [SHGBusinessManager createNewBusiness:param success:^(BOOL success) {
-                    if (success) {
-                        if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(didCreateNewBusiness:)]) {
-                            [weakSelf.delegate didCreateNewBusiness:object];
-                        }
-                        [weakSelf.navigationController performSelector:@selector(popToRootViewControllerAnimated:) withObject:@(YES) afterDelay:1.2f];
-                    }
-                }];
-                
+                switch (((SHGSameAndCommixtureSendViewController *)weakSelf.superController).sendType) {
+                    case 0:{
+                        
+                        NSString *anonymous = weakSelf.authorizeButton.isSelected ? @"1" : @"0";
+                        //SHGBusinessObject *object = [[SHGBusinessObject alloc]init];
+                        
+                        NSString *type = [businessDic objectForKey:@"type"];
+                        NSString *contact = [businessDic objectForKey:@"contact"];
+                        NSString *businessType = [businessDic objectForKey:@"businessType"];
+                        NSString *investAmount = [businessDic objectForKey:@"investAmount"];
+                        NSString *area = [businessDic objectForKey:@"area"];
+                        NSString *title = [businessDic objectForKey:@"title"];
+
+                        NSDictionary *param = @{@"uid":UID,@"type": type, @"contact":contact, @"businessType":businessType, @"investAmount": investAmount, @"area": area, @"detail": weakSelf.marketExplainTextView.text,@"photo": weakSelf.imageName,@"anonymous": anonymous,@"title": title};
+                        NSLog(@"%@",param);
+                        [SHGBusinessManager createNewBusiness:param success:^(BOOL success) {
+                            if (success) {
+                                if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(didCreateNewBusiness:)]) {
+                                    [weakSelf.delegate didCreateNewBusiness:self.obj];
+                                }
+                                [weakSelf.navigationController performSelector:@selector(popToRootViewControllerAnimated:) withObject:@(YES) afterDelay:1.2f];
+                            }
+                        }];
+                    }  break;
+                        
+                    case 1:{
+                        NSString *anonymous = weakSelf.authorizeButton.isSelected ? @"1" : @"0";
+                       // SHGBusinessObject *object = [[SHGBusinessObject alloc]init];
+                        NSString *businessId = self.obj.businessID;
+                        NSString *type = [businessDic objectForKey:@"type"];
+                        NSString *contact = [businessDic objectForKey:@"contact"];
+                        NSString *businessType = [businessDic objectForKey:@"businessType"];
+                        NSString *investAmount = [businessDic objectForKey:@"investAmount"];
+                        NSString *area = [businessDic objectForKey:@"area"];
+                        NSString *title = [businessDic objectForKey:@"title"];
+                        NSDictionary *param = @{@"uid":UID,@"businessId":businessId, @"type": type, @"contact":contact, @"businessType":businessType, @"investAmount": investAmount, @"area": area, @"detail": weakSelf.marketExplainTextView.text,@"photo": weakSelf.imageName,@"anonymous": anonymous,@"title": title};
+                        NSLog(@"%@",param);
+                        [SHGBusinessManager editBusiness:param success:^(BOOL success) {
+                            if (success) {
+                                if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(didCreateNewBusiness:)]) {
+                                    [weakSelf.delegate didCreateNewBusiness:self.obj];
+                                }
+                                [weakSelf.navigationController performSelector:@selector(popToRootViewControllerAnimated:) withObject:@(YES) afterDelay:1.2f];
+                            }
+                        }];
+                        
+                        
+                    }  break;
+                    default:
+                        break;
+                }
+   
             }
         }];
         

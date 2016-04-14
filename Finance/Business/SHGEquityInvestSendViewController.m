@@ -12,6 +12,7 @@
 #import "SHGBusinessSelectView.h"
 #import "SHGBusinessButtonContentView.h"
 #import "SHGBusinessLocationView.h"
+#import "CCLocationManager.h"
 @interface SHGEquityInvestSendViewController ()<UITextFieldDelegate,UIScrollViewDelegate>
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UIButton *nextButton;
@@ -56,13 +57,14 @@
 @property (strong, nonatomic) UIImage *buttonBgImage;
 @property (strong, nonatomic) UIImage *buttonSelectBgImage;
 
-@property (strong, nonatomic) UIButton *categoryCurrentButton;
-
 @property (strong, nonatomic) id currentContext;
 @property (assign, nonatomic) CGFloat keyBoardOrginY;
 @property (strong, nonatomic) SHGEquityInvestNextViewController *equityInvestNextViewController;
 @property (strong, nonatomic) SHGBusinessSelectView *selectViewController;
 @property (strong, nonatomic) SHGBusinessLocationView *locationView;
+
+@property (strong, nonatomic) NSMutableArray *industrySelectArray;
+@property (strong, nonatomic) NSArray *editIndustryArray;
 @end
 
 @implementation SHGEquityInvestSendViewController
@@ -70,11 +72,27 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    if (self.object) {
+        self.title = @"编辑股权投资";
+        self.sendType = 1;
+        [self.areaSelectButton setTitle:self.object.area forState:UIControlStateNormal];
+        [self.areaSelectButton setTitleColor:Color(@"161616") forState:UIControlStateNormal];
+    } else{
+        self.title = @"发布股权投资";
+        __weak typeof(self) weakSelf = self;
+        [[CCLocationManager shareLocation] getCity:^{
+            NSString * provinceName = [SHGGloble sharedGloble].provinceName;
+            [weakSelf.areaSelectButton setTitle:provinceName forState:UIControlStateNormal];
+            [weakSelf.areaSelectButton setTitleColor:Color(@"161616") forState:UIControlStateNormal];
+        }];
+        self.sendType = 0;
+    }
     self.title = @"发布股权投资";
     self.scrollView.delegate = self;
     self.nameTextField.delegate = self;
     self.phoneNumTextField.delegate = self;
     self.monenyTextField.delegate = self;
+    self.bondStageButtonView.showMode = 2;
     self.buttonBgImage = [UIImage imageNamed:@"business_SendButtonBg"];
     self.buttonBgImage = [self.buttonBgImage resizableImageWithCapInsets:UIEdgeInsetsMake(10.0f, 10.0f, 10.0f, 10.0f) resizingMode:UIImageResizingModeStretch];
     
@@ -100,6 +118,41 @@
 {
     [super viewWillDisappear:YES];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+- (NSArray *)editIndustryArray
+{
+    if (!_editIndustryArray) {
+        _editIndustryArray = [[NSArray alloc] init];
+    }
+    return _editIndustryArray;
+}
+- (NSDictionary *)firstDic
+{
+    NSDictionary *dictionary = [NSDictionary dictionary];
+    NSDictionary *businessSelectDic = [[SHGGloble sharedGloble] getBusinessKeysAndValues];
+    NSArray *array = self.bondStageButtonView.selectedArray;
+    NSString *businesstype = [businessSelectDic objectForKey:[array firstObject]];
+    if ([[array firstObject] isEqualToString:@"不限"]) {
+        businesstype = @"";
+    } else{
+        for (NSInteger i = 1 ;i < array.count ; i++) {
+            businesstype = [NSString stringWithFormat:@"%@;%@",businesstype,[businessSelectDic objectForKey:[array objectAtIndex:i]]];
+        }
+    }
+    
+    //行业多选字段
+    
+    NSString *industry = [businessSelectDic objectForKey:[self.industrySelectArray objectAtIndex:0]];
+    if ([[self.industrySelectArray objectAtIndex:0] isEqualToString:@"不限"]) {
+        industry = @"";
+    } else{
+        for (NSInteger i = 1 ;i < self.industrySelectArray.count ; i ++) {
+            industry = [NSString stringWithFormat:@"%@;%@",industry,[businessSelectDic objectForKey:[self.industrySelectArray objectAtIndex:i]]];
+        }
+        
+    }
+    dictionary = @{@"uid":UID, @"type": @"moneyside", @"contact": self.phoneNumTextField.text, @"investAmount": self.monenyTextField.text, @"area": self.areaSelectButton.titleLabel.text,@"industry":industry,@"title":self.nameTextField.text ,@"financingStage":businesstype};
+    return dictionary;
 }
 - (void)addSdLayout
 {
@@ -278,13 +331,54 @@
     
     [self.industryView setupAutoHeightWithBottomView:self.industrySelectButton bottomMargin:ktopToView];
     
-    [self.scrollView setupAutoHeightWithBottomView:self.industryView bottomMargin:0.0f];
+    [self.scrollView setupAutoContentSizeWithBottomView:self.industryView bottomMargin:MarginFactor(50.0f)];
     
 }
 
 
 - (void)initView
 {
+    NSString *financingStage = @"";
+    NSString *industry = @"";
+    NSArray *financingStageArray = [NSArray array];
+    NSArray *key = [[[SHGGloble sharedGloble] getBusinessKeysAndValues] allKeys];
+    NSArray *value = [[[SHGGloble sharedGloble] getBusinessKeysAndValues] allValues];
+    
+    if (self.sendType == 1) {
+        self.nameTextField.text = self.object.businessTitle;
+        self.phoneNumTextField.text = self.object.contact;
+        self.monenyTextField.text = self.object.investAmount;
+        financingStage = self.object.financingStage;
+
+        
+        if(financingStage.length == 0){
+            financingStage = @"不限";
+        } else{
+            financingStageArray = [self.object.financingStage componentsSeparatedByString:@";"];
+            
+        }
+        
+        industry = self.object.industry;
+        if (industry.length > 0) {
+            NSArray *industryArray = [industry componentsSeparatedByString:@";"];
+            self.editIndustryArray = industryArray;
+            NSString * str = [key objectAtIndex:[value indexOfObject:[industryArray objectAtIndex:0]]];
+            for (NSInteger  i = 0; i < industryArray.count ; i ++ ) {
+                str = [NSString stringWithFormat:@"%@/%@",str,[key objectAtIndex:[value indexOfObject:[industryArray objectAtIndex:i]]]];
+            }
+            
+            [self.industrySelectButton setTitle:str forState:UIControlStateNormal];
+            [self.industrySelectButton setTitleColor:Color(@"161616") forState:UIControlStateNormal];
+        } else{
+            [self.industrySelectButton setTitle:@"不限" forState:UIControlStateNormal];
+            [self.industrySelectButton setTitleColor:Color(@"161616") forState:UIControlStateNormal];
+        }
+        
+        
+        
+    }
+
+    self.phoneNumTextField.keyboardType = UIKeyboardTypeNumberPad;
     self.nextButton.titleLabel.font = FontFactor(19.0f);
     [self.nextButton setTitleColor:Color(@"ffffff") forState:UIControlStateNormal];
     [self.nextButton setBackgroundColor:Color(@"f04241")];
@@ -359,6 +453,20 @@
         [button setBackgroundImage:self.buttonBgImage forState:UIControlStateNormal];
         [button setTitleColor:Color(@"ff8d65") forState:UIControlStateSelected];
         [button setBackgroundImage:self.buttonSelectBgImage forState:UIControlStateSelected];
+        if ([financingStage isEqualToString:@"不限"]) {
+            if ([button.titleLabel.text isEqualToString:financingStage]) {
+                button.selected = YES;
+            }
+        } else{
+            for (NSInteger i = 0 ; i < financingStageArray.count; i ++ ) {
+                
+                NSString *str = [key objectAtIndex:[value indexOfObject:[financingStageArray objectAtIndex:i]]];
+                if ([button.titleLabel.text isEqualToString:str]) {
+                    button.selected = YES;
+                }
+            }
+            
+        }
         button.frame = CGRectMake(kLeftToView + i%3 * (kThreeButtonWidth + kButtonLeftMargin), i/3 * (kButtonHeight + kButtonTopMargin), kThreeButtonWidth, kCategoryButtonHeight);
         [button addTarget:self action:@selector(categoryButtonClick:) forControlEvents:UIControlEventTouchUpInside];
         [self.bondStageButtonView addSubview:button];
@@ -376,7 +484,7 @@
 - (IBAction)nextButtonClick:(UIButton *)sender
 {
     if ([self checkInputMessage]) {
-        self.firstDic = @{@"uid":UID, @"type": @"moneyside", @"contact": self.phoneNumTextField.text, @"investAmount": self.monenyTextField.text, @"area": self.areaSelectButton.titleLabel.text,@"industry":self.industrySelectButton.titleLabel.text,@"title":self.nameTextField.text ,@"financingStage":@"angel"};
+
         if (!self.equityInvestNextViewController) {
             self.equityInvestNextViewController = [[SHGEquityInvestNextViewController alloc] init];
         }
@@ -396,7 +504,7 @@
         [Hud showMessageWithText:@"请填写联系方式"];
         return NO;
     }
-    if (self.categoryCurrentButton.selected == YES) {
+    if (self.bondStageButtonView.selectedArray.count == 0) {
         [Hud showMessageWithText:@"请选择投资阶段"];
         return NO;
     }
@@ -404,7 +512,7 @@
         [Hud showMessageWithText:@"请选择业务地区"];
         return NO;
     }
-    if (self.industrySelectButton.titleLabel.text == 0) {
+    if (self.industrySelectArray.count == 0 ) {
         [Hud showMessageWithText:@"请填写意向行业"];
         return NO;
     }
@@ -414,7 +522,7 @@
 - (IBAction)locationSelectClick:(UIButton *)sender
 {
     if (!self.locationView) {
-        self.locationView = [[SHGBusinessLocationView alloc]initWithFrame:CGRectMake(0.0f, 0.0f, SCREENWIDTH, SCREENHEIGHT)];
+        self.locationView = [[SHGBusinessLocationView alloc]initWithFrame:CGRectMake(0.0f, 0.0f, SCREENWIDTH, SCREENHEIGHT) locationString:self.areaSelectButton.titleLabel.text];
     }
     __weak typeof (self)weakSelf = self;
     self.locationView.returnLocationBlock = ^(NSString *string){
@@ -427,11 +535,12 @@
 {
     NSArray *array =  @[@"不限",@"金融投资",@"能源化工",@"互联网",@"地产基建",@"制造业",@"大健康",@"TMT",@"服务业",@"冶金采掘",@"农林牧渔",@"其他行业"];
     if (!self.selectViewController) {
-        self.selectViewController = [[SHGBusinessSelectView alloc]initWithFrame:CGRectMake(0.0f, 0.0f, SCREENWIDTH, SCREENHEIGHT) array:array statu:YES];
+        self.selectViewController = [[SHGBusinessSelectView alloc]initWithFrame:CGRectMake(0.0f, 0.0f, SCREENWIDTH, SCREENHEIGHT) array:array statu:YES industryArray:self.editIndustryArray];
     }
     
     __weak typeof (self) weakSelf = self;
     self.selectViewController.returnTextBlock = ^(NSString *string, NSMutableArray *array){
+        weakSelf.industrySelectArray = array;
         [weakSelf.industrySelectButton setTitle:string forState:UIControlStateNormal];
         [weakSelf.industrySelectButton setTitleColor:Color(@"161616") forState:UIControlStateNormal];
     };

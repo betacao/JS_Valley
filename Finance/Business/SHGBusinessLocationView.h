@@ -13,4 +13,5 @@ typedef void (^SHGReturnLocationBlock)(NSString *showText);
 @interface SHGBusinessLocationView : UIView
 @property (nonatomic, copy) SHGReturnLocationBlock returnLocationBlock;
 @property (nonatomic, strong) NSString *currentButtonString;
+- (instancetype)initWithFrame:(CGRect)frame locationString:(NSString *)locationString;
 @end

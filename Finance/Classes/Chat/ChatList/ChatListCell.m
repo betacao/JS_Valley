@@ -68,6 +68,7 @@
     .bottomEqualToView(self.headerImageView)
     .autoHeightRatio(0.0f);
     [self.detailLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
+    [self.detailLabel setMaxNumberOfLinesToShow:1];
     
     self.lineView.sd_layout
     .leftEqualToView(self.headerImageView)

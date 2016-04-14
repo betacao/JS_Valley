@@ -19,15 +19,19 @@
 @property (nonatomic, strong) UIButton *currentButton;
 @property (nonatomic, strong) NSString *buttonString;
 @property (nonatomic, strong) NSMutableArray *buttonStrongArray;
+@property (nonatomic, strong) NSArray *strongArray;
+
+
 @end
 
 @implementation SHGBusinessSelectView
 
-- (instancetype)initWithFrame:(CGRect)frame array:(NSArray *)array statu:(BOOL)statu
+- (instancetype)initWithFrame:(CGRect)frame array:(NSArray *)array statu:(BOOL)statu industryArray:(NSArray *)industryArray
 {
     if (self = [super initWithFrame:frame]) {
         self.backgroundColor = [UIColor whiteColor];
         self.businessArry = array;
+        self.strongArray = industryArray;
         self.statu = statu;
         if (statu) {
             [self addSubview:self.buttonView];
@@ -40,7 +44,17 @@
     }
     return self;
 }
-
+- (void)makeEditIndustryString:(NSString *)str
+{
+    self.buttonString = str;
+}
+- (NSArray *)strongArray
+{
+    if (!_strongArray) {
+        _strongArray = [[NSArray alloc] init];
+    }
+    return _strongArray;
+}
 - (NSMutableArray *)buttonStrongArray
 {
     if (!_buttonStrongArray) {
@@ -79,10 +93,10 @@
 
 - (void)buttonClick:(UIButton *)btn
 {
+    SHGBusinessButtonContentView *superView =(SHGBusinessButtonContentView *)btn.superview;
+    [superView didClickButton:btn];
+    self.buttonStrongArray = superView.selectedArray;
     if (self.statu) {
-        SHGBusinessButtonContentView *superView =(SHGBusinessButtonContentView *)btn.superview;
-        [superView didClickButton:btn];
-        self.buttonStrongArray = superView.selectedArray;
         if (superView.selectedArray.count > 0) {
             self.buttonString = [superView.selectedArray objectAtIndex:0];
             for (NSInteger i = 1; i < self.buttonStrongArray.count; i ++ ) {
@@ -94,8 +108,6 @@
         }
         
     } else{
-        SHGBusinessButtonContentView *superView =(SHGBusinessButtonContentView *)btn.superview;
-        [superView didClickButton:btn];
         if (superView.selectedArray.count > 0) {
             self.buttonString = [superView.selectedArray objectAtIndex:0];
         } else{
@@ -152,6 +164,24 @@
         [button setTitleColor:Color(@"ff8d65") forState:UIControlStateSelected];
         [button setBackgroundImage:buttonBgImage forState:UIControlStateNormal];
         [button setBackgroundImage:buttonSelectBgImage forState:UIControlStateSelected];
+        NSString *industry ;
+        if ([[self.strongArray firstObject] isEqualToString:@""]) {
+            industry = @"不限";
+        } else{
+            for (NSInteger i = 0 ; i < self.strongArray.count ; i ++) {
+                NSArray *key = [[[SHGGloble sharedGloble] getBusinessKeysAndValues] allKeys];
+                
+                NSArray *value = [[[SHGGloble sharedGloble] getBusinessKeysAndValues] allValues];
+                
+                industry = [key objectAtIndex:[value indexOfObject:[self.strongArray objectAtIndex:i]]];
+                NSLog(@"%@%@",industry,self.strongArray);
+                if ([button.titleLabel.text isEqualToString:industry]) {
+                    button.selected = YES;
+                }
+            }
+
+        }
+        
         button.frame = CGRectMake(kLeftToView + i%3 * (kThreeButtonWidth + MarginFactor(9.0f)), i/3 * (kButtonHeight + MarginFactor(30.0f)), kThreeButtonWidth, kCategoryButtonHeight);
         [button addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchUpInside];
         if (self.statu) {

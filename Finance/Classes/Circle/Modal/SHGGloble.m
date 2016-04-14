@@ -544,7 +544,7 @@
 - (NSDictionary *)getBusinessKeysAndValues
 {
     if (!self.businessDictionary) {
-        self.businessDictionary = [NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"BusinessSelectString" ofType:@"plist"]];
+        self.businessDictionary = [NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"SHGBusinessSelectString" ofType:@"plist"]];
     }
     return self.businessDictionary;
 }

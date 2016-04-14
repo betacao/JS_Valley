@@ -11,13 +11,14 @@
 #import "SHGBusinessMargin.h"
 #import "UIButton+EnlargeEdge.h"
 #import "SHGBusinessManager.h"
+#import "SHGBusinessButtonContentView.h"
 @interface SHGEquityFinanceNextViewController ()<UITextFieldDelegate,UIScrollViewDelegate,UITextViewDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UIButton *sureButton;
 //投资期限
 @property (strong, nonatomic) IBOutlet UIView *investTimeView;
 @property (weak, nonatomic) IBOutlet UILabel *investTimeTitleLabel;
-@property (weak, nonatomic) IBOutlet UIView *investTimeButtonView;
+@property (weak, nonatomic) IBOutlet SHGBusinessButtonContentView *investTimeButtonView;
 
 //参股比例
 @property (strong, nonatomic) IBOutlet UIView *retributionView;
@@ -46,6 +47,7 @@
 @property (assign, nonatomic) CGFloat keyBoardOrginY;
 @property (assign, nonatomic) BOOL hasImage;
 @property (strong, nonatomic) NSString *imageName;
+@property (strong, nonatomic) SHGBusinessObject *obj;
 @end
 
 @implementation SHGEquityFinanceNextViewController
@@ -53,10 +55,19 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.title = @"发布股权融资";
+
     self.scrollView.delegate = self;
     self.retributionTextField.delegate = self;
     self.marketExplainTextView.delegate = self;
+    self.investTimeButtonView.showMode = 1;
+    if (((SHGEquityFinanceSendViewController *)self.superController).object) {
+        self.title = @"修改股权融资";
+        ((SHGEquityFinanceSendViewController *)self.superController).sendType = 1;
+        self.obj = ((SHGEquityFinanceSendViewController *)self.superController).object;
+    } else{
+        self.title = @"发布股权融资";
+        ((SHGEquityFinanceSendViewController *)self.superController).sendType = 0;
+    }
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardDidShow:) name:UIKeyboardDidShowNotification object:nil];
     self.buttonBgImage = [UIImage imageNamed:@"business_SendButtonBg"];
     self.buttonBgImage = [self.buttonBgImage resizableImageWithCapInsets:UIEdgeInsetsMake(10.0f, 10.0f, 10.0f, 10.0f) resizingMode:UIImageResizingModeStretch];
@@ -198,6 +209,38 @@
 
 - (void)initView
 {
+
+    NSString *vestYears = @"";
+    if (((SHGEquityFinanceSendViewController *)self.superController).sendType == 1) {
+        self.marketExplainTextView.text = self.obj.detail;
+        if ([self.obj.anonymous isEqualToString:@"1"]) {
+            self.authorizeButton.selected = YES;
+        } else{
+            self.authorizeButton.selected = NO;
+        }
+        
+        if (self.obj.photo && self.obj.photo.length > 0) {
+            self.hasImage = YES;
+            __weak typeof(self) weakSelf = self;
+            [[SDWebImageManager sharedManager] downloadImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,self.obj.photo]] options:SDWebImageRetryFailed|SDWebImageLowPriority progress:^(NSInteger receivedSize, NSInteger expectedSize) {
+                
+            } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
+                [weakSelf.addImageButton setImage:image forState:UIControlStateNormal];
+            }];
+        }
+        
+        NSArray *key = [[[SHGGloble sharedGloble] getBusinessKeysAndValues] allKeys];
+        NSArray *value = [[[SHGGloble sharedGloble] getBusinessKeysAndValues] allValues];
+        vestYears = self.obj.vestYears;
+        if (vestYears.length > 0) {
+            vestYears = [key objectAtIndex:[value indexOfObject:vestYears]];
+        } else{
+            vestYears = @"";
+        }
+        
+        
+    }
+
     self.sureButton.titleLabel.font = FontFactor(19.0f);
     [self.sureButton setTitleColor:Color(@"ffffff") forState:UIControlStateNormal];
     [self.sureButton setBackgroundColor:Color(@"f04241")];
@@ -234,6 +277,9 @@
         [button setBackgroundImage:self.buttonBgImage forState:UIControlStateNormal];
         [button setTitleColor:Color(@"ff8d65") forState:UIControlStateSelected];
         [button setBackgroundImage:self.buttonSelectBgImage forState:UIControlStateSelected];
+        if ([button.titleLabel.text isEqualToString:vestYears]) {
+            button.selected = YES;
+        }
         button.frame = CGRectMake(kLeftToView + i * (kThreeButtonWidth + kButtonLeftMargin), 0.0f, kThreeButtonWidth, kCategoryButtonHeight);
         [button addTarget:self action:@selector(investTimeButtonClick:) forControlEvents:UIControlEventTouchUpInside];
         [self.investTimeButtonView addSubview:button];
@@ -272,28 +318,59 @@
 {
     if ([self checkInputMessage]) {
         __weak typeof(self) weakSelf = self;
+        NSDictionary *businessDic = ((SHGEquityFinanceSendViewController *)self.superController).firstDic;
+        NSDictionary *businessSelectDic = [[SHGGloble sharedGloble] getBusinessKeysAndValues];
         [self uploadImage:^(BOOL success) {
-            if (success) {
-                NSDictionary *businessDic = ((SHGEquityFinanceSendViewController *)self.superController).firstDic;
-                NSString *anonymous = weakSelf.authorizeButton.isSelected ? @"1" : @"0";
-                SHGBusinessObject *object = [[SHGBusinessObject alloc]init];
-                NSString *type = [businessDic objectForKey:@"type"];
-                NSString *contact = [businessDic objectForKey:@"contact"];
-                NSString *financingStage = [businessDic objectForKey:@"financingStage"];
-                NSString *investAmount = [businessDic objectForKey:@"investAmount"];
-                NSString *area = [businessDic objectForKey:@"area"];
-                NSString *industry = [businessDic objectForKey:@"industry"];
-                NSString *title = [businessDic objectForKey:@"title"];
-                NSDictionary *param = @{@"uid":UID, @"type": type, @"contact":contact, @"financingStage":financingStage, @"investAmount": investAmount, @"area": area, @"industry": industry,@"fundUsetime": weakSelf.retributionTextField.text, @"vestYears":@"threeYear", @"detail": weakSelf.marketExplainTextView.text,@"photo": weakSelf.imageName,@"anonymous": anonymous,@"title": title};
-                [SHGBusinessManager createNewBusiness:param success:^(BOOL success) {
-                    if (success) {
-                        if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(didCreateNewBusiness:)]) {
-                            [weakSelf.delegate didCreateNewBusiness:object];
+            switch (((SHGEquityFinanceSendViewController *)weakSelf.superController).sendType) {
+                case 0:{
+                    NSString *vestYears =[businessSelectDic objectForKey:[weakSelf.investTimeButtonView.selectedArray firstObject]];
+                    NSString *anonymous = weakSelf.authorizeButton.isSelected ? @"1" : @"0";
+                    SHGBusinessObject *object = [[SHGBusinessObject alloc]init];
+                    NSString *businessId = self.obj.businessID;
+                    NSString *type = [businessDic objectForKey:@"type"];
+                    NSString *contact = [businessDic objectForKey:@"contact"];
+                    NSString *financingStage = [businessDic objectForKey:@"financingStage"];
+                    NSString *investAmount = [businessDic objectForKey:@"investAmount"];
+                    NSString *area = [businessDic objectForKey:@"area"];
+                    NSString *industry = [businessDic objectForKey:@"industry"];
+                    NSString *title = [businessDic objectForKey:@"title"];
+                    NSDictionary *param = @{@"uid":UID,@"businessId":businessId, @"type": type, @"contact":contact, @"financingStage":financingStage, @"investAmount": investAmount, @"area": area, @"industry": industry,@"totalshareRate": weakSelf.retributionTextField.text, @"vestYears":vestYears, @"detail": weakSelf.marketExplainTextView.text,@"photo": weakSelf.imageName,@"anonymous": anonymous,@"title": title};
+                    [SHGBusinessManager createNewBusiness:param success:^(BOOL success) {
+                        if (success) {
+                            if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(didCreateNewBusiness:)]) {
+                                [weakSelf.delegate didCreateNewBusiness:object];
+                            }
+                            [weakSelf.navigationController performSelector:@selector(popToRootViewControllerAnimated:) withObject:@(YES) afterDelay:1.2f];
                         }
-                        [weakSelf.navigationController performSelector:@selector(popToRootViewControllerAnimated:) withObject:@(YES) afterDelay:1.2f];
-                    }
-                }];
-                
+                    }];
+                }  break;
+                    
+                case 1:{
+                    NSString *vestYears =[businessSelectDic objectForKey:[weakSelf.investTimeButtonView.selectedArray firstObject]];
+                    NSString *anonymous = weakSelf.authorizeButton.isSelected ? @"1" : @"0";
+                    SHGBusinessObject *object = [[SHGBusinessObject alloc]init];
+                    NSString *businessId = self.obj.businessID;
+                    NSString *type = [businessDic objectForKey:@"type"];
+                    NSString *contact = [businessDic objectForKey:@"contact"];
+                    NSString *financingStage = [businessDic objectForKey:@"financingStage"];
+                    NSString *investAmount = [businessDic objectForKey:@"investAmount"];
+                    NSString *area = [businessDic objectForKey:@"area"];
+                    NSString *industry = [businessDic objectForKey:@"industry"];
+                    NSString *title = [businessDic objectForKey:@"title"];
+                    NSDictionary *param = @{@"uid":UID,@"businessId":businessId, @"type": type, @"contact":contact, @"financingStage":financingStage, @"investAmount": investAmount, @"area": area, @"industry": industry,@"totalshareRate": weakSelf.retributionTextField.text, @"vestYears":vestYears, @"detail": weakSelf.marketExplainTextView.text,@"photo": weakSelf.imageName,@"anonymous": anonymous,@"title": title};
+                    NSLog(@"%@",param);
+                    [SHGBusinessManager editBusiness:param success:^(BOOL success) {
+                        if (success) {
+                            if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(didCreateNewBusiness:)]) {
+                                [weakSelf.delegate didCreateNewBusiness:object];
+                            }
+                            [weakSelf.navigationController performSelector:@selector(popToRootViewControllerAnimated:) withObject:@(YES) afterDelay:1.2f];
+                        }
+                    }];
+                }
+                    break;
+                default:
+                    break;
             }
         }];
         

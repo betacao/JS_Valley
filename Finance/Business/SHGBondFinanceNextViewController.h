@@ -12,7 +12,7 @@
 #import "SHGBusinessDelegate.h"
 
 @interface SHGBondFinanceNextViewController : BaseViewController
-@property (strong, nonatomic) SHGBusinessObject *object;
+
 @property (assign, nonatomic) id<SHGBusinessDelegate> delegate;
 @property (weak, nonatomic) UIViewController *superController;
 

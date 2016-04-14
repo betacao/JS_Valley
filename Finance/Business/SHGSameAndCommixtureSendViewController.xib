@@ -46,7 +46,7 @@
                         <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </state>
                     <connections>
-                        <action selector="nextButtonClick:" destination="-1" eventType="touchUpInside" id="dgk-0n-odv"/>
+                        <action selector="nextButtonClick:" destination="-1" eventType="touchUpInside" id="ohF-Qs-E7z"/>
                     </connections>
                 </button>
                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="yQG-lH-gAl">
@@ -73,7 +73,7 @@
                     <rect key="frame" x="157" y="12" width="23" height="23"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 </imageView>
-                <view contentMode="scaleToFill" id="GRO-zk-UlN">
+                <view contentMode="scaleToFill" id="GRO-zk-UlN" customClass="SHGBusinessButtonContentView">
                     <rect key="frame" x="0.0" y="43" width="320" height="66"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" red="0.97254901959999995" green="0.97254901959999995" blue="0.97254901959999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

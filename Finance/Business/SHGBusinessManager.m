@@ -57,7 +57,7 @@
 }
 
 //创建新业务
-+ (void)createNewBusiness:(NSDictionary *)param success:(void (^)(BOOL))block
++ (void)createNewBusiness:(NSDictionary *)param success:(void (^)(BOOL success))block
 {
     NSString *request = [rBaseAddressForHttp stringByAppendingString:@"/business/saveBusiness"];
     [MOCHTTPRequestOperationManager postWithURL:request class:[SHGBusinessObject class] parameters:param success:^(MOCHTTPResponse *response) {
@@ -70,6 +70,19 @@
     }];
 }
 
++ (void)editBusiness:(NSDictionary *)param success:(void (^)(BOOL success))block
+{
+    NSString *request = [rBaseAddressForHttp stringByAppendingString:@"/business/editBusiness"];
+    [MOCHTTPRequestOperationManager postWithURL:request class:[SHGBusinessObject class] parameters:param success:^(MOCHTTPResponse *response) {
+        [Hud hideHud];
+        [Hud showMessageWithText:@"修改业务成功"];
+        block(YES);
+    } failed:^(MOCHTTPResponse *response) {
+        [Hud hideHud];
+        [Hud showMessageWithText:@"修改业务失败"];
+    }];
+
+}
 //列表
 + (void)getListDataWithParam:(NSDictionary *)param block:(void (^)(NSArray *dataArray, NSString *position, NSString *tipUrl))block;
 {

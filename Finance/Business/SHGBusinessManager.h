@@ -37,4 +37,7 @@
 - (void)shareAction:(SHGBusinessObject *)object baseController:(UIViewController *)controller finishBlock:(void (^)(BOOL))block;
 
 + (void)shareSuccessCallBack:(SHGBusinessObject *)object finishBlock:(void (^)(BOOL))block;
+
++ (void)editBusiness:(NSDictionary *)param success:(void (^)(BOOL success))block;
+
 @end

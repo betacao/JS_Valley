@@ -17,6 +17,7 @@
 #import "SHGMarketCollectionViewController.h"
 #import "SHGCardCollectionViewController.h"
 #import "SHGCircleCollectionViewController.h"
+#import "SHGBusinessCollectionListViewController.h"
 #define kLabelWidth ceilf(SCREENWIDTH / 4.0f)
 
 @interface SHGUserCenterViewController ()<UITableViewDataSource, UITableViewDelegate, UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
@@ -838,7 +839,7 @@
 
     } else if (indexPath.section == 2){
         if (indexPath.row == 0) {
-            SHGMarketCollectionViewController *controller = [[SHGMarketCollectionViewController alloc] init];
+            SHGBusinessCollectionListViewController *controller = [[SHGBusinessCollectionListViewController alloc] init];
             controller.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:controller animated:YES];
 
