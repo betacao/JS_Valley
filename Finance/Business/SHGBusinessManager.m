@@ -164,6 +164,7 @@
         NSString *result = [response.dataDictionary objectForKey:@"result"];
         if (!IsStrEmpty(result) && [result integerValue] > 0) {
             block(YES);
+            [[SHGGloble sharedGloble] recordUserAction:[NSString stringWithFormat:@"%@#%@", object.businessID, object.type] type:@"business_collect"];
         } else {
             block(NO);
         }
@@ -269,6 +270,7 @@
         if (block) {
             block(YES);
         }
+        [[SHGGloble sharedGloble] recordUserAction:[NSString stringWithFormat:@"%@#%@", object.businessID, object.type] type:@"business_comment"];
     } failed:^(MOCHTTPResponse *response) {
         [Hud hideHud];
         [Hud showMessageWithText:@"评论失败"];

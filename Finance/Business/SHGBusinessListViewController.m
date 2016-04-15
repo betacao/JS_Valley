@@ -94,7 +94,6 @@
         .bottomSpaceToView(weakSelf.view, 0.0f);
     };
 //    请求数据
-    [[SHGBusinessManager shareManager] getSecondListBlock:nil];
 }
 
 
@@ -107,6 +106,7 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+    [[SHGBusinessManager shareManager] getSecondListBlock:nil];
     self.filterView.didFinishAutoLayoutBlock = nil;
 }
 
@@ -324,14 +324,15 @@
 
 - (NSString *)minBusinessID
 {
-    NSString *businessID = [NSString stringWithFormat:@"%ld",NSIntegerMax];
+    NSString *maxBusinessID = [NSString stringWithFormat:@"%ld",NSIntegerMax];
+    NSString *businessID = maxBusinessID;
     for (SHGBusinessObject *object in self.currentArray) {
         NSString *objectBusinessId = object.businessID;
         if ([objectBusinessId compare:businessID options:NSNumericSearch] == NSOrderedAscending) {
             businessID = object.businessID;
         }
     }
-    return businessID;
+    return [businessID isEqualToString:maxBusinessID] ? @"" : businessID;
 }
 
 #pragma mark ------网络请求部分
@@ -346,7 +347,7 @@
     NSString *city = [self.cityName isEqualToString:@"全国"] ? @"" : self.cityName;
     NSString *redirect = [position isEqualToString:@"0"] ? @"1" : @"0";
     NSString *businessId = [target isEqualToString:@"refresh"] ? [self maxBusinessID] : [self minBusinessID];
-    NSMutableDictionary *param = [NSMutableDictionary dictionaryWithDictionary:@{@"businessId":businessId ,@"uid":UID ,@"type":[self.scrollView currentType] ,@"target":target ,@"pageSize":@"10" , @"city":city, @"redirect":redirect}];
+    NSMutableDictionary *param = [NSMutableDictionary dictionaryWithDictionary:@{@"businessId":businessId ,@"uid":UID ,@"type":[self.scrollView currentType] ,@"target":target ,@"pageSize":@"10" , @"area":city, @"redirect":redirect}];
     [param addEntriesFromDictionary:[self.paramDictionary objectForKey:[weakSelf.scrollView currentName]]];
     self.refreshing = YES;
     [SHGBusinessManager getListDataWithParam:param block:^(NSArray *dataArray, NSString *index, NSString *tipUrl) {
@@ -562,6 +563,7 @@
             SHGBusinessDetailViewController *controller = [[SHGBusinessDetailViewController alloc]init];
             controller.object = object;
             [self.navigationController pushViewController:controller animated:YES];
+            [[SHGGloble sharedGloble] recordUserAction:[NSString stringWithFormat:@"%@#%@", object.businessID, object.type] type:@"business_detail"];
         }
     }
 }

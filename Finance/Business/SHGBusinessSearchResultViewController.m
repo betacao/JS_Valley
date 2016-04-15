@@ -198,8 +198,11 @@
 {
     if (self.dataArr.count > 0) {
         SHGBusinessDetailViewController *controller = [[SHGBusinessDetailViewController alloc] init];
-        controller.object = [self.dataArr objectAtIndex:indexPath.row];
+        SHGBusinessObject *object = [self.dataArr objectAtIndex:indexPath.row];
+        controller.object = object;
         [self.navigationController pushViewController:controller animated:YES];
+        [[SHGGloble sharedGloble] recordUserAction:[NSString stringWithFormat:@"%@#%@", object.businessID, object.type] type:@"business_search"];
+
     }
 
 }

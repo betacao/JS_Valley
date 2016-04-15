@@ -209,4 +209,15 @@ typedef void (^SHHomeDataCompletionBlock)(NSArray *allList, NSArray *normalList,
  */
 
 - (NSDictionary *)getBusinessKeysAndValues;
+
+/**
+ @brief 通过服务端返回的value值反向去查询对应的key值
+
+ @param values 服务端返回的key
+
+ @return key值字符串
+
+ @since 1.8.0
+ */
+- (NSString *)businessKeysForValues:(NSString *)values;
 @end

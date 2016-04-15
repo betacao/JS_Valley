@@ -299,7 +299,8 @@
         self.positionLabel.text = self.responseObject.title;
     }
 
-    NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:[self valuesForKeys:[self.responseObject.middleContent componentsSeparatedByString:@"#"]] attributes:@{NSFontAttributeName:FontFactor(13.0f), NSForegroundColorAttributeName: Color(@"888888")}];
+    NSString *value = [[SHGGloble sharedGloble] businessKeysForValues:self.responseObject.middleContent];
+    NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:value attributes:@{NSFontAttributeName:FontFactor(13.0f), NSForegroundColorAttributeName: Color(@"888888")}];
     NSMutableParagraphStyle * paragraphStyle1 = [[NSMutableParagraphStyle alloc] init];
     [paragraphStyle1 setLineSpacing:5.0f];
     [string addAttribute:NSParagraphStyleAttributeName value:paragraphStyle1 range:NSMakeRange(0, [string length])];
@@ -347,28 +348,7 @@
 
 }
 
-- (NSString *)valuesForKeys:(NSArray *)keys
-{
-    __block NSString *key = @"";
-    __block NSString *value = @"";
-    __block NSString *result = @"";
-    NSArray *keyArray = [[[SHGGloble sharedGloble] getBusinessKeysAndValues] allKeys];
-    NSArray *valueArray = [[[SHGGloble sharedGloble] getBusinessKeysAndValues] allValues];
 
-    [keys enumerateObjectsUsingBlock:^(NSString *obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        key = [[obj componentsSeparatedByString:@":"] firstObject];
-        value = [[obj componentsSeparatedByString:@":"] lastObject];
-        if ([key isEqualToString:@"联系方式"] && [self.responseObject.userState isEqualToString:@"0"]) {
-            value = @"认证可见";
-        }
-        if ([valueArray containsObject:value]) {
-            value = [keyArray objectAtIndex:[valueArray indexOfObject:value]];
-        }
-        NSString *string = [key stringByAppendingFormat:@"：%@\n", value];
-        result = [result stringByAppendingString:string];
-    }];
-    return  result;
-}
 
 - (IBAction)editButtonClick:(UIButton *)sender
 {
@@ -764,7 +744,7 @@
 #pragma mark -- 拨打电话
 - (BOOL)openTel:(NSString *)tel
 {
-    [[SHGGloble sharedGloble] recordUserAction:self.responseObject.businessID type:@"call"];
+    [[SHGGloble sharedGloble] recordUserAction:[NSString stringWithFormat:@"%@#%@", self.responseObject.businessID, self.responseObject.type] type:@"business_call"];
     NSMutableString * str=[[NSMutableString alloc] initWithFormat:@"telprompt://%@",tel];
     NSLog(@"str======%@",str);
     return  [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str]];

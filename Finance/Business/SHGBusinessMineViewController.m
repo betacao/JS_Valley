@@ -202,6 +202,8 @@
         SHGBusinessDetailViewController *controller = [[SHGBusinessDetailViewController alloc]init];
         controller.object = object;
         [self.navigationController pushViewController:controller animated:YES];
+
+        [[SHGGloble sharedGloble] recordUserAction:[NSString stringWithFormat:@"%@#%@", object.businessID, object.type] type:@"business_detail"];
     }
 }
 

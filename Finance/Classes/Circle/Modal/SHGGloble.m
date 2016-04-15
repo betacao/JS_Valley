@@ -549,4 +549,31 @@
     return self.businessDictionary;
 }
 
+
+- (NSString *)businessKeysForValues:(NSString *)values;
+{
+    __block NSString *key = @"";
+    __block NSString *value = @"";
+    __block NSString *result = @"";
+    NSArray *globleKeyArray = [[self getBusinessKeysAndValues] allKeys];
+    NSArray *globleValueArray = [[self getBusinessKeysAndValues] allValues];
+    NSArray *keys = [values componentsSeparatedByString:@"#"];
+    
+    [keys enumerateObjectsUsingBlock:^(NSString *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        key = [[obj componentsSeparatedByString:@":"] firstObject];
+        value = [[obj componentsSeparatedByString:@":"] lastObject];
+        __block NSString *string = [NSString stringWithFormat:@"%@: %@\n",key, value];
+
+        NSArray *valueArray = [value componentsSeparatedByString:@";"];
+        string = [string stringByReplacingOccurrencesOfString:@";" withString:@"/"];
+        [valueArray enumerateObjectsUsingBlock:^(NSString *subValue, NSUInteger idx, BOOL * _Nonnull stop) {
+            if ([globleValueArray containsObject:subValue]) {
+                string = [string stringByReplacingOccurrencesOfString:subValue withString:[globleKeyArray objectAtIndex:[valueArray indexOfObject:subValue]]];
+            }
+        }];
+        result = [result stringByAppendingString:string];
+    }];
+    return  result;
+}
+
 @end
