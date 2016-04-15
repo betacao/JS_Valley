@@ -22,7 +22,6 @@
 			<string>江西</string>
 			<string>山东</string>
 			<string>福建</string>
-			<string>上海</string>
 		</array>
 		<key>state</key>
 		<string>华东地区</string>
@@ -33,8 +32,6 @@
 			<string>河北</string>
 			<string>山西</string>
 			<string>内蒙古</string>
-			<string>北京</string>
-			<string>天津</string>
 		</array>
 		<key>state</key>
 		<string>华北地区</string>
@@ -76,7 +73,6 @@
 			<string>贵州</string>
 			<string>云南</string>
 			<string>西藏</string>
-			<string>重庆</string>
 		</array>
 		<key>state</key>
 		<string>西南地区</string>

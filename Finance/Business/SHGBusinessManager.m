@@ -57,7 +57,7 @@
 }
 
 //创建新业务
-+ (void)createNewBusiness:(NSDictionary *)param success:(void (^)(BOOL success))block
++ (void)createNewBusiness:(NSDictionary *)param success:(void (^)(BOOL ))block
 {
     NSString *request = [rBaseAddressForHttp stringByAppendingString:@"/business/saveBusiness"];
     [MOCHTTPRequestOperationManager postWithURL:request class:[SHGBusinessObject class] parameters:param success:^(MOCHTTPResponse *response) {

@@ -352,7 +352,6 @@
 
 - (IBAction)editButtonClick:(UIButton *)sender
 {
-    NSLog(@"111");
     if ([self.responseObject.type isEqualToString:@"moneyside"]) {
         if ([self.responseObject.moneysideType isEqualToString:@"equityInvest"]) {
             SHGEquityInvestSendViewController *viewController = [[SHGEquityInvestSendViewController alloc] init];
@@ -754,7 +753,7 @@
 {
     [super viewWillDisappear:animated];
     if (!self.isCollectionChange) {
-        [self.controller changeMarketCollection];
+        [self.controller changeBusinessCollection];
     }
     
 }

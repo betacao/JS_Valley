@@ -8,10 +8,10 @@
 
 #import "BaseViewController.h"
 #import "SHGBusinessObject.h"
-#import "SHGMarketCollectionViewController.h"
+#import "SHGBusinessCollectionListViewController.h"
 
 @interface SHGBusinessDetailViewController : BaseTableViewController
 @property (strong, nonatomic) SHGBusinessObject *object;
-@property (weak, nonatomic) SHGMarketCollectionViewController *controller;
+@property (weak, nonatomic) SHGBusinessCollectionListViewController *controller;
 - (void)editBusiness;
 @end

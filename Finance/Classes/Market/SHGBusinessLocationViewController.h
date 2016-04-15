@@ -10,5 +10,5 @@
 
 @interface SHGBusinessLocationViewController : BaseViewController
 + (instancetype)sharedController;
-
+@property (nonatomic, strong) NSString *locationString;
 @end

@@ -12,4 +12,5 @@
 - (NSMutableArray *) currentDataArray;
 - (void)reloadData;
 - (void)refreshData;
+- (void)changeBusinessCollection;
 @end

@@ -417,6 +417,10 @@
             [button setTitleColor:Color(@"161616") forState:UIControlStateNormal];
             [button setTitleColor:Color(@"f33300") forState:UIControlStateSelected];
             [button addTarget:self action:@selector(locationButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+            if ([button.titleLabel.text isEqualToString:self.locationString]) {
+                button.selected = YES;
+                self.locationCurrentButton = button;
+            }
             button.frame = CGRectMake(MarginFactor(12.0f) + i%3 * (kLocationButtonLeftMargin + kLocationButtonWidth), i/3 * (kLocationButtonTopMargin + kLocationButtonHeight), kLocationButtonWidth, kLocationButtonHeight);
             [[locationArry objectAtIndex:j] addSubview:button];
         }
@@ -429,13 +433,14 @@
     if(btn != self.locationCurrentButton){
         self.locationCurrentButton.selected = NO;
         self.locationCurrentButton = btn;
+        self.locationString = self.locationCurrentButton.titleLabel.text;
     }
     self.locationCurrentButton.selected = YES;
 }
 
 - (IBAction)sureButtonClick:(UIButton *)sender
 {
-    [SHGBusinessListViewController sharedController].cityName = @"江苏";
+    [SHGBusinessListViewController sharedController].cityName = self.locationString;
     [self.navigationController popViewControllerAnimated:YES];
 }
 

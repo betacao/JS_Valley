@@ -568,7 +568,7 @@
         string = [string stringByReplacingOccurrencesOfString:@";" withString:@"/"];
         [valueArray enumerateObjectsUsingBlock:^(NSString *subValue, NSUInteger idx, BOOL * _Nonnull stop) {
             if ([globleValueArray containsObject:subValue]) {
-                string = [string stringByReplacingOccurrencesOfString:subValue withString:[globleKeyArray objectAtIndex:[valueArray indexOfObject:subValue]]];
+                string = [string stringByReplacingOccurrencesOfString:subValue withString:[globleKeyArray objectAtIndex:[globleValueArray indexOfObject:subValue]]];
             }
         }];
         result = [result stringByAppendingString:string];

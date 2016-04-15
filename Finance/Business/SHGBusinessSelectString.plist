@@ -70,5 +70,13 @@
 	<string>sameIndustry</string>
 	<key>混业</key>
 	<string>commixtureIndustry</string>
+	<key>债权融资</key>
+	<string>bondFinance</string>
+	<key>债权投资</key>
+	<string>bondInvest</string>
+	<key>股权融资</key>
+	<string>equityFinance</string>
+	<key>股权投资</key>
+	<string>equityInvest</string>
 </dict>
 </plist>

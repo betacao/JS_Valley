@@ -13,6 +13,7 @@
 #import "SHGBusinessLocationView.h"
 #import "SHGBusinessButtonContentView.h"
 #import "CCLocationManager.h"
+#import "SHGBusinessLocationViewController.h"
 @interface SHGBondInvestSendViewController ()<UITextFieldDelegate,UIScrollViewDelegate,UITextViewDelegate>
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UIButton *nextButton;
@@ -395,7 +396,6 @@
     NSArray *bondTypeArray = [NSArray array];
     NSArray *key = [[[SHGGloble sharedGloble] getBusinessKeysAndValues] allKeys];
     NSArray *value = [[[SHGGloble sharedGloble] getBusinessKeysAndValues] allValues];
-    
     if (self.sendType == 1) {
         self.nameTextField.text = self.object.businessTitle;
         self.phoneNumTextField.text = self.object.contact;
@@ -434,6 +434,7 @@
        
         
    }
+    self.monenyTextField.keyboardType = UIKeyboardTypeNumberPad;
     self.phoneNumTextField.keyboardType = UIKeyboardTypeNumberPad;
     self.nextButton.titleLabel.font = FontFactor(19.0f);
     [self.nextButton setTitleColor:Color(@"ffffff") forState:UIControlStateNormal];
@@ -569,6 +570,7 @@
         [weakSelf.areaSelectButton setTitleColor:Color(@"161616") forState:UIControlStateNormal];
     };
     [self.view.window addSubview:self.locationView];
+
 }
 
 - (void)capitalButtonClick:(UIButton *)btn

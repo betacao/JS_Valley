@@ -142,9 +142,8 @@
     .rightSpaceToView(self.scrollView, kLeftToView)
     .heightRatioToView(self.addImageTitleLabel, 1.0f);
     
-    [self.scrollView setupAutoHeightWithBottomView:self.authorizeButton bottomMargin:MarginFactor(20.0f)];
-    
-    
+    [self.scrollView setupAutoContentSizeWithBottomView:self.authorizeButton bottomMargin:MarginFactor(200.0f)];
+
     
 }
 

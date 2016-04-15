@@ -240,7 +240,7 @@
         
         
     }
-
+    self.retributionTextField.keyboardType = UIKeyboardTypeNumberPad;
     self.sureButton.titleLabel.font = FontFactor(19.0f);
     [self.sureButton setTitleColor:Color(@"ffffff") forState:UIControlStateNormal];
     [self.sureButton setBackgroundColor:Color(@"f04241")];
@@ -326,7 +326,6 @@
                     NSString *vestYears =[businessSelectDic objectForKey:[weakSelf.investTimeButtonView.selectedArray firstObject]];
                     NSString *anonymous = weakSelf.authorizeButton.isSelected ? @"1" : @"0";
                     SHGBusinessObject *object = [[SHGBusinessObject alloc]init];
-                    NSString *businessId = self.obj.businessID;
                     NSString *type = [businessDic objectForKey:@"type"];
                     NSString *contact = [businessDic objectForKey:@"contact"];
                     NSString *financingStage = [businessDic objectForKey:@"financingStage"];
@@ -334,7 +333,7 @@
                     NSString *area = [businessDic objectForKey:@"area"];
                     NSString *industry = [businessDic objectForKey:@"industry"];
                     NSString *title = [businessDic objectForKey:@"title"];
-                    NSDictionary *param = @{@"uid":UID,@"businessId":businessId, @"type": type, @"contact":contact, @"financingStage":financingStage, @"investAmount": investAmount, @"area": area, @"industry": industry,@"totalshareRate": weakSelf.retributionTextField.text, @"vestYears":vestYears, @"detail": weakSelf.marketExplainTextView.text,@"photo": weakSelf.imageName,@"anonymous": anonymous,@"title": title};
+                    NSDictionary *param = @{@"uid":UID, @"type": type, @"contact":contact, @"financingStage":financingStage, @"investAmount": investAmount, @"area": area, @"industry": industry,@"totalshareRate": weakSelf.retributionTextField.text, @"vestYears":vestYears, @"detail": weakSelf.marketExplainTextView.text,@"photo": weakSelf.imageName,@"anonymous": anonymous,@"title": title};
                     [SHGBusinessManager createNewBusiness:param success:^(BOOL success) {
                         if (success) {
                             if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(didCreateNewBusiness:)]) {

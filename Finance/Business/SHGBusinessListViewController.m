@@ -43,6 +43,7 @@
 @property (strong, nonatomic) NSMutableDictionary *paramDictionary;
 
 @property (strong, nonatomic) NSMutableDictionary *titleDictionary;
+@property (strong, nonatomic) SHGBusinessLocationViewController *locationViewController;
 @end
 
 @implementation SHGBusinessListViewController
@@ -446,8 +447,10 @@
 
 - (void)moveToProvincesViewController:(UIButton *)button
 {
-    SHGBusinessLocationViewController *controller = [[SHGBusinessLocationViewController alloc] init];
-    [self.navigationController pushViewController:controller animated:YES];
+    if (!self.locationViewController) {
+        self.locationViewController = [[SHGBusinessLocationViewController alloc] init];
+    }
+    [self.navigationController pushViewController:self.locationViewController animated:YES];
 }
 
 - (void)clearAndReloadData

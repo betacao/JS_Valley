@@ -267,7 +267,8 @@
     
     [self.areaView setupAutoHeightWithBottomView:self.areaSelectButton bottomMargin:ktopToView];
     
-    [self.scrollView setupAutoHeightWithBottomView:self.areaView bottomMargin:0.0f];
+    //[self.scrollView setupAutoHeightWithBottomView:self.areaView bottomMargin:0.0f];
+    [self.scrollView setupAutoContentSizeWithBottomView:self.areaView bottomMargin:MarginFactor(55.0f)];
     
 }
 
@@ -288,6 +289,7 @@
             category = [key objectAtIndex:[value indexOfObject:category]];
         }
     }
+    self.monenyTextField.keyboardType = UIKeyboardTypeNumberPad;
     self.phoneNumTextField.keyboardType = UIKeyboardTypeNumberPad;
     self.nextButton.titleLabel.font = FontFactor(19.0f);
     [self.nextButton setTitleColor:Color(@"ffffff") forState:UIControlStateNormal];

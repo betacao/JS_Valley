@@ -11,6 +11,7 @@
 #import "SHGBusinessManager.h"
 #import "SHGBusinessObject.h"
 #import "SHGBusinessTableViewCell.h"
+#import "SHGBusinessDetailViewController.h"
 @interface SHGBusinessCollectionListViewController ()<UITabBarDelegate, UITableViewDataSource>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) UITableViewCell *emptyCell;
@@ -146,6 +147,10 @@
     return ((SHGBusinessObject *)[self.dataArr lastObject]).businessID;
 }
 
+- (void)changeBusinessCollection
+{
+    [self requestBusinessCollectWithTarget:@"first" modifyTime:@""];
+}
 #pragma mark ------tableview代理
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -193,10 +198,10 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (self.dataArr.count > 0) {
-//        SHGMarketDetailViewController *controller = [[SHGMarketDetailViewController alloc] init];
-//        controller.controller = self;
-//        controller.object = [self.dataArr objectAtIndex:indexPath.row];
-//        [self.navigationController pushViewController:controller animated:YES];
+        SHGBusinessDetailViewController *controller = [[SHGBusinessDetailViewController alloc] init];
+        controller.controller = self;
+        controller.object = [self.dataArr objectAtIndex:indexPath.row];
+        [self.navigationController pushViewController:controller animated:YES];
     }
 }
 

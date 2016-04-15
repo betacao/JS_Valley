@@ -300,6 +300,7 @@
         
     }
 
+    self.retributionTextField.keyboardType = UIKeyboardTypeNumberPad;
     self.sureButton.titleLabel.font = FontFactor(19.0f);
     [self.sureButton setTitleColor:Color(@"ffffff") forState:UIControlStateNormal];
     [self.sureButton setBackgroundColor:Color(@"f04241")];
@@ -425,7 +426,6 @@
                     NSString *type = [businessDic objectForKey:@"type"];
                     NSString *contact = [businessDic objectForKey:@"contact"];
                     NSString *investAmount = [businessDic objectForKey:@"investAmount"];
-                    NSString *businessId = self.obj.businessID;
                     NSString *financingStage = [businessDic objectForKey:@"financingStage"];
                     NSString *area = [businessDic objectForKey:@"area"];
                     NSString *industry = [businessDic objectForKey:@"industry"];
@@ -441,7 +441,7 @@
                         
                     }
                     
-                    NSDictionary *param = @{@"uid":UID,@"businessId":businessId, @"type": type, @"moneysideType": @"equityFinance",@"contact":contact,@"financingStage":financingStage, @"investAmount": investAmount, @"area": area, @"industry": industry,@"fundSource":fundSource ,@"totalshareRate":weakSelf.retributionTextField.text, @"vestYears": vestYears,@"detail": weakSelf.marketExplainTextView.text,@"photo": weakSelf.imageName,@"anonymous": anonymous,@"title": title};
+                    NSDictionary *param = @{@"uid":UID, @"type": type, @"moneysideType": @"equityInvest",@"contact":contact,@"financingStage":financingStage, @"investAmount": investAmount, @"area": area, @"industry": industry,@"fundSource":fundSource ,@"totalshareRate":weakSelf.retributionTextField.text, @"vestYears": vestYears,@"detail": weakSelf.marketExplainTextView.text,@"photo": weakSelf.imageName,@"anonymous": anonymous,@"title": title};
                     [SHGBusinessManager createNewBusiness:param success:^(BOOL success) {
                         if (success) {
                             if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(didCreateNewBusiness:)]) {
