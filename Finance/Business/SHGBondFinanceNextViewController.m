@@ -88,6 +88,7 @@
     [self.scrollView addSubview:self.authorizeButton];
     [self addSdLayout];
     [self initView];
+    [self editObject];
 
 }
 
@@ -272,11 +273,9 @@
     
 }
 
-- (void)initView
+- (void)editObject
 {
-    NSString *clarifyingWay = @"";//增信方式
-    NSString *fundUsetime = @"";
-    if (((SHGBondFinanceSendViewController *)self.superController).sendType == 1) {
+    if (self.obj) {
         self.marketExplainTextView.text = self.obj.detail;
         if ([self.obj.anonymous isEqualToString:@"1"]) {
             self.authorizeButton.selected = YES;
@@ -294,26 +293,49 @@
             }];
         }
         
-        clarifyingWay = self.obj.clarifyingWay;
-        NSArray *clarifyingWayArray = [self.obj.clarifyingWay componentsSeparatedByString:@";"];
-        self.clarifyingWaybuttonArray = clarifyingWayArray;
-        NSArray *key = [[[SHGGloble sharedGloble] getBusinessKeysAndValues] allKeys];
-        NSArray *value = [[[SHGGloble sharedGloble] getBusinessKeysAndValues] allValues];
-        if (clarifyingWay.length > 0) {
-            clarifyingWay = [key objectAtIndex:[value indexOfObject:clarifyingWay]];
-        } else{
-            clarifyingWay = @"";
+        NSString *result = [[SHGGloble sharedGloble] businessKeysForValues:self.obj.middleContent];
+        NSArray *nameArray = @[@"增信方式",@"可承担最高利息",@"期限"];
+        NSArray *resultArray = [result componentsSeparatedByString:@"\n"];
+        NSMutableArray * array = [[SHGGloble sharedGloble] editBusinessKeysForValues:nameArray middleContentArray:resultArray];
+        NSLog(@"%@", array);
+        
+        
+        //投资期限
+        NSString *investTime = [array objectAtIndex:2];
+        
+        for (NSInteger i = 0; i < self.investTimeButtonView.buttonArray.count; i ++) {
+            UIButton *button = [self.investTimeButtonView.buttonArray objectAtIndex:i];
+            
+            if ([button.titleLabel.text isEqualToString:investTime]) {
+                button.selected = YES;
+            }
+            
         }
-       
-        fundUsetime = self.obj.fundUsetime;
-        if (fundUsetime.length > 0) {
-            fundUsetime = [key objectAtIndex:[value indexOfObject:fundUsetime]];
-        } else{
-            fundUsetime = @"";
-        }
+        
+        //可承担最高利息
+        NSString *number = [array objectAtIndex:1];
+        self.retributionTextField.text = [[number componentsSeparatedByString:@"%"] firstObject];
+        
+        //增信方式
+        NSString *addRequire = [array objectAtIndex:0];
+        NSArray *addRequireArray = [addRequire componentsSeparatedByString:@"/"];
+        for (NSInteger i = 0; i < self.addRequireButtonView.buttonArray.count; i ++) {
+            UIButton *button = [self.addRequireButtonView.buttonArray objectAtIndex:i];
+            for (NSInteger j = 0; j < addRequireArray.count; j ++) {
+                if ([button.titleLabel.text isEqualToString:[addRequireArray objectAtIndex:j]]) {
+                    button.selected = YES;
+                }
+            }
 
+            
+        }
+        
         
     }
+
+}
+- (void)initView
+{
     self.retributionTextField.keyboardType = UIKeyboardTypeNumberPad;
     self.sureButton.titleLabel.font = FontFactor(19.0f);
     [self.sureButton setTitleColor:Color(@"ffffff") forState:UIControlStateNormal];
@@ -354,9 +376,7 @@
         [button setBackgroundImage:self.buttonBgImage forState:UIControlStateNormal];
         [button setTitleColor:Color(@"ff8d65") forState:UIControlStateSelected];
         [button setBackgroundImage:self.buttonSelectBgImage forState:UIControlStateSelected];
-        if ([button.titleLabel.text isEqualToString:fundUsetime]) {
-            button.selected = YES;
-        }
+
         button.frame = CGRectMake(kLeftToView + i * (kThreeButtonWidth + kButtonLeftMargin), 0.0f, kThreeButtonWidth, kCategoryButtonHeight);
         [button addTarget:self action:@selector(investTimeButtonClick:) forControlEvents:UIControlEventTouchUpInside];
         [self.investTimeButtonView addSubview:button];
@@ -372,13 +392,7 @@
         [button setBackgroundImage:self.buttonBgImage forState:UIControlStateNormal];
         [button setTitleColor:Color(@"ff8d65") forState:UIControlStateSelected];
         [button setBackgroundImage:self.buttonSelectBgImage forState:UIControlStateSelected];
-        if (((SHGBondFinanceSendViewController *)self.superController).sendType == 1){
-            for (NSInteger i = 0; i < self.clarifyingWaybuttonArray.count; i ++) {
-                if ([button.titleLabel.text isEqualToString:[self.clarifyingWaybuttonArray objectAtIndex:i]]) {
-                    button.selected = YES;
-                }
-            }
-        }
+
         button.frame = CGRectMake(kLeftToView + j * (kFourButtonWidth + kButtonLeftMargin), 0.0f, kFourButtonWidth, kCategoryButtonHeight);
         [button addTarget:self action:@selector(addRequireButtonClick:) forControlEvents:UIControlEventTouchUpInside];
         [self.addRequireButtonView addSubview:button];

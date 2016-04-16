@@ -70,7 +70,7 @@
     }];
 }
 
-+ (void)editBusiness:(NSDictionary *)param success:(void (^)(BOOL success))block
++ (void)editBusiness:(NSDictionary *)param success:(void (^)(BOOL ))block
 {
     NSString *request = [rBaseAddressForHttp stringByAppendingString:@"/business/editBusiness"];
     [MOCHTTPRequestOperationManager postWithURL:request class:[SHGBusinessObject class] parameters:param success:^(MOCHTTPResponse *response) {

@@ -44,10 +44,7 @@
     }
     return self;
 }
-- (void)makeEditIndustryString:(NSString *)str
-{
-    self.buttonString = str;
-}
+
 - (NSArray *)strongArray
 {
     if (!_strongArray) {
@@ -95,11 +92,11 @@
 {
     SHGBusinessButtonContentView *superView =(SHGBusinessButtonContentView *)btn.superview;
     [superView didClickButton:btn];
-    self.buttonStrongArray = superView.selectedArray;
+    //self.buttonStrongArray = superView.selectedArray;
     if (self.statu) {
         if (superView.selectedArray.count > 0) {
             self.buttonString = [superView.selectedArray objectAtIndex:0];
-            for (NSInteger i = 1; i < self.buttonStrongArray.count; i ++ ) {
+            for (NSInteger i = 1; i < superView.selectedArray.count; i ++ ) {
                 self.buttonString = [NSString stringWithFormat:@"%@/%@",self.buttonString,[superView.selectedArray objectAtIndex:i]];
             }
             
@@ -120,6 +117,20 @@
 
 - (void)quiteClick:(UIButton *)btn
 {
+    if (self.statu) {
+        self.buttonStrongArray = self.buttonView.selectedArray;
+    } else{
+        self.buttonStrongArray = self.radioButtonView.selectedArray;
+    }
+    if (self.buttonStrongArray.count > 0) {
+        self.buttonString = [self.buttonStrongArray objectAtIndex:0];
+        for (NSInteger i = 1; i < self.buttonStrongArray.count; i ++ ) {
+            self.buttonString = [NSString stringWithFormat:@"%@/%@",self.buttonString,[self.buttonStrongArray objectAtIndex:i]];
+        }
+        
+    } else{
+        self.buttonString = @"";
+    }
     if (self.returnTextBlock) {
         self.returnTextBlock(self.buttonString,self.buttonStrongArray);
     }
@@ -164,29 +175,22 @@
         [button setTitleColor:Color(@"ff8d65") forState:UIControlStateSelected];
         [button setBackgroundImage:buttonBgImage forState:UIControlStateNormal];
         [button setBackgroundImage:buttonSelectBgImage forState:UIControlStateSelected];
-        NSString *industry ;
-        if ([[self.strongArray firstObject] isEqualToString:@""]) {
-            industry = @"不限";
-        } else{
-            for (NSInteger i = 0 ; i < self.strongArray.count ; i ++) {
-                NSArray *key = [[[SHGGloble sharedGloble] getBusinessKeysAndValues] allKeys];
-                
-                NSArray *value = [[[SHGGloble sharedGloble] getBusinessKeysAndValues] allValues];
-                
-                industry = [key objectAtIndex:[value indexOfObject:[self.strongArray objectAtIndex:i]]];
-                NSLog(@"%@%@",industry,self.strongArray);
-                if ([button.titleLabel.text isEqualToString:industry]) {
+        if (self.strongArray.count > 0) {
+            for (NSInteger i = 0; i < self.strongArray.count; i ++) {
+                if ([button.titleLabel.text isEqualToString:[self.strongArray objectAtIndex:i]]) {
                     button.selected = YES;
                 }
             }
-
         }
+
         
         button.frame = CGRectMake(kLeftToView + i%3 * (kThreeButtonWidth + MarginFactor(9.0f)), i/3 * (kButtonHeight + MarginFactor(30.0f)), kThreeButtonWidth, kCategoryButtonHeight);
         [button addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchUpInside];
         if (self.statu) {
+            [self.buttonView.selectedArray addObjectsFromArray:self.strongArray];
             [self.buttonView addSubview:button];
         } else{
+            [self.radioButtonView.selectedArray addObjectsFromArray:self.strongArray];
             [self.radioButtonView addSubview:button];
         }
         

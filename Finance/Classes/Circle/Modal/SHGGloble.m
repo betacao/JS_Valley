@@ -576,4 +576,21 @@
     return  result;
 }
 
+
+- (NSMutableArray *)editBusinessKeysForValues:(NSArray *)nameArray middleContentArray:(NSArray *)middleContentArray
+{
+    
+    NSMutableArray *resultArray = [[NSMutableArray alloc] init];
+    [middleContentArray enumerateObjectsUsingBlock:^(NSString *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        NSString *key = [[obj componentsSeparatedByString:@": "] firstObject];
+        NSString *value = [[obj componentsSeparatedByString:@": "] lastObject];
+        for (NSInteger i = 0; i < nameArray.count; i ++) {
+            if ([key isEqualToString:[nameArray objectAtIndex:i]]) {
+                [resultArray addObject:value];
+            }
+            
+        }
+    }];
+    return resultArray;
+}
 @end

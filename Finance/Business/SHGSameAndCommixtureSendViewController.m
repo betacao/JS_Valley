@@ -93,6 +93,7 @@
     [self.scrollView addSubview:self.areaView];
     [self addSdLayout];
     [self initView];
+    [self editObject];
 
 }
 
@@ -272,23 +273,42 @@
     
 }
 
+- (void)editObject
+{
+    if (self.object) {
+        
+        self.nameTextField.text = self.object.businessTitle;
+        NSString *result = [[SHGGloble sharedGloble] businessKeysForValues:self.object.middleContent];
+        NSArray *nameArray = @[@"联系方式",@"类型",@"金额",@"地区"];
+        NSArray *resultArray = [result componentsSeparatedByString:@"\n"];
+        NSMutableArray * array = [[SHGGloble sharedGloble] editBusinessKeysForValues:nameArray middleContentArray:resultArray];
+        NSLog(@"%@", array);
+        //金额
+        self.phoneNumTextField.text = [array objectAtIndex:3];
+        
+        NSString *money = [array objectAtIndex:1];
+        if ([money isEqualToString:@"暂未说明"]) {
+            self.monenyTextField.text = @"";
+        } else{
+            self.monenyTextField.text = money;
+        }
+        
+        //地区
+        [self.areaSelectButton setTitle:[array objectAtIndex:2] forState:UIControlStateNormal];
+        [self.areaSelectButton setTitleColor:Color(@"161616") forState:UIControlStateNormal];
+        //类型
+        NSString *category = [array objectAtIndex:0];
+        for (NSInteger i = 0; i < self.marketCategoryButtonView.buttonArray.count; i ++) {
+            UIButton *button = [self.marketCategoryButtonView.buttonArray objectAtIndex:i];
+            if ([button.titleLabel.text isEqualToString:category]) {
+                button.selected = YES;
+            }
+        }
+        
+    }
+}
 - (void)initView
 {
-    NSString * category = @"";
-    NSArray *key = [[[SHGGloble sharedGloble] getBusinessKeysAndValues] allKeys];
-    NSArray *value = [[[SHGGloble sharedGloble] getBusinessKeysAndValues] allValues];
-    
-    if (self.sendType == 1) {
-        self.nameTextField.text = self.object.businessTitle;
-        self.phoneNumTextField.text = self.object.contact;
-        self.monenyTextField.text = self.object.investAmount;
-        category = self.object.businessType;
-        if (self.object.businessType.length == 0) {
-            category = @"";
-        } else{
-            category = [key objectAtIndex:[value indexOfObject:category]];
-        }
-    }
     self.monenyTextField.keyboardType = UIKeyboardTypeNumberPad;
     self.phoneNumTextField.keyboardType = UIKeyboardTypeNumberPad;
     self.nextButton.titleLabel.font = FontFactor(19.0f);
@@ -354,9 +374,7 @@
         [button setBackgroundImage:self.buttonBgImage forState:UIControlStateNormal];
         [button setTitleColor:Color(@"ff8d65") forState:UIControlStateSelected];
         [button setBackgroundImage:self.buttonSelectBgImage forState:UIControlStateSelected];
-//        if ([button.titleLabel.text isEqualToString:category]) {
-//            button.selected = YES;
-//        }
+
         button.frame = CGRectMake(kLeftToView + i * (kTwoButtonWidth + kButtonLeftMargin), 0.0f, kTwoButtonWidth, kCategoryButtonHeight);
         [button addTarget:self action:@selector(categoryButtonClick:) forControlEvents:UIControlEventTouchUpInside];
         [self.marketCategoryButtonView addSubview:button];

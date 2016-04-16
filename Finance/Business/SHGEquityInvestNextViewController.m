@@ -24,7 +24,7 @@
 //投资期限
 @property (strong, nonatomic) IBOutlet UIView *investTimeView;
 @property (weak, nonatomic) IBOutlet UILabel *investTimeTitleLabel;
-@property (weak, nonatomic) IBOutlet SHGBusinessButtonContentView *investTimeButtonView;
+@property (weak, nonatomic) IBOutlet SHGBusinessButtonContentView *timeButtonView;
 
 //参股比例
 @property (strong, nonatomic) IBOutlet UIView *retributionView;
@@ -75,7 +75,7 @@
     self.retributionTextField.delegate = self;
     self.marketExplainTextView.delegate = self;
     self.capitalSourceButtonView.showMode = 1;
-    self.investTimeButtonView.showMode = 2;
+    self.timeButtonView.showMode = 2;
     self.buttonBgImage = [UIImage imageNamed:@"business_SendButtonBg"];
     self.buttonBgImage = [self.buttonBgImage resizableImageWithCapInsets:UIEdgeInsetsMake(10.0f, 10.0f, 10.0f, 10.0f) resizingMode:UIImageResizingModeStretch];
     
@@ -90,6 +90,7 @@
     [self.scrollView addSubview:self.authorizeButton];
     [self addSdLayout];
     [self initView];
+    [self editObject];
 
  
 }
@@ -188,13 +189,13 @@
     .autoHeightRatio(0.0f);
     [self.investTimeTitleLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
     
-    self.investTimeButtonView.sd_layout
+    self.timeButtonView.sd_layout
     .leftSpaceToView(self.investTimeView, 0.0f)
     .rightSpaceToView(self.investTimeView, 0.0f)
     .topSpaceToView(self.investTimeTitleLabel, ktopToView)
     .heightIs(kButtonHeight);
     
-    [self.investTimeView setupAutoHeightWithBottomView:self.investTimeButtonView bottomMargin:ktopToView];
+    [self.investTimeView setupAutoHeightWithBottomView:self.timeButtonView bottomMargin:ktopToView];
     //业务说明
     
     self.marketExplainView.sd_layout
@@ -258,48 +259,6 @@
 
 - (void)initView
 {
-    NSString *fundSource = @"";
-    NSString *vestYears = @"";
-    NSArray *vestYearsWayArray = [NSArray array];
-    
-    if (((SHGEquityInvestSendViewController *)self.superController).sendType == 1) {
-        self.marketExplainTextView.text = self.obj.detail;
-        if ([self.obj.anonymous isEqualToString:@"1"]) {
-            self.authorizeButton.selected = YES;
-        } else{
-            self.authorizeButton.selected = NO;
-        }
-        
-        fundSource = self.obj.fundSource;
-        if (self.obj.fundSource.length == 0) {
-            fundSource = @"";
-        } else{
-            NSArray *key = [[[SHGGloble sharedGloble] getBusinessKeysAndValues] allKeys];
-            NSArray *value = [[[SHGGloble sharedGloble] getBusinessKeysAndValues] allValues];
-            fundSource = [key objectAtIndex:[value indexOfObject:fundSource]];
-        }
-        
-        if (self.obj.photo && self.obj.photo.length > 0) {
-            self.hasImage = YES;
-            __weak typeof(self) weakSelf = self;
-            [[SDWebImageManager sharedManager] downloadImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,self.obj.photo]] options:SDWebImageRetryFailed|SDWebImageLowPriority progress:^(NSInteger receivedSize, NSInteger expectedSize) {
-                
-            } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
-                [weakSelf.addImageButton setImage:image forState:UIControlStateNormal];
-            }];
-        }
-        
-        
-        vestYears = self.obj.vestYears;
-        if (vestYears.length == 0) {
-            vestYears = @"不限";
-        } else{
-            vestYearsWayArray = [vestYears componentsSeparatedByString:@";"];
-        }
-        
-        
-    }
-
     self.retributionTextField.keyboardType = UIKeyboardTypeNumberPad;
     self.sureButton.titleLabel.font = FontFactor(19.0f);
     [self.sureButton setTitleColor:Color(@"ffffff") forState:UIControlStateNormal];
@@ -344,24 +303,10 @@
         [button setBackgroundImage:self.buttonBgImage forState:UIControlStateNormal];
         [button setTitleColor:Color(@"ff8d65") forState:UIControlStateSelected];
         [button setBackgroundImage:self.buttonSelectBgImage forState:UIControlStateSelected];
-        if (((SHGEquityInvestSendViewController *)self.superController).sendType == 1) {
-            if ([vestYears isEqualToString:@"不限"]) {
-                if ([button.titleLabel.text isEqualToString:vestYears]) {
-                     button.selected = YES;
-                }
-               
-            } else{
-                for (NSInteger i = 0; i < vestYearsWayArray.count; i ++) {
-                    if ([button.titleLabel.text isEqualToString:[vestYearsWayArray objectAtIndex:i]]) {
-                        button.selected = YES;
-                    }
-                }
-            }
-            
-        }
+
         button.frame = CGRectMake(kLeftToView + i * (kFourButtonWidth + kButtonLeftMargin), 0.0f, kFourButtonWidth, kCategoryButtonHeight);
         [button addTarget:self action:@selector(investTimeButtonClick:) forControlEvents:UIControlEventTouchUpInside];
-        [self.investTimeButtonView addSubview:button];
+        [self.timeButtonView addSubview:button];
     }
     
     NSArray *addRequireArray = @[@"个人资金",@"企业资金",@"金融机构"];
@@ -374,9 +319,6 @@
         [button setBackgroundImage:self.buttonBgImage forState:UIControlStateNormal];
         [button setTitleColor:Color(@"ff8d65") forState:UIControlStateSelected];
         [button setBackgroundImage:self.buttonSelectBgImage forState:UIControlStateSelected];
-        if ([button.titleLabel.text isEqualToString:fundSource]) {
-            button.selected = YES;
-        }
         button.frame = CGRectMake(kLeftToView + j * (kThreeButtonWidth + kButtonLeftMargin),0.0f, kThreeButtonWidth, kCategoryButtonHeight);
         [button addTarget:self action:@selector(addRequireButtonClick:) forControlEvents:UIControlEventTouchUpInside];
         [self.capitalSourceButtonView addSubview:button];
@@ -392,6 +334,62 @@
     [self.authorizeButton setImage:[UIImage imageNamed:@"business_authorizeUnselect"] forState:UIControlStateNormal];
     [self.authorizeButton setImage:[UIImage imageNamed:@"business_authorizeSelect"] forState:UIControlStateSelected];
     [self.authorizeButton setEnlargeEdgeWithTop:10.0f right:10.0f bottom:10.0f left:10.0f];
+}
+- (void)editObject
+{
+    
+    if (self.obj) {
+        self.marketExplainTextView.text = self.obj.detail;
+        if ([self.obj.anonymous isEqualToString:@"1"]) {
+            self.authorizeButton.selected = YES;
+        } else{
+            self.authorizeButton.selected = NO;
+        }
+        
+        if (self.obj.photo && self.obj.photo.length > 0) {
+            self.hasImage = YES;
+            __weak typeof(self) weakSelf = self;
+            [[SDWebImageManager sharedManager] downloadImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,self.obj.photo]] options:SDWebImageRetryFailed|SDWebImageLowPriority progress:^(NSInteger receivedSize, NSInteger expectedSize) {
+                
+            } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
+                [weakSelf.addImageButton setImage:image forState:UIControlStateNormal];
+            }];
+        }
+ 
+        NSString *result = [[SHGGloble sharedGloble] businessKeysForValues:self.obj.middleContent];
+        NSArray *nameArray = @[@"资金来源",@"参股比例",@"投资期限"];
+        NSArray *resultArray = [result componentsSeparatedByString:@"\n"];
+        NSMutableArray * array = [[SHGGloble sharedGloble] editBusinessKeysForValues:nameArray middleContentArray:resultArray];
+        NSLog(@"%@", array);
+        //资金来源
+        NSString *sources = [array objectAtIndex:0];
+        for (NSInteger i = 0; i < self.capitalSourceButtonView.buttonArray.count; i ++) {
+            UIButton *button = [self.capitalSourceButtonView.buttonArray objectAtIndex:i];
+            if ([button.titleLabel.text isEqualToString:sources]) {
+                button.selected = YES;
+            }
+        }
+     
+        //投资期限
+        NSString *investTime = [array objectAtIndex:2];
+        if (investTime.length > 0) {
+            NSArray *investArray = [investTime componentsSeparatedByString:@"/"];
+            for (NSInteger i = 0; i < self.timeButtonView.buttonArray.count; i ++) {
+                UIButton *button = [self.timeButtonView.buttonArray objectAtIndex:i];
+                for (NSInteger j = 0; j < investArray.count; j ++) {
+                    if ([button.titleLabel.text isEqualToString:[investArray objectAtIndex:j]]) {
+                        button.selected = YES;
+                    }
+                }
+            }
+        }
+        
+        //参股比例
+        NSString *number = [array objectAtIndex:1];
+        self.retributionTextField.text = [[number componentsSeparatedByString:@"%"] firstObject];
+        
+        
+    }
 }
 
 - (void)investTimeButtonClick:(UIButton *)btn
@@ -431,12 +429,15 @@
                     NSString *industry = [businessDic objectForKey:@"industry"];
                     NSString *title = [businessDic objectForKey:@"title"];
                     NSString *fundSource = [businessSelectDic objectForKey:[weakSelf.capitalSourceButtonView.selectedArray firstObject]];
-                    NSString *vestYears = [businessSelectDic objectForKey:[weakSelf.investTimeButtonView.selectedArray firstObject] ];
-                    if ([[weakSelf.investTimeButtonView.selectedArray firstObject] isEqualToString:@"不限"]) {
+                    NSString *vestYears = @"";
+                    
+                    if (weakSelf.timeButtonView.selectedArray.count == 0) {
                         vestYears = @"";
                     } else{
-                        for (NSInteger i = 1 ;i < weakSelf.investTimeButtonView.selectedArray.count ; i ++) {
-                            vestYears = [NSString stringWithFormat:@"%@;%@",vestYears,[businessDic objectForKey:[weakSelf.investTimeButtonView.selectedArray objectAtIndex:i]]];
+                        vestYears = [weakSelf.timeButtonView.selectedArray objectAtIndex:0];
+                        for (NSInteger i = 1 ;i < weakSelf.timeButtonView.selectedArray.count ; i ++) {
+                            
+                            vestYears = [NSString stringWithFormat:@"%@;%@",vestYears,[businessSelectDic objectForKey:[weakSelf.timeButtonView.selectedArray objectAtIndex:i]]];
                         }
                         
                     }
@@ -465,12 +466,14 @@
                     NSString *industry = [businessDic objectForKey:@"industry"];
                     NSString *title = [businessDic objectForKey:@"title"];
                     NSString *fundSource = [businessSelectDic objectForKey:[weakSelf.capitalSourceButtonView.selectedArray firstObject]];
-                    NSString *vestYears = [businessSelectDic objectForKey:[weakSelf.investTimeButtonView.selectedArray firstObject] ];
-                    if ([[weakSelf.investTimeButtonView.selectedArray firstObject] isEqualToString:@"不限"]) {
+                    NSString *vestYears = @"";
+                    if (weakSelf.timeButtonView.selectedArray.count == 0) {
                         vestYears = @"";
                     } else{
-                        for (NSInteger i = 1 ;i < weakSelf.investTimeButtonView.selectedArray.count ; i ++) {
-                            vestYears = [NSString stringWithFormat:@"%@;%@",vestYears,[businessDic objectForKey:[weakSelf.investTimeButtonView.selectedArray objectAtIndex:i]]];
+                        vestYears = [weakSelf.timeButtonView.selectedArray objectAtIndex:0];
+                        for (NSInteger i = 1 ;i < weakSelf.timeButtonView.selectedArray.count ; i ++) {
+
+                            vestYears = [NSString stringWithFormat:@"%@;%@",vestYears,[businessSelectDic objectForKey:[weakSelf.timeButtonView.selectedArray objectAtIndex:i]]];
                         }
                         
                     }

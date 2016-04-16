@@ -192,7 +192,7 @@
     .topSpaceToView(self.eastChinaTitleLabel, MarginFactor(15.0f))
     .leftSpaceToView(self.eastChinaView, 0.0f)
     .rightSpaceToView(self.eastChinaView, 0.0f)
-    .heightIs(MarginFactor(122.0f));
+    .heightIs(MarginFactor(82.0f));
     
     self.eastChinaBottomView.sd_layout
     .leftSpaceToView(self.eastChinaView, 0.0f)
@@ -217,7 +217,7 @@
     .topSpaceToView(self.northChinaTitleLabel, MarginFactor(15.0f))
     .leftSpaceToView(self.northChinaView, 0.0f)
     .rightSpaceToView(self.northChinaView, 0.0f)
-    .heightIs(MarginFactor(82.0f));
+    .heightIs(MarginFactor(41.0f));
     
     self.northChinaBottomView.sd_layout
     .leftSpaceToView(self.northChinaView, 0.0f)

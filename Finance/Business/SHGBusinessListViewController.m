@@ -447,10 +447,11 @@
 
 - (void)moveToProvincesViewController:(UIButton *)button
 {
-    if (!self.locationViewController) {
-        self.locationViewController = [[SHGBusinessLocationViewController alloc] init];
-    }
-    [self.navigationController pushViewController:self.locationViewController animated:YES];
+    
+    SHGBusinessLocationViewController *locationViewController = [[SHGBusinessLocationViewController alloc] init];
+    
+    locationViewController.locationString = self.titleLabel.text;
+    [self.navigationController pushViewController:locationViewController animated:YES];
 }
 
 - (void)clearAndReloadData

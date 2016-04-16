@@ -15,7 +15,6 @@
                 <outlet property="capitalSourceLabel" destination="7N4-3c-kXq" id="WE8-xI-jro"/>
                 <outlet property="capitalSourceSelectImage" destination="MZD-vY-6wK" id="AKi-HN-2S1"/>
                 <outlet property="capitalSourceView" destination="a9F-7C-NCj" id="hmI-9q-Ys7"/>
-                <outlet property="investTimeButtonView" destination="MqN-dk-N7a" id="BZ5-8e-0HZ"/>
                 <outlet property="investTimeTitleLabel" destination="30I-HW-v24" id="cqu-LU-NZt"/>
                 <outlet property="investTimeView" destination="dZY-gR-31y" id="m6T-uV-t4R"/>
                 <outlet property="marketExplainSelectImage" destination="HPD-h8-4yV" id="nAd-kF-wh5"/>
@@ -28,6 +27,7 @@
                 <outlet property="retributionView" destination="Idn-c9-Glq" id="2QC-Ob-IoH"/>
                 <outlet property="scrollView" destination="pj2-NB-bRO" id="3ab-7c-hFr"/>
                 <outlet property="sureButton" destination="hZ6-yR-ZM8" id="iit-GG-Fh2"/>
+                <outlet property="timeButtonView" destination="MqN-dk-N7a" id="Ta0-s0-32k"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>

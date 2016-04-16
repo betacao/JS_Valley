@@ -105,6 +105,7 @@
     [self.scrollView addSubview:self.industryView];
     [self addSdLayout];
     [self initView];
+    [self editObject];
 
 }
 - (void)viewWillAppear:(BOOL)animated
@@ -130,7 +131,14 @@
     NSDictionary *dictionary = [NSDictionary dictionary];
     NSDictionary *businessSelectDic = [[SHGGloble sharedGloble] getBusinessKeysAndValues];
     NSString *financingStage = [businessSelectDic objectForKey:[self.bondStageButtonView.selectedArray firstObject]];
-    NSString *industry = [businessSelectDic objectForKey:[self.industrySelectArray firstObject]];
+    NSString *industry =@"";
+    //[businessSelectDic objectForKey:[self.industrySelectArray firstObject]];
+    if (self.industrySelectArray.count > 0) {
+        industry = [businessSelectDic objectForKey:[self.industrySelectArray firstObject]];
+    } else{
+        industry = [businessSelectDic objectForKey:self.industrySelectButton.titleLabel.text];
+    }
+    
     dictionary = @{@"userId":UID, @"type": @"equityfinancing", @"contact": self.phoneNumTextField.text, @"financingStage":financingStage, @"investAmount": self.monenyTextField.text, @"area": self.areaSelectButton.titleLabel.text, @"industry": industry,@"title":self.nameTextField.text};
     return dictionary;
 }
@@ -430,9 +438,6 @@
         [button setBackgroundImage:self.buttonBgImage forState:UIControlStateNormal];
         [button setTitleColor:Color(@"ff8d65") forState:UIControlStateSelected];
         [button setBackgroundImage:self.buttonSelectBgImage forState:UIControlStateSelected];
-        if ([button.titleLabel.text isEqualToString:financingStage]) {
-            button.selected = YES;
-        }
         button.frame = CGRectMake(kLeftToView + i * (kFourButtonWidth + kButtonLeftMargin), 0.0f, kFourButtonWidth, kCategoryButtonHeight);
         [button addTarget:self action:@selector(bondStageButtonClick:) forControlEvents:UIControlEventTouchUpInside];
         [self.bondStageButtonView addSubview:button];
@@ -440,6 +445,56 @@
     
 }
 
+- (void)editObject
+{
+    if (self.object) {
+        
+        self.nameTextField.text = self.object.businessTitle;
+        NSString *result = [[SHGGloble sharedGloble] businessKeysForValues:self.object.middleContent];
+        NSArray *nameArray = @[@"联系方式",@"融资阶段",@"金额",@"地区",@"行业"];
+        NSArray *resultArray = [result componentsSeparatedByString:@"\n"];
+        NSMutableArray * array = [[SHGGloble sharedGloble] editBusinessKeysForValues:nameArray middleContentArray:resultArray];
+        NSLog(@"%@", array);
+        //金额
+        self.phoneNumTextField.text = [array objectAtIndex:4];
+        
+        NSString *money = [array objectAtIndex:1];
+        if ([money isEqualToString:@"暂未说明"]) {
+            self.monenyTextField.text = @"";
+        } else{
+            self.monenyTextField.text = money;
+        }
+        
+        //地区
+        [self.areaSelectButton setTitle:[array objectAtIndex:2] forState:UIControlStateNormal];
+        [self.areaSelectButton setTitleColor:Color(@"161616") forState:UIControlStateNormal];
+        
+        //行业
+        NSString *industry = [array objectAtIndex:3];
+        NSArray *industryArray = [industry componentsSeparatedByString:@"/"];
+        self.editIndustryArray = industryArray;
+        for (NSInteger i = 1 ; i < industryArray.count ; i ++) {
+            industry = [NSString stringWithFormat:@"%@/%@",[industryArray objectAtIndex:0],[industryArray objectAtIndex:i]];
+        }
+        [self.industrySelectButton setTitle:industry forState:UIControlStateNormal];
+        [self.industrySelectButton setTitleColor:Color(@"161616") forState:UIControlStateNormal];
+        
+        //融资阶段
+        NSString *investTime = [array objectAtIndex:0];
+//        NSArray *investTimeArray = [investTime componentsSeparatedByString:@"/"];
+        for (NSInteger i = 0; i < self.bondStageButtonView.buttonArray.count; i ++) {
+            
+            UIButton *button = [self.bondStageButtonView.buttonArray objectAtIndex:i];
+//            for (NSInteger j = 0; j < investTimeArray.count; j ++ ) {
+                if ([button.titleLabel.text isEqualToString:investTime]) {
+                    button.selected = YES;
+                }
+            }
+        
+//        }
+        
+    }
+}
 - (void)bondStageButtonClick:(UIButton *)btn
 {
     SHGBusinessButtonContentView *superView = (SHGBusinessButtonContentView *)btn.superview;
@@ -505,7 +560,11 @@
         [Hud showMessageWithText:@"请选择业务地区"];
         return NO;
     }
-    if (self.industrySelectArray.count == 0) {
+    if (self.industrySelectButton.titleLabel.text.length == 0) {
+        [Hud showMessageWithText:@"请填写所属行业"];
+        return NO;
+    }
+    if ([self.industrySelectButton.titleLabel.text isEqualToString:@"选择行业"]) {
         [Hud showMessageWithText:@"请填写所属行业"];
         return NO;
     }

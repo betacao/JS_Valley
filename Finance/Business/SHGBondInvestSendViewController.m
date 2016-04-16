@@ -119,6 +119,7 @@
     [self.scrollView addSubview:self.capitalSourceView];
     [self addSdLayout];
     [self initView];
+    [self editObject];
 }
 
 
@@ -163,14 +164,21 @@
         self.moneyButtonString = @"";
     }
     
-    NSString *industry = [businessSelectDic objectForKey:[self.industrySelectArray objectAtIndex:0]];
-    if ([[self.industrySelectArray objectAtIndex:0] isEqualToString:@"不限"]) {
-        industry = @"";
-    } else{
+    NSString *industry= @"";
+    if (self.industrySelectArray.count > 0) {
+        industry = [businessSelectDic objectForKey:[self.industrySelectArray objectAtIndex:0]];
+        
         for (NSInteger i = 1 ;i < self.industrySelectArray.count ; i ++) {
             industry = [NSString stringWithFormat:@"%@;%@",industry,[businessSelectDic objectForKey:[self.industrySelectArray objectAtIndex:i]]];
         }
         
+    } else {
+        NSArray * array = [self.industrySelectButton.titleLabel.text componentsSeparatedByString:@"/"];
+        industry = [businessSelectDic objectForKey:[array objectAtIndex:0]];
+        
+        for (NSInteger i = 1 ;i < array.count ; i ++) {
+            industry = [NSString stringWithFormat:@"%@;%@",industry,[businessSelectDic objectForKey:[array objectAtIndex:i]]];
+        }
     }
     NSArray *array = [self.marketCategoryButtonView selectedArray];
     //业务类型多选字段
@@ -388,52 +396,70 @@
     
 }
 
-- (void)initView
+- (void)editObject
 {
-    NSString *bondType = @"";
-    NSString *source = @"";
-    NSString *industry = @"";
-    NSArray *bondTypeArray = [NSArray array];
-    NSArray *key = [[[SHGGloble sharedGloble] getBusinessKeysAndValues] allKeys];
-    NSArray *value = [[[SHGGloble sharedGloble] getBusinessKeysAndValues] allValues];
-    if (self.sendType == 1) {
+    if (self.object) {
+        
         self.nameTextField.text = self.object.businessTitle;
-        self.phoneNumTextField.text = self.object.contact;
-        self.monenyTextField.text = self.object.investAmount;
-        bondType = self.object.bondType;
-        source = self.object.fundSource;
-        if (source.length > 0) {
-            source = [key objectAtIndex:[value indexOfObject:source]];
+        NSString *result = [[SHGGloble sharedGloble] businessKeysForValues:self.object.middleContent];
+        NSArray *nameArray = @[@"联系方式",@"业务类型",@"金额",@"地区",@"意向行业",@"资金来源"];
+        NSArray *resultArray = [result componentsSeparatedByString:@"\n"];
+        NSMutableArray * array = [[SHGGloble sharedGloble] editBusinessKeysForValues:nameArray middleContentArray:resultArray];
+        NSLog(@"%@", array);
+      //电话
+        self.phoneNumTextField.text = [array objectAtIndex:5];
+          //金额
+        NSString *money = [array objectAtIndex:1];
+        if ([money isEqualToString:@"暂未说明"]) {
+            self.monenyTextField.text = @"";
         } else{
-            source = @"";
+            self.monenyTextField.text = money;
         }
         
-        if(bondType.length == 0){
-            bondType = @"不限";
-        } else{
-            bondTypeArray = [self.object.bondType componentsSeparatedByString:@";"];
-
-        }
+        //地区
+        [self.areaSelectButton setTitle:[array objectAtIndex:2] forState:UIControlStateNormal];
+        [self.areaSelectButton setTitleColor:Color(@"161616") forState:UIControlStateNormal];
         
-        industry = self.object.industry;
-        if (industry.length > 0) {
-            NSArray *industryArray = [industry componentsSeparatedByString:@";"];
-            self.editIndustryArray = industryArray;
-            NSString * str = [key objectAtIndex:[value indexOfObject:[industryArray objectAtIndex:0]]];
-            for (NSInteger  i = 0; i < industryArray.count ; i ++ ) {
-                str = [NSString stringWithFormat:@"%@/%@",str,[key objectAtIndex:[value indexOfObject:[industryArray objectAtIndex:i]]]];
+        //行业
+        NSString *industry = [array objectAtIndex:3];
+        NSArray *industryArray = [industry componentsSeparatedByString:@"/"];
+        self.editIndustryArray = industryArray;
+        for (NSInteger i = 1 ; i < industryArray.count ; i ++) {
+            industry = [NSString stringWithFormat:@"%@/%@",[industryArray objectAtIndex:0],[industryArray objectAtIndex:i]];
+        }
+        [self.industrySelectButton setTitle:industry forState:UIControlStateNormal];
+        [self.industrySelectButton setTitleColor:Color(@"161616") forState:UIControlStateNormal];
+        
+        //业务类型
+        NSString *marketCategory = [array objectAtIndex:0];
+        NSArray *marketCategoryArray = [marketCategory componentsSeparatedByString:@"/"];
+        for (NSInteger i = 0; i < self.marketCategoryButtonView.buttonArray.count; i ++) {
+            
+            UIButton *button = [self.marketCategoryButtonView.buttonArray objectAtIndex:i];
+            for (NSInteger j = 0; j < marketCategoryArray.count; j ++ ) {
+                if ([button.titleLabel.text isEqualToString:[marketCategoryArray objectAtIndex:j]]) {
+                    button.selected = YES;
+                }
             }
             
-            [self.industrySelectButton setTitle:str forState:UIControlStateNormal];
-            [self.industrySelectButton setTitleColor:Color(@"161616") forState:UIControlStateNormal];
-        } else{
-            [self.industrySelectButton setTitle:@"不限" forState:UIControlStateNormal];
-            [self.industrySelectButton setTitleColor:Color(@"161616") forState:UIControlStateNormal];
         }
-
-       
+        //资金来源
+        NSString *source = [array objectAtIndex:4];
+        for (NSInteger i = 0; i < self.capitalSourceButtonView.buttonArray.count; i ++) {
+            UIButton *button = [self.capitalSourceButtonView.buttonArray objectAtIndex:i];
+            
+            if ([button.titleLabel.text isEqualToString:source]) {
+                button.selected = YES;
+            }
+        }
         
-   }
+    }
+  
+  
+}
+
+- (void)initView
+{
     self.monenyTextField.keyboardType = UIKeyboardTypeNumberPad;
     self.phoneNumTextField.keyboardType = UIKeyboardTypeNumberPad;
     self.nextButton.titleLabel.font = FontFactor(19.0f);
@@ -513,20 +539,6 @@
         [button setTitleColor:Color(@"ff8d65") forState:UIControlStateSelected];
         [button setBackgroundImage:self.buttonSelectBgImage forState:UIControlStateSelected];
 
-        if ([bondType isEqualToString:@"不限"]) {
-            if ([button.titleLabel.text isEqualToString:bondType]) {
-                button.selected = YES;
-            }
-        } else{
-            for (NSInteger i = 0 ; i < bondTypeArray.count; i ++ ) {
-                
-                NSString *str = [key objectAtIndex:[value indexOfObject:[bondTypeArray objectAtIndex:i]]];
-                if ([button.titleLabel.text isEqualToString:str]) {
-                    button.selected = YES;
-                }
-            }
-            
-        }
         button.frame = CGRectMake(kLeftToView + i * (kFourButtonWidth + kButtonLeftMargin), 0.0f, kFourButtonWidth, kCategoryButtonHeight);
         [button addTarget:self action:@selector(categoryButtonClick:) forControlEvents:UIControlEventTouchUpInside];
         [self.marketCategoryButtonView addSubview:button];
@@ -542,9 +554,7 @@
         [button setBackgroundImage:self.buttonBgImage forState:UIControlStateNormal];
         [button setTitleColor:Color(@"ff8d65") forState:UIControlStateSelected];
         [button setBackgroundImage:self.buttonSelectBgImage forState:UIControlStateSelected];
-        if ([button.titleLabel.text isEqualToString:source]) {
-            button.selected = YES;
-        }
+
         button.frame = CGRectMake(kLeftToView + j * (kThreeButtonWidth + kButtonLeftMargin), 0.0f, kThreeButtonWidth, kCategoryButtonHeight);
         NSLog(@"1111111%f",kThreeButtonWidth);
         [button addTarget:self action:@selector(capitalButtonClick:) forControlEvents:UIControlEventTouchUpInside];
@@ -629,10 +639,15 @@
         [Hud showMessageWithText:@"请选择业务地区"];
         return NO;
     }
-    if (self.industrySelectArray.count == 0 || [self.industrySelectButton.titleLabel.text isEqualToString:@"请选择行业"]) {
+    if ([self.industrySelectButton.titleLabel.text isEqualToString:@"请选择行业"]) {
         [Hud showMessageWithText:@"请填写意向行业"];
         return NO;
     }
+    if (self.industrySelectButton.titleLabel.text.length == 0 ) {
+        [Hud showMessageWithText:@"请填写意向行业"];
+        return NO;
+    }
+    
     return YES;
 }
 

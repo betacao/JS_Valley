@@ -142,7 +142,7 @@
     .rightSpaceToView(self.scrollView, kLeftToView)
     .heightRatioToView(self.addImageTitleLabel, 1.0f);
     
-    [self.scrollView setupAutoContentSizeWithBottomView:self.authorizeButton bottomMargin:MarginFactor(200.0f)];
+    [self.scrollView setupAutoContentSizeWithBottomView:self.authorizeButton bottomMargin:SCREENHEIGHT - MarginFactor(50.0f) - self.authorizeButton.bottom + MarginFactor(5.0f)];
 
     
 }
@@ -209,7 +209,6 @@
                     case 0:{
                         
                         NSString *anonymous = weakSelf.authorizeButton.isSelected ? @"1" : @"0";
-                        //SHGBusinessObject *object = [[SHGBusinessObject alloc]init];
                         
                         NSString *type = [businessDic objectForKey:@"type"];
                         NSString *contact = [businessDic objectForKey:@"contact"];
@@ -232,7 +231,6 @@
                         
                     case 1:{
                         NSString *anonymous = weakSelf.authorizeButton.isSelected ? @"1" : @"0";
-                       // SHGBusinessObject *object = [[SHGBusinessObject alloc]init];
                         NSString *businessId = self.obj.businessID;
                         NSString *type = [businessDic objectForKey:@"type"];
                         NSString *contact = [businessDic objectForKey:@"contact"];
