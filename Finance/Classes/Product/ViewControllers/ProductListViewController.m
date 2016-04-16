@@ -235,7 +235,7 @@
 - (void)addSelect
 {
 
-    [[SHGGloble sharedGloble] requsetUserVerifyStatusCompletion:^(BOOL state) {
+    [[SHGGloble sharedGloble] requestUserVerifyStatusCompletion:^(BOOL state) {
         if (state) {
             __weak typeof(self)weakSelf = self;
             DXAlertView *alert = [[DXAlertView alloc] initWithTitle:@"提示" contentText:@"是否需要发布产品?" leftButtonTitle:@"否" rightButtonTitle:@"是"];
@@ -493,7 +493,7 @@
 {
     __weak typeof(self) weakSelf = self;
 
-    [[SHGGloble sharedGloble] requsetUserVerifyStatusCompletion:^(BOOL state) {
+    [[SHGGloble sharedGloble] requestUserVerifyStatusCompletion:^(BOOL state) {
         if (state) {
             ProdListObj *obj = self.dataArr[indexPath.row];
             ProdConfigViewController *vc = [[ProdConfigViewController alloc] initWithNibName:@"ProdConfigViewController" bundle:nil];

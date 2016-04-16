@@ -69,7 +69,7 @@
     [self initView];
     //请求状态
     __weak typeof(self)weakSelf = self;
-    [[SHGGloble sharedGloble] requsetUserVerifyStatusCompletion:^(BOOL state) {
+    [[SHGGloble sharedGloble] requestUserVerifyStatusCompletion:^(BOOL state) {
         if (state) {
             [weakSelf.authView removeFromSuperview];
         }
@@ -237,7 +237,10 @@
     [self.headerImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,self.head_img]] placeholderImage:[UIImage imageNamed:@"default_head"]];
     self.nameField.text = [self.userInfo objectForKey:kNickName];
     self.industryField.text = [self codeToIndustry: [self.userInfo objectForKey:kIndustry]];
-    self.companyField.text = [self.userInfo objectForKey:kCompany];
+    NSString *company = [self.userInfo objectForKey:kCompany];
+    if (![company containsString:@"优质人脉"]) {
+        self.companyField.text = company;
+    }
     self.departmentField.text = [self.userInfo objectForKey:kDepartment];
     NSString *locationStr = [self.userInfo objectForKey:kLocation];
     if ([locationStr isEqualToString:@""]) {

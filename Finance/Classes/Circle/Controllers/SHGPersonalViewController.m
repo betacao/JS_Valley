@@ -221,7 +221,7 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
     if (self.department.length > 6) {
         NSString * str = [self.department substringToIndex:6];
         self.departmentLabel.text = [NSString stringWithFormat:@"%@...",str];
-    }else{
+    } else {
         self.departmentLabel.text = self.department;
     }
     [self.departmentLabel sizeToFit];

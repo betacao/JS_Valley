@@ -137,8 +137,8 @@
     self.firstLabel.text = [[SHGGloble sharedGloble] businessKeysForValues:object.businessShow];
 
     self.secondLabel.text = [[SHGGloble sharedGloble] businessKeysForValues:object.investAmount];
-    self.thirdLabel.text = [object.area isEqualToString:@""] ? @"全国" : object.area;
-    self.fourthLabel.text = object.createTime;
+    self.thirdLabel.text = [@"地区：" stringByAppendingString:[object.area isEqualToString:@""] ? @"全国" : object.area];
+    self.fourthLabel.text = [@"时间：" stringByAppendingString:object.createTime];
     self.browseLabel.text = object.browseNum;
 
 }

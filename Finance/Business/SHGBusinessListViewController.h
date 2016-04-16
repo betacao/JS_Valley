@@ -7,6 +7,7 @@
 //
 
 #import "BaseTableViewController.h"
+#import "SHGBusinessObject.h"
 
 typedef void(^loadViewFinishBlock)(UIView *view);
 
@@ -20,8 +21,10 @@ typedef void(^loadViewFinishBlock)(UIView *view);
 @property (nonatomic, copy) loadViewFinishBlock block;
 @property (strong, nonatomic) UIBarButtonItem *leftBarButtonItem;
 @property (strong, nonatomic) NSString *cityName;
-- (void)setFilterTitleArray:(NSArray *)array;
-- (NSArray *)getFilterTitleArray;
+
+- (void)loadFilterTitleAndParam:(void(^)(NSArray *array, NSDictionary *param))block;
 
 - (void)deleteBusinessWithBusinessID:(NSString *)businessID;
+
+- (void)didCreateOrModifyBusiness:(SHGBusinessObject *)object;
 @end

@@ -8,7 +8,7 @@
 
 #import "RegistViewController.h"
 #import "AppDelegate.h"
-#import "ImproveMatiralViewController.h"
+#import "ApplyViewController.h"
 #import "ProtocolViewController.h"
 
 typedef NS_ENUM(NSInteger, RegistType)
@@ -309,13 +309,52 @@ typedef NS_ENUM(NSInteger, RegistType)
         [[NSUserDefaults standardUserDefaults] setObject:token forKey:KEY_TOKEN];
         [[NSUserDefaults standardUserDefaults] setObject:@"1" forKey:KEY_AUTOLOGIN];
         [[NSUserDefaults standardUserDefaults] synchronize];
-        ImproveMatiralViewController *vc = [[ImproveMatiralViewController alloc] init];
-        [self.navigationController pushViewController:vc animated:YES];
+        [self chatLoagin];
+        [self loginSuccess];
 
     } failed:^(MOCHTTPResponse *response) {
         [Hud showMessageWithText:response.errorMessage];
         [Hud hideHud];
     }];
+}
+
+
+- (void)chatLoagin
+{
+    NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
+    NSString *password = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_PASSWORD];
+
+    [[EaseMob sharedInstance].chatManager asyncLoginWithUsername:uid password:password completion:^(NSDictionary *loginInfo, EMError *error) {
+        if (loginInfo && !error) {
+            [[EaseMob sharedInstance].chatManager setIsAutoLoginEnabled:NO];
+            EMError *error = [[EaseMob sharedInstance].chatManager importDataToNewDatabase];
+            if (!error) {
+                error = [[EaseMob sharedInstance].chatManager loadDataFromDatabase];
+            }
+            [[ApplyViewController shareController] loadDataSourceFromLocalDB];
+
+        }else {
+            switch (error.errorCode) {
+                case EMErrorServerNotReachable:
+                    NSLog(NSLocalizedString(@"error.connectServerFail", @"Connect to the server failed!"));
+                    break;
+                case EMErrorServerAuthenticationFailure:
+                    NSLog(@"%@",error.description);
+                    break;
+                case EMErrorServerTimeout:
+                    NSLog(NSLocalizedString(@"error.connectServerTimeout", @"Connect to the server timed out!"));
+                    break;
+                default:
+                    break;
+            }
+
+        }
+    } onQueue:nil];
+}
+
+- (void)loginSuccess
+{
+    [[AppDelegate currentAppdelegate] moveToRootController:nil];
 }
 
 -(void)registChat

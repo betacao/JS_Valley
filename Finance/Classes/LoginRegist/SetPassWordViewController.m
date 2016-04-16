@@ -8,7 +8,6 @@
 
 #import "SetPassWordViewController.h"
 #import "ApplyViewController.h"
-#import "ImproveMatiralViewController.h"
 @interface SetPassWordViewController ()
 {
     
@@ -18,7 +17,7 @@
 @end
 
 @implementation SetPassWordViewController
--(id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     
@@ -85,15 +84,15 @@
         [[NSUserDefaults standardUserDefaults] synchronize];
 
         [self chatLoagin];
-        ImproveMatiralViewController *vc = [[ImproveMatiralViewController alloc] init];
-        vc.rid = self.rid;
-        [self.navigationController pushViewController:vc animated:YES];
+        [self loginSuccess];
     } failed:^(MOCHTTPResponse *response) {
         [Hud showMessageWithText:response.errorMessage];
         [Hud hideHud];
     }];
 
 }
+
+
 - (void)chatLoagin
 {
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
@@ -136,6 +135,10 @@
      } onQueue:nil];
 }
 
+- (void)loginSuccess
+{
+    [[AppDelegate currentAppdelegate] moveToRootController:self.rid];
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     

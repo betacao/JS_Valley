@@ -28,13 +28,14 @@
 @property (weak, nonatomic) IBOutlet UIView *roundCornerView;
 @property (weak, nonatomic) IBOutlet UIButton *plusButton;
 @property (weak, nonatomic) IBOutlet UILabel *tipLabel;
-@property (weak, nonatomic) UIButton *currentButton;
+@property (strong, nonatomic) UIButton *currentButton;
 //
 @property (strong, nonatomic) UIImage *headerImage;
 @property (strong, nonatomic) NSString *state;//认证状态
 @property (strong, nonatomic) NSString *authImageUrl;//已经上传的图片链接
 @property (strong, nonatomic) UIImage *authImage;//认证的图片
 @property (strong, nonatomic) NSString *departmentCode;
+@property (strong, nonatomic) NSString *company;//保存一下 没什么用
 @end
 
 @implementation SHGAuthenticationViewController
@@ -235,6 +236,7 @@
 {
     __weak typeof(self) weakSelf = self;
     [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttp,@"user",@"personaluser"] parameters:@{@"uid":UID} success:^(MOCHTTPResponse *response) {
+        weakSelf.company = [response.dataDictionary objectForKey:@"companyname"];
         weakSelf.locationField.text = [response.dataDictionary objectForKey:@"position"];
         weakSelf.departmentField.text = [self codeToIndustry:[response.dataDictionary objectForKey:@"industrycode"]];
         NSString *head_img = [response.dataDictionary objectForKey:@"head_img"];
@@ -324,10 +326,23 @@
 
 
 //更新服务器端
+//- (void)putHeadImage:(NSString *)headImageName
+//{
+//    __weak typeof(self) weakSelf = self;
+//    [MOCHTTPRequestOperationManager putWithURL:[rBaseAddressForHttp stringByAppendingString:@"/user/modifyuser"] class:nil parameters:@{@"uid":UID, @"potname":headImageName, @"industrycode": self.departmentCode, @"area":self.locationField.text} success:^(MOCHTTPResponse *response) {
+//        NSString *code = [response.data valueForKey:@"code"];
+//        if ([code isEqualToString:@"000"]) {
+//            [weakSelf uploadAuthImage];
+//        }
+//    } failed:^(MOCHTTPResponse *response) {
+//
+//    }];
+//}
+
 - (void)putHeadImage:(NSString *)headImageName
 {
     __weak typeof(self) weakSelf = self;
-    [MOCHTTPRequestOperationManager putWithURL:[rBaseAddressForHttp stringByAppendingString:@"/user/identityAuth"] class:nil parameters:@{@"uid":UID, @"potname":headImageName, @"industrycode": self.departmentCode, @"area":self.locationField.text} success:^(MOCHTTPResponse *response) {
+    [MOCHTTPRequestOperationManager putWithURL:[NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttp,@"user",@"modifyuser"] class:nil parameters:@{@"uid":UID, @"type":@"headimage", @"value":headImageName, @"title":self.departmentCode, @"company":self.company} success:^(MOCHTTPResponse *response) {
         NSString *code = [response.data valueForKey:@"code"];
         if ([code isEqualToString:@"000"]) {
             [weakSelf uploadAuthImage];
@@ -340,8 +355,8 @@
 - (void)uploadAuthImage
 {
     __weak typeof(self) weakSelf = self;
-    [MOCHTTPRequestOperationManager POST:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"image/base"] parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
-        NSData *imageData = UIImageJPEGRepresentation(self.authImage, 0.1);
+    [MOCHTTPRequestOperationManager POST:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"image/basephoto"] parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+        NSData *imageData = UIImageJPEGRepresentation(weakSelf.authImage, 0.1);
         [formData appendPartWithFileData:imageData name:@"haha.jpg" fileName:@"haha.jpg" mimeType:@"image/jpeg"];
     } progress:^(NSProgress * _Nonnull uploadProgress) {
 
@@ -360,7 +375,7 @@
 - (void)submitMaterial
 {
     __weak typeof(self)weakSelf = self;
-    [MOCHTTPRequestOperationManager putWithURL:[NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttp,@"user",@"identity"] class:nil parameters:@{@"uid":UID,@"potname":self.authImageUrl} success:^(MOCHTTPResponse *response) {
+    [MOCHTTPRequestOperationManager putWithURL:[rBaseAddressForHttp stringByAppendingString:@"/user/identityAuth"]class:nil parameters:@{@"uid":UID, @"potname":self.authImageUrl, @"industrycode": self.departmentCode, @"area":self.locationField.text} success:^(MOCHTTPResponse *response) {
         NSString *code = [response.data valueForKey:@"code"];
         if ([code isEqualToString:@"000"]) {
             [Hud hideHud];

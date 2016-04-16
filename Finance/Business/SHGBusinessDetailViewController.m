@@ -392,7 +392,7 @@
         }
 
     } else{
-        [[SHGGloble sharedGloble] requsetUserVerifyStatusCompletion:^(BOOL state) {
+        [[SHGGloble sharedGloble] requestUserVerifyStatusCompletion:^(BOOL state) {
             if (!state) {
                 SHGAuthenticationViewController *controller = [[SHGAuthenticationViewController alloc]init];
                 [self.navigationController pushViewController:controller animated:YES];
@@ -668,7 +668,7 @@
 {
     __weak typeof(self) weakSelf = self;
     [self.popupView hideWithAnimated:YES];
-    [SHGBusinessManager addCommentWithObject:self.responseObject content:comment toOther:rid finishBlock:^(BOOL finish) {
+    [SHGBusinessManager addCommentWithObject:self.responseObject content:comment toOther:fid finishBlock:^(BOOL finish) {
         if (finish) {
             [weakSelf loadCommentBtnState];
             [weakSelf.detailTable reloadData];

@@ -314,7 +314,7 @@
         _editButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [_editButton setEnlargeEdge:MarginFactor(15.0f)];
         [_editButton setImage:[UIImage imageNamed:@"userCenterEdit"] forState:UIControlStateNormal];
-        [_editButton addTarget:self action:@selector(labelTapAction:) forControlEvents:UIControlEventTouchUpInside];
+        [_editButton addTarget:self action:@selector(editButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
         [self.tableHeaderView addSubview:_editButton];
     }
     return _editButton;
@@ -513,7 +513,7 @@
     [self.navigationController pushViewController:controller animated:YES];
 }
 
-- (void)labelTapAction:(UITapGestureRecognizer *)gesture
+- (void)editButtonClicked:(UIButton *)button
 {
     SHGModifyUserInfoViewController *controller = [[SHGModifyUserInfoViewController alloc]init];
     __weak typeof(self)weakSelf = self;
@@ -739,9 +739,11 @@
         }
 
         if ([response.dataDictionary objectForKey:@"auditstate"]) {
+            weakSelf.editButton.hidden = NO;
             weakSelf.auditState = [response.dataDictionary objectForKey:@"auditstate"];
             if ([weakSelf.auditState isEqualToString:@"0"]) {
                 [weakSelf.authButton setImage:[UIImage imageNamed:@"me_unAuth"] forState:UIControlStateNormal];
+                weakSelf.editButton.hidden = YES;
                 //弹出提示框
                 [weakSelf.authAlertView show];
             } else if ([weakSelf.auditState isEqualToString:@"1"]){

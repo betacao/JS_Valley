@@ -21,7 +21,7 @@
 @property (strong, nonatomic) NSMutableArray *buttonArray;
 @property (strong, nonatomic) UIView *contentView;
 @property (strong, nonatomic) UIView *backgroundView;
-
+@property (strong, nonatomic) NSMutableDictionary *paramDictionary;
 @end
 
 @implementation SHGBusinessFilterView
@@ -55,6 +55,7 @@
     [self addSubview:self.middleButton];
 
     self.rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.rightButton.hidden = YES;
     [self.rightButton setImage:[UIImage imageNamed:@"business_condition"] forState:UIControlStateNormal];
     [self.rightButton addTarget:self action:@selector(rightButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     [self.rightButton sizeToFit];
@@ -125,28 +126,33 @@
 {
     _expand = expand;
 
+    __weak typeof(self)weakSelf = self;
     if (expand) {
-        self.dataArray = [NSMutableArray arrayWithArray:[[SHGBusinessListViewController sharedController] getFilterTitleArray]];
+        [[SHGBusinessListViewController sharedController] loadFilterTitleAndParam:^(NSArray *array, NSDictionary *param) {
+            weakSelf.dataArray = [NSMutableArray arrayWithArray:array];
+            weakSelf.paramDictionary = [NSMutableDictionary dictionaryWithDictionary:param];
+            [self.contentView setupAutoHeightWithBottomView:[self.buttonArray lastObject] bottomMargin:MarginFactor(10.0f)];
+            [UIView animateWithDuration:0.25f animations:^{
+                [self.contentView updateLayout];
+                self.rightButton.layer.transform = CATransform3DIdentity;
+            }];
 
-        [self.contentView setupAutoHeightWithBottomView:[self.buttonArray lastObject] bottomMargin:MarginFactor(10.0f)];
-        [UIView animateWithDuration:0.25f animations:^{
-            [self.contentView updateLayout];
-            self.rightButton.layer.transform = CATransform3DMakeRotation(0.000001 - M_PI, 0.0f, 0.0f, 1.0f);
+            UIView *view = [SHGBusinessListViewController sharedController].view;
+            [view insertSubview:self.backgroundView aboveSubview:[SHGBusinessListViewController sharedController].addBusinessButton];
         }];
-
-        UIView *view = [SHGBusinessListViewController sharedController].view;
-        [view insertSubview:self.backgroundView aboveSubview:[SHGBusinessListViewController sharedController].addBusinessButton];
 
     } else{
 
         [self.contentView setupAutoHeightWithBottomView:[self.contentView.subviews firstObject] bottomMargin:MarginFactor(0.0f)];
         [UIView animateWithDuration:0.25f animations:^{
             [self.contentView updateLayout];
-            self.rightButton.layer.transform = CATransform3DIdentity;
+            self.rightButton.layer.transform = CATransform3DMakeRotation(0.000001 - M_PI, 0.0f, 0.0f, 1.0f);
         } completion:^(BOOL finished) {
-            self.dataArray = [NSMutableArray arrayWithArray:[[SHGBusinessListViewController sharedController] getFilterTitleArray]];
+            [[SHGBusinessListViewController sharedController] loadFilterTitleAndParam:^(NSArray *array, NSDictionary *param) {
+                weakSelf.dataArray = [NSMutableArray arrayWithArray:array];
+                weakSelf.paramDictionary = [NSMutableDictionary dictionaryWithDictionary:param];
+            }];
         }];
-
         [self.backgroundView removeFromSuperview];
     }
 }
@@ -160,13 +166,14 @@
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
     [self.contentView addSubview:label];
 
-    [dataArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    [dataArray enumerateObjectsUsingBlock:^(SHGBusinessSecondsubObject *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        SHGCategoryButton *button = [SHGCategoryButton buttonWithType:UIButtonTypeCustom];
+        button.object = obj;
         NSInteger row = idx / 3;
         NSInteger col = idx % 3;
         CGRect frame = CGRectMake(((2.0f * col) + 1) * kLeftToView + col * width, row * (MarginFactor(26.0f) + MarginFactor(10.0f)), width, MarginFactor(26.0f));
         button.frame = frame;
-        [button setTitle:obj forState:UIControlStateNormal];
+        [button setTitle:obj.value forState:UIControlStateNormal];
         [button setTitleColor:Color(@"f04241") forState:UIControlStateNormal];
         [button addTarget:self action:@selector(buttonClicked:) forControlEvents:UIControlEventTouchUpInside];
         [button setBackgroundImage:[[UIImage imageNamed:@"business_filterBg"] resizableImageWithCapInsets:UIEdgeInsetsMake(0.0f, 12.0f, 0.0f, 22.0f) resizingMode:UIImageResizingModeStretch] forState:UIControlStateNormal];
@@ -179,9 +186,11 @@
     if (dataArray.count > 0) {
         [self.leftButton setTitle:@"更多筛选条件" forState:UIControlStateNormal];
         self.middleButton.hidden = YES;
+        self.rightButton.hidden = NO;
     } else{
         [self.leftButton setTitle:@"高级筛选" forState:UIControlStateNormal];
         self.middleButton.hidden = NO;
+        self.rightButton.hidden = YES;
     }
     CGSize size = [self.leftButton sizeThatFits:CGSizeMake(CGFLOAT_MAX, CGRectGetHeight(self.leftButton.frame))];
     self.leftButton.width = size.width;
@@ -199,14 +208,28 @@
     self.expand = !self.expand;
 }
 
-- (void)buttonClicked:(UIButton *)button
+- (void)buttonClicked:(SHGCategoryButton *)button
 {
-    NSInteger index = [self.buttonArray indexOfObject:button];
+    NSInteger index = [self.dataArray indexOfObject:button.object];
     NSMutableArray *array = [NSMutableArray array];
     [array addObjectsFromArray:self.dataArray];
     [array removeObjectAtIndex:index];
     self.dataArray = array;
-    [[SHGBusinessListViewController sharedController] setFilterTitleArray:array];
+
+    SHGBusinessSecondsubObject *object = (SHGBusinessSecondsubObject *)button.object;
+    [self.paramDictionary enumerateKeysAndObjectsUsingBlock:^(NSString *key, NSString *obj, BOOL * _Nonnull stop) {
+        if ([obj containsString:object.code]) {
+            if ([obj containsString:[NSString stringWithFormat:@"%@;", object.code]]) {
+                obj = [obj stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"%@;", object.code] withString:@""];
+            } else{
+                obj = [obj stringByReplacingOccurrencesOfString:object.code withString:@""];
+            }
+            [self.paramDictionary setObject:obj forKey:key];
+        }
+    }];
+    
+    
+    self.selectedBlock (self.paramDictionary, array, YES);
     if (self.buttonArray.count > 0) {
         [self.contentView setupAutoHeightWithBottomView:[self.buttonArray lastObject] bottomMargin:MarginFactor(10.0f)];
     } else{

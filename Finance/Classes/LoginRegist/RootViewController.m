@@ -10,7 +10,6 @@
 #import "CCLocationManager.h"
 #import "ApplyViewController.h"
 #import "LoginViewController.h"
-#import "ImproveMatiralViewController.h"
 
 @interface RootViewController ()
 @property (weak, nonatomic) IBOutlet UIImageView *launchImage;
@@ -166,12 +165,8 @@
             [[NSUserDefaults standardUserDefaults] synchronize];
             NSString *isfull = response.dataDictionary[@"isfull"];
             weakSelf.isFull = isfull;
-            if ([weakSelf.isFull isEqualToString:@"1"]){
-                [weakSelf chatLoagin];
-                [weakSelf loginSuccess];
-            } else{
-                [weakSelf showLoginViewController];
-            }
+            [weakSelf chatLoagin];
+            [weakSelf loginSuccess];
         }
     }failed:^(MOCHTTPResponse *response){
         [Hud showMessageWithText:response.errorMessage];

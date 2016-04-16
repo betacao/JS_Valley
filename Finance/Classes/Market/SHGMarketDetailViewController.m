@@ -435,7 +435,7 @@
         }
 
     } else{
-        [[SHGGloble sharedGloble] requsetUserVerifyStatusCompletion:^(BOOL state) {
+        [[SHGGloble sharedGloble] requestUserVerifyStatusCompletion:^(BOOL state) {
             if (!state) {
                 SHGAuthenticationViewController *controller = [[SHGAuthenticationViewController alloc]init];
                 [self.navigationController pushViewController:controller animated:YES];

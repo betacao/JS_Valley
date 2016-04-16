@@ -26,5 +26,6 @@
 - (NSInteger)currentIndex;
 - (NSString *)currentType;
 - (NSString *)currentName;
+- (NSInteger)indexForName:(NSString *)name;
 - (void)moveToIndex:(NSInteger)index;
 @end

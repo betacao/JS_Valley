@@ -7,7 +7,7 @@
 //
 
 #import "BaseViewController.h"
-typedef void(^SHGBusinessSelectCategoryBlock)(NSDictionary *codeParam, NSArray *titleArray);
+typedef void(^SHGBusinessSelectCategoryBlock)(NSDictionary *codeParam, NSArray *titleArray, BOOL filterShow);
 
 @interface SHGBusinessSelectCategoryViewController : BaseViewController
 @property (copy, nonatomic) SHGBusinessSelectCategoryBlock selectedBlock;

@@ -394,7 +394,7 @@
 }
 
 
-- (void)requsetUserVerifyStatusCompletion:(void (^)(BOOL))completionblock showAlert:(BOOL)showAlert leftBlock:(void(^)())leftblock failString:(NSString *)string
+- (void)requestUserVerifyStatusCompletion:(void (^)(BOOL))completionblock showAlert:(BOOL)showAlert leftBlock:(void(^)())leftblock failString:(NSString *)string
 {
     [Hud showWait];
     NSString *request = [rBaseAddressForHttp stringByAppendingString:@"/auth/isAuth"];
@@ -562,10 +562,10 @@
     [keys enumerateObjectsUsingBlock:^(NSString *obj, NSUInteger idx, BOOL * _Nonnull stop) {
         key = [[obj componentsSeparatedByString:@":"] firstObject];
         value = [[obj componentsSeparatedByString:@":"] lastObject];
-        __block NSString *string = [NSString stringWithFormat:@"%@: %@\n",key, value];
+        __block NSString *string = [NSString stringWithFormat:@"%@：%@\n",key, value];
 
         NSArray *valueArray = [value componentsSeparatedByString:@";"];
-        string = [string stringByReplacingOccurrencesOfString:@";" withString:@"/"];
+        string = [string stringByReplacingOccurrencesOfString:@";" withString:@"，"];
         [valueArray enumerateObjectsUsingBlock:^(NSString *subValue, NSUInteger idx, BOOL * _Nonnull stop) {
             if ([globleValueArray containsObject:subValue]) {
                 string = [string stringByReplacingOccurrencesOfString:subValue withString:[globleKeyArray objectAtIndex:[globleValueArray indexOfObject:subValue]]];

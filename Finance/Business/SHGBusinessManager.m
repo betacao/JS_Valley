@@ -254,7 +254,7 @@
     [Hud showWait];
     NSString *request = [rBaseAddressForHttp stringByAppendingString:@"/common/comment/business/saveComment"];
     NSString *userName = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_USER_NAME];
-    NSDictionary *param = @{@"uid":UID, @"businessId":object.businessID, @"content":content, @"replyId":otherId, @"type":object.type,};
+    NSDictionary *param = @{@"uid":UID, @"businessId":object.businessID, @"content":content, @"replyId":otherId, @"type":object.type};
 
     [MOCHTTPRequestOperationManager postWithURL:request parameters:param success:^(MOCHTTPResponse *response) {
         [Hud hideHud];
@@ -306,7 +306,7 @@
     NSString *request = [rBaseAddressForHttp stringByAppendingFormat:@"/business/share/businessDetail?rowId=%@&uid=%@&businessType=%@",object.businessID, uid, object.type];
     UIImage *png = [UIImage imageNamed:@"80.png"];
     id<ISSCAttachment> image  = [ShareSDK pngImageWithImage:png];
-    NSString *theme = object.title;
+    NSString *theme = object.businessTitle;
     if (theme.length > 15) {
         theme = [NSString stringWithFormat:@"%@...",[object.title substringToIndex:15]];
     }

@@ -74,7 +74,7 @@
 - (UIView *)redLineView
 {
     if (!_redLineView) {
-        _redLineView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, kBusinessScrollViewHeight - 1.5f, 0.0f, 1.5f)];
+        _redLineView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, kBusinessScrollViewHeight - 2.0f, 0.0f, 2.0f)];
         _redLineView.backgroundColor = [UIColor colorWithHexString:@"D82626"];
     }
     if (!_redLineView.superview) {
@@ -107,6 +107,21 @@
 - (NSString *)currentName
 {
     return ((UIButton *)[self.buttonArrays objectAtIndex:[self currentIndex]]).titleLabel.text;
+}
+
+- (NSInteger)indexForName:(NSString *)name
+{
+    NSInteger index = 0;
+    if ([name isEqualToString:@"bondfinancing"]) {
+        index = 1;
+    } else if ([name isEqualToString:@"equityfinancing"]) {
+        index = 2;
+    } else if ([name isEqualToString:@"moneyside"]) {
+        index = 3;
+    } else if ([name isEqualToString:@"trademixed"]) {
+        index = 4;
+    }
+    return index;
 }
 
 

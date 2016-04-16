@@ -9,7 +9,6 @@
 #import "SHGBusinessListViewController.h"
 #import "SHGBusinessScrollView.h"
 #import "SHGBusinessFilterView.h"
-#import "SHGBusinessObject.h"
 #import "EMSearchBar.h"
 #import "SHGBusinessManager.h"
 #import "SHGBusinessMainSendView.h"
@@ -127,10 +126,11 @@
     if (!_filterView) {
         _filterView = [[SHGBusinessFilterView alloc] init];
         _filterView.hidden = YES;
-        _filterView.selectedBlock = ^(NSDictionary *param, NSArray *titleArray){
+        _filterView.selectedBlock = ^(NSDictionary *param, NSArray *titleArray, BOOL filterShow){
             [weakSelf.paramDictionary setObject:param forKey:[weakSelf.scrollView currentName]];
-            [weakSelf setFilterTitleArray:titleArray];
-            weakSelf.filterView.expand = YES;
+            [weakSelf.titleDictionary setObject:titleArray forKey:[[SHGBusinessScrollView sharedBusinessScrollView] currentName]];
+            [weakSelf loadDataWithTarget:@"first"];
+            weakSelf.filterView.expand = filterShow;
         };
         [self.view addSubview:_filterView];
     }
@@ -229,15 +229,11 @@
     return _titleDictionary;
 }
 
-- (void)setFilterTitleArray:(NSArray *)array
+- (void)loadFilterTitleAndParam:(void (^)(NSArray *, NSDictionary *))block
 {
-    [self.titleDictionary setObject:array forKey:[[SHGBusinessScrollView sharedBusinessScrollView] currentName]];
-    [self loadDataWithTarget:@"first"];
-}
-
-- (NSArray *)getFilterTitleArray
-{
-    return [self.titleDictionary objectForKey:[[SHGBusinessScrollView sharedBusinessScrollView] currentName]];
+    NSArray *array = [self.titleDictionary objectForKey:[[SHGBusinessScrollView sharedBusinessScrollView] currentName]];
+    NSDictionary *paramDictionary = [self.paramDictionary objectForKey:[self.scrollView currentName]];
+    block(array, paramDictionary);
 }
 
 - (SHGBusinessNoticeObject *)otherObject
@@ -333,7 +329,7 @@
             businessID = object.businessID;
         }
     }
-    return [businessID isEqualToString:maxBusinessID] ? @"" : businessID;
+    return [businessID isEqualToString:maxBusinessID] ? @"-1" : businessID;
 }
 
 #pragma mark ------网络请求部分
@@ -349,7 +345,12 @@
     NSString *redirect = [position isEqualToString:@"0"] ? @"1" : @"0";
     NSString *businessId = [target isEqualToString:@"refresh"] ? [self maxBusinessID] : [self minBusinessID];
     NSMutableDictionary *param = [NSMutableDictionary dictionaryWithDictionary:@{@"businessId":businessId ,@"uid":UID ,@"type":[self.scrollView currentType] ,@"target":target ,@"pageSize":@"10" , @"area":city, @"redirect":redirect}];
-    [param addEntriesFromDictionary:[self.paramDictionary objectForKey:[weakSelf.scrollView currentName]]];
+
+    NSDictionary *paramDictionary = [self.paramDictionary objectForKey:[self.scrollView currentName]];
+    if ([paramDictionary allKeys].count > 0) {
+        [param addEntriesFromDictionary:paramDictionary];
+        [param addEntriesFromDictionary:@{@"requsetType":@"search"}];
+    }
     self.refreshing = YES;
     [SHGBusinessManager getListDataWithParam:param block:^(NSArray *dataArray, NSString *index, NSString *tipUrl) {
         weakSelf.refreshing = NO;
@@ -435,13 +436,24 @@
 
 - (void)addBusinessButtonClicked:(UIButton *)button
 {
-    SHGBusinessMainSendView *view = [SHGBusinessMainSendView sharedView];
-    view.alpha = 0.0f;
-    [self.view.window addSubview:view];
+    [[SHGGloble sharedGloble] requestUserVerifyStatusCompletion:^(BOOL state) {
+        if (state) {
+            SHGBusinessMainSendView *view = [SHGBusinessMainSendView sharedView];
+            view.alpha = 0.0f;
+            [self.view.window addSubview:view];
 
-    [UIView animateWithDuration:0.25f animations:^{
-        view.alpha = 1.0f;
-    }];
+            [UIView animateWithDuration:0.25f animations:^{
+                view.alpha = 1.0f;
+            }];
+        } else{
+            SHGAuthenticationViewController *controller = [[SHGAuthenticationViewController alloc] init];
+            [[SHGBusinessListViewController sharedController].navigationController pushViewController:controller animated:YES];
+            [[SHGGloble sharedGloble] recordUserAction:@"" type:@"market_identity"];
+        }
+    } showAlert:YES leftBlock:^{
+        [[SHGGloble sharedGloble] recordUserAction:@"" type:@"market_identity_cancel"];
+    } failString:@"认证后才能发起业务哦～"];
+
 }
 
 
@@ -480,6 +492,13 @@
         }];
     }];
     [self.tableView reloadData];
+}
+
+- (void)didCreateOrModifyBusiness:(SHGBusinessObject *)object
+{
+    NSInteger index = [self.scrollView indexForName:object.type];
+    [self.scrollView moveToIndex:index];
+    [self loadDataWithTarget:@"first"];
 }
 
 #pragma mark ------tableview代理

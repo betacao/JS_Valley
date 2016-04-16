@@ -9,7 +9,7 @@
 #import "BaseTableViewController.h"
 #import "AppDelegate.h"
 #import "ResetPasswardViewController.h"
-#import "ImproveMatiralViewController.h"
+
 @interface LoginNextViewController : BaseTableViewController
 @property (nonatomic, strong) NSString *phone;
 @property (nonatomic,strong) NSDictionary *rid;

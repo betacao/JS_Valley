@@ -219,13 +219,8 @@ typedef NS_ENUM(NSInteger, RegistType)
             [Hud hideHud];
             NSString *code = [response.data valueForKey:@"code"];
             if ([code isEqualToString:@"000"]){
-                if ([weakSelf.isFull isEqualToString:@"1"]){
-                    [weakSelf chatLoagin];
-                    [weakSelf loginSuccess];
-                } else{
-                    ImproveMatiralViewController *vc = [[ImproveMatiralViewController alloc] init];
-                    [weakSelf.navigationController pushViewController:vc animated:YES];
-                }
+                [weakSelf chatLoagin];
+                [weakSelf loginSuccess];
             }
         } else{
             [Hud hideHud];
