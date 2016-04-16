@@ -8,16 +8,14 @@
 	<string>financial</string>
 	<key>能源化工</key>
 	<string>energy</string>
-	<key>互联网</key>
-	<string>internet</string>
 	<key>地产基建</key>
 	<string>realtyConstruction</string>
 	<key>制造业</key>
 	<string>manufacturing</string>
 	<key>大健康</key>
 	<string>bighealth</string>
-	<key>TMT</key>
-	<string>TMT</string>
+	<key>TMT/互联网</key>
+	<string>TMTinternet</string>
 	<key>服务业</key>
 	<string>service</string>
 	<key>冶金采掘</key>

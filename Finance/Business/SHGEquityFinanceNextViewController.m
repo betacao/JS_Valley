@@ -12,6 +12,7 @@
 #import "UIButton+EnlargeEdge.h"
 #import "SHGBusinessManager.h"
 #import "SHGBusinessButtonContentView.h"
+#import "SHGBusinessListViewController.h"
 @interface SHGEquityFinanceNextViewController ()<UITextFieldDelegate,UIScrollViewDelegate,UITextViewDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UIButton *sureButton;
@@ -69,6 +70,7 @@
         ((SHGEquityFinanceSendViewController *)self.superController).sendType = 0;
     }
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardDidShow:) name:UIKeyboardDidShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textFieldDidChange:) name:UITextFieldTextDidChangeNotification object:nil];
     self.buttonBgImage = [UIImage imageNamed:@"business_SendButtonBg"];
     self.buttonBgImage = [self.buttonBgImage resizableImageWithCapInsets:UIEdgeInsetsMake(10.0f, 10.0f, 10.0f, 10.0f) resizingMode:UIImageResizingModeStretch];
     
@@ -238,7 +240,7 @@
         //投资期限
         NSString *investTime = [array objectAtIndex:1];
         if (investTime.length > 0) {
-            NSArray *investArray = [investTime componentsSeparatedByString:@"/"];
+            NSArray *investArray = [investTime componentsSeparatedByString:@"，"];
             for (NSInteger i = 0; i < self.investTimeButtonView.buttonArray.count; i ++) {
                 UIButton *button = [self.investTimeButtonView.buttonArray objectAtIndex:i];
                 for (NSInteger j = 0; j < investArray.count; j ++) {
@@ -296,9 +298,6 @@
         [button setBackgroundImage:self.buttonBgImage forState:UIControlStateNormal];
         [button setTitleColor:Color(@"ff8d65") forState:UIControlStateSelected];
         [button setBackgroundImage:self.buttonSelectBgImage forState:UIControlStateSelected];
-//        if ([button.titleLabel.text isEqualToString:vestYears]) {
-//            button.selected = YES;
-//        }
         button.frame = CGRectMake(kLeftToView + i * (kThreeButtonWidth + kButtonLeftMargin), 0.0f, kThreeButtonWidth, kCategoryButtonHeight);
         [button addTarget:self action:@selector(investTimeButtonClick:) forControlEvents:UIControlEventTouchUpInside];
         [self.investTimeButtonView addSubview:button];
@@ -347,7 +346,7 @@
                     }
                    
                     NSString *anonymous = weakSelf.authorizeButton.isSelected ? @"1" : @"0";
-                    SHGBusinessObject *object = [[SHGBusinessObject alloc]init];
+                    
                     NSString *type = [businessDic objectForKey:@"type"];
                     NSString *contact = [businessDic objectForKey:@"contact"];
                     NSString *financingStage = [businessDic objectForKey:@"financingStage"];
@@ -355,12 +354,12 @@
                     NSString *area = [businessDic objectForKey:@"area"];
                     NSString *industry = [businessDic objectForKey:@"industry"];
                     NSString *title = [businessDic objectForKey:@"title"];
+                    SHGBusinessObject *object = [[SHGBusinessObject alloc]init];
+                    object.type = type;
                     NSDictionary *param = @{@"uid":UID, @"type": type, @"contact":contact, @"financingStage":financingStage, @"investAmount": investAmount, @"area": area, @"industry": industry,@"totalshareRate": weakSelf.retributionTextField.text, @"shortestquitYears":vestYears, @"detail": weakSelf.marketExplainTextView.text,@"photo": weakSelf.imageName,@"anonymous": anonymous,@"title": title};
                     [SHGBusinessManager createNewBusiness:param success:^(BOOL success) {
                         if (success) {
-                            if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(didCreateNewBusiness:)]) {
-                                [weakSelf.delegate didCreateNewBusiness:object];
-                            }
+                            [[SHGBusinessListViewController sharedController] didCreateOrModifyBusiness:object];
                             [weakSelf.navigationController performSelector:@selector(popToRootViewControllerAnimated:) withObject:@(YES) afterDelay:1.2f];
                         }
                     }];
@@ -374,7 +373,7 @@
                         vestYears = @"";
                     }
                     NSString *anonymous = weakSelf.authorizeButton.isSelected ? @"1" : @"0";
-                    SHGBusinessObject *object = [[SHGBusinessObject alloc]init];
+                    
                     NSString *businessId = self.obj.businessID;
                     NSString *type = [businessDic objectForKey:@"type"];
                     NSString *contact = [businessDic objectForKey:@"contact"];
@@ -383,13 +382,12 @@
                     NSString *area = [businessDic objectForKey:@"area"];
                     NSString *industry = [businessDic objectForKey:@"industry"];
                     NSString *title = [businessDic objectForKey:@"title"];
+                
                     NSDictionary *param = @{@"uid":UID,@"businessId":businessId, @"type": type, @"contact":contact, @"financingStage":financingStage, @"investAmount": investAmount, @"area": area, @"industry": industry,@"totalshareRate": weakSelf.retributionTextField.text, @"shortestquitYears":vestYears, @"detail": weakSelf.marketExplainTextView.text,@"photo": weakSelf.imageName,@"anonymous": anonymous,@"title": title};
                     NSLog(@"%@",param);
                     [SHGBusinessManager editBusiness:param success:^(BOOL success) {
                         if (success) {
-                            if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(didCreateNewBusiness:)]) {
-                                [weakSelf.delegate didCreateNewBusiness:object];
-                            }
+
                             [weakSelf.navigationController performSelector:@selector(popToRootViewControllerAnimated:) withObject:@(YES) afterDelay:1.2f];
                         }
                     }];
@@ -517,15 +515,36 @@
 
 - (void)keyBoardDidShow:(NSNotification *)notificaiton
 {
+//    NSDictionary* info = [notificaiton userInfo];
+//    NSValue *value = [info objectForKey:UIKeyboardFrameEndUserInfoKey];
+//    CGPoint keyboardOrigin = [value CGRectValue].origin;
+//    self.keyBoardOrginY = keyboardOrigin.y;
+//    UIView *view = (UIView *)self.currentContext;
+//    CGPoint point = CGPointMake(0.0f, CGRectGetMinX(view.frame));
+//    dispatch_async(dispatch_get_main_queue(), ^{
+//        [self.scrollView setContentOffset:point animated:YES];
+//    });
     NSDictionary* info = [notificaiton userInfo];
-    NSValue *value = [info objectForKey:UIKeyboardFrameEndUserInfoKey];
-    CGPoint keyboardOrigin = [value CGRectValue].origin;
-    self.keyBoardOrginY = keyboardOrigin.y;
+    
+    NSValue* aValue = [info objectForKey:UIKeyboardFrameEndUserInfoKey];
+    CGSize keyboardSize = [aValue CGRectValue].size;
+    
+    CGRect viewFrame = [self.scrollView frame];
+    viewFrame.size.height -= keyboardSize.height;
+    self.scrollView.frame = viewFrame;
     UIView *view = (UIView *)self.currentContext;
-    CGPoint point = CGPointMake(0.0f, CGRectGetMinX(view.frame));
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self.scrollView setContentOffset:point animated:YES];
-    });
+    CGRect textFieldRect = [view frame];
+    [self.scrollView scrollRectToVisible:textFieldRect animated:YES];
+}
+
+- (void)textFieldDidChange:(NSNotification *)notification
+{
+    UITextField *textField = notification.object;
+    if ([textField isEqual:self.retributionTextField]) {
+        if (textField.text.length > 20) {
+            textField.text = [textField.text substringToIndex:20];
+        }
+    }
 }
 
 

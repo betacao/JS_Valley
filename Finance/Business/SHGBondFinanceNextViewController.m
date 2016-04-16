@@ -12,6 +12,7 @@
 #import "UIButton+EnlargeEdge.h"
 #import "SHGBusinessManager.h"
 #import "SHGBusinessButtonContentView.h"
+#import "SHGBusinessListViewController.h"
 @interface SHGBondFinanceNextViewController ()<UITextFieldDelegate,UIScrollViewDelegate,UITextViewDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UIButton *sureButton;
@@ -96,6 +97,7 @@
 {
     [super viewWillAppear:YES];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardDidShow:) name:UIKeyboardDidShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textFieldDidChange:) name:UITextFieldTextDidChangeNotification object:nil];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -104,13 +106,7 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-- (SHGBusinessObject *)obj
-{
-    if (!_obj) {
-        _obj = [[SHGBusinessObject alloc]init];
-    }
-    return _obj;
-}
+
 - (NSArray *)clarifyingWaybuttonArray
 {
     if (!_clarifyingWaybuttonArray) {
@@ -318,7 +314,7 @@
         
         //增信方式
         NSString *addRequire = [array objectAtIndex:0];
-        NSArray *addRequireArray = [addRequire componentsSeparatedByString:@"/"];
+        NSArray *addRequireArray = [addRequire componentsSeparatedByString:@"，"];
         for (NSInteger i = 0; i < self.addRequireButtonView.buttonArray.count; i ++) {
             UIButton *button = [self.addRequireButtonView.buttonArray objectAtIndex:i];
             for (NSInteger j = 0; j < addRequireArray.count; j ++) {
@@ -421,7 +417,7 @@
 {
     SHGBusinessButtonContentView *superView = (SHGBusinessButtonContentView *)btn.superview;
     [superView didClickButton:btn];
-
+    
 }
 
 - (IBAction)authorizeButtonClick:(UIButton *)sender
@@ -442,28 +438,28 @@
                         NSString *require= [businessSelectDic objectForKey:[weakSelf.addRequireButtonView.selectedArray objectAtIndex:0]];
                         for (NSInteger i = 1; i < weakSelf.addRequireButtonView.selectedArray.count; i ++ ) {
                             require = [NSString stringWithFormat:@"%@;%@",require,[businessSelectDic objectForKey:[weakSelf.addRequireButtonView.selectedArray objectAtIndex:i]]];
-                }
-                NSString *investTime = [businessSelectDic objectForKey:[weakSelf.investTimeButtonView.selectedArray objectAtIndex:0]];
-           
-                NSString *anonymous = weakSelf.authorizeButton.isSelected ? @"1" : @"0";
-                SHGBusinessObject *object = [[SHGBusinessObject alloc]init];
-                NSString *type = [businessDic objectForKey:@"type"];
-                NSString *contact = [businessDic objectForKey:@"contact"];
-                NSString *bondType = [businessDic objectForKey:@"bondType"];
-                NSString *investAmount = [businessDic objectForKey:@"investAmount"];
-                NSString *area = [businessDic objectForKey:@"area"];
-                NSString *industry = [businessDic objectForKey:@"industry"];
-                NSString *title = [businessDic objectForKey:@"title"];
-                NSDictionary *param = @{@"uid":UID, @"type": type, @"contact":contact, @"bondType":bondType, @"investAmount": investAmount, @"area": area, @"industry": industry,@"clarifyingWay":require, @"fundUsetime":investTime, @"highestRate": weakSelf.retributionTextField.text,@"detail": weakSelf.marketExplainTextView.text,@"photo": weakSelf.imageName,@"anonymous": anonymous,@"title": title};
-                [SHGBusinessManager createNewBusiness:param success:^(BOOL success) {
-                    if (success) {
-                        if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(didCreateNewBusiness:)]) {
-                            [weakSelf.delegate didCreateNewBusiness:object];
                         }
-                        [weakSelf.navigationController performSelector:@selector(popToRootViewControllerAnimated:) withObject:@(YES) afterDelay:1.2f];
+                        NSString *investTime = [businessSelectDic objectForKey:[weakSelf.investTimeButtonView.selectedArray objectAtIndex:0]];
+                        
+                        NSString *anonymous = weakSelf.authorizeButton.isSelected ? @"1" : @"0";
+                        
+                        NSString *type = [businessDic objectForKey:@"type"];
+                        NSString *contact = [businessDic objectForKey:@"contact"];
+                        NSString *bondType = [businessDic objectForKey:@"bondType"];
+                        NSString *investAmount = [businessDic objectForKey:@"investAmount"];
+                        NSString *area = [businessDic objectForKey:@"area"];
+                        NSString *industry = [businessDic objectForKey:@"industry"];
+                        NSString *title = [businessDic objectForKey:@"title"];
+                        SHGBusinessObject *object = [[SHGBusinessObject alloc]init];
+                        object.type =type;
+                        NSDictionary *param = @{@"uid":UID, @"type": type, @"contact":contact, @"bondType":bondType, @"investAmount": investAmount, @"area": area, @"industry": industry,@"clarifyingWay":require, @"fundUsetime":investTime, @"highestRate": weakSelf.retributionTextField.text,@"detail": weakSelf.marketExplainTextView.text,@"photo": weakSelf.imageName,@"anonymous": anonymous,@"title": title};
+                        [SHGBusinessManager createNewBusiness:param success:^(BOOL success) {
+                            if (success) {
+                                [[SHGBusinessListViewController sharedController] didCreateOrModifyBusiness:object];
+                                [weakSelf.navigationController performSelector:@selector(popToRootViewControllerAnimated:) withObject:@(YES) afterDelay:1.2f];
+                            }
+                        }];
                     }
-                }];
-                }
                     break;
                     
                 case 1:{
@@ -490,9 +486,6 @@
 
                         [SHGBusinessManager editBusiness:param success:^(BOOL success) {
                             if (success) {
-                                if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(didCreateNewBusiness:)]) {
-                                    [weakSelf.delegate didCreateNewBusiness:self.obj];
-                                }
                                 [weakSelf.navigationController performSelector:@selector(popToRootViewControllerAnimated:) withObject:@(YES) afterDelay:1.2f];
                             }
                         }];
@@ -633,20 +626,36 @@
 
 - (void)keyBoardDidShow:(NSNotification *)notificaiton
 {
-    NSDictionary *info = [notificaiton userInfo];
-    NSValue *value = [info objectForKey:UIKeyboardFrameEndUserInfoKey];
-    CGPoint keyboardOrigin = [value CGRectValue].origin;
-    self.keyBoardOrginY = keyboardOrigin.y;
+//    NSDictionary *info = [notificaiton userInfo];
+//    NSValue *value = [info objectForKey:UIKeyboardFrameEndUserInfoKey];
+//    CGPoint keyboardOrigin = [value CGRectValue].origin;
+//    self.keyBoardOrginY = keyboardOrigin.y;
+//    UIView *view = (UIView *)self.currentContext;
+//    CGPoint point = CGPointMake(0.0f, CGRectGetMaxY(view.frame));
+//    dispatch_async(dispatch_get_main_queue(), ^{
+//        [self.scrollView setContentOffset:point animated:YES];
+//    });
+    NSDictionary* info = [notificaiton userInfo];
+    
+    NSValue* aValue = [info objectForKey:UIKeyboardFrameEndUserInfoKey];
+    CGSize keyboardSize = [aValue CGRectValue].size;
+    
+    CGRect viewFrame = [self.scrollView frame];
+    viewFrame.size.height -= keyboardSize.height;
+    self.scrollView.frame = viewFrame;
     UIView *view = (UIView *)self.currentContext;
-    CGPoint point = CGPointMake(0.0f, CGRectGetMaxY(view.frame));
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self.scrollView setContentOffset:point animated:YES];
-    });
+    CGRect textFieldRect = [view frame];
+    [self.scrollView scrollRectToVisible:textFieldRect animated:YES];
 }
 
-- (void)dealloc
+- (void)textFieldDidChange:(NSNotification *)notification
 {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    UITextField *textField = notification.object;
+    if ([textField isEqual:self.retributionTextField]) {
+        if (textField.text.length > 20) {
+            textField.text = [textField.text substringToIndex:20];
+        }
+    }
 }
 
 - (void)didReceiveMemoryWarning

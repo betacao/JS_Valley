@@ -1973,7 +1973,6 @@
 		987184A01C4E51ED006F2946 /* SHGMomentCityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGMomentCityViewController.h; sourceTree = "<group>"; };
 		987184A11C4E51ED006F2946 /* SHGMomentCityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGMomentCityViewController.m; sourceTree = "<group>"; };
 		987184A21C4E51ED006F2946 /* SHGMomentCityViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGMomentCityViewController.xib; sourceTree = "<group>"; };
-		987A7E9D1CBB4E9600EA7450 /* SHGBusinessDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SHGBusinessDelegate.h; sourceTree = "<group>"; };
 		9894C9751BF5BCE700F80577 /* SHGActionSignViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGActionSignViewController.h; sourceTree = "<group>"; };
 		9894C9761BF5BCE700F80577 /* SHGActionSignViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGActionSignViewController.m; sourceTree = "<group>"; };
 		9894C9771BF5BCE700F80577 /* SHGActionSignViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGActionSignViewController.xib; sourceTree = "<group>"; };
@@ -4510,7 +4509,6 @@
 			isa = PBXGroup;
 			children = (
 				985A0FD61CABA49400880DB5 /* MarketArea.plist */,
-				987A7E9D1CBB4E9600EA7450 /* SHGBusinessDelegate.h */,
 				987101351CBFB050002A8F7F /* SHGBusinessSelectString.plist */,
 			);
 			name = Resource;

@@ -17,8 +17,8 @@
 #define kReleaseH
 
 #ifdef kSitTest
-//#define rBaseAddRessHttp                @"http://120.26.114.154:8080/api"
-#define rBaseAddRessHttp                @"http://192.168.1.116:8080/api"
+#define rBaseAddRessHttp                @"http://120.26.114.154:8080/api"
+//#define rBaseAddRessHttp                @"http://192.168.1.116:8080/api"
 //#define rBaseAddRessHttp                @"http://192.168.2.11:8080/api"
 
 #define rBaseAddressForHttp				[NSString stringWithFormat:@"%@/v2",rBaseAddRessHttp]

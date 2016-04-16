@@ -66,9 +66,9 @@
     self.detailLabel.sd_layout
     .leftSpaceToView(self.headerImageView, MarginFactor(10.0f))
     .bottomEqualToView(self.headerImageView)
-    .autoHeightRatio(0.0f);
+    .heightIs(self.detailLabel.font.lineHeight);;
     [self.detailLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
-    [self.detailLabel setMaxNumberOfLinesToShow:1];
+
     
     self.lineView.sd_layout
     .leftEqualToView(self.headerImageView)
@@ -76,7 +76,7 @@
     .bottomSpaceToView(self.contentView, 0.5f)
     .heightIs(0.5f);
     
-     //[self setupAutoHeightWithBottomView:self.lineView bottomMargin:0.0f];
+
 }
 
 - (UIImageView *)headerImageView
@@ -180,7 +180,7 @@
     _model = model;
 
     self.nameLabel.frame = CGRectZero;
-    self.detailLabel.frame = CGRectZero;
+    //self.detailLabel.frame = CGRectZero;
     self.timeLabel.frame = CGRectZero;
 
     self.nameLabel.text = model.name;

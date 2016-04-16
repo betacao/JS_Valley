@@ -11,6 +11,7 @@
 #import "SHGBusinessMargin.h"
 #import "UIButton+EnlargeEdge.h"
 #import "SHGBusinessManager.h"
+#import "SHGBusinessListViewController.h"
 @interface SHGSameAndCommixtureNextViewController ()<UIScrollViewDelegate,UITextViewDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UIButton *sureButton;
@@ -142,7 +143,8 @@
     .rightSpaceToView(self.scrollView, kLeftToView)
     .heightRatioToView(self.addImageTitleLabel, 1.0f);
     
-    [self.scrollView setupAutoContentSizeWithBottomView:self.authorizeButton bottomMargin:SCREENHEIGHT - MarginFactor(50.0f) - self.authorizeButton.bottom + MarginFactor(5.0f)];
+    //CGFloat y = self.scrollView.size.height - self.marketExplainView.size.height -self.addImageView.height - self.authorizeButton.size.height  + MarginFactor(55.0f);
+    [self.scrollView setupAutoContentSizeWithBottomView:self.authorizeButton bottomMargin:MarginFactor(200.0f)];
 
     
 }
@@ -216,14 +218,13 @@
                         NSString *investAmount = [businessDic objectForKey:@"investAmount"];
                         NSString *area = [businessDic objectForKey:@"area"];
                         NSString *title = [businessDic objectForKey:@"title"];
-
+                        SHGBusinessObject *object = [[SHGBusinessObject alloc] init];
+                        object.type = type;
                         NSDictionary *param = @{@"uid":UID,@"type": type, @"contact":contact, @"businessType":businessType, @"investAmount": investAmount, @"area": area, @"detail": weakSelf.marketExplainTextView.text,@"photo": weakSelf.imageName,@"anonymous": anonymous,@"title": title};
                         NSLog(@"%@",param);
                         [SHGBusinessManager createNewBusiness:param success:^(BOOL success) {
                             if (success) {
-                                if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(didCreateNewBusiness:)]) {
-                                    [weakSelf.delegate didCreateNewBusiness:self.obj];
-                                }
+                                 [[SHGBusinessListViewController sharedController] didCreateOrModifyBusiness:object];
                                 [weakSelf.navigationController performSelector:@selector(popToRootViewControllerAnimated:) withObject:@(YES) afterDelay:1.2f];
                             }
                         }];
@@ -242,9 +243,7 @@
                         NSLog(@"%@",param);
                         [SHGBusinessManager editBusiness:param success:^(BOOL success) {
                             if (success) {
-                                if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(didCreateNewBusiness:)]) {
-                                    [weakSelf.delegate didCreateNewBusiness:self.obj];
-                                }
+
                                 [weakSelf.navigationController performSelector:@selector(popToRootViewControllerAnimated:) withObject:@(YES) afterDelay:1.2f];
                             }
                         }];
@@ -357,21 +356,29 @@
 
 - (void)keyBoardDidShow:(NSNotification *)notificaiton
 {
+//    NSDictionary* info = [notificaiton userInfo];
+//    NSValue *value = [info objectForKey:UIKeyboardFrameEndUserInfoKey];
+//    CGPoint keyboardOrigin = [value CGRectValue].origin;
+//    self.keyBoardOrginY = keyboardOrigin.y;
+//    UIView *view = (UIView *)self.currentContext;
+//    CGPoint point = CGPointMake(0.0f, CGRectGetMinX(view.frame));
+//    dispatch_async(dispatch_get_main_queue(), ^{
+//        [self.scrollView scrollRectToVisible:textFieldRect animated:YES];
+//    });
     NSDictionary* info = [notificaiton userInfo];
-    NSValue *value = [info objectForKey:UIKeyboardFrameEndUserInfoKey];
-    CGPoint keyboardOrigin = [value CGRectValue].origin;
-    self.keyBoardOrginY = keyboardOrigin.y;
-    UIView *view = (UIView *)self.currentContext;
-    CGPoint point = CGPointMake(0.0f, CGRectGetMinX(view.frame));
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self.scrollView setContentOffset:point animated:YES];
-    });
+
+    NSValue* aValue = [info objectForKey:UIKeyboardFrameEndUserInfoKey];
+    CGSize keyboardSize = [aValue CGRectValue].size;
+
+    CGRect viewFrame = [self.scrollView frame];
+    viewFrame.size.height -= keyboardSize.height;
+    self.scrollView.frame = viewFrame;
+    
+    CGRect textFieldRect = [self.currentContext frame];
+    [self.scrollView scrollRectToVisible:textFieldRect animated:YES];
 }
 
-- (void)dealloc
-{
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];

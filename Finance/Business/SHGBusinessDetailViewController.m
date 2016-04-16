@@ -608,13 +608,26 @@
 
 - (IBAction)comment:(id)sender
 {
-    self.popupView = [[BRCommentView alloc] initWithFrame:self.view.bounds superFrame:CGRectZero isController:YES type:@"comment"];
-    self.popupView.delegate = self;
-    self.popupView.type = @"comment";
-    self.popupView.fid = @"-1";
-    self.popupView.detail = @"";
-    [self.navigationController.view addSubview:self.popupView];
-    [self.popupView showWithAnimated:YES];
+    [[SHGGloble sharedGloble] requestUserVerifyStatusCompletion:^(BOOL state) {
+        if (state) {
+            self.popupView = [[BRCommentView alloc] initWithFrame:self.view.bounds superFrame:CGRectZero isController:YES type:@"comment"];
+            self.popupView.delegate = self;
+            self.popupView.type = @"comment";
+            self.popupView.fid = @"-1";
+            self.popupView.detail = @"";
+            [self.navigationController.view addSubview:self.popupView];
+            [self.popupView showWithAnimated:YES];
+            [self.navigationController.view addSubview:_popupView];
+            [_popupView showWithAnimated:YES];
+        } else{
+            SHGAuthenticationViewController *controller = [[SHGAuthenticationViewController alloc] init];
+            [self.navigationController pushViewController:controller animated:YES];
+            [[SHGGloble sharedGloble] recordUserAction:@"" type:@"dynamic_identity"];
+        }
+    } showAlert:YES leftBlock:^{
+        [[SHGGloble sharedGloble] recordUserAction:@"" type:@"dynamic_identity_cancel"];
+    } failString:@"认证后才能发起评论哦～"];
+
 
 }
 

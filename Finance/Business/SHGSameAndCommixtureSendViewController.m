@@ -12,6 +12,7 @@
 #import "SHGBusinessLocationView.h"
 #import "SHGBusinessButtonContentView.h"
 #import "CCLocationManager.h"
+
 @interface SHGSameAndCommixtureSendViewController ()<UITextFieldDelegate,UIScrollViewDelegate>
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UIButton *nextButton;
@@ -94,13 +95,14 @@
     [self addSdLayout];
     [self initView];
     [self editObject];
-
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardDidShow:) name:UIKeyboardDidShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textFieldDidChange:) name:UITextFieldTextDidChangeNotification object:nil];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -290,7 +292,7 @@
         if ([money isEqualToString:@"暂未说明"]) {
             self.monenyTextField.text = @"";
         } else{
-            self.monenyTextField.text = money;
+            self.monenyTextField.text = [money substringWithRange:NSMakeRange(0, money.length - 2)];
         }
         
         //地区
@@ -433,11 +435,15 @@
         [Hud showMessageWithText:@"请选择业务地区"];
         return NO;
     }
+    NSString *string = [[SHGGloble sharedGloble] checkPhoneNumber:self.phoneNumTextField.text];
+    if (string.length > 0) {
+        [Hud showMessageWithText:string];
+        return NO;
+    }
   
     return YES;
 }
 
-//键盘消失
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
 {
@@ -462,21 +468,46 @@
 
 - (void)keyBoardDidShow:(NSNotification *)notificaiton
 {
+//    NSDictionary* info = [notificaiton userInfo];
+//    NSValue *value = [info objectForKey:UIKeyboardFrameEndUserInfoKey];
+//    CGPoint keyboardOrigin = [value CGRectValue].origin;
+//    self.keyBoardOrginY = keyboardOrigin.y;
+//    UIView *view = (UIView *)self.currentContext;
+//    CGPoint point = CGPointMake(0.0f, CGRectGetMinX(view.frame));
+//    dispatch_async(dispatch_get_main_queue(), ^{
+//        [self.scrollView setContentOffset:point animated:YES];
+//    });
     NSDictionary* info = [notificaiton userInfo];
-    NSValue *value = [info objectForKey:UIKeyboardFrameEndUserInfoKey];
-    CGPoint keyboardOrigin = [value CGRectValue].origin;
-    self.keyBoardOrginY = keyboardOrigin.y;
-    UIView *view = (UIView *)self.currentContext;
-    CGPoint point = CGPointMake(0.0f, CGRectGetMinX(view.frame));
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self.scrollView setContentOffset:point animated:YES];
-    });
+    
+    NSValue* aValue = [info objectForKey:UIKeyboardFrameEndUserInfoKey];
+    CGSize keyboardSize = [aValue CGRectValue].size;
+    
+    CGRect viewFrame = [self.scrollView frame];
+    viewFrame.size.height -= keyboardSize.height;
+    self.scrollView.frame = viewFrame;
+    
+    CGRect textFieldRect = [self.currentContext frame];
+    [self.scrollView scrollRectToVisible:textFieldRect animated:YES];
 }
 
-- (void)dealloc
+- (void)textFieldDidChange:(NSNotification *)notification
 {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    UITextField *textField = notification.object;
+    if ([textField isEqual:self.nameTextField]) {
+        if (textField.text.length > 20) {
+            textField.text = [textField.text substringToIndex:20];
+        }
+    } else if ([textField isEqual:self.phoneNumTextField]) {
+        if (textField.text.length > 20){
+            textField.text = [textField.text substringToIndex:20];
+        }
+    } else if ([textField isEqual:self.monenyTextField]) {
+        if (textField.text.length > 20) {
+            textField.text = [textField.text substringToIndex:20];
+        }
+    }
 }
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];

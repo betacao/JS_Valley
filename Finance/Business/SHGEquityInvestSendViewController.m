@@ -111,6 +111,7 @@
 {
     [super viewWillAppear:YES];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardDidShow:) name:UIKeyboardDidShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textFieldDidChange:) name:UITextFieldTextDidChangeNotification object:nil];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -443,7 +444,7 @@
         if ([money isEqualToString:@"暂未说明"]) {
             self.monenyTextField.text = @"";
         } else{
-            self.monenyTextField.text = money;
+            self.monenyTextField.text = [money substringWithRange:NSMakeRange(0, money.length - 2)];
         }
         
         //地区
@@ -452,7 +453,7 @@
         
         //行业
         NSString *industry = [array objectAtIndex:3];
-        NSArray *industryArray = [industry componentsSeparatedByString:@"/"];
+        NSArray *industryArray = [industry componentsSeparatedByString:@"，"];
         self.editIndustryArray = industryArray;
         for (NSInteger i = 1 ; i < industryArray.count ; i ++) {
             industry = [NSString stringWithFormat:@"%@/%@",[industryArray objectAtIndex:0],[industryArray objectAtIndex:i]];
@@ -462,7 +463,7 @@
         
         //投资阶段
         NSString *investTime = [array objectAtIndex:0];
-        NSArray *investTimeArray = [investTime componentsSeparatedByString:@"/"];
+        NSArray *investTimeArray = [investTime componentsSeparatedByString:@"，"];
         for (NSInteger i = 0; i < self.bondStageButtonView.buttonArray.count; i ++) {
             
             UIButton *button = [self.bondStageButtonView.buttonArray objectAtIndex:i];
@@ -515,7 +516,7 @@
         [Hud showMessageWithText:@"请选择业务地区"];
         return NO;
     }
-    if ([self.industrySelectButton.titleLabel.text isEqualToString:@"请填写意向行业"] ) {
+    if ([self.industrySelectButton.titleLabel.text isEqualToString:@"请填选择行业"] ) {
         [Hud showMessageWithText:@"请填写意向行业"];
         return NO;
     }
@@ -523,8 +524,15 @@
         [Hud showMessageWithText:@"请填写意向行业"];
         return NO;
     }
+    NSString *string = [[SHGGloble sharedGloble] checkPhoneNumber:self.phoneNumTextField.text];
+    if (string.length > 0) {
+        [Hud showMessageWithText:string];
+        return NO;
+    }
     return YES;
 }
+
+
 
 - (IBAction)locationSelectClick:(UIButton *)sender
 {
@@ -540,7 +548,7 @@
 }
 - (IBAction)businessClick:(UIButton *)sender
 {
-    NSArray *array =  @[@"不限",@"金融投资",@"能源化工",@"互联网",@"地产基建",@"制造业",@"大健康",@"TMT",@"服务业",@"冶金采掘",@"农林牧渔",@"其他行业"];
+    NSArray *array =  @[@"不限",@"金融投资",@"能源化工",@"TMT/互联网",@"地产基建",@"制造业",@"大健康",@"服务业",@"冶金采掘",@"农林牧渔",@"其他行业"];
     if (!self.selectViewController) {
         self.selectViewController = [[SHGBusinessSelectView alloc]initWithFrame:CGRectMake(0.0f, 0.0f, SCREENWIDTH, SCREENHEIGHT) array:array statu:YES industryArray:self.editIndustryArray];
     }
@@ -554,6 +562,7 @@
     [self.view.window addSubview:self.selectViewController];
 }
 //键盘消失
+
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
 {
@@ -578,17 +587,44 @@
 
 - (void)keyBoardDidShow:(NSNotification *)notificaiton
 {
+//    NSDictionary* info = [notificaiton userInfo];
+//    NSValue *value = [info objectForKey:UIKeyboardFrameEndUserInfoKey];
+//    CGPoint keyboardOrigin = [value CGRectValue].origin;
+//    self.keyBoardOrginY = keyboardOrigin.y;
+//    UIView *view = (UIView *)self.currentContext;
+//    CGPoint point = CGPointMake(0.0f, CGRectGetMinX(view.frame));
+//    dispatch_async(dispatch_get_main_queue(), ^{
+//        [self.scrollView setContentOffset:point animated:YES];
+//    });
     NSDictionary* info = [notificaiton userInfo];
-    NSValue *value = [info objectForKey:UIKeyboardFrameEndUserInfoKey];
-    CGPoint keyboardOrigin = [value CGRectValue].origin;
-    self.keyBoardOrginY = keyboardOrigin.y;
+    
+    NSValue* aValue = [info objectForKey:UIKeyboardFrameEndUserInfoKey];
+    CGSize keyboardSize = [aValue CGRectValue].size;
+    
+    CGRect viewFrame = [self.scrollView frame];
+    viewFrame.size.height -= keyboardSize.height;
+    self.scrollView.frame = viewFrame;
     UIView *view = (UIView *)self.currentContext;
-    CGPoint point = CGPointMake(0.0f, CGRectGetMinX(view.frame));
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self.scrollView setContentOffset:point animated:YES];
-    });
+    CGRect textFieldRect = [view frame];
+    [self.scrollView scrollRectToVisible:textFieldRect animated:YES];
 }
-
+- (void)textFieldDidChange:(NSNotification *)notification
+{
+    UITextField *textField = notification.object;
+    if ([textField isEqual:self.nameTextField]) {
+        if (textField.text.length > 20) {
+            textField.text = [textField.text substringToIndex:20];
+        }
+    } else if ([textField isEqual:self.phoneNumTextField]) {
+        if (textField.text.length > 20){
+            textField.text = [textField.text substringToIndex:20];
+        }
+    } else if ([textField isEqual:self.monenyTextField]) {
+        if (textField.text.length > 20) {
+            textField.text = [textField.text substringToIndex:20];
+        }
+    }
+}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];

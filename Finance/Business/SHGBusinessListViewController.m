@@ -289,6 +289,20 @@
     }
 }
 
+- (void)didCreateNewMarket:(SHGBusinessObject *)object
+{
+    UIViewController *firstController = [self.navigationController.viewControllers firstObject];
+    [firstController performSelector:@selector(scrollToCategory:) withObject:object];
+    [firstController performSelector:@selector(refreshHeader) withObject:nil];
+
+    
+}
+
+- (void)scrollToCategory:(SHGBusinessObject *)object
+{
+    NSInteger index = [self.scrollView.categoryArray indexOfObject:object];
+    [self.scrollView moveToIndex:index];
+}
 #pragma mark ------刷新用到的
 - (void)refreshHeader
 {

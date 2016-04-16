@@ -12,6 +12,7 @@
 #import "UIButton+EnlargeEdge.h"
 #import "SHGBusinessButtonContentView.h"
 #import "SHGBusinessManager.h"
+#import "SHGBusinessListViewController.h"
 @interface SHGEquityInvestNextViewController ()<UITextFieldDelegate,UIScrollViewDelegate,UITextViewDelegate,UIImagePickerControllerDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UIButton *sureButton;
@@ -99,6 +100,7 @@
 {
     [super viewWillAppear:YES];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardDidShow:) name:UIKeyboardDidShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textFieldDidChange:) name:UITextFieldTextDidChangeNotification object:nil];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -269,7 +271,7 @@
 
     self.marketExplainTextView.layer.borderColor = Color(@"cecece").CGColor;
     self.marketExplainTextView.layer.borderWidth = 0.5f;
-    
+    self.marketExplainTextView.scrollEnabled = NO;
     self.capitalSourceLabel.textColor = Color(@"161616");
     self.capitalSourceLabel.font = FontFactor(13.0f);
     
@@ -373,7 +375,7 @@
         //投资期限
         NSString *investTime = [array objectAtIndex:2];
         if (investTime.length > 0) {
-            NSArray *investArray = [investTime componentsSeparatedByString:@"/"];
+            NSArray *investArray = [investTime componentsSeparatedByString:@"，"];
             for (NSInteger i = 0; i < self.timeButtonView.buttonArray.count; i ++) {
                 UIButton *button = [self.timeButtonView.buttonArray objectAtIndex:i];
                 for (NSInteger j = 0; j < investArray.count; j ++) {
@@ -420,7 +422,7 @@
                     
                 case 0:{
                     NSString *anonymous = weakSelf.authorizeButton.isSelected ? @"1" : @"0";
-                    SHGBusinessObject *object = [[SHGBusinessObject alloc]init];
+                    
                     NSString *type = [businessDic objectForKey:@"type"];
                     NSString *contact = [businessDic objectForKey:@"contact"];
                     NSString *investAmount = [businessDic objectForKey:@"investAmount"];
@@ -441,13 +443,12 @@
                         }
                         
                     }
-                    
+                    SHGBusinessObject *object = [[SHGBusinessObject alloc]init];
+                    object.type = type;
                     NSDictionary *param = @{@"uid":UID, @"type": type, @"moneysideType": @"equityInvest",@"contact":contact,@"financingStage":financingStage, @"investAmount": investAmount, @"area": area, @"industry": industry,@"fundSource":fundSource ,@"totalshareRate":weakSelf.retributionTextField.text, @"vestYears": vestYears,@"detail": weakSelf.marketExplainTextView.text,@"photo": weakSelf.imageName,@"anonymous": anonymous,@"title": title};
                     [SHGBusinessManager createNewBusiness:param success:^(BOOL success) {
                         if (success) {
-                            if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(didCreateNewBusiness:)]) {
-                                [weakSelf.delegate didCreateNewBusiness:object];
-                            }
+                            [[SHGBusinessListViewController sharedController] didCreateOrModifyBusiness:object];
                             [weakSelf.navigationController performSelector:@selector(popToRootViewControllerAnimated:) withObject:@(YES) afterDelay:1.2f];
                         }
                     }];
@@ -482,9 +483,6 @@
                     NSLog(@"%@",param);
                     [SHGBusinessManager editBusiness:param success:^(BOOL success) {
                         if (success) {
-                            if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(didCreateNewBusiness:)]) {
-                                [weakSelf.delegate didCreateNewBusiness:object];
-                            }
                             [weakSelf.navigationController performSelector:@selector(popToRootViewControllerAnimated:) withObject:@(YES) afterDelay:1.2f];
                         }
                     }];
@@ -599,8 +597,14 @@
     return YES;
 }
 
+- (BOOL)textViewShouldBeginEditing:(UITextView *)textView
+{
+    return YES;
+}
+
 - (void)textFieldDidBeginEditing:(UITextField *)textField
 {
+    
     self.currentContext = textField;
 }
 
@@ -612,6 +616,7 @@
 
 - (void)textViewDidBeginEditing:(UITextView *)textView
 {
+    [self.currentContext becomeFirstResponder];
     self.currentContext = textView;
 }
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
@@ -622,16 +627,36 @@
 
 - (void)keyBoardDidShow:(NSNotification *)notificaiton
 {
-    NSDictionary *info = [notificaiton userInfo];
-    NSValue *value = [info objectForKey:UIKeyboardFrameEndUserInfoKey];
-    CGPoint keyboardOrigin = [value CGRectValue].origin;
-    self.keyBoardOrginY = keyboardOrigin.y;
-    UIView *view = (UIView *)self.currentContext;
-    CGPoint point = CGPointMake(0.0f, CGRectGetMinY(view.frame));
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self.scrollView setContentOffset:point animated:YES];
-    });
+//    NSDictionary *info = [notificaiton userInfo];
+//    NSValue *value = [info objectForKey:UIKeyboardFrameEndUserInfoKey];
+//    CGPoint keyboardOrigin = [value CGRectValue].origin;
+//    self.keyBoardOrginY = keyboardOrigin.y;
+//    UIView *view = (UIView *)self.currentContext;
+//    CGPoint point = CGPointMake(0.0f, CGRectGetMinY(view.frame));
+//    dispatch_async(dispatch_get_main_queue(), ^{
+//        [self.scrollView setContentOffset:point animated:YES];
+//    });
+    NSDictionary* info = [notificaiton userInfo];
     
+    NSValue* aValue = [info objectForKey:UIKeyboardFrameEndUserInfoKey];
+    CGSize keyboardSize = [aValue CGRectValue].size;
+    
+    CGRect viewFrame = [self.scrollView frame];
+    viewFrame.size.height -= keyboardSize.height;
+    self.scrollView.frame = viewFrame;
+    UIView *view = (UIView *)self.currentContext;
+    CGRect Rect = [view frame];
+    [self.scrollView scrollRectToVisible:Rect animated:YES];
+}
+
+- (void)textFieldDidChange:(NSNotification *)notification
+{
+    UITextField *textField = notification.object;
+    if ([textField isEqual:self.retributionTextField]) {
+        if (textField.text.length > 20) {
+            textField.text = [textField.text substringToIndex:20];
+        }
+    }
 }
 
 - (void)didReceiveMemoryWarning

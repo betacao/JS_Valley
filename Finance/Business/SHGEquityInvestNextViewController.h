@@ -9,10 +9,9 @@
 #import "BaseViewController.h"
 #import "SHGBusinessObject.h"
 #import "SHGEquityInvestSendViewController.h"
-#import "SHGBusinessDelegate.h"
+
 
 @interface SHGEquityInvestNextViewController : BaseViewController
 @property (strong, nonatomic) SHGBusinessObject *object;
-@property (assign, nonatomic) id<SHGBusinessDelegate> delegate;
 @property (weak, nonatomic) UIViewController *superController;
 @end
