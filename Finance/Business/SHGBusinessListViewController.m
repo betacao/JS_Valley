@@ -209,7 +209,7 @@
         _searchBar = [[EMSearchBar alloc] init];
         _searchBar.delegate = self;
         _searchBar.needLineView = NO;
-        _searchBar.placeholder = @"请输入业务名称/类型/地区关键字";
+        _searchBar.placeholder = @"请输入业务名称/地区关键字";
         _searchBar.backgroundImageColor = Color(@"d43c33");
     }
     return _searchBar;
@@ -273,7 +273,9 @@
     if (object) {
         [self.currentArray removeObject:object];
     }
-    if ([index integerValue] >= 0){
+    NSDictionary *paramDictionary = [self.paramDictionary objectForKey:[self.scrollView currentName]];
+    //有过搜索的就不再显示图片和文字了
+    if ([index integerValue] >= 0 && [paramDictionary allKeys].count == 0){
         [self.currentArray insertUniqueObject:[self otherObject] atIndex:[index integerValue]];
     }
 }
@@ -364,11 +366,18 @@
     if (self.refreshing) {
         return;
     }
+    NSString *CFData = @"";
+    NSString *filePath = [NSString stringWithFormat:kFilePath, @"CFData"];
+    NSString *fileName = [filePath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@_%@",[[NSDate date] shortStringFromDate], UID]];
+    CFData = [NSString stringWithContentsOfFile:fileName encoding:NSUTF8StringEncoding error:nil];
+    if (IsStrEmpty(CFData)) {
+        CFData = @"";
+    }
     NSString *position = [self.positionDictionary objectForKey:[self.scrollView currentName]];
     NSString *city = [self.cityName isEqualToString:@"全国"] ? @"" : self.cityName;
     NSString *redirect = [position isEqualToString:@"0"] ? @"1" : @"0";
     NSString *businessId = [target isEqualToString:@"refresh"] ? [self maxBusinessID] : [self minBusinessID];
-    NSMutableDictionary *param = [NSMutableDictionary dictionaryWithDictionary:@{@"businessId":businessId ,@"uid":UID ,@"type":[self.scrollView currentType] ,@"target":target ,@"pageSize":@"10" , @"area":city, @"redirect":redirect}];
+    NSMutableDictionary *param = [NSMutableDictionary dictionaryWithDictionary:@{@"businessId":businessId ,@"uid":UID ,@"type":[self.scrollView currentType] ,@"target":target ,@"pageSize":@"10" , @"area":city, @"redirect":redirect, @"cfData":CFData}];
 
     NSDictionary *paramDictionary = [self.paramDictionary objectForKey:[self.scrollView currentName]];
     if ([paramDictionary allKeys].count > 0) {
@@ -376,7 +385,8 @@
         [param addEntriesFromDictionary:@{@"requsetType":@"search"}];
     }
     self.refreshing = YES;
-    [SHGBusinessManager getListDataWithParam:param block:^(NSArray *dataArray, NSString *index, NSString *tipUrl) {
+    [SHGBusinessManager getListDataWithParam:param block:^(NSArray *dataArray, NSString *index, NSString *tipUrl, NSString *cfData) {
+
         weakSelf.refreshing = NO;
         [weakSelf.tableView.mj_header endRefreshing];
         [weakSelf.tableView.mj_footer endRefreshing];
@@ -388,6 +398,9 @@
                 weakSelf.index = index;
                 [weakSelf.tableView setContentOffset:CGPointZero];
                 [weakSelf.noticeView showWithText:[NSString stringWithFormat:@"为您加载了%ld条新业务",(long)dataArray.count]];
+                NSError *error = nil;
+                [cfData writeToFile:fileName atomically:YES encoding:NSUTF8StringEncoding error:&error];
+
             } else if([target isEqualToString:@"refresh"]){
                 for (NSInteger i = dataArray.count - 1; i >= 0; i--){
                     SHGBusinessObject *obj = [dataArray objectAtIndex:i];
@@ -483,7 +496,6 @@
 
 - (void)moveToProvincesViewController:(UIButton *)button
 {
-    
     SHGBusinessLocationViewController *locationViewController = [[SHGBusinessLocationViewController alloc] init];
     
     locationViewController.locationString = self.titleLabel.text;

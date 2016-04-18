@@ -118,7 +118,10 @@
         _backgroundView = [[UIView alloc] initWithFrame:tableView.frame];
         _backgroundView.backgroundColor = [UIColor colorWithWhite:0.0f alpha:0.7f];
         UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(backgroundViewTaped:)];
+        UISwipeGestureRecognizer *swipeSecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(backgroundViewTaped:)];
+        swipeSecognizer.direction = UISwipeGestureRecognizerDirectionUp;
         [_backgroundView addGestureRecognizer:recognizer];
+        [_backgroundView addGestureRecognizer:swipeSecognizer];
     }
     return _backgroundView;
 }
@@ -218,7 +221,10 @@
     [array addObjectsFromArray:self.dataArray];
     [array removeObjectAtIndex:index];
     self.dataArray = array;
-
+    BOOL expand = YES;
+    if (array.count == 0) {
+        expand = NO;
+    }
     SHGBusinessSecondsubObject *object = (SHGBusinessSecondsubObject *)button.object;
     [self.paramDictionary enumerateKeysAndObjectsUsingBlock:^(NSString *key, NSString *obj, BOOL * _Nonnull stop) {
         if ([obj containsString:object.code]) {
@@ -232,7 +238,7 @@
     }];
     [self.selectedArray removeObject:button.object];
     
-    self.selectedBlock (self.paramDictionary, array, self.selectedArray, YES);
+    self.selectedBlock (self.paramDictionary, array, self.selectedArray, expand);
     if (self.buttonArray.count > 0) {
         [self.contentView setupAutoHeightWithBottomView:[self.buttonArray lastObject] bottomMargin:MarginFactor(10.0f)];
     } else{

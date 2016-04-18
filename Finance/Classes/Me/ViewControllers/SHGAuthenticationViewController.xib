@@ -9,6 +9,7 @@
             <connections>
                 <outlet property="authImageView" destination="6S4-HE-9mQ" id="n9T-56-NKY"/>
                 <outlet property="authScrollView" destination="ogM-fd-of5" id="q6g-eK-vWs"/>
+                <outlet property="authTipLabel" destination="DF2-cn-4Pl" id="EaW-ko-PTY"/>
                 <outlet property="authTipView" destination="j0v-Wf-x0b" id="rW9-3m-5kn"/>
                 <outlet property="departmentField" destination="FdL-cm-UcE" id="FSH-YQ-6oY"/>
                 <outlet property="headerButton" destination="Xfm-TV-zOG" id="9an-Ug-0UI"/>
@@ -62,6 +63,13 @@
                             <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         </imageView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="DF2-cn-4Pl">
+                            <rect key="frame" x="99" y="54" width="42" height="21"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
                     </subviews>
                 </scrollView>
                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="ogM-fd-of5">

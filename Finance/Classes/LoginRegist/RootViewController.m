@@ -33,6 +33,28 @@
     } else if(SCREENHEIGHT > 667.000000){
         self.launchImage.image=[UIImage imageNamed:@"736"];
     }
+
+    //删除缓存的数据
+    NSString *filePath = [NSString stringWithFormat:kFilePath, @"CFData"];
+    BOOL isDirectory = YES;
+    if (![[NSFileManager defaultManager] fileExistsAtPath:filePath isDirectory:&isDirectory]) {
+        [[NSFileManager defaultManager] createDirectoryAtPath:filePath withIntermediateDirectories:YES attributes:nil error:nil];
+    } else {
+
+        NSArray *contents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:filePath error:NULL];
+        NSEnumerator *enumerator = [contents objectEnumerator];
+        NSString *filename = @"";
+        while ((filename = [enumerator nextObject])) {
+            if (![filename containsString:[[NSDate date] shortStringFromDate]]){
+                NSError *error = nil;
+                [[NSFileManager defaultManager] removeItemAtPath:[filePath stringByAppendingPathComponent:filename] error:&error];
+                if (error) {
+                    break;
+                }
+            }
+        }
+    }
+    
     if([[SHGGloble sharedGloble] isShowGuideView]){
         [self startPlayVideo];
     } else{

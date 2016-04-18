@@ -329,7 +329,6 @@
 
 - (void)requestDataWithTarget:(NSString *)target time:(NSString *)time
 {
-    [Hud showWait];
     self.isRefreshing = YES;
 
     if ([target isEqualToString:@"first"]){

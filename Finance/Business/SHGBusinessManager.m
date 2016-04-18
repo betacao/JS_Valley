@@ -84,20 +84,18 @@
 
 }
 //列表
-+ (void)getListDataWithParam:(NSDictionary *)param block:(void (^)(NSArray *dataArray, NSString *position, NSString *tipUrl))block;
++ (void)getListDataWithParam:(NSDictionary *)param block:(void (^)(NSArray *, NSString *, NSString *, NSString *))block
 {
-    [Hud showWait];
     [MOCHTTPRequestOperationManager postWithURL:[rBaseAddressForHttp stringByAppendingString:@"/business/getBusinessList"] class:nil parameters:param success:^(MOCHTTPResponse *response) {
         NSDictionary *dictionary = response.dataDictionary;
 
         NSArray *dataArray = [[SHGGloble sharedGloble] parseServerJsonArrayToJSONModel:[dictionary objectForKey:@"businesslist"] class:[SHGBusinessObject class]];
         NSString *positon = [dictionary objectForKey:@"position"];
         NSString *tipUrl = [dictionary objectForKey:@"tipurl"];
-        block(dataArray, positon, tipUrl);
-        [Hud hideHud];
+        NSString *cfData = [dictionary objectForKey:@"cfdata"];
+        block(dataArray, positon, tipUrl, cfData);
     } failed:^(MOCHTTPResponse *response) {
-        [Hud hideHud];
-        block(nil, nil, nil);
+        block(nil, nil, nil, nil);
         [Hud showMessageWithText:@"获取列表数据失败"];
     }];
 }
@@ -113,7 +111,7 @@
         }
     } else {
         [Hud showWait];
-        [MOCHTTPRequestOperationManager postWithURL:[rBaseAddressForHttp stringByAppendingString:@"/business/getBusinessCondition"] parameters:nil success:^(MOCHTTPResponse *response) {
+        [MOCHTTPRequestOperationManager postWithURL:[rBaseAddressForHttp stringByAppendingString:@"/business/getBusinessCondition"] parameters:@{@"uid":UID} success:^(MOCHTTPResponse *response) {
             [Hud hideHud];
             weakSelf.trademixedArray = [response.dataDictionary objectForKey:@"trademixed"];
             weakSelf.bondFinancingArray = [response.dataDictionary objectForKey:@"bondfinancing"];

@@ -19,6 +19,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *stateLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *authTipView;
 @property (weak, nonatomic) IBOutlet UIImageView *authImageView;
+@property (weak, nonatomic) IBOutlet UILabel *authTipLabel;
 @property (weak, nonatomic) IBOutlet UIButton *submitButton;
 //
 @property (weak, nonatomic) IBOutlet UIScrollView *authScrollView;
@@ -36,6 +37,7 @@
 @property (strong, nonatomic) UIImage *authImage;//认证的图片
 @property (strong, nonatomic) NSString *departmentCode;
 @property (strong, nonatomic) NSString *company;//保存一下 没什么用
+@property (strong, nonatomic) NSString *rejectReason;//
 @end
 
 @implementation SHGAuthenticationViewController
@@ -63,6 +65,10 @@
 
     self.authImageView.layer.borderColor = [UIColor lightGrayColor].CGColor;
     self.authImageView.layer.borderWidth = 0.5f;
+
+    self.authTipLabel.font = FontFactor(13.0f);
+    self.authTipLabel.textColor = Color(@"999999");
+    self.authTipLabel.textAlignment = NSTextAlignmentCenter;
     //
     self.authScrollView.backgroundColor = Color(@"f7f8f9");
     self.departmentField.textColor = self.locationField.textColor = Color(@"161616");
@@ -117,6 +123,12 @@
     .rightSpaceToView(self.scrollView, MarginFactor(30.0f))
     .heightIs(MarginFactor(184.0f));
 
+    self.authTipLabel.sd_layout
+    .topSpaceToView(self.authImageView, MarginFactor(15.0f))
+    .leftEqualToView(self.authImageView)
+    .rightEqualToView(self.authImageView)
+    .autoHeightRatio(0.0f);
+    [self.authTipLabel setMaxNumberOfLinesToShow:2];
     //
     self.headerButton.sd_layout
     .topSpaceToView(self.authScrollView, MarginFactor(58.0f))
@@ -186,6 +198,7 @@
 - (void)resetView
 {
     self.authScrollView.alpha = [self.state isEqualToString:@"0"] ? 1.0f : 0.0f;
+    self.authTipLabel.hidden = YES;
     if ([self.state isEqualToString:@"0"]) {
         self.stateLabel.text = @"未认证";
         self.stateLabel.textColor = [UIColor colorWithHexString:@"f04241"];
@@ -195,6 +208,8 @@
         self.stateLabel.textColor = [UIColor colorWithHexString:@"f04241"];
         [self.submitButton setTitle:@"更新" forState:UIControlStateNormal];
         self.submitButton.hidden = YES;
+        self.authTipLabel.hidden = NO;
+        self.authTipLabel.text = @"大牛正在认证您的用户信息，我们将在一个工作日内通知您认证结果！感谢您对大牛圈的支持！";
     }else if ([self.state isEqualToString:@"2"]){
         self.stateLabel.text = @"已认证";
         self.stateLabel.textColor = [UIColor colorWithHexString:@"3588c8"];
@@ -203,7 +218,8 @@
         self.stateLabel.text = @"认证失败";
         self.stateLabel.textColor = [UIColor colorWithHexString:@"f04241"];
         [self.submitButton setTitle:@"更新" forState:UIControlStateNormal];
-
+        self.authTipLabel.hidden = NO;
+        self.authTipLabel.text = self.rejectReason;
     }
     [self.stateLabel updateLayout];
     __weak typeof(self) weakSelf = self;
@@ -223,6 +239,7 @@
         [Hud hideHud];
         weakSelf.state = [response.dataDictionary valueForKey:@"state"];
         weakSelf.authImageUrl = [response.dataDictionary valueForKey:@"potname"];
+        weakSelf.rejectReason = [response.dataDictionary valueForKey:@"reason"];
         [weakSelf loadUserInfo];
         [weakSelf resetView];
 
@@ -293,15 +310,11 @@
     }
     string = [self.departmentField.text stringByReplacingOccurrencesOfString:@" " withString:@""];
     if (string.length == 0) {
-        [Hud showMessageWithText:@"请输入职位信息"];
-        return NO;
-    }
-    if (!self.headerImage) {
-        [Hud showMessageWithText:@"请选择头像"];
+        [Hud showMessageWithText:@"请输入行业信息"];
         return NO;
     }
     if (!self.authImage) {
-        [Hud showMessageWithText:@"请选择认证图片"];
+        [Hud showMessageWithText:@"请上传您的名片"];
         return NO;
     }
     return YES;
@@ -311,57 +324,50 @@
 {
     //头像需要压缩 跟其他的上传图片接口不一样了
     [Hud showWait];
-    __weak typeof(self) weakSelf = self;
-    [MOCHTTPRequestOperationManager POST:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"image/basephoto"] parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
-        NSData *imageData = UIImageJPEGRepresentation(weakSelf.headerImage, 0.1);
-        [formData appendPartWithFileData:imageData name:@"hahaggg.jpg" fileName:@"hahaggg.jpg" mimeType:@"image/jpeg"];
-    } progress:^(NSProgress * _Nonnull uploadProgress) {
+    if (self.headerImage) {
+        __weak typeof(self) weakSelf = self;
+        [MOCHTTPRequestOperationManager POST:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"image/basephoto"] parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+            NSData *imageData = UIImageJPEGRepresentation(weakSelf.headerImage, 0.1);
+            [formData appendPartWithFileData:imageData name:@"hahaggg.jpg" fileName:@"hahaggg.jpg" mimeType:@"image/jpeg"];
+        } progress:^(NSProgress * _Nonnull uploadProgress) {
 
-    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        NSLog(@"%@",responseObject);
-        NSDictionary *dic = [(NSString *)[responseObject valueForKey:@"data"] parseToArrayOrNSDictionary];
-        NSString *newHeadImageName = [(NSArray *)[dic valueForKey:@"pname"] objectAtIndex:0];
-        [[NSUserDefaults standardUserDefaults] setObject:newHeadImageName forKey:KEY_HEAD_IMAGE];
-        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_SENDPOST object:nil];
+        } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+            NSLog(@"%@",responseObject);
+            NSDictionary *dic = [(NSString *)[responseObject valueForKey:@"data"] parseToArrayOrNSDictionary];
+            NSString *newHeadImageName = [(NSArray *)[dic valueForKey:@"pname"] objectAtIndex:0];
+            [[NSUserDefaults standardUserDefaults] setObject:newHeadImageName forKey:KEY_HEAD_IMAGE];
+            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_SENDPOST object:nil];
 
-        [weakSelf putHeadImage:newHeadImageName];
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        NSLog(@"%@",error);
-        [Hud hideHud];
-        [Hud showMessageWithText:@"上传图片失败"];
-    }];
+            [weakSelf putHeadImage:newHeadImageName];
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+            NSLog(@"%@",error);
+            [Hud hideHud];
+            [Hud showMessageWithText:@"上传图片失败"];
+        }];
+    } else {
+        [self uploadAuthImage];
+    }
 }
 
 
 //更新服务器端
-//- (void)putHeadImage:(NSString *)headImageName
-//{
-//    __weak typeof(self) weakSelf = self;
-//    [MOCHTTPRequestOperationManager putWithURL:[rBaseAddressForHttp stringByAppendingString:@"/user/modifyuser"] class:nil parameters:@{@"uid":UID, @"potname":headImageName, @"industrycode": self.departmentCode, @"area":self.locationField.text} success:^(MOCHTTPResponse *response) {
-//        NSString *code = [response.data valueForKey:@"code"];
-//        if ([code isEqualToString:@"000"]) {
-//            [weakSelf uploadAuthImage];
-//        }
-//    } failed:^(MOCHTTPResponse *response) {
-//
-//    }];
-//}
-
 - (void)putHeadImage:(NSString *)headImageName
 {
     __weak typeof(self) weakSelf = self;
     [MOCHTTPRequestOperationManager putWithURL:[NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttp,@"user",@"modifyuser"] class:nil parameters:@{@"uid":UID, @"type":@"headimage", @"value":headImageName, @"title":self.departmentCode, @"company":self.company} success:^(MOCHTTPResponse *response) {
         NSString *code = [response.data valueForKey:@"code"];
         if ([code isEqualToString:@"000"]) {
+            [Hud hideHud];
             [weakSelf uploadAuthImage];
         }
     } failed:^(MOCHTTPResponse *response) {
-
+        [Hud hideHud];
     }];
 }
 
 - (void)uploadAuthImage
 {
+    [Hud showWait];
     __weak typeof(self) weakSelf = self;
     [MOCHTTPRequestOperationManager POST:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"image/basephoto"] parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
         NSData *imageData = UIImageJPEGRepresentation(weakSelf.authImage, 0.1);
@@ -387,7 +393,7 @@
         NSString *code = [response.data valueForKey:@"code"];
         if ([code isEqualToString:@"000"]) {
             [Hud hideHud];
-            [Hud showMessageWithText:@"上传成功"];
+            [Hud showMessageWithText:@"提交成功，我们将在一个工作日内\n通知您认证结果"];
             [weakSelf.navigationController performSelector:@selector(popViewControllerAnimated:) withObject:@(YES) afterDelay:1.20f];
         }
     } failed:^(MOCHTTPResponse *response) {

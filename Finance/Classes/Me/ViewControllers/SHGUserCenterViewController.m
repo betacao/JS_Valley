@@ -751,7 +751,9 @@
                 .bottomEqualToView(self.userHeaderView)
                 .heightRatioToView(self.nickNameLabel, 1.0f);
                 //弹出提示框
-                [weakSelf.authAlertView show];
+                if ([TabBarViewController tabBar].selectedIndex == 3) {
+                    [weakSelf.authAlertView show];
+                }
             } else if ([weakSelf.auditState isEqualToString:@"1"]){
                 [weakSelf.authButton setImage:[UIImage imageNamed:@"me_authed"] forState:UIControlStateNormal];
             } else if ([weakSelf.auditState isEqualToString:@"2"]){
