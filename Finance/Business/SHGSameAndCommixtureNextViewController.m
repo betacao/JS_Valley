@@ -63,7 +63,7 @@
 {
     [super viewWillAppear:YES];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardDidShow:) name:UIKeyboardDidShowNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textViewDidChange:) name:UITextViewTextDidChangeNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textViewDidChangeText:) name:UITextViewTextDidChangeNotification object:nil];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -222,8 +222,10 @@
                         NSString *title = [businessDic objectForKey:@"title"];
                         SHGBusinessObject *object = [[SHGBusinessObject alloc] init];
                         object.type = type;
+
                         NSDictionary *param = @{@"uid":UID,@"type": type, @"contact":contact, @"businessType":businessType, @"investAmount": investAmount, @"area": area, @"detail": weakSelf.marketExplainTextView.text,@"photo": weakSelf.imageName,@"anonymous": anonymous,@"title": title};
                         NSLog(@"%@",param);
+                        NSLog(@"%@",weakSelf.marketExplainTextView.text);
                         [SHGBusinessManager createNewBusiness:param success:^(BOOL success) {
                             if (success) {
                                  [[SHGBusinessListViewController sharedController] didCreateOrModifyBusiness:object];
@@ -241,11 +243,14 @@
                         NSString *investAmount = [businessDic objectForKey:@"investAmount"];
                         NSString *area = [businessDic objectForKey:@"area"];
                         NSString *title = [businessDic objectForKey:@"title"];
+
+                        SHGBusinessObject *object = [[SHGBusinessObject alloc] init];
+                        object.type = type;
                         NSDictionary *param = @{@"uid":UID,@"businessId":businessId, @"type": type, @"contact":contact, @"businessType":businessType, @"investAmount": investAmount, @"area": area, @"detail": weakSelf.marketExplainTextView.text,@"photo": weakSelf.imageName,@"anonymous": anonymous,@"title": title};
                         NSLog(@"%@",param);
                         [SHGBusinessManager editBusiness:param success:^(BOOL success) {
                             if (success) {
-
+                                [[SHGBusinessListViewController sharedController] didCreateOrModifyBusiness:object];
                                 [weakSelf.navigationController performSelector:@selector(popToRootViewControllerAnimated:) withObject:@(YES) afterDelay:1.2f];
                             }
                         }];
@@ -358,29 +363,20 @@
 
 - (void)keyBoardDidShow:(NSNotification *)notificaiton
 {
-//    NSDictionary* info = [notificaiton userInfo];
-//    NSValue *value = [info objectForKey:UIKeyboardFrameEndUserInfoKey];
-//    CGPoint keyboardOrigin = [value CGRectValue].origin;
-//    self.keyBoardOrginY = keyboardOrigin.y;
-//    UIView *view = (UIView *)self.currentContext;
-//    CGPoint point = CGPointMake(0.0f, CGRectGetMinX(view.frame));
-//    dispatch_async(dispatch_get_main_queue(), ^{
-//        [self.scrollView scrollRectToVisible:textFieldRect animated:YES];
-//    });
-    NSDictionary* info = [notificaiton userInfo];
-
-    NSValue* aValue = [info objectForKey:UIKeyboardFrameEndUserInfoKey];
-    CGSize keyboardSize = [aValue CGRectValue].size;
-
-    CGRect viewFrame = [self.scrollView frame];
-    viewFrame.size.height -= keyboardSize.height;
-    self.scrollView.frame = viewFrame;
-    
-    CGRect textFieldRect = [self.currentContext frame];
-    [self.scrollView scrollRectToVisible:textFieldRect animated:YES];
+    NSDictionary *info = [notificaiton userInfo];
+    NSValue *value = [info objectForKey:UIKeyboardFrameEndUserInfoKey];
+    CGSize keyboardSize = [value CGRectValue].size;
+    UIView *view = (UIView *)self.currentContext;
+    CGPoint point = CGPointMake(0.0f, CGRectGetMidY(view.frame));
+    point = [view.superview convertPoint:point toView:self.scrollView];
+    point.y = MAX(0.0f, keyboardSize.height + point.y - CGRectGetHeight(self.view.frame));
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.scrollView setContentOffset:point animated:YES];
+        
+    });
 }
 
-- (void)textViewDidChange:(NSNotification *)notification
+- (void)textViewDidChangeText:(NSNotification *)notification
 {
     UITextView *textView = notification.object;
     if ([textView isEqual:self.marketExplainTextView]) {

@@ -83,7 +83,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.title = @"当前定位";
+    self.title = @"选择地点";
+    self.scrollView.backgroundColor = Color(@"efeeef");
     self.allCity = [NSMutableArray array];
     self.provinces = [[NSArray alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"MarketArea" ofType:@"plist"]];
     

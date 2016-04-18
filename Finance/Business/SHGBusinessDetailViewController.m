@@ -279,19 +279,23 @@
     //***************************
     BOOL status = [self.responseObject.status isEqualToString:@"1"] ? YES : NO;
 
+    NSString *uid = @"";
     self.nameLabel.text = self.responseObject.realName;
     if (![self.responseObject.createBy isEqualToString:UID] && [self.responseObject.anonymous isEqualToString:@"1"]) {
         self.companyLabel.textColor = [UIColor colorWithHexString:@"161616"];
         self.companyLabel.text = @"委托发布";
+        uid = @"-2";
     }  else{
         if (self.responseObject.company.length == 0) {
             self.companyLabel.textColor = [UIColor colorWithHexString:@"161616"];
             self.companyLabel.text = @"委托发布";
+            uid = @"-2";
         } else{
+            uid = self.responseObject.createBy;
             self.companyLabel.text = self.responseObject.company;
         }
     }
-    [self.headImageView updateHeaderView:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,self.responseObject.headImageUrl] placeholderImage:[UIImage imageNamed:@"default_head"] status:status userID:self.responseObject.createBy];
+    [self.headImageView updateHeaderView:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,self.responseObject.headImageUrl] placeholderImage:[UIImage imageNamed:@"default_head"] status:status userID:uid];
     if (self.responseObject.title.length > 6) {
         NSString *str = [self.responseObject.title substringToIndex:6];
         self.positionLabel.text = [NSString stringWithFormat:@"%@...",str];

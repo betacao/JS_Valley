@@ -454,6 +454,7 @@
                         NSString *title = [businessDic objectForKey:@"title"];
                         SHGBusinessObject *object = [[SHGBusinessObject alloc]init];
                         object.type =type;
+
                         NSDictionary *param = @{@"uid":UID, @"type": type, @"contact":contact, @"bondType":bondType, @"investAmount": investAmount, @"area": area, @"industry": industry,@"clarifyingWay":require, @"fundUsetime":investTime, @"highestRate": weakSelf.retributionTextField.text,@"detail": weakSelf.marketExplainTextView.text,@"photo": weakSelf.imageName,@"anonymous": anonymous,@"title": title};
                         [SHGBusinessManager createNewBusiness:param success:^(BOOL success) {
                             if (success) {
@@ -482,12 +483,15 @@
                     NSString *area = [businessDic objectForKey:@"area"];
                     NSString *industry = [businessDic objectForKey:@"industry"];
                     NSString *title = [businessDic objectForKey:@"title"];
+                    SHGBusinessObject *object = [[SHGBusinessObject alloc]init];
+                    object.type =type;
                     NSLog(@"%@,%@,%@",area,industry,title);
                     NSLog(@"%@,%@,%@,%@,%@,%@",require,weakSelf.imageName,investTime,investAmount,anonymous,weakSelf.marketExplainTextView.text);
                     NSDictionary *param = @{@"uid":UID,@"businessId":businessId, @"type": type, @"contact":contact, @"bondType":bondType, @"investAmount": investAmount, @"area": area, @"industry": industry,@"clarifyingWay":require, @"highestRate":weakSelf.retributionTextField.text, @"fundUsetime":investTime ,@"detail": weakSelf.marketExplainTextView.text,@"photo": weakSelf.imageName,@"anonymous": anonymous,@"title": title};
 
                         [SHGBusinessManager editBusiness:param success:^(BOOL success) {
                             if (success) {
+                                [[SHGBusinessListViewController sharedController] didCreateOrModifyBusiness:object];
                                 [weakSelf.navigationController performSelector:@selector(popToRootViewControllerAnimated:) withObject:@(YES) afterDelay:1.2f];
                             }
                         }];

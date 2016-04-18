@@ -184,6 +184,10 @@
     self.timeLabel.frame = CGRectZero;
 
     self.nameLabel.text = model.name;
+    if (model.detailMsg.length > 25) {
+        model.detailMsg = [model.detailMsg substringToIndex:20];
+        model.detailMsg = [NSString stringWithFormat:@"%@...",model.detailMsg];
+    }
     self.detailLabel.text = model.detailMsg;
     self.timeLabel.text = model.time;
 

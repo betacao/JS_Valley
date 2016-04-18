@@ -304,7 +304,7 @@
     .topSpaceToView(self.areaTitleLabel, ktopToView)
     .leftSpaceToView(self.areaSelectButton, kLeftToView)
     .widthIs(MarginFactor(70.0f))
-    .centerYEqualToView(self.areaSelectButton);
+    .heightRatioToView(self.areaSelectButton, 1.0f);
     
     
     [self.areaView setupAutoHeightWithBottomView:self.areaSelectButton bottomMargin:ktopToView];
@@ -587,26 +587,17 @@
 
 - (void)keyBoardDidShow:(NSNotification *)notificaiton
 {
-//    NSDictionary* info = [notificaiton userInfo];
-//    NSValue *value = [info objectForKey:UIKeyboardFrameEndUserInfoKey];
-//    CGPoint keyboardOrigin = [value CGRectValue].origin;
-//    self.keyBoardOrginY = keyboardOrigin.y;
-//    UIView *view = (UIView *)self.currentContext;
-//    CGPoint point = CGPointMake(0.0f, CGRectGetMinX(view.frame));
-//    dispatch_async(dispatch_get_main_queue(), ^{
-//        [self.scrollView setContentOffset:point animated:YES];
-//    });
-    NSDictionary* info = [notificaiton userInfo];
-    
-    NSValue* aValue = [info objectForKey:UIKeyboardFrameEndUserInfoKey];
-    CGSize keyboardSize = [aValue CGRectValue].size;
-    
-    CGRect viewFrame = [self.scrollView frame];
-    viewFrame.size.height -= keyboardSize.height;
-    self.scrollView.frame = viewFrame;
+    NSDictionary *info = [notificaiton userInfo];
+    NSValue *value = [info objectForKey:UIKeyboardFrameEndUserInfoKey];
+    CGSize keyboardSize = [value CGRectValue].size;
     UIView *view = (UIView *)self.currentContext;
-    CGRect textFieldRect = [view frame];
-    [self.scrollView scrollRectToVisible:textFieldRect animated:YES];
+    CGPoint point = CGPointMake(0.0f, CGRectGetMinY(view.frame) + kNavigationBarHeight);
+    point = [view.superview convertPoint:point toView:self.scrollView];
+    point.y = MAX(0.0f, keyboardSize.height + point.y - CGRectGetHeight(self.view.frame));
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.scrollView setContentOffset:point animated:YES];
+        
+    });
 }
 - (void)textFieldDidChange:(NSNotification *)notification
 {

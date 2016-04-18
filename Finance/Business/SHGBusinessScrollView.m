@@ -74,7 +74,7 @@
 - (UIView *)redLineView
 {
     if (!_redLineView) {
-        _redLineView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, kBusinessScrollViewHeight - 2.0f, 0.0f, 2.0f)];
+        _redLineView = [[UIView alloc] initWithFrame:CGRectMake(5.0f, kBusinessScrollViewHeight - 2.0f, 0.0f, 2.0f)];
         _redLineView.backgroundColor = [UIColor colorWithHexString:@"D82626"];
     }
     if (!_redLineView.superview) {
@@ -143,9 +143,9 @@
     [button setTitleColor:[UIColor colorWithHexString:@"D82626"] forState:UIControlStateNormal];
 
     [UIView animateWithDuration:0.25f animations:^{
-        CGRect frame = self.redLineView.frame;
-        frame.origin.x = CGRectGetMinX(button.frame);
-        frame.size.width = CGRectGetWidth(button.frame);
+        CGRect frame = self.redLineView.frame ;
+        frame.origin.x = CGRectGetMinX(button.frame) + MarginFactor(7.0f);
+        frame.size.width = CGRectGetWidth(button.frame) - MarginFactor(14.0f);
         self.redLineView.frame = frame;
     } completion:^(BOOL finished) {
 

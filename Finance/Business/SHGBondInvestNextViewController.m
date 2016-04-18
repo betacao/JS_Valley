@@ -97,7 +97,7 @@
     [super viewWillAppear:YES];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardDidShow:) name:UIKeyboardDidShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textFieldDidChange:) name:UITextFieldTextDidChangeNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textViewDidChange:) name:UITextViewTextDidChangeNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textViewDidChangeText:) name:UITextViewTextDidChangeNotification object:nil];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -315,6 +315,10 @@
 }
 - (void)initView
 {
+//    self.marketExplainTextView.returnKeyType = UIReturnKeyDefault;
+//    self.marketExplainTextView.keyboardType = UIKeyboardTypeDefault;
+//    self.marketExplainTextView.scrollEnabled = YES;
+//    self.marketExplainTextView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
     self.retributionTextField.keyboardType = UIKeyboardTypeNumberPad;
     self.sureButton.titleLabel.font = FontFactor(19.0f);
     [self.sureButton setTitleColor:Color(@"ffffff") forState:UIControlStateNormal];
@@ -466,7 +470,7 @@
                         NSString *moneysideType = @"bondInvest";
                         NSLog(@"%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@",type,contact,businessType,fundSource,investAmount,area,industry,clarifyingRequire,weakSelf.retributionTextField.text,vestYears,weakSelf.marketExplainTextView.text,weakSelf.imageName,anonymous,title);
                         SHGBusinessObject *object = [[SHGBusinessObject alloc]init];
-                        object.type = type;
+
                         NSDictionary *param = @{@"uid":UID, @"type": type, @"moneysideType":moneysideType ,@"contact":contact, @"businessType":businessType,@"fundSource":fundSource, @"investAmount": investAmount, @"area": area, @"industry": industry, @"clarifyingRequire":clarifyingRequire,@"lowestPaybackRate":weakSelf.retributionTextField.text, @"vestYears": vestYears,@"detail": weakSelf.marketExplainTextView.text,@"photo": weakSelf.imageName,@"anonymous": anonymous,@"title": title};
                         [SHGBusinessManager createNewBusiness:param success:^(BOOL success) {
                             if (success) {
@@ -504,7 +508,6 @@
                         NSString * businessId = self.obj.businessID;
                         
                         NSString *anonymous = weakSelf.authorizeButton.isSelected ? @"1" : @"0";
-                        //SHGBusinessObject *object = [[SHGBusinessObject alloc]init];
                         NSString *type = [businessDic objectForKey:@"type"];
                         NSString *contact = [businessDic objectForKey:@"contact"];
                         NSString *investAmount = [businessDic objectForKey:@"investAmount"];
@@ -514,11 +517,13 @@
                         NSString *industry = [businessDic objectForKey:@"industry"];
                         NSString *title = [businessDic objectForKey:@"title"];
                         
-                        
+                        SHGBusinessObject *object = [[SHGBusinessObject alloc]init];
+                        object.type = type;
                         NSDictionary *param = @{@"uid":UID,@"businessId":businessId, @"type": type,@"moneysideType": @"bondInvest",@"contact":contact, @"businessType":businessType,@"fundSource":fundSource, @"investAmount": investAmount, @"area": area, @"industry": industry, @"clarifyingRequire":clarifyingRequire,@"lowestPaybackRate":self.retributionTextField.text, @"vestYears": vestYears,@"detail": weakSelf.marketExplainTextView.text,@"photo": weakSelf.imageName,@"anonymous": anonymous,@"title": title};
+                       
                         [SHGBusinessManager editBusiness:param success:^(BOOL success) {
                             if (success) {
-
+                                [[SHGBusinessListViewController sharedController] didCreateOrModifyBusiness:object];
                                 [weakSelf.navigationController performSelector:@selector(popToRootViewControllerAnimated:) withObject:@(YES) afterDelay:1.2f];
                             }
                         }];
@@ -639,30 +644,17 @@
 
 - (void)keyBoardDidShow:(NSNotification *)notificaiton
 {
-//  
-//    NSDictionary* info = [notificaiton userInfo];
-//    NSValue *value = [info objectForKey:UIKeyboardFrameEndUserInfoKey];
-//    CGPoint keyboardOrigin = [value CGRectValue].origin;
-//    self.keyBoardOrginY = keyboardOrigin.y;
-//    UIView *view = (UIView *)self.currentContext;
-//    CGPoint point = CGPointMake(0.0f, CGRectGetMinX(view.frame));
-//    dispatch_async(dispatch_get_main_queue(), ^{
-//        [self.scrollView setContentOffset:point animated:YES];
-//    });
-    NSDictionary* info = [notificaiton userInfo];
-    
-    NSValue* aValue = [info objectForKey:UIKeyboardFrameEndUserInfoKey];
-    CGSize keyboardSize = [aValue CGRectValue].size;
-    
-    CGRect viewFrame = [self.scrollView frame];
-    viewFrame.size.height -= keyboardSize.height;
-    self.scrollView.frame = viewFrame;
+    NSDictionary *info = [notificaiton userInfo];
+    NSValue *value = [info objectForKey:UIKeyboardFrameEndUserInfoKey];
+    CGSize keyboardSize = [value CGRectValue].size;
     UIView *view = (UIView *)self.currentContext;
-    CGRect textFieldRect = [view frame];
-    
-    [self.scrollView scrollRectToVisible:textFieldRect animated:YES];
-    
-    
+    CGPoint point = CGPointMake(0.0f, CGRectGetMidY(view.frame));
+    point = [view.superview convertPoint:point toView:self.scrollView];
+    point.y = MAX(0.0f, keyboardSize.height + point.y - CGRectGetHeight(self.view.frame));
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.scrollView setContentOffset:point animated:YES];
+        
+    });
  
 }
 
@@ -675,7 +667,7 @@
         }
     }
 }
-- (void)textViewDidChange:(NSNotification *)notification
+- (void)textViewDidChangeText:(NSNotification *)notification
 {
     UITextView *textView = notification.object;
     if ([textView isEqual:self.marketExplainTextView]) {

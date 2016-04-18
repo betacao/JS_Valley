@@ -74,9 +74,8 @@
     if (self = [super initWithFrame:frame]) {
         self.allCity = [NSMutableArray array];
         self.provinces = [[NSArray alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"MarketArea" ofType:@"plist"]];
-        
         [[self.provinces objectAtIndex:1] objectForKey:@"areas"];
-        
+        self.scrollView.backgroundColor = Color(@"efeeef");
         [self addSubview:self.scrollView];
         [self addSubview:self.quiteButton];
         [self.scrollView addSubview:self.locationView];
@@ -118,7 +117,7 @@
     .topSpaceToView(self.scrollView, 0.0f)
     .leftSpaceToView(self.scrollView, 0.0f)
     .rightSpaceToView(self.scrollView, 0.0f)
-    .heightIs(MarginFactor(55.0f));
+    .heightIs(MarginFactor(62.0f));
     
     self.locationTitleLabel.sd_layout
     .leftSpaceToView(self.locationView, MarginFactor(24.0f))
@@ -456,6 +455,7 @@
     if (!_locationView) {
         _locationView = [[UIView alloc]init];
         _locationTitleLabel = [[UILabel alloc] init];
+        _locationView.backgroundColor = [UIColor whiteColor];
         [_locationView addSubview:_locationTitleLabel];
     
         _locationBottonView = [[UIView alloc] init];
@@ -481,6 +481,7 @@
 {
     if (!_municipalityView) {
         _municipalityView = [[UIView alloc]init];
+        _municipalityView.backgroundColor = [UIColor whiteColor];
         _municipalityTitleLabel = [[UILabel alloc] init];
         _municipalityTitleLabel.text = @"直辖市";
         [_municipalityView addSubview:_municipalityTitleLabel];
@@ -499,6 +500,7 @@
 {
     if (!_eastChinaView) {
         _eastChinaView = [[UIView alloc]init];
+        _eastChinaView.backgroundColor = [UIColor whiteColor];
         _eastChinaTitleLabel = [[UILabel alloc] init];
         _eastChinaTitleLabel.text = @"华东地区";
         [_eastChinaView addSubview:_eastChinaTitleLabel];
@@ -517,7 +519,7 @@
 {
     if (!_northChinaView) {
         _northChinaView = [[UIView alloc]init];
-        
+        _northChinaView.backgroundColor = [UIColor whiteColor];
         _northChinaTitleLabel = [[UILabel alloc] init];
         _northChinaTitleLabel.text = @"华北地区";
         [_northChinaView addSubview:_northChinaTitleLabel];
@@ -537,7 +539,7 @@
 {
     if (!_northeastView) {
         _northeastView = [[UIView alloc]init];
-        
+        _northeastView.backgroundColor = [UIColor whiteColor];
         _northeastTitleLabel = [[UILabel alloc] init];
         _northeastTitleLabel.text = @"东北地区";
         [_northeastView addSubview:_northeastTitleLabel];
@@ -556,7 +558,7 @@
 {
     if (!_southChinaView) {
         _southChinaView = [[UIView alloc]init];
-        
+        _southChinaView.backgroundColor = [UIColor whiteColor];
         _southChinaTitleLabel = [[UILabel alloc] init];
         _southChinaTitleLabel.text = @"华南地区";
         [_southChinaView addSubview:_southChinaTitleLabel];
@@ -575,7 +577,7 @@
 {
     if (!_centerView) {
         _centerView = [[UIView alloc]init];
-        
+        _centerView.backgroundColor = [UIColor whiteColor];
         _centerTitleLabel = [[UILabel alloc] init];
         _centerTitleLabel.text = @"华中地区";
         [_centerView addSubview:_centerTitleLabel];
@@ -595,7 +597,7 @@
 {
     if (!_southwestView) {
         _southwestView = [[UIView alloc]init];
-        
+        _southwestView.backgroundColor = [UIColor whiteColor];
         _southwestTitleLabel = [[UILabel alloc] init];
         _southwestTitleLabel.text = @"西南地区";
         [_southwestView addSubview:_southwestTitleLabel];
@@ -616,7 +618,7 @@
 {
     if (!_northwestView) {
         _northwestView = [[UIView alloc]init];
-        
+        _northwestView.backgroundColor = [UIColor whiteColor];
         _northwestTitleLabel = [[UILabel alloc] init];
         _northwestTitleLabel.text = @"西北地区";
         [_northwestView addSubview:_northwestTitleLabel];

@@ -300,7 +300,7 @@
     .topSpaceToView(self.areaTitleLabel, ktopToView)
     .leftSpaceToView(self.areaSelectButton, kLeftToView)
     .widthIs(MarginFactor(70.0f))
-    .centerYEqualToView(self.areaSelectButton);
+    .heightRatioToView(self.areaSelectButton, 1.0f);
     
     
     [self.areaView setupAutoHeightWithBottomView:self.areaSelectButton bottomMargin:ktopToView];

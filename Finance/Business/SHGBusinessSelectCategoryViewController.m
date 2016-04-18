@@ -27,6 +27,7 @@
 {
     [super viewDidLoad];
     self.title = @"选择分类";
+    self.view.backgroundColor = Color(@"efeeef");
     self.nextButton.backgroundColor = Color(@"f04241");
     [self.nextButton setTitle:@"确定" forState:UIControlStateNormal];
     [self loadData];
@@ -50,6 +51,7 @@
 
         [array enumerateObjectsUsingBlock:^(SHGBusinessSecondObject *secondObject, NSUInteger idx, BOOL * _Nonnull stop) {
             SHGBusinessButtonContentView *contentView = [[SHGBusinessButtonContentView alloc] initWithMode:SHGBusinessButtonShowModeExclusiveChoice];
+            contentView.backgroundColor = [UIColor whiteColor];
             [self.scrollView addSubview:contentView];
 
             UILabel *titleLabel = [[UILabel alloc] init];
@@ -76,7 +78,7 @@
                 button.object = subObject;
                 [button setTitle:subObject.value forState:UIControlStateNormal];
                 [button setTitleColor:Color(@"111111") forState:UIControlStateNormal];
-                [button setTitleColor:Color(@"f04241") forState:UIControlStateSelected];
+                [button setTitleColor:Color(@"f33300") forState:UIControlStateSelected];
                 [button addTarget:self action:@selector(buttonClicked:) forControlEvents:UIControlEventTouchUpInside];
                 [button setBackgroundImage:[[UIImage imageNamed:@"business_unSelected"] resizableImageWithCapInsets:UIEdgeInsetsMake(5.0f, 5.0f, 5.0f, 5.0f) resizingMode:UIImageResizingModeStretch] forState:UIControlStateNormal];
                 [button setBackgroundImage:[[UIImage imageNamed:@"business_selected"] resizableImageWithCapInsets:UIEdgeInsetsMake(0.0f, 5.0f, 0.0f, 20.0f) resizingMode:UIImageResizingModeStretch] forState:UIControlStateSelected];
