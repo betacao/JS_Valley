@@ -50,7 +50,6 @@
 @property (strong, nonatomic) UIImage *buttonSelectBgImage;
 
 @property (strong, nonatomic) id currentContext;
-@property (assign, nonatomic) CGFloat keyBoardOrginY;
 @property (assign, nonatomic) BOOL hasImage;
 @property (strong, nonatomic) NSString *imageName;
 @property (strong, nonatomic) NSArray *clarifyingWaybuttonArray;
@@ -95,16 +94,16 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    [super viewWillAppear:YES];
+    [super viewWillAppear:animated];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardDidShow:) name:UIKeyboardDidShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textFieldDidChange:) name:UITextFieldTextDidChangeNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textViewDidChange:) name:UITextViewTextDidChangeNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textViewDidChangeText:) name:UITextViewTextDidChangeNotification object:nil];
     
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
-    [super viewWillDisappear:YES];
+    [super viewWillDisappear:animated];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
@@ -629,26 +628,17 @@
 
 - (void)keyBoardDidShow:(NSNotification *)notificaiton
 {
-//    NSDictionary *info = [notificaiton userInfo];
-//    NSValue *value = [info objectForKey:UIKeyboardFrameEndUserInfoKey];
-//    CGPoint keyboardOrigin = [value CGRectValue].origin;
-//    self.keyBoardOrginY = keyboardOrigin.y;
-//    UIView *view = (UIView *)self.currentContext;
-//    CGPoint point = CGPointMake(0.0f, CGRectGetMaxY(view.frame));
-//    dispatch_async(dispatch_get_main_queue(), ^{
-//        [self.scrollView setContentOffset:point animated:YES];
-//    });
-    NSDictionary* info = [notificaiton userInfo];
-    
-    NSValue* aValue = [info objectForKey:UIKeyboardFrameEndUserInfoKey];
-    CGSize keyboardSize = [aValue CGRectValue].size;
-    
-    CGRect viewFrame = [self.scrollView frame];
-    viewFrame.size.height -= keyboardSize.height;
-    self.scrollView.frame = viewFrame;
+    NSDictionary *info = [notificaiton userInfo];
+    NSValue *value = [info objectForKey:UIKeyboardFrameEndUserInfoKey];
+    CGSize keyboardSize = [value CGRectValue].size;
     UIView *view = (UIView *)self.currentContext;
-    CGRect textFieldRect = [view frame];
-    [self.scrollView scrollRectToVisible:textFieldRect animated:YES];
+    CGPoint point = CGPointMake(0.0f, CGRectGetMidY(view.frame));
+    point = [view.superview convertPoint:point toView:self.scrollView];
+    point.y = MAX(0.0f, keyboardSize.height + point.y - CGRectGetHeight(self.view.frame));
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.scrollView setContentOffset:point animated:YES];
+
+    });
 }
 
 - (void)textFieldDidChange:(NSNotification *)notification
@@ -661,7 +651,7 @@
     }
 }
 
-- (void)textViewDidChange:(NSNotification *)notification
+- (void)textViewDidChangeText:(NSNotification *)notification
 {
     UITextView *textView = notification.object;
     if ([textView isEqual:self.marketExplainTextView]) {
