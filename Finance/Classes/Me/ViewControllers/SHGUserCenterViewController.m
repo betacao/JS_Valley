@@ -101,7 +101,8 @@
     .centerYEqualToView(self.userHeaderView)
     .widthIs(editSize.width)
     .heightIs(editSize.height);
-    
+    self.editButton.hidden = YES;
+
     //职位
     self.departmentLabel.sd_layout
     .leftSpaceToView(self.nickNameLabel, MarginFactor(4.0f))
@@ -739,11 +740,10 @@
         }
 
         if ([response.dataDictionary objectForKey:@"auditstate"]) {
-            weakSelf.editButton.hidden = NO;
+            weakSelf.editButton.hidden = YES;
             weakSelf.auditState = [response.dataDictionary objectForKey:@"auditstate"];
             if ([weakSelf.auditState isEqualToString:@"0"]) {
                 [weakSelf.authButton setImage:[UIImage imageNamed:@"me_unAuth"] forState:UIControlStateNormal];
-                weakSelf.editButton.hidden = YES;
                 //公司名
                 self.companyLabel.sd_resetLayout
                 .leftEqualToView(self.nickNameLabel)
@@ -756,6 +756,7 @@
                 }
             } else if ([weakSelf.auditState isEqualToString:@"1"]){
                 [weakSelf.authButton setImage:[UIImage imageNamed:@"me_authed"] forState:UIControlStateNormal];
+                weakSelf.editButton.hidden = NO;
             } else if ([weakSelf.auditState isEqualToString:@"2"]){
                 [weakSelf.authButton setImage:[UIImage imageNamed:@"me_authering"] forState:UIControlStateNormal];
             } else{

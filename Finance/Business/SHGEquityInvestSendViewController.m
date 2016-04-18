@@ -432,7 +432,7 @@
     if (self.object) {
 
         self.nameTextField.text = self.object.businessTitle;
-        NSString *result = [[SHGGloble sharedGloble] businessKeysForValues:self.object.middleContent];
+        NSString *result = [[SHGGloble sharedGloble] businessKeysForValues:self.object.middleContent showEmptyKeys:YES];
         NSArray *nameArray = @[@"联系方式",@"投资阶段",@"金额",@"地区",@"意向行业"];
         NSArray *resultArray = [result componentsSeparatedByString:@"\n"];
         NSMutableArray * array = [[SHGGloble sharedGloble] editBusinessKeysForValues:nameArray middleContentArray:resultArray];

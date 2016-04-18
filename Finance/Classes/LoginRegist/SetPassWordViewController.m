@@ -137,9 +137,18 @@
 
 - (void)loginSuccess
 {
+
+    [[SHGGloble sharedGloble] getUserAddressList:^(BOOL finished) {
+        if(finished){
+            [[NSUserDefaults standardUserDefaults] setBool:YES forKey:KEY_USER_NEEDUPLOADCONTACT];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+        }
+    }];
     [[AppDelegate currentAppdelegate] moveToRootController:self.rid];
 }
-- (void)didReceiveMemoryWarning {
+
+- (void)didReceiveMemoryWarning
+{
     [super didReceiveMemoryWarning];
     
 }

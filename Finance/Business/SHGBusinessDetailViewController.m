@@ -299,7 +299,7 @@
         self.positionLabel.text = self.responseObject.title;
     }
     
-    __block NSString *value = [[SHGGloble sharedGloble] businessKeysForValues:self.responseObject.middleContent];
+    __block NSString *value = [[SHGGloble sharedGloble] businessKeysForValues:self.responseObject.middleContent showEmptyKeys:NO];
     __block NSMutableAttributedString *string = nil;
     __block NSString *number = @"";
     NSMutableArray *array = [NSMutableArray arrayWithArray: [value componentsSeparatedByString:@"\n"]];
@@ -766,7 +766,7 @@
 - (BOOL)openTel:(NSString *)tel
 {
     [[SHGGloble sharedGloble] recordUserAction:[NSString stringWithFormat:@"%@#%@", self.responseObject.businessID, self.responseObject.type] type:@"business_call"];
-    NSMutableString * str=[[NSMutableString alloc] initWithFormat:@"telprompt://%@",tel];
+    NSString *str = [NSString stringWithFormat:@"telprompt://%@",tel];
     NSLog(@"str======%@",str);
     return  [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str]];
 }

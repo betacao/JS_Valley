@@ -120,13 +120,6 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    BOOL needUploadContact = [[NSUserDefaults standardUserDefaults] boolForKey:KEY_USER_NEEDUPLOADCONTACT];
-    if(needUploadContact){
-        [[SHGGloble sharedGloble] uploadPhonesWithPhone:^(BOOL finish) {
-            [[NSUserDefaults standardUserDefaults] setBool:NO forKey:KEY_USER_NEEDUPLOADCONTACT];
-            [[NSUserDefaults standardUserDefaults] synchronize];
-        }];
-    }
 }
 
 - (NSMutableArray *)currentDataArray

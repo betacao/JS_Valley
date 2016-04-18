@@ -12,6 +12,8 @@
 
 + (instancetype)shareManager;
 
+- (void)clearCache;
+
 + (void)getListDataWithParam:(NSDictionary *)param block:(void (^)(NSArray *dataArray, NSString *position, NSString *tipUrl, NSString *cfData))block;
 
 + (void)getMyorSearchDataWithParam:(NSDictionary *)param block:(void (^)(NSArray *dataArray, NSString *total))block;

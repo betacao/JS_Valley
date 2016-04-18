@@ -360,7 +360,7 @@
             }];
         }
  
-        NSString *result = [[SHGGloble sharedGloble] businessKeysForValues:self.obj.middleContent];
+        NSString *result = [[SHGGloble sharedGloble] businessKeysForValues:self.obj.middleContent showEmptyKeys:YES];
         NSArray *nameArray = @[@"资金来源",@"参股比例",@"投资期限"];
         NSArray *resultArray = [result componentsSeparatedByString:@"\n"];
         NSMutableArray * array = [[SHGGloble sharedGloble] editBusinessKeysForValues:nameArray middleContentArray:resultArray];

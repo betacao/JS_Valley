@@ -270,7 +270,7 @@
             }];
         }
         
-        NSString *result = [[SHGGloble sharedGloble] businessKeysForValues:self.obj.middleContent];
+        NSString *result = [[SHGGloble sharedGloble] businessKeysForValues:self.obj.middleContent showEmptyKeys:YES];
         NSArray *nameArray = @[@"增信要求",@"最低回报要求",@"投资期限"];
         NSArray *resultArray = [result componentsSeparatedByString:@"\n"];
         NSMutableArray * array = [[SHGGloble sharedGloble] editBusinessKeysForValues:nameArray middleContentArray:resultArray];

@@ -219,7 +219,7 @@ typedef void (^SHHomeDataCompletionBlock)(NSArray *allList, NSArray *normalList,
 
  @since 1.8.0
  */
-- (NSString *)businessKeysForValues:(NSString *)values;
+- (NSString *)businessKeysForValues:(NSString *)values showEmptyKeys:(BOOL)show;
 
 - (NSMutableArray *)editBusinessKeysForValues:(NSArray *)nameArray  middleContentArray:(NSArray *)middleContentArray;
 

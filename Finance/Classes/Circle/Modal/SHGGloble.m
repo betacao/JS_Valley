@@ -8,7 +8,8 @@
 
 #import "SHGGloble.h"
 #import "SHGUserTagModel.h"
-#import "SHGMarketSegmentViewController.h"
+#import "SHGBusinessListViewController.h"
+#import "SHGBusinessManager.h"
 #import "HeadImage.h"
 
 @interface SHGGloble ()
@@ -197,9 +198,10 @@
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
     if(uid && uid.length != 0 && ![self.currentUserID isEqualToString:uid]){
         self.currentUserID = uid;
-        SHGMarketSegmentViewController *controller = [SHGMarketSegmentViewController sharedSegmentController];
+        SHGBusinessListViewController *controller = [SHGBusinessListViewController sharedController];
         if ([controller isViewLoaded]) {
-            [controller refreshListViewController];
+            [[SHGBusinessManager shareManager] clearCache];
+            controller.needReloadData = YES;
         }
     }
 }
@@ -550,7 +552,7 @@
 }
 
 
-- (NSString *)businessKeysForValues:(NSString *)values;
+- (NSString *)businessKeysForValues:(NSString *)values showEmptyKeys:(BOOL)show;
 {
     __block NSString *key = @"";
     __block NSString *value = @"";
@@ -561,17 +563,33 @@
     
     [keys enumerateObjectsUsingBlock:^(NSString *obj, NSUInteger idx, BOOL * _Nonnull stop) {
         key = [[obj componentsSeparatedByString:@":"] firstObject];
-        value = [[obj componentsSeparatedByString:@":"] lastObject];
-        __block NSString *string = [NSString stringWithFormat:@"%@：%@\n",key, value];
+        value = [[[obj componentsSeparatedByString:@":"] lastObject] stringByReplacingOccurrencesOfString:@" " withString:@""];
+        if (show) {
+            __block NSString *string = [NSString stringWithFormat:@"%@：%@\n",key, value];
 
-        NSArray *valueArray = [value componentsSeparatedByString:@";"];
-        string = [string stringByReplacingOccurrencesOfString:@";" withString:@"，"];
-        [valueArray enumerateObjectsUsingBlock:^(NSString *subValue, NSUInteger idx, BOOL * _Nonnull stop) {
-            if ([globleValueArray containsObject:subValue]) {
-                string = [string stringByReplacingOccurrencesOfString:subValue withString:[globleKeyArray objectAtIndex:[globleValueArray indexOfObject:subValue]]];
+            NSArray *valueArray = [value componentsSeparatedByString:@";"];
+            string = [string stringByReplacingOccurrencesOfString:@";" withString:@"，"];
+            [valueArray enumerateObjectsUsingBlock:^(NSString *subValue, NSUInteger idx, BOOL * _Nonnull stop) {
+                if ([globleValueArray containsObject:subValue]) {
+                    string = [string stringByReplacingOccurrencesOfString:subValue withString:[globleKeyArray objectAtIndex:[globleValueArray indexOfObject:subValue]]];
+                }
+            }];
+            result = [result stringByAppendingString:string];
+        } else{
+            if (!IsStrEmpty(value)) {
+                __block NSString *string = [NSString stringWithFormat:@"%@：%@\n",key, value];
+
+                NSArray *valueArray = [value componentsSeparatedByString:@";"];
+                string = [string stringByReplacingOccurrencesOfString:@";" withString:@"，"];
+                [valueArray enumerateObjectsUsingBlock:^(NSString *subValue, NSUInteger idx, BOOL * _Nonnull stop) {
+                    if ([globleValueArray containsObject:subValue]) {
+                        string = [string stringByReplacingOccurrencesOfString:subValue withString:[globleKeyArray objectAtIndex:[globleValueArray indexOfObject:subValue]]];
+                    }
+                }];
+                result = [result stringByAppendingString:string];
             }
-        }];
-        result = [result stringByAppendingString:string];
+        }
+
     }];
     return  result;
 }

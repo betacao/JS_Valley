@@ -292,7 +292,7 @@
             }];
         }
         
-        NSString *result = [[SHGGloble sharedGloble] businessKeysForValues:self.obj.middleContent];
+        NSString *result = [[SHGGloble sharedGloble] businessKeysForValues:self.obj.middleContent showEmptyKeys:YES];
         NSArray *nameArray = @[@"增信方式",@"可承担最高利息",@"期限"];
         NSArray *resultArray = [result componentsSeparatedByString:@"\n"];
         NSMutableArray * array = [[SHGGloble sharedGloble] editBusinessKeysForValues:nameArray middleContentArray:resultArray];

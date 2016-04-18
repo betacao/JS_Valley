@@ -43,7 +43,6 @@
 
 @property (strong, nonatomic) NSMutableDictionary *titleDictionary;
 @property (strong, nonatomic) NSMutableDictionary *selectedDictionary;
-@property (strong, nonatomic) SHGBusinessLocationViewController *locationViewController;
 @end
 
 @implementation SHGBusinessListViewController
@@ -94,9 +93,16 @@
         .rightSpaceToView(weakSelf.view, 0.0f)
         .bottomSpaceToView(weakSelf.view, 0.0f);
     };
-//    请求数据
 }
 
+- (void)clearCache
+{
+    [self.positionDictionary removeAllObjects];
+    [self.paramDictionary removeAllObjects];
+    [self.titleDictionary removeAllObjects];
+    [self.selectedDictionary removeAllObjects];
+    self.filterView.expand = NO;
+}
 
 - (void)viewWillAppear:(BOOL)animated
 {
@@ -109,6 +115,14 @@
     [super viewDidAppear:animated];
     [[SHGBusinessManager shareManager] getSecondListBlock:nil];
     self.filterView.didFinishAutoLayoutBlock = nil;
+    
+    BOOL needUploadContact = [[NSUserDefaults standardUserDefaults] boolForKey:KEY_USER_NEEDUPLOADCONTACT];
+    if(needUploadContact){
+        [[SHGGloble sharedGloble] uploadPhonesWithPhone:^(BOOL finish) {
+            [[NSUserDefaults standardUserDefaults] setBool:NO forKey:KEY_USER_NEEDUPLOADCONTACT];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+        }];
+    }
 }
 
 - (SHGBusinessScrollView *)scrollView
@@ -289,14 +303,14 @@
 
     _cityName = cityName;
     
-    if (![cityName isEqualToString:self.titleLabel.text]) {
+    if (![cityName isEqualToString:self.titleLabel.text] || self.needReloadData) {
         self.titleButton.frame = CGRectZero;
         self.titleLabel.text = cityName;
         self.titleLabel.frame = CGRectMake(MarginFactor(4.0f), 0.0f, 0.0f, 0.0f);
         [self.titleLabel sizeToFit];
         self.titleImageView.origin = CGPointMake(CGRectGetMaxX(self.titleLabel.frame) + MarginFactor(4.0f), (CGRectGetHeight(self.titleLabel.frame) - CGRectGetHeight(self.titleImageView.frame)) / 2.0f);
         self.titleButton.size = CGSizeMake(CGRectGetMaxX(self.titleImageView.frame) + MarginFactor(12.0f), CGRectGetHeight(self.titleLabel.frame));
-
+        self.needReloadData = NO;
         [self clearAndReloadData];
     }
 }

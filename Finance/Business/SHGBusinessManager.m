@@ -31,6 +31,12 @@
     return sharedManager;
 }
 
+- (void)clearCache
+{
+    self.secondListArray = @[];
+    [[SHGBusinessListViewController sharedController] clearCache];
+}
+
 - (instancetype)init
 {
     self = [super init];
@@ -46,14 +52,6 @@
         NSString *newValue = [change objectForKey:@"new"];
         [SHGBusinessListViewController sharedController].cityName = newValue;
     }
-}
-
-- (NSArray *)secondListArray
-{
-    if (!_secondListArray) {
-        _secondListArray = [NSArray array];
-    }
-    return _secondListArray;
 }
 
 //创建新业务

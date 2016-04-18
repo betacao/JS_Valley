@@ -21,10 +21,13 @@ typedef void(^loadViewFinishBlock)(UIView *view);
 @property (nonatomic, copy) loadViewFinishBlock block;
 @property (strong, nonatomic) UIBarButtonItem *leftBarButtonItem;
 @property (strong, nonatomic) NSString *cityName;
+//切换账号标识
+@property (assign, nonatomic) BOOL needReloadData;
 
 - (void)loadFilterTitleAndParam:(void(^)(NSArray *array, NSDictionary *param, NSArray *selectedArray))block;
 
 - (void)deleteBusinessWithBusinessID:(NSString *)businessID;
 
 - (void)didCreateOrModifyBusiness:(SHGBusinessObject *)object;
+- (void)clearCache;
 @end
