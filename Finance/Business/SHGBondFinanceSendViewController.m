@@ -456,7 +456,7 @@
     self.industrySelectButton.layer.borderWidth = 0.5f;
     self.industrySelectButton.titleEdgeInsets = UIEdgeInsetsMake(0.0f, 6.0f, 0.0f, 0.0f);
     
-    NSArray *marketCategoryArray = @[@"企业",@"平台",@"证券"];
+    NSArray *marketCategoryArray = @[@"企业类",@"平台类",@"证券类"];
     for (NSInteger i = 0; i < marketCategoryArray.count; i ++) {
         UIButton * button = [UIButton buttonWithType:UIButtonTypeCustom];
         button.titleLabel.font = FontFactor(15.0f);
@@ -616,8 +616,8 @@
 {
     UITextField *textField = notification.object;
     if ([textField isEqual:self.nameTextField]) {
-        if (textField.text.length > 20) {
-            textField.text = [textField.text substringToIndex:20];
+        if (textField.text.length > 40) {
+            textField.text = [textField.text substringToIndex:40];
         }
     } else if ([textField isEqual:self.phoneNumTextField]) {
         if (textField.text.length > 20){

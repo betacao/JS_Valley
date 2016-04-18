@@ -744,6 +744,12 @@
             if ([weakSelf.auditState isEqualToString:@"0"]) {
                 [weakSelf.authButton setImage:[UIImage imageNamed:@"me_unAuth"] forState:UIControlStateNormal];
                 weakSelf.editButton.hidden = YES;
+                //公司名
+                self.companyLabel.sd_resetLayout
+                .leftEqualToView(self.nickNameLabel)
+                .rightSpaceToView(self.tableHeaderView, MarginFactor(15.0f))
+                .bottomEqualToView(self.userHeaderView)
+                .heightRatioToView(self.nickNameLabel, 1.0f);
                 //弹出提示框
                 [weakSelf.authAlertView show];
             } else if ([weakSelf.auditState isEqualToString:@"1"]){

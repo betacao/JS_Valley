@@ -627,8 +627,8 @@
 {
     UITextField *textField = notification.object;
     if ([textField isEqual:self.nameTextField]) {
-        if (textField.text.length > 20) {
-            textField.text = [textField.text substringToIndex:20];
+        if (textField.text.length > 40) {
+            textField.text = [textField.text substringToIndex:40];
         }
     } else if ([textField isEqual:self.phoneNumTextField]) {
         if (textField.text.length > 20){

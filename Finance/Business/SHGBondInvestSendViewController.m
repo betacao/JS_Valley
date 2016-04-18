@@ -183,14 +183,14 @@
     }
     NSArray *array = [self.marketCategoryButtonView selectedArray];
     //业务类型多选字段
-    NSString *businesstype = [businessSelectDic objectForKey:[array firstObject]];
-    if ([[array firstObject] isEqualToString:@"不限"]) {
-        businesstype = @"";
-    } else{
+    NSString *businesstype = [array objectAtIndex:0];
+//    if ([[array firstObject] isEqualToString:@"不限"]) {
+//        businesstype = @"";
+//    } else{
         for (NSInteger i = 1 ;i < array.count ; i++) {
             businesstype = [NSString stringWithFormat:@"%@;%@",businesstype,[businessSelectDic objectForKey:[array objectAtIndex:i]]];
         }
-    }
+//    }
     
     dictionary = @{@"uid":UID, @"type": @"moneyside", @"contact": self.phoneNumTextField.text, @"investAmount": self.monenyTextField.text, @"area": self.areaSelectButton.titleLabel.text, @"industry":industry ,@"title":self.nameTextField.text ,@"businessType":businesstype,@"fundSource":self.moneyButtonString};
     return dictionary;
@@ -233,7 +233,7 @@
     .leftEqualToView(self.nameLabel)
     .rightSpaceToView(self.nameView, kLeftToView)
     .topSpaceToView(self.nameLabel, ktopToView)
-    .heightIs(kButtonHeight);
+    .heightIs(kCategoryButtonHeight);
     [self.nameView setupAutoHeightWithBottomView:self.nameTextField bottomMargin:ktopToView];
     
     //联系电话
@@ -258,7 +258,7 @@
     .leftEqualToView(self.phoneNumLabel)
     .rightSpaceToView(self.phoneNumView, kLeftToView)
     .topSpaceToView(self.phoneNumLabel, ktopToView)
-    .heightIs(kButtonHeight);
+    .heightIs(kCategoryButtonHeight);
     [self.phoneNumView setupAutoHeightWithBottomView:self.phoneNumTextField bottomMargin:ktopToView];
 
     //业务类型
@@ -303,7 +303,7 @@
     .leftEqualToView(self.monenyLabel)
     .topSpaceToView(self.phoneNumLabel, ktopToView)
     .widthIs(MarginFactor(212.0f))
-    .heightIs(kButtonHeight);
+    .heightIs(kCategoryButtonHeight);
 
     self.moneyMonad.sd_layout
     .leftSpaceToView(self.monenyTextField, kLeftToView)
@@ -335,7 +335,7 @@
     .leftEqualToView(self.monenyLabel)
     .topSpaceToView(self.phoneNumLabel, ktopToView)
     .widthIs(MarginFactor(278.0f))
-    .heightIs(kButtonHeight);
+    .heightIs(kCategoryButtonHeight);
     
     self.areaNewSelectButton.sd_layout
     .topSpaceToView(self.areaTitleLabel, ktopToView)
@@ -369,7 +369,7 @@
     .leftEqualToView(self.industryLabel)
     .rightSpaceToView(self.industryView, kLeftToView)
     .topSpaceToView(self.industryLabel, ktopToView)
-    .heightIs(kButtonHeight);
+    .heightIs(kCategoryButtonHeight);
     
     [self.industryView setupAutoHeightWithBottomView:self.industrySelectButton bottomMargin:ktopToView];
 
@@ -389,7 +389,7 @@
     .leftSpaceToView(self.capitalSourceView, 0.0f)
     .rightSpaceToView(self.capitalSourceView, 0.0f)
     .topSpaceToView(self.capitalSourceLabel, ktopToView)
-    .heightIs(MarginFactor(36.0f));
+    .heightIs(kCategoryButtonHeight);
     
     [self.capitalSourceView setupAutoHeightWithBottomView:self.capitalSourceButtonView bottomMargin:ktopToView];
     
@@ -529,7 +529,7 @@
     self.industrySelectButton.layer.borderColor = Color(@"cecece").CGColor;
     self.industrySelectButton.layer.borderWidth = 0.5f;
     self.industrySelectButton.titleEdgeInsets = UIEdgeInsetsMake(0.0f, 6.0f, 0.0f, 0.0f);
-    NSArray *marketCategoryArray = @[@"不限",@"企业",@"平台",@"证券"];
+    NSArray *marketCategoryArray = @[@"不限",@"企业类",@"平台类",@"证券类"];
     for (NSInteger i = 0; i < marketCategoryArray.count; i ++) {
         UIButton * button = [UIButton buttonWithType:UIButtonTypeCustom];
         button.titleLabel.font = FontFactor(15.0f);
@@ -710,8 +710,8 @@
 {
     UITextField *textField = notification.object;
     if ([textField isEqual:self.nameTextField]) {
-        if (textField.text.length > 20) {
-            textField.text = [textField.text substringToIndex:20];
+        if (textField.text.length > 40) {
+            textField.text = [textField.text substringToIndex:40];
         }
     } else if ([textField isEqual:self.phoneNumTextField]) {
         if (textField.text.length > 20){

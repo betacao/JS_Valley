@@ -278,7 +278,6 @@
     [self loadCollectButtonState];
     //***************************
     BOOL status = [self.responseObject.status isEqualToString:@"1"] ? YES : NO;
-    [self.headImageView updateHeaderView:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,self.responseObject.headImageUrl] placeholderImage:[UIImage imageNamed:@"default_head"] status:status userID:self.responseObject.createBy];
 
     self.nameLabel.text = self.responseObject.realName;
     if (![self.responseObject.createBy isEqualToString:UID] && [self.responseObject.anonymous isEqualToString:@"1"]) {
@@ -292,13 +291,14 @@
             self.companyLabel.text = self.responseObject.company;
         }
     }
+    [self.headImageView updateHeaderView:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,self.responseObject.headImageUrl] placeholderImage:[UIImage imageNamed:@"default_head"] status:status userID:self.responseObject.createBy];
     if (self.responseObject.title.length > 6) {
         NSString *str = [self.responseObject.title substringToIndex:6];
         self.positionLabel.text = [NSString stringWithFormat:@"%@...",str];
     } else{
         self.positionLabel.text = self.responseObject.title;
     }
-
+    
     __block NSString *value = [[SHGGloble sharedGloble] businessKeysForValues:self.responseObject.middleContent];
     __block NSMutableAttributedString *string = nil;
     __block NSString *number = @"";
@@ -372,6 +372,7 @@
 
 - (IBAction)editButtonClick:(UIButton *)sender
 {
+    
     if ([self.responseObject.type isEqualToString:@"moneyside"]) {
         if ([self.responseObject.moneysideType isEqualToString:@"equityInvest"]) {
             SHGEquityInvestSendViewController *viewController = [[SHGEquityInvestSendViewController alloc] init];
@@ -624,20 +625,26 @@
     } showAlert:YES leftBlock:^{
         [[SHGGloble sharedGloble] recordUserAction:@"" type:@"dynamic_identity_cancel"];
     } failString:@"认证后才能发起评论哦～"];
-
+    
 
 }
 
 - (void)replyClicked:(SHGBusinessCommentObject *)obj commentIndex:(NSInteger)index
 {
-    self.popupView = [[BRCommentView alloc] initWithFrame:self.view.bounds superFrame:CGRectZero isController:YES type:@"reply" name:obj.commentUserName];
-    self.popupView.delegate = self;
-    self.popupView.fid = obj.commentUserId;
-    self.popupView.detail = @"";
-    self.popupView.rid = obj.commentId;
-    self.popupView.type = @"repley";
-    [self.navigationController.view addSubview:self.popupView];
-    [self.popupView showWithAnimated:YES];
+    [[SHGGloble sharedGloble] requestUserVerifyStatusCompletion:^(BOOL state) {
+        if (state) {
+            self.popupView = [[BRCommentView alloc] initWithFrame:self.view.bounds superFrame:CGRectZero isController:YES type:@"reply" name:obj.commentUserName];
+            self.popupView.delegate = self;
+            self.popupView.fid = obj.commentUserId;
+            self.popupView.detail = @"";
+            self.popupView.rid = obj.commentId;
+            self.popupView.type = @"repley";
+            [self.navigationController.view addSubview:self.popupView];
+            [self.popupView showWithAnimated:YES];
+        }
+    } showAlert:YES leftBlock:^{
+        [[SHGGloble sharedGloble] recordUserAction:@"" type:@"dynamic_identity_cancel"];
+    } failString:@"认证后才能发起评论哦～"];
 }
 
 - (void)rightUserClick:(NSInteger)index
@@ -701,6 +708,8 @@
             if (success) {
                 weakSelf.responseObject.isCollection = NO;
                 [weakSelf loadCollectButtonState];
+                [Hud showMessageWithText:@"取消收藏成功"];
+                
             }
         }];
     } else {
@@ -708,6 +717,7 @@
             if (success) {
                 weakSelf.responseObject.isCollection = YES;
                 [weakSelf loadCollectButtonState];
+                [Hud showMessageWithText:@"收藏成功"];
             }
         }];
     }

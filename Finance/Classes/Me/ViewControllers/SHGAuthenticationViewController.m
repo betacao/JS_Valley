@@ -10,7 +10,7 @@
 #import "UIButton+WebCache.h"
 #import "SHGItemChooseView.h"
 #import "SHGProvincesViewController.h"
-
+#import "CCLocationManager.h"
 @interface SHGAuthenticationViewController ()<UITextFieldDelegate, UIActionSheetDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, SHGItemChooseDelegate, SHGAreaDelegate>
 //
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
@@ -237,7 +237,15 @@
     __weak typeof(self) weakSelf = self;
     [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttp,@"user",@"personaluser"] parameters:@{@"uid":UID} success:^(MOCHTTPResponse *response) {
         weakSelf.company = [response.dataDictionary objectForKey:@"companyname"];
-        weakSelf.locationField.text = [response.dataDictionary objectForKey:@"position"];
+        if ([[response.dataDictionary objectForKey:@"position"] length] > 0) {
+             weakSelf.locationField.text = [response.dataDictionary objectForKey:@"position"];
+        } else{
+            [[CCLocationManager shareLocation] getCity:^{
+                NSString * cityName = [SHGGloble sharedGloble].cityName;
+                weakSelf.locationField.text = cityName;
+            }];
+        }
+       
         weakSelf.departmentField.text = [self codeToIndustry:[response.dataDictionary objectForKey:@"industrycode"]];
         NSString *head_img = [response.dataDictionary objectForKey:@"head_img"];
         [weakSelf.headerButton sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,head_img]] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"default_head"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {

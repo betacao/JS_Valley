@@ -97,6 +97,7 @@
     [super viewWillAppear:YES];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardDidShow:) name:UIKeyboardDidShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textFieldDidChange:) name:UITextFieldTextDidChangeNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textViewDidChange:) name:UITextViewTextDidChangeNotification object:nil];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -214,7 +215,7 @@
     
     [self.marketExplainView setupAutoHeightWithBottomView:self.marketExplainTextView bottomMargin:ktopToView];
     //添加图片
-    UIImage *addImage = [UIImage imageNamed:@"addImageButton"];
+    UIImage *addImage = [UIImage imageNamed:@"circle_plus"];
     CGSize addSize = addImage.size;
     
     self.addImageView.sd_layout
@@ -227,7 +228,7 @@
     .leftSpaceToView(self.addImageView, kLeftToView)
     .autoHeightRatio(0.0f);
     [self.addImageTitleLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
-    
+
     self.addImageButton.sd_layout
     .leftEqualToView(self.addImageTitleLabel)
     .topSpaceToView(self.addImageTitleLabel, ktopToView)
@@ -251,6 +252,7 @@
 - (void)editObject
 {
     if (self.obj) {
+        [self.sureButton setTitle:@"完成" forState:UIControlStateNormal];
         self.marketExplainTextView.text = self.obj.detail;
         if ([self.obj.anonymous isEqualToString:@"1"]) {
             self.authorizeButton.selected = YES;
@@ -258,10 +260,10 @@
             self.authorizeButton.selected = NO;
         }
         
-        if (self.obj.photo && self.obj.photo.length > 0) {
+        if (self.obj.url && self.obj.url.length > 0) {
             self.hasImage = YES;
             __weak typeof(self) weakSelf = self;
-            [[SDWebImageManager sharedManager] downloadImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,self.obj.photo]] options:SDWebImageRetryFailed|SDWebImageLowPriority progress:^(NSInteger receivedSize, NSInteger expectedSize) {
+            [[SDWebImageManager sharedManager] downloadImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,self.obj.url]] options:SDWebImageRetryFailed|SDWebImageLowPriority progress:^(NSInteger receivedSize, NSInteger expectedSize) {
                 
             } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
                 [weakSelf.addImageButton setImage:image forState:UIControlStateNormal];
@@ -594,7 +596,7 @@
         }
     } else if ([title isEqualToString:@"删除"]){
         self.hasImage = NO;
-        [self.addImageButton setImage:[UIImage imageNamed:@"addImageButton"] forState:UIControlStateNormal];
+        [self.addImageButton setImage:[UIImage imageNamed:@"circle_plus"] forState:UIControlStateNormal];
     }
 }
 
@@ -670,6 +672,15 @@
     if ([textField isEqual:self.retributionTextField]) {
         if (textField.text.length > 20) {
             textField.text = [textField.text substringToIndex:20];
+        }
+    }
+}
+- (void)textViewDidChange:(NSNotification *)notification
+{
+    UITextView *textView = notification.object;
+    if ([textView isEqual:self.marketExplainTextView]) {
+        if (textView.text.length > 600) {
+            textView.text = [textView.text substringToIndex:600];
         }
     }
 }

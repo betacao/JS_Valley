@@ -907,21 +907,27 @@
 
 -(void)circleShareWithObj:(CircleListObj *)obj
 {
-    NSString *url = [NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttpCircle,@"circle",obj.rid];
-    NSDictionary *param = @{@"uid":[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID]};
-    [MOCHTTPRequestOperationManager postWithURL:url class:nil parameters:param success:^(MOCHTTPResponse *response) {
-        
-        NSString *code = [response.data valueForKey:@"code"];
-        if ([code isEqualToString:@"000"]) {
-            self.obj.sharenum = [NSString stringWithFormat:@"%ld",(long)([self.obj.sharenum integerValue] + 1)];
-            [self loadDatasWithObj:self.obj];
-            [Hud showMessageWithText:@"帖子分享成功"];
-            [self.delegate detailShareWithRid:obj.rid shareNum:obj.sharenum];
-            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_COLLECT_SHARE_CLIC object:obj];
+    [[SHGGloble sharedGloble] requestUserVerifyStatusCompletion:^(BOOL state) {
+        if (state) {
+            NSString *url = [NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttpCircle,@"circle",obj.rid];
+            NSDictionary *param = @{@"uid":[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID]};
+            [MOCHTTPRequestOperationManager postWithURL:url class:nil parameters:param success:^(MOCHTTPResponse *response) {
+                
+                NSString *code = [response.data valueForKey:@"code"];
+                if ([code isEqualToString:@"000"]) {
+                    self.obj.sharenum = [NSString stringWithFormat:@"%ld",(long)([self.obj.sharenum integerValue] + 1)];
+                    [self loadDatasWithObj:self.obj];
+                    [Hud showMessageWithText:@"帖子分享成功"];
+                    [self.delegate detailShareWithRid:obj.rid shareNum:obj.sharenum];
+                    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_COLLECT_SHARE_CLIC object:obj];
+                }
+            } failed:^(MOCHTTPResponse *response) {
+                [Hud showMessageWithText:response.errorMessage];
+            }];
         }
-    } failed:^(MOCHTTPResponse *response) {
-        [Hud showMessageWithText:response.errorMessage];
-    }];
+    } showAlert:YES leftBlock:^{
+        [[SHGGloble sharedGloble] recordUserAction:@"" type:@"dynamic_identity_cancel"];
+    } failString:@"认证后才能发起评论哦～"];
 }
 
 #pragma mark -收藏

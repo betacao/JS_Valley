@@ -101,6 +101,7 @@
     [super viewWillAppear:YES];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardDidShow:) name:UIKeyboardDidShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textFieldDidChange:) name:UITextFieldTextDidChangeNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textViewDidChange:) name:UITextViewTextDidChangeNotification object:nil];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -225,7 +226,7 @@
     
     [self.marketExplainView setupAutoHeightWithBottomView:self.marketExplainTextView bottomMargin:ktopToView];
     //添加图片
-    UIImage *addImage = [UIImage imageNamed:@"addImageButton"];
+    UIImage *addImage = [UIImage imageNamed:@"circle_plus"];
     CGSize addSize = addImage.size;
     
     self.addImageView.sd_layout
@@ -341,6 +342,7 @@
 {
     
     if (self.obj) {
+        [self.sureButton setTitle:@"完成" forState:UIControlStateNormal];
         self.marketExplainTextView.text = self.obj.detail;
         if ([self.obj.anonymous isEqualToString:@"1"]) {
             self.authorizeButton.selected = YES;
@@ -348,10 +350,10 @@
             self.authorizeButton.selected = NO;
         }
         
-        if (self.obj.photo && self.obj.photo.length > 0) {
+        if (self.obj.url && self.obj.url.length > 0) {
             self.hasImage = YES;
             __weak typeof(self) weakSelf = self;
-            [[SDWebImageManager sharedManager] downloadImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,self.obj.photo]] options:SDWebImageRetryFailed|SDWebImageLowPriority progress:^(NSInteger receivedSize, NSInteger expectedSize) {
+            [[SDWebImageManager sharedManager] downloadImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,self.obj.url]] options:SDWebImageRetryFailed|SDWebImageLowPriority progress:^(NSInteger receivedSize, NSInteger expectedSize) {
                 
             } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
                 [weakSelf.addImageButton setImage:image forState:UIControlStateNormal];
@@ -436,7 +438,7 @@
                     if (weakSelf.timeButtonView.selectedArray.count == 0) {
                         vestYears = @"";
                     } else{
-                        vestYears = [weakSelf.timeButtonView.selectedArray objectAtIndex:0];
+                        vestYears = [businessSelectDic objectForKey:[weakSelf.timeButtonView.selectedArray objectAtIndex:0]];
                         for (NSInteger i = 1 ;i < weakSelf.timeButtonView.selectedArray.count ; i ++) {
                             
                             vestYears = [NSString stringWithFormat:@"%@;%@",vestYears,[businessSelectDic objectForKey:[weakSelf.timeButtonView.selectedArray objectAtIndex:i]]];
@@ -471,7 +473,7 @@
                     if (weakSelf.timeButtonView.selectedArray.count == 0) {
                         vestYears = @"";
                     } else{
-                        vestYears = [weakSelf.timeButtonView.selectedArray objectAtIndex:0];
+                        vestYears = [businessSelectDic objectForKey:[weakSelf.timeButtonView.selectedArray objectAtIndex:0]];
                         for (NSInteger i = 1 ;i < weakSelf.timeButtonView.selectedArray.count ; i ++) {
 
                             vestYears = [NSString stringWithFormat:@"%@;%@",vestYears,[businessSelectDic objectForKey:[weakSelf.timeButtonView.selectedArray objectAtIndex:i]]];
@@ -479,7 +481,7 @@
                         
                     }
                     
-                    NSDictionary *param = @{@"uid":UID, @"businessId":businessId,@"type": type, @"moneysideType": @"equityFinance",@"contact":contact,@"financingStage":financingStage, @"investAmount": investAmount, @"area": area, @"industry": industry,@"fundSource":fundSource ,@"totalshareRate":weakSelf.retributionTextField.text, @"vestYears": vestYears,@"detail": weakSelf.marketExplainTextView.text,@"photo": weakSelf.imageName,@"anonymous": anonymous,@"title": title};
+                    NSDictionary *param = @{@"uid":UID, @"businessId":businessId,@"type": type, @"moneysideType": @"equityInvest",@"contact":contact,@"financingStage":financingStage, @"investAmount": investAmount, @"area": area, @"industry": industry,@"fundSource":fundSource ,@"totalshareRate":weakSelf.retributionTextField.text, @"vestYears": vestYears,@"detail": weakSelf.marketExplainTextView.text,@"photo": weakSelf.imageName,@"anonymous": anonymous,@"title": title};
                     NSLog(@"%@",param);
                     [SHGBusinessManager editBusiness:param success:^(BOOL success) {
                         if (success) {
@@ -577,7 +579,7 @@
         }
     } else if ([title isEqualToString:@"删除"]){
         self.hasImage = NO;
-        [self.addImageButton setImage:[UIImage imageNamed:@"addImageButton"] forState:UIControlStateNormal];
+        [self.addImageButton setImage:[UIImage imageNamed:@"circle_plus"] forState:UIControlStateNormal];
     }
 }
 
@@ -659,6 +661,15 @@
     }
 }
 
+- (void)textViewDidChange:(NSNotification *)notification
+{
+    UITextView *textView = notification.object;
+    if ([textView isEqual:self.marketExplainTextView]) {
+        if (textView.text.length > 600) {
+            textView.text = [textView.text substringToIndex:600];
+        }
+    }
+}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];

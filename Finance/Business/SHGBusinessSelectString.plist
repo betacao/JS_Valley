@@ -24,11 +24,11 @@
 	<string>agriculture</string>
 	<key>其他行业</key>
 	<string>other</string>
-	<key>企业</key>
+	<key>企业类</key>
 	<string>enterprise</string>
-	<key>平台</key>
+	<key>平台类</key>
 	<string>platform</string>
-	<key>证券</key>
+	<key>证券类</key>
 	<string>security</string>
 	<key>个人资金</key>
 	<string>personalCapital</string>
