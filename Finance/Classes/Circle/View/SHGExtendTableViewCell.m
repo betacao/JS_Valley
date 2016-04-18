@@ -64,20 +64,20 @@
 
     self.markLabel.sd_layout
     .leftEqualToView(self.titleLabel)
-    .topSpaceToView(self.extendImageView, 0.0f)
-    .heightIs(MarginFactor(32.0f));
+    .topSpaceToView(self.extendImageView, MarginFactor(10.0f))
+    .heightIs(self.markLabel.font.lineHeight);
     [self.markLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
 
     self.timeLabel.sd_layout
     .rightEqualToView(self.titleLabel)
-    .topSpaceToView(self.extendImageView, 0.0f)
-    .heightIs(MarginFactor(32.0f));
+    .topSpaceToView(self.extendImageView, MarginFactor(10.0f))
+    .heightIs(self.timeLabel.font.lineHeight);
     [self.timeLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
 
     self.lineView.sd_layout
     .leftSpaceToView(self.contentView, 0.0f)
     .rightSpaceToView(self.contentView, 0.0f)
-    .topSpaceToView(self.timeLabel, 0.0f)
+    .topSpaceToView(self.timeLabel, MarginFactor(10.0f))
     .heightIs(0.5f);
 
     self.splitLine.sd_layout
@@ -92,7 +92,6 @@
 - (void)setObject:(CircleListObj *)object
 {
     _object = object;
-    [self clearCell];
 
     self.titleLabel.text = object.detail;
 
@@ -104,12 +103,6 @@
     }
     self.timeLabel.text = object.publishdate;
 
-}
-
-- (void)clearCell
-{
-    self.timeLabel.text = @"";
-    self.timeLabel.width = 0.0f;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
