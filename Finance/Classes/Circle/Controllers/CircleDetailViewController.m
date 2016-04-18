@@ -924,7 +924,13 @@
             } failed:^(MOCHTTPResponse *response) {
                 [Hud showMessageWithText:response.errorMessage];
             }];
+        }else{
+            SHGAuthenticationViewController *controller = [[SHGAuthenticationViewController alloc] init];
+            [self.navigationController pushViewController:controller animated:YES];
+            [[SHGGloble sharedGloble] recordUserAction:@"" type:@"dynamic_identity"];
         }
+
+        
     } showAlert:YES leftBlock:^{
         [[SHGGloble sharedGloble] recordUserAction:@"" type:@"dynamic_identity_cancel"];
     } failString:@"认证后才能发起分享哦～"];
