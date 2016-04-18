@@ -46,7 +46,7 @@
 
 - (void)initViewWithArray:(NSArray *)array
 {
-    [[SHGBusinessListViewController sharedController] loadFilterTitleAndParam:^(NSArray *selectedArray, NSDictionary *param) {
+    [[SHGBusinessListViewController sharedController] loadFilterTitleAndParam:^(NSArray *titleArray, NSDictionary *param, NSArray *selectedArray) {
 
         [array enumerateObjectsUsingBlock:^(SHGBusinessSecondObject *secondObject, NSUInteger idx, BOOL * _Nonnull stop) {
             SHGBusinessButtonContentView *contentView = [[SHGBusinessButtonContentView alloc] initWithMode:SHGBusinessButtonShowModeExclusiveChoice];
@@ -147,6 +147,7 @@
 {
     NSMutableDictionary *codeParam = [NSMutableDictionary dictionary];
     NSMutableArray *titleArray = [NSMutableArray array];
+    NSMutableArray *selectedArray = [NSMutableArray array];
     [self.scrollView.subviews enumerateObjectsUsingBlock:^(SHGBusinessButtonContentView *contentView, NSUInteger idx, BOOL * _Nonnull stop) {
         if ([contentView isKindOfClass:[SHGBusinessButtonContentView class]]) {
             NSString *key = ((SHGBusinessSecondObject *)[self.listArray objectAtIndex:idx]).key;
@@ -155,8 +156,14 @@
             NSArray *array = [contentView selectedArray];
             [array enumerateObjectsUsingBlock:^(SHGBusinessSecondsubObject *subObject, NSUInteger idx, BOOL * _Nonnull stop) {
                 codeValue = [codeValue stringByAppendingFormat:@"%@;",subObject.code];
-                [titleArray addObject:subObject];
+                if ([subObject.value isEqualToString:@"不限"]) {
+                    subObject.code = key;
+                } else {
+                    [titleArray addObject:subObject];
+                }
+                [selectedArray addObject:subObject];
             }];
+            //去除多余的一个分号
             if (codeValue.length > 0) {
                 codeValue = [codeValue substringToIndex:codeValue.length - 1];
                 [codeParam setObject:codeValue forKey:key];
@@ -165,7 +172,7 @@
 
     }];
     if (self.selectedBlock) {
-        self.selectedBlock(codeParam, titleArray, NO);
+        self.selectedBlock(codeParam, titleArray, selectedArray, NO);
     }
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.navigationController popViewControllerAnimated:YES];

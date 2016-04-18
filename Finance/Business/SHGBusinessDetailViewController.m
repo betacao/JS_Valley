@@ -28,7 +28,7 @@
 #define PRAISE_SEPWIDTH     10.0f
 #define PRAISE_RIGHTWIDTH     40.0f
 
-@interface SHGBusinessDetailViewController ()<BRCommentViewDelegate, CircleActionDelegate, SHGBusinessCommentDelegate, MLEmojiLabelDelegate>
+@interface SHGBusinessDetailViewController ()<BRCommentViewDelegate, CircleActionDelegate, SHGBusinessCommentDelegate, TTTAttributedLabelDelegate>
 {
     UIView *PickerBackView;
 }
@@ -43,7 +43,7 @@
 @property (weak, nonatomic) IBOutlet UIView *firstHorizontalLine;
 @property (weak, nonatomic) IBOutlet UIView *secondHorizontalLine;
 @property (weak, nonatomic) IBOutlet UIView *thirdHorizontalLine;
-@property (weak, nonatomic) IBOutlet MLEmojiLabel *propertyLabel;
+@property (weak, nonatomic) IBOutlet TTTAttributedLabel *propertyLabel;
 
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UIButton *collectionButton;
@@ -125,11 +125,11 @@
     self.positionLabel.font = FontFactor(13.0f);
     self.titleLabel.font = FontFactor(15.0f);
 
-    self.propertyLabel.font = FontFactor(13.0f);
     self.propertyLabel.numberOfLines = 0;
     self.propertyLabel.lineBreakMode = NSLineBreakByWordWrapping;
-    self.propertyLabel.textColor = [UIColor colorWithHexString:@"888888"];
     self.propertyLabel.delegate = self;
+    self.propertyLabel.linkAttributes = nil;
+    self.propertyLabel.activeLinkAttributes = nil;
     self.propertyLabel.isAttributedContent = YES;
 
     self.businessDetialLabel.font = FontFactor(15.0f);
@@ -299,12 +299,32 @@
         self.positionLabel.text = self.responseObject.title;
     }
 
-    NSString *value = [[SHGGloble sharedGloble] businessKeysForValues:self.responseObject.middleContent];
-    NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:value attributes:@{NSFontAttributeName:FontFactor(13.0f), NSForegroundColorAttributeName: Color(@"888888")}];
+    __block NSString *value = [[SHGGloble sharedGloble] businessKeysForValues:self.responseObject.middleContent];
+    __block NSMutableAttributedString *string = nil;
+    __block NSString *number = @"";
+    NSMutableArray *array = [NSMutableArray arrayWithArray: [value componentsSeparatedByString:@"\n"]];
+    [array enumerateObjectsUsingBlock:^(NSString *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if ([obj containsString:@"联系方式"]) {
+            number = @"认证可见";
+            if (!status) {
+                value = [value stringByReplacingOccurrencesOfString:obj withString: @"联系方式：认证可见"];
+                string = [[NSMutableAttributedString alloc] initWithString:value attributes:@{NSFontAttributeName:FontFactor(13.0f), NSForegroundColorAttributeName: Color(@"888888")}];
+                [string addAttribute:NSFontAttributeName value:FontFactor(14.0f) range:[value rangeOfString:number]];
+                [string addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"4277B2"] range: [value rangeOfString:number]];
+            } else {
+                number = [[obj componentsSeparatedByString:@"："] lastObject];
+                string = [[NSMutableAttributedString alloc] initWithString:value attributes:@{NSFontAttributeName:FontFactor(13.0f), NSForegroundColorAttributeName: Color(@"888888")}];
+                [string addAttribute:NSFontAttributeName value:FontFactor(14.0f) range:[value rangeOfString:number]];
+                [string addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"4277B2"] range: [value rangeOfString:number]];
+            }
+        }
+    }];
+
     NSMutableParagraphStyle * paragraphStyle1 = [[NSMutableParagraphStyle alloc] init];
     [paragraphStyle1 setLineSpacing:5.0f];
     [string addAttribute:NSParagraphStyleAttributeName value:paragraphStyle1 range:NSMakeRange(0, [string length])];
-    self.propertyLabel.text = string;
+    self.propertyLabel.attributedText = string;
+    [self.propertyLabel addLinkToPhoneNumber:number withRange:[value rangeOfString:number]];
     //****************************//
 
     self.businessDetialLabel.text = @"业务描述：";
@@ -377,29 +397,6 @@
         [self.navigationController pushViewController:viewController animated:YES];
     }
     
-}
-
-- (void)tapContactLabelToIdentification:(UITapGestureRecognizer *)rescognizer
-{
-
-    if([self.responseObject.userState isEqualToString:@"1" ]){
-        NSString *phoneNum = self.responseObject.middleContent;
-        NSString *num = [[NSString alloc] initWithFormat:@"telprompt://%@",phoneNum];
-        if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:num]]) {
-            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:num]];
-        } else{
-            NSLog(@"拨打失败");
-        }
-
-    } else{
-        [[SHGGloble sharedGloble] requestUserVerifyStatusCompletion:^(BOOL state) {
-            if (!state) {
-                SHGAuthenticationViewController *controller = [[SHGAuthenticationViewController alloc]init];
-                [self.navigationController pushViewController:controller animated:YES];
-            }
-        } showAlert:YES leftBlock:^{
-        } failString:@"认证后才能查看联系方式～"];
-    }
 }
 
 - (void)addEmptyViewIfNeeded
@@ -738,19 +735,21 @@
     });
 }
 
-
-- (void)mlEmojiLabel:(MLEmojiLabel*)emojiLabel didSelectLink:(NSString*)link withType:(MLEmojiLabelLinkType)type
+- (void)attributedLabel:(TTTAttributedLabel *)label didSelectLinkWithTextCheckingResult:(NSTextCheckingResult *)result
 {
-    switch(type){
-        case MLEmojiLabelLinkTypePhoneNumber:
-            [self openTel:link];
-            NSLog(@"点击了电话%@",link);
-            break;
-        default:
-            NSLog(@"点击了不知道啥%@",link);
-            break;
+    NSString *string = [label.text substringWithRange:result.range];
+    if ([string containsString:@"认证可见"]) {
+        [[SHGGloble sharedGloble] requestUserVerifyStatusCompletion:^(BOOL state) {
+            if (!state) {
+                SHGAuthenticationViewController *controller = [[SHGAuthenticationViewController alloc]init];
+                [self.navigationController pushViewController:controller animated:YES];
+            }
+        } showAlert:YES leftBlock:^{
+        } failString:@"认证后才能查看联系方式～"];
+    } else {
+        [self openTel:string];
     }
-
+    NSLog(@"%@", string);
 }
 #pragma mark -- sdc
 #pragma mark -- 拨打电话

@@ -42,6 +42,7 @@
 @property (strong, nonatomic) NSMutableDictionary *paramDictionary;
 
 @property (strong, nonatomic) NSMutableDictionary *titleDictionary;
+@property (strong, nonatomic) NSMutableDictionary *selectedDictionary;
 @property (strong, nonatomic) SHGBusinessLocationViewController *locationViewController;
 @end
 
@@ -126,9 +127,10 @@
     if (!_filterView) {
         _filterView = [[SHGBusinessFilterView alloc] init];
         _filterView.hidden = YES;
-        _filterView.selectedBlock = ^(NSDictionary *param, NSArray *titleArray, BOOL filterShow){
+        _filterView.selectedBlock = ^(NSDictionary *param, NSArray *titleArray, NSArray *selectedArray, BOOL filterShow){
             [weakSelf.paramDictionary setObject:param forKey:[weakSelf.scrollView currentName]];
             [weakSelf.titleDictionary setObject:titleArray forKey:[[SHGBusinessScrollView sharedBusinessScrollView] currentName]];
+            [weakSelf.selectedDictionary setObject:selectedArray forKey:[[SHGBusinessScrollView sharedBusinessScrollView] currentName]];
             [weakSelf loadDataWithTarget:@"first"];
             weakSelf.filterView.expand = filterShow;
         };
@@ -229,11 +231,19 @@
     return _titleDictionary;
 }
 
-- (void)loadFilterTitleAndParam:(void (^)(NSArray *, NSDictionary *))block
+- (NSMutableDictionary *)selectedDictionary
+{
+    if (!_selectedDictionary) {
+        _selectedDictionary = [NSMutableDictionary dictionary];
+    }
+    return _selectedDictionary;
+}
+
+- (void)loadFilterTitleAndParam:(void (^)(NSArray *, NSDictionary *, NSArray *))block
 {
     NSArray *array = [self.titleDictionary objectForKey:[[SHGBusinessScrollView sharedBusinessScrollView] currentName]];
     NSDictionary *paramDictionary = [self.paramDictionary objectForKey:[self.scrollView currentName]];
-    block(array, paramDictionary);
+    block(array, paramDictionary, [self.selectedDictionary objectForKey:[self.scrollView currentName]]);
 }
 
 - (SHGBusinessNoticeObject *)otherObject
@@ -330,7 +340,7 @@
             businessID = object.businessID;
         }
     }
-    return businessID;
+    return [businessID isEqualToString:@""] ? @"-1" : businessID;
 }
 
 - (NSString *)minBusinessID
@@ -512,7 +522,9 @@
 {
     NSInteger index = [self.scrollView indexForName:object.type];
     [self.scrollView moveToIndex:index];
-    [self loadDataWithTarget:@"first"];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self loadDataWithTarget:@"first"];
+    });
 }
 
 #pragma mark ------tableview代理

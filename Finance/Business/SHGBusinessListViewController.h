@@ -22,7 +22,7 @@ typedef void(^loadViewFinishBlock)(UIView *view);
 @property (strong, nonatomic) UIBarButtonItem *leftBarButtonItem;
 @property (strong, nonatomic) NSString *cityName;
 
-- (void)loadFilterTitleAndParam:(void(^)(NSArray *array, NSDictionary *param))block;
+- (void)loadFilterTitleAndParam:(void(^)(NSArray *array, NSDictionary *param, NSArray *selectedArray))block;
 
 - (void)deleteBusinessWithBusinessID:(NSString *)businessID;
 

@@ -22,6 +22,7 @@
 @property (strong, nonatomic) UIView *contentView;
 @property (strong, nonatomic) UIView *backgroundView;
 @property (strong, nonatomic) NSMutableDictionary *paramDictionary;
+@property (strong, nonatomic) NSMutableArray *selectedArray;
 @end
 
 @implementation SHGBusinessFilterView
@@ -128,9 +129,10 @@
 
     __weak typeof(self)weakSelf = self;
     if (expand) {
-        [[SHGBusinessListViewController sharedController] loadFilterTitleAndParam:^(NSArray *array, NSDictionary *param) {
+        [[SHGBusinessListViewController sharedController] loadFilterTitleAndParam:^(NSArray *array, NSDictionary *param, NSArray *selectedArray) {
             weakSelf.dataArray = [NSMutableArray arrayWithArray:array];
             weakSelf.paramDictionary = [NSMutableDictionary dictionaryWithDictionary:param];
+            weakSelf.selectedArray = [NSMutableArray arrayWithArray:selectedArray];
             [self.contentView setupAutoHeightWithBottomView:[self.buttonArray lastObject] bottomMargin:MarginFactor(10.0f)];
             [UIView animateWithDuration:0.25f animations:^{
                 [self.contentView updateLayout];
@@ -148,9 +150,10 @@
             [self.contentView updateLayout];
             self.rightButton.layer.transform = CATransform3DMakeRotation(0.000001 - M_PI, 0.0f, 0.0f, 1.0f);
         } completion:^(BOOL finished) {
-            [[SHGBusinessListViewController sharedController] loadFilterTitleAndParam:^(NSArray *array, NSDictionary *param) {
+            [[SHGBusinessListViewController sharedController] loadFilterTitleAndParam:^(NSArray *array, NSDictionary *param, NSArray *selectedArray) {
                 weakSelf.dataArray = [NSMutableArray arrayWithArray:array];
                 weakSelf.paramDictionary = [NSMutableDictionary dictionaryWithDictionary:param];
+                weakSelf.selectedArray = [NSMutableArray arrayWithArray:selectedArray];
             }];
         }];
         [self.backgroundView removeFromSuperview];
@@ -227,9 +230,9 @@
             [self.paramDictionary setObject:obj forKey:key];
         }
     }];
+    [self.selectedArray removeObject:button.object];
     
-    
-    self.selectedBlock (self.paramDictionary, array, YES);
+    self.selectedBlock (self.paramDictionary, array, self.selectedArray, YES);
     if (self.buttonArray.count > 0) {
         [self.contentView setupAutoHeightWithBottomView:[self.buttonArray lastObject] bottomMargin:MarginFactor(10.0f)];
     } else{
