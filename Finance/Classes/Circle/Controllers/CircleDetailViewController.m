@@ -927,7 +927,7 @@
         }
     } showAlert:YES leftBlock:^{
         [[SHGGloble sharedGloble] recordUserAction:@"" type:@"dynamic_identity_cancel"];
-    } failString:@"认证后才能发起评论哦～"];
+    } failString:@"认证后才能发起分享哦～"];
 }
 
 #pragma mark -收藏
