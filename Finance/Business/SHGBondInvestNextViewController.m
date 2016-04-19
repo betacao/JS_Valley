@@ -344,9 +344,9 @@
     
     self.retributionNumLabel.font = FontFactor(15.0f);
     self.retributionNumLabel.textColor = Color(@"161616");
-    
+    CGFloat scale = [[UIScreen mainScreen] scale];
     self.retributionTextField.layer.borderColor = Color(@"cecece").CGColor;
-    self.retributionTextField.layer.borderWidth = 0.5f;
+    self.retributionTextField.layer.borderWidth = 1.0f / scale;
     self.retributionTextField.font = FontFactor(15.0f);
     self.retributionTextField.leftView = [[UIView alloc]initWithFrame:CGRectMake(0.0f, 0.0f, 6.0f, 0.0f)];
     self.retributionTextField.leftViewMode = UITextFieldViewModeAlways;
@@ -387,7 +387,7 @@
     self.marketExplainTextView.placeholder = @" 请描述您的业务详情或将您的业务信息拍照上传";
     self.marketExplainTextView.placeholderColor = Color(@"bebebe");
     self.marketExplainTextView.layer.borderColor = Color(@"cecece").CGColor;
-    self.marketExplainTextView.layer.borderWidth = 0.5f;
+    self.marketExplainTextView.layer.borderWidth = 1.0f / scale;
     self.authorizeButton.backgroundColor = [UIColor clearColor];
     self.authorizeButton.titleLabel.font = FontFactor(14.0f);
     [self.authorizeButton setTitleColor:Color(@"8b8b8b") forState:UIControlStateNormal];

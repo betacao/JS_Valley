@@ -268,12 +268,12 @@
     self.sureButton.titleLabel.font = FontFactor(19.0f);
     [self.sureButton setTitleColor:Color(@"ffffff") forState:UIControlStateNormal];
     [self.sureButton setBackgroundColor:Color(@"f04241")];
-    
+    CGFloat scale = [[UIScreen mainScreen] scale];
     self.retributionTextField.layer.borderColor = Color(@"cecece").CGColor;
-    self.retributionTextField.layer.borderWidth = 0.5f;
+    self.retributionTextField.layer.borderWidth = 1.0f / scale;
 
     self.marketExplainTextView.layer.borderColor = Color(@"cecece").CGColor;
-    self.marketExplainTextView.layer.borderWidth = 0.5f;
+    self.marketExplainTextView.layer.borderWidth = 1.0f / scale;
     self.marketExplainTextView.scrollEnabled = NO;
     self.capitalSourceLabel.textColor = Color(@"161616");
     self.capitalSourceLabel.font = FontFactor(13.0f);

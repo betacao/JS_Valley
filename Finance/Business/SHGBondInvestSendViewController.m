@@ -515,21 +515,21 @@
     
     self.industrySelectButton.titleLabel.font = FontFactor(15.0f);
     [self.industrySelectButton setTitleColor:Color(@"bebebe") forState:UIControlStateNormal];
-    
+    CGFloat scale = [[UIScreen mainScreen] scale];
     self.nameTextField.layer.borderColor = Color(@"cecece").CGColor;
-    self.nameTextField.layer.borderWidth = 0.5f;
+    self.nameTextField.layer.borderWidth = 1.0 / scale;
     
     self.monenyTextField.layer.borderColor = Color(@"cecece").CGColor;
-    self.monenyTextField.layer.borderWidth = 0.5f;
+    self.monenyTextField.layer.borderWidth = 1.0 / scale;
     
     self.phoneNumTextField.layer.borderColor = Color(@"cecece").CGColor;
-    self.phoneNumTextField.layer.borderWidth = 0.5f;
+    self.phoneNumTextField.layer.borderWidth = 1.0 / scale;
     
     self.areaSelectButton.layer.borderColor = Color(@"cecece").CGColor;
-    self.areaSelectButton.layer.borderWidth = 0.5f;
+    self.areaSelectButton.layer.borderWidth = 1.0 / scale;
     self.areaSelectButton.titleEdgeInsets = UIEdgeInsetsMake(0.0f, 6.0f, 0.0f, 0.0f);
     self.industrySelectButton.layer.borderColor = Color(@"cecece").CGColor;
-    self.industrySelectButton.layer.borderWidth = 0.5f;
+    self.industrySelectButton.layer.borderWidth = 1.0 / scale;
     self.industrySelectButton.titleEdgeInsets = UIEdgeInsetsMake(0.0f, 6.0f, 0.0f, 0.0f);
     NSArray *marketCategoryArray = @[@"不限",@"企业类",@"平台类",@"证券类"];
     for (NSInteger i = 0; i < marketCategoryArray.count; i ++) {

@@ -351,22 +351,22 @@
     
     self.moneyMonad.font = FontFactor(15.0f);
     self.moneyMonad.textColor = Color(@"161616");
-    
+    CGFloat scale = [[UIScreen mainScreen] scale];
     self.areaSelectButton.titleLabel.font = FontFactor(15.0f);
     [self.areaSelectButton setTitleColor:Color(@"161616") forState:UIControlStateNormal];
     self.areaNewSelectButton.titleLabel.font = FontFactor(15.0f);
     [self.areaNewSelectButton setTitleColor:Color(@"0078ee") forState:UIControlStateNormal];
     self.nameTextField.layer.borderColor = Color(@"cecece").CGColor;
-    self.nameTextField.layer.borderWidth = 0.5f;
+    self.nameTextField.layer.borderWidth = 1.0f / scale;
     
     self.monenyTextField.layer.borderColor = Color(@"cecece").CGColor;
-    self.monenyTextField.layer.borderWidth = 0.5f;
+    self.monenyTextField.layer.borderWidth = 1.0f / scale;
     
     self.phoneNumTextField.layer.borderColor = Color(@"cecece").CGColor;
-    self.phoneNumTextField.layer.borderWidth = 0.5f;
+    self.phoneNumTextField.layer.borderWidth = 1.0f / scale;
     
     self.areaSelectButton.layer.borderColor = Color(@"cecece").CGColor;
-    self.areaSelectButton.layer.borderWidth = 0.5f;
+    self.areaSelectButton.layer.borderWidth = 1.0f / scale;
     self.areaSelectButton.titleEdgeInsets = UIEdgeInsetsMake(0.0f, 6.0f, 0.0f, 0.0f);
      NSArray *marketCategoryArray = @[@"同业",@"混业"];
     for (NSInteger i = 0; i < marketCategoryArray.count; i ++) {
