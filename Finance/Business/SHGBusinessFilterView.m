@@ -182,7 +182,7 @@
         [button setTitle:obj.value forState:UIControlStateNormal];
         [button setTitleColor:Color(@"f04241") forState:UIControlStateNormal];
         [button addTarget:self action:@selector(buttonClicked:) forControlEvents:UIControlEventTouchUpInside];
-        [button setBackgroundImage:[[UIImage imageNamed:@"business_filterBg"] resizableImageWithCapInsets:UIEdgeInsetsMake(0.0f, 12.0f, 0.0f, 22.0f) resizingMode:UIImageResizingModeStretch] forState:UIControlStateNormal];
+        [button setBackgroundImage:[[UIImage imageNamed:@"business_filterBg"] resizableImageWithCapInsets:UIEdgeInsetsMake(5.0f, 5.0f, 5.0f, 22.0f) resizingMode:UIImageResizingModeStretch] forState:UIControlStateNormal];
         button.titleLabel.font = FontFactor(13.0f);
         [self.contentView addSubview:button];
         [self.buttonArray addObject: button];

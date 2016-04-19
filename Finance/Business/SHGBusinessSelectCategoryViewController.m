@@ -81,7 +81,7 @@
                 [button setTitleColor:Color(@"f33300") forState:UIControlStateSelected];
                 [button addTarget:self action:@selector(buttonClicked:) forControlEvents:UIControlEventTouchUpInside];
                 [button setBackgroundImage:[[UIImage imageNamed:@"business_unSelected"] resizableImageWithCapInsets:UIEdgeInsetsMake(5.0f, 5.0f, 5.0f, 5.0f) resizingMode:UIImageResizingModeStretch] forState:UIControlStateNormal];
-                [button setBackgroundImage:[[UIImage imageNamed:@"business_selected"] resizableImageWithCapInsets:UIEdgeInsetsMake(1.0f, 1.0f, 1.0f, 15.0f) resizingMode:UIImageResizingModeStretch] forState:UIControlStateSelected];
+                [button setBackgroundImage:[[UIImage imageNamed:@"business_selected"] resizableImageWithCapInsets:UIEdgeInsetsMake(15.0f, 1.0f, 1.0f, 15.0f) resizingMode:UIImageResizingModeStretch] forState:UIControlStateSelected];
                 button.titleLabel.font = FontFactor(13.0f);
                 lastButton = button;
 

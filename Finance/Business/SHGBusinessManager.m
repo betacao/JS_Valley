@@ -200,7 +200,7 @@
 
 + (void)loadHotSearchWordFinishBlock:(void (^)(NSArray *))block
 {
-    NSString *request = [rBaseAddressForHttp stringByAppendingString:@"/market/getHotSearchWord"];
+    NSString *request = [rBaseAddressForHttp stringByAppendingString:@"/common/collection/getHotSearchWordCommon"];
     [MOCHTTPRequestOperationManager postWithURL:request parameters:nil success:^(MOCHTTPResponse *response) {
         NSArray *hotwords = [response.dataDictionary objectForKey:@"hotwords"];
         if (block) {

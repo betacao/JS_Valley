@@ -39,7 +39,6 @@
     [self.sureButton setBackgroundColor:[UIColor colorWithHexString:@"f04241"]];
     self.textView.font = FontFactor(15.0f);
     self.textView.textColor = [UIColor colorWithHexString:@"161616"];
-    [self.textView setValue:[UIColor colorWithHexString:@"afafaf"] forKeyPath:@"_placeholderLabel.textColor"];
     
     self.bgView.sd_layout
     .leftSpaceToView(self.view, 0.0f)
