@@ -63,6 +63,7 @@
 {
     [super viewDidLoad];
     [self addHeaderRefresh:self.tableView headerRefesh:YES headerTitle:nil andFooter:YES footerTitle:@{@(MJRefreshStateIdle):@"以上为当前业务信息"}];
+    self.tableView.backgroundColor = Color(@"efeeef");
     if (self.block) {
         self.block(self.searchBar);
     }

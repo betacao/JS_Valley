@@ -54,13 +54,13 @@
 	<string>threeBoard</string>
 	<key>1年以内</key>
 	<string>oneYear</string>
-	<key>1~3年</key>
+	<key>1-3年</key>
 	<string>oneToThreeYear</string>
 	<key>3年以上</key>
 	<string>moreThreeYear</string>
 	<key>3年以内</key>
 	<string>threeYear</string>
-	<key>3~5年</key>
+	<key>3-5年</key>
 	<string>threeToFiveYear</string>
 	<key>5年以上</key>
 	<string>moreFiveYear</string>

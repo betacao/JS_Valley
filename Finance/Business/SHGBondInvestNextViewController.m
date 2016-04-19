@@ -133,7 +133,7 @@
     self.addRequireTitleLabel.sd_layout
     .topSpaceToView(self.addRequireView, ktopToView)
     .leftSpaceToView(self.addRequireView, kLeftToView)
-    .autoHeightRatio(0.0f);
+    .heightIs(ceilf(self.addRequireTitleLabel.font.lineHeight));
     [self.addRequireTitleLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
     
     self.addRequireButtonView.sd_layout
@@ -152,7 +152,7 @@
     self.retributionTitleLabel.sd_layout
     .topSpaceToView(self.retributionView, ktopToView)
     .leftSpaceToView(self.retributionView, kLeftToView)
-    .autoHeightRatio(0.0f);
+    .heightIs(ceilf(self.retributionTitleLabel.font.lineHeight));
     [self.retributionTitleLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
     
     self.retributionTextField.sd_layout
@@ -164,7 +164,7 @@
     self.retributionNumLabel.sd_layout
     .leftSpaceToView(self.retributionTextField, kLeftToView)
     .centerYEqualToView(self.retributionTextField)
-    .autoHeightRatio(0.0f);
+    .heightIs(ceilf(self.retributionNumLabel.font.lineHeight));
     [self.retributionNumLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
    
     [self.retributionView setupAutoHeightWithBottomView:self.retributionTextField bottomMargin:ktopToView];
@@ -178,7 +178,7 @@
     self.investTimeTitleLabel.sd_layout
     .topSpaceToView(self.investTimeView, ktopToView)
     .leftSpaceToView(self.investTimeView, kLeftToView)
-    .autoHeightRatio(0.0f);
+    .heightIs(ceilf(self.investTimeTitleLabel.font.lineHeight));
     [self.investTimeTitleLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
     
     self.investTimeButtonView.sd_layout
@@ -198,7 +198,7 @@
     self.marketExplainTitleLabel.sd_layout
     .topSpaceToView(self.marketExplainView, ktopToView)
     .leftSpaceToView(self.marketExplainView, kLeftToView)
-    .autoHeightRatio(0.0f);
+    .heightIs(ceilf(self.marketExplainTitleLabel.font.lineHeight));
     [self.marketExplainTitleLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
 
     UIImage *image = [UIImage imageNamed:@"biXuan"];
@@ -229,7 +229,7 @@
     self.addImageTitleLabel.sd_layout
     .topSpaceToView(self.addImageView, ktopToView)
     .leftSpaceToView(self.addImageView, kLeftToView)
-    .autoHeightRatio(0.0f);
+    .heightIs(ceilf(self.addImageTitleLabel.font.lineHeight));
     [self.addImageTitleLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
 
     self.addImageButton.sd_layout
@@ -352,7 +352,7 @@
     self.retributionTextField.leftViewMode = UITextFieldViewModeAlways;
     [self.retributionTextField setValue:[UIColor colorWithHexString:@"bebebe"] forKeyPath:@"_placeholderLabel.textColor"];
 
-    NSArray *investTimeArray = @[@"不限",@"1年以内",@"1~3年",@"3年以上"];
+    NSArray *investTimeArray = @[@"不限",@"1年以内",@"1-3年",@"3年以上"];
     for (NSInteger i = 0; i < investTimeArray.count; i ++) {
         UIButton * button = [UIButton buttonWithType:UIButtonTypeCustom];
         button.titleLabel.font = FontFactor(15.0f);

@@ -98,8 +98,9 @@
         __weak typeof(self) weakSelf = self;
         [[CCLocationManager shareLocation] getCity:^{
             NSString * provinceName = [SHGGloble sharedGloble].provinceName;
-            [weakSelf.areaSelectButton setTitle:provinceName forState:UIControlStateNormal];
-             [weakSelf.areaSelectButton setTitleColor:Color(@"161616") forState:UIControlStateNormal];
+                [weakSelf.areaSelectButton setTitle:provinceName forState:UIControlStateNormal];
+                [weakSelf.areaSelectButton setTitleColor:Color(@"161616") forState:UIControlStateNormal];
+           
         }];
         self.sendType = 0;
     }
@@ -221,7 +222,7 @@
     self.nameLabel.sd_layout
     .topSpaceToView(self.nameView, ktopToView)
     .leftSpaceToView(self.nameView, kLeftToView)
-    .autoHeightRatio(0.0f);
+    .heightIs(ceilf(self.nameLabel.font.lineHeight));
     [self.nameLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
     
     self.nameSelectImage.sd_layout
@@ -246,7 +247,7 @@
     self.phoneNumLabel.sd_layout
     .topSpaceToView(self.phoneNumView, ktopToView)
     .leftSpaceToView(self.phoneNumView, kLeftToView)
-    .autoHeightRatio(0.0f);
+    .heightIs(ceilf(self.phoneNumLabel.font.lineHeight));
     [self.phoneNumLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
     
     self.phoneNumSelectImage.sd_layout
@@ -271,7 +272,7 @@
     self.marketCategoryLabel.sd_layout
     .topSpaceToView(self.marketCategoryView, ktopToView)
     .leftSpaceToView(self.marketCategoryView, kLeftToView)
-    .autoHeightRatio(0.0f);
+    .heightIs(ceilf(self.marketCategoryLabel.font.lineHeight));
     [self.marketCategoryLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
     
     self.marketCategorySelctImage.sd_layout
@@ -297,7 +298,7 @@
     self.monenyLabel.sd_layout
     .topSpaceToView(self.monenyView, ktopToView)
     .leftSpaceToView(self.monenyView, kLeftToView)
-    .autoHeightRatio(0.0f);
+    .heightIs(ceilf(self.monenyLabel.font.lineHeight));
     [self.monenyLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
     
     self.monenyTextField.sd_layout
@@ -323,7 +324,7 @@
     self.areaTitleLabel.sd_layout
     .topSpaceToView(self.areaView, ktopToView)
     .leftSpaceToView(self.areaView, kLeftToView)
-    .autoHeightRatio(0.0f);
+    .heightIs(ceilf(self.areaTitleLabel.font.lineHeight));
     [self.areaTitleLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
     
     self.areaSelectImage.sd_layout
@@ -357,7 +358,7 @@
     self.industryLabel.sd_layout
     .topSpaceToView(self.industryView, ktopToView)
     .leftSpaceToView(self.industryView, kLeftToView)
-    .autoHeightRatio(0.0f);
+    .heightIs(ceilf(self.industryLabel.font.lineHeight));
     [self.industryLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
     
     self.industrySelectImage.sd_layout
@@ -383,7 +384,7 @@
     self.capitalSourceLabel.sd_layout
     .topSpaceToView(self.capitalSourceView, ktopToView)
     .leftSpaceToView(self.capitalSourceView, kLeftToView)
-    .autoHeightRatio(0.0f);
+    .heightIs(ceilf(self.capitalSourceLabel.font.lineHeight));
     [self.capitalSourceLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
     
     self.capitalSourceButtonView.sd_layout
@@ -556,7 +557,6 @@
         [button setBackgroundImage:self.buttonBgImage forState:UIControlStateNormal];
         [button setTitleColor:Color(@"ff8d65") forState:UIControlStateSelected];
         [button setBackgroundImage:self.buttonSelectBgImage forState:UIControlStateSelected];
-
         button.frame = CGRectMake(kLeftToView + j * (kThreeButtonWidth + kButtonLeftMargin), 0.0f, kThreeButtonWidth, kCategoryButtonHeight);
         NSLog(@"1111111%f",kThreeButtonWidth);
         [button addTarget:self action:@selector(capitalButtonClick:) forControlEvents:UIControlEventTouchUpInside];

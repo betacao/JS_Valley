@@ -160,7 +160,7 @@
     self.municipalityTitleLabel.sd_layout
     .leftSpaceToView(self.municipalityView, MarginFactor(24.0f))
     .topSpaceToView(self.nationWideButton, MarginFactor(15.0f))
-    .autoHeightRatio(0.0f);
+    .heightIs(ceilf(self.municipalityTitleLabel.font.lineHeight));
     [self.municipalityTitleLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
 
     self.municipalityButtonView.sd_layout
@@ -186,7 +186,7 @@
     self.eastChinaTitleLabel.sd_layout
     .leftSpaceToView(self.eastChinaView, MarginFactor(24.0f))
     .topSpaceToView(self.eastChinaView, MarginFactor(15.0f))
-    .autoHeightRatio(0.0f);
+    .heightIs(ceilf(self.eastChinaTitleLabel.font.lineHeight));
     [self.eastChinaTitleLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
     
     self.eastChinaButtonView.sd_layout
@@ -211,7 +211,7 @@
     self.northChinaTitleLabel.sd_layout
     .leftSpaceToView(self.northChinaView, MarginFactor(24.0f))
     .topSpaceToView(self.northChinaView, MarginFactor(15.0f))
-    .autoHeightRatio(0.0f);
+    .heightIs(ceilf(self.northChinaTitleLabel.font.lineHeight));
     [self.northChinaTitleLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
     
     self.northChinaButtonView.sd_layout
@@ -236,7 +236,7 @@
     self.northeastTitleLabel.sd_layout
     .leftSpaceToView(self.northeastView, MarginFactor(24.0f))
     .topSpaceToView(self.northeastView, MarginFactor(15.0f))
-    .autoHeightRatio(0.0f);
+    .heightIs(ceilf(self.northeastTitleLabel.font.lineHeight));
     [self.northeastTitleLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
     
     self.northeastButtonView.sd_layout
@@ -262,7 +262,7 @@
     self.southChinaTitleLabel.sd_layout
     .leftSpaceToView(self.southChinaView, MarginFactor(24.0f))
     .topSpaceToView(self.southChinaView, MarginFactor(15.0f))
-    .autoHeightRatio(0.0f);
+    .heightIs(ceilf(self.southChinaTitleLabel.font.lineHeight));
     [self.southChinaTitleLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
     
     self.southChinaButtonView.sd_layout
@@ -287,7 +287,7 @@
     self.centerTitleLabel.sd_layout
     .leftSpaceToView(self.centerView, MarginFactor(24.0f))
     .topSpaceToView(self.centerView, MarginFactor(15.0f))
-    .autoHeightRatio(0.0f);
+    .heightIs(ceilf(self.centerTitleLabel.font.lineHeight));
     [self.centerTitleLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
     
     self.centerButtonView.sd_layout
@@ -312,7 +312,7 @@
     self.southwestTitleLabel.sd_layout
     .leftSpaceToView(self.southwestView, MarginFactor(24.0f))
     .topSpaceToView(self.southwestView, MarginFactor(15.0f))
-    .autoHeightRatio(0.0f);
+    .heightIs(ceilf(self.southwestTitleLabel.font.lineHeight));
     [self.southwestTitleLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
     
     self.southwestButtonView.sd_layout
@@ -337,7 +337,7 @@
     self.northwestTitleLabel.sd_layout
     .leftSpaceToView(self.northwestView, MarginFactor(24.0f))
     .topSpaceToView(self.northwestView, MarginFactor(15.0f))
-    .autoHeightRatio(0.0f);
+    .heightIs(ceilf(self.northwestTitleLabel.font.lineHeight));
     [self.northwestTitleLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
     
     self.northwestButtonView.sd_layout
@@ -351,10 +351,10 @@
     .rightSpaceToView(self.northwestView, 0.0f)
     .heightIs(MarginFactor(12.0f))
     .topSpaceToView(self.northwestButtonView, 0.0f);
-
+    
     [self.northwestView setupAutoHeightWithBottomView:self.northwestBottomView bottomMargin:0.0f];
     
-     [self.scrollView setupAutoHeightWithBottomView:self.northwestView bottomMargin:0.0f];
+    [self.scrollView setupAutoHeightWithBottomView:self.northwestView bottomMargin:0.0f];
 }
 
 - (void)initView
@@ -395,8 +395,8 @@
 //    [self.locationButton setTitle:@"重新定位" forState:UIControlStateNormal];
 //    [self.locationButton setTitleColor:Color(@"2b7fdc") forState:UIControlStateNormal];
     self.nationWideButton.titleLabel.font = FontFactor(14.0f);
-    [self.nationWideButton setBackgroundImage:[[UIImage imageNamed:@"locationButtonBg"] resizableImageWithCapInsets:UIEdgeInsetsMake(10.0f, 10.0f, 10.0f, 10.0f) resizingMode:UIImageResizingModeStretch] forState:UIControlStateNormal];
-    [self.nationWideButton setBackgroundImage:[[UIImage imageNamed:@"locationButtonBgHigh"] resizableImageWithCapInsets:UIEdgeInsetsMake(10.0f, 10.0f, 10.0f, 10.0f) resizingMode:UIImageResizingModeStretch] forState:UIControlStateSelected];
+    [self.nationWideButton setBackgroundImage:[[UIImage imageNamed:@"locationButtonBg"] resizableImageWithCapInsets:UIEdgeInsetsMake(5.0f, 5.0f, 5.0f, 5.0f) resizingMode:UIImageResizingModeStretch] forState:UIControlStateNormal];
+    [self.nationWideButton setBackgroundImage:[[UIImage imageNamed:@"locationButtonBgHighlight"] resizableImageWithCapInsets:UIEdgeInsetsMake(5.0f, 5.0f, 5.0f, 5.0f) resizingMode:UIImageResizingModeStretch] forState:UIControlStateSelected];
     [self.nationWideButton setTitleColor:Color(@"161616") forState:UIControlStateNormal];
     [self.nationWideButton setTitleColor:Color(@"f33300") forState:UIControlStateSelected];
     [self.nationWideButton addTarget:self action:@selector(locationButtonClick:) forControlEvents:UIControlEventTouchUpInside];
@@ -413,8 +413,8 @@
             [button setTitle:[NSString stringWithFormat:@"%@",[[[self.provinces objectAtIndex:j] objectForKey:@"areas"] objectAtIndex:i]] forState:UIControlStateNormal];
             button.titleLabel.font = FontFactor(14.0f);
             button.adjustsImageWhenHighlighted = NO;
-            [button setBackgroundImage:[[UIImage imageNamed:@"locationButtonBg"]resizableImageWithCapInsets:UIEdgeInsetsMake(10.0f, 10.0f, 10.0f, 10.0f) resizingMode:UIImageResizingModeStretch ]forState:UIControlStateNormal];
-            [button setBackgroundImage:[[UIImage imageNamed:@"locationButtonBgHigh"] resizableImageWithCapInsets:UIEdgeInsetsMake(10.0f, 10.0f, 10.0f, 10.0f) resizingMode:UIImageResizingModeStretch] forState:UIControlStateSelected];
+            [button setBackgroundImage:[[UIImage imageNamed:@"locationButtonBg"]resizableImageWithCapInsets:UIEdgeInsetsMake(5.0f, 5.0f, 5.0f, 5.0f) resizingMode:UIImageResizingModeStretch ]forState:UIControlStateNormal];
+            [button setBackgroundImage:[[UIImage imageNamed:@"locationButtonBgHighlight"] resizableImageWithCapInsets:UIEdgeInsetsMake(5.0f, 5.0f, 5.0f, 5.0f) resizingMode:UIImageResizingModeStretch] forState:UIControlStateSelected];
             [button setTitleColor:Color(@"161616") forState:UIControlStateNormal];
             [button setTitleColor:Color(@"f33300") forState:UIControlStateSelected];
             [button addTarget:self action:@selector(locationButtonClick:) forControlEvents:UIControlEventTouchUpInside];

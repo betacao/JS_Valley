@@ -187,7 +187,7 @@
     self.nameLabel.sd_layout
     .topSpaceToView(self.nameView, ktopToView)
     .leftSpaceToView(self.nameView, kLeftToView)
-    .autoHeightRatio(0.0f);
+    .heightIs(ceilf(self.nameLabel.font.lineHeight));
     [self.nameLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
     
     self.nameSelectImage.sd_layout
@@ -212,7 +212,7 @@
     self.phoneNumLabel.sd_layout
     .topSpaceToView(self.phoneNumView, ktopToView)
     .leftSpaceToView(self.phoneNumView, kLeftToView)
-    .autoHeightRatio(0.0f);
+    .heightIs(ceilf(self.phoneNumLabel.font.lineHeight));
     [self.phoneNumLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
     
     self.phoneNumSelectImage.sd_layout
@@ -237,7 +237,7 @@
     self.bondStageLabel.sd_layout
     .topSpaceToView(self.bondStageView, ktopToView)
     .leftSpaceToView(self.bondStageView, kLeftToView)
-    .autoHeightRatio(0.0f);
+    .heightIs(ceilf(self.bondStageLabel.font.lineHeight));
     [self.bondStageLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
     
     self.bondStageSelctImage.sd_layout
@@ -263,7 +263,7 @@
     self.monenyLabel.sd_layout
     .topSpaceToView(self.monenyView, ktopToView)
     .leftSpaceToView(self.monenyView, kLeftToView)
-    .autoHeightRatio(0.0f);
+    .heightIs(ceilf(self.monenyLabel.font.lineHeight));
     [self.monenyLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
     
     self.monenyTextField.sd_layout
@@ -289,7 +289,7 @@
     self.areaTitleLabel.sd_layout
     .topSpaceToView(self.areaView, ktopToView)
     .leftSpaceToView(self.areaView, kLeftToView)
-    .autoHeightRatio(0.0f);
+    .heightIs(ceilf(self.areaTitleLabel.font.lineHeight));
     [self.areaTitleLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
     
     self.areaSelectImage.sd_layout
@@ -323,7 +323,7 @@
     self.industryLabel.sd_layout
     .topSpaceToView(self.industryView, ktopToView)
     .leftSpaceToView(self.industryView, kLeftToView)
-    .autoHeightRatio(0.0f);
+    .heightIs(ceilf(self.industryLabel.font.lineHeight));
     [self.industryLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
     
     self.industrySelectImage.sd_layout

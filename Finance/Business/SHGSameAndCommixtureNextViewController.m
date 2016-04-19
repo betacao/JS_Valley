@@ -98,7 +98,7 @@
     self.marketExplainTitleLabel.sd_layout
     .topSpaceToView(self.marketExplainView, ktopToView)
     .leftSpaceToView(self.marketExplainView, kLeftToView)
-    .autoHeightRatio(0.0f);
+    .heightIs(ceilf(self.marketExplainTitleLabel.font.lineHeight));
     [self.marketExplainTitleLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
     
     UIImage *image = [UIImage imageNamed:@"biXuan"];
@@ -129,7 +129,7 @@
     self.addImageTitleLabel.sd_layout
     .topSpaceToView(self.addImageView, ktopToView)
     .leftSpaceToView(self.addImageView, kLeftToView)
-    .autoHeightRatio(0.0f);
+    .heightIs(ceilf(self.addImageTitleLabel.font.lineHeight));
     [self.addImageTitleLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
     
     self.addImageButton.sd_layout
