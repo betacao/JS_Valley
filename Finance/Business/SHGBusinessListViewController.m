@@ -43,6 +43,7 @@
 
 @property (strong, nonatomic) NSMutableDictionary *titleDictionary;
 @property (strong, nonatomic) NSMutableDictionary *selectedDictionary;
+@property (strong, nonatomic) NSString *CFData;
 @end
 
 @implementation SHGBusinessListViewController
@@ -61,7 +62,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self addHeaderRefresh:self.tableView headerRefesh:YES andFooter:YES];
+    [self addHeaderRefresh:self.tableView headerRefesh:YES headerTitle:nil andFooter:YES footerTitle:@{@(MJRefreshStateIdle):@"以上为当前业务信息"}];
     if (self.block) {
         self.block(self.searchBar);
     }
@@ -380,18 +381,14 @@
     if (self.refreshing) {
         return;
     }
-    NSString *CFData = @"";
-    NSString *filePath = [NSString stringWithFormat:kFilePath, @"CFData"];
-    NSString *fileName = [filePath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@_%@",[[NSDate date] shortStringFromDate], UID]];
-    CFData = [NSString stringWithContentsOfFile:fileName encoding:NSUTF8StringEncoding error:nil];
-    if (IsStrEmpty(CFData)) {
-        CFData = @"";
+    if (IsStrEmpty(self.CFData)) {
+        self.CFData = @"";
     }
     NSString *position = [self.positionDictionary objectForKey:[self.scrollView currentName]];
     NSString *city = [self.cityName isEqualToString:@"全国"] ? @"" : self.cityName;
     NSString *redirect = [position isEqualToString:@"0"] ? @"1" : @"0";
     NSString *businessId = [target isEqualToString:@"refresh"] ? [self maxBusinessID] : [self minBusinessID];
-    NSMutableDictionary *param = [NSMutableDictionary dictionaryWithDictionary:@{@"businessId":businessId ,@"uid":UID ,@"type":[self.scrollView currentType] ,@"target":target ,@"pageSize":@"10" , @"area":city, @"redirect":redirect, @"cfData":CFData}];
+    NSMutableDictionary *param = [NSMutableDictionary dictionaryWithDictionary:@{@"businessId":businessId ,@"uid":UID ,@"type":[self.scrollView currentType] ,@"target":target ,@"pageSize":@"10" , @"area":city, @"redirect":redirect, @"cfData":self.CFData}];
 
     NSDictionary *paramDictionary = [self.paramDictionary objectForKey:[self.scrollView currentName]];
     if ([paramDictionary allKeys].count > 0) {
@@ -400,7 +397,9 @@
     }
     self.refreshing = YES;
     [SHGBusinessManager getListDataWithParam:param block:^(NSArray *dataArray, NSString *index, NSString *tipUrl, NSString *cfData) {
-
+        if (!IsStrEmpty(cfData)) {
+            weakSelf.CFData = cfData;
+        }
         weakSelf.refreshing = NO;
         [weakSelf.tableView.mj_header endRefreshing];
         [weakSelf.tableView.mj_footer endRefreshing];
@@ -412,13 +411,11 @@
                 weakSelf.index = index;
                 [weakSelf.tableView setContentOffset:CGPointZero];
                 [weakSelf.noticeView showWithText:[NSString stringWithFormat:@"为您加载了%ld条新业务",(long)dataArray.count]];
-                NSError *error = nil;
-                [cfData writeToFile:fileName atomically:YES encoding:NSUTF8StringEncoding error:&error];
 
             } else if([target isEqualToString:@"refresh"]){
                 for (NSInteger i = dataArray.count - 1; i >= 0; i--){
                     SHGBusinessObject *obj = [dataArray objectAtIndex:i];
-                    [weakSelf.currentArray insertUniqueObject:obj atIndex:0];
+                    [weakSelf.currentArray insertObject:obj atIndex:0];
                 }
                 //下拉的话如果之前显示了偏少 则下移 否则不管
                 NSInteger position = [[weakSelf.positionDictionary objectForKey:[weakSelf.scrollView currentName]] integerValue];

@@ -812,10 +812,12 @@
     }
     NSString *content = [NSString stringWithFormat:@"%@\"%@\"%@%@",@"Hi，我在金融大牛圈上看到了一个非常棒的帖子,关于",postContent,@"，赶快下载大牛圈查看吧！",[NSString stringWithFormat:@"%@%@",rBaseAddressForHttpShare,self.obj.rid]];
     id<ISSShareActionSheetItem> item1 = [ShareSDK shareActionSheetItemWithTitle:@"动态" icon:[UIImage imageNamed:@"圈子图标"] clickHandler:^{
+        [[SHGGloble sharedGloble] recordUserAction:self.obj.rid type:@"dynamic_shareDynamic"];
         [self circleShareWithObj:self.obj];
     }];
     id<ISSShareActionSheetItem> item2 = [ShareSDK shareActionSheetItemWithTitle:@"圈内好友" icon:[UIImage imageNamed:@"圈内好友图标"] clickHandler:^{
-        
+
+        [[SHGGloble sharedGloble] recordUserAction:self.obj.rid type:@"dynamic_shareSystemUser"];
         [self shareToFriendWithText:self.obj.detail];
     }];
     
@@ -824,10 +826,12 @@
     }];
     
     id<ISSShareActionSheetItem> item4 = [ShareSDK shareActionSheetItemWithTitle:@"微信朋友圈" icon:[UIImage imageNamed:@"sns_icon_23"] clickHandler:^{
+        [[SHGGloble sharedGloble] recordUserAction:self.obj.rid type:@"dynamic_shareMicroCircle"];
         [[AppDelegate currentAppdelegate]wechatShare:self.obj shareType:1];
     }];
     
     id<ISSShareActionSheetItem> item5 = [ShareSDK shareActionSheetItemWithTitle:@"微信好友" icon:[UIImage imageNamed:@"sns_icon_22"] clickHandler:^{
+        [[SHGGloble sharedGloble] recordUserAction:self.obj.rid type:@"dynamic_shareMicroFriend"];
         [[AppDelegate currentAppdelegate]wechatShare:self.obj shareType:0];
     }];
     NSArray *shareArray = nil;
@@ -866,6 +870,7 @@
 
 -(void)shareToSMS:(NSString *)text rid:(NSString *)rid
 {
+    [[SHGGloble sharedGloble] recordUserAction:rid type:@"dynamic_shareSms"];
     [[AppDelegate currentAppdelegate] sendSmsWithText:text rid:rid];
 }
 

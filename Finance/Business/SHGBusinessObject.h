@@ -43,7 +43,7 @@
 @property (strong, nonatomic) NSString *vestYears;
 
 @property (strong, nonatomic) NSMutableArray *commentList;//评论列表
-@property (strong, nonatomic) NSString *userState;//用户的认证状态
+@property (assign, nonatomic) BOOL userState;//用户的认证状态
 @property (strong, nonatomic) NSString *middleContent;//中间的连串
 @property (strong, nonatomic) NSString *isDeleted;//是否已经在服务端删除了
 @property (assign, nonatomic) BOOL isCollection;//是否收藏

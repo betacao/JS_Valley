@@ -68,7 +68,7 @@
 
     self.authTipLabel.font = FontFactor(13.0f);
     self.authTipLabel.textColor = Color(@"999999");
-    self.authTipLabel.textAlignment = NSTextAlignmentCenter;
+    self.authTipLabel.isAttributedContent = YES;
     //
     self.authScrollView.backgroundColor = Color(@"f7f8f9");
     self.departmentField.textColor = self.locationField.textColor = Color(@"161616");
@@ -128,7 +128,6 @@
     .leftEqualToView(self.authImageView)
     .rightEqualToView(self.authImageView)
     .autoHeightRatio(0.0f);
-    [self.authTipLabel setMaxNumberOfLinesToShow:2];
     //
     self.headerButton.sd_layout
     .topSpaceToView(self.authScrollView, MarginFactor(58.0f))
@@ -209,6 +208,7 @@
         [self.submitButton setTitle:@"更新" forState:UIControlStateNormal];
         self.submitButton.hidden = YES;
         self.authTipLabel.hidden = NO;
+        self.authTipLabel.textAlignment = NSTextAlignmentCenter;
         self.authTipLabel.text = @"大牛正在认证您的用户信息，我们将在一个工作日内通知您认证结果！感谢您对大牛圈的支持！";
     }else if ([self.state isEqualToString:@"2"]){
         self.stateLabel.text = @"已认证";
@@ -219,7 +219,11 @@
         self.stateLabel.textColor = [UIColor colorWithHexString:@"f04241"];
         [self.submitButton setTitle:@"更新" forState:UIControlStateNormal];
         self.authTipLabel.hidden = NO;
-        self.authTipLabel.text = self.rejectReason;
+        self.authTipLabel.textAlignment = NSTextAlignmentLeft;
+        NSString *string = [@"驳回原因：\n" stringByAppendingFormat:@"%@", self.rejectReason];
+        NSMutableAttributedString *reason = [[NSMutableAttributedString alloc] initWithString:string attributes:@{NSFontAttributeName:FontFactor(13.0f), NSForegroundColorAttributeName:Color(@"999999")}];
+        [reason addAttributes:@{NSForegroundColorAttributeName:Color(@"dc4437")} range:[string rangeOfString:@"驳回原因："]];
+        self.authTipLabel.attributedText = reason;
     }
     [self.stateLabel updateLayout];
     __weak typeof(self) weakSelf = self;

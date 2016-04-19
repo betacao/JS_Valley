@@ -6281,7 +6281,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.danniuquan.apptest;
 				PRODUCT_NAME = "大牛圈";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "5c3015a2-16f5-4ce4-a2a4-5d0abd67d0db";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -6320,7 +6320,7 @@
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.danniuquan.apptest;
 				PRODUCT_NAME = "大牛圈";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "5c3015a2-16f5-4ce4-a2a4-5d0abd67d0db";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -6396,7 +6396,7 @@
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.danniuquan.apptest;
 				PRODUCT_NAME = "大牛圈";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "5c3015a2-16f5-4ce4-a2a4-5d0abd67d0db";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 			};

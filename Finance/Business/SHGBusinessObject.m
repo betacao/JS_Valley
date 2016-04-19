@@ -25,6 +25,12 @@
             } else{
                 return @(NO);
             }
+        } else if ([key isEqualToString:@"userState"]) {
+            if ([value isEqualToString:@"1"]) {
+                return @(YES);
+            } else{
+                return @(NO);
+            }
         }
         return value;
     }];

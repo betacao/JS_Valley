@@ -310,7 +310,7 @@
     [array enumerateObjectsUsingBlock:^(NSString *obj, NSUInteger idx, BOOL * _Nonnull stop) {
         if ([obj containsString:@"联系方式"]) {
             number = @"认证可见";
-            if (!status) {
+            if (!self.responseObject.userState) {
                 value = [value stringByReplacingOccurrencesOfString:obj withString: @"联系方式：认证可见"];
                 string = [[NSMutableAttributedString alloc] initWithString:value attributes:@{NSFontAttributeName:FontFactor(13.0f), NSForegroundColorAttributeName: Color(@"888888")}];
                 [string addAttribute:NSFontAttributeName value:FontFactor(14.0f) range:[value rangeOfString:number]];

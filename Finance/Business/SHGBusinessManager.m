@@ -140,8 +140,6 @@
 
 + (void)deleteBusiness:(SHGBusinessObject *)object success:(void (^)(BOOL))block
 {
-    block (YES);
-    return;
     [MOCHTTPRequestOperationManager postWithURL:[rBaseAddressForHttp stringByAppendingString:@"/business/deleteBusiness"] parameters:@{@"businessId": object.businessID, @"type":object.type} success:^(MOCHTTPResponse *response) {
         NSString *result = [response.dataDictionary objectForKey:@"result"];
         if (!IsStrEmpty(result) && [result integerValue] > 0) {
