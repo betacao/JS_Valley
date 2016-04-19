@@ -76,6 +76,8 @@
     [self.scrollView addGestureRecognizer:tap];
     if (self.object) {
         self.title = @"编辑股权投资";
+        [self.areaSelectButton setTitle:self.object.area forState:UIControlStateNormal];
+        [self.areaSelectButton setTitleColor:Color(@"161616") forState:UIControlStateNormal];
         self.sendType = SHGEquityInvestSendTypeReSet;
 
     } else{
@@ -514,11 +516,11 @@
         [Hud showMessageWithText:@"请选择投资阶段"];
         return NO;
     }
-    if (self.areaSelectButton.titleLabel.text == 0) {
+    if (self.areaSelectButton.titleLabel.text.length == 0) {
         [Hud showMessageWithText:@"请选择业务地区"];
         return NO;
     }
-    if ([self.industrySelectButton.titleLabel.text isEqualToString:@"请填选择行业"] ) {
+    if ([self.industrySelectButton.titleLabel.text isEqualToString:@"请选择行业"] ) {
         [Hud showMessageWithText:@"请填写意向行业"];
         return NO;
     }

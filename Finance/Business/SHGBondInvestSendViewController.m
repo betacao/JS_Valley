@@ -107,9 +107,9 @@
     self.capitalSourceButtonView.showMode = 1;
 
     
-    self.buttonBgImage = [[UIImage imageNamed:@"business_SendButtonBg"] resizableImageWithCapInsets:UIEdgeInsetsMake(5.0f, 5.0f, 5.0f, 5.0f) resizingMode:UIImageResizingModeStretch];
+    self.buttonBgImage = [[UIImage imageNamed:@"business_SendButtonBg"] resizableImageWithCapInsets:UIEdgeInsetsMake(MarginFactor(5.0f), MarginFactor(5.0f), MarginFactor(5.0f), MarginFactor(5.0f)) resizingMode:UIImageResizingModeStretch];
     
-    self.buttonSelectBgImage = [[UIImage imageNamed:@"business_SendButtonSelectBg"] resizableImageWithCapInsets:UIEdgeInsetsMake(5.0f, 5.0f, 5.0f, 5.0f) resizingMode:UIImageResizingModeStretch];
+    self.buttonSelectBgImage = [[UIImage imageNamed:@"business_SendButtonSelectBg"] resizableImageWithCapInsets:UIEdgeInsetsMake(MarginFactor(5.0f), MarginFactor(5.0f), MarginFactor(5.0f), MarginFactor(5.0f)) resizingMode:UIImageResizingModeStretch];
     
     [self.scrollView addSubview:self.nameView];
     [self.scrollView addSubview:self.phoneNumView];

@@ -423,6 +423,7 @@
 
 - (void)quiteClick:(UIButton *)btn
 {
+    self.currentButtonString = self.locationCurrentButton.titleLabel.text;
     if (self.returnLocationBlock) {
         self.returnLocationBlock(self.currentButtonString);
     }
