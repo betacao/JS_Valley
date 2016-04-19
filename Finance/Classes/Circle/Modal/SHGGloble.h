@@ -196,10 +196,18 @@ typedef void (^SHHomeDataCompletionBlock)(NSArray *allList, NSArray *normalList,
 - (void)checkForUpdate:(void(^)(BOOL state))block;
 
 /**
+ @brief 当此用户注册成功的时候调用通知给其他的好友用户
+
+ @since 1.8.0
+ */
+- (void)dealFriendPush;
+
+/**
  @brief  向服务端请求用户信息
 
  @since 1.8.0
  */
+
 - (void)refreshFriendListWithUid:(NSString *)userId finishBlock:(void (^)(BasePeopleObject *object))block;
 
 /**

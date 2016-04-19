@@ -80,7 +80,7 @@
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.tableFooterView = [[UIView alloc] init];
-    [self addHeaderRefresh:self.tableView headerRefesh:NO andFooter:YES];
+    [self addHeaderRefresh:self.tableView headerRefesh:YES headerTitle:nil andFooter:YES footerTitle:@{@(MJRefreshStateIdle):@"以上为当前业务信息"}];
 }
 
 - (void)addAutoLayout
@@ -263,7 +263,7 @@
     .heightIs(size.height);
 
     self.rightLabel.sd_layout
-    .rightSpaceToView(self, MarginFactor(12.0f))
+    .leftSpaceToView(self, MarginFactor(12.0f))
     .centerYEqualToView(self)
     .autoHeightRatio(0.0f);
     [self.rightLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];

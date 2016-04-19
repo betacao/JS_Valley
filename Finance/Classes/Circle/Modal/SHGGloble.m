@@ -518,6 +518,23 @@
 }
 
 
+//此功能------当此用户注册成功的时候调用通知给其他的好友用户
+- (void)dealFriendPush
+{
+    NSString *url = [NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"friend/dealFriendPush"];
+    NSString *name = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_USER_NAME];
+    if (IsStrEmpty(name)) {
+        name = @"";
+    }
+    NSDictionary *parm = @{@"uid":UID, @"name":name};
+    [MOCHTTPRequestOperationManager postWithURL:url class:nil parameters:parm success:^(MOCHTTPResponse *response) {
+
+    } failed:^(MOCHTTPResponse *response) {
+
+    }];
+
+}
+
 - (void)refreshFriendListWithUid:(NSString *)userId finishBlock:(void (^)(BasePeopleObject *))block
 {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{

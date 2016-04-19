@@ -89,10 +89,7 @@
     self.filterView.didFinishAutoLayoutBlock = ^(CGRect frame){
         weakSelf.filterViewFrame = frame;
         weakSelf.tableView.sd_resetNewLayout
-        .topSpaceToView(weakSelf.view, CGRectGetMinY(frame))
-        .leftSpaceToView(weakSelf.view, 0.0f)
-        .rightSpaceToView(weakSelf.view, 0.0f)
-        .bottomSpaceToView(weakSelf.view, 0.0f);
+        .spaceToSuperView(UIEdgeInsetsMake(CGRectGetMinY(frame), 0.0f, kTabBarHeight, 0.0f));
     };
 }
 
@@ -123,6 +120,7 @@
             [[NSUserDefaults standardUserDefaults] setBool:NO forKey:KEY_USER_NEEDUPLOADCONTACT];
             [[NSUserDefaults standardUserDefaults] synchronize];
         }];
+        [[SHGGloble sharedGloble] dealFriendPush];
     }
 }
 
@@ -648,17 +646,11 @@
     if (index == 0) {
         self.filterView.hidden = YES;
         self.tableView.sd_resetNewLayout
-        .topSpaceToView(self.view, CGRectGetMinY(self.filterViewFrame))
-        .leftSpaceToView(self.view, 0.0f)
-        .rightSpaceToView(self.view, 0.0f)
-        .bottomSpaceToView(self.view, 0.0f);
+        .spaceToSuperView(UIEdgeInsetsMake(CGRectGetMinY(self.filterViewFrame), 0.0f, kTabBarHeight, 0.0f));
     } else{
         self.filterView.hidden = NO;
         self.tableView.sd_resetNewLayout
-        .topSpaceToView(self.view, CGRectGetMaxY(self.filterViewFrame))
-        .leftSpaceToView(self.view, 0.0f)
-        .rightSpaceToView(self.view, 0.0f)
-        .bottomSpaceToView(self.view, 0.0f);
+        .spaceToSuperView(UIEdgeInsetsMake(CGRectGetMaxY(self.filterViewFrame), 0.0f, kTabBarHeight, 0.0f));
     }
     [self.tableView updateLayout];
 
