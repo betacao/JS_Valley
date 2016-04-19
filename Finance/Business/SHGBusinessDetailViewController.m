@@ -28,7 +28,7 @@
 #define PRAISE_SEPWIDTH     10.0f
 #define PRAISE_RIGHTWIDTH     40.0f
 
-@interface SHGBusinessDetailViewController ()<BRCommentViewDelegate, CircleActionDelegate, SHGBusinessCommentDelegate, TTTAttributedLabelDelegate>
+@interface SHGBusinessDetailViewController ()<BRCommentViewDelegate, CircleActionDelegate, SHGBusinessCommentDelegate, TTTAttributedLabelDelegate, UIActionSheetDelegate>
 {
     UIView *PickerBackView;
 }
@@ -765,12 +765,31 @@
         } showAlert:YES leftBlock:^{
         } failString:@"认证后才能查看联系方式～"];
     } else {
-        [self openTel:string];
+        NSRegularExpression *regularExpression = [NSRegularExpression regularExpressionWithPattern: @"(((13[0-9])|(15([0|1|2|3|5|6|7|8|9]))|(14([5|7]))|(17([0|5|6|7|8]))|(18[0-9]))\\d{8})|(0\\d{2}-\\d{8})|(0\\d{3}-\\d{8})|(((13[0-9])|(15([0|1|2|3|5|6|7|8|9]))|(14([5|7]))|(17([0|5|6|7|8]))|(18[0-9]))-\\d{4}-\\d{4})" options:0 error:nil];
+
+        __block NSString *phone = @"";
+        [regularExpression enumerateMatchesInString:string options:0 range:NSMakeRange(0, string.length) usingBlock:^(NSTextCheckingResult * _Nullable result, NSMatchingFlags flags, BOOL * _Nonnull stop) {
+            phone = [phone stringByAppendingFormat:@"%@,", [string substringWithRange:result.range]];
+        }];
+        if (!IsStrEmpty(phone)) {
+            phone = [phone substringToIndex:phone.length - 1];
+            UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"拨打电话？" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:phone, nil];
+            [sheet showInView:self.view];
+        }
     }
     NSLog(@"%@", string);
 }
 #pragma mark -- sdc
 #pragma mark -- 拨打电话
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex != actionSheet.cancelButtonIndex) {
+        NSString *string = [actionSheet buttonTitleAtIndex:buttonIndex];
+        [self openTel:string];
+    }
+}
+
 - (BOOL)openTel:(NSString *)tel
 {
     [[SHGGloble sharedGloble] recordUserAction:[NSString stringWithFormat:@"%@#%@", self.responseObject.businessID, self.responseObject.type] type:@"business_call"];

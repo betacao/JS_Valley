@@ -64,7 +64,7 @@
     self.stateLabel.textColor = Color(@"3588c8");
 
     self.authImageView.layer.borderColor = [UIColor lightGrayColor].CGColor;
-    self.authImageView.layer.borderWidth = 0.5f;
+    self.authImageView.layer.borderWidth = 1.0f / [UIScreen mainScreen].scale;
 
     self.authTipLabel.font = FontFactor(13.0f);
     self.authTipLabel.textColor = Color(@"999999");
@@ -75,7 +75,7 @@
     self.departmentField.font = self.locationField.font = FontFactor(15.0f);
     self.departmentField.layer.borderColor = self.locationField.layer.borderColor = [UIColor lightGrayColor].CGColor;
 
-    self.departmentField.layer.borderWidth = self.locationField.layer.borderWidth = 0.5f;
+    self.departmentField.layer.borderWidth = self.locationField.layer.borderWidth = 1.0f / [UIScreen mainScreen].scale;
     [self.departmentField setValue:Color(@"bebebe")forKeyPath:@"_placeholderLabel.textColor"];
     [self.locationField setValue:Color(@"bebebe") forKeyPath:@"_placeholderLabel.textColor"];
 
