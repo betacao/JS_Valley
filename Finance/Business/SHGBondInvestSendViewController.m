@@ -86,7 +86,8 @@
     self.phoneNumTextField.delegate = self;
     self.monenyTextField.delegate = self;
 
-    
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(scrollerTapAction:)];
+    [self.scrollView addGestureRecognizer:tap];
     if (self.object) {
         self.title = @"编辑债权投资";
         self.sendType = 1;
@@ -713,6 +714,11 @@
             textField.text = [textField.text substringToIndex:20];
         }
     }
+}
+
+-(void)scrollerTapAction:(UITapGestureRecognizer *)ges
+{
+    [self.currentContext resignFirstResponder];
 }
 
 - (void)didReceiveMemoryWarning

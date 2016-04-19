@@ -721,6 +721,8 @@ typedef NS_ENUM(NSInteger, SHGMarketSendType){
     }
 }
 
+//- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer
 {
 

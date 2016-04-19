@@ -72,6 +72,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(scrollerTapAction:)];
+    [self.scrollView addGestureRecognizer:tap];
     if (self.object) {
         self.title = @"编辑股权投资";
         self.sendType = SHGEquityInvestSendTypeReSet;
@@ -615,6 +617,11 @@
             textField.text = [textField.text substringToIndex:20];
         }
     }
+}
+
+-(void)scrollerTapAction:(UITapGestureRecognizer *)ges
+{
+    [self.currentContext resignFirstResponder];
 }
 - (void)didReceiveMemoryWarning
 {

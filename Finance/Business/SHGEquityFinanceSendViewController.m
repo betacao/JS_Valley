@@ -71,6 +71,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(scrollerTapAction:)];
+    [self.scrollView addGestureRecognizer:tap];
     if (self.object) {
         self.title = @"编辑股权融资";
         self.sendType = 1;
@@ -91,7 +93,6 @@
     self.phoneNumTextField.delegate = self;
     self.monenyTextField.delegate = self;
     self.bondStageButtonView.showMode = 1;
-//    self.businessSelectDic = [[NSDictionary alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"SHGBusinessSelectString" ofType:@"plist"]];
     self.buttonBgImage = [UIImage imageNamed:@"business_SendButtonBg"];
     self.buttonBgImage = [self.buttonBgImage resizableImageWithCapInsets:UIEdgeInsetsMake(10.0f, 10.0f, 10.0f, 10.0f) resizingMode:UIImageResizingModeStretch];
     
@@ -632,6 +633,10 @@
     }
 }
 
+-(void)scrollerTapAction:(UITapGestureRecognizer *)ges
+{
+    [self.currentContext resignFirstResponder];
+}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];

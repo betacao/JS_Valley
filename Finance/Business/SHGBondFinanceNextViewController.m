@@ -63,6 +63,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(scrollerTapAction:)];
+    [self.scrollView addGestureRecognizer:tap];
+
     if (((SHGBondFinanceSendViewController *)self.superController).object) {
         self.title = @"修改债权融资";
         ((SHGBondFinanceSendViewController *)self.superController).sendType = 1;
@@ -664,6 +667,12 @@
         }
     }
 }
+
+-(void)scrollerTapAction:(UITapGestureRecognizer *)ges
+{
+    [self.currentContext resignFirstResponder];
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];

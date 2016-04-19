@@ -56,7 +56,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(scrollerTapAction:)];
+    [self.scrollView addGestureRecognizer:tap];
     self.scrollView.delegate = self;
     self.retributionTextField.delegate = self;
     self.marketExplainTextView.delegate = self;
@@ -565,6 +566,10 @@
     }
 }
 
+-(void)scrollerTapAction:(UITapGestureRecognizer *)ges
+{
+    [self.currentContext resignFirstResponder];
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 

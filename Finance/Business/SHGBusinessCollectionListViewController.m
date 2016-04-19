@@ -12,10 +12,12 @@
 #import "SHGBusinessObject.h"
 #import "SHGBusinessTableViewCell.h"
 #import "SHGBusinessDetailViewController.h"
+#import "SHGNoticeView.h"
 @interface SHGBusinessCollectionListViewController ()<UITabBarDelegate, UITableViewDataSource>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) UITableViewCell *emptyCell;
 @property (strong, nonatomic) SHGEmptyDataView *emptyView;
+@property (strong, nonatomic) SHGNoticeView *noticeView;
 @end
 
 @implementation SHGBusinessCollectionListViewController
@@ -30,7 +32,7 @@
     .spaceToSuperView(UIEdgeInsetsZero);
     self.tableView.backgroundColor = [UIColor colorWithHexString:@"efeeef"];
     [self addHeaderRefresh:self.tableView headerRefesh:YES andFooter:YES];
-    [self requestBusinessCollectWithTarget:@"first" modifyTime:@""];
+    [self requestBusinessCollectWithTarget:@"first" ];
 }
 
 - (NSMutableArray *)currentDataArray
@@ -45,9 +47,9 @@
 
 - (void)refreshData
 {
-    [self requestBusinessCollectWithTarget:@"first" modifyTime:@""];
+    [self requestBusinessCollectWithTarget:@"first" ];
 }
-- (void)requestBusinessCollectWithTarget:(NSString *)target modifyTime:(NSString *)modifyTime
+- (void)requestBusinessCollectWithTarget:(NSString *)target
 {
     if ([target isEqualToString:@"first"])
     {
@@ -55,9 +57,9 @@
         
     }
     
+    NSString *businessId = [target isEqualToString:@"refresh"] ? [self maxBusinessID] : [self minBusinessID];
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
-    [Hud showWait];
-    NSDictionary *param = @{@"uid":uid,@"target":target,@"modifyTime":modifyTime,@"pageSize":@"100"};
+    NSDictionary *param = @{@"uid":uid,@"target":target,@"businessId":businessId ,@"pageSize":@"10"};
     [MOCHTTPRequestOperationManager postWithURL:[NSString stringWithFormat:@"%@/%@/%@/%@",rBaseAddressForHttp,@"business",@"collection",@"myCollectBusiness"] class:nil parameters:param success:^(MOCHTTPResponse *response) {
         NSDictionary *dictionary = response.dataDictionary;
         NSArray * dataArray = [[SHGGloble sharedGloble] parseServerJsonArrayToJSONModel:[dictionary objectForKey:@"businesslist"] class:[SHGBusinessObject class]];
@@ -65,15 +67,20 @@
         if ([target isEqualToString:@"first"]) {
             [self.dataArr removeAllObjects];
             [self.dataArr addObjectsFromArray:dataArray];
+             [self.noticeView showWithText:[NSString stringWithFormat:@"为您加载了%ld条新业务",(long)dataArray.count]];
             [self.tableView reloadData];
         }
         if ([target isEqualToString:@"refresh"]) {
+            
             if (dataArray.count > 0) {
                 for (NSInteger i = dataArray.count-1; i >= 0; i --) {
                     SHGBusinessObject *obj = dataArray[i];
                     [self.dataArr insertObject:obj atIndex:0];
+                    [self.noticeView showWithText:[NSString stringWithFormat:@"为您加载了%ld条新业务",(long)dataArray.count]];
                 }
                 [self.tableView reloadData];
+            } else{
+                [self.noticeView showWithText:@"暂无新业务，休息一会儿"];
             }
             
         }
@@ -116,13 +123,21 @@
     return _emptyView;
 }
 
+- (SHGNoticeView *)noticeView
+{
+    if (!_noticeView) {
+        _noticeView = [[SHGNoticeView alloc] initWithFrame:CGRectZero type:SHGNoticeTypeNewMessage];
+        _noticeView.superView = self.view;
+    }
+    return _noticeView;
+}
 
 - (void)refreshHeader
 {
     if (self.dataArr.count > 0) {
-        [self requestBusinessCollectWithTarget:@"refresh" modifyTime:@""];
+        [self requestBusinessCollectWithTarget:@"refresh" ];
     } else{
-        [self requestBusinessCollectWithTarget:@"first" modifyTime:@""];
+        [self requestBusinessCollectWithTarget:@"first" ];
     }
     
 }
@@ -130,26 +145,39 @@
 - (void)refreshFooter
 {
     if (self.dataArr.count > 0) {
-        [self requestBusinessCollectWithTarget:@"load" modifyTime:@""];
+        [self requestBusinessCollectWithTarget:@"load" ];
         
     } else{
-        [self requestBusinessCollectWithTarget:@"first" modifyTime:@""];
+        [self requestBusinessCollectWithTarget:@"first" ];
     }
 }
 
 - (NSString *)maxBusinessID
 {
-    return ((SHGBusinessObject *)[self.dataArr firstObject]).businessID;
+    NSString *businessID = @"";
+    for (SHGBusinessObject *object in self.dataArr) {
+        if ([object.businessID compare:businessID options:NSNumericSearch] == NSOrderedDescending && ![object.businessID isEqualToString:[NSString stringWithFormat:@"%ld",NSIntegerMax]]) {
+            businessID = object.businessID;
+        }
+    }
+    return businessID;
 }
 
 - (NSString *)minBusinessID
 {
-    return ((SHGBusinessObject *)[self.dataArr lastObject]).businessID;
+    NSString *businessID = [NSString stringWithFormat:@"%ld",NSIntegerMax];
+    for (SHGBusinessObject *object in self.dataArr) {
+        NSString *objectMarketId = object.businessID;
+        if ([objectMarketId compare:businessID options:NSNumericSearch] == NSOrderedAscending) {
+            businessID = object.businessID;
+        }
+    }
+    return businessID;
 }
 
 - (void)changeBusinessCollection
 {
-    [self requestBusinessCollectWithTarget:@"first" modifyTime:@""];
+    [self requestBusinessCollectWithTarget:@"first" ];
 }
 #pragma mark ------tableview代理
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView

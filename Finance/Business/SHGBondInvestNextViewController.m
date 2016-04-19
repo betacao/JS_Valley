@@ -61,6 +61,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(scrollerTapAction:)];
+    [self.scrollView addGestureRecognizer:tap];
+
     if (((SHGBondInvestSendViewController *)self.superController).object) {
         self.title = @"修改债权投资";
         ((SHGBondInvestSendViewController *)self.superController).sendType = 1;
@@ -677,6 +680,10 @@
     }
 }
 
+-(void)scrollerTapAction:(UITapGestureRecognizer *)ges
+{
+    [self.currentContext resignFirstResponder];
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 

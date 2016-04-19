@@ -40,7 +40,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-   // self.title = @"发布同业混业";
+
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(scrollerTapAction:)];
+    [self.scrollView addGestureRecognizer:tap];
     if (((SHGSameAndCommixtureSendViewController *)self.superController).object) {
         self.title = @"修改同业混业";
         ((SHGSameAndCommixtureSendViewController *)self.superController).sendType = 1;
@@ -385,6 +387,13 @@
         }
     }
 }
+
+-(void)scrollerTapAction:(UITapGestureRecognizer *)ges
+{
+    [self.currentContext resignFirstResponder];
+}
+
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
