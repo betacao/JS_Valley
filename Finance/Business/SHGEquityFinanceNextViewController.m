@@ -276,7 +276,7 @@
 
 - (void)initView
 {
-    self.retributionTextField.keyboardType = UIKeyboardTypeNumberPad;
+    self.retributionTextField.keyboardType = UIKeyboardTypeDecimalPad;
     self.sureButton.titleLabel.font = FontFactor(19.0f);
     [self.sureButton setTitleColor:Color(@"ffffff") forState:UIControlStateNormal];
     [self.sureButton setBackgroundColor:Color(@"f04241")];
