@@ -42,7 +42,7 @@
 #pragma mark animationMethod
 - (void)startAnimation {
     if(![self.activityLayer animationForKey:@"transform"]) {
-        CABasicAnimation *animation =[CABasicAnimation animationWithKeyPath:@"transform" ];
+        CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"transform" ];
         [animation setFromValue: [NSValue valueWithCATransform3D:CATransform3DIdentity]];
         //圍繞z軸旋轉，垂直螢幕
         [animation setToValue: [NSValue valueWithCATransform3D:CATransform3DMakeRotation(M_PI/2.0f, 0.0f, 0.0f, 1.0f)]];

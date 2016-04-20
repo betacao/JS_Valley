@@ -24,8 +24,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self.lblPassward becomeFirstResponder];
-
     self.title = @"输入密码";
     [self addSdLayout];
     UIView *leftView = [[UIView alloc]initWithFrame:CGRectMake(0.0f, 0.0f, MarginFactor(12.0f), MarginFactor(55.0f))];
@@ -41,6 +39,14 @@
     [self.loginButton setTitleColor:[UIColor colorWithHexString:@"ffffff"] forState:UIControlStateNormal];
     [self.loginButton setBackgroundColor:[UIColor colorWithHexString:@"f04241"]];
     self.loginButton.titleLabel.font = FontFactor(17.0f);
+
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+
+    [self.lblPassward becomeFirstResponder];
 
 }
 

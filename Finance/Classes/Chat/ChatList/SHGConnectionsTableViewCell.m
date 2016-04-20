@@ -232,7 +232,7 @@
 
 - (IBAction)actionInvite:(id)sender
 {
-    NSString *content =[NSString stringWithFormat:@"%@%@",@"诚邀您加入大牛圈——金融业务互助平台！这里有业务互助、人脉嫁接！赶快加入吧！",[NSString stringWithFormat:@"%@?uid=%@",SHARE_YAOQING_URL,[[NSUserDefaults standardUserDefaults]objectForKey:KEY_UID]]];
+    NSString *content =[NSString stringWithFormat:@"%@%@",@"诚邀您加入大牛圈--金融业务互助平台！这里有业务互助、人脉嫁接！赶快加入吧！",[NSString stringWithFormat:@"%@?uid=%@",SHARE_YAOQING_URL,[[NSUserDefaults standardUserDefaults]objectForKey:KEY_UID]]];
 
     [[AppDelegate currentAppdelegate] sendSmsWithText:content rid:self.uid];
 }

@@ -40,7 +40,6 @@
 - (void)scrollViewContentOffsetDidChange:(NSDictionary *)change
 {
     [super scrollViewContentOffsetDidChange:change];
-
 }
 
 #pragma mark 监听scrollView的contentSize改变
@@ -60,11 +59,10 @@
 #pragma mark 监听控件的刷新状态
 - (void)setState:(MJRefreshState)state
 {
-    MJRefreshCheckState;
-
+    [super setState:state];
     switch (state) {
         case MJRefreshStateIdle:
-            [self.progressHud stopAnimation];
+            [self.progressHud startAnimation];
             break;
         case MJRefreshStatePulling:
             [self.progressHud startAnimation];

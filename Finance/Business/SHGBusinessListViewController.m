@@ -101,6 +101,7 @@
     [self.titleDictionary removeAllObjects];
     [self.selectedDictionary removeAllObjects];
     self.filterView.expand = NO;
+    self.CFData = @"";
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -430,9 +431,8 @@
                 [weakSelf.currentArray addObjectsFromArray:dataArray];
             }
             weakSelf.tipUrl = tipUrl;
-
-            [weakSelf.tableView reloadData];
         }
+        [weakSelf.tableView reloadData];
     }];
 }
 
