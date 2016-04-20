@@ -64,7 +64,7 @@
     }
     
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
-    [Hud showWait];
+    //[Hud showWait];
     NSDictionary *param = @{@"uid":uid,
                             @"target":target,
                             @"time":time,
