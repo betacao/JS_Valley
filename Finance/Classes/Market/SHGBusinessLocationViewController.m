@@ -87,7 +87,6 @@
     self.scrollView.backgroundColor = Color(@"efeeef");
     self.allCity = [NSMutableArray array];
     self.provinces = [[NSArray alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"MarketArea" ofType:@"plist"]];
-    
     [[self.provinces objectAtIndex:1] objectForKey:@"areas"];
     
 
@@ -405,6 +404,11 @@
     
     NSArray *locationArry = @[self.municipalityButtonView,self.eastChinaButtonView,self.northChinaButtonView,self.northeastButtonView,self.southChinaButtonView,self.centerButtonView,self.southwestButtonView,self.northwestButtonView,self.eastChinaButtonView];
     
+    if ([self.locationString isEqualToString:@"全国"]) {
+        self.nationWideButton.selected = YES;
+        self.locationCurrentButton = self.nationWideButton;
+        
+    }
     for (NSInteger j = 0 ; j < self.provinces.count; j ++)
     {
         for (NSInteger i = 0; i < [[[self.provinces objectAtIndex:j] objectForKey:@"areas"] count]; i ++)
