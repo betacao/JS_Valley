@@ -11,5 +11,5 @@
 @interface SHGPersonFriendsTableViewCell : UITableViewCell
 
 @property (strong, nonatomic) NSString *uid;
-- (void)loadDatasWithObj:(BasePeopleObject *)obj;
+@property (strong,nonatomic) BasePeopleObject * obj;
 @end

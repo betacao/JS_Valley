@@ -13,7 +13,6 @@
 #import "SHGPersonFriendsTableViewCell.h"
 #import "SHGPersonalViewController.h"
 #import "SHGEmptyDataView.h"
-#define kRowHeight 50;
 
 @interface SHGPersonFriendsViewController ()<UITableViewDataSource,UITableViewDelegate>
 @property (assign,nonatomic)NSInteger  pageNum;
@@ -30,7 +29,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        
+       
     }
     return self;
 }
@@ -259,9 +258,7 @@
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             
         }
-        
-        [cell loadDatasWithObj:obj];
-        
+        cell.obj = obj;
         return cell;
     } else{
         return self.emptyCell;
@@ -286,7 +283,7 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (self.contactsSource.count > 0) {
-         return kRowHeight;
+         return MarginFactor(60.0f);
     } else{
         return CGRectGetHeight(self.view.frame);
     }
