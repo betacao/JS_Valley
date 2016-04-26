@@ -104,6 +104,7 @@
     if (item.tag == 1000){
         self.navigationItem.titleView = self.businessSegmentTitleView;
         self.navigationItem.leftBarButtonItem = self.businessListViewController.leftBarButtonItem;
+        self.navigationItem.rightBarButtonItem = self.businessListViewController.rightBarButtonItem;
         [MobClick event:@"EnterMarketController" label:@"onClick"];
 
     } else if (item.tag == 2000){
@@ -113,7 +114,7 @@
         [MobClick event:@"SHGHomeViewController" label:@"onClick"];
 
     } else if (item.tag == 3000){
-        self.navigationItem.leftBarButtonItem=nil;
+        self.navigationItem.leftBarButtonItem = nil;
         self.navigationItem.titleView = self.prodViewController.titleLabel;
         self.navigationItem.rightBarButtonItem = nil;
         [MobClick event:@"DiscoverViewController" label:@"onClick"];

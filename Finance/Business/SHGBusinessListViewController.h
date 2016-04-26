@@ -20,6 +20,7 @@ typedef void(^loadViewFinishBlock)(UIView *view);
 
 @property (nonatomic, copy) loadViewFinishBlock block;
 @property (strong, nonatomic) UIBarButtonItem *leftBarButtonItem;
+@property (strong, nonatomic) UIBarButtonItem *rightBarButtonItem;
 @property (strong, nonatomic) NSString *cityName;
 //切换账号标识
 @property (assign, nonatomic) BOOL needReloadData;

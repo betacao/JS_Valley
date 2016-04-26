@@ -11,12 +11,13 @@
                 <outlet property="businessDetialLabel" destination="KaF-BG-50w" id="2p1-0X-Uwf"/>
                 <outlet property="collectionButton" destination="uZh-Zx-J1I" id="H2a-eA-bxe"/>
                 <outlet property="companyLabel" destination="PzT-uA-o9S" id="kJ3-yC-qJh"/>
-                <outlet property="detailContentLabel" destination="LbM-9Y-YbL" id="UHx-n1-VKe"/>
+                <outlet property="contentTextView" destination="YMU-xE-2cM" id="jvF-Wx-hFD"/>
                 <outlet property="detailTable" destination="hba-XB-AU2" id="JYs-S5-Hob"/>
                 <outlet property="editButton" destination="nro-wK-yqY" id="4ir-JM-hVJ"/>
                 <outlet property="firstHorizontalLine" destination="BEb-0C-VH5" id="tTB-8f-6GM"/>
                 <outlet property="headImageView" destination="9jW-eX-RZK" id="Y8N-Qt-5J2"/>
                 <outlet property="nameLabel" destination="LMs-Z9-aK0" id="gzr-Pa-DfM"/>
+                <outlet property="phoneTextView" destination="89U-u3-YXe" id="srY-bS-dFt"/>
                 <outlet property="positionLabel" destination="6L9-zk-Yza" id="L91-rC-p3M"/>
                 <outlet property="propertyLabel" destination="U1o-NM-TA7" id="puM-Vn-mQy"/>
                 <outlet property="secondHorizontalLine" destination="mpP-C0-I5f" id="ZJi-XV-gW7"/>
@@ -116,7 +117,7 @@
                     <color key="textColor" red="0.2274509804" green="0.2274509804" blue="0.2274509804" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="U1o-NM-TA7" customClass="TTTAttributedLabel">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="U1o-NM-TA7">
                     <rect key="frame" x="139" y="290" width="42" height="21"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -145,13 +146,13 @@
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" red="0.90196078430000004" green="0.90588235289999997" blue="0.90980392160000001" alpha="1" colorSpace="calibratedRGB"/>
                 </view>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="LbM-9Y-YbL">
-                    <rect key="frame" x="15" y="220" width="290" height="21"/>
+                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" id="YMU-xE-2cM" customClass="SHGCopyTextView">
+                    <rect key="frame" x="40" y="236" width="240" height="128"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                    <color key="textColor" red="0.37647058820000001" green="0.37647058820000001" blue="0.37647058820000001" alpha="1" colorSpace="calibratedRGB"/>
-                    <nil key="highlightedColor"/>
-                </label>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                </textView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="PzT-uA-o9S">
                     <rect key="frame" x="63" y="36" width="243" height="15"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -171,6 +172,13 @@
                     <color key="textColor" red="0.1137254902" green="0.3411764706" blue="0.59607843140000005" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="89U-u3-YXe" customClass="SHGCopyTextView">
+                    <rect key="frame" x="8" y="220" width="240" height="128"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                </textView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>

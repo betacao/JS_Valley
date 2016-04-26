@@ -218,6 +218,15 @@
     return _leftBarButtonItem;
 }
 
+- (UIBarButtonItem *)rightBarButtonItem
+{
+    if (!_rightBarButtonItem) {
+        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(-1.0f, 0.0f, 1.0f, 1.0f)];
+        _rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView: view];
+    }
+    return _rightBarButtonItem;
+}
+
 - (EMSearchBar *)searchBar
 {
     if (!_searchBar) {
@@ -305,12 +314,12 @@
     _cityName = cityName;
     
     if (![cityName isEqualToString:self.titleLabel.text] || self.needReloadData) {
-        self.titleButton.frame = CGRectZero;
+        self.titleButton.frame = CGRectMake(2.0f, 0.0f, 0.0f, 0.0f);
         self.titleLabel.text = cityName;
         self.titleLabel.frame = CGRectMake(MarginFactor(4.0f), 0.0f, 0.0f, 0.0f);
         [self.titleLabel sizeToFit];
         self.titleImageView.origin = CGPointMake(CGRectGetMaxX(self.titleLabel.frame) + MarginFactor(4.0f), (CGRectGetHeight(self.titleLabel.frame) - CGRectGetHeight(self.titleImageView.frame)) / 2.0f);
-        self.titleButton.size = CGSizeMake(CGRectGetMaxX(self.titleImageView.frame) + MarginFactor(12.0f), CGRectGetHeight(self.titleLabel.frame));
+        self.titleButton.size = CGSizeMake(CGRectGetMaxX(self.titleImageView.frame) + MarginFactor(13.0f), CGRectGetHeight(self.titleLabel.frame));
         self.needReloadData = NO;
         [self clearAndReloadData];
     }

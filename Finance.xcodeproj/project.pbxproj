@@ -943,6 +943,7 @@
 		F9D296DD1C8FCB9C00A1446C /* SHGExtendTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9D296DB1C8FCB9C00A1446C /* SHGExtendTableViewCell.xib */; };
 		F9D296E11C8FF1E700A1446C /* SHGRecommendTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F9D296DF1C8FF1E700A1446C /* SHGRecommendTableViewCell.m */; };
 		F9D296E21C8FF1E700A1446C /* SHGRecommendTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9D296E01C8FF1E700A1446C /* SHGRecommendTableViewCell.xib */; };
+		F9D560AB1CCF68B500CD2457 /* SHGCopyTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = F9D560AA1CCF68B500CD2457 /* SHGCopyTextView.m */; };
 		F9D809961CB3A32900C59E0A /* SHGBusinessScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = F9D809951CB3A32900C59E0A /* SHGBusinessScrollView.m */; };
 		F9D94BB11CB4D4FC00B37A4A /* SHGBusinessFilterView.m in Sources */ = {isa = PBXBuildFile; fileRef = F9D94BB01CB4D4FC00B37A4A /* SHGBusinessFilterView.m */; };
 		F9D9F1571BB51D5F00F94E70 /* SHGUserTagModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F9D9F1561BB51D5F00F94E70 /* SHGUserTagModel.m */; };
@@ -2311,6 +2312,8 @@
 		F9D296DE1C8FF1E700A1446C /* SHGRecommendTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGRecommendTableViewCell.h; sourceTree = "<group>"; };
 		F9D296DF1C8FF1E700A1446C /* SHGRecommendTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGRecommendTableViewCell.m; sourceTree = "<group>"; };
 		F9D296E01C8FF1E700A1446C /* SHGRecommendTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGRecommendTableViewCell.xib; sourceTree = "<group>"; };
+		F9D560A91CCF68B500CD2457 /* SHGCopyTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGCopyTextView.h; sourceTree = "<group>"; };
+		F9D560AA1CCF68B500CD2457 /* SHGCopyTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGCopyTextView.m; sourceTree = "<group>"; };
 		F9D809941CB3A32900C59E0A /* SHGBusinessScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGBusinessScrollView.h; sourceTree = "<group>"; };
 		F9D809951CB3A32900C59E0A /* SHGBusinessScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGBusinessScrollView.m; sourceTree = "<group>"; };
 		F9D94BAF1CB4D4FC00B37A4A /* SHGBusinessFilterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGBusinessFilterView.h; sourceTree = "<group>"; };
@@ -3290,6 +3293,8 @@
 				9896F1221C50CB0A00E10A53 /* SHGGlobleTableViewCell.m */,
 				F96E10A11CBB9875006710A0 /* SHGCategoryButton.h */,
 				F96E10A21CBB9875006710A0 /* SHGCategoryButton.m */,
+				F9D560A91CCF68B500CD2457 /* SHGCopyTextView.h */,
+				F9D560AA1CCF68B500CD2457 /* SHGCopyTextView.m */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -5958,6 +5963,7 @@
 				6187D2D61AF1C693008E1D21 /* ChatViewController+Category.m in Sources */,
 				614BA7F11AE77AFA009480CD /* ProdListObj.m in Sources */,
 				6187D2D51AF1C693008E1D21 /* ChatSendHelper.m in Sources */,
+				F9D560AB1CCF68B500CD2457 /* SHGCopyTextView.m in Sources */,
 				614EFEC41AEF278A00F2BDD1 /* SubDetailViewController.m in Sources */,
 				985A0FDB1CABAB1400880DB5 /* SHGBusinessLocationViewController.m in Sources */,
 				538964D31AFC6BEB00041548 /* NSDateFormatter+Category.m in Sources */,

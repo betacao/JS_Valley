@@ -14,7 +14,7 @@
 #import "SHGPersonalViewController.h"
 #import "SHGBusinessCommentTableViewCell.h"
 #import "SHGEmptyDataView.h"
-#import "MLEmojiLabel.h"
+#import "SHGCopyTextView.h"
 #import "SHGUnifiedTreatment.h"
 #import "SHGBondInvestSendViewController.h"
 #import "SHGBondFinanceSendViewController.h"
@@ -28,7 +28,7 @@
 #define PRAISE_SEPWIDTH     10.0f
 #define PRAISE_RIGHTWIDTH     40.0f
 
-@interface SHGBusinessDetailViewController ()<BRCommentViewDelegate, CircleActionDelegate, SHGBusinessCommentDelegate, TTTAttributedLabelDelegate, UIActionSheetDelegate>
+@interface SHGBusinessDetailViewController ()<BRCommentViewDelegate, CircleActionDelegate, SHGBusinessCommentDelegate, UIActionSheetDelegate>
 {
     UIView *PickerBackView;
 }
@@ -43,14 +43,15 @@
 @property (weak, nonatomic) IBOutlet UIView *firstHorizontalLine;
 @property (weak, nonatomic) IBOutlet UIView *secondHorizontalLine;
 @property (weak, nonatomic) IBOutlet UIView *thirdHorizontalLine;
-@property (weak, nonatomic) IBOutlet TTTAttributedLabel *propertyLabel;
+@property (weak, nonatomic) IBOutlet UILabel *propertyLabel;
+@property (weak, nonatomic) IBOutlet SHGCopyTextView *phoneTextView;
 
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UIButton *collectionButton;
 @property (weak, nonatomic) IBOutlet UIButton *editButton;
 
 @property (weak, nonatomic) IBOutlet UILabel *businessDetialLabel;
-@property (weak, nonatomic) IBOutlet UILabel *detailContentLabel;
+@property (weak, nonatomic) IBOutlet SHGCopyTextView *contentTextView;
 
 @property (weak, nonatomic) IBOutlet UIButton *btnShare;
 @property (weak, nonatomic) IBOutlet UIView *viewInput;
@@ -66,9 +67,6 @@
 //数据
 @property (strong, nonatomic) UIView *photoView ;
 @property (strong, nonatomic) SHGBusinessObject *responseObject;
-- (IBAction)comment:(id)sender;
-- (IBAction)share:(id)sender;
-- (IBAction)collectionClick:(UIButton *)sender;
 
 @end
 
@@ -120,21 +118,26 @@
 
 - (void)initView
 {
+    UITapGestureRecognizer *recognizer1 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapTableView:)];
+    [self.detailTable addGestureRecognizer:recognizer1];
+
     self.nameLabel.font = FontFactor(15.0f);
     self.companyLabel.font = FontFactor(13.0f);
     self.positionLabel.font = FontFactor(13.0f);
     self.titleLabel.font = FontFactor(15.0f);
 
-    self.propertyLabel.numberOfLines = 0;
-    self.propertyLabel.lineBreakMode = NSLineBreakByWordWrapping;
-    self.propertyLabel.delegate = self;
-    self.propertyLabel.linkAttributes = nil;
-    self.propertyLabel.activeLinkAttributes = nil;
     self.propertyLabel.isAttributedContent = YES;
 
+    self.phoneTextView.editable = NO;
+    self.phoneTextView.textContainerInset = UIEdgeInsetsMake(0, -5.0f, 0, 0);
+    UITapGestureRecognizer *recognizer2 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapPhoneTextView:)];
+    [self.phoneTextView addGestureRecognizer:recognizer2];
+
     self.businessDetialLabel.font = FontFactor(15.0f);
-    self.detailContentLabel.font = FontFactor(15.0f);
-    [self loadCommentBtnState];
+
+    self.contentTextView.editable = NO;
+    self.contentTextView.textContainerInset = UIEdgeInsetsMake(0, -5.0f, 0, 0);
+
     self.speakButton.imageEdgeInsets = UIEdgeInsetsMake(0.0f, MarginFactor(8.0f), 0.0f,0.0f);
     self.speakButton.titleEdgeInsets = UIEdgeInsetsMake(0.0f, MarginFactor(15.0f), 0.0f, 0.0f);
     self.speakButton.titleLabel.font = FontFactor(13.0);
@@ -144,6 +147,8 @@
     [self.collectionButton setEnlargeEdgeWithTop:10.0f right:10.0f bottom:10.0f left:0.0f];
     [self.editButton setEnlargeEdgeWithTop:10.0f right:10.0f bottom:10.0f left:0.0f];
     [self.btnShare  setEnlargeEdgeWithTop:10.0f right:10.0f bottom:10.0f left:0.0f];
+
+    [self loadCommentBtnState];
 }
 
 - (void)addLayout
@@ -234,10 +239,15 @@
     .topSpaceToView(self.titleLabel, MarginFactor(12.0f))
     .autoHeightRatio(0.0f);
 
+    self.phoneTextView.sd_layout
+    .leftSpaceToView(self.viewHeader, MarginFactor(12.0f))
+    .rightSpaceToView(self.viewHeader, MarginFactor(12.0f))
+    .topSpaceToView(self.propertyLabel, 5.0f);
+
     self.secondHorizontalLine.sd_layout
     .leftSpaceToView(self.viewHeader, 0.0f)
     .rightSpaceToView(self.viewHeader, 0.0f)
-    .topSpaceToView(self.propertyLabel, MarginFactor(12.0f))
+    .topSpaceToView(self.phoneTextView, MarginFactor(12.0f))
     .heightIs(0.5f);
 
     self.businessDetialLabel.sd_layout
@@ -252,19 +262,17 @@
     .topSpaceToView(self.businessDetialLabel, MarginFactor(12.0f))
     .heightIs(0.5f);
 
-    self.detailContentLabel.sd_layout
+    self.contentTextView.sd_layout
     .leftSpaceToView(self.viewHeader, MarginFactor(12.0f))
     .rightSpaceToView(self.viewHeader, MarginFactor(12.0f))
-    .topSpaceToView(self.thirdHorizontalLine, MarginFactor(16.0f))
-    .autoHeightRatio(0.0f);
-    self.detailContentLabel.isAttributedContent = YES;
+    .topSpaceToView(self.thirdHorizontalLine, MarginFactor(16.0f));
 
     self.photoView = [[UIView alloc] init];
     [self.viewHeader addSubview:self.photoView];
     self.photoView.sd_layout
     .leftSpaceToView(self.viewHeader, MarginFactor(15.0f))
     .rightSpaceToView(self.viewHeader, MarginFactor(15.0f))
-    .topSpaceToView(self.detailContentLabel,0.0f)
+    .topSpaceToView(self.contentTextView,0.0f)
     .heightIs(0.0f);
 
     [self.viewHeader setupAutoHeightWithBottomView:self.photoView bottomMargin:MarginFactor(16.0f)];
@@ -302,41 +310,57 @@
     } else{
         self.positionLabel.text = self.responseObject.title;
     }
-    
+
     __block NSString *value = [[SHGGloble sharedGloble] businessKeysForValues:self.responseObject.middleContent showEmptyKeys:NO];
-    __block NSMutableAttributedString *string = nil;
-    __block NSString *number = @"";
-    NSMutableArray *array = [NSMutableArray arrayWithArray: [value componentsSeparatedByString:@"\n"]];
+    __block NSString *phoneNumber = @"";
+    NSMutableParagraphStyle * paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+    [paragraphStyle setLineSpacing:MarginFactor(5.0f)];
+
+    NSArray *array = [value componentsSeparatedByString:@"\n"];
     [array enumerateObjectsUsingBlock:^(NSString *obj, NSUInteger idx, BOOL * _Nonnull stop) {
         if ([obj containsString:@"联系方式"]) {
-            number = @"认证可见";
-            if (!self.responseObject.userState) {
-                value = [value stringByReplacingOccurrencesOfString:obj withString: @"联系方式：认证可见"];
-                string = [[NSMutableAttributedString alloc] initWithString:value attributes:@{NSFontAttributeName:FontFactor(13.0f), NSForegroundColorAttributeName: Color(@"888888")}];
-                [string addAttribute:NSFontAttributeName value:FontFactor(14.0f) range:[value rangeOfString:number]];
-                [string addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"4277B2"] range: [value rangeOfString:number]];
-            } else {
-                number = [[obj componentsSeparatedByString:@"："] lastObject];
-                string = [[NSMutableAttributedString alloc] initWithString:value attributes:@{NSFontAttributeName:FontFactor(13.0f), NSForegroundColorAttributeName: Color(@"888888")}];
-                [string addAttribute:NSFontAttributeName value:FontFactor(14.0f) range:[value rangeOfString:number]];
-                [string addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"4277B2"] range: [value rangeOfString:number]];
-            }
+            phoneNumber = obj;
+            value = [value stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"\n%@\n", obj] withString:@""];
         }
     }];
 
-    NSMutableParagraphStyle * paragraphStyle1 = [[NSMutableParagraphStyle alloc] init];
-    [paragraphStyle1 setLineSpacing:5.0f];
-    [string addAttribute:NSParagraphStyleAttributeName value:paragraphStyle1 range:NSMakeRange(0, [string length])];
+    NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:value attributes:@{NSFontAttributeName:FontFactor(13.0f), NSForegroundColorAttributeName: Color(@"888888"), NSParagraphStyleAttributeName:paragraphStyle}];
+
     self.propertyLabel.attributedText = string;
-    [self.propertyLabel addLinkToPhoneNumber:number withRange:[value rangeOfString:number]];
+
+    if (!self.responseObject.userState) {
+        NSString *number = @"认证可见";
+        phoneNumber = @"联系方式：认证可见";
+        string = [[NSMutableAttributedString alloc] initWithString:phoneNumber attributes:@{NSFontAttributeName:FontFactor(13.0f), NSForegroundColorAttributeName: Color(@"888888")}];
+        [string addAttribute:NSFontAttributeName value:FontFactor(14.0f) range:[phoneNumber rangeOfString:number]];
+        [string addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"4277B2"] range: [phoneNumber rangeOfString:number]];
+    } else {
+        array = [phoneNumber componentsSeparatedByString:@"："];
+        NSString *number = [array lastObject];
+        string = [[NSMutableAttributedString alloc] initWithString:phoneNumber attributes:@{NSFontAttributeName:FontFactor(13.0f), NSForegroundColorAttributeName: Color(@"888888")}];
+        [string addAttribute:NSFontAttributeName value:FontFactor(14.0f) range:[phoneNumber rangeOfString:number]];
+        [string addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"4277B2"] range: [phoneNumber rangeOfString:number]];
+    }
+    self.phoneTextView.attributedText = string;
+    CGSize size = [self.phoneTextView sizeThatFits:CGSizeMake(SCREENWIDTH - 2 * MarginFactor(12.0f), CGFLOAT_MAX)];
+    self.phoneTextView.sd_resetLayout
+    .leftSpaceToView(self.viewHeader, MarginFactor(12.0f))
+    .rightSpaceToView(self.viewHeader, MarginFactor(12.0f))
+    .topSpaceToView(self.propertyLabel, 5.0f)
+    .heightIs(size.height);
+
     //****************************//
 
     self.businessDetialLabel.text = @"业务描述：";
-    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc]initWithString:self.responseObject.detail];;
-    NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc]init];
-    [paragraphStyle setLineSpacing:MarginFactor(5.0f)];
-    [attributedString addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, self.responseObject.detail.length)];
-    self.detailContentLabel.attributedText = attributedString;
+    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:self.responseObject.detail attributes:@{NSFontAttributeName:FontFactor(15.0f), NSForegroundColorAttributeName: Color(@"888888"), NSParagraphStyleAttributeName:paragraphStyle}];
+    self.contentTextView.attributedText = attributedString;
+
+    size = [self.contentTextView sizeThatFits:CGSizeMake(SCREENWIDTH - 2 * MarginFactor(12.0f), CGFLOAT_MAX)];
+    self.contentTextView.sd_resetLayout
+    .leftSpaceToView(self.viewHeader, MarginFactor(12.0f))
+    .rightSpaceToView(self.viewHeader, MarginFactor(12.0f))
+    .topSpaceToView(self.thirdHorizontalLine, MarginFactor(16.0f))
+    .heightIs(size.height);
 
     NSString *title = self.responseObject.businessTitle;
     self.titleLabel.text = title;
@@ -345,7 +369,7 @@
         self.photoView.sd_resetLayout
         .leftSpaceToView(self.viewHeader, MarginFactor(15.0f))
         .rightSpaceToView(self.viewHeader, MarginFactor(15.0f))
-        .topSpaceToView(self.detailContentLabel, MarginFactor(15.0f))
+        .topSpaceToView(self.contentTextView, MarginFactor(15.0f))
         .heightIs(MarginFactor(135.0f));
         self.photoView.clipsToBounds = YES;
         SDPhotoGroup * photoGroup = [[SDPhotoGroup alloc] init];
@@ -742,20 +766,15 @@
     }
 }
 
-
-#pragma mark ------分享到圈内好友的通知
-- (void)shareToFriendSuccess:(NSNotification *)notification
+- (void)tapTableView:(UITapGestureRecognizer *)recognizer
 {
-    [SHGBusinessManager shareSuccessCallBack:self.responseObject finishBlock:^(BOOL success) {
-    }];
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [Hud showMessageWithText:@"分享成功"];
-    });
+    [self.phoneTextView resignFirstResponder];
+    [self.contentTextView resignFirstResponder];
 }
 
-- (void)attributedLabel:(TTTAttributedLabel *)label didSelectLinkWithTextCheckingResult:(NSTextCheckingResult *)result
+- (void)tapPhoneTextView:(UITapGestureRecognizer *)recognizer
 {
-    NSString *string = [label.text substringWithRange:result.range];
+    NSString *string = self.phoneTextView.text;
     if ([string containsString:@"认证可见"]) {
         [[SHGGloble sharedGloble] requestUserVerifyStatusCompletion:^(BOOL state) {
             if (!state) {
@@ -767,18 +786,28 @@
     } else {
         NSRegularExpression *regularExpression = [NSRegularExpression regularExpressionWithPattern: @"(((13[0-9])|(15([0|1|2|3|5|6|7|8|9]))|(14([5|7]))|(17([0|5|6|7|8]))|(18[0-9]))\\d{8})|(0\\d{2}-\\d{8})|(0\\d{3}-\\d{8})|(((13[0-9])|(15([0|1|2|3|5|6|7|8|9]))|(14([5|7]))|(17([0|5|6|7|8]))|(18[0-9]))-\\d{4}-\\d{4})" options:0 error:nil];
 
-        __block NSString *phone = @"";
+        UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"拨打电话？" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:nil, nil];
         [regularExpression enumerateMatchesInString:string options:0 range:NSMakeRange(0, string.length) usingBlock:^(NSTextCheckingResult * _Nullable result, NSMatchingFlags flags, BOOL * _Nonnull stop) {
-            phone = [phone stringByAppendingFormat:@"%@,", [string substringWithRange:result.range]];
+            [sheet addButtonWithTitle: [string substringWithRange:result.range]];
         }];
-        if (!IsStrEmpty(phone)) {
-            phone = [phone substringToIndex:phone.length - 1];
-            UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"拨打电话？" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:phone, nil];
+        if (sheet.numberOfButtons > 1) {
             [sheet showInView:self.view];
         }
     }
     NSLog(@"%@", string);
 }
+
+
+#pragma mark ------分享到圈内好友的通知
+- (void)shareToFriendSuccess:(NSNotification *)notification
+{
+    [SHGBusinessManager shareSuccessCallBack:self.responseObject finishBlock:^(BOOL success) {
+    }];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [Hud showMessageWithText:@"分享成功"];
+    });
+}
+
 #pragma mark -- sdc
 #pragma mark -- 拨打电话
 
