@@ -134,7 +134,7 @@
     .rightEqualToView(self.textView)
     .heightIs(2.0f * kImageViewHeight + kImageViewMargin);
 
-    size = self.addButton.currentImage.size;
+    size = self.addButton.currentBackgroundImage.size;
     self.addButton.sd_layout
     .widthIs(size.width)
     .heightIs(size.height);
@@ -430,7 +430,8 @@
             ALAsset *asset = assets[i];
             UIImage *tempImg = [UIImage imageWithCGImage:asset.defaultRepresentation.fullScreenImage scale:asset.defaultRepresentation.scale orientation:(UIImageOrientation)asset.defaultRepresentation.orientation];
             if (tempImg){
-                UIImage *imageNew = [tempImg reSizeImagetoSize:CGSizeMake(CGRectGetWidth(self.view.frame) * 2.0f, CGRectGetWidth(self.view.frame) * 2.0f)];
+                CGSize size = CGSizeMake(CGRectGetWidth(self.view.frame) * 2.0f, CGRectGetWidth(self.view.frame) * 2.0f / tempImg.size.width * tempImg.size.height);
+                UIImage *imageNew = [tempImg reSizeImagetoSize:size];
                 NSData *dataImage = UIImageJPEGRepresentation(imageNew, 0.5f);//压缩
                 RecommendTypeObj *detailObj = [[RecommendTypeObj alloc] init];
                 detailObj.image = tempImg;
@@ -453,7 +454,9 @@
     UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
 
     if (image) {
-        UIImage *imageNew = [image reSizeImagetoSize:CGSizeMake(CGRectGetWidth(self.view.frame) * 2.0f, CGRectGetWidth(self.view.frame) * 2.0f)];
+
+        CGSize size = CGSizeMake(CGRectGetWidth(self.view.frame) * 2.0f, CGRectGetWidth(self.view.frame) * 2.0f / image.size.width * image.size.height);
+        UIImage *imageNew = [image reSizeImagetoSize: size];
 
         UIImage *imageData = [UIImage fixOrientation:image];
         NSData *dataImage = UIImageJPEGRepresentation(imageData, 0.5f);//压缩
@@ -509,6 +512,16 @@
 @end
 
 @implementation SHGCircleSendImageView
+
+- (instancetype)initWithFrame:(CGRect)frame
+{
+    self = [super initWithFrame:frame];
+    if (self) {
+        self.contentMode = UIViewContentModeScaleAspectFill;
+        self.clipsToBounds = YES;
+    }
+    return self;
+}
 
 - (void)setObject:(RecommendTypeObj *)object
 {
