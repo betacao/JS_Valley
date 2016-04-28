@@ -28,6 +28,12 @@
 #define PRAISE_SEPWIDTH     10.0f
 #define PRAISE_RIGHTWIDTH     40.0f
 
+typedef NS_ENUM(NSInteger, SHGTapPhoneType)
+{
+    SHGTapPhoneTypeDialNumber,
+    SHGTapPhoneTypeSendMessage
+};
+
 @interface SHGBusinessDetailViewController ()<BRCommentViewDelegate, CircleActionDelegate, SHGBusinessCommentDelegate, UIActionSheetDelegate>
 {
     UIView *PickerBackView;
@@ -68,6 +74,10 @@
 @property (strong, nonatomic) UIView *photoView ;
 @property (strong, nonatomic) SHGBusinessObject *responseObject;
 
+@property (strong, nonatomic) NSMutableArray *phoneArray;
+@property (strong, nonatomic) NSMutableArray *mobileArray;
+
+@property (assign, nonatomic) SHGTapPhoneType type;
 @end
 
 @implementation SHGBusinessDetailViewController
@@ -99,10 +109,12 @@
 {
     __weak typeof(self) weakSelf = self;
     [SHGBusinessManager getBusinessDetail:self.object success:^(SHGBusinessObject *detailObject) {
-        weakSelf.responseObject = detailObject;
-        NSLog(@"%@",weakSelf.responseObject);
-        [weakSelf loadData];
-        [weakSelf.detailTable reloadData];
+        if (detailObject) {
+            weakSelf.responseObject = detailObject;
+            NSLog(@"%@",weakSelf.responseObject);
+            [weakSelf loadData];
+            [weakSelf.detailTable reloadData];
+        }
     }];
 
 }
@@ -114,6 +126,22 @@
         _emptyView.type = SHGEmptyDateTypeBusinessDeleted;
     }
     return _emptyView;
+}
+
+- (NSMutableArray *)phoneArray
+{
+    if (!_phoneArray) {
+        _phoneArray = [NSMutableArray array];
+    }
+    return _phoneArray;
+}
+
+- (NSMutableArray *)mobileArray
+{
+    if (!_mobileArray) {
+        _mobileArray = [NSMutableArray array];
+    }
+    return _mobileArray;
 }
 
 - (void)initView
@@ -774,6 +802,8 @@
 
 - (void)tapPhoneTextView:(UITapGestureRecognizer *)recognizer
 {
+    [self.mobileArray removeAllObjects];
+    [self.phoneArray removeAllObjects];
     NSString *string = self.phoneTextView.text;
     if ([string containsString:@"认证可见"]) {
         [[SHGGloble sharedGloble] requestUserVerifyStatusCompletion:^(BOOL state) {
@@ -784,12 +814,23 @@
         } showAlert:YES leftBlock:^{
         } failString:@"认证后才能查看联系方式～"];
     } else {
-        NSRegularExpression *regularExpression = [NSRegularExpression regularExpressionWithPattern: @"(((13[0-9])|(15([0|1|2|3|5|6|7|8|9]))|(14([5|7]))|(17([0|5|6|7|8]))|(18[0-9]))\\d{8})|(0\\d{2}-\\d{8})|(0\\d{3}-\\d{8})|(((13[0-9])|(15([0|1|2|3|5|6|7|8|9]))|(14([5|7]))|(17([0|5|6|7|8]))|(18[0-9]))-\\d{4}-\\d{4})" options:0 error:nil];
-
-        UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"拨打电话？" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:nil, nil];
-        [regularExpression enumerateMatchesInString:string options:0 range:NSMakeRange(0, string.length) usingBlock:^(NSTextCheckingResult * _Nullable result, NSMatchingFlags flags, BOOL * _Nonnull stop) {
-            [sheet addButtonWithTitle: [string substringWithRange:result.range]];
+        NSRegularExpression *mobileExpression = [NSRegularExpression regularExpressionWithPattern: @"((13|15|18|17)[0-9]{9})" options:0 error:nil];
+        NSRegularExpression *phoneExpression = [NSRegularExpression regularExpressionWithPattern: @"(0[1,2]{1}\\d{1}-?\\d{8})|(0[3-9] {1}\\d{2}-?\\d{7,8})|(0[1,2]{1}\\d{1}-?\\d{8}-(\\d{1,4}))|(0[3-9]{1}\\d{2}-? \\d{7,8}-(\\d{1,4}))|0[7,8]\\d{2}-?\\d{8}" options:0 error:nil];
+        [mobileExpression enumerateMatchesInString:string options:0 range:NSMakeRange(0, string.length) usingBlock:^(NSTextCheckingResult * _Nullable result, NSMatchingFlags flags, BOOL * _Nonnull stop) {
+            [self.mobileArray addObject:[string substringWithRange:result.range]];
         }];
+
+        [phoneExpression enumerateMatchesInString:string options:0 range:NSMakeRange(0, string.length) usingBlock:^(NSTextCheckingResult * _Nullable result, NSMatchingFlags flags, BOOL * _Nonnull stop) {
+            [self.phoneArray addObject:[string substringWithRange:result.range]];
+        }];
+
+        UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:nil, nil];
+        if (self.mobileArray.count > 0) {
+            [sheet addButtonWithTitle:@"拨打电话"];
+            [sheet addButtonWithTitle:@"发送短信"];
+        } else {
+            [sheet addButtonWithTitle:@"拨打电话"];
+        };
         if (sheet.numberOfButtons > 1) {
             [sheet showInView:self.view];
         }
@@ -815,7 +856,43 @@
 {
     if (buttonIndex != actionSheet.cancelButtonIndex) {
         NSString *string = [actionSheet buttonTitleAtIndex:buttonIndex];
-        [self openTel:string];
+        NSMutableArray *array = [NSMutableArray array];
+        if ([string containsString:@"电话"]) {
+            UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:nil, nil];
+            [self.mobileArray enumerateObjectsUsingBlock:^(NSString *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                [array addObject:obj];
+                [sheet addButtonWithTitle:obj];
+            }];
+            [self.phoneArray enumerateObjectsUsingBlock:^(NSString *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                [array addObject:obj];
+                [sheet addButtonWithTitle:obj];
+            }];
+            if (array.count == 1) {
+                [self openTel:[array firstObject]];
+            } else {
+                self.type = SHGTapPhoneTypeDialNumber;
+                [sheet showInView:self.view];
+            }
+        } else if ([string containsString:@"短信"]) {
+            UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:nil, nil];
+            [self.mobileArray enumerateObjectsUsingBlock:^(NSString *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                [array addObject:obj];
+                [sheet addButtonWithTitle:obj];
+            }];
+            if (array.count == 1) {
+                [[SHGGloble sharedGloble] sendMessage:[array firstObject]];
+            } else {
+                self.type = SHGTapPhoneTypeSendMessage;
+                [sheet showInView:self.view];
+            }
+        } else {
+            //直接拨号
+            if (self.type == SHGTapPhoneTypeSendMessage) {
+                [[SHGGloble sharedGloble] sendMessage:string];
+            } else {
+                [self openTel:string];
+            }
+        }
     }
 }
 

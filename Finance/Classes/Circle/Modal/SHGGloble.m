@@ -482,7 +482,6 @@
             if (block) {
                 block(YES);
             } else{
-                DXAlertView *alert = nil;
                 UILabel *label = [[UILabel alloc] init];
                 label.text = detail;
                 label.numberOfLines = 0;
@@ -493,7 +492,7 @@
                 label.size = size;
                 UIView *contentView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, kAlertWidth, size.height + kCustomViewButtomMargin)];
                 [contentView addSubview:label];
-                alert = [[DXAlertView alloc] initWithTitle:@"提示" customView:contentView leftButtonTitle:nil rightButtonTitle:@"立即更新"];
+                DXAlertView *alert = [[DXAlertView alloc] initWithTitle:@"提示" customView:contentView leftButtonTitle:nil rightButtonTitle:@"立即更新"];
                 alert.rightBlock = ^{
                     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://itunes.apple.com/cn/app/da-niu-quan-jin-rong-zheng/id984379568?mt=8"]];
                 };
@@ -628,6 +627,7 @@
     }];
     return resultArray;
 }
+
 - (NSString *)checkPhoneNumber:(NSString *)mobileNum
 {
     /**
@@ -677,4 +677,31 @@
     }
     
 }
+
+- (void)dialNumber:(NSString *)number
+{
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"telprompt://%@",number]];
+    if ([[UIApplication sharedApplication] canOpenURL:url]) {
+        [[UIApplication sharedApplication] openURL:url];
+    }
+}
+
+- (void)sendMessage:(NSString *)number
+{
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"sms://%@",number]];
+    if ([[UIApplication sharedApplication] canOpenURL:url]) {
+        [[UIApplication sharedApplication] openURL:url];
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
 @end

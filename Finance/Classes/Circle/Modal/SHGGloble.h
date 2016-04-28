@@ -229,7 +229,26 @@ typedef void (^SHHomeDataCompletionBlock)(NSArray *allList, NSArray *normalList,
  */
 - (NSString *)businessKeysForValues:(NSString *)values showEmptyKeys:(BOOL)show;
 
-- (NSMutableArray *)editBusinessKeysForValues:(NSArray *)nameArray  middleContentArray:(NSArray *)middleContentArray;
+- (NSMutableArray *)editBusinessKeysForValues:(NSArray *)nameArray middleContentArray:(NSArray *)middleContentArray;
 
 - (NSString *)checkPhoneNumber:(NSString *)phoneText;
+
+
+/**
+ @brief 拨打电话号码
+
+ @param number 电话号码
+
+ @since 1.8.1
+ */
+- (void)dialNumber:(NSString *)number;
+
+/**
+ @brief 发送短信
+
+ @param number 短信号码
+
+ @since 1.8.1
+ */
+- (void)sendMessage:(NSString *)number;
 @end
