@@ -486,13 +486,14 @@
                 label.text = detail;
                 label.numberOfLines = 0;
                 label.textColor = [UIColor colorWithRed:141.0/255.0 green:141.0/255.0 blue:141.0/255.0 alpha:1];
-                label.font = FontFactor(13.0f);
+                label.font = FontFactor(14.0f);
                 label.origin = CGPointMake(kLineViewLeftMargin, kCustomViewButtomMargin);
                 CGSize size = [label sizeThatFits:CGSizeMake(kAlertWidth - 2 * kLineViewLeftMargin, CGFLOAT_MAX)];
                 label.size = size;
                 UIView *contentView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, kAlertWidth, size.height + kCustomViewButtomMargin)];
                 [contentView addSubview:label];
-                DXAlertView *alert = [[DXAlertView alloc] initWithTitle:@"提示" customView:contentView leftButtonTitle:nil rightButtonTitle:@"立即更新"];
+                DXAlertView *alert = [[DXAlertView alloc] initWithTitle:@"版本更新" customView:contentView leftButtonTitle:nil rightButtonTitle:@"立即更新"];
+                [alert addSubTitle:version];
                 alert.rightBlock = ^{
                     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://itunes.apple.com/cn/app/da-niu-quan-jin-rong-zheng/id984379568?mt=8"]];
                 };

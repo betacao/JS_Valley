@@ -18,7 +18,9 @@
 @property (strong, nonatomic) UIButton *rightBtn;
 @property (strong, nonatomic) UIView *backImageView;
 @property (strong, nonatomic) UIView *customView;
+
 @property (strong, nonatomic) UIButton *closeButton;
+@property (strong, nonatomic) UILabel *subTitleLabel;
 @end
 
 @implementation DXAlertView
@@ -204,6 +206,17 @@
     return _closeButton;
 }
 
+- (UILabel *)subTitleLabel
+{
+    if (!_subTitleLabel) {
+        _subTitleLabel = [[UILabel alloc] init];
+        _subTitleLabel.textColor = Color(@"585858");
+        _subTitleLabel.font = FontFactor(14.0f);
+        _subTitleLabel.textAlignment = NSTextAlignmentCenter;
+    }
+    return _subTitleLabel;
+}
+
 - (void)leftBtnClicked:(id)sender
 {
     if (self.leftBlock) {
@@ -220,6 +233,23 @@
     if (self.shouldDismiss) {
         [self dismissAlert];
     }
+}
+
+- (void)addSubTitle:(NSString *)subTitle
+{
+    [self addSubview:self.subTitleLabel];
+    self.subTitleLabel.text = [@"V" stringByAppendingString: subTitle];
+    self.subTitleLabel.sd_layout
+    .bottomSpaceToView(self.lineLabel, MarginFactor(4.0f))
+    .centerXEqualToView(self)
+    .heightIs(self.subTitleLabel.font.lineHeight)
+    .widthRatioToView(self, 1.0f);
+
+    self.alertTitleLabel.sd_layout
+    .bottomSpaceToView(self.subTitleLabel, MarginFactor(5.0f))
+    .centerXEqualToView(self)
+    .heightIs(self.alertTitleLabel.font.lineHeight)
+    .widthRatioToView(self, 1.0f);
 }
 
 - (void)show
