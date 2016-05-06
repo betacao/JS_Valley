@@ -10,7 +10,7 @@
 #import "AppDelegate.h"
 #import "ApplyViewController.h"
 #import "ProtocolViewController.h"
-
+#import "SHGRecommendViewController.h"
 typedef NS_ENUM(NSInteger, RegistType)
 {
 	RegistInit = 0,//未发送验证码
@@ -309,8 +309,8 @@ typedef NS_ENUM(NSInteger, RegistType)
         [[NSUserDefaults standardUserDefaults] setObject:token forKey:KEY_TOKEN];
         [[NSUserDefaults standardUserDefaults] setObject:@"1" forKey:KEY_AUTOLOGIN];
         [[NSUserDefaults standardUserDefaults] synchronize];
-        [self chatLoagin];
-        [self loginSuccess];
+        SHGRecommendViewController *viewController = [[SHGRecommendViewController alloc] init];
+        [self.navigationController pushViewController:viewController animated:YES];
 
     } failed:^(MOCHTTPResponse *response) {
         [Hud showMessageWithText:response.errorMessage];

@@ -8,6 +8,7 @@
 
 #import "SetPassWordViewController.h"
 #import "ApplyViewController.h"
+#import "SHGRecommendViewController.h"
 @interface SetPassWordViewController ()
 {
     
@@ -84,6 +85,9 @@
         [[NSUserDefaults standardUserDefaults] synchronize];
 
         [self chatLoagin];
+        SHGRecommendViewController *viewController = [[SHGRecommendViewController alloc] init];
+        [self.navigationController pushViewController:viewController animated:YES];
+
         [self loginSuccess];
     } failed:^(MOCHTTPResponse *response) {
         [Hud showMessageWithText:response.errorMessage];

@@ -13,6 +13,7 @@
 #import "SHGBusinessButtonContentView.h"
 #import "SHGBusinessManager.h"
 #import "SHGBusinessListViewController.h"
+#import "SHGBusinessSendSuccessViewController.h"
 @interface SHGBondInvestNextViewController ()<UITextFieldDelegate,UIScrollViewDelegate,UITextViewDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UIButton *sureButton;
@@ -471,10 +472,13 @@
                         SHGBusinessObject *object = [[SHGBusinessObject alloc]init];
                         object.type = type;
                         NSDictionary *param = @{@"uid":UID, @"type": type, @"moneysideType":moneysideType ,@"contact":contact, @"businessType":businessType,@"fundSource":fundSource, @"investAmount": investAmount, @"area": area, @"industry": industry, @"clarifyingRequire":clarifyingRequire,@"lowestPaybackRate":weakSelf.retributionTextField.text, @"vestYears": vestYears,@"detail": weakSelf.marketExplainTextView.text,@"photo": weakSelf.imageName,@"anonymous": anonymous,@"title": title};
-                        [SHGBusinessManager createNewBusiness:param success:^(BOOL success) {
+                        [SHGBusinessManager createNewBusiness:param success:^(BOOL success, NSString *bussinessId) {
                             if (success) {
-                                [[SHGBusinessListViewController sharedController] didCreateOrModifyBusiness:object];
-                                [weakSelf.navigationController performSelector:@selector(popToRootViewControllerAnimated:) withObject:@(YES) afterDelay:1.2f];
+                                object.businessID = bussinessId;
+                                object.businessTitle = title;
+                                SHGBusinessSendSuccessViewController *viewController = [[SHGBusinessSendSuccessViewController alloc] init];
+                                viewController.object = object;
+                                [weakSelf.navigationController pushViewController:viewController animated:YES];
                             }
                         }];
                         

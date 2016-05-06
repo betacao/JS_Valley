@@ -54,6 +54,12 @@
 @property (nonatomic,strong) NSString *pcurl;
 @property (nonatomic,strong) NSString *shareTitle;
 
+@property(nonatomic, strong)  NSString *companyname;
+@property(nonatomic, strong)  NSString *phone;
+@property(nonatomic, strong)  NSString *picname;
+@property(nonatomic, strong)  NSString *position;
+@property(nonatomic, strong)  NSString *realname;
+
 
 @end
 
@@ -86,4 +92,6 @@
 @property (nonatomic, strong) NSString *thumbnail;
 
 @end
+
+
 

@@ -219,8 +219,14 @@ typedef NS_ENUM(NSInteger, RegistType)
             [Hud hideHud];
             NSString *code = [response.data valueForKey:@"code"];
             if ([code isEqualToString:@"000"]){
-                [weakSelf chatLoagin];
-                [weakSelf loginSuccess];
+                if ([weakSelf.isFull isEqualToString:@"1"]){
+                    [weakSelf chatLoagin];
+                    [weakSelf loginSuccess];
+                } else{
+                    SHGRecommendViewController *viewControll = [[SHGRecommendViewController alloc] init];
+                    [weakSelf.navigationController pushViewController:viewControll animated:YES];
+                }
+
             }
         } else{
             [Hud hideHud];

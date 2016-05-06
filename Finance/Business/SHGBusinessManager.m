@@ -10,7 +10,7 @@
 #import "SHGBusinessObject.h"
 #import "SHGBusinessScrollView.h"
 #import "SHGBusinessListViewController.h"
-
+#import "SHGBusinessDetailViewController.h"
 @interface SHGBusinessManager()
 @property (strong, nonatomic) NSArray *secondListArray;
 @property (strong, nonatomic) NSArray *trademixedArray;//同业混业
@@ -55,13 +55,17 @@
 }
 
 //创建新业务
-+ (void)createNewBusiness:(NSDictionary *)param success:(void (^)(BOOL ))block
++ (void)createNewBusiness:(NSDictionary *)param success:(void (^)(BOOL ,NSString *))block
 {
     NSString *request = [rBaseAddressForHttp stringByAppendingString:@"/business/saveBusiness"];
     [MOCHTTPRequestOperationManager postWithURL:request class:[SHGBusinessObject class] parameters:param success:^(MOCHTTPResponse *response) {
         [Hud hideHud];
-        [Hud showMessageWithText:@"发布业务成功"];
-        block(YES);
+        //[Hud showMessageWithText:@"发布业务成功"];
+        
+        NSDictionary *dictionary = response.dataDictionary;
+        NSLog(@"zzzzz%@",dictionary);
+        NSString *businessId = [dictionary objectForKey:@"result"];
+        block(YES,businessId);
     } failed:^(MOCHTTPResponse *response) {
         [Hud hideHud];
         [Hud showMessageWithText:@"发布业务失败"];
@@ -306,9 +310,19 @@
     }
     NSString *postContent = [NSString stringWithFormat:@"【业务】%@", theme];
     NSString *shareContent = [NSString stringWithFormat:@"【业务】%@", theme];
-    NSString *friendContent = [NSString stringWithFormat:@"%@\"%@\"%@%@",@"Hi，我看到了一个非常棒的业务,关于",theme,@"，赶快去业务版块查看吧！",request];
+//    NSString *friendContent = [NSString stringWithFormat:@"%@\"%@\"%@%@",@"Hi，我看到了一个非常棒的业务,关于",theme,@"，赶快去业务版块查看吧！",request];
+//     NSString *messageContent = [NSString stringWithFormat:@"%@\"%@\"%@%@",@"Hi，我在金融大牛圈上看到了一个非常棒的业务,关于",theme,@"，赶快下载大牛圈查看吧！",@"https://itunes.apple.com/cn/app/da-niu-quan-jin-rong-zheng/id984379568?mt=8"];
+    NSString *friendContent = @"";
+    NSString *messageContent = @"";
+    if (![controller isKindOfClass:[SHGBusinessDetailViewController class]]) {
+        friendContent = [NSString stringWithFormat:@"%@\"%@\"%@%@",@"Hi，我发布一个非常棒的业务,关于",theme,@"，赶快去业务版块查看吧！",request];
+        messageContent = [NSString stringWithFormat:@"%@\"%@\"%@%@",@"Hi，我在金融大牛圈上发布了一个非常棒的业务,关于",theme,@"，赶快下载大牛圈查看吧！",@"https://itunes.apple.com/cn/app/da-niu-quan-jin-rong-zheng/id984379568?mt=8"];
+    } else{
+        friendContent = [NSString stringWithFormat:@"%@\"%@\"%@%@",@"Hi，我看到了一个非常棒的业务,关于",theme,@"，赶快去业务版块查看吧！",request];
+        messageContent = [NSString stringWithFormat:@"%@\"%@\"%@%@",@"Hi，我在金融大牛圈上看到了一个非常棒的业务,关于",theme,@"，赶快下载大牛圈查看吧！",@"https://itunes.apple.com/cn/app/da-niu-quan-jin-rong-zheng/id984379568?mt=8"];
+    }
 
-    NSString *messageContent = [NSString stringWithFormat:@"%@\"%@\"%@%@",@"Hi，我在金融大牛圈上看到了一个非常棒的业务,关于",theme,@"，赶快下载大牛圈查看吧！",@"https://itunes.apple.com/cn/app/da-niu-quan-jin-rong-zheng/id984379568?mt=8"];
+   
     id<ISSShareActionSheetItem> item0 = [ShareSDK shareActionSheetItemWithTitle:@"微信好友" icon:[UIImage imageNamed:@"sns_icon_22"] clickHandler:^{
         [[AppDelegate currentAppdelegate] shareActionToWeChat:0 content:postContent url:request];
     }];

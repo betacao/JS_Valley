@@ -12,6 +12,7 @@
 #import "UIButton+EnlargeEdge.h"
 #import "SHGBusinessManager.h"
 #import "SHGBusinessListViewController.h"
+#import "SHGBusinessSendSuccessViewController.h"
 @interface SHGSameAndCommixtureNextViewController ()<UIScrollViewDelegate,UITextViewDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UIButton *sureButton;
@@ -228,10 +229,13 @@
                         NSDictionary *param = @{@"uid":UID,@"type": type, @"contact":contact, @"businessType":businessType, @"investAmount": investAmount, @"area": area, @"detail": weakSelf.marketExplainTextView.text,@"photo": weakSelf.imageName,@"anonymous": anonymous,@"title": title};
                         NSLog(@"%@",param);
                         NSLog(@"%@",weakSelf.marketExplainTextView.text);
-                        [SHGBusinessManager createNewBusiness:param success:^(BOOL success) {
+                        [SHGBusinessManager createNewBusiness:param success:^(BOOL success , NSString *bussinessId) {
                             if (success) {
-                                 [[SHGBusinessListViewController sharedController] didCreateOrModifyBusiness:object];
-                                [weakSelf.navigationController performSelector:@selector(popToRootViewControllerAnimated:) withObject:@(YES) afterDelay:1.2f];
+                                object.businessID = bussinessId;
+                                object.businessTitle = title;
+                                SHGBusinessSendSuccessViewController *viewController = [[SHGBusinessSendSuccessViewController alloc] init];
+                                viewController.object = object;
+                                [weakSelf.navigationController pushViewController:viewController animated:YES];
                             }
                         }];
                     }  break;

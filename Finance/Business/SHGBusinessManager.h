@@ -20,7 +20,7 @@
 
 - (void)getSecondListBlock:(void (^)(NSArray *array, NSString *cityName))block;
 
-+ (void)createNewBusiness:(NSDictionary *)param success:(void (^)(BOOL success))block;
++ (void)createNewBusiness:(NSDictionary *)param success:(void (^)( BOOL success,NSString *businessId))block;
 
 + (void)deleteBusiness:(SHGBusinessObject *)object success:(void (^)(BOOL success))block;
 

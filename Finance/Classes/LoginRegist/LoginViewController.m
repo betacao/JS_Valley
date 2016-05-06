@@ -14,7 +14,7 @@
 #import "BindPhoneViewController.h"
 #import "ApplyViewController.h"
 #import <QZoneConnection/ISSQZoneApp.h>
-
+#import "SHGRecommendViewController.h"
 @interface LoginViewController ()
 
 @property (weak, nonatomic) IBOutlet UITextField *textUser;
@@ -283,8 +283,14 @@
             [Hud hideHud];
             NSString *code = [response.data valueForKey:@"code"];
             if ([code isEqualToString:@"000"]){
-                [weakSelf chatLoagin];
-                [weakSelf loginSuccess];
+                if ([weakSelf.isFull isEqualToString:@"1"]){
+                    [weakSelf chatLoagin];
+                    [weakSelf loginSuccess];
+                } else{
+                    SHGRecommendViewController *viewController = [[SHGRecommendViewController alloc] init];
+                    [weakSelf.navigationController pushViewController:viewController animated:YES];
+                }
+
             }
         } else{
             [Hud hideHud];

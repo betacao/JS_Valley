@@ -13,6 +13,7 @@
 #import "SHGBusinessButtonContentView.h"
 #import "SHGBusinessManager.h"
 #import "SHGBusinessListViewController.h"
+#import "SHGBusinessSendSuccessViewController.h"
 @interface SHGEquityInvestNextViewController ()<UITextFieldDelegate,UIScrollViewDelegate,UITextViewDelegate,UIImagePickerControllerDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UIButton *sureButton;
@@ -451,10 +452,13 @@
                     SHGBusinessObject *object = [[SHGBusinessObject alloc]init];
                     object.type = type;
                     NSDictionary *param = @{@"uid":UID, @"type": type, @"moneysideType": @"equityInvest",@"contact":contact,@"financingStage":financingStage, @"investAmount": investAmount, @"area": area, @"industry": industry,@"fundSource":fundSource ,@"totalshareRate":weakSelf.retributionTextField.text, @"vestYears": vestYears,@"detail": weakSelf.marketExplainTextView.text,@"photo": weakSelf.imageName,@"anonymous": anonymous,@"title": title};
-                    [SHGBusinessManager createNewBusiness:param success:^(BOOL success) {
+                    [SHGBusinessManager createNewBusiness:param success:^(BOOL success, NSString *bussinessId) {
                         if (success) {
-                            [[SHGBusinessListViewController sharedController] didCreateOrModifyBusiness:object];
-                            [weakSelf.navigationController performSelector:@selector(popToRootViewControllerAnimated:) withObject:@(YES) afterDelay:1.2f];
+                            object.businessID = bussinessId;
+                            object.businessTitle = title;
+                            SHGBusinessSendSuccessViewController *viewController = [[SHGBusinessSendSuccessViewController alloc] init];
+                            viewController.object = object;
+                            [weakSelf.navigationController pushViewController:viewController animated:YES];
                         }
                     }];
                 }
