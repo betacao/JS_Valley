@@ -405,7 +405,7 @@
         //未认证
         if ([[response.dataDictionary objectForKey:@"status"] isEqualToString:@"0"]) {
             if (showAlert) {
-                DXAlertView *alert = [[DXAlertView alloc] initWithTitle:@"提示" contentText:string leftButtonTitle:@"取消" rightButtonTitle:@"去认证"];
+                SHGAlertView *alert = [[SHGAlertView alloc] initWithTitle:@"提示" contentText:string leftButtonTitle:@"取消" rightButtonTitle:@"去认证"];
                 alert.leftBlock = leftblock;
                 alert.rightBlock = ^{
                     completionblock(NO);
@@ -485,15 +485,15 @@
                 UILabel *label = [[UILabel alloc] init];
                 label.text = detail;
                 label.numberOfLines = 0;
-                label.textColor = [UIColor colorWithRed:141.0/255.0 green:141.0/255.0 blue:141.0/255.0 alpha:1];
+                label.textColor = Color(@"8d8d8d");
                 label.font = FontFactor(14.0f);
-                label.origin = CGPointMake(kLineViewLeftMargin, kCustomViewButtomMargin);
-                CGSize size = [label sizeThatFits:CGSizeMake(kAlertWidth - 2 * kLineViewLeftMargin, CGFLOAT_MAX)];
+                label.origin = CGPointMake(MarginFactor(26.0f), MarginFactor(17.0f));
+                CGSize size = [label sizeThatFits:CGSizeMake(MarginFactor(300.0f) - 2 * MarginFactor(26.0f), CGFLOAT_MAX)];
                 label.size = size;
-                UIView *contentView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, kAlertWidth, size.height + kCustomViewButtomMargin)];
+                UIView *contentView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, MarginFactor(300.0f), size.height + MarginFactor(17.0f))];
                 [contentView addSubview:label];
-                DXAlertView *alert = [[DXAlertView alloc] initWithTitle:@"版本更新" customView:contentView leftButtonTitle:nil rightButtonTitle:@"立即更新"];
-                [alert addSubTitle:version];
+                SHGAlertView *alert = [[SHGAlertView alloc] initWithTitle:@"版本更新" customView:contentView leftButtonTitle:nil rightButtonTitle:@"立即更新"];
+                [alert addSubTitle:[@"V" stringByAppendingString: version]];
                 alert.rightBlock = ^{
                     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://itunes.apple.com/cn/app/da-niu-quan-jin-rong-zheng/id984379568?mt=8"]];
                 };

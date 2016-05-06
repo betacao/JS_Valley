@@ -103,7 +103,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pushCircle:) name:kMPNotificationViewTapReceivedNotification object:nil];
     //设置导航title字体
     [[UINavigationBar appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:kNavBarTitleFontSize],NSForegroundColorAttributeName:NavRTitleColor}];
-    [[UINavigationBar appearance] setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithHexString:@"d43c33"]] forBarMetrics:UIBarMetricsDefault];
+    [[UINavigationBar appearance] setBackgroundImage:[CommonMethod imageWithColor:[UIColor colorWithHexString:@"d43c33"]] forBarMetrics:UIBarMetricsDefault];
     self.window.rootViewController = rootVC;
     [self.window makeKeyAndVisible];
     return YES;

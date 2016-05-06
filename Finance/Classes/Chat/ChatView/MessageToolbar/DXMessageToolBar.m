@@ -334,8 +334,8 @@
     self.recordButton.layer.cornerRadius = 6.0f;
     self.recordButton.clipsToBounds = YES;
     self.recordButton.titleLabel.font = [UIFont boldSystemFontOfSize:15.0];
-    [self.recordButton setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithHexString:@"d7d7d7"]] forState:UIControlStateNormal];
-     [self.recordButton setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithHexString:@"bdbdbd"]] forState:UIControlStateHighlighted];
+    [self.recordButton setBackgroundImage:[CommonMethod imageWithColor:[UIColor colorWithHexString:@"d7d7d7"]] forState:UIControlStateNormal];
+     [self.recordButton setBackgroundImage:[CommonMethod imageWithColor:[UIColor colorWithHexString:@"bdbdbd"]] forState:UIControlStateHighlighted];
     [self.recordButton setTitle:kTouchToRecord forState:UIControlStateNormal];
     [self.recordButton setTitleColor:[UIColor colorWithHexString:@"6a6a6a"] forState:UIControlStateNormal];
     [self.recordButton setTitle:kTouchToFinish forState:UIControlStateHighlighted];

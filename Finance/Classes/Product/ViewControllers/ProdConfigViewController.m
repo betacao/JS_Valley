@@ -219,7 +219,7 @@
     }];
 }
 - (IBAction)actionGo:(id)sender {
-    DXAlertView *alert = [[DXAlertView alloc] initWithTitle:@"提示" contentText:@"是否预约该产品？" leftButtonTitle:@"否" rightButtonTitle:@"是"];
+    SHGAlertView *alert = [[SHGAlertView alloc] initWithTitle:@"提示" contentText:@"是否预约该产品？" leftButtonTitle:@"否" rightButtonTitle:@"是"];
     __weak typeof(self) weakSelf = self;
     alert.rightBlock = ^{
         [weakSelf go];

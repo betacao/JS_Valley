@@ -45,7 +45,7 @@
 - (CPTextViewPlaceholder *)textView
 {
     if (!_textView) {
-        _textView = [[CPTextViewPlaceholder alloc] initWithFrame:CGRectMake(kLineViewLeftMargin, 0.0f, kAlertWidth - 2 * kLineViewLeftMargin, 85.0f)];
+        _textView = [[CPTextViewPlaceholder alloc] initWithFrame:CGRectMake(MarginFactor(26.0f), 0.0f, MarginFactor(300.0f) - 2 * MarginFactor(26.0f), 85.0f)];
         _textView.layer.borderWidth = 0.5f;
         _textView.layer.borderColor = [UIColor lightGrayColor].CGColor;
         _textView.font = [UIFont systemFontOfSize:13.0f];
@@ -129,7 +129,7 @@
 - (IBAction)clickRightButton:(UIButton *)button
 {
     __weak typeof(self)weakSelf = self;
-    DXAlertView *alert = [[DXAlertView alloc] initWithCustomView:self.textView leftButtonTitle:@"取消" rightButtonTitle:@"确定"];
+    SHGAlertView *alert = [[SHGAlertView alloc] initWithCustomView:self.textView leftButtonTitle:@"取消" rightButtonTitle:@"确定"];
     alert.rightBlock = ^{
         [weakSelf.textView resignFirstResponder];
         if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(meetAttend:clickRejectButton:reason:)]) {

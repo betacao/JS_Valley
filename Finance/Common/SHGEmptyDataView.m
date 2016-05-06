@@ -57,7 +57,7 @@
             [self.imageView sizeToFit];
             self.actionButton.titleLabel.font = [UIFont systemFontOfSize:15.0f];
             [self.actionButton setTitle:@"立即创建" forState:UIControlStateNormal];
-            [self.actionButton setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithHexString:@"F04241"]] forState:UIControlStateNormal];
+            [self.actionButton setBackgroundImage:[CommonMethod imageWithColor:[UIColor colorWithHexString:@"F04241"]] forState:UIControlStateNormal];
             [self addSubview:self.actionButton];
             break;
         default:

@@ -573,7 +573,7 @@
 {
     __weak typeof(self) weakSelf = self;
     
-    DXAlertView *alert = [[DXAlertView alloc] initWithTitle:NSLocalizedString(@"prompt", @"Prompt") contentText:NSLocalizedString(@"sureToDelete", @"please make sure to delete") leftButtonTitle:NSLocalizedString(@"cancel", @"Cancel") rightButtonTitle:NSLocalizedString(@"ok", @"OK")];
+    SHGAlertView *alert = [[SHGAlertView alloc] initWithTitle:NSLocalizedString(@"prompt", @"Prompt") contentText:NSLocalizedString(@"sureToDelete", @"please make sure to delete") leftButtonTitle:NSLocalizedString(@"cancel", @"Cancel") rightButtonTitle:NSLocalizedString(@"ok", @"OK")];
     alert.rightBlock = ^{
         [[NSNotificationCenter defaultCenter] postNotificationName:@"RemoveAllMessages" object:weakSelf.chatGroup.groupId];
     };
@@ -584,7 +584,7 @@
 - (void)dissolveAction
 {
     //提示
-    DXAlertView *alert = [[DXAlertView alloc] initWithTitle:NSLocalizedString(@"prompt", @"Prompt") contentText:@"确定解散该群组?" leftButtonTitle:@"取消" rightButtonTitle:@"确定"];
+    SHGAlertView *alert = [[SHGAlertView alloc] initWithTitle:NSLocalizedString(@"prompt", @"Prompt") contentText:@"确定解散该群组?" leftButtonTitle:@"取消" rightButtonTitle:@"确定"];
     __weak typeof(self)weakSelf = self;
     alert.rightBlock = ^{
         [weakSelf dissolveActionOperator];
@@ -619,7 +619,7 @@
 - (void)exitAction
 {
     __weak typeof(self) weakSelf = self;
-    DXAlertView *alert = [[DXAlertView alloc] initWithTitle:@"提示" contentText:@"确定退出该群组?" leftButtonTitle:@"取消" rightButtonTitle:@"确定"];
+    SHGAlertView *alert = [[SHGAlertView alloc] initWithTitle:@"提示" contentText:@"确定退出该群组?" leftButtonTitle:@"取消" rightButtonTitle:@"确定"];
     alert.rightBlock = ^{
         [weakSelf showHudInView:self.view hint:NSLocalizedString(@"group.leave", @"quit the group")];
         [[EaseMob sharedInstance].chatManager asyncLeaveGroup:_chatGroup.groupId completion:^(EMGroup *group, EMGroupLeaveReason reason, EMError *error) {

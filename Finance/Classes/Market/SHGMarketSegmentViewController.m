@@ -453,7 +453,7 @@
 
 - (void)deleteMarket:(SHGMarketObject *)object
 {
-    DXAlertView *alertView = [[DXAlertView alloc] initWithTitle:@"提示" contentText:@"确认删除吗?" leftButtonTitle:@"取消" rightButtonTitle:@"删除"];
+    SHGAlertView *alertView = [[SHGAlertView alloc] initWithTitle:@"提示" contentText:@"确认删除吗?" leftButtonTitle:@"取消" rightButtonTitle:@"删除"];
     alertView.rightBlock = ^{
         [SHGMarketManager deleteMarket:object success:^(BOOL success) {
             //我的业务被移动到个人中心后 要刷新

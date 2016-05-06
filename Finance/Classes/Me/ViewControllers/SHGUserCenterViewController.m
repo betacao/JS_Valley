@@ -41,7 +41,7 @@
 
 @property (strong, nonatomic) UIImageView *authMaskImageView;
 @property (strong, nonatomic) UIButton *authMaskButton;
-@property (strong, nonatomic) DXAlertView *authAlertView;
+@property (strong, nonatomic) SHGAlertView *authAlertView;
 
 @property (strong, nonatomic) UIButton      *authButton;
 @property (strong, nonatomic) NSString      *nickName;
@@ -426,10 +426,10 @@
     return _authMaskButton;
 }
 
-- (DXAlertView *)authAlertView
+- (SHGAlertView *)authAlertView
 {
     if (!_authAlertView) {
-        _authAlertView = [[DXAlertView alloc] initWithCustomView:self.authMaskImageView leftButtonTitle:nil rightButtonTitle:nil];
+        _authAlertView = [[SHGAlertView alloc] initWithCustomView:self.authMaskImageView leftButtonTitle:nil rightButtonTitle:nil];
         _authAlertView.touchOtherDismiss = YES;
         __weak typeof(self) weakSelf = self;
         _authAlertView.leftBlock = ^{
@@ -828,7 +828,7 @@
             if (self.hasUpdatedContacts){
                 [Hud showMessageWithText:@"您刚刚更新过好友"];
             } else{
-                DXAlertView *alert = [[DXAlertView alloc] initWithTitle:@"提示" contentText:@"更新好友将更新您一度人脉中手机通讯录，将有效拓展您的人脉。" leftButtonTitle:@"取消" rightButtonTitle:@"更新"];
+                SHGAlertView *alert = [[SHGAlertView alloc] initWithTitle:@"提示" contentText:@"更新好友将更新您一度人脉中手机通讯录，将有效拓展您的人脉。" leftButtonTitle:@"取消" rightButtonTitle:@"更新"];
                 __weak typeof(self) weakSelf = self;
                 alert.rightBlock = ^{
                     [weakSelf uploadContact];

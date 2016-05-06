@@ -238,7 +238,7 @@
     [[SHGGloble sharedGloble] requestUserVerifyStatusCompletion:^(BOOL state) {
         if (state) {
             __weak typeof(self)weakSelf = self;
-            DXAlertView *alert = [[DXAlertView alloc] initWithTitle:@"提示" contentText:@"是否需要发布产品?" leftButtonTitle:@"否" rightButtonTitle:@"是"];
+            SHGAlertView *alert = [[SHGAlertView alloc] initWithTitle:@"提示" contentText:@"是否需要发布产品?" leftButtonTitle:@"否" rightButtonTitle:@"是"];
             alert.rightBlock = ^{
                 NSString *url = [NSString stringWithFormat:@"%@/%@",rBaseAddressForHttpProd,@"publish"];
                 [Hud showWait];

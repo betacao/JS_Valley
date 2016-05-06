@@ -135,7 +135,7 @@
 -(void)btnBackClick:(id)sender
 {
     [self.currentField resignFirstResponder];
-    DXAlertView *alert = [[DXAlertView alloc] initWithTitle:@"提示" contentText:@"因大牛圈需要真实用户信息，完善信息后才可正常使用。" leftButtonTitle:@"完善信息" rightButtonTitle:@"退出应用"];
+    SHGAlertView *alert = [[SHGAlertView alloc] initWithTitle:@"提示" contentText:@"因大牛圈需要真实用户信息，完善信息后才可正常使用。" leftButtonTitle:@"完善信息" rightButtonTitle:@"退出应用"];
     alert.rightBlock = ^{
         [[AppDelegate currentAppdelegate] exitApplication];
     };
@@ -602,9 +602,9 @@
         [button setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
         [button setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
 
-        [button setBackgroundImage:[UIImage imageWithColor:[UIColor whiteColor]] forState:UIControlStateNormal];
-        [button setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithHexString:@"f95c53"]] forState:UIControlStateHighlighted];
-        [button setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithHexString:@"f95c53"]] forState:UIControlStateSelected];
+        [button setBackgroundImage:[CommonMethod imageWithColor:[UIColor whiteColor]] forState:UIControlStateNormal];
+        [button setBackgroundImage:[CommonMethod imageWithColor:[UIColor colorWithHexString:@"f95c53"]] forState:UIControlStateHighlighted];
+        [button setBackgroundImage:[CommonMethod imageWithColor:[UIColor colorWithHexString:@"f95c53"]] forState:UIControlStateSelected];
         [button addTarget:self action:@selector(didSelectCategory:) forControlEvents:UIControlEventTouchUpInside];
         CGRect frame = CGRectMake(kPersonCategoryLeftMargin + (kPersonCategoryHorizontalMargin + width) * col, kPersonCategoryTopMargin + (kPersonCategoryVerticalMargin + kPersonCategoryHeight) * row, width, kPersonCategoryHeight);
         button.frame = frame;

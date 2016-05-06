@@ -861,7 +861,7 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
 - (void)didLoginFromOtherDevice
 {
     [[EaseMob sharedInstance].chatManager asyncLogoffWithUnbindDeviceToken:NO completion:^(NSDictionary *info, EMError *error) {
-        DXAlertView *alertView = [[DXAlertView alloc] initWithTitle:NSLocalizedString(@"prompt", @"Prompt") contentText:NSLocalizedString(@"loginAtOtherDevice", @"your login account has been in other places") leftButtonTitle:nil rightButtonTitle:NSLocalizedString(@"ok", @"OK")];
+        SHGAlertView *alertView = [[SHGAlertView alloc] initWithTitle:NSLocalizedString(@"prompt", @"Prompt") contentText:NSLocalizedString(@"loginAtOtherDevice", @"your login account has been in other places") leftButtonTitle:nil rightButtonTitle:NSLocalizedString(@"ok", @"OK")];
         alertView.rightBlock = ^{
             [[EaseMob sharedInstance].chatManager asyncLogoffWithUnbindDeviceToken:YES completion:^(NSDictionary *info, EMError *error) {
                 if (error && error.errorCode != EMErrorServerNotLogin) {

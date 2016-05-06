@@ -1215,7 +1215,7 @@
 {
     //删除
     __weak typeof(self)weakSelf = self;
-    DXAlertView *alert = [[DXAlertView alloc] initWithTitle:@"提示" contentText:@"确认删除吗?" leftButtonTitle:@"取消" rightButtonTitle:@"删除"];
+    SHGAlertView *alert = [[SHGAlertView alloc] initWithTitle:@"提示" contentText:@"确认删除吗?" leftButtonTitle:@"取消" rightButtonTitle:@"删除"];
     alert.rightBlock = ^{
         [weakSelf deleteSelf];
         

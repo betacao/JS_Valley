@@ -235,7 +235,7 @@
 - (void)btnBackClick:(id)sender
 {
     [self.textView resignFirstResponder];
-    DXAlertView *alertView = [[DXAlertView alloc] initWithTitle:@"提示" contentText:@"退出此次编辑?" leftButtonTitle:@"取消" rightButtonTitle:@"退出"];
+    SHGAlertView *alertView = [[SHGAlertView alloc] initWithTitle:@"提示" contentText:@"退出此次编辑?" leftButtonTitle:@"取消" rightButtonTitle:@"退出"];
     alertView.rightBlock = ^{
         [self.navigationController performSelector:@selector(popToRootViewControllerAnimated:) withObject:@(YES) afterDelay:0.25f];
     };

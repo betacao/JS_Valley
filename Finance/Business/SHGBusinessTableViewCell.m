@@ -156,7 +156,7 @@
 - (IBAction)deleteBusiness:(UIButton *)button
 {
     __weak typeof(self)weakSelf = self;
-    DXAlertView *alertView = [[DXAlertView alloc] initWithTitle:@"提示" contentText:@"确认删除吗?" leftButtonTitle:@"取消" rightButtonTitle:@"删除"];
+    SHGAlertView *alertView = [[SHGAlertView alloc] initWithTitle:@"提示" contentText:@"确认删除吗?" leftButtonTitle:@"取消" rightButtonTitle:@"删除"];
     alertView.rightBlock = ^{
         [SHGBusinessManager deleteBusiness:weakSelf.object success:^(BOOL success) {
             if (success) {

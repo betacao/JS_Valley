@@ -1261,7 +1261,7 @@
     }
     else{
         __weak typeof(self) weakSelf = self;
-        DXAlertView *alert = [[DXAlertView alloc] initWithTitle:NSLocalizedString(@"prompt", @"Prompt") contentText:NSLocalizedString(@"sureToDelete", @"please make sure to delete") leftButtonTitle:NSLocalizedString(@"cancel", @"Cancel") rightButtonTitle:NSLocalizedString(@"ok", @"OK")];
+        SHGAlertView *alert = [[SHGAlertView alloc] initWithTitle:NSLocalizedString(@"prompt", @"Prompt") contentText:NSLocalizedString(@"sureToDelete", @"please make sure to delete") leftButtonTitle:NSLocalizedString(@"cancel", @"Cancel") rightButtonTitle:NSLocalizedString(@"ok", @"OK")];
         alert.rightBlock = ^{
             [weakSelf.conversation removeAllMessages];
             [weakSelf.messages removeAllObjects];

@@ -255,11 +255,11 @@
 {
     [[SHGActionManager shareActionManager] loadUserPermissionState:^(NSString *state) {
         if ([state isEqualToString:@"0"]) {
-            DXAlertView *alert = [[DXAlertView alloc] initWithTitle:@"提示" contentText:@"您当前有活动正在审核中，请等待审核后再提交，谢谢。" leftButtonTitle:nil rightButtonTitle:@"确定"];
+            SHGAlertView *alert = [[SHGAlertView alloc] initWithTitle:@"提示" contentText:@"您当前有活动正在审核中，请等待审核后再提交，谢谢。" leftButtonTitle:nil rightButtonTitle:@"确定"];
             [alert show];
             block(NO);
         } else if ([state isEqualToString:@"2"]){
-            DXAlertView *alert = [[DXAlertView alloc] initWithTitle:@"提示" contentText:@"您当前有活动申请被驳回，请至我的活动查看。" leftButtonTitle:nil rightButtonTitle:@"确定"];
+            SHGAlertView *alert = [[SHGAlertView alloc] initWithTitle:@"提示" contentText:@"您当前有活动申请被驳回，请至我的活动查看。" leftButtonTitle:nil rightButtonTitle:@"确定"];
             [alert show];
             block(NO);
         } else{

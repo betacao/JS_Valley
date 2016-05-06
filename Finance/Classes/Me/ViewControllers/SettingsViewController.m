@@ -195,7 +195,7 @@
 
     } else if ([object.content isEqualToString:@"清除缓存"]){
          [[SHGGloble sharedGloble] recordUserAction:@"" type:@"user_setting_clearCache"];
-        DXAlertView *alert = [[DXAlertView alloc] initWithTitle:@"提示" contentText:@"是否确认清除本地缓存？" leftButtonTitle:@"取消" rightButtonTitle:@"确定"];
+        SHGAlertView *alert = [[SHGAlertView alloc] initWithTitle:@"提示" contentText:@"是否确认清除本地缓存？" leftButtonTitle:@"取消" rightButtonTitle:@"确定"];
         __weak typeof(self) weakSelf = self;
         alert.rightBlock = ^{
             [Hud showWait];
@@ -231,7 +231,7 @@
 {
     [[SHGGloble sharedGloble] recordUserAction:@"" type:@"user_setting_exit"];
     //注销登录
-    DXAlertView *alert = [[DXAlertView alloc] initWithTitle:@"提示" contentText:@"是否退出该账号?" leftButtonTitle:@"取消" rightButtonTitle:@"确定"];
+    SHGAlertView *alert = [[SHGAlertView alloc] initWithTitle:@"提示" contentText:@"是否退出该账号?" leftButtonTitle:@"取消" rightButtonTitle:@"确定"];
     alert.rightBlock = ^{
         [self performSelector:@selector(initUserInfo) withObject:nil afterDelay:0.25];
     };

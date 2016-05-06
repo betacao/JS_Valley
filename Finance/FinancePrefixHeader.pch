@@ -51,7 +51,6 @@
 #import "CircleDetailViewController.h"
 #import "SHGGloble.h"
 #import "SHGUserHeaderView.h"
-#import "DXAlertView.h"
 #import "NSArray+Category.h"
 #import "UIView+SDAutoLayout.h"
 #import "UITableView+SDAutoTableViewCellHeight.h"
@@ -59,5 +58,6 @@
 #import "SHGMainPageConst.h"
 #import "UIButton+EnlargeEdge.h"
 #import "SHGCategoryButton.h"
+#import "SHGAlertView.h"
 #endif
 #endif

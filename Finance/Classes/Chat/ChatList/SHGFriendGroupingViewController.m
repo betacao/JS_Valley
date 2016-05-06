@@ -48,17 +48,17 @@
     self.tableView.tableFooterView = [[UIView alloc] init];
     [self addHeaderRefresh:self.tableView headerRefesh:NO andFooter:YES];
 
-    [self.companyButton setBackgroundImage:[UIImage imageWithColor:[UIColor whiteColor]] forState:UIControlStateNormal];
-    [self.departmentButton setBackgroundImage:[UIImage imageWithColor:[UIColor whiteColor]] forState:UIControlStateNormal];
-    [self.locationButton setBackgroundImage:[UIImage imageWithColor:[UIColor whiteColor]] forState:UIControlStateNormal];
+    [self.companyButton setBackgroundImage:[CommonMethod imageWithColor:[UIColor whiteColor]] forState:UIControlStateNormal];
+    [self.departmentButton setBackgroundImage:[CommonMethod imageWithColor:[UIColor whiteColor]] forState:UIControlStateNormal];
+    [self.locationButton setBackgroundImage:[CommonMethod imageWithColor:[UIColor whiteColor]] forState:UIControlStateNormal];
 
-    [self.companyButton setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithHexString:@"f4f4f4"]] forState:UIControlStateHighlighted];
-    [self.departmentButton setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithHexString:@"f4f4f4"]] forState:UIControlStateHighlighted];
-    [self.locationButton setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithHexString:@"f4f4f4"]] forState:UIControlStateHighlighted];
+    [self.companyButton setBackgroundImage:[CommonMethod imageWithColor:[UIColor colorWithHexString:@"f4f4f4"]] forState:UIControlStateHighlighted];
+    [self.departmentButton setBackgroundImage:[CommonMethod imageWithColor:[UIColor colorWithHexString:@"f4f4f4"]] forState:UIControlStateHighlighted];
+    [self.locationButton setBackgroundImage:[CommonMethod imageWithColor:[UIColor colorWithHexString:@"f4f4f4"]] forState:UIControlStateHighlighted];
 
-    [self.companyButton setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithHexString:@"f4f4f4"]] forState:UIControlStateSelected];
-    [self.departmentButton setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithHexString:@"f4f4f4"]] forState:UIControlStateSelected];
-    [self.locationButton setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithHexString:@"f4f4f4"]] forState:UIControlStateSelected];
+    [self.companyButton setBackgroundImage:[CommonMethod imageWithColor:[UIColor colorWithHexString:@"f4f4f4"]] forState:UIControlStateSelected];
+    [self.departmentButton setBackgroundImage:[CommonMethod imageWithColor:[UIColor colorWithHexString:@"f4f4f4"]] forState:UIControlStateSelected];
+    [self.locationButton setBackgroundImage:[CommonMethod imageWithColor:[UIColor colorWithHexString:@"f4f4f4"]] forState:UIControlStateSelected];
 
     self.companyButton.titleLabel.font = FontFactor(15.0f);
     self.departmentButton.titleLabel.font = FontFactor(15.0f);

@@ -94,7 +94,7 @@
 - (CPTextViewPlaceholder *)cpTextView
 {
     if (!_cpTextView) {
-        _cpTextView = [[CPTextViewPlaceholder alloc] initWithFrame:CGRectMake(kLineViewLeftMargin, 0.0f, kAlertWidth - 2 * kLineViewLeftMargin, 85.0f)];
+        _cpTextView = [[CPTextViewPlaceholder alloc] initWithFrame:CGRectMake(MarginFactor(26.0f), 0.0f, MarginFactor(300.0f) - 2 * MarginFactor(26.0f), 85.0f)];
         _cpTextView.layer.borderWidth = 0.5f;
         _cpTextView.layer.borderColor = [UIColor lightGrayColor].CGColor;
         _cpTextView.font = [UIFont systemFontOfSize:13.0f];
@@ -291,7 +291,7 @@
     __weak typeof(self) weakSelf = self;
     NSString *title = button.titleLabel.text;
     if ([title rangeOfString:@"被驳回"].location != NSNotFound) {
-        DXAlertView *alertView = [[DXAlertView alloc] initWithTitle:@"驳回原因" contentText:self.rejectReason leftButtonTitle:nil rightButtonTitle:@"确定"];
+        SHGAlertView *alertView = [[SHGAlertView alloc] initWithTitle:@"驳回原因" contentText:self.rejectReason leftButtonTitle:nil rightButtonTitle:@"确定"];
         [alertView show];
     } else if([title rangeOfString:@"重新编辑"].location != NSNotFound){
         SHGActionSendViewController *controller =[[SHGActionSendViewController alloc] init];
@@ -306,7 +306,7 @@
             }
         }];
     } else if([title rangeOfString:@"报名"].location != NSNotFound){
-        DXAlertView *alert = [[DXAlertView alloc] initWithCustomView:self.cpTextView leftButtonTitle:@"取消" rightButtonTitle:@"确定"];
+        SHGAlertView *alert = [[SHGAlertView alloc] initWithCustomView:self.cpTextView leftButtonTitle:@"取消" rightButtonTitle:@"确定"];
         alert.rightBlock = ^{
             [weakSelf.cpTextView resignFirstResponder];
             [[SHGActionManager shareActionManager] enterForActionObject:weakSelf.responseObject reason:weakSelf.cpTextView.text finishBlock:^(BOOL success) {
