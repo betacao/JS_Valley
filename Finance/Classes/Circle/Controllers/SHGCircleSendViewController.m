@@ -53,6 +53,7 @@
     self.title = @"发帖";
     [self initView];
     [self addAutoLayout];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardDidShow:) name:UIKeyboardDidShowNotification object:nil];
 }
 - (void)viewDidAppear:(BOOL)animated
 {
@@ -497,9 +498,30 @@
     });
 }
 
+- (void)keyBoardDidShow:(NSNotification *)notificaiton
+{
+    NSDictionary *info = [notificaiton userInfo];
+    NSValue *value = [info objectForKey:UIKeyboardFrameEndUserInfoKey];
+    CGSize keyboardSize = [value CGRectValue].size;
+    UIView *view = (UIView *)self.textView;
+    CGPoint point = CGPointMake(0.0f, CGRectGetMidY(view.frame));
+    point = [view.superview convertPoint:point toView:self.scrollView];
+    //point.y = MAX(0.0f, keyboardSize.height + point.y - CGRectGetHeight(self.view.frame));
+    NSLog(@"%lf",SCREENHEIGHT);
+    point.y = MAX(0.0f, CGRectGetHeight(view.frame) - SCREENHEIGHT + keyboardSize.height + CGRectGetHeight(self.inputAccessoryView.frame) );
+    [self.scrollView setContentOffset:point animated:YES];
+        
+  
+    
+}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
+}
+
+- (void)dealloc
+{
+ [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 @end

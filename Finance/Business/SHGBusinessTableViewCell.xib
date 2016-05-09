@@ -11,7 +11,7 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="113"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="112.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="112"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="cBe-Sy-5CX">
@@ -73,10 +73,18 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <view contentMode="scaleToFill" id="B6h-E9-OmS">
-                        <rect key="frame" x="40" y="-7" width="240" height="128"/>
+                        <rect key="frame" x="40" y="-7" width="169" height="128"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="fCy-AF-mpH">
+                        <rect key="frame" x="270" y="57" width="39" height="22"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <state key="normal" image="business_refresh"/>
+                        <connections>
+                            <action selector="refreshButtonClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="MoY-Hr-FSY"/>
+                        </connections>
+                    </button>
                 </subviews>
             </tableViewCellContentView>
             <connections>
@@ -86,6 +94,7 @@
                 <outlet property="firstLabel" destination="nMe-1j-7RA" id="22L-yy-RHL"/>
                 <outlet property="fourthLabel" destination="UWf-Og-zeb" id="cj5-vA-Poe"/>
                 <outlet property="lineView" destination="jOw-6U-68i" id="ag1-eb-5RV"/>
+                <outlet property="refreshButton" destination="fCy-AF-mpH" id="4Aa-h3-wma"/>
                 <outlet property="secondLabel" destination="TEv-5e-07s" id="DGp-FS-0oh"/>
                 <outlet property="spliteView" destination="B6h-E9-OmS" id="OoM-Pv-YDn"/>
                 <outlet property="thirdLabel" destination="oPc-cb-hjN" id="Ou1-21-M51"/>
@@ -94,4 +103,7 @@
             <point key="canvasLocation" x="129" y="162.5"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="business_refresh" width="39" height="21"/>
+    </resources>
 </document>

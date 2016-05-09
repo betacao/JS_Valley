@@ -445,10 +445,13 @@
         self.phoneNumTextField.text = [array objectAtIndex:4];
         
         NSString *money = [array objectAtIndex:1];
+        NSString *str = [money substringWithRange:NSMakeRange(money.length - 1, 1)];
         if ([money isEqualToString:@"暂未说明"]) {
             self.monenyTextField.text = @"";
+        } else if ([str isEqualToString:@"亿"]){
+            self.monenyTextField.text = [[money substringToIndex:money.length - 1] stringByAppendingString:@"0000"];
         } else{
-            self.monenyTextField.text = [money substringWithRange:NSMakeRange(0, money.length - 2)];
+            self.monenyTextField.text = [money substringWithRange:NSMakeRange(0, money.length - 1)];
         }
         
         //地区

@@ -22,6 +22,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *deleteButton;
 @property (weak, nonatomic) IBOutlet UIView *lineView;
 @property (weak, nonatomic) IBOutlet UIView *spliteView;
+@property (weak, nonatomic) IBOutlet UIButton *refreshButton;
 
 @end
 
@@ -57,6 +58,7 @@
     self.browseImageView.image = [UIImage imageNamed:@"business_Browse"];
 
     self.deleteButton.hidden = YES;
+    self.refreshButton.hidden = YES;
     [self.deleteButton setImage:[UIImage imageNamed:@"home_delete"] forState:UIControlStateNormal];
     [self.deleteButton setEnlargeEdge:20.0f];
 
@@ -66,10 +68,19 @@
 
 - (void)addAutoLayout
 {
-    self.titleLabel.sd_layout
-    .leftSpaceToView(self.contentView, MarginFactor(12.0f))
+    UIImage *image = [UIImage imageNamed:@"business_refresh"];
+    CGSize size = image.size;
+    
+    self.refreshButton.sd_layout
     .rightSpaceToView(self.contentView, MarginFactor(12.0f))
     .topSpaceToView(self.contentView, MarginFactor(18.0f))
+    .widthIs(size.width)
+    .heightIs(size.height);
+    
+    self.titleLabel.sd_layout
+    .leftSpaceToView(self.contentView, MarginFactor(12.0f))
+    .rightSpaceToView(self.refreshButton, MarginFactor(12.0f))
+    .centerYEqualToView(self.refreshButton)
     .heightIs(self.titleLabel.font.lineHeight);
 
     self.firstLabel.sd_layout
@@ -126,6 +137,7 @@
     .topSpaceToView(self.lineView, 0.0f)
     .heightIs(MarginFactor(10.0f));
 
+   
     [self setupAutoHeightWithBottomView:self.spliteView bottomMargin:0.0f];
 }
 
@@ -135,12 +147,20 @@
 
     self.titleLabel.text = object.title;
     self.firstLabel.text = [[SHGGloble sharedGloble] businessKeysForValues:object.businessShow showEmptyKeys:NO];
-
+    
     self.secondLabel.text = [[SHGGloble sharedGloble] businessKeysForValues:object.investAmount showEmptyKeys:NO];
     self.thirdLabel.text = [@"地区：" stringByAppendingString:[object.area isEqualToString:@""] ? @"全国" : object.area];
     self.fourthLabel.text = [@"时间：" stringByAppendingString:object.createTime];
     self.browseLabel.text = object.browseNum;
-
+    
+    if ([object.isRefresh isEqualToString:@"true"]) {
+        [self.refreshButton setImage:[UIImage imageNamed:@"business_refresh"] forState:UIControlStateNormal];
+        self.refreshButton.selected =YES;
+    } else{
+        [self.refreshButton setImage:[UIImage imageNamed:@"business_refreshed"] forState:UIControlStateNormal];
+        self.refreshButton.selected = NO;
+    }
+    
 }
 
 - (void)setStyle:(SHGBusinessTableViewCellStyle)style
@@ -148,8 +168,10 @@
     _style = style;
     if (style == SHGBusinessTableViewCellStyleMine) {
         self.deleteButton.hidden = NO;
+        self.refreshButton.hidden = NO;
     } else{
         self.deleteButton.hidden = YES;
+        self.refreshButton.hidden = YES;
     }
 }
 
@@ -170,6 +192,23 @@
         }];
     };
     [alertView show];
+
+}
+- (IBAction)refreshButtonClick:(UIButton *)sender
+{
+    if (sender.selected) {
+        [MOCHTTPRequestOperationManager postWithURL:[rBaseAddressForHttp stringByAppendingString:@"/business/refreshBusiness"] parameters:@{@"uid": UID,@"businessId": self.object.businessID, @"businessType":self.object.type} success:^(MOCHTTPResponse *response) {
+            [self.refreshButton setImage:[UIImage imageNamed:@"business_refreshed"] forState:UIControlStateNormal];
+            self.refreshButton.selected = NO;
+            [Hud showMessageWithText:@"刷新成功，24小时只能刷新一次"];
+        } failed:^(MOCHTTPResponse *response) {
+            
+        }];
+        
+    } else{
+        [Hud showMessageWithText:@"不到间隔时间刷新，24小时只能刷新一次"];
+    }
+    
 
 }
 

@@ -21,13 +21,24 @@
 
 - (void)awakeFromNib
 {
-    [super awakeFromNib];
     [self addSdLayout];
 
 }
 
 - (void)addSdLayout
 {
+    self.companylabel.textColor = Color(@"626262");
+    self.companylabel.font = FontFactor(12.0f);
+    
+    self.nameLabel.textColor = Color(@"1d5798");
+    self.nameLabel.font = FontFactor(14.0f);
+    
+    self.positionLabel.textColor = Color(@"626262");
+    self.positionLabel.font = FontFactor(13.0f);
+    
+    self.areaLabel.textColor = Color(@"a5a5a5");
+    self.areaLabel.font = FontFactor(10.0f);
+    
     UIImage *image = [UIImage imageNamed:@"newAddAttention"];
     CGSize size = image.size;
     self.headerView.sd_layout
@@ -62,33 +73,20 @@
 
     self.attentionButton.sd_layout
     .bottomEqualToView(self.positionLabel)
-    .rightEqualToView(self.companylabel)
+    .rightSpaceToView(self.contentView, MarginFactor(7.0f))
     .widthIs(size.width)
     .heightIs(size.height);
-    
-    
     
 }
 
 - (void)setObject:(CircleListObj *)object
 {
-    self.companylabel.textColor = Color(@"626262");
-    self.companylabel.font = FontFactor(12.0f);
-    
-    self.nameLabel.textColor = Color(@"1d5798");
-    self.nameLabel.font = FontFactor(14.0f);
-    
-    self.positionLabel.textColor = Color(@"626262");
-    self.positionLabel.font = FontFactor(13.0f);
-    
-    self.areaLabel.textColor = Color(@"a5a5a5");
-    self.areaLabel.font = FontFactor(10.0f);
-
     _object = object;
+    [self clearCell];
     [self.headerView updateHeaderView:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,_object.picname] placeholderImage:[UIImage imageNamed:@"default_head"] status:YES userID:_object.userid];
-    self.attentionButton.selected = NO;
     [self.attentionButton setImage:[UIImage imageNamed:@"newAddAttention"] forState:UIControlStateNormal];
     [self.attentionButton setImage:[UIImage imageNamed:@"newAttention"] forState:UIControlStateSelected];
+    
     if (_object.realname.length == 0) {
         self.nameLabel.text = @" ";
     } else{
@@ -105,10 +103,19 @@
         self.positionLabel.text = @" ";
     } else{
         self.positionLabel.text = _object.title;
+        
     }
+    
     self.companylabel.text = _object.companyname;
     
-    
+}
+
+- (void)clearCell
+{
+    self.nameLabel.text = @"";
+    self.positionLabel.text = @"";
+    self.areaLabel.text = @"";
+    self.attentionButton.titleLabel.text = @"";
     
 }
 - (IBAction)attentionClick:(UIButton *)sender

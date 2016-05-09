@@ -54,6 +54,15 @@ static NSString *const HeaderIdentifier = @"HeaderIdentifier";
     
 }
 
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
+        self.navigationController.interactivePopGestureRecognizer.enabled = NO;
+    }
+}
 - (void)addSDLayout
 {
     self.collectionView.sd_layout
