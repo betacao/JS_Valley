@@ -208,8 +208,6 @@
     } else{
         [Hud showMessageWithText:@"不到间隔时间刷新，24小时只能刷新一次"];
     }
-    
-
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated

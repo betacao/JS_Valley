@@ -274,6 +274,7 @@
 {
     SHGBusinessNoticeObject *otherObject = [[SHGBusinessNoticeObject alloc] init];
     otherObject.businessID = [NSString stringWithFormat:@"%ld",NSIntegerMax];
+    otherObject.modifyTime = [NSString stringWithFormat:@"%ld",NSIntegerMax];
     NSString *position = [self.positionDictionary objectForKey:[self.scrollView currentName]];
     if ([position isEqualToString:@"0"]) {
         otherObject.noticeType = SHGBusinessTypePositionTop;
@@ -382,6 +383,30 @@
     return [businessID isEqualToString:maxBusinessID] ? @"-1" : businessID;
 }
 
+- (NSString *)maxModifyTime
+{
+    NSString *modifyTime = @"";
+    for (SHGBusinessObject *object in self.currentArray) {
+        if ([object.modifyTime compare:modifyTime options:NSNumericSearch] == NSOrderedDescending && ![object.modifyTime isEqualToString:[NSString stringWithFormat:@"%ld",NSIntegerMax]]) {
+            modifyTime = object.modifyTime;
+        }
+    }
+    return [modifyTime isEqualToString:@""] ? @"" : modifyTime;
+}
+
+- (NSString *)minModifyTime
+{
+    NSString *maxModifyTime = [NSString stringWithFormat:@"%ld",NSIntegerMax];
+    NSString *modifyTime = maxModifyTime;
+    for (SHGBusinessObject *object in self.currentArray) {
+        NSString *objectModifyTime = object.modifyTime;
+        if ([objectModifyTime compare:modifyTime options:NSNumericSearch] == NSOrderedAscending) {
+            modifyTime = object.modifyTime;
+        }
+    }
+    return [modifyTime isEqualToString:maxModifyTime] ? @"" : modifyTime;
+}
+
 #pragma mark ------网络请求部分
 
 - (void)loadDataWithTarget:(NSString *)target
@@ -397,7 +422,8 @@
     NSString *city = [self.cityName isEqualToString:@"全国"] ? @"" : self.cityName;
     NSString *redirect = [position isEqualToString:@"0"] ? @"1" : @"0";
     NSString *businessId = [target isEqualToString:@"refresh"] ? [self maxBusinessID] : [self minBusinessID];
-    NSMutableDictionary *param = [NSMutableDictionary dictionaryWithDictionary:@{@"businessId":businessId ,@"uid":UID ,@"type":[self.scrollView currentType] ,@"target":target ,@"pageSize":@"10" , @"area":city, @"redirect":redirect, @"cfData":self.CFData}];
+    NSString *modifyTime = [target isEqualToString:@"refresh"] ? [self maxModifyTime] : [self minModifyTime];
+    NSMutableDictionary *param = [NSMutableDictionary dictionaryWithDictionary:@{@"businessId":businessId ,@"modifyTime":modifyTime ,@"uid":UID ,@"type":[self.scrollView currentType] ,@"target":target ,@"pageSize":@"10" , @"area":city, @"redirect":redirect, @"cfData":self.CFData}];
 
     NSDictionary *paramDictionary = [self.paramDictionary objectForKey:[self.scrollView currentName]];
     if ([paramDictionary allKeys].count > 0) {

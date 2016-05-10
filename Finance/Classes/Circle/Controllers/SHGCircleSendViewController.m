@@ -53,18 +53,24 @@
     self.title = @"发帖";
     [self initView];
     [self addAutoLayout];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardDidShow:) name:UIKeyboardDidShowNotification object:nil];
 }
+
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    //为了能够滑动
-    self.scrollView.contentSize = CGSizeMake(0.0f, CGRectGetHeight(self.scrollView.frame) + 1.0f);
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardDidShow:) name:UIKeyboardDidShowNotification object:nil];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)initView
 {
     self.textView.placeholder = @"来说点什么吧...";
+    self.textView.bounces = NO;
     self.textView.placeholderColor = [UIColor colorWithHexString:@"919291"];
     self.textView.textColor = [UIColor colorWithHexString:@"161616"];
     self.textView.font = FontFactor(16.0f);
@@ -134,6 +140,14 @@
     .leftEqualToView(self.textView)
     .rightEqualToView(self.textView)
     .heightIs(2.0f * kImageViewHeight + kImageViewMargin);
+
+    __weak typeof(self)weakSelf = self;
+    self.photoView.didFinishAutoLayoutBlock = ^(CGRect rect){
+        CGFloat maxY = MAX(CGRectGetMaxY(rect), CGRectGetHeight(self.scrollView.frame) + 1.0f);
+        if (weakSelf.scrollView.contentSize.height != maxY) {
+            weakSelf.scrollView.contentSize = CGSizeMake(0.0f, maxY);
+        }
+    };
 
     size = self.addButton.currentBackgroundImage.size;
     self.addButton.sd_layout
@@ -476,19 +490,35 @@
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
 {
-    if ( ![text isEqualToString:@""] && textView.text.length + text.length > MAX_TEXT_LENGTH){
+    if (![text isEqualToString:@""] && textView.text.length + text.length > MAX_TEXT_LENGTH){
         [Hud showMessageWithText:@"帖子过长，不能超过2000个字"];
         return NO;
     }
     return YES;
 }
 
-- (void)textViewDidEndEditing:(UITextView *)textView
+- (BOOL)textViewShouldEndEditing:(UITextView *)textView
 {
     CGSize size = [textView sizeThatFits:CGSizeMake(CGRectGetWidth(textView.frame), MAXFLOAT)];
     CGRect frame = textView.frame;
     frame.size.height = size.height > kTextViewMinHeight ? size.height : kTextViewMinHeight;
     textView.frame = frame;
+    return YES;
+}
+
+- (void)keyBoardDidShow:(NSNotification *)notification
+{
+    NSDictionary *info = [notification userInfo];
+    NSValue *value = [info objectForKey:UIKeyboardFrameEndUserInfoKey];
+    CGSize keyboardSize = [value CGRectValue].size;
+
+    CGFloat maxHeight = CGRectGetHeight(self.view.frame) - keyboardSize.height - CGRectGetHeight(self.inputAccessoryView.frame);
+
+    CGFloat cursorPosition = [self.textView caretRectForPosition:self.textView.selectedTextRange.start].origin.y;
+
+    if (cursorPosition > maxHeight) {
+        [self.scrollView setContentOffset:CGPointMake(0.0f, cursorPosition - maxHeight) animated:YES];
+    }
 }
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
@@ -498,30 +528,9 @@
     });
 }
 
-- (void)keyBoardDidShow:(NSNotification *)notificaiton
-{
-    NSDictionary *info = [notificaiton userInfo];
-    NSValue *value = [info objectForKey:UIKeyboardFrameEndUserInfoKey];
-    CGSize keyboardSize = [value CGRectValue].size;
-    UIView *view = (UIView *)self.textView;
-    CGPoint point = CGPointMake(0.0f, CGRectGetMidY(view.frame));
-    point = [view.superview convertPoint:point toView:self.scrollView];
-    //point.y = MAX(0.0f, keyboardSize.height + point.y - CGRectGetHeight(self.view.frame));
-    NSLog(@"%lf",SCREENHEIGHT);
-    point.y = MAX(0.0f, CGRectGetHeight(view.frame) - SCREENHEIGHT + keyboardSize.height + CGRectGetHeight(self.inputAccessoryView.frame) );
-    [self.scrollView setContentOffset:point animated:YES];
-        
-  
-    
-}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-}
-
-- (void)dealloc
-{
- [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 @end

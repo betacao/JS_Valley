@@ -431,6 +431,7 @@
     };
     [alertView show];
 }
+
 - (BOOL)checkInputMessage
 {
     if (self.nameTextField.text.length == 0) {
