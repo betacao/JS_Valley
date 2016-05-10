@@ -195,27 +195,6 @@ static NSString *const HeaderIdentifier = @"HeaderIdentifier";
     
 }
 
-- (void)changeRecommend:(NSString *)uid
-{
-    NSString *url = [NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"friends"];
-    NSDictionary *param = @{@"uid":[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID], @"oid":uid};
-    
-        [MOCHTTPRequestOperationManager postWithURL:url class:nil parameters:param success:^(MOCHTTPResponse *response) {
-            NSString *code = [response.data valueForKey:@"code"];
-            if ([code isEqualToString:@"000"]){
-                for (CircleListObj *cobj in self.dataArray) {
-                    if ([cobj.userid isEqualToString:uid]) {
-                        cobj.isattention = @"Y";
-                    }
-                }
-                
-            }
-            [self.collectionView reloadData];
-        } failed:^(MOCHTTPResponse *response) {
-        
-        }];
-
-}
 
 - (void)addNewAddress
 {

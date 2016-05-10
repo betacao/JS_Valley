@@ -9,5 +9,5 @@
 #import "BaseViewController.h"
 
 @interface SHGRecommendViewController : BaseViewController
-- (void)changeRecommend:(NSString *)uid;
+
 @end

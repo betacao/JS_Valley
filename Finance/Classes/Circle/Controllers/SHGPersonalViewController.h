@@ -13,6 +13,5 @@
 
 @property (strong, nonatomic) NSString *userId;
 @property (weak, nonatomic) SHGCardCollectionViewController * controller;
-@property (weak, nonatomic) SHGRecommendViewController *recommendController;
 @property (strong, nonatomic) id<CircleActionDelegate> delegate;
 @end
