@@ -142,7 +142,6 @@ static NSString *const HeaderIdentifier = @"HeaderIdentifier";
 {
     CircleListObj *obj = [self.dataArray objectAtIndex:indexPath.row];
     SHGPersonalViewController *controller = [[SHGPersonalViewController alloc] initWithNibName:@"SHGPersonalViewController" bundle:nil];
-    controller.recommendController = self;
     controller.userId = obj.userid;
     [self.navigationController pushViewController:controller animated:YES];
     
