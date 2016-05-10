@@ -83,30 +83,30 @@
 {
     _object = object;
     [self clearCell];
-    [self.headerView updateHeaderView:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,_object.picname] placeholderImage:[UIImage imageNamed:@"default_head"] status:YES userID:_object.userid];
+    [self.headerView updateHeaderView:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,object.picname] placeholderImage:[UIImage imageNamed:@"default_head"] status:YES userID:object.userid];
     [self.attentionButton setImage:[UIImage imageNamed:@"newAddAttention"] forState:UIControlStateNormal];
     [self.attentionButton setImage:[UIImage imageNamed:@"newAttention"] forState:UIControlStateSelected];
     
-    if (_object.realname.length == 0) {
+    if (object.realname.length == 0) {
         self.nameLabel.text = @" ";
     } else{
-        self.nameLabel.text = _object.realname;
+        self.nameLabel.text = object.realname;
     }
     
-    if (_object.position.length == 0) {
+    if (object.position.length == 0) {
         self.areaLabel.text = @" ";
     } else{
-        self.areaLabel.text = _object.position;
+        self.areaLabel.text = object.position;
     }
     
-    if (_object.title.length == 0) {
+    if (object.title.length == 0) {
         self.positionLabel.text = @" ";
     } else{
-        self.positionLabel.text = _object.title;
+        self.positionLabel.text = object.title;
         
     }
     
-    self.companylabel.text = _object.companyname;
+    self.companylabel.text = object.companyname;
     
 }
 

@@ -61,6 +61,7 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
 @property (strong, nonatomic) NSString * commonfriends;
 @property (weak, nonatomic) IBOutlet UIView *grayView;
 @property (assign, nonatomic) BOOL isCardChange;
+@property (assign, nonatomic) BOOL isRecommendChange;
 @end
 
 @implementation SHGPersonalViewController
@@ -70,6 +71,7 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
     [super viewDidLoad];
     self.title = @"个人动态";
     self.isCardChange = YES;
+    self.isRecommendChange = YES;
     if ([self.userId isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID]]) {
         self.listArray = [NSMutableArray arrayWithArray:@[@"我的动态", @"我的好友"]];
         self.friendImage.hidden = YES;
@@ -88,6 +90,10 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
     [super viewWillDisappear:animated];
     if (!self.isCardChange) {
         [self.controller changeCardCollection];
+    }
+    
+    if (!self.isRecommendChange) {
+        [self.recommendController changeRecommend:self.userId];
     }
 }
 - (void)initView
@@ -341,6 +347,7 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
 - (IBAction)sendMessageButtonClick:(UIButton *)sender
 {
     if ([self.relationShip integerValue] == 0) {
+        self.isRecommendChange = NO;
         [self action];
     } else if ([self.relationShip integerValue] == 1){
         [Hud hideHud];

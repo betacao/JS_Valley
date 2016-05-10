@@ -309,9 +309,10 @@ typedef NS_ENUM(NSInteger, RegistType)
         [[NSUserDefaults standardUserDefaults] setObject:token forKey:KEY_TOKEN];
         [[NSUserDefaults standardUserDefaults] setObject:@"1" forKey:KEY_AUTOLOGIN];
         [[NSUserDefaults standardUserDefaults] synchronize];
+        [self chatLoagin];
+        
         SHGRecommendViewController *viewController = [[SHGRecommendViewController alloc] init];
         [self.navigationController pushViewController:viewController animated:YES];
-
     } failed:^(MOCHTTPResponse *response) {
         [Hud showMessageWithText:response.errorMessage];
         [Hud hideHud];

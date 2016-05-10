@@ -165,13 +165,8 @@
             [[NSUserDefaults standardUserDefaults] synchronize];
             NSString *isfull = response.dataDictionary[@"isfull"];
             weakSelf.isFull = isfull;
-            if ([weakSelf.isFull isEqualToString:@"1"]){
-                [weakSelf chatLoagin];
-                [weakSelf loginSuccess];
-            } else{
-                [weakSelf showLoginViewController];
-            }
-
+            [weakSelf chatLoagin];
+            [weakSelf loginSuccess];
         }
     }failed:^(MOCHTTPResponse *response){
         [Hud showMessageWithText:response.errorMessage];

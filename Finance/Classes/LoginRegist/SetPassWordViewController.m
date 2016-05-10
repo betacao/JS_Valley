@@ -87,8 +87,6 @@
         [self chatLoagin];
         SHGRecommendViewController *viewController = [[SHGRecommendViewController alloc] init];
         [self.navigationController pushViewController:viewController animated:YES];
-
-        [self loginSuccess];
     } failed:^(MOCHTTPResponse *response) {
         [Hud showMessageWithText:response.errorMessage];
         [Hud hideHud];

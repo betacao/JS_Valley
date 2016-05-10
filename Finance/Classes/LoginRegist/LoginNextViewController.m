@@ -9,7 +9,7 @@
 #import "LoginNextViewController.h"
 #import "SHGHomeViewController.h"
 #import "ApplyViewController.h"
-
+#import "SHGRecommendViewController.h"
 @interface LoginNextViewController ()
 
 @property (weak, nonatomic) IBOutlet UITextField *lblPassward;
@@ -17,7 +17,7 @@
 @property (weak, nonatomic) IBOutlet UIView *bgView;
 @property (weak, nonatomic) IBOutlet UIButton *forgetPassward;
 @property (weak, nonatomic) IBOutlet UIButton *loginButton;
-
+@property (nonatomic, strong) NSString *recommend;
 @end
 
 @implementation LoginNextViewController
@@ -112,7 +112,7 @@
         NSString *head_img = response.dataDictionary[@"head_img"];
         NSString *area = response.dataDictionary[@"area"];
         weakSelf.isFull = response.dataDictionary[@"isfull"];
-
+        weakSelf.recommend = response.dataDictionary[@"recommend"];
         [[NSUserDefaults standardUserDefaults] setObject:uid forKey:KEY_UID];
         [[NSUserDefaults standardUserDefaults] setObject:password forKey:KEY_PASSWORD];
         [[NSUserDefaults standardUserDefaults] setObject:state forKey:KEY_AUTHSTATE];
@@ -143,8 +143,14 @@
         if (success) {
             NSString *code = [response.data valueForKey:@"code"];
             if ([code isEqualToString:@"000"]){
-                [weakSelf chatLoagin];
-                [weakSelf loginSuccess];
+                if ([weakSelf.recommend isEqualToString:@"1"]) {
+                    [weakSelf chatLoagin];
+                    [weakSelf loginSuccess];
+                } else{
+                    SHGRecommendViewController *viewController = [[SHGRecommendViewController alloc] init];
+                    [self.navigationController pushViewController:viewController animated:YES];
+                }
+                
             }
         } else{
             [Hud showMessageWithText:response.errorMessage];

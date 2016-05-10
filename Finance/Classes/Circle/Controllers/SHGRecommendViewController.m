@@ -55,14 +55,6 @@ static NSString *const HeaderIdentifier = @"HeaderIdentifier";
 }
 
 
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-    
-    if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
-        self.navigationController.interactivePopGestureRecognizer.enabled = NO;
-    }
-}
 - (void)addSDLayout
 {
     self.collectionView.sd_layout
@@ -150,6 +142,7 @@ static NSString *const HeaderIdentifier = @"HeaderIdentifier";
 {
     CircleListObj *obj = [self.dataArray objectAtIndex:indexPath.row];
     SHGPersonalViewController *controller = [[SHGPersonalViewController alloc] initWithNibName:@"SHGPersonalViewController" bundle:nil];
+    controller.recommendController = self;
     controller.userId = obj.userid;
     [self.navigationController pushViewController:controller animated:YES];
     
@@ -200,6 +193,28 @@ static NSString *const HeaderIdentifier = @"HeaderIdentifier";
         }];
     }
     
+}
+
+- (void)changeRecommend:(NSString *)uid
+{
+    NSString *url = [NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"friends"];
+    NSDictionary *param = @{@"uid":[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID], @"oid":uid};
+    
+        [MOCHTTPRequestOperationManager postWithURL:url class:nil parameters:param success:^(MOCHTTPResponse *response) {
+            NSString *code = [response.data valueForKey:@"code"];
+            if ([code isEqualToString:@"000"]){
+                for (CircleListObj *cobj in self.dataArray) {
+                    if ([cobj.userid isEqualToString:uid]) {
+                        cobj.isattention = @"Y";
+                    }
+                }
+                
+            }
+            [self.collectionView reloadData];
+        } failed:^(MOCHTTPResponse *response) {
+        
+        }];
+
 }
 
 - (void)addNewAddress
@@ -264,6 +279,7 @@ static NSString *const HeaderIdentifier = @"HeaderIdentifier";
         [weakSelf loginSuccess];
     });
 }
+
 - (void)loginSuccess
 {
     [[AppDelegate currentAppdelegate] moveToRootController:nil];
