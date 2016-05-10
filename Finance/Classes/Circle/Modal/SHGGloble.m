@@ -11,8 +11,9 @@
 #import "SHGBusinessListViewController.h"
 #import "SHGBusinessManager.h"
 #import "HeadImage.h"
+#import <MessageUI/MessageUI.h>
 
-@interface SHGGloble ()
+@interface SHGGloble ()<MFMessageComposeViewControllerDelegate>
 
 /**
  @brief  当前用户名
@@ -687,17 +688,42 @@
     }
 }
 
-- (void)sendMessage:(NSString *)number
+- (void)showMessageView:(NSArray *)phones body:(NSString *)body
 {
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"sms://%@",number]];
-    if ([[UIApplication sharedApplication] canOpenURL:url]) {
-        [[UIApplication sharedApplication] openURL:url];
+    if([MFMessageComposeViewController canSendText]) {
+        MFMessageComposeViewController *controller = [[MFMessageComposeViewController alloc]init];
+        controller.recipients = phones;
+        controller.body = body;
+        controller.messageComposeDelegate = self;
+        [[self getCurrentRootViewController] presentViewController:controller animated:YES completion:nil];
+    } else {
+        SHGAlertView *alert = [[SHGAlertView alloc] initWithTitle:@"提示" contentText:@"该设备不支持短信功能" leftButtonTitle:nil rightButtonTitle:@"确定"];
+        [alert show];
     }
 }
 
 
 
+- (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result
+{
+    [controller dismissViewControllerAnimated:YES completion:nil];
+    switch (result) {
+        case MessageComposeResultSent:
+            //信息传送成功
 
+            break;
+        case MessageComposeResultFailed:
+            //信息传送失败
+
+            break;
+        case MessageComposeResultCancelled:
+            //信息被用户取消传送
+
+            break;
+        default:
+            break;
+    }
+}
 
 
 

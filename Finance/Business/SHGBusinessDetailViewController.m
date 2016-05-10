@@ -21,12 +21,7 @@
 #import "SHGEquityFinanceSendViewController.h"
 #import "SHGEquityInvestSendViewController.h"
 #import "SHGSameAndCommixtureSendViewController.h"
-#define k_FirstToTop 5.0f * XFACTOR
-#define k_SecondToTop 10.0f * XFACTOR
-#define k_ThirdToTop 15.0f * XFACTOR
-#define PRAISE_WIDTH 30.0f
-#define PRAISE_SEPWIDTH     10.0f
-#define PRAISE_RIGHTWIDTH     40.0f
+
 
 typedef NS_ENUM(NSInteger, SHGTapPhoneType)
 {
@@ -880,7 +875,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
                 [sheet addButtonWithTitle:obj];
             }];
             if (array.count == 1) {
-                [[SHGGloble sharedGloble] sendMessage:[array firstObject]];
+                [[SHGGloble sharedGloble] showMessageView:array body:@"你好，我在大牛圈看到您发布的业务，请问"];
             } else {
                 self.type = SHGTapPhoneTypeSendMessage;
                 [sheet showInView:self.view];
@@ -888,7 +883,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
         } else {
             //直接拨号
             if (self.type == SHGTapPhoneTypeSendMessage) {
-                [[SHGGloble sharedGloble] sendMessage:string];
+                [[SHGGloble sharedGloble] showMessageView:array body:@"你好，我在大牛圈看到您发布的业务，请问"];
             } else {
                 [self openTel:string];
             }

@@ -246,9 +246,10 @@ typedef void (^SHHomeDataCompletionBlock)(NSArray *allList, NSArray *normalList,
 /**
  @brief 发送短信
 
- @param number 短信号码
+ @param phones 发送的电话号码 可以多个
+ @param body   默认的消息
 
  @since 1.8.1
  */
-- (void)sendMessage:(NSString *)number;
+- (void)showMessageView:(NSArray *)phones body:(NSString *)body;
 @end
