@@ -32,7 +32,6 @@
 @property (strong, nonatomic) UITableViewCell *emptyCell;
 @property (strong, nonatomic) SHGEmptyDataView *emptyView;
 @property (assign, nonatomic) CGSize addBusinessSize;
-@property (assign, nonatomic) CGRect filterViewFrame;
 //
 @property (weak, nonatomic) NSMutableArray *currentArray;
 @property (assign, nonatomic) BOOL refreshing;
@@ -62,8 +61,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self addHeaderRefresh:self.tableView headerRefesh:YES headerTitle:nil andFooter:YES footerTitle:@{@(MJRefreshStateIdle):@"以上为当前业务信息"}];
-    self.tableView.backgroundColor = Color(@"efeeef");
     if (self.block) {
         self.block(self.searchBar);
     }
@@ -85,13 +82,6 @@
     .topSpaceToView(self.scrollView, 0.0f)
     .leftSpaceToView(self.view, 0.0f)
     .rightSpaceToView(self.view, 0.0f);
-
-    __weak typeof(self)weakSelf = self;
-    self.filterView.didFinishAutoLayoutBlock = ^(CGRect frame){
-        weakSelf.filterViewFrame = frame;
-        weakSelf.tableView.sd_resetNewLayout
-        .spaceToSuperView(UIEdgeInsetsMake(CGRectGetMinY(frame), 0.0f, kTabBarHeight, 0.0f));
-    };
 }
 
 - (void)clearCache
@@ -113,8 +103,20 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+    if (self.tableView.hidden) {
+        //放在这里的原因是 kTabBarHeight 这个属性在这个时候才可以计算到
+        self.tableView.hidden = NO;
+        [self addHeaderRefresh:self.tableView headerRefesh:YES headerTitle:nil andFooter:YES footerTitle:@{@(MJRefreshStateIdle):@"以上为当前业务信息"}];
+        self.tableView.backgroundColor = Color(@"efeeef");
+        self.tableView.sd_layout
+        .leftSpaceToView(self.view, 0.0f)
+        .rightSpaceToView(self.view, 0.0f)
+        .bottomSpaceToView(self.view, kTabBarHeight)
+        .topSpaceToView(self.scrollView, 0.0f);
+        [self.tableView updateLayout];
+    }
+
     [[SHGBusinessManager shareManager] getSecondListBlock:nil];
-    self.filterView.didFinishAutoLayoutBlock = nil;
     
     BOOL needUploadContact = [[NSUserDefaults standardUserDefaults] boolForKey:KEY_USER_NEEDUPLOADCONTACT];
     if(needUploadContact){
@@ -682,11 +684,17 @@
     if (index == 0) {
         self.filterView.hidden = YES;
         self.tableView.sd_resetNewLayout
-        .spaceToSuperView(UIEdgeInsetsMake(CGRectGetMinY(self.filterViewFrame), 0.0f, kTabBarHeight, 0.0f));
+        .leftSpaceToView(self.view, 0.0f)
+        .rightSpaceToView(self.view, 0.0f)
+        .bottomSpaceToView(self.view, kTabBarHeight)
+        .topSpaceToView(self.scrollView, 0.0f);
     } else{
         self.filterView.hidden = NO;
         self.tableView.sd_resetNewLayout
-        .spaceToSuperView(UIEdgeInsetsMake(CGRectGetMaxY(self.filterViewFrame), 0.0f, kTabBarHeight, 0.0f));
+        .leftSpaceToView(self.view, 0.0f)
+        .rightSpaceToView(self.view, 0.0f)
+        .bottomSpaceToView(self.view, kTabBarHeight)
+        .topSpaceToView(self.filterView, 0.0f);
     }
     [self.tableView updateLayout];
 

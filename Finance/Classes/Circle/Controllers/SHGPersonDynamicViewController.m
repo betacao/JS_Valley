@@ -45,7 +45,6 @@
         [Hud hideHud];
         [weakSelf.tableView.mj_header endRefreshing];
         [weakSelf.tableView.mj_footer endRefreshing];
-        NSLog(@"=data = %@",response.dataDictionary);
         [weakSelf parseDataWithDic:response.dataDictionary];
         [weakSelf.tableView reloadData];
     } failed:^(MOCHTTPResponse *response) {
@@ -60,40 +59,22 @@
 
 - (void)parseDataWithDic:(NSDictionary *)dictionary
 {
-    NSArray *listArray = [dictionary objectForKey: @"list"];
+    NSArray *listArray = [dictionary objectForKey:@"list"];
     listArray = [[SHGGloble sharedGloble] parseServerJsonArrayToJSONModel:listArray class:[CircleListObj class]];
     if ([self.target isEqualToString:@"first"] && listArray.count > 0) {
         [self.dataArr addObjectsFromArray:listArray];
     }
-    if ([self.target isEqualToString:@"refresh"] && listArray.count > 0) {
-        for (NSInteger i = listArray.count - 1; i >= 0; i--){
-            CircleListObj *obj = [listArray objectAtIndex:i];
-            NSLog(@"%@",obj.rid);
-            [self.dataArr insertObject:obj atIndex:0];
-        }
-    }
     if ([self.target isEqualToString:@"load"] && listArray.count > 0) {
         [self.dataArr addObjectsFromArray:listArray];
-        if (listArray.count < 10) {
-            [self.tableView.mj_footer endRefreshingWithNoMoreData];
-        }
-
-    }}
-
-- (void)refreshHeader
-{
-    NSLog(@"refreshHeader");
-    self.target = @"refresh";
-    if (self.dataArr.count > 0){
-        CircleListObj *obj = self.dataArr[0];
-        [self requestDataWithTarget:@"refresh" time:obj.rid];
+    }
+    if (listArray.count < 10) {
+        [self.tableView.mj_footer endRefreshingWithNoMoreData];
     }
 }
 
 
 - (void)refreshFooter
 {
-    NSLog(@"refreshFooter");
     self.target = @"load";
     if (self.dataArr.count > 0){
         CircleListObj *obj = [self.dataArr lastObject];

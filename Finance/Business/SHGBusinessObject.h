@@ -73,8 +73,11 @@
 @end
 
 @interface SHGBusinessSecondsubObject : MTLModel<MTLJSONSerializing>
-@property (strong, nonatomic) NSString *code;
-@property (strong, nonatomic) NSString *value;
+
+@property (strong, nonatomic) NSString *code;//代号
+@property (strong, nonatomic) NSString *value;//显示的文字
+@property (strong, nonatomic) NSString *superCode;//所属的父分类名称，指向对应的secondObject的key
+
 @end
 
 typedef NS_ENUM(NSInteger, SHGBusinessNoticeType)

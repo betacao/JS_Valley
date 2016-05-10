@@ -159,7 +159,7 @@
             [array enumerateObjectsUsingBlock:^(SHGBusinessSecondsubObject *subObject, NSUInteger idx, BOOL * _Nonnull stop) {
                 codeValue = [codeValue stringByAppendingFormat:@"%@;",subObject.code];
                 if ([subObject.value isEqualToString:@"不限"]) {
-                    subObject.code = key;
+                    subObject.superCode = key;
                 } else {
                     [titleArray addObject:subObject];
                 }
