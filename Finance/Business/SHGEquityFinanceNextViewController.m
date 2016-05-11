@@ -455,6 +455,11 @@
 
 - (BOOL)checkInputMessage
 {
+    CGFloat percent = [self.retributionTextField.text floatValue] - 100.0f;
+    if (percent > 0) {
+        [Hud showMessageWithText:@"抱歉，您输入的数字不可超过100"];
+        return NO;
+    }
     if (self.marketExplainTextView.text.length == 0) {
         [Hud showMessageWithText:@"请填写业务说明"];
         return NO;

@@ -552,6 +552,11 @@
         [Hud showMessageWithText:@"请选择增信方式"];
         return NO;
     }
+    CGFloat percent = [self.retributionTextField.text floatValue] - 100.0f;
+    if (percent > 0) {
+        [Hud showMessageWithText:@"抱歉，您输入的数字不可超过100"];
+        return NO;
+    }
     if (self.investTimeButtonView.selectedArray.count == 0) {
         [Hud showMessageWithText:@"请选择期限"];
         return NO;
