@@ -200,13 +200,13 @@
         [MOCHTTPRequestOperationManager postWithURL:[rBaseAddressForHttp stringByAppendingString:@"/business/refreshBusiness"] parameters:@{@"uid": UID,@"businessId": self.object.businessID, @"businessType":self.object.type} success:^(MOCHTTPResponse *response) {
             [self.refreshButton setImage:[UIImage imageNamed:@"business_refreshed"] forState:UIControlStateNormal];
             self.refreshButton.selected = NO;
-            [Hud showMessageWithText:@"刷新成功，24小时只能刷新一次"];
+            [Hud showMessageWithText:@"刷新成功"];
         } failed:^(MOCHTTPResponse *response) {
             
         }];
         
     } else{
-        [Hud showMessageWithText:@"不到间隔时间刷新，24小时只能刷新一次"];
+        [Hud showMessageWithText:@"莫心急，24小时内只能刷新一次哦～"];
     }
 }
 
