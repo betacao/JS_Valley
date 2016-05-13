@@ -11,6 +11,7 @@
 #import "SHGBusinessScrollView.h"
 #import "SHGBusinessListViewController.h"
 #import "SHGBusinessDetailViewController.h"
+#import "SHGBusinessSendSuccessViewController.h"
 @interface SHGBusinessManager()
 @property (strong, nonatomic) NSArray *secondListArray;
 @property (strong, nonatomic) NSArray *trademixedArray;//同业混业
@@ -310,13 +311,12 @@
     }
     NSString *postContent = [NSString stringWithFormat:@"【业务】%@", theme];
     NSString *shareContent = [NSString stringWithFormat:@"【业务】%@", theme];
-//    NSString *friendContent = [NSString stringWithFormat:@"%@\"%@\"%@%@",@"Hi，我看到了一个非常棒的业务,关于",theme,@"，赶快去业务版块查看吧！",request];
-//     NSString *messageContent = [NSString stringWithFormat:@"%@\"%@\"%@%@",@"Hi，我在金融大牛圈上看到了一个非常棒的业务,关于",theme,@"，赶快下载大牛圈查看吧！",@"https://itunes.apple.com/cn/app/da-niu-quan-jin-rong-zheng/id984379568?mt=8"];
     NSString *friendContent = @"";
     NSString *messageContent = @"";
-    if (![controller isKindOfClass:[SHGBusinessDetailViewController class]]) {
+    if ([controller isKindOfClass:[SHGBusinessSendSuccessViewController class]] || [uid isEqualToString:object.createBy]) {
         friendContent = [NSString stringWithFormat:@"%@\"%@\"%@%@",@"Hi，我发布一个非常棒的业务,关于",theme,@"，赶快去业务版块查看吧！",request];
         messageContent = [NSString stringWithFormat:@"%@\"%@\"%@%@",@"Hi，我在金融大牛圈上发布了一个非常棒的业务,关于",theme,@"，赶快下载大牛圈查看吧！",@"https://itunes.apple.com/cn/app/da-niu-quan-jin-rong-zheng/id984379568?mt=8"];
+        
     } else{
         friendContent = [NSString stringWithFormat:@"%@\"%@\"%@%@",@"Hi，我看到了一个非常棒的业务,关于",theme,@"，赶快去业务版块查看吧！",request];
         messageContent = [NSString stringWithFormat:@"%@\"%@\"%@%@",@"Hi，我在金融大牛圈上看到了一个非常棒的业务,关于",theme,@"，赶快下载大牛圈查看吧！",@"https://itunes.apple.com/cn/app/da-niu-quan-jin-rong-zheng/id984379568?mt=8"];

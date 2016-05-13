@@ -74,6 +74,6 @@
 - (void)btnBackClick:(id)sender
 {
     [[SHGBusinessListViewController sharedController] didCreateOrModifyBusiness:self.object];
-    [self.navigationController performSelector:@selector(popToRootViewControllerAnimated:) withObject:@(YES) afterDelay:1.2f];
+    [self.navigationController performSelector:@selector(popToRootViewControllerAnimated:) withObject:@(YES) afterDelay:0.25f];
 }
 @end
