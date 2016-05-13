@@ -425,7 +425,7 @@
     NSString *redirect = [position isEqualToString:@"0"] ? @"1" : @"0";
     NSString *businessId = [target isEqualToString:@"refresh"] ? [self maxBusinessID] : [self minBusinessID];
     NSString *modifyTime = [target isEqualToString:@"refresh"] ? [self maxModifyTime] : [self minModifyTime];
-    NSMutableDictionary *param = [NSMutableDictionary dictionaryWithDictionary:@{@"businessId":businessId ,@"modifyTime":modifyTime ,@"uid":UID ,@"type":[self.scrollView currentType] ,@"target":target ,@"pageSize":@"10" , @"area":city, @"redirect":redirect, @"cfData":self.CFData}];
+    NSMutableDictionary *param = [NSMutableDictionary dictionaryWithDictionary:@{@"businessId":businessId, @"modifyTime":modifyTime, @"uid":UID, @"type":[self.scrollView currentType], @"target":target, @"pageSize":@"10", @"area":city, @"redirect":redirect, @"cfData":self.CFData}];
 
     NSDictionary *paramDictionary = [self.paramDictionary objectForKey:[self.scrollView currentName]];
     if ([paramDictionary allKeys].count > 0) {

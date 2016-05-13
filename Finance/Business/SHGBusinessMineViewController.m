@@ -104,6 +104,30 @@
     return businessID;
 }
 
+- (NSString *)maxModifyTime
+{
+    NSString *modifyTime = @"";
+    for (SHGBusinessObject *object in self.dataArr) {
+        if ([object.modifyTime compare:modifyTime options:NSNumericSearch] == NSOrderedDescending && ![object.modifyTime isEqualToString:[NSString stringWithFormat:@"%ld",NSIntegerMax]]) {
+            modifyTime = object.modifyTime;
+        }
+    }
+    return [modifyTime isEqualToString:@""] ? @"" : modifyTime;
+}
+
+- (NSString *)minModifyTime
+{
+    NSString *maxModifyTime = [NSString stringWithFormat:@"%ld",NSIntegerMax];
+    NSString *modifyTime = maxModifyTime;
+    for (SHGBusinessObject *object in self.dataArr) {
+        NSString *objectModifyTime = object.modifyTime;
+        if ([objectModifyTime compare:modifyTime options:NSNumericSearch] == NSOrderedAscending) {
+            modifyTime = object.modifyTime;
+        }
+    }
+    return [modifyTime isEqualToString:maxModifyTime] ? @"" : modifyTime;
+}
+
 #pragma mark ------网络请求部分
 
 - (void)loadDataWithTarget:(NSString *)target
@@ -113,7 +137,8 @@
         return;
     }
     NSString *businessId = [target isEqualToString:@"refresh"] ? [self maxBusinessID] : [self minBusinessID];
-    NSMutableDictionary *param = [NSMutableDictionary dictionaryWithDictionary:@{@"businessId":businessId ,@"uid":UID ,@"type":@"my" ,@"target":target ,@"pageSize":@"10" }];
+    NSString *modifyTime = [target isEqualToString:@"refresh"] ? [self maxModifyTime] : [self minModifyTime];
+    NSMutableDictionary *param = [NSMutableDictionary dictionaryWithDictionary:@{@"businessId":businessId, @"modifyTime":modifyTime, @"uid":UID, @"type":@"my", @"target":target, @"pageSize":@"10" }];
     self.refreshing = YES;
     [SHGBusinessManager getMyorSearchDataWithParam:param block:^(NSArray *dataArray, NSString *total) {
         weakSelf.refreshing = NO;

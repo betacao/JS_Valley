@@ -810,7 +810,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
         } failString:@"认证后才能查看联系方式～"];
     } else {
         NSRegularExpression *mobileExpression = [NSRegularExpression regularExpressionWithPattern: @"((13|15|18|17)[0-9]{9})" options:0 error:nil];
-        NSRegularExpression *phoneExpression = [NSRegularExpression regularExpressionWithPattern: @"(0[1,2]{1}\\d{1}-?\\d{8})|(0[3-9] {1}\\d{2}-?\\d{7,8})|(0[1,2]{1}\\d{1}-?\\d{8}-(\\d{1,4}))|(0[3-9]{1}\\d{2}-? \\d{7,8}-(\\d{1,4}))|0[7,8]\\d{2}-?\\d{8}" options:0 error:nil];
+        NSRegularExpression *phoneExpression = [NSRegularExpression regularExpressionWithPattern: @"(0[1,2]{1}\\d{1}-?\\d{8})|(0[3-9] {1}\\d{2}-?\\d{7,8})|(0[1,2]{1}\\d{1}-?\\d{8}-(\\d{1,4}))|(0[3-9]{1}\\d{2}-? \\d{7,8}-(\\d{1,4}))|0[7,8]\\d{2}-?\\d{8}|0\\d{2,3}-?\\d{7,8}" options:0 error:nil];
         [mobileExpression enumerateMatchesInString:string options:0 range:NSMakeRange(0, string.length) usingBlock:^(NSTextCheckingResult * _Nullable result, NSMatchingFlags flags, BOOL * _Nonnull stop) {
             [self.mobileArray addObject:[string substringWithRange:result.range]];
         }];
@@ -883,7 +883,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
         } else {
             //直接拨号
             if (self.type == SHGTapPhoneTypeSendMessage) {
-                [[SHGGloble sharedGloble] showMessageView:array body:@"你好，我在大牛圈看到您发布的业务，请问"];
+                [[SHGGloble sharedGloble] showMessageView:@[string] body:@"你好，我在大牛圈看到您发布的业务，请问"];
             } else {
                 [self openTel:string];
             }
