@@ -27,7 +27,12 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.title = @"我的业务";
+    if (self.userId.length == 0) {
+        self.title = @"我的业务";
+    } else{
+        self.title = @"他的业务";
+    }
+    
     [self addHeaderRefresh:self.tableView headerRefesh:YES andFooter:YES];
     self.tableView.sd_layout
     .spaceToSuperView(UIEdgeInsetsZero);
@@ -136,9 +141,17 @@
     if (self.refreshing) {
         return;
     }
+    NSString *uid = @"";
+    if (self.userId) {
+        uid = self.userId;
+    } else{
+        uid = UID;
+    }
     NSString *businessId = [target isEqualToString:@"refresh"] ? [self maxBusinessID] : [self minBusinessID];
+
     NSString *modifyTime = [target isEqualToString:@"refresh"] ? [self maxModifyTime] : [self minModifyTime];
-    NSMutableDictionary *param = [NSMutableDictionary dictionaryWithDictionary:@{@"businessId":businessId, @"modifyTime":modifyTime, @"uid":UID, @"type":@"my", @"target":target, @"pageSize":@"10" }];
+    NSMutableDictionary *param = [NSMutableDictionary dictionaryWithDictionary:@{@"businessId":businessId, @"modifyTime":modifyTime, @"uid":uid, @"type":@"my", @"target":target, @"pageSize":@"10" }];
+
     self.refreshing = YES;
     [SHGBusinessManager getMyorSearchDataWithParam:param block:^(NSArray *dataArray, NSString *total) {
         weakSelf.refreshing = NO;
@@ -194,7 +207,12 @@
     if (!cell) {
         cell = [[[NSBundle mainBundle] loadNibNamed:identifier owner:self options:nil] lastObject];
     }
-    cell.style = SHGBusinessTableViewCellStyleMine;
+    if (self.userId) {
+        cell.style = SHGBusinessTableViewCellStyleOther;
+    } else{
+        cell.style = SHGBusinessTableViewCellStyleMine;
+    }
+    
     cell.object = [self.dataArr objectAtIndex:indexPath.row];
     [cell useCellFrameCacheWithIndexPath:indexPath tableView:tableView];
     return cell;
