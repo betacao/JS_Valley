@@ -514,7 +514,7 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if ([self.userId isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID]]){
+    if ([self.userId isEqualToString:UID]){
         switch (indexPath.row) {
             case 0:{
                 __weak typeof(self) weakSelf = self;

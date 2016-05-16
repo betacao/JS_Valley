@@ -12,6 +12,6 @@
 @interface SHGPersonalViewController : BaseTableViewController
 
 @property (strong, nonatomic) NSString *userId;
-@property (weak, nonatomic) SHGCardCollectionViewController * controller;
+@property (weak, nonatomic) SHGCardCollectionViewController *controller;
 @property (strong, nonatomic) id<CircleActionDelegate> delegate;
 @end
