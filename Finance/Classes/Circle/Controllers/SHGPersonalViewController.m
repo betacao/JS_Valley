@@ -8,13 +8,13 @@
 
 #import "SHGPersonalViewController.h"
 #import "SHGUserTagModel.h"
-#import "SHGPersonDynamicViewController.h"
 #import "ChatViewController.h"
 #import "ChatListViewController.h"
 #import "SHGPersonFriendsViewController.h"
 #import "SDPhotoBrowser.h"
 #import "SHGPersonalTableViewCell.h"
 #import "SHGBusinessMineViewController.h"
+
 #define kTagViewWidth 45.0f * XFACTOR
 #define kTagViewHeight 16.0f * XFACTOR
 #define kBottomViewLeftMargin 14.0f
@@ -77,13 +77,13 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
     self.tableView.separatorStyle = UITableViewCellSelectionStyleNone;
     [self requestDataWithTarget:@"first" time:@""];
 }
+
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
     if (!self.isCardChange) {
         [self.controller changeCardCollection];
     }
-    
 }
 - (void)initView
 {
@@ -289,6 +289,9 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
         //互相关注
         [self.sendMessageButton setTitle:@"发消息" forState:UIControlStateNormal];
         [self.sendMessageButton setTitleColor:[UIColor colorWithHexString:@"1D5798"] forState:UIControlStateNormal];
+    }
+    if (self.block) {
+        self.block(self.relationShip);
     }
 
 }

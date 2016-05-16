@@ -84,8 +84,15 @@
     _object = object;
     [self clearCell];
     [self.headerView updateHeaderView:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,object.picname] placeholderImage:[UIImage imageNamed:@"default_head"] status:YES userID:object.userid];
-    [self.attentionButton setImage:[UIImage imageNamed:@"newAddAttention"] forState:UIControlStateNormal];
-    [self.attentionButton setImage:[UIImage imageNamed:@"newAttention"] forState:UIControlStateSelected];
+    if ([object.isattention isEqualToString:@"Y"]) {
+        [self.attentionButton setImage:[UIImage imageNamed:@"newAttention"] forState:UIControlStateNormal];
+        self.attentionButton.selected = NO;
+    } else{
+        [self.attentionButton setImage:[UIImage imageNamed:@"newAddAttention"] forState:UIControlStateNormal];
+        [self.attentionButton setImage:[UIImage imageNamed:@"newAttention"] forState:UIControlStateSelected];
+    }
+    
+    
     
     if (object.realname.length == 0) {
         self.nameLabel.text = @" ";
@@ -108,6 +115,19 @@
     
     self.companylabel.text = object.companyname;
     
+}
+
+- (void)setAttentionState:(NSString *)attentionState
+{
+    _attentionState = attentionState;
+    self.object.isattention = [attentionState isEqualToString:@"0"] ? @"N" :@"Y";
+    if ([self.object.isattention isEqualToString:@"Y"]) {
+        [self.attentionButton setImage:[UIImage imageNamed:@"newAttention"] forState:UIControlStateNormal];
+        self.attentionButton.selected = NO;
+    } else{
+        [self.attentionButton setImage:[UIImage imageNamed:@"newAddAttention"] forState:UIControlStateNormal];
+        [self.attentionButton setImage:[UIImage imageNamed:@"newAttention"] forState:UIControlStateSelected];
+    }
 }
 
 - (void)clearCell
