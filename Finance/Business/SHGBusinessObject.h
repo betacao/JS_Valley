@@ -16,7 +16,7 @@
 @property (strong, nonatomic) NSString *createTime;
 @property (strong, nonatomic) NSString *businessID;
 @property (strong, nonatomic) NSString *modifyTime;
-@property (assign, nonatomic) NSString * isRefresh;
+@property (strong, nonatomic) NSString *isRefresh;
 @property (strong, nonatomic) NSString *type;
 @property (strong, nonatomic) NSString *anonymous;
 @property (strong, nonatomic) NSString *area;

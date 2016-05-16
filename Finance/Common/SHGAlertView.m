@@ -341,6 +341,8 @@
                 .centerXEqualToView([AppDelegate currentAppdelegate].window);
             }
         }
+        //再次更新下 以防布局出错
+        [self updateLayout];
     }
 }
 
