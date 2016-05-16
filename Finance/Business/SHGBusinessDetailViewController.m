@@ -823,7 +823,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
         if (self.mobileArray.count > 0) {
             [sheet addButtonWithTitle:@"拨打电话"];
             [sheet addButtonWithTitle:@"发送短信"];
-        } else {
+        } else if (self.phoneArray.count > 0) {
             [sheet addButtonWithTitle:@"拨打电话"];
         };
         if (sheet.numberOfButtons > 1) {
