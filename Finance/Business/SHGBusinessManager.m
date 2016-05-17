@@ -314,7 +314,7 @@
     NSString *friendContent = @"";
     NSString *messageContent = @"";
     if ([controller isKindOfClass:[SHGBusinessSendSuccessViewController class]] || [uid isEqualToString:object.createBy]) {
-        friendContent = [NSString stringWithFormat:@"%@\"%@\"%@%@",@"Hi，我发布一个非常棒的业务,关于",theme,@"，赶快去业务版块查看吧！",request];
+        friendContent = [NSString stringWithFormat:@"%@\"%@\"%@%@",@"Hi，我发布了一个非常棒的业务,关于",theme,@"，赶快去业务版块查看吧！",request];
         messageContent = [NSString stringWithFormat:@"%@\"%@\"%@%@",@"Hi，我在金融大牛圈上发布了一个非常棒的业务,关于",theme,@"，赶快下载大牛圈查看吧！",@"https://itunes.apple.com/cn/app/da-niu-quan-jin-rong-zheng/id984379568?mt=8"];
         
     } else{
