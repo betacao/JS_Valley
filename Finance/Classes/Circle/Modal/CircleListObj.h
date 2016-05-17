@@ -21,7 +21,7 @@
 @class linkOBj;
 
 @interface CircleListObj : MTLModel<MTLJSONSerializing>
-@property (nonatomic,strong) NSString *businesstotal;
+
 @property (nonatomic,strong) NSString *cmmtnum;
 @property (nonatomic,strong) NSMutableArray *comments;
 @property (nonatomic,strong) NSString *company;
