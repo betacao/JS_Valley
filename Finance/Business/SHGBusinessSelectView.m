@@ -63,7 +63,7 @@
 {
     if (!_buttonView) {
         
-             _buttonView = [[SHGBusinessButtonContentView alloc] initWithMode:SHGBusinessButtonShowModeExclusiveChoice];
+        _buttonView = [[SHGBusinessButtonContentView alloc] initWithMode:SHGBusinessButtonShowModeExclusiveChoice];
         
     }
     return _buttonView;
@@ -82,7 +82,12 @@
 {
     if (!_quitButton) {
         _quitButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        [_quitButton setImage:[UIImage imageNamed:@"business_quit"] forState:UIControlStateNormal];
+        if (self.strongArray.count > 0) {
+            [_quitButton setImage:[UIImage imageNamed:@"business_quiteSelected"] forState:UIControlStateNormal];
+        } else{
+            [_quitButton setImage:[UIImage imageNamed:@"business_quit"] forState:UIControlStateNormal];
+        }
+        
         [_quitButton addTarget:self action:@selector(quiteClick:) forControlEvents:UIControlEventTouchUpInside];
     }
     return _quitButton;
@@ -92,7 +97,6 @@
 {
     SHGBusinessButtonContentView *superView =(SHGBusinessButtonContentView *)btn.superview;
     [superView didClickButton:btn];
-    //self.buttonStrongArray = superView.selectedArray;
     if (self.statu) {
         if (superView.selectedArray.count > 0) {
             self.buttonString = [superView.selectedArray objectAtIndex:0];
@@ -102,6 +106,7 @@
             
         } else{
             self.buttonString = @"";
+            
         }
         
     } else{
@@ -113,6 +118,11 @@
        
 
   }
+    if (superView.selectedArray.count > 0) {
+        [self.quitButton setImage:[UIImage imageNamed:@"business_quiteSelected"] forState:UIControlStateNormal];
+    } else{
+        [self.quitButton setImage:[UIImage imageNamed:@"business_quit"] forState:UIControlStateNormal];
+    }
 }
 
 - (void)quiteClick:(UIButton *)btn
