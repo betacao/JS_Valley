@@ -31,8 +31,7 @@
 @property (strong, nonatomic) UIButton        *editButton;
 @property (strong, nonatomic) UIView          *messageView;
 @property (strong, nonatomic) UIView          *labelView;
-
-@property (strong, nonatomic) UILabel	*circleHeaderLabel;  //动态lable(1.8.1替换成业务)
+@property (strong, nonatomic) UILabel	*circleHeaderLabel;  //动态lable
 @property (strong, nonatomic) UILabel	*followHeaderLabel;  //关注label
 @property (strong, nonatomic) UILabel	*fansHeaderLabel;  //粉丝label
 @property (strong, nonatomic) UIView	*breakLine1;
@@ -65,12 +64,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
-    NSArray *array0 = @[[[SHGGlobleModel alloc] initWithText:@"业务收藏" lineViewHidden:NO accessoryViewHidden:NO], [[SHGGlobleModel alloc] initWithText:@"动态收藏" lineViewHidden:NO accessoryViewHidden:NO], [[SHGGlobleModel alloc] initWithText:@"名片收藏" lineViewHidden:YES accessoryViewHidden:NO]];
-    NSArray *array1 = @[[[SHGGlobleModel alloc] initWithText:@"我的动态" lineViewHidden:YES accessoryViewHidden:NO]];
-    NSArray *array2 = @[[[SHGGlobleModel alloc] initWithText:@"邀请好友加入大牛圈" lineViewHidden:NO accessoryViewHidden:YES], [[SHGGlobleModel alloc] initWithText:@"更新通讯录到大牛圈" lineViewHidden:YES accessoryViewHidden:YES]];
+    NSArray *array0 = @[[[SHGGlobleModel alloc] initWithText:@"邀请好友加入大牛圈" lineViewHidden:NO accessoryViewHidden:YES], [[SHGGlobleModel alloc] initWithText:@"更新通讯录到大牛圈" lineViewHidden:YES accessoryViewHidden:YES]];
+    NSArray *array1 = @[[[SHGGlobleModel alloc] initWithText:@"我的业务" lineViewHidden:YES accessoryViewHidden:NO]];
+    NSArray *array2 = @[[[SHGGlobleModel alloc] initWithText:@"业务收藏" lineViewHidden:NO accessoryViewHidden:NO], [[SHGGlobleModel alloc] initWithText:@"动态收藏" lineViewHidden:NO accessoryViewHidden:NO], [[SHGGlobleModel alloc] initWithText:@"名片收藏" lineViewHidden:YES accessoryViewHidden:NO]];
     NSArray *array3 = @[[[SHGGlobleModel alloc] initWithText:@"设置" lineViewHidden:YES accessoryViewHidden:NO]];
     self.titleArray = @[array0, array1, array2, array3];
-
+    
     [self addHeaderRefresh:self.tableView headerRefesh:YES andFooter:NO];
     self.tableHeaderView.backgroundColor = [UIColor whiteColor];;
     UIImage * editImage = [UIImage imageNamed:@"userCenterEdit"];
@@ -131,7 +130,7 @@
     .topSpaceToView(self.lineView, 0.5f)
     .heightIs(MarginFactor(58.0f));
 
-    //动态（1.8.1替换成业务）
+    //动态
     self.circleHeaderLabel.sd_layout
     .topSpaceToView(self.labelView, 0.0f)
     .leftSpaceToView(self.labelView, 0.0f)
@@ -354,7 +353,7 @@
         _circleHeaderLabel.numberOfLines = 0;
         _circleHeaderLabel.font = FontFactor(12.0f);
         _circleHeaderLabel.userInteractionEnabled = YES;
-        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(goToMyBusiness)];
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(goToMyCircle)];
         [_circleHeaderLabel addGestureRecognizer:tap];
     }
     return _circleHeaderLabel;
@@ -419,7 +418,7 @@
     if (!_authMaskButton) {
         _authMaskButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [_authMaskButton setImage:[UIImage imageNamed:@"me_authButton"] forState:UIControlStateNormal];
-#pragma clang diagnostic ignored"-Wundeclared-selector"
+        #pragma clang diagnostic ignored"-Wundeclared-selector"
         [_authMaskButton addTarget:self.authAlertView action:@selector(leftBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
         [self.authMaskImageView addSubview:self.authMaskButton];
     }
@@ -481,13 +480,6 @@
 - (void)refreshHeader
 {
     [self getMyselfMaterial];
-}
-
-- (void)goToMyBusiness
-{
-    SHGBusinessMineViewController *controller = [[SHGBusinessMineViewController alloc] initWithNibName:@"SHGBusinessMineViewController" bundle:nil];
-    controller.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:controller animated:YES];
 }
 
 - (void)goToMyCircle
@@ -598,7 +590,7 @@
         [Hud hideHud];
         [Hud showMessageWithText:@"上传图片失败"];
     }];
-
+    
 }
 
 //更新服务器端
@@ -624,14 +616,14 @@
     id<ISSShareActionSheetItem> item3 = [ShareSDK shareActionSheetItemWithTitle:@"短信" icon:[UIImage imageNamed:@"sns_icon_19"] clickHandler:^{
         [weakSelf shareToSMS:content];
     }];
-
+   
     NSString *shareUrl =[NSString stringWithFormat:@"%@?uid=%@",SHARE_YAOQING_URL,[[NSUserDefaults standardUserDefaults]objectForKey:KEY_UID]];
     id<ISSShareActionSheetItem> item4 = [ShareSDK shareActionSheetItemWithTitle:@"微信朋友圈" icon:[UIImage imageNamed:@"sns_icon_23"] clickHandler:^{
-        [[SHGGloble sharedGloble] recordUserAction:@"" type:@"user_inviteMicroCircle"];
+         [[SHGGloble sharedGloble] recordUserAction:@"" type:@"user_inviteMicroCircle"];
         [[AppDelegate currentAppdelegate] wechatShareWithText:contentOther shareUrl:shareUrl shareType:1];
     }];
     id<ISSShareActionSheetItem> item5 = [ShareSDK shareActionSheetItemWithTitle:@"微信好友" icon:[UIImage imageNamed:@"sns_icon_22"] clickHandler:^{
-        [[SHGGloble sharedGloble] recordUserAction:@"" type:@"user_inviteMicroFriend"];
+         [[SHGGloble sharedGloble] recordUserAction:@"" type:@"user_inviteMicroFriend"];
         [[AppDelegate currentAppdelegate] wechatShareWithText:contentOther shareUrl:shareUrl shareType:0];
     }];
 
@@ -688,7 +680,7 @@
         NSString *followCount = [response.dataDictionary valueForKey:@"attention"];
         NSString *fansCount = [response.dataDictionary valueForKey:@"fans"];
 
-        NSString *circleString = [NSString stringWithFormat:@"业务 \n%@",circleCount];
+        NSString *circleString = [NSString stringWithFormat:@"动态 \n%@",circleCount];
         NSString *followString = [NSString stringWithFormat:@"关注 \n%@",followCount];
         NSString *fansString = [NSString stringWithFormat:@"粉丝 \n%@",fansCount];
 
@@ -777,7 +769,7 @@
     } failed:^(MOCHTTPResponse *response) {
 
         [weakSelf.tableView.mj_header endRefreshing];
-
+        
     }];
 }
 #pragma mark - TableView Delegate
@@ -829,47 +821,53 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    NSString *text = ((SHGGlobleModel *)[[self.titleArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row]).text;
-    if ([text containsString:@"邀请好友"]) {
-        [self actionInvite];
-    } else if ([text containsString:@"更新通讯录"]) {
-        if (self.hasUpdatedContacts){
-            [Hud showMessageWithText:@"您刚刚更新过好友"];
+    if (indexPath.section == 0) {
+        if (indexPath.row == 0) {
+            [self actionInvite];
         } else{
-            SHGAlertView *alert = [[SHGAlertView alloc] initWithTitle:@"提示" contentText:@"更新好友将更新您一度人脉中手机通讯录，将有效拓展您的人脉。" leftButtonTitle:@"取消" rightButtonTitle:@"更新"];
-            __weak typeof(self) weakSelf = self;
-            alert.rightBlock = ^{
-                [weakSelf uploadContact];
-            };
-            alert.leftBlock = ^{
-                self.hasUpdatedContacts = NO;
-            };
-            [alert show];
-            self.hasUpdatedContacts = YES;
-            [self performSelector:@selector(changeUpdateState) withObject:nil afterDelay:60.0f];
+            if (self.hasUpdatedContacts){
+                [Hud showMessageWithText:@"您刚刚更新过好友"];
+            } else{
+                SHGAlertView *alert = [[SHGAlertView alloc] initWithTitle:@"提示" contentText:@"更新好友将更新您一度人脉中手机通讯录，将有效拓展您的人脉。" leftButtonTitle:@"取消" rightButtonTitle:@"更新"];
+                __weak typeof(self) weakSelf = self;
+                alert.rightBlock = ^{
+                    [weakSelf uploadContact];
+                };
+                alert.leftBlock = ^{
+                    self.hasUpdatedContacts = NO;
+                };
+                [alert show];
+                self.hasUpdatedContacts = YES;
+                [self performSelector:@selector(changeUpdateState) withObject:nil afterDelay:60.0f];
+            }
+
         }
-    } else if ([text containsString:@"我的动态"]){
+    } else if (indexPath.section == 1){
 
-        [self goToMyCircle];
-
-    } else if ([text containsString:@"业务收藏"]){
-        SHGBusinessCollectionListViewController *controller = [[SHGBusinessCollectionListViewController alloc] init];
-        controller.hidesBottomBarWhenPushed = YES;
-        [self.navigationController pushViewController:controller animated:YES];
-    }
-    else if ([text containsString:@"动态收藏"]){
-
-        SHGCircleCollectionViewController *controller = [[SHGCircleCollectionViewController alloc] init];
-        controller.hidesBottomBarWhenPushed = YES;
-        [self.navigationController pushViewController:controller animated:YES];
-    } else if ([text containsString:@"名片收藏"]){
-
-        SHGCardCollectionViewController *controller = [[SHGCardCollectionViewController alloc] init];
+        SHGBusinessMineViewController *controller = [[SHGBusinessMineViewController alloc] init];
         controller.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:controller animated:YES];
 
-    } else if ([text containsString:@"设置"]){
+    } else if (indexPath.section == 2){
+        if (indexPath.row == 0) {
+            SHGBusinessCollectionListViewController *controller = [[SHGBusinessCollectionListViewController alloc] init];
+            controller.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:controller animated:YES];
 
+        } else if (indexPath.row == 1){
+            
+            SHGCircleCollectionViewController *controller = [[SHGCircleCollectionViewController alloc] init];
+            controller.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:controller animated:YES];
+        } else if (indexPath.row == 2){
+            
+            SHGCardCollectionViewController *controller = [[SHGCardCollectionViewController alloc] init];
+            controller.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:controller animated:YES];
+
+        }
+    } else if (indexPath.section == 3){
+        
         if (self.nickName.length > 0){
             SettingsViewController *controller = [[SettingsViewController alloc] init];
             controller.hidesBottomBarWhenPushed = YES;

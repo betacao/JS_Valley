@@ -10,5 +10,4 @@
 
 @interface SHGBusinessMineViewController : BaseTableViewController
 - (void)deleteBusinessWithBusinessID:(NSString *)businessID;
-@property(nonatomic, strong) NSString *userId;
 @end
