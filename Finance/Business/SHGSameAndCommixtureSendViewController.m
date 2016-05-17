@@ -65,12 +65,12 @@
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(scrollerTapAction:)];
     [self.scrollView addGestureRecognizer:tap];
     if (self.object) {
-        self.title = @"编辑同业混业";
+        self.title = @"编辑银证业务";
         self.sendType = 1;
         [self.areaSelectButton setTitle:self.object.area forState:UIControlStateNormal];
         [self.areaSelectButton setTitleColor:Color(@"161616") forState:UIControlStateNormal];
     } else{
-        self.title = @"发布同业混业";
+        self.title = @"发布银证业务";
         __weak typeof(self) weakSelf = self;
         [[CCLocationManager shareLocation] getCity:^{
             NSString * provinceName = [SHGGloble sharedGloble].provinceName;

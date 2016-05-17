@@ -45,11 +45,11 @@
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(scrollerTapAction:)];
     [self.scrollView addGestureRecognizer:tap];
     if (((SHGSameAndCommixtureSendViewController *)self.superController).object) {
-        self.title = @"修改同业混业";
+        self.title = @"修改银证业务";
         ((SHGSameAndCommixtureSendViewController *)self.superController).sendType = 1;
         self.obj = ((SHGSameAndCommixtureSendViewController *)self.superController).object;
     } else{
-        self.title = @"发布同业混业";
+        self.title = @"发布银证业务";
         ((SHGSameAndCommixtureSendViewController *)self.superController).sendType = 0;
     }
     self.scrollView.delegate = self;

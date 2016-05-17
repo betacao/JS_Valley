@@ -65,7 +65,7 @@
         self.block(self.searchBar);
     }
 
-    NSArray *array = @[@"推荐", @"债权融资", @"股权融资", @"资金方", @"同业混业"];
+    NSArray *array = @[@"推荐", @"债权融资", @"股权融资", @"投资机构", @"银证业务"];
     NSMutableArray *categoryArray = [NSMutableArray array];
     [array enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         [categoryArray addObject:[[SHGBusinessFirstObject alloc] initWithName:obj]];

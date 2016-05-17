@@ -384,7 +384,7 @@
         [self.investTimeButtonView addSubview:button];
     }
     
-    NSArray *addRequireArray = @[@"抵押",@"质押",@"担保",@"信用"];
+    NSArray *addRequireArray = @[@"抵押",@"质押",@"保证",@"信用"];
     for (NSInteger j = 0; j < addRequireArray.count; j ++) {
         UIButton * button = [UIButton buttonWithType:UIButtonTypeCustom];
         button.titleLabel.font = FontFactor(15.0f);

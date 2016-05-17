@@ -40,7 +40,7 @@
 	<string>mortgage</string>
 	<key>质押</key>
 	<string>pledge</string>
-	<key>担保</key>
+	<key>保证</key>
 	<string>warrant</string>
 	<key>信用</key>
 	<string>credit</string>

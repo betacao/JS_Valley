@@ -247,7 +247,7 @@
         }
         
         NSString *result = [[SHGGloble sharedGloble] businessKeysForValues:self.obj.middleContent showEmptyKeys:YES];
-        NSArray *nameArray = @[@"资金方占股比例",@"最短退出年限"];
+        NSArray *nameArray = @[@"出让股份比例",@"最短退出年限"];
         NSArray *resultArray = [result componentsSeparatedByString:@"\n"];
         NSMutableArray * array = [[SHGGloble sharedGloble] editBusinessKeysForValues:nameArray middleContentArray:resultArray];
         NSLog(@"%@", array);
