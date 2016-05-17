@@ -11,5 +11,6 @@ typedef void(^SHGBusinessSelectCategoryBlock)(NSDictionary *codeParam, NSArray *
 
 @interface SHGBusinessSelectCategoryViewController : BaseViewController
 @property (copy, nonatomic) SHGBusinessSelectCategoryBlock selectedBlock;
+@property (assign, nonatomic) NSInteger columnsInOnerow;
 @end
 

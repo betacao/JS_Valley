@@ -205,6 +205,11 @@
 - (void)leftButtonClicked:(UIButton *)button
 {
     SHGBusinessSelectCategoryViewController *controller = [[SHGBusinessSelectCategoryViewController alloc] init];
+    if ([[SHGBusinessScrollView sharedBusinessScrollView] currentIndex] == 4) {
+        controller.columnsInOnerow = 2;
+    } else {
+        controller.columnsInOnerow = 3;
+    }
     controller.selectedBlock = self.selectedBlock;
     [[SHGBusinessListViewController sharedController].navigationController pushViewController:controller animated:YES];
 }

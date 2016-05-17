@@ -30,6 +30,11 @@
     self.view.backgroundColor = Color(@"efeeef");
     self.nextButton.backgroundColor = Color(@"f04241");
     [self.nextButton setTitle:@"确定" forState:UIControlStateNormal];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
     [self loadData];
 }
 
@@ -67,12 +72,12 @@
             .heightIs(MarginFactor(30.0f) + titleLabel.font.lineHeight);
 
             __block UIButton *lastButton = nil;
-            CGFloat width = ceilf((SCREENWIDTH - kLeftToView * 4.0f) / 3.0f);
+            CGFloat width = ceilf((SCREENWIDTH - kLeftToView * (self.columnsInOnerow + 1)) / self.columnsInOnerow);
             [secondObject.subArray enumerateObjectsUsingBlock:^(SHGBusinessSecondsubObject *subObject, NSUInteger idx, BOOL * _Nonnull stop) {
 
                 SHGCategoryButton *button = [SHGCategoryButton buttonWithType:UIButtonTypeCustom];
-                NSInteger row = idx / 3;
-                NSInteger col = idx % 3;
+                NSInteger row = idx / self.columnsInOnerow;
+                NSInteger col = idx % self.columnsInOnerow;
                 CGRect frame = CGRectMake((col + 1) * kLeftToView + col * width, row * (MarginFactor(36.0f) + MarginFactor(10.0f)) + MarginFactor(30.0f) + ceilf(titleLabel.font.lineHeight), width, MarginFactor(36.0f));
                 button.frame = frame;
                 button.object = subObject;

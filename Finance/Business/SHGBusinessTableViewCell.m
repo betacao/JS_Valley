@@ -86,20 +86,20 @@
     self.firstLabel.sd_layout
     .leftEqualToView(self.titleLabel)
     .topSpaceToView(self.titleLabel, MarginFactor(14.0f))
+    .rightSpaceToView(self.secondLabel, 0.0f)
     .heightIs(self.firstLabel.font.lineHeight);
-    [self.firstLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
 
     self.thirdLabel.sd_layout
     .leftEqualToView(self.titleLabel)
     .topSpaceToView(self.firstLabel, MarginFactor(11.0f))
+    .widthRatioToView(self.firstLabel, 1.0f)
     .heightIs(self.thirdLabel.font.lineHeight);
-    [self.thirdLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
     
     self.browseLabel.sd_layout
     .rightSpaceToView(self.contentView, MarginFactor(12.0f))
     .centerYEqualToView(self.thirdLabel)
     .heightIs(self.browseLabel.font.lineHeight);
-    [self.browseLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
+    [self.browseLabel setSingleLineAutoResizeWithMaxWidth:SCREENWIDTH];
 
     self.browseImageView.sd_layout
     .rightSpaceToView(self.browseLabel, MarginFactor(5.0f))
@@ -110,14 +110,14 @@
     self.secondLabel.sd_layout
     .leftSpaceToView(self.contentView, SCREENWIDTH / 2.0f)
     .topEqualToView(self.firstLabel)
+    .rightSpaceToView(self.browseImageView, 0.0f)
     .heightIs(self.secondLabel.font.lineHeight);
-    [self.secondLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
 
     self.fourthLabel.sd_layout
     .leftEqualToView(self.secondLabel)
     .topEqualToView(self.thirdLabel)
+    .widthIs(SCREENWIDTH / 2.0f)
     .heightIs(self.fourthLabel.font.lineHeight);
-    [self.fourthLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
 
     self.deleteButton.sd_layout
     .centerYEqualToView(self.firstLabel)
