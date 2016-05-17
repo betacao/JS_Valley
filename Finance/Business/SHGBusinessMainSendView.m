@@ -76,7 +76,7 @@
     [self.fourthButton addTarget:self action:@selector(buttonClicked:) forControlEvents:UIControlEventTouchUpInside];
 
     self.fifthButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [self.fifthButton setImage:[UIImage imageNamed:@"business_SameAndCommixture"] forState:UIControlStateNormal];
+    [self.fifthButton setImage:[UIImage imageNamed:@"banksAndRecurity"] forState:UIControlStateNormal];
     [self.fifthButton addTarget:self action:@selector(buttonClicked:) forControlEvents:UIControlEventTouchUpInside];
 
     self.closeButton = [UIButton buttonWithType:UIButtonTypeCustom];
