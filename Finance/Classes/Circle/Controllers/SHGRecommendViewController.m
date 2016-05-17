@@ -17,11 +17,11 @@ static NSString *const HeaderIdentifier = @"HeaderIdentifier";
 @interface SHGRecommendViewController ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,CircleListDelegate>
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (weak, nonatomic) IBOutlet UICollectionViewFlowLayout *flowLayout;
-@property (strong, nonatomic) UIView *headerView;
 @property (strong, nonatomic) NSArray *dataArray;
 @end
 
 @implementation SHGRecommendViewController
+
 
 - (void)viewDidLoad
 {
@@ -54,15 +54,14 @@ static NSString *const HeaderIdentifier = @"HeaderIdentifier";
     
 }
 
-
-- (void)addSDLayout
+-(NSArray *)dataArray
 {
-    self.collectionView.sd_layout
-    .topSpaceToView(self.view, 0.0f)
-    .bottomSpaceToView(self.view, 0.0f)
-    .leftSpaceToView(self.view, 0.0f)
-    .rightSpaceToView(self.view, 0.0f);
+    if (!_dataArray) {
+        _dataArray = [[NSArray alloc] init];
+    }
+    return _dataArray;
 }
+
 
 - (void)requestContact
 {
@@ -124,25 +123,28 @@ static NSString *const HeaderIdentifier = @"HeaderIdentifier";
 {
     return MarginFactor(7.0f);
 }
--(UIEdgeInsets )collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
+- (UIEdgeInsets )collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
 
 {
     return UIEdgeInsetsMake (0.0f, MarginFactor(12.0f) ,MarginFactor(7.0f), MarginFactor(12.0f));
 }
 
--(BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath
+- (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath
 
 {
     return YES ;
     
 }
 
--(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
-
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     CircleListObj *obj = [self.dataArray objectAtIndex:indexPath.row];
+    SHGRecommendCollectionViewCell *cell = (SHGRecommendCollectionViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
     SHGPersonalViewController *controller = [[SHGPersonalViewController alloc] initWithNibName:@"SHGPersonalViewController" bundle:nil];
     controller.userId = obj.userid;
+    controller.block = ^(NSString *state){
+        cell.attentionState = state;
+    };
     [self.navigationController pushViewController:controller animated:YES];
     
 }
