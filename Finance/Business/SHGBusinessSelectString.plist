@@ -76,5 +76,17 @@
 	<string>equityFinance</string>
 	<key>股权投资</key>
 	<string>equityInvest</string>
+	<key>票据类</key>
+	<string>ticket</string>
+	<key>同业拆借&amp;存款类</key>
+	<string>bankBorrowing</string>
+	<key>理财&amp;资产类</key>
+	<string>financeAsset</string>
+	<key>质押融资&amp;配资类</key>
+	<string>financingDistribution</string>
+	<key>债券类</key>
+	<string>bondClass</string>
+	<key>委投&amp;通道类</key>
+	<string>investmentChannel</string>
 </dict>
 </plist>

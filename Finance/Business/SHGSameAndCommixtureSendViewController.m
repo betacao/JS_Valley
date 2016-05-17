@@ -83,7 +83,7 @@
     self.nameTextField.delegate = self;
     self.phoneNumTextField.delegate = self;
     self.monenyTextField.delegate = self;
-    self.marketCategoryButtonView.showMode = 1;
+    self.marketCategoryButtonView.showMode = SHGBusinessButtonShowModeMultipleChoice;
     self.buttonBgImage = [UIImage imageNamed:@"business_SendButtonBg"];
     self.buttonBgImage = [self.buttonBgImage resizableImageWithCapInsets:UIEdgeInsetsMake(10.0f, 10.0f, 10.0f, 10.0f) resizingMode:UIImageResizingModeStretch];
     
@@ -105,6 +105,7 @@
     [super viewWillAppear:YES];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardDidShow:) name:UIKeyboardDidShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textFieldDidChange:) name:UITextFieldTextDidChangeNotification object:nil];
+    
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -116,7 +117,14 @@
 - (NSDictionary *)firstDic
 {
     NSDictionary *dictonary = [NSDictionary dictionary];
-    NSString *businessType = [[[SHGGloble sharedGloble] getBusinessKeysAndValues] objectForKey:[self.marketCategoryButtonView.selectedArray firstObject]];
+    NSDictionary *businessSelectDic = [[SHGGloble sharedGloble] getBusinessKeysAndValues];
+    NSArray *array = [self.marketCategoryButtonView selectedArray];
+    //业务类型多选字段
+    NSString *businessType = [businessSelectDic objectForKey:[array objectAtIndex:0]];
+    for (NSInteger i = 1 ;i < array.count ; i++) {
+        businessType = [NSString stringWithFormat:@"%@;%@",businessType,[businessSelectDic objectForKey:[array objectAtIndex:i]]];
+    }
+
     NSLog(@"%@",businessType);
     dictonary = @{@"uid":UID, @"type": @"trademixed", @"contact": self.phoneNumTextField.text, @"investAmount": self.monenyTextField.text, @"area":self.areaSelectButton.titleLabel.text,@"title":self.nameTextField.text ,@"businessType":businessType};
 
@@ -209,7 +217,7 @@
     .leftSpaceToView(self.marketCategoryView, 0.0f)
     .rightSpaceToView(self.marketCategoryView, 0.0f)
     .topSpaceToView(self.marketCategoryLabel, ktopToView)
-    .heightIs(kButtonHeight);
+    .heightIs(3 * kButtonHeight + 2 * kButtonTopMargin);
     
     [self.marketCategoryView setupAutoHeightWithBottomView:self.marketCategoryButtonView bottomMargin:ktopToView];
     
@@ -305,13 +313,24 @@
         [self.areaSelectButton setTitleColor:Color(@"161616") forState:UIControlStateNormal];
         //类型
         NSString *category = [array objectAtIndex:0];
+        NSArray *marketCategoryArray = [category componentsSeparatedByString:@"，"];
         for (NSInteger i = 0; i < self.marketCategoryButtonView.buttonArray.count; i ++) {
             UIButton *button = [self.marketCategoryButtonView.buttonArray objectAtIndex:i];
-            if ([button.titleLabel.text isEqualToString:category]) {
-                button.selected = YES;
+            for (NSInteger j = 0; j < marketCategoryArray.count; j ++ ) {
+                if ([button.titleLabel.text isEqualToString:[marketCategoryArray objectAtIndex:j]]) {
+                    button.selected = YES;
+                }
             }
+            
         }
-        
+
+//        for (NSInteger i = 0; i < self.marketCategoryButtonView.buttonArray.count; i ++) {
+//            UIButton *button = [self.marketCategoryButtonView.buttonArray objectAtIndex:i];
+//            if ([button.titleLabel.text isEqualToString:category]) {
+//                button.selected = YES;
+//            }
+//        }
+//        
     }
 }
 - (void)initView
@@ -371,7 +390,7 @@
     self.areaSelectButton.layer.borderColor = Color(@"cecece").CGColor;
     self.areaSelectButton.layer.borderWidth = 1.0f / scale;
     self.areaSelectButton.titleEdgeInsets = UIEdgeInsetsMake(0.0f, 6.0f, 0.0f, 0.0f);
-     NSArray *marketCategoryArray = @[@"同业",@"混业"];
+     NSArray *marketCategoryArray = @[@"票据类",@"债券类",@"理财&资产类",@"委投&通道类",@"质押融资&配资类",@"同业拆借&存款类"];
     for (NSInteger i = 0; i < marketCategoryArray.count; i ++) {
         UIButton * button = [UIButton buttonWithType:UIButtonTypeCustom];
         button.titleLabel.font = FontFactor(15.0f);
@@ -382,7 +401,7 @@
         [button setTitleColor:Color(@"ff8d65") forState:UIControlStateSelected];
         [button setBackgroundImage:self.buttonSelectBgImage forState:UIControlStateSelected];
 
-        button.frame = CGRectMake(kLeftToView + i * (kTwoButtonWidth + kButtonLeftMargin), 0.0f, kTwoButtonWidth, kCategoryButtonHeight);
+        button.frame = CGRectMake(kLeftToView + i%2 * (kTwoButtonWidth + kButtonLeftMargin), i/2 * (kButtonHeight + kButtonTopMargin), kTwoButtonWidth, kCategoryButtonHeight);
         [button addTarget:self action:@selector(categoryButtonClick:) forControlEvents:UIControlEventTouchUpInside];
         [self.marketCategoryButtonView addSubview:button];
     }
