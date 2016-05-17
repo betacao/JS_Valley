@@ -21,7 +21,8 @@
 
 @implementation SHGPersonDynamicViewController
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
     if ([self.userId isEqualToString:UID]) {
         self.title = @"我的动态";
@@ -53,7 +54,6 @@
         NSLog(@"%@",response.errorMessage);
         [weakSelf.tableView.mj_header endRefreshing];
         [weakSelf.tableView.mj_footer endRefreshing];
-
     }];
 }
 
