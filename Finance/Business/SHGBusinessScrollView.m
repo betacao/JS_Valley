@@ -176,7 +176,7 @@
     }];
 
     CGFloat width = [string sizeWithAttributes:@{NSFontAttributeName:kBusinessNormalFont}].width;
-    CGFloat margin = MAX(20.0f, floorf(ABS(SCREENWIDTH - width) / self.categoryArray.count));
+    CGFloat margin = MAX(floorf(ABS(375.0f - width) / self.categoryArray.count), floorf(ABS(SCREENWIDTH - width) / self.categoryArray.count));
     [self.categoryArray enumerateObjectsUsingBlock:^(SHGBusinessFirstObject *object, NSUInteger idx, BOOL * _Nonnull stop) {
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
         [button setTitle:object.name forState:UIControlStateNormal];

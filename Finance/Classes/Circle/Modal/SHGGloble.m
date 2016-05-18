@@ -399,10 +399,8 @@
 
 - (void)requestUserVerifyStatusCompletion:(void (^)(BOOL))completionblock showAlert:(BOOL)showAlert leftBlock:(void(^)())leftblock failString:(NSString *)string
 {
-    [Hud showWait];
     NSString *request = [rBaseAddressForHttp stringByAppendingString:@"/auth/isAuth"];
     [MOCHTTPRequestOperationManager postWithURL:request parameters:@{@"uid":UID} success:^(MOCHTTPResponse *response) {
-        [Hud hideHud];
         //未认证
         if ([[response.dataDictionary objectForKey:@"status"] isEqualToString:@"0"]) {
             if (showAlert) {
@@ -419,7 +417,6 @@
             completionblock(YES);
         }
     } failed:^(MOCHTTPResponse *response) {
-        [Hud hideHud];
         [Hud showMessageWithText:@"获取用户认证状态失败"];
     }];
 
@@ -484,10 +481,11 @@
                 block(YES);
             } else{
                 UILabel *label = [[UILabel alloc] init];
-                label.text = detail;
+                NSMutableParagraphStyle *style = [[NSMutableParagraphStyle alloc] init];
+                style.lineSpacing = MarginFactor(4.0f);
+                NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:detail attributes:@{NSParagraphStyleAttributeName:style, NSForegroundColorAttributeName:Color(@"8d8d8d"), NSFontAttributeName:FontFactor(17.0f)}];
+                label.attributedText = string;
                 label.numberOfLines = 0;
-                label.textColor = Color(@"8d8d8d");
-                label.font = FontFactor(14.0f);
                 label.origin = CGPointMake(MarginFactor(26.0f), MarginFactor(17.0f));
                 CGSize size = [label sizeThatFits:CGSizeMake(MarginFactor(300.0f) - 2 * MarginFactor(26.0f), CGFLOAT_MAX)];
                 label.size = size;

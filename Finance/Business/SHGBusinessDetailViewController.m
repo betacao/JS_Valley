@@ -902,6 +902,9 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
+    if (self.popupView) {
+        [self.popupView hideWithAnimated:NO];
+    }
     if (!self.isCollectionChange) {
         [self.controller changeBusinessCollection];
     }

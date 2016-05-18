@@ -392,4 +392,16 @@
     }];
 }
 
++ (void)refreshBusiness:(SHGBusinessObject *)object success:(void (^)(BOOL))block
+{
+    [MOCHTTPRequestOperationManager postWithURL:[rBaseAddressForHttp stringByAppendingString:@"/business/refreshBusiness"] parameters:@{@"uid": UID,@"businessId": object.businessID, @"businessType":object.type} success:^(MOCHTTPResponse *response) {
+        if (block) {
+            block(YES);
+        }
+        [Hud showMessageWithText:@"刷新成功"];
+    } failed:^(MOCHTTPResponse *response) {
+        [Hud showMessageWithText:@"刷新失败"];
+    }];
+}
+
 @end

@@ -146,8 +146,12 @@
     _object = object;
 
     self.titleLabel.text = object.title;
-    self.firstLabel.text = [[SHGGloble sharedGloble] businessKeysForValues:object.businessShow showEmptyKeys:NO];
-    
+    NSString *firstText = [[SHGGloble sharedGloble] businessKeysForValues:object.businessShow showEmptyKeys:NO];
+    NSArray *array = [firstText componentsSeparatedByString:@"，"];
+    if (array.count > 1) {
+        firstText = [[array firstObject] stringByAppendingString:@"..."];
+    }
+    self.firstLabel.text = firstText;
     self.secondLabel.text = [[SHGGloble sharedGloble] businessKeysForValues:object.investAmount showEmptyKeys:NO];
     self.thirdLabel.text = [@"地区：" stringByAppendingString:[object.area isEqualToString:@""] ? @"全国" : object.area];
     self.fourthLabel.text = [@"时间：" stringByAppendingString:object.createTime];
@@ -155,10 +159,8 @@
     
     if ([object.isRefresh isEqualToString:@"true"]) {
         [self.refreshButton setImage:[UIImage imageNamed:@"business_refresh"] forState:UIControlStateNormal];
-        self.refreshButton.selected =YES;
     } else{
         [self.refreshButton setImage:[UIImage imageNamed:@"business_refreshed"] forState:UIControlStateNormal];
-        self.refreshButton.selected = NO;
     }
     
 }
@@ -196,13 +198,13 @@
 }
 - (IBAction)refreshButtonClick:(UIButton *)sender
 {
-    if (sender.selected) {
-        [MOCHTTPRequestOperationManager postWithURL:[rBaseAddressForHttp stringByAppendingString:@"/business/refreshBusiness"] parameters:@{@"uid": UID,@"businessId": self.object.businessID, @"businessType":self.object.type} success:^(MOCHTTPResponse *response) {
-            [self.refreshButton setImage:[UIImage imageNamed:@"business_refreshed"] forState:UIControlStateNormal];
-            self.refreshButton.selected = NO;
-            [Hud showMessageWithText:@"刷新成功"];
-        } failed:^(MOCHTTPResponse *response) {
-            
+    __weak typeof(self)weakSelf = self;
+    if ([self.object.isRefresh isEqualToString:@"true"]) {
+        [SHGBusinessManager refreshBusiness:self.object success:^(BOOL success) {
+            if (success) {
+                [weakSelf.refreshButton setImage:[UIImage imageNamed:@"business_refreshed"] forState:UIControlStateNormal];
+                weakSelf.object.isRefresh = @"false";
+            };
         }];
         
     } else{

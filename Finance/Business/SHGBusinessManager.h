@@ -42,4 +42,6 @@
 
 + (void)editBusiness:(NSDictionary *)param success:(void (^)(BOOL success))block;
 
++ (void)refreshBusiness:(SHGBusinessObject *)object success:(void (^)(BOOL success))block;
+
 @end

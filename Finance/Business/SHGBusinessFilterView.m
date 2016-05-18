@@ -166,7 +166,7 @@
 - (void)setDataArray:(NSMutableArray *)dataArray
 {
     _dataArray = dataArray;
-    CGFloat width = ceilf((SCREENWIDTH - kLeftToView * 6.0f) / 3.0f);
+    CGFloat width = ceilf((SCREENWIDTH - kLeftToView * 4.0f) / 2.0f);
     [self.contentView removeAllSubviews];
     [self.buttonArray removeAllObjects];
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
@@ -175,8 +175,8 @@
     [dataArray enumerateObjectsUsingBlock:^(SHGBusinessSecondsubObject *obj, NSUInteger idx, BOOL * _Nonnull stop) {
         SHGCategoryButton *button = [SHGCategoryButton buttonWithType:UIButtonTypeCustom];
         button.object = obj;
-        NSInteger row = idx / 3;
-        NSInteger col = idx % 3;
+        NSInteger row = idx / 2;
+        NSInteger col = idx % 2;
         CGRect frame = CGRectMake(((2.0f * col) + 1) * kLeftToView + col * width, row * (MarginFactor(26.0f) + MarginFactor(10.0f)), width, MarginFactor(26.0f));
         button.frame = frame;
         [button setTitle:obj.value forState:UIControlStateNormal];

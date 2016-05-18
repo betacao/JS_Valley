@@ -69,7 +69,7 @@
 @end
 
 @implementation CircleDetailViewController
--(id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self){
@@ -77,13 +77,6 @@
     }
     return self;
 }
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    [MobClick event:@"CircleDetailViewController" label:@"onClick"];
-}
-
 
 - (void)viewDidLoad
 {
@@ -335,7 +328,25 @@
     
 }
 
--(void)parseObjWithDic:(NSDictionary *)dics
+
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [MobClick event:@"CircleDetailViewController" label:@"onClick"];
+}
+
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    if (self.popupView) {
+        [self.popupView hideWithAnimated:NO];
+    }
+
+}
+
+- (void)parseObjWithDic:(NSDictionary *)dics
 {
     NSDictionary *dic = dics[@"circle"][0];
     NSArray *cmArr = dics[@"comments"];

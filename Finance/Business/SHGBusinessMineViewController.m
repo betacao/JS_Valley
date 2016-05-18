@@ -138,7 +138,7 @@
     }
     NSString *businessId = [target isEqualToString:@"refresh"] ? [self maxBusinessID] : [self minBusinessID];
     NSString *modifyTime = [target isEqualToString:@"refresh"] ? [self maxModifyTime] : [self minModifyTime];
-    NSMutableDictionary *param = [NSMutableDictionary dictionaryWithDictionary:@{@"businessId":businessId, @"modifyTime":modifyTime, @"uid":UID, @"type":@"my", @"target":target, @"pageSize":@"10" }];
+    NSMutableDictionary *param = [NSMutableDictionary dictionaryWithDictionary:@{@"businessId":businessId, @"modifyTime":modifyTime, @"uid":UID, @"type":@"my", @"target":target, @"pageSize":@"10"}];
     self.refreshing = YES;
     [SHGBusinessManager getMyorSearchDataWithParam:param block:^(NSArray *dataArray, NSString *total) {
         weakSelf.refreshing = NO;
