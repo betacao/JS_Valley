@@ -10,12 +10,13 @@
 #import "SHGRecommendCollectionViewCell.h"
 #import "SHGRecommendHeaderView.h"
 #import "SHGPersonalViewController.h"
-#import "CircleListObj.h"
 #import "ApplyViewController.h"
 #import "CCLocationManager.h"
+
 UIKIT_EXTERN NSString *const UICollectionElementKindSectionHeader;  //定义好Identifier
 static NSString *const HeaderIdentifier = @"HeaderIdentifier";
-@interface SHGRecommendViewController ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,CircleListDelegate>
+
+@interface SHGRecommendViewController ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (weak, nonatomic) IBOutlet UICollectionViewFlowLayout *flowLayout;
 @property (strong, nonatomic) NSArray *dataArray;
@@ -35,18 +36,13 @@ static NSString *const HeaderIdentifier = @"HeaderIdentifier";
     self.navigationItem.leftBarButtonItem = leftItem;
     
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-    button.frame =CGRectMake(0, 0, 50, 44);
     [button addTarget:self action:@selector(addNewAddress) forControlEvents:UIControlEventTouchUpInside];
     [button setTitle:@"下一步" forState:UIControlStateNormal];
-    [button setTitle:@"下一步" forState:UIControlStateHighlighted];
-    
     [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [button setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
-    
-    button.titleLabel.font = [UIFont systemFontOfSize:15.0f];
+    button.titleLabel.font = FontFactor(15.0f);
+    [button sizeToFit];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:button];
-    [self requestCity];
-    [self requestContact];
+
     self.collectionView.backgroundColor = Color(@"efeeef");
     self.collectionView.delegate = self;
     self.collectionView.dataSource = self;
@@ -54,10 +50,9 @@ static NSString *const HeaderIdentifier = @"HeaderIdentifier";
     [self.collectionView registerClass:[SHGRecommendHeaderView  class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:HeaderIdentifier];
 
     [self.collectionView registerNib:[UINib nibWithNibName:@"SHGRecommendCollectionViewCell" bundle:nil] forCellWithReuseIdentifier:@"SHGRecommendCollectionViewCell"];
-    
-   
 
-    
+    [self requestCity];
+    [self requestContact];
 }
 
 - (void)requestCity
@@ -73,9 +68,6 @@ static NSString *const HeaderIdentifier = @"HeaderIdentifier";
         }];
         
     }];
-    
-    
-
 }
 
 -(NSArray *)dataArray
@@ -127,16 +119,15 @@ static NSString *const HeaderIdentifier = @"HeaderIdentifier";
 {
     SHGRecommendCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"SHGRecommendCollectionViewCell" forIndexPath:indexPath];
     cell.backgroundColor = [UIColor whiteColor];
-    cell.delegate = self;
     CircleListObj *obj = [self.dataArray objectAtIndex:indexPath.row];
     cell.object = obj;
     return cell;
 }
+
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     CGFloat width = (SCREENWIDTH - 2 * MarginFactor(12.0f) - MarginFactor(7.0f)) / 2.0f;
     return CGSizeMake(width, MarginFactor(126.0f));
-  
 }
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section
@@ -148,17 +139,15 @@ static NSString *const HeaderIdentifier = @"HeaderIdentifier";
 {
     return MarginFactor(7.0f);
 }
-- (UIEdgeInsets )collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
 
+- (UIEdgeInsets )collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
 {
     return UIEdgeInsetsMake (0.0f, MarginFactor(12.0f) ,MarginFactor(7.0f), MarginFactor(12.0f));
 }
 
 - (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath
-
 {
-    return YES ;
-    
+    return YES;
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
@@ -174,53 +163,6 @@ static NSString *const HeaderIdentifier = @"HeaderIdentifier";
     
 }
 
-#pragma mark ------ 关注
-- (void)attentionClicked:(CircleListObj *)obj
-{
-    [Hud showWait];
-    NSString *url = [NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"friends"];
-    NSDictionary *param = @{@"uid":[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID], @"oid":obj.userid};
-    if (![obj.isattention isEqualToString:@"Y"]) {
-        [MOCHTTPRequestOperationManager postWithURL:url class:nil parameters:param success:^(MOCHTTPResponse *response) {
-            [Hud hideHud];
-            NSString *code = [response.data valueForKey:@"code"];
-            if ([code isEqualToString:@"000"]){
-                for (CircleListObj *cobj in self.dataArray) {
-                    if ([cobj.userid isEqualToString:obj.userid]) {
-                        cobj.isattention = @"Y";
-                    }
-                }
-                [Hud showMessageWithText:@"关注成功"];
-
-            }
-            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_COLLECT_COLLECT_CLIC object:obj];
-        } failed:^(MOCHTTPResponse *response) {
-            [Hud hideHud];
-            [Hud showMessageWithText:response.errorMessage];
-        }];
-    } else{
-        
-        [MOCHTTPRequestOperationManager deleteWithURL:url parameters:param success:^(MOCHTTPResponse *response) {
-            [Hud hideHud];
-            NSString *code = [response.data valueForKey:@"code"];
-            if ([code isEqualToString:@"000"]) {
-                for (CircleListObj *cobj in self.dataArray) {
-                    if ([cobj.userid isEqualToString:obj.userid]) {
-                        cobj.isattention = @"N";
-                    }
-                }
-                [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_COLLECT_COLLECT_CLIC object:obj];
-
-                [Hud showMessageWithText:@"取消关注成功"];
-            }
-        } failed:^(MOCHTTPResponse *response) {
-            [Hud hideHud];
-            [Hud showMessageWithText:response.errorMessage];
-        }];
-    }
-    
-}
-
 
 - (void)addNewAddress
 {
@@ -228,6 +170,7 @@ static NSString *const HeaderIdentifier = @"HeaderIdentifier";
     [self dealFriendPush];
     [self didUploadAllUserInfo];
 }
+
 - (void)chatLoagin
 {
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
@@ -260,6 +203,7 @@ static NSString *const HeaderIdentifier = @"HeaderIdentifier";
         }
     } onQueue:nil];
 }
+
 - (void)dealFriendPush
 {
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
@@ -289,6 +233,7 @@ static NSString *const HeaderIdentifier = @"HeaderIdentifier";
 {
     [[AppDelegate currentAppdelegate] moveToRootController:nil];
 }
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];

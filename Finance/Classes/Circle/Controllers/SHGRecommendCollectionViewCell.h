@@ -7,11 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "CircleListDelegate.h"
+
 @interface SHGRecommendCollectionViewCell : UICollectionViewCell
-@property (weak, nonatomic) id<CircleListDelegate> delegate;
 
 @property (strong ,nonatomic) CircleListObj *object;
 
 @property (strong, nonatomic) NSString *attentionState;
+
 @end
