@@ -12,12 +12,14 @@
 #import "SHGPersonalViewController.h"
 #import "CircleListObj.h"
 #import "ApplyViewController.h"
+#import "CCLocationManager.h"
 UIKIT_EXTERN NSString *const UICollectionElementKindSectionHeader;  //定义好Identifier
 static NSString *const HeaderIdentifier = @"HeaderIdentifier";
 @interface SHGRecommendViewController ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,CircleListDelegate>
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (weak, nonatomic) IBOutlet UICollectionViewFlowLayout *flowLayout;
 @property (strong, nonatomic) NSArray *dataArray;
+
 @end
 
 @implementation SHGRecommendViewController
@@ -43,7 +45,7 @@ static NSString *const HeaderIdentifier = @"HeaderIdentifier";
     
     button.titleLabel.font = [UIFont systemFontOfSize:15.0f];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:button];
-    
+    [self requestCity];
     [self requestContact];
     self.collectionView.backgroundColor = Color(@"efeeef");
     self.collectionView.delegate = self;
@@ -53,6 +55,27 @@ static NSString *const HeaderIdentifier = @"HeaderIdentifier";
 
     [self.collectionView registerNib:[UINib nibWithNibName:@"SHGRecommendCollectionViewCell" bundle:nil] forCellWithReuseIdentifier:@"SHGRecommendCollectionViewCell"];
     
+   
+
+    
+}
+
+- (void)requestCity
+{
+    [[CCLocationManager shareLocation] getCity:^{
+        NSString *cityName = [SHGGloble sharedGloble].cityName;
+        NSString *url = [NSString stringWithFormat:@"%@/%@/%@/%@",rBaseAddressForHttp,@"user",@"info",@"saveOrUpdateUserPosition"];
+        NSDictionary *parameters = @{@"uid":UID,@"position":cityName};
+        [MOCHTTPRequestOperationManager getWithURL:url parameters:parameters success:^(MOCHTTPResponse *response){
+            
+        }failed:^(MOCHTTPResponse *response){
+            
+        }];
+        
+    }];
+    
+    
+
 }
 
 -(NSArray *)dataArray
