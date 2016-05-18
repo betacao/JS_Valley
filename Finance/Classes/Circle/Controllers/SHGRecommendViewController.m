@@ -48,6 +48,7 @@ static NSString *const HeaderIdentifier = @"HeaderIdentifier";
     self.collectionView.backgroundColor = Color(@"efeeef");
     self.collectionView.delegate = self;
     self.collectionView.dataSource = self;
+    self.flowLayout.headerReferenceSize = CGSizeMake(SCREENWIDTH, MarginFactor(45.0f));
     [self.collectionView registerClass:[SHGRecommendHeaderView  class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:HeaderIdentifier];
 
     [self.collectionView registerNib:[UINib nibWithNibName:@"SHGRecommendCollectionViewCell" bundle:nil] forCellWithReuseIdentifier:@"SHGRecommendCollectionViewCell"];
@@ -110,7 +111,8 @@ static NSString *const HeaderIdentifier = @"HeaderIdentifier";
 }
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    return CGSizeMake((SCREENWIDTH - 2 * MarginFactor(12.0f) - MarginFactor(7.0f)) / 2.0f, MarginFactor(137.0f));
+    CGFloat width = (SCREENWIDTH - 2 * MarginFactor(12.0f) - MarginFactor(7.0f)) / 2.0f;
+    return CGSizeMake(width, MarginFactor(126.0f));
   
 }
 

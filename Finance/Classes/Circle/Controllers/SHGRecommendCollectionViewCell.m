@@ -21,8 +21,8 @@
 
 - (void)awakeFromNib
 {
+    [super awakeFromNib];
     [self addSdLayout];
-
 }
 
 - (void)addSdLayout
@@ -39,7 +39,7 @@
     self.areaLabel.textColor = Color(@"a5a5a5");
     self.areaLabel.font = FontFactor(10.0f);
     
-    UIImage *image = [UIImage imageNamed:@"newAddAttention"];
+    UIImage *image = [UIImage imageNamed:@"recommentAddAttention"];
     CGSize size = image.size;
     self.headerView.sd_layout
     .leftSpaceToView(self.contentView, MarginFactor(6.0f))
@@ -55,28 +55,27 @@
     
     self.nameLabel.sd_layout
     .leftEqualToView(self.headerView)
-    .topSpaceToView(self.headerView, MarginFactor(7.0f))
+    .topSpaceToView(self.headerView, MarginFactor(6.0f))
     .widthIs(MarginFactor(100.0f))
-    .heightIs(MarginFactor(20.0f));
+    .heightIs(floorf(self.nameLabel.font.lineHeight));
     
     self.positionLabel.sd_layout
     .leftEqualToView(self.nameLabel)
-    .topSpaceToView(self.nameLabel, MarginFactor(9.0f))
+    .topSpaceToView(self.nameLabel, MarginFactor(6.0f))
     .widthIs(MarginFactor(100.0f))
-    .heightIs(MarginFactor(16.0f));
+    .heightIs(floorf(self.positionLabel.font.lineHeight));
     
     self.areaLabel.sd_layout
     .leftEqualToView(self.positionLabel)
-    .topSpaceToView(self.positionLabel, MarginFactor(10.0f))
+    .topSpaceToView(self.positionLabel, MarginFactor(6.0f))
     .widthIs(MarginFactor(100.0f))
-    .heightIs(MarginFactor(12.0f));
+    .heightIs(floorf(self.areaLabel.font.lineHeight));
 
     self.attentionButton.sd_layout
     .bottomEqualToView(self.positionLabel)
     .rightSpaceToView(self.contentView, MarginFactor(7.0f))
     .widthIs(size.width)
     .heightIs(size.height);
-    
 }
 
 - (void)setObject:(CircleListObj *)object
@@ -85,11 +84,11 @@
     [self clearCell];
     [self.headerView updateHeaderView:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,object.picname] placeholderImage:[UIImage imageNamed:@"default_head"] status:YES userID:object.userid];
     if ([object.isattention isEqualToString:@"Y"]) {
-        [self.attentionButton setImage:[UIImage imageNamed:@"newAttention"] forState:UIControlStateNormal];
+        [self.attentionButton setImage:[UIImage imageNamed:@"recommentAttention"] forState:UIControlStateNormal];
         self.attentionButton.selected = NO;
     } else{
-        [self.attentionButton setImage:[UIImage imageNamed:@"newAddAttention"] forState:UIControlStateNormal];
-        [self.attentionButton setImage:[UIImage imageNamed:@"newAttention"] forState:UIControlStateSelected];
+        [self.attentionButton setImage:[UIImage imageNamed:@"recommentAddAttention"] forState:UIControlStateNormal];
+        [self.attentionButton setImage:[UIImage imageNamed:@"recommentAttention"] forState:UIControlStateSelected];
     }
     
     
@@ -122,11 +121,11 @@
     _attentionState = attentionState;
     self.object.isattention = [attentionState isEqualToString:@"0"] ? @"N" :@"Y";
     if ([self.object.isattention isEqualToString:@"Y"]) {
-        [self.attentionButton setImage:[UIImage imageNamed:@"newAttention"] forState:UIControlStateNormal];
+        [self.attentionButton setImage:[UIImage imageNamed:@"recommentAttention"] forState:UIControlStateNormal];
         self.attentionButton.selected = NO;
     } else{
-        [self.attentionButton setImage:[UIImage imageNamed:@"newAddAttention"] forState:UIControlStateNormal];
-        [self.attentionButton setImage:[UIImage imageNamed:@"newAttention"] forState:UIControlStateSelected];
+        [self.attentionButton setImage:[UIImage imageNamed:@"recommentAddAttention"] forState:UIControlStateNormal];
+        [self.attentionButton setImage:[UIImage imageNamed:@"recommentAttention"] forState:UIControlStateSelected];
     }
 }
 

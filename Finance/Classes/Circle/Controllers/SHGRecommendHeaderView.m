@@ -15,7 +15,7 @@
 @implementation SHGRecommendHeaderView
 - (id)initWithFrame:(CGRect)frame
 {
-    self = [super initWithFrame:CGRectMake(frame.origin.x, frame.origin.y, frame.size.width, MarginFactor(45.0f))];
+    self = [super initWithFrame:frame];
     if (self) {
 
         [self addSubview:self.bgView];
