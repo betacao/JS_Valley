@@ -34,13 +34,11 @@
     } else if(SCREENHEIGHT > 667.000000){
         self.launchImage.image=[UIImage imageNamed:@"736"];
     }
-//    if([[SHGGloble sharedGloble] isShowGuideView]){
-//        [self startGuideView];
-//    } else{
-//        [self moveToHomePage];
-//    }
-
-    [self startGuideView];
+    if([[SHGGloble sharedGloble] isShowGuideView]){
+        [self startGuideView];
+    } else{
+        [self moveToHomePage];
+    }
 }
 
 - (void)startGuideView
