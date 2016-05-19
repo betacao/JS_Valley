@@ -159,6 +159,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
     self.businessDetialLabel.font = FontFactor(15.0f);
 
     self.contentTextView.editable = NO;
+    self.contentTextView.scrollEnabled = NO;
     self.contentTextView.textContainerInset = UIEdgeInsetsMake(0, -5.0f, 0, 0);
 
     self.speakButton.imageEdgeInsets = UIEdgeInsetsMake(0.0f, MarginFactor(8.0f), 0.0f,0.0f);

@@ -167,16 +167,21 @@ static NSString *const HeaderIdentifier = @"HeaderIdentifier";
 - (void)nextClick:(UIButton *)sender
 {
     __weak typeof(self) weakSelf = self;
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.2f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.25f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [weakSelf loginSuccess];
     });
 }
 
 - (void)loginSuccess
 {
-    [[SHGGloble sharedGloble] uploadPhonesWithPhone:^(BOOL finish) {
-
+    [[SHGGloble sharedGloble] getUserAddressList:^(BOOL finished) {
+        if(finished){
+            [[SHGGloble sharedGloble] uploadPhonesWithPhone:^(BOOL finish) {
+                
+            }];
+        }
     }];
+
     [[AppDelegate currentAppdelegate] moveToRootController:nil];
 }
 
