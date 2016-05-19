@@ -36,7 +36,7 @@ static NSString *const HeaderIdentifier = @"HeaderIdentifier";
     self.navigationItem.leftBarButtonItem = leftItem;
     
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-    [button addTarget:self action:@selector(addNewAddress) forControlEvents:UIControlEventTouchUpInside];
+    [button addTarget:self action:@selector(nextClick:) forControlEvents:UIControlEventTouchUpInside];
     [button setTitle:@"下一步" forState:UIControlStateNormal];
     [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     button.titleLabel.font = FontFactor(15.0f);
@@ -164,73 +164,19 @@ static NSString *const HeaderIdentifier = @"HeaderIdentifier";
 }
 
 
-- (void)addNewAddress
-{
-    [self chatLoagin];
-    [self dealFriendPush];
-    [self didUploadAllUserInfo];
-}
-
-- (void)chatLoagin
-{
-    NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
-    NSString *password = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_PASSWORD];
-    
-    [[EaseMob sharedInstance].chatManager asyncLoginWithUsername:uid password:password completion:^(NSDictionary *loginInfo, EMError *error) {
-        if (loginInfo && !error) {
-            [[EaseMob sharedInstance].chatManager setIsAutoLoginEnabled:NO];
-            EMError *error = [[EaseMob sharedInstance].chatManager importDataToNewDatabase];
-            if (!error) {
-                error = [[EaseMob sharedInstance].chatManager loadDataFromDatabase];
-            }
-            [[ApplyViewController shareController] loadDataSourceFromLocalDB];
-            
-        }else {
-            switch (error.errorCode) {
-                case EMErrorServerNotReachable:
-                    NSLog(NSLocalizedString(@"error.connectServerFail", @"Connect to the server failed!"));
-                    break;
-                case EMErrorServerAuthenticationFailure:
-                    NSLog(@"%@",error.description);
-                    break;
-                case EMErrorServerTimeout:
-                    NSLog(NSLocalizedString(@"error.connectServerTimeout", @"Connect to the server timed out!"));
-                    break;
-                default:
-                    break;
-            }
-            
-        }
-    } onQueue:nil];
-}
-
-- (void)dealFriendPush
-{
-    NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
-    uid = uid ? uid : @"";
-    NSString *url = [NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"friend/dealFriendPush"];
-    NSDictionary *parm = @{@"uid":uid};
-    [MOCHTTPRequestOperationManager postWithURL:url class:nil parameters:parm success:^(MOCHTTPResponse *response) {
-        NSString *code = [response.data valueForKey:@"code"];
-        if ([code isEqualToString:@"000"]){
-        }
-        
-    } failed:^(MOCHTTPResponse *response) {
-        
-    }];
-    
-}
-- (void)didUploadAllUserInfo
+- (void)nextClick:(UIButton *)sender
 {
     __weak typeof(self) weakSelf = self;
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.2f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [Hud hideHud];
         [weakSelf loginSuccess];
     });
 }
 
 - (void)loginSuccess
 {
+    [[SHGGloble sharedGloble] uploadPhonesWithPhone:^(BOOL finish) {
+
+    }];
     [[AppDelegate currentAppdelegate] moveToRootController:nil];
 }
 

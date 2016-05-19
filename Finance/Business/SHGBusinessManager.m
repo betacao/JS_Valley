@@ -89,7 +89,9 @@
 //列表
 + (void)getListDataWithParam:(NSDictionary *)param block:(void (^)(NSArray *, NSString *, NSString *, NSString *))block
 {
-    [MOCHTTPRequestOperationManager postWithURL:[rBaseAddressForHttp stringByAppendingString:@"/business/getBusinessList"] class:nil parameters:param success:^(MOCHTTPResponse *response) {
+    NSMutableDictionary *mutableParam = [NSMutableDictionary dictionaryWithDictionary:param];
+    [mutableParam setObject:[SHGGloble sharedGloble].currentVersion forKey:@"version"];
+    [MOCHTTPRequestOperationManager postWithURL:[rBaseAddressForHttp stringByAppendingString:@"/business/getBusinessList"] class:nil parameters:mutableParam success:^(MOCHTTPResponse *response) {
         NSDictionary *dictionary = response.dataDictionary;
 
         NSArray *dataArray = [[SHGGloble sharedGloble] parseServerJsonArrayToJSONModel:[dictionary objectForKey:@"businesslist"] class:[SHGBusinessObject class]];
@@ -188,7 +190,8 @@
 
 + (void)getMyorSearchDataWithParam:(NSDictionary *)param block:(void (^)(NSArray *, NSString *))block
 {
-    //[Hud showWait];
+    NSMutableDictionary *mutableParam = [NSMutableDictionary dictionaryWithDictionary:param];
+    [mutableParam setObject:[SHGGloble sharedGloble].currentVersion forKey:@"version"];
     NSString *request = [rBaseAddressForHttp stringByAppendingString:@"/business/getAllTypeBusinessList"];
     [MOCHTTPRequestOperationManager postWithURL:request class:nil parameters:param success:^(MOCHTTPResponse *response) {
         [Hud hideHud];

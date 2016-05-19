@@ -184,30 +184,23 @@
 {
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
     NSString *password = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_PASSWORD];
-    
-    [[EaseMob sharedInstance].chatManager asyncLoginWithUsername:uid
-                                                        password:password
-                                                      completion:
-     ^(NSDictionary *loginInfo, EMError *error)
-    {
-         if (loginInfo && !error)
-         {
+
+    [[EaseMob sharedInstance].chatManager asyncLoginWithUsername:uid password:password completion:
+     ^(NSDictionary *loginInfo, EMError *error) {
+         if (loginInfo && !error) {
              [[EaseMob sharedInstance].chatManager setIsAutoLoginEnabled:NO];
              //发送自动登陆状态通知
              //             [[NSNotificationCenter defaultCenter] postNotificationName:KNOTIFICATION_LOGINCHANGE object:@YES];
              //将旧版的coredata数据导入新的数据库
              EMError *error = [[EaseMob sharedInstance].chatManager importDataToNewDatabase];
-             if (!error)
-             {
+             if (!error) {
                  error = [[EaseMob sharedInstance].chatManager loadDataFromDatabase];
              }
-             
+
              [[ApplyViewController shareController] loadDataSourceFromLocalDB];
-             
-         }else
-         {
-             switch (error.errorCode)
-             {
+
+         } else {
+             switch (error.errorCode) {
                  case EMErrorServerNotReachable:
                      NSLog(NSLocalizedString(@"error.connectServerFail", @"Connect to the server failed!"));
                      break;
@@ -224,6 +217,7 @@
          }
      } onQueue:nil];
 }
+
 #pragma mark - private
 //登陆状态改变
 -(void)loginStateChange:(NSNotification *)notification

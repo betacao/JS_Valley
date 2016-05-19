@@ -353,18 +353,7 @@ typedef NS_ENUM(NSInteger, RegistType)
     } onQueue:nil];
 }
 
-- (void)loginSuccess
-{
-    [[SHGGloble sharedGloble] getUserAddressList:^(BOOL finished) {
-        if(finished){
-            [[NSUserDefaults standardUserDefaults] setBool:YES forKey:KEY_USER_NEEDUPLOADCONTACT];
-            [[NSUserDefaults standardUserDefaults] synchronize];
-        }
-    }];
-    [[AppDelegate currentAppdelegate] moveToRootController:nil];
-}
-
--(void)registChat
+- (void)registChat
 {
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
 

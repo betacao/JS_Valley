@@ -353,7 +353,7 @@
         NSDictionary *businessSelectDic = [[SHGGloble sharedGloble] getBusinessKeysAndValues];
         [self uploadImage:^(BOOL success) {
             switch (((SHGEquityFinanceSendViewController *)weakSelf.superController).sendType) {
-                case 0:{
+                case SHGEquityFinaceSendTypeNew:{
                     NSString *vestYears = @"";
                     if (weakSelf.investTimeButtonView.selectedArray.count > 0) {
                          vestYears =[businessSelectDic objectForKey:[weakSelf.investTimeButtonView.selectedArray objectAtIndex:0]];
@@ -373,7 +373,7 @@
                     SHGBusinessObject *object = [[SHGBusinessObject alloc]init];
                     object.type = type;
 
-                    NSDictionary *param = @{@"uid":UID, @"type": type, @"contact":contact, @"financingStage":financingStage, @"investAmount": investAmount, @"area": area, @"industry": industry,@"totalshareRate": weakSelf.retributionTextField.text, @"shortestquitYears":vestYears, @"detail": weakSelf.marketExplainTextView.text,@"photo": weakSelf.imageName,@"anonymous": anonymous,@"title": title};
+                    NSDictionary *param = @{@"uid":UID, @"type": type, @"contact":contact, @"financingStage":financingStage, @"investAmount": investAmount, @"area": area, @"industry": industry,@"totalshareRate": weakSelf.retributionTextField.text, @"shortestquitYears":vestYears, @"detail": weakSelf.marketExplainTextView.text,@"photo": weakSelf.imageName,@"anonymous": anonymous,@"title": title, @"version":[SHGGloble sharedGloble].currentVersion};
                     [SHGBusinessManager createNewBusiness:param success:^(BOOL success, NSString *bussinessId) {
                         if (success) {
                             object.businessID = bussinessId;
@@ -385,7 +385,7 @@
                     }];
                 }  break;
                     
-                case 1:{
+                case SHGEquityFinaceSendTypeReSet:{
                     NSString *vestYears = @"";
                     if (weakSelf.investTimeButtonView.selectedArray.count > 0) {
                         vestYears =[businessSelectDic objectForKey:[weakSelf.investTimeButtonView.selectedArray objectAtIndex:0]];
@@ -405,7 +405,7 @@
                     SHGBusinessObject *object = [[SHGBusinessObject alloc]init];
                     object.type = type;
 
-                    NSDictionary *param = @{@"uid":UID,@"businessId":businessId, @"type": type, @"contact":contact, @"financingStage":financingStage, @"investAmount": investAmount, @"area": area, @"industry": industry,@"totalshareRate": weakSelf.retributionTextField.text, @"shortestquitYears":vestYears, @"detail": weakSelf.marketExplainTextView.text,@"photo": weakSelf.imageName,@"anonymous": anonymous,@"title": title};
+                    NSDictionary *param = @{@"uid":UID,@"businessId":businessId, @"type": type, @"contact":contact, @"financingStage":financingStage, @"investAmount": investAmount, @"area": area, @"industry": industry,@"totalshareRate": weakSelf.retributionTextField.text, @"shortestquitYears":vestYears, @"detail": weakSelf.marketExplainTextView.text,@"photo": weakSelf.imageName,@"anonymous": anonymous,@"title": title, @"version":[SHGGloble sharedGloble].currentVersion};
                     NSLog(@"%@",param);
                     [SHGBusinessManager editBusiness:param success:^(BOOL success) {
                         if (success) {

@@ -65,7 +65,6 @@
     
     [MOCHTTPRequestOperationManager postWithURL:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"thirdLogin/thirdUserRegister"] class:nil parameters:param success:^(MOCHTTPResponse *response){
         [Hud hideHud];
-        //         NSString *isthirdlogin = response.dataDictionary[@"bindResult"];
         NSString *uid = response.dataDictionary[@"uid"];
         NSString *token = response.dataDictionary[@"token"];
         NSString *state = response.dataDictionary[@"state"];
@@ -135,18 +134,6 @@
              }
          }
      } onQueue:nil];
-}
-
-- (void)loginSuccess
-{
-
-    [[SHGGloble sharedGloble] getUserAddressList:^(BOOL finished) {
-        if(finished){
-            [[NSUserDefaults standardUserDefaults] setBool:YES forKey:KEY_USER_NEEDUPLOADCONTACT];
-            [[NSUserDefaults standardUserDefaults] synchronize];
-        }
-    }];
-    [[AppDelegate currentAppdelegate] moveToRootController:self.rid];
 }
 
 - (void)didReceiveMemoryWarning

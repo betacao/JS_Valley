@@ -432,7 +432,7 @@
             if (success) {
                 switch (((SHGBondInvestSendViewController *)weakSelf.superController).sendType) {
                         
-                    case 0:{
+                    case SHGBusinessSendTypeNew:{
                         //增信选择字段
                         NSString *clarifyingRequire = @"";
                         
@@ -471,7 +471,7 @@
                         NSLog(@"%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@",type,contact,businessType,fundSource,investAmount,area,industry,clarifyingRequire,weakSelf.retributionTextField.text,vestYears,weakSelf.marketExplainTextView.text,weakSelf.imageName,anonymous,title);
                         SHGBusinessObject *object = [[SHGBusinessObject alloc]init];
                         object.type = type;
-                        NSDictionary *param = @{@"uid":UID, @"type": type, @"moneysideType":moneysideType ,@"contact":contact, @"businessType":businessType,@"fundSource":fundSource, @"investAmount": investAmount, @"area": area, @"industry": industry, @"clarifyingRequire":clarifyingRequire,@"lowestPaybackRate":weakSelf.retributionTextField.text, @"vestYears": vestYears,@"detail": weakSelf.marketExplainTextView.text,@"photo": weakSelf.imageName,@"anonymous": anonymous,@"title": title};
+                        NSDictionary *param = @{@"uid":UID, @"type": type, @"moneysideType":moneysideType ,@"contact":contact, @"businessType":businessType,@"fundSource":fundSource, @"investAmount": investAmount, @"area": area, @"industry": industry, @"clarifyingRequire":clarifyingRequire,@"lowestPaybackRate":weakSelf.retributionTextField.text, @"vestYears": vestYears,@"detail": weakSelf.marketExplainTextView.text,@"photo": weakSelf.imageName,@"anonymous": anonymous,@"title": title, @"version":[SHGGloble sharedGloble].currentVersion};
                         [SHGBusinessManager createNewBusiness:param success:^(BOOL success, NSString *bussinessId) {
                             if (success) {
                                 object.businessID = bussinessId;
@@ -485,7 +485,7 @@
                     }
                         break;
                         
-                    case 1:{
+                    case SHGBusinessSendTypeReSet:{
                         //增信选择字段
                         NSString *clarifyingRequire = @"";
                         
@@ -522,7 +522,7 @@
                         
                         SHGBusinessObject *object = [[SHGBusinessObject alloc]init];
                         object.type = type;
-                        NSDictionary *param = @{@"uid":UID,@"businessId":businessId, @"type": type,@"moneysideType": @"bondInvest",@"contact":contact, @"businessType":businessType,@"fundSource":fundSource, @"investAmount": investAmount, @"area": area, @"industry": industry, @"clarifyingRequire":clarifyingRequire,@"lowestPaybackRate":self.retributionTextField.text, @"vestYears": vestYears,@"detail": weakSelf.marketExplainTextView.text,@"photo": weakSelf.imageName,@"anonymous": anonymous,@"title": title};
+                        NSDictionary *param = @{@"uid":UID,@"businessId":businessId, @"type": type,@"moneysideType": @"bondInvest",@"contact":contact, @"businessType":businessType,@"fundSource":fundSource, @"investAmount": investAmount, @"area": area, @"industry": industry, @"clarifyingRequire":clarifyingRequire,@"lowestPaybackRate":self.retributionTextField.text, @"vestYears": vestYears,@"detail": weakSelf.marketExplainTextView.text,@"photo": weakSelf.imageName,@"anonymous": anonymous,@"title": title, @"version":[SHGGloble sharedGloble].currentVersion};
                        
                         [SHGBusinessManager editBusiness:param success:^(BOOL success) {
                             if (success) {

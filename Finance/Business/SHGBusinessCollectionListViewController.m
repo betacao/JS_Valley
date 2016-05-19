@@ -59,7 +59,7 @@
     
     NSString *businessId = [target isEqualToString:@"refresh"] ? [self maxBusinessID] : [self minBusinessID];
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
-    NSDictionary *param = @{@"uid":uid,@"target":target,@"businessId":businessId ,@"pageSize":@"10"};
+    NSDictionary *param = @{@"uid":uid, @"target":target, @"businessId":businessId, @"pageSize":@"10", @"version":[SHGGloble sharedGloble].currentVersion};
     [MOCHTTPRequestOperationManager postWithURL:[NSString stringWithFormat:@"%@/%@/%@/%@",rBaseAddressForHttp,@"business",@"collection",@"myCollectBusiness"] class:nil parameters:param success:^(MOCHTTPResponse *response) {
         NSDictionary *dictionary = response.dataDictionary;
         NSArray * dataArray = [[SHGGloble sharedGloble] parseServerJsonArrayToJSONModel:[dictionary objectForKey:@"businesslist"] class:[SHGBusinessObject class]];

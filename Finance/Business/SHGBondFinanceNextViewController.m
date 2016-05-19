@@ -440,7 +440,7 @@
                 NSDictionary *businessSelectDic = [[SHGGloble sharedGloble]getBusinessKeysAndValues];
                 NSDictionary *businessDic = ((SHGBondFinanceSendViewController *)self.superController).firstDic;
                 switch (((SHGBondFinanceSendViewController *)weakSelf.superController).sendType) {
-                    case 0:{
+                    case SHGBondFinaceSendTypeNew:{
                         NSString *require= [businessSelectDic objectForKey:[weakSelf.addRequireButtonView.selectedArray objectAtIndex:0]];
                         for (NSInteger i = 1; i < weakSelf.addRequireButtonView.selectedArray.count; i ++ ) {
                             require = [NSString stringWithFormat:@"%@;%@",require,[businessSelectDic objectForKey:[weakSelf.addRequireButtonView.selectedArray objectAtIndex:i]]];
@@ -459,7 +459,7 @@
                         SHGBusinessObject *object = [[SHGBusinessObject alloc]init];
                         object.type =type;
 
-                        NSDictionary *param = @{@"uid":UID, @"type": type, @"contact":contact, @"bondType":bondType, @"investAmount": investAmount, @"area": area, @"industry": industry,@"clarifyingWay":require, @"fundUsetime":investTime, @"highestRate": weakSelf.retributionTextField.text,@"detail": weakSelf.marketExplainTextView.text,@"photo": weakSelf.imageName,@"anonymous": anonymous,@"title": title};
+                        NSDictionary *param = @{@"uid":UID, @"type": type, @"contact":contact, @"bondType":bondType, @"investAmount": investAmount, @"area": area, @"industry": industry,@"clarifyingWay":require, @"fundUsetime":investTime, @"highestRate": weakSelf.retributionTextField.text,@"detail": weakSelf.marketExplainTextView.text,@"photo": weakSelf.imageName,@"anonymous": anonymous,@"title": title, @"version":[SHGGloble sharedGloble].currentVersion};
                         [SHGBusinessManager createNewBusiness:param success:^(BOOL success, NSString *bussinessId) {
                             if (success) {
                                 object.businessID = bussinessId;
@@ -472,7 +472,7 @@
                     }
                     break;
                     
-                case 1:{
+                case SHGBondFinaceSendTypeReSet:{
                     NSLog(@"%@,%@",businessDic,businessSelectDic);
                     NSString *require= [businessSelectDic objectForKey:[weakSelf.addRequireButtonView.selectedArray objectAtIndex:0]];
                     for (NSInteger i = 1; i < weakSelf.addRequireButtonView.selectedArray.count; i ++ ) {
@@ -494,7 +494,7 @@
                     object.type =type;
                     NSLog(@"%@,%@,%@",area,industry,title);
                     NSLog(@"%@,%@,%@,%@,%@,%@",require,weakSelf.imageName,investTime,investAmount,anonymous,weakSelf.marketExplainTextView.text);
-                    NSDictionary *param = @{@"uid":UID,@"businessId":businessId, @"type": type, @"contact":contact, @"bondType":bondType, @"investAmount": investAmount, @"area": area, @"industry": industry,@"clarifyingWay":require, @"highestRate":weakSelf.retributionTextField.text, @"fundUsetime":investTime ,@"detail": weakSelf.marketExplainTextView.text,@"photo": weakSelf.imageName,@"anonymous": anonymous,@"title": title};
+                    NSDictionary *param = @{@"uid":UID,@"businessId":businessId, @"type": type, @"contact":contact, @"bondType":bondType, @"investAmount": investAmount, @"area": area, @"industry": industry,@"clarifyingWay":require, @"highestRate":weakSelf.retributionTextField.text, @"fundUsetime":investTime ,@"detail": weakSelf.marketExplainTextView.text,@"photo": weakSelf.imageName,@"anonymous": anonymous,@"title": title, @"version":[SHGGloble sharedGloble].currentVersion};
 
                         [SHGBusinessManager editBusiness:param success:^(BOOL success) {
                             if (success) {

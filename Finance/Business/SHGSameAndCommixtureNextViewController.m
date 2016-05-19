@@ -213,7 +213,7 @@
         [self uploadImage:^(BOOL success) {
             if (success) {
                 switch (((SHGSameAndCommixtureSendViewController *)weakSelf.superController).sendType) {
-                    case 0:{
+                    case SHGSameAndCommixtureSendTypeNew:{
                         
                         NSString *anonymous = weakSelf.authorizeButton.isSelected ? @"1" : @"0";
                         
@@ -226,7 +226,7 @@
                         SHGBusinessObject *object = [[SHGBusinessObject alloc] init];
                         object.type = type;
 
-                        NSDictionary *param = @{@"uid":UID,@"type": type, @"contact":contact, @"businessType":businessType, @"investAmount": investAmount, @"area": area, @"detail": weakSelf.marketExplainTextView.text,@"photo": weakSelf.imageName,@"anonymous": anonymous,@"title": title};
+                        NSDictionary *param = @{@"uid":UID,@"type": type, @"contact":contact, @"businessType":businessType, @"investAmount": investAmount, @"area": area, @"detail": weakSelf.marketExplainTextView.text,@"photo": weakSelf.imageName,@"anonymous": anonymous,@"title": title, @"version":[SHGGloble sharedGloble].currentVersion};
                         NSLog(@"%@",param);
                         NSLog(@"%@",weakSelf.marketExplainTextView.text);
                         [SHGBusinessManager createNewBusiness:param success:^(BOOL success , NSString *bussinessId) {
@@ -240,7 +240,7 @@
                         }];
                     }  break;
                         
-                    case 1:{
+                    case SHGSameAndCommixtureSendTypeReSet:{
                         NSString *anonymous = weakSelf.authorizeButton.isSelected ? @"1" : @"0";
                         NSString *businessId = self.obj.businessID;
                         NSString *type = [businessDic objectForKey:@"type"];
@@ -252,7 +252,7 @@
 
                         SHGBusinessObject *object = [[SHGBusinessObject alloc] init];
                         object.type = type;
-                        NSDictionary *param = @{@"uid":UID,@"businessId":businessId, @"type": type, @"contact":contact, @"businessType":businessType, @"investAmount": investAmount, @"area": area, @"detail": weakSelf.marketExplainTextView.text,@"photo": weakSelf.imageName,@"anonymous": anonymous,@"title": title};
+                        NSDictionary *param = @{@"uid":UID,@"businessId":businessId, @"type": type, @"contact":contact, @"businessType":businessType, @"investAmount": investAmount, @"area": area, @"detail": weakSelf.marketExplainTextView.text,@"photo": weakSelf.imageName,@"anonymous": anonymous,@"title": title, @"version":[SHGGloble sharedGloble].currentVersion};
                         NSLog(@"%@",param);
                         [SHGBusinessManager editBusiness:param success:^(BOOL success) {
                             if (success) {

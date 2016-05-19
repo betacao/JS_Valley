@@ -68,6 +68,7 @@
     self = [super init];
     if(self){
         self.cityName = @"";
+        self.currentVersion = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
         //添加一个通知 观察uid的变化
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userDefaultsDidChange:) name:NSUserDefaultsDidChangeNotification object:nil];
     }
