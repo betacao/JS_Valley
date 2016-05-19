@@ -193,7 +193,7 @@
     NSMutableDictionary *mutableParam = [NSMutableDictionary dictionaryWithDictionary:param];
     [mutableParam setObject:[SHGGloble sharedGloble].currentVersion forKey:@"version"];
     NSString *request = [rBaseAddressForHttp stringByAppendingString:@"/business/getAllTypeBusinessList"];
-    [MOCHTTPRequestOperationManager postWithURL:request class:nil parameters:param success:^(MOCHTTPResponse *response) {
+    [MOCHTTPRequestOperationManager postWithURL:request class:nil parameters:mutableParam success:^(MOCHTTPResponse *response) {
         [Hud hideHud];
         NSDictionary *dictionary = response.dataDictionary;
         NSArray *dataArray = [[SHGGloble sharedGloble] parseServerJsonArrayToJSONModel:[dictionary objectForKey:@"businesslist"] class:[SHGBusinessObject class]];

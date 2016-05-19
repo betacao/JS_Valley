@@ -10,6 +10,7 @@
 #import "CCLocationManager.h"
 #import "ApplyViewController.h"
 #import "LoginViewController.h"
+#import "SHGGuideView.h"
 
 @interface RootViewController ()
 @property (weak, nonatomic) IBOutlet UIImageView *launchImage;
@@ -17,7 +18,7 @@
 @property (strong, nonatomic) AVPlayerItem *playerItem;
 @property (strong, nonatomic) AVPlayer *player;
 @property (assign, nonatomic) CMTime totalTime;
-
+@property (strong, nonatomic) SHGGuideView *guideView;
 @end
 
 @implementation RootViewController
@@ -33,11 +34,23 @@
     } else if(SCREENHEIGHT > 667.000000){
         self.launchImage.image=[UIImage imageNamed:@"736"];
     }
-    if([[SHGGloble sharedGloble] isShowGuideView]){
-        [self startPlayVideo];
-    } else{
-        [self moveToHomePage];
-    }
+//    if([[SHGGloble sharedGloble] isShowGuideView]){
+//        [self startGuideView];
+//    } else{
+//        [self moveToHomePage];
+//    }
+
+    [self startGuideView];
+}
+
+- (void)startGuideView
+{
+    __weak typeof(self) weakSelf = self;
+    self.guideView = [[SHGGuideView alloc] init];
+    self.guideView.block = ^{
+        [weakSelf moveToHomePage];
+    };
+    [self.view addSubview:self.guideView];
 }
 
 - (void)moveToHomePage
