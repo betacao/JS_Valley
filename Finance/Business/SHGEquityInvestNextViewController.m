@@ -418,6 +418,7 @@
 
 - (IBAction)sureButtonClick:(UIButton *)sender
 {
+    if ([self checkInputMessage ]) {
     __weak typeof(self) weakSelf = self;
     NSDictionary *businessDic = ((SHGEquityInvestSendViewController *)self.superController).firstDic;
     NSDictionary *businessSelectDic = [[SHGGloble sharedGloble] getBusinessKeysAndValues];
@@ -508,7 +509,7 @@
             
         }
     }];
-    
+    }  
     
 }
 
@@ -543,7 +544,7 @@
 
 - (BOOL)checkInputMessage
 {
-    if (self.requireCurrentButton.selected  == YES) {
+    if (self.capitalSourceButtonView.selectedArray.count == 0) {
         [Hud showMessageWithText:@"请选择资金来源"];
         return NO;
     }
