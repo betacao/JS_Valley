@@ -23,6 +23,9 @@
     [super viewDidLoad];
     self.title = @"发布成功";
     self.view.backgroundColor = Color(@"efeeef");
+    if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
+        self.navigationController.interactivePopGestureRecognizer.enabled = NO;
+    }
     [self addSdLayout];
 }
 
