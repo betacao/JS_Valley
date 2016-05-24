@@ -35,7 +35,7 @@
 //屏幕尺寸
 #define SCREENWIDTH [[UIScreen mainScreen] bounds].size.width
 #define SCREENHEIGHT [[UIScreen mainScreen] bounds].size.height
-
+#define SCALE [UIScreen mainScreen].scale
 #define XFACTOR SCREENWIDTH / 320.0f
 #define YFACTOR SCREENHEIGHT / 568.0f
 

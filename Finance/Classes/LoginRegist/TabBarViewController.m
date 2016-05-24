@@ -12,7 +12,7 @@
 #import "SHGUserCenterViewController.h"
 #import "ApplyViewController.h"
 #import "CircleDetailViewController.h"
-#import "DiscoverViewController.h"
+#import "SHGDiscoveryViewController.h"
 #import "headImage.h"
 #import "MessageViewController.h"
 #import "SHGSegmentController.h"
@@ -25,7 +25,7 @@
 @property (strong, nonatomic) SHGSegmentController *homeSegmentViewController;
 @property (strong, nonatomic) SHGHomeViewController *homeViewController;
 @property (strong, nonatomic) SHGNewsViewController *newsViewController;
-@property (strong, nonatomic) DiscoverViewController *prodViewController;
+@property (strong, nonatomic) SHGDiscoveryViewController *discoveryViewController;
 @property (strong, nonatomic) SHGUserCenterViewController *meViewController;
 @property (strong, nonatomic) SHGBusinessListViewController *businessListViewController;
 @property (strong, nonatomic) NSDate *lastPlaySoundDate;
@@ -115,7 +115,6 @@
 
     } else if (item.tag == 3000){
         self.navigationItem.leftBarButtonItem = nil;
-        self.navigationItem.titleView = self.prodViewController.titleLabel;
         self.navigationItem.rightBarButtonItem = nil;
         [MobClick event:@"DiscoverViewController" label:@"onClick"];
 
@@ -158,8 +157,8 @@
     image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     selectedImage = [UIImage imageNamed:@"find_height"];
     selectedImage = [selectedImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    self.prodViewController.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"发现" image:image selectedImage:selectedImage];
-    self.prodViewController.tabBarItem.tag = 3000;
+    self.discoveryViewController.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"发现" image:image selectedImage:selectedImage];
+    self.discoveryViewController.tabBarItem.tag = 3000;
     
     //我的
     image = [UIImage imageNamed:@"my"];
@@ -172,7 +171,7 @@
     [[UITabBarItem appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor colorWithHexString:@"949494"],NSForegroundColorAttributeName, nil] forState:UIControlStateNormal];
     [[UITabBarItem appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor colorWithHexString:@"E21F0D"],NSForegroundColorAttributeName, nil] forState:UIControlStateSelected];
 
-    self.viewControllers = [NSArray arrayWithObjects:self.businessListViewController,self.homeSegmentViewController,self.prodViewController ,self.meViewController ,nil];
+    self.viewControllers = [NSArray arrayWithObjects:self.businessListViewController,self.homeSegmentViewController,self.discoveryViewController ,self.meViewController ,nil];
     self.selectedIndex = 0;
     
 }
@@ -211,13 +210,13 @@
     return _businessListViewController;
 }
 
-- (DiscoverViewController *)prodViewController
+- (SHGDiscoveryViewController *)discoveryViewController
 {
-    if (!_prodViewController)
+    if (!_discoveryViewController)
     {
-        _prodViewController = [[DiscoverViewController alloc] initWithNibName:@"DiscoverViewController" bundle:nil];
+        _discoveryViewController = [[SHGDiscoveryViewController alloc] init];
     }
-    return _prodViewController;
+    return _discoveryViewController;
 }
 
 - (SHGUserCenterViewController *)meViewController

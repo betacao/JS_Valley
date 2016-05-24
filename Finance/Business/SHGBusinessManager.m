@@ -116,7 +116,7 @@
         }
     } else {
         [Hud showWait];
-        [MOCHTTPRequestOperationManager postWithURL:[rBaseAddressForHttp stringByAppendingString:@"/business/getBusinessCondition"] parameters:@{@"uid":UID} success:^(MOCHTTPResponse *response) {
+        [MOCHTTPRequestOperationManager postWithURL:[rBaseAddressForHttp stringByAppendingString:@"/business/getBusinessCondition"] parameters:@{@"uid":UID,@"version":[SHGGloble sharedGloble].currentVersion} success:^(MOCHTTPResponse *response) {
             [Hud hideHud];
             weakSelf.trademixedArray = [response.dataDictionary objectForKey:@"trademixed"];
             weakSelf.bondFinancingArray = [response.dataDictionary objectForKey:@"bondfinancing"];

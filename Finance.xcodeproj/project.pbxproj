@@ -854,6 +854,7 @@
 		F91982CC1C59F9FA00A450B9 /* SHGUserCenterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F91982CA1C59F9FA00A450B9 /* SHGUserCenterViewController.m */; };
 		F91D3A461CB7528200E3419D /* SHGBusinessButtonContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = F91D3A451CB7528200E3419D /* SHGBusinessButtonContentView.m */; };
 		F91F43DF1CDC2D1C005604A0 /* SHGAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = F91F43DE1CDC2D1C005604A0 /* SHGAlertView.m */; };
+		F9203D161CF449E000F55373 /* SHGDiscoveryObject.m in Sources */ = {isa = PBXBuildFile; fileRef = F9203D151CF449E000F55373 /* SHGDiscoveryObject.m */; };
 		F920570A1C63203600897C8B /* SHGMarketAdvancedSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F92057081C63203600897C8B /* SHGMarketAdvancedSearchViewController.m */; };
 		F920570B1C63203600897C8B /* SHGMarketAdvancedSearchViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F92057091C63203600897C8B /* SHGMarketAdvancedSearchViewController.xib */; };
 		F924C2B41CACC1400070286F /* SHGBusinessListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F924C2B21CACC1400070286F /* SHGBusinessListViewController.m */; };
@@ -911,6 +912,9 @@
 		F9A227C61BF5C2140054F8D7 /* SHGActionMineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9A227C41BF5C2140054F8D7 /* SHGActionMineViewController.m */; };
 		F9A227C71BF5C2140054F8D7 /* SHGActionMineViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9A227C51BF5C2140054F8D7 /* SHGActionMineViewController.xib */; };
 		F9A227CA1BF5C7E10054F8D7 /* SHGActionSegmentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9A227C91BF5C7E10054F8D7 /* SHGActionSegmentViewController.m */; };
+		F9A2EF871CF3EE180054AE1C /* SHGDiscoveryManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F9A2EF861CF3EE180054AE1C /* SHGDiscoveryManager.m */; };
+		F9A2EF8B1CF3EE680054AE1C /* SHGDiscoveryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9A2EF891CF3EE680054AE1C /* SHGDiscoveryViewController.m */; };
+		F9A2EF8C1CF3EE680054AE1C /* SHGDiscoveryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9A2EF8A1CF3EE680054AE1C /* SHGDiscoveryViewController.xib */; };
 		F9A6C68C1CBE5FAB00AFEE49 /* SHGBusinessNoticeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F9A6C68B1CBE5FAB00AFEE49 /* SHGBusinessNoticeTableViewCell.m */; };
 		F9A8D27E1BE712B700A2BFB1 /* QQConnection.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9A8D2541BE712B700A2BFB1 /* QQConnection.framework */; };
 		F9A8D27F1BE712B700A2BFB1 /* QZoneConnection.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9A8D2551BE712B700A2BFB1 /* QZoneConnection.framework */; };
@@ -2163,6 +2167,8 @@
 		F91D3A451CB7528200E3419D /* SHGBusinessButtonContentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGBusinessButtonContentView.m; sourceTree = "<group>"; };
 		F91F43DD1CDC2D1C005604A0 /* SHGAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGAlertView.h; sourceTree = "<group>"; };
 		F91F43DE1CDC2D1C005604A0 /* SHGAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGAlertView.m; sourceTree = "<group>"; };
+		F9203D141CF449E000F55373 /* SHGDiscoveryObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGDiscoveryObject.h; sourceTree = "<group>"; };
+		F9203D151CF449E000F55373 /* SHGDiscoveryObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGDiscoveryObject.m; sourceTree = "<group>"; };
 		F92057071C63203600897C8B /* SHGMarketAdvancedSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGMarketAdvancedSearchViewController.h; sourceTree = "<group>"; };
 		F92057081C63203600897C8B /* SHGMarketAdvancedSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGMarketAdvancedSearchViewController.m; sourceTree = "<group>"; };
 		F92057091C63203600897C8B /* SHGMarketAdvancedSearchViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGMarketAdvancedSearchViewController.xib; sourceTree = "<group>"; };
@@ -2260,6 +2266,11 @@
 		F9A227C51BF5C2140054F8D7 /* SHGActionMineViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGActionMineViewController.xib; sourceTree = "<group>"; };
 		F9A227C81BF5C7E10054F8D7 /* SHGActionSegmentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGActionSegmentViewController.h; sourceTree = "<group>"; };
 		F9A227C91BF5C7E10054F8D7 /* SHGActionSegmentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGActionSegmentViewController.m; sourceTree = "<group>"; };
+		F9A2EF851CF3EE180054AE1C /* SHGDiscoveryManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGDiscoveryManager.h; sourceTree = "<group>"; };
+		F9A2EF861CF3EE180054AE1C /* SHGDiscoveryManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGDiscoveryManager.m; sourceTree = "<group>"; };
+		F9A2EF881CF3EE670054AE1C /* SHGDiscoveryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGDiscoveryViewController.h; sourceTree = "<group>"; };
+		F9A2EF891CF3EE680054AE1C /* SHGDiscoveryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGDiscoveryViewController.m; sourceTree = "<group>"; };
+		F9A2EF8A1CF3EE680054AE1C /* SHGDiscoveryViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGDiscoveryViewController.xib; sourceTree = "<group>"; };
 		F9A6C68A1CBE5FAB00AFEE49 /* SHGBusinessNoticeTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGBusinessNoticeTableViewCell.h; sourceTree = "<group>"; };
 		F9A6C68B1CBE5FAB00AFEE49 /* SHGBusinessNoticeTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGBusinessNoticeTableViewCell.m; sourceTree = "<group>"; };
 		F9A8D2541BE712B700A2BFB1 /* QQConnection.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = QQConnection.framework; sourceTree = "<group>"; };
@@ -3883,6 +3894,7 @@
 		61D6E73D1AD50FCA0016C13A /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				F9A2EF841CF3EC970054AE1C /* Discovery */,
 				F924C2B01CACBFCF0070286F /* Business */,
 				F9F349AE1C19216D0090F111 /* Market */,
 				F9A227B51BF5ABC60054F8D7 /* Action */,
@@ -4938,6 +4950,20 @@
 			path = Action;
 			sourceTree = "<group>";
 		};
+		F9A2EF841CF3EC970054AE1C /* Discovery */ = {
+			isa = PBXGroup;
+			children = (
+				F9203D141CF449E000F55373 /* SHGDiscoveryObject.h */,
+				F9203D151CF449E000F55373 /* SHGDiscoveryObject.m */,
+				F9A2EF851CF3EE180054AE1C /* SHGDiscoveryManager.h */,
+				F9A2EF861CF3EE180054AE1C /* SHGDiscoveryManager.m */,
+				F9A2EF881CF3EE670054AE1C /* SHGDiscoveryViewController.h */,
+				F9A2EF891CF3EE680054AE1C /* SHGDiscoveryViewController.m */,
+				F9A2EF8A1CF3EE680054AE1C /* SHGDiscoveryViewController.xib */,
+			);
+			path = Discovery;
+			sourceTree = "<group>";
+		};
 		F9A8D2521BE712B700A2BFB1 /* ShareSDK */ = {
 			isa = PBXGroup;
 			children = (
@@ -5817,6 +5843,7 @@
 				61E83D1C1AF7C78E00703651 /* 检查更新@2x.png in Resources */,
 				61E83D021AF7C78E00703651 /* 圈子-选中@2x.png in Resources */,
 				61E83D6B1AF7C78E00703651 /* 我的-默认@3x.png in Resources */,
+				F9A2EF8C1CF3EE680054AE1C /* SHGDiscoveryViewController.xib in Resources */,
 				408D8B751AF8618C0055810C /* chat_sender_audio_playing_000@2x.png in Resources */,
 				B080FEAE1B81E30100426579 /* emoji_unselected_center_bg.png in Resources */,
 				6149CFE31B25E5B0006E45FE /* city_code.txt in Resources */,
@@ -6051,6 +6078,7 @@
 				9804FC731CCF554F00C2BB25 /* SHGRecommendHeaderView.m in Sources */,
 				6187D2F31AF1C693008E1D21 /* EMSearchBar.m in Sources */,
 				53AFF7841AFBF5F700D04B6B /* THProgressView.m in Sources */,
+				F9A2EF8B1CF3EE680054AE1C /* SHGDiscoveryViewController.m in Sources */,
 				610FF0451AD621500027EBA6 /* PopoverListObj.m in Sources */,
 				538964D11AFC6BEB00041548 /* AppDelegate+EaseMob.m in Sources */,
 				F9A997F61C72CAA500355337 /* SHGMarketSearchResultViewController.m in Sources */,
@@ -6065,6 +6093,7 @@
 				986CF19C1CCF3BE800064C52 /* SHGRecommendCollectionViewCell.m in Sources */,
 				4088DDBC1AF102FE00393855 /* SettingQuestionViewController.m in Sources */,
 				6187D2EA1AF1C693008E1D21 /* MessageReadManager.m in Sources */,
+				F9203D161CF449E000F55373 /* SHGDiscoveryObject.m in Sources */,
 				985CBDC31C04042C002B3D9D /* SHGCollectCardClass.m in Sources */,
 				985088191BF424F800FE9B04 /* SHGTableHeaderView.m in Sources */,
 				569C6D401B7CB5B300AD59C3 /* SetPassWordViewController.m in Sources */,
@@ -6108,6 +6137,7 @@
 				F91D3A461CB7528200E3419D /* SHGBusinessButtonContentView.m in Sources */,
 				F90684921CBF33F00003B123 /* SHGBusinessSearchViewController.m in Sources */,
 				6187D30F1AF1C693008E1D21 /* SRRefreshView.m in Sources */,
+				F9A2EF871CF3EE180054AE1C /* SHGDiscoveryManager.m in Sources */,
 				40302B151AEF5C3500F22EB6 /* AddAddressViewController.m in Sources */,
 				6187D2E21AF1C693008E1D21 /* EMChatLocationBubbleView.m in Sources */,
 				980D0D5B1C99026E00351F8C /* SHGMarketCollectionViewController.m in Sources */,

@@ -13,6 +13,8 @@
 #import "SHGPersonFriendsViewController.h"
 #import "SDPhotoBrowser.h"
 #import "SHGPersonalTableViewCell.h"
+#import "SHGBusinessMineViewController.h"
+
 #define kTagViewWidth 45.0f * XFACTOR
 #define kTagViewHeight 16.0f * XFACTOR
 #define kBottomViewLeftMargin 14.0f
@@ -58,6 +60,7 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
 @property (strong, nonatomic) NSString * position;
 @property (strong, nonatomic) NSString * tags;
 @property (strong, nonatomic) NSString * commonfriends;
+@property (strong, nonatomic) NSString * businessTotal;
 @property (weak, nonatomic) IBOutlet UIView *grayView;
 @property (assign, nonatomic) BOOL isCardChange;
 @end
@@ -69,26 +72,18 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
     [super viewDidLoad];
     self.title = @"个人动态";
     self.isCardChange = YES;
-    if ([self.userId isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID]]) {
-        self.listArray = [NSMutableArray arrayWithArray:@[@"我的动态", @"我的好友"]];
-        self.friendImage.hidden = YES;
-        self.lineView.hidden = YES;
-    } else{
-        self.friendImage.hidden = NO;
-        self.listArray = [NSMutableArray arrayWithArray:@[@"他的动态", @"他的好友", @"共同好友"]];
-    }
     [self initView];
     [self addSdLayout];
     self.tableView.separatorStyle = UITableViewCellSelectionStyleNone;
     [self requestDataWithTarget:@"first" time:@""];
 }
+
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
     if (!self.isCardChange) {
         [self.controller changeCardCollection];
     }
-    
 }
 - (void)initView
 {
@@ -264,7 +259,12 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
         .rightSpaceToView(self.headerView, 0.0f)
         .topSpaceToView(self.sendMessageButton, 0.0f)
         .heightIs(MarginFactor(10.0f));
-        self.listArray = [NSMutableArray arrayWithArray:@[@"他的动态", @"他的好友", @"共同好友"]];
+        if ([self.commonfriends intValue] == 0) {
+            self.listArray = [NSMutableArray arrayWithArray:@[@"TA的业务",@"TA的动态", @"TA的好友"]];
+        } else{
+            self.listArray = [NSMutableArray arrayWithArray:@[@"TA的业务",@"TA的动态", @"TA的好友", @"共同好友"]];
+       }
+        
     }
 
     [self refreshFriendShip];
@@ -320,6 +320,7 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
     self.friendNumber = [dictionary objectForKey:@"friends"];
     self.commonfriends = [dictionary objectForKey:@"commonfriends"];
     self.friendShip = [dictionary objectForKey:@"friendship"];
+    self.businessTotal = [dictionary objectForKey:@"businesstotal"];
     if ([[dictionary objectForKey:@"iscollected"] isEqualToString:@"true"]) {
         self.isCollected = YES;
     } else{
@@ -457,28 +458,57 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
         cell = [[[NSBundle mainBundle] loadNibNamed:@"SHGPersonalTableViewCell" owner:self options:nil] objectAtIndex:0];
         }
     SHGPersonalMode *model = [[SHGPersonalMode alloc]init];
-    switch (indexPath.row) {
-        case 0:{
-            if (self.dynamicNumber) {
-                model.count = [NSString stringWithFormat:@"%@条",self.dynamicNumber];
+    
+    if (![self.userId isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID]])
+    {
+        switch (indexPath.row) {
+            case 0:{
+                if (self.businessTotal) {
+                    model.count = [NSString stringWithFormat:@"%@条",self.businessTotal];
+                }
             }
-        }
-            break;
-        case 1:{
-            if (self.friendNumber) {
-                model.count = [NSString stringWithFormat:@"%@人",self.friendNumber];
+                break;
+            case 1:{
+                if (self.dynamicNumber) {
+                    model.count = [NSString stringWithFormat:@"%@条",self.dynamicNumber];
+                }
             }
-        }
-            break;
-        case 2:{
-            if (self.commonfriends) {
-                model.count  = [NSString stringWithFormat:@"%@人",self.commonfriends];
+                break;
+            case 2:{
+                if (self.friendNumber) {
+                    model.count = [NSString stringWithFormat:@"%@人",self.friendNumber];
+                }
             }
-            
+                break;
+            case 3:{
+                if (self.commonfriends) {
+                    model.count  = [NSString stringWithFormat:@"%@人",self.commonfriends];
+                }
+                
+            }
+                break;
+            default:
+                break;
         }
-            break;
-        default:
-            break;
+        
+        
+    } else{
+        switch (indexPath.row) {
+            case 0:{
+                if (self.dynamicNumber) {
+                    model.count = [NSString stringWithFormat:@"%@条",self.dynamicNumber];
+                }
+            }
+                break;
+            case 1:{
+                if (self.friendNumber) {
+                    model.count = [NSString stringWithFormat:@"%@人",self.friendNumber];
+                }
+            }
+                break;
+            default:
+                break;
+        }
     }
     model.name = [self.listArray objectAtIndex:indexPath.row];
     cell.model = model;
@@ -487,44 +517,78 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    switch (indexPath.row) {
-        case 0:{
-            __weak typeof(self) weakSelf = self;
-            SHGPersonDynamicViewController *controller = [[SHGPersonDynamicViewController alloc] initWithNibName:@"SHGPersonDynamicViewController" bundle:nil];
-            controller.userId = self.userId;
-            controller.delegate = self.delegate;
-            controller.block = ^(NSString *state){
-                weakSelf.relationShip = state;
-                [weakSelf refreshFriendShip];
-            };
-            [self.navigationController pushViewController:controller animated:YES];
-        }
-            break;
-        case 1:{
-            SHGPersonFriendsViewController *vc = [[SHGPersonFriendsViewController alloc] init];
-            vc.userId = self.userId;
-            if ([self.userId isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID]] ) {
-                [vc friendStatus:@"me"];
-            } else{
-                [vc friendStatus:@"his"];
+    if ([self.userId isEqualToString:UID]){
+        switch (indexPath.row) {
+            case 0:{
+                __weak typeof(self) weakSelf = self;
+                SHGPersonDynamicViewController *controller = [[SHGPersonDynamicViewController alloc] initWithNibName:@"SHGPersonDynamicViewController" bundle:nil];
+                controller.userId = self.userId;
+                controller.delegate = self.delegate;
+                controller.block = ^(NSString *state){
+                    weakSelf.relationShip = state;
+                    [weakSelf refreshFriendShip];
+                };
+                [self.navigationController pushViewController:controller animated:YES];
             }
-            [self.navigationController pushViewController:vc animated:YES];
+                break;
+            case 1:{
+                SHGPersonFriendsViewController *vc = [[SHGPersonFriendsViewController alloc] init];
+                vc.userId = self.userId;
+                [vc friendStatus:@"me"];
+                [self.navigationController pushViewController:vc animated:YES];
+            }
+                break;
+            default:{
+                
+            }
+                break;
         }
-            break;
-        case 2:{
-            SHGPersonFriendsViewController *vc = [[SHGPersonFriendsViewController alloc] init];
-            vc.userId = self.userId;
-            [vc friendStatus:@"all"];
-            [self.navigationController pushViewController:vc animated:YES];
+    } else{
+        switch (indexPath.row) {
+            case 0:{
+                SHGBusinessMineViewController *controller = [[SHGBusinessMineViewController alloc] initWithNibName:@"SHGBusinessMineViewController" bundle:nil];
+                controller.userId = self.userId;
+                [self.navigationController pushViewController:controller animated:YES];
+            }
+                break;
+            case 1:{
+                __weak typeof(self) weakSelf = self;
+                SHGPersonDynamicViewController *controller = [[SHGPersonDynamicViewController alloc] initWithNibName:@"SHGPersonDynamicViewController" bundle:nil];
+                controller.userId = self.userId;
+                controller.delegate = self.delegate;
+                controller.block = ^(NSString *state){
+                    weakSelf.relationShip = state;
+                    [weakSelf refreshFriendShip];
+                };
+                [self.navigationController pushViewController:controller animated:YES];
+            }
+                break;
+            case 2:{
+                SHGPersonFriendsViewController *vc = [[SHGPersonFriendsViewController alloc] init];
+                vc.userId = self.userId;
+                [vc friendStatus:@"his"];
+                
+                [self.navigationController pushViewController:vc animated:YES];
+            }
+                break;
+            case 3:{
+                SHGPersonFriendsViewController *vc = [[SHGPersonFriendsViewController alloc] init];
+                vc.userId = self.userId;
+                [vc friendStatus:@"all"];
+                [self.navigationController pushViewController:vc animated:YES];
+            }
+                break;
+                
+            default:{
+                
+            }
+                break;
         }
-            break;
 
-        default:{
-
-        }
-            break;
+        
     }
-}
+    
+   }
 
 
 #pragma mark ------图片浏览器代理
