@@ -427,6 +427,7 @@
             switch (((SHGEquityInvestSendViewController *)weakSelf.superController).sendType) {
                     
                 case SHGEquityInvestSendTypeNew:{
+                    [[SHGGloble sharedGloble] recordUserAction:@"" type:@"business_create"];
                     NSString *anonymous = weakSelf.authorizeButton.isSelected ? @"1" : @"0";
                     
                     NSString *type = [businessDic objectForKey:@"type"];

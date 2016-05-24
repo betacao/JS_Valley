@@ -152,6 +152,7 @@
 
 - (IBAction)nextButtonClicked:(UIButton *)sender
 {
+    NSMutableArray *selectCategoryArray = [[NSMutableArray alloc] init];
     NSMutableDictionary *codeParam = [NSMutableDictionary dictionary];
     NSMutableArray *titleArray = [NSMutableArray array];
     NSMutableArray *selectedArray = [NSMutableArray array];
@@ -161,6 +162,10 @@
             __block NSString *codeValue = @"";
 
             NSArray *array = [contentView selectedArray];
+            if (array.count > 0) {
+                [selectCategoryArray addObject:key];
+            }
+
             [array enumerateObjectsUsingBlock:^(SHGBusinessSecondsubObject *subObject, NSUInteger idx, BOOL * _Nonnull stop) {
                 codeValue = [codeValue stringByAppendingFormat:@"%@;",subObject.code];
                 if ([subObject.value isEqualToString:@"不限"]) {
@@ -178,6 +183,16 @@
         }
 
     }];
+    NSString *selectCtegoryString = @"";
+    if (selectCategoryArray.count > 0) {
+        selectCtegoryString = [selectCategoryArray firstObject];
+        for (NSInteger i = 1 ; i < selectCategoryArray.count ; i ++) {
+            selectCtegoryString = [NSString stringWithFormat:@"%@,%@",selectCtegoryString,[selectCategoryArray objectAtIndex:i]];
+        }
+        
+    }
+    [[SHGGloble sharedGloble] recordUserAction:selectCtegoryString type:@"business_more_condition"];
+
     if (self.selectedBlock) {
         self.selectedBlock(codeParam, titleArray, selectedArray, NO);
     }

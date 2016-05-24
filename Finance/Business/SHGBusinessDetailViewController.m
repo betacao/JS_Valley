@@ -672,10 +672,10 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
         } else{
             SHGAuthenticationViewController *controller = [[SHGAuthenticationViewController alloc] init];
             [self.navigationController pushViewController:controller animated:YES];
-            [[SHGGloble sharedGloble] recordUserAction:@"" type:@"dynamic_identity"];
+            [[SHGGloble sharedGloble] recordUserAction:@"" type:@"business_identity"];
         }
     } showAlert:YES leftBlock:^{
-        [[SHGGloble sharedGloble] recordUserAction:@"" type:@"dynamic_identity_cancel"];
+        [[SHGGloble sharedGloble] recordUserAction:@"" type:@"business_identity_cancel"];
     } failString:@"认证后才能发起评论哦～"];
     
 
@@ -696,10 +696,10 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
         } else{
             SHGAuthenticationViewController *controller = [[SHGAuthenticationViewController alloc] init];
             [self.navigationController pushViewController:controller animated:YES];
-            [[SHGGloble sharedGloble] recordUserAction:@"" type:@"dynamic_identity"];
+            [[SHGGloble sharedGloble] recordUserAction:@"" type:@"business_identity"];
         }
     } showAlert:YES leftBlock:^{
-        [[SHGGloble sharedGloble] recordUserAction:@"" type:@"dynamic_identity_cancel"];
+        [[SHGGloble sharedGloble] recordUserAction:@"" type:@"business_identity_cancel"];
     } failString:@"认证后才能发起评论哦～"];
 }
 
@@ -751,6 +751,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
 
 - (IBAction)share:(id)sender
 {
+    [[SHGGloble sharedGloble] recordUserAction:[NSString stringWithFormat:@"%@#%@", self.responseObject.businessID, self.responseObject.type] type:@"business_share"];
     [[SHGBusinessManager shareManager] shareAction:self.responseObject baseController:self finishBlock:^(BOOL success) {
 
     }];

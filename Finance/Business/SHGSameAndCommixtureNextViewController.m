@@ -214,7 +214,7 @@
             if (success) {
                 switch (((SHGSameAndCommixtureSendViewController *)weakSelf.superController).sendType) {
                     case SHGSameAndCommixtureSendTypeNew:{
-                        
+                        [[SHGGloble sharedGloble] recordUserAction:@"" type:@"business_create"];
                         NSString *anonymous = weakSelf.authorizeButton.isSelected ? @"1" : @"0";
                         
                         NSString *type = [businessDic objectForKey:@"type"];

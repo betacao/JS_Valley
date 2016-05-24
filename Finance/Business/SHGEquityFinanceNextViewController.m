@@ -354,6 +354,7 @@
         [self uploadImage:^(BOOL success) {
             switch (((SHGEquityFinanceSendViewController *)weakSelf.superController).sendType) {
                 case SHGEquityFinaceSendTypeNew:{
+                    [[SHGGloble sharedGloble] recordUserAction:@"" type:@"business_create"];
                     NSString *vestYears = @"";
                     if (weakSelf.investTimeButtonView.selectedArray.count > 0) {
                          vestYears =[businessSelectDic objectForKey:[weakSelf.investTimeButtonView.selectedArray objectAtIndex:0]];

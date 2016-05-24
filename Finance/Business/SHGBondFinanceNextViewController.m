@@ -441,6 +441,7 @@
                 NSDictionary *businessDic = ((SHGBondFinanceSendViewController *)self.superController).firstDic;
                 switch (((SHGBondFinanceSendViewController *)weakSelf.superController).sendType) {
                     case SHGBondFinaceSendTypeNew:{
+                        [[SHGGloble sharedGloble] recordUserAction:@"" type:@"business_create"];
                         NSString *require= [businessSelectDic objectForKey:[weakSelf.addRequireButtonView.selectedArray objectAtIndex:0]];
                         for (NSInteger i = 1; i < weakSelf.addRequireButtonView.selectedArray.count; i ++ ) {
                             require = [NSString stringWithFormat:@"%@;%@",require,[businessSelectDic objectForKey:[weakSelf.addRequireButtonView.selectedArray objectAtIndex:i]]];

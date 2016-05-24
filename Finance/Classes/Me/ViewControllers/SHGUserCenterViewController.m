@@ -485,6 +485,7 @@
 
 - (void)goToMyBusiness
 {
+    [[SHGGloble sharedGloble] recordUserAction:@"" type:@"user_business"];
     SHGBusinessMineViewController *controller = [[SHGBusinessMineViewController alloc] initWithNibName:@"SHGBusinessMineViewController" bundle:nil];
     controller.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:controller animated:YES];
@@ -853,6 +854,7 @@
         [self goToMyCircle];
 
     } else if ([text containsString:@"业务收藏"]){
+        [[SHGGloble sharedGloble] recordUserAction:@"" type:@"user_collectBusiness"];
         SHGBusinessCollectionListViewController *controller = [[SHGBusinessCollectionListViewController alloc] init];
         controller.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:controller animated:YES];

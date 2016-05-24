@@ -175,6 +175,7 @@
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
+    [[SHGGloble sharedGloble] recordUserAction:searchBar.text type:@"business_search_word"];
     SHGBusinessSearchResultViewController *controller = [[SHGBusinessSearchResultViewController alloc] initWithType:SHGBusinessSearchTypeNormal];
     controller.param = @{@"uid":UID ,@"type":@"search" ,@"pageSize":@"10", @"keyword":searchBar.text};
     [self.navigationController pushViewController:controller animated:YES];

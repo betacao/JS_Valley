@@ -433,6 +433,7 @@
                 switch (((SHGBondInvestSendViewController *)weakSelf.superController).sendType) {
                         
                     case SHGBusinessSendTypeNew:{
+                        [[SHGGloble sharedGloble] recordUserAction:@"" type:@"business_create"];
                         //增信选择字段
                         NSString *clarifyingRequire = @"";
                         
