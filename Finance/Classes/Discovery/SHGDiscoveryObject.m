@@ -17,10 +17,10 @@
 + (NSValueTransformer *)JSONTransformerForKey:(NSString *)key
 {
     return [MTLValueTransformer transformerUsingForwardBlock:^id(NSString *value, BOOL *success, NSError *__autoreleasing *error) {
-        if ([key isEqualToString:@"industryImageName"]) {
-            if ([value containsString:@""]) {
-                
-            }
+        if ([key isEqualToString:@"industryImage"]) {
+            NSString *imageName = [NSString stringWithFormat:@"discovery_%@", value];
+            UIImage *image = [UIImage imageNamed:imageName];
+            return image;
         }
         return value;
     }];

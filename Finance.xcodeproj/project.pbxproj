@@ -855,6 +855,7 @@
 		F91D3A461CB7528200E3419D /* SHGBusinessButtonContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = F91D3A451CB7528200E3419D /* SHGBusinessButtonContentView.m */; };
 		F91F43DF1CDC2D1C005604A0 /* SHGAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = F91F43DE1CDC2D1C005604A0 /* SHGAlertView.m */; };
 		F9203D161CF449E000F55373 /* SHGDiscoveryObject.m in Sources */ = {isa = PBXBuildFile; fileRef = F9203D151CF449E000F55373 /* SHGDiscoveryObject.m */; };
+		F9203D181CF44C6200F55373 /* SHGIndustry.plist in Resources */ = {isa = PBXBuildFile; fileRef = F9203D171CF44C6200F55373 /* SHGIndustry.plist */; };
 		F920570A1C63203600897C8B /* SHGMarketAdvancedSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F92057081C63203600897C8B /* SHGMarketAdvancedSearchViewController.m */; };
 		F920570B1C63203600897C8B /* SHGMarketAdvancedSearchViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F92057091C63203600897C8B /* SHGMarketAdvancedSearchViewController.xib */; };
 		F924C2B41CACC1400070286F /* SHGBusinessListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F924C2B21CACC1400070286F /* SHGBusinessListViewController.m */; };
@@ -887,6 +888,8 @@
 		F93FCBCA1C856D5A004E356E /* UIImage+Customized.m in Sources */ = {isa = PBXBuildFile; fileRef = F93FCBB81C856D5A004E356E /* UIImage+Customized.m */; };
 		F93FCBCB1C856D5A004E356E /* UIImage+Rotation.m in Sources */ = {isa = PBXBuildFile; fileRef = F93FCBBA1C856D5A004E356E /* UIImage+Rotation.m */; };
 		F93FCBCD1C856D5A004E356E /* UIView+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = F93FCBBE1C856D5A004E356E /* UIView+Additions.m */; };
+		F951C60D1CF53536007FA198 /* SHGDiscoveryMyContactCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F951C60C1CF53536007FA198 /* SHGDiscoveryMyContactCell.xib */; };
+		F951C60F1CF53AAC007FA198 /* SHGDiscoveryContactExpandCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F951C60E1CF53AAC007FA198 /* SHGDiscoveryContactExpandCell.xib */; };
 		F95A88C71CAA784100D7F9BD /* SHGGifHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = F95A88C61CAA784100D7F9BD /* SHGGifHeader.m */; };
 		F95F42AA1C8DA341003EDA30 /* SHGConnectionsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F95F42A81C8DA341003EDA30 /* SHGConnectionsTableViewCell.m */; };
 		F95F42AB1C8DA341003EDA30 /* SHGConnectionsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F95F42A91C8DA341003EDA30 /* SHGConnectionsTableViewCell.xib */; };
@@ -2169,6 +2172,7 @@
 		F91F43DE1CDC2D1C005604A0 /* SHGAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGAlertView.m; sourceTree = "<group>"; };
 		F9203D141CF449E000F55373 /* SHGDiscoveryObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGDiscoveryObject.h; sourceTree = "<group>"; };
 		F9203D151CF449E000F55373 /* SHGDiscoveryObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGDiscoveryObject.m; sourceTree = "<group>"; };
+		F9203D171CF44C6200F55373 /* SHGIndustry.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = SHGIndustry.plist; sourceTree = "<group>"; };
 		F92057071C63203600897C8B /* SHGMarketAdvancedSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGMarketAdvancedSearchViewController.h; sourceTree = "<group>"; };
 		F92057081C63203600897C8B /* SHGMarketAdvancedSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGMarketAdvancedSearchViewController.m; sourceTree = "<group>"; };
 		F92057091C63203600897C8B /* SHGMarketAdvancedSearchViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGMarketAdvancedSearchViewController.xib; sourceTree = "<group>"; };
@@ -2225,6 +2229,8 @@
 		F93FCBBA1C856D5A004E356E /* UIImage+Rotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Rotation.m"; sourceTree = "<group>"; };
 		F93FCBBD1C856D5A004E356E /* UIView+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Additions.h"; sourceTree = "<group>"; };
 		F93FCBBE1C856D5A004E356E /* UIView+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Additions.m"; sourceTree = "<group>"; };
+		F951C60C1CF53536007FA198 /* SHGDiscoveryMyContactCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGDiscoveryMyContactCell.xib; sourceTree = "<group>"; };
+		F951C60E1CF53AAC007FA198 /* SHGDiscoveryContactExpandCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGDiscoveryContactExpandCell.xib; sourceTree = "<group>"; };
 		F95A88C51CAA784100D7F9BD /* SHGGifHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGGifHeader.h; sourceTree = "<group>"; };
 		F95A88C61CAA784100D7F9BD /* SHGGifHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGGifHeader.m; sourceTree = "<group>"; };
 		F95F42A71C8DA341003EDA30 /* SHGConnectionsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGConnectionsTableViewCell.h; sourceTree = "<group>"; };
@@ -4953,6 +4959,7 @@
 		F9A2EF841CF3EC970054AE1C /* Discovery */ = {
 			isa = PBXGroup;
 			children = (
+				F9203D171CF44C6200F55373 /* SHGIndustry.plist */,
 				F9203D141CF449E000F55373 /* SHGDiscoveryObject.h */,
 				F9203D151CF449E000F55373 /* SHGDiscoveryObject.m */,
 				F9A2EF851CF3EE180054AE1C /* SHGDiscoveryManager.h */,
@@ -4960,6 +4967,8 @@
 				F9A2EF881CF3EE670054AE1C /* SHGDiscoveryViewController.h */,
 				F9A2EF891CF3EE680054AE1C /* SHGDiscoveryViewController.m */,
 				F9A2EF8A1CF3EE680054AE1C /* SHGDiscoveryViewController.xib */,
+				F951C60C1CF53536007FA198 /* SHGDiscoveryMyContactCell.xib */,
+				F951C60E1CF53AAC007FA198 /* SHGDiscoveryContactExpandCell.xib */,
 			);
 			path = Discovery;
 			sourceTree = "<group>";
@@ -5359,6 +5368,7 @@
 				408D8B221AF8618C0055810C /* call_silence@2x.png in Resources */,
 				B080FE881B81E30100426579 /* btn_publish_face_a@2x.png in Resources */,
 				408D8B241AF8618C0055810C /* call_silence_h@2x.png in Resources */,
+				F951C60D1CF53536007FA198 /* SHGDiscoveryMyContactCell.xib in Resources */,
 				9842E9D01C017FCA0008B6AF /* SHGPersonFriendsViewController.xib in Resources */,
 				408D8B081AF8618C0055810C /* VoiceSearchFeedback010@2x.png in Resources */,
 				408D8B2D1AF8618C0055810C /* chatBar_more_faceSelected.png in Resources */,
@@ -5506,6 +5516,7 @@
 				61E83D2E1AF7C78E00703651 /* 接受按钮-按下@2x.png in Resources */,
 				61616FEA1B02F29100E5A837 /* 已关注按钮@3x.png in Resources */,
 				615234791B0D8A6400011EAC /* DiscoverViewController.xib in Resources */,
+				F9203D181CF44C6200F55373 /* SHGIndustry.plist in Resources */,
 				61E83D071AF7C78E00703651 /* 按钮@2x.png in Resources */,
 				40302B2D1AF07AA500F22EB6 /* MyMoneyViewController.xib in Resources */,
 				61E83CD41AF7C78E00703651 /* 圈子图标@2x.png in Resources */,
@@ -5657,6 +5668,7 @@
 				B06F1C161B74B4AE005157A2 /* 矢量智能对象.png in Resources */,
 				408D8B3A1AF8618C0055810C /* faceDelete@2x.png in Resources */,
 				408D8B0D1AF8618C0055810C /* VoiceSearchFeedback013.png in Resources */,
+				F951C60F1CF53AAC007FA198 /* SHGDiscoveryContactExpandCell.xib in Resources */,
 				616405421B29FE920071A18D /* 通讯录更新@2x.png in Resources */,
 				61616FF01B02F29100E5A837 /* new评论@3x.png in Resources */,
 				614EFEC01AEF1FD200F2BDD1 /* myreservation@2x.png in Resources */,

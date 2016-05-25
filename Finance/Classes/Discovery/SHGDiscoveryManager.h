@@ -12,6 +12,6 @@
 
 + (instancetype)shareManager;
 
-+ (void)loadDiscoveryData:(NSDictionary *)param block:(void (^)(NSArray *dataArray, NSString *position, NSString *tipUrl, NSString *cfData))block;
++ (void)loadDiscoveryData:(NSDictionary *)param block:(void (^)(NSArray *dataArray))block;
 
 @end

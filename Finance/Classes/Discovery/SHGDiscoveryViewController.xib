@@ -7,9 +7,6 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SHGDiscoveryViewController">
             <connections>
-                <outlet property="contactExpandCell" destination="fb8-dZ-KMx" id="BJH-1Y-i20"/>
-                <outlet property="contactRecommendView" destination="4HI-e1-Woa" id="KsW-mG-h3i"/>
-                <outlet property="myContactView" destination="SjL-eB-0Lb" id="9f6-i3-Zt9"/>
                 <outlet property="tableView" destination="VYg-83-Wer" id="6ho-Ot-rd8"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -32,68 +29,5 @@
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <point key="canvasLocation" x="32" y="330"/>
         </view>
-        <view contentMode="scaleToFill" id="SjL-eB-0Lb" customClass="SHGDiscoveryMyContactView">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-        </view>
-        <view contentMode="scaleToFill" id="4HI-e1-Woa" customClass="SHGDiscoveryContactRecommendView">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-        </view>
-        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="SHGDiscoveryContactExpandCell" id="fb8-dZ-KMx" customClass="SHGDiscoveryContactExpandCell">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-            <autoresizingMask key="autoresizingMask"/>
-            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="fb8-dZ-KMx" id="79T-fl-1sS">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
-                <autoresizingMask key="autoresizingMask"/>
-                <subviews>
-                    <view contentMode="scaleToFill" id="2Ct-DL-bLH">
-                        <rect key="frame" x="40" y="-42" width="240" height="128"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="0Py-sM-b9W" customClass="SHGDiscoveryCategoryButton">
-                                <rect key="frame" x="97" y="49" width="46" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Cto-Nc-CxH" customClass="SHGDiscoveryCategoryButton">
-                                <rect key="frame" x="97" y="49" width="46" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </button>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                    <view contentMode="scaleToFill" id="l82-dt-3Gh">
-                        <rect key="frame" x="40" y="-42" width="240" height="128"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <subviews>
-                            <view contentMode="scaleToFill" id="VHf-iX-M18">
-                                <rect key="frame" x="58" y="41" width="123" height="47"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="vZ2-CH-LjO">
-                                <rect key="frame" x="99" y="54" width="42" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                </subviews>
-            </tableViewCellContentView>
-            <connections>
-                <outlet property="buttonView" destination="2Ct-DL-bLH" id="Fn8-0c-HOD"/>
-                <outlet property="leftButton" destination="0Py-sM-b9W" id="v0R-hH-Wv0"/>
-                <outlet property="redLineView" destination="VHf-iX-M18" id="16K-Ha-mVP"/>
-                <outlet property="rightButton" destination="Cto-Nc-CxH" id="XKc-vf-GML"/>
-                <outlet property="titleLabel" destination="vZ2-CH-LjO" id="9Q9-r4-Ro7"/>
-                <outlet property="topView" destination="l82-dt-3Gh" id="yhQ-jK-jMp"/>
-            </connections>
-            <point key="canvasLocation" x="445" y="549"/>
-        </tableViewCell>
     </objects>
 </document>

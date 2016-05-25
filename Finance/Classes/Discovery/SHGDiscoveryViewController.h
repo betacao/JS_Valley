@@ -12,7 +12,11 @@
 
 @end
 
-@interface SHGDiscoveryMyContactView : UIView
+@interface SHGDiscoveryMyContactCell : UITableViewCell
+
+@property (strong, nonatomic) NSArray *effctiveArray;
+
+@property (weak, nonatomic) SHGDiscoveryViewController *controller;
 
 @end
 
@@ -27,5 +31,6 @@
 @interface SHGDiscoveryCategoryButton : UIButton
 
 - (void)setTitle:(NSString *)title image:(UIImage *)image;
+- (void)setAttributedTitle:(NSAttributedString *)title image:(UIImage *)image;
 
 @end

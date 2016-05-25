@@ -7,6 +7,7 @@
 //
 
 #import "SHGDiscoveryManager.h"
+#import "SHGDiscoveryObject.h"
 
 @interface SHGDiscoveryManager()
 
@@ -24,10 +25,13 @@
     return sharedManager;
 }
 
-+ (void)loadDiscoveryData:(NSDictionary *)param block:(void (^)(NSArray *, NSString *, NSString *, NSString *))block
++ (void)loadDiscoveryData:(NSDictionary *)param block:(void (^)(NSArray *))block
 {
     [MOCHTTPRequestOperationManager postWithURL:[rBaseAddressForHttp stringByAppendingString: @"/neo4j/friend/getIndustryCountByPhone"] parameters:param success:^(MOCHTTPResponse *response) {
-
+        NSArray *array = [[SHGGloble sharedGloble] parseServerJsonArrayToJSONModel:[response.dataDictionary objectForKey:@"industrylist"] class:[SHGDiscoveryObject class]];
+        if (block) {
+            block(array);
+        }
     } failed:^(MOCHTTPResponse *response) {
 
     }];
