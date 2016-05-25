@@ -30,6 +30,10 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="t53-tf-SSJ">
+                                <rect key="frame" x="277" y="285" width="46" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -47,6 +51,7 @@
             <connections>
                 <outlet property="bottomView" destination="Gea-4y-vxJ" id="cuz-Ht-DQa"/>
                 <outlet property="buttonView" destination="GZx-tb-ZKd" id="19i-i5-PHq"/>
+                <outlet property="inviteButton" destination="t53-tf-SSJ" id="zAc-EY-cIW"/>
                 <outlet property="redLineView" destination="cYQ-B0-pB6" id="qbI-Di-KDY"/>
                 <outlet property="titleLabel" destination="A6a-XR-sed" id="eKs-sd-Mkg"/>
                 <outlet property="topView" destination="oEu-Or-doy" id="pOn-ob-xDl"/>

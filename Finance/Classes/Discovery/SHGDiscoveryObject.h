@@ -15,3 +15,11 @@
 @property (strong, nonatomic) UIImage *industryImage;
 
 @end
+
+@interface SHGDiscoveryIndustryObject : MTLModel<MTLJSONSerializing>
+
+@property (strong, nonatomic) NSString *module;
+@property (strong, nonatomic) NSString *counts;
+@property (strong, nonatomic) NSString *moduleName;
+
+@end

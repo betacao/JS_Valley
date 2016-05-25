@@ -95,11 +95,6 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
 
 }
 
-- (void)editBusiness
-{
-    [self initData];
-}
-
 - (void)initData
 {
     __weak typeof(self) weakSelf = self;

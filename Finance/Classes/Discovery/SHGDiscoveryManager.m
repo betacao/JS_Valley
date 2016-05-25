@@ -37,4 +37,16 @@
     }];
 }
 
++ (void)loadDiscoveryGroupUser:(NSDictionary *)param block:(void (^)(NSArray *))block
+{
+    [MOCHTTPRequestOperationManager postWithURL:[rBaseAddressForHttp stringByAppendingString: @"/discoverUser/groupUser"] parameters:param success:^(MOCHTTPResponse *response) {
+        NSArray *array = [[SHGGloble sharedGloble] parseServerJsonArrayToJSONModel:[response.dataDictionary objectForKey:@"list"] class:[SHGDiscoveryIndustryObject class]];
+        if (block) {
+            block(array);
+        }
+    } failed:^(MOCHTTPResponse *response) {
+
+    }];
+}
+
 @end

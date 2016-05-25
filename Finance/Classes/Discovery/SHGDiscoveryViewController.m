@@ -10,8 +10,10 @@
 #import "SHGDiscoveryManager.h"
 #import "EMSearchBar.h"
 #import "SHGDiscoveryObject.h"
+#import "SHGDiscoverySearchViewController.h"
+#import "SHGDiscoveryGroupingViewController.h"
 
-@interface SHGDiscoveryViewController ()<UITableViewDelegate, UITableViewDataSource>
+@interface SHGDiscoveryViewController ()<UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) SHGDiscoveryMyContactCell *myContactCell;
@@ -21,12 +23,33 @@
 
 @implementation SHGDiscoveryViewController
 
++ (instancetype)sharedController
+{
+    static SHGDiscoveryViewController *sharedGlobleInstance = nil;
+    static dispatch_once_t predicate;
+    dispatch_once(&predicate, ^{
+        sharedGlobleInstance = [[self alloc] init];
+    });
+    return sharedGlobleInstance;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.title = @"发现";
     [self initView];
     [self addAutoLayout];
+}
+
+- (UILabel *)titleLabel
+{
+    if (!_titleLabel) {
+        _titleLabel = [[UILabel alloc] init];
+        _titleLabel.font = [UIFont systemFontOfSize:kNavBarTitleFontSize];
+        _titleLabel.textColor = TEXT_COLOR;
+        _titleLabel.text = @"发现";
+        [_titleLabel sizeToFit];
+    }
+    return _titleLabel;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -42,7 +65,6 @@
 - (void)initView
 {
     self.myContactCell = [[[NSBundle mainBundle] loadNibNamed:@"SHGDiscoveryMyContactCell" owner:self options:nil] lastObject];
-    self.myContactCell.controller = self;
 
     self.contactExpandCell = [[[NSBundle mainBundle] loadNibNamed:@"SHGDiscoveryContactExpandCell" owner:self options:nil] lastObject];
 
@@ -60,6 +82,7 @@
 {
     if (!_searchBar) {
         _searchBar = [[EMSearchBar alloc] init];
+        _searchBar.delegate = self;
         _searchBar.placeholder = @"请输入姓名/公司名";
     }
     return _searchBar;
@@ -91,6 +114,13 @@
     }
 }
 
+- (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar
+{
+    SHGDiscoverySearchViewController *controller = [[SHGDiscoverySearchViewController alloc] init];
+    [self.navigationController pushViewController:controller animated:YES];
+    return NO;
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -98,6 +128,9 @@
 
 @end
 
+
+
+#pragma mark ------我的人脉------
 @interface SHGDiscoveryMyContactCell()
 
 @property (weak, nonatomic) IBOutlet UIView *buttonView;
@@ -105,9 +138,8 @@
 @property (weak, nonatomic) IBOutlet UIView *redLineView;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UIView *bottomView;
-
+@property (weak, nonatomic) IBOutlet UIButton *inviteButton;
 @property (strong, nonatomic) NSMutableArray *dataArray;
-
 
 @end
 
@@ -127,8 +159,12 @@
     self.buttonView.backgroundColor = Color(@"efecee");
     self.redLineView.backgroundColor = Color(@"d43b37");
     self.titleLabel.font = FontFactor(14.0f);
+    self.titleLabel.textColor = Color(@"161616");
     self.titleLabel.text = @"我的人脉";
     self.bottomView.backgroundColor = Color(@"efeeef");
+    [self.inviteButton setTitleColor:Color(@"eeae01") forState:UIControlStateNormal];
+    [self.inviteButton setTitle:@"邀请好友" forState:UIControlStateNormal];
+    self.inviteButton.titleLabel.font = FontFactor(13.0f);
     self.dataArray = [NSMutableArray array];
 }
 
@@ -151,20 +187,28 @@
     .centerYEqualToView(self.topView)
     .rightSpaceToView(self.topView, 0.0f)
     .heightIs(self.titleLabel.font.lineHeight);
+
+    CGSize size = [self.inviteButton sizeThatFits:CGSizeMake(SCREENWIDTH, SCREENWIDTH)];
+    self.inviteButton.sd_layout
+    .rightSpaceToView(self.topView, MarginFactor(12.0f))
+    .centerYEqualToView(self.topView)
+    .heightRatioToView(self.topView, 1.0f)
+    .widthIs(size.width);
 }
 
 - (void)addSubButtons
 {
-    NSDictionary *dictionay = [NSDictionary dictionaryWithContentsOfFile: [[NSBundle mainBundle] pathForResource:@"SHGIndustry" ofType:@"plist"]];
-    [dictionay enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull value, BOOL * _Nonnull stop) {
+    NSArray *array = [NSArray arrayWithContentsOfFile: [[NSBundle mainBundle] pathForResource:@"SHGIndustry" ofType:@"plist"]];
+    [array enumerateObjectsUsingBlock:^(NSDictionary *dictionary, NSUInteger idx, BOOL * _Nonnull stop) {
         SHGDiscoveryObject *object = [[SHGDiscoveryObject alloc] init];
-        NSString *imageName = [NSString stringWithFormat:@"discovery_%@", value];
+        NSString *imageName = [NSString stringWithFormat:@"discovery_%@", [[dictionary allValues] firstObject]];
         UIImage *image = [UIImage imageNamed:imageName];
         object.industryImage = image;
-        object.industryNum = @"1170";
-        object.industryName = key;
+        object.industryNum = @"0";
+        object.industryName = [[dictionary allKeys] firstObject];
         [self.dataArray addObject:object];
     }];
+
     CGFloat width = (SCREENWIDTH - 2 * 1 / SCALE) / 3;
     UIButton *lastButton = nil;
     for (SHGDiscoveryObject *object in self.dataArray) {
@@ -179,7 +223,7 @@
         NSMutableParagraphStyle *style = [[NSMutableParagraphStyle alloc] init];
         style.lineSpacing = MarginFactor(4.0f);
         style.alignment = NSTextAlignmentCenter;
-        NSMutableAttributedString *title = [[NSMutableAttributedString alloc] initWithString:[object.industryName stringByAppendingFormat:@"\n%@", object.industryNum] attributes:@{NSFontAttributeName:FontFactor(14.0f), NSForegroundColorAttributeName:[UIColor blackColor], NSParagraphStyleAttributeName:style}];
+        NSMutableAttributedString *title = [[NSMutableAttributedString alloc] initWithString:[object.industryName stringByAppendingFormat:@"\n%@", object.industryNum] attributes:@{NSFontAttributeName:FontFactor(14.0f), NSForegroundColorAttributeName:Color(@"161616"), NSParagraphStyleAttributeName:style}];
 
         [title addAttributes:@{NSFontAttributeName:FontFactor(9.0f), NSForegroundColorAttributeName:Color(@"999999")} range:[title.string rangeOfString:object.industryNum]];
 
@@ -209,13 +253,28 @@
 - (void)setEffctiveArray:(NSArray *)effctiveArray
 {
     _effctiveArray = effctiveArray;
-}
+    for (SHGDiscoveryObject *object in effctiveArray) {
+        for (SHGDiscoveryCategoryButton *button in self.buttonView.subviews) {
+            if ([button.currentAttributedTitle.string containsString:object.industryName]) {
 
+                NSMutableParagraphStyle *style = [[NSMutableParagraphStyle alloc] init];
+                style.lineSpacing = MarginFactor(4.0f);
+                style.alignment = NSTextAlignmentCenter;
+                NSMutableAttributedString *title = [[NSMutableAttributedString alloc] initWithString:[object.industryName stringByAppendingFormat:@"\n%@", object.industryNum] attributes:@{NSFontAttributeName:FontFactor(14.0f), NSForegroundColorAttributeName:Color(@"161616"), NSParagraphStyleAttributeName:style}];
+
+                [title addAttributes:@{NSFontAttributeName:FontFactor(9.0f), NSForegroundColorAttributeName:Color(@"999999")} range:[title.string rangeOfString:object.industryNum]];
+
+                [button setAttributedTitle:title image:object.industryImage];
+            }
+        }
+    }
+}
 @end
 
 
 
 
+#pragma mark ------人脉拓展------
 @interface SHGDiscoveryContactExpandCell()
 
 @property (weak, nonatomic) IBOutlet UIView *topView;
@@ -241,15 +300,19 @@
     self.buttonView.backgroundColor = Color(@"efecee");
     self.redLineView.backgroundColor = Color(@"d43b37");
     self.titleLabel.font = FontFactor(14.0f);
+    self.titleLabel.textColor = Color(@"161616");
     self.titleLabel.text = @"人脉拓展";
 
-//    __weak typeof(self)weakSelf = self;
-//    self.leftButton.didFinishAutoLayoutBlock = ^(CGRect rect){
-        [self.leftButton setTitle:@"行业" image:[UIImage imageNamed:@"discovery_department"]];
-//    };
-//    self.rightButton.didFinishAutoLayoutBlock = ^(CGRect rect){
-        [self.rightButton setTitle:@"地区" image:[UIImage imageNamed:@"discovery_location"]];
-//    };
+    self.leftButton.didFinishAutoLayoutBlock = ^(CGRect rect){
+        NSMutableAttributedString *title = [[NSMutableAttributedString alloc] initWithString:@"行业" attributes:@{NSFontAttributeName:FontFactor(14.0f), NSForegroundColorAttributeName:Color(@"161616")}];
+        [self.leftButton setAttributedTitle:title image:[UIImage imageNamed:@"discovery_department"]];
+    };
+    self.rightButton.didFinishAutoLayoutBlock = ^(CGRect rect){
+        NSMutableAttributedString *title = [[NSMutableAttributedString alloc] initWithString:@"地区" attributes:@{NSFontAttributeName:FontFactor(14.0f), NSForegroundColorAttributeName:Color(@"161616")}];
+        [self.rightButton setAttributedTitle:title image:[UIImage imageNamed:@"discovery_location"]];
+    };
+    [self.leftButton addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchUpInside];
+    [self.rightButton addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)addAutoLayout
@@ -293,17 +356,27 @@
     [self setupAutoHeightWithBottomView:self.buttonView bottomMargin:0.0f];
 }
 
+- (void)buttonClick:(UIButton *)button
+{
+    SHGDiscoveryGroupingViewController *controller = [[SHGDiscoveryGroupingViewController alloc] init];
+    if ([button isEqual:self.leftButton]) {
+        controller.type = SHGDiscoveryGroupingTypeIndustry;
+    } else {
+        controller.type = SHGDiscoveryGroupingTypePosition;
+    }
+    [[SHGDiscoveryViewController sharedController].navigationController pushViewController:controller animated:YES];
+}
+
 @end
 
 
 
-
-
-
+#pragma mark ------人脉推荐------
 @interface SHGDiscoveryContactRecommendView()
 
 @end
 
+#pragma mark ------发现的首页按钮------
 @interface SHGDiscoveryCategoryButton()
 
 @end
@@ -312,29 +385,11 @@
 
 - (void)setAttributedTitle:(NSAttributedString *)title image:(UIImage *)image
 {
-//    if ([title isEqualToAttributedString:self.titleLabel.attributedText] && [self.currentImage isEqual:image]) {
-//        return;
-//    }
-
     self.backgroundColor = [UIColor whiteColor];
     self.titleLabel.numberOfLines = 0;
     [self setAttributedTitle:title forState:UIControlStateNormal];
     [self setImage:image forState:UIControlStateNormal];
     [self resetInsets];
-}
-
-- (void)setTitle:(NSString *)title image:(UIImage *)image
-{
-//    if ([title isEqualToString:self.titleLabel.text] && [self.currentImage isEqual:image] ) {
-//        return;
-//    }
-    self.titleLabel.font = FontFactor(14.0f);
-    self.backgroundColor = [UIColor whiteColor];
-    [self setTitle:title forState:UIControlStateNormal];
-    [self setImage:image forState:UIControlStateNormal];
-    [self setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [self resetInsets];
-
 }
 
 - (void)resetInsets
@@ -359,7 +414,9 @@
     CGFloat imageEdgeInsetsBottom = -imageEdgeInsetsTop;
     CGFloat imageEdgeInsetsRight = -imageEdgeInsetsLeft;
     UIEdgeInsets imageEdgeInsets = UIEdgeInsetsMake(imageEdgeInsetsTop, imageEdgeInsetsLeft, imageEdgeInsetsBottom, imageEdgeInsetsRight);
-    self.imageEdgeInsets = imageEdgeInsets;
+    if (UIEdgeInsetsEqualToEdgeInsets(UIEdgeInsetsZero, self.imageEdgeInsets)) {
+        self.imageEdgeInsets = imageEdgeInsets;
+    }
 
     // 设置titleEdgeInsets
     CGFloat titleEdgeInsetsTop = endTitleLabelCenter.y-startTitleLabelCenter.y;
@@ -367,7 +424,25 @@
     CGFloat titleEdgeInsetsBottom = -titleEdgeInsetsTop;
     CGFloat titleEdgeInsetsRight = -titleEdgeInsetsLeft;
     UIEdgeInsets titleEdgeInsets = UIEdgeInsetsMake(titleEdgeInsetsTop, titleEdgeInsetsLeft, titleEdgeInsetsBottom, titleEdgeInsetsRight);
-    self.titleEdgeInsets = titleEdgeInsets;
+    if (UIEdgeInsetsEqualToEdgeInsets(UIEdgeInsetsZero, self.titleEdgeInsets)) {
+        self.titleEdgeInsets = titleEdgeInsets;
+    }
+
+}
+
+- (void)layoutSubviews
+{
+    [super layoutSubviews];
+    for (UIView *view in self.subviews) {
+        CGRect frame = view.frame;
+        frame = [self convertRect:frame toView:[UIApplication sharedApplication].keyWindow];
+        frame.origin.x = ceilf(frame.origin.x);
+        frame.origin.y = ceilf(frame.origin.y);
+        frame.size.width = ceilf(frame.size.width);
+        frame.size.height = ceilf(frame.size.height);
+        frame = [self convertRect:frame fromView:[UIApplication sharedApplication].keyWindow];
+        view.frame = frame;
+    }
 }
 
 @end

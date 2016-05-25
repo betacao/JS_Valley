@@ -1,24 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
-<dict>
-	<key>证券公司</key>
-	<string>bond</string>
-	<key>PE/VC</key>
-	<string>pevc</string>
-	<key>公募基金</key>
-	<string>fund</string>
-	<key>信托公司</key>
-	<string>entrust</string>
-	<key>三方理财</key>
-	<string>manage</string>
-	<key>担保小贷</key>
-	<string>bonding</string>
-	<key>上市公司</key>
-	<string>public</string>
-	<key>银行机构</key>
-	<string>bank</string>
-	<key>其他</key>
-	<string>other</string>
-</dict>
+<array>
+	<dict>
+		<key>银行机构</key>
+		<string>bank</string>
+	</dict>
+	<dict>
+		<key>证券公司</key>
+		<string>bond</string>
+	</dict>
+	<dict>
+		<key>PE/VC</key>
+		<string>pevc</string>
+	</dict>
+	<dict>
+		<key>公募基金</key>
+		<string>fund</string>
+	</dict>
+	<dict>
+		<key>信托公司</key>
+		<string>entrust</string>
+	</dict>
+	<dict>
+		<key>三方理财</key>
+		<string>manage</string>
+	</dict>
+	<dict>
+		<key>担保小贷</key>
+		<string>bonding</string>
+	</dict>
+	<dict>
+		<key>上市公司</key>
+		<string>public</string>
+	</dict>
+	<dict>
+		<key>其他</key>
+		<string>other</string>
+	</dict>
+</array>
 </plist>

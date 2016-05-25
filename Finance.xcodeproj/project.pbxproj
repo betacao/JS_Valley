@@ -855,7 +855,6 @@
 		F91D3A461CB7528200E3419D /* SHGBusinessButtonContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = F91D3A451CB7528200E3419D /* SHGBusinessButtonContentView.m */; };
 		F91F43DF1CDC2D1C005604A0 /* SHGAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = F91F43DE1CDC2D1C005604A0 /* SHGAlertView.m */; };
 		F9203D161CF449E000F55373 /* SHGDiscoveryObject.m in Sources */ = {isa = PBXBuildFile; fileRef = F9203D151CF449E000F55373 /* SHGDiscoveryObject.m */; };
-		F9203D181CF44C6200F55373 /* SHGIndustry.plist in Resources */ = {isa = PBXBuildFile; fileRef = F9203D171CF44C6200F55373 /* SHGIndustry.plist */; };
 		F920570A1C63203600897C8B /* SHGMarketAdvancedSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F92057081C63203600897C8B /* SHGMarketAdvancedSearchViewController.m */; };
 		F920570B1C63203600897C8B /* SHGMarketAdvancedSearchViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F92057091C63203600897C8B /* SHGMarketAdvancedSearchViewController.xib */; };
 		F924C2B41CACC1400070286F /* SHGBusinessListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F924C2B21CACC1400070286F /* SHGBusinessListViewController.m */; };
@@ -890,6 +889,15 @@
 		F93FCBCD1C856D5A004E356E /* UIView+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = F93FCBBE1C856D5A004E356E /* UIView+Additions.m */; };
 		F951C60D1CF53536007FA198 /* SHGDiscoveryMyContactCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F951C60C1CF53536007FA198 /* SHGDiscoveryMyContactCell.xib */; };
 		F951C60F1CF53AAC007FA198 /* SHGDiscoveryContactExpandCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F951C60E1CF53AAC007FA198 /* SHGDiscoveryContactExpandCell.xib */; };
+		F951C6111CF54776007FA198 /* SHGIndustry.plist in Resources */ = {isa = PBXBuildFile; fileRef = F951C6101CF54776007FA198 /* SHGIndustry.plist */; };
+		F951C6151CF56F4D007FA198 /* SHGDiscoverySearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F951C6131CF56F4D007FA198 /* SHGDiscoverySearchViewController.m */; };
+		F951C6161CF56F4D007FA198 /* SHGDiscoverySearchViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F951C6141CF56F4D007FA198 /* SHGDiscoverySearchViewController.xib */; };
+		F951C61A1CF57BCB007FA198 /* SHGDiscoveryGroupingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F951C6181CF57BCB007FA198 /* SHGDiscoveryGroupingViewController.m */; };
+		F951C61B1CF57BCB007FA198 /* SHGDiscoveryGroupingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F951C6191CF57BCB007FA198 /* SHGDiscoveryGroupingViewController.xib */; };
+		F951C61D1CF57C28007FA198 /* SHGDiscoveryGroupingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F951C61C1CF57C28007FA198 /* SHGDiscoveryGroupingCell.xib */; };
+		F951C6211CF5A00A007FA198 /* SHGDiscoveryDisplayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F951C61F1CF5A00A007FA198 /* SHGDiscoveryDisplayViewController.m */; };
+		F951C6221CF5A00A007FA198 /* SHGDiscoveryDisplayViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F951C6201CF5A00A007FA198 /* SHGDiscoveryDisplayViewController.xib */; };
+		F951C6241CF5A069007FA198 /* SHGDiscoveryDisplayCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F951C6231CF5A069007FA198 /* SHGDiscoveryDisplayCell.xib */; };
 		F95A88C71CAA784100D7F9BD /* SHGGifHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = F95A88C61CAA784100D7F9BD /* SHGGifHeader.m */; };
 		F95F42AA1C8DA341003EDA30 /* SHGConnectionsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F95F42A81C8DA341003EDA30 /* SHGConnectionsTableViewCell.m */; };
 		F95F42AB1C8DA341003EDA30 /* SHGConnectionsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F95F42A91C8DA341003EDA30 /* SHGConnectionsTableViewCell.xib */; };
@@ -2172,7 +2180,6 @@
 		F91F43DE1CDC2D1C005604A0 /* SHGAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGAlertView.m; sourceTree = "<group>"; };
 		F9203D141CF449E000F55373 /* SHGDiscoveryObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGDiscoveryObject.h; sourceTree = "<group>"; };
 		F9203D151CF449E000F55373 /* SHGDiscoveryObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGDiscoveryObject.m; sourceTree = "<group>"; };
-		F9203D171CF44C6200F55373 /* SHGIndustry.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = SHGIndustry.plist; sourceTree = "<group>"; };
 		F92057071C63203600897C8B /* SHGMarketAdvancedSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGMarketAdvancedSearchViewController.h; sourceTree = "<group>"; };
 		F92057081C63203600897C8B /* SHGMarketAdvancedSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGMarketAdvancedSearchViewController.m; sourceTree = "<group>"; };
 		F92057091C63203600897C8B /* SHGMarketAdvancedSearchViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGMarketAdvancedSearchViewController.xib; sourceTree = "<group>"; };
@@ -2231,6 +2238,18 @@
 		F93FCBBE1C856D5A004E356E /* UIView+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Additions.m"; sourceTree = "<group>"; };
 		F951C60C1CF53536007FA198 /* SHGDiscoveryMyContactCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGDiscoveryMyContactCell.xib; sourceTree = "<group>"; };
 		F951C60E1CF53AAC007FA198 /* SHGDiscoveryContactExpandCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGDiscoveryContactExpandCell.xib; sourceTree = "<group>"; };
+		F951C6101CF54776007FA198 /* SHGIndustry.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = SHGIndustry.plist; sourceTree = "<group>"; };
+		F951C6121CF56F4D007FA198 /* SHGDiscoverySearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGDiscoverySearchViewController.h; sourceTree = "<group>"; };
+		F951C6131CF56F4D007FA198 /* SHGDiscoverySearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGDiscoverySearchViewController.m; sourceTree = "<group>"; };
+		F951C6141CF56F4D007FA198 /* SHGDiscoverySearchViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGDiscoverySearchViewController.xib; sourceTree = "<group>"; };
+		F951C6171CF57BCB007FA198 /* SHGDiscoveryGroupingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGDiscoveryGroupingViewController.h; sourceTree = "<group>"; };
+		F951C6181CF57BCB007FA198 /* SHGDiscoveryGroupingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGDiscoveryGroupingViewController.m; sourceTree = "<group>"; };
+		F951C6191CF57BCB007FA198 /* SHGDiscoveryGroupingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGDiscoveryGroupingViewController.xib; sourceTree = "<group>"; };
+		F951C61C1CF57C28007FA198 /* SHGDiscoveryGroupingCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGDiscoveryGroupingCell.xib; sourceTree = "<group>"; };
+		F951C61E1CF5A00A007FA198 /* SHGDiscoveryDisplayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGDiscoveryDisplayViewController.h; sourceTree = "<group>"; };
+		F951C61F1CF5A00A007FA198 /* SHGDiscoveryDisplayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGDiscoveryDisplayViewController.m; sourceTree = "<group>"; };
+		F951C6201CF5A00A007FA198 /* SHGDiscoveryDisplayViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGDiscoveryDisplayViewController.xib; sourceTree = "<group>"; };
+		F951C6231CF5A069007FA198 /* SHGDiscoveryDisplayCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGDiscoveryDisplayCell.xib; sourceTree = "<group>"; };
 		F95A88C51CAA784100D7F9BD /* SHGGifHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGGifHeader.h; sourceTree = "<group>"; };
 		F95A88C61CAA784100D7F9BD /* SHGGifHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGGifHeader.m; sourceTree = "<group>"; };
 		F95F42A71C8DA341003EDA30 /* SHGConnectionsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGConnectionsTableViewCell.h; sourceTree = "<group>"; };
@@ -4959,7 +4978,7 @@
 		F9A2EF841CF3EC970054AE1C /* Discovery */ = {
 			isa = PBXGroup;
 			children = (
-				F9203D171CF44C6200F55373 /* SHGIndustry.plist */,
+				F951C6101CF54776007FA198 /* SHGIndustry.plist */,
 				F9203D141CF449E000F55373 /* SHGDiscoveryObject.h */,
 				F9203D151CF449E000F55373 /* SHGDiscoveryObject.m */,
 				F9A2EF851CF3EE180054AE1C /* SHGDiscoveryManager.h */,
@@ -4969,6 +4988,17 @@
 				F9A2EF8A1CF3EE680054AE1C /* SHGDiscoveryViewController.xib */,
 				F951C60C1CF53536007FA198 /* SHGDiscoveryMyContactCell.xib */,
 				F951C60E1CF53AAC007FA198 /* SHGDiscoveryContactExpandCell.xib */,
+				F951C6121CF56F4D007FA198 /* SHGDiscoverySearchViewController.h */,
+				F951C6131CF56F4D007FA198 /* SHGDiscoverySearchViewController.m */,
+				F951C6141CF56F4D007FA198 /* SHGDiscoverySearchViewController.xib */,
+				F951C6171CF57BCB007FA198 /* SHGDiscoveryGroupingViewController.h */,
+				F951C6181CF57BCB007FA198 /* SHGDiscoveryGroupingViewController.m */,
+				F951C6191CF57BCB007FA198 /* SHGDiscoveryGroupingViewController.xib */,
+				F951C61C1CF57C28007FA198 /* SHGDiscoveryGroupingCell.xib */,
+				F951C61E1CF5A00A007FA198 /* SHGDiscoveryDisplayViewController.h */,
+				F951C61F1CF5A00A007FA198 /* SHGDiscoveryDisplayViewController.m */,
+				F951C6201CF5A00A007FA198 /* SHGDiscoveryDisplayViewController.xib */,
+				F951C6231CF5A069007FA198 /* SHGDiscoveryDisplayCell.xib */,
 			);
 			path = Discovery;
 			sourceTree = "<group>";
@@ -5239,6 +5269,7 @@
 				61E83D2A1AF7C78E00703651 /* 删除图标@2x.png in Resources */,
 				61E83D301AF7C78E00703651 /* 搜索好友输入框@2x.png in Resources */,
 				40302B011AEF213400F22EB6 /* BasePeopleTableViewCell.xib in Resources */,
+				F951C6161CF56F4D007FA198 /* SHGDiscoverySearchViewController.xib in Resources */,
 				6152347E1B0D8C4200011EAC /* DiscoveryTableViewCell.xib in Resources */,
 				408D8B0C1AF8618C0055810C /* VoiceSearchFeedback012@2x.png in Resources */,
 				408D8B681AF8618C0055810C /* chat_receiver_audio_playing000.png in Resources */,
@@ -5366,6 +5397,7 @@
 				F986DE371BFDCBD900E6709F /* SHGActionTotalInViewController.xib in Resources */,
 				408D8B631AF8618C0055810C /* chatBar_more_photo.png in Resources */,
 				408D8B221AF8618C0055810C /* call_silence@2x.png in Resources */,
+				F951C61B1CF57BCB007FA198 /* SHGDiscoveryGroupingViewController.xib in Resources */,
 				B080FE881B81E30100426579 /* btn_publish_face_a@2x.png in Resources */,
 				408D8B241AF8618C0055810C /* call_silence_h@2x.png in Resources */,
 				F951C60D1CF53536007FA198 /* SHGDiscoveryMyContactCell.xib in Resources */,
@@ -5395,6 +5427,7 @@
 				F9A8D28B1BE712B700A2BFB1 /* WeiboSDK.bundle in Resources */,
 				B080FEA61B81E30100426579 /* emoji_recent_n.png in Resources */,
 				408D8B1F1AF8618C0055810C /* call_out_h.png in Resources */,
+				F951C6221CF5A00A007FA198 /* SHGDiscoveryDisplayViewController.xib in Resources */,
 				408D8AEB1AF8618C0055810C /* chatListCellHead.png in Resources */,
 				614AD19F1AD75EA000DDF43E /* regist_btn_unselect@2x.png in Resources */,
 				6149CFDF1B259E40006E45FE /* options_pointer@2x.png in Resources */,
@@ -5471,6 +5504,7 @@
 				61E83D141AF7C78E00703651 /* 头像图标@2x.png in Resources */,
 				614BA7DD1AE5E96C009480CD /* LoginNextViewController.xib in Resources */,
 				408D8B341AF8618C0055810C /* chat_location_detail_disclosure@2x.png in Resources */,
+				F951C6241CF5A069007FA198 /* SHGDiscoveryDisplayCell.xib in Resources */,
 				F9F349BD1C1952B00090F111 /* SHGMarketListViewController.xib in Resources */,
 				408D8B131AF8618C0055810C /* VoiceSearchFeedback016.png in Resources */,
 				61E83D651AF7C78E00703651 /* 列表向右箭头@3x.png in Resources */,
@@ -5516,13 +5550,13 @@
 				61E83D2E1AF7C78E00703651 /* 接受按钮-按下@2x.png in Resources */,
 				61616FEA1B02F29100E5A837 /* 已关注按钮@3x.png in Resources */,
 				615234791B0D8A6400011EAC /* DiscoverViewController.xib in Resources */,
-				F9203D181CF44C6200F55373 /* SHGIndustry.plist in Resources */,
 				61E83D071AF7C78E00703651 /* 按钮@2x.png in Resources */,
 				40302B2D1AF07AA500F22EB6 /* MyMoneyViewController.xib in Resources */,
 				61E83CD41AF7C78E00703651 /* 圈子图标@2x.png in Resources */,
 				5331DF2D1AFC20A600E035B8 /* MessageViewController.xib in Resources */,
 				61E83D8E1AF7C78E00703651 /* 勾选框@3x - 点击.png in Resources */,
 				56F2D5171B5A6860008E2855 /* 分享.png in Resources */,
+				F951C61D1CF57C28007FA198 /* SHGDiscoveryGroupingCell.xib in Resources */,
 				61E83CED1AF7C78E00703651 /* 加关注按钮@2x.png in Resources */,
 				61E83CF11AF7C78E00703651 /* 发送按钮-按下@2x.png in Resources */,
 				61E83D811AF7C78E00703651 /* 意见反馈@3x.png in Resources */,
@@ -5754,6 +5788,7 @@
 				614AD1CD1AD7CCD900DDF43E /* edit@2x.png in Resources */,
 				6152348D1B0D92B200011EAC /* 我的粉丝@2x.png in Resources */,
 				408D8B721AF8618C0055810C /* chat_receiver_bg.png in Resources */,
+				F951C6111CF54776007FA198 /* SHGIndustry.plist in Resources */,
 				61E83D871AF7C78E00703651 /* 编辑@3x.png in Resources */,
 				B04D6E2A1B60C01300E3863E /* 评论x@2x.png in Resources */,
 				569C6D391B7CAB6A00AD59C3 /* 手机@2x.png in Resources */,
@@ -6027,6 +6062,7 @@
 				6187D2DC1AF1C693008E1D21 /* FacialView.m in Sources */,
 				61D62BEF1ADD1C4D002DD395 /* MOCHTTPResponse.m in Sources */,
 				61D6E7D21AD50FCB0016C13A /* BaseNavigationController.m in Sources */,
+				F951C6211CF5A00A007FA198 /* SHGDiscoveryDisplayViewController.m in Sources */,
 				614EFEDA1AEF6B2F00F2BDD1 /* ProdConsulutionViewController.m in Sources */,
 				6187D2E61AF1C693008E1D21 /* EMChatViewBaseCell.m in Sources */,
 				9894C97D1BF5D24200F80577 /* SHGActionSignTableViewCell.m in Sources */,
@@ -6082,6 +6118,7 @@
 				F93FCBCD1C856D5A004E356E /* UIView+Additions.m in Sources */,
 				6187D2D21AF1C693008E1D21 /* PublicGroupListViewController.m in Sources */,
 				6187D2D11AF1C693008E1D21 /* PublicGroupDetailViewController.m in Sources */,
+				F951C6151CF56F4D007FA198 /* SHGDiscoverySearchViewController.m in Sources */,
 				614AD1AF1AD7AC4D00DDF43E /* RegistViewController.m in Sources */,
 				F9E2A4B01BE99A4C00ECB234 /* SHGSegmentController.m in Sources */,
 				B085B5381B749E2000DC592E /* Extend_Description.m in Sources */,
@@ -6094,6 +6131,7 @@
 				610FF0451AD621500027EBA6 /* PopoverListObj.m in Sources */,
 				538964D11AFC6BEB00041548 /* AppDelegate+EaseMob.m in Sources */,
 				F9A997F61C72CAA500355337 /* SHGMarketSearchResultViewController.m in Sources */,
+				F951C61A1CF57BCB007FA198 /* SHGDiscoveryGroupingViewController.m in Sources */,
 				6187D2D91AF1C693008E1D21 /* LocationViewController.m in Sources */,
 				F936DD4B1C3A437500584F53 /* SHGFriendGroupingViewController.m in Sources */,
 				B0BAA36E1B6A059E0036C367 /* TWEmojiKeyBoard.m in Sources */,

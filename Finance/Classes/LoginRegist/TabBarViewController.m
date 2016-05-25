@@ -115,6 +115,7 @@
 
     } else if (item.tag == 3000){
         self.navigationItem.leftBarButtonItem = nil;
+        self.navigationItem.titleView = self.discoveryViewController.titleLabel;
         self.navigationItem.rightBarButtonItem = nil;
         [MobClick event:@"DiscoverViewController" label:@"onClick"];
 
@@ -212,11 +213,7 @@
 
 - (SHGDiscoveryViewController *)discoveryViewController
 {
-    if (!_discoveryViewController)
-    {
-        _discoveryViewController = [[SHGDiscoveryViewController alloc] init];
-    }
-    return _discoveryViewController;
+    return [SHGDiscoveryViewController sharedController];
 }
 
 - (SHGUserCenterViewController *)meViewController

@@ -26,3 +26,13 @@
     }];
 }
 @end
+
+
+@implementation SHGDiscoveryIndustryObject
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey
+{
+    return @{@"module":@"module", @"counts":@"counts", @"moduleName":@"modulename"};
+}
+
+@end
