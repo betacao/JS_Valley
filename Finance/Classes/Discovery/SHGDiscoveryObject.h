@@ -12,6 +12,7 @@
 
 @property (strong, nonatomic) NSString *industryNum;
 @property (strong, nonatomic) NSString *industryName;
+@property (strong, nonatomic) NSString *industry;
 @property (strong, nonatomic) UIImage *industryImage;
 
 @end
@@ -21,5 +22,44 @@
 @property (strong, nonatomic) NSString *module;
 @property (strong, nonatomic) NSString *counts;
 @property (strong, nonatomic) NSString *moduleName;
+
+@end
+
+@interface SHGDiscoveryPeopleObject : MTLModel<MTLJSONSerializing>
+
+@property (strong, nonatomic) NSString *phone;
+@property (strong, nonatomic) NSString *area;
+@property (assign, nonatomic) BOOL status;
+@property (strong, nonatomic) NSString *userID;
+@property (strong, nonatomic) NSString *title;
+@property (strong, nonatomic) NSString *company;
+@property (strong, nonatomic) NSString *headImg;
+@property (strong, nonatomic) NSString *isAttention;
+@property (strong, nonatomic) NSString *realName;
+@property (strong, nonatomic) NSString *industry;
+
+@end
+
+@interface SHGDiscoveryInvateObject : MTLModel<MTLJSONSerializing>
+
+@property (strong, nonatomic) NSString *phone;
+@property (strong, nonatomic) NSString *realName;
+
+@end
+
+@interface SHGDiscoveryDepartmentObject : MTLModel<MTLJSONSerializing>
+
+@property (strong, nonatomic) NSString *phone;
+@property (strong, nonatomic) NSString *position;
+@property (strong, nonatomic) NSString *userID;
+@property (strong, nonatomic) UIImage *friendTypeImage;
+@property (strong, nonatomic) NSString *commonFriendCount;
+@property (strong, nonatomic) NSString *realName;
+@property (strong, nonatomic) NSString *commonFriend;
+@property (strong, nonatomic) NSString *company;
+@property (strong, nonatomic) NSString *title;
+@property (strong, nonatomic) NSString *headImg;
+@property (strong, nonatomic) NSString *area;
+@property (assign, nonatomic) BOOL userStatus;
 
 @end

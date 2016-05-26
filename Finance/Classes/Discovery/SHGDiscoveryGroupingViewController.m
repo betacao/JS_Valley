@@ -8,6 +8,7 @@
 
 #import "SHGDiscoveryGroupingViewController.h"
 #import "SHGDiscoveryManager.h"
+#import "SHGDiscoveryDisplayViewController.h"
 
 @interface SHGDiscoveryGroupingViewController ()<UITableViewDelegate, UITableViewDataSource>
 
@@ -60,6 +61,13 @@
     }
     cell.object = [self.dataArray objectAtIndex:indexPath.row];
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    SHGDiscoveryDisplayViewController *controller = [[SHGDiscoveryDisplayViewController alloc] init];
+    controller.object = [self.dataArray objectAtIndex:indexPath.row];
+    [self.navigationController pushViewController:controller animated:YES];
 }
 
 - (void)didReceiveMemoryWarning

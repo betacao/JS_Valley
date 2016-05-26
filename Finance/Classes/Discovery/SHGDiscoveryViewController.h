@@ -7,6 +7,7 @@
 //
 
 #import "BaseViewController.h"
+#import "SHGCategoryButton.h"
 
 @interface SHGDiscoveryViewController : BaseViewController
 
@@ -30,7 +31,7 @@
 
 @end
 
-@interface SHGDiscoveryCategoryButton : UIButton
+@interface SHGDiscoveryCategoryButton : SHGCategoryButton
 
 - (void)setAttributedTitle:(NSAttributedString *)title image:(UIImage *)image;
 

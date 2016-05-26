@@ -15,6 +15,18 @@
 //发现首页
 + (void)loadDiscoveryData:(NSDictionary *)param block:(void (^)(NSArray *dataArray))block;
 
+//发现首页搜索接口
++ (void)searchDiscovery:(NSDictionary *)param block:(void (^)(NSArray *dataArray))block;
+
+//发现中邀请好友列表
++ (void)loadDiscoveryInvateData:(NSDictionary *)param block:(void (^)(NSArray *firstArray, NSArray *secondArray))block;
+
+//发现首页中行业统计人数点击进入接口
++ (void)loadDiscoveryMyDepartmentData:(NSDictionary *)param block:(void (^)(NSArray *firstArray, NSArray *secondArray))block;
+
 //发现首页中点击行业,地区后进入行业地区统计人数接口
 + (void)loadDiscoveryGroupUser:(NSDictionary *)param block:(void (^)(NSArray *dataArray))block;
+//点击行业进入行业统计列表后点击某个行业的接口
+//点击地区进入地区统计列表后点击某个地区的接口
++ (void)loadDiscoveryGroupUserDetail:(NSDictionary *)param block:(void (^)(NSArray *firstArray, NSArray *secondArray))block;
 @end

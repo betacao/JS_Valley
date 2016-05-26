@@ -12,6 +12,7 @@
 #import "SHGDiscoveryObject.h"
 #import "SHGDiscoverySearchViewController.h"
 #import "SHGDiscoveryGroupingViewController.h"
+#import "SHGDiscoveryDisplayViewController.h"
 
 @interface SHGDiscoveryViewController ()<UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate>
 
@@ -138,7 +139,7 @@
 @property (weak, nonatomic) IBOutlet UIView *redLineView;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UIView *bottomView;
-@property (weak, nonatomic) IBOutlet UIButton *inviteButton;
+@property (weak, nonatomic) IBOutlet SHGCategoryButton *inviteButton;
 @property (strong, nonatomic) NSMutableArray *dataArray;
 
 @end
@@ -165,6 +166,13 @@
     [self.inviteButton setTitleColor:Color(@"eeae01") forState:UIControlStateNormal];
     [self.inviteButton setTitle:@"邀请好友" forState:UIControlStateNormal];
     self.inviteButton.titleLabel.font = FontFactor(13.0f);
+    [self.inviteButton addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchUpInside];
+
+    SHGDiscoveryObject *object = [[SHGDiscoveryObject alloc] init];
+    object.industryNum = @"0";
+    object.industryName = self.inviteButton.currentTitle;
+    self.inviteButton.object = object;
+
     self.dataArray = [NSMutableArray array];
 }
 
@@ -228,6 +236,7 @@
         [title addAttributes:@{NSFontAttributeName:FontFactor(9.0f), NSForegroundColorAttributeName:Color(@"999999")} range:[title.string rangeOfString:object.industryNum]];
 
         [button setAttributedTitle:title image:object.industryImage];
+        [button addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchUpInside];
         lastButton = button;
     }
     if (!lastButton) {
@@ -254,21 +263,29 @@
 {
     _effctiveArray = effctiveArray;
     for (SHGDiscoveryObject *object in effctiveArray) {
-        for (SHGDiscoveryCategoryButton *button in self.buttonView.subviews) {
-            if ([button.currentAttributedTitle.string containsString:object.industryName]) {
+        if ([self.dataArray containsObject:object]) {
+            SHGDiscoveryCategoryButton *button = [self.buttonView.subviews objectAtIndex:[self.dataArray indexOfObject:object]];
+            button.object = object;
+            NSMutableParagraphStyle *style = [[NSMutableParagraphStyle alloc] init];
+            style.lineSpacing = MarginFactor(4.0f);
+            style.alignment = NSTextAlignmentCenter;
+            NSMutableAttributedString *title = [[NSMutableAttributedString alloc] initWithString:[object.industryName stringByAppendingFormat:@"\n%@", object.industryNum] attributes:@{NSFontAttributeName:FontFactor(14.0f), NSForegroundColorAttributeName:Color(@"161616"), NSParagraphStyleAttributeName:style}];
 
-                NSMutableParagraphStyle *style = [[NSMutableParagraphStyle alloc] init];
-                style.lineSpacing = MarginFactor(4.0f);
-                style.alignment = NSTextAlignmentCenter;
-                NSMutableAttributedString *title = [[NSMutableAttributedString alloc] initWithString:[object.industryName stringByAppendingFormat:@"\n%@", object.industryNum] attributes:@{NSFontAttributeName:FontFactor(14.0f), NSForegroundColorAttributeName:Color(@"161616"), NSParagraphStyleAttributeName:style}];
+            [title addAttributes:@{NSFontAttributeName:FontFactor(9.0f), NSForegroundColorAttributeName:Color(@"999999")} range:[title.string rangeOfString:object.industryNum]];
 
-                [title addAttributes:@{NSFontAttributeName:FontFactor(9.0f), NSForegroundColorAttributeName:Color(@"999999")} range:[title.string rangeOfString:object.industryNum]];
-
-                [button setAttributedTitle:title image:object.industryImage];
-            }
+            [button setAttributedTitle:title image:object.industryImage];
         }
     }
 }
+
+- (void)buttonClick:(SHGDiscoveryCategoryButton *)button
+{
+    SHGDiscoveryDisplayViewController *controller = [[SHGDiscoveryDisplayViewController alloc] init];
+    controller.object = button.object;
+    [[SHGDiscoveryViewController sharedController].navigationController pushViewController:controller animated:YES];
+}
+
+
 @end
 
 

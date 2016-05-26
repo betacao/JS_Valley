@@ -49,7 +49,7 @@
 - (void)awakeFromNib
 {
     
-    self.headerImageView = [[UIImageView alloc] init];
+    self.headerImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"default_head"]];
     [self addSubview:self.headerImageView];
     
     self.headerImageView.sd_layout

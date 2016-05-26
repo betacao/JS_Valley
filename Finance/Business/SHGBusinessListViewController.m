@@ -434,7 +434,7 @@
         if (dataArray) {
             if ([target isEqualToString:@"first"]) {
                 [weakSelf.currentArray removeAllObjects];
-                [weakSelf.currentArray addObjectsFromArray:dataArray];
+                [weakSelf.currentArray appendUniqueObjectsFromArray:dataArray];
                 //第一次给服务器的值
                 weakSelf.index = index;
                 [weakSelf.tableView setContentOffset:CGPointZero];
@@ -443,7 +443,7 @@
             } else if([target isEqualToString:@"refresh"]){
                 for (NSInteger i = dataArray.count - 1; i >= 0; i--){
                     SHGBusinessObject *obj = [dataArray objectAtIndex:i];
-                    [weakSelf.currentArray insertObject:obj atIndex:0];
+                    [weakSelf.currentArray insertUniqueObject:obj atIndex:0];
                 }
                 //下拉的话如果之前显示了偏少 则下移 否则不管
                 NSInteger position = [[weakSelf.positionDictionary objectForKey:[weakSelf.scrollView currentName]] integerValue];
@@ -456,7 +456,7 @@
                     [weakSelf.noticeView showWithText:@"暂无新业务，休息一会儿"];
                 }
             } else if([target isEqualToString:@"load"]){
-                [weakSelf.currentArray addObjectsFromArray:dataArray];
+                [weakSelf.currentArray appendUniqueObjectsFromArray:dataArray];
             }
             weakSelf.tipUrl = tipUrl;
         }

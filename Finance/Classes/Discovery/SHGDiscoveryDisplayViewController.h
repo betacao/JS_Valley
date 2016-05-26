@@ -6,8 +6,19 @@
 //  Copyright © 2016年 HuMin. All rights reserved.
 //
 
-#import "BaseViewController.h"
+#import "BaseTableViewController.h"
+#import "SHGDiscoveryObject.h"
 
-@interface SHGDiscoveryDisplayViewController : BaseViewController
+@interface SHGDiscoveryDisplayViewController : BaseTableViewController
+
+@property (strong, nonatomic) NSObject *object;
+
+@end
+
+
+
+@interface SHGDiscoveryDisplayCell : UITableViewCell
+
+@property (strong, nonatomic) NSObject *object;
 
 @end

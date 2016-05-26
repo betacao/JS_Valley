@@ -357,7 +357,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
         array = [phoneNumber componentsSeparatedByString:@"："];
         NSString *number = [array lastObject];
         string = [[NSMutableAttributedString alloc] initWithString:phoneNumber attributes:@{NSFontAttributeName:FontFactor(13.0f), NSForegroundColorAttributeName: Color(@"888888")}];
-        [string addAttribute:NSFontAttributeName value:FontFactor(14.0f) range:[phoneNumber rangeOfString:number]];
+        [string addAttribute:NSFontAttributeName value:BoldFontFactor(14.0f) range:[phoneNumber rangeOfString:number]];
         [string addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"4277B2"] range: [phoneNumber rangeOfString:number]];
     }
     self.phoneTextView.attributedText = string;

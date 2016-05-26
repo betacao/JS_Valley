@@ -6,8 +6,8 @@
 //  Copyright © 2016年 HuMin. All rights reserved.
 //
 
-#import "BaseNavigationController.h"
+#import "BaseTableViewController.h"
 
-@interface SHGDiscoverySearchViewController : BaseViewController
+@interface SHGDiscoverySearchViewController : BaseTableViewController
 
 @end
