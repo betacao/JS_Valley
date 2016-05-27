@@ -241,7 +241,6 @@
 		53F6CFAC1B06C1D6007716E5 /* load_6p.png in Resources */ = {isa = PBXBuildFile; fileRef = 53F6CFA91B06C1D6007716E5 /* load_6p.png */; };
 		53F6CFAE1B06C1FD007716E5 /* load_6.png in Resources */ = {isa = PBXBuildFile; fileRef = 53F6CFAD1B06C1FD007716E5 /* load_6.png */; };
 		53F6CFB01B06C404007716E5 /* load_5s.png in Resources */ = {isa = PBXBuildFile; fileRef = 53F6CFAF1B06C404007716E5 /* load_5s.png */; };
-		565136D51B834E2F00894B1D /* RecommendModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 565136D41B834E2F00894B1D /* RecommendModel.m */; };
 		569C6D2F1B7CA9EB00AD59C3 /* BindPhoneViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 569C6D2D1B7CA9EB00AD59C3 /* BindPhoneViewController.m */; };
 		569C6D301B7CA9EB00AD59C3 /* BindPhoneViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 569C6D2E1B7CA9EB00AD59C3 /* BindPhoneViewController.xib */; };
 		569C6D371B7CAB6A00AD59C3 /* 密码@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 569C6D311B7CAB6A00AD59C3 /* 密码@2x.png */; };
@@ -1294,8 +1293,6 @@
 		53F6CFA91B06C1D6007716E5 /* load_6p.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = load_6p.png; sourceTree = "<group>"; };
 		53F6CFAD1B06C1FD007716E5 /* load_6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = load_6.png; sourceTree = "<group>"; };
 		53F6CFAF1B06C404007716E5 /* load_5s.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = load_5s.png; sourceTree = "<group>"; };
-		565136D31B834E2F00894B1D /* RecommendModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecommendModel.h; sourceTree = "<group>"; };
-		565136D41B834E2F00894B1D /* RecommendModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecommendModel.m; sourceTree = "<group>"; };
 		569C6D2C1B7CA9EB00AD59C3 /* BindPhoneViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BindPhoneViewController.h; sourceTree = "<group>"; };
 		569C6D2D1B7CA9EB00AD59C3 /* BindPhoneViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BindPhoneViewController.m; sourceTree = "<group>"; };
 		569C6D2E1B7CA9EB00AD59C3 /* BindPhoneViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BindPhoneViewController.xib; sourceTree = "<group>"; };
@@ -3889,8 +3886,6 @@
 				F9B7CC311B8AD6C000E55EFD /* SHGGloble.m */,
 				61D62BFC1ADE035C002DD395 /* CircleListObj.h */,
 				61D62BFD1ADE035C002DD395 /* CircleListObj.m */,
-				565136D31B834E2F00894B1D /* RecommendModel.h */,
-				565136D41B834E2F00894B1D /* RecommendModel.m */,
 				B082D6611B82EF1C00BB6C20 /* RecmdFriendObj.h */,
 				B082D6621B82EF1C00BB6C20 /* RecmdFriendObj.m */,
 				F9AB29511B883F2F00BD2BDE /* CircleListDelegate.h */,
@@ -6015,7 +6010,6 @@
 				F920570A1C63203600897C8B /* SHGMarketAdvancedSearchViewController.m in Sources */,
 				F9D296DC1C8FCB9C00A1446C /* SHGExtendTableViewCell.m in Sources */,
 				6187D2D31AF1C693008E1D21 /* ChatListCell.m in Sources */,
-				565136D51B834E2F00894B1D /* RecommendModel.m in Sources */,
 				6187D2D71AF1C693008E1D21 /* ChatViewController.m in Sources */,
 				F9F349B11C1921900090F111 /* SHGMarketSegmentViewController.m in Sources */,
 				986CF1971CCF395300064C52 /* SHGRecommendViewController.m in Sources */,

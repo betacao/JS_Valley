@@ -17,11 +17,17 @@
 
 @end
 
+typedef NS_ENUM(NSInteger, SHGDiscoveryGroupingType) {
+    SHGDiscoveryGroupingTypeIndustry,
+    SHGDiscoveryGroupingTypePosition
+};
 @interface SHGDiscoveryIndustryObject : MTLModel<MTLJSONSerializing>
 
 @property (strong, nonatomic) NSString *module;
 @property (strong, nonatomic) NSString *counts;
 @property (strong, nonatomic) NSString *moduleName;
+//不是由服务器返回的 自己创建
+@property (assign, nonatomic) SHGDiscoveryGroupingType moduleType;
 
 @end
 

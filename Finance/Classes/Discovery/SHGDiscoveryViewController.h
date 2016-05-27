@@ -27,11 +27,9 @@
 
 @end
 
-@interface SHGDiscoveryContactRecommendView : UIView
+@interface SHGDiscoveryCategoryButton : UIButton
 
-@end
-
-@interface SHGDiscoveryCategoryButton : SHGCategoryButton
+@property (strong, nonatomic) id object;
 
 - (void)setAttributedTitle:(NSAttributedString *)title image:(UIImage *)image;
 

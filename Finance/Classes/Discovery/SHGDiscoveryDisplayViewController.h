@@ -11,14 +11,20 @@
 
 @interface SHGDiscoveryDisplayViewController : BaseTableViewController
 
-@property (strong, nonatomic) NSObject *object;
+@property (strong, nonatomic) SHGDiscoveryObject *object;
 
 @end
-
-
 
 @interface SHGDiscoveryDisplayCell : UITableViewCell
 
 @property (strong, nonatomic) NSObject *object;
+
+@end
+
+//本来可以用SHGDiscoveryDisplayViewController
+//刷新的方式不同 无法复用
+@interface SHGDiscoveryDisplayExpandViewController : BaseTableViewController
+
+@property (strong, nonatomic) SHGDiscoveryIndustryObject *object;
 
 @end

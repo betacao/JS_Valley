@@ -58,8 +58,12 @@
     [super viewWillAppear:animated];
 
     __weak typeof(self) weakSelf = self;
-    [SHGDiscoveryManager loadDiscoveryData:@{@"uid":UID} block:^(NSArray *dataArray) {
-        weakSelf.myContactCell.effctiveArray = [NSArray arrayWithArray:dataArray];
+    [SHGDiscoveryManager loadDiscoveryData:@{@"uid":UID} block:^(NSArray *firstArray, NSArray *secondArray) {
+        if (firstArray.count > 0) {
+            weakSelf.myContactCell.effctiveArray = [NSArray arrayWithArray:firstArray];
+        } else {
+
+        }
     }];
 }
 
@@ -226,16 +230,9 @@
         NSInteger col = index / 3;
         CGRect frame = CGRectMake(col * (width + 1 / SCALE), row * (1 / SCALE + width) + 1 / SCALE, width, width);
         button.frame = frame;
+        button.object = object;
         [self.buttonView addSubview:button];
 
-        NSMutableParagraphStyle *style = [[NSMutableParagraphStyle alloc] init];
-        style.lineSpacing = MarginFactor(4.0f);
-        style.alignment = NSTextAlignmentCenter;
-        NSMutableAttributedString *title = [[NSMutableAttributedString alloc] initWithString:[object.industryName stringByAppendingFormat:@"\n%@", object.industryNum] attributes:@{NSFontAttributeName:FontFactor(14.0f), NSForegroundColorAttributeName:Color(@"161616"), NSParagraphStyleAttributeName:style}];
-
-        [title addAttributes:@{NSFontAttributeName:FontFactor(9.0f), NSForegroundColorAttributeName:Color(@"999999")} range:[title.string rangeOfString:object.industryNum]];
-
-        [button setAttributedTitle:title image:object.industryImage];
         [button addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchUpInside];
         lastButton = button;
     }
@@ -262,18 +259,16 @@
 - (void)setEffctiveArray:(NSArray *)effctiveArray
 {
     _effctiveArray = effctiveArray;
+    //先做一次清空 然后再赋值
+    for (SHGDiscoveryCategoryButton *button in self.buttonView.subviews) {
+        SHGDiscoveryObject *object = button.object;
+        object.industryNum = @"0";
+        button.object = object;
+    }
     for (SHGDiscoveryObject *object in effctiveArray) {
         if ([self.dataArray containsObject:object]) {
             SHGDiscoveryCategoryButton *button = [self.buttonView.subviews objectAtIndex:[self.dataArray indexOfObject:object]];
             button.object = object;
-            NSMutableParagraphStyle *style = [[NSMutableParagraphStyle alloc] init];
-            style.lineSpacing = MarginFactor(4.0f);
-            style.alignment = NSTextAlignmentCenter;
-            NSMutableAttributedString *title = [[NSMutableAttributedString alloc] initWithString:[object.industryName stringByAppendingFormat:@"\n%@", object.industryNum] attributes:@{NSFontAttributeName:FontFactor(14.0f), NSForegroundColorAttributeName:Color(@"161616"), NSParagraphStyleAttributeName:style}];
-
-            [title addAttributes:@{NSFontAttributeName:FontFactor(9.0f), NSForegroundColorAttributeName:Color(@"999999")} range:[title.string rangeOfString:object.industryNum]];
-
-            [button setAttributedTitle:title image:object.industryImage];
         }
     }
 }
@@ -328,7 +323,15 @@
         NSMutableAttributedString *title = [[NSMutableAttributedString alloc] initWithString:@"地区" attributes:@{NSFontAttributeName:FontFactor(14.0f), NSForegroundColorAttributeName:Color(@"161616")}];
         [self.rightButton setAttributedTitle:title image:[UIImage imageNamed:@"discovery_location"]];
     };
+
+    SHGDiscoveryIndustryObject *leftObject = [[SHGDiscoveryIndustryObject alloc] init];
+    leftObject.moduleType = SHGDiscoveryGroupingTypeIndustry;
+    self.leftButton.object = leftObject;
     [self.leftButton addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchUpInside];
+
+    SHGDiscoveryIndustryObject *rightObject = [[SHGDiscoveryIndustryObject alloc] init];
+    rightObject.moduleType = SHGDiscoveryGroupingTypePosition;
+    self.rightButton.object = rightObject;
     [self.rightButton addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchUpInside];
 }
 
@@ -373,25 +376,15 @@
     [self setupAutoHeightWithBottomView:self.buttonView bottomMargin:0.0f];
 }
 
-- (void)buttonClick:(UIButton *)button
+- (void)buttonClick:(SHGDiscoveryCategoryButton *)button
 {
     SHGDiscoveryGroupingViewController *controller = [[SHGDiscoveryGroupingViewController alloc] init];
-    if ([button isEqual:self.leftButton]) {
-        controller.type = SHGDiscoveryGroupingTypeIndustry;
-    } else {
-        controller.type = SHGDiscoveryGroupingTypePosition;
-    }
+    controller.object = button.object;
     [[SHGDiscoveryViewController sharedController].navigationController pushViewController:controller animated:YES];
 }
 
 @end
 
-
-
-#pragma mark ------人脉推荐------
-@interface SHGDiscoveryContactRecommendView()
-
-@end
 
 #pragma mark ------发现的首页按钮------
 @interface SHGDiscoveryCategoryButton()
@@ -460,6 +453,23 @@
         frame = [self convertRect:frame fromView:[UIApplication sharedApplication].keyWindow];
         view.frame = frame;
     }
+}
+
+- (void)setObject:(id)object
+{
+    if ([object isKindOfClass:[SHGDiscoveryObject class]]) {
+        SHGDiscoveryObject *discoveryObject = (SHGDiscoveryObject *)object;
+
+        NSMutableParagraphStyle *style = [[NSMutableParagraphStyle alloc] init];
+        style.lineSpacing = MarginFactor(4.0f);
+        style.alignment = NSTextAlignmentCenter;
+        NSMutableAttributedString *title = [[NSMutableAttributedString alloc] initWithString:[discoveryObject.industryName stringByAppendingFormat:@"\n%@", discoveryObject.industryNum] attributes:@{NSFontAttributeName:FontFactor(14.0f), NSForegroundColorAttributeName:Color(@"161616"), NSParagraphStyleAttributeName:style}];
+
+        [title addAttributes:@{NSFontAttributeName:FontFactor(9.0f), NSForegroundColorAttributeName:Color(@"999999")} range:[title.string rangeOfString:discoveryObject.industryNum]];
+
+        [self setAttributedTitle:title image:discoveryObject.industryImage];
+    }
+    _object = object;
 }
 
 @end

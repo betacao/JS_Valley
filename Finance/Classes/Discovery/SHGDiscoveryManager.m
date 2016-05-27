@@ -25,24 +25,26 @@
     return sharedManager;
 }
 
-+ (void)loadDiscoveryData:(NSDictionary *)param block:(void (^)(NSArray *))block
++ (void)loadDiscoveryData:(NSDictionary *)param block:(void (^)(NSArray *, NSArray *))block
 {
     [MOCHTTPRequestOperationManager postWithURL:[rBaseAddressForHttp stringByAppendingString: @"/neo4j/friend/getIndustryCountByPhone"] parameters:param success:^(MOCHTTPResponse *response) {
-        NSArray *array = [[SHGGloble sharedGloble] parseServerJsonArrayToJSONModel:[response.dataDictionary objectForKey:@"industrylist"] class:[SHGDiscoveryObject class]];
+        NSArray *industryList = [[SHGGloble sharedGloble] parseServerJsonArrayToJSONModel:[response.dataDictionary objectForKey:@"industrylist"] class:[SHGDiscoveryObject class]];
+        NSArray *list = [[SHGGloble sharedGloble] parseServerJsonArrayToJSONModel:[response.dataDictionary objectForKey:@"list"] class:[SHGDiscoveryObject class]];
         if (block) {
-            block(array);
+            block(industryList, list);
         }
     } failed:^(MOCHTTPResponse *response) {
 
     }];
 }
 
-+ (void)searchDiscovery:(NSDictionary *)param block:(void (^)(NSArray *))block
++ (void)searchDiscovery:(NSDictionary *)param block:(void (^)(NSArray *, NSString *))block
 {
     [MOCHTTPRequestOperationManager postWithURL:[rBaseAddressForHttp stringByAppendingString: @"/discoverUser/searchUser"] parameters:param success:^(MOCHTTPResponse *response) {
         NSArray *array = [[SHGGloble sharedGloble] parseServerJsonArrayToJSONModel:[response.dataDictionary objectForKey:@"list"] class:[SHGDiscoveryPeopleObject class]];
+        NSString *total = [response.dataDictionary objectForKey:@"total"];
         if (block) {
-            block(array);
+            block(array, total);
         }
     } failed:^(MOCHTTPResponse *response) {
 
@@ -89,7 +91,7 @@
 + (void)loadDiscoveryGroupUserDetail:(NSDictionary *)param block:(void (^)(NSArray *, NSArray *))block
 {
     [MOCHTTPRequestOperationManager postWithURL:[rBaseAddressForHttp stringByAppendingString: @"/discoverUser/searchUser"] parameters:param success:^(MOCHTTPResponse *response) {
-        NSArray *firstArray = [[SHGGloble sharedGloble] parseServerJsonArrayToJSONModel:[response.dataDictionary objectForKey:@"list"] class:[SHGDiscoveryDepartmentObject class]];
+        NSArray *firstArray = [[SHGGloble sharedGloble] parseServerJsonArrayToJSONModel:[response.dataDictionary objectForKey:@"list"] class:[SHGDiscoveryPeopleObject class]];
         if (block) {
             block(firstArray, nil);
         }

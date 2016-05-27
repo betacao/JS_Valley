@@ -15,6 +15,7 @@
 
 @property (weak, nonatomic) IBOutlet UIImageView *middleImageView;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (strong, nonatomic) IBOutlet SHGDiscoverySearchHeaderView *tableHeaderView;
 
 @property (strong, nonatomic) EMSearchBar *searchBar;
 @property (strong, nonatomic) NSString *searchText;
@@ -97,9 +98,11 @@
 
 - (void)loadDataWithTarget:(NSString *)target
 {
-    NSDictionary *param = @{@"target":target, @"indexCondition":self.searchText, @"userId":[target isEqualToString:@"first"] ? @"-1" : [self minUserID], @"pageSize":@"10"};
+    NSDictionary *param = @{@"target":target, @"indexCondition":self.searchText, @"userId":[target isEqualToString:@"first"] ? @"-1" : [self minUserID], @"pageSize":@"10", @"uid":UID};
     __weak typeof(self)weakSelf = self;
-    [SHGDiscoveryManager searchDiscovery:param block:^(NSArray *dataArray) {
+    [SHGDiscoveryManager searchDiscovery:param block:^(NSArray *dataArray, NSString *total) {
+
+        weakSelf.tableHeaderView.total = total;
         if ([target isEqualToString:@"first"]) {
             [weakSelf.dataArr removeAllObjects];
         }
@@ -126,6 +129,11 @@
     return self.dataArr.count;
 }
 
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return self.dataArr.count > 0 ? 1 : 0;
+}
+
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (self.dataArr.count > 0) {
@@ -134,6 +142,16 @@
         return height;
     }
     return 0.0f;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return CGRectGetHeight(self.tableHeaderView.frame);
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    return self.tableHeaderView;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -179,6 +197,56 @@
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
+}
+
+@end
+
+@interface SHGDiscoverySearchHeaderView()
+
+@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
+@property (weak, nonatomic) IBOutlet UIView *spliteView;
+
+@end
+
+
+@implementation SHGDiscoverySearchHeaderView
+
+- (void)awakeFromNib
+{
+    [super awakeFromNib];
+    [self initView];
+    [self addAutoLayout];
+}
+
+- (void)initView
+{
+    self.titleLabel.font = FontFactor(13.0f);
+    self.titleLabel.textColor = Color(@"898989");
+    self.spliteView.backgroundColor = Color(@"e6e7e8");
+
+}
+
+- (void)addAutoLayout
+{
+    self.titleLabel.sd_layout
+    .leftSpaceToView(self, MarginFactor(12.0f))
+    .rightSpaceToView(self, 0.0f)
+    .topSpaceToView(self, 0.0f)
+    .heightIs(MarginFactor(41.0f));
+
+    self.spliteView.sd_layout
+    .leftSpaceToView(self, 0.0f)
+    .rightSpaceToView(self, 0.0f)
+    .topSpaceToView(self.titleLabel, 0.0f)
+    .heightIs(1 / SCALE);
+
+    [self setupAutoHeightWithBottomView:self.spliteView bottomMargin:0.0f];
+}
+
+- (void)setTotal:(NSString *)total
+{
+    _total = total;
+    self.titleLabel.text = [NSString stringWithFormat:@"共%@个搜索结果", total];
 }
 
 @end

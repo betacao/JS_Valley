@@ -23,7 +23,7 @@
     [super viewDidLoad];
     [self addAutoLayout];
     NSDictionary *param = nil;
-    if (self.type == SHGDiscoveryGroupingTypeIndustry) {
+    if (self.object.moduleType == SHGDiscoveryGroupingTypeIndustry) {
         self.title = @"行业分组";
         param = @{@"uid":UID, @"aliasName":@"industry"};
     } else {
@@ -59,13 +59,15 @@
     if (!cell) {
         cell = [[[NSBundle mainBundle] loadNibNamed:@"SHGDiscoveryGroupingCell" owner:self options:nil] lastObject];
     }
-    cell.object = [self.dataArray objectAtIndex:indexPath.row];
+    SHGDiscoveryIndustryObject *object = [self.dataArray objectAtIndex:indexPath.row];
+    object.moduleType = self.object.moduleType;
+    cell.object = object;
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    SHGDiscoveryDisplayViewController *controller = [[SHGDiscoveryDisplayViewController alloc] init];
+    SHGDiscoveryDisplayExpandViewController *controller = [[SHGDiscoveryDisplayExpandViewController alloc] init];
     controller.object = [self.dataArray objectAtIndex:indexPath.row];
     [self.navigationController pushViewController:controller animated:YES];
 }

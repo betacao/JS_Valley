@@ -88,12 +88,11 @@
 @end
 
 
-
 @implementation SHGDiscoveryDepartmentObject
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey
 {
-    return @{@"phone":@"phone", @"realName":@"realname", @"userID":@"userid", @"position":@"position", @"title":@"title", @"headImg":@"headimg", @"company":@"company", @"friendTypeImage":@"friendtype", @"commonFriendCount":@"commonfriendcount", @"commonFriend":@"commonfriend", @"userStatus":@"userstatus", @"area":@"area"};
+    return @{@"phone":@"phone", @"realName":@"realname", @"userID":@"id", @"position":@"position", @"title":@"title", @"headImg":@"headimg", @"company":@"company", @"friendTypeImage":@"friendtype", @"commonFriendCount":@"commonfriendcount", @"commonFriend":@"commonfriend", @"userStatus":@"userstatus", @"area":@"area"};
 }
 
 + (NSValueTransformer *)JSONTransformerForKey:(NSString *)key

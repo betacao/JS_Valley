@@ -9,15 +9,8 @@
 #import "BaseViewController.h"
 #import "SHGDiscoveryObject.h"
 
-typedef NS_ENUM(NSInteger, SHGDiscoveryGroupingType) {
-    SHGDiscoveryGroupingTypeIndustry,
-    SHGDiscoveryGroupingTypePosition
-};
-
 @interface SHGDiscoveryGroupingViewController : BaseViewController
-
-@property (assign, nonatomic) SHGDiscoveryGroupingType type;
-
+@property (strong, nonatomic) SHGDiscoveryIndustryObject *object;
 @end
 
 

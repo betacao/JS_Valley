@@ -8,6 +8,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SHGDiscoverySearchViewController">
             <connections>
                 <outlet property="middleImageView" destination="oUx-Ay-RJL" id="an4-AH-HwM"/>
+                <outlet property="tableHeaderView" destination="B6b-BA-cLT" id="0fz-ew-tZ9"/>
                 <outlet property="tableView" destination="HzF-fm-7KV" id="Xbe-5x-ijV"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -32,7 +33,32 @@
                 </imageView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-            <point key="canvasLocation" x="305" y="185"/>
+            <point key="canvasLocation" x="140" y="148"/>
+        </view>
+        <view contentMode="scaleToFill" id="B6b-BA-cLT" customClass="SHGDiscoverySearchHeaderView">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="135"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="MdR-Uz-o8W">
+                    <rect key="frame" x="106" y="0.0" width="42" height="21"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <view contentMode="scaleToFill" id="5tn-2N-SXj">
+                    <rect key="frame" x="40" y="32" width="240" height="128"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="spliteView" destination="5tn-2N-SXj" id="ecm-c7-Lwj"/>
+                <outlet property="titleLabel" destination="MdR-Uz-o8W" id="69y-gL-pTN"/>
+            </connections>
+            <point key="canvasLocation" x="527" y="375.5"/>
         </view>
     </objects>
 </document>

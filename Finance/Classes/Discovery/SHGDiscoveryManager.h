@@ -13,10 +13,10 @@
 + (instancetype)shareManager;
 
 //发现首页
-+ (void)loadDiscoveryData:(NSDictionary *)param block:(void (^)(NSArray *dataArray))block;
++ (void)loadDiscoveryData:(NSDictionary *)param block:(void (^)(NSArray *firstArray, NSArray *secondArray))block;
 
 //发现首页搜索接口
-+ (void)searchDiscovery:(NSDictionary *)param block:(void (^)(NSArray *dataArray))block;
++ (void)searchDiscovery:(NSDictionary *)param block:(void (^)(NSArray *dataArray, NSString *total))block;
 
 //发现中邀请好友列表
 + (void)loadDiscoveryInvateData:(NSDictionary *)param block:(void (^)(NSArray *firstArray, NSArray *secondArray))block;

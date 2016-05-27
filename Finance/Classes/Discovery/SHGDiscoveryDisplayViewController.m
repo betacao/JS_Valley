@@ -26,14 +26,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    if ([self.object isKindOfClass:[SHGDiscoveryObject class]]) {
-        self.title = ((SHGDiscoveryObject *)self.object).industryName;
-    } else if ([self.object isKindOfClass:[SHGDiscoveryObject class]]) {
-        self.title = ((SHGDiscoveryIndustryObject *)self.object).moduleName;
-    }
+    self.title = self.object.industryName;
     [self initView];
     [self addAutoLayout];
-    [self loadDataWithTarget:@"first"];
 
 }
 
@@ -76,19 +71,23 @@
     .bottomSpaceToView(self.view, 0.0f);
 }
 
+- (void)setSearchText:(NSString *)searchText
+{
+    _searchText = searchText;
+    self.pageNumber = 1;
+    [self.dataArr removeAllObjects];
+    [self loadData];
+}
 
 - (void)refreshFooter
 {
-    [self loadDataWithTarget:@"load"];
+    [self loadData];
 }
 
-- (void)loadDataWithTarget:(NSString *)target
+- (void)loadData
 {
     __weak typeof(self)weakSelf = self;
     void(^block)(NSArray *firstArray, NSArray *secondArray) = ^(NSArray *firstArray, NSArray *secondArray) {
-        if ([target isEqualToString:@"first"]) {
-            [weakSelf.dataArr removeAllObjects];
-        }
         [weakSelf.dataArr addObjectsFromArray:firstArray];
 
         if (firstArray.count < 10) {
@@ -100,24 +99,17 @@
         [weakSelf.tableView reloadData];
     };
 
-    if ([self.object isKindOfClass:[SHGDiscoveryObject class]]) {
-        //邀请好友和点击我的行业
-        SHGDiscoveryObject *discoveryObject = (SHGDiscoveryObject *)self.object;
-        if ([discoveryObject.industryName isEqualToString:@"邀请好友"]) {
-            //不显示搜索框
-            self.hideSearchBar = YES;
-            NSDictionary *param = @{@"uid":UID, @"pageNum":@(self.pageNumber), @"pageSize":@"10"};
-            [SHGDiscoveryManager loadDiscoveryInvateData:param block:block];
-        } else {
-            NSDictionary *param = @{@"uid":UID, @"pageNum":@(self.pageNumber), @"pageSize":@"10", @"condition":self.searchText, @"industry":discoveryObject.industry, @"industryTotal":discoveryObject.industryNum};
-            [SHGDiscoveryManager loadDiscoveryMyDepartmentData:param block:block];
-        }
-    } else if ([self.object isKindOfClass:[SHGDiscoveryObject class]]) {
-        //行业拓展
+
+    if ([self.object.industryName isEqualToString:@"邀请好友"]) {
+        //不显示搜索框
+        self.hideSearchBar = YES;
         NSDictionary *param = @{@"uid":UID, @"pageNum":@(self.pageNumber), @"pageSize":@"10"};
         [SHGDiscoveryManager loadDiscoveryInvateData:param block:block];
+    } else {
+        NSDictionary *param = @{@"uid":UID, @"pageNum":@(self.pageNumber), @"pageSize":@"10", @"condition":self.searchText, @"industry":self.object.industry, @"industryTotal":self.object.industryNum};
+        [SHGDiscoveryManager loadDiscoveryMyDepartmentData:param block:block];
     }
-    
+
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -143,6 +135,34 @@
     }
     cell.object = [self.dataArr objectAtIndex:indexPath.row];
     return cell;
+}
+
+- (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar
+{
+    [searchBar setShowsCancelButton:YES animated:YES];
+}
+
+- (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar
+{
+    [searchBar setShowsCancelButton:NO animated:YES];
+}
+
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
+{
+    [searchBar resignFirstResponder];
+    [searchBar setShowsCancelButton:NO animated:YES];
+}
+
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
+{
+    [searchBar resignFirstResponder];
+    [searchBar setShowsCancelButton:NO animated:YES];
+    self.searchText = searchBar.text;
+}
+
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
+{
+    [self.searchBar resignFirstResponder];
 }
 
 - (void)didReceiveMemoryWarning
@@ -242,7 +262,7 @@
         self.thirdLabel.text = @"通讯录联系人";
         [self.button setImage:[UIImage imageNamed:@"discovery_invate"] forState:UIControlStateNormal];
     } else if ([object isKindOfClass:[SHGDiscoveryDepartmentObject class]]) {
-        //
+        //我的人脉
         SHGDiscoveryDepartmentObject *depentmentObject = (SHGDiscoveryDepartmentObject *)object;
         [self.headerView updateHeaderView:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,depentmentObject.headImg] placeholderImage:[UIImage imageNamed:@"default_head"] status:depentmentObject.userStatus userID:depentmentObject.userID];
         self.firstLabel.text = depentmentObject.realName;
@@ -261,6 +281,185 @@
     .leftSpaceToView(self.firstLabel, MarginFactor(10.0f))
     .heightIs(self.relationShipImageView.image.size.height)
     .widthIs(self.relationShipImageView.image.size.width);
+}
+
+
+@end
+
+
+@interface SHGDiscoveryDisplayExpandViewController ()<UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate>
+
+@property (strong, nonatomic) UITableView *tableView;
+@property (strong, nonatomic) EMSearchBar *searchBar;
+@property (strong, nonatomic) NSString *searchText;
+
+@end
+
+@implementation SHGDiscoveryDisplayExpandViewController
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    self.title = self.object.moduleName;
+    [self initView];
+    [self addAutoLayout];
+    [self loadDataWithTarget:@"first"];
+
+}
+
+- (void)initView
+{
+    [self.view addSubview:self.searchBar];
+    [self.view addSubview:self.tableView];
+    [self addHeaderRefresh:self.tableView headerRefesh:NO andFooter:YES];
+    self.tableView.mj_footer.automaticallyHidden = YES;
+    self.tableView.tableFooterView = [[UIView alloc] init];
+    self.searchText = @"";
+}
+
+- (void)addAutoLayout
+{
+    self.searchBar.sd_layout
+    .leftSpaceToView(self.view, 0.0f)
+    .rightSpaceToView(self.view, 0.0f)
+    .topSpaceToView(self.view, 0.0f);
+
+    self.tableView.sd_layout
+    .leftSpaceToView(self.view, 0.0f)
+    .rightSpaceToView(self.view, 0.0f)
+    .topSpaceToView(self.searchBar, 0.0f)
+    .bottomSpaceToView(self.view, 0.0f);
+}
+
+- (EMSearchBar *)searchBar
+{
+    if (!_searchBar) {
+        _searchBar = [[EMSearchBar alloc] init];
+        _searchBar.delegate = self;
+        if (self.object.moduleType == SHGDiscoveryGroupingTypeIndustry) {
+            _searchBar.placeholder = @"请输入城市名/姓名查找精准人脉";
+        } else {
+            _searchBar.placeholder = @"请输入行业名/姓名查找精准人脉";
+        }
+    }
+    return _searchBar;
+}
+
+- (UITableView *)tableView
+{
+    if (!_tableView) {
+        _tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
+        _tableView.dataSource = self;
+        _tableView.delegate = self;
+        _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    }
+    return _tableView;
+}
+
+- (void)refreshFooter
+{
+    [self loadDataWithTarget:@"load"];
+}
+
+- (NSString *)minUserID
+{
+    NSString *maxUserID = [NSString stringWithFormat:@"%ld",NSIntegerMax];
+    NSString *uid = maxUserID;
+    for (SHGDiscoveryPeopleObject *object in self.dataArr) {
+        NSString *userID = object.userID;
+        if ([userID compare:uid options:NSNumericSearch] == NSOrderedAscending) {
+            uid = userID;
+        }
+    }
+    return [uid isEqualToString:maxUserID] ? @"-1" : uid;
+}
+
+- (void)loadDataWithTarget:(NSString *)target
+{
+    __weak typeof(self)weakSelf = self;
+    void(^block)(NSArray *firstArray, NSArray *secondArray) = ^(NSArray *firstArray, NSArray *secondArray) {
+        if ([target isEqualToString:@"first"]) {
+            [weakSelf.dataArr removeAllObjects];
+        }
+        [weakSelf.dataArr addObjectsFromArray:firstArray];
+
+        if (firstArray.count < 10) {
+            [weakSelf.tableView.mj_footer endRefreshingWithNoMoreData];
+        } else {
+            [weakSelf.tableView.mj_footer endRefreshing];
+        }
+        [weakSelf.tableView reloadData];
+    };
+
+    if (self.object.moduleType == SHGDiscoveryGroupingTypeIndustry) {
+
+        NSDictionary *param = @{@"target":target, @"industry":self.object.module, @"userId":[self minUserID], @"pageSize":@"10", @"positionCondition":self.searchText, @"uid":UID};
+        [SHGDiscoveryManager loadDiscoveryGroupUserDetail:param block:block];
+    } else {
+        
+        NSDictionary *param = @{@"target":target, @"position":self.object.module, @"userId":[self minUserID], @"pageSize":@"10", @"industryCondition":self.searchText, @"uid":UID};
+        [SHGDiscoveryManager loadDiscoveryGroupUserDetail:param block:block];
+    }
+
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return self.dataArr.count;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (self.dataArr.count > 0) {
+        NSObject *object = [self.dataArr objectAtIndex:indexPath.row];
+        CGFloat height = [tableView cellHeightForIndexPath:indexPath model:object keyPath:@"object" cellClass:[SHGDiscoveryDisplayCell class] contentViewWidth:SCREENWIDTH];
+        return height;
+    }
+    return 0.0f;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    SHGDiscoveryDisplayCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SHGDiscoveryDisplayCell"];
+    if(!cell) {
+        cell = [[[NSBundle mainBundle] loadNibNamed:@"SHGDiscoveryDisplayCell" owner:self options:nil] lastObject];
+    }
+    cell.object = [self.dataArr objectAtIndex:indexPath.row];
+    return cell;
+}
+
+- (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar
+{
+    [searchBar setShowsCancelButton:YES animated:YES];
+}
+
+- (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar
+{
+    [searchBar setShowsCancelButton:NO animated:YES];
+}
+
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
+{
+    [searchBar resignFirstResponder];
+    [searchBar setShowsCancelButton:NO animated:YES];
+}
+
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
+{
+    [searchBar resignFirstResponder];
+    [searchBar setShowsCancelButton:NO animated:YES];
+    self.searchText = searchBar.text;
+    [self loadDataWithTarget:@"first"];
+}
+
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
+{
+    [self.searchBar resignFirstResponder];
+}
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
 }
 
 
