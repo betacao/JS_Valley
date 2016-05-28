@@ -12,10 +12,7 @@
 #import "SHGPersonalViewController.h"
 #import "ApplyViewController.h"
 #import "CCLocationManager.h"
-
-
-UIKIT_EXTERN NSString *const UICollectionElementKindSectionHeader;  //定义好Identifier
-static NSString *const HeaderIdentifier = @"HeaderIdentifier";
+#import "SHGDiscoveryObject.h"
 
 @interface SHGRecommendViewController ()
 
@@ -34,8 +31,10 @@ static NSString *const HeaderIdentifier = @"HeaderIdentifier";
     UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
     UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:leftButton];
     self.navigationItem.leftBarButtonItem = leftItem;
-
-    [self requestCity];
+    [self initView];
+    [self addAutoLayout];
+    [self uploadCityName];
+    [self loadData];
 }
 
 - (void)initView
@@ -50,7 +49,7 @@ static NSString *const HeaderIdentifier = @"HeaderIdentifier";
     .spaceToSuperView(UIEdgeInsetsZero);
 }
 
-- (void)requestCity
+- (void)uploadCityName
 {
     [[CCLocationManager shareLocation] getCity:^{
         NSString *cityName = [SHGGloble sharedGloble].cityName;
@@ -58,8 +57,20 @@ static NSString *const HeaderIdentifier = @"HeaderIdentifier";
         NSDictionary *parameters = @{@"uid":UID,@"position":cityName};
         [MOCHTTPRequestOperationManager getWithURL:url parameters:parameters success:nil failed:nil];
     }];
+
 }
 
+- (void)loadData
+{
+    __weak typeof(self) weakSelf = self;
+    NSString *url = [NSString stringWithFormat:@"%@/%@/%@/%@",rBaseAddressForHttp,@"recommended",@"friends",@"getFirstRecommendedFriend"];
+    NSDictionary *parameters = @{@"uid":UID};
+    [MOCHTTPRequestOperationManager postWithURL:url class:nil parameters:parameters success:^(MOCHTTPResponse *response){
+        weakSelf.recommendCollectionView.dataArray = [[SHGGloble sharedGloble] parseServerJsonArrayToJSONModel:[response.dataDictionary objectForKey:@"list"] class:[SHGDiscoveryRecommendObject class]];
+    }failed:^(MOCHTTPResponse *response){
+
+    }];
+}
 
 - (void)rightItemClick:(id)sender
 {
@@ -78,7 +89,6 @@ static NSString *const HeaderIdentifier = @"HeaderIdentifier";
             }];
         }
     }];
-
     [[AppDelegate currentAppdelegate] moveToRootController:nil];
 }
 

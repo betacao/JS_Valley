@@ -50,19 +50,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    self.recommendContactArray = nil;
-    __weak typeof(self) weakSelf = self;
-    [SHGDiscoveryManager loadDiscoveryData:@{@"uid":UID} block:^(NSArray *firstArray, NSArray *secondArray) {
-        if (firstArray.count > 0) {
-            weakSelf.myContactCell.effctiveArray = [NSArray arrayWithArray:firstArray];
-            weakSelf.myContactCell.hideInvateButton = [SHGDiscoveryManager shareManager].hideInvateButton;
-        } else {
-            weakSelf.recommendContactArray = [NSArray arrayWithArray:secondArray];
-            weakSelf.recommendCollectionView.dataArray = weakSelf.recommendContactArray;
-            weakSelf.recommendCollectionView.hideInvateButton = [SHGDiscoveryManager shareManager].hideInvateButton;
-        }
-        [weakSelf.tableView reloadData];
-    }];
+    [self loadData];
 }
 
 - (void)initView
@@ -114,6 +102,27 @@
         .spaceToSuperView(UIEdgeInsetsZero);
     }
     return _recommendCollectionView;
+}
+
+
+- (void)loadData
+{
+    self.recommendContactArray = nil;
+    __weak typeof(self) weakSelf = self;
+    [SHGDiscoveryManager loadDiscoveryData:@{@"uid":UID} block:^(NSArray *firstArray, NSArray *secondArray) {
+        if ([self isViewLoaded]) {
+            if (firstArray.count > 0) {
+                weakSelf.myContactCell.effctiveArray = [NSArray arrayWithArray:firstArray];
+                weakSelf.myContactCell.hideInvateButton = [SHGDiscoveryManager shareManager].hideInvateButton;
+            } else {
+                weakSelf.recommendContactArray = [NSArray arrayWithArray:secondArray];
+                weakSelf.recommendCollectionView.dataArray = weakSelf.recommendContactArray;
+                weakSelf.recommendCollectionView.hideInvateButton = [SHGDiscoveryManager shareManager].hideInvateButton;
+            }
+            [weakSelf.tableView reloadData];
+        }
+    }];
+
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView

@@ -160,4 +160,24 @@
         [self insertObject:object atIndex:toIdx];
     }
 }
+- (void)insertNewestUniqueObject:(id)anObject
+{
+    [self insertNewestUniqueObject:anObject atIndex:self.count];
+}
+
+- (void)insertNewestUniqueObject:(id)anObject atIndex:(NSInteger)index
+{
+    [self enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if ([obj isEqual:anObject]) {
+            [self removeObject:obj];
+        }
+    }];
+    if (index > [self count]) {
+        [self addObject:anObject];
+    }
+    if (index < 0) {
+        return;
+    }
+    [self insertObject:anObject atIndex:index];
+}
 @end

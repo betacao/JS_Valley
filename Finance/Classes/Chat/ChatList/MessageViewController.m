@@ -12,6 +12,8 @@
 #import "SHGActionDetailViewController.h"
 #import "LinkViewController.h"
 #import "SHGMarketSegmentViewController.h"
+#import "SHGBusinessObject.h"
+#import "SHGBusinessDetailViewController.h"
 
 @interface MessageViewController ()
 {
@@ -212,7 +214,17 @@
         object.marketId = obj.oid;
         controller.object = object;
         [self.navigationController pushViewController:controller animated:YES];
-    } else{
+    } else if ([obj.code isEqualToString:@"1014"]){
+        //新版业务的推送
+        NSString *businessId = obj.oid;
+        NSString *businessType = obj.unionID;
+        SHGBusinessDetailViewController *controller = [[SHGBusinessDetailViewController alloc] init];
+        SHGBusinessObject *object = [[SHGBusinessObject alloc] init];
+        object.businessID = businessId;
+        object.type = businessType;
+        controller.object = object;
+        [self.navigationController pushViewController:controller animated:YES];
+    }  else{
         //进入帖子详情
         CircleDetailViewController *vc = [[CircleDetailViewController alloc] initWithNibName:@"CircleDetailViewController" bundle:nil];
         MessageObj *obj = self.dataArr[indexPath.row];

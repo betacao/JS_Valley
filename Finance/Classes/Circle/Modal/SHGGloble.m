@@ -9,6 +9,7 @@
 #import "SHGGloble.h"
 #import "SHGUserTagModel.h"
 #import "SHGBusinessListViewController.h"
+#import "SHGDiscoveryViewController.h"
 #import "SHGBusinessManager.h"
 #import "HeadImage.h"
 #import <MessageUI/MessageUI.h>
@@ -205,6 +206,7 @@
             [[SHGBusinessManager shareManager] clearCache];
             controller.needReloadData = YES;
         }
+        [[SHGDiscoveryViewController sharedController] loadData];
     }
 }
 

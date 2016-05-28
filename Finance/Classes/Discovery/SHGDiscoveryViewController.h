@@ -13,6 +13,8 @@
 
 + (instancetype)sharedController;
 
+- (void)loadData;
+
 @property (strong, nonatomic) UILabel *titleLabel;
 
 @end

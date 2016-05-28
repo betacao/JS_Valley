@@ -26,6 +26,8 @@
 #import "GeTuiSdkError.h"
 #import "LinkViewController.h"
 #import "SHGMarketSegmentViewController.h"
+#import "SHGBusinessDetailViewController.h"
+#import "SHGBusinessObject.h"
 //for mac
 #include <sys/socket.h>
 #include <sys/sysctl.h>
@@ -498,6 +500,16 @@
         SHGMarketDetailViewController *controller = [[SHGMarketDetailViewController alloc] init];
         SHGMarketObject *object = [[SHGMarketObject alloc] init];
         object.marketId = marketId;
+        controller.object = object;
+        [self pushIntoViewController:TopVC newViewController:controller];
+    } else if ([ridCode isEqualToString:@"1014"]){
+        //新版业务的推送
+        NSString *businessId = [userInfo objectForKey:@"rid"];
+        NSString *businessType = [userInfo objectForKey:@"businessType"];
+        SHGBusinessDetailViewController *controller = [[SHGBusinessDetailViewController alloc] init];
+        SHGBusinessObject *object = [[SHGBusinessObject alloc] init];
+        object.businessID = businessId;
+        object.type = businessType;
         controller.object = object;
         [self pushIntoViewController:TopVC newViewController:controller];
     } else{  //进入帖子详情

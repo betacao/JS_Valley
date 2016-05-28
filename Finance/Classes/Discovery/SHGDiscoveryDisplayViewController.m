@@ -234,6 +234,7 @@
     self.firstLabel.textColor = Color(@"161616");
     self.secondLabel.textColor = self.thirdLabel.textColor = Color(@"898989");
     self.spliteView.backgroundColor = Color(@"e6e7e8");
+    [self.button addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)addAutoLayout
@@ -316,6 +317,16 @@
     .leftSpaceToView(self.firstLabel, MarginFactor(10.0f))
     .heightIs(self.relationShipImageView.image.size.height)
     .widthIs(self.relationShipImageView.image.size.width);
+}
+
+- (void)buttonClick:(UIButton *)button
+{
+    if ([self.object isKindOfClass:[SHGDiscoveryInvateObject class]]){
+        //邀请好友
+        NSString *content =[NSString stringWithFormat:@"%@%@",@"诚邀您加入大牛圈--金融业务互助平台！这里有业务互助、人脉嫁接！赶快加入吧！",[NSString stringWithFormat:@"%@?uid=%@",SHARE_YAOQING_URL, UID]];
+        SHGDiscoveryInvateObject *invateObject = (SHGDiscoveryInvateObject *)self.object;
+        [[SHGGloble sharedGloble] showMessageView:@[invateObject.phone] body:content];
+    }
 }
 
 

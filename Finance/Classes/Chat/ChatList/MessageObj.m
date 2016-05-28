@@ -13,7 +13,7 @@
 @implementation MessageObj
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey{
-    return  @{@"title": @"title", @"content":@"content", @"time":@"time", @"code":@"code", @"oid":@"oid", @"feedHtml":@"feedhtml"};
+    return  @{@"title": @"title", @"content":@"content", @"time":@"time", @"code":@"code", @"oid":@"oid", @"feedHtml":@"feedhtml", @"unionID":@"unionid"};
 }
 
 @end

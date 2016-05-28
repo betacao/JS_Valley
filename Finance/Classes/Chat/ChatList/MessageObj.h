@@ -16,6 +16,7 @@
 @property (strong, nonatomic) NSString *code;
 @property (strong, nonatomic) NSString *oid;
 @property (strong, nonatomic) NSString *feedHtml;
+@property (strong, nonatomic) NSString *unionID;
 @end
 
 

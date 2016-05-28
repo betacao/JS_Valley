@@ -40,7 +40,7 @@ typedef NS_ENUM(NSInteger, SHGDiscoveryGroupingType) {
 @property (strong, nonatomic) NSString *title;
 @property (strong, nonatomic) NSString *company;
 @property (strong, nonatomic) NSString *headImg;
-@property (strong, nonatomic) NSString *isAttention;
+@property (assign, nonatomic) BOOL isAttention;
 @property (strong, nonatomic) NSString *realName;
 @property (strong, nonatomic) NSString *industry;
 

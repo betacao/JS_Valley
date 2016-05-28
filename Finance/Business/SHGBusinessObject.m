@@ -40,6 +40,15 @@
 {
     return [MTLJSONAdapter arrayTransformerWithModelClass:[SHGBusinessCommentObject class]];
 }
+
+- (BOOL)isEqual:(SHGBusinessObject *)object
+{
+    if ([self.businessID isEqualToString:object.businessID]) {
+        return YES;
+    }
+    return NO;
+}
+
 @end
 
 @implementation SHGBusinessFirstObject

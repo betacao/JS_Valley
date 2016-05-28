@@ -443,7 +443,7 @@
             } else if([target isEqualToString:@"refresh"]){
                 for (NSInteger i = dataArray.count - 1; i >= 0; i--){
                     SHGBusinessObject *obj = [dataArray objectAtIndex:i];
-                    [weakSelf.currentArray insertUniqueObject:obj atIndex:0];
+                    [weakSelf.currentArray insertNewestUniqueObject:obj atIndex:0];
                 }
                 //下拉的话如果之前显示了偏少 则下移 否则不管
                 NSInteger position = [[weakSelf.positionDictionary objectForKey:[weakSelf.scrollView currentName]] integerValue];
