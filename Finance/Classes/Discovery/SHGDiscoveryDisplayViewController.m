@@ -9,15 +9,19 @@
 #import "SHGDiscoveryDisplayViewController.h"
 #import "SHGDiscoveryManager.h"
 #import "EMSearchBar.h"
+#import "SHGRecommendCollectionView.h"
 
 @interface SHGDiscoveryDisplayViewController ()<UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (strong, nonatomic) IBOutlet UITableViewCell *recommendCell;
 @property (strong, nonatomic) EMSearchBar *searchBar;
 @property (assign, nonatomic) NSInteger pageNumber;
 @property (strong, nonatomic) NSString *searchText;
 
 @property (assign, nonatomic) BOOL hideSearchBar;
+@property (strong, nonatomic) SHGRecommendCollectionView *recommendCollectionView;
+@property (strong, nonatomic) NSArray *recommendContactArray;
 
 @end
 
@@ -61,6 +65,18 @@
     return _searchBar;
 }
 
+- (SHGRecommendCollectionView *)recommendCollectionView
+{
+    if (!_recommendCollectionView) {
+        _recommendCollectionView = [[SHGRecommendCollectionView alloc] init];
+        _recommendCollectionView.scrollEnabled = NO;
+        [self.recommendCell.contentView addSubview:_recommendCollectionView];
+        _recommendCollectionView.sd_layout
+        .spaceToSuperView(UIEdgeInsetsZero);
+    }
+    return _recommendCollectionView;
+}
+
 - (void)setHideSearchBar:(BOOL)hideSearchBar
 {
     _hideSearchBar = hideSearchBar;
@@ -88,7 +104,12 @@
 {
     __weak typeof(self)weakSelf = self;
     void(^block)(NSArray *firstArray, NSArray *secondArray) = ^(NSArray *firstArray, NSArray *secondArray) {
-        [weakSelf.dataArr addObjectsFromArray:firstArray];
+        if (firstArray.count > 0) {
+            [weakSelf.dataArr addObjectsFromArray:firstArray];
+        } else if(secondArray.count > 0) {
+            weakSelf.recommendContactArray = [NSArray arrayWithArray:secondArray];
+            weakSelf.recommendCollectionView.dataArray = weakSelf.recommendContactArray;
+        }
 
         if (firstArray.count < 10) {
             [weakSelf.tableView.mj_footer endRefreshingWithNoMoreData];
@@ -114,11 +135,17 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
+    if (self.recommendContactArray) {
+        return 1;
+    }
     return self.dataArr.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if (self.recommendContactArray) {
+        return self.recommendCollectionView.totalHeight;
+    }
     if (self.dataArr.count > 0) {
         NSObject *object = [self.dataArr objectAtIndex:indexPath.row];
         CGFloat height = [tableView cellHeightForIndexPath:indexPath model:object keyPath:@"object" cellClass:[SHGDiscoveryDisplayCell class] contentViewWidth:SCREENWIDTH];
@@ -129,6 +156,9 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if (self.recommendContactArray) {
+        return self.recommendCell;
+    }
     SHGDiscoveryDisplayCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SHGDiscoveryDisplayCell"];
     if(!cell) {
         cell = [[[NSBundle mainBundle] loadNibNamed:@"SHGDiscoveryDisplayCell" owner:self options:nil] lastObject];
@@ -249,9 +279,9 @@
         self.secondLabel.text = peopleObject.company;
         self.thirdLabel.text = peopleObject.area;
         if (peopleObject.isAttention) {
-            [self.button setImage:[UIImage imageNamed:@"me_follow"] forState:UIControlStateNormal];
-        } else {
             [self.button setImage:[UIImage imageNamed:@"me_followed"] forState:UIControlStateNormal];
+        } else {
+            [self.button setImage:[UIImage imageNamed:@"me_follow"] forState:UIControlStateNormal];
         }
     } else if ([object isKindOfClass:[SHGDiscoveryInvateObject class]]) {
         //邀请好友
@@ -269,6 +299,11 @@
         self.secondLabel.text = depentmentObject.company;
         self.thirdLabel.text = depentmentObject.area;
         self.relationShipImageView.image = depentmentObject.friendTypeImage;
+        if (depentmentObject.isAttention) {
+            [self.button setImage:[UIImage imageNamed:@"me_followed"] forState:UIControlStateNormal];
+        } else {
+            [self.button setImage:[UIImage imageNamed:@"me_follow"] forState:UIControlStateNormal];
+        }
     }
     self.button.sd_layout
     .rightSpaceToView(self.contentView, MarginFactor(12.0f))

@@ -40,14 +40,12 @@ static NSString *const HeaderIdentifier = @"HeaderIdentifier";
 
 - (void)initView
 {
-
+    self.recommendCollectionView = [[SHGRecommendCollectionView alloc] init];
+    [self.view addSubview:self.recommendCollectionView];
 }
 
 - (void)addAutoLayout
 {
-    self.recommendCollectionView = [[SHGRecommendCollectionView alloc] init];
-    [self.view addSubview:self.recommendCollectionView];
-
     self.recommendCollectionView.sd_layout
     .spaceToSuperView(UIEdgeInsetsZero);
 }

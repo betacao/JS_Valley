@@ -10,6 +10,9 @@
 
 @interface SHGRecommendCollectionView : UIView
 
+//决定是不是显示邀请好友
+@property (assign, nonatomic) BOOL hideInvateButton;
+
 @property (strong, nonatomic) NSArray *dataArray;
 
 @property (assign, nonatomic) CGFloat totalHeight;

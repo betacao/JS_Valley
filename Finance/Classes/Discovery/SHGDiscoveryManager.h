@@ -10,6 +10,9 @@
 
 @interface SHGDiscoveryManager : NSObject
 
+//决定是不是显示邀请好友
+@property (assign, nonatomic) BOOL hideInvateButton;
+
 + (instancetype)shareManager;
 
 //发现首页

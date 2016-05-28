@@ -66,6 +66,7 @@ typedef NS_ENUM(NSInteger, SHGDiscoveryGroupingType) {
 @property (strong, nonatomic) NSString *title;
 @property (strong, nonatomic) NSString *headImg;
 @property (strong, nonatomic) NSString *area;
+@property (assign, nonatomic) BOOL isAttention;
 @property (assign, nonatomic) BOOL userStatus;
 
 @end
@@ -79,7 +80,7 @@ typedef NS_ENUM(NSInteger, SHGDiscoveryGroupingType) {
 @property (strong, nonatomic) NSString *picName;
 @property (strong, nonatomic) NSString *realName;
 @property (strong, nonatomic) NSString *companyName;
-@property (strong, nonatomic) NSString *isAttention;
-@property (strong, nonatomic) NSString *userStatus;
+@property (assign, nonatomic) BOOL isAttention;
+@property (assign, nonatomic) BOOL userStatus;
 
 @end

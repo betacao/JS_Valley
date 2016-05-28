@@ -92,7 +92,7 @@
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey
 {
-    return @{@"phone":@"phone", @"realName":@"realname", @"userID":@"id", @"position":@"position", @"title":@"title", @"headImg":@"headimg", @"company":@"company", @"friendTypeImage":@"friendtype", @"commonFriendCount":@"commonfriendcount", @"commonFriend":@"commonfriend", @"userStatus":@"userstatus", @"area":@"area"};
+    return @{@"phone":@"phone", @"realName":@"realname", @"userID":@"id", @"position":@"position", @"title":@"title", @"headImg":@"headimg", @"company":@"company", @"friendTypeImage":@"friendtype", @"commonFriendCount":@"commonfriendcount", @"commonFriend":@"commonfriend", @"userStatus":@"userstatus", @"area":@"area", @"isAttention":@"isattention"};
 }
 
 + (NSValueTransformer *)JSONTransformerForKey:(NSString *)key
@@ -110,6 +110,13 @@
             }
             return [UIImage imageNamed:@"discovery_second"];
         }
+        if ([key isEqualToString:@"isAttention"]) {
+            if ([value isEqualToString:@"false"]) {
+                return @(NO);
+            } else {
+                return @(YES);
+            }
+        }
         return value;
     }];
 }
@@ -122,7 +129,27 @@
 {
     return @{@"phone":@"phone", @"realName":@"realname", @"userID":@"userid", @"position":@"position", @"title":@"title", @"picName":@"picname", @"companyName":@"companyname", @"isAttention":@"isattention", @"userStatus":@"userstatus"};
 }
++ (NSValueTransformer *)JSONTransformerForKey:(NSString *)key
+{
+    return [MTLValueTransformer transformerUsingForwardBlock:^id(NSString *value, BOOL *success, NSError *__autoreleasing *error) {
+        if ([key isEqualToString:@"userStatus"]) {
+            if ([value isEqualToString:@"0"]) {
+                return @(NO);
+            } else {
+                return @(YES);
+            }
+        }
+        if ([key isEqualToString:@"isAttention"]) {
+            if ([value isEqualToString:@"false"]) {
+                return @(NO);
+            } else {
+                return @(YES);
+            }
+        }
 
+        return value;
+    }];
+}
 @end
 
 

@@ -30,6 +30,7 @@
     [MOCHTTPRequestOperationManager postWithURL:[rBaseAddressForHttp stringByAppendingString: @"/neo4j/friend/getIndustryCountByPhone"] parameters:param success:^(MOCHTTPResponse *response) {
         NSArray *industryList = [[SHGGloble sharedGloble] parseServerJsonArrayToJSONModel:[response.dataDictionary objectForKey:@"industrylist"] class:[SHGDiscoveryObject class]];
         NSArray *list = [[SHGGloble sharedGloble] parseServerJsonArrayToJSONModel:[response.dataDictionary objectForKey:@"list"] class:[SHGDiscoveryRecommendObject class]];
+        [SHGDiscoveryManager shareManager].hideInvateButton = [[response.dataDictionary objectForKey:@"phonecount"] isEqualToString:@"0"] ? YES : NO;
         if (block) {
             block(industryList, list);
         }
@@ -67,7 +68,7 @@
 {
     [MOCHTTPRequestOperationManager postWithURL:[rBaseAddressForHttp stringByAppendingString: @"/neo4j/friend/searchNeo4jFriend"] parameters:param success:^(MOCHTTPResponse *response) {
         NSArray *firstArray = [[SHGGloble sharedGloble] parseServerJsonArrayToJSONModel:[response.dataDictionary objectForKey:@"friendlist"] class:[SHGDiscoveryDepartmentObject class]];
-        NSArray *secondArray = [[SHGGloble sharedGloble] parseServerJsonArrayToJSONModel:[response.dataDictionary objectForKey:@"list"] class:[SHGDiscoveryDepartmentObject class]];
+        NSArray *secondArray = [[SHGGloble sharedGloble] parseServerJsonArrayToJSONModel:[response.dataDictionary objectForKey:@"list"] class:[SHGDiscoveryRecommendObject class]];
         if (block) {
             block(firstArray, secondArray);
         }

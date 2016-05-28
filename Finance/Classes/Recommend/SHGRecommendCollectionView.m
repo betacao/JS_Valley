@@ -53,6 +53,13 @@
     self.collectionView.scrollEnabled = scrollEnabled;
 }
 
+- (void)setHideInvateButton:(BOOL)hideInvateButton
+{
+    _hideInvateButton = hideInvateButton;
+
+    self.inviteButton.hidden = hideInvateButton;
+}
+
 - (UICollectionViewFlowLayout *)collectionViewFlowLayout
 {
     if (!_collectionViewFlowLayout) {
@@ -88,7 +95,9 @@
     [self.inviteButton setTitleColor:Color(@"eeae01") forState:UIControlStateNormal];
     [self.inviteButton setTitle:@"邀请好友" forState:UIControlStateNormal];
     self.inviteButton.titleLabel.font = FontFactor(13.0f);
+    self.inviteButton.hidden = YES;
     [self.inviteButton addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchUpInside];
+    
     SHGDiscoveryObject *object = [[SHGDiscoveryObject alloc] init];
     object.industryNum = @"0";
     object.industryName = self.inviteButton.currentTitle;

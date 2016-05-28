@@ -55,9 +55,11 @@
     [SHGDiscoveryManager loadDiscoveryData:@{@"uid":UID} block:^(NSArray *firstArray, NSArray *secondArray) {
         if (firstArray.count > 0) {
             weakSelf.myContactCell.effctiveArray = [NSArray arrayWithArray:firstArray];
+            weakSelf.myContactCell.hideInvateButton = [SHGDiscoveryManager shareManager].hideInvateButton;
         } else {
             weakSelf.recommendContactArray = [NSArray arrayWithArray:secondArray];
             weakSelf.recommendCollectionView.dataArray = weakSelf.recommendContactArray;
+            weakSelf.recommendCollectionView.hideInvateButton = [SHGDiscoveryManager shareManager].hideInvateButton;
         }
         [weakSelf.tableView reloadData];
     }];
@@ -185,7 +187,6 @@
 
 @implementation SHGDiscoveryMyContactCell
 
-
 - (void)awakeFromNib
 {
     [super awakeFromNib];
@@ -197,14 +198,19 @@
 - (void)initView
 {
     self.buttonView.backgroundColor = Color(@"efecee");
+
     self.redLineView.backgroundColor = Color(@"d43b37");
+    
     self.titleLabel.font = FontFactor(14.0f);
     self.titleLabel.textColor = Color(@"161616");
     self.titleLabel.text = @"我的人脉";
+
     self.bottomView.backgroundColor = Color(@"efeeef");
+
     [self.inviteButton setTitleColor:Color(@"eeae01") forState:UIControlStateNormal];
     [self.inviteButton setTitle:@"邀请好友" forState:UIControlStateNormal];
     self.inviteButton.titleLabel.font = FontFactor(13.0f);
+    self.inviteButton.hidden = YES;
     [self.inviteButton addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchUpInside];
 
     SHGDiscoveryObject *object = [[SHGDiscoveryObject alloc] init];
@@ -253,6 +259,7 @@
         object.industryImage = image;
         object.industryNum = @"0";
         object.industryName = [[dictionary allKeys] firstObject];
+        object.industry =[[dictionary allValues] firstObject];
         [self.dataArray addObject:object];
     }];
 
@@ -306,6 +313,13 @@
             button.object = object;
         }
     }
+}
+
+- (void)setHideInvateButton:(BOOL)hideInvateButton
+{
+    _hideInvateButton = hideInvateButton;
+
+    self.inviteButton.hidden = hideInvateButton;
 }
 
 - (void)buttonClick:(SHGDiscoveryCategoryButton *)button
