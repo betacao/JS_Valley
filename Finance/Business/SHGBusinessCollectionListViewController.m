@@ -227,7 +227,6 @@
 {
     if (self.dataArr.count > 0) {
         SHGBusinessDetailViewController *controller = [[SHGBusinessDetailViewController alloc] init];
-        controller.controller = self;
         controller.object = [self.dataArr objectAtIndex:indexPath.row];
         [self.navigationController pushViewController:controller animated:YES];
     }

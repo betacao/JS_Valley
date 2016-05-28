@@ -193,7 +193,7 @@
 
     [self.headerImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,model.imageURL]] placeholderImage:model.placeholderImage];
 
-    if([model.name isEqualToString:@"群申请与通知"] || [model.name isEqualToString:@"通知"]){
+    if([model.name isEqualToString:@"群申请与通知"] || [model.name isEqualToString:@"通知"] || [model.name isEqualToString:@"大牛助手"]){
         self.nameLabel.sd_resetLayout
         .leftSpaceToView(self.headerImageView, MarginFactor(10.0f))
         .centerYEqualToView(self.headerImageView)

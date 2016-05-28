@@ -143,6 +143,7 @@
 
 - (void)buttonClicked:(UIButton *)button
 {
+    [[SHGGloble sharedGloble] recordUserAction:@"" type:@"business_create"];
     [UIView animateWithDuration:0.25f animations:^{
         self.alpha = 0.0f;
     } completion:^(BOOL finished) {

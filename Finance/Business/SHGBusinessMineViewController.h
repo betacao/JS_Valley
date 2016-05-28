@@ -9,6 +9,10 @@
 #import "BaseTableViewController.h"
 
 @interface SHGBusinessMineViewController : BaseTableViewController
-- (void)deleteBusinessWithBusinessID:(NSString *)businessID;
+
 @property(nonatomic, strong) NSString *userId;
+
+- (void)deleteBusinessWithBusinessID:(NSString *)businessID;
+- (void)didCreateOrModifyBusiness;
+
 @end

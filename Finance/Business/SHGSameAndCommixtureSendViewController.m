@@ -105,6 +105,7 @@
     [super viewWillAppear:YES];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardDidShow:) name:UIKeyboardDidShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textFieldDidChange:) name:UITextFieldTextDidChangeNotification object:nil];
+    self.navigationController.interactivePopGestureRecognizer.enabled = NO;
     
 }
 
@@ -112,6 +113,7 @@
 {
     [super viewWillDisappear:YES];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    self.navigationController.interactivePopGestureRecognizer.enabled = YES;
 }
 
 - (NSDictionary *)firstDic
@@ -446,7 +448,7 @@
     __weak typeof (self) weakSelf = self;
     SHGAlertView *alertView = [[SHGAlertView alloc] initWithTitle:@"提示" contentText:@"退出此次编辑?" leftButtonTitle:@"取消" rightButtonTitle:@"退出"];
     alertView.rightBlock = ^{
-        [weakSelf.navigationController performSelector:@selector(popToRootViewControllerAnimated:) withObject:@(YES) afterDelay:0.25f];
+        [weakSelf.navigationController popViewControllerAnimated:YES];
     };
     [alertView show];
 }

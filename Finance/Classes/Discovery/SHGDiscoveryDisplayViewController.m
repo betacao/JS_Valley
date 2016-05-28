@@ -257,7 +257,8 @@
 
     self.thirdLabel.sd_layout
     .bottomEqualToView(self.headerView)
-    .leftEqualToView(self.firstLabel);
+    .leftEqualToView(self.firstLabel)
+    .heightIs(self.thirdLabel.font.lineHeight);
     [self.thirdLabel setSingleLineAutoResizeWithMaxWidth:MarginFactor(200.0f)];
 
     self.spliteView.sd_layout

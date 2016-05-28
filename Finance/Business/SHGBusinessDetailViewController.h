@@ -9,8 +9,9 @@
 #import "BaseViewController.h"
 #import "SHGBusinessObject.h"
 #import "SHGBusinessCollectionListViewController.h"
-
+#import "SHGBusinessMineViewController.h"
 @interface SHGBusinessDetailViewController : BaseTableViewController
 @property (strong, nonatomic) SHGBusinessObject *object;
-@property (weak, nonatomic) SHGBusinessCollectionListViewController *controller;
+- (void)didCreateOrModifyBusiness;
+
 @end

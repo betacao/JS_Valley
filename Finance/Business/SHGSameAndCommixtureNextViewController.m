@@ -13,6 +13,7 @@
 #import "SHGBusinessManager.h"
 #import "SHGBusinessListViewController.h"
 #import "SHGBusinessSendSuccessViewController.h"
+#import "SHGBusinessDetailViewController.h"
 @interface SHGSameAndCommixtureNextViewController ()<UIScrollViewDelegate,UITextViewDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UIButton *sureButton;
@@ -214,7 +215,6 @@
             if (success) {
                 switch (((SHGSameAndCommixtureSendViewController *)weakSelf.superController).sendType) {
                     case SHGSameAndCommixtureSendTypeNew:{
-                        [[SHGGloble sharedGloble] recordUserAction:@"" type:@"business_create"];
                         NSString *anonymous = weakSelf.authorizeButton.isSelected ? @"1" : @"0";
                         
                         NSString *type = [businessDic objectForKey:@"type"];
@@ -229,7 +229,8 @@
                         NSDictionary *param = @{@"uid":UID,@"type": type, @"contact":contact, @"businessType":businessType, @"investAmount": investAmount, @"area": area, @"detail": weakSelf.marketExplainTextView.text,@"photo": weakSelf.imageName,@"anonymous": anonymous,@"title": title, @"version":[SHGGloble sharedGloble].currentVersion};
                         NSLog(@"%@",param);
                         NSLog(@"%@",weakSelf.marketExplainTextView.text);
-                        [SHGBusinessManager createNewBusiness:param success:^(BOOL success , NSString *bussinessId) {
+                        
+                        [SHGBusinessManager createNewBusiness:param success:^(BOOL success, NSString *bussinessId) {
                             if (success) {
                                 object.businessID = bussinessId;
                                 object.businessTitle = title;
@@ -238,6 +239,7 @@
                                 [weakSelf.navigationController pushViewController:viewController animated:YES];
                             }
                         }];
+                        
                     }  break;
                         
                     case SHGSameAndCommixtureSendTypeReSet:{
@@ -257,8 +259,18 @@
                         [SHGBusinessManager editBusiness:param success:^(BOOL success) {
                             if (success) {
                                 [[SHGBusinessListViewController sharedController] didCreateOrModifyBusiness:object];
-                                [weakSelf.navigationController performSelector:@selector(popToRootViewControllerAnimated:) withObject:@(YES) afterDelay:1.2f];
-                            }
+                                NSArray *teamViewControllerArray = self.navigationController.viewControllers;
+                                for(UIViewController *viewController in teamViewControllerArray){
+                                    if ([viewController isKindOfClass:[SHGBusinessDetailViewController class]]){
+                                        [(SHGBusinessDetailViewController *)viewController didCreateOrModifyBusiness];
+                                        [self.navigationController popToViewController:viewController animated:YES];
+                                    }
+                                    if ([viewController isKindOfClass:[SHGBusinessMineViewController class]]){
+                                        [(SHGBusinessMineViewController *)viewController didCreateOrModifyBusiness];
+                                        
+                                    }
+                                    
+                                }                            }
                         }];
                         
                         

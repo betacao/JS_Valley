@@ -72,6 +72,18 @@
         [Hud showMessageWithText:@"发布业务失败"];
     }];
 }
+//判断当日发布业务次数是否达到上限
+
++ (void)createBusinessNum:(void(^)(BOOL,NSString *allowCreate))block
+{
+    NSString *request = [rBaseAddressForHttp stringByAppendingString:@"/business/beforeCreateBusiness"];
+    [MOCHTTPRequestOperationManager postWithURL:request parameters:@{@"uid":UID} success:^(MOCHTTPResponse *response) {
+        NSString *allowCreate = [response.dataDictionary objectForKey:@"allowcreate"];
+        block(YES,allowCreate);
+    } failed:^(MOCHTTPResponse *response) {
+        
+    }];
+}
 
 + (void)editBusiness:(NSDictionary *)param success:(void (^)(BOOL ))block
 {

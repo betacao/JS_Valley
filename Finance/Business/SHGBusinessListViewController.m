@@ -513,13 +513,24 @@
 {
     [[SHGGloble sharedGloble] requestUserVerifyStatusCompletion:^(BOOL state) {
         if (state) {
-            SHGBusinessMainSendView *view = [SHGBusinessMainSendView sharedView];
-            view.alpha = 0.0f;
-            [self.view.window addSubview:view];
-
-            [UIView animateWithDuration:0.25f animations:^{
-                view.alpha = 1.0f;
+            [SHGBusinessManager createBusinessNum:^(BOOL success, NSString *allowCreate) {
+                if (success) {
+                    if ([allowCreate boolValue] == YES) {
+                        SHGBusinessMainSendView *view = [SHGBusinessMainSendView sharedView];
+                        view.alpha = 0.0f;
+                        [self.view.window addSubview:view];
+                        
+                        [UIView animateWithDuration:0.25f animations:^{
+                            view.alpha = 1.0f;
+                        }];
+                        
+                    } else{
+                        [Hud hideHud];
+                        [Hud showMessageWithText:@"每天业务发布不得超过5条哦!\n明天再来试试吧～"];
+                    }
+                }
             }];
+            
         } else{
             SHGAuthenticationViewController *controller = [[SHGAuthenticationViewController alloc] init];
             [[SHGBusinessListViewController sharedController].navigationController pushViewController:controller animated:YES];

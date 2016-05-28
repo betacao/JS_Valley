@@ -83,7 +83,13 @@ NSString *const kRouterEventChatHeadImageTapEventName = @"kRouterEventChatHeadIm
 
     self.nameLabel.text = messageModel.nickName;
     [self.nameLabel sizeToFit];
-    UIImage *placeholderImage = [UIImage imageNamed:@"default_head"];
+    UIImage *placeholderImage;
+    if ([messageModel.username isEqualToString:@"-2"]) {
+        placeholderImage = [UIImage imageNamed:@"team_head"];
+    } else{
+        placeholderImage = [UIImage imageNamed:@"default_head"];
+    }
+    
     [self.headImageView sd_setImageWithURL:_messageModel.headImageURL placeholderImage:placeholderImage];
 }
 

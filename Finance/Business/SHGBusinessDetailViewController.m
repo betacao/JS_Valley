@@ -21,7 +21,7 @@
 #import "SHGEquityFinanceSendViewController.h"
 #import "SHGEquityInvestSendViewController.h"
 #import "SHGSameAndCommixtureSendViewController.h"
-
+#import "SHGBusinessMineViewController.h"
 
 typedef NS_ENUM(NSInteger, SHGTapPhoneType)
 {
@@ -58,7 +58,6 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
 @property (weak, nonatomic) IBOutlet UIView *viewInput;
 @property (weak, nonatomic) IBOutlet UIButton *speakButton;
 
-@property (assign, nonatomic) BOOL isCollectionChange;
 
 @property (weak, nonatomic) SHGBusinessCommentObject *commentObject;
 @property (strong, nonatomic) NSString *copyedString;
@@ -81,7 +80,6 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
 {
     [super viewDidLoad];
     self.title = @"业务详情";
-    self.isCollectionChange = YES;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shareToFriendSuccess:) name:NOTIFI_ACTION_SHARE_TO_FRIENDSUCCESS object:nil];
 
     self.detailTable.delegate = self;
@@ -94,6 +92,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
     [self initData];
 
 }
+
 
 - (void)initData
 {
@@ -143,6 +142,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
     self.companyLabel.font = FontFactor(13.0f);
     self.positionLabel.font = FontFactor(13.0f);
     self.titleLabel.font = FontFactor(15.0f);
+    self.titleLabel.textColor = Color(@"3a3a3a");
 
     self.propertyLabel.isAttributedContent = YES;
 
@@ -261,7 +261,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
     self.phoneTextView.sd_layout
     .leftSpaceToView(self.viewHeader, MarginFactor(12.0f))
     .rightSpaceToView(self.viewHeader, MarginFactor(12.0f))
-    .topSpaceToView(self.propertyLabel, 5.0f);
+    .topSpaceToView(self.propertyLabel, 11.0f);
 
     self.secondHorizontalLine.sd_layout
     .leftSpaceToView(self.viewHeader, 0.0f)
@@ -298,7 +298,10 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
 
     self.detailTable.tableHeaderView = self.viewHeader;
 }
-
+- (void)didCreateOrModifyBusiness
+{
+    [self initData];
+}
 - (void)loadData
 {
     [self addEmptyViewIfNeeded];
@@ -333,7 +336,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
     __block NSString *value = [[SHGGloble sharedGloble] businessKeysForValues:self.responseObject.middleContent showEmptyKeys:NO];
     __block NSString *phoneNumber = @"";
     NSMutableParagraphStyle * paragraphStyle = [[NSMutableParagraphStyle alloc] init];
-    [paragraphStyle setLineSpacing:MarginFactor(5.0f)];
+    [paragraphStyle setLineSpacing:MarginFactor(13.0f)];
 
     NSArray *array = [value componentsSeparatedByString:@"\n"];
     [array enumerateObjectsUsingBlock:^(NSString *obj, NSUInteger idx, BOOL * _Nonnull stop) {
@@ -343,21 +346,21 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
         }
     }];
 
-    NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:value attributes:@{NSFontAttributeName:FontFactor(13.0f), NSForegroundColorAttributeName: Color(@"888888"), NSParagraphStyleAttributeName:paragraphStyle}];
+    NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:value attributes:@{NSFontAttributeName:FontFactor(13.0f), NSForegroundColorAttributeName: Color(@"606060"), NSParagraphStyleAttributeName:paragraphStyle}];
 
     self.propertyLabel.attributedText = string;
 
     if (!self.responseObject.userState) {
         NSString *number = @"认证可见";
         phoneNumber = @"联系方式：认证可见";
-        string = [[NSMutableAttributedString alloc] initWithString:phoneNumber attributes:@{NSFontAttributeName:FontFactor(13.0f), NSForegroundColorAttributeName: Color(@"888888")}];
-        [string addAttribute:NSFontAttributeName value:FontFactor(14.0f) range:[phoneNumber rangeOfString:number]];
+        string = [[NSMutableAttributedString alloc] initWithString:phoneNumber attributes:@{NSFontAttributeName:FontFactor(13.0f), NSForegroundColorAttributeName: Color(@"606060")}];
+        [string addAttribute:NSFontAttributeName value:FontFactor(16.0f) range:[phoneNumber rangeOfString:number]];
         [string addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"4277B2"] range: [phoneNumber rangeOfString:number]];
     } else {
         array = [phoneNumber componentsSeparatedByString:@"："];
         NSString *number = [array lastObject];
-        string = [[NSMutableAttributedString alloc] initWithString:phoneNumber attributes:@{NSFontAttributeName:FontFactor(13.0f), NSForegroundColorAttributeName: Color(@"888888")}];
-        [string addAttribute:NSFontAttributeName value:BoldFontFactor(14.0f) range:[phoneNumber rangeOfString:number]];
+        string = [[NSMutableAttributedString alloc] initWithString:phoneNumber attributes:@{NSFontAttributeName:FontFactor(13.0f), NSForegroundColorAttributeName: Color(@"606060")}];
+        [string addAttribute:NSFontAttributeName value:FontFactor(16.0f) range:[phoneNumber rangeOfString:number]];
         [string addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"4277B2"] range: [phoneNumber rangeOfString:number]];
     }
     self.phoneTextView.attributedText = string;
@@ -365,13 +368,15 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
     self.phoneTextView.sd_resetLayout
     .leftSpaceToView(self.viewHeader, MarginFactor(12.0f))
     .rightSpaceToView(self.viewHeader, MarginFactor(12.0f))
-    .topSpaceToView(self.propertyLabel, 5.0f)
+    .topSpaceToView(self.propertyLabel, 11.0f)
     .heightIs(size.height);
 
     //****************************//
 
+    NSMutableParagraphStyle * contentParagraphStyle = [[NSMutableParagraphStyle alloc] init];
+    [contentParagraphStyle setLineSpacing:MarginFactor(5.0f)];
     self.businessDetialLabel.text = @"业务描述：";
-    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:self.responseObject.detail attributes:@{NSFontAttributeName:FontFactor(15.0f), NSForegroundColorAttributeName: Color(@"888888"), NSParagraphStyleAttributeName:paragraphStyle}];
+    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:self.responseObject.detail attributes:@{NSFontAttributeName:FontFactor(15.0f), NSForegroundColorAttributeName: Color(@"606060"), NSParagraphStyleAttributeName:contentParagraphStyle}];
     self.contentTextView.attributedText = attributedString;
 
     size = [self.contentTextView sizeThatFits:CGSizeMake(SCREENWIDTH - 2 * MarginFactor(12.0f), CGFLOAT_MAX)];
@@ -779,10 +784,8 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
 {
     if (self.responseObject.isCollection) {
         [self.collectionButton setImage:[UIImage imageNamed:@"business_collection"] forState:UIControlStateNormal];
-        self.isCollectionChange = YES;
     } else{
         [self.collectionButton setImage:[UIImage imageNamed:@"business_unCollection"] forState:UIControlStateNormal];
-        self.isCollectionChange = NO;
     }
 }
 
@@ -902,10 +905,6 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
     if (self.popupView) {
         [self.popupView hideWithAnimated:NO];
     }
-    if (!self.isCollectionChange) {
-        [self.controller changeBusinessCollection];
-    }
-    
 }
 
 - (void)dealloc

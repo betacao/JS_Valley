@@ -98,15 +98,12 @@
 
     self.locationTitleLabel.font = FontFactor(16.0f);
     self.locationTitleLabel.textColor = Color(@"161616");
-    
     self.locationButton.titleLabel.font = FontFactor(15.0f);
     [self.locationButton setTitle:@"重新定位" forState:UIControlStateNormal];
     [self.locationButton setTitleColor:Color(@"2b7fdc") forState:UIControlStateNormal];
     [self.locationButton setImage:[UIImage imageNamed:@"location"] forState:UIControlStateNormal];
     self.locationButton.imageEdgeInsets = UIEdgeInsetsMake(0.0f, -7.0f, 0.0f, 0.0f);
     
-
-
     for (NSInteger j = 0 ; j < self.provinces.count; j ++) {
         SHGBusinessButtonContentView *contentView = [[SHGBusinessButtonContentView alloc] initWithMode:SHGBusinessButtonShowModeSingleChoice];
         contentView.backgroundColor = [UIColor whiteColor];
@@ -136,6 +133,8 @@
             if ([button.titleLabel.text isEqualToString:self.locationTitleLabel.text]) {
                 button.selected = YES;
                 self.locationCurrentButton = button;
+                self.currentButtonString = button.titleLabel.text;
+                [self.quiteButton setImage:[UIImage imageNamed:@"business_quiteSelected"] forState:UIControlStateNormal];
             }
             [button addTarget:self action:@selector(locationButtonClick:) forControlEvents:UIControlEventTouchUpInside];
             button.frame = CGRectMake(MarginFactor(12.0f) + i%3 * (kLocationButtonLeftMargin + kLocationButtonWidth), i/3 * (kLocationButtonTopMargin + kLocationButtonHeight) + MarginFactor(30.0f) + ceilf(titleLabel.font.lineHeight), kLocationButtonWidth, kLocationButtonHeight);
@@ -182,16 +181,20 @@
         self.currentButtonString = self.locationCurrentButton.titleLabel.text;
     }
     self.locationCurrentButton.selected = YES;
+    if (self.currentButtonString.length > 0) {
+        [self.quiteButton setImage:[UIImage imageNamed:@"business_quiteSelected"] forState:UIControlStateNormal];
+    }
 }
 
 - (void)quiteClick:(UIButton *)btn
 {
+   
     self.currentButtonString = self.locationCurrentButton.titleLabel.text;
     if (self.returnLocationBlock) {
         self.returnLocationBlock(self.currentButtonString);
     }
        [self removeFromSuperview];
-    
+   
 }
 
 - (UIScrollView *)scrollView

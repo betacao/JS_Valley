@@ -55,6 +55,11 @@
     [self addAutoLayout];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    self.navigationController.interactivePopGestureRecognizer.enabled = NO;
+}
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
@@ -65,6 +70,7 @@
 {
     [super viewWillDisappear:animated];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    self.navigationController.interactivePopGestureRecognizer.enabled = YES;
 }
 
 - (void)initView
@@ -278,6 +284,7 @@
         [self sendPhotos];
     }
 }
+
 
 - (void)sendPhotos
 {

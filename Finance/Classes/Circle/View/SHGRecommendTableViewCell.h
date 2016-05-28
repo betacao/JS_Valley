@@ -14,5 +14,5 @@
 @property (strong, nonatomic) NSArray *objectArray;
 @property (weak, nonatomic) UIViewController *controller;
 @property (assign ,nonatomic) id<CircleListDelegate> delegate;
-
+@property (strong, nonatomic) NSString *attentionState;
 @end

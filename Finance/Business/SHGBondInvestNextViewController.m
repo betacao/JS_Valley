@@ -14,6 +14,8 @@
 #import "SHGBusinessManager.h"
 #import "SHGBusinessListViewController.h"
 #import "SHGBusinessSendSuccessViewController.h"
+#import "SHGBusinessDetailViewController.h"
+#import "SHGBusinessMineViewController.h"
 @interface SHGBondInvestNextViewController ()<UITextFieldDelegate,UIScrollViewDelegate,UITextViewDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UIButton *sureButton;
@@ -433,7 +435,6 @@
                 switch (((SHGBondInvestSendViewController *)weakSelf.superController).sendType) {
                         
                     case SHGBusinessSendTypeNew:{
-                        [[SHGGloble sharedGloble] recordUserAction:@"" type:@"business_create"];
                         //增信选择字段
                         NSString *clarifyingRequire = @"";
                         
@@ -482,7 +483,6 @@
                                 [weakSelf.navigationController pushViewController:viewController animated:YES];
                             }
                         }];
-                        
                     }
                         break;
                         
@@ -527,8 +527,20 @@
                        
                         [SHGBusinessManager editBusiness:param success:^(BOOL success) {
                             if (success) {
-                                [[SHGBusinessListViewController sharedController] didCreateOrModifyBusiness:object];
-                                [weakSelf.navigationController performSelector:@selector(popToRootViewControllerAnimated:) withObject:@(YES) afterDelay:1.2f];
+                                [[SHGBusinessListViewController sharedController] didCreateOrModifyBusiness:self.object];
+                                NSArray *teamViewControllerArray = self.navigationController.viewControllers;
+                                for(UIViewController *viewController in teamViewControllerArray){
+                                    if ([viewController isKindOfClass:[SHGBusinessDetailViewController class]]){
+                                        [(SHGBusinessDetailViewController *)viewController didCreateOrModifyBusiness];
+                                        [self.navigationController popToViewController:viewController animated:YES];
+                                    }
+                                    if ([viewController isKindOfClass:[SHGBusinessMineViewController class]]){
+                                        [(SHGBusinessMineViewController *)viewController didCreateOrModifyBusiness];
+                                        
+                                    }
+                                    
+                                }
+
                             }
                         }];
                         

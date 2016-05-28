@@ -14,6 +14,7 @@
 #import "SHGBusinessButtonContentView.h"
 #import "SHGBusinessListViewController.h"
 #import "SHGBusinessSendSuccessViewController.h"
+#import "SHGBusinessDetailViewController.h"
 @interface SHGEquityFinanceNextViewController ()<UITextFieldDelegate,UIScrollViewDelegate,UITextViewDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UIButton *sureButton;
@@ -354,7 +355,6 @@
         [self uploadImage:^(BOOL success) {
             switch (((SHGEquityFinanceSendViewController *)weakSelf.superController).sendType) {
                 case SHGEquityFinaceSendTypeNew:{
-                    [[SHGGloble sharedGloble] recordUserAction:@"" type:@"business_create"];
                     NSString *vestYears = @"";
                     if (weakSelf.investTimeButtonView.selectedArray.count > 0) {
                          vestYears =[businessSelectDic objectForKey:[weakSelf.investTimeButtonView.selectedArray objectAtIndex:0]];
@@ -373,7 +373,7 @@
                     NSString *title = [businessDic objectForKey:@"title"];
                     SHGBusinessObject *object = [[SHGBusinessObject alloc]init];
                     object.type = type;
-
+                    
                     NSDictionary *param = @{@"uid":UID, @"type": type, @"contact":contact, @"financingStage":financingStage, @"investAmount": investAmount, @"area": area, @"industry": industry,@"totalshareRate": weakSelf.retributionTextField.text, @"shortestquitYears":vestYears, @"detail": weakSelf.marketExplainTextView.text,@"photo": weakSelf.imageName,@"anonymous": anonymous,@"title": title, @"version":[SHGGloble sharedGloble].currentVersion};
                     [SHGBusinessManager createNewBusiness:param success:^(BOOL success, NSString *bussinessId) {
                         if (success) {
@@ -384,6 +384,7 @@
                             [weakSelf.navigationController pushViewController:viewController animated:YES];
                         }
                     }];
+                    
                 }  break;
                     
                 case SHGEquityFinaceSendTypeReSet:{
@@ -411,7 +412,18 @@
                     [SHGBusinessManager editBusiness:param success:^(BOOL success) {
                         if (success) {
                             [[SHGBusinessListViewController sharedController] didCreateOrModifyBusiness:object];
-                            [weakSelf.navigationController performSelector:@selector(popToRootViewControllerAnimated:) withObject:@(YES) afterDelay:1.2f];
+                            NSArray *teamViewControllerArray = self.navigationController.viewControllers;
+                            for(UIViewController *viewController in teamViewControllerArray){
+                                if ([viewController isKindOfClass:[SHGBusinessDetailViewController class]]){
+                                    [(SHGBusinessDetailViewController *)viewController didCreateOrModifyBusiness];
+                                    [self.navigationController popToViewController:viewController animated:YES];
+                                }
+                                if ([viewController isKindOfClass:[SHGBusinessMineViewController class]]){
+                                    [(SHGBusinessMineViewController *)viewController didCreateOrModifyBusiness];
+                                    
+                                }
+                                
+                            }
                         }
                     }];
                 }

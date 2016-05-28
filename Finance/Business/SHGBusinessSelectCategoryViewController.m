@@ -159,11 +159,12 @@
     [self.scrollView.subviews enumerateObjectsUsingBlock:^(SHGBusinessButtonContentView *contentView, NSUInteger idx, BOOL * _Nonnull stop) {
         if ([contentView isKindOfClass:[SHGBusinessButtonContentView class]]) {
             NSString *key = ((SHGBusinessSecondObject *)[self.listArray objectAtIndex:idx]).key;
+            NSString *title = ((SHGBusinessSecondObject *)[self.listArray objectAtIndex:idx]).title;
             __block NSString *codeValue = @"";
 
             NSArray *array = [contentView selectedArray];
             if (array.count > 0) {
-                [selectCategoryArray addObject:key];
+                [selectCategoryArray addObject:title];
             }
 
             [array enumerateObjectsUsingBlock:^(SHGBusinessSecondsubObject *subObject, NSUInteger idx, BOOL * _Nonnull stop) {

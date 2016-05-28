@@ -39,6 +39,7 @@
     [self loadDataWithTarget:@"first"];
 }
 
+
 - (UITableViewCell *)emptyCell
 {
     if (!_emptyCell) {
@@ -66,7 +67,14 @@
     }
     return _noticeView;
 }
+- (void)didCreateOrModifyBusiness
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self loadDataWithTarget:@"first"];
+        
+    });
 
+}
 #pragma mark ------刷新用到的
 - (void)refreshHeader
 {

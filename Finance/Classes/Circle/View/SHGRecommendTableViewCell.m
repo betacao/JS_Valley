@@ -17,6 +17,7 @@
 @property (strong, nonatomic) UIView *thirdContentView;
 @property (strong, nonatomic) UIView *fourthContentView;
 @property (weak, nonatomic) IBOutlet UIView *splitView;
+@property (assign, nonatomic) NSInteger index;
 @property (strong, nonatomic) NSArray *viewArray;
 @end
 
@@ -293,10 +294,30 @@
 - (void)tapContentViewAction:(UITapGestureRecognizer *)sender
 {
     RecmdFriendObj *object = [self.objectArray objectAtIndex:[self.viewArray indexOfObject:sender.view]];
+    self.index = [self.viewArray indexOfObject:sender.view];
     SHGPersonalViewController *controller = [[SHGPersonalViewController alloc] init];
     controller.userId = object.uid;
+    controller.block = ^(NSString *state){
+        self.attentionState = state;
+    };
     [self.controller.navigationController pushViewController:controller animated:YES];
     
+}
+
+- (void)setAttentionState:(NSString *)attentionState
+{
+    _attentionState = attentionState;
+    UIView *view = [self.viewArray objectAtIndex:self.index];
+    UIButton *button = [view viewWithTag:106];
+    RecmdFriendObj * obj = [self.objectArray objectAtIndex:self.index];
+    obj.isFocus = [attentionState boolValue];
+    if (obj.isFocus) {
+        [button setImage:[UIImage imageNamed:@"newAddAttention"] forState:UIControlStateNormal];
+        
+    } else{
+        [button setImage:[UIImage imageNamed:@"newAttention"] forState:UIControlStateNormal];
+    }
+
 }
 
 - (void)clearCell

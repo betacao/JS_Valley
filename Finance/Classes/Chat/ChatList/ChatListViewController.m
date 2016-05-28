@@ -61,6 +61,7 @@ static NSString * const kCommonFNum			= @"commonnum";
 @property (nonatomic,strong) MLKMenuPopover1 *menuPopover1;
 @property (nonatomic,strong) NSArray *menuItems;
 @property (nonatomic,strong) GroupListViewController *groupVC;
+@property (nonatomic,strong) EMConversation * daNiuConversation;
 @end
 
 @implementation ChatListViewController
@@ -260,7 +261,6 @@ static NSString * const kCommonFNum			= @"commonnum";
 {
     NSMutableArray *ret = nil;
     NSArray *conversations = [[EaseMob sharedInstance].chatManager conversations];
-    
     NSArray* sorte = [conversations sortedArrayUsingComparator:^(EMConversation *obj1, EMConversation* obj2){
         EMMessage *message1 = [obj1 latestMessage];
         EMMessage *message2 = [obj2 latestMessage];
@@ -273,6 +273,13 @@ static NSString * const kCommonFNum			= @"commonnum";
 
     ret = [[NSMutableArray alloc] initWithArray:sorte];
 
+    for (NSInteger i = 0; i < ret.count; i ++) {
+        EMConversation * conversation = [ret objectAtIndex:i];
+        if ([conversation.chatter isEqualToString:@"-2"]) {
+            self.daNiuConversation = conversation;
+            [ret removeObjectAtIndex:i];
+        }
+    }
     return ret;
 }
 
@@ -371,6 +378,21 @@ static NSString * const kCommonFNum			= @"commonnum";
         model.detailMsg = @"";
         model.time = @"";
         cell.model = model;
+    } else if (indexPath.row == 2){
+        ChatModel *model = [[ChatModel alloc] init];
+            __weak typeof(self) weakSelf = self;
+            [[SHGGloble sharedGloble] refreshFriendListWithUid:@"-2" finishBlock:^(BasePeopleObject *object) {
+                [weakSelf.contactsSource addObject:object];
+            }];
+            cell.rightImage.hidden = YES;
+            model.placeholderImage = [UIImage imageNamed:@"team_head"];
+            model.imageURL = nil;
+            model.name = @"大牛助手";
+            model.detailMsg = @"";
+            model.time = @"";
+            model.unreadCount = [self unreadMessageCountByConversation:self.daNiuConversation];
+            cell.model = model;
+        
     } else{
         ChatModel *model = [[ChatModel alloc] init];
         cell.rightImage.hidden = YES;
@@ -378,6 +400,7 @@ static NSString * const kCommonFNum			= @"commonnum";
         for (BasePeopleObject *obj in self.contactsSource) {
             if ([obj.uid isEqualToString:conversation.chatter]){
                 model.name =  obj.name;
+                
             }
         }
         if (conversation.isGroup){
@@ -435,22 +458,56 @@ static NSString * const kCommonFNum			= @"commonnum";
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
-    return MarginFactor(55.0f);
+    CGFloat height;
+    if ([UID isEqualToString:@"-2"] && indexPath.row == 2) {
+        height = 0.0f;
+    } else{
+        height = MarginFactor(55.0f);
+    }
+    return height;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    if(indexPath.row==0){
+    if(indexPath.row == 0){
         [[SHGGloble sharedGloble] recordUserAction:@"" type:@"msg_groupApply"];
         ApplyViewController *vc=[ApplyViewController shareController];
         [self.navigationController pushViewController:vc animated:YES];
-    } else if(indexPath.row==1){
+    } else if(indexPath.row == 1){
         MessageViewController *mViewController=[[MessageViewController alloc] init];
         [self.navigationController pushViewController:mViewController animated:YES];
-    } else{
-        EMConversation *conversation = [self.dataSource objectAtIndex:indexPath.row];
+    }
+//    else if (indexPath.row == 2){
+//        ChatViewController *chatController;
+//        NSString *chatter = self.daNiuConversation.chatter;
+//        NSString *titleName = @"";
+//        for (BasePeopleObject *obj in self.contactsSource) {
+//            if ([obj.uid isEqualToString:self.daNiuConversation.chatter]) {
+//                titleName = obj.name;
+//            }
+//        }
+//
+//        chatController.title = titleName;
+//        chatController = [[ChatViewController alloc] initWithChatter:chatter isGroup:self.daNiuConversation.isGroup];
+//        [self.navigationController pushViewController:chatController animated:YES];
+//    }
+    else{
+        
+        EMConversation *conversation;
+        if (indexPath.row == 2) {
+            if (self.daNiuConversation) {
+                conversation = self.daNiuConversation;
+            } else{
+                [conversation setValue:@"-2" forKey:@"chatter"];
+                [conversation setValue:@"NO" forKey:@"isGroup"];
+        
+            }
+            
+        } else{
+            conversation = [self.dataSource objectAtIndex:indexPath.row];
+        }
+        
         ChatViewController *chatController;
         NSString *title = conversation.chatter;
         if (conversation.isGroup) {
@@ -575,9 +632,10 @@ static NSString * const kCommonFNum			= @"commonnum";
 {
     //    self.chatListType=ChatListView;
     [self.dataSource removeAllObjects];
-    for(unsigned int i=0;i<2;i++)
+    for(unsigned int i=0;i<3;i++)
     {
         [self.dataSource addObject:[NSString stringWithFormat:@"%d",i]];
+        
     }
     NSArray *dSource=[self loadDataSource];
     for(unsigned int i=0;i<dSource.count;i++)
@@ -716,7 +774,7 @@ static NSString * const kCommonFNum			= @"commonnum";
 - (void)refreshDataSource
 {
     [self.dataSource removeAllObjects];
-    for(NSInteger i = 0; i < 2; i++){
+    for(NSInteger i = 0; i < 3; i++){
         [self.dataSource addObject:[NSString stringWithFormat:@"%ld",(long)i]];
     }
     NSArray *dSource = [self loadDataSource];
