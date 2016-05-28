@@ -47,9 +47,9 @@
 
 - (void)initUI
 {
-    UIView *emptyView = [[UIView alloc] init];
-    UIBarButtonItem *emptyButton = [[UIBarButtonItem alloc] initWithCustomView:emptyView];
-    [self.navigationItem setLeftBarButtonItem:emptyButton];
+    UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:leftButton];
+    self.navigationItem.leftBarButtonItem = leftItem;
 }
 
 - (void)viewDidAppear:(BOOL)animated

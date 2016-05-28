@@ -806,7 +806,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
         } showAlert:YES leftBlock:^{
         } failString:@"认证后才能查看联系方式～"];
     } else {
-        NSRegularExpression *mobileExpression = [NSRegularExpression regularExpressionWithPattern: @"((\\+?86)|(\(\\+86\\)))?1\\d{10}$" options:0 error:nil];
+        NSRegularExpression *mobileExpression = [NSRegularExpression regularExpressionWithPattern: @"((\\+?86)|(\(\\+86\\)))?1\\d{10}\\s" options:0 error:nil];
         NSRegularExpression *phoneExpression = [NSRegularExpression regularExpressionWithPattern: @"(0[1,2]{1}\\d{1}-?\\d{8})|(0[3-9] {1}\\d{2}-?\\d{7,8})|(0[1,2]{1}\\d{1}-?\\d{8}-(\\d{1,4}))|(0[3-9]{1}\\d{2}-? \\d{7,8}-(\\d{1,4}))|0[7,8]\\d{2}-?\\d{8}|0\\d{2,3}-?\\d{7,8}" options:0 error:nil];
         [mobileExpression enumerateMatchesInString:string options:0 range:NSMakeRange(0, string.length) usingBlock:^(NSTextCheckingResult * _Nullable result, NSMatchingFlags flags, BOOL * _Nonnull stop) {
             [self.mobileArray addObject:[string substringWithRange:result.range]];

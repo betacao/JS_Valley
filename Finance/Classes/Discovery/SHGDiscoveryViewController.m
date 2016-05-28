@@ -13,13 +13,18 @@
 #import "SHGDiscoverySearchViewController.h"
 #import "SHGDiscoveryGroupingViewController.h"
 #import "SHGDiscoveryDisplayViewController.h"
+#import "SHGRecommendCollectionView.h"
 
 @interface SHGDiscoveryViewController ()<UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (strong, nonatomic) IBOutlet UITableViewCell *recommendCell;
 @property (strong, nonatomic) SHGDiscoveryMyContactCell *myContactCell;
 @property (strong, nonatomic) SHGDiscoveryContactExpandCell *contactExpandCell;
 @property (strong, nonatomic) EMSearchBar *searchBar;
+@property (strong, nonatomic) SHGRecommendCollectionView *recommendCollectionView;
+
+@property (strong, nonatomic) NSArray *recommendContactArray;
 @end
 
 @implementation SHGDiscoveryViewController
@@ -41,29 +46,20 @@
     [self addAutoLayout];
 }
 
-- (UILabel *)titleLabel
-{
-    if (!_titleLabel) {
-        _titleLabel = [[UILabel alloc] init];
-        _titleLabel.font = [UIFont systemFontOfSize:kNavBarTitleFontSize];
-        _titleLabel.textColor = TEXT_COLOR;
-        _titleLabel.text = @"发现";
-        [_titleLabel sizeToFit];
-    }
-    return _titleLabel;
-}
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-
+    self.recommendContactArray = nil;
     __weak typeof(self) weakSelf = self;
     [SHGDiscoveryManager loadDiscoveryData:@{@"uid":UID} block:^(NSArray *firstArray, NSArray *secondArray) {
         if (firstArray.count > 0) {
             weakSelf.myContactCell.effctiveArray = [NSArray arrayWithArray:firstArray];
         } else {
-
+            weakSelf.recommendContactArray = [NSArray arrayWithArray:secondArray];
+            weakSelf.recommendCollectionView.dataArray = weakSelf.recommendContactArray;
         }
+        [weakSelf.tableView reloadData];
     }];
 }
 
@@ -83,6 +79,19 @@
     .spaceToSuperView(UIEdgeInsetsMake(0.0f, 0.0f, kTabBarHeight, 0.0f));
 }
 
+- (UILabel *)titleLabel
+{
+    if (!_titleLabel) {
+        _titleLabel = [[UILabel alloc] init];
+        _titleLabel.font = [UIFont systemFontOfSize:kNavBarTitleFontSize];
+        _titleLabel.textColor = TEXT_COLOR;
+        _titleLabel.text = @"发现";
+        [_titleLabel sizeToFit];
+    }
+    return _titleLabel;
+}
+
+
 - (EMSearchBar *)searchBar
 {
     if (!_searchBar) {
@@ -93,17 +102,39 @@
     return _searchBar;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+- (SHGRecommendCollectionView *)recommendCollectionView
+{
+    if (!_recommendCollectionView) {
+        _recommendCollectionView = [[SHGRecommendCollectionView alloc] init];
+        _recommendCollectionView.scrollEnabled = NO;
+        [self.recommendCell.contentView addSubview:_recommendCollectionView];
+        _recommendCollectionView.sd_layout
+        .spaceToSuperView(UIEdgeInsetsZero);
+    }
+    return _recommendCollectionView;
+}
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return 2;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return 1;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     CGFloat height = 0.0f;
-    if (indexPath.row == 0) {
-        height = [tableView cellHeightForIndexPath:indexPath model:nil keyPath:nil cellClass:[SHGDiscoveryMyContactCell class] contentViewWidth:SCREENWIDTH];
-        return height;
+    if (indexPath.section == 0) {
+        if (self.recommendContactArray) {
+            height = self.recommendCollectionView.totalHeight;
+            return height;
+        } else {
+            height = [tableView cellHeightForIndexPath:indexPath model:nil keyPath:nil cellClass:[SHGDiscoveryMyContactCell class] contentViewWidth:SCREENWIDTH];
+            return height;
+        }
     } else {
         height = [tableView cellHeightForIndexPath:indexPath model:nil keyPath:nil cellClass:[SHGDiscoveryContactExpandCell class] contentViewWidth:SCREENWIDTH];
         return height;
@@ -112,8 +143,12 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row == 0) {
-        return self.myContactCell;
+    if (indexPath.section == 0) {
+        if (self.recommendContactArray) {
+            return self.recommendCell;
+        } else {
+            return self.myContactCell;
+        }
     } else {
         return self.contactExpandCell;
     }

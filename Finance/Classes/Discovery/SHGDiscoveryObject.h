@@ -69,3 +69,17 @@ typedef NS_ENUM(NSInteger, SHGDiscoveryGroupingType) {
 @property (assign, nonatomic) BOOL userStatus;
 
 @end
+
+@interface SHGDiscoveryRecommendObject : MTLModel<MTLJSONSerializing>
+
+@property (strong, nonatomic) NSString *phone;
+@property (strong, nonatomic) NSString *position;
+@property (strong, nonatomic) NSString *userID;
+@property (strong, nonatomic) NSString *title;
+@property (strong, nonatomic) NSString *picName;
+@property (strong, nonatomic) NSString *realName;
+@property (strong, nonatomic) NSString *companyName;
+@property (strong, nonatomic) NSString *isAttention;
+@property (strong, nonatomic) NSString *userStatus;
+
+@end

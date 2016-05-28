@@ -340,10 +340,6 @@
 		615010DD1AD61BD700827F82 /* ZYQAssetPicker.Bundle in Resources */ = {isa = PBXBuildFile; fileRef = 615010D91AD61BD700827F82 /* ZYQAssetPicker.Bundle */; };
 		615010DE1AD61BD700827F82 /* ZYQAssetPickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 615010DB1AD61BD700827F82 /* ZYQAssetPickerController.m */; };
 		615010E21AD61C1800827F82 /* CPTextViewPlaceholder.m in Sources */ = {isa = PBXBuildFile; fileRef = 615010E11AD61C1800827F82 /* CPTextViewPlaceholder.m */; };
-		615234781B0D8A6400011EAC /* DiscoverViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 615234761B0D8A6400011EAC /* DiscoverViewController.m */; };
-		615234791B0D8A6400011EAC /* DiscoverViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 615234771B0D8A6400011EAC /* DiscoverViewController.xib */; };
-		6152347D1B0D8C4200011EAC /* DiscoveryTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6152347B1B0D8C4200011EAC /* DiscoveryTableViewCell.m */; };
-		6152347E1B0D8C4200011EAC /* DiscoveryTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6152347C1B0D8C4200011EAC /* DiscoveryTableViewCell.xib */; };
 		615234871B0D92B200011EAC /* 一度@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 615234801B0D92B200011EAC /* 一度@2x.png */; };
 		615234881B0D92B200011EAC /* 二度@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 615234811B0D92B200011EAC /* 二度@2x.png */; };
 		615234891B0D92B200011EAC /* 合作@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 615234821B0D92B200011EAC /* 合作@2x.png */; };
@@ -707,10 +703,6 @@
 		985CBDC31C04042C002B3D9D /* SHGCollectCardClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 985CBDC21C04042C002B3D9D /* SHGCollectCardClass.m */; };
 		986C89F21CD1D63D001AF201 /* SHGBusinessSendSuccessViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 986C89F01CD1D63D001AF201 /* SHGBusinessSendSuccessViewController.m */; };
 		986C89F31CD1D63D001AF201 /* SHGBusinessSendSuccessViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 986C89F11CD1D63D001AF201 /* SHGBusinessSendSuccessViewController.xib */; };
-		986CF1971CCF395300064C52 /* SHGRecommendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 986CF1951CCF395300064C52 /* SHGRecommendViewController.m */; };
-		986CF1981CCF395300064C52 /* SHGRecommendViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 986CF1961CCF395300064C52 /* SHGRecommendViewController.xib */; };
-		986CF19C1CCF3BE800064C52 /* SHGRecommendCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 986CF19A1CCF3BE800064C52 /* SHGRecommendCollectionViewCell.m */; };
-		986CF19D1CCF3BE800064C52 /* SHGRecommendCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 986CF19B1CCF3BE800064C52 /* SHGRecommendCollectionViewCell.xib */; };
 		986FFF131CBC857200D9FE04 /* SHGBusinessLocationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 986FFF121CBC857200D9FE04 /* SHGBusinessLocationView.m */; };
 		987101331CBFB030002A8F7F /* SHGBusinessCollectionListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 987101311CBFB030002A8F7F /* SHGBusinessCollectionListViewController.m */; };
 		987101341CBFB030002A8F7F /* SHGBusinessCollectionListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 987101321CBFB030002A8F7F /* SHGBusinessCollectionListViewController.xib */; };
@@ -977,6 +969,12 @@
 		F9E2A4B01BE99A4C00ECB234 /* SHGSegmentController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9E2A4AF1BE99A4C00ECB234 /* SHGSegmentController.m */; };
 		F9E2A4B41BE99E1C00ECB234 /* SHGNewsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9E2A4B21BE99E1C00ECB234 /* SHGNewsViewController.m */; };
 		F9E2A4B51BE99E1C00ECB234 /* SHGNewsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9E2A4B31BE99E1C00ECB234 /* SHGNewsViewController.xib */; };
+		F9E7CAE71CF8290C0068EF4B /* SHGRecommendCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = F9E7CAE61CF8290C0068EF4B /* SHGRecommendCollectionView.m */; };
+		F9E7CAED1CF82AFF0068EF4B /* SHGRecommendCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F9E7CAEB1CF82AFF0068EF4B /* SHGRecommendCollectionViewCell.m */; };
+		F9E7CAEE1CF82AFF0068EF4B /* SHGRecommendCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9E7CAEC1CF82AFF0068EF4B /* SHGRecommendCollectionViewCell.xib */; };
+		F9E7CAF11CF833F00068EF4B /* SHGRecommendManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F9E7CAF01CF833F00068EF4B /* SHGRecommendManager.m */; };
+		F9E7CAF51CF83C740068EF4B /* SHGRecommendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9E7CAF21CF83C740068EF4B /* SHGRecommendViewController.m */; };
+		F9E7CAF61CF83C740068EF4B /* SHGRecommendViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9E7CAF41CF83C740068EF4B /* SHGRecommendViewController.xib */; };
 		F9EBB7D01BB3F4470023E84E /* China_City.plist in Resources */ = {isa = PBXBuildFile; fileRef = F9EBB7CF1BB3F4470023E84E /* China_City.plist */; };
 		F9EBB7D41BB3F4A00023E84E /* SHGProvincesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9EBB7D21BB3F4A00023E84E /* SHGProvincesViewController.m */; };
 		F9EBB7D51BB3F4A00023E84E /* SHGProvincesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9EBB7D31BB3F4A00023E84E /* SHGProvincesViewController.xib */; };
@@ -1439,12 +1437,6 @@
 		615010E51AD61DB200827F82 /* pathConstant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pathConstant.h; sourceTree = "<group>"; };
 		615010E61AD61DFD00827F82 /* ipConstant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ipConstant.h; sourceTree = "<group>"; };
 		615010E71AD61F5A00827F82 /* notificationConstant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = notificationConstant.h; sourceTree = "<group>"; };
-		615234751B0D8A6400011EAC /* DiscoverViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiscoverViewController.h; sourceTree = "<group>"; };
-		615234761B0D8A6400011EAC /* DiscoverViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DiscoverViewController.m; sourceTree = "<group>"; };
-		615234771B0D8A6400011EAC /* DiscoverViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DiscoverViewController.xib; sourceTree = "<group>"; };
-		6152347A1B0D8C4200011EAC /* DiscoveryTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiscoveryTableViewCell.h; sourceTree = "<group>"; };
-		6152347B1B0D8C4200011EAC /* DiscoveryTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DiscoveryTableViewCell.m; sourceTree = "<group>"; };
-		6152347C1B0D8C4200011EAC /* DiscoveryTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DiscoveryTableViewCell.xib; sourceTree = "<group>"; };
 		615234801B0D92B200011EAC /* 一度@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "一度@2x.png"; sourceTree = "<group>"; };
 		615234811B0D92B200011EAC /* 二度@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "二度@2x.png"; sourceTree = "<group>"; };
 		615234821B0D92B200011EAC /* 合作@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "合作@2x.png"; sourceTree = "<group>"; };
@@ -1990,12 +1982,6 @@
 		986C89EF1CD1D63D001AF201 /* SHGBusinessSendSuccessViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SHGBusinessSendSuccessViewController.h; path = ../Classes/Circle/Controllers/SHGBusinessSendSuccessViewController.h; sourceTree = "<group>"; };
 		986C89F01CD1D63D001AF201 /* SHGBusinessSendSuccessViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SHGBusinessSendSuccessViewController.m; path = ../Classes/Circle/Controllers/SHGBusinessSendSuccessViewController.m; sourceTree = "<group>"; };
 		986C89F11CD1D63D001AF201 /* SHGBusinessSendSuccessViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SHGBusinessSendSuccessViewController.xib; path = ../Classes/Circle/Controllers/SHGBusinessSendSuccessViewController.xib; sourceTree = "<group>"; };
-		986CF1941CCF395300064C52 /* SHGRecommendViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGRecommendViewController.h; sourceTree = "<group>"; };
-		986CF1951CCF395300064C52 /* SHGRecommendViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGRecommendViewController.m; sourceTree = "<group>"; };
-		986CF1961CCF395300064C52 /* SHGRecommendViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGRecommendViewController.xib; sourceTree = "<group>"; };
-		986CF1991CCF3BE800064C52 /* SHGRecommendCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGRecommendCollectionViewCell.h; sourceTree = "<group>"; };
-		986CF19A1CCF3BE800064C52 /* SHGRecommendCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGRecommendCollectionViewCell.m; sourceTree = "<group>"; };
-		986CF19B1CCF3BE800064C52 /* SHGRecommendCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGRecommendCollectionViewCell.xib; sourceTree = "<group>"; };
 		986FFF111CBC857200D9FE04 /* SHGBusinessLocationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGBusinessLocationView.h; sourceTree = "<group>"; };
 		986FFF121CBC857200D9FE04 /* SHGBusinessLocationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGBusinessLocationView.m; sourceTree = "<group>"; };
 		987101301CBFB030002A8F7F /* SHGBusinessCollectionListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGBusinessCollectionListViewController.h; sourceTree = "<group>"; };
@@ -2387,6 +2373,16 @@
 		F9E2A4B11BE99E1C00ECB234 /* SHGNewsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGNewsViewController.h; sourceTree = "<group>"; };
 		F9E2A4B21BE99E1C00ECB234 /* SHGNewsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGNewsViewController.m; sourceTree = "<group>"; };
 		F9E2A4B31BE99E1C00ECB234 /* SHGNewsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGNewsViewController.xib; sourceTree = "<group>"; };
+		F9E7CAE51CF8290C0068EF4B /* SHGRecommendCollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGRecommendCollectionView.h; sourceTree = "<group>"; };
+		F9E7CAE61CF8290C0068EF4B /* SHGRecommendCollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGRecommendCollectionView.m; sourceTree = "<group>"; };
+		F9E7CAEA1CF82AFF0068EF4B /* SHGRecommendCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGRecommendCollectionViewCell.h; sourceTree = "<group>"; };
+		F9E7CAEB1CF82AFF0068EF4B /* SHGRecommendCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGRecommendCollectionViewCell.m; sourceTree = "<group>"; };
+		F9E7CAEC1CF82AFF0068EF4B /* SHGRecommendCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGRecommendCollectionViewCell.xib; sourceTree = "<group>"; };
+		F9E7CAEF1CF833F00068EF4B /* SHGRecommendManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGRecommendManager.h; sourceTree = "<group>"; };
+		F9E7CAF01CF833F00068EF4B /* SHGRecommendManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGRecommendManager.m; sourceTree = "<group>"; };
+		F9E7CAF21CF83C740068EF4B /* SHGRecommendViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGRecommendViewController.m; sourceTree = "<group>"; };
+		F9E7CAF31CF83C740068EF4B /* SHGRecommendViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGRecommendViewController.h; sourceTree = "<group>"; };
+		F9E7CAF41CF83C740068EF4B /* SHGRecommendViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGRecommendViewController.xib; sourceTree = "<group>"; };
 		F9EBB7CF1BB3F4470023E84E /* China_City.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = China_City.plist; sourceTree = "<group>"; };
 		F9EBB7D11BB3F4A00023E84E /* SHGProvincesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGProvincesViewController.h; sourceTree = "<group>"; };
 		F9EBB7D21BB3F4A00023E84E /* SHGProvincesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGProvincesViewController.m; sourceTree = "<group>"; };
@@ -2952,9 +2948,6 @@
 				61425B3B1AFA7CDD00758BCB /* CinfigView.h */,
 				61425B3C1AFA7CDD00758BCB /* CinfigView.m */,
 				61425B3E1AFA7CFF00758BCB /* ConfigView.xib */,
-				6152347A1B0D8C4200011EAC /* DiscoveryTableViewCell.h */,
-				6152347B1B0D8C4200011EAC /* DiscoveryTableViewCell.m */,
-				6152347C1B0D8C4200011EAC /* DiscoveryTableViewCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -2977,9 +2970,6 @@
 				61909FCF1AF90D1F0023935F /* ProdSubViewController.h */,
 				61909FD01AF90D1F0023935F /* ProdSubViewController.m */,
 				61909FD11AF90D1F0023935F /* ProdSubViewController.xib */,
-				615234751B0D8A6400011EAC /* DiscoverViewController.h */,
-				615234761B0D8A6400011EAC /* DiscoverViewController.m */,
-				615234771B0D8A6400011EAC /* DiscoverViewController.xib */,
 				F995039D1C4675700050562F /* SHGConnectionsViewController.h */,
 				F995039E1C4675700050562F /* SHGConnectionsViewController.m */,
 				F995039F1C4675700050562F /* SHGConnectionsViewController.xib */,
@@ -3215,12 +3205,6 @@
 				985CBDB71C03FD0B002B3D9D /* SHGCardTableViewCell.h */,
 				985CBDB81C03FD0B002B3D9D /* SHGCardTableViewCell.m */,
 				985CBDB91C03FD0B002B3D9D /* SHGCardTableViewCell.xib */,
-				986CF1941CCF395300064C52 /* SHGRecommendViewController.h */,
-				986CF1951CCF395300064C52 /* SHGRecommendViewController.m */,
-				986CF1961CCF395300064C52 /* SHGRecommendViewController.xib */,
-				986CF1991CCF3BE800064C52 /* SHGRecommendCollectionViewCell.h */,
-				986CF19A1CCF3BE800064C52 /* SHGRecommendCollectionViewCell.m */,
-				986CF19B1CCF3BE800064C52 /* SHGRecommendCollectionViewCell.xib */,
 				9804FC711CCF554F00C2BB25 /* SHGRecommendHeaderView.h */,
 				9804FC721CCF554F00C2BB25 /* SHGRecommendHeaderView.m */,
 			);
@@ -3914,6 +3898,7 @@
 		61D6E73D1AD50FCA0016C13A /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				F9E7CAE11CF827FF0068EF4B /* Recommend */,
 				F9A2EF841CF3EC970054AE1C /* Discovery */,
 				F924C2B01CACBFCF0070286F /* Business */,
 				F9F349AE1C19216D0090F111 /* Market */,
@@ -5102,6 +5087,23 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		F9E7CAE11CF827FF0068EF4B /* Recommend */ = {
+			isa = PBXGroup;
+			children = (
+				F9E7CAEF1CF833F00068EF4B /* SHGRecommendManager.h */,
+				F9E7CAF01CF833F00068EF4B /* SHGRecommendManager.m */,
+				F9E7CAF31CF83C740068EF4B /* SHGRecommendViewController.h */,
+				F9E7CAF21CF83C740068EF4B /* SHGRecommendViewController.m */,
+				F9E7CAF41CF83C740068EF4B /* SHGRecommendViewController.xib */,
+				F9E7CAE51CF8290C0068EF4B /* SHGRecommendCollectionView.h */,
+				F9E7CAE61CF8290C0068EF4B /* SHGRecommendCollectionView.m */,
+				F9E7CAEA1CF82AFF0068EF4B /* SHGRecommendCollectionViewCell.h */,
+				F9E7CAEB1CF82AFF0068EF4B /* SHGRecommendCollectionViewCell.m */,
+				F9E7CAEC1CF82AFF0068EF4B /* SHGRecommendCollectionViewCell.xib */,
+			);
+			path = Recommend;
+			sourceTree = "<group>";
+		};
 		F9EDD5EA1BABFBCF00506C0C /* SDPhotoBrowser */ = {
 			isa = PBXGroup;
 			children = (
@@ -5265,7 +5267,6 @@
 				61E83D301AF7C78E00703651 /* 搜索好友输入框@2x.png in Resources */,
 				40302B011AEF213400F22EB6 /* BasePeopleTableViewCell.xib in Resources */,
 				F951C6161CF56F4D007FA198 /* SHGDiscoverySearchViewController.xib in Resources */,
-				6152347E1B0D8C4200011EAC /* DiscoveryTableViewCell.xib in Resources */,
 				408D8B0C1AF8618C0055810C /* VoiceSearchFeedback012@2x.png in Resources */,
 				408D8B681AF8618C0055810C /* chat_receiver_audio_playing000.png in Resources */,
 				61E83D491AF7C78E00703651 /* 热门图标@3x.png in Resources */,
@@ -5276,7 +5277,6 @@
 				61E83D0F1AF7C78E00703651 /* 二维码@2x.png in Resources */,
 				61D6E7DD1AD50FCB0016C13A /* EaseMob.bundle in Resources */,
 				986C89F31CD1D63D001AF201 /* SHGBusinessSendSuccessViewController.xib in Resources */,
-				986CF19D1CCF3BE800064C52 /* SHGRecommendCollectionViewCell.xib in Resources */,
 				61E83D131AF7C78E00703651 /* 取消-默认@2x.png in Resources */,
 				F936DD561C3A6C9700584F53 /* SHGGropingViewController.xib in Resources */,
 				61E83D581AF7C78E00703651 /* 发送按钮-默认@3x.png in Resources */,
@@ -5544,7 +5544,6 @@
 				610BC8221AFBC76B001F07EC /* default_image.png in Resources */,
 				61E83D2E1AF7C78E00703651 /* 接受按钮-按下@2x.png in Resources */,
 				61616FEA1B02F29100E5A837 /* 已关注按钮@3x.png in Resources */,
-				615234791B0D8A6400011EAC /* DiscoverViewController.xib in Resources */,
 				61E83D071AF7C78E00703651 /* 按钮@2x.png in Resources */,
 				40302B2D1AF07AA500F22EB6 /* MyMoneyViewController.xib in Resources */,
 				61E83CD41AF7C78E00703651 /* 圈子图标@2x.png in Resources */,
@@ -5810,6 +5809,7 @@
 				F93D55D21CA0EA24008845C5 /* MessageTableViewCell.xib in Resources */,
 				61E83CFE1AF7C78E00703651 /* 产品-默认@2x.png in Resources */,
 				F9E2A4B51BE99E1C00ECB234 /* SHGNewsViewController.xib in Resources */,
+				F9E7CAEE1CF82AFF0068EF4B /* SHGRecommendCollectionViewCell.xib in Resources */,
 				61E83D231AF7C78E00703651 /* 选择行业下拉框@2x.png in Resources */,
 				B080FEAC1B81E30100426579 /* emoji_touch.png in Resources */,
 				980D0D5A1C99026E00351F8C /* SHGCardCollectionViewController.xib in Resources */,
@@ -5849,6 +5849,7 @@
 				408D8B421AF8618C0055810C /* chatBar_keyboard@2x.png in Resources */,
 				6190274B1B2359C600D9EEA2 /* popTableViewCell.xib in Resources */,
 				61E83D1D1AF7C78E00703651 /* 清除缓存@2x.png in Resources */,
+				F9E7CAF61CF83C740068EF4B /* SHGRecommendViewController.xib in Resources */,
 				61E83CF81AF7C78E00703651 /* 评论@2x.png in Resources */,
 				B080FE8A1B81E30100426579 /* btn_publish_face_b@2x.png in Resources */,
 				56F2D5181B5A6860008E2855 /* 留言.png in Resources */,
@@ -5857,7 +5858,6 @@
 				408D8B541AF8618C0055810C /* chatBar_colorMore_cameraSelected@2x.png in Resources */,
 				61E83D161AF7C78E00703651 /* 对话设置@2x.png in Resources */,
 				53F6CFB01B06C404007716E5 /* load_5s.png in Resources */,
-				986CF1981CCF395300064C52 /* SHGRecommendViewController.xib in Resources */,
 				614AD19E1AD75EA000DDF43E /* regist_btn_select@2x.png in Resources */,
 				61E83D421AF7C78E00703651 /* 搜索图标@3x.png in Resources */,
 				61E83CEA1AF7C78E00703651 /* 不能发起对话按钮@2x.png in Resources */,
@@ -6012,7 +6012,6 @@
 				6187D2D31AF1C693008E1D21 /* ChatListCell.m in Sources */,
 				6187D2D71AF1C693008E1D21 /* ChatViewController.m in Sources */,
 				F9F349B11C1921900090F111 /* SHGMarketSegmentViewController.m in Sources */,
-				986CF1971CCF395300064C52 /* SHGRecommendViewController.m in Sources */,
 				982EB8041CB3AD24003EEBE6 /* SHGSameAndCommixtureSendViewController.m in Sources */,
 				6187D2DE1AF1C693008E1D21 /* DXRecordView.m in Sources */,
 				61425B3D1AFA7CDD00758BCB /* CinfigView.m in Sources */,
@@ -6084,6 +6083,7 @@
 				982EB8091CB3AD47003EEBE6 /* SHGSameAndCommixtureNextViewController.m in Sources */,
 				F93FCBCB1C856D5A004E356E /* UIImage+Rotation.m in Sources */,
 				98FA41C31BF5E1B40058A4EF /* SHGActionDetailViewController.m in Sources */,
+				F9E7CAE71CF8290C0068EF4B /* SHGRecommendCollectionView.m in Sources */,
 				F9DF86121C34FCE900D42DBE /* SHGMarketCommentTableViewCell.m in Sources */,
 				987184A31C4E51ED006F2946 /* SHGMomentCityViewController.m in Sources */,
 				F93FCBC11C856D5A004E356E /* DDTapGestureRecognizer.m in Sources */,
@@ -6134,7 +6134,6 @@
 				61046C761AE0FF440065F59D /* RecommendView.m in Sources */,
 				61D62BEE1ADD1C4D002DD395 /* MOCHTTPRequestOperationManager.m in Sources */,
 				40302B081AEF573200F22EB6 /* MyAddressViewController.m in Sources */,
-				986CF19C1CCF3BE800064C52 /* SHGRecommendCollectionViewCell.m in Sources */,
 				4088DDBC1AF102FE00393855 /* SettingQuestionViewController.m in Sources */,
 				6187D2EA1AF1C693008E1D21 /* MessageReadManager.m in Sources */,
 				F9203D161CF449E000F55373 /* SHGDiscoveryObject.m in Sources */,
@@ -6143,7 +6142,6 @@
 				569C6D401B7CB5B300AD59C3 /* SetPassWordViewController.m in Sources */,
 				6187D2CB1AF1C693008E1D21 /* ContactView.m in Sources */,
 				613CAC511AFFFFDE00EA8C23 /* CircleLinkViewController.m in Sources */,
-				615234781B0D8A6400011EAC /* DiscoverViewController.m in Sources */,
 				5331DF311AFC21BF00E035B8 /* MessageTableViewCell.m in Sources */,
 				F9C41F901C9FBB0400962A49 /* SHGProgressHUD.m in Sources */,
 				F93FCBC51C856D5A004E356E /* NSString+Check.m in Sources */,
@@ -6163,6 +6161,7 @@
 				6190274A1B2359C600D9EEA2 /* popTableViewCell.m in Sources */,
 				F9F349BC1C1952B00090F111 /* SHGMarketListViewController.m in Sources */,
 				4088DDB91AF102FE00393855 /* SettingQuestionDetailViewController.m in Sources */,
+				F9E7CAF51CF83C740068EF4B /* SHGRecommendViewController.m in Sources */,
 				F9EDD5FA1BABFBCF00506C0C /* SDWaitingView.m in Sources */,
 				B04D032E1B43F88A009BE7C2 /* ZYExceptionHandler.m in Sources */,
 				F908C1511BFECD2F00CAE018 /* SHGActionCommentTableViewCell.m in Sources */,
@@ -6188,7 +6187,6 @@
 				F9A227BE1BF5ABC60054F8D7 /* SHGActionListViewController.m in Sources */,
 				9896F11F1C4F185C00E10A53 /* SHGMomentCityTableViewCell.m in Sources */,
 				980D0D591C99026E00351F8C /* SHGCardCollectionViewController.m in Sources */,
-				6152347D1B0D8C4200011EAC /* DiscoveryTableViewCell.m in Sources */,
 				F91F43DF1CDC2D1C005604A0 /* SHGAlertView.m in Sources */,
 				61425B421AFA7ED600758BCB /* ConfigObj.m in Sources */,
 				6149CFE91B2605FC006E45FE /* TwainContactInfo.m in Sources */,
@@ -6200,6 +6198,7 @@
 				6187D2E01AF1C693008E1D21 /* EMChatBaseBubbleView.m in Sources */,
 				56F2D50A1B5A45E6008E2855 /* UncaughtExceptionHandler.m in Sources */,
 				F9A6C68C1CBE5FAB00AFEE49 /* SHGBusinessNoticeTableViewCell.m in Sources */,
+				F9E7CAED1CF82AFF0068EF4B /* SHGRecommendCollectionViewCell.m in Sources */,
 				F906849C1CBF64FC0003B123 /* SHGBusinessCommentTableViewCell.m in Sources */,
 				6187D2DF1AF1C693008E1D21 /* EMChatAudioBubbleView.m in Sources */,
 				6145FF111AE49D4A0074AB49 /* BRCommentView.m in Sources */,
@@ -6218,6 +6217,7 @@
 				F93891BE1CA11B2900B182F7 /* UINavigationItem+Custom.m in Sources */,
 				6187D2F51AF1C693008E1D21 /* RealtimeSearchUtil.m in Sources */,
 				F9EBB7D41BB3F4A00023E84E /* SHGProvincesViewController.m in Sources */,
+				F9E7CAF11CF833F00068EF4B /* SHGRecommendManager.m in Sources */,
 				F9F349D01C1975910090F111 /* SHGMarketManager.m in Sources */,
 				614A59781AD3AEA1005DAB04 /* main.m in Sources */,
 				F9AA69CF1C61E0A800C920B5 /* SHGMarketSearchViewController.m in Sources */,

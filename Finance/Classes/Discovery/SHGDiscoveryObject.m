@@ -115,3 +115,16 @@
 }
 
 @end
+
+@implementation SHGDiscoveryRecommendObject
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey
+{
+    return @{@"phone":@"phone", @"realName":@"realname", @"userID":@"userid", @"position":@"position", @"title":@"title", @"picName":@"picname", @"companyName":@"companyname", @"isAttention":@"isattention", @"userStatus":@"userstatus"};
+}
+
+@end
+
+
+
+
