@@ -21,75 +21,75 @@
 @class linkOBj;
 
 @interface CircleListObj : MTLModel<MTLJSONSerializing>
-@property (nonatomic,strong) NSString *businesstotal;
-@property (nonatomic,strong) NSString *cmmtnum;
-@property (nonatomic,strong) NSMutableArray *comments;
-@property (nonatomic,strong) NSString *company;
-@property (nonatomic,strong) NSString *detail;
-@property (nonatomic,strong) NSString *isattention;
-@property (nonatomic,strong) NSString *nickname;
-@property (nonatomic,strong) NSArray  *photos;
-@property (nonatomic,strong) NSString *potname;
-@property (nonatomic,strong) NSString *praisenum;
-@property (nonatomic,strong) NSMutableArray *heads;
-@property (nonatomic,strong) NSString *iscollection;
-@property (nonatomic,strong) NSString *publishdate;
-@property (nonatomic,strong) NSString *rid;
-@property (nonatomic,strong) NSString *sharenum;
-@property (nonatomic,strong) NSString *status;
-@property (nonatomic,strong) NSString *title;
-@property (nonatomic,strong) linkOBj *linkObj;
-@property (nonatomic,strong) NSString *postType;
-@property (nonatomic,strong) NSString *userid;
-@property (nonatomic,strong) NSString *type;
-@property (nonatomic,assign) NSInteger cellHeight;
-@property (nonatomic,assign) BOOL isPull;
-@property (nonatomic,strong) NSArray *photoArr;
-@property (nonatomic,strong) NSString *ispraise;
-@property (nonatomic,strong) NSString *friendship; //好友关系
-@property (nonatomic,strong) NSString *userstatus;  //认证状态
-@property (nonatomic,strong) NSString *currcity; //城市
-@property (nonatomic,strong) NSString *feedhtml; //feed流链接
-@property (nonatomic,strong) NSString *displayposition;//广告所在的位置
-@property (nonatomic,strong) NSString *pcurl;
-@property (nonatomic,strong) NSString *shareTitle;
+@property (strong, nonatomic) NSString *businesstotal;
+@property (strong, nonatomic) NSString *cmmtnum;
+@property (strong, nonatomic) NSMutableArray *comments;
+@property (strong, nonatomic) NSString *company;
+@property (strong, nonatomic) NSString *detail;
+@property (assign, nonatomic) BOOL isAttention;
+@property (strong, nonatomic) NSString *nickname;
+@property (strong, nonatomic) NSArray  *photos;
+@property (strong, nonatomic) NSString *potname;
+@property (strong, nonatomic) NSString *praisenum;
+@property (strong, nonatomic) NSMutableArray *heads;
+@property (strong, nonatomic) NSString *iscollection;
+@property (strong, nonatomic) NSString *publishdate;
+@property (strong, nonatomic) NSString *rid;
+@property (strong, nonatomic) NSString *sharenum;
+@property (strong, nonatomic) NSString *status;
+@property (strong, nonatomic) NSString *title;
+@property (strong, nonatomic) linkOBj *linkObj;
+@property (strong, nonatomic) NSString *postType;
+@property (strong, nonatomic) NSString *userid;
+@property (strong, nonatomic) NSString *type;
+@property (assign, nonatomic) NSInteger cellHeight;
+@property (assign, nonatomic) BOOL isPull;
+@property (strong, nonatomic) NSArray *photoArr;
+@property (strong, nonatomic) NSString *ispraise;
+@property (strong, nonatomic) NSString *friendship; //好友关系
+@property (strong, nonatomic) NSString *userstatus;  //认证状态
+@property (strong, nonatomic) NSString *currcity; //城市
+@property (strong, nonatomic) NSString *feedhtml; //feed流链接
+@property (strong, nonatomic) NSString *displayposition;//广告所在的位置
+@property (strong, nonatomic) NSString *pcurl;
+@property (strong, nonatomic) NSString *shareTitle;
 
-@property(nonatomic, strong)  NSString *companyname;
-@property(nonatomic, strong)  NSString *phone;
-@property(nonatomic, strong)  NSString *picname;
-@property(nonatomic, strong)  NSString *position;
-@property(nonatomic, strong)  NSString *realname;
+@property(strong, nonatomic)  NSString *companyname;
+@property(strong, nonatomic)  NSString *phone;
+@property(strong, nonatomic)  NSString *picname;
+@property(strong, nonatomic)  NSString *position;
+@property(strong, nonatomic)  NSString *realname;
 
 
 @end
 
 @interface commentOBj : MTLModel<MTLJSONSerializing>
-@property(nonatomic, strong)  NSString *cdetail ;
-@property(nonatomic, strong)  NSString *cid;
-@property(nonatomic, strong)  NSString *cnickname;
-@property(nonatomic, strong)  NSString *rid ;
-@property(nonatomic, strong)  NSString *rnickname;
+@property(strong, nonatomic)  NSString *cdetail ;
+@property(strong, nonatomic)  NSString *cid;
+@property(strong, nonatomic)  NSString *cnickname;
+@property(strong, nonatomic)  NSString *rid ;
+@property(strong, nonatomic)  NSString *rnickname;
 
 
 @end
 
 @interface photoObj : MTLModel<MTLJSONSerializing>
-@property(nonatomic, strong)  NSString *photos ;
+@property(strong, nonatomic)  NSString *photos ;
 
 @end
 
 @interface praiseOBj: MTLModel<MTLJSONSerializing>
-@property(nonatomic, strong)  NSString *pnickname ;
-@property(nonatomic, strong)  NSString *puserid;
-@property(nonatomic, strong)  NSString *ppotname;
+@property(strong, nonatomic)  NSString *pnickname ;
+@property(strong, nonatomic)  NSString *puserid;
+@property(strong, nonatomic)  NSString *ppotname;
 
 @end
 
 @interface linkOBj : MTLModel<MTLJSONSerializing>
-@property(nonatomic, strong)  NSString *title ;
-@property(nonatomic, strong)  NSString *desc;
-@property(nonatomic, strong)  NSString *link;
-@property (nonatomic, strong) NSString *thumbnail;
+@property(strong, nonatomic)  NSString *title ;
+@property(strong, nonatomic)  NSString *desc;
+@property(strong, nonatomic)  NSString *link;
+@property(strong, nonatomic) NSString *thumbnail;
 
 @end
 

@@ -43,8 +43,6 @@
     self.view.backgroundColor = [UIColor whiteColor];
     self.tableView.tableHeaderView = self.searchBar;
     self.tableView.tableFooterView = [[UIView alloc] init];
- 
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(attentionChanged:) name:NOTIFI_COLLECT_COLLECT_CLIC object:nil];
 	[self searchController];
 }
 
@@ -59,18 +57,7 @@
     }
 }
 
-- (void)detailAttentionWithRid:(NSString *)rid attention:(NSString *)atten
-{
-    [self requestData];
-}
-
--(void)attentionChanged:(NSNotification *)noti
-{
-    CircleListObj *obj = noti.object;
-    [self detailAttentionWithRid:obj.userid attention:obj.isattention];
-}
-
--(void)refreshHeader
+- (void)refreshHeader
 {
     if (self.dataSource.count > 0){
         [Hud showWait];
@@ -371,84 +358,4 @@
 	[searchBar setShowsCancelButton:NO animated:YES];
 }
 
-- (void)followButtonClicked:(BasePeopleObject *)obj
-{
-
-	NSString *url = [NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"friends"];
-	NSDictionary *param = @{@"uid":UID, @"oid":obj.uid};
-
-    __weak typeof(self)weakSelf = self;
-    if (obj.followRelation == 0) {
-        [Hud showWait];
-        [MOCHTTPRequestOperationManager postWithURL:url class:nil parameters:param success:^(MOCHTTPResponse *response) {
-            [Hud hideHud];
-            obj.followRelation = [response.dataDictionary[@"state"] integerValue];
-            [weakSelf.tableView reloadData];
-            if (weakSelf.searchBarIsEdite) {
-                [weakSelf.searchController.searchResultsTableView reloadData];
-            }
-            [Hud showMessageWithText:@"关注成功"];
-            CircleListObj *robj = [[CircleListObj alloc] init];
-            robj.userid = obj.uid;
-            robj.isattention = @"Y";
-            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_COLLECT_COLLECT_CLIC object:robj];
-        } failed:^(MOCHTTPResponse *response) {
-            [Hud hideHud];
-            [Hud showMessageWithText:response.errorMessage];
-        }];
-        
-    } else if (obj.followRelation == 1){
-        [Hud showWait];
-        [MOCHTTPRequestOperationManager deleteWithURL:url parameters:param success:^(MOCHTTPResponse *response) {
-            [Hud hideHud];
-            NSString *code = [response.data valueForKey:@"code"];
-            if ([code isEqualToString:@"000"]){
-                [weakSelf.dataSource removeObject:obj];
-                [weakSelf.tableView reloadData];
-                if (weakSelf.searchBarIsEdite) {
-                    [weakSelf.searchController.searchResultsTableView reloadData];
-                }
-                [Hud showMessageWithText:@"取消关注成功"];
-                CircleListObj *robj = [[CircleListObj alloc] init];
-                robj.userid = obj.uid;
-                robj.isattention = @"N";
-                [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_COLLECT_COLLECT_CLIC object:robj];
-            } else{
-                [Hud showMessageWithText:[response.data valueForKey:@"msg"]];
-            }
-        } failed:^(MOCHTTPResponse *response) {
-            [Hud hideHud];
-            [Hud showMessageWithText:response.errorMessage];
-        }];
-
-    } else if (obj.followRelation == 2){
-        [Hud showWait];
-        [MOCHTTPRequestOperationManager deleteWithURL:url parameters:param success:^(MOCHTTPResponse *response) {
-            [Hud hideHud];
-            NSString *code = [response.data valueForKey:@"code"];
-            if ([code isEqualToString:@"000"]) {
-                if (weakSelf.relationShip == 1) {
-                    obj.followRelation = 0;
-                } else if (weakSelf.relationShip == 2){
-                    obj.followRelation = 0;
-                }
-
-                [weakSelf.tableView reloadData];
-                if (weakSelf.searchBarIsEdite) {
-                    [weakSelf.searchController.searchResultsTableView reloadData];
-                }
-                CircleListObj *robj = [[CircleListObj alloc] init];
-                robj.userid = obj.uid;
-                robj.isattention = @"N";
-                [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_COLLECT_COLLECT_CLIC object:robj];
-                [Hud showMessageWithText:@"取消关注成功"];
-            } else{
-                [Hud showMessageWithText:[response.data valueForKey:@"msg"]];
-            }
-        } failed:^(MOCHTTPResponse *response) {
-            [Hud hideHud];
-            [Hud showMessageWithText:response.errorMessage];
-        }];
-	}
-}
 @end

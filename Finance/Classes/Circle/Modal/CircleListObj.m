@@ -55,7 +55,7 @@
 
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey{
-    return  @{@"businesstotal": @"businesstotal",@"realname": @"realname",@"position": @"position",@"picname": @"picname",@"phone": @"phone",@"companyname": @"companyname",@"cmmtnum": @"cmmtnum", @"nickname":@"nickname", @"comments": @"comments", @"company": @"company", @"detail": @"detail", @"isattention": @"isattention", @"potname": @"potname", @"praisenum": @"praisenum", @"publishdate": @"publishdate", @"rid": @"rid", @"photos":@"attach", @"sharenum": @"sharenum", @"status": @"status", @"title": @"title", @"userid": @"userid", @"ispraise":@"ispraise", @"type":@"attachtype", @"linkObj":@"link", @"postType":@"type", @"friendship":@"friendship", @"userstatus":@"userstatus", @"currcity":@"currcity", @"feedhtml":@"feedhtml", @"displayposition":@"displayposition", @"pcurl":@"pcurl", @"shareTitle":@"sharetitle"};
+    return  @{@"businesstotal": @"businesstotal",@"realname": @"realname",@"position": @"position",@"picname": @"picname",@"phone": @"phone",@"companyname": @"companyname",@"cmmtnum": @"cmmtnum", @"nickname":@"nickname", @"comments": @"comments", @"company": @"company", @"detail": @"detail", @"isAttention": @"isattention", @"potname": @"potname", @"praisenum": @"praisenum", @"publishdate": @"publishdate", @"rid": @"rid", @"photos":@"attach", @"sharenum": @"sharenum", @"status": @"status", @"title": @"title", @"userid": @"userid", @"ispraise":@"ispraise", @"type":@"attachtype", @"linkObj":@"link", @"postType":@"type", @"friendship":@"friendship", @"userstatus":@"userstatus", @"currcity":@"currcity", @"feedhtml":@"feedhtml", @"displayposition":@"displayposition", @"pcurl":@"pcurl", @"shareTitle":@"sharetitle"};
 }
 
 
@@ -67,6 +67,21 @@
 + (NSValueTransformer *)linkObjJSONTransformer
 {
     return [MTLJSONAdapter dictionaryTransformerWithModelClass:[linkOBj class]];
+}
+
++ (NSValueTransformer *)JSONTransformerForKey:(NSString *)key
+{
+    return [MTLValueTransformer transformerUsingForwardBlock:^id(NSString *value, BOOL *success, NSError *__autoreleasing *error) {
+        if ([key isEqualToString:@"isAttention"]) {
+            if ([value isEqualToString:@"Y"]) {
+                return @(YES);
+            } else {
+                return @(NO);
+            }
+        }
+
+        return value;
+    }];
 }
 
 @end

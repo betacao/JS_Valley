@@ -17,7 +17,6 @@
 #define NOTIFI_CIRCLELIESTRELOAD     @"notificationCircleReload"
 #define NOTIFI_COLLECT_DELETE_CLICK     @"notificationCircleDeleteCLick"
 #define NOTIFI_COLLECT_PRAISE_CLICK     @"notificationCirclePraiseCLick"
-#define NOTIFI_COLLECT_COLLECT_CLIC     @"notificationCircleAttentionCLiCK"
 #define NOTIFI_COLLECT_SHARE_CLIC     @"notificationCircleSHareCLick"
 #define NOTIFI_COLLECT_COMMENT_CLIC     @"notificationCircleCOmmentCLick"
 

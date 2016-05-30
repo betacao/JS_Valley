@@ -390,65 +390,6 @@
     }];
 }
 
-#pragma mark ------ 关注
-- (void)attentionClicked:(CircleListObj *)obj
-{
-    [Hud showWait];
-    __weak typeof (self) weakSelf = self;
-    NSString *url = [NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"friends"];
-    NSDictionary *param = @{@"uid":[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID], @"oid":obj.userid};
-    if (![obj.isattention isEqualToString:@"Y"]) {
-        [MOCHTTPRequestOperationManager postWithURL:url class:nil parameters:param success:^(MOCHTTPResponse *response) {
-            [Hud hideHud];
-            NSString *code = [response.data valueForKey:@"code"];
-            if ([code isEqualToString:@"000"]){
-                for (CircleListObj *cobj in self.dataArr) {
-                    if ([cobj.userid isEqualToString:obj.userid]) {
-                        cobj.isattention = @"Y";
-                    }
-                }
-                [weakSelf.delegate detailAttentionWithRid:obj.userid attention:obj.isattention];
-                [Hud showMessageWithText:@"关注成功"];
-                NSString *state = [response.dataDictionary valueForKey:@"state"];
-                if (weakSelf.block) {
-                    weakSelf.block(state);
-                }
-            }
-            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_COLLECT_COLLECT_CLIC object:obj];
-            [weakSelf.tableView reloadData];
-        } failed:^(MOCHTTPResponse *response) {
-            [Hud hideHud];
-            [Hud showMessageWithText:response.errorMessage];
-        }];
-    } else{
-
-        [MOCHTTPRequestOperationManager deleteWithURL:url parameters:param success:^(MOCHTTPResponse *response) {
-            [Hud hideHud];
-            NSString *code = [response.data valueForKey:@"code"];
-            if ([code isEqualToString:@"000"]) {
-                for (CircleListObj *cobj in self.dataArr) {
-                    if ([cobj.userid isEqualToString:obj.userid]) {
-                        cobj.isattention = @"N";
-                    }
-                }
-                [weakSelf.delegate detailAttentionWithRid:obj.userid attention:obj.isattention];
-                [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_COLLECT_COLLECT_CLIC object:obj];
-                NSDictionary *data = [[response.data valueForKey:@"data"] parseToArrayOrNSDictionary];
-                NSString *state = [data valueForKey:@"state"];
-                if (weakSelf.block) {
-                    weakSelf.block(state);
-                }
-                [Hud showMessageWithText:@"取消关注成功"];
-            }
-            [weakSelf.tableView reloadData];
-        } failed:^(MOCHTTPResponse *response) {
-            [Hud hideHud];
-            [Hud showMessageWithText:response.errorMessage];
-        }];
-    }
-
-}
-
 - (void)cityClicked:(CircleListObj *)obj
 {
     if([obj.postType isEqualToString:@"pc"]){
@@ -583,23 +524,6 @@
     [self.delegate detailShareWithRid:rid shareNum:num];
     [self.tableView reloadData];
 
-}
-
-- (void)detailAttentionWithRid:(NSString *)rid attention:(NSString *)atten
-{
-    CircleListObj *bobj;
-
-    for (CircleListObj *obj in self.dataArr) {
-        if ([obj.userid isEqualToString:rid]){
-            obj.isattention = atten;
-            bobj = obj;
-        }
-
-    }
-    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_COLLECT_COLLECT_CLIC object:bobj];
-
-    [self.delegate detailAttentionWithRid:rid attention:atten];
-    [self.tableView reloadData];
 }
 
 - (void)detailCommentWithRid:(NSString *)rid commentNum:(NSString*)num comments:(NSMutableArray *)comments

@@ -345,7 +345,7 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
 - (IBAction)sendMessageButtonClick:(UIButton *)sender
 {
     if ([self.relationShip integerValue] == 0) {
-        [self action];
+//        [SHGGlobleOperation addAttation:self.ob]
     } else if ([self.relationShip integerValue] == 1){
         [Hud hideHud];
         [Hud showMessageWithText:@"您与对方还不是好友,对方关注您后\n可进行对话"];
@@ -354,35 +354,9 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
     }
 
 }
-//关注
-- (void)action
+
+- (void)chat
 {
-    __weak typeof(self) weakSelf = self;
-    NSString *url = [NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"friends"];
-    NSDictionary *param = @{@"uid":[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID],@"oid":self.userId};
-    [MOCHTTPRequestOperationManager postWithURL:url class:nil parameters:param success:^(MOCHTTPResponse *response) {
-        NSString *code = [response.data valueForKey:@"code"];
-        if ([code isEqualToString:@"000"]){
-            weakSelf.relationShip = [response.dataDictionary valueForKey:@"state"];
-            for (CircleListObj *cobj in weakSelf.dataArr){
-                if ([cobj.userid isEqualToString:weakSelf.userId]) {
-                    cobj.isattention = @"Y";
-                }
-            }
-            [self.delegate detailAttentionWithRid:weakSelf.userId attention:@"Y"];
-            CircleListObj *cObj = [[CircleListObj alloc] init];
-            cObj.userid = weakSelf.userId;
-            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_COLLECT_COLLECT_CLIC object:cObj];
-            [weakSelf loadData];
-            [weakSelf.tableView reloadData];
-
-        }
-    } failed:^(MOCHTTPResponse *response) {
-        [Hud showMessageWithText:response.errorMessage];
-    }];
-}
-
-- (void)chat{
     [[SHGGloble sharedGloble] recordUserAction:self.userId type:@"imChat"];
     ChatViewController *chatVC = [[ChatViewController alloc] initWithChatter:self.userId isGroup:NO];
     chatVC.title = self.nickName;

@@ -31,7 +31,6 @@
     if (self) {
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(smsShareSuccess:) name:NOTIFI_CHANGE_SHARE_TO_SMSSUCCESS object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(smsShareSuccess:) name:NOTIFI_CHANGE_SHARE_TO_FRIENDSUCCESS object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(attentionChanged:) name:NOTIFI_COLLECT_COLLECT_CLIC object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(commentsChanged:) name:NOTIFI_COLLECT_COMMENT_CLIC object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(praiseChanged:) name:NOTIFI_COLLECT_PRAISE_CLICK object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shareChanged:) name:NOTIFI_COLLECT_SHARE_CLIC object:nil];
@@ -365,114 +364,6 @@
     }
 }
 
-#pragma mark -关注
-- (void)attentionClicked:(CircleListObj *)obj
-{
-    [Hud showWait];
-    if([obj isKindOfClass:[CircleListObj class]]){
-        //普通好友加关注的方法
-        NSString *url = [NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"friends"];
-        NSDictionary *param = @{@"uid":[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID], @"oid":obj.userid};
-        if (![obj.isattention isEqualToString:@"Y"]) {
-            [[SHGGloble sharedGloble] recordUserAction:obj.rid type:@"dynamic_indexAttention"];
-            [MOCHTTPRequestOperationManager postWithURL:url class:nil parameters:param success:^(MOCHTTPResponse *response) {
-                [Hud hideHud];
-                NSString *code = [response.data valueForKey:@"code"];
-                if ([code isEqualToString:@"000"]) {
-                    NSArray *array = [[SHGSegmentController sharedSegmentController] targetObjectsByUserID:obj.userid];
-                    for (CircleListObj *cobj in array) {
-                        cobj.isattention = @"Y";
-                    }
-                    [MobClick event:@"ActionAttentionClicked" label:@"onClick"];
-                    [Hud showMessageWithText:@"关注成功"];
-                } else{
-                    [Hud showMessageWithText:@"关注失败"];
-                }
-                [[SHGSegmentController sharedSegmentController] reloadData];
-            } failed:^(MOCHTTPResponse *response) {
-                [Hud hideHud];
-                [Hud showMessageWithText:response.errorMessage];
-            }];
-        } else{
-            [MOCHTTPRequestOperationManager deleteWithURL:url parameters:param success:^(MOCHTTPResponse *response) {
-                [Hud hideHud];
-                NSString *code = [response.data valueForKey:@"code"];
-                if ([code isEqualToString:@"000"]) {
-                    NSArray *array = [[SHGSegmentController sharedSegmentController] targetObjectsByUserID:obj.userid];
-                    for (CircleListObj *cobj in array) {
-                        cobj.isattention = @"N";
-                    }
-
-                    //在关注界面的时候要移除掉
-                    NSMutableArray *removeArr = [NSMutableArray array];
-                    for (CircleListObj *cobj in array) {
-                        [removeArr addObject:cobj];
-                    }
-                    [[SHGSegmentController sharedSegmentController] removeObjects:removeArr];
-
-                    [MobClick event:@"ActionAttentionClickedFalse" label:@"onClick"];
-                    [Hud showMessageWithText:@"取消关注成功"];
-                    [[SHGSegmentController sharedSegmentController] reloadData];
-                } else{
-                    [Hud showMessageWithText:@"取消关注失败"];
-                }
-            } failed:^(MOCHTTPResponse *response) {
-                [Hud hideHud];
-                [Hud showMessageWithText:response.errorMessage];
-            }];
-
-
-        }
-    } else{
-        //这个是推荐栏目加关注的方法 因为不是同一个类 不得已多写一个else
-        RecmdFriendObj *friend = (RecmdFriendObj *)obj;
-        if(!friend.uid || friend.uid.length == 0){
-            [Hud showMessageWithText:@"暂未获取到此用户的ID"];
-            return;
-        }
-        NSString *url = [NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"friends"];
-        NSDictionary *param = @{@"uid":[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID], @"oid":friend.uid};
-        if(!friend.isFocus){
-            [[SHGGloble sharedGloble] recordUserAction:friend.uid type:@"dynamic_indexAttention"];
-            [MOCHTTPRequestOperationManager postWithURL:url class:nil parameters:param success:^(MOCHTTPResponse *response) {
-                [Hud hideHud];
-                NSString *code = [response.data valueForKey:@"code"];
-                if ([code isEqualToString:@"000"]) {
-                    friend.isFocus = YES;
-                    [MobClick event:@"ActionAttentionClicked" label:@"onClick"];
-                    [Hud showMessageWithText:@"关注成功"];
-                } else{
-                    [Hud showMessageWithText:@"关注失败"];
-                }
-                [[SHGSegmentController sharedSegmentController] reloadData];
-            } failed:^(MOCHTTPResponse *response) {
-                [Hud hideHud];
-                [Hud showMessageWithText:response.errorMessage];
-            }];
-        } else{
-
-            [MOCHTTPRequestOperationManager deleteWithURL:url parameters:param success:^(MOCHTTPResponse *response) {
-                [Hud hideHud];
-                NSString *code = [response.data valueForKey:@"code"];
-                if ([code isEqualToString:@"000"]) {
-                    friend.isFocus = NO;
-                    [MobClick event:@"ActionAttentionClickedFalse" label:@"onClick"];
-                    [Hud showMessageWithText:@"取消关注成功"];
-                    [[SHGSegmentController sharedSegmentController] reloadData];
-                } else{
-                    [Hud hideHud];
-                    [Hud showMessageWithText:@"取消关注失败"];
-                }
-            } failed:^(MOCHTTPResponse *response) {
-                [Hud hideHud];
-                [Hud showMessageWithText:response.errorMessage];
-            }];
-
-        }
-    }
-
-}
-
 #pragma mark -详情界面的代理
 - (void)detailDeleteWithRid:(NSString *)rid
 {
@@ -505,15 +396,6 @@
     [[SHGSegmentController sharedSegmentController] refreshHomeView];
 }
 
-- (void)detailAttentionWithRid:(NSString *)rid attention:(NSString *)atten
-{
-    NSArray *array = [[SHGSegmentController sharedSegmentController] targetObjectsByUserID:rid];
-    for (CircleListObj *obj in array){
-        obj.isattention = atten;
-    }
-    [[SHGSegmentController sharedSegmentController] reloadData];
-}
-
 - (void)detailCommentWithRid:(NSString *)rid commentNum:(NSString*)num comments:(NSMutableArray *)comments
 {
     NSArray *array = [[SHGSegmentController sharedSegmentController] targetObjectsByRid:rid];
@@ -536,12 +418,6 @@
 - (void)cnickCLick:(NSString * )userId name:(NSString *)name
 {
     [self gotoSomeOne:userId name:name];
-}
-
-- (void)attentionChanged:(NSNotification *)noti
-{
-    CircleListObj *obj = noti.object;
-    [self detailAttentionWithRid:obj.userid attention:obj.isattention];
 }
 
 - (void)commentsChanged:(NSNotification *)noti

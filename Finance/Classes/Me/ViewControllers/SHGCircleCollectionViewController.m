@@ -483,60 +483,10 @@
     }];
 }
 
-- (void)attentionClicked:(CircleListObj *)obj
-{
-    [Hud showWait];
-    __weak typeof(self) weakSelf = self;
-    NSString *url = [NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"friends"];
-    NSDictionary *param = @{@"uid":[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID], @"oid":obj.userid};
-    if (![obj.isattention isEqualToString:@"Y"]) {
-        [MOCHTTPRequestOperationManager postWithURL:url class:nil parameters:param success:^(MOCHTTPResponse *response) {
-            [Hud hideHud];
-            NSString *code = [response.data valueForKey:@"code"];
-            if ([code isEqualToString:@"000"]){
-                for (CircleListObj *cobj in self.dataArr) {
-                    if ([cobj.userid isEqualToString:obj.userid]) {
-                        cobj.isattention = @"Y";
-                    }
-                }
-                [Hud showMessageWithText:@"关注成功"];
-                [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_COLLECT_COLLECT_CLIC object:obj];
-            } else{
-                [Hud showMessageWithText:@"失败"];
-            }
-            [weakSelf.tableView reloadData];
-        } failed:^(MOCHTTPResponse *response) {
-            [Hud hideHud];
-            [Hud showMessageWithText:response.errorMessage];
-        }];
-    } else{
-
-        [MOCHTTPRequestOperationManager deleteWithURL:url parameters:param success:^(MOCHTTPResponse *response) {
-            [Hud hideHud];
-            NSString *code = [response.data valueForKey:@"code"];
-            if ([code isEqualToString:@"000"]){
-                for (CircleListObj *cobj in self.dataArr) {
-                    if ([cobj.userid isEqualToString:obj.userid]) {
-                        cobj.isattention = @"N";
-                    }
-                }
-                [Hud showMessageWithText:@"取消关注成功"];
-                [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_COLLECT_COLLECT_CLIC object:obj];
-            } else{
-                [Hud showMessageWithText:@"失败"];
-            }
-            [weakSelf.tableView reloadData];
-        } failed:^(MOCHTTPResponse *response) {
-            [Hud hideHud];
-            [Hud showMessageWithText:response.errorMessage];
-        }];
-
-    }
-}
 
 #pragma mark detailDelagte
 
--(void)detailDeleteWithRid:(NSString *)rid
+- (void)detailDeleteWithRid:(NSString *)rid
 {
     for (CircleListObj *obj in self.dataArr) {
         if ([obj.rid isEqualToString:rid]) {
@@ -548,7 +498,7 @@
     [self.tableView reloadData];
 }
 
--(void)detailPraiseWithRid:(NSString *)rid praiseNum:(NSString *)num isPraised:(NSString *)isPrased
+- (void)detailPraiseWithRid:(NSString *)rid praiseNum:(NSString *)num isPraised:(NSString *)isPrased
 {
     for (CircleListObj *obj in self.dataArr) {
         if ([obj.rid isEqualToString:rid]) {
@@ -563,7 +513,7 @@
     [self.tableView reloadData];
 }
 
--(void)detailShareWithRid:(NSString *)rid shareNum:(NSString *)num
+- (void)detailShareWithRid:(NSString *)rid shareNum:(NSString *)num
 {
     for (CircleListObj *obj in self.dataArr) {
         if ([obj.rid isEqualToString:rid]) {
@@ -574,16 +524,6 @@
     }
     [self.tableView reloadData];
     
-}
--(void)detailAttentionWithRid:(NSString *)rid attention:(NSString *)atten
-{
-    for (CircleListObj *obj in self.dataArr) {
-        if ([obj.userid isEqualToString:rid]) {
-            obj.isattention = atten;
-            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_COLLECT_COLLECT_CLIC object:obj];
-        }
-    }
-    [self.tableView reloadData];
 }
 
 -(void)detailCommentWithRid:(NSString *)rid commentNum:(NSString*)num comments:(NSMutableArray *)comments

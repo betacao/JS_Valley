@@ -74,7 +74,6 @@
     
     [self loadPreLoadingData];
     [self addHeaderRefresh:self.tableView headerRefesh:YES headerTitle:@{kRefreshStateIdle:@"下拉可以刷新", kRefreshStatePulling:@"释放后查看最新动态", kRefreshStateRefreshing:@"正在努力加载中"} andFooter:YES footerTitle:nil];
-//    self.tableView.tableHeaderView = self.searchBar;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshData) name:NOTIFI_SENDPOST object:nil];
 
 }
@@ -320,6 +319,15 @@
     }];
 }
 
+- (void)loadAttationState:(id)object
+{
+    if ([object isKindOfClass:[CircleListObj class]]) {
+        CircleListObj *listObject = (CircleListObj *)object;
+        listObject.isAttention = !listObject.isAttention;
+    }
+    [self.tableView reloadData];
+}
+
 - (void)requestDataWithTarget:(NSString *)target time:(NSString *)time
 {
     self.isRefreshing = YES;
@@ -501,7 +509,6 @@
             NSMutableArray *array = [self.dataArr objectAtIndex:indexPath.row];
             cell.objectArray = array;
             cell.controller = self;
-            cell.delegate = [SHGUnifiedTreatment sharedTreatment];
             return cell;
 
         } else if ([obj isKindOfClass:[SHGNewFriendObject class]]){

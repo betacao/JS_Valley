@@ -12,7 +12,7 @@
 - (void)detailPraiseWithRid:(NSString *)rid praiseNum:(NSString*)num isPraised:(NSString *)isPrased;
 - (void)detailCommentWithRid:(NSString *)rid commentNum:(NSString *)num comments:(NSMutableArray *)comments;
 - (void)detailShareWithRid:(NSString *)rid shareNum:(NSString*)num;
-- (void)detailAttentionWithRid:(NSString *)rid attention:(NSString *)atten;
+
 - (void)detailDeleteWithRid:(NSString *)rid ;
 - (void)detailCollectionWithRid:(NSString *)rid collected:(NSString *)isColle;
 - (void)detailHomeListShouldRefresh:(CircleListObj *)currentObj;

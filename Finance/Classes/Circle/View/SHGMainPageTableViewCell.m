@@ -294,7 +294,7 @@
         self.attentionButton.hidden = NO;
     }
 
-    if ([object.isattention isEqualToString:@"Y"] || [object.userid isEqualToString:CHATID_MANAGER]){
+    if (self.object.isAttention || [object.userid isEqualToString:CHATID_MANAGER]){
         [self.attentionButton setImage:[UIImage imageNamed:@"newAttention"] forState:UIControlStateNormal] ;
     } else{
         [self.attentionButton setImage:[UIImage imageNamed:@"newAddAttention"] forState:UIControlStateNormal] ;
@@ -487,7 +487,7 @@
         [Hud showMessageWithText:@"不能关注自己"];
         return;
     }
-    [self.delegate attentionClicked:self.object];
+    [SHGGlobleOperation addAttation:self.object];
 }
 
 - (IBAction)deleteButtonClick:(UIButton *)sender

@@ -14,7 +14,7 @@
 - (void)commentClicked:(CircleListObj *)obj;
 - (void)replyClicked:(CircleListObj *)obj commentIndex:(NSInteger)index;
 - (void)shareClicked:(CircleListObj *)obj;
-- (void)attentionClicked:(CircleListObj *)obj;
+
 - (void)deleteClicked:(CircleListObj *)obj;
 - (void)moreMessageClicked:(CircleListObj *)obj;
 - (void)pullClicked:(CircleListObj *)obj;

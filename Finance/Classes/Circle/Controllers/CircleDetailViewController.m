@@ -100,6 +100,7 @@
         [Hud hideHud];
         [Hud showMessageWithText:response.errorMessage];
     }];
+    [SHGGlobleOperation registerAttationClass:[self class] method:@selector(loadAttationState:)];
 }
 
 - (void)initView
@@ -375,7 +376,7 @@
     self.obj.cmmtnum = [NSString stringWithFormat:@"%@",dic[@"cmmtnum"]];
     self.obj.company = dic[@"company"];
     self.obj.detail = dic[@"detail"];
-    self.obj.isattention = dic[@"isattention"];
+    self.obj.isAttention = dic[@"isattention"];
     self.obj.nickname = dic[@"nickname"];
     self.obj.photos = dic[@"attach"];
     self.obj.potname = dic[@"potname"];
@@ -436,6 +437,7 @@
     }
 }
 
+
 - (void)loadDatasWithObj:(CircleListObj *)obj
 {
     self.obj.photoArr = (NSArray *)obj.photos;
@@ -491,7 +493,7 @@
     [self.btnPraise setTitle:obj.praisenum forState:UIControlStateNormal];
     [self.btnPraise sizeToFit];
     
-    if ([obj.isattention isEqualToString:@"Y"]){
+    if (obj.isAttention){
         [self.btnAttention setImage:[UIImage imageNamed:@"newAttention"] forState:UIControlStateNormal] ;
     } else{
         [self.btnAttention setImage:[UIImage imageNamed:@"newAddAttention"] forState:UIControlStateNormal];
@@ -997,53 +999,19 @@
     }
 }
 
-- (IBAction)actionAttention:(id)sender
+- (void)loadAttationState:(id)object
 {
-    NSString *url = [NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"friends"];
-    NSDictionary *param = @{@"uid":[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID], @"oid":self.obj.userid};
-    [Hud showWait];
-    if ([self.obj.isattention isEqualToString:@"N"]) {
-        [MOCHTTPRequestOperationManager postWithURL:url class:nil parameters:param success:^(MOCHTTPResponse *response) {
-            [Hud hideHud];
-            NSString *code = [response.data valueForKey:@"code"];
-            if ([code isEqualToString:@"000"]){
-                self.obj.isattention = @"Y";
-                [Hud showMessageWithText:@"关注成功"];
-            }
-            [self loadDatasWithObj:self.obj];
-            
-            [self.delegate detailAttentionWithRid:self.obj.userid attention:self.obj.isattention];
-            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_COLLECT_COLLECT_CLIC object:self.obj];
-        } failed:^(MOCHTTPResponse *response) {
-            [Hud hideHud];
-            [Hud showMessageWithText:response.errorMessage];
-        }];
-    } else{
-        __weak typeof(self) weakSelf = self;
-        [MOCHTTPRequestOperationManager deleteWithURL:url parameters:param success:^(MOCHTTPResponse *response) {
-
-            [Hud hideHud];
-            NSString *code = [response.data valueForKey:@"code"];
-            if ([code isEqualToString:@"000"]){
-                weakSelf.obj.isattention = @"N";
-                [Hud showMessageWithText:@"取消关注成功"];
-            }
-            [weakSelf loadDatasWithObj:weakSelf.obj];
-            [weakSelf.delegate detailAttentionWithRid:weakSelf.obj.userid attention:weakSelf.obj.isattention];
-            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_COLLECT_COLLECT_CLIC object:weakSelf.obj];
-
-        } failed:^(MOCHTTPResponse *response) {
-
-            [Hud hideHud];
-            [Hud showMessageWithText:response.errorMessage];
-        }];
+    if ([object isKindOfClass:[CircleListObj class]]) {
+        CircleListObj *listObject = (CircleListObj *)object;
+        listObject.isAttention = !listObject.isAttention;
 
     }
 }
 
--(void)refreshFooter
+
+- (IBAction)actionAttention:(id)sender
 {
-    
+    [SHGGlobleOperation addAttation:self.obj];
 }
 
 #pragma mark =============  UITableView DataSource  =============
@@ -1178,18 +1146,6 @@
     [self loadDatasWithObj:self.obj];
     [self.listTable reloadData];
     [self.delegate detailShareWithRid:rid shareNum:num];
-    
-}
-
--(void)detailAttentionWithRid:(NSString *)rid attention:(NSString *)atten
-{
-    if ([self.obj.userid isEqualToString:rid]) {
-        self.obj.isattention = atten;
-    }
-    [self loadDatasWithObj:self.obj];
-    
-    [self.listTable reloadData];
-    [self.delegate detailAttentionWithRid:rid attention:atten];
     
 }
 

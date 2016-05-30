@@ -51,7 +51,7 @@
     if ([object isKindOfClass:[CircleListObj class]]) {
         CircleListObj *circleListObject = (CircleListObj *)object;
         targetUserID = circleListObject.userid;
-        attationState = [circleListObject.isattention isEqualToString:@"Y"] ? YES : NO;
+        attationState = circleListObject.isAttention;
     } else if ([object isKindOfClass:[SHGDiscoveryPeopleObject class]]) {
         SHGDiscoveryPeopleObject *peopleObject = (SHGDiscoveryPeopleObject *)object;
         targetUserID = peopleObject.userID;
@@ -72,6 +72,8 @@
             [Hud hideHud];
             NSString *code = [response.data valueForKey:@"code"];
             if ([code isEqualToString:@"000"]){
+                //记录行为轨迹
+                [MobClick event:@"ActionAttentionClicked" label:@"onClick"];
                 [[SHGGlobleOperation sharedGloble] addAttationSuccess:object];
                 [Hud showMessageWithText:@"关注成功"];
             }
@@ -84,6 +86,8 @@
             [Hud hideHud];
             NSString *code = [response.data valueForKey:@"code"];
             if ([code isEqualToString:@"000"]) {
+                //记录行为轨迹
+                [MobClick event:@"ActionAttentionClickedFalse" label:@"onClick"];
                 [[SHGGlobleOperation sharedGloble] addAttationSuccess:object];
                 [Hud showMessageWithText:@"取消关注成功"];
             }
