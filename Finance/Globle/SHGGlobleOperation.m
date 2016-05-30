@@ -8,8 +8,7 @@
 
 #import "SHGGlobleOperation.h"
 #import "SHGDiscoveryObject.h"
-#define kAttationClass @"attationClass"
-#define kAttationMethod @"attationMethod"
+#import "RecmdFriendObj.h"
 
 @interface SHGGlobleOperation()
 
@@ -64,6 +63,10 @@
         SHGDiscoveryRecommendObject *recommendObject = (SHGDiscoveryRecommendObject *)object;
         targetUserID = recommendObject.userID;
         attationState = recommendObject.isAttention;
+    } else if ([object isKindOfClass:[RecmdFriendObj class]]) {
+        RecmdFriendObj *friendObject = (RecmdFriendObj *)object;
+        targetUserID = friendObject.uid;
+        attationState = friendObject.isAttention;
     }
     NSString *url = [NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"friends"];
     NSDictionary *param = @{@"uid":UID, @"oid":targetUserID};

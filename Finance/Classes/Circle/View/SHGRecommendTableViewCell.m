@@ -274,7 +274,7 @@
         }
         detailLabel.text = [detailString stringByReplacingOccurrencesOfString:@"\n" withString:@""];
 
-        if(!object.isFocus){
+        if(!object.isAttention){
             [button setImage:[UIImage imageNamed:@"newAddAttention"] forState:UIControlStateNormal];
         } else{
             [button setImage:[UIImage imageNamed:@"newAttention"] forState:UIControlStateNormal];
