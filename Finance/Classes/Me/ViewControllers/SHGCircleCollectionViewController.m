@@ -32,12 +32,14 @@
     self.tableView.backgroundColor = [UIColor colorWithHexString:@"efeeef"];
     [self addHeaderRefresh:self.tableView headerRefesh:YES andFooter:YES];
     [self requestPostListWithTarget:@"first" time:@"0"];
+    [SHGGlobleOperation registerAttationClass:[self class] method:@selector(loadAttationState:attationState:)];
 }
--(void)smsShareSuccess:(NSNotification *)noti
+
+
+- (void)smsShareSuccess:(NSNotification *)noti
 {
     id obj = noti.object;
-    if ([obj isKindOfClass:[NSString class]])
-    {
+    if ([obj isKindOfClass:[NSString class]]){
         NSString *rid = obj;
         for (CircleListObj *objs in self.dataArr) {
             if ([objs.rid isEqualToString:rid]) {
@@ -62,6 +64,19 @@
     [self requestPostListWithTarget:@"first" time:@"0"];
 }
 
+- (void)loadAttationState:(NSString *)targetUserID attationState:(BOOL)attationState
+{
+    [self.dataArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if ([obj isKindOfClass:[CircleListObj class]]) {
+            CircleListObj *listObject = (CircleListObj *)obj;
+            if ([listObject.userid isEqualToString:targetUserID]) {
+                listObject.isAttention = attationState;
+            }
+        }
+    }];
+    [self.tableView reloadData];
+}
+
 
 - (UITableViewCell *)emptyCell
 {
@@ -77,10 +92,7 @@
 {
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
   
-    NSDictionary * param = @{@"uid":uid,
-                             @"target":target,
-                             @"time":time,
-                             @"num":@"100"};
+    NSDictionary * param = @{@"uid":uid, @"target":target, @"time":time, @"num":@"100"};
     
     [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttp,@"collection",@"mycirclelist"] class:[CircleListObj class] parameters:param success:^(MOCHTTPResponse *response) {
         if ([target isEqualToString:@"first"]) {
@@ -117,7 +129,7 @@
     
 }
 
--(void)endFoot
+- (void)endFoot
 {
     [self.tableView.mj_footer endRefreshing];
     

@@ -76,7 +76,19 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
     [self addSdLayout];
     self.tableView.separatorStyle = UITableViewCellSelectionStyleNone;
     [self requestDataWithTarget:@"first" time:@""];
+    [SHGGlobleOperation registerAttationClass:[self class] method:@selector(loadAttationState:attationState:)];
 }
+
+- (void)loadAttationState:(NSString *)targetUserID attationState:(BOOL)attationState
+{
+    if (attationState) {
+        self.relationShip = @"1";
+    } else {
+        self.relationShip = @"0";
+    }
+    [self refreshFriendShip];
+}
+
 
 - (void)viewWillDisappear:(BOOL)animated
 {
@@ -85,6 +97,7 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
         [self.controller changeCardCollection];
     }
 }
+
 - (void)initView
 {
     self.headerImageView.userInteractionEnabled = YES;
@@ -290,9 +303,6 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
         [self.sendMessageButton setTitle:@"发消息" forState:UIControlStateNormal];
         [self.sendMessageButton setTitleColor:[UIColor colorWithHexString:@"1D5798"] forState:UIControlStateNormal];
     }
-    if (self.block) {
-        self.block(self.relationShip);
-    }
 
 }
 -(void)refreshCollection
@@ -345,7 +355,10 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
 - (IBAction)sendMessageButtonClick:(UIButton *)sender
 {
     if ([self.relationShip integerValue] == 0) {
-//        [SHGGlobleOperation addAttation:self.ob]
+        CircleListObj *object = [[CircleListObj alloc] init];
+        object.userid = self.userId;
+        object.isAttention = NO;
+        [SHGGlobleOperation addAttation:object];
     } else if ([self.relationShip integerValue] == 1){
         [Hud hideHud];
         [Hud showMessageWithText:@"您与对方还不是好友,对方关注您后\n可进行对话"];
@@ -494,14 +507,9 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
     if ([self.userId isEqualToString:UID]){
         switch (indexPath.row) {
             case 0:{
-                __weak typeof(self) weakSelf = self;
                 SHGPersonDynamicViewController *controller = [[SHGPersonDynamicViewController alloc] initWithNibName:@"SHGPersonDynamicViewController" bundle:nil];
                 controller.userId = self.userId;
                 controller.delegate = self.delegate;
-                controller.block = ^(NSString *state){
-                    weakSelf.relationShip = state;
-                    [weakSelf refreshFriendShip];
-                };
                 [self.navigationController pushViewController:controller animated:YES];
             }
                 break;
@@ -526,14 +534,9 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
             }
                 break;
             case 1:{
-                __weak typeof(self) weakSelf = self;
                 SHGPersonDynamicViewController *controller = [[SHGPersonDynamicViewController alloc] initWithNibName:@"SHGPersonDynamicViewController" bundle:nil];
                 controller.userId = self.userId;
                 controller.delegate = self.delegate;
-                controller.block = ^(NSString *state){
-                    weakSelf.relationShip = state;
-                    [weakSelf refreshFriendShip];
-                };
                 [self.navigationController pushViewController:controller animated:YES];
             }
                 break;

@@ -12,12 +12,3 @@
 
 @end
 
-
-@implementation SHGPeopleObject
-
-+ (NSDictionary *)JSONKeyPathsByPropertyKey
-{
-    return @{@"name":@"nick", @"nickname":@"nickname", @"headImageUrl":@"avatar", @"uid":@"username", @"userstatus":@"userstatus", @"company":@"company", @"position":@"position", @"rela":@"rela", @"commonfriend":@"commonfriend", @"commonfriendnum":@"commonfriendnum"};
-}
-
-@end

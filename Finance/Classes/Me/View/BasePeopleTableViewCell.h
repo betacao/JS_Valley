@@ -9,17 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "BasePeopleObject.h"
 
-@protocol BasePeopleTableViewCellDelegate <NSObject>
-
-@optional
-- (void)followButtonClicked:(BasePeopleObject *)obj;
-
-@end
 
 @interface BasePeopleTableViewCell : UITableViewCell
 
 @property (nonatomic, strong) BasePeopleObject *object;
-@property (nonatomic, weak) id<BasePeopleTableViewCellDelegate> delegate;
-
 
 @end

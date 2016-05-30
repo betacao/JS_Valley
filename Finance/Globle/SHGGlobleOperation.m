@@ -77,7 +77,7 @@
             if ([code isEqualToString:@"000"]){
                 //记录行为轨迹
                 [MobClick event:@"ActionAttentionClicked" label:@"onClick"];
-                [[SHGGlobleOperation sharedGloble] addAttationSuccess:targetUserID];
+                [[SHGGlobleOperation sharedGloble] addAttationSuccess:targetUserID attationState:YES];
                 [Hud showMessageWithText:@"关注成功"];
             }
         } failed:^(MOCHTTPResponse *response) {
@@ -91,7 +91,7 @@
             if ([code isEqualToString:@"000"]) {
                 //记录行为轨迹
                 [MobClick event:@"ActionAttentionClickedFalse" label:@"onClick"];
-                [[SHGGlobleOperation sharedGloble] addAttationSuccess:targetUserID];
+                [[SHGGlobleOperation sharedGloble] addAttationSuccess:targetUserID attationState:NO];
                 [Hud showMessageWithText:@"取消关注成功"];
             }
         } failed:^(MOCHTTPResponse *response) {
@@ -101,7 +101,7 @@
     }
 }
 
-- (void)addAttationSuccess:(NSString *)targetUserID
+- (void)addAttationSuccess:(NSString *)targetUserID attationState:(BOOL)attationState
 {
     UINavigationController *nav = (UINavigationController *)[AppDelegate currentAppdelegate].window.rootViewController;
     NSMutableArray *controllerArray = [NSMutableArray arrayWithArray:nav.viewControllers];
@@ -112,8 +112,8 @@
         for (UIViewController *controller in controllerArray) {
             if ([controller isKindOfClass:class]) {
                 IMP imp = [controller methodForSelector:selector];
-                void (*func)(id, SEL, id) = (void *)imp;
-                func(controller, selector, targetUserID);
+                void (*func)(id, SEL, id, BOOL) = (void *)imp;
+                func(controller, selector, targetUserID, attationState);
             }
         }
 

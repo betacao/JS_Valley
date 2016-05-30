@@ -12,7 +12,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *followButton;
 @property (weak, nonatomic) IBOutlet SHGUserHeaderView *headerView;
 @property (weak, nonatomic) IBOutlet UIView *lineView;
-- (IBAction)followButtonClicked:(id)sender;
+
 @end
 
 @implementation BasePeopleTableViewCell
@@ -84,8 +84,9 @@
 
 - (IBAction)followButtonClicked:(id)sender
 {
-	if (self.delegate && [self.delegate respondsToSelector:@selector(followButtonClicked:)]) {
-		[self.delegate followButtonClicked:self.object];
-	}
+    CircleListObj *object = [[CircleListObj alloc] init];
+    object.userid = self.object.uid;
+    object.isAttention = self.object.followRelation == 0 ? NO :YES;
+    [SHGGlobleOperation addAttation:object];
 }
 @end

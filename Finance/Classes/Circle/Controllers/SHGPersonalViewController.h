@@ -16,6 +16,4 @@
 @property (weak, nonatomic) SHGCardCollectionViewController *controller;
 @property (strong, nonatomic) id<CircleActionDelegate> delegate;
 
-@property (copy, nonatomic) SHGPersonalChangeStateBlock block;
-
 @end

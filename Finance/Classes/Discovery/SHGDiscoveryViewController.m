@@ -62,7 +62,7 @@
     self.tableView.tableHeaderView = self.searchBar;
     self.tableView.tableFooterView = [[UIView alloc] init];
 
-    [SHGGlobleOperation registerAttationClass:[self class] method:@selector(loadAttationState:)];
+    [SHGGlobleOperation registerAttationClass:[self class] method:@selector(loadAttationState:attationState:)];
 }
 
 - (void)addAutoLayout
@@ -105,13 +105,13 @@
     return _recommendCollectionView;
 }
 
-- (void)loadAttationState:(NSString *)targetUserID
+- (void)loadAttationState:(NSString *)targetUserID attationState:(BOOL)attationState
 {
     [self.recommendContactArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         if ([obj isKindOfClass:[SHGDiscoveryRecommendObject class]]) {
             SHGDiscoveryRecommendObject *recommendObject = (SHGDiscoveryRecommendObject *)obj;
             if ([recommendObject.userID isEqualToString:targetUserID]) {
-                recommendObject.isAttention = !recommendObject.isAttention;
+                recommendObject.isAttention = attationState;
             }
         }
     }];

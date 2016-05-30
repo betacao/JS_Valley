@@ -115,7 +115,7 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     if(self.block){
         self.block(self.titleLabel);
     }
-    [SHGGlobleOperation registerAttationClass:[self class] method:@selector(loadAttationState:)];
+    [SHGGlobleOperation registerAttationClass:[self class] method:@selector(loadAttationState:attationState:)];
 }
 
 - (UILabel *)titleLabel
@@ -130,9 +130,9 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     return _titleLabel;
 }
 
-- (void)loadAttationState:(id)object
+- (void)loadAttationState:(id)object attationState:(BOOL)attationState
 {
-    [[SHGHomeViewController sharedController] loadAttationState:object];
+    [[SHGHomeViewController sharedController] loadAttationState:object attationState:attationState];
 }
 
 

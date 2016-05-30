@@ -14,7 +14,7 @@
 #import "RealtimeSearchUtil.h"
 #import "SHGPersonalViewController.h"
 
-@interface MyFollowViewController ()<UITableViewDelegate, UITableViewDataSource, UISearchDisplayDelegate, UISearchBarDelegate,BasePeopleTableViewCellDelegate>
+@interface MyFollowViewController ()<UITableViewDelegate, UITableViewDataSource, UISearchDisplayDelegate, UISearchBarDelegate>
 @property (nonatomic, strong) IBOutlet	UITableView *tableView;
 //关注
 @property (nonatomic, strong) NSMutableArray *followArray;
@@ -43,7 +43,43 @@
     self.view.backgroundColor = [UIColor whiteColor];
     self.tableView.tableHeaderView = self.searchBar;
     self.tableView.tableFooterView = [[UIView alloc] init];
+    [SHGGlobleOperation registerAttationClass:[self class] method:@selector(loadAttationState:attationState:)];
 	[self searchController];
+}
+
+
+- (void)loadAttationState:(NSString *)targetUserID attationState:(BOOL)attationState
+{
+    [self.dataSource enumerateObjectsUsingBlock:^(BasePeopleObject *object, NSUInteger idx, BOOL * _Nonnull stop) {
+        if ([object.uid isEqualToString:targetUserID]) {
+            if (self.relationShip == 1) {
+                [self.dataSource removeObject:object];
+            } else if (self.relationShip == 2){
+                if (object.followRelation == 0) {
+                    object.followRelation = 2;
+                } else {
+                    object.followRelation = 0;
+                }
+            }
+        }
+    }];
+    [self.searchController.resultsSource enumerateObjectsUsingBlock:^(BasePeopleObject *object, NSUInteger idx, BOOL * _Nonnull stop) {
+        if ([object.uid isEqualToString:targetUserID]) {
+            if (self.relationShip == 1) {
+                [self.dataSource removeObject:object];
+            } else if (self.relationShip == 2){
+                if (object.followRelation == 0) {
+                    object.followRelation = 2;
+                } else {
+                    object.followRelation = 0;
+                }
+            }
+        }
+    }];
+    if (self.searchBarIsEdite) {
+        [self.searchController.searchResultsTableView reloadData];
+    }
+    [self.tableView reloadData];
 }
 
 - (void)requestData
@@ -154,9 +190,7 @@
 -(void)requestFansListWithTarget:(NSString *)target time:(NSString *)time
 {
 	NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
-	NSDictionary *param = @{@"uid":uid, @"target":target,
-							@"time":time,
-							@"num":@"100"};
+	NSDictionary *param = @{@"uid":uid, @"target":target, @"time":time, @"num":@"100"};
 	[MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttp,@"attention",@"myfanslist"] class:nil parameters:param success:^(MOCHTTPResponse *response) {
 		NSLog(@"=data = %@",response.dataArray);
         NSMutableArray *array = [NSMutableArray array];
@@ -237,7 +271,6 @@
     BasePeopleTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
     if (!cell) {
         cell = [[[NSBundle mainBundle] loadNibNamed:@"BasePeopleTableViewCell" owner:self options:nil] lastObject];
-        cell.delegate = self;
     }
     BasePeopleObject *obj = self.dataSource[indexPath.row];
     obj.followRelationHiden = NO;
@@ -285,7 +318,6 @@
 			BasePeopleObject *obj = weakSelf.searchController.resultsSource[indexPath.row];
             obj.followRelationHiden = NO;
             cell.object = obj;
-            cell.delegate = weakSelf;
 			return cell;
 
 		}];

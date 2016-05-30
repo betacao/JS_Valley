@@ -319,18 +319,18 @@
     }];
 }
 
-- (void)loadAttationState:(NSString *)targetUserID
+- (void)loadAttationState:(NSString *)targetUserID attationState:(BOOL)attationState
 {
     [self.dataArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         if ([obj isKindOfClass:[CircleListObj class]]) {
             CircleListObj *listObject = (CircleListObj *)obj;
             if ([listObject.userid isEqualToString:targetUserID]) {
-                listObject.isAttention = !listObject.isAttention;
+                listObject.isAttention = attationState;
             }
         } else if ([obj isKindOfClass:[NSArray class]]) {
             [obj enumerateObjectsUsingBlock:^(RecmdFriendObj *friendObject, NSUInteger idx, BOOL * _Nonnull stop) {
                 if ([friendObject.uid isEqualToString:targetUserID]) {
-                    friendObject.isAttention = !friendObject.isAttention;
+                    friendObject.isAttention = attationState;
                 }
             }];
         }

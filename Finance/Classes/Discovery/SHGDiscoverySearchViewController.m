@@ -47,7 +47,7 @@
     self.tableView.tableFooterView = [[UIView alloc] init];
     self.middleImageView.image = [UIImage imageNamed:@"discovery_search"];
     self.searchText = @"";
-    [SHGGlobleOperation registerAttationClass:[self class] method:@selector(loadAttationState:)];
+    [SHGGlobleOperation registerAttationClass:[self class] method:@selector(loadAttationState:attationState:)];
 }
 
 - (void)addAutoLayout
@@ -85,13 +85,13 @@
     [self loadDataWithTarget:@"load"];
 }
 
-- (void)loadAttationState:(NSString *)targetUserID
+- (void)loadAttationState:(NSString *)targetUserID attationState:(BOOL)attationState
 {
     [self.dataArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         if ([obj isKindOfClass:[SHGDiscoveryPeopleObject class]]) {
             SHGDiscoveryPeopleObject *peopleObject = (SHGDiscoveryPeopleObject *)obj;
             if ([peopleObject.userID isEqualToString:targetUserID]) {
-                peopleObject.isAttention = !peopleObject.isAttention;
+                peopleObject.isAttention = attationState;
             }
         }
     }];

@@ -34,7 +34,22 @@
     [self addHeaderRefresh:self.tableView headerRefesh:NO andFooter:YES];
     self.target = @"first";
     [self requestDataWithTarget:@"first" time:@"-1"];
+    [SHGGlobleOperation registerAttationClass:[self class] method:@selector(loadAttationState:attationState:)];
 }
+
+- (void)loadAttationState:(NSString *)targetUserID attationState:(BOOL)attationState
+{
+    [self.dataArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if ([obj isKindOfClass:[CircleListObj class]]) {
+            CircleListObj *listObj = (CircleListObj *)obj;
+            if ([listObj.userid isEqualToString:targetUserID]) {
+                listObj.isAttention = attationState;
+            }
+        }
+    }];
+    [self.tableView reloadData];
+}
+
 
 - (void)requestDataWithTarget:(NSString *)target time:(NSString *)time
 {

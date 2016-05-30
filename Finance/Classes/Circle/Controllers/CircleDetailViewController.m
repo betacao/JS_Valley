@@ -100,7 +100,7 @@
         [Hud hideHud];
         [Hud showMessageWithText:response.errorMessage];
     }];
-    [SHGGlobleOperation registerAttationClass:[self class] method:@selector(loadAttationState:)];
+    [SHGGlobleOperation registerAttationClass:[self class] method:@selector(loadAttationState:attationState:)];
 }
 
 - (void)initView
@@ -999,10 +999,10 @@
     }
 }
 
-- (void)loadAttationState:(NSString *)targetUserID
+- (void)loadAttationState:(NSString *)targetUserID attationState:(BOOL)attationState
 {
     if ([self.obj.userid isEqualToString:targetUserID]) {
-        self.obj.isAttention = !self.obj.isAttention;
+        self.obj.isAttention = attationState;
         if (self.obj.isAttention){
             [self.btnAttention setImage:[UIImage imageNamed:@"newAttention"] forState:UIControlStateNormal] ;
         } else{
