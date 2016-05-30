@@ -209,7 +209,7 @@
     self.buttonView.backgroundColor = Color(@"efecee");
 
     self.redLineView.backgroundColor = Color(@"d43b37");
-    
+
     self.titleLabel.font = FontFactor(14.0f);
     self.titleLabel.textColor = Color(@"161616");
     self.titleLabel.text = @"我的人脉";
@@ -524,7 +524,7 @@
         NSMutableAttributedString *title = [[NSMutableAttributedString alloc] initWithString:[discoveryObject.industryName stringByAppendingFormat:@"\n%@", discoveryObject.industryNum] attributes:@{NSFontAttributeName:FontFactor(14.0f), NSForegroundColorAttributeName:Color(@"161616"), NSParagraphStyleAttributeName:style}];
 
         [title addAttributes:@{NSFontAttributeName:FontFactor(9.0f), NSForegroundColorAttributeName:Color(@"999999")} range:[title.string rangeOfString:discoveryObject.industryNum]];
-
+        
         [self setAttributedTitle:title image:discoveryObject.industryImage];
     }
     _object = object;

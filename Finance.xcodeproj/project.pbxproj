@@ -715,7 +715,6 @@
 		9894C97E1BF5D24200F80577 /* SHGActionSignTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9894C97C1BF5D24200F80577 /* SHGActionSignTableViewCell.xib */; };
 		9896F11F1C4F185C00E10A53 /* SHGMomentCityTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9896F11D1C4F185C00E10A53 /* SHGMomentCityTableViewCell.m */; };
 		9896F1201C4F185C00E10A53 /* SHGMomentCityTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9896F11E1C4F185C00E10A53 /* SHGMomentCityTableViewCell.xib */; };
-		9896F1241C50CB0A00E10A53 /* SHGGlobleTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9896F1221C50CB0A00E10A53 /* SHGGlobleTableViewCell.m */; };
 		98CB422F1C3262C00023A124 /* SHGSecondCategoryButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 98CB422E1C3262C00023A124 /* SHGSecondCategoryButton.m */; };
 		98D13FD71C3B69E6007CDFCD /* SHGMyTeamListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98D13FD51C3B69E6007CDFCD /* SHGMyTeamListTableViewController.m */; };
 		98D13FD81C3B69E6007CDFCD /* SHGMyTeamListTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98D13FD61C3B69E6007CDFCD /* SHGMyTeamListTableViewController.xib */; };
@@ -860,6 +859,8 @@
 		F924C2CA1CACCC780070286F /* SHGBusinessManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F924C2C91CACCC780070286F /* SHGBusinessManager.m */; };
 		F928141C1C045F8900C7782D /* SHGItemChooseView.m in Sources */ = {isa = PBXBuildFile; fileRef = F928141B1C045F8900C7782D /* SHGItemChooseView.m */; };
 		F93242BA1BE9EE92003B7F07 /* SHGUnifiedTreatment.m in Sources */ = {isa = PBXBuildFile; fileRef = F93242B91BE9EE92003B7F07 /* SHGUnifiedTreatment.m */; };
+		F9352BF91CFBCDBC00778635 /* SHGGloble.m in Sources */ = {isa = PBXBuildFile; fileRef = F9352BF61CFBCDBC00778635 /* SHGGloble.m */; };
+		F9352BFA1CFBCDBC00778635 /* SHGGlobleTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F9352BF81CFBCDBC00778635 /* SHGGlobleTableViewCell.m */; };
 		F936DD4B1C3A437500584F53 /* SHGFriendGroupingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F936DD491C3A437500584F53 /* SHGFriendGroupingViewController.m */; };
 		F936DD4C1C3A437500584F53 /* SHGFriendGroupingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F936DD4A1C3A437500584F53 /* SHGFriendGroupingViewController.xib */; };
 		F936DD501C3A553800584F53 /* SHGFriendGropingTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F936DD4E1C3A553800584F53 /* SHGFriendGropingTableViewCell.m */; };
@@ -946,7 +947,6 @@
 		F9ADD7C61CED94AC00FC0AC6 /* SHGGuideView.m in Sources */ = {isa = PBXBuildFile; fileRef = F9ADD7C51CED94AC00FC0AC6 /* SHGGuideView.m */; };
 		F9B0636B1BD7699400471DF4 /* SHGNavigationView.m in Sources */ = {isa = PBXBuildFile; fileRef = F9B0636A1BD7699400471DF4 /* SHGNavigationView.m */; };
 		F9B18C081BA0521600EA0314 /* SHGNoticeView.m in Sources */ = {isa = PBXBuildFile; fileRef = F9B18C071BA0521600EA0314 /* SHGNoticeView.m */; };
-		F9B7CC321B8AD6C000E55EFD /* SHGGloble.m in Sources */ = {isa = PBXBuildFile; fileRef = F9B7CC311B8AD6C000E55EFD /* SHGGloble.m */; };
 		F9BF4E8A1CB5F4B100D0155C /* SHGBusinessMainSendView.m in Sources */ = {isa = PBXBuildFile; fileRef = F9BF4E891CB5F4B100D0155C /* SHGBusinessMainSendView.m */; };
 		F9BF4E8E1CB6332700D0155C /* SHGBusinessSelectCategoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9BF4E8C1CB6332700D0155C /* SHGBusinessSelectCategoryViewController.m */; };
 		F9BF4E8F1CB6332700D0155C /* SHGBusinessSelectCategoryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9BF4E8D1CB6332700D0155C /* SHGBusinessSelectCategoryViewController.xib */; };
@@ -2000,8 +2000,6 @@
 		9896F11C1C4F185C00E10A53 /* SHGMomentCityTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGMomentCityTableViewCell.h; sourceTree = "<group>"; };
 		9896F11D1C4F185C00E10A53 /* SHGMomentCityTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGMomentCityTableViewCell.m; sourceTree = "<group>"; };
 		9896F11E1C4F185C00E10A53 /* SHGMomentCityTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGMomentCityTableViewCell.xib; sourceTree = "<group>"; };
-		9896F1211C50CB0A00E10A53 /* SHGGlobleTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGGlobleTableViewCell.h; sourceTree = "<group>"; };
-		9896F1221C50CB0A00E10A53 /* SHGGlobleTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGGlobleTableViewCell.m; sourceTree = "<group>"; };
 		98CB422D1C3262C00023A124 /* SHGSecondCategoryButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGSecondCategoryButton.h; sourceTree = "<group>"; };
 		98CB422E1C3262C00023A124 /* SHGSecondCategoryButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGSecondCategoryButton.m; sourceTree = "<group>"; };
 		98D13FD41C3B69E6007CDFCD /* SHGMyTeamListTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGMyTeamListTableViewController.h; sourceTree = "<group>"; };
@@ -2187,6 +2185,10 @@
 		F93242B81BE9EE92003B7F07 /* SHGUnifiedTreatment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGUnifiedTreatment.h; sourceTree = "<group>"; };
 		F93242B91BE9EE92003B7F07 /* SHGUnifiedTreatment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGUnifiedTreatment.m; sourceTree = "<group>"; };
 		F93242BB1BE9F73E003B7F07 /* CircleActionDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CircleActionDelegate.h; sourceTree = "<group>"; };
+		F9352BF51CFBCDBC00778635 /* SHGGloble.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGGloble.h; sourceTree = "<group>"; };
+		F9352BF61CFBCDBC00778635 /* SHGGloble.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGGloble.m; sourceTree = "<group>"; };
+		F9352BF71CFBCDBC00778635 /* SHGGlobleTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGGlobleTableViewCell.h; sourceTree = "<group>"; };
+		F9352BF81CFBCDBC00778635 /* SHGGlobleTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGGlobleTableViewCell.m; sourceTree = "<group>"; };
 		F936DD481C3A437500584F53 /* SHGFriendGroupingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGFriendGroupingViewController.h; sourceTree = "<group>"; };
 		F936DD491C3A437500584F53 /* SHGFriendGroupingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGFriendGroupingViewController.m; sourceTree = "<group>"; };
 		F936DD4A1C3A437500584F53 /* SHGFriendGroupingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGFriendGroupingViewController.xib; sourceTree = "<group>"; };
@@ -2333,8 +2335,6 @@
 		F9B0636A1BD7699400471DF4 /* SHGNavigationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGNavigationView.m; sourceTree = "<group>"; };
 		F9B18C061BA0521600EA0314 /* SHGNoticeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGNoticeView.h; sourceTree = "<group>"; };
 		F9B18C071BA0521600EA0314 /* SHGNoticeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGNoticeView.m; sourceTree = "<group>"; };
-		F9B7CC301B8AD6C000E55EFD /* SHGGloble.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGGloble.h; sourceTree = "<group>"; };
-		F9B7CC311B8AD6C000E55EFD /* SHGGloble.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGGloble.m; sourceTree = "<group>"; };
 		F9BF4E881CB5F4B100D0155C /* SHGBusinessMainSendView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGBusinessMainSendView.h; sourceTree = "<group>"; };
 		F9BF4E891CB5F4B100D0155C /* SHGBusinessMainSendView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGBusinessMainSendView.m; sourceTree = "<group>"; };
 		F9BF4E8B1CB6332700D0155C /* SHGBusinessSelectCategoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGBusinessSelectCategoryViewController.h; sourceTree = "<group>"; };
@@ -3022,6 +3022,7 @@
 		614A59741AD3AEA1005DAB04 /* Finance */ = {
 			isa = PBXGroup;
 			children = (
+				F9352BF41CFBCD8800778635 /* Globle */,
 				614DC8891AD65F6900F610D4 /* Common */,
 				F93FCBA41C856D5A004E356E /* Category */,
 				610FF0861AD62DB60027EBA6 /* Resource */,
@@ -3335,8 +3336,6 @@
 				F91778C11BFC240900C535CB /* SHGDatePickerView.xib */,
 				F9DB81611C1278BB007C63B7 /* SHGEmptyDataView.h */,
 				F9DB81621C1278BB007C63B7 /* SHGEmptyDataView.m */,
-				9896F1211C50CB0A00E10A53 /* SHGGlobleTableViewCell.h */,
-				9896F1221C50CB0A00E10A53 /* SHGGlobleTableViewCell.m */,
 				F96E10A11CBB9875006710A0 /* SHGCategoryButton.h */,
 				F96E10A21CBB9875006710A0 /* SHGCategoryButton.m */,
 				F9D560A91CCF68B500CD2457 /* SHGCopyTextView.h */,
@@ -3866,8 +3865,6 @@
 		61D62BFB1ADE0349002DD395 /* Modal */ = {
 			isa = PBXGroup;
 			children = (
-				F9B7CC301B8AD6C000E55EFD /* SHGGloble.h */,
-				F9B7CC311B8AD6C000E55EFD /* SHGGloble.m */,
 				61D62BFC1ADE035C002DD395 /* CircleListObj.h */,
 				61D62BFD1ADE035C002DD395 /* CircleListObj.m */,
 				B082D6611B82EF1C00BB6C20 /* RecmdFriendObj.h */,
@@ -4846,6 +4843,17 @@
 			name = Business;
 			path = Finance/Business;
 			sourceTree = SOURCE_ROOT;
+		};
+		F9352BF41CFBCD8800778635 /* Globle */ = {
+			isa = PBXGroup;
+			children = (
+				F9352BF51CFBCDBC00778635 /* SHGGloble.h */,
+				F9352BF61CFBCDBC00778635 /* SHGGloble.m */,
+				F9352BF71CFBCDBC00778635 /* SHGGlobleTableViewCell.h */,
+				F9352BF81CFBCDBC00778635 /* SHGGlobleTableViewCell.m */,
+			);
+			path = Globle;
+			sourceTree = "<group>";
 		};
 		F93FCBA41C856D5A004E356E /* Category */ = {
 			isa = PBXGroup;
@@ -5976,6 +5984,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F9352BFA1CFBCDBC00778635 /* SHGGlobleTableViewCell.m in Sources */,
 				6187D2F91AF1C693008E1D21 /* EMSearchDisplayController.m in Sources */,
 				982EB7FA1CB3A248003EEBE6 /* SHGEquityFinanceSendViewController.m in Sources */,
 				614AD1C01AD7AFED00DDF43E /* SHGHomeViewController.m in Sources */,
@@ -6047,7 +6056,6 @@
 				538964D61AFC6BEB00041548 /* UIViewController+DismissKeyboard.m in Sources */,
 				40302B1A1AEF61B600F22EB6 /* MyTeamViewController.m in Sources */,
 				F9ED07F41C3B6A530079A1A9 /* SHGModifyUserInfoViewController.m in Sources */,
-				9896F1241C50CB0A00E10A53 /* SHGGlobleTableViewCell.m in Sources */,
 				9842E9D41C0180240008B6AF /* SHGPersonFriendsTableViewCell.m in Sources */,
 				5331DF1C1AFC017600E035B8 /* ApplyFriendCell.m in Sources */,
 				F9EDD5F81BABFBCF00506C0C /* SDPhotoGroup.m in Sources */,
@@ -6230,7 +6238,6 @@
 				5331DF1D1AFC017600E035B8 /* ApplyViewController.m in Sources */,
 				F9EDD5F61BABFBCF00506C0C /* SDBrowserImageView.m in Sources */,
 				61425B7B1AFAB75E00758BCB /* ResetPasswardViewController.m in Sources */,
-				F9B7CC321B8AD6C000E55EFD /* SHGGloble.m in Sources */,
 				6187D2F41AF1C693008E1D21 /* EMTextView.m in Sources */,
 				F9BF4E8E1CB6332700D0155C /* SHGBusinessSelectCategoryViewController.m in Sources */,
 				F9ADD7C61CED94AC00FC0AC6 /* SHGGuideView.m in Sources */,
@@ -6261,6 +6268,7 @@
 				F936DD551C3A6C9700584F53 /* SHGGropingViewController.m in Sources */,
 				40302B101AEF57F600F22EB6 /* MyAddressTableViewCell.m in Sources */,
 				6187D2E11AF1C693008E1D21 /* EMChatImageBubbleView.m in Sources */,
+				F9352BF91CFBCDBC00778635 /* SHGGloble.m in Sources */,
 				98CB422F1C3262C00023A124 /* SHGSecondCategoryButton.m in Sources */,
 				F99B602C1B9E7D9500759AAC /* SHGUserHeaderView.m in Sources */,
 				611B8CD71AFD5C09009CB21F /* ReplyTableViewCell.m in Sources */,

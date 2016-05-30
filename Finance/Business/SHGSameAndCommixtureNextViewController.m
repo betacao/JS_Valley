@@ -84,74 +84,74 @@
     .leftSpaceToView(self.view, 0.0f)
     .rightSpaceToView(self.view, 0.0f)
     .bottomSpaceToView(self.view, MarginFactor(50.0f));
-    
+
     self.sureButton.sd_layout
     .leftSpaceToView(self.view, 0.0f)
     .rightSpaceToView(self.view, 0.0f)
     .bottomSpaceToView(self.view, 0.0f)
     .heightIs(MarginFactor(50.0f));
     //业务说明
-    
+
     self.marketExplainView.sd_layout
     .topSpaceToView(self.scrollView, 0.0f)
     .leftSpaceToView(self.scrollView, 0.0f)
     .rightSpaceToView(self.scrollView, 0.0f);
-    
+
     self.marketExplainTitleLabel.sd_layout
     .topSpaceToView(self.marketExplainView, ktopToView)
     .leftSpaceToView(self.marketExplainView, kLeftToView)
     .heightIs(ceilf(self.marketExplainTitleLabel.font.lineHeight));
     [self.marketExplainTitleLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
-    
+
     UIImage *image = [UIImage imageNamed:@"biXuan"];
     CGSize size = image.size;
-    
+
     self.marketExplainSelectImage.sd_layout
     .leftSpaceToView(self.marketExplainTitleLabel, kLeftToView)
     .centerYEqualToView(self.marketExplainTitleLabel)
     .widthIs(size.width)
     .heightIs(size.height);
-    
+
     self.marketExplainTextView.sd_layout
     .leftEqualToView(self.marketExplainTitleLabel)
     .topSpaceToView(self.marketExplainTitleLabel,ktopToView)
     .rightSpaceToView(self.marketExplainView, kLeftToView)
     .heightIs(MarginFactor(144.0f));
-    
+
     [self.marketExplainView setupAutoHeightWithBottomView:self.marketExplainTextView bottomMargin:ktopToView];
     //添加图片
     UIImage *addImage = [UIImage imageNamed:@"circle_plus"];
     CGSize addSize = addImage.size;
-    
+
     self.addImageView.sd_layout
     .topSpaceToView(self.marketExplainView, kLeftToView)
     .leftSpaceToView(self.scrollView, 0.0f)
     .rightSpaceToView(self.scrollView, 0.0f);
-    
+
     self.addImageTitleLabel.sd_layout
     .topSpaceToView(self.addImageView, ktopToView)
     .leftSpaceToView(self.addImageView, kLeftToView)
     .heightIs(ceilf(self.addImageTitleLabel.font.lineHeight));
     [self.addImageTitleLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
-    
+
     self.addImageButton.sd_layout
     .leftEqualToView(self.addImageTitleLabel)
     .topSpaceToView(self.addImageTitleLabel, ktopToView)
     .widthIs(addSize.width)
     .heightIs(addSize.height);
-    
+
     [self.addImageView setupAutoHeightWithBottomView:self.addImageButton bottomMargin:ktopToView];
-    
+
     self.authorizeButton.sd_layout
     .topSpaceToView(self.addImageView, MarginFactor(20.0f))
     .leftSpaceToView(self.scrollView, kLeftToView)
     .rightSpaceToView(self.scrollView, kLeftToView)
     .heightRatioToView(self.addImageTitleLabel, 1.0f);
-    
+
     //CGFloat y = self.scrollView.size.height - self.marketExplainView.size.height -self.addImageView.height - self.authorizeButton.size.height  + MarginFactor(55.0f);
     [self.scrollView setupAutoContentSizeWithBottomView:self.authorizeButton bottomMargin:MarginFactor(200.0f)];
 
-    
+
 }
 
 
@@ -166,31 +166,31 @@
         } else{
             self.authorizeButton.selected = NO;
         }
-        
+
         if (self.obj.url && self.obj.url.length > 0) {
             self.hasImage = YES;
             __weak typeof(self) weakSelf = self;
             [[SDWebImageManager sharedManager] downloadImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,self.obj.url]] options:SDWebImageRetryFailed|SDWebImageLowPriority progress:^(NSInteger receivedSize, NSInteger expectedSize) {
-                
+
             } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
                 [weakSelf.addImageButton setImage:image forState:UIControlStateNormal];
-           }];
-       }
+            }];
+        }
 
-   }
+    }
     self.sureButton.titleLabel.font = FontFactor(19.0f);
     [self.sureButton setTitleColor:Color(@"ffffff") forState:UIControlStateNormal];
     [self.sureButton setBackgroundColor:Color(@"f04241")];
     self.marketExplainTitleLabel.textColor = Color(@"161616");
     self.marketExplainTitleLabel.font = FontFactor(13.0f);
-    
+
     self.addImageTitleLabel.textColor = Color(@"161616");
     self.addImageTitleLabel.font = FontFactor(13.0f);
     self.marketExplainTextView.font = FontFactor(15.0f);
     self.marketExplainTextView.textColor = Color(@"161616");
     self.marketExplainTextView.placeholder = @" 请描述您的业务详情或将您的业务信息拍照上传";
     self.marketExplainTextView.placeholderColor = Color(@"bebebe");
-    
+
     self.authorizeButton.backgroundColor = [UIColor clearColor];
     self.authorizeButton.titleLabel.font = FontFactor(14.0f);
     [self.authorizeButton setTitleColor:Color(@"8b8b8b") forState:UIControlStateNormal];
@@ -207,16 +207,16 @@
 
 - (IBAction)sureButtonClick:(UIButton *)sender
 {
- 
+
     if ([self checkInputMessage]) {
         __weak typeof(self) weakSelf = self;
-           NSDictionary *businessDic = ((SHGSameAndCommixtureSendViewController *)weakSelf.superController).firstDic;
+        NSDictionary *businessDic = ((SHGSameAndCommixtureSendViewController *)weakSelf.superController).firstDic;
         [self uploadImage:^(BOOL success) {
             if (success) {
                 switch (((SHGSameAndCommixtureSendViewController *)weakSelf.superController).sendType) {
                     case SHGSameAndCommixtureSendTypeNew:{
                         NSString *anonymous = weakSelf.authorizeButton.isSelected ? @"1" : @"0";
-                        
+
                         NSString *type = [businessDic objectForKey:@"type"];
                         NSString *contact = [businessDic objectForKey:@"contact"];
                         NSString *businessType = [businessDic objectForKey:@"businessType"];
@@ -229,7 +229,7 @@
                         NSDictionary *param = @{@"uid":UID,@"type": type, @"contact":contact, @"businessType":businessType, @"investAmount": investAmount, @"area": area, @"detail": weakSelf.marketExplainTextView.text,@"photo": weakSelf.imageName,@"anonymous": anonymous,@"title": title, @"version":[SHGGloble sharedGloble].currentVersion};
                         NSLog(@"%@",param);
                         NSLog(@"%@",weakSelf.marketExplainTextView.text);
-                        
+
                         [SHGBusinessManager createNewBusiness:param success:^(BOOL success, NSString *bussinessId) {
                             if (success) {
                                 object.businessID = bussinessId;
@@ -239,9 +239,9 @@
                                 [weakSelf.navigationController pushViewController:viewController animated:YES];
                             }
                         }];
-                        
+
                     }  break;
-                        
+
                     case SHGSameAndCommixtureSendTypeReSet:{
                         NSString *anonymous = weakSelf.authorizeButton.isSelected ? @"1" : @"0";
                         NSString *businessId = self.obj.businessID;
@@ -267,22 +267,20 @@
                                     }
                                     if ([viewController isKindOfClass:[SHGBusinessMineViewController class]]){
                                         [(SHGBusinessMineViewController *)viewController didCreateOrModifyBusiness];
-                                        
                                     }
-                                    
-                                }                            }
+                                }
+                            }
                         }];
-                        
-                        
+
                     }  break;
                     default:
                         break;
                 }
-   
+
             }
         }];
-        
-        
+
+
     }
 }
 
@@ -295,7 +293,7 @@
             NSData *imageData = UIImageJPEGRepresentation(self.addImageButton.imageView.image, 0.1);
             [formData appendPartWithFileData:imageData name:@"market.jpg" fileName:@"market.jpg" mimeType:@"image/jpeg"];
         } progress:^(NSProgress * _Nonnull uploadProgress) {
-            
+
         } success:^(NSURLSessionDataTask *operation, id responseObject) {
             NSLog(@"%@",responseObject);
             [Hud hideHud];
@@ -311,7 +309,7 @@
         self.imageName = @"";
         block(YES);
     }
-    
+
 }
 
 - (BOOL)checkInputMessage
@@ -390,7 +388,7 @@
     point.y = MAX(0.0f, keyboardSize.height + point.y - CGRectGetHeight(self.view.frame));
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.scrollView setContentOffset:point animated:YES];
-        
+
     });
 }
 
@@ -413,7 +411,7 @@
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-
+    
 }
 
 @end

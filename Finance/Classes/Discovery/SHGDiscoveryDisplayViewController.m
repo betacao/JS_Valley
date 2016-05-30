@@ -10,11 +10,15 @@
 #import "SHGDiscoveryManager.h"
 #import "EMSearchBar.h"
 #import "SHGRecommendCollectionView.h"
+#import "SHGEmptyDataView.h"
 
 @interface SHGDiscoveryDisplayViewController ()<UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) IBOutlet UITableViewCell *recommendCell;
+@property (strong, nonatomic) IBOutlet UITableViewCell *emptyCell;
+@property (strong, nonatomic) SHGEmptyDataView *emptyView;
+
 @property (strong, nonatomic) EMSearchBar *searchBar;
 @property (assign, nonatomic) NSInteger pageNumber;
 @property (strong, nonatomic) NSString *searchText;
@@ -77,6 +81,25 @@
     return _recommendCollectionView;
 }
 
+- (UITableViewCell *)emptyCell
+{
+    if (!_emptyCell) {
+        _emptyCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+        _emptyCell.selectionStyle = UITableViewCellSelectionStyleNone;
+        [_emptyCell.contentView addSubview:self.emptyView];
+    }
+    return _emptyCell;
+}
+
+- (SHGEmptyDataView *)emptyView
+{
+    if (!_emptyView) {
+        _emptyView = [[SHGEmptyDataView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, SCREENWIDTH, SCREENHEIGHT)];
+    }
+    return _emptyView;
+}
+
+
 - (void)setHideSearchBar:(BOOL)hideSearchBar
 {
     _hideSearchBar = hideSearchBar;
@@ -107,6 +130,7 @@
         if (firstArray.count > 0) {
             [weakSelf.dataArr addObjectsFromArray:firstArray];
         } else if(secondArray.count > 0) {
+            weakSelf.hideSearchBar = YES;
             weakSelf.recommendContactArray = [NSArray arrayWithArray:secondArray];
             weakSelf.recommendCollectionView.dataArray = weakSelf.recommendContactArray;
         }
@@ -138,7 +162,7 @@
     if (self.recommendContactArray) {
         return 1;
     }
-    return self.dataArr.count;
+    return self.dataArr.count == 0 ? 1 : self.dataArr.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -151,13 +175,16 @@
         CGFloat height = [tableView cellHeightForIndexPath:indexPath model:object keyPath:@"object" cellClass:[SHGDiscoveryDisplayCell class] contentViewWidth:SCREENWIDTH];
         return height;
     }
-    return 0.0f;
+    return CGRectGetHeight(tableView.frame);
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (self.recommendContactArray) {
         return self.recommendCell;
+    }
+    if (self.dataArr.count == 0) {
+        return self.emptyCell;
     }
     SHGDiscoveryDisplayCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SHGDiscoveryDisplayCell"];
     if(!cell) {
@@ -340,6 +367,10 @@
 @property (strong, nonatomic) EMSearchBar *searchBar;
 @property (strong, nonatomic) NSString *searchText;
 
+@property (strong, nonatomic) UITableViewCell *emptyCell;
+@property (strong, nonatomic) SHGEmptyDataView *emptyView;
+
+
 @end
 
 @implementation SHGDiscoveryDisplayExpandViewController
@@ -402,6 +433,24 @@
     }
     return _tableView;
 }
+- (UITableViewCell *)emptyCell
+{
+    if (!_emptyCell) {
+        _emptyCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+        _emptyCell.selectionStyle = UITableViewCellSelectionStyleNone;
+        [_emptyCell.contentView addSubview:self.emptyView];
+    }
+    return _emptyCell;
+}
+
+- (SHGEmptyDataView *)emptyView
+{
+    if (!_emptyView) {
+        _emptyView = [[SHGEmptyDataView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, SCREENWIDTH, SCREENHEIGHT)];
+    }
+    return _emptyView;
+}
+
 
 - (void)refreshFooter
 {
@@ -452,7 +501,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.dataArr.count;
+    return self.dataArr.count == 0 ? 1 : self.dataArr.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -462,11 +511,14 @@
         CGFloat height = [tableView cellHeightForIndexPath:indexPath model:object keyPath:@"object" cellClass:[SHGDiscoveryDisplayCell class] contentViewWidth:SCREENWIDTH];
         return height;
     }
-    return 0.0f;
+    return CGRectGetHeight(tableView.frame);
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if (self.dataArr.count == 0) {
+        return self.emptyCell;
+    }
     SHGDiscoveryDisplayCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SHGDiscoveryDisplayCell"];
     if(!cell) {
         cell = [[[NSBundle mainBundle] loadNibNamed:@"SHGDiscoveryDisplayCell" owner:self options:nil] lastObject];
