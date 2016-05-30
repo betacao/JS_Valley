@@ -19,4 +19,6 @@
 
 @property (assign, nonatomic) BOOL scrollEnabled;
 
+- (void)reloadData;
+
 @end

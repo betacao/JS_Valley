@@ -42,6 +42,11 @@
     return self;
 }
 
+- (void)reloadData
+{
+    [self.collectionView reloadData];
+}
+
 - (CGFloat)totalHeight
 {
     return ceilf(self.dataArray.count / 2) * (kCellMargin + kCellHeight) - kCellMargin / 2 + CGRectGetHeight(self.topView.frame);

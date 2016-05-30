@@ -2,17 +2,12 @@
 //  SHGNewsViewController.h
 //  Finance
 //
-//  Created by changxicao on 15/11/4.
-//  Copyright © 2015年 HuMin. All rights reserved.
+//  Created by changxicao on 16/5/30.
+//  Copyright © 2016年 HuMin. All rights reserved.
 //
 
 #import "BaseTableViewController.h"
 
 @interface SHGNewsViewController : BaseTableViewController
-
-
-- (NSMutableArray *)currentDataArray;
-
-- (void)refreshHeader;
 
 @end

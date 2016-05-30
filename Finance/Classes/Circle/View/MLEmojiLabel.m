@@ -28,7 +28,7 @@ return _##regularExpression;\
 
 REGULAREXPRESSION(URLRegularExpression,@"((http[s]{0,1}|ftp)://[a-zA-Z0-9\\.\\-]+\\.([a-zA-Z]{2,4})(:\\d+)?(/[a-zA-Z0-9\\.\\-~!@#$%^&*+?:_/=<>]*)?)|(www.[a-zA-Z0-9\\.\\-]+\\.([a-zA-Z]{2,4})(:\\d+)?(/[a-zA-Z0-9\\.\\-~!@#$%^&*+?:_/=<>]*)?)")
 
-REGULAREXPRESSION(PhoneNumerRegularExpression, @"(((13[0-9])|(15([0|1|2|3|5|6|7|8|9]))|(14([5|7]))|(17([0|5|6|7|8]))|(18[0-9]))\\d{8})|(0\\d{2}-\\d{8})|(0\\d{3}-\\d{8})|(((13[0-9])|(15([0|1|2|3|5|6|7|8|9]))|(14([5|7]))|(17([0|5|6|7|8]))|(18[0-9]))-\\d{4}-\\d{4})")
+REGULAREXPRESSION(PhoneNumerRegularExpression, @"\\d{3}-\\d{8}|\\d{3}-\\d{7}|\\d{4}-\\d{8}|\\d{4}-\\d{7}|1+[3578]+\\d{9}|\\d{8}|\\d{7}")
 
 REGULAREXPRESSION(EmailRegularExpression, @"[A-Z0-9a-z\\._%+-]+@([A-Za-z0-9-]+\\.)+[A-Za-z]{2,4}")
 

@@ -61,6 +61,8 @@
 
     self.tableView.tableHeaderView = self.searchBar;
     self.tableView.tableFooterView = [[UIView alloc] init];
+
+    [SHGGlobleOperation registerAttationClass:[self class] method:@selector(loadAttationState:)];
 }
 
 - (void)addAutoLayout
@@ -80,7 +82,6 @@
     }
     return _titleLabel;
 }
-
 
 - (EMSearchBar *)searchBar
 {
@@ -104,6 +105,14 @@
     return _recommendCollectionView;
 }
 
+- (void)loadAttationState:(id)object
+{
+    if ([object isKindOfClass:[SHGDiscoveryRecommendObject class]]) {
+        SHGDiscoveryRecommendObject *recommendObject = (SHGDiscoveryRecommendObject *)object;
+        recommendObject.isAttention = !recommendObject.isAttention;
+    }
+    [self.recommendCollectionView reloadData];
+}
 
 - (void)loadData
 {

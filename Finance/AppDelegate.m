@@ -13,8 +13,6 @@
 #import "ContactSelectionViewController.h"
 #import "AppDelegate+EaseMob.h"
 #import "RegistViewController.h"
-#import "ProductListViewController.h"
-#import "ProdConsulutionViewController.h"
 #import "CircleDetailViewController.h"
 #import "ApplyViewController.h"
 #import "CircleDetailViewController.h"

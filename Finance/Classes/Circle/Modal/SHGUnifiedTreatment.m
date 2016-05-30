@@ -10,7 +10,6 @@
 #import "LinkViewController.h"
 #import "SHGSegmentController.h"
 #import "RecmdFriendObj.h"
-#import "SHGNewsViewController.h"
 #import "SHGPersonalViewController.h"
 
 @implementation SHGUnifiedTreatment

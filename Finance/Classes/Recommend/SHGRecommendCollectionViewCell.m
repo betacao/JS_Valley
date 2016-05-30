@@ -49,6 +49,7 @@
     self.fourthLabel.textColor = Color(@"a5a5a5");
 
     [self.button setImage:[UIImage imageNamed:@"me_follow"] forState:UIControlStateNormal];
+    [self.button addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)addAutoLayout
@@ -109,6 +110,11 @@
             [self.button setImage:[UIImage imageNamed:@"me_follow"] forState:UIControlStateNormal];
         }
     }
+}
+
+- (void)buttonClick:(UIButton *)button
+{
+    [SHGGlobleOperation addAttation:self.object];
 }
 
 @end

@@ -1,4 +1,4 @@
- //
+//
 //  SHGGloble.m
 //  Finance
 //
@@ -24,7 +24,7 @@
 @property (strong, nonatomic) NSString *currentUserID;
 /**
  @brief  首页url返回的数据，如果没有数据也不是nil
- 
+
  @since 1.4.1
  */
 @property (strong, nonatomic) NSMutableArray *homeListArray;
@@ -154,7 +154,7 @@
     [[SHGHomeViewController sharedController] requestRecommendFriends];
     [[SHGHomeViewController sharedController] loadRegisterPushFriend];
     NSDictionary *param = @{@"uid":UID, @"type":@"all", @"target":@"first", @"rid":@(0), @"num": rRequestNum, @"tagId": @"-1"};
-    
+
     __weak typeof(self) weakSelf = self;
     [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,dynamicAndNews] class:[CircleListObj class] parameters:param success:^(MOCHTTPResponse *response){
         NSLog(@"首页预加载数据成功");
@@ -555,9 +555,9 @@
             [arr addObject:obj];
             [HeadImage inertWithArr:arr];
             block(obj);
-            
+
         } failed:^(MOCHTTPResponse *response) {
-            
+
         }];
     });
 }
@@ -579,10 +579,10 @@
     NSArray *globleKeyArray = [[self getBusinessKeysAndValues] allKeys];
     NSArray *globleValueArray = [[self getBusinessKeysAndValues] allValues];
     NSArray *keys = [values componentsSeparatedByString:@"#"];
-    
+
     [keys enumerateObjectsUsingBlock:^(NSString *obj, NSUInteger idx, BOOL * _Nonnull stop) {
         key = [[obj componentsSeparatedByString:@":"] firstObject];
-        value = [[[obj componentsSeparatedByString:@":"] lastObject] stringByReplacingOccurrencesOfString:@" " withString:@""];
+        value = [[obj componentsSeparatedByString:@":"] lastObject];
         if (show) {
             __block NSString *string = [NSString stringWithFormat:@"%@：%@\n",key, value];
 
@@ -616,7 +616,7 @@
 
 - (NSMutableArray *)editBusinessKeysForValues:(NSArray *)nameArray middleContentArray:(NSArray *)middleContentArray
 {
-    
+
     NSMutableArray *resultArray = [[NSMutableArray alloc] init];
     [middleContentArray enumerateObjectsUsingBlock:^(NSString *obj, NSUInteger idx, BOOL * _Nonnull stop) {
         NSString *key = [[obj componentsSeparatedByString:@"："] firstObject];
@@ -625,7 +625,7 @@
             if ([key isEqualToString:[nameArray objectAtIndex:i]]) {
                 [resultArray addObject:value];
             }
-            
+
         }
     }];
     return resultArray;
@@ -660,8 +660,8 @@
      26         * 区号：010,020,021,022,023,024,025,027,028,029
      27         * 号码：七位或八位
      28         */
-     NSString * PHS = @"^0(10|2[05789]|\\d{3})\\d{7,8}$";
-    
+    NSString * PHS = @"^0(10|2[05789]|\\d{3})\\d{7,8}$";
+
     NSPredicate *regextestmobile = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", MOBILE];
     NSPredicate *regextestcm = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", CM];
     NSPredicate *regextestcu = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", CU];
@@ -672,13 +672,13 @@
         || ([regextestct evaluateWithObject:mobileNum] == YES)
         || ([regextestcu evaluateWithObject:mobileNum] == YES)
         || ([regextestPHS evaluateWithObject:mobileNum] == YES)){
-        
+
         return nil;
-        
+
     } else{
         return @"请输入正确的手机号码或座机号";
     }
-    
+
 }
 
 - (void)dialNumber:(NSString *)number
@@ -715,11 +715,11 @@
             break;
         case MessageComposeResultFailed:
             //信息传送失败
-
+            
             break;
         case MessageComposeResultCancelled:
             //信息被用户取消传送
-
+            
             break;
         default:
             break;

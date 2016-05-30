@@ -49,6 +49,7 @@
     self.tableView.tableFooterView = [[UIView alloc] init];
     self.hideSearchBar = NO;
     self.searchText = @"";
+    [SHGGlobleOperation registerAttationClass:[self class] method:@selector(loadAttationState:)];
 }
 
 - (void)addAutoLayout
@@ -121,6 +122,16 @@
 - (void)refreshFooter
 {
     [self loadData];
+}
+
+- (void)loadAttationState:(id)object
+{
+    if ([object isKindOfClass:[SHGDiscoveryDepartmentObject class]]) {
+        SHGDiscoveryDepartmentObject *departmentObject = (SHGDiscoveryDepartmentObject *)object;
+        departmentObject.isAttention = !departmentObject.isAttention;
+
+    }
+    [self.tableView reloadData];
 }
 
 - (void)loadData
@@ -354,6 +365,10 @@
         NSString *content =[NSString stringWithFormat:@"%@%@",@"诚邀您加入大牛圈--金融业务互助平台！这里有业务互助、人脉嫁接！赶快加入吧！",[NSString stringWithFormat:@"%@?uid=%@",SHARE_YAOQING_URL, UID]];
         SHGDiscoveryInvateObject *invateObject = (SHGDiscoveryInvateObject *)self.object;
         [[SHGGloble sharedGloble] showMessageView:@[invateObject.phone] body:content];
+    } else if ([self.object isKindOfClass:[SHGDiscoveryPeopleObject class]]) {
+        [SHGGlobleOperation addAttation:self.object];
+    } else if ([self.object isKindOfClass:[SHGDiscoveryDepartmentObject class]]) {
+        [SHGGlobleOperation addAttation:self.object];
     }
 }
 
@@ -393,6 +408,7 @@
     self.tableView.mj_footer.automaticallyHidden = YES;
     self.tableView.tableFooterView = [[UIView alloc] init];
     self.searchText = @"";
+    [SHGGlobleOperation registerAttationClass:[self class] method:@selector(loadAttationState:)];
 }
 
 - (void)addAutoLayout
@@ -433,6 +449,7 @@
     }
     return _tableView;
 }
+
 - (UITableViewCell *)emptyCell
 {
     if (!_emptyCell) {
@@ -451,10 +468,19 @@
     return _emptyView;
 }
 
-
 - (void)refreshFooter
 {
     [self loadDataWithTarget:@"load"];
+}
+
+- (void)loadAttationState:(id)object
+{
+    if ([object isKindOfClass:[SHGDiscoveryPeopleObject class]]) {
+        SHGDiscoveryPeopleObject *peopleObject = (SHGDiscoveryPeopleObject *)object;
+        peopleObject.isAttention = !peopleObject.isAttention;
+
+    }
+    [self.tableView reloadData];
 }
 
 - (NSString *)minUserID

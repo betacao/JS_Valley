@@ -59,5 +59,6 @@
 #import "UIButton+EnlargeEdge.h"
 #import "SHGCategoryButton.h"
 #import "SHGAlertView.h"
+#import "SHGGlobleOperation.h"
 #endif
 #endif

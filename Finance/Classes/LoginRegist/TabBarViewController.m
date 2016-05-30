@@ -8,7 +8,6 @@
 
 #import "TabBarViewController.h"
 #import "SHGHomeViewController.h"
-#import "ProductListViewController.h"
 #import "SHGUserCenterViewController.h"
 #import "ApplyViewController.h"
 #import "CircleDetailViewController.h"
@@ -198,7 +197,7 @@
 - (SHGNewsViewController *)newsViewController
 {
     if(!_newsViewController){
-        _newsViewController = [[SHGNewsViewController alloc] initWithNibName:@"SHGNewsViewController" bundle:nil];
+        _newsViewController = [[SHGNewsViewController alloc] init];
     }
     return _newsViewController;
 }
