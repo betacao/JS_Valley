@@ -10,6 +10,7 @@
 #import "SHGDiscoveryDisplayViewController.h"
 #import "SHGDiscoveryManager.h"
 #import "EMSearchBar.h"
+#import "SHGPersonalViewController.h"
 
 @interface SHGDiscoverySearchViewController ()<UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource>
 
@@ -179,6 +180,15 @@
     return cell;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (self.dataArr.count > 0) {
+        SHGDiscoveryPeopleObject *object = [self.dataArr objectAtIndex:indexPath.row];
+        SHGPersonalViewController *viewController = [[SHGPersonalViewController alloc] init];
+        viewController.userId = object.userID;
+        [self.navigationController pushViewController:viewController animated:YES];
+    }
+}
 
 - (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar
 {

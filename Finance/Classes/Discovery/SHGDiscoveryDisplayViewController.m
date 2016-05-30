@@ -11,6 +11,7 @@
 #import "EMSearchBar.h"
 #import "SHGRecommendCollectionView.h"
 #import "SHGEmptyDataView.h"
+#import "SHGPersonalViewController.h"
 
 @interface SHGDiscoveryDisplayViewController ()<UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate>
 
@@ -208,6 +209,16 @@
     return cell;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (self.dataArr.count > 0) {
+        SHGDiscoveryPeopleObject *object = [self.dataArr objectAtIndex:indexPath.row];
+        SHGPersonalViewController *viewController = [[SHGPersonalViewController alloc] init];
+        viewController.userId = object.userID;
+        [self.navigationController pushViewController:viewController animated:YES];
+    }
+}
+
 - (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar
 {
     [searchBar setShowsCancelButton:YES animated:YES];
@@ -288,12 +299,14 @@
 
     self.firstLabel.sd_layout
     .topEqualToView(self.headerView)
-    .leftSpaceToView(self.headerView, MarginFactor(10.0f));
+    .leftSpaceToView(self.headerView, MarginFactor(10.0f))
+    .heightIs(self.firstLabel.font.lineHeight);
     [self.firstLabel setSingleLineAutoResizeWithMaxWidth:MarginFactor(200.0f)];
 
     self.secondLabel.sd_layout
     .centerYEqualToView(self.headerView)
-    .leftEqualToView(self.firstLabel);
+    .leftEqualToView(self.firstLabel)
+    .heightIs(self.secondLabel.font.lineHeight);
     [self.secondLabel setSingleLineAutoResizeWithMaxWidth:MarginFactor(200.0f)];
 
     self.thirdLabel.sd_layout
@@ -558,6 +571,17 @@
     cell.object = [self.dataArr objectAtIndex:indexPath.row];
     return cell;
 }
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (self.dataArr.count > 0) {
+        SHGDiscoveryPeopleObject *object = [self.dataArr objectAtIndex:indexPath.row];
+        SHGPersonalViewController *viewController = [[SHGPersonalViewController alloc] init];
+        viewController.userId = object.userID;
+        [self.navigationController pushViewController:viewController animated:YES];
+    }
+}
+
 
 - (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar
 {
