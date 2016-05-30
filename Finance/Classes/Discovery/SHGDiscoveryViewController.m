@@ -105,12 +105,16 @@
     return _recommendCollectionView;
 }
 
-- (void)loadAttationState:(id)object
+- (void)loadAttationState:(NSString *)targetUserID
 {
-    if ([object isKindOfClass:[SHGDiscoveryRecommendObject class]]) {
-        SHGDiscoveryRecommendObject *recommendObject = (SHGDiscoveryRecommendObject *)object;
-        recommendObject.isAttention = !recommendObject.isAttention;
-    }
+    [self.recommendContactArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if ([obj isKindOfClass:[SHGDiscoveryRecommendObject class]]) {
+            SHGDiscoveryRecommendObject *recommendObject = (SHGDiscoveryRecommendObject *)obj;
+            if ([recommendObject.userID isEqualToString:targetUserID]) {
+                recommendObject.isAttention = !recommendObject.isAttention;
+            }
+        }
+    }];
     [self.recommendCollectionView reloadData];
 }
 

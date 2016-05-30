@@ -376,7 +376,7 @@
     self.obj.cmmtnum = [NSString stringWithFormat:@"%@",dic[@"cmmtnum"]];
     self.obj.company = dic[@"company"];
     self.obj.detail = dic[@"detail"];
-    self.obj.isAttention = dic[@"isattention"];
+    self.obj.isAttention = [dic[@"isattention"] isEqualToString:@"Y"] ? YES : NO;
     self.obj.nickname = dic[@"nickname"];
     self.obj.photos = dic[@"attach"];
     self.obj.potname = dic[@"potname"];
@@ -999,12 +999,15 @@
     }
 }
 
-- (void)loadAttationState:(id)object
+- (void)loadAttationState:(NSString *)targetUserID
 {
-    if ([object isKindOfClass:[CircleListObj class]]) {
-        CircleListObj *listObject = (CircleListObj *)object;
-        listObject.isAttention = !listObject.isAttention;
-
+    if ([self.obj.userid isEqualToString:targetUserID]) {
+        self.obj.isAttention = !self.obj.isAttention;
+        if (self.obj.isAttention){
+            [self.btnAttention setImage:[UIImage imageNamed:@"newAttention"] forState:UIControlStateNormal] ;
+        } else{
+            [self.btnAttention setImage:[UIImage imageNamed:@"newAddAttention"] forState:UIControlStateNormal];
+        }
     }
 }
 

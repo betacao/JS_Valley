@@ -221,25 +221,11 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     [[[self.viewControllers firstObject] performSelector:@selector(currentDataArray)] removeObject:object];
 }
 
-- (void)removeObjects:(NSArray *)array
-{
-    [[[self.viewControllers lastObject] performSelector:@selector(currentDataArray)] removeObjectsInArray:array];
-}
-
 - (NSArray *)targetObjectsByRid:(NSString *)string
 {
     NSMutableArray *result = [NSMutableArray array];
     NSMutableArray *array1 = [[self.viewControllers firstObject] performSelector:@selector(currentDataArray)];
-    NSMutableArray *array2 = [[self.viewControllers lastObject] performSelector:@selector(currentDataArray)];
     [array1 enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        if ([obj isKindOfClass:[CircleListObj class]]){
-            CircleListObj *object = (CircleListObj *)obj;
-            if([object.rid isEqualToString:string]){
-                [result addObject:object];
-            }
-        }
-    }];
-    [array2 enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         if ([obj isKindOfClass:[CircleListObj class]]){
             CircleListObj *object = (CircleListObj *)obj;
             if([object.rid isEqualToString:string]){
@@ -254,16 +240,7 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
 {
     NSMutableArray *result = [NSMutableArray array];
     NSMutableArray *array1 = [[self.viewControllers firstObject] performSelector:@selector(currentDataArray)];
-    NSMutableArray *array2 = [[self.viewControllers lastObject] performSelector:@selector(currentDataArray)];
     [array1 enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        if ([obj isKindOfClass:[CircleListObj class]]){
-            CircleListObj *object = (CircleListObj *)obj;
-            if([object.userid isEqualToString:string]){
-                [result addObject:object];
-            }
-        }
-    }];
-    [array2 enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         if ([obj isKindOfClass:[CircleListObj class]]){
             CircleListObj *object = (CircleListObj *)obj;
             if([object.userid isEqualToString:string]){
@@ -283,16 +260,7 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
 {
     NSMutableArray *result = [NSMutableArray array];
     NSMutableArray *array1 = [[self.viewControllers firstObject] performSelector:@selector(currentDataArray)];
-    NSMutableArray *array2 = [[self.viewControllers lastObject] performSelector:@selector(currentDataArray)];
     [array1 enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        if ([obj isKindOfClass:[CircleListObj class]]){
-            CircleListObj *object = (CircleListObj *)obj;
-            if([object.rid isEqualToString:string]){
-                [result addObject:@(idx)];
-            }
-        }
-    }];
-    [array2 enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         if ([obj isKindOfClass:[CircleListObj class]]){
             CircleListObj *object = (CircleListObj *)obj;
             if([object.rid isEqualToString:string]){

@@ -31,7 +31,6 @@
 #import "TabBarViewController.h"
 #import "popObj.h"
 #import "SHGPersonalViewController.h"
-#import "SHGFriendGroupingViewController.h"
 
 static NSString * const kUid				= @"uid";
 static NSString * const kHeadImg			= @"headimg";

@@ -20,5 +20,5 @@
 - (void)loadRegisterPushFriend;
 //调整推荐好友和好友提醒的位置
 - (void)adjustAdditionalObject;
-- (void)loadAttationState:(id)object;
+- (void)loadAttationState:(NSString *)targetUserID;
 @end

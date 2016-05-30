@@ -124,13 +124,16 @@
     [self loadData];
 }
 
-- (void)loadAttationState:(id)object
+- (void)loadAttationState:(NSString *)targetUserID
 {
-    if ([object isKindOfClass:[SHGDiscoveryDepartmentObject class]]) {
-        SHGDiscoveryDepartmentObject *departmentObject = (SHGDiscoveryDepartmentObject *)object;
-        departmentObject.isAttention = !departmentObject.isAttention;
-
-    }
+    [self.dataArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if ([obj isKindOfClass:[SHGDiscoveryDepartmentObject class]]) {
+            SHGDiscoveryDepartmentObject *departmentObject = (SHGDiscoveryDepartmentObject *)obj;
+            if ([departmentObject.userID isEqualToString:targetUserID]) {
+                departmentObject.isAttention = !departmentObject.isAttention;
+            }
+        }
+    }];
     [self.tableView reloadData];
 }
 
@@ -473,13 +476,16 @@
     [self loadDataWithTarget:@"load"];
 }
 
-- (void)loadAttationState:(id)object
+- (void)loadAttationState:(NSString *)targetUserID
 {
-    if ([object isKindOfClass:[SHGDiscoveryPeopleObject class]]) {
-        SHGDiscoveryPeopleObject *peopleObject = (SHGDiscoveryPeopleObject *)object;
-        peopleObject.isAttention = !peopleObject.isAttention;
-
-    }
+    [self.dataArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if ([obj isKindOfClass:[SHGDiscoveryPeopleObject class]]) {
+            SHGDiscoveryPeopleObject *peopleObject = (SHGDiscoveryPeopleObject *)obj;
+            if ([peopleObject.userID isEqualToString:targetUserID]) {
+                peopleObject.isAttention = !peopleObject.isAttention;
+            }
+        }
+    }];
     [self.tableView reloadData];
 }
 

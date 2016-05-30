@@ -319,13 +319,24 @@
     }];
 }
 
-- (void)loadAttationState:(id)object
+- (void)loadAttationState:(NSString *)targetUserID
 {
-    if ([object isKindOfClass:[CircleListObj class]]) {
-        CircleListObj *listObject = (CircleListObj *)object;
-        listObject.isAttention = !listObject.isAttention;
-    }
+    [self.dataArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if ([obj isKindOfClass:[CircleListObj class]]) {
+            CircleListObj *listObject = (CircleListObj *)obj;
+            if ([listObject.userid isEqualToString:targetUserID]) {
+                listObject.isAttention = !listObject.isAttention;
+            }
+        } else if ([obj isKindOfClass:[NSArray class]]) {
+            [obj enumerateObjectsUsingBlock:^(RecmdFriendObj *friendObject, NSUInteger idx, BOOL * _Nonnull stop) {
+                if ([friendObject.uid isEqualToString:targetUserID]) {
+                    friendObject.isAttention = !friendObject.isAttention;
+                }
+            }];
+        }
+    }];
     [self.tableView reloadData];
+
 }
 
 - (void)requestDataWithTarget:(NSString *)target time:(NSString *)time
