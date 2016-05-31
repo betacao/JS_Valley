@@ -218,12 +218,6 @@
 {
     if (!_emptyView) {
         _emptyView = [[SHGEmptyDataView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, SCREENWIDTH, SCREENHEIGHT)];
-        __weak typeof(self) weakSelf = self;
-        _emptyView.block = ^(NSDictionary *dictionary){
-            SHGMarketSecondCategoryViewController *controller = [[SHGMarketSecondCategoryViewController alloc] init];
-            controller.delegate = weakSelf;
-            [weakSelf.navigationController pushViewController:controller animated:YES];
-        };
     }
     return _emptyView;
 }
@@ -373,7 +367,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (self.currentArray.count == 0) {
-        self.emptyView.type = SHGEmptyDateTypeNormal;
+        self.emptyView.type = SHGEmptyDateNormal;
         return self.emptyCell;
     }
     SHGMarketObject *object = [self.currentArray objectAtIndex:indexPath.row];

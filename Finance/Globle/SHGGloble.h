@@ -70,6 +70,13 @@ typedef void (^SHHomeDataCompletionBlock)(NSArray *allList, NSArray *normalList,
  */
 @property (strong, nonatomic) NSString *currentVersion;
 
+/**
+ @brief 当前手机的型号
+
+ @since 1.8.2
+ */
+@property (strong, nonatomic) NSString *platform;
+
 
 /**
  @brief  首页请求完成的回掉

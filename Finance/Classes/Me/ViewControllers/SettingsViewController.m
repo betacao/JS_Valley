@@ -9,7 +9,6 @@
 #import "SettingsViewController.h"
 #import "SettingsObj.h"
 #import "SettingsViewController.h"
-#import "SettingQuestionViewController.h"
 #import "SettingModifyPWDViewController.h"
 #import "SettingAboutUsViewController.h"
 #import "LoginViewController.h"

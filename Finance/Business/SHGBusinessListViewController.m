@@ -592,7 +592,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (self.currentArray.count == 0) {
-        self.emptyView.type = SHGEmptyDateTypeNormal;
+        self.emptyView.type = SHGEmptyDateNormal;
         return self.emptyCell;
     }
     SHGBusinessObject *object = [self.currentArray objectAtIndex:indexPath.row];

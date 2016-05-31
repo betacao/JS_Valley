@@ -81,9 +81,8 @@
         [Hud showMessageWithText:@"请输入反馈意见！"];
         return;
     }
-    NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
     
-    [MOCHTTPRequestOperationManager postWithURL:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"feedback"]parameters:@{@"uid":uid,@"method":@"",@"detail":self.textView.text}success:^(MOCHTTPResponse *response) {
+    [MOCHTTPRequestOperationManager postWithURL:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"feedback"]parameters:@{@"uid":UID,@"method":@"",@"detail":self.textView.text, @"phoneType":[SHGGloble sharedGloble].platform}success:^(MOCHTTPResponse *response) {
         [Hud showMessageWithText:@"提交成功"];
         [self.navigationController popViewControllerAnimated:YES];
         
