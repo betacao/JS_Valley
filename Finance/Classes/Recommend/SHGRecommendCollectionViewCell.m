@@ -33,6 +33,7 @@
 
 - (void)initView
 {
+    self.borderView.backgroundColor = [UIColor clearColor];
     self.borderView.layer.borderColor = Color(@"e6e7e8").CGColor;
     self.borderView.layer.borderWidth = 1 / SCALE;
 

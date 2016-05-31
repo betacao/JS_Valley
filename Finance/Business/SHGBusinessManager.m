@@ -13,12 +13,13 @@
 #import "SHGBusinessDetailViewController.h"
 #import "SHGBusinessSendSuccessViewController.h"
 @interface SHGBusinessManager()
+
 @property (strong, nonatomic) NSArray *secondListArray;
 @property (strong, nonatomic) NSArray *trademixedArray;//同业混业
 @property (strong, nonatomic) NSArray *bondFinancingArray;
 @property (strong, nonatomic) NSArray *moneySideArray;
 @property (strong, nonatomic) NSArray *equityFinancingArray;
-@property (strong, nonatomic) NSString *cityName;
+
 @end
 @implementation SHGBusinessManager
 
@@ -111,8 +112,10 @@
         NSString *tipUrl = [dictionary objectForKey:@"tipurl"];
         NSString *cfData = [dictionary objectForKey:@"cfdata"];
         block(dataArray, positon, tipUrl, cfData);
+        [Hud hideHud];
     } failed:^(MOCHTTPResponse *response) {
         block(nil, nil, nil, nil);
+        [Hud hideHud];
         [Hud showMessageWithText:@"获取列表数据失败"];
     }];
 }
@@ -149,7 +152,6 @@
             if (block) {
                 block(array, weakSelf.cityName);
             }
-            [Hud hideHud];
         } failed:^(MOCHTTPResponse *response) {
             [Hud hideHud];
             [Hud showMessageWithText:@"获取分类错误"];

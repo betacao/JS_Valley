@@ -45,7 +45,7 @@
 {
     self.pageNumber = 1;
     [self.view insertSubview:self.searchBar belowSubview:self.tableView];
-    [self addHeaderRefresh:self.tableView headerRefesh:NO andFooter:YES];
+    [self addHeaderRefresh:self.tableView headerRefesh:NO headerTitle:nil andFooter:YES footerTitle:@{@(MJRefreshStateNoMoreData):@""}];
     self.tableView.mj_footer.automaticallyHidden = YES;
     self.tableView.tableFooterView = [[UIView alloc] init];
     self.hideSearchBar = NO;
@@ -212,10 +212,12 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (self.dataArr.count > 0) {
-        SHGDiscoveryPeopleObject *object = [self.dataArr objectAtIndex:indexPath.row];
-        SHGPersonalViewController *viewController = [[SHGPersonalViewController alloc] init];
-        viewController.userId = object.userID;
-        [self.navigationController pushViewController:viewController animated:YES];
+        SHGDiscoveryDepartmentObject *object = [self.dataArr objectAtIndex:indexPath.row];
+        if ([object isKindOfClass:[SHGDiscoveryDepartmentObject class]]) {
+            SHGPersonalViewController *viewController = [[SHGPersonalViewController alloc] init];
+            viewController.userId = object.userID;
+            [self.navigationController pushViewController:viewController animated:YES];
+        }
     }
 }
 
@@ -286,6 +288,7 @@
     self.firstLabel.textColor = Color(@"161616");
     self.secondLabel.textColor = self.thirdLabel.textColor = Color(@"898989");
     self.spliteView.backgroundColor = Color(@"e6e7e8");
+    [self.button setEnlargeEdge:10.0f];
     [self.button addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchUpInside];
 }
 
@@ -420,7 +423,7 @@
 {
     [self.view addSubview:self.searchBar];
     [self.view addSubview:self.tableView];
-    [self addHeaderRefresh:self.tableView headerRefesh:NO andFooter:YES];
+    [self addHeaderRefresh:self.tableView headerRefesh:NO headerTitle:nil andFooter:YES footerTitle:@{@(MJRefreshStateNoMoreData):@""}];
     self.tableView.mj_footer.automaticallyHidden = YES;
     self.tableView.tableFooterView = [[UIView alloc] init];
     self.searchText = @"";
@@ -576,9 +579,11 @@
 {
     if (self.dataArr.count > 0) {
         SHGDiscoveryPeopleObject *object = [self.dataArr objectAtIndex:indexPath.row];
-        SHGPersonalViewController *viewController = [[SHGPersonalViewController alloc] init];
-        viewController.userId = object.userID;
-        [self.navigationController pushViewController:viewController animated:YES];
+        if ([object isKindOfClass:[SHGDiscoveryPeopleObject class]]) {
+            SHGPersonalViewController *viewController = [[SHGPersonalViewController alloc] init];
+            viewController.userId = object.userID;
+            [self.navigationController pushViewController:viewController animated:YES];
+        }
     }
 }
 

@@ -41,6 +41,7 @@
 {
     self.recommendCollectionView = [[SHGRecommendCollectionView alloc] init];
     [self.view addSubview:self.recommendCollectionView];
+    [SHGGlobleOperation registerAttationClass:[self class] method:@selector(loadAttationState:attationState:)];
 }
 
 - (void)addAutoLayout
@@ -60,6 +61,19 @@
 
 }
 
+- (void)loadAttationState:(NSString *)targetUserID attationState:(BOOL)attationState
+{
+    [self.recommendCollectionView.dataArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if ([obj isKindOfClass:[SHGDiscoveryRecommendObject class]]) {
+            SHGDiscoveryRecommendObject *recommendObject = (SHGDiscoveryRecommendObject *)obj;
+            if ([recommendObject.userID isEqualToString:targetUserID]) {
+                recommendObject.isAttention = attationState;
+            }
+        }
+    }];
+    [self.recommendCollectionView reloadData];
+}
+
 - (void)loadData
 {
     __weak typeof(self) weakSelf = self;
@@ -71,6 +85,7 @@
 
     }];
 }
+
 
 - (void)rightItemClick:(id)sender
 {

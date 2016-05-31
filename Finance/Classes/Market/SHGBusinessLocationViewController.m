@@ -8,6 +8,7 @@
 
 #import "SHGBusinessLocationViewController.h"
 #import "SHGBusinessMargin.h"
+#import "SHGBusinessManager.h"
 #import "SHGBusinessListViewController.h"
 
 @interface SHGBusinessLocationViewController ()
@@ -446,7 +447,7 @@
 - (IBAction)sureButtonClick:(UIButton *)sender
 {
     [[SHGGloble sharedGloble] recordUserAction:self.locationString type:@"business_search_city"];
-    [SHGBusinessListViewController sharedController].cityName = self.locationString;
+    [SHGBusinessManager shareManager].cityName = self.locationString;
     [self.navigationController popViewControllerAnimated:YES];
 }
 

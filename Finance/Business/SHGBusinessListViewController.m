@@ -553,9 +553,9 @@
 
 - (void)clearAndReloadData
 {
+    [Hud showWait];
     [self.positionDictionary removeAllObjects];
     if (self.dataArr.count > 0) {
-
         [self.dataArr enumerateObjectsUsingBlock:^(NSMutableArray *array, NSUInteger idx, BOOL * _Nonnull stop) {
             [array removeAllObjects];
         }];

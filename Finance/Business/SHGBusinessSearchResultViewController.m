@@ -80,7 +80,7 @@
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.tableFooterView = [[UIView alloc] init];
-    [self addHeaderRefresh:self.tableView headerRefesh:YES headerTitle:nil andFooter:YES footerTitle:@{@(MJRefreshStateIdle):@"以上为当前业务信息"}];
+    [self addHeaderRefresh:self.tableView headerRefesh:NO headerTitle:nil andFooter:YES footerTitle:@{@(MJRefreshStateIdle):@"以上为当前业务信息"}];
 }
 
 - (void)addAutoLayout

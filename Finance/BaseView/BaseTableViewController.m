@@ -63,9 +63,10 @@
         footer.stateLabel.textColor = [UIColor colorWithHexString:@"606060"];
         footer.stateLabel.font = [UIFont systemFontOfSize:12.0f];
         tableView.mj_footer = footer;
-        if (footerTitle) {
-            [footer setTitle:[footerTitle objectForKey:@(MJRefreshStateIdle)] forState:MJRefreshStateIdle];
-        }
+        [footer setTitle:[footerTitle objectForKey:@(MJRefreshStateIdle)] forState:MJRefreshStateIdle];
+        [footerTitle enumerateKeysAndObjectsUsingBlock:^(NSNumber *key, NSString *obj, BOOL * _Nonnull stop) {
+            [footer setTitle:obj forState:key.integerValue];
+        }];
     }
 
 }

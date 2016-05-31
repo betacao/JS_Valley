@@ -10,6 +10,8 @@
 #import "SHGBusinessObject.h"
 @interface SHGBusinessManager : NSObject
 
+@property (strong, nonatomic) NSString *cityName;
+
 + (instancetype)shareManager;
 
 - (void)clearCache;
@@ -21,7 +23,9 @@
 - (void)getSecondListBlock:(void (^)(NSArray *array, NSString *cityName))block;
 
 + (void)createNewBusiness:(NSDictionary *)param success:(void (^)( BOOL success,NSString *businessId))block;
+
 + (void)createBusinessNum:(void(^)(BOOL success, NSString *allowCreate))block;
+
 + (void)deleteBusiness:(SHGBusinessObject *)object success:(void (^)(BOOL success))block;
 
 + (void)collectBusiness:(SHGBusinessObject *)object success:(void (^)(BOOL success))block;

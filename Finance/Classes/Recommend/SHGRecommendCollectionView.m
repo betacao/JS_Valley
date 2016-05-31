@@ -49,7 +49,8 @@
 
 - (CGFloat)totalHeight
 {
-    return ceilf(self.dataArray.count / 2) * (kCellMargin + kCellHeight) - kCellMargin / 2 + CGRectGetHeight(self.topView.frame);
+    CGFloat height = CGRectGetHeight(self.topView.frame) + ceilf(self.dataArray.count / 2) * (kCellMargin + kCellHeight);
+    return height;
 }
 
 - (void)setScrollEnabled:(BOOL)scrollEnabled

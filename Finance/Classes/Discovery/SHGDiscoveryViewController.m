@@ -61,6 +61,7 @@
 
     self.tableView.tableHeaderView = self.searchBar;
     self.tableView.tableFooterView = [[UIView alloc] init];
+    self.tableView.showsVerticalScrollIndicator = NO;
 
     [SHGGlobleOperation registerAttationClass:[self class] method:@selector(loadAttationState:attationState:)];
 }
@@ -290,8 +291,8 @@
     for (SHGDiscoveryObject *object in self.dataArray) {
         SHGDiscoveryCategoryButton *button = [SHGDiscoveryCategoryButton buttonWithType:UIButtonTypeCustom];
         NSInteger index = [self.dataArray indexOfObject:object];
-        NSInteger row = index % 3;
-        NSInteger col = index / 3;
+        NSInteger row = index / 3;
+        NSInteger col = index % 3;
         CGRect frame = CGRectMake(col * (width + 1 / SCALE), row * (1 / SCALE + width) + 1 / SCALE, width, width);
         button.frame = frame;
         button.object = object;
