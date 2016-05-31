@@ -297,7 +297,6 @@
         button.frame = frame;
         button.object = object;
         [self.buttonView addSubview:button];
-
         [button addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchUpInside];
         lastButton = button;
     }
@@ -537,7 +536,7 @@
         style.alignment = NSTextAlignmentCenter;
         NSMutableAttributedString *title = [[NSMutableAttributedString alloc] initWithString:[discoveryObject.industryName stringByAppendingFormat:@"\n%@", discoveryObject.industryNum] attributes:@{NSFontAttributeName:FontFactor(14.0f), NSForegroundColorAttributeName:Color(@"161616"), NSParagraphStyleAttributeName:style}];
 
-        [title addAttributes:@{NSFontAttributeName:FontFactor(9.0f), NSForegroundColorAttributeName:Color(@"999999")} range:[title.string rangeOfString:discoveryObject.industryNum]];
+        [title addAttributes:@{NSFontAttributeName:FontFactor(10.0f), NSForegroundColorAttributeName:Color(@"999999")} range:[title.string rangeOfString:discoveryObject.industryNum]];
         
         [self setAttributedTitle:title image:discoveryObject.industryImage];
     }

@@ -8,7 +8,6 @@
 
 #import "SHGUserCenterViewController.h"
 #import "SHGPersonalViewController.h"
-#import "MyFollowViewController.h"
 #import "MyTeamViewController.h"
 #import "MyMoneyViewController.h"
 #import "MyAppointmentViewController.h"
@@ -18,6 +17,8 @@
 #import "SHGCardCollectionViewController.h"
 #import "SHGCircleCollectionViewController.h"
 #import "SHGBusinessCollectionListViewController.h"
+#import "SHGMyFollowViewController.h"
+#import "SHGMyFansViewController.h"
 #define kLabelWidth ceilf(SCREENWIDTH / 4.0f)
 
 @interface SHGUserCenterViewController ()<UITableViewDataSource, UITableViewDelegate, UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
@@ -502,16 +503,14 @@
 
 - (void)goToFollowList
 {
-    MyFollowViewController *controller = [[MyFollowViewController alloc] init];
-    controller.relationShip = 1;
+    SHGMyFollowViewController *controller = [[SHGMyFollowViewController alloc] init];
     controller.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:controller animated:YES];
 }
 
 - (void)goToFansList
 {
-    MyFollowViewController *controller = [[MyFollowViewController alloc] init];
-    controller.relationShip = 2;
+    SHGMyFansViewController *controller = [[SHGMyFansViewController alloc] init];
     controller.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:controller animated:YES];
 }

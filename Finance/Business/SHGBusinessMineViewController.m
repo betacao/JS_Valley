@@ -30,7 +30,7 @@
     if (self.userId.length == 0) {
         self.title = @"我的业务";
     } else{
-        self.title = @"他的业务";
+        self.title = @"TA的业务";
     }
     
     [self addHeaderRefresh:self.tableView headerRefesh:YES andFooter:YES];

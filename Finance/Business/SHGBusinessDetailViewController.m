@@ -276,7 +276,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
     [self.businessDetialLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
 
     self.thirdHorizontalLine.sd_layout
-    .leftSpaceToView(self.viewHeader, 0.0f)
+    .leftSpaceToView(self.viewHeader, MarginFactor(12.0f))
     .rightSpaceToView(self.viewHeader, 0.0f)
     .topSpaceToView(self.businessDetialLabel, MarginFactor(12.0f))
     .heightIs(0.5f);
@@ -336,7 +336,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
     __block NSString *value = [[SHGGloble sharedGloble] businessKeysForValues:self.responseObject.middleContent showEmptyKeys:NO];
     __block NSString *phoneNumber = @"";
     NSMutableParagraphStyle * paragraphStyle = [[NSMutableParagraphStyle alloc] init];
-    [paragraphStyle setLineSpacing:MarginFactor(13.0f)];
+    [paragraphStyle setLineSpacing:MarginFactor(11.0f)];
 
     NSArray *array = [value componentsSeparatedByString:@"\n"];
     [array enumerateObjectsUsingBlock:^(NSString *obj, NSUInteger idx, BOOL * _Nonnull stop) {
@@ -346,20 +346,20 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
         }
     }];
 
-    NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:value attributes:@{NSFontAttributeName:FontFactor(13.0f), NSForegroundColorAttributeName: Color(@"606060"), NSParagraphStyleAttributeName:paragraphStyle}];
+    NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:value attributes:@{NSFontAttributeName:FontFactor(14.0f), NSForegroundColorAttributeName: Color(@"606060"), NSParagraphStyleAttributeName:paragraphStyle}];
 
     self.propertyLabel.attributedText = string;
 
     if (!self.responseObject.userState) {
         NSString *number = @"认证可见";
         phoneNumber = @"联系方式：认证可见";
-        string = [[NSMutableAttributedString alloc] initWithString:phoneNumber attributes:@{NSFontAttributeName:FontFactor(13.0f), NSForegroundColorAttributeName: Color(@"606060")}];
+        string = [[NSMutableAttributedString alloc] initWithString:phoneNumber attributes:@{NSFontAttributeName:FontFactor(14.0f), NSForegroundColorAttributeName: Color(@"606060")}];
         [string addAttribute:NSFontAttributeName value:FontFactor(16.0f) range:[phoneNumber rangeOfString:number]];
         [string addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"4277B2"] range: [phoneNumber rangeOfString:number]];
     } else {
         array = [phoneNumber componentsSeparatedByString:@"："];
         NSString *number = [array lastObject];
-        string = [[NSMutableAttributedString alloc] initWithString:phoneNumber attributes:@{NSFontAttributeName:FontFactor(13.0f), NSForegroundColorAttributeName: Color(@"606060")}];
+        string = [[NSMutableAttributedString alloc] initWithString:phoneNumber attributes:@{NSFontAttributeName:FontFactor(14.0f), NSForegroundColorAttributeName: Color(@"606060")}];
         [string addAttribute:NSFontAttributeName value:FontFactor(16.0f) range:[phoneNumber rangeOfString:number]];
         [string addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"4277B2"] range: [phoneNumber rangeOfString:number]];
     }
@@ -376,7 +376,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
     NSMutableParagraphStyle * contentParagraphStyle = [[NSMutableParagraphStyle alloc] init];
     [contentParagraphStyle setLineSpacing:MarginFactor(5.0f)];
     self.businessDetialLabel.text = @"业务描述：";
-    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:self.responseObject.detail attributes:@{NSFontAttributeName:FontFactor(15.0f), NSForegroundColorAttributeName: Color(@"606060"), NSParagraphStyleAttributeName:contentParagraphStyle}];
+    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:self.responseObject.detail attributes:@{NSFontAttributeName:FontFactor(14.0f), NSForegroundColorAttributeName: Color(@"606060"), NSParagraphStyleAttributeName:contentParagraphStyle}];
     self.contentTextView.attributedText = attributedString;
 
     size = [self.contentTextView sizeThatFits:CGSizeMake(SCREENWIDTH - 2 * MarginFactor(12.0f), CGFLOAT_MAX)];

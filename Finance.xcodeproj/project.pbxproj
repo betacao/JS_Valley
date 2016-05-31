@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		40302AFB1AEE6CE900F22EB6 /* MyFollowViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 40302AF91AEE6CE900F22EB6 /* MyFollowViewController.m */; };
-		40302AFC1AEE6CE900F22EB6 /* MyFollowViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 40302AFA1AEE6CE900F22EB6 /* MyFollowViewController.xib */; };
 		40302B001AEF213400F22EB6 /* BasePeopleTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 40302AFE1AEF213400F22EB6 /* BasePeopleTableViewCell.m */; };
 		40302B011AEF213400F22EB6 /* BasePeopleTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 40302AFF1AEF213400F22EB6 /* BasePeopleTableViewCell.xib */; };
 		40302B041AEF22E800F22EB6 /* BasePeopleObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 40302B031AEF22E800F22EB6 /* BasePeopleObject.m */; };
@@ -690,6 +688,10 @@
 		987101361CBFB050002A8F7F /* SHGBusinessSelectString.plist in Resources */ = {isa = PBXBuildFile; fileRef = 987101351CBFB050002A8F7F /* SHGBusinessSelectString.plist */; };
 		987184A31C4E51ED006F2946 /* SHGMomentCityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 987184A11C4E51ED006F2946 /* SHGMomentCityViewController.m */; };
 		987184A41C4E51ED006F2946 /* SHGMomentCityViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 987184A21C4E51ED006F2946 /* SHGMomentCityViewController.xib */; };
+		98765FB31CFC577C00C8C590 /* SHGMyFollowViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98765FB11CFC577C00C8C590 /* SHGMyFollowViewController.m */; };
+		98765FB41CFC577C00C8C590 /* SHGMyFollowViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98765FB21CFC577C00C8C590 /* SHGMyFollowViewController.xib */; };
+		98765FB81CFC744900C8C590 /* SHGMyFansViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98765FB61CFC744900C8C590 /* SHGMyFansViewController.m */; };
+		98765FB91CFC744900C8C590 /* SHGMyFansViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98765FB71CFC744900C8C590 /* SHGMyFansViewController.xib */; };
 		9894C9781BF5BCE700F80577 /* SHGActionSignViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9894C9761BF5BCE700F80577 /* SHGActionSignViewController.m */; };
 		9894C9791BF5BCE700F80577 /* SHGActionSignViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9894C9771BF5BCE700F80577 /* SHGActionSignViewController.xib */; };
 		9894C97D1BF5D24200F80577 /* SHGActionSignTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9894C97B1BF5D24200F80577 /* SHGActionSignTableViewCell.m */; };
@@ -981,9 +983,6 @@
 
 /* Begin PBXFileReference section */
 		3EF30FE57247DF0C05D81B0B /* Pods-Finance.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Finance.release.xcconfig"; path = "Pods/Target Support Files/Pods-Finance/Pods-Finance.release.xcconfig"; sourceTree = "<group>"; };
-		40302AF81AEE6CE900F22EB6 /* MyFollowViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyFollowViewController.h; sourceTree = "<group>"; };
-		40302AF91AEE6CE900F22EB6 /* MyFollowViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyFollowViewController.m; sourceTree = "<group>"; };
-		40302AFA1AEE6CE900F22EB6 /* MyFollowViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MyFollowViewController.xib; sourceTree = "<group>"; };
 		40302AFD1AEF213400F22EB6 /* BasePeopleTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BasePeopleTableViewCell.h; sourceTree = "<group>"; };
 		40302AFE1AEF213400F22EB6 /* BasePeopleTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BasePeopleTableViewCell.m; sourceTree = "<group>"; };
 		40302AFF1AEF213400F22EB6 /* BasePeopleTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BasePeopleTableViewCell.xib; sourceTree = "<group>"; };
@@ -1933,6 +1932,12 @@
 		987184A01C4E51ED006F2946 /* SHGMomentCityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGMomentCityViewController.h; sourceTree = "<group>"; };
 		987184A11C4E51ED006F2946 /* SHGMomentCityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGMomentCityViewController.m; sourceTree = "<group>"; };
 		987184A21C4E51ED006F2946 /* SHGMomentCityViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGMomentCityViewController.xib; sourceTree = "<group>"; };
+		98765FB01CFC577C00C8C590 /* SHGMyFollowViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGMyFollowViewController.h; sourceTree = "<group>"; };
+		98765FB11CFC577C00C8C590 /* SHGMyFollowViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGMyFollowViewController.m; sourceTree = "<group>"; };
+		98765FB21CFC577C00C8C590 /* SHGMyFollowViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGMyFollowViewController.xib; sourceTree = "<group>"; };
+		98765FB51CFC744900C8C590 /* SHGMyFansViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGMyFansViewController.h; sourceTree = "<group>"; };
+		98765FB61CFC744900C8C590 /* SHGMyFansViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGMyFansViewController.m; sourceTree = "<group>"; };
+		98765FB71CFC744900C8C590 /* SHGMyFansViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGMyFansViewController.xib; sourceTree = "<group>"; };
 		9894C9751BF5BCE700F80577 /* SHGActionSignViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGActionSignViewController.h; sourceTree = "<group>"; };
 		9894C9761BF5BCE700F80577 /* SHGActionSignViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGActionSignViewController.m; sourceTree = "<group>"; };
 		9894C9771BF5BCE700F80577 /* SHGActionSignViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGActionSignViewController.xib; sourceTree = "<group>"; };
@@ -3662,9 +3667,6 @@
 				980D0D991C9A41BC00351F8C /* SHGCircleCollectionViewController.h */,
 				980D0D9A1C9A41BC00351F8C /* SHGCircleCollectionViewController.m */,
 				980D0D9B1C9A41BC00351F8C /* SHGCircleCollectionViewController.xib */,
-				40302AF81AEE6CE900F22EB6 /* MyFollowViewController.h */,
-				40302AF91AEE6CE900F22EB6 /* MyFollowViewController.m */,
-				40302AFA1AEE6CE900F22EB6 /* MyFollowViewController.xib */,
 				40302B051AEF573200F22EB6 /* MyAddressViewController.h */,
 				40302B061AEF573200F22EB6 /* MyAddressViewController.m */,
 				40302B071AEF573200F22EB6 /* MyAddressViewController.xib */,
@@ -3686,6 +3688,12 @@
 				98D13FD41C3B69E6007CDFCD /* SHGMyTeamListTableViewController.h */,
 				98D13FD51C3B69E6007CDFCD /* SHGMyTeamListTableViewController.m */,
 				98D13FD61C3B69E6007CDFCD /* SHGMyTeamListTableViewController.xib */,
+				98765FB01CFC577C00C8C590 /* SHGMyFollowViewController.h */,
+				98765FB11CFC577C00C8C590 /* SHGMyFollowViewController.m */,
+				98765FB21CFC577C00C8C590 /* SHGMyFollowViewController.xib */,
+				98765FB51CFC744900C8C590 /* SHGMyFansViewController.h */,
+				98765FB61CFC744900C8C590 /* SHGMyFansViewController.m */,
+				98765FB71CFC744900C8C590 /* SHGMyFansViewController.xib */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -4414,6 +4422,7 @@
 				987101351CBFB050002A8F7F /* SHGBusinessSelectString.plist */,
 			);
 			name = Resource;
+			path = ../../Business;
 			sourceTree = "<group>";
 		};
 		9855F0231CACF6F8006F760F /* Bond */ = {
@@ -4647,7 +4656,6 @@
 		F924C2B01CACBFCF0070286F /* Business */ = {
 			isa = PBXGroup;
 			children = (
-				9855F0221CACF6C0006F760F /* Resource */,
 				9855F0231CACF6F8006F760F /* Bond */,
 				9855F0241CACF731006F760F /* Equity */,
 				9855F0261CACF7DB006F760F /* SameAndCommixture */,
@@ -4820,6 +4828,7 @@
 		F9A2EF841CF3EC970054AE1C /* Discovery */ = {
 			isa = PBXGroup;
 			children = (
+				9855F0221CACF6C0006F760F /* Resource */,
 				F951C6101CF54776007FA198 /* SHGIndustry.plist */,
 				F9203D141CF449E000F55373 /* SHGDiscoveryObject.h */,
 				F9203D151CF449E000F55373 /* SHGDiscoveryObject.m */,
@@ -5293,6 +5302,7 @@
 				40302B091AEF573200F22EB6 /* MyAddressViewController.xib in Resources */,
 				B03D10F01B4E799900316FEA /* 11@2x.png in Resources */,
 				61E83D5D1AF7C78E00703651 /* 查看更多@3x.png in Resources */,
+				98765FB41CFC577C00C8C590 /* SHGMyFollowViewController.xib in Resources */,
 				61E83D941AF7C78E00703651 /* 删除群成员@3x.png in Resources */,
 				61E83CD31AF7C78E00703651 /* 圈内好友图标@2x.png in Resources */,
 				B03938B41B623F83003A85EC /* 6.png in Resources */,
@@ -5327,7 +5337,6 @@
 				98E04A071CAE11DF006A8773 /* SHGBondInvestNextViewController.xib in Resources */,
 				408D8B571AF8618C0055810C /* chatBar_colorMore_photo@2x.png in Resources */,
 				61E83D4C1AF7C78E00703651 /* 短信图标@3x.png in Resources */,
-				40302AFC1AEE6CE900F22EB6 /* MyFollowViewController.xib in Resources */,
 				408D8B5E1AF8618C0055810C /* chatBar_more_cameraSelected@2x.png in Resources */,
 				61616FE81B02F29100E5A837 /* 关注按钮@3x.png in Resources */,
 				61E83CDA1AF7C78E00703651 /* 扣扣好友图标@2x.png in Resources */,
@@ -5587,6 +5596,7 @@
 				614A59891AD3AEA1005DAB04 /* Images.xcassets in Resources */,
 				408D8AF61AF8618C0055810C /* VoiceSearchFeedback001@2x.png in Resources */,
 				61E83CDD1AF7C78E00703651 /* 搜索框@2x.png in Resources */,
+				98765FB91CFC744900C8C590 /* SHGMyFansViewController.xib in Resources */,
 				614BA7E91AE73FDA009480CD /* storeSearch@3x.png in Resources */,
 				408D8B691AF8618C0055810C /* chat_receiver_audio_playing000@2x.png in Resources */,
 				408D8B321AF8618C0055810C /* chat_location_annotation_someone@2x.png in Resources */,
@@ -5918,6 +5928,7 @@
 				538964D51AFC6BEB00041548 /* UIResponder+Router.m in Sources */,
 				6187D2E71AF1C693008E1D21 /* EMChatViewCell.m in Sources */,
 				5331DF1A1AFC017600E035B8 /* AddFriendCell.m in Sources */,
+				98765FB81CFC744900C8C590 /* SHGMyFansViewController.m in Sources */,
 				9842E9CF1C017FCA0008B6AF /* SHGPersonFriendsViewController.m in Sources */,
 				F90EAF491CAB772700B58E75 /* SHGEncryptionAlgorithm.m in Sources */,
 				F90344151C1C192F0063EABB /* SHGMarketDetailViewController.m in Sources */,
@@ -6088,7 +6099,6 @@
 				614EFEDF1AEF8F7300F2BDD1 /* Hud.m in Sources */,
 				F9F349C91C1968310090F111 /* SHGMarketTableViewCell.m in Sources */,
 				4088DDB01AF102FE00393855 /* SettingAboutUsViewController.m in Sources */,
-				40302AFB1AEE6CE900F22EB6 /* MyFollowViewController.m in Sources */,
 				F9F349B81C1945920090F111 /* SHGBadgeView.m in Sources */,
 				986C89F21CD1D63D001AF201 /* SHGBusinessSendSuccessViewController.m in Sources */,
 				6187D2D41AF1C693008E1D21 /* ChatListViewController.m in Sources */,
@@ -6099,6 +6109,7 @@
 				F99B602C1B9E7D9500759AAC /* SHGUserHeaderView.m in Sources */,
 				611B8CD71AFD5C09009CB21F /* ReplyTableViewCell.m in Sources */,
 				409DB3E41B03483500E6665E /* ImproveMatiralViewController.m in Sources */,
+				98765FB31CFC577C00C8C590 /* SHGMyFollowViewController.m in Sources */,
 				F9EDD5F91BABFBCF00506C0C /* SDPhotoItem.m in Sources */,
 				538964D41AFC6BEB00041548 /* NSString+Valid.m in Sources */,
 			);
@@ -6237,7 +6248,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.danniuquan.apptest;
 				PRODUCT_NAME = "大牛圈";
-				PROVISIONING_PROFILE = "8d31c767-b836-470f-8d8d-fdb8fe214efd";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -6276,7 +6287,7 @@
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.danniuquan.apptest;
 				PRODUCT_NAME = "大牛圈";
-				PROVISIONING_PROFILE = "8d31c767-b836-470f-8d8d-fdb8fe214efd";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -6352,7 +6363,7 @@
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.danniuquan.apptest;
 				PRODUCT_NAME = "大牛圈";
-				PROVISIONING_PROFILE = "8d31c767-b836-470f-8d8d-fdb8fe214efd";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 			};

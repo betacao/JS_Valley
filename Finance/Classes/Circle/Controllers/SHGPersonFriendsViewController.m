@@ -118,10 +118,10 @@
         }];
         
     }else if ([self.friend_status isEqualToString:@"his"]) {
-        self.title = @"他的好友";
+        self.title = @"TA的好友";
         NSString * uid = self.userId;
         NSDictionary *param = @{@"uid":uid,
-                                @"pagenum":[NSNumber numberWithInteger:self.pageNum],                          @"pagesize":@15};
+                                @"pagenum":[NSNumber numberWithInteger:self.pageNum], @"pagesize":@15};
         NSString *url = [NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttp,@"friends",@"getHisFriends"];
         [MOCHTTPRequestOperationManager postWithURL:url class:[BasePeopleObject class] parameters:param success:^(MOCHTTPResponse *response) {
             [Hud hideHud];

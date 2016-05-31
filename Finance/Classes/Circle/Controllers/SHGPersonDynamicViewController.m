@@ -27,7 +27,7 @@
     if ([self.userId isEqualToString:UID]) {
         self.title = @"我的动态";
     } else{
-        self.title = @"他的动态";
+        self.title = @"TA的动态";
     }
     self.tableView.sd_layout
     .spaceToSuperView(UIEdgeInsetsZero);

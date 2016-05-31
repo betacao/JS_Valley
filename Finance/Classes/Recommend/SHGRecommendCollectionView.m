@@ -12,6 +12,7 @@
 #import "SHGDiscoveryManager.h"
 #import "SHGDiscoveryDisplayViewController.h"
 #import "SHGDiscoveryViewController.h"
+#import "SHGPersonalViewController.h"
 
 #define kCellWidth MarginFactor(170.0f)
 #define kCellHeight MarginFactor(125.0f)
@@ -26,7 +27,6 @@
 
 @property (strong, nonatomic) UICollectionView *collectionView;
 @property (strong, nonatomic) UICollectionViewFlowLayout *collectionViewFlowLayout;
-
 
 @end
 
@@ -190,6 +190,16 @@
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
 {
     return UIEdgeInsetsMake(kCellMargin, kCellMargin, kCellMargin, kCellMargin);
+}
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (self.dataArray > 0) {
+        SHGDiscoveryRecommendObject *obj = [self.dataArray objectAtIndex:indexPath.item];
+        SHGPersonalViewController *viewController = [[SHGPersonalViewController alloc] init];
+        viewController.userId = obj.userID;
+        [(UINavigationController *)[AppDelegate currentAppdelegate].window.rootViewController pushViewController:viewController animated:YES];
+    }
 }
 
 @end
