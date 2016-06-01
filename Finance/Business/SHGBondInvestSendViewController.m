@@ -467,7 +467,7 @@
 
 - (void)initView
 {
-    self.monenyTextField.keyboardType = UIKeyboardTypeDecimalPad;
+    self.monenyTextField.keyboardType = UIKeyboardTypeNumberPad;
     self.phoneNumTextField.keyboardType = UIKeyboardTypeNumberPad;
     self.nextButton.titleLabel.font = FontFactor(19.0f);
     [self.nextButton setTitleColor:Color(@"ffffff") forState:UIControlStateNormal];

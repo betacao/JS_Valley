@@ -29,7 +29,6 @@
 {
     [super viewDidLoad];
     self.title = @"我的粉丝";
-    
     [self initView];
     [self addSdLayout];
     [self requestFansListWithTarget:@"first" time:@"-1"];
@@ -54,6 +53,7 @@
     .rightSpaceToView(self.view, 0.0f)
     .topSpaceToView(self.searchBar, 0.0f)
     .bottomSpaceToView(self.view, 0.0f);
+    
 }
 
 - (void)initView
@@ -64,7 +64,6 @@
     [self addHeaderRefresh:self.tableView headerRefesh:NO andFooter:YES];
     self.tableView.mj_footer.automaticallyHidden = YES;
     self.tableView.tableFooterView = [[UIView alloc] init];
-
     [SHGGlobleOperation registerAttationClass:[self class] method:@selector(loadAttationState:attationState:)];
 }
 
@@ -99,7 +98,7 @@
 - (void)refreshFooter
 {
     if (self.dataArr.count > 0) {
-        BasePeopleObject *obj = [self.dataArr lastObject];
+        SHGFollowAndFansObject *obj = [self.dataArr lastObject];
         [self requestFansListWithTarget:@"load" time:obj.updateTime];
     } else {
         [self requestFansListWithTarget:@"load" time:@"-1"];
@@ -123,11 +122,10 @@
 
 - (void)requestFansListWithTarget:(NSString *)target time:(NSString *)time
 {
-    NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
+    NSString *uid = UID;
     NSDictionary *param = @{@"uid":uid, @"target":target, @"time":time, @"num":@"100"};
     __weak typeof(self)weakSelf = self;
     [MOCHTTPRequestOperationManager getWithURL:[rBaseAddressForHttp stringByAppendingString:@"/attention/myfanslist"] class:[SHGFollowAndFansObject class] parameters:param success:^(MOCHTTPResponse *response) {
-
         NSMutableArray *array = [NSMutableArray arrayWithArray:response.dataArray];
         [array enumerateObjectsUsingBlock:^(SHGFollowAndFansObject *obj, NSUInteger idx, BOOL * _Nonnull stop) {
             if ([obj.uid isEqualToString:UID]) {
@@ -149,7 +147,7 @@
         } else {
             [weakSelf.tableView.mj_footer endRefreshing];
         }
-
+        
         [weakSelf.tableView reloadData];
         [Hud hideHud];
     } failed:^(MOCHTTPResponse *response) {
@@ -180,7 +178,6 @@
     SHGFollowAndFansTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
     if (!cell) {
         cell = [[[NSBundle mainBundle] loadNibNamed:@"SHGFollowAndFansTableViewCell" owner:self options:nil] lastObject];
-        
         cell.backgroundColor = [UIColor whiteColor];
     }
     SHGFollowAndFansObject *obj = [self.dataArr objectAtIndex:indexPath.row];

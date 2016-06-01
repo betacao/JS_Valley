@@ -339,7 +339,7 @@
 }
 - (void)initView
 {
-    self.retributionTextField.keyboardType = UIKeyboardTypeDecimalPad;
+    self.retributionTextField.keyboardType = UIKeyboardTypeNumberPad;
     self.sureButton.titleLabel.font = FontFactor(19.0f);
     [self.sureButton setTitleColor:Color(@"ffffff") forState:UIControlStateNormal];
     [self.sureButton setBackgroundColor:Color(@"f04241")];
@@ -564,8 +564,8 @@
         [Hud showMessageWithText:@"请选择增信方式"];
         return NO;
     }
-    CGFloat percent = [self.retributionTextField.text floatValue] - 100.0f;
-    if (percent > 0) {
+    
+    if ([self.retributionTextField.text floatValue] > 100.0f) {
         [Hud showMessageWithText:@"抱歉，您输入的数字不可超过100"];
         return NO;
     }
@@ -631,6 +631,21 @@
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
 {
+    return YES;
+}
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    if (textField == self.retributionTextField) {
+        if (string.length == 0) {
+            return YES;
+        }
+        if ([textField.text floatValue] > 100.0f) {
+            [Hud showMessageWithText:@"抱歉，您输入的数字不可超过100"];
+            return NO;
+        }
+    }
+    
     return YES;
 }
 

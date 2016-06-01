@@ -396,7 +396,7 @@
 }
 - (void)initView
 {
-    self.monenyTextField.keyboardType = UIKeyboardTypeDecimalPad;
+    self.monenyTextField.keyboardType = UIKeyboardTypeNumberPad;
     self.phoneNumTextField.keyboardType = UIKeyboardTypeNumberPad;
     self.nextButton.titleLabel.font = FontFactor(19.0f);
     [self.nextButton setTitleColor:Color(@"ffffff") forState:UIControlStateNormal];
@@ -515,8 +515,7 @@
         [weakSelf.industrySelectButton setTitle:string forState:UIControlStateNormal];
         [weakSelf.industrySelectButton setTitleColor:Color(@"161616") forState:UIControlStateNormal];
     };
-    
-    [self.view.window addSubview:self.selectViewController];
+        [self.view.window addSubview:self.selectViewController];
 }
 
 - (IBAction)nextButtonClick:(UIButton *)sender
