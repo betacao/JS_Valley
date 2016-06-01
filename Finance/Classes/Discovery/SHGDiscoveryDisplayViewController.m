@@ -40,6 +40,40 @@
 
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    if (self.recommendCollectionView.dataArray.count > 0) {
+        [self.recommendCollectionView reloadData];
+    } else {
+        [self.tableView reloadData];
+    }
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    if (self.recommendCollectionView.dataArray.count > 0) {
+        [self.recommendCollectionView.dataArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            if ([obj isKindOfClass:[SHGDiscoveryRecommendObject class]]) {
+                SHGDiscoveryRecommendObject *recommendObject = (SHGDiscoveryRecommendObject *)obj;
+                if (recommendObject.isAttention) {
+                    recommendObject.hideAttation = YES;
+                }
+            }
+        }];
+    } else {
+        [self.dataArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            if ([obj isKindOfClass:[SHGDiscoveryDepartmentObject class]]) {
+                SHGDiscoveryDepartmentObject *departmentObject = (SHGDiscoveryDepartmentObject *)obj;
+                if (departmentObject.isAttention) {
+                    departmentObject.hideAttation = YES;
+                }
+            }
+        }];
+    }
+}
+
 - (void)initView
 {
     self.pageNumber = 1;
@@ -125,15 +159,27 @@
 
 - (void)loadAttationState:(NSString *)targetUserID attationState:(BOOL)attationState
 {
-    [self.dataArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        if ([obj isKindOfClass:[SHGDiscoveryDepartmentObject class]]) {
-            SHGDiscoveryDepartmentObject *departmentObject = (SHGDiscoveryDepartmentObject *)obj;
-            if ([departmentObject.userID isEqualToString:targetUserID]) {
-                departmentObject.isAttention = attationState;
+    if (self.recommendCollectionView.dataArray.count > 0) {
+        [self.recommendCollectionView.dataArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            if ([obj isKindOfClass:[SHGDiscoveryRecommendObject class]]) {
+                SHGDiscoveryRecommendObject *recommendObject = (SHGDiscoveryRecommendObject *)obj;
+                if ([recommendObject.userID isEqualToString:targetUserID]) {
+                    recommendObject.isAttention = attationState;
+                }
             }
-        }
-    }];
-    [self.tableView reloadData];
+        }];
+        [self.recommendCollectionView reloadData];
+    } else {
+        [self.dataArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            if ([obj isKindOfClass:[SHGDiscoveryDepartmentObject class]]) {
+                SHGDiscoveryDepartmentObject *departmentObject = (SHGDiscoveryDepartmentObject *)obj;
+                if ([departmentObject.userID isEqualToString:targetUserID]) {
+                    departmentObject.isAttention = attationState;
+                }
+            }
+        }];
+        [self.tableView reloadData];
+    }
 }
 
 - (void)loadData
@@ -141,7 +187,7 @@
     __weak typeof(self)weakSelf = self;
     void(^block)(NSArray *firstArray, NSArray *secondArray) = ^(NSArray *firstArray, NSArray *secondArray) {
         weakSelf.emptyView.hidden = YES;
-        
+
         if (firstArray.count > 0) {
             [weakSelf.dataArr addObjectsFromArray:firstArray];
             [weakSelf.tableView.mj_footer endRefreshing];
@@ -337,6 +383,7 @@
         } else {
             [self.button setImage:[UIImage imageNamed:@"me_follow"] forState:UIControlStateNormal];
         }
+        self.button.hidden = peopleObject.hideAttation;
     } else if ([object isKindOfClass:[SHGDiscoveryInvateObject class]]) {
         //邀请好友
         SHGDiscoveryInvateObject *invateObject = (SHGDiscoveryInvateObject *)object;
@@ -345,6 +392,7 @@
         self.secondLabel.text = @"暂未提供公司信息";
         self.thirdLabel.text = @"通讯录联系人";
         [self.button setImage:[UIImage imageNamed:@"discovery_invate"] forState:UIControlStateNormal];
+
     } else if ([object isKindOfClass:[SHGDiscoveryDepartmentObject class]]) {
         //我的人脉
         SHGDiscoveryDepartmentObject *depentmentObject = (SHGDiscoveryDepartmentObject *)object;
@@ -358,7 +406,9 @@
         } else {
             [self.button setImage:[UIImage imageNamed:@"me_follow"] forState:UIControlStateNormal];
         }
+        self.button.hidden = depentmentObject.hideAttation;
     }
+
     self.button.sd_layout
     .rightSpaceToView(self.contentView, MarginFactor(12.0f))
     .centerYEqualToView(self.headerView)
@@ -411,6 +461,27 @@
     [self addAutoLayout];
     [self loadDataWithTarget:@"first"];
 
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    if (self.dataArr.count > 0) {
+        [self.tableView reloadData];
+    }
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    [self.dataArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if ([obj isKindOfClass:[SHGDiscoveryPeopleObject class]]) {
+            SHGDiscoveryPeopleObject *peopleObject = (SHGDiscoveryPeopleObject *)obj;
+            if (peopleObject.isAttention) {
+                peopleObject.hideAttation = YES;
+            }
+        }
+    }];
 }
 
 - (void)initView

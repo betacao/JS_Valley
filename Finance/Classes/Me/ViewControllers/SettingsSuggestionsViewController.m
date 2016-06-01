@@ -82,7 +82,7 @@
         return;
     }
     
-    [MOCHTTPRequestOperationManager postWithURL:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"feedback"]parameters:@{@"uid":UID,@"method":@"",@"detail":self.textView.text, @"phoneType":[SHGGloble sharedGloble].platform}success:^(MOCHTTPResponse *response) {
+    [MOCHTTPRequestOperationManager postWithURL:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"feedback"] parameters:@{@"ctype":@"iPhone", @"os":@"iOS", @"osv":[UIDevice currentDevice].systemVersion, @"uid":UID, @"method":@"", @"detail":self.textView.text, @"phoneType":[SHGGloble sharedGloble].platform, @"appv":LOCAL_Version } success:^(MOCHTTPResponse *response) {
         [Hud showMessageWithText:@"提交成功"];
         [self.navigationController popViewControllerAnimated:YES];
         

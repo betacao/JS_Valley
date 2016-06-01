@@ -50,7 +50,7 @@
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey
 {
-    return @{@"phone":@"phone", @"area":@"area", @"status":@"status", @"userID":@"id", @"title":@"title", @"company":@"company", @"headImg":@"headimg", @"isAttention":@"isattention", @"realName":@"realname", @"industry":@"industry"};
+    return @{@"phone":@"phone", @"area":@"area", @"status":@"status", @"userID":@"id", @"title":@"title", @"company":@"company", @"headImg":@"headimg", @"isAttention":@"isattention", @"realName":@"realname", @"industry":@"industry", @"hideAttation":@"isattention"};
 }
 
 + (NSValueTransformer *)JSONTransformerForKey:(NSString *)key
@@ -64,6 +64,13 @@
             }
         }
         if ([key isEqualToString:@"isAttention"]) {
+            if ([value isEqualToString:@"false"]) {
+                return @(NO);
+            } else {
+                return @(YES);
+            }
+        }
+        if ([key isEqualToString:@"hideAttation"]) {
             if ([value isEqualToString:@"false"]) {
                 return @(NO);
             } else {
@@ -92,7 +99,7 @@
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey
 {
-    return @{@"phone":@"phone", @"realName":@"realname", @"userID":@"id", @"position":@"position", @"title":@"title", @"headImg":@"headimg", @"company":@"company", @"friendTypeImage":@"friendtype", @"commonFriendCount":@"commonfriendcount", @"commonFriend":@"commonfriend", @"userStatus":@"userstatus", @"area":@"area", @"isAttention":@"isattention"};
+    return @{@"phone":@"phone", @"realName":@"realname", @"userID":@"id", @"position":@"position", @"title":@"title", @"headImg":@"headimg", @"company":@"company", @"friendTypeImage":@"friendtype", @"commonFriendCount":@"commonfriendcount", @"commonFriend":@"commonfriend", @"userStatus":@"userstatus", @"area":@"area", @"isAttention":@"isattention", @"hideAttation":@"isattention"};
 }
 
 + (NSValueTransformer *)JSONTransformerForKey:(NSString *)key
@@ -117,6 +124,13 @@
                 return @(YES);
             }
         }
+        if ([key isEqualToString:@"hideAttation"]) {
+            if ([value isEqualToString:@"false"]) {
+                return @(NO);
+            } else {
+                return @(YES);
+            }
+        }
         return value;
     }];
 }
@@ -127,8 +141,9 @@
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey
 {
-    return @{@"phone":@"phone", @"realName":@"realname", @"userID":@"userid", @"position":@"position", @"title":@"title", @"picName":@"picname", @"companyName":@"companyname", @"isAttention":@"isattention", @"userStatus":@"userstatus"};
+    return @{@"phone":@"phone", @"realName":@"realname", @"userID":@"userid", @"position":@"position", @"title":@"title", @"picName":@"picname", @"companyName":@"companyname", @"isAttention":@"isattention", @"userStatus":@"userstatus", @"hideAttation":@"isattention"};
 }
+
 + (NSValueTransformer *)JSONTransformerForKey:(NSString *)key
 {
     return [MTLValueTransformer transformerUsingForwardBlock:^id(NSString *value, BOOL *success, NSError *__autoreleasing *error) {
@@ -140,6 +155,13 @@
             }
         }
         if ([key isEqualToString:@"isAttention"]) {
+            if ([value isEqualToString:@"false"]) {
+                return @(NO);
+            } else {
+                return @(YES);
+            }
+        }
+        if ([key isEqualToString:@"hideAttation"]) {
             if ([value isEqualToString:@"false"]) {
                 return @(NO);
             } else {

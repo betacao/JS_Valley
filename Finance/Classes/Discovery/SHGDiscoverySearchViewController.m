@@ -33,11 +33,33 @@
     [self addAutoLayout];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    if (self.dataArr.count > 0) {
+        [self.tableView reloadData];
+    }
+}
+
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
     [self.searchBar becomeFirstResponder];
 }
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    [self.dataArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if ([obj isKindOfClass:[SHGDiscoveryPeopleObject class]]) {
+            SHGDiscoveryPeopleObject *peopleObject = (SHGDiscoveryPeopleObject *)obj;
+            if (peopleObject.isAttention) {
+                peopleObject.hideAttation = YES;
+            }
+        }
+    }];
+}
+
 
 - (void)initView
 {
