@@ -107,7 +107,6 @@
     self.departmentField.textColor = [UIColor colorWithHexString:@"161616"];
     [self.departmentField setValue:[UIColor colorWithHexString:@"afafaf"] forKeyPath:@"_placeholderLabel.textColor"];
     self.cityButton.titleLabel.font = FontFactor(15.0f);
-    [self.cityButton setTitleColor:[UIColor colorWithHexString:@"161616"] forState:UIControlStateNormal];
     [self.nextButton setTitleColor:[UIColor colorWithHexString:@"ffffff"] forState:UIControlStateNormal];
     self.nextButton.titleLabel.font = FontFactor(17.0f);
     self.nextButton.backgroundColor = Color(@"f04241");
@@ -245,6 +244,7 @@
     NSString *locationStr = [self.userInfo objectForKey:kLocation];
     if ([locationStr isEqualToString:@""]) {
         [self.cityButton setTitle:@"所在地" forState:UIControlStateNormal];
+        self.cityButton.titleLabel.textColor = Color(@"afafaf");
     } else{
         [self.cityButton setTitle:[NSString stringWithFormat:@"%@",self.location] forState:UIControlStateNormal];
         [self.cityButton setTitleColor:[UIColor colorWithHexString:@"161616"] forState:UIControlStateNormal];
@@ -322,7 +322,12 @@
     if([self checkInputMessageValid]){
         [Hud showWait];
         __weak typeof(self) weakSelf = self;
-        NSDictionary *param = @{@"uid":UID,@"picName":self.head_img,@"realName":self.nameField.text, @"industrycode":self.industry, @"company":self.companyField.text, @"city":self.cityButton.titleLabel.text, @"title":self.departmentField.text};
+        NSString *city = @"";
+        if (![self.cityButton.titleLabel.text isEqualToString:@"所在地"]) {
+            city = self.cityButton.titleLabel.text;
+        }
+        
+        NSDictionary *param = @{@"uid":UID,@"picName":self.head_img,@"realName":self.nameField.text, @"industrycode":self.industry, @"company":self.companyField.text, @"city":city, @"title":self.departmentField.text};
         [MOCHTTPRequestOperationManager postWithURL:[NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttp,@"user",@"editUser"] parameters:param success:^(MOCHTTPResponse *response) {
             [Hud hideHud];
             if (weakSelf.block) {

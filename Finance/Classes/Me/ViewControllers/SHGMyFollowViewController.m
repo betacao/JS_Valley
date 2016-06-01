@@ -7,16 +7,17 @@
 //
 
 #import "SHGMyFollowViewController.h"
-#import "BasePeopleTableViewCell.h"
-#import "BasePeopleObject.h"
 #import "EMSearchBar.h"
 #import "SHGPersonalViewController.h"
 #import "SHGEmptyDataView.h"
 #import "RealtimeSearchUtil.h"
+#import "SHGFollowAndFansTableViewCell.h"
+#import "SHGFollowAndFansObject.h"
 @interface SHGMyFollowViewController ()<UITableViewDelegate, UITableViewDataSource, UISearchDisplayDelegate, UISearchBarDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) NSMutableArray *dataSource;
+@property (nonatomic, strong) NSMutableArray *currentArray;
 @property (strong, nonatomic) EMSearchBar *searchBar;
 
 @property (strong, nonatomic) UITableViewCell *emptyCell;
@@ -63,6 +64,13 @@
     [SHGGlobleOperation registerAttationClass:[self class] method:@selector(loadAttationState:attationState:)];
 }
 
+- (NSMutableArray *)currentArray{
+    if (!_currentArray) {
+        _currentArray = [[NSMutableArray alloc] init];
+    }
+    return _currentArray;
+}
+
 - (EMSearchBar *)searchBar
 {
     if (!_searchBar) {
@@ -102,7 +110,7 @@
 
 - (void)loadAttationState:(NSString *)targetUserID attationState:(BOOL)attationState
 {
-    [self.dataSource enumerateObjectsUsingBlock:^(BasePeopleObject *object, NSUInteger idx, BOOL * _Nonnull stop) {
+    [self.dataSource enumerateObjectsUsingBlock:^(SHGFollowAndFansObject *object, NSUInteger idx, BOOL * _Nonnull stop) {
         if ([object.uid isEqualToString:targetUserID]) {
             [self.dataSource removeObject:object];
             
@@ -115,17 +123,10 @@
 - (void)requestFollowListWithTarget:(NSString *)target time:(NSString *)time
 {
     NSDictionary *param = @{@"uid":UID, @"target":target, @"time":time, @"num":@"100"};
-    [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttp,@"attention",@"myattentionlist"] class:[BasePeopleObject class] parameters:param success:^(MOCHTTPResponse *response) {
+    [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttp,@"attention",@"myattentionlist"] class:[SHGFollowAndFansObject class] parameters:param success:^(MOCHTTPResponse *response) {
         NSMutableArray *array = [NSMutableArray array];
         for (int i = 0; i<response.dataArray.count; i++) {
-            NSDictionary *dic = response.dataArray[i];
-            BasePeopleObject *obj = [[BasePeopleObject alloc] init];
-            obj.name = [dic valueForKey:@"nickname"];
-            obj.headImageUrl = [dic valueForKey:@"head_img"];
-            obj.uid = [dic valueForKey:@"uid"];
-            obj.updateTime = [dic valueForKey:@"time"];
-            obj.followRelation = [[dic valueForKey:@"state"] integerValue];
-            obj.userstatus = [dic objectForKey:@"userstatus"];
+            SHGFollowAndFansObject *obj = [response.dataArray objectAtIndex:i];
             if (![obj.uid isEqualToString:UID]) {
                 [array addObject:obj];
             }
@@ -134,14 +135,17 @@
         if ([target isEqualToString:@"first"]) {
             [self.dataSource removeAllObjects];
             [self.dataSource addObjectsFromArray:array];
-            
+            [self.currentArray removeAllObjects];
+            [self.currentArray addObjectsFromArray:array];
         }
 
         if ([target isEqualToString:@"load"]) {
             
             [self.dataSource addObjectsFromArray:array];
+            [self.currentArray addObjectsFromArray:array];
             
         }
+        
         [self.tableView.mj_footer endRefreshing];
         [Hud hideHud];
         [self.tableView reloadData];
@@ -176,14 +180,13 @@
     if (self.dataSource.count == 0) {
         return self.emptyCell;
     }
-    NSString *identifier = @"BasePeopleTableViewCell";
-    BasePeopleTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+    NSString *identifier = @"SHGFollowAndFansTableViewCell";
+    SHGFollowAndFansTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
     if (!cell) {
-        cell = [[[NSBundle mainBundle] loadNibNamed:@"BasePeopleTableViewCell" owner:self options:nil] lastObject];
+        cell = [[[NSBundle mainBundle] loadNibNamed:@"SHGFollowAndFansTableViewCell" owner:self options:nil] lastObject];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
-    BasePeopleObject *obj = self.dataSource[indexPath.row];
-    obj.followRelationHiden = NO;
+    SHGFollowAndFansObject *obj = self.dataSource[indexPath.row];
     cell.object = obj;
    	
     return cell;
@@ -193,7 +196,7 @@
 {
     if (self.dataArr.count > 0) {
        [tableView deselectRowAtIndexPath:indexPath animated:YES];
-        BasePeopleObject *obj = self.dataSource[indexPath.row];
+        SHGFollowAndFansObject *obj = self.dataSource[indexPath.row];
         SHGPersonalViewController *controller = [[SHGPersonalViewController alloc] initWithNibName:@"SHGPersonalViewController" bundle:nil];
         controller.userId = obj.uid;
         [self.navigationController pushViewController:controller animated:YES];
@@ -204,7 +207,7 @@
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
 {
-    [[RealtimeSearchUtil currentUtil] realtimeSearchWithSource:self.dataSource searchText:(NSString *)searchText collationStringSelector:@selector(name) resultBlock:^(NSArray *results) {
+    [[RealtimeSearchUtil currentUtil] realtimeSearchWithSource:self.currentArray searchText:(NSString *)searchText collationStringSelector:@selector(name) resultBlock:^(NSArray *results) {
         if (results) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self.dataSource removeAllObjects];
@@ -214,6 +217,7 @@
         }
     }];
 }
+
 - (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar
 {
     [searchBar setShowsCancelButton:YES animated:YES];
