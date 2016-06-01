@@ -815,9 +815,6 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
         NSArray *array = [string componentsSeparatedByCharactersInSet:characterSet];
 
         [array enumerateObjectsUsingBlock:^(NSString *obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            if (![[SHGGloble sharedGloble] checkPhoneNumber:obj]) {
-                [self.mobileArray addObject:obj];
-            }
             NSPredicate *mobilePredicate = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", @"\\d{3}-\\d{8}|\\d{3}-\\d{7}|\\d{4}-\\d{8}|\\d{4}-\\d{7}|1+[3578]+\\d{9}|\\d{8}|\\d{7}"];
             if ([mobilePredicate evaluateWithObject:obj]) {
                 [self.mobileArray addObject:obj];

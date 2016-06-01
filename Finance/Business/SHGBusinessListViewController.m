@@ -294,7 +294,11 @@
     NSDictionary *paramDictionary = [self.paramDictionary objectForKey:[self.scrollView currentName]];
     //有过搜索的就不再显示图片和文字了
     if ([index integerValue] >= 0 && [paramDictionary allKeys].count == 0){
-        [self.currentArray insertUniqueObject:[self otherObject] atIndex:[index integerValue]];
+        SHGBusinessNoticeObject *object = [self otherObject];
+        [self.currentArray insertUniqueObject:object atIndex:[index integerValue]];
+        if ([[self.currentArray lastObject] isEqual:object]) {
+            [self.currentArray removeObject:object];
+        }
     }
 }
 
