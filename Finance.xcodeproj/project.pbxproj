@@ -976,7 +976,6 @@
 		F9F349D41C1993F90090F111 /* SHGMarketSendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9F349D21C1993F90090F111 /* SHGMarketSendViewController.m */; };
 		F9F349D51C1993F90090F111 /* SHGMarketSendViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9F349D31C1993F90090F111 /* SHGMarketSendViewController.xib */; };
 		F9F349DB1C199E730090F111 /* SHGComBoxView.m in Sources */ = {isa = PBXBuildFile; fileRef = F9F349D81C199E730090F111 /* SHGComBoxView.m */; };
-		F9FBAF541BDF132E008D89D9 /* 15skaiji.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = F9FBAF531BDF132E008D89D9 /* 15skaiji.mp4 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -2362,7 +2361,6 @@
 		F9F349D31C1993F90090F111 /* SHGMarketSendViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGMarketSendViewController.xib; sourceTree = "<group>"; };
 		F9F349D71C199E730090F111 /* SHGComBoxView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGComBoxView.h; sourceTree = "<group>"; };
 		F9F349D81C199E730090F111 /* SHGComBoxView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGComBoxView.m; sourceTree = "<group>"; };
-		F9FBAF531BDF132E008D89D9 /* 15skaiji.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = 15skaiji.mp4; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -2830,7 +2828,6 @@
 		610FF0861AD62DB60027EBA6 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
-				F9FBAF531BDF132E008D89D9 /* 15skaiji.mp4 */,
 				B085B54F1B74A61700DC592E /* 1.4图 */,
 				B04D6E361B60C01E00E3863E /* 1.3图 */,
 				6149CFE21B25E5B0006E45FE /* city_code.txt */,
@@ -5498,7 +5495,6 @@
 				408D8B0E1AF8618C0055810C /* VoiceSearchFeedback013@2x.png in Resources */,
 				B04D6E411B60F2D500E3863E /* 组-46@2x.png in Resources */,
 				6187D30E1AF1C693008E1D21 /* sr_refresh@2X.png in Resources */,
-				F9FBAF541BDF132E008D89D9 /* 15skaiji.mp4 in Resources */,
 				F98D64F01C0053ED00717EA5 /* SHGActionCommentTableViewCell.xib in Resources */,
 				408D8B5A1AF8618C0055810C /* chatBar_colorMore_videoSelected@2x.png in Resources */,
 				408D8AF41AF8618C0055810C /* chatFire_audioPlaying3@2x.png in Resources */,

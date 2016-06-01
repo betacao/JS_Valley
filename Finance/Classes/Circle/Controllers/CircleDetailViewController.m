@@ -627,7 +627,6 @@
     
 }
 
-#pragma mark -- sdc
 #pragma mark -- 评论
 - (void)loadCommentBtnState
 {
@@ -659,7 +658,6 @@
             obj.cid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
             [self.obj.comments addObject:obj];
             self.obj.cmmtnum = [NSString stringWithFormat:@"%ld",(long)([self.obj.cmmtnum integerValue] + 1)];
-            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_COLLECT_COMMENT_CLIC object:self.obj];
         }
         [self.listTable reloadData];
         [self loadDatasWithObj:self.obj];
@@ -698,7 +696,6 @@
             obj.rnickname = cmntObj.cnickname;
             [self.obj.comments addObject:obj];
             self.obj.cmmtnum = [NSString stringWithFormat:@"%ld",(long)([self.obj.cmmtnum integerValue] + 1)];
-            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_COLLECT_COMMENT_CLIC object:self.obj];
             [MobClick event:@"ActionCommentClick" label:@"onClick"];
         }
         [self.listTable reloadData];
@@ -1226,7 +1223,6 @@
     
 }
 
-#pragma mark -- sdc
 #pragma mark -- 拨打电话
 - (BOOL)openTel:(NSString *)tel
 {
@@ -1235,7 +1231,6 @@
     return  [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str]];
 }
 
-#pragma mark -- sdc
 #pragma mark -- 打开url
 - (BOOL)openURL:(NSURL *)url
 {

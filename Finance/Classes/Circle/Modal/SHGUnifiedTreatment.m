@@ -401,7 +401,11 @@
     NSArray *array = [[SHGSegmentController sharedSegmentController] targetObjectsByRid:rid];
     for (CircleListObj *obj in array){
         obj.cmmtnum = num;
-        obj.comments = comments;
+        if (comments.count > 3) {
+            obj.comments = [NSMutableArray arrayWithArray:[comments subarrayWithRange:NSMakeRange(0, 3)]];
+        } else {
+            obj.comments = comments;
+        }
     }
     [[SHGSegmentController sharedSegmentController] reloadData];
 }

@@ -155,7 +155,7 @@
         return;
     }
     __weak typeof(self)weakSelf = self;
-    NSDictionary *param = @{@"uid":key_Uid,@"t":key_Token, @"appv":LOCAL_Version};
+    NSDictionary *param = @{@"uid":key_Uid,@"t":key_Token, @"appv":LOCAL_Version, @"phoneType":[SHGGloble sharedGloble].platform};
     [MOCHTTPRequestOperationManager postWithURL:[NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttp,@"login",@"auto"] class:nil parameters:param success:^(MOCHTTPResponse *response){
         NSString *code =[response.data valueForKey:@"code"];
         if ([code isEqualToString:@"000"]){

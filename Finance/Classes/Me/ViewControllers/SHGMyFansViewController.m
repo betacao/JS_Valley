@@ -16,11 +16,10 @@
 
 @interface SHGMyFansViewController ()<UITableViewDelegate, UITableViewDataSource, UISearchDisplayDelegate, UISearchBarDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property (nonatomic, strong) NSMutableArray *dataSource;
-@property (nonatomic, strong) NSMutableArray *currentArray;
+
+@property (strong, nonatomic) NSMutableArray *currentArray;
 @property (strong, nonatomic) EMSearchBar *searchBar;
 
-@property (strong, nonatomic) UITableViewCell *emptyCell;
 @property (strong, nonatomic) SHGEmptyDataView *emptyView;
 @end
 
@@ -33,7 +32,8 @@
     
     [self initView];
     [self addSdLayout];
-    
+    [self requestFansListWithTarget:@"first" time:@"-1"];
+
 }
 
 - (void)addSdLayout
@@ -48,17 +48,23 @@
     .rightSpaceToView(self.view, 0.0f)
     .topSpaceToView(self.searchBar, 0.0f)
     .bottomSpaceToView(self.view, 0.0f);
+
+    self.emptyView.sd_layout
+    .leftSpaceToView(self.view, 0.0f)
+    .rightSpaceToView(self.view, 0.0f)
+    .topSpaceToView(self.searchBar, 0.0f)
+    .bottomSpaceToView(self.view, 0.0f);
 }
 
 - (void)initView
 {
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
-    self.dataSource = [[NSMutableArray alloc] init];
     [self.view insertSubview:self.searchBar belowSubview:self.tableView];
     [self addHeaderRefresh:self.tableView headerRefesh:NO andFooter:YES];
+    self.tableView.mj_footer.automaticallyHidden = YES;
     self.tableView.tableFooterView = [[UIView alloc] init];
-    [self requestFansListWithTarget:@"first" time:@"-1"];
+
     [SHGGlobleOperation registerAttationClass:[self class] method:@selector(loadAttationState:attationState:)];
 }
 
@@ -79,111 +85,97 @@
     return _currentArray;
 }
 
-- (UITableViewCell *)emptyCell
-{
-    if (!_emptyCell) {
-        _emptyCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
-        _emptyCell.selectionStyle = UITableViewCellSelectionStyleNone;
-        [_emptyCell.contentView addSubview:self.emptyView];
-    }
-    return _emptyCell;
-}
-
 - (SHGEmptyDataView *)emptyView
 {
     if (!_emptyView) {
         _emptyView = [[SHGEmptyDataView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, SCREENWIDTH, SCREENHEIGHT)];
+        _emptyView.hidden = YES;
+        [self.view addSubview:_emptyView];
     }
     return _emptyView;
 }
 
-- (void)refreshHeader
-{
-    if (self.dataSource.count > 0){
-        BasePeopleObject *obj = self.dataSource[0];
-        [self requestFansListWithTarget:@"refresh" time:obj.updateTime];
-    }
-}
 
--(void)refreshFooter
+- (void)refreshFooter
 {
-    if (self.dataSource.count > 0){
-        BasePeopleObject *obj = [self.dataSource lastObject];
+    if (self.dataArr.count > 0) {
+        BasePeopleObject *obj = [self.dataArr lastObject];
         [self requestFansListWithTarget:@"load" time:obj.updateTime];
+    } else {
+        [self requestFansListWithTarget:@"load" time:@"-1"];
     }
 }
 
 
 - (void)loadAttationState:(NSString *)targetUserID attationState:(BOOL)attationState
 {
-    [self.dataSource enumerateObjectsUsingBlock:^(SHGFollowAndFansObject *object, NSUInteger idx, BOOL * _Nonnull stop) {
+    [self.dataArr enumerateObjectsUsingBlock:^(SHGFollowAndFansObject *object, NSUInteger idx, BOOL * _Nonnull stop) {
         if ([object.uid isEqualToString:targetUserID]) {
             if ([object.followRelation isEqualToString:@"0"]) {
                 object.followRelation = @"2";
             } else {
                 object.followRelation = @"0";
             }
-            
         }
     }];
     [self.tableView reloadData];
 }
 
--(void)requestFansListWithTarget:(NSString *)target time:(NSString *)time
+- (void)requestFansListWithTarget:(NSString *)target time:(NSString *)time
 {
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
     NSDictionary *param = @{@"uid":uid, @"target":target, @"time":time, @"num":@"100"};
-    [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttp,@"attention",@"myfanslist"] class:[SHGFollowAndFansObject class] parameters:param success:^(MOCHTTPResponse *response) {
-        NSLog(@"=data = %@",response.dataArray);
-        NSMutableArray *array = [NSMutableArray array];
-        for (int i = 0; i<response.dataArray.count; i++) {
-            SHGFollowAndFansObject *obj = [response.dataArray objectAtIndex:i];
-            if (![obj.uid isEqualToString:UID]) {
-                [array addObject:obj];
+    __weak typeof(self)weakSelf = self;
+    [MOCHTTPRequestOperationManager getWithURL:[rBaseAddressForHttp stringByAppendingString:@"/attention/myfanslist"] class:[SHGFollowAndFansObject class] parameters:param success:^(MOCHTTPResponse *response) {
+
+        NSMutableArray *array = [NSMutableArray arrayWithArray:response.dataArray];
+        [array enumerateObjectsUsingBlock:^(SHGFollowAndFansObject *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            if ([obj.uid isEqualToString:UID]) {
+                [array removeObject:obj];
             }
-        }
-        
+        }];
         if ([target isEqualToString:@"first"]) {
-            [self.dataSource removeAllObjects];
-            [self.dataSource addObjectsFromArray:array];
-            [self.currentArray removeAllObjects];
-            [self.currentArray addObjectsFromArray:array];
-            
+            [weakSelf.dataArr removeAllObjects];
+            [weakSelf.dataArr addObjectsFromArray:array];
+            [weakSelf.currentArray removeAllObjects];
+            [weakSelf.currentArray addObjectsFromArray:array];
         }
-        
         if ([target isEqualToString:@"load"]) {
-            [self.dataSource addObjectsFromArray:array];
-            [self.currentArray addObjectsFromArray:array];
+            [weakSelf.dataArr addObjectsFromArray:array];
+            [weakSelf.currentArray addObjectsFromArray:array];
         }
-        [self.tableView.mj_footer endRefreshing];
+        if (array.count == 0) {
+            [weakSelf.tableView.mj_footer endRefreshingWithNoMoreData];
+        } else {
+            [weakSelf.tableView.mj_footer endRefreshing];
+        }
+
+        [weakSelf.tableView reloadData];
         [Hud hideHud];
-        [self.tableView reloadData];
     } failed:^(MOCHTTPResponse *response) {
-        NSLog(@"%@",response.errorMessage);
-        [self.tableView.mj_footer endRefreshing];
+        [weakSelf.tableView.mj_footer endRefreshing];
         [Hud hideHud];
     }];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.dataSource.count == 0 ? 1 : self.dataSource.count;
+    if (self.dataArr.count == 0) {
+        self.emptyView.hidden = NO;
+    } else {
+        self.emptyView.hidden = YES;
+    }
+    return self.dataArr.count;
 }
 
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (self.dataSource.count > 0) {
-        return MarginFactor(59.0f);
-    }
-    return CGRectGetHeight(tableView.frame);
+    return MarginFactor(59.0f);
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (self.dataSource.count == 0) {
-        return self.emptyCell;
-    }
     NSString *identifier = @"SHGFollowAndFansTableViewCell";
     SHGFollowAndFansTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
     if (!cell) {
@@ -191,37 +183,35 @@
         
         cell.backgroundColor = [UIColor whiteColor];
     }
-    SHGFollowAndFansObject *obj = self.dataSource[indexPath.row];
+    SHGFollowAndFansObject *obj = [self.dataArr objectAtIndex:indexPath.row];
     cell.object = obj;
-   	
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (self.dataSource.count > 0) {
-        [tableView deselectRowAtIndexPath:indexPath animated:YES];
-        SHGFollowAndFansObject *obj = self.dataSource[indexPath.row];
-        SHGPersonalViewController *controller = [[SHGPersonalViewController alloc] initWithNibName:@"SHGPersonalViewController" bundle:nil];
-        controller.userId = obj.uid;
-        [self.navigationController pushViewController:controller animated:YES];
-    }
+    SHGFollowAndFansObject *obj = [self.dataArr objectAtIndex:indexPath.row];
+    SHGPersonalViewController *controller = [[SHGPersonalViewController alloc] initWithNibName:@"SHGPersonalViewController" bundle:nil];
+    controller.userId = obj.uid;
+    [self.navigationController pushViewController:controller animated:YES];
 }
 
 #pragma mark - UISearchBarDelegate
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
 {
+    __weak typeof(self)weakSelf = self;
     [[RealtimeSearchUtil currentUtil] realtimeSearchWithSource:self.currentArray searchText:(NSString *)searchText collationStringSelector:@selector(name) resultBlock:^(NSArray *results) {
         if (results) {
             dispatch_async(dispatch_get_main_queue(), ^{
-                [self.dataSource removeAllObjects];
-                [self.dataSource addObjectsFromArray:results];
-                [self.tableView reloadData];
+                [weakSelf.dataArr removeAllObjects];
+                [weakSelf.dataArr addObjectsFromArray:results];
+                [weakSelf.tableView reloadData];
             });
         }
     }];
 }
+
 - (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar
 {
     [searchBar setShowsCancelButton:YES animated:YES];
@@ -238,7 +228,6 @@
     [[RealtimeSearchUtil currentUtil] realtimeSearchStop];
     [searchBar resignFirstResponder];
     [searchBar setShowsCancelButton:NO animated:YES];
-    [self requestFansListWithTarget:@"first" time:@"-1"];
 }
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
