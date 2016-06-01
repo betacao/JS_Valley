@@ -11,8 +11,9 @@
 #define kActionButtonFrame CGRectMake(kObjectMargin, CGRectGetMaxY(self.imageView.frame) + kImageViewTopMargin, SCREENWIDTH - 2 * kObjectMargin, 35.0f)
 
 @interface SHGEmptyDataView()
+
 @property (strong, nonatomic) UIImageView *imageView;
-@property (strong, nonatomic) UIButton *actionButton;
+
 @end
 
 @implementation SHGEmptyDataView
@@ -22,9 +23,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         self.imageView = [[UIImageView alloc] init];
-        self.actionButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        [self.actionButton addTarget:self action:@selector(actionButtonClick:) forControlEvents:UIControlEventTouchUpInside];
-        self.type = SHGEmptyDateTypeNormal;
+        self.type = SHGEmptyDateNormal;
         [self addSubview:self.imageView];
     }
     return self;
@@ -35,30 +34,26 @@
     _type = type;
     self.backgroundColor = [UIColor colorWithHexString:@"EFEEEF"];
     switch (type) {
-        case SHGEmptyDateTypeNormal:
-            self.actionButton.hidden = YES;
+        case SHGEmptyDateNormal:
             self.imageView.image = [UIImage imageNamed:@"emptyBg"];
             [self.imageView sizeToFit];
             break;
-        case SHGEmptyDateTypeMarketDeleted:
-            self.actionButton.hidden = YES;
+        case SHGEmptyDateMarketDeleted:
             self.imageView.image = [UIImage imageNamed:@"deleted_market"];
             [self.imageView sizeToFit];
             break;
-        case SHGEmptyDateTypeBusinessDeleted:
-            self.actionButton.hidden = YES;
+        case SHGEmptyDateBusinessDeleted:
             self.imageView.image = [UIImage imageNamed:@"deleted_market"];
             [self.imageView sizeToFit];
             break;
-        case SHGEmptyDateTypeMarketEmptyRecommended:
-            self.actionButton.hidden = NO ;
+        case SHGEmptyDateDiscoverySearch:
             self.backgroundColor = [UIColor whiteColor];
-            self.imageView.image = [UIImage imageNamed:@"market_emptyUser"];
-            [self.imageView sizeToFit];
-            self.actionButton.titleLabel.font = [UIFont systemFontOfSize:15.0f];
-            [self.actionButton setTitle:@"立即创建" forState:UIControlStateNormal];
-            [self.actionButton setBackgroundImage:[CommonMethod imageWithColor:[UIColor colorWithHexString:@"F04241"]] forState:UIControlStateNormal];
-            [self addSubview:self.actionButton];
+            self.imageView.image = [UIImage imageNamed:@"discovery_search_none"];
+            self.imageView.sd_layout
+            .centerXEqualToView(self)
+            .topSpaceToView(self, MarginFactor(65.0f))
+            .widthIs(self.imageView.image.size.width)
+            .heightIs(self.imageView.image.size.height);
             break;
         default:
             break;
@@ -67,28 +62,10 @@
     [self setNeedsLayout];
 }
 
-- (void)actionButtonClick:(UIButton *)button
-{
-    if (self.block) {
-        switch (self.type) {
-            case SHGEmptyDateTypeMarketEmptyRecommended:
-                self.block(nil);
-                break;
-                
-            default:
-                break;
-        }
-    }
-}
-
 - (void)layoutSubviews
 {
     [super layoutSubviews];
-    if (self.type == SHGEmptyDateTypeMarketEmptyRecommended) {
-        self.imageView.origin = CGPointMake((SCREENWIDTH - CGRectGetWidth(self.imageView.frame)) / 2.0f, kImageViewTopMargin);
-        self.actionButton.frame = kActionButtonFrame;
-        return;
-    } else{
+    if (self.type == SHGEmptyDateNormal ||self.type == SHGEmptyDateMarketDeleted||self.type == SHGEmptyDateBusinessDeleted) {
         CGPoint point = self.window.center;
         point = [self convertPoint:point fromView:self.window];
         self.imageView.center = point;

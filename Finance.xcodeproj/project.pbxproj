@@ -39,11 +39,6 @@
 		4088DDB21AF102FE00393855 /* SettingAboutUsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4088DD941AF102FE00393855 /* SettingAboutUsViewController.xib */; };
 		4088DDB31AF102FE00393855 /* SettingModifyPWDViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4088DD961AF102FE00393855 /* SettingModifyPWDViewController.m */; };
 		4088DDB51AF102FE00393855 /* SettingModifyPWDViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4088DD981AF102FE00393855 /* SettingModifyPWDViewController.xib */; };
-		4088DDB91AF102FE00393855 /* SettingQuestionDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4088DD9E1AF102FE00393855 /* SettingQuestionDetailViewController.m */; };
-		4088DDBA1AF102FE00393855 /* SettingQuestionDetailViewController3.5.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4088DD9F1AF102FE00393855 /* SettingQuestionDetailViewController3.5.xib */; };
-		4088DDBB1AF102FE00393855 /* SettingQuestionDetailViewController4.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4088DDA01AF102FE00393855 /* SettingQuestionDetailViewController4.xib */; };
-		4088DDBC1AF102FE00393855 /* SettingQuestionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4088DDA21AF102FE00393855 /* SettingQuestionViewController.m */; };
-		4088DDBE1AF102FE00393855 /* SettingQuestionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4088DDA41AF102FE00393855 /* SettingQuestionViewController.xib */; };
 		4088DDCE1AF105FD00393855 /* SettingQuestionObj.m in Sources */ = {isa = PBXBuildFile; fileRef = 4088DDCD1AF105FD00393855 /* SettingQuestionObj.m */; };
 		4088DDD21AF1065100393855 /* SettingQuestionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4088DDD01AF1065100393855 /* SettingQuestionCell.m */; };
 		4088DDD31AF1065100393855 /* SettingQuestionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4088DDD11AF1065100393855 /* SettingQuestionCell.xib */; };
@@ -1033,13 +1028,6 @@
 		4088DD951AF102FE00393855 /* SettingModifyPWDViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SettingModifyPWDViewController.h; path = Settings/SettingModifyPWDViewController.h; sourceTree = "<group>"; };
 		4088DD961AF102FE00393855 /* SettingModifyPWDViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SettingModifyPWDViewController.m; path = Settings/SettingModifyPWDViewController.m; sourceTree = "<group>"; };
 		4088DD981AF102FE00393855 /* SettingModifyPWDViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SettingModifyPWDViewController.xib; path = Settings/SettingModifyPWDViewController.xib; sourceTree = "<group>"; };
-		4088DD9D1AF102FE00393855 /* SettingQuestionDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SettingQuestionDetailViewController.h; path = Settings/SettingQuestionDetailViewController.h; sourceTree = "<group>"; };
-		4088DD9E1AF102FE00393855 /* SettingQuestionDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SettingQuestionDetailViewController.m; path = Settings/SettingQuestionDetailViewController.m; sourceTree = "<group>"; };
-		4088DD9F1AF102FE00393855 /* SettingQuestionDetailViewController3.5.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SettingQuestionDetailViewController3.5.xib; path = Settings/SettingQuestionDetailViewController3.5.xib; sourceTree = "<group>"; };
-		4088DDA01AF102FE00393855 /* SettingQuestionDetailViewController4.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SettingQuestionDetailViewController4.xib; path = Settings/SettingQuestionDetailViewController4.xib; sourceTree = "<group>"; };
-		4088DDA11AF102FE00393855 /* SettingQuestionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SettingQuestionViewController.h; path = Settings/SettingQuestionViewController.h; sourceTree = "<group>"; };
-		4088DDA21AF102FE00393855 /* SettingQuestionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SettingQuestionViewController.m; path = Settings/SettingQuestionViewController.m; sourceTree = "<group>"; };
-		4088DDA41AF102FE00393855 /* SettingQuestionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SettingQuestionViewController.xib; path = Settings/SettingQuestionViewController.xib; sourceTree = "<group>"; };
 		4088DDCC1AF105FD00393855 /* SettingQuestionObj.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingQuestionObj.h; sourceTree = "<group>"; };
 		4088DDCD1AF105FD00393855 /* SettingQuestionObj.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingQuestionObj.m; sourceTree = "<group>"; };
 		4088DDCF1AF1065100393855 /* SettingQuestionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingQuestionCell.h; sourceTree = "<group>"; };
@@ -2478,13 +2466,6 @@
 				4088DD951AF102FE00393855 /* SettingModifyPWDViewController.h */,
 				4088DD961AF102FE00393855 /* SettingModifyPWDViewController.m */,
 				4088DD981AF102FE00393855 /* SettingModifyPWDViewController.xib */,
-				4088DD9D1AF102FE00393855 /* SettingQuestionDetailViewController.h */,
-				4088DD9E1AF102FE00393855 /* SettingQuestionDetailViewController.m */,
-				4088DD9F1AF102FE00393855 /* SettingQuestionDetailViewController3.5.xib */,
-				4088DDA01AF102FE00393855 /* SettingQuestionDetailViewController4.xib */,
-				4088DDA11AF102FE00393855 /* SettingQuestionViewController.h */,
-				4088DDA21AF102FE00393855 /* SettingQuestionViewController.m */,
-				4088DDA41AF102FE00393855 /* SettingQuestionViewController.xib */,
 				4088DD851AF0EEA200393855 /* SettingsViewController.h */,
 				4088DD861AF0EEA200393855 /* SettingsViewController.m */,
 				4088DD871AF0EEA200393855 /* SettingsViewController.xib */,
@@ -5251,7 +5232,6 @@
 				61E83D241AF7C78E00703651 /* 邀请好友、身份认证按钮@2x.png in Resources */,
 				987101341CBFB030002A8F7F /* SHGBusinessCollectionListViewController.xib in Resources */,
 				982EB7EC1CB38734003EEBE6 /* SHGBondFinanceNextViewController.xib in Resources */,
-				4088DDBE1AF102FE00393855 /* SettingQuestionViewController.xib in Resources */,
 				6149CFDE1B259E40006E45FE /* options_pointer.png in Resources */,
 				56F2D5121B5A67DB008E2855 /* 删除.png in Resources */,
 				408D8B3D1AF8618C0055810C /* chatBar_face.png in Resources */,
@@ -5341,7 +5321,6 @@
 				61616FE81B02F29100E5A837 /* 关注按钮@3x.png in Resources */,
 				61E83CDA1AF7C78E00703651 /* 扣扣好友图标@2x.png in Resources */,
 				61E83CD01AF7C78E00703651 /* 免费预约按钮-按下@2x.png in Resources */,
-				4088DDBB1AF102FE00393855 /* SettingQuestionDetailViewController4.xib in Resources */,
 				408D8B101AF8618C0055810C /* VoiceSearchFeedback014@2x.png in Resources */,
 				408D8B7D1AF8618C0055810C /* chat_sender_audio_playing_full@2x.png in Resources */,
 				B080FE8F1B81E30100426579 /* btn_publish_keyboard_b@3x.png in Resources */,
@@ -5417,7 +5396,6 @@
 				61E83CED1AF7C78E00703651 /* 加关注按钮@2x.png in Resources */,
 				61E83CF11AF7C78E00703651 /* 发送按钮-按下@2x.png in Resources */,
 				61E83D811AF7C78E00703651 /* 意见反馈@3x.png in Resources */,
-				4088DDBA1AF102FE00393855 /* SettingQuestionDetailViewController3.5.xib in Resources */,
 				408D8B041AF8618C0055810C /* VoiceSearchFeedback008@2x.png in Resources */,
 				61D62C071ADE3E85002DD395 /* 2.png in Resources */,
 				408D8B021AF8618C0055810C /* VoiceSearchFeedback007@2x.png in Resources */,
@@ -5985,7 +5963,6 @@
 				61046C761AE0FF440065F59D /* RecommendView.m in Sources */,
 				61D62BEE1ADD1C4D002DD395 /* MOCHTTPRequestOperationManager.m in Sources */,
 				40302B081AEF573200F22EB6 /* MyAddressViewController.m in Sources */,
-				4088DDBC1AF102FE00393855 /* SettingQuestionViewController.m in Sources */,
 				6187D2EA1AF1C693008E1D21 /* MessageReadManager.m in Sources */,
 				F9203D161CF449E000F55373 /* SHGDiscoveryObject.m in Sources */,
 				985CBDC31C04042C002B3D9D /* SHGCollectCardClass.m in Sources */,
@@ -6011,7 +5988,6 @@
 				F986DE361BFDCBD900E6709F /* SHGActionTotalInViewController.m in Sources */,
 				6190274A1B2359C600D9EEA2 /* popTableViewCell.m in Sources */,
 				F9F349BC1C1952B00090F111 /* SHGMarketListViewController.m in Sources */,
-				4088DDB91AF102FE00393855 /* SettingQuestionDetailViewController.m in Sources */,
 				F9E7CAF51CF83C740068EF4B /* SHGRecommendViewController.m in Sources */,
 				F9EDD5FA1BABFBCF00506C0C /* SDWaitingView.m in Sources */,
 				B04D032E1B43F88A009BE7C2 /* ZYExceptionHandler.m in Sources */,

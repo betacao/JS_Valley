@@ -17,7 +17,6 @@
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) IBOutlet UITableViewCell *recommendCell;
-@property (strong, nonatomic) IBOutlet UITableViewCell *emptyCell;
 @property (strong, nonatomic) SHGEmptyDataView *emptyView;
 
 @property (strong, nonatomic) EMSearchBar *searchBar;
@@ -45,7 +44,8 @@
 {
     self.pageNumber = 1;
     [self.view insertSubview:self.searchBar belowSubview:self.tableView];
-    [self addHeaderRefresh:self.tableView headerRefesh:NO headerTitle:nil andFooter:YES footerTitle:@{@(MJRefreshStateNoMoreData):@""}];
+    [self.view addSubview:self.emptyView];
+    [self addHeaderRefresh:self.tableView headerRefesh:NO andFooter:YES];
     self.tableView.mj_footer.automaticallyHidden = YES;
     self.tableView.tableFooterView = [[UIView alloc] init];
     self.hideSearchBar = NO;
@@ -83,20 +83,12 @@
     return _recommendCollectionView;
 }
 
-- (UITableViewCell *)emptyCell
-{
-    if (!_emptyCell) {
-        _emptyCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
-        _emptyCell.selectionStyle = UITableViewCellSelectionStyleNone;
-        [_emptyCell.contentView addSubview:self.emptyView];
-    }
-    return _emptyCell;
-}
-
 - (SHGEmptyDataView *)emptyView
 {
     if (!_emptyView) {
         _emptyView = [[SHGEmptyDataView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, SCREENWIDTH, SCREENHEIGHT)];
+        _emptyView.hidden = YES;
+        _emptyView.type = SHGEmptyDateDiscoverySearch;
     }
     return _emptyView;
 }
@@ -106,6 +98,12 @@
 {
     _hideSearchBar = hideSearchBar;
     self.tableView.sd_resetLayout
+    .leftSpaceToView(self.view, 0.0f)
+    .rightSpaceToView(self.view, 0.0f)
+    .topSpaceToView(hideSearchBar ? self.view : self.searchBar, 0.0f)
+    .bottomSpaceToView(self.view, 0.0f);
+
+    self.emptyView.sd_resetLayout
     .leftSpaceToView(self.view, 0.0f)
     .rightSpaceToView(self.view, 0.0f)
     .topSpaceToView(hideSearchBar ? self.view : self.searchBar, 0.0f)
@@ -142,19 +140,22 @@
 {
     __weak typeof(self)weakSelf = self;
     void(^block)(NSArray *firstArray, NSArray *secondArray) = ^(NSArray *firstArray, NSArray *secondArray) {
+        weakSelf.emptyView.hidden = YES;
+        
         if (firstArray.count > 0) {
             [weakSelf.dataArr addObjectsFromArray:firstArray];
-        } else if(secondArray.count > 0) {
-            weakSelf.hideSearchBar = YES;
-            weakSelf.recommendContactArray = [NSArray arrayWithArray:secondArray];
-            weakSelf.recommendCollectionView.dataArray = weakSelf.recommendContactArray;
+            [weakSelf.tableView.mj_footer endRefreshing];
+        } else {
+            [weakSelf.tableView.mj_footer endRefreshingWithNoMoreData];
+            if(secondArray.count > 0) {
+                weakSelf.hideSearchBar = YES;
+                weakSelf.recommendContactArray = [NSArray arrayWithArray:secondArray];
+                weakSelf.recommendCollectionView.dataArray = weakSelf.recommendContactArray;
+            } else if(weakSelf.dataArr.count == 0){
+                weakSelf.emptyView.hidden = NO;
+            }
         }
 
-        if (firstArray.count < 10) {
-            [weakSelf.tableView.mj_footer endRefreshingWithNoMoreData];
-        } else {
-            [weakSelf.tableView.mj_footer endRefreshing];
-        }
         weakSelf.pageNumber++;
         [weakSelf.tableView reloadData];
     };
@@ -177,7 +178,7 @@
     if (self.recommendContactArray) {
         return 1;
     }
-    return self.dataArr.count == 0 ? 1 : self.dataArr.count;
+    return self.dataArr.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -185,21 +186,15 @@
     if (self.recommendContactArray) {
         return self.recommendCollectionView.totalHeight;
     }
-    if (self.dataArr.count > 0) {
-        NSObject *object = [self.dataArr objectAtIndex:indexPath.row];
-        CGFloat height = [tableView cellHeightForIndexPath:indexPath model:object keyPath:@"object" cellClass:[SHGDiscoveryDisplayCell class] contentViewWidth:SCREENWIDTH];
-        return height;
-    }
-    return CGRectGetHeight(tableView.frame);
+    NSObject *object = [self.dataArr objectAtIndex:indexPath.row];
+    CGFloat height = [tableView cellHeightForIndexPath:indexPath model:object keyPath:@"object" cellClass:[SHGDiscoveryDisplayCell class] contentViewWidth:SCREENWIDTH];
+    return height;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (self.recommendContactArray) {
         return self.recommendCell;
-    }
-    if (self.dataArr.count == 0) {
-        return self.emptyCell;
     }
     SHGDiscoveryDisplayCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SHGDiscoveryDisplayCell"];
     if(!cell) {
@@ -335,7 +330,7 @@
         SHGDiscoveryPeopleObject *peopleObject = (SHGDiscoveryPeopleObject *)object;
         [self.headerView updateHeaderView:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,peopleObject.headImg] placeholderImage:[UIImage imageNamed:@"default_head"] status:peopleObject.status userID:peopleObject.userID];
         self.firstLabel.text = peopleObject.realName;
-        self.secondLabel.text = peopleObject.company;
+        self.secondLabel.text = peopleObject.company.length == 0 ? @"暂未提供公司信息" : peopleObject.company;
         self.thirdLabel.text = peopleObject.area;
         if (peopleObject.isAttention) {
             [self.button setImage:[UIImage imageNamed:@"me_followed"] forState:UIControlStateNormal];
@@ -355,7 +350,7 @@
         SHGDiscoveryDepartmentObject *depentmentObject = (SHGDiscoveryDepartmentObject *)object;
         [self.headerView updateHeaderView:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,depentmentObject.headImg] placeholderImage:[UIImage imageNamed:@"default_head"] status:depentmentObject.userStatus userID:depentmentObject.userID];
         self.firstLabel.text = depentmentObject.realName;
-        self.secondLabel.text = depentmentObject.company;
+        self.secondLabel.text = depentmentObject.company.length == 0 ? @"暂未提供公司信息" : depentmentObject.company;
         self.thirdLabel.text = depentmentObject.area;
         self.relationShipImageView.image = depentmentObject.friendTypeImage;
         if (depentmentObject.isAttention) {
@@ -401,7 +396,6 @@
 @property (strong, nonatomic) EMSearchBar *searchBar;
 @property (strong, nonatomic) NSString *searchText;
 
-@property (strong, nonatomic) UITableViewCell *emptyCell;
 @property (strong, nonatomic) SHGEmptyDataView *emptyView;
 
 
@@ -423,7 +417,8 @@
 {
     [self.view addSubview:self.searchBar];
     [self.view addSubview:self.tableView];
-    [self addHeaderRefresh:self.tableView headerRefesh:NO headerTitle:nil andFooter:YES footerTitle:@{@(MJRefreshStateNoMoreData):@""}];
+    [self.view sd_addSubviews:@[self.searchBar, self.tableView, self.emptyView]];
+    [self addHeaderRefresh:self.tableView headerRefesh:NO andFooter:YES];
     self.tableView.mj_footer.automaticallyHidden = YES;
     self.tableView.tableFooterView = [[UIView alloc] init];
     self.searchText = @"";
@@ -438,6 +433,12 @@
     .topSpaceToView(self.view, 0.0f);
 
     self.tableView.sd_layout
+    .leftSpaceToView(self.view, 0.0f)
+    .rightSpaceToView(self.view, 0.0f)
+    .topSpaceToView(self.searchBar, 0.0f)
+    .bottomSpaceToView(self.view, 0.0f);
+
+    self.emptyView.sd_layout
     .leftSpaceToView(self.view, 0.0f)
     .rightSpaceToView(self.view, 0.0f)
     .topSpaceToView(self.searchBar, 0.0f)
@@ -469,20 +470,12 @@
     return _tableView;
 }
 
-- (UITableViewCell *)emptyCell
-{
-    if (!_emptyCell) {
-        _emptyCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
-        _emptyCell.selectionStyle = UITableViewCellSelectionStyleNone;
-        [_emptyCell.contentView addSubview:self.emptyView];
-    }
-    return _emptyCell;
-}
-
 - (SHGEmptyDataView *)emptyView
 {
     if (!_emptyView) {
         _emptyView = [[SHGEmptyDataView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, SCREENWIDTH, SCREENHEIGHT)];
+        _emptyView.type = SHGEmptyDateDiscoverySearch;
+        _emptyView.hidden = YES;
     }
     return _emptyView;
 }
@@ -527,11 +520,17 @@
         }
         [weakSelf.dataArr addObjectsFromArray:firstArray];
 
-        if (firstArray.count < 10) {
+        if (weakSelf.dataArr.count == 0) {
+            weakSelf.emptyView.hidden = NO;
+        } else {
+            weakSelf.emptyView.hidden = YES;
+        }
+        if (firstArray.count == 0) {
             [weakSelf.tableView.mj_footer endRefreshingWithNoMoreData];
         } else {
             [weakSelf.tableView.mj_footer endRefreshing];
         }
+
         [weakSelf.tableView reloadData];
     };
 
@@ -540,7 +539,7 @@
         NSDictionary *param = @{@"target":target, @"industry":self.object.module, @"userId":[self minUserID], @"pageSize":@"10", @"positionCondition":self.searchText, @"uid":UID};
         [SHGDiscoveryManager loadDiscoveryGroupUserDetail:param block:block];
     } else {
-        
+
         NSDictionary *param = @{@"target":target, @"position":self.object.module, @"userId":[self minUserID], @"pageSize":@"10", @"industryCondition":self.searchText, @"uid":UID};
         [SHGDiscoveryManager loadDiscoveryGroupUserDetail:param block:block];
     }
@@ -549,24 +548,18 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.dataArr.count == 0 ? 1 : self.dataArr.count;
+    return self.dataArr.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (self.dataArr.count > 0) {
-        NSObject *object = [self.dataArr objectAtIndex:indexPath.row];
-        CGFloat height = [tableView cellHeightForIndexPath:indexPath model:object keyPath:@"object" cellClass:[SHGDiscoveryDisplayCell class] contentViewWidth:SCREENWIDTH];
-        return height;
-    }
-    return CGRectGetHeight(tableView.frame);
+    NSObject *object = [self.dataArr objectAtIndex:indexPath.row];
+    CGFloat height = [tableView cellHeightForIndexPath:indexPath model:object keyPath:@"object" cellClass:[SHGDiscoveryDisplayCell class] contentViewWidth:SCREENWIDTH];
+    return height;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (self.dataArr.count == 0) {
-        return self.emptyCell;
-    }
     SHGDiscoveryDisplayCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SHGDiscoveryDisplayCell"];
     if(!cell) {
         cell = [[[NSBundle mainBundle] loadNibNamed:@"SHGDiscoveryDisplayCell" owner:self options:nil] lastObject];

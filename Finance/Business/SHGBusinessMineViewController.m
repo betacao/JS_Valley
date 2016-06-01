@@ -207,7 +207,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (self.dataArr.count == 0) {
-        self.emptyView.type = SHGEmptyDateTypeNormal;
+        self.emptyView.type = SHGEmptyDateNormal;
         return self.emptyCell;
     }
     NSString *identifier = @"SHGBusinessTableViewCell";

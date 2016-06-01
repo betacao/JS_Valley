@@ -124,7 +124,7 @@
         }
         [weakSelf.dataArr addObjectsFromArray:dataArray];
 
-        if (dataArray.count < 10) {
+        if (dataArray.count == 0) {
             [weakSelf.tableView.mj_footer endRefreshingWithNoMoreData];
         } else {
             [weakSelf.tableView.mj_footer endRefreshing];
@@ -270,8 +270,10 @@
 
 - (void)setTotal:(NSString *)total
 {
-    _total = total;
-    self.titleLabel.text = [NSString stringWithFormat:@"共%@个搜索结果", total];
+    if (total) {
+        _total = total;
+        self.titleLabel.text = [NSString stringWithFormat:@"共%@个搜索结果", total];
+    }
 }
 
 @end

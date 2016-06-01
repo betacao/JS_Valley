@@ -112,7 +112,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
 {
     if (!_emptyView) {
         _emptyView = [[SHGEmptyDataView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, SCREENWIDTH, SCREENHEIGHT)];
-        _emptyView.type = SHGEmptyDateTypeBusinessDeleted;
+        _emptyView.type = SHGEmptyDateBusinessDeleted;
     }
     return _emptyView;
 }
@@ -818,8 +818,13 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
             if (![[SHGGloble sharedGloble] checkPhoneNumber:obj]) {
                 [self.mobileArray addObject:obj];
             }
-            NSPredicate *regextestPhone = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", @"(0[1,2]{1}\\d{1}-?\\d{8})|(0[3-9] {1}\\d{2}-?\\d{7,8})|(0[1,2]{1}\\d{1}-?\\d{8}-(\\d{1,4}))|(0[3-9]{1}\\d{2}-? \\d{7,8}-(\\d{1,4}))|0[7,8]\\d{2}-?\\d{8}|0\\d{2,3}-?\\d{7,8}"];
-            if ([regextestPhone evaluateWithObject:obj]) {
+            NSPredicate *mobilePredicate = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", @"\\d{3}-\\d{8}|\\d{3}-\\d{7}|\\d{4}-\\d{8}|\\d{4}-\\d{7}|1+[3578]+\\d{9}|\\d{8}|\\d{7}"];
+            if ([mobilePredicate evaluateWithObject:obj]) {
+                [self.mobileArray addObject:obj];
+            }
+
+            NSPredicate *phonePredicate = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", @"(0[1,2]{1}\\d{1}-?\\d{8})|(0[3-9] {1}\\d{2}-?\\d{7,8})|(0[1,2]{1}\\d{1}-?\\d{8}-(\\d{1,4}))|(0[3-9]{1}\\d{2}-? \\d{7,8}-(\\d{1,4}))|0[7,8]\\d{2}-?\\d{8}|0\\d{2,3}-?\\d{7,8}"];
+            if ([phonePredicate evaluateWithObject:obj]) {
                 [self.phoneArray addObject:obj];
             }
         }];
