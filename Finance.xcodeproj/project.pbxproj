@@ -683,6 +683,9 @@
 		987101361CBFB050002A8F7F /* SHGBusinessSelectString.plist in Resources */ = {isa = PBXBuildFile; fileRef = 987101351CBFB050002A8F7F /* SHGBusinessSelectString.plist */; };
 		987184A31C4E51ED006F2946 /* SHGMomentCityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 987184A11C4E51ED006F2946 /* SHGMomentCityViewController.m */; };
 		987184A41C4E51ED006F2946 /* SHGMomentCityViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 987184A21C4E51ED006F2946 /* SHGMomentCityViewController.xib */; };
+		98727B4C1CFE0AC6008AEF6B /* SHGFollowAndFansObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 98727B4B1CFE0AC6008AEF6B /* SHGFollowAndFansObject.m */; };
+		98727B501CFE11EB008AEF6B /* SHGFollowAndFansTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 98727B4E1CFE11EB008AEF6B /* SHGFollowAndFansTableViewCell.m */; };
+		98727B511CFE11EB008AEF6B /* SHGFollowAndFansTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98727B4F1CFE11EB008AEF6B /* SHGFollowAndFansTableViewCell.xib */; };
 		98765FB31CFC577C00C8C590 /* SHGMyFollowViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98765FB11CFC577C00C8C590 /* SHGMyFollowViewController.m */; };
 		98765FB41CFC577C00C8C590 /* SHGMyFollowViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98765FB21CFC577C00C8C590 /* SHGMyFollowViewController.xib */; };
 		98765FB81CFC744900C8C590 /* SHGMyFansViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98765FB61CFC744900C8C590 /* SHGMyFansViewController.m */; };
@@ -1920,6 +1923,11 @@
 		987184A01C4E51ED006F2946 /* SHGMomentCityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGMomentCityViewController.h; sourceTree = "<group>"; };
 		987184A11C4E51ED006F2946 /* SHGMomentCityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGMomentCityViewController.m; sourceTree = "<group>"; };
 		987184A21C4E51ED006F2946 /* SHGMomentCityViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGMomentCityViewController.xib; sourceTree = "<group>"; };
+		98727B4A1CFE0AC6008AEF6B /* SHGFollowAndFansObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGFollowAndFansObject.h; sourceTree = "<group>"; };
+		98727B4B1CFE0AC6008AEF6B /* SHGFollowAndFansObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGFollowAndFansObject.m; sourceTree = "<group>"; };
+		98727B4D1CFE11EA008AEF6B /* SHGFollowAndFansTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGFollowAndFansTableViewCell.h; sourceTree = "<group>"; };
+		98727B4E1CFE11EB008AEF6B /* SHGFollowAndFansTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGFollowAndFansTableViewCell.m; sourceTree = "<group>"; };
+		98727B4F1CFE11EB008AEF6B /* SHGFollowAndFansTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGFollowAndFansTableViewCell.xib; sourceTree = "<group>"; };
 		98765FB01CFC577C00C8C590 /* SHGMyFollowViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGMyFollowViewController.h; sourceTree = "<group>"; };
 		98765FB11CFC577C00C8C590 /* SHGMyFollowViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGMyFollowViewController.m; sourceTree = "<group>"; };
 		98765FB21CFC577C00C8C590 /* SHGMyFollowViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGMyFollowViewController.xib; sourceTree = "<group>"; };
@@ -3604,6 +3612,8 @@
 				40302B1D1AEF657300F22EB6 /* TeamDetailObject.m */,
 				408D8B801AF86CF20055810C /* MyMoneyDetailObject.h */,
 				408D8B811AF86CF20055810C /* MyMoneyDetailObject.m */,
+				98727B4A1CFE0AC6008AEF6B /* SHGFollowAndFansObject.h */,
+				98727B4B1CFE0AC6008AEF6B /* SHGFollowAndFansObject.m */,
 			);
 			path = Modal;
 			sourceTree = "<group>";
@@ -3675,6 +3685,9 @@
 				98765FB51CFC744900C8C590 /* SHGMyFansViewController.h */,
 				98765FB61CFC744900C8C590 /* SHGMyFansViewController.m */,
 				98765FB71CFC744900C8C590 /* SHGMyFansViewController.xib */,
+				98727B4D1CFE11EA008AEF6B /* SHGFollowAndFansTableViewCell.h */,
+				98727B4E1CFE11EB008AEF6B /* SHGFollowAndFansTableViewCell.m */,
+				98727B4F1CFE11EB008AEF6B /* SHGFollowAndFansTableViewCell.xib */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -5380,6 +5393,7 @@
 				4088DDB21AF102FE00393855 /* SettingAboutUsViewController.xib in Resources */,
 				985A0FD71CABA49400880DB5 /* MarketArea.plist in Resources */,
 				56F2D5101B5A5CB3008E2855 /* 邀请.png in Resources */,
+				98727B511CFE11EB008AEF6B /* SHGFollowAndFansTableViewCell.xib in Resources */,
 				408D8B481AF8618C0055810C /* chatBar_moreSelected@2x.png in Resources */,
 				61E83D691AF7C78E00703651 /* 圈子-默认@3x.png in Resources */,
 				B09BF7691B7C6C1F008260B3 /* 1度@2x.png in Resources */,
@@ -5859,6 +5873,7 @@
 				B0EAB2561B467AB8005A760F /* TTTAttributedLabel.m in Sources */,
 				53AFF7961AFBF5F700D04B6B /* EmojiEmoticons.m in Sources */,
 				40302B001AEF213400F22EB6 /* BasePeopleTableViewCell.m in Sources */,
+				98727B4C1CFE0AC6008AEF6B /* SHGFollowAndFansObject.m in Sources */,
 				6146B4AB1B011B7800D62678 /* RootViewController.m in Sources */,
 				615010E21AD61C1800827F82 /* CPTextViewPlaceholder.m in Sources */,
 				F9ED07EA1C3B59EC0079A1A9 /* SHGSettingTableViewCell.m in Sources */,
@@ -6070,6 +6085,7 @@
 				4088DD8C1AF0FB2B00393855 /* SettingsObj.m in Sources */,
 				F908C8421C30FA83004DD99A /* SHGMarketSecondCategoryViewController.m in Sources */,
 				6187D2C91AF1C693008E1D21 /* ChatGroupDetailViewController.m in Sources */,
+				98727B501CFE11EB008AEF6B /* SHGFollowAndFansTableViewCell.m in Sources */,
 				F928141C1C045F8900C7782D /* SHGItemChooseView.m in Sources */,
 				982EB7FF1CB3A269003EEBE6 /* SHGEquityFinanceNextViewController.m in Sources */,
 				614EFEDF1AEF8F7300F2BDD1 /* Hud.m in Sources */,
