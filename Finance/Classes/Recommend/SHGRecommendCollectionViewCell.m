@@ -110,7 +110,6 @@
         } else {
             [self.button setImage:[UIImage imageNamed:@"me_follow"] forState:UIControlStateNormal];
         }
-        self.button.hidden = recommendObject.hideAttation;
     }
 }
 

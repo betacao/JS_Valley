@@ -43,9 +43,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    if (self.recommendCollectionView.dataArray.count > 0) {
-        [self.recommendCollectionView reloadData];
-    } else {
+    if (self.dataArr.count > 0) {
         [self.tableView reloadData];
     }
 }
@@ -53,16 +51,7 @@
 - (void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
-    if (self.recommendCollectionView.dataArray.count > 0) {
-        [self.recommendCollectionView.dataArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            if ([obj isKindOfClass:[SHGDiscoveryRecommendObject class]]) {
-                SHGDiscoveryRecommendObject *recommendObject = (SHGDiscoveryRecommendObject *)obj;
-                if (recommendObject.isAttention) {
-                    recommendObject.hideAttation = YES;
-                }
-            }
-        }];
-    } else {
+    if (self.dataArr.count > 0) {
         [self.dataArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             if ([obj isKindOfClass:[SHGDiscoveryDepartmentObject class]]) {
                 SHGDiscoveryDepartmentObject *departmentObject = (SHGDiscoveryDepartmentObject *)obj;

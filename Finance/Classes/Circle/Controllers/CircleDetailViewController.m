@@ -360,6 +360,7 @@
             obj.cnickname = cmt[@"cnickname"];
             obj.rnickname = cmt[@"rnickname"];
             obj.rid = cmt[@"rid"];
+            obj.replyid = cmt[@"replyid"];
             [self.obj.comments addObject:obj];
         }
     }
@@ -579,7 +580,7 @@
 -(void)rnickClick:(NSInteger)index
 {
     commentOBj *obj = self.obj.comments[index];
-    [self gotoSomeOneWithId:obj.rid name:obj.rnickname];
+    [self gotoSomeOneWithId:obj.replyid name:obj.rnickname];
 }
 
 -(void)replyClick:(NSInteger )index

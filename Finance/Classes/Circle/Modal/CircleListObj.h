@@ -67,7 +67,8 @@
 @property(strong, nonatomic)  NSString *cdetail ;
 @property(strong, nonatomic)  NSString *cid;
 @property(strong, nonatomic)  NSString *cnickname;
-@property(strong, nonatomic)  NSString *rid ;
+@property(strong, nonatomic)  NSString *rid;
+@property(strong, nonatomic)  NSString *replyid ;
 @property(strong, nonatomic)  NSString *rnickname;
 
 

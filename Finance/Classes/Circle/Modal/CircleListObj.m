@@ -90,7 +90,7 @@
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey{
     
-    return @{@"cdetail":@"cdetail", @"cid":@"cid", @"cnickname":@"cnickname", @"rid":@"rid", @"rnickname":@"rnickname"};
+    return @{@"cdetail":@"cdetail", @"cid":@"cid", @"cnickname":@"cnickname",@"rid":@"rid" ,@"replyid":@"replyid", @"rnickname":@"rnickname"};
 }
 
 @end
