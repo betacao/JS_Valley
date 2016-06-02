@@ -82,7 +82,7 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     [super viewDidLoad];
 	self.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     CGRect rect = CGRectMake(0, 50, 170, 26);
-    tabButtonsContainerView = [[UISegmentedControl alloc] initWithItems: [NSArray arrayWithObjects:@"圈子", @"资讯", nil]];
+    tabButtonsContainerView = [[UISegmentedControl alloc] initWithItems: [NSArray arrayWithObjects:@"动态", @"资讯", nil]];
     tabButtonsContainerView.frame = rect;
     tabButtonsContainerView.enabled = YES;
     tabButtonsContainerView.layer.masksToBounds = YES;
@@ -124,7 +124,7 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
         _titleLabel = [[UILabel alloc] init];
         _titleLabel.font = [UIFont systemFontOfSize:kNavBarTitleFontSize];
         _titleLabel.textColor = TEXT_COLOR;
-        _titleLabel.text = @"圈子";
+        _titleLabel.text = @"动态";
         [_titleLabel sizeToFit];
     }
     return _titleLabel;

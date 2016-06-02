@@ -168,7 +168,7 @@
     }
     NSString *content = [NSString stringWithFormat:@"%@\"%@\"%@%@",@"Hi，我在金融大牛圈上看到了一个非常棒的帖子,关于",postContent,@"，赶快下载大牛圈查看吧！",[NSString stringWithFormat:@"%@%@",rBaseAddressForHttpShare,obj.rid]];
 
-    id<ISSShareActionSheetItem> item1 = [ShareSDK shareActionSheetItemWithTitle:@"圈子" icon:[UIImage imageNamed:@"圈子图标"] clickHandler:^{
+    id<ISSShareActionSheetItem> item1 = [ShareSDK shareActionSheetItemWithTitle:@"动态" icon:[UIImage imageNamed:@"圈子图标"] clickHandler:^{
         [[SHGGloble sharedGloble] recordUserAction:obj.rid type:@"dynamic_shareDynamic"];
         [self circleShareWithObj:obj];
     }];
