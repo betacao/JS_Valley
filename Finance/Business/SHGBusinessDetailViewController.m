@@ -34,7 +34,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
     UIView *PickerBackView;
 }
 //界面
-@property (weak, nonatomic) IBOutlet UITableView *detailTable;
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) IBOutlet UIView *viewHeader;
 @property (weak, nonatomic) IBOutlet SHGUserHeaderView *headImageView;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
@@ -82,9 +82,8 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
     self.title = @"业务详情";
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shareToFriendSuccess:) name:NOTIFI_ACTION_SHARE_TO_FRIENDSUCCESS object:nil];
 
-    self.detailTable.delegate = self;
-    self.detailTable.dataSource = self;
-    [self.detailTable setTableFooterView:[[UIView alloc] init]];
+
+    [self.tableView setTableFooterView:[[UIView alloc] init]];
     [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:KEY_MEMORY];
 
     [self initView];
@@ -102,7 +101,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
             weakSelf.responseObject = detailObject;
             NSLog(@"%@",weakSelf.responseObject);
             [weakSelf loadData];
-            [weakSelf.detailTable reloadData];
+            [weakSelf.tableView reloadData];
         }
     }];
 
@@ -135,9 +134,9 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
 
 - (void)initView
 {
-    UITapGestureRecognizer *recognizer1 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapTableView:)];
-    [self.detailTable addGestureRecognizer:recognizer1];
 
+    UITapGestureRecognizer *tableHeaderViewRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapTableHeaderView:)];
+    [self.viewHeader addGestureRecognizer:tableHeaderViewRecognizer];
     self.nameLabel.font = FontFactor(15.0f);
     self.companyLabel.font = FontFactor(13.0f);
     self.positionLabel.font = FontFactor(13.0f);
@@ -148,8 +147,8 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
 
     self.phoneTextView.editable = NO;
     self.phoneTextView.textContainerInset = UIEdgeInsetsMake(0, -5.0f, 0, 0);
-    UITapGestureRecognizer *recognizer2 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapPhoneTextView:)];
-    [self.phoneTextView addGestureRecognizer:recognizer2];
+    UITapGestureRecognizer *phoneTextViewRecognizer  = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapPhoneTextView:)];
+    [self.phoneTextView addGestureRecognizer:phoneTextViewRecognizer];
 
     self.businessDetialLabel.font = FontFactor(15.0f);
 
@@ -178,7 +177,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
     .bottomSpaceToView(self.view, 0.0f)
     .heightIs(MarginFactor(45.0f));
 
-    self.detailTable.sd_layout
+    self.tableView.sd_layout
     .leftSpaceToView(self.view, 0.0f)
     .rightSpaceToView(self.view, 0.0f)
     .topSpaceToView(self.view, 0.0f)
@@ -296,7 +295,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
 
     [self.viewHeader setupAutoHeightWithBottomView:self.photoView bottomMargin:MarginFactor(16.0f)];
 
-    self.detailTable.tableHeaderView = self.viewHeader;
+    self.tableView.tableHeaderView = self.viewHeader;
 }
 - (void)didCreateOrModifyBusiness
 {
@@ -416,7 +415,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
     }
     [self.btnShare setImage:[UIImage imageNamed:@"blueMarketDetailShare"] forState:UIControlStateNormal];
     [self.viewHeader layoutSubviews];
-    self.detailTable.tableHeaderView = self.viewHeader;
+    self.tableView.tableHeaderView = self.viewHeader;
 
 }
 
@@ -509,7 +508,6 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
     SHGBusinessCommentObject *object = [self.responseObject.commentList objectAtIndex:indexPath.row];
     self.commentObject = object;
     self.copyedString = object.commentDetail;
@@ -526,8 +524,8 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
 {
     UILongPressGestureRecognizer *longPress = (UILongPressGestureRecognizer *)sender;
     UIGestureRecognizerState state = longPress.state;//这是长按手势的状态   下面switch用到了
-    CGPoint location = [longPress locationInView:self.detailTable];
-    NSIndexPath *indexPath = [self.detailTable indexPathForRowAtPoint:location];
+    CGPoint location = [longPress locationInView:self.tableView];
+    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:location];
     switch (state){
         case UIGestureRecognizerStateBegan:{
             if (indexPath){
@@ -617,7 +615,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
 {
     NSLog(@"....%@",self.copyedString);
     [UIPasteboard generalPasteboard].string = self.copyedString;
-    self.detailTable.frame = CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT);
+    self.tableView.frame = CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT);
     [self.view sendSubviewToBack:PickerBackView];
 }
 //删除
@@ -627,7 +625,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
     [SHGBusinessManager deleteCommentWithID:self.commentObject.commentId finishBlock:^(BOOL finish) {
         if (finish) {
             [weakSelf.responseObject.commentList removeObject:weakSelf.commentObject];
-            [weakSelf.detailTable reloadData];
+            [weakSelf.tableView reloadData];
         }
     }];
     [self.view sendSubviewToBack:PickerBackView];
@@ -732,7 +730,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
     [SHGBusinessManager addCommentWithObject:self.responseObject content:comment toOther:nil finishBlock:^(BOOL finish) {
         if (finish) {
             [weakSelf loadCommentBtnState];
-            [weakSelf.detailTable reloadData];
+            [weakSelf.tableView reloadData];
         }
     }];
 }
@@ -744,7 +742,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
     [SHGBusinessManager addCommentWithObject:self.responseObject content:comment toOther:fid finishBlock:^(BOOL finish) {
         if (finish) {
             [weakSelf loadCommentBtnState];
-            [weakSelf.detailTable reloadData];
+            [weakSelf.tableView reloadData];
         }
     }];
 }
@@ -789,7 +787,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
     }
 }
 
-- (void)tapTableView:(UITapGestureRecognizer *)recognizer
+- (void)tapTableHeaderView:(UITapGestureRecognizer *)recognizer
 {
     [self.phoneTextView resignFirstResponder];
     [self.contentTextView resignFirstResponder];
