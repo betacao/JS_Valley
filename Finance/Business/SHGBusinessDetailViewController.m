@@ -140,6 +140,9 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
 
 - (void)initView
 {
+
+    UITapGestureRecognizer *tableHeaderViewRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapTableHeaderView:)];
+    [self.viewHeader addGestureRecognizer:tableHeaderViewRecognizer];
     self.nameLabel.font = FontFactor(15.0f);
     self.companyLabel.font = FontFactor(13.0f);
     self.positionLabel.font = FontFactor(13.0f);
@@ -149,8 +152,8 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
 
     self.phoneTextView.editable = NO;
     self.phoneTextView.textContainerInset = UIEdgeInsetsMake(0, -5.0f, 0, 0);
-    UITapGestureRecognizer *recognizer2 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapPhoneTextView:)];
-    [self.phoneTextView addGestureRecognizer:recognizer2];
+    UITapGestureRecognizer *phoneTextViewRecognizer  = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapPhoneTextView:)];
+    [self.phoneTextView addGestureRecognizer:phoneTextViewRecognizer];
 
     self.businessDetialLabel.font = FontFactor(15.0f);
 
@@ -785,7 +788,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
     }
 }
 
-- (void)tapTableView:(UITapGestureRecognizer *)recognizer
+- (void)tapTableHeaderView:(UITapGestureRecognizer *)recognizer
 {
     [self.phoneTextView resignFirstResponder];
     [self.contentTextView resignFirstResponder];
