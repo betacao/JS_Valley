@@ -12,7 +12,6 @@
                 <outlet property="collectionButton" destination="uZh-Zx-J1I" id="H2a-eA-bxe"/>
                 <outlet property="companyLabel" destination="PzT-uA-o9S" id="kJ3-yC-qJh"/>
                 <outlet property="contentTextView" destination="YMU-xE-2cM" id="jvF-Wx-hFD"/>
-                <outlet property="detailTable" destination="hba-XB-AU2" id="JYs-S5-Hob"/>
                 <outlet property="editButton" destination="nro-wK-yqY" id="4ir-JM-hVJ"/>
                 <outlet property="firstHorizontalLine" destination="BEb-0C-VH5" id="tTB-8f-6GM"/>
                 <outlet property="headImageView" destination="9jW-eX-RZK" id="Y8N-Qt-5J2"/>
@@ -22,6 +21,7 @@
                 <outlet property="propertyLabel" destination="U1o-NM-TA7" id="puM-Vn-mQy"/>
                 <outlet property="secondHorizontalLine" destination="mpP-C0-I5f" id="ZJi-XV-gW7"/>
                 <outlet property="speakButton" destination="fsP-Ds-d7D" id="pSq-43-0UT"/>
+                <outlet property="tableView" destination="pTP-rH-N7b" id="Ev0-V4-4Hs"/>
                 <outlet property="thirdHorizontalLine" destination="16p-lI-B28" id="kbe-du-ROg"/>
                 <outlet property="titleLabel" destination="3Eo-Pp-lkT" id="c09-LY-Vf8"/>
                 <outlet property="verticalLine" destination="l0j-zE-mAP" id="rEU-Cy-Fjv"/>
@@ -35,15 +35,6 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="hba-XB-AU2">
-                    <rect key="frame" x="0.0" y="0.0" width="320" height="523"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    <connections>
-                        <outlet property="dataSource" destination="-1" id="rn7-fa-xLH"/>
-                        <outlet property="delegate" destination="-1" id="BtQ-ms-hwR"/>
-                    </connections>
-                </tableView>
                 <view contentMode="scaleToFill" id="cId-3i-YSY">
                     <rect key="frame" x="0.0" y="523" width="320" height="45"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -90,6 +81,15 @@
                     </subviews>
                     <color key="backgroundColor" red="0.8980392157" green="0.8980392157" blue="0.8980392157" alpha="1" colorSpace="calibratedRGB"/>
                 </view>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="pTP-rH-N7b">
+                    <rect key="frame" x="40" y="194" width="240" height="128"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <connections>
+                        <outlet property="dataSource" destination="-1" id="HdA-3i-uvC"/>
+                        <outlet property="delegate" destination="-1" id="RD7-4C-aqY"/>
+                    </connections>
+                </tableView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <point key="canvasLocation" x="-40" y="220"/>
