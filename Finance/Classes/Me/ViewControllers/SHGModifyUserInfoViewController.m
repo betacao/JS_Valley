@@ -283,8 +283,8 @@
         [Hud showMessageWithText:@"职位不能为空"];
         return NO;
     }
-    if ([self.cityButton.titleLabel.text isEqualToString:@"所选城市"]) {
-        [Hud showMessageWithText:@"请输入城市选择"];
+    if ([self.cityButton.titleLabel.text isEqualToString:@"所在地"]) {
+        [Hud showMessageWithText:@"所在地不能为空"];
         return NO;
     }
     return YES;
