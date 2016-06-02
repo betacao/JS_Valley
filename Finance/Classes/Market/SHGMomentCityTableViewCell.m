@@ -22,13 +22,13 @@
     self.cityNameLabel.font = FontFactor(14.0f);
     self.redLine.backgroundColor = [UIColor colorWithHexString:@"E6E7E8"];
     self.redLine.frame = CGRectMake(self.redLine.origin.x, self.contentView.height - 1.0f, self.redLine.width, 0.5f);
-    
+
 }
 
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
+- (void)setSelected:(BOOL)selected animated:(BOOL)animated
+{
     [super setSelected:selected animated:animated];
-
-    }
+}
 
 - (void)loadWithUi:(SHGMarketCityObject *)obj
 {

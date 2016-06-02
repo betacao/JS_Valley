@@ -121,9 +121,9 @@
 
 - (void)loadData
 {
-    self.recommendContactArray = nil;
     __weak typeof(self) weakSelf = self;
     [SHGDiscoveryManager loadDiscoveryData:@{@"uid":UID} block:^(NSArray *firstArray, NSArray *secondArray) {
+        weakSelf.recommendContactArray = nil;
         if ([self isViewLoaded]) {
             if (firstArray.count > 0) {
                 weakSelf.myContactCell.effctiveArray = [NSArray arrayWithArray:firstArray];
@@ -215,7 +215,7 @@
     [super awakeFromNib];
     [self initView];
     [self addAutoLayout];
-    [self addSubButtons];
+    [self addButtons];
 }
 
 - (void)initView
@@ -272,7 +272,7 @@
     .widthIs(size.width);
 }
 
-- (void)addSubButtons
+- (void)addButtons
 {
     NSArray *array = [NSArray arrayWithContentsOfFile: [[NSBundle mainBundle] pathForResource:@"SHGIndustry" ofType:@"plist"]];
     [array enumerateObjectsUsingBlock:^(NSDictionary *dictionary, NSUInteger idx, BOOL * _Nonnull stop) {

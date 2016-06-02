@@ -128,4 +128,9 @@
     [self.delegate rightUserClick:self.index];
 }
 
+- (void)setSelected:(BOOL)selected animated:(BOOL)animated
+{
+    [super setSelected:selected animated:animated];
+}
+
 @end
