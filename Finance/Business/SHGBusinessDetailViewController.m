@@ -813,7 +813,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
         NSArray *array = [string componentsSeparatedByCharactersInSet:characterSet];
 
         [array enumerateObjectsUsingBlock:^(NSString *obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            NSPredicate *mobilePredicate = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", @"\\d{3}-\\d{8}|\\d{3}-\\d{7}|\\d{4}-\\d{8}|\\d{4}-\\d{7}|1+[3578]+\\d{9}|\\d{8}|\\d{7}"];
+            NSPredicate *mobilePredicate = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", @"((13|15|18|17)[0-9]{9})"];
             if ([mobilePredicate evaluateWithObject:obj]) {
                 [self.mobileArray addObject:obj];
             }

@@ -13,6 +13,7 @@
 #import "ApplyViewController.h"
 #import "CCLocationManager.h"
 #import "SHGDiscoveryObject.h"
+#import "SHGDiscoveryManager.h"
 
 @interface SHGRecommendViewController ()
 
@@ -33,7 +34,7 @@
     self.navigationItem.leftBarButtonItem = leftItem;
     [self initView];
     [self addAutoLayout];
-    [self uploadCityName];
+    [self uploadData];
     [self loadData];
 }
 
@@ -50,7 +51,7 @@
     .spaceToSuperView(UIEdgeInsetsZero);
 }
 
-- (void)uploadCityName
+- (void)uploadData
 {
     [[CCLocationManager shareLocation] getCity:^{
         NSString *cityName = [SHGGloble sharedGloble].cityName;
@@ -59,6 +60,15 @@
         [MOCHTTPRequestOperationManager getWithURL:url parameters:parameters success:nil failed:nil];
     }];
 
+    [[SHGGloble sharedGloble] getUserAddressList:^(BOOL finished) {
+        if(finished){
+            [[SHGGloble sharedGloble] uploadPhonesWithPhone:^(BOOL finish) {
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5.0f * NSEC_PER_SEC)), dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+                    [SHGDiscoveryManager loadDiscoveryData:@{@"uid":UID} block:nil];
+                });
+            }];
+        }
+    }];
 }
 
 - (void)loadAttationState:(NSString *)targetUserID attationState:(BOOL)attationState
@@ -97,13 +107,6 @@
 
 - (void)loginSuccess
 {
-    [[SHGGloble sharedGloble] getUserAddressList:^(BOOL finished) {
-        if(finished){
-            [[SHGGloble sharedGloble] uploadPhonesWithPhone:^(BOOL finish) {
-                
-            }];
-        }
-    }];
     [[AppDelegate currentAppdelegate] moveToRootController:nil];
 }
 
