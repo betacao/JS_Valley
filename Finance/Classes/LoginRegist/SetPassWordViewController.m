@@ -61,7 +61,7 @@
     NSString *phone =[[NSUserDefaults standardUserDefaults] objectForKey:KEY_PHONE];
     NSString *authCode =[[NSUserDefaults standardUserDefaults] objectForKey:KEY_AUTHCODE];
 
-    NSDictionary *param = @{@"loginNum":thirdUid, @"loginType":logType, @"ctype":@"iphone", @"phone":phone, @"pwd":[passWordText.text md5], @"validateCode":authCode, @"os":@"ios", @"osv":osv, @"appv":LOCAL_Version, @"yuncid":channelId?:@"", @"yunuid":userId?:@""};
+    NSDictionary *param = @{@"loginNum":thirdUid, @"loginType":logType, @"ctype":@"iphone", @"phone":phone, @"pwd":[passWordText.text md5], @"validateCode":authCode, @"os":@"ios", @"osv":osv, @"appv":LOCAL_Version, @"yuncid":channelId?:@"", @"yunuid":userId?:@"",@"phoneType":[SHGGloble sharedGloble].platform};
     
     [MOCHTTPRequestOperationManager postWithURL:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"thirdLogin/thirdUserRegister"] class:nil parameters:param success:^(MOCHTTPResponse *response){
         [Hud hideHud];

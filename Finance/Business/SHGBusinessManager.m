@@ -270,7 +270,7 @@
     [Hud showWait];
     NSString *request = [rBaseAddressForHttp stringByAppendingString:@"/common/comment/business/saveComment"];
     NSString *userName = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_USER_NAME];
-    NSDictionary *param = @{@"uid":UID, @"businessId":object.businessID, @"content":content, @"replyId":otherId, @"type":object.type};
+    NSDictionary *param = @{@"uid":UID, @"businessId":object.businessID, @"content":content, @"replyId":otherId, @"type":object.type, @"version":[SHGGloble sharedGloble].currentVersion};
 
     [MOCHTTPRequestOperationManager postWithURL:request parameters:param success:^(MOCHTTPResponse *response) {
         [Hud hideHud];
