@@ -63,8 +63,6 @@
     self.tabBar.tintColor = RGB(255, 57, 67);
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setupUntreatedApplyCount) name:@"setupUntreatedApplyCount" object:nil];
-    
-    self.navigationController.delegate = self;
 
     dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     EMPushNotificationOptions *options = [[EaseMob sharedInstance].chatManager pushNotificationOptions];
@@ -224,20 +222,7 @@
     return _meViewController;
 }
 
-- (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated
-{
-    //每次当navigation中的界面切换，设为空。本次赋值只在程序初始化时执行一次
-    static UIViewController *lastController = nil;
-    //若上个view不为空
-    if (lastController != nil)
-    {
-        if ([lastController respondsToSelector:@selector(viewWillDisappear:)]){
-        }
-    }
-    lastController = viewController;
-}
 #pragma mark - 操作
-
 - (void)setSelectedIndex:(NSUInteger)selectedIndex
 {
     [super setSelectedIndex:selectedIndex];

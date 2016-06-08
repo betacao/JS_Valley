@@ -8,6 +8,8 @@
 
 #import "BaseNavigationController.h"
 #import "BaseViewController.h"
+#import "SHGBusinessDetailViewController.h"
+
 @interface BaseNavigationController ()<UINavigationControllerDelegate,UIGestureRecognizerDelegate>
 @property(nonatomic, weak) UIViewController *currentShowVC;
 @end
@@ -25,28 +27,44 @@
     }
 }
 
-- (instancetype)initWithRootViewController:(UIViewController *)rootViewController{
+- (instancetype)initWithRootViewController:(UIViewController *)rootViewController
+{
     BaseNavigationController *nav = [super initWithRootViewController:rootViewController];
     nav.interactivePopGestureRecognizer.delegate = self;
     nav.delegate = self;
     return nav;
 }
-- (void)navigationController:(UINavigationController *)navigationController didShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
-    if (1 == navigationController.viewControllers.count) {
+
+- (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated
+{
+    if ([viewController isKindOfClass:[SHGBusinessDetailViewController class]]) {
+
+        [self.navigationBar setBackgroundImage:[CommonMethod imageWithColor:Color(@"f04f46")] forBarMetrics:UIBarMetricsDefault];
+    } else {
+
+        [self.navigationBar setBackgroundImage:[CommonMethod imageWithColor:Color(@"d43c33")] forBarMetrics:UIBarMetricsDefault];
+    }
+}
+
+- (void)navigationController:(UINavigationController *)navigationController didShowViewController:(UIViewController *)viewController animated:(BOOL)animated
+{
+    if(navigationController.viewControllers.count == 1) {
         self.currentShowVC = nil;
     } else {
         self.currentShowVC = viewController;
     }
 }
 
-- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
+- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer
+{
     if (gestureRecognizer == self.interactivePopGestureRecognizer) {
         return (self.currentShowVC == self.topViewController);
     }
     return YES;
 }
 
-- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
+{
     if ([gestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]] &&
         [otherGestureRecognizer isKindOfClass:[UIScreenEdgePanGestureRecognizer class]]) {
         return YES;
