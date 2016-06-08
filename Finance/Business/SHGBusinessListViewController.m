@@ -18,7 +18,7 @@
 #import "SHGBusinessNoticeTableViewCell.h"
 #import "SHGBusinessLocationViewController.h"
 #import "SHGBusinessSearchViewController.h"
-#import "SHGBusinessDetailViewController.h"
+#import "SHGBusinessNewDetailViewController.h"
 
 @interface SHGBusinessListViewController ()<UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, SHGBusinessScrollViewDelegate>
 //
@@ -674,7 +674,7 @@
                 [self.navigationController pushViewController:controller animated:YES];
             }
         } else{
-            SHGBusinessDetailViewController *controller = [[SHGBusinessDetailViewController alloc]init];
+            SHGBusinessNewDetailViewController *controller = [[SHGBusinessNewDetailViewController alloc]init];
             controller.object = object;
             [self.navigationController pushViewController:controller animated:YES];
             [[SHGGloble sharedGloble] recordUserAction:[NSString stringWithFormat:@"%@#%@", object.businessID, object.type] type:@"business_detail"];

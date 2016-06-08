@@ -54,6 +54,15 @@
 @property (strong, nonatomic) NSString *headImageUrl;
 @property (strong, nonatomic) NSString *url;
 @property (strong, nonatomic) NSString *businessTitle;
+
+@property (strong, nonatomic) NSMutableArray *bpnameList;
+@property (strong, nonatomic) NSMutableArray *bppathList;
+
+@end
+
+@interface  SHGBusinessPDFObject: MTLModel<MTLJSONSerializing>
+@property (strong, nonatomic) NSString *bpName;
+@property (strong, nonatomic) NSString *bpPath;
 @end
 
 @interface SHGBusinessFirstObject : NSObject

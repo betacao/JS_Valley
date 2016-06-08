@@ -11,6 +11,7 @@
 #import "SHGBusinessTableViewCell.h"
 #import "SHGEmptyDataView.h"
 #import "SHGBusinessDetailViewController.h"
+#import "SHGBusinessNewDetailViewController.h"
 
 @interface SHGBusinessSearchResultViewController ()<UITableViewDataSource, UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -197,7 +198,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (self.dataArr.count > 0) {
-        SHGBusinessDetailViewController *controller = [[SHGBusinessDetailViewController alloc] init];
+        SHGBusinessNewDetailViewController *controller = [[SHGBusinessNewDetailViewController alloc] init];
         SHGBusinessObject *object = [self.dataArr objectAtIndex:indexPath.row];
         controller.object = object;
         [self.navigationController pushViewController:controller animated:YES];

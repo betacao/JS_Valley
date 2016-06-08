@@ -16,6 +16,7 @@
 #import "SHGBusinessSendSuccessViewController.h"
 #import "SHGBusinessDetailViewController.h"
 #import "SHGBusinessMineViewController.h"
+#import "SHGBusinessNewDetailViewController.h"
 @interface SHGBondInvestNextViewController ()<UITextFieldDelegate,UIScrollViewDelegate,UITextViewDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UIButton *sureButton;
@@ -530,8 +531,8 @@
                                 [[SHGBusinessListViewController sharedController] didCreateOrModifyBusiness:self.object];
                                 NSArray *teamViewControllerArray = self.navigationController.viewControllers;
                                 for(UIViewController *viewController in teamViewControllerArray){
-                                    if ([viewController isKindOfClass:[SHGBusinessDetailViewController class]]){
-                                        [(SHGBusinessDetailViewController *)viewController didCreateOrModifyBusiness];
+                                    if ([viewController isKindOfClass:[SHGBusinessNewDetailViewController class]]){
+                                        [(SHGBusinessNewDetailViewController *)viewController didCreateOrModifyBusiness];
                                         [self.navigationController popToViewController:viewController animated:YES];
                                     }
                                     if ([viewController isKindOfClass:[SHGBusinessMineViewController class]]){

@@ -12,7 +12,7 @@
 + (NSDictionary *)JSONKeyPathsByPropertyKey
 {
 
-    return @{@"isRefresh" : @"isrefresh", @"browseNum" : @"browsenum", @"modifyNum" : @"modifyNum", @"businessShow" : @"businessshow",@"createTime" : @"createtime", @"businessID" : @"businessid", @"modifyTime" : @"modifytime", @"anonymous" : @"anonymous",@"type":@"type",@"area":@"area",@"bondType":@"bondtype",@"clarifyingWay":@"clarifyingway",@"contact":@"contact",@"detail":@"detail", @"fundUsetime":@"fundusetime", @"highestRate":@"highestrate",@"industry":@"industry",@"investAmount":@"investamount", @"investModel":@"investmodel", @"title":@"title", @"uid":@"uid", @"photo":@"photo",@"businessType":@"businesstype",@"clarifyingRequire":@"clarifyingrequire",@"lowestPaybackRate":@"lowestpaybackrate",@"financingStage":@"financingstage",@"fundSource":@"fundsource",@"moneysideType":@"moneysidetype",@"totalshareRate":@"totalsharerate",@"vestYears":@"vestyears", @"userState":@"loginuserstate", @"middleContent":@"middlecontent", @"isDeleted":@"isdeleted", @"isCollection":@"iscollected", @"createBy":@"createby", @"commentList":@"commentlist", @"realName":@"realname", @"company":@"company", @"status":@"status", @"headImageUrl":@"headimageurl", @"url":@"url", @"businessTitle":@"businesstitle"};
+    return @{@"isRefresh" : @"isrefresh", @"browseNum" : @"browsenum", @"modifyNum" : @"modifyNum", @"businessShow" : @"businessshow",@"createTime" : @"createtime", @"businessID" : @"businessid", @"modifyTime" : @"modifytime", @"anonymous" : @"anonymous",@"type":@"type",@"area":@"area",@"bondType":@"bondtype",@"clarifyingWay":@"clarifyingway",@"contact":@"contact",@"detail":@"detail", @"fundUsetime":@"fundusetime", @"highestRate":@"highestrate",@"industry":@"industry",@"investAmount":@"investamount", @"investModel":@"investmodel", @"title":@"title", @"uid":@"uid", @"photo":@"photo",@"businessType":@"businesstype",@"clarifyingRequire":@"clarifyingrequire",@"lowestPaybackRate":@"lowestpaybackrate",@"financingStage":@"financingstage",@"fundSource":@"fundsource",@"moneysideType":@"moneysidetype",@"totalshareRate":@"totalsharerate",@"vestYears":@"vestyears", @"userState":@"loginuserstate", @"middleContent":@"middlecontent", @"isDeleted":@"isdeleted", @"isCollection":@"iscollected", @"createBy":@"createby", @"commentList":@"commentlist", @"realName":@"realname", @"company":@"company", @"status":@"status", @"headImageUrl":@"headimageurl", @"url":@"url", @"businessTitle":@"businesstitle", @"bpnameList":@"bpnamelist", @"bppathList":@"bppathlist"};
     
 }
 
@@ -124,5 +124,14 @@
     CGFloat height = size.height;
     return height;
 }
+
+@end
+
+@implementation SHGBusinessPDFObject
++ (NSDictionary *)JSONKeyPathsByPropertyKey
+{
+    return @{@"bpName":@"bpname",@"bpPath":@"bppath"};
+}
+
 
 @end

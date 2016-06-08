@@ -703,6 +703,8 @@
 		98D73C2E1C194E7E0055AF75 /* SHGNewsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98D73C2C1C194E7E0055AF75 /* SHGNewsTableViewCell.xib */; };
 		98DCAF5B1C90B60400C648A4 /* SHGPersonalTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 98DCAF591C90B60400C648A4 /* SHGPersonalTableViewCell.m */; };
 		98DCAF5C1C90B60400C648A4 /* SHGPersonalTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98DCAF5A1C90B60400C648A4 /* SHGPersonalTableViewCell.xib */; };
+		98DCFE0C1D05662D00F6C16A /* SHGBusinessNewDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98DCFE0A1D05662D00F6C16A /* SHGBusinessNewDetailViewController.m */; };
+		98DCFE0D1D05662D00F6C16A /* SHGBusinessNewDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98DCFE0B1D05662D00F6C16A /* SHGBusinessNewDetailViewController.xib */; };
 		98E04A061CAE11DF006A8773 /* SHGBondInvestNextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98E04A041CAE11DF006A8773 /* SHGBondInvestNextViewController.m */; };
 		98E04A071CAE11DF006A8773 /* SHGBondInvestNextViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98E04A051CAE11DF006A8773 /* SHGBondInvestNextViewController.xib */; };
 		98E3022B1BFB0708001D4A69 /* SHGAuthenticationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98E302291BFB0708001D4A69 /* SHGAuthenticationViewController.m */; };
@@ -1953,6 +1955,9 @@
 		98DCAF581C90B60400C648A4 /* SHGPersonalTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGPersonalTableViewCell.h; sourceTree = "<group>"; };
 		98DCAF591C90B60400C648A4 /* SHGPersonalTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGPersonalTableViewCell.m; sourceTree = "<group>"; };
 		98DCAF5A1C90B60400C648A4 /* SHGPersonalTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGPersonalTableViewCell.xib; sourceTree = "<group>"; };
+		98DCFE091D05662D00F6C16A /* SHGBusinessNewDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGBusinessNewDetailViewController.h; sourceTree = "<group>"; };
+		98DCFE0A1D05662D00F6C16A /* SHGBusinessNewDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGBusinessNewDetailViewController.m; sourceTree = "<group>"; };
+		98DCFE0B1D05662D00F6C16A /* SHGBusinessNewDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGBusinessNewDetailViewController.xib; sourceTree = "<group>"; };
 		98E04A031CAE11DF006A8773 /* SHGBondInvestNextViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGBondInvestNextViewController.h; sourceTree = "<group>"; };
 		98E04A041CAE11DF006A8773 /* SHGBondInvestNextViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGBondInvestNextViewController.m; sourceTree = "<group>"; };
 		98E04A051CAE11DF006A8773 /* SHGBondInvestNextViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGBondInvestNextViewController.xib; sourceTree = "<group>"; };
@@ -4672,6 +4677,9 @@
 				F924C2BB1CACC1860070286F /* SHGBusinessDetailViewController.h */,
 				F924C2BC1CACC1860070286F /* SHGBusinessDetailViewController.m */,
 				F924C2BD1CACC1860070286F /* SHGBusinessDetailViewController.xib */,
+				98DCFE091D05662D00F6C16A /* SHGBusinessNewDetailViewController.h */,
+				98DCFE0A1D05662D00F6C16A /* SHGBusinessNewDetailViewController.m */,
+				98DCFE0B1D05662D00F6C16A /* SHGBusinessNewDetailViewController.xib */,
 				F90684991CBF64FC0003B123 /* SHGBusinessCommentTableViewCell.h */,
 				F906849A1CBF64FC0003B123 /* SHGBusinessCommentTableViewCell.m */,
 				F906849B1CBF64FC0003B123 /* SHGBusinessCommentTableViewCell.xib */,
@@ -5561,6 +5569,7 @@
 				61E83D9E1AF7C78E00703651 /* 选择好友@3x.png in Resources */,
 				98FA41C41BF5E1B40058A4EF /* SHGActionDetailViewController.xib in Resources */,
 				61E83D4E1AF7C78E00703651 /* 身份验证弹出对话框@3x.png in Resources */,
+				98DCFE0D1D05662D00F6C16A /* SHGBusinessNewDetailViewController.xib in Resources */,
 				98DCAF5C1C90B60400C648A4 /* SHGPersonalTableViewCell.xib in Resources */,
 				F9ED07EB1C3B59EC0079A1A9 /* SHGSettingTableViewCell.xib in Resources */,
 				61E83CD21AF7C78E00703651 /* 分享@2x.png in Resources */,
@@ -5934,6 +5943,7 @@
 				98E04A061CAE11DF006A8773 /* SHGBondInvestNextViewController.m in Sources */,
 				980D0D9C1C9A41BC00351F8C /* SHGCircleCollectionViewController.m in Sources */,
 				F9A227C21BF5AF8D0054F8D7 /* SHGActionObject.m in Sources */,
+				98DCFE0C1D05662D00F6C16A /* SHGBusinessNewDetailViewController.m in Sources */,
 				4088DDCE1AF105FD00393855 /* SettingQuestionObj.m in Sources */,
 				61D62BF01ADD1C4D002DD395 /* MOCNetworkReachabilityManager.m in Sources */,
 				F9352C011CFBD25C00778635 /* SHGNewsViewController.m in Sources */,

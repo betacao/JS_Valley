@@ -160,7 +160,7 @@
     
     NSDictionary *businessSelectDic = [[SHGGloble sharedGloble] getBusinessKeysAndValues];
     //行业多选字段
-    
+
     if (self.capitalSourceButtonView.selectedArray.count > 0) {
        self.moneyButtonString = [self.capitalSourceButtonView.selectedArray objectAtIndex:0];
     } else{

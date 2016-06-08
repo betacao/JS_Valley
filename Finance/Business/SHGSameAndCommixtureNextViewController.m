@@ -14,6 +14,7 @@
 #import "SHGBusinessListViewController.h"
 #import "SHGBusinessSendSuccessViewController.h"
 #import "SHGBusinessDetailViewController.h"
+#import "SHGBusinessNewDetailViewController.h"
 @interface SHGSameAndCommixtureNextViewController ()<UIScrollViewDelegate,UITextViewDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UIButton *sureButton;
@@ -261,8 +262,8 @@
                                 [[SHGBusinessListViewController sharedController] didCreateOrModifyBusiness:object];
                                 NSArray *teamViewControllerArray = self.navigationController.viewControllers;
                                 for(UIViewController *viewController in teamViewControllerArray){
-                                    if ([viewController isKindOfClass:[SHGBusinessDetailViewController class]]){
-                                        [(SHGBusinessDetailViewController *)viewController didCreateOrModifyBusiness];
+                                    if ([viewController isKindOfClass:[SHGBusinessNewDetailViewController class]]){
+                                        [(SHGBusinessNewDetailViewController *)viewController didCreateOrModifyBusiness];
                                         [self.navigationController popToViewController:viewController animated:YES];
                                     }
                                     if ([viewController isKindOfClass:[SHGBusinessMineViewController class]]){

@@ -8,7 +8,7 @@
 
 #import "BaseNavigationController.h"
 #import "BaseViewController.h"
-#import "SHGBusinessDetailViewController.h"
+#import "SHGBusinessNewDetailViewController.h"
 
 @interface BaseNavigationController ()<UINavigationControllerDelegate,UIGestureRecognizerDelegate>
 @property(nonatomic, weak) UIViewController *currentShowVC;
@@ -37,11 +37,12 @@
 
 - (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated
 {
-    if ([viewController isKindOfClass:[SHGBusinessDetailViewController class]]) {
+    if ([viewController isKindOfClass:[SHGBusinessNewDetailViewController class]]) {
 
+        [self.navigationBar setShadowImage:[[UIImage alloc] init]];
         [self.navigationBar setBackgroundImage:[CommonMethod imageWithColor:Color(@"f04f46")] forBarMetrics:UIBarMetricsDefault];
     } else {
-
+        [self.navigationBar setShadowImage:nil];
         [self.navigationBar setBackgroundImage:[CommonMethod imageWithColor:Color(@"d43c33")] forBarMetrics:UIBarMetricsDefault];
     }
 }

@@ -13,6 +13,7 @@
 #import "SHGBusinessTableViewCell.h"
 #import "SHGEmptyDataView.h"
 #import "SHGBusinessDetailViewController.h"
+#import "SHGBusinessNewDetailViewController.h"
 
 @interface SHGBusinessMineViewController ()<UITableViewDelegate, UITableViewDataSource>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -250,7 +251,7 @@
 {
     if (self.dataArr.count > 0) {
         SHGBusinessObject *object = [self.dataArr objectAtIndex:indexPath.row];
-        SHGBusinessDetailViewController *controller = [[SHGBusinessDetailViewController alloc]init];
+        SHGBusinessNewDetailViewController *controller = [[SHGBusinessNewDetailViewController alloc]init];
         controller.object = object;
         [self.navigationController pushViewController:controller animated:YES];
 
