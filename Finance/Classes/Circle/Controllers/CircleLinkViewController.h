@@ -10,4 +10,5 @@
 
 @interface CircleLinkViewController : BaseTableViewController<UIWebViewDelegate>
 @property (nonatomic, strong) NSString *link;
+@property (nonatomic, strong) NSString *linkTitle;
 @end

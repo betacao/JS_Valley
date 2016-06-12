@@ -12,6 +12,7 @@
 #import "SHGBusinessObject.h"
 #import "SHGBusinessTableViewCell.h"
 #import "SHGBusinessDetailViewController.h"
+#import "SHGBusinessNewDetailViewController.h"
 #import "SHGNoticeView.h"
 @interface SHGBusinessCollectionListViewController ()<UITabBarDelegate, UITableViewDataSource>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -226,7 +227,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (self.dataArr.count > 0) {
-        SHGBusinessDetailViewController *controller = [[SHGBusinessDetailViewController alloc] init];
+        SHGBusinessNewDetailViewController *controller = [[SHGBusinessNewDetailViewController alloc] init];
         controller.object = [self.dataArr objectAtIndex:indexPath.row];
         [self.navigationController pushViewController:controller animated:YES];
     }

@@ -1110,6 +1110,7 @@
 {
     CircleLinkViewController *vc = [[CircleLinkViewController alloc] init];
     vc.link = self.obj.linkObj.link;
+    self.title = @"视频";
     UINavigationController *nav =  (UINavigationController *)[AppDelegate currentAppdelegate].window.rootViewController;
     [nav pushViewController:vc animated:YES];
 }

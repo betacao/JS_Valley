@@ -162,7 +162,7 @@
     //行业多选字段
 
     if (self.capitalSourceButtonView.selectedArray.count > 0) {
-       self.moneyButtonString = [self.capitalSourceButtonView.selectedArray objectAtIndex:0];
+       self.moneyButtonString = [businessSelectDic objectForKey:[self.capitalSourceButtonView.selectedArray objectAtIndex:0]];
     } else{
         
         self.moneyButtonString = @"";
@@ -186,7 +186,7 @@
     }
     NSArray *array = [self.marketCategoryButtonView selectedArray];
     //业务类型多选字段
-    NSString *businesstype = [array objectAtIndex:0];
+    NSString *businesstype = [businessSelectDic objectForKey:[array objectAtIndex:0]];
 //    if ([[array firstObject] isEqualToString:@"不限"]) {
 //        businesstype = @"";
 //    } else{

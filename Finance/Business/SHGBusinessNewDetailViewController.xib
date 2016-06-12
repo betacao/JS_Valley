@@ -7,13 +7,17 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SHGBusinessNewDetailViewController">
             <connections>
+                <outlet property="BPBottomLine" destination="rwF-Vg-dpJ" id="Cwg-Dt-H3h"/>
                 <outlet property="BPButtonView" destination="Csd-xq-8z6" id="zYS-sO-Wc3"/>
                 <outlet property="BPLabel" destination="QcV-dF-SyY" id="Sj6-b1-lIN"/>
                 <outlet property="BPLine" destination="R3D-oR-SaM" id="vo9-oj-tmi"/>
+                <outlet property="BPTopLine" destination="dwZ-27-bDe" id="oTZ-U6-rKg"/>
                 <outlet property="BPView" destination="JRj-eS-ceK" id="i67-I0-uEZ"/>
                 <outlet property="areaButton" destination="fKO-7Q-wpW" id="Lp5-Gt-xJN"/>
+                <outlet property="businessMessageBpttomLine" destination="njr-Cb-WK3" id="z61-cw-GIA"/>
                 <outlet property="businessMessageLabel" destination="MDX-aJ-dTu" id="Sps-fB-JOI"/>
                 <outlet property="businessMessageLabelView" destination="N1Y-oS-THd" id="YZR-ZB-mKK"/>
+                <outlet property="businessMessageTopLine" destination="eKl-nC-cXw" id="1tM-rF-Rew"/>
                 <outlet property="businessMessageView" destination="fQS-8x-aFc" id="TPU-Dn-Nku"/>
                 <outlet property="businessRepresentLabel" destination="gcB-8z-6jm" id="WVC-5C-Kqa"/>
                 <outlet property="centerLine" destination="sA4-ZD-RZ2" id="Zjq-fq-bQD"/>
@@ -33,6 +37,7 @@
                 <outlet property="phoneTextView" destination="eXF-EW-rMT" id="fnB-5T-9U5"/>
                 <outlet property="redView" destination="yOY-Pl-fO4" id="l8R-YW-Ztk"/>
                 <outlet property="rightVerticalLine" destination="kca-J9-phN" id="13Z-lJ-P0X"/>
+                <outlet property="secondGrayTopLine" destination="NWQ-G7-xyt" id="dr3-dh-Zpf"/>
                 <outlet property="secondGrayView" destination="sEg-OL-QuP" id="SUK-uO-jP6"/>
                 <outlet property="secondHorizontalLine" destination="OjN-gd-v1v" id="IL1-iK-lgB"/>
                 <outlet property="shareButton" destination="FZB-FG-HbP" id="opJ-4n-TgP"/>
@@ -42,6 +47,7 @@
                 <outlet property="titleDetailLabel" destination="aw1-ls-HN2" id="Z1v-y9-t9O"/>
                 <outlet property="titleNameLabel" destination="Xto-xh-zba" id="MXJ-0E-COd"/>
                 <outlet property="typeButton" destination="nak-rD-PmG" id="FpH-D0-UBR"/>
+                <outlet property="userBottomLine" destination="AaE-bp-Efh" id="sl7-ES-ItT"/>
                 <outlet property="userButton" destination="ScZ-we-J2Z" id="oV2-A7-9qX"/>
                 <outlet property="userLabel" destination="fAX-6V-QrS" id="plR-m6-cEr"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -194,6 +200,11 @@
                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
+                        <view contentMode="scaleToFill" id="AaE-bp-Efh">
+                            <rect key="frame" x="0.0" y="24" width="320" height="4"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        </view>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
@@ -223,7 +234,7 @@
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         </view>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="e9g-89-5CN">
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="e9g-89-5CN">
                             <rect key="frame" x="0.0" y="96" width="42" height="21"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -237,19 +248,19 @@
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                         </textView>
+                        <view contentMode="scaleToFill" id="eKl-nC-cXw">
+                            <rect key="frame" x="0.0" y="58" width="320" height="4"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        </view>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                </view>
-                <view contentMode="scaleToFill" id="S0O-xX-GrT">
-                    <rect key="frame" x="-4" y="428" width="320" height="4"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
                 <view contentMode="scaleToFill" id="JRj-eS-ceK">
                     <rect key="frame" x="4" y="236" width="303" height="128"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="项目BP" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="QcV-dF-SyY">
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="QcV-dF-SyY">
                             <rect key="frame" x="92" y="54" width="118" height="21"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -271,6 +282,16 @@
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         </view>
+                        <view contentMode="scaleToFill" id="dwZ-27-bDe">
+                            <rect key="frame" x="-53" y="14" width="320" height="4"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        </view>
+                        <view contentMode="scaleToFill" id="rwF-Vg-dpJ">
+                            <rect key="frame" x="-44" y="4" width="320" height="4"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        </view>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
@@ -281,10 +302,25 @@
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <view contentMode="scaleToFill" id="NWQ-G7-xyt">
+                    <rect key="frame" x="0.0" y="292" width="320" height="4"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                </view>
+                <view contentMode="scaleToFill" id="njr-Cb-WK3">
+                    <rect key="frame" x="0.0" y="292" width="320" height="4"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                </view>
                 <view contentMode="scaleToFill" id="sEg-OL-QuP">
                     <rect key="frame" x="0.0" y="205" width="320" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                </view>
+                <view contentMode="scaleToFill" id="S0O-xX-GrT">
+                    <rect key="frame" x="-4" y="428" width="320" height="4"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                 </view>
                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" id="3XK-2z-R7U" customClass="SHGCopyTextView">
                     <rect key="frame" x="36" y="440" width="240" height="128"/>
@@ -296,7 +332,7 @@
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <point key="canvasLocation" x="-157" y="215"/>
+            <point key="canvasLocation" x="147" y="212"/>
         </view>
     </objects>
     <resources>

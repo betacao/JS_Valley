@@ -17,7 +17,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"视频";
+    self.title = self.linkTitle;
    _webViewForCUD = [[ UIWebView alloc] initWithFrame: CGRectMake(0,0,SCREENWIDTH,SCREENHEIGHT)];
     [_webViewForCUD setUserInteractionEnabled:YES];
     _webViewForCUD.delegate = self;

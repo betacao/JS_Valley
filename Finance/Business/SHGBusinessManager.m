@@ -243,10 +243,14 @@
     NSString *request = [rBaseAddressForHttp stringByAppendingString:@"/business/getBusinessById"];
     NSDictionary *param = @{@"uid":UID, @"type":object.type, @"businessId":object.businessID };
     [MOCHTTPRequestOperationManager postWithURL:request parameters:param success:^(MOCHTTPResponse *response) {
+        NSLog(@"popopopopop%@",response);
+        if (response.dataDictionary.count > 0) {
         SHGBusinessObject *otherObject = [[[SHGGloble sharedGloble] parseServerJsonArrayToJSONModel:@[response.dataDictionary] class:[SHGBusinessObject class]] firstObject];
-        if (block) {
-            block(otherObject);
-        }
+            if (block) {
+                block(otherObject);
+            }
+        } 
+       
     } failed:^(MOCHTTPResponse *response) {
         if (block) {
             block(nil);
