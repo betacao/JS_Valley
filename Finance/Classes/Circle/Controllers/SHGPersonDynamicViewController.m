@@ -8,10 +8,9 @@
 
 #import "SHGPersonDynamicViewController.h"
 #import "SHGMainPageTableViewCell.h"
-#import "MLEmojiLabel.h"
 #import "LinkViewController.h"
 #import "SHGEmptyDataView.h"
-@interface SHGPersonDynamicViewController ()<UITableViewDataSource, UITableViewDelegate, MLEmojiLabelDelegate, CircleListDelegate, CircleActionDelegate>
+@interface SHGPersonDynamicViewController ()<UITableViewDataSource, UITableViewDelegate, CircleListDelegate, CircleActionDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) NSString *target;
 @property (strong, nonatomic) UITableViewCell *emptyCell;
@@ -160,7 +159,6 @@
             cell.index = indexPath.row;
             cell.delegate = self;
             cell.object = obj;
-            cell.controller = self;
             cell.sd_tableView = tableView;
             cell.sd_indexPath = indexPath;
             return cell;
@@ -209,47 +207,6 @@
          return CGRectGetHeight(self.view.frame);
     }
 }
-
-#pragma mark -- sdc
-#pragma mark -- url点击
-- (void)mlEmojiLabel:(MLEmojiLabel*)emojiLabel didSelectLink:(NSString*)link withType:(MLEmojiLabelLinkType)type
-{
-    NSLog(@"1111");
-    LinkViewController *controller =  [[LinkViewController alloc]init];
-    controller.url = link;
-    switch(type){
-        case MLEmojiLabelLinkTypeURL:
-            [self.navigationController pushViewController:controller animated:YES];
-            NSLog(@"点击了链接%@",link);
-            break;
-        case MLEmojiLabelLinkTypePhoneNumber:
-            [self openTel:link];
-            NSLog(@"点击了电话%@",link);
-            break;
-        case MLEmojiLabelLinkTypeEmail:
-            NSLog(@"点击了邮箱%@",link);
-            break;
-        case MLEmojiLabelLinkTypeAt:
-            NSLog(@"点击了用户%@",link);
-            break;
-        case MLEmojiLabelLinkTypePoundSign:
-            NSLog(@"点击了话题%@",link);
-            break;
-        default:
-            NSLog(@"点击了不知道啥%@",link);
-            break;
-    }
-
-}
-#pragma mark -- sdc
-#pragma mark -- 拨打电话
-- (BOOL)openTel:(NSString *)tel
-{
-    NSMutableString * str=[[NSMutableString alloc] initWithFormat:@"telprompt://%@",tel];
-    NSLog(@"str======%@",str);
-    return  [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str]];
-}
-
 
 #pragma mark ------分享
 

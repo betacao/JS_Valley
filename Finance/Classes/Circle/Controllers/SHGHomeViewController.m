@@ -10,7 +10,6 @@
 #import "CircleListObj.h"
 #import "SHGCircleSendViewController.h"
 #import "ChatViewController.h"
-#import "MLEmojiLabel.h"
 #import "LinkViewController.h"
 #import "RecmdFriendObj.h"
 #import "SHGNoticeView.h"
@@ -26,7 +25,7 @@
 #import "SHGNewFriendTableViewCell.h"
 
 
-@interface SHGHomeViewController ()<MLEmojiLabelDelegate,CircleListDelegate, UISearchBarDelegate>
+@interface SHGHomeViewController ()<CircleListDelegate, UISearchBarDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 //判断是否已经加载过推荐列表
@@ -546,7 +545,6 @@
                     }
                     cell.index = indexPath.row;
                     cell.object = obj;
-                    cell.controller = self;
                     cell.delegate = [SHGUnifiedTreatment sharedTreatment];
                     cell.sd_tableView = tableView;
                     cell.sd_indexPath = indexPath;
@@ -571,59 +569,7 @@
     }
     return nil;
 }
-#pragma mark -- sdc
-#pragma mark -- url点击
-- (void)mlEmojiLabel:(MLEmojiLabel*)emojiLabel didSelectLink:(NSString*)link withType:(MLEmojiLabelLinkType)type
-{
-    NSLog(@"1111");
-    [UIPasteboard generalPasteboard].string = link;
-    LinkViewController *vc=  [[LinkViewController alloc]init];
-    switch(type){
-        case MLEmojiLabelLinkTypeURL:
-            vc.url = link;
-            [self.navigationController pushViewController:vc animated:YES];
-            NSLog(@"点击了链接%@",link);
-            break;
-        case MLEmojiLabelLinkTypePhoneNumber:
-            [self openTel:link];
-            NSLog(@"点击了电话%@",link);
-            break;
-        case MLEmojiLabelLinkTypeEmail:
-            NSLog(@"点击了邮箱%@",link);
-            break;
-        case MLEmojiLabelLinkTypeAt:
-            NSLog(@"点击了用户%@",link);
-            break;
-        case MLEmojiLabelLinkTypePoundSign:
-            NSLog(@"点击了话题%@",link);
-            break;
-        default:
-            NSLog(@"点击了不知道啥%@",link);
-            break;
-    }
-    
-    
-}
-#pragma mark -- sdc
-#pragma mark -- 拨打电话
-- (BOOL)openTel:(NSString *)tel
-{
-    NSMutableString * str=[[NSMutableString alloc] initWithFormat:@"telprompt://%@",tel];
-    NSLog(@"str======%@",str);
-    return  [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str]];
-}
 
-- (BOOL)openURL:(NSURL *)url
-{
-    BOOL safariCompatible = [url.scheme isEqualToString:@"http"] || [url.scheme isEqualToString:@"https"] ;
-    if (safariCompatible && [[UIApplication sharedApplication] canOpenURL:url]){
-        NSLog(@"%@",url);
-        [[UIApplication sharedApplication] openURL:url];
-        return YES;
-    } else {
-        return NO;
-    }
-}
 
 
 #pragma mark =============  UITableView Delegate  =============

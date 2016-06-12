@@ -9,9 +9,7 @@
 #import "MessageViewController.h"
 #import "MessageTableViewCell.h"
 #import "SHGPersonalViewController.h"
-#import "SHGActionDetailViewController.h"
 #import "LinkViewController.h"
-#import "SHGMarketSegmentViewController.h"
 #import "SHGBusinessObject.h"
 #import "SHGBusinessDetailViewController.h"
 
@@ -195,11 +193,7 @@
         UINavigationController *nav = (UINavigationController *)[AppDelegate currentAppdelegate].window.rootViewController;
         [nav pushViewController:controller animated:YES];
     } else if ([obj.code isEqualToString:@"1010"] || [obj.code isEqualToString:@"1011"]){
-        SHGActionDetailViewController *controller = [[SHGActionDetailViewController alloc] init];
-        SHGActionObject *object = [[SHGActionObject alloc] init];
-        object.meetId = obj.oid;
-        controller.object = object;
-        [self.navigationController pushViewController:controller animated:YES];
+        //之前的活动
     } else if ([obj.code isEqualToString:@"1013"]){
         //feed流
         CircleListObj *object = [[CircleListObj alloc] init];
@@ -209,11 +203,7 @@
         controller.object = object;
         [self.navigationController pushViewController:controller animated:YES];
     } else if ([obj.code isEqualToString:@"3000"]){
-        SHGMarketDetailViewController *controller = [[SHGMarketDetailViewController alloc] init];
-        SHGMarketObject *object = [[SHGMarketObject alloc] init];
-        object.marketId = obj.oid;
-        controller.object = object;
-        [self.navigationController pushViewController:controller animated:YES];
+        //之前的业务详情
     } else if ([obj.code isEqualToString:@"1014"]){
         //新版业务的推送
         NSString *businessId = obj.oid;

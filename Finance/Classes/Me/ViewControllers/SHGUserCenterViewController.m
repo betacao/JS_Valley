@@ -13,7 +13,6 @@
 #import "MyAppointmentViewController.h"
 #import "SHGBusinessMineViewController.h"
 #import "SettingsViewController.h"
-#import "SHGMarketCollectionViewController.h"
 #import "SHGCardCollectionViewController.h"
 #import "SHGCircleCollectionViewController.h"
 #import "SHGBusinessCollectionListViewController.h"

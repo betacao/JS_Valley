@@ -19,11 +19,9 @@
 #import "UncaughtExceptionHandler.h"
 #import "MessageViewController.h"
 #import "SHGPersonalViewController.h"
-#import "SHGActionDetailViewController.h"
 #import "GeTuiSdk.h"
 #import "GeTuiSdkError.h"
 #import "LinkViewController.h"
-#import "SHGMarketSegmentViewController.h"
 #import "SHGBusinessDetailViewController.h"
 #import "SHGBusinessObject.h"
 //for mac
@@ -231,12 +229,6 @@
             } else{
                 if ([code isEqualToString:@"3001"]) {
                     [[SHGSegmentController sharedSegmentController] deleteObjectByRid:rid];
-                } else if ([code isEqualToString:@"3002"]) {
-                    NSString *marketId = [userInfo objectForKey:@"marketId"];
-                    if (!IsStrEmpty(marketId)) {
-                        [[SHGMarketSegmentViewController sharedSegmentController] deleteMarketByMarketId:marketId];
-                    }
-
                 }
             }
         }
@@ -479,11 +471,7 @@
         SHGAuthenticationViewController *controller =[[SHGAuthenticationViewController alloc]init];
         [self pushIntoViewController:TopVC newViewController:controller];
     } else if ([ridCode isEqualToString:@"1010"] || [ridCode isEqualToString:@"1011"]){
-        SHGActionDetailViewController *controller = [[SHGActionDetailViewController alloc] init];
-        SHGActionObject *object = [[SHGActionObject alloc] init];
-        object.meetId = [userInfo objectForKey:@"rid"];
-        controller.object = object;
-        [self pushIntoViewController:TopVC newViewController:controller];
+        //之前的活动
     } else if ([ridCode isEqualToString:@"1013"]){
         //feed流
         CircleListObj *object = [[CircleListObj alloc] init];
@@ -493,12 +481,7 @@
         controller.object = object;
         [self pushIntoViewController:TopVC newViewController:controller];
     } else if ([ridCode isEqualToString:@"3000"]){
-        NSString *marketId = [userInfo objectForKey:@"marketId"];
-        SHGMarketDetailViewController *controller = [[SHGMarketDetailViewController alloc] init];
-        SHGMarketObject *object = [[SHGMarketObject alloc] init];
-        object.marketId = marketId;
-        controller.object = object;
-        [self pushIntoViewController:TopVC newViewController:controller];
+        //之前的业务详情
     } else if ([ridCode isEqualToString:@"1014"]){
         //新版业务的推送
         NSString *businessId = [userInfo objectForKey:@"rid"];

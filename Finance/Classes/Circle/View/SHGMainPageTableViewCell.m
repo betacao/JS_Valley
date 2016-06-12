@@ -9,15 +9,18 @@
 #import "SHGMainPageTableViewCell.h"
 #import "SDPhotoGroup.h"
 #import "SDPhotoItem.h"
+#import "CTTextDisplayView.h"
+#import "LinkViewController.h"
 
-@interface SHGMainPageTableViewCell()<MLEmojiLabelDelegate>
+@interface SHGMainPageTableViewCell()<CTTextDisplayViewDelegate>
+
 @property (weak, nonatomic) IBOutlet SHGUserHeaderView *headerView;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *companyLabel;
 @property (weak, nonatomic) IBOutlet UILabel *departmentLabel;
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
 @property (weak, nonatomic) IBOutlet UIButton *attentionButton;
-@property (weak, nonatomic) IBOutlet MLEmojiLabel *contentLabel;
+@property (weak, nonatomic) IBOutlet CTTextDisplayView *contentLabel;
 @property (weak, nonatomic) IBOutlet UIView *photoView;
 @property (weak, nonatomic) IBOutlet UIView *actionView;
 @property (weak, nonatomic) IBOutlet UILabel *relationLabel;
@@ -34,7 +37,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *fourthCommentLabel;
 
 @property (strong, nonatomic) NSArray *commentLabelArray;
-
+@property (strong, nonatomic) CTTextStyleModel *styleModel;
 @end
 
 @implementation SHGMainPageTableViewCell
@@ -49,7 +52,10 @@
 - (void)initView
 {
     [self.contentView bringSubviewToFront:self.headerView];
-    
+
+    self.contentLabel.delegate = self;
+    self.contentLabel.styleModel = self.styleModel;
+
     self.nameLabel.font = kMainNameFont;
     self.nameLabel.textColor = kMainNameColor;
 
@@ -61,12 +67,6 @@
 
     self.timeLabel.font = kMainTimeFont;
     self.timeLabel.textColor = kMainTimeColor;
-
-    self.contentLabel.lineBreakMode = NSLineBreakByTruncatingTail;
-    self.contentLabel.font = kMainContentFont;
-    self.contentLabel.textColor = kMainContentColor;
-    self.contentLabel.backgroundColor = [UIColor clearColor];
-    self.contentLabel.isAttributedContent = YES;
 
     self.relationLabel.font = kMainRelationFont;
     self.relationLabel.textColor = kMainRelationColor;
@@ -216,6 +216,14 @@
     return _commentLabelArray;
 }
 
+- (CTTextStyleModel *)styleModel
+{
+    if (!_styleModel) {
+        _styleModel = [[CTTextStyleModel alloc] init];
+    }
+    return _styleModel;
+}
+
 - (void)setObject:(CircleListObj *)object
 {
     _object = object;
@@ -225,12 +233,6 @@
     [self loadPhotoView:object];
     [self loadActionView:object];
     [self loadCommentView:object];
-}
-
-- (void)setController:(UIViewController<MLEmojiLabelDelegate> *)controller
-{
-    _controller = controller;
-    self.contentLabel.delegate = controller;
 }
 
 - (void)clearCell
@@ -262,7 +264,6 @@
 
 - (void)loadUserInfo:(CircleListObj *)object
 {
-
     BOOL status = [object.userstatus isEqualToString:@"true"] ? YES : NO;
     [self.headerView updateHeaderView:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,object.potname] placeholderImage:[UIImage imageNamed:@"default_head"] status:status userID:object.userid];
 
@@ -311,8 +312,7 @@
         .topSpaceToView(self.headerView, kMainContentTopMargin)
         .leftEqualToView(self.headerView)
         .rightEqualToView(self.attentionButton)
-        .maxHeightIs(ceilf(self.contentLabel.lineSpacing + self.contentLabel.font.lineHeight) * 5.0f)
-        .autoHeightRatio(0.0);
+        .heightIs([CTTextDisplayView getRowHeightWithText:detail rectSize:CGSizeMake(SCREENWIDTH -  2 * kMainItemLeftMargin, CGFLOAT_MAX) styleModel:self.styleModel]);
     } else{
         self.contentLabel.sd_resetLayout
         .topSpaceToView(self.headerView, 0.0f)
@@ -509,6 +509,28 @@
 - (IBAction)shareButtonClick:(UIButton *)sender
 {
     [self.delegate shareClicked:self.object];
+}
+
+- (void)ct_textDisplayView:(CTTextDisplayView *)textDisplayView obj:(id)obj
+{
+    if ([obj isKindOfClass:[NSDictionary class]]) {
+        NSDictionary *dictionary = (NSDictionary *)obj;
+        NSString *key = [[dictionary objectForKey:@"key"] lowercaseString];
+        if ([key isEqualToString:@"u"]) {
+            LinkViewController *controller = [[LinkViewController alloc] init];
+            controller.url = [dictionary objectForKey:@"value"];
+            [[SHGHomeViewController sharedController].navigationController pushViewController:controller animated:YES];
+        } else if([key isEqualToString:@"p"]) {
+            [self openTel:[dictionary objectForKey:@"value"]];
+        }
+    }
+}
+
+
+- (BOOL)openTel:(NSString *)tel
+{
+    NSMutableString * str=[[NSMutableString alloc] initWithFormat:@"telprompt://%@",tel];
+    return  [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str]];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated

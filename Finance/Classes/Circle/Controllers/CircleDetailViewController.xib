@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CircleDetailViewController">
@@ -20,7 +20,7 @@
                 <outlet property="faceBtn" destination="ys0-he-oJB" id="oEu-wD-s4x"/>
                 <outlet property="imageHeader" destination="9Sx-ef-Sas" id="1RY-fp-lPg"/>
                 <outlet property="lblCompanyName" destination="0bu-Jl-Pav" id="qJc-5Z-j0z"/>
-                <outlet property="lblContent" destination="YrT-Xh-muG" id="JZ5-Yv-DKG"/>
+                <outlet property="lblContent" destination="qYe-1m-FgM" id="HVn-qu-i62"/>
                 <outlet property="lblTime" destination="nr5-PN-i9k" id="rYI-57-daI"/>
                 <outlet property="lbldepartName" destination="Scx-sD-Z3A" id="x0b-lT-v5E"/>
                 <outlet property="lineView" destination="XRh-HR-PlL" id="yoq-jd-uHV"/>
@@ -112,7 +112,7 @@
                             <rect key="frame" x="34" y="5" width="42" height="21"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="0bu-Jl-Pav">
@@ -252,12 +252,11 @@
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
-                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="YrT-Xh-muG" customClass="MLEmojiLabel">
-                    <rect key="frame" x="14" y="48" width="292" height="24"/>
+                <view contentMode="scaleToFill" id="qYe-1m-FgM" customClass="CTTextDisplayView">
+                    <rect key="frame" x="0.0" y="-159" width="320" height="568"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <attributedString key="attributedText"/>
-                    <nil key="highlightedColor"/>
-                </label>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </view>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <nil key="simulatedStatusBarMetrics"/>
@@ -270,7 +269,7 @@
     <resources>
         <image name="commentWei_zan" width="14" height="13"/>
         <image name="comment_backimage" width="25" height="25"/>
-        <image name="homeDetailCollection" width="14" height="13"/>
+        <image name="homeDetailCollection" width="16" height="15"/>
         <image name="homeShare" width="13" height="12"/>
         <image name="home_comment" width="13" height="14"/>
         <image name="home_delete" width="14" height="14"/>

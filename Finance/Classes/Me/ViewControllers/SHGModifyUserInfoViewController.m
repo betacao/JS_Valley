@@ -8,7 +8,6 @@
 
 #import "SHGModifyUserInfoViewController.h"
 #import "SHGItemChooseView.h"
-#import "SHGMarketManager.h"
 #import "SHGProvincesViewController.h"
 
 @interface SHGModifyUserInfoViewController ()<UIActionSheetDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, SHGItemChooseDelegate,SHGAreaDelegate>

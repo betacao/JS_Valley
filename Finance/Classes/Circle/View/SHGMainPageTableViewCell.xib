@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -11,7 +11,7 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="564"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="563"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="563.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" id="wny-XQ-u6x" customClass="SHGUserHeaderView">
@@ -54,13 +54,11 @@
                             <action selector="attentionButtonClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="J5n-Ko-HYb"/>
                         </connections>
                     </button>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="S5s-b4-xnG" customClass="MLEmojiLabel">
-                        <rect key="frame" x="35" y="136" width="244" height="21"/>
+                    <view contentMode="scaleToFill" id="oLW-AH-vpY" customClass="CTTextDisplayView">
+                        <rect key="frame" x="40" y="218" width="240" height="128"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                        <nil key="highlightedColor"/>
-                    </label>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
                     <view contentMode="scaleToFill" id="yti-tJ-RH2">
                         <rect key="frame" x="0.0" y="165" width="320" height="127"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -165,7 +163,7 @@
                 <outlet property="commentButton" destination="bM6-Pq-J7w" id="V8K-TE-MP3"/>
                 <outlet property="commentView" destination="2TC-Px-Pbb" id="MSY-ge-6zW"/>
                 <outlet property="companyLabel" destination="4BK-24-OGa" id="R2z-7n-K9g"/>
-                <outlet property="contentLabel" destination="S5s-b4-xnG" id="zSG-Sw-ptM"/>
+                <outlet property="contentLabel" destination="oLW-AH-vpY" id="BxX-Fv-ESY"/>
                 <outlet property="deleteButton" destination="2hI-6w-4kN" id="roY-sV-a8b"/>
                 <outlet property="departmentLabel" destination="Cxj-lu-SLg" id="wJq-4q-aIo"/>
                 <outlet property="firstCommentLabel" destination="dw3-cj-bCn" id="nqa-Xk-Dih"/>

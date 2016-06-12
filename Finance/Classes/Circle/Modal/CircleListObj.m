@@ -8,7 +8,6 @@
 
 #import "CircleListObj.h"
 #import "SHGGloble.h"
-#import "MLEmojiLabel.h"
 
 @interface CircleListObj()
 

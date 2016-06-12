@@ -10,8 +10,11 @@
 #import "SHGBusinessObject.h"
 #import "SHGDiscoveryViewController.h"
 @interface SHGBusinessNewDetailViewController : BaseTableViewController
+
 @property (strong, nonatomic) SHGBusinessObject *object;
+
 - (void)didCreateOrModifyBusiness;
+
 @end
 
 

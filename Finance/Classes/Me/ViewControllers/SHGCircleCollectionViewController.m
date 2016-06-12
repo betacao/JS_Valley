@@ -12,7 +12,6 @@
 #import "CircleListDelegate.h"
 #import "SHGMainPageTableViewCell.h"
 #import "CircleDetailViewController.h"
-#import "SHGMarketSegmentViewController.h"
 @interface SHGCircleCollectionViewController ()<UITabBarDelegate, UITableViewDataSource,CircleListDelegate,UIAlertViewDelegate,CircleActionDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) UITableViewCell *emptyCell;

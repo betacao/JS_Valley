@@ -697,7 +697,11 @@
     }
 }
 
-
+- (NSString *)formatStringToHtml:(NSString *)string
+{
+//    [string]
+    return @"";
+}
 
 
 

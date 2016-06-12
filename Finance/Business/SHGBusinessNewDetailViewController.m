@@ -27,7 +27,6 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
 };
 
 @interface SHGBusinessNewDetailViewController ()<CircleActionDelegate,SHGBusinessCommentDelegate,BRCommentViewDelegate,UITableViewDataSource,UITableViewDelegate,UIActionSheetDelegate>
-
 {
     UIView *PickerBackView;
 }

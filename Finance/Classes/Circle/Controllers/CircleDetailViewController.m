@@ -7,7 +7,6 @@
 //
 
 #import "CircleDetailViewController.h"
-#import "MLEmojiLabel.h"
 #import "LinkViewController.h"
 #import "TWEmojiKeyBoard.h"
 #import "SDPhotoGroup.h"
@@ -17,12 +16,13 @@
 #import "CircleListDelegate.h"
 #import "CircleLinkViewController.h"
 #import "ReplyTableViewCell.h"
+#import "CTTextDisplayView.h"
 #define PRAISE_SEPWIDTH     10
 #define PRAISE_RIGHTWIDTH     40
 #define PRAISE_WIDTH 28.0f
 #define kItemMargin 7.0f * XFACTOR
 
-@interface CircleDetailViewController ()<MLEmojiLabelDelegate, CircleListDelegate, ReplyDelegate>
+@interface CircleDetailViewController ()<CircleListDelegate, ReplyDelegate>
 {
     UIControl *backView;
     UIView *PickerBackView;
@@ -43,7 +43,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *btnShare;
 @property (weak, nonatomic) IBOutlet UITableView *listTable;
 @property (weak, nonatomic) IBOutlet UIView *actionView;
-@property (weak, nonatomic) IBOutlet MLEmojiLabel *lblContent;
+@property (weak, nonatomic) IBOutlet CTTextDisplayView *lblContent;
 @property (weak, nonatomic) IBOutlet UIButton *btnAttention;
 @property (weak, nonatomic) IBOutlet UILabel *lblTime;
 @property (weak, nonatomic) IBOutlet UILabel *lbldepartName;
@@ -132,12 +132,9 @@
     self.btnPraise.titleEdgeInsets = UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, -10.0f);
     self.btnPraise.titleLabel.font = kMainActionFont;
 
-    self.lblContent.textColor = kMainContentColor;
-    self.lblContent.font = kMainContentFont;
-    self.lblContent.numberOfLines = 0;
-    self.lblContent.lineBreakMode = NSLineBreakByWordWrapping;
-    self.lblContent.delegate = self;
-    self.lblContent.backgroundColor = [UIColor clearColor];
+    CTTextStyleModel *model = [[CTTextStyleModel alloc] init];
+    model.numberOfLines = -1;
+    self.lblContent.styleModel = model;
 
     self.btnSend.titleLabel.font = FontFactor(15.0f);
     self.btnSend.layer.masksToBounds = YES;
@@ -244,8 +241,7 @@
     .topSpaceToView(self.personView, 0.0f)
     .leftEqualToView(self.imageHeader)
     .rightEqualToView(self.btnAttention)
-    .autoHeightRatio(0.0f);
-    self.lblContent.isAttributedContent = YES;
+    .heightIs(0.0f);
     
     self.photoView = [[UIView alloc]init];
     [self.viewHeader addSubview:self.photoView];
@@ -501,6 +497,12 @@
     }
     
     self.lblContent.text = obj.detail;
+    self.lblContent.sd_resetLayout
+    .topSpaceToView(self.personView, 0.0f)
+    .leftEqualToView(self.imageHeader)
+    .rightEqualToView(self.btnAttention)
+    .heightIs([CTTextDisplayView getRowHeightWithText:obj.detail rectSize:CGSizeMake(SCREENWIDTH -  2 * kMainItemLeftMargin, CGFLOAT_MAX) styleModel:self.lblContent.styleModel]);
+
     
     if ([self.obj.type isEqualToString:TYPE_PHOTO]){
         SDPhotoGroup *photoGroup = [[SDPhotoGroup alloc] init];
@@ -1192,58 +1194,25 @@
     
 }
 
-#pragma mark -- sdc
-#pragma mark -- url点击
-- (void)mlEmojiLabel:(MLEmojiLabel*)emojiLabel didSelectLink:(NSString*)link withType:(MLEmojiLabelLinkType)type
+- (void)ct_textDisplayView:(CTTextDisplayView *)textDisplayView obj:(id)obj
 {
-    NSLog(@"1111");
-    LinkViewController *vc=  [[LinkViewController alloc]init];
-    vc.url = link;
-    switch(type){
-        case MLEmojiLabelLinkTypeURL:
-            [self.navigationController pushViewController:vc animated:YES];
-            NSLog(@"点击了链接%@",link);
-            break;
-        case MLEmojiLabelLinkTypePhoneNumber:
-            [self openTel:link];
-            NSLog(@"点击了电话%@",link);
-            break;
-        case MLEmojiLabelLinkTypeEmail:
-            NSLog(@"点击了邮箱%@",link);
-            break;
-        case MLEmojiLabelLinkTypeAt:
-            NSLog(@"点击了用户%@",link);
-            break;
-        case MLEmojiLabelLinkTypePoundSign:
-            NSLog(@"点击了话题%@",link);
-            break;
-        default:
-            NSLog(@"点击了不知道啥%@",link);
-            break;
+    if ([obj isKindOfClass:[NSDictionary class]]) {
+        NSDictionary *dictionary = (NSDictionary *)obj;
+        NSString *key = [[dictionary objectForKey:@"key"] lowercaseString];
+        if ([key isEqualToString:@"u"]) {
+            LinkViewController *controller = [[LinkViewController alloc] init];
+            controller.url = [dictionary objectForKey:@"value"];
+            [[SHGHomeViewController sharedController].navigationController pushViewController:controller animated:YES];
+        } else if([key isEqualToString:@"p"]) {
+            [self openTel:[dictionary objectForKey:@"value"]];
+        }
     }
-    
 }
 
-#pragma mark -- 拨打电话
 - (BOOL)openTel:(NSString *)tel
 {
     NSMutableString * str=[[NSMutableString alloc] initWithFormat:@"telprompt://%@",tel];
-    NSLog(@"str======%@",str);
     return  [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str]];
-}
-
-#pragma mark -- 打开url
-- (BOOL)openURL:(NSURL *)url
-{
-    BOOL safariCompatible = [url.scheme isEqualToString:@"http"] || [url.scheme isEqualToString:@"https"] ;
-    if (safariCompatible && [[UIApplication sharedApplication] canOpenURL:url]){
-        
-        NSLog(@"%@",url);
-        [[UIApplication sharedApplication] openURL:url];
-        return YES;
-    } else {
-        return NO;
-    }
 }
 
 #pragma mark -- sdc

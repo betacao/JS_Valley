@@ -10,4 +10,6 @@ pod 'MBProgressHUD'
 pod 'SDWebImage'
 pod 'MagicalRecord'
 pod 'SDAutoLayout'
+pod 'TTTAttributedLabel'
+
 end
