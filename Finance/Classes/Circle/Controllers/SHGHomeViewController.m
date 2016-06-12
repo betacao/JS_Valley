@@ -70,7 +70,7 @@
     self.needShowNewFriend = YES;
     self.tableView.sd_layout
     .spaceToSuperView(UIEdgeInsetsZero);
-    
+
     [self loadPreLoadingData];
     [self addHeaderRefresh:self.tableView headerRefesh:YES headerTitle:@{kRefreshStateIdle:@"下拉可以刷新", kRefreshStatePulling:@"释放后查看最新动态", kRefreshStateRefreshing:@"正在努力加载中"} andFooter:YES footerTitle:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshData) name:NOTIFI_SENDPOST object:nil];
@@ -254,7 +254,7 @@
                 [self.dataArr moveObjectAtIndex:index toIndex:3];
             }
         }
-        
+
     }
 }
 
@@ -294,15 +294,15 @@
     self.friendObject = nil;
     __weak typeof(self) weakSelf = self;
     [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@%@",rBaseAddressForHttp,@"/recommended/friends/registerPushFriendGrade"] parameters:@{@"uid":UID} success:^(MOCHTTPResponse *response) {
-//        weakSelf.friendObject = [[SHGNewFriendObject alloc] init];
-//        weakSelf.friendObject.commonFriendCount = @"10";
-//        weakSelf.friendObject.commonFriendList = @[@"1wqekjqwe",@"wwwwww",@"fsadasasd",@"eee",];
-//        weakSelf.friendObject.company = @"w";
-//        weakSelf.friendObject.picName = @"";
-//        weakSelf.friendObject.position = @"南京";
-//        weakSelf.friendObject.realName = @"w";
-//        weakSelf.friendObject.title = @"w";
-//        weakSelf.friendObject.uid = @"9975";
+        //        weakSelf.friendObject = [[SHGNewFriendObject alloc] init];
+        //        weakSelf.friendObject.commonFriendCount = @"10";
+        //        weakSelf.friendObject.commonFriendList = @[@"1wqekjqwe",@"wwwwww",@"fsadasasd",@"eee",];
+        //        weakSelf.friendObject.company = @"w";
+        //        weakSelf.friendObject.picName = @"";
+        //        weakSelf.friendObject.position = @"南京";
+        //        weakSelf.friendObject.realName = @"w";
+        //        weakSelf.friendObject.title = @"w";
+        //        weakSelf.friendObject.uid = @"9975";
         NSDictionary *dictionary = response.dataDictionary;
         if (dictionary) {
             NSArray *array = [[SHGGloble sharedGloble] parseServerJsonArrayToJSONModel:@[dictionary] class:[SHGNewFriendObject class]];
@@ -359,7 +359,7 @@
         weakSelf.needRefreshTableView = YES;
         [weakSelf.tableView.mj_header endRefreshing];
         [weakSelf.tableView.mj_footer endRefreshing];
-      
+
     } failed:^(MOCHTTPResponse *response){
         weakSelf.isRefreshing = NO;
         [Hud showMessageWithText:response.errorMessage];
@@ -453,7 +453,7 @@
     } else{
         [self requestDataWithTarget:@"first" time:@""];
     }
-    
+
 }
 
 - (void)refreshFooter
@@ -466,7 +466,7 @@
     if (self.dataArr.count > 0){
         [self requestDataWithTarget:@"load" time:[self refreshMinRid]];
     }
-    
+
 }
 
 - (NSString *)refreshMaxRid
@@ -591,9 +591,9 @@
             return MarginFactor(60.0f) * ((NSArray *)object).count;
 
         } else if ([object isKindOfClass:[SHGNewFriendObject class]]){
-            
+
             return MarginFactor(140.0f);
-            
+
         }
         return SCREENWIDTH;
     }
@@ -666,7 +666,7 @@
 {
     if (self.dataArr.count > 0) {
         CircleListObj *obj = self.dataArr[indexPath.row];
-   
+
         if([obj isKindOfClass:[CircleListObj class]]){
             if (!IsStrEmpty(obj.feedhtml)){
                 NSLog(@"%@",obj.feedhtml);

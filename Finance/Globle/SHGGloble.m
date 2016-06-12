@@ -699,8 +699,16 @@
 
 - (NSString *)formatStringToHtml:(NSString *)string
 {
-//    [string]
-    return @"";
+    __block NSString *copyString = [NSString stringWithString:string];
+    NSString *urlRegular = @"((http[s]{0,1}|ftp)://[a-zA-Z0-9\\.\\-]+\\.([a-zA-Z]{2,4})(:\\d+)?(/[a-zA-Z0-9\\.\\-~!@#$%^&*+?:_/=<>]*)?)|(www.[a-zA-Z0-9\\.\\-]+\\.([a-zA-Z]{2,4})(:\\d+)?(/[a-zA-Z0-9\\.\\-~!@#$%^&*+?:_/=<>]*)?)";
+
+    NSRegularExpression *expression = [NSRegularExpression regularExpressionWithPattern:urlRegular options:0 error:nil];
+    [expression enumerateMatchesInString:copyString options:0 range:NSMakeRange(0, copyString.length) usingBlock:^(NSTextCheckingResult * _Nullable result, NSMatchingFlags flags, BOOL * _Nonnull stop) {
+        NSString *subString = [copyString substringWithRange:result.range];
+        NSString *replaceString = [NSString stringWithFormat:@"<a href='%@'>网页链接</a>",subString];
+        copyString = [copyString stringByReplacingOccurrencesOfString:subString withString:replaceString];
+    }];
+    return copyString;
 }
 
 

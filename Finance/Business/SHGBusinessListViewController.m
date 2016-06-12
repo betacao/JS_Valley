@@ -428,7 +428,7 @@
         [param addEntriesFromDictionary:@{@"requsetType":@"search"}];
     }
     self.refreshing = YES;
-    [SHGBusinessManager getListDataWithParam:param block:^(NSArray *dataArray, NSString *index, NSString *tipUrl, NSString *cfData) {
+    [SHGBusinessManager getListDataWithParam:param target:target block:^(NSArray *dataArray, NSString *index, NSString *tipUrl, NSString *cfData) {
         if (!IsStrEmpty(cfData)) {
             weakSelf.CFData = cfData;
         }

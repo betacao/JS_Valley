@@ -22,7 +22,7 @@
 #define PRAISE_WIDTH 28.0f
 #define kItemMargin 7.0f * XFACTOR
 
-@interface CircleDetailViewController ()<CircleListDelegate, ReplyDelegate>
+@interface CircleDetailViewController ()<CircleListDelegate, ReplyDelegate, CTTextDisplayViewDelegate>
 {
     UIControl *backView;
     UIView *PickerBackView;
@@ -135,6 +135,7 @@
     CTTextStyleModel *model = [[CTTextStyleModel alloc] init];
     model.numberOfLines = -1;
     self.lblContent.styleModel = model;
+    self.lblContent.delegate = self;
 
     self.btnSend.titleLabel.font = FontFactor(15.0f);
     self.btnSend.layer.masksToBounds = YES;
@@ -496,7 +497,7 @@
         [self.btnAttention setImage:[UIImage imageNamed:@"newAddAttention"] forState:UIControlStateNormal];
     }
     
-    self.lblContent.text = obj.detail;
+    self.lblContent.text = [[SHGGloble sharedGloble] formatStringToHtml:obj.detail];
     self.lblContent.sd_resetLayout
     .topSpaceToView(self.personView, 0.0f)
     .leftEqualToView(self.imageHeader)

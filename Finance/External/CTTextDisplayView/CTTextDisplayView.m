@@ -464,7 +464,7 @@
     
     
     //以下注释打开后 触摸移动时内存消耗比较严重
-    ///***
+    /***
     CGPoint location = [(UITouch *)[touches anyObject] locationInView:self];
     CGPoint runLocation = CGPointMake(location.x, self.frame.size.height - location.y);
     
@@ -481,7 +481,7 @@
             }
         }
     }];
-    //***/
+    */
 }
 
 

@@ -305,7 +305,7 @@
 
 - (void)loadContent:(CircleListObj *)object
 {
-    NSString *detail = object.detail;
+    NSString *detail = [[SHGGloble sharedGloble] formatStringToHtml:object.detail];
     self.contentLabel.text = detail;
     if (detail.length > 0) {
         self.contentLabel.sd_resetLayout
@@ -529,8 +529,8 @@
 
 - (BOOL)openTel:(NSString *)tel
 {
-    NSMutableString * str=[[NSMutableString alloc] initWithFormat:@"telprompt://%@",tel];
-    return  [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str]];
+    NSMutableString *str = [[NSMutableString alloc] initWithFormat:@"telprompt://%@",tel];
+    return [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str]];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated

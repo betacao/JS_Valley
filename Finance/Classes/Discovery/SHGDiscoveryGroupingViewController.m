@@ -107,7 +107,8 @@
 
     self.rightLabel.font = FontFactor(13.0f);
     self.rightLabel.textColor = Color(@"bbbbbb");
-
+    self.rightLabel.hidden = YES;
+    
     self.rightArrowImageView.image = [UIImage imageNamed:@"rightArrowImage"];
 
     self.spliteView.backgroundColor = Color(@"e5e6e7");

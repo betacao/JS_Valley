@@ -100,8 +100,11 @@
 
 }
 //列表
-+ (void)getListDataWithParam:(NSDictionary *)param block:(void (^)(NSArray *, NSString *, NSString *, NSString *))block
++ (void)getListDataWithParam:(NSDictionary *)param target:(NSString *)target block:(void (^)(NSArray *, NSString *, NSString *, NSString *))block
 {
+    if ([target isEqualToString:@"first"]) {
+        [Hud showWait];
+    }
     NSMutableDictionary *mutableParam = [NSMutableDictionary dictionaryWithDictionary:param];
     [mutableParam setObject:[SHGGloble sharedGloble].currentVersion forKey:@"version"];
     [MOCHTTPRequestOperationManager postWithURL:[rBaseAddressForHttp stringByAppendingString:@"/business/getBusinessList"] class:nil parameters:mutableParam success:^(MOCHTTPResponse *response) {
@@ -411,6 +414,7 @@
 
 + (void)refreshBusiness:(SHGBusinessObject *)object success:(void (^)(BOOL))block
 {
+    [[SHGGloble sharedGloble] recordUserAction:@"" type:@"business_refresh"];
     [MOCHTTPRequestOperationManager postWithURL:[rBaseAddressForHttp stringByAppendingString:@"/business/refreshBusiness"] parameters:@{@"uid": UID,@"businessId": object.businessID, @"businessType":object.type} success:^(MOCHTTPResponse *response) {
         if (block) {
             block(YES);
