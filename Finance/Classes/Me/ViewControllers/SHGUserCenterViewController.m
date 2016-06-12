@@ -32,7 +32,7 @@
 @property (strong, nonatomic) UIView          *messageView;
 @property (strong, nonatomic) UIView          *labelView;
 
-@property (strong, nonatomic) UILabel	*circleHeaderLabel;  //动态lable(1.8.1替换成业务)
+@property (strong, nonatomic) UILabel	*circleHeaderLabel;  //动态lable
 @property (strong, nonatomic) UILabel	*followHeaderLabel;  //关注label
 @property (strong, nonatomic) UILabel	*fansHeaderLabel;  //粉丝label
 @property (strong, nonatomic) UIView	*breakLine1;
@@ -66,7 +66,7 @@
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     NSArray *array0 = @[[[SHGGlobleModel alloc] initWithText:@"业务收藏" lineViewHidden:NO accessoryViewHidden:NO], [[SHGGlobleModel alloc] initWithText:@"动态收藏" lineViewHidden:NO accessoryViewHidden:NO], [[SHGGlobleModel alloc] initWithText:@"名片收藏" lineViewHidden:YES accessoryViewHidden:NO]];
-    NSArray *array1 = @[[[SHGGlobleModel alloc] initWithText:@"我的动态" lineViewHidden:YES accessoryViewHidden:NO]];
+    NSArray *array1 = @[[[SHGGlobleModel alloc] initWithText:@"我的业务" lineViewHidden:YES accessoryViewHidden:NO]];
     NSArray *array2 = @[[[SHGGlobleModel alloc] initWithText:@"邀请好友加入大牛圈" lineViewHidden:NO accessoryViewHidden:YES], [[SHGGlobleModel alloc] initWithText:@"更新通讯录到大牛圈" lineViewHidden:YES accessoryViewHidden:YES]];
     NSArray *array3 = @[[[SHGGlobleModel alloc] initWithText:@"设置" lineViewHidden:YES accessoryViewHidden:NO]];
     self.titleArray = @[array0, array1, array2, array3];
@@ -131,7 +131,7 @@
     .topSpaceToView(self.lineView, 0.5f)
     .heightIs(MarginFactor(58.0f));
 
-    //动态（1.8.1替换成业务）
+    //动态
     self.circleHeaderLabel.sd_layout
     .topSpaceToView(self.labelView, 0.0f)
     .leftSpaceToView(self.labelView, 0.0f)
@@ -354,7 +354,7 @@
         _circleHeaderLabel.numberOfLines = 0;
         _circleHeaderLabel.font = FontFactor(12.0f);
         _circleHeaderLabel.userInteractionEnabled = YES;
-        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(goToMyBusiness)];
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(goToMyCircle)];
         [_circleHeaderLabel addGestureRecognizer:tap];
     }
     return _circleHeaderLabel;
@@ -687,7 +687,7 @@
         NSString *followCount = [response.dataDictionary valueForKey:@"attention"];
         NSString *fansCount = [response.dataDictionary valueForKey:@"fans"];
 
-        NSString *businessTotal = [NSString stringWithFormat:@"业务 \n%@",businesstotal];
+        NSString *businessTotal = [NSString stringWithFormat:@"动态 \n%@",businesstotal];
         NSString *followString = [NSString stringWithFormat:@"关注 \n%@",followCount];
         NSString *fansString = [NSString stringWithFormat:@"粉丝 \n%@",fansCount];
 
@@ -847,10 +847,8 @@
             self.hasUpdatedContacts = YES;
             [self performSelector:@selector(changeUpdateState) withObject:nil afterDelay:60.0f];
         }
-    } else if ([text containsString:@"我的动态"]){
-
-        [self goToMyCircle];
-
+    } else if ([text containsString:@"我的业务"]){
+        [self goToMyBusiness];
     } else if ([text containsString:@"业务收藏"]){
         [[SHGGloble sharedGloble] recordUserAction:@"" type:@"user_collectBusiness"];
         SHGBusinessCollectionListViewController *controller = [[SHGBusinessCollectionListViewController alloc] init];
