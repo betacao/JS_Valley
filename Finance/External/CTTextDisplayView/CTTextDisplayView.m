@@ -380,7 +380,7 @@
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    [super touchesBegan:touches withEvent:event];
+//    [super touchesBegan:touches withEvent:event];
     _private_need_calc_height = NO;
     
     CGPoint location = [(UITouch *)[touches anyObject] locationInView:self];
@@ -405,7 +405,7 @@
 }
 
 - (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
-    [super touchesCancelled:touches withEvent:event];
+//    [super touchesCancelled:touches withEvent:event];
     _private_need_calc_height = NO;
     self.currentKey = nil;
     self.currentKeyRectArray = nil;
@@ -414,7 +414,7 @@
 
 - (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
-    [super touchesEnded:touches withEvent:event];
+//    [super touchesEnded:touches withEvent:event];
     _private_need_calc_height = NO;
     
     CGPoint location = [(UITouch *)[touches anyObject] locationInView:self];
@@ -459,7 +459,7 @@
 }
 
 - (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
-    [super touchesMoved:touches withEvent:event];
+//    [super touchesMoved:touches withEvent:event];
     _private_need_calc_height = NO;
     
     
