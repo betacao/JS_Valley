@@ -20,6 +20,7 @@
 #import "SHGSameAndCommixtureSendViewController.h"
 #import "CircleLinkViewController.h"
 #import "SHGEmptyDataView.h"
+#import "NSCharacterSet+Common.h"
 typedef NS_ENUM(NSInteger, SHGTapPhoneType)
 {
     SHGTapPhoneTypeDialNumber,
@@ -565,9 +566,6 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
     } else{
         self.titleDetailLabel.font = BoldFontFactor(23.0f);
     }
-    
-//    UIFont *font =BoldFontFactor(ceilf(-0.6f * title.length + 40.0f));
-//    self.titleDetailLabel.font = font;
     self.titleDetailLabel.text = title;
     if ([self.responseObject.type isEqualToString:@"moneyside"]) {
         [self.typeButton setTitle:@"投资机构" forState:UIControlStateNormal];
@@ -634,7 +632,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
         allSender = [NSString stringWithFormat:@"%@\n%@",@"发布人",sender];
     } else{
         sender = self.responseObject.realName;
-        if (self.responseObject.realName.length > 4) {
+        if (self.responseObject.realName.length > 7) {
             sender = [NSString stringWithFormat:@"%@...",[sender substringToIndex:7]];
             allSender = [NSString stringWithFormat:@"%@\n%@...",@"发布人",[sender substringToIndex:7]];
         } else{
@@ -699,7 +697,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
         NSMutableAttributedString *string= [[NSMutableAttributedString alloc] initWithString:rightString attributes:@{NSFontAttributeName:FontFactor(14.0f), NSForegroundColorAttributeName: Color(@"3a3a3a"), NSParagraphStyleAttributeName:labelParagraphStyle}];
         rightLabel.attributedText = string;
         [rightLabel sizeToFit];
-        CGSize size = [rightLabel sizeThatFits:CGSizeMake(MarginFactor(223.0f), CGFLOAT_MAX)];
+        CGSize size = rightLabel.frame.size;
         rightLabel.frame = CGRectMake(MarginFactor(125.0f), height +  i * topMargin, MarginFactor(223.0f), size.height);
         [self.businessMessageLabelView addSubview:rightLabel];
         
@@ -731,21 +729,22 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
     self.phoneTextView.editable = NO;
     UITapGestureRecognizer *phoneTextViewRecognizer  = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapPhoneTextView:)];
     [self.phoneTextView addGestureRecognizer:phoneTextViewRecognizer];
-    NSString *phoneNum = @"";
+    __block NSString *phoneNum = @"";
     if (!self.responseObject.userState) {
         phoneNum = @"认证可见";
     } else{
         NSString *numString = [rightArray objectAtIndex:rightArray.count - 2];
-        NSArray *array = [numString componentsSeparatedByString:@"，"];
-        for (NSInteger i = 0; i < array.count; i ++) {
-            phoneNum = [phoneNum stringByAppendingFormat:@"%@\n",[array objectAtIndex:i]];
-            phoneNum = [phoneNum substringWithRange:NSMakeRange(0, phoneNum.length - 1)];
-        }
-        
+        NSArray *array = [numString componentsSeparatedByCharactersInSet:[NSCharacterSet formUnionWithArray:@[@",",@" "]]];
+        [array enumerateObjectsUsingBlock:^(NSString *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            if (obj.length > 0) {
+                phoneNum = [phoneNum stringByAppendingFormat:@"%@\n",obj];
+            }
+        }];
+        phoneNum = [phoneNum substringToIndex:(phoneNum.length - 1)];
     }
     NSMutableParagraphStyle * paragraphStyle = [[NSMutableParagraphStyle alloc] init];
     paragraphStyle.alignment = NSTextAlignmentRight;
-    [paragraphStyle setLineSpacing:MarginFactor(14.0f)];
+    [paragraphStyle setLineSpacing:MarginFactor(5.0f)];
     NSMutableAttributedString *string= [[NSMutableAttributedString alloc] initWithString:phoneNum attributes:@{NSFontAttributeName:FontFactor(14.0f), NSForegroundColorAttributeName: Color(@"4277B2"), NSParagraphStyleAttributeName:paragraphStyle}];
     self.phoneTextView.attributedText = string;
     CGSize size = [self.phoneTextView sizeThatFits:CGSizeMake(MarginFactor(150.0f), CGFLOAT_MAX)];

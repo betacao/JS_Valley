@@ -675,6 +675,7 @@
 		985CBDC31C04042C002B3D9D /* SHGCollectCardClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 985CBDC21C04042C002B3D9D /* SHGCollectCardClass.m */; };
 		986C89F21CD1D63D001AF201 /* SHGBusinessSendSuccessViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 986C89F01CD1D63D001AF201 /* SHGBusinessSendSuccessViewController.m */; };
 		986C89F31CD1D63D001AF201 /* SHGBusinessSendSuccessViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 986C89F11CD1D63D001AF201 /* SHGBusinessSendSuccessViewController.xib */; };
+		986DC1431D0EB92C0027EE15 /* NSCharacterSet+Common.m in Sources */ = {isa = PBXBuildFile; fileRef = 986DC1421D0EB92C0027EE15 /* NSCharacterSet+Common.m */; };
 		986FFF131CBC857200D9FE04 /* SHGBusinessLocationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 986FFF121CBC857200D9FE04 /* SHGBusinessLocationView.m */; };
 		987101331CBFB030002A8F7F /* SHGBusinessCollectionListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 987101311CBFB030002A8F7F /* SHGBusinessCollectionListViewController.m */; };
 		987101341CBFB030002A8F7F /* SHGBusinessCollectionListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 987101321CBFB030002A8F7F /* SHGBusinessCollectionListViewController.xib */; };
@@ -1915,6 +1916,8 @@
 		986C89EF1CD1D63D001AF201 /* SHGBusinessSendSuccessViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SHGBusinessSendSuccessViewController.h; path = ../Classes/Circle/Controllers/SHGBusinessSendSuccessViewController.h; sourceTree = "<group>"; };
 		986C89F01CD1D63D001AF201 /* SHGBusinessSendSuccessViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SHGBusinessSendSuccessViewController.m; path = ../Classes/Circle/Controllers/SHGBusinessSendSuccessViewController.m; sourceTree = "<group>"; };
 		986C89F11CD1D63D001AF201 /* SHGBusinessSendSuccessViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SHGBusinessSendSuccessViewController.xib; path = ../Classes/Circle/Controllers/SHGBusinessSendSuccessViewController.xib; sourceTree = "<group>"; };
+		986DC1411D0EB92C0027EE15 /* NSCharacterSet+Common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSCharacterSet+Common.h"; sourceTree = "<group>"; };
+		986DC1421D0EB92C0027EE15 /* NSCharacterSet+Common.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSCharacterSet+Common.m"; sourceTree = "<group>"; };
 		986FFF111CBC857200D9FE04 /* SHGBusinessLocationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGBusinessLocationView.h; sourceTree = "<group>"; };
 		986FFF121CBC857200D9FE04 /* SHGBusinessLocationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGBusinessLocationView.m; sourceTree = "<group>"; };
 		987101301CBFB030002A8F7F /* SHGBusinessCollectionListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGBusinessCollectionListViewController.h; sourceTree = "<group>"; };
@@ -4771,6 +4774,8 @@
 		F93FCBA41C856D5A004E356E /* Category */ = {
 			isa = PBXGroup;
 			children = (
+				986DC1411D0EB92C0027EE15 /* NSCharacterSet+Common.h */,
+				986DC1421D0EB92C0027EE15 /* NSCharacterSet+Common.m */,
 				F93FCBA51C856D5A004E356E /* DDTapGestureRecognizer.h */,
 				F93FCBA61C856D5A004E356E /* DDTapGestureRecognizer.m */,
 				F90EAF471CAB772700B58E75 /* SHGEncryptionAlgorithm.h */,
@@ -5907,6 +5912,7 @@
 				F9D560AB1CCF68B500CD2457 /* SHGCopyTextView.m in Sources */,
 				985A0FDB1CABAB1400880DB5 /* SHGBusinessLocationViewController.m in Sources */,
 				538964D31AFC6BEB00041548 /* NSDateFormatter+Category.m in Sources */,
+				986DC1431D0EB92C0027EE15 /* NSCharacterSet+Common.m in Sources */,
 				40302B401AF0C31F00F22EB6 /* MyAppointmentViewController.m in Sources */,
 				538964D51AFC6BEB00041548 /* UIResponder+Router.m in Sources */,
 				6187D2E71AF1C693008E1D21 /* EMChatViewCell.m in Sources */,
