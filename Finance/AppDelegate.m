@@ -22,8 +22,8 @@
 #import "GeTuiSdk.h"
 #import "GeTuiSdkError.h"
 #import "LinkViewController.h"
-#import "SHGBusinessDetailViewController.h"
 #import "SHGBusinessObject.h"
+#import "SHGBusinessNewDetailViewController.h"
 //for mac
 #include <sys/socket.h>
 #include <sys/sysctl.h>
@@ -486,7 +486,7 @@
         //新版业务的推送
         NSString *businessId = [userInfo objectForKey:@"rid"];
         NSString *businessType = [userInfo objectForKey:@"businessType"];
-        SHGBusinessDetailViewController *controller = [[SHGBusinessDetailViewController alloc] init];
+        SHGBusinessNewDetailViewController *controller = [[SHGBusinessNewDetailViewController alloc] init];
         SHGBusinessObject *object = [[SHGBusinessObject alloc] init];
         object.businessID = businessId;
         object.type = businessType;
