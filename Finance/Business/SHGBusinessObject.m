@@ -95,7 +95,7 @@
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey
 {
-    return @{@"commentId":@"rid", @"commentUserId":@"cid", @"commentDetail":@"cdetail", @"commentUserName":@"cnickname", @"commentOtherName":@"rnickname"};
+    return @{@"commentId":@"rid", @"commentUserId":@"cid", @"commentDetail":@"cdetail", @"commentUserName":@"cnickname", @"commentOtherName":@"rnickname", @"commentOtherId":@"replyid"};
 }
 
 - (CGFloat)heightForCell

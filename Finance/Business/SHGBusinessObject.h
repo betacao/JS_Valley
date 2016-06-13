@@ -110,6 +110,7 @@ typedef NS_ENUM(NSInteger, SHGBusinessNoticeType)
 @property (strong, nonatomic) NSString *commentDetail;
 @property (strong, nonatomic) NSString *commentUserName;
 @property (strong, nonatomic) NSString *commentOtherName;
+@property (strong, nonatomic) NSString *commentOtherId;
 
 - (CGFloat)heightForCell;
 

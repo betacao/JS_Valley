@@ -1092,13 +1092,13 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
 - (void)rightUserClick:(NSInteger)index
 {
     SHGBusinessCommentObject *obj = self.responseObject.commentList[index];
-    [self gotoSomeOneWithId:obj.commentUserId name:obj.commentOtherName];
+    [self gotoSomeOneWithId:obj.commentOtherId name:obj.commentOtherName];
 }
 
 - (void)leftUserClick:(NSInteger)index
 {
     SHGBusinessCommentObject *obj = self.responseObject.commentList[index];
-    [self gotoSomeOneWithId:obj.commentUserId name:obj.commentOtherName];
+    [self gotoSomeOneWithId:obj.commentUserId name:obj.commentUserName];
 }
 
 -(void)gotoSomeOneWithId:(NSString *)uid name:(NSString *)name
