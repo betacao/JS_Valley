@@ -30,7 +30,7 @@
                 textField.textColor = Color(@"3c3c3c");
                 [textField setValue:Color(@"bebebe") forKeyPath:@"_placeholderLabel.textColor"];
                 [textField setValue:FontFactor(15.0f) forKeyPath:@"_placeholderLabel.font"];
-                textField.enablesReturnKeyAutomatically = NO;
+                textField.enablesReturnKeyAutomatically = YES;
             } else if ([object isKindOfClass:NSClassFromString(@"UISearchBarBackground")]){
 
             } else{

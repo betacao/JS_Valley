@@ -119,7 +119,7 @@ static NSString * const kCommonFNum			= @"commonnum";
     }
 }
 
--(void)btnBackClick:(UIButton *)sender
+- (void)btnBackClick:(UIButton *)sender
 {
 
     [self.groupVC.searchController setActive:NO animated:YES];
@@ -157,7 +157,7 @@ static NSString * const kCommonFNum			= @"commonnum";
     //[self.tableView reloadData];
     area = obj.code;
     [rightButton setTitle:obj.name forState:UIControlStateNormal];
-    
+
     [self requestTwainContact];
 }
 #pragma mark -- sdc
@@ -165,7 +165,7 @@ static NSString * const kCommonFNum			= @"commonnum";
 - (void)menuPopover:(MLKMenuPopover *)menuPopover didSelectMenuItemAtIndex:(NSInteger)selectedIndex
 {
     [self.menuPopover dismissMenuPopover];
-    
+
     if(selectedIndex == 0){
         FriendsListViewController *vc=[[FriendsListViewController alloc] init];
         [self.navigationController pushViewController:vc animated:YES];
@@ -183,7 +183,7 @@ static NSString * const kCommonFNum			= @"commonnum";
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
+
     [self reloadApplyView];
     [self reloadDataSource];
     [self registerNotifications];
@@ -229,7 +229,7 @@ static NSString * const kCommonFNum			= @"commonnum";
         _tableView.separatorInset=UIEdgeInsetsMake(0, 0, 0, 0);
         [_tableView registerClass:[ChatListCell class] forCellReuseIdentifier:@"chatListCell"];
     }
-    
+
     return _tableView;
 }
 
@@ -238,11 +238,11 @@ static NSString * const kCommonFNum			= @"commonnum";
     if (_networkStateView == nil) {
         _networkStateView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 44)];
         _networkStateView.backgroundColor = [UIColor colorWithRed:255 / 255.0 green:199 / 255.0 blue:199 / 255.0 alpha:0.5];
-        
+
         UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, (_networkStateView.frame.size.height - 20) / 2, 20, 20)];
         imageView.image = [UIImage imageNamed:@"messageSendFail"];
         [_networkStateView addSubview:imageView];
-        
+
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(imageView.frame) + 5, 0, _networkStateView.frame.size.width - (CGRectGetMaxX(imageView.frame) + 15), _networkStateView.frame.size.height)];
         label.font = FontFactor(15.0f);
         label.textColor = [UIColor grayColor];
@@ -250,7 +250,7 @@ static NSString * const kCommonFNum			= @"commonnum";
         label.text = NSLocalizedString(@"network.disconnection", @"Network disconnection");
         [_networkStateView addSubview:label];
     }
-    
+
     return _networkStateView;
 }
 
@@ -290,7 +290,7 @@ static NSString * const kCommonFNum			= @"commonnum";
     if (lastMessage) {
         ret = [NSDate formattedTimeFromTimeInterval:lastMessage.timestamp];
     }
-    
+
     return ret;
 }
 
@@ -299,7 +299,7 @@ static NSString * const kCommonFNum			= @"commonnum";
 {
     NSInteger ret = 0;
     ret = conversation.unreadMessagesCount;
-    
+
     return  ret;
 }
 
@@ -332,18 +332,18 @@ static NSString * const kCommonFNum			= @"commonnum";
             } break;
         }
     }
-    
+
     return ret;
 }
 
 - (void)getMyselfMaterialWithUid:(NSString *)uid
 {
     [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttp,@"user",@"personaluser"] parameters:@{@"uid":uid}success:^(MOCHTTPResponse *response) {
-        
-        
-        
+
+
+
     } failed:^(MOCHTTPResponse *response) {
-        
+
     }];
 }
 
@@ -397,7 +397,7 @@ static NSString * const kCommonFNum			= @"commonnum";
             model.time = @"";
             cell.model = model;
         }
-        
+
     } else{
         ChatModel *model = [[ChatModel alloc] init];
         cell.rightImage.hidden = YES;
@@ -405,7 +405,7 @@ static NSString * const kCommonFNum			= @"commonnum";
         for (BasePeopleObject *obj in self.contactsSource) {
             if ([obj.uid isEqualToString:conversation.chatter]){
                 model.name =  obj.name;
-                
+
             }
         }
         if (conversation.isGroup){
@@ -470,7 +470,7 @@ static NSString * const kCommonFNum			= @"commonnum";
         } else{
             height = MarginFactor(55.0f);
         }
-        
+
     } else{
         height = MarginFactor(55.0f);
     }
@@ -527,7 +527,7 @@ static NSString * const kCommonFNum			= @"commonnum";
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSInteger indexRow = indexPath.row;
-    if(indexRow == 0 || indexRow == 1)
+    if(indexRow == 0 || indexRow == 1 || indexRow == 2)
     {
         return NO;
     }
@@ -535,7 +535,7 @@ static NSString * const kCommonFNum			= @"commonnum";
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    
+
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         EMConversation *converation = [self.dataSource objectAtIndex:indexPath.row];
         [[EaseMob sharedInstance].chatManager removeConversationByChatter:converation.chatter deleteMessages:YES append2Chat:YES];
@@ -548,25 +548,25 @@ static NSString * const kCommonFNum			= @"commonnum";
 
 - (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar
 {
-    
+
     //[self.navigationController setNavigationBarHidden:YES animated:YES];
     [searchBar setShowsCancelButton:YES animated:YES];
-    
+
     return YES;
 }
 #pragma mark -- 检索
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
 {
-//    [[RealtimeSearchUtil currentUtil] realtimeSearchWithSource:self.contactsSource searchText:searchText firstSel:@selector(name) secondSel:@selector(company) thirdSel:@selector(position) resultBlock:^(NSArray *results) {
-//        if (results){
-//            dispatch_async(dispatch_get_main_queue(), ^{
-//                [self.searchController.resultsSource removeAllObjects];
-//                [self.searchController.resultsSource addObjectsFromArray:results];
-//                [self.searchController.searchResultsTableView reloadData];
-//            });
-//        }
-//
-//    }];
+    //    [[RealtimeSearchUtil currentUtil] realtimeSearchWithSource:self.contactsSource searchText:searchText firstSel:@selector(name) secondSel:@selector(company) thirdSel:@selector(position) resultBlock:^(NSArray *results) {
+    //        if (results){
+    //            dispatch_async(dispatch_get_main_queue(), ^{
+    //                [self.searchController.resultsSource removeAllObjects];
+    //                [self.searchController.resultsSource addObjectsFromArray:results];
+    //                [self.searchController.searchResultsTableView reloadData];
+    //            });
+    //        }
+    //
+    //    }];
 }
 
 - (BOOL)searchBarShouldEndEditing:(UISearchBar *)searchBar
@@ -622,7 +622,7 @@ static NSString * const kCommonFNum			= @"commonnum";
     for(unsigned int i=0;i<3;i++)
     {
         [self.dataSource addObject:[NSString stringWithFormat:@"%d",i]];
-        
+
     }
     NSArray *dSource=[self loadDataSource];
     for(unsigned int i=0;i<dSource.count;i++)
@@ -641,9 +641,9 @@ static NSString * const kCommonFNum			= @"commonnum";
 - (void)refreshFriendShip
 {
     [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"refresh"] parameters:nil success:^(MOCHTTPResponse *response) {
-        
+
     } failed:^(MOCHTTPResponse *response) {
-        
+
     }];
 }
 -(void)requestContact
@@ -703,7 +703,7 @@ static NSString * const kCommonFNum			= @"commonnum";
 #pragma mark -- 我的好友的好友
 -(void)requestTwainContact
 {
-    
+
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
     NSDictionary *param = @{@"uid":uid, @"pagenum":[NSNumber numberWithInteger:pageNum], @"pagesize":@15};
     if (!IsStrEmpty(area)){
@@ -745,11 +745,11 @@ static NSString * const kCommonFNum			= @"commonnum";
                 [_tableView.mj_footer endRefreshingWithNoMoreData];
             }
             [self.tableView reloadData];
-            
+
             [self.tableView.mj_header endRefreshing];
             [self.tableView.mj_footer endRefreshing];
         });
-        
+
     } failed:^(MOCHTTPResponse *response) {
         [Hud hideHud];
         [self.tableView.mj_header endRefreshing];
@@ -793,7 +793,7 @@ static NSString * const kCommonFNum			= @"commonnum";
     else{
         _tableView.tableHeaderView = nil;
     }
-    
+
 }
 
 - (void)networkChanged:(EMConnectionState)connectionState
@@ -819,12 +819,12 @@ static NSString * const kCommonFNum			= @"commonnum";
 - (void)reloadApplyView
 {
     NSInteger count = [[[ApplyViewController shareController] dataSource] count];
-    
+
     if (count == 0) {
         self.unapplyCountLabel.hidden = YES;
     } else{
         NSString *tmpStr = [NSString stringWithFormat:@"%i", (int)count];
-//        CGSize size = [tmpStr sizeWithFont:self.unapplyCountLabel.font constrainedToSize:CGSizeMake(50, 20) lineBreakMode:NSLineBreakByWordWrapping];
+        //        CGSize size = [tmpStr sizeWithFont:self.unapplyCountLabel.font constrainedToSize:CGSizeMake(50, 20) lineBreakMode:NSLineBreakByWordWrapping];
         CGSize size = [tmpStr boundingRectWithSize:CGSizeMake(50, 20) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName: self.unapplyCountLabel.font} context:nil].size;
         CGRect rect = self.unapplyCountLabel.frame;
         rect.size.width = size.width > 20 ? size.width : 20;
@@ -832,7 +832,7 @@ static NSString * const kCommonFNum			= @"commonnum";
         self.unapplyCountLabel.frame = rect;
         self.unapplyCountLabel.hidden = NO;
     }
-    
+
     //刷新badgeValue值
     [[TabBarViewController tabBar] setupUntreatedApplyCount];
 }
@@ -850,7 +850,7 @@ static NSString * const kCommonFNum			= @"commonnum";
         _unapplyCountLabel.hidden = YES;
         _unapplyCountLabel.clipsToBounds = YES;
     }
-    
+
     return _unapplyCountLabel;
 }
 
@@ -891,19 +891,19 @@ static NSString * const kCommonFNum			= @"commonnum";
     return _titleView;
 }
 
-#pragma mark -- sdc 
+#pragma mark -- sdc
 #pragma mark -- 加号按钮
 - (UIBarButtonItem *)rightBarButtonItem
 {
     if (!_rightBarButtonItem) {
-        
+
         UIButton *customButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [customButton setFrame:CGRectMake(0, 0, 24, 24)];
         [customButton setBackgroundImage:[UIImage imageNamed:@"right_add"] forState:UIControlStateNormal];
         [customButton addTarget:self action:@selector(rightBarButtonItemClicked:) forControlEvents:UIControlEventTouchUpInside];
         customButton.hidden = YES;
         self.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:customButton];
-        
+
     }
     return _rightBarButtonItem;
 }
@@ -912,7 +912,7 @@ static NSString * const kCommonFNum			= @"commonnum";
 {
     if (!_leftBarButtonItem) {
     }
-    
+
     return _leftBarButtonItem;
 }
 #pragma mark -- sdc
@@ -920,7 +920,7 @@ static NSString * const kCommonFNum			= @"commonnum";
 - (UISegmentedControl *)segmentControl
 {
     if (!_segmentControl) {
-        
+
         _segmentControl = [[UISegmentedControl alloc] initWithItems:
                            [NSArray arrayWithObjects:
                             @"消息", @"群组", nil]];
@@ -944,11 +944,11 @@ static NSString * const kCommonFNum			= @"commonnum";
         [_segmentControl setBackgroundImage:selectImage forState:UIControlStateSelected barMetrics:UIBarMetricsDefault];
 
         [_segmentControl setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithHexString:@"d53432"] andSize:CGSizeMake(85, 26)] forState:UIControlStateHighlighted barMetrics:UIBarMetricsDefault];
-        
+
         [_segmentControl addTarget:self action:@selector(selected:) forControlEvents:UIControlEventValueChanged];
         _segmentControl.selected = NO;
         _segmentControl.selectedSegmentIndex = 0;
-        
+
     }
     return _segmentControl;
 }
@@ -961,7 +961,7 @@ static NSString * const kCommonFNum			= @"commonnum";
             self.tableView.hidden = NO;
             self.tableView.frame= CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
             [self.view bringSubviewToFront:self.tableView];
-            
+
         }
             break;
         case 1:{
