@@ -598,8 +598,9 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
     paragraphStyle.alignment = NSTextAlignmentCenter;
     [paragraphStyle setLineSpacing:MarginFactor(6.0f)];
     
-    __block NSString *money = @"";
-    for (id obj in self.middleContentArray) {
+    NSString *money = @"";
+    NSMutableArray *tempArray = [NSMutableArray arrayWithArray:self.middleContentArray];
+    for (NSString *obj in tempArray) {
         if ([obj containsString:@"金额"]) {
             NSArray *array = [obj componentsSeparatedByString:@"："];
             if ([[array lastObject] length] == 0) {
@@ -642,9 +643,10 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
 
 - (void)loadBusinessMessageView
 {
-    __block NSString *titleStr = @"";
-    __block NSString *detailceStr = @"";
-    for (NSString *obj in self.middleContentArray) {
+    NSString *titleStr = @"";
+    NSString *detailceStr = @"";
+    NSMutableArray *tempArray = [NSMutableArray arrayWithArray:self.middleContentArray];
+    for (NSString *obj in tempArray) {
         if ([obj containsString:@"融资阶段"] || [obj containsString:@"投资方式"]){
             NSArray *array = [obj componentsSeparatedByString:@"："];
             titleStr = [array firstObject];
