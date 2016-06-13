@@ -440,7 +440,7 @@
                         NSString *clarifyingRequire = @"";
                         
                         if (weakSelf.addRequireButtonView.selectedArray.count > 0) {
-                            clarifyingRequire = [weakSelf.addRequireButtonView.selectedArray  objectAtIndex:0];
+                            clarifyingRequire = [businessSelectDic objectForKey:[weakSelf.addRequireButtonView.selectedArray  objectAtIndex:0]];
                             for (NSInteger i = 1 ;i < weakSelf.addRequireButtonView.selectedArray .count ; i ++) {
                                 clarifyingRequire = [NSString stringWithFormat:@"%@;%@",clarifyingRequire,[businessSelectDic objectForKey:[weakSelf.addRequireButtonView.selectedArray  objectAtIndex:i]]];
                             }
@@ -649,7 +649,8 @@
         if (string.length == 0) {
             return YES;
         }
-        if ([textField.text floatValue] > 100.0f) {
+        NSString * toBeString = [self.retributionTextField.text stringByReplacingCharactersInRange:range withString:string];
+        if (range.location > 1 && [toBeString floatValue] > 100) {
             [Hud showMessageWithText:@"抱歉，您输入的数字不可超过100"];
             return NO;
         }

@@ -218,8 +218,8 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
     self.titleDetailLabel.sd_layout
     .centerYIs(self.redView.centerY - MarginFactor(20.0f))
     .centerXEqualToView(self.redView)
-    .widthIs(MarginFactor(320.0f))
-    .heightIs(MarginFactor(80.0f));
+    .widthIs(MarginFactor(335.0f))
+    .heightIs(MarginFactor(100.0f));
     
     
     self.firstHorizontalLine.sd_layout
@@ -448,12 +448,6 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
     self.redView.backgroundColor = Color(@"f04f46");
     self.titleNameLabel.textColor = Color(@"fbdfdd");
     self.titleNameLabel.font = FontFactor(13.0f);
-    
-    self.titleDetailLabel.textAlignment = NSTextAlignmentCenter;
-    
-    self.titleDetailLabel.textColor = Color(@"ffffff");
-    self.titleDetailLabel.numberOfLines = 0;
-    
     self.firstHorizontalLine.backgroundColor = Color(@"fd665d");
     self.typeButton.titleLabel.font = self.areaButton.titleLabel.font = FontFactor(12.0f);
     [self.typeButton setTitleColor:Color(@"ffffff") forState:UIControlStateNormal];
@@ -494,6 +488,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
 {
     [self initData];
     [self.businessMessageLabelView removeAllSubviews];
+    [self.photoView removeAllSubviews];
 }
 
 - (void)addEmptyViewIfNeeded
@@ -556,9 +551,12 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
 
 - (void)loadRedView
 {
-    self.titleNameLabel.text = @"业务名称";
     NSString *title = self.responseObject.businessTitle;
-    UIFont *font =BoldFontFactor(-0.6f * title.length + 40.0f);
+    self.titleDetailLabel.textAlignment = NSTextAlignmentCenter;
+    self.titleDetailLabel.lineBreakMode = NSLineBreakByTruncatingTail;
+    self.titleDetailLabel.textColor = Color(@"ffffff");
+    self.titleDetailLabel.numberOfLines = 2;
+    UIFont *font =BoldFontFactor(ceilf(-0.6f * title.length + 40.0f));
     self.titleDetailLabel.font = font;
     self.titleDetailLabel.text = self.responseObject.businessTitle;
     if ([self.responseObject.type isEqualToString:@"moneyside"]) {
@@ -587,7 +585,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
     self.areaButton.sd_resetLayout
     .leftSpaceToView(self.typeButton, MarginFactor(9.0f))
     .centerYEqualToView(self.typeButton)
-    .widthIs(areaRect.size.width + MarginFactor(28.0f))
+    .widthIs(areaRect.size.width + MarginFactor(48.0f))
     .heightIs(MarginFactor(20.0f));
 }
 
@@ -766,11 +764,10 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
         .topSpaceToView(self.BPView, 0.0f)
         .heightIs(MarginFactor(44.0f));
         self.BPLabel.text = @"项目BP";
-        //UIImage *image = [UIImage imageNamed:@"business_pdf"];
-        CGFloat buttonWidth = MarginFactor(100.0f);
+//        UIImage *image = [UIImage imageNamed:@"business_pdf"];
+        CGFloat buttonWidth = SCREENWIDTH / 3.0;
+        CGFloat labelWidth = (SCREENWIDTH - MarginFactor(60.0f)) / 3.0;
         CGFloat buttonHeight = MarginFactor(95.0f);
-        CGFloat leftMargin = (SCREENWIDTH - 3 * buttonWidth) / 6.0;
-        CGFloat buttonMargin = (SCREENWIDTH - 3 * buttonWidth) / 3.0;
         for (NSInteger i = 0 ; i < self.responseObject.bpnameList.count ; i ++) {
             SHGBusinessPDFObject *obj = [[SHGBusinessPDFObject alloc] init];
             NSDictionary *dicName = [self.responseObject.bpnameList objectAtIndex:i];
@@ -778,11 +775,24 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
             obj.bpName = [dicName valueForKey:@"bpname"];
             obj.bpPath = [dicPath valueForKey:@"bppath"];
             SHGBusinessCategoryButton *button = [SHGBusinessCategoryButton buttonWithType:UIButtonTypeCustom];
-            CGRect frame = CGRectMake(leftMargin + i * (buttonWidth + buttonMargin), MarginFactor(15.0f) , buttonWidth, buttonHeight);
+            CGRect frame = CGRectMake(i * buttonWidth , MarginFactor(15.0f) , buttonWidth, buttonHeight);
             button.frame = frame;
             button.object = obj;
             [self.BPButtonView addSubview:button];
             [button addTarget:self action:@selector(pdfButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+            UILabel *nameLabel = [[UILabel alloc] init];
+            if (obj.bpName.length > 16) {
+                nameLabel.text = [NSString stringWithFormat:@"%@...",[obj.bpName substringToIndex:15]];
+            } else{
+                nameLabel.text = obj.bpName;
+            }
+            
+            nameLabel.numberOfLines = 0;
+            nameLabel.font = FontFactor(11.0f);
+            nameLabel.textColor = Color(@"8d8d8d");
+            nameLabel.textAlignment = NSTextAlignmentCenter;
+            nameLabel.frame = CGRectMake(MarginFactor(10.0f) + i *(MarginFactor(20.0f) + labelWidth), MarginFactor(65.0f), labelWidth, MarginFactor(40.0f));
+            [self.BPButtonView addSubview:nameLabel];
             
         }
         
@@ -1314,11 +1324,11 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
         style.lineSpacing = MarginFactor(2.0f);
         style.alignment = NSTextAlignmentCenter;
         NSString *name = businessPdfObject.bpName;
-        if (name.length > 8) {
-            businessPdfObject.bpName = [NSString stringWithFormat:@"%@...",[name substringToIndex:7]];
+        if (name.length > 16) {
+            businessPdfObject.bpName = [NSString stringWithFormat:@"%@...",[name substringToIndex:15]];
         }
         style.lineBreakMode = NSLineBreakByTruncatingTail|NSLineBreakByCharWrapping;
-        NSMutableAttributedString *title = [[NSMutableAttributedString alloc] initWithString:businessPdfObject.bpName attributes:@{NSFontAttributeName:FontFactor(11.0f), NSForegroundColorAttributeName:Color(@"8d8d8d"), NSParagraphStyleAttributeName:style}];
+        NSMutableAttributedString *title = [[NSMutableAttributedString alloc] initWithString:@"" attributes:@{NSFontAttributeName:FontFactor(11.0f), NSForegroundColorAttributeName:Color(@"8d8d8d"), NSParagraphStyleAttributeName:style}];
         UIImage *image = [UIImage imageNamed:@"business_pdf"];
         [self setAttributedTitle:title image:image];
         self.titleLabel.numberOfLines = 2;
