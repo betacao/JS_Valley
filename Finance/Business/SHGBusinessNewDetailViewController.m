@@ -794,8 +794,12 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
             [self.BPButtonView addSubview:button];
             [button addTarget:self action:@selector(pdfButtonClick:) forControlEvents:UIControlEventTouchUpInside];
             UILabel *nameLabel = [[UILabel alloc] init];
-            if (obj.bpName.length > 16) {
-                nameLabel.text = [NSString stringWithFormat:@"%@...",[obj.bpName substringToIndex:15]];
+            if (obj.bpName.length > 8) {
+                NSMutableString *name = [[NSMutableString alloc] initWithString:obj.bpName];
+                [name insertString:@"\n" atIndex:8];
+                if (name.length > 16) {
+                    nameLabel.text = [NSString stringWithFormat:@"%@...",[name substringToIndex:16]];
+                }
             } else{
                 nameLabel.text = obj.bpName;
             }
@@ -1213,10 +1217,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
         } showAlert:YES leftBlock:^{
         } failString:@"认证后才能查看联系方式～"];
     } else {
-        NSMutableCharacterSet *characterSet = [NSMutableCharacterSet characterSetWithCharactersInString:@","];
-        [characterSet formUnionWithCharacterSet:[NSCharacterSet whitespaceCharacterSet]];
-        [characterSet formUnionWithCharacterSet:[NSCharacterSet characterSetWithCharactersInString:@"："]];
-        NSArray *array = [string componentsSeparatedByCharactersInSet:characterSet];
+        NSArray *array = [string componentsSeparatedByCharactersInSet:[NSCharacterSet formUnionWithArray:@[@":", @"：", @"，", @",", @" ", @"\n"]]];
         
         [array enumerateObjectsUsingBlock:^(NSString *obj, NSUInteger idx, BOOL * _Nonnull stop) {
             NSPredicate *mobilePredicate = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", @"((13|15|18|17)[0-9]{9})"];
