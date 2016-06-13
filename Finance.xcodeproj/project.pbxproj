@@ -213,7 +213,6 @@
 		538964D11AFC6BEB00041548 /* AppDelegate+EaseMob.m in Sources */ = {isa = PBXBuildFile; fileRef = 538964C41AFC6BEB00041548 /* AppDelegate+EaseMob.m */; };
 		538964D21AFC6BEB00041548 /* NSDate+Category.m in Sources */ = {isa = PBXBuildFile; fileRef = 538964C61AFC6BEB00041548 /* NSDate+Category.m */; };
 		538964D31AFC6BEB00041548 /* NSDateFormatter+Category.m in Sources */ = {isa = PBXBuildFile; fileRef = 538964C81AFC6BEB00041548 /* NSDateFormatter+Category.m */; };
-		538964D41AFC6BEB00041548 /* NSString+Valid.m in Sources */ = {isa = PBXBuildFile; fileRef = 538964CA1AFC6BEB00041548 /* NSString+Valid.m */; };
 		538964D51AFC6BEB00041548 /* UIResponder+Router.m in Sources */ = {isa = PBXBuildFile; fileRef = 538964CC1AFC6BEB00041548 /* UIResponder+Router.m */; };
 		538964D61AFC6BEB00041548 /* UIViewController+DismissKeyboard.m in Sources */ = {isa = PBXBuildFile; fileRef = 538964CE1AFC6BEB00041548 /* UIViewController+DismissKeyboard.m */; };
 		538964D71AFC6BEB00041548 /* UIViewController+HUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 538964D01AFC6BEB00041548 /* UIViewController+HUD.m */; };
@@ -1230,8 +1229,6 @@
 		538964C61AFC6BEB00041548 /* NSDate+Category.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Category.m"; sourceTree = "<group>"; };
 		538964C71AFC6BEB00041548 /* NSDateFormatter+Category.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDateFormatter+Category.h"; sourceTree = "<group>"; };
 		538964C81AFC6BEB00041548 /* NSDateFormatter+Category.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDateFormatter+Category.m"; sourceTree = "<group>"; };
-		538964C91AFC6BEB00041548 /* NSString+Valid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Valid.h"; sourceTree = "<group>"; };
-		538964CA1AFC6BEB00041548 /* NSString+Valid.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Valid.m"; sourceTree = "<group>"; };
 		538964CB1AFC6BEB00041548 /* UIResponder+Router.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIResponder+Router.h"; sourceTree = "<group>"; };
 		538964CC1AFC6BEB00041548 /* UIResponder+Router.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIResponder+Router.m"; sourceTree = "<group>"; };
 		538964CD1AFC6BEB00041548 /* UIViewController+DismissKeyboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+DismissKeyboard.h"; sourceTree = "<group>"; };
@@ -2758,8 +2755,6 @@
 				538964C61AFC6BEB00041548 /* NSDate+Category.m */,
 				538964C71AFC6BEB00041548 /* NSDateFormatter+Category.h */,
 				538964C81AFC6BEB00041548 /* NSDateFormatter+Category.m */,
-				538964C91AFC6BEB00041548 /* NSString+Valid.h */,
-				538964CA1AFC6BEB00041548 /* NSString+Valid.m */,
 				538964CB1AFC6BEB00041548 /* UIResponder+Router.h */,
 				538964CC1AFC6BEB00041548 /* UIResponder+Router.m */,
 				538964CD1AFC6BEB00041548 /* UIViewController+DismissKeyboard.h */,
@@ -6077,7 +6072,6 @@
 				409DB3E41B03483500E6665E /* ImproveMatiralViewController.m in Sources */,
 				98765FB31CFC577C00C8C590 /* SHGMyFollowViewController.m in Sources */,
 				F9EDD5F91BABFBCF00506C0C /* SDPhotoItem.m in Sources */,
-				538964D41AFC6BEB00041548 /* NSString+Valid.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

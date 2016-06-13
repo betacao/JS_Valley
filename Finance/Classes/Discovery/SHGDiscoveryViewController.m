@@ -126,7 +126,7 @@
         weakSelf.recommendContactArray = nil;
         if ([self isViewLoaded]) {
             if (firstArray.count > 0) {
-                weakSelf.myContactCell.effctiveArray = [NSArray arrayWithArray:firstArray];
+                weakSelf.myContactCell.effctiveArray = [[NSArray alloc] initWithArray:firstArray copyItems:YES];
                 weakSelf.myContactCell.hideInvateButton = [SHGDiscoveryManager shareManager].hideInvateButton;
             } else {
                 weakSelf.recommendContactArray = [NSArray arrayWithArray:secondArray];
@@ -141,7 +141,7 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 2;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -327,7 +327,6 @@
     for (SHGDiscoveryCategoryButton *button in self.buttonView.subviews) {
         SHGDiscoveryObject *object = button.object;
         object.industryNum = @"0";
-        button.object = object;
     }
     for (SHGDiscoveryObject *object in effctiveArray) {
         if ([self.dataArray containsObject:object]) {
