@@ -418,7 +418,7 @@
 
 + (void)refreshBusiness:(SHGBusinessObject *)object success:(void (^)(BOOL))block
 {
-    [[SHGGloble sharedGloble] recordUserAction:@"" type:@"business_refresh"];
+    [[SHGGloble sharedGloble] recordUserAction:object.businessID type:@"business_refresh"];
     [MOCHTTPRequestOperationManager postWithURL:[rBaseAddressForHttp stringByAppendingString:@"/business/refreshBusiness"] parameters:@{@"uid": UID,@"businessId": object.businessID, @"businessType":object.type} success:^(MOCHTTPResponse *response) {
         if (block) {
             block(YES);
