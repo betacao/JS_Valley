@@ -54,7 +54,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
 //灰色view
 @property (weak, nonatomic) IBOutlet UIView *firstGrayView;
 @property (weak, nonatomic) IBOutlet UIView *secondGrayView;
-@property (weak, nonatomic) IBOutlet UIView *secondGrayTopLine;
+
 
 //businessMessageVIew
 @property (weak, nonatomic) IBOutlet UIView *businessMessageView;
@@ -66,6 +66,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
 @property (weak, nonatomic) IBOutlet UIView *businessMessageTopLine;
 @property (weak, nonatomic) IBOutlet UIView *businessMessageBpttomLine;
 
+@property (weak, nonatomic) IBOutlet UIView *representLabelTopine;
 //
 @property (weak, nonatomic) IBOutlet UILabel *businessRepresentLabel;
 @property (weak, nonatomic) IBOutlet UIView *thirdHorizontalLine;
@@ -207,7 +208,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
     .topSpaceToView(self.view, 0.0f)
     .leftSpaceToView(self.view, 0.0f)
     .rightSpaceToView(self.view, 0.0f)
-    .heightIs(MarginFactor(150.0f));
+    .heightIs(MarginFactor(124.0f));
     
     self.titleNameLabel.sd_layout
     .topSpaceToView(self.redView, 0.0f)
@@ -216,10 +217,10 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
     [self.titleNameLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
     
     self.titleDetailLabel.sd_layout
-    .centerYIs(self.redView.centerY - MarginFactor(20.0f))
+    .centerYIs(self.redView.centerY - MarginFactor(20.0f) - MarginFactor(10.0f))
     .centerXEqualToView(self.redView)
-    .widthIs(MarginFactor(335.0f))
-    .heightIs(MarginFactor(100.0f));
+    .widthIs(MarginFactor(240.0f))
+    .heightIs(MarginFactor(83.0f));
     
     
     self.firstHorizontalLine.sd_layout
@@ -320,33 +321,25 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
     .topSpaceToView(self.businessMessageLabelView,0.0f)
     .widthIs(MarginFactor(150.0f));
     
-    
     self.phoneLabel.sd_layout
     .leftEqualToView(self.businessMessageLabelView)
     .topEqualToView(self.phoneTextView)
     .heightIs(self.phoneLabel.font.lineHeight);
     [self.phoneLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
     
-    
     [self.businessMessageView setupAutoHeightWithBottomView:self.phoneTextView bottomMargin:0.0f];
-    
-    self.secondGrayTopLine.sd_layout
-    .leftSpaceToView(self.businessMessageView, 0.0f)
-    .rightSpaceToView(self.businessMessageView, 0.0f)
-    .topSpaceToView(self.businessMessageView, 13.0f)
+
+    self.businessMessageBpttomLine.sd_layout
+    .leftSpaceToView(self.headerView, 0.0f)
+    .rightSpaceToView(self.headerView, 0.0f)
+    .topSpaceToView(self.businessMessageView, MarginFactor(13.0f))
     .heightIs(0.5f);
     
     self.secondGrayView.sd_layout
     .leftSpaceToView(self.headerView, 0.0f)
     .rightSpaceToView(self.headerView, 0.0f)
-    .topSpaceToView(self.secondGrayTopLine, 0.0f)
+    .topSpaceToView(self.businessMessageBpttomLine, 0.0f)
     .heightIs(MarginFactor(10.0f));
-    
-    self.businessMessageBpttomLine.sd_layout
-    .leftSpaceToView(self.businessMessageView, 0.0f)
-    .rightSpaceToView(self.businessMessageView, 0.0f)
-    .topSpaceToView(self.secondGrayView, 0.0f)
-    .heightIs(0.5f);
     
     //BPView
     self.BPView.sd_layout
@@ -355,9 +348,9 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
     .topSpaceToView(self.secondGrayView,0.0f);
     
     self.BPTopLine.sd_layout
-    .leftSpaceToView(self.BPTopLine, 0.0f)
-    .rightSpaceToView(self.BPTopLine, 0.0f)
-    .topSpaceToView(self.BPTopLine, 0.0f)
+    .leftSpaceToView(self.BPView, 0.0f)
+    .rightSpaceToView(self.BPView, 0.0f)
+    .topSpaceToView(self.BPView, 0.0f)
     .heightIs(0.5f);
     
     self.BPLabel.sd_layout
@@ -378,23 +371,31 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
     .topSpaceToView(self.BPLine, 0.0f)
     .heightIs(MarginFactor(110.0f));
     
-    self.thirdGaryView.sd_layout
-    .leftEqualToView(self.BPButtonView)
-    .rightEqualToView(self.BPButtonView)
-    .topSpaceToView(self.BPButtonView,0.0f)
-    .heightIs(MarginFactor(10.0f));
-    
     self.BPBottomLine.sd_layout
     .leftSpaceToView(self.BPView, 0.0f)
     .rightSpaceToView(self.BPView, 0.0f)
-    .bottomSpaceToView(self.BPView, 0.0f)
+    .topSpaceToView(self.BPButtonView, 0.0f)
     .heightIs(0.5f);
-    [self.BPView setupAutoHeightWithBottomView:self.thirdGaryView bottomMargin:1.0f];
+    
+    self.thirdGaryView.sd_layout
+    .leftEqualToView(self.BPButtonView)
+    .rightEqualToView(self.BPButtonView)
+    .topSpaceToView(self.BPBottomLine,0.0f)
+    .heightIs(MarginFactor(10.0f));
+    
+   
+    [self.BPView setupAutoHeightWithBottomView:self.thirdGaryView bottomMargin:0.0f];
+    
+    self.representLabelTopine.sd_layout
+    .leftSpaceToView(self.headerView, 0.0f)
+    .rightSpaceToView(self.headerView, 0.0f)
+    .topSpaceToView(self.secondGrayView, 0.0f)
+    .heightIs(0.5f);
     
     self.businessRepresentLabel.sd_layout
     .leftSpaceToView(self.headerView, MarginFactor(14.0f))
     .rightSpaceToView(self.headerView, MarginFactor(14.0f))
-    .topSpaceToView(self.secondGrayView, 1.0f)
+    .topSpaceToView(self.representLabelTopine, 0.0f)
     .heightIs(MarginFactor(44.0f));
     
     self.thirdHorizontalLine.sd_layout
@@ -459,7 +460,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
     
     self.firstGrayView.backgroundColor = self.secondGrayView.backgroundColor = self.thirdGaryView.backgroundColor = Color(@"f7f7f7");
     self.secondHorizontalLine.backgroundColor = self.thirdHorizontalLine.backgroundColor = self.centerLine.backgroundColor = Color(@"e6e7e8");
-    self.userBottomLine.backgroundColor = self.businessMessageBpttomLine.backgroundColor = self.businessMessageTopLine.backgroundColor = self.BPBottomLine.backgroundColor = self.BPTopLine.backgroundColor = self.secondGrayTopLine.backgroundColor = Color(@"e6e7e8");
+    self.userBottomLine.backgroundColor = self.businessMessageBpttomLine.backgroundColor = self.businessMessageTopLine.backgroundColor = self.BPBottomLine.backgroundColor = self.BPTopLine.backgroundColor = self.representLabelTopine.backgroundColor = Color(@"e6e7e8");
     self.businessMessageLabel.font = FontFactor(16.0f);
     self.businessMessageLabel.textColor = Color(@"3A3A3A");
     
@@ -555,10 +556,19 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
     self.titleDetailLabel.textAlignment = NSTextAlignmentCenter;
     self.titleDetailLabel.lineBreakMode = NSLineBreakByTruncatingTail;
     self.titleDetailLabel.textColor = Color(@"ffffff");
-    self.titleDetailLabel.numberOfLines = 2;
-    UIFont *font =BoldFontFactor(ceilf(-0.6f * title.length + 40.0f));
-    self.titleDetailLabel.font = font;
-    self.titleDetailLabel.text = self.responseObject.businessTitle;
+    self.titleDetailLabel.numberOfLines = 0;
+    if (title.length < 10) {
+        self.titleDetailLabel.font = BoldFontFactor(25.0f);
+    } else if (title.length > 20){
+        title = [NSString stringWithFormat:@"%@...",[title substringToIndex:19]];
+        self.titleDetailLabel.font = BoldFontFactor(23.0f);
+    } else{
+        self.titleDetailLabel.font = BoldFontFactor(23.0f);
+    }
+    
+//    UIFont *font =BoldFontFactor(ceilf(-0.6f * title.length + 40.0f));
+//    self.titleDetailLabel.font = font;
+    self.titleDetailLabel.text = title;
     if ([self.responseObject.type isEqualToString:@"moneyside"]) {
         [self.typeButton setTitle:@"投资机构" forState:UIControlStateNormal];
     } else if ([self.responseObject.type isEqualToString:@"trademixed"]){
@@ -679,7 +689,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
     CGFloat height = 0.0f;
     NSMutableParagraphStyle * labelParagraphStyle = [[NSMutableParagraphStyle alloc] init];
     labelParagraphStyle.alignment = NSTextAlignmentRight;
-    //[labelParagraphStyle setLineSpacing:MarginFactor(14.0f)];
+    [labelParagraphStyle setLineSpacing:MarginFactor(5.0f)];
     for (NSInteger i = 0; i < rightArray.count - 2 ; i ++) {
         UILabel *rightLabel = [[UILabel alloc] init];
         rightLabel.numberOfLines = 0;
@@ -758,13 +768,17 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
     if (self.responseObject.bpnameList) {
         self.BPView.hidden = NO;
         self.BPLine.backgroundColor = Color(@"e6e7e8");
+        self.representLabelTopine.sd_resetLayout
+        .leftSpaceToView(self.headerView, 0.0f)
+        .rightSpaceToView(self.headerView, 0.0f)
+        .topSpaceToView(self.BPView, 0.0f)
+        .heightIs(0.5f);
         self.businessRepresentLabel.sd_resetLayout
         .leftSpaceToView(self.headerView, MarginFactor(14.0f))
         .rightSpaceToView(self.headerView, MarginFactor(14.0f))
-        .topSpaceToView(self.BPView, 0.0f)
+        .topSpaceToView(self.representLabelTopine, 0.0f)
         .heightIs(MarginFactor(44.0f));
         self.BPLabel.text = @"项目BP";
-//        UIImage *image = [UIImage imageNamed:@"business_pdf"];
         CGFloat buttonWidth = SCREENWIDTH / 3.0;
         CGFloat labelWidth = (SCREENWIDTH - MarginFactor(60.0f)) / 3.0;
         CGFloat buttonHeight = MarginFactor(95.0f);

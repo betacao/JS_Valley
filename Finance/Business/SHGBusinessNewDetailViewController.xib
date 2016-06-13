@@ -36,8 +36,8 @@
                 <outlet property="phoneLabel" destination="e9g-89-5CN" id="HpG-fl-BBb"/>
                 <outlet property="phoneTextView" destination="eXF-EW-rMT" id="fnB-5T-9U5"/>
                 <outlet property="redView" destination="yOY-Pl-fO4" id="l8R-YW-Ztk"/>
+                <outlet property="representLabelTopine" destination="NWQ-G7-xyt" id="MG5-oj-hWM"/>
                 <outlet property="rightVerticalLine" destination="kca-J9-phN" id="13Z-lJ-P0X"/>
-                <outlet property="secondGrayTopLine" destination="NWQ-G7-xyt" id="dr3-dh-Zpf"/>
                 <outlet property="secondGrayView" destination="sEg-OL-QuP" id="SUK-uO-jP6"/>
                 <outlet property="secondHorizontalLine" destination="OjN-gd-v1v" id="IL1-iK-lgB"/>
                 <outlet property="shareButton" destination="FZB-FG-HbP" id="opJ-4n-TgP"/>
@@ -236,7 +236,7 @@
                             <rect key="frame" x="0.0" y="96" width="42" height="21"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" id="eXF-EW-rMT" customClass="SHGCopyTextView">
@@ -330,7 +330,7 @@
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <point key="canvasLocation" x="147" y="212"/>
+            <point key="canvasLocation" x="-88" y="200"/>
         </view>
     </objects>
     <resources>
