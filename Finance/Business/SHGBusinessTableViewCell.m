@@ -200,7 +200,6 @@
 {
     __weak typeof(self)weakSelf = self;
     if ([self.object.isRefresh isEqualToString:@"true"]) {
-        [[SHGGloble sharedGloble] recordUserAction:[NSString stringWithFormat:@"%@#%@", self.object.businessID, self.object.type] type:@"business_refresh"];
         [SHGBusinessManager refreshBusiness:self.object success:^(BOOL success) {
             if (success) {
                 [weakSelf.refreshButton setImage:[UIImage imageNamed:@"business_refreshed"] forState:UIControlStateNormal];
