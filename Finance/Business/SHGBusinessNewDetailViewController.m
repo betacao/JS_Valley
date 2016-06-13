@@ -696,8 +696,9 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
         rightString = [rightArray objectAtIndex:i];
         NSMutableAttributedString *string= [[NSMutableAttributedString alloc] initWithString:rightString attributes:@{NSFontAttributeName:FontFactor(14.0f), NSForegroundColorAttributeName: Color(@"3a3a3a"), NSParagraphStyleAttributeName:labelParagraphStyle}];
         rightLabel.attributedText = string;
-        CGSize size = [rightLabel sizeThatFits:CGSizeMake(MarginFactor(233.0f), CGFLOAT_MAX)];
-        rightLabel.frame = CGRectMake(MarginFactor(125.0f), height +  i * topMargin, MarginFactor(223.0f), size.height);
+        [rightLabel sizeToFit];
+        CGSize size = [rightLabel sizeThatFits:CGSizeMake(MarginFactor(223.0f), CGFLOAT_MAX)];
+        rightLabel.frame = CGRectMake(MarginFactor(125.0f), height +  i * topMargin , MarginFactor(223.0f), size.height);
         [self.businessMessageLabelView addSubview:rightLabel];
         
         UILabel *leftLabel = [[UILabel alloc] init];
@@ -708,7 +709,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
         leftLabel.frame = CGRectMake(0.0f, height +  i * topMargin - 1, MarginFactor(100.0f),leftLabel.font.lineHeight);
         [self.businessMessageLabelView addSubview:leftLabel];
         
-        height =  height + size.height ;
+        height =  height + size.height  ;
         
     }
     self.businessMessageLabelView.sd_resetLayout
@@ -797,6 +798,8 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
                 [name insertString:@"\n" atIndex:8];
                 if (name.length > 16) {
                     nameLabel.text = [NSString stringWithFormat:@"%@...",[name substringToIndex:16]];
+                } else{
+                    nameLabel.text = name;
                 }
             } else{
                 nameLabel.text = obj.bpName;

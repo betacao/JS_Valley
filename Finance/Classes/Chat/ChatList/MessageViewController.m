@@ -11,7 +11,7 @@
 #import "SHGPersonalViewController.h"
 #import "LinkViewController.h"
 #import "SHGBusinessObject.h"
-#import "SHGBusinessDetailViewController.h"
+#import "SHGBusinessNewDetailViewController.h"
 
 @interface MessageViewController ()
 {
@@ -208,7 +208,7 @@
         //新版业务的推送
         NSString *businessId = obj.oid;
         NSString *businessType = obj.unionID;
-        SHGBusinessDetailViewController *controller = [[SHGBusinessDetailViewController alloc] init];
+        SHGBusinessNewDetailViewController *controller = [[SHGBusinessNewDetailViewController alloc] init];
         SHGBusinessObject *object = [[SHGBusinessObject alloc] init];
         object.businessID = businessId;
         object.type = businessType;
