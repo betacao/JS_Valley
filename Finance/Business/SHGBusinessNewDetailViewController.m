@@ -696,8 +696,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
         rightString = [rightArray objectAtIndex:i];
         NSMutableAttributedString *string= [[NSMutableAttributedString alloc] initWithString:rightString attributes:@{NSFontAttributeName:FontFactor(14.0f), NSForegroundColorAttributeName: Color(@"3a3a3a"), NSParagraphStyleAttributeName:labelParagraphStyle}];
         rightLabel.attributedText = string;
-        [rightLabel sizeToFit];
-        CGSize size = rightLabel.frame.size;
+        CGSize size = [rightLabel sizeThatFits:CGSizeMake(MarginFactor(233.0f), CGFLOAT_MAX)];
         rightLabel.frame = CGRectMake(MarginFactor(125.0f), height +  i * topMargin, MarginFactor(223.0f), size.height);
         [self.businessMessageLabelView addSubview:rightLabel];
         
@@ -706,7 +705,6 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
         leftLabel.textColor = Color(@"8d8d8d");
         leftLabel.font = FontFactor(12.0f);
         leftLabel.text = [leftArray objectAtIndex:i];
-        [leftLabel sizeToFit];
         leftLabel.frame = CGRectMake(0.0f, height +  i * topMargin - 1, MarginFactor(100.0f),leftLabel.font.lineHeight);
         [self.businessMessageLabelView addSubview:leftLabel];
         

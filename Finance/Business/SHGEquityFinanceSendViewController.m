@@ -480,10 +480,11 @@
         NSString *industry = [array objectAtIndex:3];
         NSArray *industryArray = [industry componentsSeparatedByString:@"，"];
         self.editIndustryArray = industryArray;
+        NSString *industryStr = [industryArray objectAtIndex:0];
         for (NSInteger i = 1 ; i < industryArray.count ; i ++) {
-            industry = [NSString stringWithFormat:@"%@/%@",[industryArray objectAtIndex:0],[industryArray objectAtIndex:i]];
+            industryStr = [NSString stringWithFormat:@"%@/%@",industryStr,[industryArray objectAtIndex:i]];
         }
-        [self.industrySelectButton setTitle:industry forState:UIControlStateNormal];
+        [self.industrySelectButton setTitle:industryStr forState:UIControlStateNormal];
         [self.industrySelectButton setTitleColor:Color(@"161616") forState:UIControlStateNormal];
         
         //融资阶段
