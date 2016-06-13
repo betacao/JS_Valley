@@ -134,15 +134,6 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
     return _mobileArray;
 }
 
-- (NSMutableArray *)middleContentArray
-{
-    if (!_middleContentArray) {
-        _middleContentArray = [[NSMutableArray alloc] init];
-        
-    }
-    return _middleContentArray;
-}
-
 - (SHGEmptyDataView *)emptyView
 {
     if (!_emptyView) {
@@ -225,7 +216,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
     [self.titleNameLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
     
     self.titleDetailLabel.sd_layout
-    .topSpaceToView(self.titleNameLabel, 0.0f)
+    .centerYIs(self.redView.centerY - MarginFactor(20.0f))
     .centerXEqualToView(self.redView)
     .widthIs(MarginFactor(320.0f))
     .heightIs(MarginFactor(80.0f));
@@ -438,6 +429,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
 
 - (void)initView
 {
+    self.titleNameLabel.hidden = YES;
     [self.userButton setEnlargeEdgeWithTop:10.0f right:0.0f bottom:10.0f left:150.0f];
     UITapGestureRecognizer *tableHeaderViewRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapTableHeaderView:)];
     [self.headerView addGestureRecognizer:tableHeaderViewRecognizer];
@@ -467,10 +459,10 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
     [self.typeButton setTitleColor:Color(@"ffffff") forState:UIControlStateNormal];
     [self.areaButton setTitleColor:Color(@"ffffff") forState:UIControlStateNormal];
     self.typeButton.adjustsImageWhenHighlighted = self.areaButton.adjustsImageWhenHighlighted = NO;
-    self.titleDetailLabel.numberOfLines = 0;
     self.moneyLabel.isAttributedContent = self.userLabel.isAttributedContent = YES;
     self.userLabel.numberOfLines = self.moneyLabel.numberOfLines = 0;
     self.moneyLabel.textAlignment = self.userLabel.textAlignment = NSTextAlignmentCenter;
+    
     self.firstGrayView.backgroundColor = self.secondGrayView.backgroundColor = self.thirdGaryView.backgroundColor = Color(@"f7f7f7");
     self.secondHorizontalLine.backgroundColor = self.thirdHorizontalLine.backgroundColor = self.centerLine.backgroundColor = Color(@"e6e7e8");
     self.userBottomLine.backgroundColor = self.businessMessageBpttomLine.backgroundColor = self.businessMessageTopLine.backgroundColor = self.BPBottomLine.backgroundColor = self.BPTopLine.backgroundColor = self.secondGrayTopLine.backgroundColor = Color(@"e6e7e8");
@@ -488,10 +480,9 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
     __weak typeof(self) weakSelf = self;
     [SHGBusinessManager getBusinessDetail:weakSelf.object success:^(SHGBusinessObject *detailObject) {
         weakSelf.responseObject = detailObject;
-        [self.middleContentArray removeAllObjects];
         NSString *value = [[SHGGloble sharedGloble] businessKeysForValues:self.responseObject.middleContent showEmptyKeys:NO];
         NSArray *array = [value componentsSeparatedByString:@"\n"];
-        [weakSelf.middleContentArray addObjectsFromArray:array];
+        weakSelf.middleContentArray = [NSMutableArray arrayWithArray:array];
         NSLog(@"%@",weakSelf.responseObject);
         [weakSelf loadData];
         [weakSelf.tableView reloadData];
@@ -508,6 +499,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
 - (void)addEmptyViewIfNeeded
 {
     if ([self.responseObject.isDeleted isEqualToString:@"Y"]) {
+        self.title = @"业务详情";
         [self.view addSubview:self.emptyView];
     }
 }
@@ -607,7 +599,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
     [paragraphStyle setLineSpacing:MarginFactor(6.0f)];
     
     __block NSString *money = @"";
-    [self.middleContentArray enumerateObjectsUsingBlock:^(NSString *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+    for (id obj in self.middleContentArray) {
         if ([obj containsString:@"金额"]) {
             NSArray *array = [obj componentsSeparatedByString:@"："];
             if ([[array lastObject] length] == 0) {
@@ -617,8 +609,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
             }
             [self.middleContentArray removeObject:obj];
         }
-        
-    }];
+    }
     
     NSString *allMoney = [NSString stringWithFormat:@"%@\n%@",@"金额",money];
     NSMutableAttributedString *moneyStr= [[NSMutableAttributedString alloc] initWithString:allMoney attributes:@{NSFontAttributeName:FontFactor(12.0f), NSForegroundColorAttributeName: Color(@"8d8d8d"), NSParagraphStyleAttributeName:paragraphStyle}];
@@ -653,26 +644,23 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
 {
     __block NSString *titleStr = @"";
     __block NSString *detailceStr = @"";
-    [self.middleContentArray enumerateObjectsUsingBlock:^(NSString *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+    for (NSString *obj in self.middleContentArray) {
         if ([obj containsString:@"融资阶段"] || [obj containsString:@"投资方式"]){
             NSArray *array = [obj componentsSeparatedByString:@"："];
             titleStr = [array firstObject];
             detailceStr = [array lastObject];
             [self.middleContentArray removeObject:obj];
-        }
-        if ([obj containsString:@"类型"]) {
+        } else if ([obj containsString:@"类型"]) {
             NSArray *array = [obj componentsSeparatedByString:@"："];
             titleStr = [NSString stringWithFormat:@"%@",[array firstObject]];
             detailceStr = [array lastObject];
             [self.middleContentArray removeObject:obj];
-        }
-        if ([obj containsString:@"地区"]) {
+        } else if ([obj containsString:@"地区"]) {
             NSArray *array = [obj componentsSeparatedByString:@"："];
             [self.areaButton setTitle:[array lastObject] forState:UIControlStateNormal];
             [self.middleContentArray removeObject:obj];
         }
-        
-    }];
+    }
     
     __block NSMutableArray *leftArray = [[NSMutableArray alloc] init];
     __block NSMutableArray *rightArray = [[NSMutableArray alloc] init];
@@ -1033,6 +1021,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
         if (state) {
             self.popupView = [[BRCommentView alloc] initWithFrame:self.view.bounds superFrame:CGRectZero isController:YES type:@"comment"];
             self.popupView.delegate = self;
+            self.popupView.sendColor = @"429fff";
             self.popupView.type = @"comment";
             self.popupView.fid = @"-1";
             self.popupView.detail = @"";
@@ -1057,6 +1046,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
         if (state) {
             self.popupView = [[BRCommentView alloc] initWithFrame:self.view.bounds superFrame:CGRectZero isController:YES type:@"reply" name:obj.commentUserName];
             self.popupView.delegate = self;
+            self.popupView.sendColor = @"429fff";
             self.popupView.fid = obj.commentUserId;
             self.popupView.detail = @"";
             self.popupView.rid = obj.commentId;

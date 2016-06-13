@@ -20,6 +20,7 @@
 @property (nonatomic, strong) UIButton *btnSend;
 @property (nonatomic, strong) UITextField *textVComment;
 @property (nonatomic, strong) UIButton *btnEmoje;
+@property (nonatomic, strong) NSString *color;
 @end
 
 @implementation BRCommentView
@@ -35,6 +36,7 @@
     self = [super initWithFrame:frame superFrame:superFrame isController:isController];
     if (self) {
          _type = type;
+        _color = self.sendColor;
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWasChange:) name:UIKeyboardDidChangeFrameNotification object:nil];
         [self initContentView];
     }
@@ -65,7 +67,13 @@
     UIButton *btnTemp = [UIButton buttonWithType:UIButtonTypeCustom];
     btnTemp = [UIButton buttonWithType:UIButtonTypeCustom];
     [btnTemp setFrame:CGRectMake(SCREENWIDTH - 69, 7, 54, 32)];
-    [btnTemp setBackgroundColor:RGB(255, 57, 67)];
+    btnTemp.layer.cornerRadius = 3;
+    if (self.color.length > 0) {
+        [btnTemp setBackgroundColor:RGB(255, 57, 67)];
+    } else{
+        [btnTemp setBackgroundColor:Color(@"429fff")];
+    }
+    
     [btnTemp.titleLabel setFont:[UIFont systemFontOfSize:15.0f]];
     [btnTemp setTitle:@"发送" forState:UIControlStateNormal];
     [btnTemp setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];

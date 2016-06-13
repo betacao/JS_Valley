@@ -21,7 +21,7 @@
 @interface BRCommentView : BasePopupView
 
 @property (nonatomic, weak) id<BRCommentViewDelegate> delegate;
-
+@property (nonatomic, strong) NSString *sendColor;
 //comment 评论 ; reply 回复
 @property (nonatomic, strong) NSString *type;
 @property (nonatomic, strong) NSString *rid;
