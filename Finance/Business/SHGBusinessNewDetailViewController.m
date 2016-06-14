@@ -103,6 +103,8 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
 
 @property (strong, nonatomic) SHGEmptyDataView *emptyView;
 @property (assign, nonatomic) SHGTapPhoneType type;
+
+@property (assign, nonatomic) BOOL isChangeCollection;
 @end
 
 @implementation SHGBusinessNewDetailViewController
@@ -111,6 +113,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
     [super viewDidLoad];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
+    self.isChangeCollection = YES;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shareToFriendSuccess:) name:NOTIFI_ACTION_SHARE_TO_FRIENDSUCCESS object:nil];
     [self.tableView setTableFooterView:[[UIView alloc] init]];
@@ -504,6 +507,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
 - (void)loadData
 {
     [self addEmptyViewIfNeeded];
+    [self loadCollectButtonState];
     [self loadRedView];
     
     [self loadUserAndMoneyView];
@@ -1179,8 +1183,10 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
 {
     if (self.responseObject.isCollection) {
         [self.collectionButton setImage:[UIImage imageNamed:@"red_businessCollectied"] forState:UIControlStateNormal];
+        self.isChangeCollection = YES;
     } else{
         [self.collectionButton setImage:[UIImage imageNamed:@"red_businessCollection"] forState:UIControlStateNormal];
+        self.isChangeCollection = NO;
     }
 }
 
@@ -1317,6 +1323,9 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
     [super viewWillDisappear:animated];
     if (self.popupView) {
         [self.popupView hideWithAnimated:NO];
+    }
+    if (self.isChangeCollection == NO) {
+        [self.collectionController changeBusinessCollection];
     }
 }
 - (void)dealloc

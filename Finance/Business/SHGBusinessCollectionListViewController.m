@@ -229,6 +229,7 @@
     if (self.dataArr.count > 0) {
         SHGBusinessNewDetailViewController *controller = [[SHGBusinessNewDetailViewController alloc] init];
         controller.object = [self.dataArr objectAtIndex:indexPath.row];
+        controller.collectionController = self;
         [self.navigationController pushViewController:controller animated:YES];
     }
 }

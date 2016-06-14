@@ -139,7 +139,7 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
     self.departmentLabel.sd_layout
     .leftSpaceToView(self.userNameLabel, MarginFactor(10.0f))
     .bottomEqualToView(self.userNameLabel)
-    .autoHeightRatio(0.0f);
+    .heightIs(self.departmentLabel.font.lineHeight);
     [self.departmentLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
     
     self.companyLabel.sd_layout
@@ -235,7 +235,8 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
     [self.departmentLabel sizeToFit];
     self.companyLabel.text = self.companyName;
     [self.companyLabel sizeToFit];
-    self.userNameLabel.text = self.nickName;
+    NSString *name = [self.nickName stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+    self.userNameLabel.text = name;
     [self.userNameLabel sizeToFit];
   
     if ([self.friendShip isEqualToString:@"一度"]) {

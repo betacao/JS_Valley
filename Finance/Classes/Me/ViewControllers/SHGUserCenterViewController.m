@@ -683,18 +683,18 @@
     __weak typeof(self) weakSelf = self;
     [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttp,@"user",@"personaluser"] parameters:@{@"uid":UID} success:^(MOCHTTPResponse *response) {
 
-        NSString *businesstotal = [response.dataDictionary valueForKey:@"businesstotal"];
+        NSString *circles = [response.dataDictionary valueForKey:@"circles"];
         NSString *followCount = [response.dataDictionary valueForKey:@"attention"];
         NSString *fansCount = [response.dataDictionary valueForKey:@"fans"];
 
-        NSString *businessTotal = [NSString stringWithFormat:@"动态 \n%@",businesstotal];
+        NSString *circlesString = [NSString stringWithFormat:@"动态 \n%@",circles];
         NSString *followString = [NSString stringWithFormat:@"关注 \n%@",followCount];
         NSString *fansString = [NSString stringWithFormat:@"粉丝 \n%@",fansCount];
 
         NSMutableParagraphStyle * paragraphStyle1 = [[NSMutableParagraphStyle alloc] init];
         [paragraphStyle1 setLineSpacing:1.0f];
         paragraphStyle1.alignment = NSTextAlignmentCenter;
-        NSMutableAttributedString *aCircleString = [[NSMutableAttributedString alloc] initWithString:businessTotal];
+        NSMutableAttributedString *aCircleString = [[NSMutableAttributedString alloc] initWithString:circlesString];
         [aCircleString addAttributes:@{NSForegroundColorAttributeName:[UIColor colorWithHexString:@"161616"], NSFontAttributeName:FontFactor(13.0f)} range:NSMakeRange(4, aCircleString.length - 4)];
         [aCircleString addAttribute:NSParagraphStyleAttributeName value:paragraphStyle1 range:NSMakeRange(0, [aCircleString length])];
 

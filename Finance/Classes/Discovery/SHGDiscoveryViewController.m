@@ -229,7 +229,7 @@
     self.titleLabel.text = @"我的人脉";
 
     self.bottomView.backgroundColor = Color(@"efeeef");
-
+    self.bottomView.hidden = YES;
     [self.inviteButton setTitleColor:Color(@"eeae01") forState:UIControlStateNormal];
     [self.inviteButton setTitle:@"邀请好友" forState:UIControlStateNormal];
     self.inviteButton.titleLabel.font = FontFactor(13.0f);
