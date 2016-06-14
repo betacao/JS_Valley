@@ -6002,14 +6002,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_BITCODE = NO;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Finance/External/ShareSDK/Connection",
-					"$(PROJECT_DIR)/Finance/External/ShareSDK/Core",
-					"$(PROJECT_DIR)/Finance/External/ShareSDK/Extend/QQConnectSDK",
-					"$(PROJECT_DIR)/Finance/External/ShareSDK",
-					"$(PROJECT_DIR)/Finance/External/ShareSDK/UI",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_PREFIX_HEADER = "$(PROJECT_DIR)/Finance/FinancePrefixHeader.pch";
 				INFOPLIST_FILE = Finance/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
@@ -6019,8 +6012,6 @@
 					"$(PROJECT_DIR)/Finance/External/EaseMobSDK/lib",
 					"$(PROJECT_DIR)/Finance/External/Mob",
 					"$(PROJECT_DIR)/Finance/External/GeTui",
-					"$(PROJECT_DIR)/Finance/External/ShareSDK/Extend/SinaWeiboSDK",
-					"$(PROJECT_DIR)/Finance/External/ShareSDK/Extend/WeChatSDK",
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.danniuquan.apptest;
@@ -6041,14 +6032,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_BITCODE = NO;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Finance/External/ShareSDK/Connection",
-					"$(PROJECT_DIR)/Finance/External/ShareSDK/Core",
-					"$(PROJECT_DIR)/Finance/External/ShareSDK/Extend/QQConnectSDK",
-					"$(PROJECT_DIR)/Finance/External/ShareSDK",
-					"$(PROJECT_DIR)/Finance/External/ShareSDK/UI",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_PREFIX_HEADER = "$(PROJECT_DIR)/Finance/FinancePrefixHeader.pch";
 				INFOPLIST_FILE = Finance/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
@@ -6058,8 +6042,6 @@
 					"$(PROJECT_DIR)/Finance/External/EaseMobSDK/lib",
 					"$(PROJECT_DIR)/Finance/External/Mob",
 					"$(PROJECT_DIR)/Finance/External/GeTui",
-					"$(PROJECT_DIR)/Finance/External/ShareSDK/Extend/SinaWeiboSDK",
-					"$(PROJECT_DIR)/Finance/External/ShareSDK/Extend/WeChatSDK",
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.danniuquan.apptest;
@@ -6117,14 +6099,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer: xie jian (A35C7Q22SB)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = NO;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Finance/External/ShareSDK/Connection",
-					"$(PROJECT_DIR)/Finance/External/ShareSDK/Core",
-					"$(PROJECT_DIR)/Finance/External/ShareSDK/Extend/QQConnectSDK",
-					"$(PROJECT_DIR)/Finance/External/ShareSDK",
-					"$(PROJECT_DIR)/Finance/External/ShareSDK/UI",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_PREFIX_HEADER = "$(PROJECT_DIR)/Finance/FinancePrefixHeader.pch";
 				INFOPLIST_FILE = Finance/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
@@ -6134,8 +6109,6 @@
 					"$(PROJECT_DIR)/Finance/External/EaseMobSDK/lib",
 					"$(PROJECT_DIR)/Finance/External/Mob",
 					"$(PROJECT_DIR)/Finance/External/GeTui",
-					"$(PROJECT_DIR)/Finance/External/ShareSDK/Extend/SinaWeiboSDK",
-					"$(PROJECT_DIR)/Finance/External/ShareSDK/Extend/WeChatSDK",
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.danniuquan.apptest;

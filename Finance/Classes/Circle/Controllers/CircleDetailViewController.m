@@ -804,7 +804,7 @@
 
 - (IBAction)actionShare:(id)sender
 {
-    id<ISSCAttachment> image  = [ShareSDK pngImageWithImage:[UIImage imageNamed:@"80"]];
+    /*id<ISSCAttachment> image  = [ShareSDK pngImageWithImage:[UIImage imageNamed:@"80"]];
     NSString *postContent = @"";
     NSString *shareContent = @"";
     NSString *shareTitle = @"";
@@ -879,7 +879,7 @@
         } else if (state == SSResponseStateFail){
             NSLog(NSLocalizedString(@"TEXT_ShARE_FAI", @"帖子分享失败,错误码:%d,错误描述:%@"), [error errorCode], [error errorDescription]);
         }
-    }];
+    }];*/
 }
 
 -(void)shareToSMS:(NSString *)text rid:(NSString *)rid

@@ -145,22 +145,6 @@
     [[EaseMob sharedInstance] applicationProtectedDataDidBecomeAvailable:notif.object];
 }
 
-// 将得到的deviceToken传给SDK
-//- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken{
-//    [[EaseMob sharedInstance] application:application didRegisterForRemoteNotificationsWithDeviceToken:deviceToken];
-//    
-//}
-
-// 注册deviceToken失败，此处失败，与环信SDK无关，一般是您的环境配置或者证书配置有误
-- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error{
-    [[EaseMob sharedInstance] application:application didFailToRegisterForRemoteNotificationsWithError:error];
-//    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"apns.failToRegisterApns", Fail to register apns)
-//                                                    message:error.description
-//                                                   delegate:nil
-//                                          cancelButtonTitle:NSLocalizedString(@"ok", @"OK")
-//                                          otherButtonTitles:nil];
-//    [alert show];
-}
 
 // 注册推送
 - (void)registerRemoteNotification

@@ -340,7 +340,7 @@
 }
 - (void)shareClicked:(CircleListObj *)obj
 {
-    id<ISSCAttachment> image  = [ShareSDK pngImageWithImage:[UIImage imageNamed:@"80"]];
+    /*id<ISSCAttachment> image  = [ShareSDK pngImageWithImage:[UIImage imageNamed:@"80"]];
     
     if (!IsArrEmpty(obj.photoArr)  ) {
         //  image = [ShareSDK imageWithUrl:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,_obj.photoArr[0]]];
@@ -431,7 +431,7 @@
             NSLog(NSLocalizedString(@"TEXT_ShARE_FAI", @"帖子分享失败,错误码:%d,错误描述:%@"), [error errorCode], [error errorDescription]);
             
         }
-    }];
+    }];*/
     
 }
 -(void)shareToWeibo:(NSString *)text rid:(NSString *)rid

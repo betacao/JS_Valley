@@ -7,14 +7,15 @@
 // 9月1号
 
 #import "AppDelegate.h"
-#import "MOCHTTPRequestOperationManager.h"
 #import "SHGSegmentController.h"
 #import "ChatListViewController.h"
-#import "ContactSelectionViewController.h"
+#import <ShareSDK/ShareSDK.h>
+#import <ShareSDKConnector/ShareSDKConnector.h>
+#import <TencentOpenAPI/TencentOAuth.h>
+#import <TencentOpenAPI/QQApiInterface.h>
+
 #import "AppDelegate+EaseMob.h"
-#import "RegistViewController.h"
 #import "CircleDetailViewController.h"
-#import "ApplyViewController.h"
 #import "CircleDetailViewController.h"
 #import "UncaughtExceptionHandler.h"
 #import "MessageViewController.h"
@@ -24,6 +25,7 @@
 #import "LinkViewController.h"
 #import "SHGBusinessObject.h"
 #import "SHGBusinessNewDetailViewController.h"
+
 //for mac
 #include <sys/socket.h>
 #include <sys/sysctl.h>
@@ -73,7 +75,7 @@
     } notReachable:^{
 
     }];
-    
+
     //一天启动次数
     NSInteger numberOfLaunch =[[[NSUserDefaults standardUserDefaults] objectForKey:@"LaunchTimes"] intValue];
     NSString *lastLaunchTime =[[NSUserDefaults standardUserDefaults] objectForKey:@"LastLauncnTime"];
@@ -89,7 +91,7 @@
         [[NSUserDefaults standardUserDefaults] setObject:[formater stringFromDate:nowTime] forKey:@"LastLauncnTime"];
         [[NSUserDefaults standardUserDefaults] synchronize];
     }
-    
+
     [MOCHTTPRequestOperationManager setupRequestOperationManager:resultcodekey successCode:successcode dataKey:datakey messageKey:messagekey];
     [self easemobApplication:application didFinishLaunchingWithOptions:launchOptions];
     [self setupShare];
@@ -132,7 +134,7 @@
 
     if (err) {
         NSLog(@"%@",[NSString stringWithFormat:@"%@", [err localizedDescription]]);
-        
+
     }
 }
 
@@ -143,20 +145,47 @@
 
 - (void)setupShare
 {
-    [ShareSDK registerApp:KEY_SHARESDK];
-    [ShareSDK connectSMS];
-    //连接微信
-    [ShareSDK connectWeChatWithAppId:@"wx8868d86915c77c36" appSecret:@"73c0d5f3e3b4844d69c2ea59407ec404" wechatCls:[WXApi class]];
-    //连接微博
-    [ShareSDK connectSinaWeiboWithAppKey:@"347846106" appSecret:@"50e6c6fa2d245ec2e008e1b8e2aefe71" redirectUri:@"https://api.weibo.com/oauth2/default.html"];
-    [ShareSDK connectQZoneWithAppKey:@"1104624210" appSecret:@"PnZ1JkvJ3qd53uKY" qqApiInterfaceCls:[QQApiInterface class] tencentOAuthCls:[TencentOAuth class]];
-    //连接QQ
-    [ShareSDK connectQQWithQZoneAppKey:@"1104624210" qqApiInterfaceCls:[QQApiInterface class] tencentOAuthCls:[TencentOAuth class]];
-    //连接微信好友
-    [ShareSDK connectWeChatSessionWithAppId:@"wx8868d86915c77c36" appSecret:@"73c0d5f3e3b4844d69c2ea59407ec404" wechatCls:[WXApi class]];
-    //连接微信朋友圈
-    [ShareSDK connectWeChatTimelineWithAppId:@"wx8868d86915c77c36" appSecret:@"73c0d5f3e3b4844d69c2ea59407ec404" wechatCls:[WXApi class]];
-    
+
+    /**
+     *  设置ShareSDK的appKey，如果尚未在ShareSDK官网注册过App，请移步到http://mob.com/login 登录后台进行应用注册，
+     *  在将生成的AppKey传入到此方法中。
+     *  方法中的第二个第三个参数为需要连接社交平台SDK时触发，
+     *  在此事件中写入连接代码。第四个参数则为配置本地社交平台时触发，根据返回的平台类型来配置平台信息。
+     *  如果您使用的时服务端托管平台信息时，第二、四项参数可以传入nil，第三项参数则根据服务端托管平台来决定要连接的社交SDK。
+     */
+    [ShareSDK registerApp:KEY_SHARESDK activePlatforms:@[@(SSDKPlatformTypeSinaWeibo), @(SSDKPlatformTypeWechat), @(SSDKPlatformTypeQQ)] onImport:^(SSDKPlatformType platformType) {
+        switch (platformType) {
+            case SSDKPlatformTypeWechat:
+                [ShareSDKConnector connectWeChat:[WXApi class]];
+                break;
+            case SSDKPlatformTypeQQ:
+                [ShareSDKConnector connectQQ:[QQApiInterface class] tencentOAuthClass:[TencentOAuth class]];
+                break;
+            case SSDKPlatformTypeSinaWeibo:
+                [ShareSDKConnector connectWeibo:[WeiboSDK class]];
+                break;
+            default:
+                break;
+        }
+    } onConfiguration:^(SSDKPlatformType platformType, NSMutableDictionary *appInfo) {
+        switch (platformType) {
+            case SSDKPlatformTypeSinaWeibo:
+                [appInfo SSDKSetupSinaWeiboByAppKey:@"347846106" appSecret:@"50e6c6fa2d245ec2e008e1b8e2aefe71" redirectUri:@"https://api.weibo.com/oauth2/default.html" authType:SSDKAuthTypeBoth];
+                break;
+            case SSDKPlatformTypeWechat:
+                [appInfo SSDKSetupWeChatByAppId:@"wx8868d86915c77c36" appSecret:@"73c0d5f3e3b4844d69c2ea59407ec404"];
+                break;
+            case SSDKPlatformTypeQQ:
+                [appInfo SSDKSetupQQByAppId:@"1104624210" appKey:@"PnZ1JkvJ3qd53uKY" authType:SSDKAuthTypeBoth];
+                break;
+            case SSDKPlatformTypeSMS:
+                [appInfo SSDKSetupRenRenByAppId:@"226427" appKey:@"fc5b8aed373c4c27a05b712acba0f8c3" secretKey:@"f29df781abdd4f49beca5a2194676ca4" authType:SSDKAuthTypeBoth];
+                break;
+            default:
+                break;
+        }
+    }];
+
 }
 
 - (void)umengTrack
@@ -270,6 +299,9 @@
 // 当 DeviceToken 获取失败时，系统会回调此方法
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
 {
+
+
+    [[EaseMob sharedInstance] application:application didFailToRegisterForRemoteNotificationsWithError:error];
     NSLog(@"DeviceToken 获取失败，原因：%@",error);
     // [3-EXT]:如果APNS注册失败，通知个推服务器
     [GeTuiSdk registerDeviceToken:@""];
@@ -288,7 +320,7 @@
 
 }
 - (void)presentViewControllerWithUserInfo:(NSDictionary *)userInfo{
-    
+
 }
 
 -(void)application:(UIApplication *)application performFetchWithCompletionHandler:(nonnull void (^)(UIBackgroundFetchResult))completionHandler
@@ -361,7 +393,7 @@
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
-//    [GeTuiSdk resume];
+    //    [GeTuiSdk resume];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
@@ -406,7 +438,7 @@
     if (_persistentStoreCoordinator != nil) {
         return _persistentStoreCoordinator;
     }
-    
+
     // Create the coordinator and store
     NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:
                              [NSNumber numberWithBool:YES], NSMigratePersistentStoresAutomaticallyOption,
@@ -427,7 +459,7 @@
         NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
         abort();
     }
-    
+
     return _persistentStoreCoordinator;
 }
 
@@ -437,7 +469,7 @@
     if (_managedObjectContext != nil) {
         return _managedObjectContext;
     }
-    
+
     NSPersistentStoreCoordinator *coordinator = [self persistentStoreCoordinator];
     if (!coordinator) {
         return nil;
@@ -538,29 +570,16 @@
 }
 #pragma mark - Core Data Saving support
 
-- (void)saveContext {
+- (void)saveContext
+{
     NSManagedObjectContext *managedObjectContext = self.managedObjectContext;
     if (managedObjectContext != nil) {
         NSError *error = nil;
         if ([managedObjectContext hasChanges] && ![managedObjectContext save:&error]) {
-            // Replace this implementation with code to handle the error appropriately.
-            // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
             NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
             abort();
         }
     }
-}
-
-
-- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
-{
-    return [ShareSDK handleOpenURL:url wxDelegate:self];
-    return YES;
-}
-
-- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
-{
-    return [ShareSDK handleOpenURL:url sourceApplication:sourceApplication annotation:annotation wxDelegate:self]|[WXApi handleOpenURL:url delegate:self];
 }
 
 #pragma mark - share
@@ -575,11 +594,11 @@
         smsPicker.messageComposeDelegate = self;
         NSString *shareBody = text;
         smsPicker.body = shareBody;
-        
+
         if (rid.length  > 9) {
             smsPicker.recipients = [NSArray arrayWithObject:rid];
         }
-        
+
         shareRid = rid;
         [[AppDelegate currentAppdelegate].window.rootViewController presentViewController:smsPicker animated:YES completion:^{
             [Hud hideHud];
@@ -592,7 +611,7 @@
 // 发送短信api的回调函数
 - (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result {
     [controller dismissViewControllerAnimated:YES completion:nil];
-    
+
     NSString *text ;
     if (shareRid.length > 9) {
         switch (result){
@@ -643,14 +662,14 @@
     WBAuthorizeRequest *authRequest = [WBAuthorizeRequest request];
     authRequest.redirectURI = @"https://api.weibo.com/oauth2/default.html";
     authRequest.scope = @"all";
-    
+
     WBSendMessageToWeiboRequest *request = [WBSendMessageToWeiboRequest requestWithMessage:message authInfo:authRequest access_token:self.wbtoken];
     request.userInfo = @{@"ShareMessageFrom": @"SendMessageToWeiboViewController",
                          @"Other_Info_1": [NSNumber numberWithInt:123],
                          @"Other_Info_2": @[@"obj1", @"obj2"],
                          @"Other_Info_3": @{@"key1": @"obj1", @"key2": @"obj2"}};
     [WeiboSDK sendRequest:request];
-    
+
 }
 
 #pragma mark - weiboSDKDelegate
@@ -685,7 +704,7 @@
                 break;
             case -3:
                 message = @"授权失败";
-                
+
                 break;
             default:
                 break;
@@ -694,7 +713,7 @@
     }
     else if ([response isKindOfClass:WBAuthorizeResponse.class])
     {
-        
+
         self.wbtoken = [(WBAuthorizeResponse *)response accessToken];
         self.wbCurrentUserID = [(WBAuthorizeResponse *)response userID];
         //[alert show];
@@ -706,31 +725,31 @@
 -(void)exitApplication
 {
     [UIView beginAnimations:@"exitApplication" context:nil];
-    
+
     [UIView setAnimationDuration:0.5];
-    
+
     [UIView setAnimationDelegate:self];
-    
+
     // [UIView setAnimationTransition:UIViewAnimationCurveEaseOut forView:self.view.window cache:NO];
-    
+
     [UIView setAnimationTransition:UIViewAnimationTransitionCurlUp forView:self.window cache:NO];
-    
+
     [UIView setAnimationDidStopSelector:@selector(animationFinished:finished:context:)];
-    
+
     //self.view.window.bounds = CGRectMake(0, 0, 0, 0);
-    
+
     self.window.bounds = CGRectMake(0, 0, 0, 0);
-    
+
     [UIView commitAnimations];
 }
 - (void)animationFinished:(NSString *)animationID finished:(NSNumber *)finished context:(void *)context {
-    
+
     if ([animationID compare:@"exitApplication"] == 0) {
-        
+
         exit(0);
-        
+
     }
-    
+
 }
 #pragma mark - weChat share
 
@@ -751,10 +770,10 @@
     {
         ShowMessageFromWXReq* temp = (ShowMessageFromWXReq*)req;
         WXMediaMessage *msg = temp.message;
-        
+
         //显示微信传过来的内容
         WXAppExtendObject *obj = msg.mediaObject;
-        
+
         NSString *strTitle = [NSString stringWithFormat:@"微信请求App显示内容"];
         NSString *strMsg = [NSString stringWithFormat:@"openID: %@, 标题：%@ \n内容：%@ \n附带信息：%@ \n缩略图:%lu bytes\n附加消息:%@\n", temp.openID, msg.title, msg.description, obj.extInfo, (unsigned long)msg.thumbData.length, msg.messageExt];
 
@@ -765,11 +784,11 @@
     {
         LaunchFromWXReq *temp = (LaunchFromWXReq *)req;
         WXMediaMessage *msg = temp.message;
-        
+
         //从微信启动App
         NSString *strTitle = [NSString stringWithFormat:@"从微信启动"];
         NSString *strMsg = [NSString stringWithFormat:@"openID: %@, messageExt:%@", temp.openID, msg.messageExt];
-        
+
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:strTitle message:strMsg delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         [alert show];
     }
@@ -786,26 +805,26 @@
             } else{
                 [Hud showMessageWithText:@"分享成功"];
             }
-            
+
         } else if(resp.errCode == -1){
             message = @"分享失败";
             [Hud showMessageWithText:message];
-            
+
         } else{
             message = @"分享取消";
             [Hud showMessageWithText:message];
-            
+
         }
     }
-    
+
 }
 
 - (void)sendLinkContentWithMessage:(WXMediaMessage *)message type:(NSInteger)type
 {
     // WXMediaMessage *message = [WXMediaMessage message];
-    
+
     NSString *shareUrl = message.messageExt;
-    
+
     WXWebpageObject *ext = [WXWebpageObject object];
     ext.webpageUrl = shareUrl;
     message.mediaObject = ext;
@@ -818,7 +837,7 @@
 }
 
 - (void)wechatShareWithText:(NSString *)text shareUrl:(NSString *)shareUrl shareType:(NSInteger)scene
-{    
+{
     if([WXApi isWXAppInstalled ]){
         if ([WXApi isWXAppSupportApi]){
             WXMediaMessage *message = [WXMediaMessage message];
@@ -888,7 +907,7 @@
         if (buttonIndex == 1)
         {
             NSString *appleID = @"414478124";
-            
+
             if ([[UIDevice currentDevice].systemVersion floatValue] >= 7.0) {
                 NSString *str = [NSString stringWithFormat:@"itms-apps://itunes.apple.com/app/id%@",appleID];
                 [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str]];
@@ -898,7 +917,7 @@
             }
         }
     }
-    
+
 }
 
 - (void)didReceiveWeiboRequest:(WBBaseRequest *)request
@@ -1033,7 +1052,7 @@
     if([[UIDevice currentDevice] respondsToSelector:@selector( identifierForVendor)]) {
         return [[UIDevice currentDevice].identifierForVendor UUIDString];
     }
-    
+
     return @"";
 }
 

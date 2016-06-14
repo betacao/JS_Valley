@@ -245,7 +245,7 @@
 
 - (IBAction)inviteButtonClicked:(id *)sender
 {
-    id<ISSCAttachment> image  = [ShareSDK pngImageWithImage:[UIImage imageNamed:@"80"]];
+    /*id<ISSCAttachment> image  = [ShareSDK pngImageWithImage:[UIImage imageNamed:@"80"]];
     NSString *contentOther =[NSString stringWithFormat:@"%@",@"诚邀您加入大牛圈--金融业务互助平台"];
     
     NSString *content =[NSString stringWithFormat:@"%@%@",@"诚邀您加入大牛圈--金融业务互助平台！这里有业务互助、人脉嫁接！赶快加入吧！",[NSString stringWithFormat:@"%@?uid=%@",SHARE_YAOQING_URL,[[NSUserDefaults standardUserDefaults]objectForKey:KEY_UID]]];
@@ -295,7 +295,7 @@
         } else if (state == SSResponseStateFail){
             NSLog(NSLocalizedString(@"TEXT_ShARE_FAI", @"分享失败,错误码:%d,错误描述:%@"), [error errorCode], [error errorDescription]);
         }
-    }];
+    }];*/
 }
 
 -(void)shareToWeibo:(NSString *)text rid:(NSString *)rid

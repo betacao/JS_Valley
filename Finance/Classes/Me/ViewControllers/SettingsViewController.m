@@ -13,7 +13,7 @@
 #import "SettingAboutUsViewController.h"
 #import "LoginViewController.h"
 #import "DingDQRCodeShareViewController.h"
-#import "EaseMob.h"
+#import <ShareSDK/ShareSDK.h>
 #import "SettingsSuggestionsViewController.h"
 #import "SHGSettingTableViewCell.h"
 

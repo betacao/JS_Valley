@@ -144,7 +144,8 @@
 #pragma mark -分享
 - (void)shareClicked:(CircleListObj *)obj
 {
-    UIImage *png = [UIImage imageNamed:@"80.png"];
+    [SHGGlobleOperation share:obj];
+    /*UIImage *png = [UIImage imageNamed:@"80.png"];
     id<ISSCAttachment> image  = [ShareSDK pngImageWithImage:png];
     NSString *postContent;
     NSString *shareContent;
@@ -221,13 +222,13 @@
         } else if (state == SSResponseStateFail){
             NSLog(NSLocalizedString(@"TEXT_ShARE_FAI", @"分享失败,错误码:%d,错误描述:%@"), [error errorCode], [error errorDescription]);
         }
-    }];
+    }];*/
 
 }
 
 - (void)shareFeedhtmlString:(CircleListObj *)object
 {
-    UIImage *png = [UIImage imageNamed:@"80.png"];
+   /* UIImage *png = [UIImage imageNamed:@"80.png"];
     id<ISSCAttachment> image  = [ShareSDK pngImageWithImage:png];
     
     NSString *content = object.shareTitle;
@@ -270,7 +271,7 @@
         } else if (state == SSResponseStateFail){
             [Hud showMessageWithText:@"分享失败"];
         }
-    }];
+    }];*/
 }
 
 //分享给好友

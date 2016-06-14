@@ -324,7 +324,7 @@
 //分享业务
 - (void)shareAction:(SHGBusinessObject *)object baseController:(UIViewController *)controller finishBlock:(void (^)(BOOL))block
 {
-    NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
+    /*NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
     NSString *request = [rBaseAddressForHttp stringByAppendingFormat:@"/business/share/businessDetail?rowId=%@&uid=%@&businessType=%@",object.businessID, uid, object.type];
     UIImage *png = [UIImage imageNamed:@"80.png"];
     id<ISSCAttachment> image  = [ShareSDK pngImageWithImage:png];
@@ -388,7 +388,7 @@
         } else if (state == SSResponseStateFail){
             [Hud showMessageWithText:@"分享失败"];
         }
-    }];
+    }];*/
 }
 //分享给好友
 - (void)shareToFriendController:(UIViewController *)controller content:(NSString *)content
