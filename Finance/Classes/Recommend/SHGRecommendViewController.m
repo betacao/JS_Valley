@@ -36,6 +36,7 @@
     [self addAutoLayout];
     [self uploadData];
     [self loadData];
+    [[SHGGloble sharedGloble] dealFriendPush];
 }
 
 - (void)initView

@@ -544,22 +544,25 @@
     if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
         pickerImage.sourceType = UIImagePickerControllerSourceTypeCamera;
         pickerImage.mediaTypes = [UIImagePickerController availableMediaTypesForSourceType:pickerImage.sourceType];
+        pickerImage.delegate = self;
+        pickerImage.allowsEditing = YES;
+        [self presentViewController:pickerImage animated:YES completion:nil];
     }
-    pickerImage.delegate = self;
-    pickerImage.allowsEditing = YES;
-    [self presentViewController:pickerImage animated:YES completion:nil];
 }
 
 - (void)photosClick
 {
     UIImagePickerController *pickerImage = [[UIImagePickerController alloc] init];
+    [pickerImage.navigationBar setShadowImage:[[UIImage alloc] init]];
+    [pickerImage.navigationBar setBackgroundImage:[CommonMethod imageWithColor:Color(@"f04f46")] forBarMetrics:UIBarMetricsDefault];
+    pickerImage.navigationBar.tintColor = [UIColor whiteColor];
     if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]) {
         pickerImage.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
         pickerImage.mediaTypes = [UIImagePickerController availableMediaTypesForSourceType:pickerImage.sourceType];
+        pickerImage.delegate = self;
+        pickerImage.allowsEditing = YES;
+        [self presentViewController:pickerImage animated:YES completion:nil];
     }
-    pickerImage.delegate = self;
-    pickerImage.allowsEditing = YES;
-    [self presentViewController:pickerImage animated:YES completion:nil];
 }
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info

@@ -465,7 +465,6 @@ static UIColor *titleColor;
 - (void)setupButtons
 {
     UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [leftButton setImage:[UIImage imageNamed:@"newBack"] forState:UIControlStateNormal];
     [leftButton setTitle:@"相簿" forState:UIControlStateNormal];
     leftButton.titleLabel.font = [UIFont systemFontOfSize:14.0f * XFACTOR];
     [leftButton addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
@@ -481,11 +480,6 @@ static UIColor *titleColor;
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:rightButton];
     self.navigationItem.rightBarButtonItem=rightItem;
 
-//    self.navigationItem.rightBarButtonItem =
-//    [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"完成", nil)
-//                                     style:UIBarButtonItemStylePlain
-//                                    target:self
-//                                    action:@selector(finishPickingAssets:)];
 }
 
 - (void)back

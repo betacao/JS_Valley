@@ -13,7 +13,7 @@
 
 @protocol ZYQAssetPickerControllerDelegate;
 
-@interface ZYQAssetPickerController : UINavigationController
+@interface ZYQAssetPickerController : BaseNavigationController
 
 @property (nonatomic, weak) id <UINavigationControllerDelegate, ZYQAssetPickerControllerDelegate> zyDelegate;
 
