@@ -69,6 +69,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
 
+## MOBFoundation
+
+Copyright © 2012-2015 mob
+
 ## MagicalRecord
 
  Copyright (c) 2010-2015, Magical Panda Software, LLC
@@ -173,6 +177,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
 
+
+## ShareSDK3
+
+Copyright © 2012-2015 mob
 
 ## TTTAttributedLabel
 

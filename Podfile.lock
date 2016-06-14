@@ -22,10 +22,18 @@ PODS:
   - Mantle/extobjc (2.0.6)
   - MBProgressHUD (0.9.2)
   - MJRefresh (3.1.0)
+  - MOBFoundation (1.5.3)
   - SDAutoLayout (1.53)
   - SDWebImage (3.7.5):
     - SDWebImage/Core (= 3.7.5)
   - SDWebImage/Core (3.7.5)
+  - ShareSDK3 (3.3.1):
+    - ShareSDK3/ShareSDK (= 3.3.1)
+  - ShareSDK3/ShareSDK (3.3.1)
+  - ShareSDK3/ShareSDKPlatforms/QQ (3.3.1)
+  - ShareSDK3/ShareSDKPlatforms/SinaWeibo (3.3.1)
+  - ShareSDK3/ShareSDKPlatforms/WeChat (3.3.1)
+  - ShareSDK3/ShareSDKUI (3.3.1)
   - TTTAttributedLabel (1.13.4)
 
 DEPENDENCIES:
@@ -34,8 +42,14 @@ DEPENDENCIES:
   - Mantle
   - MBProgressHUD
   - MJRefresh
+  - MOBFoundation
   - SDAutoLayout
   - SDWebImage
+  - ShareSDK3
+  - ShareSDK3/ShareSDKPlatforms/QQ
+  - ShareSDK3/ShareSDKPlatforms/SinaWeibo
+  - ShareSDK3/ShareSDKPlatforms/WeChat
+  - ShareSDK3/ShareSDKUI
   - TTTAttributedLabel
 
 SPEC CHECKSUMS:
@@ -44,10 +58,12 @@ SPEC CHECKSUMS:
   Mantle: 299966b00759634931699f69cb6a30b9239b944d
   MBProgressHUD: 1569cf7ace17a8bac47aabfbb8580a49690386d1
   MJRefresh: 743e6404967d1c2c688472ea3ecfde247d872db4
+  MOBFoundation: 1a4f9865c777e76f069050c4990602c668126a89
   SDAutoLayout: ea6e2ae9fbb438aa2feb0c4363dba9297e98638a
   SDWebImage: 69c6303e3348fba97e03f65d65d4fbc26740f461
+  ShareSDK3: 8423b4dca9f5a3a210d536fc4f0c4b1555022810
   TTTAttributedLabel: 0a2ac7b2dd726d32a070dafb01446026b11e624f
 
-PODFILE CHECKSUM: ac27f8d1ef1362ea169e5e40d143a54185f90cfe
+PODFILE CHECKSUM: 780e04360b65a557249d76a4621a3a9d79ff5cc8
 
 COCOAPODS: 1.0.0.rc.1
