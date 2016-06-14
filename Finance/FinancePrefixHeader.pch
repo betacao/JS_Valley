@@ -16,9 +16,6 @@
 #import <AFNetworking/AFNetworking.h>
 #import <Mantle/Mantle.h>
 #import <MessageUI/MessageUI.h>
-#import <ShareSDK/ShareSDK.h>
-#import <TencentOpenAPI/QQApiInterface.h>
-#import <TencentOpenAPI/TencentOAuth.h>
 #import <AddressBook/AddressBook.h>
 #import "CircleActionDelegate.h"
 #import "MobClick.h"

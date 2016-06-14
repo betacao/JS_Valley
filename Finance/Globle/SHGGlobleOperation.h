@@ -12,8 +12,11 @@
 
 + (instancetype)sharedGloble;
 
+//关注
 + (void)registerAttationClass:(Class)CClass method:(SEL)selector;
 
 + (void)addAttation:(id)object;
 
+//分享
++ (void)share:(id)object;
 @end

@@ -10,6 +10,9 @@
 #import "SHGDiscoveryObject.h"
 #import "RecmdFriendObj.h"
 
+#import <ShareSDK/ShareSDK.h>
+#import <ShareSDKUI/ShareSDK+SSUI.h>
+
 @interface SHGGlobleOperation()
 
 @property (strong, nonatomic) NSMutableArray *attationArray;
@@ -27,6 +30,9 @@
     });
     return sharedGlobleInstance;
 }
+
+
+#pragma mark ------关注------
 
 - (NSMutableArray *)attationArray
 {
@@ -118,6 +124,31 @@
         }
 
     }];
+}
+
+
+#pragma mark ------分享------
++ (void)share:(id)object
+{
+    //1、创建分享参数
+    NSArray* imageArray = @[[UIImage imageNamed:@"80"]];
+    if (imageArray) {
+        NSMutableDictionary *shareParams = [NSMutableDictionary dictionary];
+        [shareParams SSDKSetupShareParamsByText:@"分享内容" images:imageArray url:[NSURL URLWithString:@"http://mob.com"] title:@"分享标题" type:SSDKContentTypeAuto];
+        //2、分享（可以弹出我们的分享菜单和编辑界面）
+        [ShareSDK showShareActionSheet:nil items:nil shareParams:shareParams onShareStateChanged:^(SSDKResponseState state, SSDKPlatformType platformType, NSDictionary *userData, SSDKContentEntity *contentEntity, NSError *error, BOOL end) {
+            switch (state) {
+                case SSDKResponseStateSuccess: {
+                    break;
+                }
+                case SSDKResponseStateFail: {
+                    break;
+                }
+                default:
+                    break;
+            }
+        }];
+    }
 }
 
 @end

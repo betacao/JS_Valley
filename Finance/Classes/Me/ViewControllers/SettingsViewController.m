@@ -260,9 +260,9 @@
             [[NSUserDefaults standardUserDefaults]synchronize];
             //退出shareSDK的登录
 
-            [ShareSDK cancelAuthWithType:ShareTypeSinaWeibo];
-            [ShareSDK cancelAuthWithType:ShareTypeWeixiSession];
-            [ShareSDK cancelAuthWithType:ShareTypeQQSpace];
+            [ShareSDK cancelAuthorize:SSDKPlatformTypeSinaWeibo];
+            [ShareSDK cancelAuthorize:SSDKPlatformTypeWechat];
+            [ShareSDK cancelAuthorize:SSDKPlatformSubTypeQZone];
 
             [AppDelegate currentAppdelegate].window.rootViewController = nav;
 

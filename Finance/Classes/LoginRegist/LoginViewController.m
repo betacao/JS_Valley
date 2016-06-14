@@ -13,7 +13,6 @@
 #import "WXApi.h"
 #import "BindPhoneViewController.h"
 #import "ApplyViewController.h"
-#import <QZoneConnection/ISSQZoneApp.h>
 
 @interface LoginViewController ()
 
@@ -55,7 +54,7 @@
 {
     self.navigationItem.leftBarButtonItem = nil;
     self.view.backgroundColor = Color(@"efeeef");
-    
+
     self.textUser.font = FontFactor(16.0f);
     self.textUser.textColor = Color(@"161616");
 
@@ -190,42 +189,37 @@
 
 - (IBAction)thirdPartyLog:(id)sender
 {
-    [ShareSDK cancelAuthWithType:ShareTypeSinaWeibo];
-    [ShareSDK cancelAuthWithType:ShareTypeWeixiSession];
-    [ShareSDK cancelAuthWithType:ShareTypeQQSpace];
+    [ShareSDK cancelAuthorize:SSDKPlatformTypeSinaWeibo];
+    [ShareSDK cancelAuthorize:SSDKPlatformTypeWechat];
+    [ShareSDK cancelAuthorize:SSDKPlatformSubTypeQZone];
     UIButton *button =(UIButton*)sender;
-    ShareType type;
-    NSString *logType=@"";
+    SSDKPlatformType type = SSDKPlatformTypeUnknown;
+    NSString *loginType = @"";
     switch (button.tag) {
         case 1000:
-            type = ShareTypeSinaWeibo;
-            logType = @"weibo";
+            type = SSDKPlatformTypeSinaWeibo;
+            loginType = @"weibo";
             break;
         case 1001:
-            type= ShareTypeWeixiSession;
-            logType = @"weixin";
+            type= SSDKPlatformTypeWechat;
+            loginType = @"weixin";
             break;
-        case 1002:{
-            type = ShareTypeQQSpace;
-            logType = @"qq";
-            id<ISSQZoneApp> app =(id<ISSQZoneApp>)[ShareSDK getClientWithType:ShareTypeQQSpace];
-            [app setIsAllowWebAuthorize:YES];
-        }
-
+        case 1002:
+            type = SSDKPlatformSubTypeQZone;
+            loginType = @"qq";
             break;
-
         default:
             break;
     }
     [Hud showWait];
-    [ShareSDK getUserInfoWithType:type authOptions:nil result:^(BOOL result, id<ISSPlatformUser> userInfo, id<ICMErrorInfo> error){
+    [ShareSDK getUserInfo:type onStateChanged:^(SSDKResponseState state, SSDKUser *user, NSError *error) {
         [Hud hideHud];
-        if (result){
+        if (user){
             [Hud showWait];
             __weak typeof(self) weakSelf = self;
             NSString *channelId = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_BPUSH_CHANNELID];
             NSString *userId = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_BPUSH_USERID];
-            NSDictionary *param = @{@"loginNum":[userInfo uid], @"loginType":logType, @"ctype":@"iPhone", @"os":@"iOS", @"osv":[UIDevice currentDevice].systemVersion, @"appv":LOCAL_Version, @"yuncid":channelId?:@"", @"yunuid":userId?:@"", @"phoneType":[SHGGloble sharedGloble].platform};
+            NSDictionary *param = @{@"loginNum":user.uid, @"loginType":loginType, @"ctype":@"iPhone", @"os":@"iOS", @"osv":[UIDevice currentDevice].systemVersion, @"appv":LOCAL_Version, @"yuncid":channelId?:@"", @"yunuid":userId?:@"", @"phoneType":[SHGGloble sharedGloble].platform};
 
             [MOCHTTPRequestOperationManager postWithURL:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"thirdLogin/isThirdLogin"] class:nil parameters:param success:^(MOCHTTPResponse *response){
                 [Hud hideHud];
@@ -239,9 +233,9 @@
                 NSString *area = response.dataDictionary[@"area"];
                 weakSelf.isFull = response.dataDictionary[@"isfull"];
                 [[NSUserDefaults standardUserDefaults] setObject:uid forKey:KEY_UID];
-                [[NSUserDefaults standardUserDefaults] setObject:[userInfo uid] forKey:KEY_THIRDPARTY_UID];
+                [[NSUserDefaults standardUserDefaults] setObject:user.uid forKey:KEY_THIRDPARTY_UID];
                 [[NSUserDefaults standardUserDefaults] setObject:weakSelf.isFull forKey:KEY_ISFULL];
-                [[NSUserDefaults standardUserDefaults] setObject:logType forKey:KEY_THIRDPARTY_TYPE];
+                [[NSUserDefaults standardUserDefaults] setObject:loginType forKey:KEY_THIRDPARTY_TYPE];
                 [[NSUserDefaults standardUserDefaults] setObject:state forKey:KEY_AUTHSTATE];
                 [[NSUserDefaults standardUserDefaults] setObject:name forKey:KEY_USER_NAME];
                 [[NSUserDefaults standardUserDefaults] setObject:area forKey:KEY_USER_AREA];
