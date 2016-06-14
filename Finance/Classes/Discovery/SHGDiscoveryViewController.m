@@ -323,14 +323,12 @@
 - (void)setEffctiveArray:(NSArray *)effctiveArray
 {
     _effctiveArray = effctiveArray;
-    //先做一次清空 然后再赋值
-    for (SHGDiscoveryCategoryButton *button in self.buttonView.subviews) {
-        SHGDiscoveryObject *object = button.object;
-        object.industryNum = @"0";
-    }
-    for (SHGDiscoveryObject *object in effctiveArray) {
-        if ([self.dataArray containsObject:object]) {
-            SHGDiscoveryCategoryButton *button = [self.buttonView.subviews objectAtIndex:[self.dataArray indexOfObject:object]];
+
+    for (SHGDiscoveryObject *object in self.dataArray) {
+        SHGDiscoveryCategoryButton *button = [self.buttonView.subviews objectAtIndex:[self.dataArray indexOfObject:object]];
+        if ([effctiveArray containsObject:object]) {
+            button.object = [effctiveArray objectAtIndex:[effctiveArray indexOfObject:object]];
+        } else{
             button.object = object;
         }
     }
