@@ -61,6 +61,9 @@
         if ([object isKindOfClass:NSClassFromString(@"UISearchBarBackground")]) {
         } else if ([object isKindOfClass:NSClassFromString(@"UISearchBarTextField")]) {
 
+            UITextField *textField = (UITextField *)object;
+            [textField setValue:Color(@"bebebe") forKeyPath:@"_placeholderLabel.textColor"];
+
         } else if ([object isKindOfClass:NSClassFromString(@"UINavigationButton")]){
             UIButton *button = (UIButton *)object;
             button.enabled = YES;

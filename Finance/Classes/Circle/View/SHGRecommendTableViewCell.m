@@ -186,7 +186,7 @@
         .topSpaceToView(header, MarginFactor(12.0f))
         .rightSpaceToView(view, 0.0f)
         .leftEqualToView(header)
-        .heightIs(0.5f);
+        .heightIs(1 / SCALE);
 
         if ([view isEqual:self.firstContentView]) {
             view.sd_layout

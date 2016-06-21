@@ -161,13 +161,13 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
     self.leftVerticalLine.sd_layout
     .centerXIs(SCREENWIDTH / 3.0)
     .centerYEqualToView(self.inPutView)
-    .widthIs(0.5f)
+    .widthIs(1 / SCALE)
     .heightIs(MarginFactor(20.0f));
     
     self.rightVerticalLine.sd_layout
     .centerXIs(2 * SCREENWIDTH / 3.0)
     .centerYEqualToView(self.inPutView)
-    .widthIs(0.5f)
+    .widthIs(1 / SCALE)
     .heightIs(MarginFactor(20.0f));
     
     self.collectionButton.titleEdgeInsets = UIEdgeInsetsMake(0.0f, MarginFactor(8.0f), 0.0f, 0.0f);
@@ -203,7 +203,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
     .leftSpaceToView(self.inPutView, 0.0f)
     .rightSpaceToView(self.inPutView, 0.0f)
     .topSpaceToView(self.inPutView, 0.0f)
-    .heightIs(0.5f);
+    .heightIs(1 / SCALE);
     
     
     
@@ -255,7 +255,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
     self.centerLine.sd_layout
     .centerYEqualToView(self.moneyAndUserView)
     .centerXEqualToView(self.moneyAndUserView)
-    .widthIs(0.5f)
+    .widthIs(1 / SCALE)
     .heightIs(MarginFactor(35.0f));
     
     self.moneyLabel.sd_layout
@@ -282,7 +282,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
     .leftSpaceToView(self.moneyAndUserView, 0.0f)
     .rightSpaceToView(self.moneyAndUserView, 0.0f)
     .bottomSpaceToView(self.moneyAndUserView, 0.0f)
-    .heightIs(0.5f);
+    .heightIs(1 / SCALE);
     
     self.firstGrayView.sd_layout
     .leftSpaceToView(self.headerView, 0.0f)
@@ -300,7 +300,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
     .leftSpaceToView(self.businessMessageView, 0.0f)
     .rightSpaceToView(self.businessMessageView, 0.0f)
     .topSpaceToView(self.businessMessageView, 0.0f)
-    .heightIs(0.5f);
+    .heightIs(1 / SCALE);
     
     self.businessMessageLabel.sd_layout
     .leftSpaceToView(self.businessMessageView, MarginFactor(14.0f))
@@ -312,7 +312,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
     .leftEqualToView(self.businessMessageLabel)
     .rightSpaceToView(self.businessMessageView, MarginFactor(14.0f))
     .topSpaceToView(self.businessMessageLabel, 0.0f)
-    .heightIs(0.5f);
+    .heightIs(1 / SCALE);
     
     self.businessMessageLabelView.sd_layout
     .leftEqualToView(self.secondHorizontalLine)
@@ -337,7 +337,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
     .leftSpaceToView(self.headerView, 0.0f)
     .rightSpaceToView(self.headerView, 0.0f)
     .topSpaceToView(self.businessMessageView, MarginFactor(13.0f))
-    .heightIs(0.5f);
+    .heightIs(1 / SCALE);
     
     self.secondGrayView.sd_layout
     .leftSpaceToView(self.headerView, 0.0f)
@@ -355,7 +355,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
     .leftSpaceToView(self.BPView, 0.0f)
     .rightSpaceToView(self.BPView, 0.0f)
     .topSpaceToView(self.BPView, 0.0f)
-    .heightIs(0.5f);
+    .heightIs(1 / SCALE);
     
     self.BPLabel.sd_layout
     .leftSpaceToView(self.BPView, MarginFactor(14.0f))
@@ -394,7 +394,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
     .leftSpaceToView(self.headerView, 0.0f)
     .rightSpaceToView(self.headerView, 0.0f)
     .topSpaceToView(self.secondGrayView, 0.0f)
-    .heightIs(0.5f);
+    .heightIs(1 / SCALE);
     
     self.businessRepresentLabel.sd_layout
     .leftSpaceToView(self.headerView, MarginFactor(14.0f))
@@ -406,7 +406,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
     .leftEqualToView(self.businessRepresentLabel)
     .rightEqualToView(self.businessRepresentLabel)
     .topSpaceToView(self.businessRepresentLabel, 1.0f)
-    .heightIs(0.5);
+    .heightIs(1 / SCALE);
     
     self.contentTextView.sd_layout
     .leftEqualToView(self.thirdHorizontalLine)
@@ -774,7 +774,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
         .leftSpaceToView(self.headerView, 0.0f)
         .rightSpaceToView(self.headerView, 0.0f)
         .topSpaceToView(self.BPView, 0.0f)
-        .heightIs(0.5f);
+        .heightIs(1 / SCALE);
         self.businessRepresentLabel.sd_resetLayout
         .leftSpaceToView(self.headerView, MarginFactor(14.0f))
         .rightSpaceToView(self.headerView, MarginFactor(14.0f))
