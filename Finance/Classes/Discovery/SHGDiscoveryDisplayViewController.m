@@ -243,6 +243,7 @@
 {
     if (self.dataArr.count > 0) {
         SHGDiscoveryDepartmentObject *object = [self.dataArr objectAtIndex:indexPath.row];
+        [[SHGGloble sharedGloble] recordUserAction:object.userID type:@"personalDynamic_index"];
         if ([object isKindOfClass:[SHGDiscoveryDepartmentObject class]]) {
             SHGPersonalViewController *viewController = [[SHGPersonalViewController alloc] init];
             viewController.userId = object.userID;
@@ -272,6 +273,7 @@
     [searchBar resignFirstResponder];
     [searchBar setShowsCancelButton:NO animated:YES];
     self.searchText = searchBar.text;
+    [[SHGGloble sharedGloble] recordUserAction:self.searchBar.text type:@"newdiscover_searcher"];
 }
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
@@ -662,6 +664,7 @@
     [searchBar resignFirstResponder];
     [searchBar setShowsCancelButton:NO animated:YES];
     self.searchText = searchBar.text;
+    [[SHGGloble sharedGloble] recordUserAction:self.searchBar.text type:@"newdiscover_searcher"];
     [self loadDataWithTarget:@"first"];
 }
 

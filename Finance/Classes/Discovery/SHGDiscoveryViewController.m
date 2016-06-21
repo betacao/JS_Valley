@@ -343,8 +343,10 @@
 
 - (void)buttonClick:(SHGDiscoveryCategoryButton *)button
 {
+    SHGDiscoveryObject *object = button.object;
     SHGDiscoveryDisplayViewController *controller = [[SHGDiscoveryDisplayViewController alloc] init];
     controller.object = button.object;
+    [[SHGGloble sharedGloble] recordUserAction:object.industryName type:@"newdiscover_industry"];
     [[SHGDiscoveryViewController sharedController].navigationController pushViewController:controller animated:YES];
 }
 

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -28,6 +28,10 @@
                 <outlet property="nameView" destination="p9Z-h7-nHk" id="RZg-Fj-9vw"/>
                 <outlet property="nextButton" destination="YGg-3m-IxA" id="bBI-pY-RNK"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+                <outlet property="waringDeleteButton" destination="8M4-34-aEY" id="PZk-Ao-Qqm"/>
+                <outlet property="waringLineView" destination="wzo-Xc-gwO" id="Gg2-Ut-ebD"/>
+                <outlet property="warningLabel" destination="jQS-4N-KVu" id="Qun-C3-i4F"/>
+                <outlet property="warningView" destination="dCP-RR-zj1" id="ABh-re-ca2"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -43,6 +47,33 @@
                             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
+                                <view contentMode="scaleToFill" id="dCP-RR-zj1">
+                                    <rect key="frame" x="0.0" y="251" width="320" height="66"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="jQS-4N-KVu">
+                                            <rect key="frame" x="17" y="22" width="42" height="21"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" red="0.54117647058823526" green="0.52549019607843139" blue="0.32941176470588235" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <view contentMode="scaleToFill" id="wzo-Xc-gwO">
+                                            <rect key="frame" x="40" y="58" width="240" height="19"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="8M4-34-aEY">
+                                            <rect key="frame" x="239" y="22" width="68" height="40"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <state key="normal" image="me_deleteInput"/>
+                                            <connections>
+                                                <action selector="waringDeleteButtonClick:" destination="-1" eventType="touchUpInside" id="U86-ZA-eNU"/>
+                                            </connections>
+                                        </button>
+                                    </subviews>
+                                    <color key="backgroundColor" red="1" green="0.99607843137254903" blue="0.95294117647058818" alpha="1" colorSpace="calibratedRGB"/>
+                                </view>
                                 <view contentMode="scaleToFill" id="ztV-f1-jcF">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="45"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -188,11 +219,12 @@
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <nil key="simulatedStatusBarMetrics"/>
-            <point key="canvasLocation" x="180" y="209"/>
+            <point key="canvasLocation" x="55" y="115"/>
         </view>
     </objects>
     <resources>
         <image name="me_authTip" width="375" height="50"/>
         <image name="me_authTitletip" width="375" height="55"/>
+        <image name="me_deleteInput" width="14" height="14"/>
     </resources>
 </document>

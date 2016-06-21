@@ -69,7 +69,7 @@
     NSArray *array1 = @[[[SHGGlobleModel alloc] initWithText:@"我的业务" lineViewHidden:YES accessoryViewHidden:NO]];
     NSArray *array2 = @[[[SHGGlobleModel alloc] initWithText:@"邀请好友加入大牛圈" lineViewHidden:NO accessoryViewHidden:YES], [[SHGGlobleModel alloc] initWithText:@"更新通讯录到大牛圈" lineViewHidden:YES accessoryViewHidden:YES]];
     NSArray *array3 = @[[[SHGGlobleModel alloc] initWithText:@"设置" lineViewHidden:YES accessoryViewHidden:NO]];
-    self.titleArray = @[array0, array1, array2, array3];
+    self.titleArray = @[array1, array0, array2, array3];
 
     [self addHeaderRefresh:self.tableView headerRefesh:YES andFooter:NO];
     self.tableHeaderView.backgroundColor = [UIColor whiteColor];;

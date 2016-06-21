@@ -233,6 +233,7 @@
     [searchBar resignFirstResponder];
     [searchBar setShowsCancelButton:NO animated:YES];
     self.searchText = searchBar.text;
+    [[SHGGloble sharedGloble] recordUserAction:self.searchBar.text type:@"newdiscover_searcher"];
     [self loadDataWithTarget:@"first"];
 }
 

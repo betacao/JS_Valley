@@ -55,14 +55,17 @@
         SHGDiscoveryPeopleObject *peopleObject = (SHGDiscoveryPeopleObject *)object;
         targetUserID = peopleObject.userID;
         attationState = peopleObject.isAttention;
+        [[SHGGloble sharedGloble] recordUserAction:targetUserID type:@"newdiscover_attention"];
     } else if ([object isKindOfClass:[SHGDiscoveryDepartmentObject class]]) {
         SHGDiscoveryDepartmentObject *departmentObject = (SHGDiscoveryDepartmentObject *)object;
         targetUserID = departmentObject.userID;
         attationState = departmentObject.isAttention;
+        [[SHGGloble sharedGloble] recordUserAction:targetUserID type:@"newdiscover_attention"];
     } else if ([object isKindOfClass:[SHGDiscoveryRecommendObject class]]) {
         SHGDiscoveryRecommendObject *recommendObject = (SHGDiscoveryRecommendObject *)object;
         targetUserID = recommendObject.userID;
         attationState = recommendObject.isAttention;
+        [[SHGGloble sharedGloble] recordUserAction:targetUserID type:@"newdiscover_attention"];
     } else if ([object isKindOfClass:[RecmdFriendObj class]]) {
         RecmdFriendObj *friendObject = (RecmdFriendObj *)object;
         targetUserID = friendObject.uid;

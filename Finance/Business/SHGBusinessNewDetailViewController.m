@@ -27,13 +27,14 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
     SHGTapPhoneTypeSendMessage
 };
 
-@interface SHGBusinessNewDetailViewController ()<CircleActionDelegate,SHGBusinessCommentDelegate,BRCommentViewDelegate,UITableViewDataSource,UITableViewDelegate,UIActionSheetDelegate>
+@interface SHGBusinessNewDetailViewController ()<CircleActionDelegate,SHGBusinessCommentDelegate,BRCommentViewDelegate,UITableViewDataSource,UITableViewDelegate,UIActionSheetDelegate,UIScrollViewDelegate>
 {
     UIView *PickerBackView;
 }
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) IBOutlet UIView *headerView;
 @property (strong, nonatomic) IBOutlet UIView *inPutView;
+@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 
 //头部redView
 @property (weak, nonatomic) IBOutlet UIView *redView;
@@ -67,16 +68,26 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
 @property (weak, nonatomic) IBOutlet UIView *businessMessageTopLine;
 @property (weak, nonatomic) IBOutlet UIView *businessMessageBpttomLine;
 
+//企业信息
+@property (strong, nonatomic) IBOutlet UIView *companyView;
+@property (weak, nonatomic) IBOutlet UILabel *companyLabel;
+@property (weak, nonatomic) IBOutlet SHGCopyTextView *companyTextView;
+@property (weak, nonatomic) IBOutlet UIView *companyTopLIneView;
+@property (weak, nonatomic) IBOutlet UIView *companyCenterLineView;
+@property (weak, nonatomic) IBOutlet UIView *companyBottomLineView;
+@property (weak, nonatomic) IBOutlet UIView *companyBottomView;
+
+//业务信息
+@property (strong, nonatomic) IBOutlet UIView *representView;
 @property (weak, nonatomic) IBOutlet UIView *representLabelTopine;
-//
 @property (weak, nonatomic) IBOutlet UILabel *businessRepresentLabel;
 @property (weak, nonatomic) IBOutlet UIView *thirdHorizontalLine;
 @property (weak, nonatomic) IBOutlet SHGCopyTextView *contentTextView;
 
 //inputView
 @property (weak, nonatomic) IBOutlet UIButton *collectionButton;
+@property (weak, nonatomic) IBOutlet UIButton *phoneButton;
 @property (weak, nonatomic) IBOutlet UIButton *commentButton;
-@property (weak, nonatomic) IBOutlet UIButton *shareButton;
 @property (weak, nonatomic) IBOutlet UIView *leftVerticalLine;
 @property (weak, nonatomic) IBOutlet UIView *rightVerticalLine;
 @property (weak, nonatomic) IBOutlet UIView *inputTopLine;
@@ -105,6 +116,8 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
 @property (assign, nonatomic) SHGTapPhoneType type;
 
 @property (assign, nonatomic) BOOL isChangeCollection;
+
+
 @end
 
 @implementation SHGBusinessNewDetailViewController
@@ -113,15 +126,24 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
     [super viewDidLoad];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
+    self.scrollView.delegate = self;
     self.isChangeCollection = YES;
+    self.rightItemtitleName = @"分享";
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shareToFriendSuccess:) name:NOTIFI_ACTION_SHARE_TO_FRIENDSUCCESS object:nil];
     [self.tableView setTableFooterView:[[UIView alloc] init]];
+    [self.headerView addSubview:self.redView];
+    [self.headerView addSubview:self.moneyAndUserView];
+    [self.headerView addSubview:self.businessMessageView];
+    [self.headerView addSubview:self.BPView];
+    [self.headerView addSubview:self.companyView];
+    [self.headerView addSubview:self.representView];
     [self initView];
     [self addSdLayout];
     [self initData];
     
 }
+
 
 - (NSMutableArray *)phoneArray
 {
@@ -172,7 +194,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
     
     self.collectionButton.titleEdgeInsets = UIEdgeInsetsMake(0.0f, MarginFactor(8.0f), 0.0f, 0.0f);
     self.commentButton.titleEdgeInsets = UIEdgeInsetsMake(0.0f, MarginFactor(8.0f), 0.0f, 0.0f);
-    self.shareButton.titleEdgeInsets = UIEdgeInsetsMake(0.0f, MarginFactor(8.0f), 0.0f, 0.0f);
+    self.phoneButton.titleEdgeInsets = UIEdgeInsetsMake(0.0f, MarginFactor(8.0f), 0.0f, 0.0f);
     self.editButton.titleEdgeInsets = UIEdgeInsetsMake(0.0f, MarginFactor(8.0f), 0.0f, 0.0f);
     
     self.collectionButton.sd_layout
@@ -193,7 +215,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
     .rightSpaceToView(self.rightVerticalLine, 0.0f)
     .heightRatioToView(self.inPutView, 1.0f);
     
-    self.shareButton.sd_layout
+    self.phoneButton.sd_layout
     .centerYEqualToView(self.inPutView)
     .leftSpaceToView(self.rightVerticalLine, 0.0f)
     .rightSpaceToView(self.inPutView, 0.0f)
@@ -205,13 +227,16 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
     .topSpaceToView(self.inPutView, 0.0f)
     .heightIs(1 / SCALE);
     
-    
+    self.headerView.sd_layout
+    .topSpaceToView(self.scrollView, 0.0f)
+    .leftSpaceToView(self.scrollView, 0.0f)
+    .rightSpaceToView(self.scrollView, 0.0f);
     
     //redView
     self.redView.sd_layout
-    .topSpaceToView(self.view, 0.0f)
-    .leftSpaceToView(self.view, 0.0f)
-    .rightSpaceToView(self.view, 0.0f)
+    .topSpaceToView(self.headerView, 0.0f)
+    .leftSpaceToView(self.headerView, 0.0f)
+    .rightSpaceToView(self.headerView, 0.0f)
     .heightIs(MarginFactor(124.0f));
     
     self.titleNameLabel.sd_layout
@@ -219,9 +244,9 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
     .centerXEqualToView(self.redView)
     .heightIs(self.titleNameLabel.font.lineHeight);
     [self.titleNameLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
-    
+
     self.titleDetailLabel.sd_layout
-    .centerYIs(self.redView.centerY - MarginFactor(20.0f) - MarginFactor(10.0f))
+    .topSpaceToView(self.redView, 0.0f)
     .centerXEqualToView(self.redView)
     .widthIs(MarginFactor(240.0f))
     .heightIs(MarginFactor(83.0f));
@@ -249,7 +274,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
     self.moneyAndUserView.sd_layout
     .leftSpaceToView(self.headerView, 0.0f)
     .rightSpaceToView(self.headerView, 0.0f)
-    .topSpaceToView(self.headerView, 0.0f)
+    .topSpaceToView(self.redView, 0.0f)
     .heightIs(MarginFactor(55.0f));
     
     self.centerLine.sd_layout
@@ -390,15 +415,64 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
    
     [self.BPView setupAutoHeightWithBottomView:self.thirdGaryView bottomMargin:0.0f];
     
-    self.representLabelTopine.sd_layout
+    //企业信息
+    self.companyView.sd_layout
     .leftSpaceToView(self.headerView, 0.0f)
     .rightSpaceToView(self.headerView, 0.0f)
-    .topSpaceToView(self.secondGrayView, 0.0f)
+    .topSpaceToView(self.secondGrayView, 0.0f);
+    
+    self.companyTopLIneView.sd_layout
+    .leftSpaceToView(self.companyView, 0.0f)
+    .rightSpaceToView(self.companyView, 0.0f)
+    .topSpaceToView(self.companyView, 0.0f)
+    .heightIs(1 / SCALE);
+    
+    self.companyLabel.sd_layout
+    .leftSpaceToView(self.companyView, MarginFactor(14.0f))
+    .rightSpaceToView(self.companyView, MarginFactor(14.0f))
+    .topSpaceToView(self.companyTopLIneView, 0.0f)
+    .heightIs(MarginFactor(44.0f));
+    
+    self.companyCenterLineView.sd_layout
+    .leftEqualToView(self.companyLabel)
+    .rightEqualToView(self.companyLabel)
+    .topSpaceToView(self.companyLabel, 1.0f)
+    .heightIs(1 / SCALE);
+    
+    self.companyTextView.sd_layout
+    .leftEqualToView(self.companyCenterLineView)
+    .rightEqualToView(self.companyCenterLineView)
+    .topSpaceToView(self.companyCenterLineView, MarginFactor(15.0f));
+    
+    self.companyBottomLineView.sd_layout
+    .leftSpaceToView(self.companyView, 0.0f)
+    .rightSpaceToView(self.companyView, 0.0f)
+    .topSpaceToView(self.companyTextView, MarginFactor(15.0f))
+    .heightIs(1 / SCALE);
+    
+    self.companyBottomView.sd_layout
+    .topSpaceToView(self.companyBottomLineView, 0.0f)
+    .leftSpaceToView(self.companyView, 0.0f)
+    .rightSpaceToView(self.companyView, 0.0f)
+    .heightIs(MarginFactor(10.0f));
+    
+    [self.companyView setupAutoHeightWithBottomView:self.companyBottomView bottomMargin:0.0f];
+    
+    //业务描述
+    self.representView.sd_layout
+    .leftSpaceToView(self.headerView, 0.0f)
+    .rightSpaceToView(self.headerView, 0.0f)
+    .topSpaceToView(self.companyView, 0.0f);
+    
+    self.representLabelTopine.sd_layout
+    .leftSpaceToView(self.representView, 0.0f)
+    .rightSpaceToView(self.representView, 0.0f)
+    .topSpaceToView(self.representView, 0.0f)
     .heightIs(1 / SCALE);
     
     self.businessRepresentLabel.sd_layout
-    .leftSpaceToView(self.headerView, MarginFactor(14.0f))
-    .rightSpaceToView(self.headerView, MarginFactor(14.0f))
+    .leftSpaceToView(self.representView, MarginFactor(14.0f))
+    .rightSpaceToView(self.representView, MarginFactor(14.0f))
     .topSpaceToView(self.representLabelTopine, 0.0f)
     .heightIs(MarginFactor(44.0f));
     
@@ -413,27 +487,33 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
     .rightEqualToView(self.thirdHorizontalLine)
     .topSpaceToView(self.thirdHorizontalLine, MarginFactor(15.0f));
     
+    [self.representView setupAutoHeightWithBottomView:self.contentTextView bottomMargin:MarginFactor(15.0f)];
+    
     self.photoView = [[UIView alloc] init];
     [self.headerView addSubview:self.photoView];
     self.photoView.sd_layout
     .leftSpaceToView(self.headerView, MarginFactor(15.0f))
     .rightSpaceToView(self.headerView, MarginFactor(15.0f))
-    .topSpaceToView(self.contentTextView,0.0f)
+    .topSpaceToView(self.representView,0.0f)
     .heightIs(0.0f);
     
     [self.headerView setupAutoHeightWithBottomView:self.photoView bottomMargin:MarginFactor(15.0f)];
+    [self.scrollView setupAutoHeightWithBottomView:self.headerView bottomMargin:MarginFactor(10.0f)];
     
-    [self.tableView setTableHeaderView:self.headerView];
+    [self.tableView setTableHeaderView:self.scrollView];
     
     self.tableView.sd_layout
     .leftSpaceToView(self.view, 0.0f)
     .rightSpaceToView(self.view, 0.0f)
-    .topSpaceToView(self.redView,0.0f)
+    .topSpaceToView(self.view,0.0f)
     .bottomSpaceToView(self.inPutView, 0.0f);
 }
 
 - (void)initView
 {
+    self.scrollView.showsHorizontalScrollIndicator = NO;
+    self.scrollView.showsVerticalScrollIndicator = NO;
+    self.tableView.bounces = NO;
     self.titleNameLabel.hidden = YES;
     [self.userButton setEnlargeEdgeWithTop:10.0f right:0.0f bottom:10.0f left:150.0f];
     UITapGestureRecognizer *tableHeaderViewRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapTableHeaderView:)];
@@ -445,9 +525,9 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
     self.inputTopLine.backgroundColor = Color(@"e2e2e2");
     [self.collectionButton setTitleColor:Color(@"a5a5a5") forState:UIControlStateNormal];
     [self.commentButton setTitleColor:Color(@"a5a5a5") forState:UIControlStateNormal];
-    [self.shareButton setTitleColor:Color(@"a5a5a5") forState:UIControlStateNormal];
+    [self.phoneButton setTitleColor:Color(@"a5a5a5") forState:UIControlStateNormal];
     [self.editButton setTitleColor:Color(@"a5a5a5") forState:UIControlStateNormal];
-    self.editButton.titleLabel.font = self.collectionButton.titleLabel.font = self.commentButton.titleLabel.font = self.shareButton.titleLabel.font = FontFactor(15.0f);
+    self.editButton.titleLabel.font = self.collectionButton.titleLabel.font = self.commentButton.titleLabel.font = self.phoneButton.titleLabel.font = FontFactor(15.0f);
     
     //redView
     self.redView.backgroundColor = Color(@"f04f46");
@@ -462,15 +542,16 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
     self.userLabel.numberOfLines = self.moneyLabel.numberOfLines = 0;
     self.moneyLabel.textAlignment = self.userLabel.textAlignment = NSTextAlignmentCenter;
     
-    self.firstGrayView.backgroundColor = self.secondGrayView.backgroundColor = self.thirdGaryView.backgroundColor = Color(@"f7f7f7");
+    self.firstGrayView.backgroundColor = self.secondGrayView.backgroundColor = self.thirdGaryView.backgroundColor = self.companyBottomView.backgroundColor = Color(@"f7f7f7");
     self.secondHorizontalLine.backgroundColor = self.thirdHorizontalLine.backgroundColor = self.centerLine.backgroundColor = Color(@"e6e7e8");
-    self.userBottomLine.backgroundColor = self.businessMessageBpttomLine.backgroundColor = self.businessMessageTopLine.backgroundColor = self.BPBottomLine.backgroundColor = self.BPTopLine.backgroundColor = self.representLabelTopine.backgroundColor = Color(@"e6e7e8");
-    self.businessMessageLabel.font = FontFactor(16.0f);
-    self.businessMessageLabel.textColor = Color(@"3A3A3A");
+    self.userBottomLine.backgroundColor = self.businessMessageBpttomLine.backgroundColor = self.businessMessageTopLine.backgroundColor = self.BPBottomLine.backgroundColor = self.BPTopLine.backgroundColor = self.representLabelTopine.backgroundColor = self.companyTopLIneView.backgroundColor = self.companyCenterLineView.backgroundColor = self.companyBottomLineView.backgroundColor = Color(@"e6e7e8");
     
-    self.contentTextView.editable = NO;
-    self.contentTextView.scrollEnabled = NO;
-    self.contentTextView.textContainerInset = UIEdgeInsetsMake(0, -5.0f, 0, 0);
+    self.businessMessageLabel.font = self.businessRepresentLabel.font = self.companyLabel.font = FontFactor(16.0f);
+    self.businessMessageLabel.textColor = self.businessRepresentLabel.textColor = self.companyLabel.textColor = Color(@"3A3A3A");
+    
+    self.contentTextView.editable = self.companyTextView.editable = NO;
+    self.contentTextView.scrollEnabled = self.companyTextView.scrollEnabled = NO;
+    self.contentTextView.textContainerInset = self.companyTextView.textContainerInset = UIEdgeInsetsMake(0, -5.0f, 0, 0);
     
 }
 
@@ -507,12 +588,16 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
 - (void)loadData
 {
     [self addEmptyViewIfNeeded];
+    
     [self loadCollectButtonState];
+    
     [self loadRedView];
     
     [self loadUserAndMoneyView];
     
     [self loadBusinessMessageView];
+    
+    [self loadCompanyView];
     
     [self loadBPView];
     if ([UID isEqualToString:self.responseObject.createBy]) {
@@ -530,8 +615,8 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
     
     CGSize size = [self.contentTextView sizeThatFits:CGSizeMake(SCREENWIDTH - 2 * MarginFactor(12.0f), CGFLOAT_MAX)];
     self.contentTextView.sd_resetLayout
-    .leftSpaceToView(self.headerView, MarginFactor(14.0f))
-    .rightSpaceToView(self.headerView, MarginFactor(14.0f))
+    .leftSpaceToView(self.representView, MarginFactor(14.0f))
+    .rightSpaceToView(self.representView, MarginFactor(14.0f))
     .topSpaceToView(self.thirdHorizontalLine, MarginFactor(15.0f))
     .heightIs(size.height);
     
@@ -539,7 +624,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
         self.photoView.sd_resetLayout
         .leftSpaceToView(self.headerView, MarginFactor(15.0f))
         .rightSpaceToView(self.headerView, MarginFactor(15.0f))
-        .topSpaceToView(self.contentTextView, MarginFactor(15.0f))
+        .topSpaceToView(self.representView, MarginFactor(15.0f))
         .heightIs(MarginFactor(135.0f) + 64.0f);
         self.photoView.clipsToBounds = YES;
         SDPhotoGroup * photoGroup = [[SDPhotoGroup alloc] init];
@@ -708,7 +793,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
         UILabel *leftLabel = [[UILabel alloc] init];
         leftLabel.textAlignment = NSTextAlignmentLeft;
         leftLabel.textColor = Color(@"8d8d8d");
-        leftLabel.font = FontFactor(12.0f);
+        leftLabel.font = FontFactor(14.0f);
         leftLabel.text = [leftArray objectAtIndex:i];
         leftLabel.frame = CGRectMake(0.0f, height +  i * topMargin - 1, MarginFactor(100.0f),leftLabel.font.lineHeight);
         [self.businessMessageLabelView addSubview:leftLabel];
@@ -724,7 +809,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
     
     self.phoneLabel.textAlignment = NSTextAlignmentLeft;
     self.phoneLabel.textColor = Color(@"8d8d8d");
-    self.phoneLabel.font = FontFactor(12.0f);
+    self.phoneLabel.font = FontFactor(14.0f);
     self.phoneLabel.text = [leftArray objectAtIndex:rightArray.count - 2];
     
     self.phoneTextView.font = BoldFontFactor(15.0f);
@@ -770,16 +855,10 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
     if (self.responseObject.bpnameList) {
         self.BPView.hidden = NO;
         self.BPLine.backgroundColor = Color(@"e6e7e8");
-        self.representLabelTopine.sd_resetLayout
+        self.companyView.sd_resetLayout
         .leftSpaceToView(self.headerView, 0.0f)
         .rightSpaceToView(self.headerView, 0.0f)
-        .topSpaceToView(self.BPView, 0.0f)
-        .heightIs(1 / SCALE);
-        self.businessRepresentLabel.sd_resetLayout
-        .leftSpaceToView(self.headerView, MarginFactor(14.0f))
-        .rightSpaceToView(self.headerView, MarginFactor(14.0f))
-        .topSpaceToView(self.representLabelTopine, 0.0f)
-        .heightIs(MarginFactor(44.0f));
+        .topSpaceToView(self.BPView, 0.0f);
         self.BPLabel.text = @"项目BP";
         CGFloat buttonWidth = SCREENWIDTH / 3.0;
         CGFloat labelWidth = (SCREENWIDTH - MarginFactor(60.0f)) / 3.0;
@@ -808,7 +887,6 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
             } else{
                 nameLabel.text = obj.bpName;
             }
-            
             nameLabel.numberOfLines = 0;
             nameLabel.font = FontFactor(11.0f);
             nameLabel.textColor = Color(@"8d8d8d");
@@ -824,6 +902,21 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
     
 }
 
+- (void)loadCompanyView
+{
+    self.companyLabel.text = @"企业信息";
+    NSMutableParagraphStyle * contentParagraphStyle = [[NSMutableParagraphStyle alloc] init];
+    [contentParagraphStyle setLineSpacing:MarginFactor(5.0f)];
+    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:self.responseObject.detail attributes:@{NSFontAttributeName:FontFactor(14.0f), NSForegroundColorAttributeName: Color(@"3a3a3a"), NSParagraphStyleAttributeName:contentParagraphStyle}];
+    self.companyTextView.attributedText = attributedString;
+    
+    CGSize size = [self.companyTextView sizeThatFits:CGSizeMake(SCREENWIDTH - 2 * MarginFactor(12.0f), CGFLOAT_MAX)];
+    self.companyTextView.sd_resetLayout
+    .leftSpaceToView(self.companyView, MarginFactor(14.0f))
+    .rightSpaceToView(self.companyView, MarginFactor(14.0f))
+    .topSpaceToView(self.companyCenterLineView, MarginFactor(15.0f))
+    .heightIs(size.height);
+}
 
 - (void)pdfButtonClick:(SHGBusinessCategoryButton *)btn
 {
@@ -898,6 +991,27 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
     }
 }
 
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    [self.phoneTextView resignFirstResponder];
+    [self.contentTextView resignFirstResponder];
+    if (scrollView.contentOffset.y > MarginFactor(120.0f) ){
+        [UIView beginAnimations:nil context:nil];
+        //[UIView setAnimationCurve:UIViewAnimationCurveEaseIn];
+        [UIView setAnimationDuration:1.0];
+        [UIView setAnimationDelegate:self];
+        self.title = @"业务详情";
+        [UIView commitAnimations];
+    }
+    if (scrollView.contentOffset.y < MarginFactor(120.0f) ){
+        [UIView beginAnimations:nil context:nil];
+        //[UIView setAnimationCurve:UIViewAnimationCurveEaseIn];
+        [UIView setAnimationDuration:1.0];
+        [UIView setAnimationDelegate:self];
+        self.title = @"";
+        [UIView commitAnimations];
+    }
+}
 
 #pragma mark -- 删除评论
 - (void)longPressGesturecognized:(id)sender
@@ -1148,7 +1262,12 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
     
 }
 
-- (IBAction)share:(id)sender
+- (IBAction)phoneNumClick:(UIButton *)sender
+{
+    
+}
+
+- (void)shareClick:(id)sender
 {
     [[SHGGloble sharedGloble] recordUserAction:[NSString stringWithFormat:@"%@#%@", self.responseObject.businessID, self.responseObject.type] type:@"business_share"];
     [[SHGBusinessManager shareManager] shareAction:self.responseObject baseController:self finishBlock:^(BOOL success) {
