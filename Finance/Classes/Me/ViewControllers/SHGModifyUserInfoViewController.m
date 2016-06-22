@@ -9,6 +9,7 @@
 #import "SHGModifyUserInfoViewController.h"
 #import "SHGItemChooseView.h"
 #import "SHGProvincesViewController.h"
+#import "SHGAuthenticationWarningView.h"
 
 @interface SHGModifyUserInfoViewController ()<UIActionSheetDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, SHGItemChooseDelegate,SHGAreaDelegate>
 
@@ -35,6 +36,8 @@
 @property (weak, nonatomic) IBOutlet UIImageView *authTipView;
 @property (weak, nonatomic) IBOutlet UIButton *authButton;
 
+@property (strong, nonatomic) SHGAuthenticationWarningView *warningView;
+
 @property (strong, nonatomic) NSString *nickName;
 @property (strong, nonatomic) NSString *department;
 @property (strong, nonatomic) NSString *company;
@@ -54,7 +57,7 @@
 {
     [super viewDidLoad];
     self.title = @"个人信息";
-    [self addSdLayout];
+
     self.nickName = [self.userInfo objectForKey:kNickName];
     self.department = [self.userInfo objectForKey:kDepartment];
     self.company = [self.userInfo objectForKey:kCompany];
@@ -66,6 +69,7 @@
     [self.headView addGestureRecognizer:recognizer];
 
     [self initView];
+    [self addSdLayout];
     //请求状态
     __weak typeof(self)weakSelf = self;
     [[SHGGloble sharedGloble] requestUserVerifyStatusCompletion:^(BOOL state) {
@@ -87,8 +91,27 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
+- (SHGAuthenticationWarningView *)warningView
+{
+    if (!_warningView) {
+        _warningView = [[SHGAuthenticationWarningView alloc] init];
+        _warningView.text = @"如需修改个人信息请重新认证";
+        [self.bgScrollView addSubview:_warningView];
+    }
+    return _warningView;
+}
+
 - (void)initView
 {
+    __weak typeof(self) weakSelf = self;
+    self.warningView.block = ^{
+        [UIView animateWithDuration:0.25f animations:^{
+            weakSelf.warningView.sd_layout
+            .heightIs(0.0f);
+            [weakSelf.warningView updateLayout];
+        }];
+    };
+    
     self.bgView.backgroundColor = [UIColor colorWithHexString:@"efeeef"];
     self.headName.font = FontFactor(15.0f);
     self.headName.textColor = [UIColor colorWithHexString:@"161616"];
@@ -128,11 +151,17 @@
     .rightSpaceToView(self.view, 0.0f)
     .topSpaceToView(self.view, 0.0f)
     .bottomSpaceToView(self.view, 0.0f);
+
+    self.warningView.sd_layout
+    .leftSpaceToView(self.bgScrollView, 0.0f)
+    .rightSpaceToView(self.bgScrollView, 0.0f)
+    .topSpaceToView(self.bgScrollView, 0.0f)
+    .heightIs(MarginFactor(39.0f));
     
     self.bgView.sd_layout
     .leftSpaceToView(self.bgScrollView, 0.0f)
     .rightSpaceToView(self.bgScrollView, 0.0f)
-    .topSpaceToView(self.bgScrollView, 0.0f)
+    .topSpaceToView(self.warningView, 0.0f)
     .bottomSpaceToView(self.bgScrollView, 0.0f);
     
     self.headView.sd_layout
@@ -154,7 +183,7 @@
     .heightIs(MarginFactor(35.0f));
     
     self.nameView.sd_layout
-    .topSpaceToView(self.headView, MarginFactor(11.0f))
+    .topSpaceToView(self.bgView, MarginFactor(11.0f))
     .leftSpaceToView(self.bgView, 0.0f)
     .rightSpaceToView(self.bgView, 0.0f)
     .heightIs(MarginFactor(55.0f));
@@ -199,9 +228,9 @@
     .spaceToSuperView(UIEdgeInsetsMake(0.0f, MarginFactor(11.0f), 0.0f, 0.0f));
     
     self.nextButton.sd_layout
-    .leftSpaceToView(self.bgView, MarginFactor(12.0f))
-    .rightSpaceToView(self.bgView, MarginFactor(12.0f))
-    .bottomSpaceToView(self.bgView, MarginFactor(19.0f))
+    .leftSpaceToView(self.bgScrollView, MarginFactor(12.0f))
+    .rightSpaceToView(self.bgScrollView, MarginFactor(12.0f))
+    .bottomSpaceToView(self.bgScrollView, MarginFactor(19.0f))
     .heightIs(MarginFactor(40.0f));
 
     //认证界面
@@ -258,12 +287,9 @@
 
 - (IBAction)nextButtonClick:(UIButton *)button
 {
-    if (self.imageChanged) {
-        [self uploadHeadImage:self.headerImage.image];
-    } else{
-        [self uploadUserInfo];
-    }
+    [self authButtonClicked:button];
 }
+
 - (BOOL)checkInputMessageValid
 {
     if (IsStrEmpty(self.nameField.text)) {

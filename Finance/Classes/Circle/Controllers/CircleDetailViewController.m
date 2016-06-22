@@ -11,7 +11,6 @@
 #import "TWEmojiKeyBoard.h"
 #import "SDPhotoGroup.h"
 #import "SDPhotoItem.h"
-#import "SHGNavigationView.h"
 #import "SHGPersonalViewController.h"
 #import "CircleListDelegate.h"
 #import "CircleLinkViewController.h"

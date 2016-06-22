@@ -850,8 +850,6 @@
 		F916B6321D0D395300AE217F /* photo@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = F916B5F81D0D395300AE217F /* photo@3x.png */; };
 		F916B6331D0D395300AE217F /* video@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F916B5F91D0D395300AE217F /* video@2x.png */; };
 		F916B6341D0D395300AE217F /* video@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = F916B5FA1D0D395300AE217F /* video@3x.png */; };
-		F91778C21BFC240900C535CB /* SHGDatePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = F91778C01BFC240900C535CB /* SHGDatePickerView.m */; };
-		F91778C31BFC240900C535CB /* SHGDatePickerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F91778C11BFC240900C535CB /* SHGDatePickerView.xib */; };
 		F91982B81C59B8F500A450B9 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = F91982B71C59B8F500A450B9 /* libsqlite3.tbd */; };
 		F91982BA1C59B92500A450B9 /* libz.1.2.5.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = F91982B91C59B92500A450B9 /* libz.1.2.5.tbd */; };
 		F91982BC1C59B93500A450B9 /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = F91982BB1C59B93500A450B9 /* libicucore.tbd */; };
@@ -908,6 +906,8 @@
 		F95F42B01C8E993C003EDA30 /* SHGCircleSendViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F95F42AE1C8E993C003EDA30 /* SHGCircleSendViewController.xib */; };
 		F96E10A31CBB9875006710A0 /* SHGCategoryButton.m in Sources */ = {isa = PBXBuildFile; fileRef = F96E10A21CBB9875006710A0 /* SHGCategoryButton.m */; };
 		F9758A631BB002D70085D32C /* ImproveMatiralViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9758A621BB002D70085D32C /* ImproveMatiralViewController.xib */; };
+		F986CADC1D1A2C1A0086FC42 /* SHGAuthenticationWarningView.m in Sources */ = {isa = PBXBuildFile; fileRef = F986CADB1D1A2C1A0086FC42 /* SHGAuthenticationWarningView.m */; };
+		F986CAE01D1A7A450086FC42 /* SHGAuthenticationNextViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F986CADF1D1A7A450086FC42 /* SHGAuthenticationNextViewController.xib */; };
 		F98B16EF1BC7947D000A577C /* libGeTuiSdk-1.2.1.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F98B16EE1BC7947D000A577C /* libGeTuiSdk-1.2.1.a */; };
 		F99B602C1B9E7D9500759AAC /* SHGUserHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = F99B602B1B9E7D9500759AAC /* SHGUserHeaderView.m */; };
 		F9A227B31BF586090054F8D7 /* SHGPersonDynamicViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9A227B11BF586090054F8D7 /* SHGPersonDynamicViewController.m */; };
@@ -937,7 +937,6 @@
 		F9A8D2901BE712B700A2BFB1 /* ShareSDKShareActionSheet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9A8D27D1BE712B700A2BFB1 /* ShareSDKShareActionSheet.framework */; };
 		F9ADAEB71BF2DB32001366F9 /* SHGPersonalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9ADAEB51BF2DB32001366F9 /* SHGPersonalViewController.m */; };
 		F9ADD7C61CED94AC00FC0AC6 /* SHGGuideView.m in Sources */ = {isa = PBXBuildFile; fileRef = F9ADD7C51CED94AC00FC0AC6 /* SHGGuideView.m */; };
-		F9B0636B1BD7699400471DF4 /* SHGNavigationView.m in Sources */ = {isa = PBXBuildFile; fileRef = F9B0636A1BD7699400471DF4 /* SHGNavigationView.m */; };
 		F9B18C081BA0521600EA0314 /* SHGNoticeView.m in Sources */ = {isa = PBXBuildFile; fileRef = F9B18C071BA0521600EA0314 /* SHGNoticeView.m */; };
 		F9BF4E8A1CB5F4B100D0155C /* SHGBusinessMainSendView.m in Sources */ = {isa = PBXBuildFile; fileRef = F9BF4E891CB5F4B100D0155C /* SHGBusinessMainSendView.m */; };
 		F9BF4E8E1CB6332700D0155C /* SHGBusinessSelectCategoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9BF4E8C1CB6332700D0155C /* SHGBusinessSelectCategoryViewController.m */; };
@@ -2116,9 +2115,6 @@
 		F916B5F81D0D395300AE217F /* photo@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "photo@3x.png"; sourceTree = "<group>"; };
 		F916B5F91D0D395300AE217F /* video@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "video@2x.png"; sourceTree = "<group>"; };
 		F916B5FA1D0D395300AE217F /* video@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "video@3x.png"; sourceTree = "<group>"; };
-		F91778BF1BFC240900C535CB /* SHGDatePickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGDatePickerView.h; sourceTree = "<group>"; };
-		F91778C01BFC240900C535CB /* SHGDatePickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGDatePickerView.m; sourceTree = "<group>"; };
-		F91778C11BFC240900C535CB /* SHGDatePickerView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGDatePickerView.xib; sourceTree = "<group>"; };
 		F91982B71C59B8F500A450B9 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		F91982B91C59B92500A450B9 /* libz.1.2.5.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.1.2.5.tbd; path = usr/lib/libz.1.2.5.tbd; sourceTree = SDKROOT; };
 		F91982BB1C59B93500A450B9 /* libicucore.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libicucore.tbd; path = usr/lib/libicucore.tbd; sourceTree = SDKROOT; };
@@ -2209,6 +2205,9 @@
 		F96E10A11CBB9875006710A0 /* SHGCategoryButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGCategoryButton.h; sourceTree = "<group>"; };
 		F96E10A21CBB9875006710A0 /* SHGCategoryButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGCategoryButton.m; sourceTree = "<group>"; };
 		F9758A621BB002D70085D32C /* ImproveMatiralViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ImproveMatiralViewController.xib; sourceTree = "<group>"; };
+		F986CADA1D1A2C1A0086FC42 /* SHGAuthenticationWarningView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGAuthenticationWarningView.h; sourceTree = "<group>"; };
+		F986CADB1D1A2C1A0086FC42 /* SHGAuthenticationWarningView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGAuthenticationWarningView.m; sourceTree = "<group>"; };
+		F986CADF1D1A7A450086FC42 /* SHGAuthenticationNextViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGAuthenticationNextViewController.xib; sourceTree = "<group>"; };
 		F98B16EC1BC7947D000A577C /* GeTuiSdk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeTuiSdk.h; sourceTree = "<group>"; };
 		F98B16ED1BC7947D000A577C /* GeTuiSdkError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeTuiSdkError.h; sourceTree = "<group>"; };
 		F98B16EE1BC7947D000A577C /* libGeTuiSdk-1.2.1.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libGeTuiSdk-1.2.1.a"; sourceTree = "<group>"; };
@@ -2264,8 +2263,6 @@
 		F9ADAEB51BF2DB32001366F9 /* SHGPersonalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGPersonalViewController.m; sourceTree = "<group>"; };
 		F9ADD7C41CED94AC00FC0AC6 /* SHGGuideView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGGuideView.h; sourceTree = "<group>"; };
 		F9ADD7C51CED94AC00FC0AC6 /* SHGGuideView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGGuideView.m; sourceTree = "<group>"; };
-		F9B063691BD7699400471DF4 /* SHGNavigationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGNavigationView.h; sourceTree = "<group>"; };
-		F9B0636A1BD7699400471DF4 /* SHGNavigationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGNavigationView.m; sourceTree = "<group>"; };
 		F9B18C061BA0521600EA0314 /* SHGNoticeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGNoticeView.h; sourceTree = "<group>"; };
 		F9B18C071BA0521600EA0314 /* SHGNoticeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGNoticeView.m; sourceTree = "<group>"; };
 		F9BF4E881CB5F4B100D0155C /* SHGBusinessMainSendView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGBusinessMainSendView.h; sourceTree = "<group>"; };
@@ -3155,11 +3152,6 @@
 				614DC88B1AD65F9C00F610D4 /* CommonMethod.m */,
 				6149CFE71B2605FC006E45FE /* TwainContactInfo.h */,
 				6149CFE81B2605FC006E45FE /* TwainContactInfo.m */,
-				F9B063691BD7699400471DF4 /* SHGNavigationView.h */,
-				F9B0636A1BD7699400471DF4 /* SHGNavigationView.m */,
-				F91778BF1BFC240900C535CB /* SHGDatePickerView.h */,
-				F91778C01BFC240900C535CB /* SHGDatePickerView.m */,
-				F91778C11BFC240900C535CB /* SHGDatePickerView.xib */,
 				F9DB81611C1278BB007C63B7 /* SHGEmptyDataView.h */,
 				F9DB81621C1278BB007C63B7 /* SHGEmptyDataView.m */,
 				F96E10A11CBB9875006710A0 /* SHGCategoryButton.h */,
@@ -3168,6 +3160,8 @@
 				F9D560AA1CCF68B500CD2457 /* SHGCopyTextView.m */,
 				F91F43DD1CDC2D1C005604A0 /* SHGAlertView.h */,
 				F91F43DE1CDC2D1C005604A0 /* SHGAlertView.m */,
+				F986CADA1D1A2C1A0086FC42 /* SHGAuthenticationWarningView.h */,
+				F986CADB1D1A2C1A0086FC42 /* SHGAuthenticationWarningView.m */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -3640,6 +3634,7 @@
 				98E302281BFB0708001D4A69 /* SHGAuthenticationViewController.h */,
 				98E302291BFB0708001D4A69 /* SHGAuthenticationViewController.m */,
 				98E3022A1BFB0708001D4A69 /* SHGAuthenticationViewController.xib */,
+				F986CADF1D1A7A450086FC42 /* SHGAuthenticationNextViewController.xib */,
 				98D13FD41C3B69E6007CDFCD /* SHGMyTeamListTableViewController.h */,
 				98D13FD51C3B69E6007CDFCD /* SHGMyTeamListTableViewController.m */,
 				98D13FD61C3B69E6007CDFCD /* SHGMyTeamListTableViewController.xib */,
@@ -5508,6 +5503,7 @@
 				611B8CD81AFD5C09009CB21F /* ReplyTableViewCell.xib in Resources */,
 				61E83CF71AF7C78E00703651 /* 查看更多@2x.png in Resources */,
 				61E83CEB1AF7C78E00703651 /* 分享circle@2x.png in Resources */,
+				F986CAE01D1A7A450086FC42 /* SHGAuthenticationNextViewController.xib in Resources */,
 				B04D6E281B60C01300E3863E /* 个人中心.png in Resources */,
 				61E83D461AF7C78E00703651 /* 新三板@3x.png in Resources */,
 				6186DF3A1AFB7F3800960934 /* 帖子@2x.png in Resources */,
@@ -5549,7 +5545,6 @@
 				F916B6331D0D395300AE217F /* video@2x.png in Resources */,
 				F9A8D2891BE712B700A2BFB1 /* TencentOpenApi_IOS_Bundle.bundle in Resources */,
 				614EFF081AF114D800F2BDD1 /* circle.png in Resources */,
-				F91778C31BFC240900C535CB /* SHGDatePickerView.xib in Resources */,
 				408D8AFA1AF8618C0055810C /* VoiceSearchFeedback003@2x.png in Resources */,
 				61E83D981AF7C78E00703651 /* 接受按钮-默认@3x.png in Resources */,
 				40302B1B1AEF61B600F22EB6 /* MyTeamViewController.xib in Resources */,
@@ -5921,7 +5916,6 @@
 				B082D6631B82EF1C00BB6C20 /* RecmdFriendObj.m in Sources */,
 				F96E10A31CBB9875006710A0 /* SHGCategoryButton.m in Sources */,
 				6187D2E81AF1C693008E1D21 /* MessageModel.m in Sources */,
-				F9B0636B1BD7699400471DF4 /* SHGNavigationView.m in Sources */,
 				F93FCBC21C856D5A004E356E /* NSArray+Category.m in Sources */,
 				614BA7DC1AE5E96C009480CD /* LoginNextViewController.m in Sources */,
 				615010DC1AD61BD700827F82 /* ZSYPopoverListView.m in Sources */,
@@ -5955,6 +5949,7 @@
 				61046C761AE0FF440065F59D /* RecommendView.m in Sources */,
 				61D62BEE1ADD1C4D002DD395 /* MOCHTTPRequestOperationManager.m in Sources */,
 				40302B081AEF573200F22EB6 /* MyAddressViewController.m in Sources */,
+				F986CADC1D1A2C1A0086FC42 /* SHGAuthenticationWarningView.m in Sources */,
 				6187D2EA1AF1C693008E1D21 /* MessageReadManager.m in Sources */,
 				F9203D161CF449E000F55373 /* SHGDiscoveryObject.m in Sources */,
 				985CBDC31C04042C002B3D9D /* SHGCollectCardClass.m in Sources */,
@@ -5979,7 +5974,6 @@
 				F9E7CAF51CF83C740068EF4B /* SHGRecommendViewController.m in Sources */,
 				F9EDD5FA1BABFBCF00506C0C /* SDWaitingView.m in Sources */,
 				B04D032E1B43F88A009BE7C2 /* ZYExceptionHandler.m in Sources */,
-				F91778C21BFC240900C535CB /* SHGDatePickerView.m in Sources */,
 				987101331CBFB030002A8F7F /* SHGBusinessCollectionListViewController.m in Sources */,
 				98E3022B1BFB0708001D4A69 /* SHGAuthenticationViewController.m in Sources */,
 				614A597E1AD3AEA1005DAB04 /* Finance.xcdatamodeld in Sources */,

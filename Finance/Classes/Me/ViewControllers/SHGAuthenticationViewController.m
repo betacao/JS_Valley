@@ -11,6 +11,9 @@
 #import "SHGItemChooseView.h"
 #import "SHGProvincesViewController.h"
 #import "CCLocationManager.h"
+#import "SHGAuthenticationWarningView.h"
+#import "SDWebImageManager.h"
+
 @interface SHGAuthenticationViewController ()<UITextFieldDelegate, UIActionSheetDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, SHGItemChooseDelegate, SHGAreaDelegate>
 //
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
@@ -31,13 +34,19 @@
 @property (weak, nonatomic) IBOutlet UILabel *tipLabel;
 @property (strong, nonatomic) UIButton *currentButton;
 //
+
+@property (strong, nonatomic) SHGAuthenticationWarningView *warningView;
+@property (strong, nonatomic) SHGAuthenticationNextViewController *nextController;
+
+//
 @property (strong, nonatomic) UIImage *headerImage;
 @property (strong, nonatomic) NSString *state;//认证状态
 @property (strong, nonatomic) NSString *authImageUrl;//已经上传的图片链接
 @property (strong, nonatomic) UIImage *authImage;//认证的图片
 @property (strong, nonatomic) NSString *departmentCode;
 @property (strong, nonatomic) NSString *company;//保存一下 没什么用
-@property (strong, nonatomic) NSString *rejectReason;//
+@property (strong, nonatomic) NSString *rejectReason;//驳回理由
+
 @end
 
 @implementation SHGAuthenticationViewController
@@ -64,12 +73,25 @@
     self.stateLabel.textColor = Color(@"3588c8");
 
     self.authImageView.layer.borderColor = [UIColor lightGrayColor].CGColor;
-    self.authImageView.layer.borderWidth = 1.0f / [UIScreen mainScreen].scale;
+    self.authImageView.layer.borderWidth = 1.0f / SCALE;
 
     self.authTipLabel.font = FontFactor(13.0f);
     self.authTipLabel.textColor = Color(@"999999");
     self.authTipLabel.isAttributedContent = YES;
+
     //
+    __weak typeof(self) weakSelf = self;
+    self.warningView = [[SHGAuthenticationWarningView alloc] init];
+    self.warningView.text = @"完善个人认证每日可查看5条业务联系方式";
+    self.warningView.block = ^{
+        [UIView animateWithDuration:0.25f animations:^{
+            weakSelf.warningView.sd_layout
+            .heightIs(0.0f);
+            [weakSelf.warningView updateLayout];
+        }];
+    };
+    [self.authScrollView addSubview:self.warningView];
+
     self.authScrollView.backgroundColor = Color(@"f7f8f9");
     self.departmentField.textColor = self.locationField.textColor = Color(@"161616");
     self.departmentField.font = self.locationField.font = FontFactor(15.0f);
@@ -128,15 +150,22 @@
     .leftEqualToView(self.authImageView)
     .rightEqualToView(self.authImageView)
     .autoHeightRatio(0.0f);
+
     //
+    self.warningView.sd_layout
+    .leftSpaceToView(self.authScrollView, 0.0f)
+    .rightSpaceToView(self.authScrollView, 0.0f)
+    .topSpaceToView(self.authScrollView, 0.0f)
+    .heightIs(MarginFactor(39.0f));
+
     self.headerButton.sd_layout
-    .topSpaceToView(self.authScrollView, MarginFactor(58.0f))
+    .topSpaceToView(self.warningView, MarginFactor(46.0f))
     .centerXEqualToView(self.authScrollView)
     .widthIs(self.headerButton.currentImage.size.width)
     .heightIs(self.headerButton.currentImage.size.height);
 
     self.departmentField.sd_layout
-    .topSpaceToView(self.headerButton, MarginFactor(58.0f))
+    .topSpaceToView(self.headerButton, MarginFactor(46.0f))
     .leftSpaceToView(self.authScrollView, MarginFactor(15.0f))
     .rightSpaceToView(self.authScrollView, MarginFactor(15.0f))
     .heightIs(MarginFactor(42.0f));
@@ -194,6 +223,14 @@
     return string;
 }
 
+- (SHGAuthenticationNextViewController *)nextController
+{
+    if (!_nextController) {
+        _nextController = [[SHGAuthenticationNextViewController alloc] init];
+    }
+    return _nextController;
+}
+
 - (void)resetView
 {
     self.authScrollView.alpha = [self.state isEqualToString:@"0"] ? 1.0f : 0.0f;
@@ -244,6 +281,7 @@
         weakSelf.state = [response.dataDictionary valueForKey:@"state"];
         weakSelf.authImageUrl = [response.dataDictionary valueForKey:@"potname"];
         weakSelf.rejectReason = [response.dataDictionary valueForKey:@"reason"];
+        weakSelf.nextController.licenseUrl = [response.dataDictionary objectForKey:@"photourl"];
         [weakSelf loadUserInfo];
         [weakSelf resetView];
 
@@ -259,14 +297,14 @@
     [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttp,@"user",@"personaluser"] parameters:@{@"uid":UID} success:^(MOCHTTPResponse *response) {
         weakSelf.company = [response.dataDictionary objectForKey:@"companyname"];
         if ([[response.dataDictionary objectForKey:@"position"] length] > 0) {
-             weakSelf.locationField.text = [response.dataDictionary objectForKey:@"position"];
+            weakSelf.locationField.text = [response.dataDictionary objectForKey:@"position"];
         } else{
             [[CCLocationManager shareLocation] getCity:^{
                 NSString * cityName = [SHGGloble sharedGloble].cityName;
                 weakSelf.locationField.text = cityName;
             }];
         }
-       
+
         weakSelf.departmentField.text = [self codeToIndustry:[response.dataDictionary objectForKey:@"industrycode"]];
         NSString *head_img = [response.dataDictionary objectForKey:@"head_img"];
         [weakSelf.headerButton sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,head_img]] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"uploadHead"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
@@ -297,12 +335,19 @@
         [UIView animateWithDuration:0.25f animations:^{
             self.authScrollView.alpha = 1.0f;
         }];
-        [sender setTitle:@"提交" forState:UIControlStateNormal];
+        [sender setTitle:@"下一步" forState:UIControlStateNormal];
     } else {
-        if ([self checkInputMessage]) {
-            [self uploadHeaderImage];
+        if ([self checkInputMessage]){
+            self.nextController.headerImage = self.headerImage;
+            self.nextController.departmentCode = self.departmentCode;
+            self.nextController.location = self.locationField.text;
+            self.nextController.authImage = self.authImage;
+            self.nextController.company = self.company;
+
+            [self.navigationController pushViewController:self.nextController animated:YES];
         }
     }
+
 }
 
 - (BOOL)checkInputMessage
@@ -324,6 +369,369 @@
     return YES;
 }
 
+- (void)showIndustryChoiceView
+{
+    SHGItemChooseView *view = [[SHGItemChooseView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, SCREENWIDTH, SCREENHEIGHT) lineNumber:9];
+    view.delegate = self;
+    view.dataArray = @[@"银行机构", @"证券公司", @"PE/VC",@"公募基金",@"信托公司",@"三方理财", @"担保小贷", @"上市公司", @"其他"];
+    [self.view.window addSubview:view];
+}
+
+- (void)showLocationChoiceView
+{
+    SHGProvincesViewController *controller = [[SHGProvincesViewController alloc] initWithNibName:@"SHGProvincesViewController" bundle:nil];
+    if(controller){
+        controller.delegate = self;
+        [self.navigationController pushViewController:controller animated:YES];
+    }
+}
+
+
+- (NSString *)industryToCode:(NSString *)industry
+{
+    if ([industry isEqualToString:@"银行机构"]) {
+        return @"bank";
+    } else if ([industry isEqualToString:@"证券公司"]) {
+        return @"bond";
+    } else if ([industry isEqualToString:@"PE/VC"]) {
+        return  @"pevc";
+    } else if ([industry isEqualToString:@"公募基金"]) {
+        return @"fund";
+    } else if ([industry isEqualToString:@"信托公司"]) {
+        return @"entrust";
+    } else if ([industry isEqualToString:@"三方理财"]) {
+        return @"manage";
+    } else if ([industry isEqualToString:@"担保小贷"]) {
+        return @"bonding";
+    } else if ([industry isEqualToString:@"上市公司"]) {
+        return @"public";
+    } else if ([industry isEqualToString:@"其他"]) {
+        return @"other";
+    }
+
+    return nil;
+}
+
+- (NSString *)codeToIndustry:(NSString *)code
+{
+    if ([code isEqualToString:@"bank"]) {
+        return  @"银行机构";
+    } else if ([code isEqualToString:@"bond"]) {
+        return @"证券公司";
+    } else if ([code isEqualToString:@"pevc"]) {
+        return  @"PE/VC";
+    } else if ([code isEqualToString:@"fund"]) {
+        return @"公募基金";
+    } else if ([code isEqualToString:@"entrust"]) {
+        return @"信托公司";
+    } else if ([code isEqualToString:@"manage"]) {
+        return @"三方理财";
+    } else if ([code isEqualToString:@"bonding"]) {
+        return @"担保小贷";
+    } else if ([code isEqualToString:@"public"]) {
+        return @"上市公司";
+    } else if ([code isEqualToString:@"other"]) {
+        return @"其他";
+    }
+
+    return nil;
+}
+
+
+- (void)cameraClick
+{
+    UIImagePickerController *pickerImage = [[UIImagePickerController alloc] init];
+
+    if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+        pickerImage.sourceType = UIImagePickerControllerSourceTypeCamera;
+        pickerImage.mediaTypes = [UIImagePickerController availableMediaTypesForSourceType:pickerImage.sourceType];
+        pickerImage.delegate = self;
+        pickerImage.allowsEditing = YES;
+        [self presentViewController:pickerImage animated:YES completion:nil];
+    }
+}
+
+- (void)photosClick
+{
+    UIImagePickerController *pickerImage = [[UIImagePickerController alloc] init];
+
+    if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]) {
+        pickerImage.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+        pickerImage.mediaTypes = [UIImagePickerController availableMediaTypesForSourceType:pickerImage.sourceType];
+        pickerImage.delegate = self;
+        pickerImage.allowsEditing = YES;
+        [self.navigationController presentViewController:pickerImage animated:YES completion:nil];
+    }
+}
+
+#pragma mark ------actionSheet代理
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 0) {
+        NSLog(@"拍照");
+        [self cameraClick];
+    }  else if (buttonIndex == 1) {
+        NSLog(@"选图");
+        [self photosClick];
+    } else if (buttonIndex == 2){
+        NSLog(@"取消");
+    }
+}
+
+
+#pragma mark ------textfield代理
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
+{
+    if ([textField isEqual:self.locationField]) {
+        [self showLocationChoiceView];
+    } else {
+        [self showIndustryChoiceView];
+    }
+    return NO;
+}
+
+#pragma mark ------ 选择行业代理
+- (void)didSelectItem:(NSString *)item
+{
+    self.departmentField.text = item;
+}
+
+#pragma mark ------ 选择城市代理
+- (void)didSelectCity:(NSString *)city
+{
+    self.locationField.text = city;
+}
+
+#pragma mark ------选图代理
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+    [picker dismissViewControllerAnimated:YES completion:nil];
+    UIImage *image = info[UIImagePickerControllerEditedImage];
+    [self.currentButton setImage:image forState:UIControlStateNormal];
+    if ([self.currentButton isEqual:self.plusButton]) {
+        self.authImage = image;
+    } else {
+        self.headerImage = image;
+    }
+}
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+}
+
+@end
+
+
+
+
+@interface SHGAuthenticationNextViewController()<UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
+
+@property (strong, nonatomic) SHGAuthenticationWarningView *warningView;
+
+@property (strong, nonatomic) UIView *contentView;
+@property (strong, nonatomic) UIImageView *imageView;
+
+@property (strong, nonatomic) UILabel *label;
+@property (strong, nonatomic) UIButton *button;
+@property (strong, nonatomic) UIButton *deleteButton;
+@property (strong, nonatomic) UIImage *image;
+
+@property (strong, nonatomic) UIButton *submitButton;
+@property (strong, nonatomic) NSString *authImageUrl;//已经上传的图片链接
+
+@end
+
+@implementation SHGAuthenticationNextViewController
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    [self initView];
+    [self addAutoLayout];
+}
+
+- (void)initView
+{
+    self.title = @"身份认证";
+
+    __weak typeof(self) weakSelf = self;
+    [[SDWebImageManager sharedManager] downloadImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,self.licenseUrl]] options:SDWebImageLowPriority|SDWebImageRetryFailed progress:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
+        weakSelf.image = image;
+    }];
+
+    self.warningView = [[SHGAuthenticationWarningView alloc] init];
+    self.warningView.text = @"上传营业执照每日可查看10条业务联系方式（选填）";
+    self.warningView.block = ^{
+        [UIView animateWithDuration:0.25f animations:^{
+            weakSelf.warningView.sd_layout
+            .heightIs(0.0f);
+            [weakSelf.warningView updateLayout];
+        }];
+    };
+    [self.view addSubview:self.warningView];
+
+    self.contentView = [[UIView alloc] init];
+    self.contentView.backgroundColor = Color(@"eeeff0");
+    self.contentView.layer.cornerRadius = 10.0f;
+    self.contentView.clipsToBounds = YES;
+
+    self.button = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.button setImage:[UIImage imageNamed:@"circle_plus"] forState:UIControlStateNormal];
+    [self.button addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchUpInside];
+
+    self.label = [[UILabel alloc] init];
+    self.label.textColor = Color(@"8f8f8f");
+    self.label.font = FontFactor(14.0f);
+    self.label.text = @"请上传您公司的企业营业执照";
+
+    self.imageView = [[UIImageView alloc] init];
+    self.imageView.userInteractionEnabled = YES;
+    self.imageView.hidden = YES;
+
+    self.deleteButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.deleteButton.backgroundColor = [UIColor colorWithWhite:0.0f alpha:0.5f];
+    self.deleteButton.titleLabel.font = FontFactor(14.0f);
+    [self.deleteButton setTitle:@"删除" forState:UIControlStateNormal];
+    [self.deleteButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [self.deleteButton addTarget:self action:@selector(deleteButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+
+    [self.view addSubview:self.contentView];
+
+    [self.contentView sd_addSubviews:@[self.button, self.label, self.imageView]];
+    [self.imageView addSubview:self.deleteButton];
+
+    self.submitButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.submitButton setTitle:@"提交" forState:UIControlStateNormal];
+    self.submitButton.titleLabel.font = FontFactor(15.0f);
+    self.submitButton.backgroundColor = Color(@"f04241");
+    [self.submitButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [self.submitButton addTarget:self action:@selector(submitButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:self.submitButton];
+
+}
+
+- (void)addAutoLayout
+{
+    self.warningView.sd_layout
+    .leftSpaceToView(self.view, 0.0f)
+    .rightSpaceToView(self.view, 0.0f)
+    .topSpaceToView(self.view, 0.0f)
+    .heightIs(MarginFactor(39.0f));
+
+    self.contentView.sd_layout
+    .topSpaceToView(self.warningView, MarginFactor(32.0f))
+    .leftSpaceToView(self.view, MarginFactor(12.0f))
+    .rightSpaceToView(self.view, MarginFactor(12.0f))
+    .heightIs(MarginFactor(150.0f));
+
+    self.button.sd_layout
+    .centerYEqualToView(self.contentView)
+    .leftSpaceToView(self.contentView, MarginFactor(30.0f))
+    .widthIs(self.button.currentImage.size.width)
+    .heightIs(self.button.currentImage.size.height);
+
+    self.label.sd_layout
+    .centerYEqualToView(self.contentView)
+    .leftSpaceToView(self.button, MarginFactor(22.0f))
+    .rightSpaceToView(self.contentView, MarginFactor(22.0f))
+    .autoHeightRatio(0.0f);
+
+    self.imageView.sd_layout
+    .spaceToSuperView(UIEdgeInsetsZero);
+
+    self.deleteButton.sd_layout
+    .leftSpaceToView(self.imageView, 0.0f)
+    .rightSpaceToView(self.imageView, 0.0f)
+    .bottomSpaceToView(self.imageView, 0.0f)
+    .heightIs(MarginFactor(28.0f));
+
+    self.submitButton.sd_layout
+    .leftSpaceToView(self.view, MarginFactor(15.0f))
+    .rightSpaceToView(self.view, MarginFactor(15.0f))
+    .bottomSpaceToView(self.view, MarginFactor(19.0f))
+    .heightIs(MarginFactor(40.0f));
+}
+
+- (void)setImage:(UIImage *)image
+{
+    _image = image;
+    self.imageView.image = image;
+    self.imageView.hidden = !image;
+}
+
+- (void)buttonClick:(UIButton *)button
+{
+    UIActionSheet *takeSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"拍照",@"选图", nil];
+    [takeSheet showInView:self.view];
+}
+
+- (void)deleteButtonClick:(UIButton *)button
+{
+    [UIView animateWithDuration:0.25f animations:^{
+        self.imageView.alpha = 0.0f;
+    } completion:^(BOOL finished) {
+        self.imageView.alpha = 1.0f;
+        self.image = nil;
+        self.licenseUrl = @"";
+    }];
+}
+
+- (void)submitButtonClicked:(UIButton *)sender
+{
+    [self uploadHeaderImage];
+}
+
+- (void)cameraClick
+{
+    UIImagePickerController *pickerImage = [[UIImagePickerController alloc] init];
+
+    if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+        pickerImage.sourceType = UIImagePickerControllerSourceTypeCamera;
+        pickerImage.mediaTypes = [UIImagePickerController availableMediaTypesForSourceType:pickerImage.sourceType];
+        pickerImage.delegate = self;
+        pickerImage.allowsEditing = YES;
+        [self presentViewController:pickerImage animated:YES completion:nil];
+    }
+}
+
+- (void)photosClick
+{
+    UIImagePickerController *pickerImage = [[UIImagePickerController alloc] init];
+
+    if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]) {
+        pickerImage.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+        pickerImage.mediaTypes = [UIImagePickerController availableMediaTypesForSourceType:pickerImage.sourceType];
+        pickerImage.delegate = self;
+        pickerImage.allowsEditing = YES;
+        [self.navigationController presentViewController:pickerImage animated:YES completion:nil];
+    }
+}
+
+#pragma mark ------actionSheet代理
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 0) {
+        NSLog(@"拍照");
+        [self cameraClick];
+    }  else if (buttonIndex == 1) {
+        NSLog(@"选图");
+        [self photosClick];
+    } else if (buttonIndex == 2){
+        NSLog(@"取消");
+    }
+}
+
+#pragma mark ------选图代理
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+    [picker dismissViewControllerAnimated:YES completion:nil];
+    UIImage *image = info[UIImagePickerControllerEditedImage];
+    self.image = image;
+}
+
+
+#pragma mark ------上传信息模块
 - (void)uploadHeaderImage
 {
     //头像需要压缩 跟其他的上传图片接口不一样了
@@ -382,7 +790,7 @@
         NSLog(@"%@",responseObject);
         NSDictionary *dic = [(NSString *)[responseObject valueForKey:@"data"] parseToArrayOrNSDictionary];
         weakSelf.authImageUrl = [(NSArray *)[dic valueForKey:@"pname"] objectAtIndex:0];
-        [weakSelf submitMaterial];
+        [weakSelf uploadLicenseImage];
     } failure:^(NSURLSessionDataTask *operation, NSError *error) {
         NSLog(@"%@",error);
         [Hud hideHud];
@@ -390,171 +798,53 @@
     }];
 }
 
+- (void)uploadLicenseImage
+{
+    [Hud showWait];
+    if (self.image) {
+        __weak typeof(self) weakSelf = self;
+        [MOCHTTPRequestOperationManager POST:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"image/businessLicense"] parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+            NSData *imageData = UIImageJPEGRepresentation(weakSelf.image, 0.1);
+            [formData appendPartWithFileData:imageData name:@"haha.jpg" fileName:@"haha.jpg" mimeType:@"image/jpeg"];
+        } progress:^(NSProgress * _Nonnull uploadProgress) {
+
+        } success:^(NSURLSessionDataTask *operation, id responseObject) {
+            NSLog(@"%@",responseObject);
+            NSDictionary *dic = [(NSString *)[responseObject valueForKey:@"data"] parseToArrayOrNSDictionary];
+            weakSelf.licenseUrl = [(NSArray *)[dic valueForKey:@"pname"] objectAtIndex:0];
+            [weakSelf submitMaterial];
+        } failure:^(NSURLSessionDataTask *operation, NSError *error) {
+            NSLog(@"%@",error);
+            [Hud hideHud];
+            [Hud showMessageWithText:@"上传营业执照失败"];
+        }];
+    } else{
+        [self submitMaterial];
+    }
+}
+
 - (void)submitMaterial
 {
     __weak typeof(self)weakSelf = self;
-    [MOCHTTPRequestOperationManager putWithURL:[rBaseAddressForHttp stringByAppendingString:@"/user/identityAuth"]class:nil parameters:@{@"uid":UID, @"potname":self.authImageUrl, @"industrycode": self.departmentCode, @"area":self.locationField.text} success:^(MOCHTTPResponse *response) {
+    [MOCHTTPRequestOperationManager putWithURL:[rBaseAddressForHttp stringByAppendingString:@"/user/identityAuth"]class:nil parameters:@{@"uid":UID, @"potname":self.authImageUrl, @"industrycode": self.departmentCode, @"area":self.location, @"photoUrl":self.licenseUrl} success:^(MOCHTTPResponse *response) {
         NSString *code = [response.data valueForKey:@"code"];
         if ([code isEqualToString:@"000"]) {
             [Hud hideHud];
             [Hud showMessageWithText:@"提交成功，我们将在一个工作日内\n通知您认证结果"];
-            [weakSelf.navigationController performSelector:@selector(popViewControllerAnimated:) withObject:@(YES) afterDelay:1.20f];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.2f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [weakSelf.navigationController popToViewController:[TabBarViewController tabBar] animated:YES];
+            });
         }
     } failed:^(MOCHTTPResponse *response) {
         [Hud hideHud];
     }];
 }
 
-
-- (void)showIndustryChoiceView
-{
-    SHGItemChooseView *view = [[SHGItemChooseView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, SCREENWIDTH, SCREENHEIGHT) lineNumber:9];
-    view.delegate = self;
-    view.dataArray = @[@"银行机构", @"证券公司", @"PE/VC",@"公募基金",@"信托公司",@"三方理财", @"担保小贷", @"上市公司", @"其他"];
-    [self.view.window addSubview:view];
-}
-
-- (void)showLocationChoiceView
-{
-    SHGProvincesViewController *controller = [[SHGProvincesViewController alloc] initWithNibName:@"SHGProvincesViewController" bundle:nil];
-    if(controller){
-        controller.delegate = self;
-        [self.navigationController pushViewController:controller animated:YES];
-    }
-}
-
-
-- (NSString *)industryToCode:(NSString *)industry
-{
-    if ([industry isEqualToString:@"银行机构"]) {
-        return  @"bank";
-    } else if ([industry isEqualToString:@"证券公司"]) {
-        return @"bond";
-    } else if ([industry isEqualToString:@"PE/VC"]) {
-        return  @"pevc";
-    } else if ([industry isEqualToString:@"公募基金"]) {
-        return @"fund";
-    } else if ([industry isEqualToString:@"信托公司"]) {
-        return @"entrust";
-    } else if ([industry isEqualToString:@"三方理财"]) {
-        return @"manage";
-    } else if ([industry isEqualToString:@"担保小贷"]) {
-        return @"bonding";
-    } else if ([industry isEqualToString:@"上市公司"]) {
-        return @"public";
-    } else if ([industry isEqualToString:@"其他"]) {
-        return @"other";
-    }
-
-    return nil;
-}
-
-- (NSString *)codeToIndustry:(NSString *)code
-{
-    if ([code isEqualToString:@"bank"]) {
-        return  @"银行机构";
-    } else if ([code isEqualToString:@"bond"]) {
-        return @"证券公司";
-    } else if ([code isEqualToString:@"pevc"]) {
-        return  @"PE/VC";
-    } else if ([code isEqualToString:@"fund"]) {
-        return @"公募基金";
-    } else if ([code isEqualToString:@"entrust"]) {
-        return @"信托公司";
-    } else if ([code isEqualToString:@"manage"]) {
-        return @"三方理财";
-    } else if ([code isEqualToString:@"bonding"]) {
-        return @"担保小贷";
-    } else if ([code isEqualToString:@"public"]) {
-        return @"上市公司";
-    } else if ([code isEqualToString:@"other"]) {
-        return @"其他";
-    }
-
-    return nil;
-}
-
-
-- (void)cameraClick
-{
-    UIImagePickerController *pickerImage = [[UIImagePickerController alloc] init];
-
-    if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
-        pickerImage.sourceType = UIImagePickerControllerSourceTypeCamera;
-        pickerImage.mediaTypes = [UIImagePickerController availableMediaTypesForSourceType:pickerImage.sourceType];
-    }
-    pickerImage.delegate = self;
-    pickerImage.allowsEditing = YES;
-    [self presentViewController:pickerImage animated:YES completion:nil];
-}
-
-- (void)photosClick
-{
-    UIImagePickerController *pickerImage = [[UIImagePickerController alloc] init];
-
-    if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]) {
-        pickerImage.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-        pickerImage.mediaTypes = [UIImagePickerController availableMediaTypesForSourceType:pickerImage.sourceType];
-    }
-    pickerImage.delegate = self;
-    pickerImage.allowsEditing = YES;
-    [self.navigationController presentViewController:pickerImage animated:YES completion:nil];
-}
-
-#pragma mark ------actionSheet代理
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    if (buttonIndex == 0) {
-        NSLog(@"拍照");
-        [self cameraClick];
-    }  else if (buttonIndex == 1) {
-        NSLog(@"选图");
-        [self photosClick];
-    } else if (buttonIndex == 2){
-        NSLog(@"取消");
-    }
-}
-
-
-#pragma mark ------textfield代理
-- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
-{
-    if ([textField isEqual:self.locationField]) {
-        [self showLocationChoiceView];
-    } else {
-        [self showIndustryChoiceView];
-    }
-    return NO;
-}
-
-#pragma mark ------ 选择行业代理
-- (void)didSelectItem:(NSString *)item
-{
-    self.departmentField.text = item;
-}
-
-#pragma mark ------ 选择城市代理
-- (void)didSelectCity:(NSString *)city
-{
-    self.locationField.text = city;
-}
-
-#pragma mark ------选图代理
-- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
-{
-    [picker dismissViewControllerAnimated:YES completion:nil];
-    UIImage *image = info[UIImagePickerControllerEditedImage];
-    [self.currentButton setImage:image forState:UIControlStateNormal];
-    if ([self.currentButton isEqual:self.plusButton]) {
-        self.authImage = image;
-    } else {
-        self.headerImage = image;
-    }
-}
-
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
 }
+
+
 
 @end
