@@ -869,8 +869,6 @@
 		F924C2B51CACC1400070286F /* SHGBusinessListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F924C2B31CACC1400070286F /* SHGBusinessListViewController.xib */; };
 		F924C2B91CACC1620070286F /* SHGBusinessMineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F924C2B71CACC1620070286F /* SHGBusinessMineViewController.m */; };
 		F924C2BA1CACC1620070286F /* SHGBusinessMineViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F924C2B81CACC1620070286F /* SHGBusinessMineViewController.xib */; };
-		F924C2BE1CACC1860070286F /* SHGBusinessDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F924C2BC1CACC1860070286F /* SHGBusinessDetailViewController.m */; };
-		F924C2BF1CACC1860070286F /* SHGBusinessDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F924C2BD1CACC1860070286F /* SHGBusinessDetailViewController.xib */; };
 		F924C2C31CACCBE50070286F /* SHGBusinessTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F924C2C11CACCBE50070286F /* SHGBusinessTableViewCell.m */; };
 		F924C2C41CACCBE50070286F /* SHGBusinessTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F924C2C21CACCBE50070286F /* SHGBusinessTableViewCell.xib */; };
 		F924C2C71CACCC5F0070286F /* SHGBusinessObject.m in Sources */ = {isa = PBXBuildFile; fileRef = F924C2C61CACCC5F0070286F /* SHGBusinessObject.m */; };
@@ -2145,9 +2143,6 @@
 		F924C2B61CACC1620070286F /* SHGBusinessMineViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGBusinessMineViewController.h; sourceTree = "<group>"; };
 		F924C2B71CACC1620070286F /* SHGBusinessMineViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGBusinessMineViewController.m; sourceTree = "<group>"; };
 		F924C2B81CACC1620070286F /* SHGBusinessMineViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGBusinessMineViewController.xib; sourceTree = "<group>"; };
-		F924C2BB1CACC1860070286F /* SHGBusinessDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGBusinessDetailViewController.h; sourceTree = "<group>"; };
-		F924C2BC1CACC1860070286F /* SHGBusinessDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGBusinessDetailViewController.m; sourceTree = "<group>"; };
-		F924C2BD1CACC1860070286F /* SHGBusinessDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGBusinessDetailViewController.xib; sourceTree = "<group>"; };
 		F924C2C01CACCBE50070286F /* SHGBusinessTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGBusinessTableViewCell.h; sourceTree = "<group>"; };
 		F924C2C11CACCBE50070286F /* SHGBusinessTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGBusinessTableViewCell.m; sourceTree = "<group>"; };
 		F924C2C21CACCBE50070286F /* SHGBusinessTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGBusinessTableViewCell.xib; sourceTree = "<group>"; };
@@ -4724,9 +4719,6 @@
 				F924C2B61CACC1620070286F /* SHGBusinessMineViewController.h */,
 				F924C2B71CACC1620070286F /* SHGBusinessMineViewController.m */,
 				F924C2B81CACC1620070286F /* SHGBusinessMineViewController.xib */,
-				F924C2BB1CACC1860070286F /* SHGBusinessDetailViewController.h */,
-				F924C2BC1CACC1860070286F /* SHGBusinessDetailViewController.m */,
-				F924C2BD1CACC1860070286F /* SHGBusinessDetailViewController.xib */,
 				98DCFE091D05662D00F6C16A /* SHGBusinessNewDetailViewController.h */,
 				98DCFE0A1D05662D00F6C16A /* SHGBusinessNewDetailViewController.m */,
 				98DCFE0B1D05662D00F6C16A /* SHGBusinessNewDetailViewController.xib */,
@@ -5562,7 +5554,6 @@
 				61E83D981AF7C78E00703651 /* 接受按钮-默认@3x.png in Resources */,
 				40302B1B1AEF61B600F22EB6 /* MyTeamViewController.xib in Resources */,
 				F916B6321D0D395300AE217F /* photo@3x.png in Resources */,
-				F924C2BF1CACC1860070286F /* SHGBusinessDetailViewController.xib in Resources */,
 				613CAC521AFFFFDE00EA8C23 /* CircleLinkViewController.xib in Resources */,
 				61E83D121AF7C78E00703651 /* 取消-按下@2x.png in Resources */,
 				61E83D9D1AF7C78E00703651 /* 选中好友@3x.png in Resources */,
@@ -5856,7 +5847,6 @@
 				6187D2DE1AF1C693008E1D21 /* DXRecordView.m in Sources */,
 				F9D9F1571BB51D5F00F94E70 /* SHGUserTagModel.m in Sources */,
 				985CBDBA1C03FD0B002B3D9D /* SHGCardTableViewCell.m in Sources */,
-				F924C2BE1CACC1860070286F /* SHGBusinessDetailViewController.m in Sources */,
 				6187D2F71AF1C693008E1D21 /* EMChooseViewController.m in Sources */,
 				6187D2CF1AF1C693008E1D21 /* GroupSettingViewController.m in Sources */,
 				982EB7EB1CB38734003EEBE6 /* SHGBondFinanceNextViewController.m in Sources */,

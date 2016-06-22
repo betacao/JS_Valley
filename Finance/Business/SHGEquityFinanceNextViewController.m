@@ -14,7 +14,6 @@
 #import "SHGBusinessButtonContentView.h"
 #import "SHGBusinessListViewController.h"
 #import "SHGBusinessSendSuccessViewController.h"
-#import "SHGBusinessDetailViewController.h"
 #import "SHGBusinessNewDetailViewController.h"
 @interface SHGEquityFinanceNextViewController ()<UITextFieldDelegate,UIScrollViewDelegate,UITextViewDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;

@@ -12,7 +12,6 @@
 #import "SHGNoticeView.h"
 #import "SHGBusinessTableViewCell.h"
 #import "SHGEmptyDataView.h"
-#import "SHGBusinessDetailViewController.h"
 #import "SHGBusinessNewDetailViewController.h"
 
 @interface SHGBusinessMineViewController ()<UITableViewDelegate, UITableViewDataSource>

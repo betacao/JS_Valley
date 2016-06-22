@@ -10,7 +10,6 @@
 #import "SHGBusinessObject.h"
 #import "SHGBusinessScrollView.h"
 #import "SHGBusinessListViewController.h"
-#import "SHGBusinessDetailViewController.h"
 #import "SHGBusinessSendSuccessViewController.h"
 @interface SHGBusinessManager()
 

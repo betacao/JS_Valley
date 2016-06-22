@@ -46,13 +46,6 @@
 @property (strong, nonatomic) UITextField *currentField;
 @property (assign, nonatomic) CGRect keyboaradRect;
 
-@property (strong, nonatomic) IBOutlet UIView *warningView;
-@property (weak, nonatomic) IBOutlet UILabel *warningLabel;
-@property (weak, nonatomic) IBOutlet UIButton *waringDeleteButton;
-@property (weak, nonatomic) IBOutlet UIView *waringLineView;
-
-
-
 @end
 
 @implementation SHGModifyUserInfoViewController
@@ -61,7 +54,6 @@
 {
     [super viewDidLoad];
     self.title = @"个人信息";
-    self.headView.hidden = YES;
     [self addSdLayout];
     self.nickName = [self.userInfo objectForKey:kNickName];
     self.department = [self.userInfo objectForKey:kDepartment];
@@ -97,9 +89,6 @@
 
 - (void)initView
 {
-    self.waringLineView.backgroundColor = Color(@"c5c5c5");
-    self.warningLabel.font = FontFactor(14.0f);
-    self.warningLabel.text = @"完成个人认证每日可查看5条业务联系方式";
     self.bgView.backgroundColor = [UIColor colorWithHexString:@"efeeef"];
     self.headName.font = FontFactor(15.0f);
     self.headName.textColor = [UIColor colorWithHexString:@"161616"];
@@ -146,52 +135,26 @@
     .topSpaceToView(self.bgScrollView, 0.0f)
     .bottomSpaceToView(self.bgScrollView, 0.0f);
     
-//    self.headView.sd_layout
-//    .topSpaceToView(self.bgView, 0.0f)
-//    .leftSpaceToView(self.bgView, 0.0f)
-//    .rightSpaceToView(self.bgView, 0.0f)
-//    .heightIs(MarginFactor(55.0f));
-//    
-//    self.headName.sd_layout
-//    .topSpaceToView(self.headView, 0.0f)
-//    .leftSpaceToView(self.headView, MarginFactor(11.0f))
-//    .rightSpaceToView(self.headView, MarginFactor(60.0f))
-//    .bottomSpaceToView(self.headView, 0.0f);
-//    
-//    self.headerImage.sd_layout
-//    .rightSpaceToView(self.headView, MarginFactor(11.0f))
-//    .centerYEqualToView(self.headView)
-//    .widthIs(MarginFactor(35.0f))
-//    .heightIs(MarginFactor(35.0f));
-    
-    self.warningView.sd_layout
+    self.headView.sd_layout
+    .topSpaceToView(self.bgView, 0.0f)
     .leftSpaceToView(self.bgView, 0.0f)
     .rightSpaceToView(self.bgView, 0.0f)
-    .topSpaceToView(self.bgView, 0.0f)
-    .heightIs(MarginFactor(40.0f));
+    .heightIs(MarginFactor(55.0f));
     
-    UIImage *image = [UIImage imageNamed:@"me_deleteInput"];
-    CGSize size = image.size;
-    self.waringDeleteButton.sd_layout
-    .rightSpaceToView(self.warningView, MarginFactor(11.0f))
-    .centerYEqualToView(self.warningView)
-    .widthIs(size.width)
-    .heightIs(size.height);
+    self.headName.sd_layout
+    .topSpaceToView(self.headView, 0.0f)
+    .leftSpaceToView(self.headView, MarginFactor(11.0f))
+    .rightSpaceToView(self.headView, MarginFactor(60.0f))
+    .bottomSpaceToView(self.headView, 0.0f);
     
-    self.warningLabel.sd_layout
-    .leftSpaceToView(self.warningView, MarginFactor(11.0f))
-    .rightSpaceToView(self.waringDeleteButton, MarginFactor(10.0f))
-    .topSpaceToView(self.warningView, 0.0f)
-    .bottomSpaceToView(self.warningView, 0.0f);
-    
-    self.waringLineView.sd_layout
-    .leftSpaceToView(self.warningView, 0.0f)
-    .rightSpaceToView(self.warningView, 0.0f)
-    .bottomSpaceToView(self.warningView, 0.0f)
-    .heightIs(1 / SCALE);
+    self.headerImage.sd_layout
+    .rightSpaceToView(self.headView, MarginFactor(11.0f))
+    .centerYEqualToView(self.headView)
+    .widthIs(MarginFactor(35.0f))
+    .heightIs(MarginFactor(35.0f));
     
     self.nameView.sd_layout
-    .topSpaceToView(self.warningView, MarginFactor(11.0f))
+    .topSpaceToView(self.headView, MarginFactor(11.0f))
     .leftSpaceToView(self.bgView, 0.0f)
     .rightSpaceToView(self.bgView, 0.0f)
     .heightIs(MarginFactor(55.0f));
@@ -577,15 +540,6 @@
 {
     [self.cityButton setTitle:city forState:UIControlStateNormal];
     [self.cityButton setTitleColor:[UIColor colorWithHexString:@"161616"] forState:UIControlStateNormal];
-}
-
-- (IBAction)waringDeleteButtonClick:(UIButton *)sender
-{
-    self.nameView.sd_resetLayout
-    .topSpaceToView(self.bgView, 0.0f)
-    .leftSpaceToView(self.bgView, 0.0f)
-    .rightSpaceToView(self.bgView, 0.0f)
-    .heightIs(MarginFactor(55.0f));
 }
 
 

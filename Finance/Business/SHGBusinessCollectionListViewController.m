@@ -11,7 +11,6 @@
 #import "SHGBusinessManager.h"
 #import "SHGBusinessObject.h"
 #import "SHGBusinessTableViewCell.h"
-#import "SHGBusinessDetailViewController.h"
 #import "SHGBusinessNewDetailViewController.h"
 #import "SHGNoticeView.h"
 @interface SHGBusinessCollectionListViewController ()<UITabBarDelegate, UITableViewDataSource>

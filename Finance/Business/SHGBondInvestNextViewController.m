@@ -14,7 +14,6 @@
 #import "SHGBusinessManager.h"
 #import "SHGBusinessListViewController.h"
 #import "SHGBusinessSendSuccessViewController.h"
-#import "SHGBusinessDetailViewController.h"
 #import "SHGBusinessMineViewController.h"
 #import "SHGBusinessNewDetailViewController.h"
 @interface SHGBondInvestNextViewController ()<UITextFieldDelegate,UIScrollViewDelegate,UITextViewDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
