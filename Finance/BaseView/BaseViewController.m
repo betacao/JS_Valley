@@ -16,13 +16,13 @@
 
 @implementation BaseViewController
 
--(id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    
+
     if (self)
     {
-       
+
 
     }
     return  self;
@@ -59,10 +59,10 @@
     [leftButton addTarget:self action:@selector(btnBackClick:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:leftButton];
     self.navigationItem.leftBarButtonItem = leftItem;
-    
-    
+
+
     UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    
+
     NSString *rightImageName ;
     if (!IsStrEmpty(self.rightItemImageName)){
         rightImageName = self.rightItemImageName;
@@ -79,16 +79,16 @@
         UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:rightButton];
         self.navigationItem.rightBarButtonItem = rightItem;
     }
-    
-    
+
+
 }
 - (void)navigationController:(UINavigationController *)navController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated
 {
     if (viewController.hidesBottomBarWhenPushed){
-        
+
     }
     else{
-        
+
     }
 }
 
@@ -108,7 +108,7 @@
 
 - (BOOL)prefersStatusBarHidden
 {
-     //[[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
+    //[[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
     // 已经不起作用了
     return NO;
 }
@@ -119,7 +119,7 @@
 }
 - (void)rightItemClick:(id)sender
 {
-    
+
 }
 - (void)dealloc
 {
@@ -140,9 +140,9 @@
     rect.origin.y = rect.origin.y- self.upDistance;
     self.view.frame = rect;
     [UIView setAnimationDuration:0.3];
-    
+
     [UIView commitAnimations];
-    
+
 }// became first responder
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
@@ -152,20 +152,20 @@
     rect.origin.y = rect.origin.y + self.upDistance;
     self.view.frame = rect;
     [UIView setAnimationDuration:0.3];
-    
+
     [UIView commitAnimations];
 }
 
 
 
 /*
-#pragma mark - Navigation
+ #pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

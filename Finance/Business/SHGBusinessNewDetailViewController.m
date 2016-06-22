@@ -32,13 +32,13 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
     UIView *PickerBackView;
 }
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
+@property (strong, nonatomic) UILabel *titleLabel;
 @property (strong, nonatomic) IBOutlet UIView *headerView;
 @property (strong, nonatomic) IBOutlet UIView *inPutView;
-@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 
 //头部redView
 @property (weak, nonatomic) IBOutlet UIView *redView;
-@property (weak, nonatomic) IBOutlet UILabel *titleNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *titleDetailLabel;
 @property (weak, nonatomic) IBOutlet UIView *firstHorizontalLine;
 @property (weak, nonatomic) IBOutlet UIButton *typeButton;
@@ -123,27 +123,28 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
 @implementation SHGBusinessNewDetailViewController
 - (void)viewDidLoad
 {
-    [super viewDidLoad];
-    self.tableView.delegate = self;
-    self.tableView.dataSource = self;
-    self.scrollView.delegate = self;
-    self.isChangeCollection = YES;
     self.rightItemtitleName = @"分享";
-    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    [super viewDidLoad];
+    self.isChangeCollection = YES;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shareToFriendSuccess:) name:NOTIFI_ACTION_SHARE_TO_FRIENDSUCCESS object:nil];
     [self.tableView setTableFooterView:[[UIView alloc] init]];
-    [self.headerView addSubview:self.redView];
-    [self.headerView addSubview:self.moneyAndUserView];
-    [self.headerView addSubview:self.businessMessageView];
-    [self.headerView addSubview:self.BPView];
-    [self.headerView addSubview:self.companyView];
-    [self.headerView addSubview:self.representView];
     [self initView];
     [self addSdLayout];
     [self initData];
     
 }
 
+- (UILabel *)titleLabel
+{
+    if (!_titleLabel) {
+        _titleLabel = [[UILabel alloc] init];
+        _titleLabel.font = FontFactor(kNavBarTitleFontSize);
+        _titleLabel.text = @"动态详情";
+        _titleLabel.textColor = [UIColor whiteColor];
+        [_titleLabel sizeToFit];
+    }
+    return _titleLabel;
+}
 
 - (NSMutableArray *)phoneArray
 {
@@ -238,12 +239,6 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
     .leftSpaceToView(self.headerView, 0.0f)
     .rightSpaceToView(self.headerView, 0.0f)
     .heightIs(MarginFactor(124.0f));
-    
-    self.titleNameLabel.sd_layout
-    .topSpaceToView(self.redView, 0.0f)
-    .centerXEqualToView(self.redView)
-    .heightIs(self.titleNameLabel.font.lineHeight);
-    [self.titleNameLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
 
     self.titleDetailLabel.sd_layout
     .topSpaceToView(self.redView, 0.0f)
@@ -511,10 +506,15 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
 
 - (void)initView
 {
-    self.scrollView.showsHorizontalScrollIndicator = NO;
-    self.scrollView.showsVerticalScrollIndicator = NO;
-    self.tableView.bounces = NO;
-    self.titleNameLabel.hidden = YES;
+    [self.headerView addSubview:self.redView];
+    [self.headerView addSubview:self.moneyAndUserView];
+    [self.headerView addSubview:self.businessMessageView];
+    [self.headerView addSubview:self.BPView];
+    [self.headerView addSubview:self.companyView];
+    [self.headerView addSubview:self.representView];
+
+    self.navigationItem.titleView = self.titleLabel;
+
     [self.userButton setEnlargeEdgeWithTop:10.0f right:0.0f bottom:10.0f left:150.0f];
     UITapGestureRecognizer *tableHeaderViewRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapTableHeaderView:)];
     [self.headerView addGestureRecognizer:tableHeaderViewRecognizer];
@@ -531,8 +531,6 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
     
     //redView
     self.redView.backgroundColor = Color(@"f04f46");
-    self.titleNameLabel.textColor = Color(@"fbdfdd");
-    self.titleNameLabel.font = FontFactor(13.0f);
     self.firstHorizontalLine.backgroundColor = Color(@"fd665d");
     self.typeButton.titleLabel.font = self.areaButton.titleLabel.font = FontFactor(12.0f);
     [self.typeButton setTitleColor:Color(@"ffffff") forState:UIControlStateNormal];
@@ -995,21 +993,11 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
 {
     [self.phoneTextView resignFirstResponder];
     [self.contentTextView resignFirstResponder];
-    if (scrollView.contentOffset.y > MarginFactor(120.0f) ){
-        [UIView beginAnimations:nil context:nil];
-        //[UIView setAnimationCurve:UIViewAnimationCurveEaseIn];
-        [UIView setAnimationDuration:1.0];
-        [UIView setAnimationDelegate:self];
-        self.title = @"业务详情";
-        [UIView commitAnimations];
+    if (scrollView.contentOffset.y > CGRectGetHeight(self.redView.frame)){
+        self.navigationItem.titleView.alpha = 1.0f;
     }
-    if (scrollView.contentOffset.y < MarginFactor(120.0f) ){
-        [UIView beginAnimations:nil context:nil];
-        //[UIView setAnimationCurve:UIViewAnimationCurveEaseIn];
-        [UIView setAnimationDuration:1.0];
-        [UIView setAnimationDelegate:self];
-        self.title = @"";
-        [UIView commitAnimations];
+    if (scrollView.contentOffset.y < CGRectGetHeight(self.redView.frame)){
+        self.navigationItem.titleView.alpha = ABS(scrollView.contentOffset.y - CGRectGetHeight(self.redView.frame)) / CGRectGetHeight(self.redView.frame);
     }
 }
 
