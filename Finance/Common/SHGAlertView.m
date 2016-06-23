@@ -18,7 +18,7 @@
 @property (strong, nonatomic) UILabel *lineLabel;
 @property (strong, nonatomic) UIButton *leftBtn;
 @property (strong, nonatomic) UIButton *rightBtn;
-@property (strong, nonatomic) UIView *backImageView;
+@property (strong, nonatomic) UIView *backView;
 @property (strong, nonatomic) UIView *customView;
 
 @property (strong, nonatomic) UIButton *closeButton;
@@ -112,7 +112,7 @@
     .heightIs(self.closeButton.currentImage.size.height);
 }
 
-- (instancetype)initWithTitle:(NSString *)title contentText:(NSString *)content leftButtonTitle:(NSString *)leftTitle rightButtonTitle:(NSString *)rigthTitle
+- (instancetype)initWithTitle:(NSString *)title contentText:(NSString *)content leftButtonTitle:(NSString *)leftTitle rightButtonTitle:(NSString *)rightTitle
 {
     self = [self init];
     if (self) {
@@ -132,7 +132,7 @@
             .widthRatioToView(self.lineLabel, 1.0f)
             .heightIs(MarginFactor(37.0f));
 
-            [self.rightBtn setTitle:rigthTitle forState:UIControlStateNormal];
+            [self.rightBtn setTitle:rightTitle forState:UIControlStateNormal];
 
         } else {
             [self sd_addSubviews:@[self.contentLabel, self.leftBtn, self.rightBtn]];
@@ -157,7 +157,7 @@
 
             [self.leftBtn setTitle:leftTitle forState:UIControlStateNormal];
 
-            [self.rightBtn setTitle:rigthTitle forState:UIControlStateNormal];
+            [self.rightBtn setTitle:rightTitle forState:UIControlStateNormal];
         }
 
         self.titleLabel.text = title;
@@ -168,7 +168,7 @@
     return self;
 }
 
-- (instancetype)initWithTitle:(NSString *)title customView:(UIView *)customView leftButtonTitle:(NSString *)leftTitle rightButtonTitle:(NSString *)rigthTitle
+- (instancetype)initWithTitle:(NSString *)title customView:(UIView *)customView leftButtonTitle:(NSString *)leftTitle rightButtonTitle:(NSString *)rightTitle
 {
     self = [self init];
     if (self) {
@@ -187,7 +187,7 @@
             .widthRatioToView(self.lineLabel, 1.0f)
             .heightIs(MarginFactor(37.0f));
 
-            [self.rightBtn setTitle:rigthTitle forState:UIControlStateNormal];
+            [self.rightBtn setTitle:rightTitle forState:UIControlStateNormal];
 
         } else {
             [self sd_addSubviews:@[customView, self.leftBtn, self.rightBtn]];
@@ -209,17 +209,17 @@
 
             [self.leftBtn setTitle:leftTitle forState:UIControlStateNormal];
 
-            [self.rightBtn setTitle:rigthTitle forState:UIControlStateNormal];
+            [self.rightBtn setTitle:rightTitle forState:UIControlStateNormal];
         }
 
         self.titleLabel.text = title;
-        
+
         [self setupAutoHeightWithBottomView:self.rightBtn bottomMargin:MarginFactor(24.0f)];
     }
     return self;
 }
 
-- (instancetype)initWithCustomView:(UIView *)customView leftButtonTitle:(NSString *)leftTitle rightButtonTitle:(NSString *)rigthTitle
+- (instancetype)initWithCustomView:(UIView *)customView leftButtonTitle:(NSString *)leftTitle rightButtonTitle:(NSString *)rightTitle
 {
     self = [super init];
     if (self) {
@@ -289,8 +289,8 @@
 
 - (void)removeFromSuperview
 {
-    [self.backImageView removeFromSuperview];
-    self.backImageView = nil;
+    [self.backView removeFromSuperview];
+    self.backView = nil;
     [super removeFromSuperview];
 }
 
@@ -300,16 +300,16 @@
         return;
     }
 
-    if (!self.backImageView) {
-        self.backImageView = [[UIView alloc] initWithFrame:[AppDelegate currentAppdelegate].window.bounds];
-        self.backImageView.backgroundColor = [UIColor blackColor];
-        self.backImageView.alpha = 0.6f;
-        self.backImageView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
-        UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(backImageViewTaped:)];
-        [self.backImageView addGestureRecognizer:recognizer];
+    if (!self.backView) {
+        self.backView = [[UIView alloc] initWithFrame:[AppDelegate currentAppdelegate].window.bounds];
+        self.backView.backgroundColor = [UIColor blackColor];
+        self.backView.alpha = 0.6f;
+        self.backView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+        UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(backViewTaped:)];
+        [self.backView addGestureRecognizer:recognizer];
     }
-    [newWindow addSubview:self.backImageView];
-    
+    [newWindow addSubview:self.backView];
+
     [UIView animateKeyframesWithDuration:0.45f delay:0.0f options:UIViewKeyframeAnimationOptionCalculationModeCubic | UIViewAnimationOptionCurveLinear animations:^{
         [UIView addKeyframeWithRelativeStartTime:0.0f relativeDuration:0.15f animations:^{
             self.transform = CGAffineTransformMakeScale(1.05f, 1.05f);
@@ -320,8 +320,8 @@
         [UIView addKeyframeWithRelativeStartTime:0.3f relativeDuration:0.15f animations:^{
             self.transform = CGAffineTransformMakeScale(1.0f, 1.0f);
         }];
-    } completion:^(BOOL finished) {
-    }];
+    } completion:nil];
+
     [super willMoveToWindow:newWindow];
 }
 
@@ -344,13 +344,165 @@
         //再次更新下 以防布局出错
         [self updateLayout];
     }
+    [super didMoveToWindow];
 }
 
-- (void)backImageViewTaped:(UITapGestureRecognizer *)recognizer
+- (void)backViewTaped:(UITapGestureRecognizer *)recognizer
 {
     if (self.touchOtherDismiss) {
         [self dismissAlert];
     }
 }
+
+@end
+
+
+@interface SHGBusinessContactAlertView()
+
+@property (strong, nonatomic) UIView *backgroundView;
+@property (strong, nonatomic) UIView *contentView;
+@property (strong, nonatomic) UIImageView *imageView;
+@property (strong, nonatomic) UILabel *label;
+
+@property (strong, nonatomic) NSString *leftTitle;
+@property (strong, nonatomic) NSString *rightTitle;
+
+@end
+
+@implementation SHGBusinessContactAlertView
+
+- (instancetype)initWithLeftButtonTitle:(NSString *)leftTitle rightButtonTitle:(NSString *)rightTitle
+{
+    self = [super init];
+    if (self) {
+        self.backgroundColor = [UIColor clearColor];
+        self.leftTitle = leftTitle;
+        self.rightTitle = rightTitle;
+    }
+    return self;
+}
+
+- (void)initView
+{
+    self.contentView = [[UIView alloc] init];
+
+    self.backgroundView = [[UIView alloc] init];
+    self.backgroundView.backgroundColor = [UIColor whiteColor];
+    self.backgroundView.layer.masksToBounds = YES;
+    self.backgroundView.layer.cornerRadius = 10.0f;
+
+    self.imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"business_titleImage"]];
+
+    self.label = [[UILabel alloc] init];
+    self.label.font = FontFactor(15.0f);
+    self.label.textColor = Color(@"8d8d8d");
+    self.label.textAlignment = NSTextAlignmentCenter;
+
+    self.leftBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.leftBtn.backgroundColor = Color(@"66c1d1");
+    [self.leftBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [self.leftBtn setTitle:self.leftTitle forState:UIControlStateNormal];
+
+    self.rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.rightBtn.backgroundColor = Color(@"f95c53");
+    [self.rightBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [self.rightBtn setTitle:self.rightTitle forState:UIControlStateNormal];
+
+    self.leftBtn.titleLabel.font = self.rightBtn.titleLabel.font = FontFactor(16.0f);
+    self.leftBtn.layer.masksToBounds = self.rightBtn.layer.masksToBounds = YES;
+    self.leftBtn.layer.cornerRadius = self.rightBtn.layer.cornerRadius = 3.0f;
+
+    [self addSubview:self.contentView];
+    
+    [self.contentView sd_addSubviews:@[self.backgroundView, self.imageView, self.label, self.rightBtn, self.leftBtn]];
+
+    self.customView = self.contentView;
+}
+
+- (void)addAutoLayout
+{
+    self.contentView.sd_layout
+    .widthIs(MarginFactor(290.0f));
+
+    self.imageView.sd_layout
+    .centerXEqualToView(self.contentView)
+    .topSpaceToView(self.contentView, 0.0f)
+    .widthIs(self.imageView.image.size.width)
+    .heightIs(self.imageView.image.size.height);
+
+    self.backgroundView.sd_layout
+    .leftSpaceToView(self.contentView, 0.0f)
+    .rightSpaceToView(self.contentView, 0.0f)
+    .topSpaceToView(self.contentView, MarginFactor(45.0f))
+    .bottomSpaceToView(self.contentView, 0.0f);
+
+    self.label.sd_layout
+    .leftSpaceToView(self.contentView, MarginFactor(27.0f))
+    .rightSpaceToView(self.contentView, MarginFactor(27.0f))
+    .topSpaceToView(self.imageView, MarginFactor(25.0f))
+    .autoHeightRatio(0.0f);
+
+    if (self.leftTitle) {
+        self.leftBtn.sd_layout
+        .leftEqualToView(self.label)
+        .topSpaceToView(self.imageView, MarginFactor(40.0f))
+        .heightIs(MarginFactor(38.0f))
+        .widthIs(MarginFactor(116.0f));
+
+        self.rightBtn.sd_layout
+        .rightEqualToView(self.label)
+        .topEqualToView(self.leftBtn)
+        .widthRatioToView(self.leftBtn, 1.0f)
+        .heightRatioToView(self.leftBtn, 1.0f);
+    } else{
+        self.rightBtn.sd_layout
+        .centerXEqualToView(self.contentView)
+        .topSpaceToView(self.imageView, MarginFactor(40.0f))
+        .widthIs(MarginFactor(227.0f))
+        .heightIs(MarginFactor(38.0f));
+    }
+
+    [self.contentView setupAutoHeightWithBottomView:self.leftBtn bottomMargin:MarginFactor(40.0f)];
+
+    [self setupAutoHeightWithBottomView:self.contentView bottomMargin:0.0f];
+
+    [self setNeedsLayout];
+    [self layoutIfNeeded];
+}
+
+- (void)setText:(NSString *)text
+{
+    _text = text;
+
+    self.label.text = text;
+
+    if (self.leftTitle) {
+        self.leftBtn.sd_resetNewLayout
+        .leftEqualToView(self.label)
+        .topSpaceToView(self.label, MarginFactor(25.0f))
+        .heightIs(MarginFactor(38.0f))
+        .widthIs(MarginFactor(116.0f));
+
+        self.rightBtn.sd_resetNewLayout
+        .rightEqualToView(self.label)
+        .topEqualToView(self.leftBtn)
+        .widthRatioToView(self.leftBtn, 1.0f)
+        .heightRatioToView(self.leftBtn, 1.0f);
+    } else{
+
+        self.rightBtn.sd_layout
+        .centerXEqualToView(self.contentView)
+        .topSpaceToView(self.label, MarginFactor(25.0f))
+        .widthIs(MarginFactor(227.0f))
+        .heightIs(MarginFactor(38.0f));
+    }
+
+    
+    [self.contentView setupAutoHeightWithBottomView:self.leftBtn bottomMargin:MarginFactor(25.0f)];
+
+    [self setNeedsLayout];
+    [self layoutIfNeeded];
+}
+
 
 @end
