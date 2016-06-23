@@ -50,7 +50,7 @@
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey
 {
-    return @{@"phone":@"phone", @"area":@"area", @"status":@"status", @"userID":@"id", @"title":@"title", @"company":@"company", @"headImg":@"headimg", @"isAttention":@"isattention", @"realName":@"realname", @"industry":@"industry", @"hideAttation":@"isattention"};
+    return @{@"phone":@"phone", @"area":@"area", @"status":@"status", @"userID":@"id", @"title":@"title", @"company":@"company", @"headImg":@"headimg", @"isAttention":@"isattention", @"realName":@"realname", @"industry":@"industry", @"hideAttation":@"isattention", @"businessStatus":@"businessstatus"};
 }
 
 + (NSValueTransformer *)JSONTransformerForKey:(NSString *)key
@@ -99,7 +99,7 @@
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey
 {
-    return @{@"phone":@"phone", @"realName":@"realname", @"userID":@"id", @"position":@"position", @"title":@"title", @"headImg":@"headimg", @"company":@"company", @"friendTypeImage":@"friendtype", @"commonFriendCount":@"commonfriendcount", @"commonFriend":@"commonfriend", @"userStatus":@"userstatus", @"area":@"area", @"isAttention":@"isattention", @"hideAttation":@"isattention"};
+    return @{@"phone":@"phone", @"realName":@"realname", @"userID":@"id", @"position":@"position", @"title":@"title", @"headImg":@"headimg", @"company":@"company", @"friendTypeImage":@"friendtype", @"commonFriendCount":@"commonfriendcount", @"commonFriend":@"commonfriend", @"userStatus":@"userstatus", @"area":@"area", @"isAttention":@"isattention", @"hideAttation":@"isattention", @"businessStatus":@"businessstatus"};
 }
 
 + (NSValueTransformer *)JSONTransformerForKey:(NSString *)key

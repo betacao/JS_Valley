@@ -14,11 +14,13 @@
 #import "SDPhotoBrowser.h"
 #import "SHGPersonalTableViewCell.h"
 #import "SHGBusinessMineViewController.h"
+#import "SHGAuthenticationView.h"
 
 #define kTagViewWidth 45.0f * XFACTOR
 #define kTagViewHeight 16.0f * XFACTOR
 #define kBottomViewLeftMargin 14.0f
 #define kHeaderViewHeight MarginFactor(82.0f)
+
 typedef NS_ENUM(NSInteger, SHGUserType) {
     //马甲号类型
     SHGUserTypeVest = 0,
@@ -44,6 +46,7 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
 @property (weak, nonatomic) IBOutlet UIView *centerLine;
 @property (weak, nonatomic) IBOutlet UIButton *sendMessageButton;
 @property (weak, nonatomic) IBOutlet UIButton *collectButton;
+@property (weak, nonatomic) IBOutlet SHGAuthenticationView *authenticationView;
 
 //数据
 @property (strong, nonatomic) NSString *department;//职称
@@ -54,6 +57,7 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
 @property (strong, nonatomic) NSString *nickName;
 @property (strong, nonatomic) NSString *companyName;
 @property (strong, nonatomic) NSString *userStatus;
+@property (assign, nonatomic) BOOL businessStatus;
 @property (strong, nonatomic) NSString *friendNumber;
 @property (strong, nonatomic) NSString *friendShip;
 @property (assign, nonatomic) SHGUserType userType;
@@ -68,7 +72,8 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
 @implementation SHGPersonalViewController
 
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
     self.title = @"个人动态";
     self.isCardChange = YES;
@@ -133,7 +138,7 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
     self.userNameLabel.sd_layout
     .leftSpaceToView(self.headerImageView, MarginFactor(10.0f))
     .topEqualToView(self.headerImageView)
-    .autoHeightRatio(0.0f);
+    .heightIs(self.userNameLabel.font.lineHeight);
     [self.userNameLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
     
     self.departmentLabel.sd_layout
@@ -141,6 +146,11 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
     .bottomEqualToView(self.userNameLabel)
     .heightIs(self.departmentLabel.font.lineHeight);
     [self.departmentLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
+
+    self.authenticationView.sd_layout
+    .leftSpaceToView(self.departmentLabel, 0.0f)
+    .centerYEqualToView(self.departmentLabel)
+    .heightRatioToView(self.departmentLabel, 1.0f);
     
     self.companyLabel.sd_layout
     .leftEqualToView(self.userNameLabel)
@@ -226,6 +236,7 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
 - (void)loadData
 {
     [self.headerImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,self.potName]] placeholderImage:[UIImage imageNamed:@"default_head"]];
+    [self.authenticationView updateWithVStatus:self.userStatus enterpriseStatus:self.businessStatus];
     if (self.department.length > 6) {
         NSString * str = [self.department substringToIndex:6];
         self.departmentLabel.text = [NSString stringWithFormat:@"%@...",str];
@@ -326,6 +337,7 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
     self.relationShip = [dictionary objectForKey: @"rela"];
     self.department = [dictionary objectForKey: @"title"];
     self.userStatus = [dictionary objectForKey:@"userstatus"];
+    self.businessStatus = [[dictionary objectForKey:@"businessstatus"] boolValue];
     self.position = [dictionary objectForKey:@"position"];
     self.tags = [dictionary objectForKey:@"tags"];
     self.friendNumber = [dictionary objectForKey:@"friends"];

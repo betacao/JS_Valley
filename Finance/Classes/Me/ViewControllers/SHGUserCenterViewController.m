@@ -18,6 +18,8 @@
 #import "SHGBusinessCollectionListViewController.h"
 #import "SHGMyFollowViewController.h"
 #import "SHGMyFansViewController.h"
+#import "SHGAuthenticationView.h"
+
 #define kLabelWidth ceilf(SCREENWIDTH / 4.0f)
 
 @interface SHGUserCenterViewController ()<UITableViewDataSource, UITableViewDelegate, UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
@@ -27,6 +29,7 @@
 @property (strong, nonatomic) UILabel         *departmentLabel;
 @property (strong, nonatomic) UILabel         *nickNameLabel;
 @property (strong, nonatomic) UILabel         *companyLabel;
+@property (strong, nonatomic) SHGAuthenticationView *authenticationView;
 @property (strong, nonatomic) UIView          *lineView;
 @property (strong, nonatomic) UIButton        *editButton;
 @property (strong, nonatomic) UIView          *messageView;
@@ -93,8 +96,8 @@
     self.nickNameLabel.sd_layout
     .leftSpaceToView(self.userHeaderView, MarginFactor(11.0f))
     .topEqualToView(self.userHeaderView)
-    .autoHeightRatio(0.0f);
-    [self.nickNameLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
+    .heightIs(self.nickNameLabel.font.lineHeight);
+    [self.nickNameLabel setSingleLineAutoResizeWithMaxWidth:kLabelWidth * 2.0f];
 
     //编辑按钮
     self.editButton.sd_layout
@@ -107,9 +110,15 @@
     //职位
     self.departmentLabel.sd_layout
     .leftSpaceToView(self.nickNameLabel, MarginFactor(4.0f))
-    .rightSpaceToView(self.editButton, MarginFactor(39.0f))
     .bottomEqualToView(self.nickNameLabel)
-    .heightRatioToView(self.nickNameLabel, 1.0f);
+    .heightIs(self.departmentLabel.font.lineHeight);
+    [self.departmentLabel setSingleLineAutoResizeWithMaxWidth:kLabelWidth * 2.0f];
+
+    //v+企
+    self.authenticationView.sd_layout
+    .leftSpaceToView(self.departmentLabel, 0.0f)
+    .centerYEqualToView(self.departmentLabel)
+    .heightRatioToView(self.departmentLabel, 1.0f);
 
     //公司名
     self.companyLabel.sd_layout
@@ -261,6 +270,7 @@
         [_tableHeaderView addSubview:self.nickNameLabel];
         [_tableHeaderView addSubview:self.companyLabel];
         [_tableHeaderView addSubview:self.departmentLabel];
+        [_tableHeaderView addSubview:self.authenticationView];
         [_tableHeaderView addSubview:self.lineView];
         [_tableHeaderView addSubview:self.labelView];
         [_tableHeaderView addSubview:self.bottomView];
@@ -308,6 +318,14 @@
         _departmentLabel.textColor = [UIColor colorWithHexString:@"161616"];
     }
     return _departmentLabel;
+}
+
+- (SHGAuthenticationView *)authenticationView
+{
+    if (!_authenticationView) {
+        _authenticationView = [[SHGAuthenticationView alloc] init];
+    }
+    return _authenticationView;
 }
 
 - (UIButton *)editButton
@@ -748,6 +766,7 @@
             }
             [weakSelf.userHeaderView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,headImageUrl]] placeholderImage:placeImage];
         }
+        [weakSelf.authenticationView updateWithVStatus:[[response.dataDictionary objectForKey:@"userstatus"] isEqualToString:@"true"] ? YES : NO enterpriseStatus:[[response.dataDictionary objectForKey:@"businessstatus"] boolValue]];
 
         if ([response.dataDictionary objectForKey:@"auditstate"]) {
             weakSelf.editButton.hidden = YES;

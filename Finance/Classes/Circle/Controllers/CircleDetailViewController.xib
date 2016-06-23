@@ -8,6 +8,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CircleDetailViewController">
             <connections>
                 <outlet property="actionView" destination="HFs-C6-FpA" id="cj0-9n-gwW"/>
+                <outlet property="authenticationView" destination="bWR-WX-0kG" id="qXg-hS-Hzu"/>
                 <outlet property="backImageView" destination="AC2-KC-3Lg" id="wKZ-Fq-5TK"/>
                 <outlet property="btnAttention" destination="Kgd-tr-IWO" id="UTm-WJ-xop"/>
                 <outlet property="btnCollet" destination="h3Y-4G-plf" id="mz2-sT-ld1"/>
@@ -122,6 +123,11 @@
                             <color key="textColor" red="0.33725490196078434" green="0.33725490196078434" blue="0.33725490196078434" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
+                        <view contentMode="scaleToFill" id="bWR-WX-0kG" customClass="SHGAuthenticationView">
+                            <rect key="frame" x="40" y="-41" width="240" height="128"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </view>
                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="nr5-PN-i9k">
                             <rect key="frame" x="50" y="31" width="143" height="11"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>

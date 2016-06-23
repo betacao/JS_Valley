@@ -880,6 +880,7 @@
 		F9352C021CFBD25C00778635 /* SHGNewsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9352C001CFBD25C00778635 /* SHGNewsViewController.xib */; };
 		F93891BE1CA11B2900B182F7 /* UINavigationItem+Custom.m in Sources */ = {isa = PBXBuildFile; fileRef = F93891BD1CA11B2900B182F7 /* UINavigationItem+Custom.m */; };
 		F93D55D21CA0EA24008845C5 /* MessageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F93D55D11CA0EA24008845C5 /* MessageTableViewCell.xib */; };
+		F93FC95A1D1B8E6800CBE7B8 /* SHGAuthenticationView.m in Sources */ = {isa = PBXBuildFile; fileRef = F93FC9591D1B8E6800CBE7B8 /* SHGAuthenticationView.m */; };
 		F93FCBC11C856D5A004E356E /* DDTapGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = F93FCBA61C856D5A004E356E /* DDTapGestureRecognizer.m */; };
 		F93FCBC21C856D5A004E356E /* NSArray+Category.m in Sources */ = {isa = PBXBuildFile; fileRef = F93FCBA81C856D5A004E356E /* NSArray+Category.m */; };
 		F93FCBC31C856D5A004E356E /* NSDate+Customized.m in Sources */ = {isa = PBXBuildFile; fileRef = F93FCBAA1C856D5A004E356E /* NSDate+Customized.m */; };
@@ -2163,6 +2164,8 @@
 		F93891BC1CA11B2900B182F7 /* UINavigationItem+Custom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationItem+Custom.h"; sourceTree = "<group>"; };
 		F93891BD1CA11B2900B182F7 /* UINavigationItem+Custom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationItem+Custom.m"; sourceTree = "<group>"; };
 		F93D55D11CA0EA24008845C5 /* MessageTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MessageTableViewCell.xib; sourceTree = "<group>"; };
+		F93FC9581D1B8E6800CBE7B8 /* SHGAuthenticationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGAuthenticationView.h; sourceTree = "<group>"; };
+		F93FC9591D1B8E6800CBE7B8 /* SHGAuthenticationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGAuthenticationView.m; sourceTree = "<group>"; };
 		F93FCBA51C856D5A004E356E /* DDTapGestureRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDTapGestureRecognizer.h; sourceTree = "<group>"; };
 		F93FCBA61C856D5A004E356E /* DDTapGestureRecognizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDTapGestureRecognizer.m; sourceTree = "<group>"; };
 		F93FCBA71C856D5A004E356E /* NSArray+Category.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+Category.h"; sourceTree = "<group>"; };
@@ -3162,6 +3165,8 @@
 				F91F43DE1CDC2D1C005604A0 /* SHGAlertView.m */,
 				F986CADA1D1A2C1A0086FC42 /* SHGAuthenticationWarningView.h */,
 				F986CADB1D1A2C1A0086FC42 /* SHGAuthenticationWarningView.m */,
+				F93FC9581D1B8E6800CBE7B8 /* SHGAuthenticationView.h */,
+				F93FC9591D1B8E6800CBE7B8 /* SHGAuthenticationView.m */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -5018,12 +5023,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 614A599B1AD3AEA1005DAB04 /* Build configuration list for PBXNativeTarget "Finance" */;
 			buildPhases = (
-				E82B5713BF48165B29E70825 /* 📦 Check Pods Manifest.lock */,
+				E82B5713BF48165B29E70825 /* [CP] Check Pods Manifest.lock */,
 				614A596E1AD3AEA1005DAB04 /* Sources */,
 				614A596F1AD3AEA1005DAB04 /* Frameworks */,
 				614A59701AD3AEA1005DAB04 /* Resources */,
-				12B563E8CEC0A014CF51C94A /* 📦 Embed Pods Frameworks */,
-				6EA2A4CB368E3059F74449CE /* 📦 Copy Pods Resources */,
+				12B563E8CEC0A014CF51C94A /* [CP] Embed Pods Frameworks */,
+				6EA2A4CB368E3059F74449CE /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -5757,14 +5762,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		12B563E8CEC0A014CF51C94A /* 📦 Embed Pods Frameworks */ = {
+		12B563E8CEC0A014CF51C94A /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Embed Pods Frameworks";
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -5772,14 +5777,14 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Finance/Pods-Finance-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		6EA2A4CB368E3059F74449CE /* 📦 Copy Pods Resources */ = {
+		6EA2A4CB368E3059F74449CE /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Copy Pods Resources";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -5787,14 +5792,14 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Finance/Pods-Finance-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		E82B5713BF48165B29E70825 /* 📦 Check Pods Manifest.lock */ = {
+		E82B5713BF48165B29E70825 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Check Pods Manifest.lock";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -5968,6 +5973,7 @@
 				4088DDD21AF1065100393855 /* SettingQuestionCell.m in Sources */,
 				40D6CC0B1B064122005F61C8 /* ProtocolViewController.m in Sources */,
 				408D8B821AF86CF20055810C /* MyMoneyDetailObject.m in Sources */,
+				F93FC95A1D1B8E6800CBE7B8 /* SHGAuthenticationView.m in Sources */,
 				F9D296D61C8F02F100A1446C /* SHGMainPageTableViewCell.m in Sources */,
 				982EB8111CB6023E003EEBE6 /* SHGBusinessSelectView.m in Sources */,
 				6190274A1B2359C600D9EEA2 /* popTableViewCell.m in Sources */,

@@ -35,7 +35,7 @@
         self.VImageView = [[UIImageView alloc] init];
         self.VImageView.image = [UIImage imageNamed:@"V"];
         [self.VImageView sizeToFit];
-        [self addSubview:self.VImageView];
+//        [self addSubview:self.VImageView];
 
         self.VImageView.hidden = YES;
 
@@ -62,8 +62,8 @@
     self.VImageView = [[UIImageView alloc] init];
     self.VImageView.image = [UIImage imageNamed:@"V"];
     [self.VImageView sizeToFit];
-    [self addSubview:self.VImageView];
-    
+//    [self addSubview:self.VImageView];
+
     self.VImageView.hidden = YES;
 
     UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapUserHeaderView)];

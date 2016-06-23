@@ -12,6 +12,7 @@
 #import "SHGRecommendCollectionView.h"
 #import "SHGEmptyDataView.h"
 #import "SHGPersonalViewController.h"
+#import "SHGAuthenticationView.h"
 
 @interface SHGDiscoveryDisplayViewController ()<UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate>
 
@@ -300,6 +301,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *button;
 @property (weak, nonatomic) IBOutlet UIView *spliteView;
 @property (weak, nonatomic) IBOutlet UIImageView *relationShipImageView;
+@property (weak, nonatomic) IBOutlet SHGAuthenticationView *authenticationView;
 
 @end
 
@@ -338,6 +340,11 @@
     .heightIs(self.firstLabel.font.lineHeight);
     [self.firstLabel setSingleLineAutoResizeWithMaxWidth:MarginFactor(200.0f)];
 
+    self.authenticationView.sd_layout
+    .centerYEqualToView(self.firstLabel)
+    .leftSpaceToView(self.firstLabel, 0.0f)
+    .heightRatioToView(self.firstLabel, 1.0f);
+
     self.secondLabel.sd_layout
     .centerYEqualToView(self.headerView)
     .leftEqualToView(self.firstLabel)
@@ -366,6 +373,7 @@
         //发现的搜索
         SHGDiscoveryPeopleObject *peopleObject = (SHGDiscoveryPeopleObject *)object;
         [self.headerView updateHeaderView:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,peopleObject.headImg] placeholderImage:[UIImage imageNamed:@"default_head"] status:peopleObject.status userID:peopleObject.userID];
+        [self.authenticationView updateWithVStatus:peopleObject.status enterpriseStatus:peopleObject.businessStatus];
         self.firstLabel.text = peopleObject.realName;
         self.secondLabel.text = peopleObject.company.length == 0 ? @"暂未提供公司信息" : peopleObject.company;
         self.thirdLabel.text = peopleObject.area;
@@ -388,6 +396,7 @@
         //我的人脉
         SHGDiscoveryDepartmentObject *depentmentObject = (SHGDiscoveryDepartmentObject *)object;
         [self.headerView updateHeaderView:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,depentmentObject.headImg] placeholderImage:[UIImage imageNamed:@"default_head"] status:depentmentObject.userStatus userID:depentmentObject.userID];
+        [self.authenticationView updateWithVStatus:depentmentObject.userStatus enterpriseStatus:depentmentObject.businessStatus];
         self.firstLabel.text = depentmentObject.realName;
         self.secondLabel.text = depentmentObject.company.length == 0 ? @"暂未提供公司信息" : depentmentObject.company;
         self.thirdLabel.text = depentmentObject.area;
@@ -408,7 +417,7 @@
 
     self.relationShipImageView.sd_layout
     .centerYEqualToView(self.firstLabel)
-    .leftSpaceToView(self.firstLabel, MarginFactor(10.0f))
+    .leftSpaceToView(self.authenticationView, 0.0f)
     .heightIs(self.relationShipImageView.image.size.height)
     .widthIs(self.relationShipImageView.image.size.width);
 }

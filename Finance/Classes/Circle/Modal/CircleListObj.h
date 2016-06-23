@@ -54,11 +54,13 @@
 @property (strong, nonatomic) NSString *pcurl;
 @property (strong, nonatomic) NSString *shareTitle;
 
-@property(strong, nonatomic)  NSString *companyname;
-@property(strong, nonatomic)  NSString *phone;
-@property(strong, nonatomic)  NSString *picname;
-@property(strong, nonatomic)  NSString *position;
-@property(strong, nonatomic)  NSString *realname;
+@property (strong, nonatomic)  NSString *companyname;
+@property (strong, nonatomic)  NSString *phone;
+@property (strong, nonatomic)  NSString *picname;
+@property (strong, nonatomic)  NSString *position;
+@property (strong, nonatomic)  NSString *realname;
+
+@property (assign, nonatomic) BOOL businessStatus;
 
 
 @end

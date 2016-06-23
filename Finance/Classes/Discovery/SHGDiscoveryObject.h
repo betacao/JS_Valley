@@ -44,6 +44,7 @@ typedef NS_ENUM(NSInteger, SHGDiscoveryGroupingType) {
 @property (assign, nonatomic) BOOL hideAttation;
 @property (strong, nonatomic) NSString *realName;
 @property (strong, nonatomic) NSString *industry;
+@property (assign, nonatomic) BOOL businessStatus;
 
 @end
 
@@ -70,6 +71,7 @@ typedef NS_ENUM(NSInteger, SHGDiscoveryGroupingType) {
 @property (assign, nonatomic) BOOL isAttention;
 @property (assign, nonatomic) BOOL hideAttation;
 @property (assign, nonatomic) BOOL userStatus;
+@property (assign, nonatomic) BOOL businessStatus;
 
 @end
 

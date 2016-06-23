@@ -18,7 +18,6 @@
 @interface CircleDetailViewController : BaseTableViewController<BRCommentViewDelegate,UIScrollViewDelegate,UITextFieldDelegate,CircleActionDelegate>
 @property (weak, nonatomic)     id<CircleActionDelegate> delegate;
 @property (strong, nonatomic)   NSString *rid;
-@property (strong, nonatomic)   CircleListObj *obj;
 @property (strong, nonatomic)   NSDictionary *itemInfoDictionary;
 
 - (void)smsShareSuccess:(NSNotification *)noti;
