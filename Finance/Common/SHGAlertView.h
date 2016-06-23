@@ -29,7 +29,7 @@
 
 @interface SHGBusinessContactAlertView : SHGAlertView
 
-@property (strong, nonatomic) NSString *text;
+@property (strong, nonatomic) NSAttributedString *text;
 
 - (instancetype)initWithLeftButtonTitle:(NSString *)leftTitle rightButtonTitle:(NSString *)rightTitle;
 

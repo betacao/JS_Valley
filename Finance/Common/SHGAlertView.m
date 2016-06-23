@@ -59,7 +59,7 @@
     self.lineLabel.backgroundColor = Color(@"f04241");
 
     self.contentLabel = [[UILabel alloc] init];
-    self.contentLabel.font = FontFactor(16.0f);
+    self.contentLabel.font = FontFactor(15.0f);
     self.contentLabel.textColor = Color(@"8d8d8d");
     self.contentLabel.textAlignment = NSTextAlignmentCenter;
 
@@ -378,6 +378,8 @@
         self.backgroundColor = [UIColor clearColor];
         self.leftTitle = leftTitle;
         self.rightTitle = rightTitle;
+        [self initView];
+        [self addAutoLayout];
     }
     return self;
 }
@@ -397,21 +399,22 @@
     self.label.font = FontFactor(15.0f);
     self.label.textColor = Color(@"8d8d8d");
     self.label.textAlignment = NSTextAlignmentCenter;
-
+    
     self.leftBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     self.leftBtn.backgroundColor = Color(@"66c1d1");
     [self.leftBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.leftBtn setTitle:self.leftTitle forState:UIControlStateNormal];
-
+    [self.leftBtn addTarget:self action:@selector(leftBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+    
     self.rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     self.rightBtn.backgroundColor = Color(@"f95c53");
     [self.rightBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.rightBtn setTitle:self.rightTitle forState:UIControlStateNormal];
-
+    [self.rightBtn addTarget:self action:@selector(rightBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
     self.leftBtn.titleLabel.font = self.rightBtn.titleLabel.font = FontFactor(16.0f);
     self.leftBtn.layer.masksToBounds = self.rightBtn.layer.masksToBounds = YES;
     self.leftBtn.layer.cornerRadius = self.rightBtn.layer.cornerRadius = 3.0f;
-
+    
     [self addSubview:self.contentView];
     
     [self.contentView sd_addSubviews:@[self.backgroundView, self.imageView, self.label, self.rightBtn, self.leftBtn]];
@@ -462,7 +465,7 @@
         .heightIs(MarginFactor(38.0f));
     }
 
-    [self.contentView setupAutoHeightWithBottomView:self.leftBtn bottomMargin:MarginFactor(40.0f)];
+    [self.contentView setupAutoHeightWithBottomView:self.rightBtn bottomMargin:MarginFactor(40.0f)];
 
     [self setupAutoHeightWithBottomView:self.contentView bottomMargin:0.0f];
 
@@ -470,36 +473,46 @@
     [self layoutIfNeeded];
 }
 
-- (void)setText:(NSString *)text
+- (void)setText:(NSAttributedString *)text
 {
     _text = text;
-
-    self.label.text = text;
-
+    
+    self.label.attributedText = text;
+    
+    if (text == nil) {
+        self.label.sd_layout
+        .leftSpaceToView(self.contentView, MarginFactor(27.0f))
+        .rightSpaceToView(self.contentView, MarginFactor(27.0f))
+        .topSpaceToView(self.imageView, MarginFactor(15.0f))
+        .autoHeightRatio(0.0f);
+    }
     if (self.leftTitle) {
         self.leftBtn.sd_resetNewLayout
         .leftEqualToView(self.label)
         .topSpaceToView(self.label, MarginFactor(25.0f))
         .heightIs(MarginFactor(38.0f))
         .widthIs(MarginFactor(116.0f));
-
+        
         self.rightBtn.sd_resetNewLayout
         .rightEqualToView(self.label)
         .topEqualToView(self.leftBtn)
         .widthRatioToView(self.leftBtn, 1.0f)
         .heightRatioToView(self.leftBtn, 1.0f);
     } else{
-
+        
         self.rightBtn.sd_layout
         .centerXEqualToView(self.contentView)
         .topSpaceToView(self.label, MarginFactor(25.0f))
         .widthIs(MarginFactor(227.0f))
         .heightIs(MarginFactor(38.0f));
     }
-
+    if (text == nil) {
+        [self.contentView setupAutoHeightWithBottomView:self.rightBtn bottomMargin:MarginFactor(40.0f)];
+    } else{
+       [self.contentView setupAutoHeightWithBottomView:self.rightBtn bottomMargin:MarginFactor(25.0f)];
+    }
     
-    [self.contentView setupAutoHeightWithBottomView:self.leftBtn bottomMargin:MarginFactor(25.0f)];
-
+    
     [self setNeedsLayout];
     [self layoutIfNeeded];
 }

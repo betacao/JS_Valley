@@ -36,6 +36,10 @@
 
 + (void)getBusinessDetail:(SHGBusinessObject *)object success:(void (^)(SHGBusinessObject *detailObject))block;
 
++ (void)getBusinessCheckedNum:(SHGBusinessObject *)object success:(void (^)(NSString *num))block;
+
++ (void)getBusinessContactAuth:(SHGBusinessObject *)object success:(void (^)(SHGBusinessContactAuthObject *contactAuthObject))block;
+
 + (void)addCommentWithObject:(SHGBusinessObject *)object content:(NSString *)content toOther:(NSString *)otherId finishBlock:(void (^)(BOOL))block;
 
 + (void)deleteCommentWithID:(NSString *)commentId finishBlock:(void (^)(BOOL))block;

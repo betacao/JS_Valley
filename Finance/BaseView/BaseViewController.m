@@ -66,7 +66,7 @@
     NSString *rightImageName ;
     if (!IsStrEmpty(self.rightItemImageName)){
         rightImageName = self.rightItemImageName;
-        [rightButton setImage:[UIImage imageNamed:imageName] forState:UIControlStateNormal];
+        [rightButton setImage:[UIImage imageNamed:rightImageName] forState:UIControlStateNormal];
     } else if(!IsStrEmpty(self.rightItemtitleName)){
         [rightButton setTitle:self.rightItemtitleName forState:UIControlStateNormal];
         [rightButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];

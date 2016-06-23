@@ -65,16 +65,16 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    self.tableView.backgroundColor = Color(@"efeeef");
     self.circleType = @"all";
     self.needShowNewFriend = YES;
     self.tableView.sd_layout
     .spaceToSuperView(UIEdgeInsetsZero);
-
+    
     [self loadPreLoadingData];
     [self addHeaderRefresh:self.tableView headerRefesh:YES headerTitle:@{kRefreshStateIdle:@"下拉可以刷新", kRefreshStatePulling:@"释放后查看最新动态", kRefreshStateRefreshing:@"正在努力加载中"} andFooter:YES footerTitle:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshData) name:NOTIFI_SENDPOST object:nil];
-
+    
 }
 
 - (void)loadPreLoadingData

@@ -32,6 +32,7 @@
 @property (strong, nonatomic) NSString *title;
 @property (strong, nonatomic) NSString *uid;
 @property (strong, nonatomic) NSString *photo;
+@property (strong, nonatomic) NSString *companyDetail;
 //资金方
 @property (strong, nonatomic) NSString *businessType;
 @property (strong, nonatomic) NSString *clarifyingRequire;
@@ -58,6 +59,14 @@
 @property (strong, nonatomic) NSMutableArray *bpnameList;
 @property (strong, nonatomic) NSMutableArray *bppathList;
 
+@end
+
+@interface  SHGBusinessContactAuthObject: MTLModel<MTLJSONSerializing>
+@property (strong, nonatomic) NSString *userContactLimit;
+@property (strong, nonatomic) NSString *businessContactLimit;
+@property (assign, nonatomic) BOOL tipFlag;
+@property (assign, nonatomic) BOOL businessLicenceFlag;
+@property (assign, nonatomic) BOOL contactShow;
 @end
 
 @interface  SHGBusinessPDFObject: MTLModel<MTLJSONSerializing>

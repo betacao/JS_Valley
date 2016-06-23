@@ -21,6 +21,7 @@
 #import "CircleLinkViewController.h"
 #import "SHGEmptyDataView.h"
 #import "NSCharacterSet+Common.h"
+#import "SHGAlertView.h"
 typedef NS_ENUM(NSInteger, SHGTapPhoneType)
 {
     SHGTapPhoneTypeDialNumber,
@@ -32,7 +33,6 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
     UIView *PickerBackView;
 }
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (strong, nonatomic) UILabel *titleLabel;
 @property (strong, nonatomic) IBOutlet UIView *headerView;
 @property (strong, nonatomic) IBOutlet UIView *inPutView;
@@ -63,8 +63,6 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
 @property (weak, nonatomic) IBOutlet UILabel *businessMessageLabel;
 @property (weak, nonatomic) IBOutlet UIView *secondHorizontalLine;
 @property (weak, nonatomic) IBOutlet UIView *businessMessageLabelView;
-@property (weak, nonatomic) IBOutlet UILabel *phoneLabel;
-@property (weak, nonatomic) IBOutlet SHGCopyTextView *phoneTextView;
 @property (weak, nonatomic) IBOutlet UIView *businessMessageTopLine;
 @property (weak, nonatomic) IBOutlet UIView *businessMessageBpttomLine;
 
@@ -77,7 +75,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
 @property (weak, nonatomic) IBOutlet UIView *companyBottomLineView;
 @property (weak, nonatomic) IBOutlet UIView *companyBottomView;
 
-//业务信息
+//业务描述
 @property (strong, nonatomic) IBOutlet UIView *representView;
 @property (weak, nonatomic) IBOutlet UIView *representLabelTopine;
 @property (weak, nonatomic) IBOutlet UILabel *businessRepresentLabel;
@@ -104,6 +102,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
 @property (strong, nonatomic) UIView *photoView;
 @property (strong, nonatomic) SHGBusinessObject *responseObject;
 @property (weak, nonatomic) SHGBusinessCommentObject *commentObject;
+@property (strong, nonatomic) SHGBusinessContactAuthObject *contactAuthObject;
 @property (strong, nonatomic) NSString *copyedString;
 
 @property (strong, nonatomic) BRCommentView *popupView;
@@ -117,13 +116,14 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
 
 @property (assign, nonatomic) BOOL isChangeCollection;
 
+@property (strong, nonatomic) SHGAlertView *alert;
 
 @end
 
 @implementation SHGBusinessNewDetailViewController
 - (void)viewDidLoad
 {
-    self.rightItemtitleName = @"分享";
+    self.rightItemImageName = @"newBusiness_share";
     [super viewDidLoad];
     self.isChangeCollection = YES;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shareToFriendSuccess:) name:NOTIFI_ACTION_SHARE_TO_FRIENDSUCCESS object:nil];
@@ -140,7 +140,8 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
         _titleLabel = [[UILabel alloc] init];
         _titleLabel.font = FontFactor(kNavBarTitleFontSize);
         _titleLabel.text = @"动态详情";
-        _titleLabel.textColor = [UIColor whiteColor];
+        _titleLabel.alpha = 0.0f;
+        _titleLabel.textColor = [UIColor clearColor];
         [_titleLabel sizeToFit];
     }
     return _titleLabel;
@@ -229,9 +230,9 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
     .heightIs(1 / SCALE);
     
     self.headerView.sd_layout
-    .topSpaceToView(self.scrollView, 0.0f)
-    .leftSpaceToView(self.scrollView, 0.0f)
-    .rightSpaceToView(self.scrollView, 0.0f);
+    .topSpaceToView(self.tableView, 0.0f)
+    .leftSpaceToView(self.tableView, 0.0f)
+    .rightSpaceToView(self.tableView, 0.0f);
     
     //redView
     self.redView.sd_layout
@@ -337,21 +338,11 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
     self.businessMessageLabelView.sd_layout
     .leftEqualToView(self.secondHorizontalLine)
     .rightEqualToView(self.secondHorizontalLine)
-    .topSpaceToView(self.secondHorizontalLine, MarginFactor(14.0f))
-    .bottomSpaceToView(self.businessMessageView, 0.0f);
+    .topSpaceToView(self.secondHorizontalLine, MarginFactor(14.0f));
+   
     
-    self.phoneTextView.sd_layout
-    .rightEqualToView(self.businessMessageLabelView)
-    .topSpaceToView(self.businessMessageLabelView,0.0f)
-    .widthIs(MarginFactor(150.0f));
     
-    self.phoneLabel.sd_layout
-    .leftEqualToView(self.businessMessageLabelView)
-    .topEqualToView(self.phoneTextView)
-    .heightIs(self.phoneLabel.font.lineHeight);
-    [self.phoneLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
-    
-    [self.businessMessageView setupAutoHeightWithBottomView:self.phoneTextView bottomMargin:0.0f];
+    [self.businessMessageView setupAutoHeightWithBottomView:self.businessMessageLabelView bottomMargin:0.0f];
 
     self.businessMessageBpttomLine.sd_layout
     .leftSpaceToView(self.headerView, 0.0f)
@@ -365,50 +356,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
     .topSpaceToView(self.businessMessageBpttomLine, 0.0f)
     .heightIs(MarginFactor(10.0f));
     
-    //BPView
-    self.BPView.sd_layout
-    .leftSpaceToView(self.headerView, 0.0f)
-    .rightSpaceToView(self.headerView, 0.0f)
-    .topSpaceToView(self.secondGrayView,0.0f);
     
-    self.BPTopLine.sd_layout
-    .leftSpaceToView(self.BPView, 0.0f)
-    .rightSpaceToView(self.BPView, 0.0f)
-    .topSpaceToView(self.BPView, 0.0f)
-    .heightIs(1 / SCALE);
-    
-    self.BPLabel.sd_layout
-    .leftSpaceToView(self.BPView, MarginFactor(14.0f))
-    .rightSpaceToView(self.BPView, MarginFactor(14.0f))
-    .topSpaceToView(self.BPView, 1.0f)
-    .heightIs(MarginFactor(44.0f));
-    
-    self.BPLine.sd_layout
-    .leftEqualToView(self.BPLabel)
-    .rightEqualToView(self.BPLabel)
-    .topSpaceToView(self.BPLabel, 0.0f)
-    .heightIs(0.5f);
-    
-    self.BPButtonView.sd_layout
-    .leftSpaceToView(self.BPView, 0.0f)
-    .rightSpaceToView(self.BPView, 0.0f)
-    .topSpaceToView(self.BPLine, 0.0f)
-    .heightIs(MarginFactor(110.0f));
-    
-    self.BPBottomLine.sd_layout
-    .leftSpaceToView(self.BPView, 0.0f)
-    .rightSpaceToView(self.BPView, 0.0f)
-    .topSpaceToView(self.BPButtonView, 0.0f)
-    .heightIs(0.5f);
-    
-    self.thirdGaryView.sd_layout
-    .leftEqualToView(self.BPButtonView)
-    .rightEqualToView(self.BPButtonView)
-    .topSpaceToView(self.BPBottomLine,0.0f)
-    .heightIs(MarginFactor(10.0f));
-    
-   
-    [self.BPView setupAutoHeightWithBottomView:self.thirdGaryView bottomMargin:0.0f];
     
     //企业信息
     self.companyView.sd_layout
@@ -453,6 +401,50 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
     
     [self.companyView setupAutoHeightWithBottomView:self.companyBottomView bottomMargin:0.0f];
     
+    //BPView
+    self.BPView.sd_layout
+    .leftSpaceToView(self.headerView, 0.0f)
+    .rightSpaceToView(self.headerView, 0.0f)
+    .topSpaceToView(self.companyView,0.0f);
+    
+    self.BPTopLine.sd_layout
+    .leftSpaceToView(self.BPView, 0.0f)
+    .rightSpaceToView(self.BPView, 0.0f)
+    .topSpaceToView(self.BPView, 0.0f)
+    .heightIs(1 / SCALE);
+    
+    self.BPLabel.sd_layout
+    .leftSpaceToView(self.BPView, MarginFactor(14.0f))
+    .rightSpaceToView(self.BPView, MarginFactor(14.0f))
+    .topSpaceToView(self.BPView, 1.0f)
+    .heightIs(MarginFactor(44.0f));
+    
+    self.BPLine.sd_layout
+    .leftEqualToView(self.BPLabel)
+    .rightEqualToView(self.BPLabel)
+    .topSpaceToView(self.BPLabel, 0.0f)
+    .heightIs(0.5f);
+    
+    self.BPButtonView.sd_layout
+    .leftSpaceToView(self.BPView, 0.0f)
+    .rightSpaceToView(self.BPView, 0.0f)
+    .topSpaceToView(self.BPLine, 0.0f)
+    .heightIs(MarginFactor(110.0f));
+    
+    self.BPBottomLine.sd_layout
+    .leftSpaceToView(self.BPView, 0.0f)
+    .rightSpaceToView(self.BPView, 0.0f)
+    .topSpaceToView(self.BPButtonView, 0.0f)
+    .heightIs(0.5f);
+    
+    self.thirdGaryView.sd_layout
+    .leftEqualToView(self.BPButtonView)
+    .rightEqualToView(self.BPButtonView)
+    .topSpaceToView(self.BPBottomLine,0.0f)
+    .heightIs(MarginFactor(10.0f));
+    
+    
+    [self.BPView setupAutoHeightWithBottomView:self.thirdGaryView bottomMargin:0.0f];
     //业务描述
     self.representView.sd_layout
     .leftSpaceToView(self.headerView, 0.0f)
@@ -493,9 +485,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
     .heightIs(0.0f);
     
     [self.headerView setupAutoHeightWithBottomView:self.photoView bottomMargin:MarginFactor(15.0f)];
-    [self.scrollView setupAutoHeightWithBottomView:self.headerView bottomMargin:MarginFactor(10.0f)];
-    
-    [self.tableView setTableHeaderView:self.scrollView];
+    [self.tableView setTableHeaderView:self.headerView];
     
     self.tableView.sd_layout
     .leftSpaceToView(self.view, 0.0f)
@@ -506,15 +496,10 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
 
 - (void)initView
 {
-    [self.headerView addSubview:self.redView];
-    [self.headerView addSubview:self.moneyAndUserView];
-    [self.headerView addSubview:self.businessMessageView];
-    [self.headerView addSubview:self.BPView];
-    [self.headerView addSubview:self.companyView];
-    [self.headerView addSubview:self.representView];
-
+    self.businessRepresentLabel.text = @"业务描述";
+    [self.headerView sd_addSubviews:@[self.redView,self.moneyAndUserView,self.businessMessageView,self.BPView,self.companyView,self.representView]];
     self.navigationItem.titleView = self.titleLabel;
-
+    self.navigationItem.titleView.alpha = 0.0f;
     [self.userButton setEnlargeEdgeWithTop:10.0f right:0.0f bottom:10.0f left:150.0f];
     UITapGestureRecognizer *tableHeaderViewRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapTableHeaderView:)];
     [self.headerView addGestureRecognizer:tableHeaderViewRecognizer];
@@ -736,6 +721,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
 
 - (void)loadBusinessMessageView
 {
+    self.businessMessageLabel.text = @"业务信息";
     NSString *titleStr = @"";
     NSString *detailceStr = @"";
     NSMutableArray *tempArray = [NSMutableArray arrayWithArray:self.middleContentArray];
@@ -805,46 +791,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
     .topSpaceToView(self.secondHorizontalLine, MarginFactor(14.0f))
     .heightIs(height + (rightArray.count-3) * topMargin );
     
-    self.phoneLabel.textAlignment = NSTextAlignmentLeft;
-    self.phoneLabel.textColor = Color(@"8d8d8d");
-    self.phoneLabel.font = FontFactor(14.0f);
-    self.phoneLabel.text = [leftArray objectAtIndex:rightArray.count - 2];
-    
-    self.phoneTextView.font = BoldFontFactor(15.0f);
-    self.phoneTextView.textColor = Color(@"3d86e0");
-    self.phoneTextView.editable = NO;
-    UITapGestureRecognizer *phoneTextViewRecognizer  = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapPhoneTextView:)];
-    [self.phoneTextView addGestureRecognizer:phoneTextViewRecognizer];
-    __block NSString *phoneNum = @"";
-    if (!self.responseObject.userState) {
-        phoneNum = @"认证可见";
-    } else{
-        NSString *numString = [rightArray objectAtIndex:rightArray.count - 2];
-        NSArray *array = [numString componentsSeparatedByCharactersInSet:[NSCharacterSet formUnionWithArray:@[@",",@" "]]];
-        [array enumerateObjectsUsingBlock:^(NSString *obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            if (obj.length > 0) {
-                phoneNum = [phoneNum stringByAppendingFormat:@"%@\n",obj];
-            }
-        }];
-        phoneNum = [phoneNum substringToIndex:(phoneNum.length - 1)];
-    }
-    NSMutableParagraphStyle * paragraphStyle = [[NSMutableParagraphStyle alloc] init];
-    paragraphStyle.alignment = NSTextAlignmentRight;
-    [paragraphStyle setLineSpacing:MarginFactor(5.0f)];
-    NSMutableAttributedString *string= [[NSMutableAttributedString alloc] initWithString:phoneNum attributes:@{NSFontAttributeName:FontFactor(14.0f), NSForegroundColorAttributeName: Color(@"4277B2"), NSParagraphStyleAttributeName:paragraphStyle}];
-    self.phoneTextView.attributedText = string;
-    CGSize size = [self.phoneTextView sizeThatFits:CGSizeMake(MarginFactor(150.0f), CGFLOAT_MAX)];
-    self.phoneTextView.sd_resetLayout
-    .rightEqualToView(self.businessMessageLabelView)
-    .topSpaceToView(self.businessMessageLabelView, MarginFactor(14.0f))
-    .widthIs(MarginFactor(200.0f))
-    .heightIs(size.height);
-    
-    self.phoneLabel.sd_resetLayout
-    .leftEqualToView(self.businessMessageLabelView)
-    .topSpaceToView(self.businessMessageLabelView, MarginFactor(21.0f))
-    .heightIs(self.phoneLabel.font.lineHeight);
-    [self.phoneLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
+
     
 }
 
@@ -853,7 +800,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
     if (self.responseObject.bpnameList) {
         self.BPView.hidden = NO;
         self.BPLine.backgroundColor = Color(@"e6e7e8");
-        self.companyView.sd_resetLayout
+        self.representView.sd_resetLayout
         .leftSpaceToView(self.headerView, 0.0f)
         .rightSpaceToView(self.headerView, 0.0f)
         .topSpaceToView(self.BPView, 0.0f);
@@ -902,18 +849,32 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
 
 - (void)loadCompanyView
 {
-    self.companyLabel.text = @"企业信息";
-    NSMutableParagraphStyle * contentParagraphStyle = [[NSMutableParagraphStyle alloc] init];
-    [contentParagraphStyle setLineSpacing:MarginFactor(5.0f)];
-    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:self.responseObject.detail attributes:@{NSFontAttributeName:FontFactor(14.0f), NSForegroundColorAttributeName: Color(@"3a3a3a"), NSParagraphStyleAttributeName:contentParagraphStyle}];
-    self.companyTextView.attributedText = attributedString;
-    
-    CGSize size = [self.companyTextView sizeThatFits:CGSizeMake(SCREENWIDTH - 2 * MarginFactor(12.0f), CGFLOAT_MAX)];
-    self.companyTextView.sd_resetLayout
-    .leftSpaceToView(self.companyView, MarginFactor(14.0f))
-    .rightSpaceToView(self.companyView, MarginFactor(14.0f))
-    .topSpaceToView(self.companyCenterLineView, MarginFactor(15.0f))
-    .heightIs(size.height);
+    if (self.responseObject.companyDetail.length > 0) {
+        self.companyView.hidden = NO;
+        self.companyLabel.text = @"企业信息";
+        NSMutableParagraphStyle * contentParagraphStyle = [[NSMutableParagraphStyle alloc] init];
+        [contentParagraphStyle setLineSpacing:MarginFactor(5.0f)];
+        NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:self.responseObject.companyDetail attributes:@{NSFontAttributeName:FontFactor(14.0f), NSForegroundColorAttributeName: Color(@"3a3a3a"), NSParagraphStyleAttributeName:contentParagraphStyle}];
+        self.companyTextView.attributedText = attributedString;
+        
+        CGSize size = [self.companyTextView sizeThatFits:CGSizeMake(SCREENWIDTH - 2 * MarginFactor(12.0f), CGFLOAT_MAX)];
+        self.companyTextView.sd_resetLayout
+        .leftSpaceToView(self.companyView, MarginFactor(14.0f))
+        .rightSpaceToView(self.companyView, MarginFactor(14.0f))
+        .topSpaceToView(self.companyCenterLineView, MarginFactor(15.0f))
+        .heightIs(size.height);
+    } else{
+        self.companyView.hidden = YES;
+        self.BPView.sd_resetLayout
+        .leftSpaceToView(self.headerView, 0.0f)
+        .rightSpaceToView(self.headerView, 0.0f)
+        .topSpaceToView(self.secondGrayView, 0.0f);
+        
+        self.representView.sd_resetLayout
+        .leftSpaceToView(self.headerView, 0.0f)
+        .rightSpaceToView(self.headerView, 0.0f)
+        .topSpaceToView(self.secondGrayView, 0.0f);
+    }
 }
 
 - (void)pdfButtonClick:(SHGBusinessCategoryButton *)btn
@@ -991,13 +952,15 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    [self.phoneTextView resignFirstResponder];
+    [self.companyTextView resignFirstResponder];
     [self.contentTextView resignFirstResponder];
+    self.titleLabel.textColor = [UIColor whiteColor];
     if (scrollView.contentOffset.y > CGRectGetHeight(self.redView.frame)){
-        self.navigationItem.titleView.alpha = 1.0f;
+        self.titleLabel.alpha = 1.0f;
     }
     if (scrollView.contentOffset.y < CGRectGetHeight(self.redView.frame)){
-        self.navigationItem.titleView.alpha = ABS(scrollView.contentOffset.y - CGRectGetHeight(self.redView.frame)) / CGRectGetHeight(self.redView.frame);
+        self.titleLabel.alpha = scrollView.contentOffset.y  / CGRectGetHeight(self.redView.frame);
+        NSLog(@"alpha%f;%f",self.navigationItem.titleView.alpha,scrollView.contentOffset.y);
     }
 }
 
@@ -1252,10 +1215,102 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
 
 - (IBAction)phoneNumClick:(UIButton *)sender
 {
-    
+   
+    [[SHGGloble sharedGloble] requestUserVerifyStatusCompletion:^(BOOL state) {
+        if (state) {
+            __weak typeof(self) weakSelf = self;
+            [weakSelf makePhoneNum];
+            NSString *leftTitle = @"发短信";
+            if (self.mobileArray.count == 0 ) {
+                leftTitle = nil;
+            }
+            
+            [SHGBusinessManager getBusinessContactAuth:weakSelf.responseObject success:^(SHGBusinessContactAuthObject *contactAuthObject) {
+                weakSelf.contactAuthObject = contactAuthObject;
+                NSMutableAttributedString *textString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"打电话或发短信将消耗1次联系\n对方的机会，当前剩余%@次",weakSelf.contactAuthObject.businessContactLimit] attributes:@{NSFontAttributeName:FontFactor(15.0f),NSForegroundColorAttributeName:Color(@"8d8d8d")}];
+                [textString addAttribute:NSForegroundColorAttributeName value:Color(@"f95c53") range:NSMakeRange(25, weakSelf.contactAuthObject.businessContactLimit.length)];
+                if (weakSelf.contactAuthObject.contactShow ) {
+                    if (weakSelf.contactAuthObject.tipFlag ) {
+                        [weakSelf showContactAlertView:leftTitle text:textString];
+                    } else{
+                        [weakSelf showContactAlertView:leftTitle text:nil];
+                    }
+                } else{
+                    if ([weakSelf.contactAuthObject.businessContactLimit integerValue] > 0){
+                        if ([weakSelf.contactAuthObject.userContactLimit integerValue] > 0) {
+                            [weakSelf showContactAlertView:leftTitle text:textString];
+                        } else{
+                            if (!weakSelf.contactAuthObject.businessLicenceFlag ) {
+                                [weakSelf showAlertView:@"您今日查看联系方式次数已用完，\n认证营业执照后每日可查看10条\n联系方式~" leftTitle:@"我知道了" rightTitle:@"现在认证"];
+                            } else{
+                                [weakSelf showAlertView:@"您今日的查看次数已用完~" leftTitle:nil rightTitle:@"确定"];
+                            }
+                        }
+                        
+                    } else{
+                        [weakSelf showAlertView:@"该业务联系次数今日已达上限，\n明天早点哦~" leftTitle:nil rightTitle:@"确定"];
+                    }
+                }
+                
+            }];
+            
+            
+            
+        } else{
+            SHGAuthenticationViewController *controller = [[SHGAuthenticationViewController alloc] init];
+            [self.navigationController pushViewController:controller animated:YES];
+            [[SHGGloble sharedGloble] recordUserAction:@"" type:@"business_identity"];
+        }
+    } showAlert:YES leftBlock:^{
+        [[SHGGloble sharedGloble] recordUserAction:@"" type:@"business_identity_cancel"];
+    } failString:@"认证后才能联系TA哦~"];
 }
 
-- (void)shareClick:(id)sender
+- (void)showAlertView:(NSString *)message leftTitle:(NSString *)leftTitle rightTitle:(NSString *)rightTitle
+{
+    
+    SHGAlertView *alert = [[SHGAlertView alloc] initWithTitle:@"无法查看" contentText:message leftButtonTitle:leftTitle rightButtonTitle:rightTitle];
+    if ([rightTitle isEqualToString:@"现在认证"]) {
+        __weak typeof(self)weakSelf = self;
+        alert.rightBlock = ^{
+            SHGAuthenticationViewController *controller = [[SHGAuthenticationViewController alloc] init];
+            [weakSelf.navigationController pushViewController:controller animated:YES];
+            [[SHGGloble sharedGloble] recordUserAction:@"" type:@"business_identity"];
+        };
+    }
+    [alert show];
+}
+
+- (void)showContactAlertView:(NSString *)leftTitle text:(NSAttributedString *)text
+{
+    SHGBusinessContactAlertView *contactAlert = [[SHGBusinessContactAlertView alloc] initWithLeftButtonTitle:leftTitle rightButtonTitle:@"打电话"];
+    contactAlert.text = text;
+    contactAlert.touchOtherDismiss = YES;
+    __weak typeof(self) weakSelf = self;
+    contactAlert.leftBlock = ^{
+        [SHGBusinessManager getBusinessCheckedNum:weakSelf.responseObject success:^(NSString *num) {
+            if (num > 0) {
+                [weakSelf sendMessage];
+            } else{
+                [weakSelf showAlertView:@"该业务联系次数今日已达上限，\n明天早点哦~" leftTitle:nil rightTitle:@"确定"];
+            }
+        }] ;
+        
+    };
+    contactAlert.rightBlock = ^{
+        [SHGBusinessManager getBusinessCheckedNum:weakSelf.responseObject success:^(NSString *num) {
+            if (num > 0) {
+                [weakSelf callPhone];
+            } else{
+                [weakSelf showAlertView:@"该业务联系次数今日已达上限，\n明天早点哦~" leftTitle:nil rightTitle:@"确定"];
+            }
+        }] ;
+        
+    };
+    [contactAlert show];
+}
+
+- (void)rightItemClick:(id)sender
 {
     [[SHGGloble sharedGloble] recordUserAction:[NSString stringWithFormat:@"%@#%@", self.responseObject.businessID, self.responseObject.type] type:@"business_share"];
     [[SHGBusinessManager shareManager] shareAction:self.responseObject baseController:self finishBlock:^(BOOL success) {
@@ -1313,24 +1368,58 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
 
 - (void)tapTableHeaderView:(UITapGestureRecognizer *)recognizer
 {
-    [self.phoneTextView resignFirstResponder];
+    [self.companyTextView resignFirstResponder];
     [self.contentTextView resignFirstResponder];
 }
 
-- (void)tapPhoneTextView:(UITapGestureRecognizer *)recognizer
+- (void)callPhone
+{
+    NSMutableArray *array = [NSMutableArray array];
+    UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:nil, nil];
+    [self.mobileArray enumerateObjectsUsingBlock:^(NSString *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        [array addObject:obj];
+        [sheet addButtonWithTitle:obj];
+    }];
+    [self.phoneArray enumerateObjectsUsingBlock:^(NSString *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        [array addObject:obj];
+        [sheet addButtonWithTitle:obj];
+    }];
+    if (array.count == 1) {
+        [self openTel:[array firstObject]];
+    } else {
+        self.type = SHGTapPhoneTypeDialNumber;
+        [sheet showInView:self.view];
+    }
+
+}
+
+- (void)sendMessage
+{
+    NSMutableArray *array = [NSMutableArray array];
+    UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:nil, nil];
+    [self.mobileArray enumerateObjectsUsingBlock:^(NSString *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        [array addObject:obj];
+        [sheet addButtonWithTitle:obj];
+    }];
+    if (array.count == 1) {
+        [[SHGGloble sharedGloble] showMessageView:array body:@"你好，我在大牛圈看到您发布的业务，请问"];
+    } else {
+        self.type = SHGTapPhoneTypeSendMessage;
+        [sheet showInView:self.view];
+    }
+   
+}
+- (void)makePhoneNum
 {
     [self.mobileArray removeAllObjects];
     [self.phoneArray removeAllObjects];
-    NSString *string = self.phoneTextView.text;
-    if ([string containsString:@"认证可见"]) {
-        [[SHGGloble sharedGloble] requestUserVerifyStatusCompletion:^(BOOL state) {
-            if (!state) {
-                SHGAuthenticationViewController *controller = [[SHGAuthenticationViewController alloc]init];
-                [self.navigationController pushViewController:controller animated:YES];
-            }
-        } showAlert:YES leftBlock:^{
-        } failString:@"认证后才能查看联系方式～"];
-    } else {
+    __block NSString *string = @"";
+    [self.middleContentArray enumerateObjectsUsingBlock:^(NSString *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        NSArray *array = [obj componentsSeparatedByString:@":"];
+        if ([obj containsString:@"联系方式"]) {
+            string =[array lastObject];
+        }
+    }];
         NSArray *array = [string componentsSeparatedByCharactersInSet:[NSCharacterSet formUnionWithArray:@[@":", @"：", @"，", @",", @" ", @"\n"]]];
         
         [array enumerateObjectsUsingBlock:^(NSString *obj, NSUInteger idx, BOOL * _Nonnull stop) {
@@ -1344,20 +1433,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
                 [self.phoneArray addObject:obj];
             }
         }];
-        
-        
-        UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:nil, nil];
-        if (self.mobileArray.count > 0) {
-            [sheet addButtonWithTitle:@"拨打电话"];
-            [sheet addButtonWithTitle:@"发送短信"];
-        } else if (self.phoneArray.count > 0) {
-            [sheet addButtonWithTitle:@"拨打电话"];
-        };
-        if (sheet.numberOfButtons > 1) {
-            [sheet showInView:self.view];
-        }
-    }
-    NSLog(@"%@", string);
+        NSLog(@"%@", string);
 }
 
 #pragma mark ------分享到圈内好友的通知
@@ -1377,42 +1453,10 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
 {
     if (buttonIndex != actionSheet.cancelButtonIndex) {
         NSString *string = [actionSheet buttonTitleAtIndex:buttonIndex];
-        NSMutableArray *array = [NSMutableArray array];
-        if ([string containsString:@"电话"]) {
-            UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:nil, nil];
-            [self.mobileArray enumerateObjectsUsingBlock:^(NSString *obj, NSUInteger idx, BOOL * _Nonnull stop) {
-                [array addObject:obj];
-                [sheet addButtonWithTitle:obj];
-            }];
-            [self.phoneArray enumerateObjectsUsingBlock:^(NSString *obj, NSUInteger idx, BOOL * _Nonnull stop) {
-                [array addObject:obj];
-                [sheet addButtonWithTitle:obj];
-            }];
-            if (array.count == 1) {
-                [self openTel:[array firstObject]];
-            } else {
-                self.type = SHGTapPhoneTypeDialNumber;
-                [sheet showInView:self.view];
-            }
-        } else if ([string containsString:@"短信"]) {
-            UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:nil, nil];
-            [self.mobileArray enumerateObjectsUsingBlock:^(NSString *obj, NSUInteger idx, BOOL * _Nonnull stop) {
-                [array addObject:obj];
-                [sheet addButtonWithTitle:obj];
-            }];
-            if (array.count == 1) {
-                [[SHGGloble sharedGloble] showMessageView:array body:@"你好，我在大牛圈看到您发布的业务，请问"];
-            } else {
-                self.type = SHGTapPhoneTypeSendMessage;
-                [sheet showInView:self.view];
-            }
+        if (self.type == SHGTapPhoneTypeSendMessage) {
+            [[SHGGloble sharedGloble] showMessageView:@[string] body:@"你好，我在大牛圈看到您发布的业务，请问"];
         } else {
-            //直接拨号
-            if (self.type == SHGTapPhoneTypeSendMessage) {
-                [[SHGGloble sharedGloble] showMessageView:@[string] body:@"你好，我在大牛圈看到您发布的业务，请问"];
-            } else {
-                [self openTel:string];
-            }
+            [self openTel:string];
         }
     }
 }

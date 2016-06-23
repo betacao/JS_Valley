@@ -256,6 +256,36 @@
     }];
 }
 
++ (void)getBusinessCheckedNum:(SHGBusinessObject *)object success:(void (^)(NSString *num))block
+{
+    NSDictionary *param = @{@"uid":UID, @"type":object.type, @"businessId":object.businessID};
+    NSString *request = [rBaseAddressForHttp stringByAppendingString:@"/business/saveBusinessContact"];
+    [MOCHTTPRequestOperationManager postWithURL:request parameters:param success:^(MOCHTTPResponse *response) {
+        NSString *num = [response.dataDictionary objectForKey:@"result"];
+        NSLog(@"%@",num);
+        block(num);
+    } failed:^(MOCHTTPResponse *response) {
+        
+    }];
+}
+
++ (void)getBusinessContactAuth:(SHGBusinessObject *)object success:(void (^)(SHGBusinessContactAuthObject *))block
+{
+    NSDictionary *param = @{@"uid":UID, @"type":object.type, @"businessId":object.businessID,@"version":@"1.8.3"};
+    NSString *request = [rBaseAddressForHttp stringByAppendingString:@"/business/getBusinessContactAuth"];
+    [MOCHTTPRequestOperationManager postWithURL:request parameters:param success:^(MOCHTTPResponse *response) {
+        NSLog(@"00000%@",response.dataDictionary);
+        SHGBusinessContactAuthObject *contactAuthObject = [[[SHGGloble sharedGloble] parseServerJsonArrayToJSONModel:@[response.dataDictionary] class:[SHGBusinessContactAuthObject class]] firstObject];
+        if (block) {
+            block(contactAuthObject);
+        }
+    } failed:^(MOCHTTPResponse *response) {
+        if (block) {
+            block(nil);
+        }
+    }];
+}
+
 //评论
 + (void)addCommentWithObject:(SHGBusinessObject *)object content:(NSString *)content toOther:(NSString *)otherId finishBlock:(void (^)(BOOL))block
 {

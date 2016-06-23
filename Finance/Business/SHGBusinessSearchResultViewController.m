@@ -38,13 +38,13 @@
 {
     [super viewDidLoad];
     self.title = @"搜索结果";
-
+    self.tableView.backgroundColor = Color(@"efeeef");
     [self initView];
     [self addAutoLayout];
-
+    
     self.sectionView.parentController = self;
     self.sectionView.type = self.searchType;
-
+    
     if (self.searchType == SHGBusinessSearchTypeNormal) {
         [self searchNormalBusinessList:@"first" businessId:@"-1"];
     } else{
