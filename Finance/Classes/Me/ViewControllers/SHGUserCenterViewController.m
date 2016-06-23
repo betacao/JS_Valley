@@ -324,6 +324,7 @@
 {
     if (!_authenticationView) {
         _authenticationView = [[SHGAuthenticationView alloc] init];
+        _authenticationView.showGray = YES;
     }
     return _authenticationView;
 }

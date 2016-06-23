@@ -10,6 +10,8 @@
 
 @interface SHGAuthenticationView : UIView
 
+@property (assign, nonatomic) BOOL showGray;
+
 - (void)updateWithVStatus:(BOOL)vStatus enterpriseStatus:(BOOL)enterpriseStatus;
 
 @end

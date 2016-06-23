@@ -13,6 +13,9 @@
 @property (strong, nonatomic) UIButton *VButton;
 @property (strong, nonatomic) UIButton *QButton;
 
+@property (assign, nonatomic) BOOL vStatus;
+@property (assign, nonatomic) BOOL enterpriseStatus;
+
 @end
 
 @implementation SHGAuthenticationView
@@ -64,11 +67,41 @@
 
 - (void)updateWithVStatus:(BOOL)vStatus enterpriseStatus:(BOOL)enterpriseStatus
 {
+    self.vStatus = vStatus;
+    self.enterpriseStatus = enterpriseStatus;
 
     [self.VButton setImage:vStatus ? [UIImage imageNamed:@"v_yellow"] : [UIImage imageNamed:@"v_gray"] forState:UIControlStateNormal];
-
     [self.QButton setImage:enterpriseStatus ? [UIImage imageNamed:@"enterprise_blue"] : [UIImage imageNamed:@"enterprise_gray"] forState:UIControlStateNormal];
+}
 
+- (void)setVStatus:(BOOL)vStatus
+{
+    _vStatus = vStatus;
+    if (!self.showGray) {
+        self.VButton.hidden = !vStatus;
+    }
+}
+
+- (void)setEnterpriseStatus:(BOOL)enterpriseStatus
+{
+    _enterpriseStatus = enterpriseStatus;
+    if (!self.showGray) {
+        self.QButton.hidden = !enterpriseStatus;
+        if (self.vStatus) {
+            self.QButton.sd_resetLayout
+            .leftSpaceToView(self.VButton, MarginFactor(5.0f))
+            .centerYEqualToView(self)
+            .widthIs(self.QButton.currentImage.size.width)
+            .heightIs(self.QButton.currentImage.size.height);
+        } else{
+            self.QButton.sd_resetLayout
+            .leftSpaceToView(self, MarginFactor(12.0f))
+            .centerYEqualToView(self)
+            .widthIs(self.QButton.currentImage.size.width)
+            .heightIs(self.QButton.currentImage.size.height);
+        }
+        [self setupAutoWidthWithRightView:enterpriseStatus ? self.QButton : self.VButton rightMargin:(enterpriseStatus | self.vStatus) ? MarginFactor(12.0f) : - self.VButton.currentImage.size.width];
+    }
 }
 
 
