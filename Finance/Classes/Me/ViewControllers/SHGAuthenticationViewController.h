@@ -15,6 +15,8 @@
 
 @interface SHGAuthenticationNextViewController : BaseViewController
 
+@property (strong, nonatomic) NSString *headerImageUrl;
+@property (strong, nonatomic) NSString *authImageUrl;
 @property (strong, nonatomic) UIImage *headerImage;
 @property (strong, nonatomic) NSString *departmentCode;
 @property (strong, nonatomic) NSString *location;

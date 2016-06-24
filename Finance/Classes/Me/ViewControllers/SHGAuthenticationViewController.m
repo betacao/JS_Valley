@@ -39,6 +39,7 @@
 @property (strong, nonatomic) SHGAuthenticationNextViewController *nextController;
 
 //
+@property (strong, nonatomic) NSString *headerImageUrl;
 @property (strong, nonatomic) UIImage *headerImage;
 @property (strong, nonatomic) NSString *state;//认证状态
 @property (strong, nonatomic) NSString *authImageUrl;//已经上传的图片链接
@@ -306,8 +307,8 @@
         }
 
         weakSelf.departmentField.text = [self codeToIndustry:[response.dataDictionary objectForKey:@"industrycode"]];
-        NSString *head_img = [response.dataDictionary objectForKey:@"head_img"];
-        [weakSelf.headerButton sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,head_img]] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"uploadHead"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+        weakSelf.headerImageUrl = [response.dataDictionary objectForKey:@"head_img"];
+        [weakSelf.headerButton sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,weakSelf.headerImageUrl]] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"uploadHead"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
             weakSelf.headerImage = image;
         }];
     }failed:^(MOCHTTPResponse *response) {
@@ -343,7 +344,8 @@
             self.nextController.location = self.locationField.text;
             self.nextController.authImage = self.authImage;
             self.nextController.company = self.company;
-
+            self.nextController.headerImageUrl = self.headerImageUrl;
+            self.nextController.authImageUrl = self.authImageUrl;
             [self.navigationController pushViewController:self.nextController animated:YES];
         }
     }
@@ -510,8 +512,10 @@
     [self.currentButton setImage:image forState:UIControlStateNormal];
     if ([self.currentButton isEqual:self.plusButton]) {
         self.authImage = image;
+        self.authImageUrl = nil;
     } else {
         self.headerImage = image;
+        self.headerImageUrl = nil;
     }
 }
 
@@ -538,7 +542,6 @@
 @property (strong, nonatomic) UIImage *image;
 
 @property (strong, nonatomic) UIButton *submitButton;
-@property (strong, nonatomic) NSString *authImageUrl;//已经上传的图片链接
 
 @end
 
@@ -736,7 +739,7 @@
 {
     //头像需要压缩 跟其他的上传图片接口不一样了
     [Hud showWait];
-    if (self.headerImage) {
+    if (self.headerImage && !self.headerImageUrl) {
         __weak typeof(self) weakSelf = self;
         [MOCHTTPRequestOperationManager POST:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"image/basephoto"] parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
             NSData *imageData = UIImageJPEGRepresentation(weakSelf.headerImage, 0.1);
@@ -746,11 +749,11 @@
         } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
             NSLog(@"%@",responseObject);
             NSDictionary *dic = [(NSString *)[responseObject valueForKey:@"data"] parseToArrayOrNSDictionary];
-            NSString *newHeadImageName = [(NSArray *)[dic valueForKey:@"pname"] objectAtIndex:0];
-            [[NSUserDefaults standardUserDefaults] setObject:newHeadImageName forKey:KEY_HEAD_IMAGE];
+            weakSelf.headerImageUrl = [(NSArray *)[dic valueForKey:@"pname"] objectAtIndex:0];
+            [[NSUserDefaults standardUserDefaults] setObject:weakSelf.headerImageUrl forKey:KEY_HEAD_IMAGE];
             [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_SENDPOST object:nil];
 
-            [weakSelf putHeadImage:newHeadImageName];
+            [weakSelf putHeadImage];
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
             NSLog(@"%@",error);
             [Hud hideHud];
@@ -763,10 +766,10 @@
 
 
 //更新服务器端
-- (void)putHeadImage:(NSString *)headImageName
+- (void)putHeadImage
 {
     __weak typeof(self) weakSelf = self;
-    [MOCHTTPRequestOperationManager putWithURL:[NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttp,@"user",@"modifyuser"] class:nil parameters:@{@"uid":UID, @"type":@"headimage", @"value":headImageName, @"title":self.departmentCode, @"company":self.company} success:^(MOCHTTPResponse *response) {
+    [MOCHTTPRequestOperationManager putWithURL:[NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttp,@"user",@"modifyuser"] class:nil parameters:@{@"uid":UID, @"type":@"headimage", @"value":self.headerImageUrl, @"title":self.departmentCode, @"company":self.company} success:^(MOCHTTPResponse *response) {
         NSString *code = [response.data valueForKey:@"code"];
         if ([code isEqualToString:@"000"]) {
             [Hud hideHud];
@@ -781,21 +784,23 @@
 {
     [Hud showWait];
     __weak typeof(self) weakSelf = self;
-    [MOCHTTPRequestOperationManager POST:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"image/basephoto"] parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
-        NSData *imageData = UIImageJPEGRepresentation(weakSelf.authImage, 0.1);
-        [formData appendPartWithFileData:imageData name:@"haha.jpg" fileName:@"haha.jpg" mimeType:@"image/jpeg"];
-    } progress:^(NSProgress * _Nonnull uploadProgress) {
+    if (self.authImage && !self.authImageUrl) {
+        [MOCHTTPRequestOperationManager POST:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"image/basephoto"] parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+            NSData *imageData = UIImageJPEGRepresentation(weakSelf.authImage, 0.1);
+            [formData appendPartWithFileData:imageData name:@"haha.jpg" fileName:@"haha.jpg" mimeType:@"image/jpeg"];
+        } progress:^(NSProgress * _Nonnull uploadProgress) {
 
-    } success:^(NSURLSessionDataTask *operation, id responseObject) {
-        NSLog(@"%@",responseObject);
-        NSDictionary *dic = [(NSString *)[responseObject valueForKey:@"data"] parseToArrayOrNSDictionary];
-        weakSelf.authImageUrl = [(NSArray *)[dic valueForKey:@"pname"] objectAtIndex:0];
-        [weakSelf uploadLicenseImage];
-    } failure:^(NSURLSessionDataTask *operation, NSError *error) {
-        NSLog(@"%@",error);
-        [Hud hideHud];
-        [Hud showMessageWithText:@"上传认证图片失败"];
-    }];
+        } success:^(NSURLSessionDataTask *operation, id responseObject) {
+            NSLog(@"%@",responseObject);
+            NSDictionary *dic = [(NSString *)[responseObject valueForKey:@"data"] parseToArrayOrNSDictionary];
+            weakSelf.authImageUrl = [(NSArray *)[dic valueForKey:@"pname"] objectAtIndex:0];
+            [weakSelf uploadLicenseImage];
+        } failure:^(NSURLSessionDataTask *operation, NSError *error) {
+            NSLog(@"%@",error);
+            [Hud hideHud];
+            [Hud showMessageWithText:@"上传认证图片失败"];
+        }];
+    }
 }
 
 - (void)uploadLicenseImage
