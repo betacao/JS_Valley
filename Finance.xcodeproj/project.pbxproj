@@ -879,6 +879,7 @@
 		F9352C011CFBD25C00778635 /* SHGNewsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9352BFF1CFBD25C00778635 /* SHGNewsViewController.m */; };
 		F9352C021CFBD25C00778635 /* SHGNewsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9352C001CFBD25C00778635 /* SHGNewsViewController.xib */; };
 		F93891BE1CA11B2900B182F7 /* UINavigationItem+Custom.m in Sources */ = {isa = PBXBuildFile; fileRef = F93891BD1CA11B2900B182F7 /* UINavigationItem+Custom.m */; };
+		F93C22F71D1CC7F400A1F5E9 /* SHGAdvertisementView.m in Sources */ = {isa = PBXBuildFile; fileRef = F93C22F61D1CC7F400A1F5E9 /* SHGAdvertisementView.m */; };
 		F93D55D21CA0EA24008845C5 /* MessageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F93D55D11CA0EA24008845C5 /* MessageTableViewCell.xib */; };
 		F93FC95A1D1B8E6800CBE7B8 /* SHGAuthenticationView.m in Sources */ = {isa = PBXBuildFile; fileRef = F93FC9591D1B8E6800CBE7B8 /* SHGAuthenticationView.m */; };
 		F93FCBC11C856D5A004E356E /* DDTapGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = F93FCBA61C856D5A004E356E /* DDTapGestureRecognizer.m */; };
@@ -2163,6 +2164,8 @@
 		F9352C001CFBD25C00778635 /* SHGNewsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGNewsViewController.xib; sourceTree = "<group>"; };
 		F93891BC1CA11B2900B182F7 /* UINavigationItem+Custom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationItem+Custom.h"; sourceTree = "<group>"; };
 		F93891BD1CA11B2900B182F7 /* UINavigationItem+Custom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationItem+Custom.m"; sourceTree = "<group>"; };
+		F93C22F51D1CC7F400A1F5E9 /* SHGAdvertisementView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGAdvertisementView.h; sourceTree = "<group>"; };
+		F93C22F61D1CC7F400A1F5E9 /* SHGAdvertisementView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGAdvertisementView.m; sourceTree = "<group>"; };
 		F93D55D11CA0EA24008845C5 /* MessageTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MessageTableViewCell.xib; sourceTree = "<group>"; };
 		F93FC9581D1B8E6800CBE7B8 /* SHGAuthenticationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGAuthenticationView.h; sourceTree = "<group>"; };
 		F93FC9591D1B8E6800CBE7B8 /* SHGAuthenticationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGAuthenticationView.m; sourceTree = "<group>"; };
@@ -2936,6 +2939,8 @@
 				F9D9F1541BB51D2C00F94E70 /* Model */,
 				F9ADD7C41CED94AC00FC0AC6 /* SHGGuideView.h */,
 				F9ADD7C51CED94AC00FC0AC6 /* SHGGuideView.m */,
+				F93C22F51D1CC7F400A1F5E9 /* SHGAdvertisementView.h */,
+				F93C22F61D1CC7F400A1F5E9 /* SHGAdvertisementView.m */,
 				6146B4A81B011B7800D62678 /* RootViewController.h */,
 				6146B4A91B011B7800D62678 /* RootViewController.m */,
 				6146B4AA1B011B7800D62678 /* RootViewController.xib */,
@@ -6058,6 +6063,7 @@
 				6187D2E11AF1C693008E1D21 /* EMChatImageBubbleView.m in Sources */,
 				F9352BF91CFBCDBC00778635 /* SHGGloble.m in Sources */,
 				F99B602C1B9E7D9500759AAC /* SHGUserHeaderView.m in Sources */,
+				F93C22F71D1CC7F400A1F5E9 /* SHGAdvertisementView.m in Sources */,
 				611B8CD71AFD5C09009CB21F /* ReplyTableViewCell.m in Sources */,
 				409DB3E41B03483500E6665E /* ImproveMatiralViewController.m in Sources */,
 				98765FB31CFC577C00C8C590 /* SHGMyFollowViewController.m in Sources */,

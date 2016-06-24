@@ -11,34 +11,33 @@
 #import "ApplyViewController.h"
 #import "LoginViewController.h"
 #import "SHGGuideView.h"
+#import "SHGAdvertisementView.h"
 
 @interface RootViewController ()
-@property (weak, nonatomic) IBOutlet UIImageView *launchImage;
+
+@property (weak, nonatomic) IBOutlet SHGAdvertisementView *advertisementView;
 @property (strong, nonatomic) NSString *isFull;
 @property (strong, nonatomic) AVPlayerItem *playerItem;
 @property (strong, nonatomic) AVPlayer *player;
 @property (assign, nonatomic) CMTime totalTime;
 @property (strong, nonatomic) SHGGuideView *guideView;
+
 @end
 
 @implementation RootViewController
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
-    if(SCREENHEIGHT < 568.000000){
-        self.launchImage.image = [UIImage imageNamed:@"480"];
-    } else if(SCREENHEIGHT == 568.000000){
-        self.launchImage.image = [UIImage imageNamed:@"568"];
-    } else if(SCREENHEIGHT == 667.000000){
-        self.launchImage.image = [UIImage imageNamed:@"667"];
-    } else if(SCREENHEIGHT > 667.000000){
-        self.launchImage.image=[UIImage imageNamed:@"736"];
-    }
-    if([[SHGGloble sharedGloble] isShowGuideView]){
-        [self startGuideView];
-    } else{
-        [self moveToHomePage];
-    }
+
+    __weak typeof(self) weakSelf = self;
+    self.advertisementView.dissmissBlock = ^{
+        if([[SHGGloble sharedGloble] isShowGuideView]){
+            [weakSelf startGuideView];
+        } else{
+            [weakSelf moveToHomePage];
+        }
+    };
 }
 
 - (void)startGuideView
@@ -126,7 +125,6 @@
                 [layer.player play];
                 weakSelf.totalTime = weakSelf.playerItem.duration;
                 //去掉最上面的的遮罩
-                [weakSelf.launchImage removeFromSuperview];
             });
         }
     }

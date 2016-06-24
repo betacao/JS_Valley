@@ -9,10 +9,9 @@
 #import "LoginObj.h"
 
 @implementation LoginObj
+
 + (NSDictionary *)JSONKeyPathsByPropertyKey
 {
-    return  @{
-              @"state": @"state"
-              };
+    return @{@"state": @"state"};
 }
 @end

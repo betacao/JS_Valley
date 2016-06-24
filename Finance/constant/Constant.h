@@ -114,8 +114,6 @@ typedef void (^BBBasicBlock)(void);
 
 //当前的版本号
 #define kShowVersion @"showVersion"
-#define kPathDocument               [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0]
-#define kFilePath   [kPathDocument stringByAppendingPathComponent:@"%@"]
 
 #define kRefreshStateIdle       @"stateIdle"
 #define kRefreshStatePulling    @"statePulling"

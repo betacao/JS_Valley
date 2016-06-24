@@ -11,6 +11,7 @@
 #import "SDPhotoItem.h"
 #import "CTTextDisplayView.h"
 #import "LinkViewController.h"
+#import "SHGAuthenticationView.h"
 
 @interface SHGMainPageTableViewCell()<CTTextDisplayViewDelegate>
 
@@ -18,6 +19,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *companyLabel;
 @property (weak, nonatomic) IBOutlet UILabel *departmentLabel;
+@property (weak, nonatomic) IBOutlet SHGAuthenticationView *authenticationView;
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
 @property (weak, nonatomic) IBOutlet UIButton *attentionButton;
 @property (weak, nonatomic) IBOutlet CTTextDisplayView *contentLabel;
@@ -117,9 +119,14 @@
     .autoHeightRatio(0.0f);
     [self.nameLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
 
+    self.authenticationView.sd_layout
+    .leftSpaceToView(self.headerView, 0.0f)
+    .bottomEqualToView(self.headerView)
+    .heightRatioToView(self.timeLabel, 1.0f);
+
     self.timeLabel.sd_layout
     .bottomEqualToView(self.headerView)
-    .leftEqualToView(self.nameLabel)
+    .leftSpaceToView(self.authenticationView, 0.0f)
     .autoHeightRatio(0.0f);
     [self.timeLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
 
@@ -266,7 +273,8 @@
 {
     BOOL status = [object.userstatus isEqualToString:@"true"] ? YES : NO;
     [self.headerView updateHeaderView:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,object.potname] placeholderImage:[UIImage imageNamed:@"default_head"] status:status userID:object.userid];
-
+    [self.authenticationView updateWithVStatus:status enterpriseStatus:object.businessStatus];
+    
     NSString *name = object.nickname;
     if (object.nickname.length > 4){
         name = [object.nickname substringToIndex:4];

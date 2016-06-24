@@ -40,6 +40,11 @@
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <view contentMode="scaleToFill" id="Qdx-Ls-zFp" customClass="SHGAuthenticationView">
+                        <rect key="frame" x="40" y="218" width="240" height="128"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="eGv-gi-Bah">
                         <rect key="frame" x="139" y="272" width="42" height="21"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -160,6 +165,7 @@
             <connections>
                 <outlet property="actionView" destination="zBg-2q-FN1" id="JZB-bv-lKd"/>
                 <outlet property="attentionButton" destination="sJ7-tc-eYm" id="JML-VD-o9X"/>
+                <outlet property="authenticationView" destination="Qdx-Ls-zFp" id="3JH-st-eE0"/>
                 <outlet property="commentButton" destination="bM6-Pq-J7w" id="V8K-TE-MP3"/>
                 <outlet property="commentView" destination="2TC-Px-Pbb" id="MSY-ge-6zW"/>
                 <outlet property="companyLabel" destination="4BK-24-OGa" id="R2z-7n-K9g"/>

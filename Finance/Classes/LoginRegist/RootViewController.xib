@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -7,7 +7,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="RootViewController">
             <connections>
-                <outlet property="launchImage" destination="7Q4-Vs-ibq" id="9Q5-5U-fno"/>
+                <outlet property="advertisementView" destination="u7X-Uc-c3N" id="ict-Vp-WVT"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -16,17 +16,13 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="7Q4-Vs-ibq">
-                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                </imageView>
+                <view contentMode="scaleToFill" id="u7X-Uc-c3N" customClass="SHGAdvertisementView">
+                    <rect key="frame" x="-35" y="200" width="240" height="128"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </view>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-            <constraints>
-                <constraint firstItem="7Q4-Vs-ibq" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="JiB-e0-wLZ"/>
-                <constraint firstAttribute="bottom" secondItem="7Q4-Vs-ibq" secondAttribute="bottom" id="Wzg-Y3-Pix"/>
-                <constraint firstAttribute="trailing" secondItem="7Q4-Vs-ibq" secondAttribute="trailing" id="d3s-Rx-iix"/>
-                <constraint firstItem="7Q4-Vs-ibq" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="dd1-He-6xh"/>
-            </constraints>
             <nil key="simulatedTopBarMetrics"/>
             <point key="canvasLocation" x="340" y="219"/>
         </view>
