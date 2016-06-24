@@ -343,7 +343,7 @@
     self.authenticationView.sd_layout
     .centerYEqualToView(self.firstLabel)
     .leftSpaceToView(self.firstLabel, 0.0f)
-    .heightRatioToView(self.firstLabel, 1.0f);
+    .heightIs(13.0f);
 
     self.secondLabel.sd_layout
     .centerYEqualToView(self.headerView)

@@ -122,7 +122,7 @@
     self.authenticationView.sd_layout
     .leftSpaceToView(self.headerView, 0.0f)
     .bottomEqualToView(self.headerView)
-    .heightRatioToView(self.timeLabel, 1.0f);
+    .heightIs(13.0f);
 
     self.timeLabel.sd_layout
     .bottomEqualToView(self.headerView)

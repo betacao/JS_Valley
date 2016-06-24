@@ -30,6 +30,7 @@
 @property (strong, nonatomic) UILabel         *nickNameLabel;
 @property (strong, nonatomic) UILabel         *companyLabel;
 @property (strong, nonatomic) SHGAuthenticationView *authenticationView;
+@property (strong, nonatomic) UIButton *authenTipButton;
 @property (strong, nonatomic) UIView          *lineView;
 @property (strong, nonatomic) UIButton        *editButton;
 @property (strong, nonatomic) UIView          *messageView;
@@ -118,7 +119,14 @@
     self.authenticationView.sd_layout
     .leftSpaceToView(self.departmentLabel, 0.0f)
     .centerYEqualToView(self.departmentLabel)
-    .heightRatioToView(self.departmentLabel, 1.0f);
+    .offset(-1.0f)
+    .heightIs(13.0f);
+
+    self.authenTipButton.sd_layout
+    .centerXEqualToView(self.authenticationView)
+    .topEqualToView(self.authenticationView)
+    .widthIs(self.authenTipButton.currentImage.size.width)
+    .heightIs(self.authenTipButton.currentImage.size.height);
 
     //公司名
     self.companyLabel.sd_layout
@@ -274,6 +282,7 @@
         [_tableHeaderView addSubview:self.lineView];
         [_tableHeaderView addSubview:self.labelView];
         [_tableHeaderView addSubview:self.bottomView];
+        [_tableHeaderView addSubview:self.authenTipButton];
     }
     _tableHeaderView.backgroundColor = [UIColor whiteColor];
     return _tableHeaderView;
@@ -322,11 +331,30 @@
 
 - (SHGAuthenticationView *)authenticationView
 {
+    __weak typeof(self) weakSelf = self;
     if (!_authenticationView) {
         _authenticationView = [[SHGAuthenticationView alloc] init];
+        _authenticationView.VBlock = ^{
+            CGFloat toAlpha = ABS(weakSelf.authenTipButton.alpha - 1.0f);
+            [UIView animateWithDuration:0.3f animations:^{
+                weakSelf.authenTipButton.alpha = toAlpha;
+            }];
+        };
+        _authenticationView.enterpriseBlock = _authenticationView.VBlock;
         _authenticationView.showGray = YES;
     }
     return _authenticationView;
+}
+
+- (UIButton *)authenTipButton
+{
+    if (!_authenTipButton) {
+        _authenTipButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        _authenTipButton.alpha = 0.0f;
+        [_authenTipButton setImage:[UIImage imageNamed:@"me_AuthenTip"] forState:UIControlStateNormal];
+        [_authenTipButton addTarget:self action:@selector(authenTipButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _authenTipButton;
 }
 
 - (UIButton *)editButton
@@ -340,6 +368,7 @@
     }
     return _editButton;
 }
+
 - (UIView *)lineView
 {
     if (!_lineView) {
@@ -549,6 +578,13 @@
     [self.navigationController pushViewController:controller animated:YES];
 }
 
+- (void)authenTipButtonClick:(UIButton *)button
+{
+    CGFloat toAlpha = ABS(button.alpha - 1.0f);
+    [UIView animateWithDuration:0.3f animations:^{
+        button.alpha = toAlpha;
+    }];
+}
 #pragma mark ------更换头像
 - (void)changeUserHeadImage:(UIGestureRecognizer *)recognizer
 {

@@ -232,7 +232,7 @@
     self.authenticationView.sd_layout
     .leftSpaceToView(self.imageHeader, 0.0f)
     .bottomEqualToView(self.imageHeader)
-    .heightRatioToView(self.lblTime, 1.0f);
+    .heightIs(13.0f);
 
     self.lblTime.sd_layout
     .leftSpaceToView(self.authenticationView, 0.0f)

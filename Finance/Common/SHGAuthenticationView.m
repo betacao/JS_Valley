@@ -41,9 +41,11 @@
 {
     self.VButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.VButton setImage:[UIImage imageNamed:@"v_gray"] forState:UIControlStateNormal];
+    [self.VButton addTarget:self action:@selector(VButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
 
     self.QButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.QButton setImage:[UIImage imageNamed:@"enterprise_gray"] forState:UIControlStateNormal];
+    [self.QButton addTarget:self action:@selector(QButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
 
     [self sd_addSubviews:@[self.VButton, self.QButton]];
 }
@@ -52,13 +54,13 @@
 {
     self.VButton.sd_layout
     .leftSpaceToView(self, MarginFactor(12.0f))
-    .centerYEqualToView(self)
+    .bottomSpaceToView(self, 0.0f)
     .widthIs(self.VButton.currentImage.size.width)
     .heightIs(self.VButton.currentImage.size.height);
 
     self.QButton.sd_layout
     .leftSpaceToView(self.VButton, MarginFactor(5.0f))
-    .centerYEqualToView(self)
+    .bottomSpaceToView(self, 0.0f)
     .widthIs(self.QButton.currentImage.size.width)
     .heightIs(self.QButton.currentImage.size.height);
 
@@ -90,13 +92,13 @@
         if (self.vStatus) {
             self.QButton.sd_resetLayout
             .leftSpaceToView(self.VButton, MarginFactor(5.0f))
-            .centerYEqualToView(self)
+            .bottomSpaceToView(self, 0.0f)
             .widthIs(self.QButton.currentImage.size.width)
             .heightIs(self.QButton.currentImage.size.height);
         } else{
             self.QButton.sd_resetLayout
             .leftSpaceToView(self, MarginFactor(12.0f))
-            .centerYEqualToView(self)
+            .bottomSpaceToView(self, 0.0f)
             .widthIs(self.QButton.currentImage.size.width)
             .heightIs(self.QButton.currentImage.size.height);
         }
@@ -104,5 +106,27 @@
     }
 }
 
+- (void)VButtonClicked:(id)sender
+{
+    if (self.VBlock) {
+        self.VBlock();
+    }
+}
+
+- (void)QButtonClicked:(id)sender
+{
+    if (self.enterpriseBlock) {
+        self.enterpriseBlock();
+    }
+}
+
+- (void)layoutSubviews
+{
+    [super layoutSubviews];
+    CGRect frame = self.frame;
+    frame.origin.x = floorf(frame.origin.x);
+    frame.origin.y = floorf(frame.origin.y);
+    self.frame = frame;
+}
 
 @end
