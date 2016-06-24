@@ -271,7 +271,7 @@
 
 + (void)getBusinessContactAuth:(SHGBusinessObject *)object success:(void (^)(SHGBusinessContactAuthObject *))block
 {
-    NSDictionary *param = @{@"uid":UID, @"type":object.type, @"businessId":object.businessID,@"version":@"1.8.3"};
+    NSDictionary *param = @{@"uid":UID, @"type":object.type, @"businessId":object.businessID,@"version":[SHGGloble sharedGloble].currentVersion};
     NSString *request = [rBaseAddressForHttp stringByAppendingString:@"/business/getBusinessContactAuth"];
     [MOCHTTPRequestOperationManager postWithURL:request parameters:param success:^(MOCHTTPResponse *response) {
         NSLog(@"00000%@",response.dataDictionary);

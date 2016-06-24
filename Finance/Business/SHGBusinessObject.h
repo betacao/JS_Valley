@@ -67,6 +67,8 @@
 @property (assign, nonatomic) BOOL tipFlag;
 @property (assign, nonatomic) BOOL businessLicenceFlag;
 @property (assign, nonatomic) BOOL contactShow;
+@property (strong, nonatomic) NSString *firstAuditValue;
+@property (strong, nonatomic) NSString *secondAudit;
 @end
 
 @interface  SHGBusinessPDFObject: MTLModel<MTLJSONSerializing>

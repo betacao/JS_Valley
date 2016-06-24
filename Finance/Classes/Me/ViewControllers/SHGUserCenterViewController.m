@@ -739,7 +739,7 @@
 {
     [self.userHeaderView setImage:[UIImage imageNamed:@"default_head"]];
     __weak typeof(self) weakSelf = self;
-    [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttp,@"user",@"personaluser"] parameters:@{@"uid":UID} success:^(MOCHTTPResponse *response) {
+    [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttp,@"user",@"personaluser"] parameters:@{@"uid":UID,@"version":[SHGGloble sharedGloble].currentVersion} success:^(MOCHTTPResponse *response) {
 
         NSString *circles = [response.dataDictionary valueForKey:@"circles"];
         NSString *followCount = [response.dataDictionary valueForKey:@"attention"];
@@ -829,6 +829,7 @@
                 [weakSelf.authButton setImage:[UIImage imageNamed:@"me_rejected"] forState:UIControlStateNormal];
             } else{
                 [weakSelf.authButton setImage:[UIImage imageNamed:@"me_unConsummate"] forState:UIControlStateNormal];
+                weakSelf.editButton.hidden = NO;
             }
         }
         [weakSelf.tableView.mj_header endRefreshing];

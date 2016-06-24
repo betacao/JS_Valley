@@ -111,6 +111,7 @@
     self.submitButton.titleLabel.font = FontFactor(15.0f);
     self.submitButton.backgroundColor = Color(@"f04241");
     [self.submitButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [self.submitButton setTitle:@"下一步" forState:UIControlStateNormal];
 }
 
 - (void)addAutoLayout
@@ -235,11 +236,15 @@
 - (void)resetView
 {
     self.authScrollView.alpha = [self.state isEqualToString:@"0"] ? 1.0f : 0.0f;
+    if ([self.state isEqualToString:@"4"]) {
+        self.authScrollView.alpha = 1.0f;
+    }
+
     self.authTipLabel.hidden = YES;
     if ([self.state isEqualToString:@"0"]) {
         self.stateLabel.text = @"未认证";
         self.stateLabel.textColor = [UIColor colorWithHexString:@"f04241"];
-        [self.submitButton setTitle:@"提交" forState:UIControlStateNormal];
+        [self.submitButton setTitle:@"下一步" forState:UIControlStateNormal];
     }else if ([self.state isEqualToString:@"1"]){
         self.stateLabel.text = @"审核中";
         self.stateLabel.textColor = [UIColor colorWithHexString:@"f04241"];
@@ -277,7 +282,7 @@
 {
     __weak typeof(self)weakSelf = self;
     [Hud showWait];
-    [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttp,@"user",@"myidentity"] parameters:@{@"uid":UID}success:^(MOCHTTPResponse *response) {
+    [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttp,@"user",@"myidentity"] parameters:@{@"uid":UID,@"version":[SHGGloble sharedGloble].currentVersion}success:^(MOCHTTPResponse *response) {
         [Hud hideHud];
         weakSelf.state = [response.dataDictionary valueForKey:@"state"];
         weakSelf.authImageUrl = [response.dataDictionary valueForKey:@"potname"];
@@ -557,6 +562,10 @@
 - (void)initView
 {
     self.title = @"身份认证";
+    
+    if (!self.licenseUrl) {
+        [self loadUserState];
+    }
 
     __weak typeof(self) weakSelf = self;
     [[SDWebImageManager sharedManager] downloadImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,self.licenseUrl]] options:SDWebImageLowPriority|SDWebImageRetryFailed progress:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
@@ -654,6 +663,42 @@
     .rightSpaceToView(self.view, MarginFactor(15.0f))
     .bottomSpaceToView(self.view, MarginFactor(19.0f))
     .heightIs(MarginFactor(40.0f));
+}
+
+- (void)loadUserState
+{
+    __weak typeof(self)weakSelf = self;
+    [Hud showWait];
+    [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttp,@"user",@"myidentity"] parameters:@{@"uid":UID,@"version":[SHGGloble sharedGloble].currentVersion}success:^(MOCHTTPResponse *response) {
+        [Hud hideHud];
+        weakSelf.authImageUrl = [response.dataDictionary valueForKey:@"potname"];
+        [weakSelf loadUserInfo];
+        
+    } failed:^(MOCHTTPResponse *response) {
+        [Hud hideHud];
+        [Hud showMessageWithText:@"获取身份信息失败"];
+    }];
+}
+
+- (void)loadUserInfo
+{
+    __weak typeof(self) weakSelf = self;
+    [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttp,@"user",@"personaluser"] parameters:@{@"uid":UID} success:^(MOCHTTPResponse *response) {
+        weakSelf.company = [response.dataDictionary objectForKey:@"companyname"];
+        if ([[response.dataDictionary objectForKey:@"position"] length] > 0) {
+            weakSelf.location = [response.dataDictionary objectForKey:@"position"];
+        } else{
+            [[CCLocationManager shareLocation] getCity:^{
+                NSString *cityName = [SHGGloble sharedGloble].cityName;
+                weakSelf.location = cityName;
+            }];
+        }
+        
+        weakSelf.departmentCode = [response.dataDictionary objectForKey:@"industrycode"];
+
+    }failed:^(MOCHTTPResponse *response) {
+        
+    }];
 }
 
 - (void)setImage:(UIImage *)image
@@ -800,6 +845,8 @@
             [Hud hideHud];
             [Hud showMessageWithText:@"上传认证图片失败"];
         }];
+    } else{
+        [self uploadLicenseImage];
     }
 }
 
@@ -831,7 +878,7 @@
 - (void)submitMaterial
 {
     __weak typeof(self)weakSelf = self;
-    [MOCHTTPRequestOperationManager putWithURL:[rBaseAddressForHttp stringByAppendingString:@"/user/identityAuth"]class:nil parameters:@{@"uid":UID, @"potname":self.authImageUrl, @"industrycode": self.departmentCode, @"area":self.location, @"photoUrl":self.licenseUrl} success:^(MOCHTTPResponse *response) {
+    [MOCHTTPRequestOperationManager putWithURL:[rBaseAddressForHttp stringByAppendingString:@"/user/identityAuth"]class:nil parameters:@{@"uid":UID, @"potname":self.authImageUrl, @"industrycode": self.departmentCode, @"area":self.location, @"photoUrl":self.licenseUrl,@"version":[SHGGloble sharedGloble].currentVersion} success:^(MOCHTTPResponse *response) {
         NSString *code = [response.data valueForKey:@"code"];
         if ([code isEqualToString:@"000"]) {
             [Hud hideHud];

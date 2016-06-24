@@ -140,7 +140,7 @@
 @implementation SHGBusinessContactAuthObject
 + (NSDictionary *)JSONKeyPathsByPropertyKey
 {
-    return@{@"userContactLimit":@"usercontactlimit",@"businessContactLimit":@"businesscontactlimit",@"tipFlag":@"tipflag",@"businessLicenceFlag":@"businesslicenceflag",@"contactShow":@"contactshow"};
+    return@{@"userContactLimit":@"usercontactlimit",@"businessContactLimit":@"businesscontactlimit",@"tipFlag":@"tipflag",@"businessLicenceFlag":@"businesslicenceflag",@"contactShow":@"contactshow",@"firstAuditValue":@"firstauditvalue",@"secondAudit":@"secondaudit"};
 }
 
 

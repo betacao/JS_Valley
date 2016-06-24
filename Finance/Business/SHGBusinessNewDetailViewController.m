@@ -881,6 +881,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
 {
     SHGBusinessPDFObject *obj = [[SHGBusinessPDFObject alloc] init];
     obj = btn.pdfObject;
+    [[SHGGloble sharedGloble] recordUserAction:[NSString stringWithFormat:@"%@#%@",self.responseObject.businessID,self.responseObject.type] type:@"business_bp"];
     CircleLinkViewController *viewControll = [[CircleLinkViewController alloc] init];
     NSString *url = [NSString stringWithFormat:@"%@%@",rBaseAddressForImage,obj.bpPath];
     viewControll.linkTitle = obj.bpName;
@@ -1241,7 +1242,12 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
                             [weakSelf showContactAlertView:leftTitle text:textString];
                         } else{
                             if (!weakSelf.contactAuthObject.businessLicenceFlag ) {
-                                [weakSelf showAlertView:@"您今日查看联系方式次数已用完，\n认证营业执照后每日可查看10条\n联系方式~" leftTitle:@"我知道了" rightTitle:@"现在认证"];
+                                if ([weakSelf.contactAuthObject.firstAuditValue integerValue] < 0) {
+                                    [weakSelf showAlertView:[NSString stringWithFormat:@"您今日查看联系方式次数已用完，\n认证营业执照后每日可查看%@条\n联系方式~",weakSelf.contactAuthObject.secondAudit] leftTitle:@"我知道了" rightTitle:@"现在认证"];
+                                } else{
+                                    [Hud showMessageWithText:@"营业执照认证中，通过认证后方可查看更多联系方式"];
+                                }
+                                
                             } else{
                                 [weakSelf showAlertView:@"您今日的查看次数已用完~" leftTitle:nil rightTitle:@"确定"];
                             }
@@ -1273,7 +1279,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
     if ([rightTitle isEqualToString:@"现在认证"]) {
         __weak typeof(self)weakSelf = self;
         alert.rightBlock = ^{
-            SHGAuthenticationViewController *controller = [[SHGAuthenticationViewController alloc] init];
+            SHGAuthenticationNextViewController *controller = [[SHGAuthenticationNextViewController alloc] init];
             [weakSelf.navigationController pushViewController:controller animated:YES];
             [[SHGGloble sharedGloble] recordUserAction:@"" type:@"business_identity"];
         };
