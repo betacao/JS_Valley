@@ -110,7 +110,7 @@
 
     //职位
     self.departmentLabel.sd_layout
-    .leftSpaceToView(self.nickNameLabel, MarginFactor(4.0f))
+    .leftSpaceToView(self.nickNameLabel, MarginFactor(12.0f))
     .bottomEqualToView(self.nickNameLabel)
     .heightIs(self.departmentLabel.font.lineHeight);
     [self.departmentLabel setSingleLineAutoResizeWithMaxWidth:kLabelWidth * 2.0f];
@@ -119,7 +119,7 @@
     self.authenticationView.sd_layout
     .leftSpaceToView(self.departmentLabel, 0.0f)
     .centerYEqualToView(self.departmentLabel)
-    .offset(-1.0f)
+    .offset(MarginFactor(-1.0f))
     .heightIs(13.0f);
 
     self.authenTipButton.sd_layout
@@ -585,6 +585,7 @@
         button.alpha = toAlpha;
     }];
 }
+
 #pragma mark ------更换头像
 - (void)changeUserHeadImage:(UIGestureRecognizer *)recognizer
 {
@@ -771,14 +772,23 @@
         weakSelf.nickNameLabel.text = [response.dataDictionary valueForKey:@"name"];
         weakSelf.nickName = [response.dataDictionary valueForKey:@"name"];
         if([response.dataDictionary valueForKey:@"titles"]){
-            weakSelf.departmentLabel.text = [response.dataDictionary valueForKey:@"titles"];
-            weakSelf.department = self.departmentLabel.text;
+            NSString *department = [response.dataDictionary valueForKey:@"titles"];
+            weakSelf.department = department;
+            if (department.length > 8) {
+                department = [department substringToIndex:8];
+            }
+            weakSelf.departmentLabel.text = department;
         } else{
             weakSelf.departmentLabel.text = @"暂无职称";
         }
         if([response.dataDictionary valueForKey:@"companyname"]){
-            weakSelf.companyLabel.text = [response.dataDictionary valueForKey:@"companyname"];
-            weakSelf.company = self.companyLabel.text;
+            NSString *companyName = [response.dataDictionary valueForKey:@"companyname"];
+            weakSelf.company = companyName;
+            if (companyName.length > 12) {
+                companyName = [companyName substringToIndex:12];
+            }
+            weakSelf.companyLabel.text = companyName;
+            
         } else{
             weakSelf.companyLabel.text = @"暂无公司名";
         }
