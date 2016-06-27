@@ -110,8 +110,6 @@
 
     self.submitButton.titleLabel.font = FontFactor(15.0f);
     self.submitButton.backgroundColor = Color(@"f04241");
-    [self.submitButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [self.submitButton setTitle:@"下一步" forState:UIControlStateNormal];
 }
 
 - (void)addAutoLayout
@@ -267,6 +265,8 @@
         NSMutableAttributedString *reason = [[NSMutableAttributedString alloc] initWithString:string attributes:@{NSFontAttributeName:FontFactor(13.0f), NSForegroundColorAttributeName:Color(@"999999")}];
         [reason addAttributes:@{NSForegroundColorAttributeName:Color(@"dc4437")} range:[string rangeOfString:@"驳回原因："]];
         self.authTipLabel.attributedText = reason;
+    } else if ([self.state isEqualToString:@"4"]){
+        [self.submitButton setTitle:@"下一步" forState:UIControlStateNormal];
     }
     [self.stateLabel updateLayout];
     __weak typeof(self) weakSelf = self;

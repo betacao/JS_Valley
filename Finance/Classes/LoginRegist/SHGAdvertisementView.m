@@ -46,17 +46,11 @@
             if (show && photoUrl) {
                 [weakSelf.imageView sd_setImageWithURL:[NSURL URLWithString:photoUrl]];
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3.0f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                    [UIView animateWithDuration:0.3f animations:^{
-                        weakSelf.alpha = 0.2f;
-                    } completion:^(BOOL finished) {
-                        [weakSelf removeFromSuperview];
-                        if (self.dissmissBlock) {
-                            self.dissmissBlock();
-                        }
-                    }];
+                    if (self.dissmissBlock) {
+                        self.dissmissBlock();
+                    }
                 });
             } else{
-                [weakSelf removeFromSuperview];
                 if (self.dissmissBlock) {
                     self.dissmissBlock();
                 }
@@ -104,9 +98,11 @@
         [[SDWebImageManager sharedManager] downloadImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,phototUrl]] options:SDWebImageRetryFailed|SDWebImageLowPriority progress:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
 
         }];
-        NSData *data = [NSJSONSerialization dataWithJSONObject:dictionary options:NSJSONWritingPrettyPrinted error:nil];
-        NSLog(@"%@", kSplashScreenAdCacheImgLocalPath);
-        [data writeToFile:kSplashScreenAdCacheImgLocalPath atomically:YES];
+        if (dictionary) {
+            NSData *data = [NSJSONSerialization dataWithJSONObject:dictionary options:NSJSONWritingPrettyPrinted error:nil];
+            NSLog(@"%@", kSplashScreenAdCacheImgLocalPath);
+            [data writeToFile:kSplashScreenAdCacheImgLocalPath atomically:YES];
+        }
     } failed:nil];
 }
 
