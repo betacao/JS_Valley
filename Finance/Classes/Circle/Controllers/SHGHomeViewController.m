@@ -65,11 +65,15 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+   
     self.tableView.backgroundColor = Color(@"efeeef");
     self.circleType = @"all";
     self.needShowNewFriend = YES;
     self.tableView.sd_layout
-    .spaceToSuperView(UIEdgeInsetsZero);
+    .leftSpaceToView(self.view, 0.0f)
+    .rightSpaceToView(self.view, 0.0f)
+    .bottomSpaceToView(self.view, kTabBarHeight)
+    .topSpaceToView(self.view, 0.0f);
     
     [self loadPreLoadingData];
     [self addHeaderRefresh:self.tableView headerRefesh:YES headerTitle:@{kRefreshStateIdle:@"下拉可以刷新", kRefreshStatePulling:@"释放后查看最新动态", kRefreshStateRefreshing:@"正在努力加载中"} andFooter:YES footerTitle:nil];
@@ -294,15 +298,6 @@
     self.friendObject = nil;
     __weak typeof(self) weakSelf = self;
     [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@%@",rBaseAddressForHttp,@"/recommended/friends/registerPushFriendGrade"] parameters:@{@"uid":UID} success:^(MOCHTTPResponse *response) {
-        //        weakSelf.friendObject = [[SHGNewFriendObject alloc] init];
-        //        weakSelf.friendObject.commonFriendCount = @"10";
-        //        weakSelf.friendObject.commonFriendList = @[@"1wqekjqwe",@"wwwwww",@"fsadasasd",@"eee",];
-        //        weakSelf.friendObject.company = @"w";
-        //        weakSelf.friendObject.picName = @"";
-        //        weakSelf.friendObject.position = @"南京";
-        //        weakSelf.friendObject.realName = @"w";
-        //        weakSelf.friendObject.title = @"w";
-        //        weakSelf.friendObject.uid = @"9975";
         NSDictionary *dictionary = response.dataDictionary;
         if (dictionary) {
             NSArray *array = [[SHGGloble sharedGloble] parseServerJsonArrayToJSONModel:@[dictionary] class:[SHGNewFriendObject class]];

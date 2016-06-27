@@ -112,7 +112,7 @@
         }];
     };
     
-    self.bgView.backgroundColor = [UIColor colorWithHexString:@"efeeef"];
+    self.bgView.backgroundColor = [UIColor colorWithHexString:@"f7f8f9"];
     self.headName.font = FontFactor(15.0f);
     self.headName.textColor = [UIColor colorWithHexString:@"161616"];
     

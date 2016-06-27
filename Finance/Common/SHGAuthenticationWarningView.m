@@ -42,7 +42,7 @@
     [self.button setImage:[UIImage imageNamed:@"me_deleteInput"] forState:UIControlStateNormal];
 
     self.spliteView = [[UIView alloc] init];
-    self.spliteView.backgroundColor = Color(@"c5c5c5");
+    self.spliteView.backgroundColor = Color(@"ebebeb");
 
     [self sd_addSubviews:@[self.label, self.button, self.spliteView]];
 }

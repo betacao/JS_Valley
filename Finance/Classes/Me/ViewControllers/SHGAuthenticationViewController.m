@@ -96,7 +96,7 @@
     self.authScrollView.backgroundColor = Color(@"f7f8f9");
     self.departmentField.textColor = self.locationField.textColor = Color(@"161616");
     self.departmentField.font = self.locationField.font = FontFactor(15.0f);
-    self.departmentField.layer.borderColor = self.locationField.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    self.departmentField.layer.borderColor = self.locationField.layer.borderColor = Color(@"cdcdcd").CGColor;
 
     self.departmentField.layer.borderWidth = self.locationField.layer.borderWidth = 1.0f / [UIScreen mainScreen].scale;
     [self.departmentField setValue:Color(@"bebebe")forKeyPath:@"_placeholderLabel.textColor"];
@@ -108,6 +108,7 @@
     self.tipLabel.textColor = Color(@"8f8f8f");
     self.tipLabel.font = FontFactor(14.0f);
 
+    
     self.submitButton.titleLabel.font = FontFactor(15.0f);
     self.submitButton.backgroundColor = Color(@"f04241");
 }
@@ -188,6 +189,7 @@
     .leftSpaceToView(self.roundCornerView, MarginFactor(30.0f))
     .widthIs(self.plusButton.currentImage.size.width)
     .heightIs(self.plusButton.currentImage.size.height);
+    self.plusButton.sd_cornerRadius = @(10.0f);
 
     self.tipLabel.sd_layout
     .centerYEqualToView(self.roundCornerView)
@@ -587,6 +589,7 @@
     self.contentView.backgroundColor = Color(@"eeeff0");
     self.contentView.layer.cornerRadius = 10.0f;
     self.contentView.clipsToBounds = YES;
+    
 
     self.button = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.button setImage:[UIImage imageNamed:@"circle_plus"] forState:UIControlStateNormal];
@@ -600,6 +603,7 @@
     self.imageView = [[UIImageView alloc] init];
     self.imageView.userInteractionEnabled = YES;
     self.imageView.hidden = YES;
+    self.imageView.contentMode = UIViewContentModeScaleAspectFill;
 
     self.deleteButton = [UIButton buttonWithType:UIButtonTypeCustom];
     self.deleteButton.backgroundColor = [UIColor colorWithWhite:0.0f alpha:0.5f];

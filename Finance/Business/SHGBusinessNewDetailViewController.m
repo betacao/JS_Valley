@@ -139,7 +139,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
     if (!_titleLabel) {
         _titleLabel = [[UILabel alloc] init];
         _titleLabel.font = FontFactor(kNavBarTitleFontSize);
-        _titleLabel.text = @"动态详情";
+        _titleLabel.text = @"业务详情";
         _titleLabel.alpha = 0.0f;
         _titleLabel.textColor = [UIColor clearColor];
         [_titleLabel sizeToFit];
@@ -726,17 +726,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
     NSString *detailceStr = @"";
     NSMutableArray *tempArray = [NSMutableArray arrayWithArray:self.middleContentArray];
     for (NSString *obj in tempArray) {
-        if ([obj containsString:@"融资阶段"] || [obj containsString:@"投资方式"]){
-            NSArray *array = [obj componentsSeparatedByString:@"："];
-            titleStr = [array firstObject];
-            detailceStr = [array lastObject];
-            [self.middleContentArray removeObject:obj];
-        } else if ([obj containsString:@"类型"]) {
-            NSArray *array = [obj componentsSeparatedByString:@"："];
-            titleStr = [NSString stringWithFormat:@"%@",[array firstObject]];
-            detailceStr = [array lastObject];
-            [self.middleContentArray removeObject:obj];
-        } else if ([obj containsString:@"地区"]) {
+            if ([obj containsString:@"地区"]) {
             NSArray *array = [obj componentsSeparatedByString:@"："];
             [self.areaButton setTitle:[array lastObject] forState:UIControlStateNormal];
             [self.middleContentArray removeObject:obj];
@@ -1228,7 +1218,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
             
             [SHGBusinessManager getBusinessContactAuth:weakSelf.responseObject success:^(SHGBusinessContactAuthObject *contactAuthObject) {
                 weakSelf.contactAuthObject = contactAuthObject;
-                NSMutableAttributedString *textString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"打电话或发短信将消耗1次联系\n对方的机会，当前剩余%@次",weakSelf.contactAuthObject.businessContactLimit] attributes:@{NSFontAttributeName:FontFactor(15.0f),NSForegroundColorAttributeName:Color(@"8d8d8d")}];
+                NSMutableAttributedString *textString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"打电话或发短信将消耗1次联系\n对方的机会，当前剩余%@次",weakSelf.contactAuthObject.userContactLimit] attributes:@{NSFontAttributeName:FontFactor(15.0f),NSForegroundColorAttributeName:Color(@"8d8d8d")}];
                 [textString addAttribute:NSForegroundColorAttributeName value:Color(@"f95c53") range:NSMakeRange(25, weakSelf.contactAuthObject.businessContactLimit.length)];
                 if (weakSelf.contactAuthObject.contactShow ) {
                     if (weakSelf.contactAuthObject.tipFlag ) {
@@ -1269,7 +1259,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
         }
     } showAlert:YES leftBlock:^{
         [[SHGGloble sharedGloble] recordUserAction:@"" type:@"business_identity_cancel"];
-    } failString:@"认证后才能联系TA哦~"];
+    } failString:@"认证后才能查看联系方式哦~"];
 }
 
 - (void)showAlertView:(NSString *)message leftTitle:(NSString *)leftTitle rightTitle:(NSString *)rightTitle

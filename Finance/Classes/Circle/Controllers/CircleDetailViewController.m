@@ -213,7 +213,7 @@
 
     self.nickName.sd_layout
     .topEqualToView(self.imageHeader)
-    .leftSpaceToView(self.imageHeader, MarginFactor(9.0f))
+    .leftSpaceToView(self.imageHeader, MarginFactor(12.0f))
     .autoHeightRatio(0.0f);
     [self.nickName setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
 

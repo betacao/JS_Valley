@@ -19,6 +19,7 @@
 #import "SHGPersonalViewController.h"
 #import "SHGBusinessListViewController.h"
 #import "GroupListViewController.h"
+//#import "CommonMethod.h"
 
 @interface TabBarViewController()<SHGSegmentControllerDelegate>
 @property (strong, nonatomic) SHGSegmentController *homeSegmentViewController;
@@ -56,6 +57,8 @@
 -(void)viewDidLoad
 {
     [super viewDidLoad];
+    [self.tabBar setBackgroundImage:[[UIImage alloc] init]];
+    [self.tabBar setShadowImage:[CommonMethod imageWithColor:Color(@"e2e2e2")]];
     [self addObserver:[AppDelegate currentAppdelegate] forKeyPath:@"isViewLoad" options:NSKeyValueObservingOptionNew context:nil];
     NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:RGB(51, 51, 51), NSForegroundColorAttributeName, nil];;
     [[UITabBarItem appearance] setTitleTextAttributes:dic forState:UIControlStateNormal];

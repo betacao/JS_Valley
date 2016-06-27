@@ -150,6 +150,7 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
     self.authenticationView.sd_layout
     .leftSpaceToView(self.departmentLabel, 0.0f)
     .centerYEqualToView(self.departmentLabel)
+    .offset(MarginFactor(-1.0f))
     .heightIs(13.0f);
     
     self.companyLabel.sd_layout
@@ -236,7 +237,8 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
 - (void)loadData
 {
     [self.headerImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,self.potName]] placeholderImage:[UIImage imageNamed:@"default_head"]];
-    [self.authenticationView updateWithVStatus:self.userStatus enterpriseStatus:self.businessStatus];
+    BOOL userStatus = [self.userStatus boolValue];
+    [self.authenticationView updateWithVStatus:userStatus enterpriseStatus:self.businessStatus];
     if (self.department.length > 6) {
         NSString * str = [self.department substringToIndex:6];
         self.departmentLabel.text = [NSString stringWithFormat:@"%@...",str];

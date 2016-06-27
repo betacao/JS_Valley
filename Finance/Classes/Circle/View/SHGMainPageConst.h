@@ -14,7 +14,7 @@
 #define kMainHeaderViewTopMargin MarginFactor(16.0f) //动态头像的上间距
 #define kMainHeaderViewWidth MarginFactor(35.0f) //动态头像的宽度
 #define kMainHeaderViewHeight MarginFactor(35.0f)//动态头像的高度
-#define kMainNameToHeaderViewLeftMargin MarginFactor(9.0f)//名字和时间距离头像的左距离
+#define kMainNameToHeaderViewLeftMargin MarginFactor(12.0f)//名字和时间距离头像的左距离
 #define kMainCompanyToNameLeftMargin MarginFactor(7.0f)//公司距离名称的左距离
 
 #define kMainContentTopMargin MarginFactor(16.0f)//内容的上下间距
