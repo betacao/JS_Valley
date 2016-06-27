@@ -18,7 +18,6 @@
 #import "SHGBusinessCollectionListViewController.h"
 #import "SHGMyFollowViewController.h"
 #import "SHGMyFansViewController.h"
-#import "SHGAuthenticationView.h"
 
 #define kLabelWidth ceilf(SCREENWIDTH / 4.0f)
 
@@ -29,8 +28,7 @@
 @property (strong, nonatomic) UILabel         *departmentLabel;
 @property (strong, nonatomic) UILabel         *nickNameLabel;
 @property (strong, nonatomic) UILabel         *companyLabel;
-@property (strong, nonatomic) SHGAuthenticationView *authenticationView;
-@property (strong, nonatomic) UIButton *authenTipButton;
+@property (strong, nonatomic) SHGUserCenterAuthTipView *authenTipView;
 @property (strong, nonatomic) UIView          *lineView;
 @property (strong, nonatomic) UIButton        *editButton;
 @property (strong, nonatomic) UIView          *messageView;
@@ -66,7 +64,18 @@
 
 @implementation SHGUserCenterViewController
 
-- (void)viewDidLoad {
++ (instancetype)sharedController
+{
+    static SHGUserCenterViewController *sharedGlobleInstance = nil;
+    static dispatch_once_t predicate;
+    dispatch_once(&predicate, ^{
+        sharedGlobleInstance = [[self alloc] init];
+    });
+    return sharedGlobleInstance;
+}
+
+- (void)viewDidLoad
+{
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     NSArray *array0 = @[[[SHGGlobleModel alloc] initWithText:@"业务收藏" lineViewHidden:NO accessoryViewHidden:NO], [[SHGGlobleModel alloc] initWithText:@"动态收藏" lineViewHidden:NO accessoryViewHidden:NO], [[SHGGlobleModel alloc] initWithText:@"名片收藏" lineViewHidden:YES accessoryViewHidden:NO]];
@@ -98,7 +107,7 @@
     .leftSpaceToView(self.userHeaderView, MarginFactor(11.0f))
     .topEqualToView(self.userHeaderView)
     .heightIs(self.nickNameLabel.font.lineHeight);
-    [self.nickNameLabel setSingleLineAutoResizeWithMaxWidth:kLabelWidth * 2.0f];
+    [self.nickNameLabel setSingleLineAutoResizeWithMaxWidth:kLabelWidth];
 
     //编辑按钮
     self.editButton.sd_layout
@@ -113,20 +122,20 @@
     .leftSpaceToView(self.nickNameLabel, MarginFactor(12.0f))
     .bottomEqualToView(self.nickNameLabel)
     .heightIs(self.departmentLabel.font.lineHeight);
-    [self.departmentLabel setSingleLineAutoResizeWithMaxWidth:kLabelWidth * 2.0f];
+    [self.departmentLabel setSingleLineAutoResizeWithMaxWidth:kLabelWidth];
 
     //v+企
     self.authenticationView.sd_layout
     .leftSpaceToView(self.departmentLabel, 0.0f)
     .centerYEqualToView(self.departmentLabel)
-    .offset(MarginFactor(-1.0f))
+    .offset(MarginFactor(1.0f))
     .heightIs(13.0f);
 
-    self.authenTipButton.sd_layout
-    .centerXEqualToView(self.authenticationView)
-    .topEqualToView(self.authenticationView)
-    .widthIs(self.authenTipButton.currentImage.size.width)
-    .heightIs(self.authenTipButton.currentImage.size.height);
+    self.authenTipView.sd_layout
+    .centerXEqualToView(self.view)
+    .topSpaceToView(self.authenticationView, MarginFactor(2.0f))
+    .widthIs(MarginFactor(331.0f))
+    .heightIs(MarginFactor(148.0f));
 
     //公司名
     self.companyLabel.sd_layout
@@ -282,7 +291,7 @@
         [_tableHeaderView addSubview:self.lineView];
         [_tableHeaderView addSubview:self.labelView];
         [_tableHeaderView addSubview:self.bottomView];
-        [_tableHeaderView addSubview:self.authenTipButton];
+        [_tableHeaderView addSubview:self.authenTipView];
     }
     _tableHeaderView.backgroundColor = [UIColor whiteColor];
     return _tableHeaderView;
@@ -335,10 +344,15 @@
     if (!_authenticationView) {
         _authenticationView = [[SHGAuthenticationView alloc] init];
         _authenticationView.VBlock = ^{
-            CGFloat toAlpha = ABS(weakSelf.authenTipButton.alpha - 1.0f);
+            CGFloat toAlpha = ABS(weakSelf.authenTipView.alpha - 1.0f);
             [UIView animateWithDuration:0.3f animations:^{
-                weakSelf.authenTipButton.alpha = toAlpha;
+                weakSelf.authenTipView.alpha = toAlpha;
             }];
+        };
+
+        _authenticationView.didFinishAutoLayoutBlock = ^(CGRect rect){
+            CGPoint point = [weakSelf.tableHeaderView convertPoint:weakSelf.authenticationView.center toView:weakSelf.authenTipView.contentView];
+            weakSelf.authenTipView.pointX = point.x - 6.0f;
         };
         _authenticationView.enterpriseBlock = _authenticationView.VBlock;
         _authenticationView.showGray = YES;
@@ -346,15 +360,13 @@
     return _authenticationView;
 }
 
-- (UIButton *)authenTipButton
+- (SHGUserCenterAuthTipView *)authenTipView
 {
-    if (!_authenTipButton) {
-        _authenTipButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        _authenTipButton.alpha = 0.0f;
-        [_authenTipButton setImage:[UIImage imageNamed:@"me_AuthenTip"] forState:UIControlStateNormal];
-        [_authenTipButton addTarget:self action:@selector(authenTipButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+    if (!_authenTipView) {
+        _authenTipView = [[SHGUserCenterAuthTipView alloc] init];
+        _authenTipView.alpha = 0.0f;
     }
-    return _authenTipButton;
+    return _authenTipView;
 }
 
 - (UIButton *)editButton
@@ -832,7 +844,7 @@
                 }
             } else if ([weakSelf.auditState isEqualToString:@"1"]){
                 [weakSelf.authButton setImage:[UIImage imageNamed:@"me_authed"] forState:UIControlStateNormal];
-                weakSelf.editButton.hidden = NO;
+//                weakSelf.editButton.hidden = NO;
             } else if ([weakSelf.auditState isEqualToString:@"2"]){
                 [weakSelf.authButton setImage:[UIImage imageNamed:@"me_authering"] forState:UIControlStateNormal];
             } else if ([weakSelf.auditState isEqualToString:@"3"]){
@@ -899,6 +911,12 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if (self.authenTipView.alpha > 0) {
+        [UIView animateWithDuration:0.3f animations:^{
+            self.authenTipView.alpha = 0.0f;
+        }];
+        return;
+    }
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     NSString *text = ((SHGGlobleModel *)[[self.titleArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row]).text;
     if ([text containsString:@"邀请好友"]) {
@@ -991,11 +1009,119 @@
     }
 }
 
-
-
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }
 
+
+@end
+
+
+@interface SHGUserCenterAuthTipView()
+
+@property (strong, nonatomic) UIImageView *imageView;
+@property (strong, nonatomic) UIImageView *leftImageView;
+@property (strong, nonatomic) UIImageView *rightImageView;
+@property (strong, nonatomic) UIImageView *labelImageView;
+
+@end
+
+@implementation SHGUserCenterAuthTipView
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        [self initView];
+        [self addAutoLayout];
+    }
+    return self;
+}
+
+- (void)initView
+{
+    self.imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"me_authTipBg"]];
+
+    self.leftImageView = [[UIImageView alloc] initWithImage:[[UIImage imageNamed:@"me_authLeftImage"]resizableImageWithCapInsets:UIEdgeInsetsMake(7.0f, 7.0f, 7.0f, 10.0f) resizingMode:UIImageResizingModeStretch]];
+
+    self.rightImageView = [[UIImageView alloc] initWithImage:[[UIImage imageNamed:@"me_authRightImage"]resizableImageWithCapInsets:UIEdgeInsetsMake(13.0f, 12.0f, 7.0f, 7.0f) resizingMode:UIImageResizingModeStretch]];
+
+    self.labelImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"me_authTipLabel"]];
+
+    self.contentView = [[UIView alloc] init];
+    [self.contentView sd_addSubviews:@[self.leftImageView, self.rightImageView, self.labelImageView]];
+
+    [self sd_addSubviews:@[self.imageView, self.contentView]];
+}
+
+- (void)addAutoLayout
+{
+    self.imageView.sd_layout
+    .leftSpaceToView(self, 0.0f)
+    .rightSpaceToView(self, 0.0f)
+    .bottomSpaceToView(self, 0.0f)
+    .heightIs(MarginFactor(self.imageView.image.size.height));
+
+    self.contentView.sd_layout
+    .centerXEqualToView(self)
+    .widthIs(MarginFactor(256.0f))
+    .heightIs(MarginFactor(88.0f))
+    .topSpaceToView(self, 0.0f);
+
+    self.leftImageView.sd_layout
+    .leftSpaceToView(self.contentView, 0.0f)
+    .bottomEqualToView(self.rightImageView)
+    .widthIs(self.pointX)
+    .heightIs(MarginFactor(88.0f) - 6.0f);
+
+    self.rightImageView.sd_layout
+    .rightSpaceToView(self.contentView, 0.0f)
+    .topSpaceToView(self.contentView, 0.0f)
+    .leftSpaceToView(self.leftImageView, 0.0f)
+    .heightRatioToView(self.contentView, 1.0f);
+
+    self.labelImageView.sd_layout
+    .centerXEqualToView(self.contentView)
+    .centerYEqualToView(self.contentView)
+    .widthIs(self.labelImageView.image.size.width)
+    .heightIs(self.labelImageView.image.size.height);
+}
+
+- (void)setPointX:(CGFloat)pointX
+{
+    if (pointX == _pointX || !self.superview) {
+        return;
+    }
+
+    if (pointX > CGRectGetWidth(self.contentView.frame) - (self.rightImageView.image.size.width - 6.0f)) {
+        _pointX = (CGRectGetWidth(self.contentView.frame) - (self.rightImageView.image.size.width - 6.0f));
+        self.sd_resetNewLayout
+        .centerXEqualToView(self.superview)
+        .topSpaceToView([SHGUserCenterViewController sharedController].authenticationView, MarginFactor(2.0f))
+        .widthIs(MarginFactor(331.0f))
+        .heightIs(MarginFactor(148.0f))
+        .offset(_pointX);
+    } else{
+        _pointX = pointX;
+        self.sd_resetNewLayout
+        .topSpaceToView([SHGUserCenterViewController sharedController].authenticationView, MarginFactor(2.0f))
+        .centerXEqualToView(self.superview)
+        .widthIs(MarginFactor(331.0f))
+        .heightIs(MarginFactor(148.0f));
+    }
+
+    self.leftImageView.sd_resetLayout
+    .leftSpaceToView(self.contentView, 0.0f)
+    .bottomEqualToView(self.rightImageView)
+    .widthIs(_pointX)
+    .heightIs(MarginFactor(88.0f) - 6.0f);
+}
+
+- (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+{
+    [UIView animateWithDuration:0.3f animations:^{
+        self.alpha = 0.0f;
+    }];
+}
 
 @end

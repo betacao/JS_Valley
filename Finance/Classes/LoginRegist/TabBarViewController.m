@@ -218,9 +218,8 @@
 
 - (SHGUserCenterViewController *)meViewController
 {
-    if (!_meViewController)
-    {
-        _meViewController = [[SHGUserCenterViewController alloc] init];
+    if (!_meViewController){
+        _meViewController = [SHGUserCenterViewController sharedController];
     }
     return _meViewController;
 }
