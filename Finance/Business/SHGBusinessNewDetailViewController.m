@@ -948,10 +948,14 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
     self.titleLabel.textColor = [UIColor whiteColor];
     if (scrollView.contentOffset.y > CGRectGetHeight(self.redView.frame)){
         self.titleLabel.alpha = 1.0f;
+        [self.navigationController.navigationBar setShadowImage:nil];
+        [self.navigationController.navigationBar setBackgroundImage:[CommonMethod imageWithColor:Color(@"d43c33")] forBarMetrics:UIBarMetricsDefault];
     }
     if (scrollView.contentOffset.y < CGRectGetHeight(self.redView.frame)){
         self.titleLabel.alpha = scrollView.contentOffset.y  / CGRectGetHeight(self.redView.frame);
         NSLog(@"alpha%f;%f",self.navigationItem.titleView.alpha,scrollView.contentOffset.y);
+        [self.navigationController.navigationBar setShadowImage:[[UIImage alloc] init]];
+        [self.navigationController.navigationBar setBackgroundImage:[CommonMethod imageWithColor:Color(@"f04f46")] forBarMetrics:UIBarMetricsDefault];
     }
 }
 
