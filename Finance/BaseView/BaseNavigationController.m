@@ -41,9 +41,6 @@
 
         [self.navigationBar setShadowImage:[[UIImage alloc] init]];
         [self.navigationBar setBackgroundImage:[CommonMethod imageWithColor:Color(@"f04f46")] forBarMetrics:UIBarMetricsDefault];
-    } else {
-        [self.navigationBar setShadowImage:nil];
-        [self.navigationBar setBackgroundImage:[CommonMethod imageWithColor:Color(@"d43c33")] forBarMetrics:UIBarMetricsDefault];
     }
 }
 
@@ -53,6 +50,10 @@
         self.currentShowVC = nil;
     } else {
         self.currentShowVC = viewController;
+    }
+    if (![viewController isKindOfClass:[SHGBusinessNewDetailViewController class]]) {
+        [self.navigationBar setShadowImage:nil];
+        [self.navigationBar setBackgroundImage:[CommonMethod imageWithColor:Color(@"d43c33")] forBarMetrics:UIBarMetricsDefault];
     }
 }
 

@@ -119,14 +119,14 @@
 
     //职位
     self.departmentLabel.sd_layout
-    .leftSpaceToView(self.nickNameLabel, MarginFactor(12.0f))
+    .leftSpaceToView(self.nickNameLabel, MarginFactor(10.0f))
     .bottomEqualToView(self.nickNameLabel)
     .heightIs(self.departmentLabel.font.lineHeight);
-    [self.departmentLabel setSingleLineAutoResizeWithMaxWidth:kLabelWidth];
+    [self.departmentLabel setSingleLineAutoResizeWithMaxWidth:kLabelWidth * 2.0f];
 
     //v+企
     self.authenticationView.sd_layout
-    .leftSpaceToView(self.departmentLabel, 0.0f)
+    .leftSpaceToView(self.departmentLabel, MarginFactor(-7.0f))
     .centerYEqualToView(self.departmentLabel)
     .offset(MarginFactor(1.0f))
     .heightIs(13.0f);
@@ -351,7 +351,8 @@
         };
 
         _authenticationView.didFinishAutoLayoutBlock = ^(CGRect rect){
-            CGPoint point = [weakSelf.tableHeaderView convertPoint:weakSelf.authenticationView.center toView:weakSelf.authenTipView.contentView];
+            CGPoint point = weakSelf.authenticationView.center;
+            point = [weakSelf.tableHeaderView convertPoint:weakSelf.authenticationView.center toView:weakSelf.authenTipView.contentView];
             weakSelf.authenTipView.pointX = point.x - 6.0f;
         };
         _authenticationView.enterpriseBlock = _authenticationView.VBlock;
@@ -1083,8 +1084,8 @@
     self.labelImageView.sd_layout
     .centerXEqualToView(self.contentView)
     .centerYEqualToView(self.contentView)
-    .widthIs(self.labelImageView.image.size.width)
-    .heightIs(self.labelImageView.image.size.height);
+    .widthIs(MarginFactor(self.labelImageView.image.size.width))
+    .heightIs(MarginFactor(self.labelImageView.image.size.height));
 }
 
 - (void)setPointX:(CGFloat)pointX
@@ -1094,7 +1095,7 @@
     }
 
     if (pointX > CGRectGetWidth(self.contentView.frame) - (self.rightImageView.image.size.width - 6.0f)) {
-        _pointX = (CGRectGetWidth(self.contentView.frame) - (self.rightImageView.image.size.width - 6.0f));
+        _pointX = pointX -(CGRectGetWidth(self.contentView.frame) - (self.rightImageView.image.size.width - 6.0f));
         self.sd_resetNewLayout
         .centerXEqualToView(self.superview)
         .topSpaceToView([SHGUserCenterViewController sharedController].authenticationView, MarginFactor(2.0f))

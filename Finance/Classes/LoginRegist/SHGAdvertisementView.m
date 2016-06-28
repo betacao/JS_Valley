@@ -45,7 +45,7 @@
         [SHGAdvertisementManager loadLocalAdvertisementBlock:^(BOOL show, NSString *photoUrl) {
             if (show && photoUrl) {
                 [weakSelf.imageView sd_setImageWithURL:[NSURL URLWithString:photoUrl]];
-                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3.0f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                     if (self.dissmissBlock) {
                         self.dissmissBlock();
                     }
