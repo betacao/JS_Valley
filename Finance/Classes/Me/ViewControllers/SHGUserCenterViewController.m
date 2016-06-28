@@ -236,11 +236,6 @@
     }
 }
 
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-}
-
 - (void)initData
 {
     self.shouldRefresh = YES;
@@ -348,12 +343,6 @@
             [UIView animateWithDuration:0.3f animations:^{
                 weakSelf.authenTipView.alpha = toAlpha;
             }];
-        };
-
-        _authenticationView.didFinishAutoLayoutBlock = ^(CGRect rect){
-            CGPoint point = weakSelf.authenticationView.center;
-            point = [weakSelf.tableHeaderView convertPoint:weakSelf.authenticationView.center toView:weakSelf.authenTipView.contentView];
-            weakSelf.authenTipView.pointX = point.x - 6.0f;
         };
         _authenticationView.enterpriseBlock = _authenticationView.VBlock;
         _authenticationView.showGray = YES;
@@ -845,7 +834,7 @@
                 }
             } else if ([weakSelf.auditState isEqualToString:@"1"]){
                 [weakSelf.authButton setImage:[UIImage imageNamed:@"me_authed"] forState:UIControlStateNormal];
-//                weakSelf.editButton.hidden = NO;
+                weakSelf.editButton.hidden = NO;
             } else if ([weakSelf.auditState isEqualToString:@"2"]){
                 [weakSelf.authButton setImage:[UIImage imageNamed:@"me_authering"] forState:UIControlStateNormal];
             } else if ([weakSelf.auditState isEqualToString:@"3"]){
@@ -857,6 +846,10 @@
         }
         [weakSelf.tableView.mj_header endRefreshing];
         [weakSelf.tableHeaderView layoutSubviews];
+
+        CGPoint point = weakSelf.authenticationView.center;
+        point = [weakSelf.tableHeaderView convertPoint:weakSelf.authenticationView.center toView:weakSelf.authenTipView.contentView];
+        weakSelf.authenTipView.pointX = point.x - 6.0f;
 
     } failed:^(MOCHTTPResponse *response) {
 
@@ -1095,13 +1088,14 @@
     }
 
     if (pointX > CGRectGetWidth(self.contentView.frame) - (self.rightImageView.image.size.width - 6.0f)) {
-        _pointX = pointX -(CGRectGetWidth(self.contentView.frame) - (self.rightImageView.image.size.width - 6.0f));
+        _pointX = CGRectGetWidth(self.contentView.frame) - (self.rightImageView.image.size.width - 6.0f);
+        CGFloat offset = pointX - _pointX;
         self.sd_resetNewLayout
         .centerXEqualToView(self.superview)
         .topSpaceToView([SHGUserCenterViewController sharedController].authenticationView, MarginFactor(2.0f))
         .widthIs(MarginFactor(331.0f))
         .heightIs(MarginFactor(148.0f))
-        .offset(_pointX);
+        .offset(offset);
     } else{
         _pointX = pointX;
         self.sd_resetNewLayout
@@ -1116,6 +1110,8 @@
     .bottomEqualToView(self.rightImageView)
     .widthIs(_pointX)
     .heightIs(MarginFactor(88.0f) - 6.0f);
+    
+    [self updateLayout];
 }
 
 - (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
