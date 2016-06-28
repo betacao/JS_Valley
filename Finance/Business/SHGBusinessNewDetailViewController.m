@@ -1223,7 +1223,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
             [SHGBusinessManager getBusinessContactAuth:weakSelf.responseObject success:^(SHGBusinessContactAuthObject *contactAuthObject) {
                 weakSelf.contactAuthObject = contactAuthObject;
                 NSMutableAttributedString *textString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"打电话或发短信将消耗1次联系\n对方的机会，当前剩余%@次",weakSelf.contactAuthObject.userContactLimit] attributes:@{NSFontAttributeName:FontFactor(15.0f),NSForegroundColorAttributeName:Color(@"8d8d8d")}];
-                [textString addAttribute:NSForegroundColorAttributeName value:Color(@"f95c53") range:NSMakeRange(25, weakSelf.contactAuthObject.businessContactLimit.length)];
+                [textString addAttribute:NSForegroundColorAttributeName value:Color(@"f95c53") range:NSMakeRange(25, weakSelf.contactAuthObject.userContactLimit.length)];
                 if (weakSelf.contactAuthObject.contactShow ) {
                     if (weakSelf.contactAuthObject.tipFlag ) {
                         [weakSelf showContactAlertView:leftTitle text:textString];
@@ -1239,7 +1239,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
                                 if ([weakSelf.contactAuthObject.firstAuditValue integerValue] < 0) {
                                     [weakSelf showAlertView:[NSString stringWithFormat:@"您今日查看联系方式次数已用完，\n认证营业执照后每日可查看%@条\n联系方式~",weakSelf.contactAuthObject.secondAudit] leftTitle:@"我知道了" rightTitle:@"现在认证"];
                                 } else{
-                                    [Hud showMessageWithText:@"营业执照认证中，通过认证后方可查看更多联系方式"];
+                                    [Hud showMessageWithText:@"营业执照认证中，通过认证后方可\n查看更多联系方式"];
                                 }
                                 
                             } else{

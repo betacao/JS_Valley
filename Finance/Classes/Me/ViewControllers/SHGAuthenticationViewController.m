@@ -83,7 +83,7 @@
     //
     __weak typeof(self) weakSelf = self;
     self.warningView = [[SHGAuthenticationWarningView alloc] init];
-    self.warningView.text = @"完善个人认证每日可查看5条业务联系方式";
+    self.warningView.text = @"完成个人认证每日可查看5条业务联系方式";
     self.warningView.block = ^{
         [UIView animateWithDuration:0.25f animations:^{
             weakSelf.warningView.sd_layout
@@ -235,9 +235,11 @@
 
 - (void)resetView
 {
-    self.authScrollView.alpha = [self.state isEqualToString:@"0"] ? 1.0f : 0.0f;
-    if ([self.state isEqualToString:@"4"]) {
+    
+    if ([self.state isEqualToString:@"4"] || [self.state isEqualToString:@"2"]) {
         self.authScrollView.alpha = 1.0f;
+    } else{
+        self.authScrollView.alpha = 0.0f;
     }
 
     self.authTipLabel.hidden = YES;

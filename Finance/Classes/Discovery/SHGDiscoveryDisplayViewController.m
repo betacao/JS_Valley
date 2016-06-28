@@ -387,7 +387,7 @@
     } else if ([object isKindOfClass:[SHGDiscoveryInvateObject class]]) {
         //邀请好友
         SHGDiscoveryInvateObject *invateObject = (SHGDiscoveryInvateObject *)object;
-
+        [self.authenticationView updateWithVStatus:NO enterpriseStatus:NO];
         self.firstLabel.text = invateObject.realName;
         self.secondLabel.text = @"暂未提供公司信息";
         self.thirdLabel.text = @"通讯录联系人";
