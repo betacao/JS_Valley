@@ -249,7 +249,7 @@
         item.refView = view;
         [weakSelf setValue:item forKey:key];
         weakSelf.lastModelItem = item;
-        if ([key isEqualToString:@"equalCenterY"] && [view isKindOfClass:NSClassFromString(@"UITableViewCellContentView")]) {
+        if ([view isKindOfClass:NSClassFromString(@"UITableViewCellContentView")] && ([key isEqualToString:@"equalCenterY"] || [key isEqualToString:@"equalBottom"])) {
             view.shouldReadjustFrameBeforeStoreCache = YES;
         }
         return weakSelf;
@@ -1134,11 +1134,15 @@
         }
         
         if (![self isKindOfClass:[UIScrollView class]] && self.sd_rightViewsArray.count && (self.ownLayoutModel.right || self.ownLayoutModel.equalRight)) {
+            self.fixedWidth = @(self.width);
             [self layoutRightWithView:self model:self.ownLayoutModel];
+            self.fixedWidth = nil;
         }
         
         if (![self isKindOfClass:[UIScrollView class]] && self.sd_bottomViewsArray.count && (self.ownLayoutModel.bottom || self.ownLayoutModel.equalBottom)) {
+            self.fixedHeight = @(self.height);
             [self layoutBottomWithView:self model:self.ownLayoutModel];
+            self.fixedHeight = nil;
         }
         
         if (self.didFinishAutoLayoutBlock) {
@@ -1424,6 +1428,9 @@
             view.bottom_sd = model.equalBottom.refView.bottom_sd + model.equalBottom.offset;
         }
     }
+    if (model.widthEqualHeight && !view.fixedHeight) {
+        [self layoutRightWithView:view model:model];
+    }
 }
 
 
@@ -1560,10 +1567,10 @@
     if (self.ownLayoutModel.widthEqualHeight) {
         if (width_sd != self.height_sd) return;
     }
+    [self setWidth:width_sd];
     if (self.ownLayoutModel.heightEqualWidth) {
         self.height_sd = width_sd;
     }
-    [self setWidth:width_sd];
 }
 
 - (CGFloat)height_sd {
@@ -1574,10 +1581,10 @@
     if (self.ownLayoutModel.heightEqualWidth) {
         if (height_sd != self.width_sd) return;
     }
+    [self setHeight:height_sd];
     if (self.ownLayoutModel.widthEqualHeight) {
         self.width_sd = height_sd;
     }
-    [self setHeight:height_sd];
 }
 
 - (CGPoint)origin_sd {

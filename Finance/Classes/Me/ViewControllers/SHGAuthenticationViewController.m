@@ -566,14 +566,14 @@
     self.title = @"身份认证";
     
     if (!self.licenseUrl) {
+        self.licenseUrl = @"";
         [self loadUserState];
+    } else{
+        //为了执行下载图片
+        self.licenseUrl = self.licenseUrl;
     }
 
     __weak typeof(self) weakSelf = self;
-    [[SDWebImageManager sharedManager] downloadImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,self.licenseUrl]] options:SDWebImageLowPriority|SDWebImageRetryFailed progress:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
-        weakSelf.image = image;
-    }];
-
     self.warningView = [[SHGAuthenticationWarningView alloc] init];
     self.warningView.text = @"上传营业执照每日可查看10条业务联系方式（选填）";
     self.warningView.block = ^{
@@ -676,6 +676,7 @@
     [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttp,@"user",@"myidentity"] parameters:@{@"uid":UID,@"version":[SHGGloble sharedGloble].currentVersion}success:^(MOCHTTPResponse *response) {
         [Hud hideHud];
         weakSelf.authImageUrl = [response.dataDictionary valueForKey:@"potname"];
+        weakSelf.licenseUrl = [response.dataDictionary objectForKey:@"photourl"];
         [weakSelf loadUserInfo];
         
     } failed:^(MOCHTTPResponse *response) {
@@ -703,6 +704,17 @@
     }failed:^(MOCHTTPResponse *response) {
         
     }];
+}
+
+- (void)setLicenseUrl:(NSString *)licenseUrl
+{
+    _licenseUrl = licenseUrl;
+    if (licenseUrl && licenseUrl.length > 0 && [self isViewLoaded]) {
+        __weak typeof(self) weakSelf = self;
+        [[SDWebImageManager sharedManager] downloadImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,self.licenseUrl]] options:SDWebImageLowPriority|SDWebImageRetryFailed progress:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
+            weakSelf.image = image;
+        }];
+    }
 }
 
 - (void)setImage:(UIImage *)image

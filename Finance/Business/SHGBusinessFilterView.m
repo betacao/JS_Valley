@@ -15,7 +15,7 @@
 
 @interface SHGBusinessFilterView()
 
-@property (strong, nonatomic) UIButton *leftButton;
+@property (strong, nonatomic) UILabel *leftLabel;
 @property (strong, nonatomic) UIButton *middleButton;
 @property (strong, nonatomic) UIButton *rightButton;
 @property (strong, nonatomic) NSMutableArray *buttonArray;
@@ -42,13 +42,14 @@
     self.clipsToBounds = YES;
     self.backgroundColor = Color(@"f0f0f0");
 
-    self.leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [self.leftButton setTitle:@"高级筛选" forState:UIControlStateNormal];
-    self.leftButton.titleLabel.font = FontFactor(15.0f);
-    [self.leftButton setTitleColor:Color(@"256ebf") forState:UIControlStateNormal];
-    [self.leftButton addTarget:self action:@selector(leftButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-    [self.leftButton sizeToFit];
-    [self addSubview:self.leftButton];
+    self.leftLabel = [[UILabel alloc] init];
+    self.leftLabel.text = @"高级筛选";
+    self.leftLabel.font = FontFactor(15.0f);
+    self.leftLabel.userInteractionEnabled = YES;
+    self.leftLabel.textColor = Color(@"256ebf");
+    UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(leftButtonClicked:)];
+    [self.leftLabel addGestureRecognizer:recognizer];
+    [self addSubview:self.leftLabel];
 
     self.middleButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.middleButton setImage:[UIImage imageNamed:@"down_dark0"] forState:UIControlStateNormal];
@@ -73,31 +74,30 @@
 
 - (void)addAutoLayout
 {
-    CGSize size = self.leftButton.frame.size;
-    self.leftButton.sd_layout
+    self.leftLabel.sd_layout
     .leftSpaceToView(self, MarginFactor(12.0f))
     .topSpaceToView(self, MarginFactor(10.0f))
-    .widthIs(size.width)
-    .heightIs(ceilf(self.leftButton.titleLabel.font.lineHeight));
+    .heightIs(ceilf(self.leftLabel.font.lineHeight));
+    [self.leftLabel setSingleLineAutoResizeWithMaxWidth:SCREENWIDTH];
 
-    size = self.middleButton.frame.size;
+    CGSize size = self.middleButton.frame.size;
     self.middleButton.sd_layout
-    .leftSpaceToView(self.leftButton, MarginFactor(5.0f))
-    .centerYEqualToView(self.leftButton)
+    .leftSpaceToView(self.leftLabel, MarginFactor(5.0f))
+    .centerYEqualToView(self.leftLabel)
     .widthIs(size.width)
     .heightIs(size.height);
 
     size = self.rightButton.frame.size;
     self.rightButton.sd_layout
     .rightSpaceToView(self, MarginFactor(17.0f))
-    .centerYEqualToView(self.leftButton)
+    .centerYEqualToView(self.leftLabel)
     .widthIs(size.width)
     .heightIs(size.height);
 
     self.contentView.sd_layout
     .rightSpaceToView(self, 0.0f)
     .leftSpaceToView(self, 0.0f)
-    .topSpaceToView(self.leftButton, MarginFactor(10.0f))
+    .topSpaceToView(self.leftLabel, MarginFactor(10.0f))
     .heightIs(0.0f);
 
     [self setupAutoHeightWithBottomView:self.contentView bottomMargin:0.0f];
@@ -190,19 +190,17 @@
 
     //控制左按钮显示的文字
     if (dataArray.count > 0) {
-        [self.leftButton setTitle:@"更多筛选条件" forState:UIControlStateNormal];
+        self.leftLabel.text = @"更多筛选条件";
         self.middleButton.hidden = YES;
         self.rightButton.hidden = NO;
     } else{
-        [self.leftButton setTitle:@"高级筛选" forState:UIControlStateNormal];
+        self.leftLabel.text = @"高级筛选";
         self.middleButton.hidden = NO;
         self.rightButton.hidden = YES;
     }
-    CGSize size = [self.leftButton sizeThatFits:CGSizeMake(CGFLOAT_MAX, CGRectGetHeight(self.leftButton.frame))];
-    self.leftButton.width = size.width;
 }
 
-- (void)leftButtonClicked:(UIButton *)button
+- (void)leftButtonClicked:(UITapGestureRecognizer *)recognizer
 {
     SHGBusinessSelectCategoryViewController *controller = [[SHGBusinessSelectCategoryViewController alloc] init];
     if ([[SHGBusinessScrollView sharedBusinessScrollView] currentIndex] == 4) {
