@@ -40,10 +40,12 @@
 - (void)initView
 {
     self.VButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.VButton setEnlargeEdgeWithTop:10.0f right:0.0f bottom:10.0f left:10.0f];
     [self.VButton setImage:[UIImage imageNamed:@"v_gray"] forState:UIControlStateNormal];
     [self.VButton addTarget:self action:@selector(VButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
 
     self.QButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.QButton setEnlargeEdgeWithTop:10.0f right:10.0f bottom:10.0f left:0.0f];
     [self.QButton setImage:[UIImage imageNamed:@"enterprise_gray"] forState:UIControlStateNormal];
     [self.QButton addTarget:self action:@selector(QButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
 
