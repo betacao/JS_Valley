@@ -10,8 +10,8 @@
 
 @interface SHGAuthenticationView ()
 
-@property (strong, nonatomic) UIButton *VButton;
-@property (strong, nonatomic) UIButton *QButton;
+@property (strong, nonatomic) UIImageView *VButton;
+@property (strong, nonatomic) UIImageView *QButton;
 
 @property (assign, nonatomic) BOOL vStatus;
 @property (assign, nonatomic) BOOL enterpriseStatus;
@@ -20,14 +20,14 @@
 
 @implementation SHGAuthenticationView
 
-- (instancetype)init
++ (instancetype)buttonWithType:(UIButtonType)buttonType
 {
-    self = [super init];
-    if (self) {
-        [self initView];
-        [self addAutoLayout];
+    SHGAuthenticationView *button = [super buttonWithType:buttonType];
+    if (button) {
+        [button initView];
+        [button addAutoLayout];
     }
-    return self;
+    return button;
 }
 
 - (void)awakeFromNib
@@ -39,19 +39,16 @@
 
 - (void)initView
 {
-    self.VButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [self.VButton setEnlargeEdgeWithTop:10.0f right:0.0f bottom:10.0f left:10.0f];
-    [self.VButton setImage:[UIImage imageNamed:@"v_gray"] forState:UIControlStateNormal];
-    [self.VButton addTarget:self action:@selector(VButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    self.VButton = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"v_gray"]];
 
-    self.QButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [self.QButton setEnlargeEdgeWithTop:10.0f right:10.0f bottom:10.0f left:0.0f];
-    [self.QButton setImage:[UIImage imageNamed:@"enterprise_gray"] forState:UIControlStateNormal];
-    [self.QButton addTarget:self action:@selector(QButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    self.QButton = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"enterprise_gray"]];
 
     self.VButton.hidden = self.QButton.hidden = YES;
     
     [self sd_addSubviews:@[self.VButton, self.QButton]];
+
+    [self addTarget:self action:@selector(selfClick:) forControlEvents:UIControlEventTouchUpInside];
+    [self setEnlargeEdge:20.0f];
 }
 
 - (void)addAutoLayout
@@ -59,14 +56,14 @@
     self.VButton.sd_layout
     .leftSpaceToView(self, MarginFactor(12.0f))
     .bottomSpaceToView(self, 0.0f)
-    .widthIs(self.VButton.currentImage.size.width)
-    .heightIs(self.VButton.currentImage.size.height);
+    .widthIs(self.VButton.image.size.width)
+    .heightIs(self.VButton.image.size.height);
 
     self.QButton.sd_layout
     .leftSpaceToView(self.VButton, MarginFactor(5.0f))
     .bottomSpaceToView(self, 0.0f)
-    .widthIs(self.QButton.currentImage.size.width)
-    .heightIs(self.QButton.currentImage.size.height);
+    .widthIs(self.QButton.image.size.width)
+    .heightIs(self.QButton.image.size.height);
 
     [self setupAutoWidthWithRightView:self.QButton rightMargin:MarginFactor(12.0f)];
 }
@@ -77,8 +74,8 @@
     self.vStatus = vStatus;
     self.enterpriseStatus = enterpriseStatus;
 
-    [self.VButton setImage:vStatus ? [UIImage imageNamed:@"v_yellow"] : [UIImage imageNamed:@"v_gray"] forState:UIControlStateNormal];
-    [self.QButton setImage:enterpriseStatus ? [UIImage imageNamed:@"enterprise_blue"] : [UIImage imageNamed:@"enterprise_gray"] forState:UIControlStateNormal];
+    self.VButton.image = vStatus ? [UIImage imageNamed:@"v_yellow"] : [UIImage imageNamed:@"v_gray"];
+    self.QButton.image = enterpriseStatus ? [UIImage imageNamed:@"enterprise_blue"] : [UIImage imageNamed:@"enterprise_gray"];
 }
 
 - (void)setVStatus:(BOOL)vStatus
@@ -98,30 +95,23 @@
             self.QButton.sd_resetLayout
             .leftSpaceToView(self.VButton, MarginFactor(5.0f))
             .bottomSpaceToView(self, 0.0f)
-            .widthIs(self.QButton.currentImage.size.width)
-            .heightIs(self.QButton.currentImage.size.height);
+            .widthIs(self.QButton.image.size.width)
+            .heightIs(self.QButton.image.size.height);
         } else{
             self.QButton.sd_resetLayout
             .leftSpaceToView(self, MarginFactor(12.0f))
             .bottomSpaceToView(self, 0.0f)
-            .widthIs(self.QButton.currentImage.size.width)
-            .heightIs(self.QButton.currentImage.size.height);
+            .widthIs(self.QButton.image.size.width)
+            .heightIs(self.QButton.image.size.height);
         }
-        [self setupAutoWidthWithRightView:enterpriseStatus ? self.QButton : self.VButton rightMargin:(enterpriseStatus | self.vStatus) ? MarginFactor(12.0f) : - self.VButton.currentImage.size.width];
+        [self setupAutoWidthWithRightView:enterpriseStatus ? self.QButton : self.VButton rightMargin:(enterpriseStatus | self.vStatus) ? MarginFactor(12.0f) : - self.VButton.image.size.width];
     }
 }
 
-- (void)VButtonClicked:(id)sender
+- (void)selfClick:(id)sender
 {
-    if (self.VBlock) {
-        self.VBlock();
-    }
-}
-
-- (void)QButtonClicked:(id)sender
-{
-    if (self.enterpriseBlock) {
-        self.enterpriseBlock();
+    if (self.block) {
+        self.block();
     }
 }
 
