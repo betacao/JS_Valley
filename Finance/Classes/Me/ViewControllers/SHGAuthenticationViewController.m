@@ -254,11 +254,18 @@
     }else if ([self.state isEqualToString:@"2"]){
         self.stateLabel.text = @"已认证";
         self.stateLabel.textColor = [UIColor colorWithHexString:@"3588c8"];
-        [self.submitButton setTitle:@"更新" forState:UIControlStateNormal];
+        if (self.authStatu) {
+            self.authScrollView.alpha = 1.0f;
+            [self.submitButton setTitle:@"下一步" forState:UIControlStateNormal];
+        } else{
+            self.authScrollView.alpha = 0.0f;
+            [self.submitButton setTitle:@"更新" forState:UIControlStateNormal];
+        }
+        
     }else if ([self.state isEqualToString:@"3"]){
         self.stateLabel.text = @"认证失败";
         self.stateLabel.textColor = [UIColor colorWithHexString:@"f04241"];
-        [self.submitButton setTitle:@"更新" forState:UIControlStateNormal];
+        [self.submitButton setTitle:@"下一步" forState:UIControlStateNormal];
         self.authTipLabel.hidden = NO;
         self.authTipLabel.textAlignment = NSTextAlignmentLeft;
         NSString *string = [@"驳回原因：\n" stringByAppendingFormat:@"%@", self.rejectReason];

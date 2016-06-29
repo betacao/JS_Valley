@@ -568,6 +568,7 @@
 {
     SHGAuthenticationViewController *controller = [[SHGAuthenticationViewController alloc] init];
     controller.hidesBottomBarWhenPushed = YES;
+    controller.authStatu = NO;
     [self.navigationController pushViewController:controller animated:YES];
 }
 

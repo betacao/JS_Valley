@@ -515,7 +515,7 @@
 
 - (void)addBusinessButtonClicked:(UIButton *)button
 {
-    [[SHGGloble sharedGloble] requestUserVerifyStatusCompletion:^(BOOL state) {
+    [[SHGGloble sharedGloble] requestUserVerifyStatusCompletion:^(BOOL state,NSString *auditState) {
         if (state) {
             [SHGBusinessManager createBusinessNum:^(BOOL success, NSString *allowCreate) {
                 if (success) {

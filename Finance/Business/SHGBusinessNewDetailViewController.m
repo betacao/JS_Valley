@@ -1114,7 +1114,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
 
 - (IBAction)comment:(id)sender
 {
-    [[SHGGloble sharedGloble] requestUserVerifyStatusCompletion:^(BOOL state) {
+    [[SHGGloble sharedGloble] requestUserVerifyStatusCompletion:^(BOOL state,NSString *auditState) {
         if (state) {
             self.popupView = [[BRCommentView alloc] initWithFrame:self.view.bounds superFrame:CGRectZero isController:YES type:@"comment"];
             self.popupView.delegate = self;
@@ -1139,7 +1139,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
 
 - (void)replyClicked:(SHGBusinessCommentObject *)obj commentIndex:(NSInteger)index
 {
-    [[SHGGloble sharedGloble] requestUserVerifyStatusCompletion:^(BOOL state) {
+    [[SHGGloble sharedGloble] requestUserVerifyStatusCompletion:^(BOOL state,NSString *auditState) {
         if (state) {
             self.popupView = [[BRCommentView alloc] initWithFrame:self.view.bounds superFrame:CGRectZero isController:YES type:@"reply" name:obj.commentUserName];
             self.popupView.delegate = self;
@@ -1214,7 +1214,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
 - (IBAction)phoneNumClick:(UIButton *)sender
 {
    
-    [[SHGGloble sharedGloble] requestUserVerifyStatusCompletion:^(BOOL state) {
+    [[SHGGloble sharedGloble] requestUserVerifyStatusCompletion:^(BOOL state,NSString *auditState) {
         if (state) {
             __weak typeof(self) weakSelf = self;
             [weakSelf makePhoneNum];
@@ -1222,42 +1222,42 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
             if (self.mobileArray.count == 0 ) {
                 leftTitle = nil;
             }
-            
-            [SHGBusinessManager getBusinessContactAuth:weakSelf.responseObject success:^(SHGBusinessContactAuthObject *contactAuthObject) {
-                weakSelf.contactAuthObject = contactAuthObject;
-                NSMutableAttributedString *textString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"打电话或发短信将消耗1次联系\n对方的机会，当前剩余%@次",weakSelf.contactAuthObject.userContactLimit] attributes:@{NSFontAttributeName:FontFactor(15.0f),NSForegroundColorAttributeName:Color(@"8d8d8d")}];
-                [textString addAttribute:NSForegroundColorAttributeName value:Color(@"f95c53") range:NSMakeRange(25, weakSelf.contactAuthObject.userContactLimit.length)];
-                if (weakSelf.contactAuthObject.contactShow ) {
-                    if (weakSelf.contactAuthObject.tipFlag ) {
-                        [weakSelf showContactAlertView:leftTitle text:textString];
-                    } else{
-                        [weakSelf showContactAlertView:leftTitle text:nil];
-                    }
-                } else{
-                    if ([weakSelf.contactAuthObject.businessContactLimit integerValue] > 0){
-                        if ([weakSelf.contactAuthObject.userContactLimit integerValue] > 0) {
+            if (self.mobileArray.count > 0 || self.phoneArray.count > 0) {
+                [SHGBusinessManager getBusinessContactAuth:weakSelf.responseObject success:^(SHGBusinessContactAuthObject *contactAuthObject) {
+                    weakSelf.contactAuthObject = contactAuthObject;
+                    NSMutableAttributedString *textString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"打电话或发短信将消耗1次联系\n对方的机会，当前剩余%@次",weakSelf.contactAuthObject.userContactLimit] attributes:@{NSFontAttributeName:FontFactor(15.0f),NSForegroundColorAttributeName:Color(@"8d8d8d")}];
+                    [textString addAttribute:NSForegroundColorAttributeName value:Color(@"f95c53") range:NSMakeRange(25, weakSelf.contactAuthObject.userContactLimit.length)];
+                    if (weakSelf.contactAuthObject.contactShow ) {
+                        if (weakSelf.contactAuthObject.tipFlag ) {
                             [weakSelf showContactAlertView:leftTitle text:textString];
                         } else{
-                            if (!weakSelf.contactAuthObject.businessLicenceFlag ) {
-                                if ([weakSelf.contactAuthObject.firstAuditValue integerValue] < 0) {
-                                    [weakSelf showAlertView:[NSString stringWithFormat:@"您今日查看联系方式次数已用完，\n认证营业执照后每日可查看%@条\n联系方式~",weakSelf.contactAuthObject.secondAudit] leftTitle:@"我知道了" rightTitle:@"现在认证"];
-                                } else{
-                                    [Hud showMessageWithText:@"营业执照认证中，通过认证后方可\n查看更多联系方式"];
-                                }
-                                
-                            } else{
-                                [weakSelf showAlertView:@"您今日的查看次数已用完~" leftTitle:nil rightTitle:@"确定"];
-                            }
+                            [weakSelf showContactAlertView:leftTitle text:nil];
                         }
-                        
                     } else{
-                        [weakSelf showAlertView:@"该业务联系次数今日已达上限，\n明天早点哦~" leftTitle:nil rightTitle:@"确定"];
+                        if ([weakSelf.contactAuthObject.businessContactLimit integerValue] > 0){
+                            if ([weakSelf.contactAuthObject.userContactLimit integerValue] > 0) {
+                                [weakSelf showContactAlertView:leftTitle text:textString];
+                            } else{
+                                if (!weakSelf.contactAuthObject.businessLicenceFlag ) {
+                                    if ([weakSelf.contactAuthObject.firstAuditValue integerValue] < 0) {
+                                        [weakSelf showAlertView:[NSString stringWithFormat:@"您今日查看联系方式次数已用完，\n认证营业执照后每日可查看%@条\n联系方式~",weakSelf.contactAuthObject.secondAudit] leftTitle:@"我知道了" rightTitle:@"现在认证"];
+                                    } else{
+                                        [Hud showMessageWithText:@"营业执照认证中，通过认证后方可\n查看更多联系方式"];
+                                    }
+                                    
+                                } else{
+                                    [weakSelf showAlertView:@"您今日的查看次数已用完~" leftTitle:nil rightTitle:@"确定"];
+                                }
+                            }
+                            
+                        } else{
+                            [weakSelf showAlertView:@"该业务联系次数今日已达上限，\n明天早点哦~" leftTitle:nil rightTitle:@"确定"];
+                        }
                     }
-                }
-                
-            }];
-            
-            
+                    
+                }];
+
+            }
             
         } else{
             SHGAuthenticationViewController *controller = [[SHGAuthenticationViewController alloc] init];

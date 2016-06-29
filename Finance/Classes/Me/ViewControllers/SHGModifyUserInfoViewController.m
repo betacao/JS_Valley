@@ -57,7 +57,7 @@
 {
     [super viewDidLoad];
     self.title = @"个人信息";
-
+    self.authView.hidden = YES;
     self.nickName = [self.userInfo objectForKey:kNickName];
     self.department = [self.userInfo objectForKey:kDepartment];
     self.company = [self.userInfo objectForKey:kCompany];
@@ -72,9 +72,22 @@
     [self addSdLayout];
     //请求状态
     __weak typeof(self)weakSelf = self;
-    [[SHGGloble sharedGloble] requestUserVerifyStatusCompletion:^(BOOL state) {
+    [[SHGGloble sharedGloble] requestUserVerifyStatusCompletion:^(BOOL state,NSString *auditState) {
         if (state) {
-            [weakSelf.authView removeFromSuperview];
+            if ([auditState isEqualToString:@"1"]){
+                [weakSelf.authView removeFromSuperview];
+                self.nextButton.alpha = 0.0f;
+            } else{
+                [weakSelf.authView removeFromSuperview];
+            }
+
+        } else {
+            self.authView.hidden = NO;
+            if ([auditState isEqualToString:@"1"]) {
+                [self.authButton setTitle:@"审核中" forState:UIControlStateNormal];
+                self.authButton.enabled = NO;
+                self.authTipView.image = [UIImage imageNamed:@"messageIsChecked"];
+            }
         }
     } showAlert:NO leftBlock:nil failString:nil];
 }
@@ -282,6 +295,7 @@
 - (void)authButtonClicked:(UIButton *)button
 {
     SHGAuthenticationViewController *controller = [[SHGAuthenticationViewController alloc] init];
+    controller.authStatu = YES;
     [self.navigationController pushViewController:controller animated:YES];
 }
 

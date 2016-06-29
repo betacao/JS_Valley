@@ -610,7 +610,7 @@
 
 - (IBAction)actionComment:(id)sender
 {
-    [[SHGGloble sharedGloble] requestUserVerifyStatusCompletion:^(BOOL state) {
+    [[SHGGloble sharedGloble] requestUserVerifyStatusCompletion:^(BOOL state,NSString *auditState) {
         if (state) {
             _popupView = [[BRCommentView alloc] initWithFrame:self.view.bounds superFrame:CGRectZero isController:YES type:@"comment"];
             _popupView.delegate = self;
@@ -716,7 +716,7 @@
 
 - (void)replyClicked:(CircleListObj *)obj commentIndex:(NSInteger)index;
 {
-    [[SHGGloble sharedGloble] requestUserVerifyStatusCompletion:^(BOOL state) {
+    [[SHGGloble sharedGloble] requestUserVerifyStatusCompletion:^(BOOL state,NSString *auditState) {
         if (state) {
             commentOBj *cmbObj = obj.comments[index];
             _popupView = [[BRCommentView alloc] initWithFrame:self.view.bounds superFrame:CGRectZero isController:YES type:@"reply" name:cmbObj.cnickname];
@@ -927,7 +927,7 @@
 
 -(void)circleShareWithObj:(CircleListObj *)obj
 {
-    [[SHGGloble sharedGloble] requestUserVerifyStatusCompletion:^(BOOL state) {
+    [[SHGGloble sharedGloble] requestUserVerifyStatusCompletion:^(BOOL state,NSString *auditState) {
         if (state) {
             NSString *url = [NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttpCircle,@"circle",obj.rid];
             NSDictionary *param = @{@"uid":[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID]};

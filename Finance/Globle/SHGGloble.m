@@ -408,24 +408,25 @@
 }
 
 
-- (void)requestUserVerifyStatusCompletion:(void (^)(BOOL))completionblock showAlert:(BOOL)showAlert leftBlock:(void(^)())leftblock failString:(NSString *)string
+- (void)requestUserVerifyStatusCompletion:(void (^)(BOOL, NSString *))completionblock showAlert:(BOOL)showAlert leftBlock:(void(^)())leftblock failString:(NSString *)string
 {
     NSString *request = [rBaseAddressForHttp stringByAppendingString:@"/auth/isAuth"];
     [MOCHTTPRequestOperationManager postWithURL:request parameters:@{@"uid":UID} success:^(MOCHTTPResponse *response) {
         //未认证
+        NSString *auditState = [response.dataDictionary objectForKey:@"auditstate"];
         if ([[response.dataDictionary objectForKey:@"status"] isEqualToString:@"0"]) {
             if (showAlert) {
                 SHGAlertView *alert = [[SHGAlertView alloc] initWithTitle:@"提示" contentText:string leftButtonTitle:@"取消" rightButtonTitle:@"去认证"];
                 alert.leftBlock = leftblock;
                 alert.rightBlock = ^{
-                    completionblock(NO);
+                    completionblock(NO,auditState);
                 };
                 [alert show];
             } else {
-                completionblock(NO);
+                completionblock(NO,auditState);
             }
         } else {
-            completionblock(YES);
+            completionblock(YES,auditState);
         }
     } failed:^(MOCHTTPResponse *response) {
         [Hud showMessageWithText:@"获取用户认证状态失败"];
