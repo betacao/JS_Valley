@@ -9,7 +9,7 @@
 #import "BaseViewController.h"
 
 @interface SHGAuthenticationViewController : BaseViewController
-@property (assign, nonatomic) BOOL authStatu;
+@property (assign, nonatomic) BOOL authState;
 @end
 
 

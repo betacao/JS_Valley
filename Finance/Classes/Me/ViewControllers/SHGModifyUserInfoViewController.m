@@ -76,17 +76,17 @@
         if (state) {
             if ([auditState isEqualToString:@"1"]){
                 [weakSelf.authView removeFromSuperview];
-                self.nextButton.alpha = 0.0f;
+                weakSelf.nextButton.alpha = 0.0f;
             } else{
                 [weakSelf.authView removeFromSuperview];
             }
-
+            
         } else {
-            self.authView.hidden = NO;
+            weakSelf.authView.hidden = NO;
             if ([auditState isEqualToString:@"1"]) {
-                [self.authButton setTitle:@"审核中" forState:UIControlStateNormal];
-                self.authButton.enabled = NO;
-                self.authTipView.image = [UIImage imageNamed:@"messageIsChecked"];
+                [weakSelf.authButton setTitle:@"审核中" forState:UIControlStateNormal];
+                weakSelf.authButton.enabled = NO;
+                weakSelf.authTipView.image = [UIImage imageNamed:@"messageIsChecked"];
             }
         }
     } showAlert:NO leftBlock:nil failString:nil];
@@ -295,7 +295,7 @@
 - (void)authButtonClicked:(UIButton *)button
 {
     SHGAuthenticationViewController *controller = [[SHGAuthenticationViewController alloc] init];
-    controller.authStatu = YES;
+    controller.authState = YES;
     [self.navigationController pushViewController:controller animated:YES];
 }
 

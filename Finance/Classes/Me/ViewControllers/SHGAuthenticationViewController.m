@@ -254,7 +254,7 @@
     }else if ([self.state isEqualToString:@"2"]){
         self.stateLabel.text = @"已认证";
         self.stateLabel.textColor = [UIColor colorWithHexString:@"3588c8"];
-        if (self.authStatu) {
+        if (self.authState) {
             self.authScrollView.alpha = 1.0f;
             [self.submitButton setTitle:@"下一步" forState:UIControlStateNormal];
         } else{
