@@ -58,13 +58,13 @@
     self.title = @"身份认证";
     [self initView];
     [self addAutoLayout];
-    self.authScrollView.alpha = 0.0f;
     [self loadUserState];
 }
 
 - (void)initView
 {
     //
+
     self.view.backgroundColor = Color(@"f7f8f9");
     self.topView.backgroundColor = [UIColor whiteColor];
     self.stateNameLabel.font = self.stateLabel.font = FontFactor(16.0f);
@@ -94,6 +94,8 @@
     [self.authScrollView addSubview:self.warningView];
 
     self.authScrollView.backgroundColor = Color(@"f7f8f9");
+    self.authScrollView.alpha = 0.0f;
+
     self.departmentField.textColor = self.locationField.textColor = Color(@"161616");
     self.departmentField.font = self.locationField.font = FontFactor(15.0f);
     self.departmentField.layer.borderColor = self.locationField.layer.borderColor = Color(@"cdcdcd").CGColor;
@@ -235,18 +237,12 @@
 
 - (void)resetView
 {
-    
-    if ([self.state isEqualToString:@"4"] || [self.state isEqualToString:@"2"]) {
-        self.authScrollView.alpha = 1.0f;
-    } else{
-        self.authScrollView.alpha = 0.0f;
-    }
-
     self.authTipLabel.hidden = YES;
     if ([self.state isEqualToString:@"0"]) {
         self.stateLabel.text = @"未认证";
         self.stateLabel.textColor = [UIColor colorWithHexString:@"f04241"];
         [self.submitButton setTitle:@"下一步" forState:UIControlStateNormal];
+        self.authScrollView.alpha = 1.0f;
     }else if ([self.state isEqualToString:@"1"]){
         self.stateLabel.text = @"审核中";
         self.stateLabel.textColor = [UIColor colorWithHexString:@"f04241"];
@@ -270,6 +266,7 @@
         [reason addAttributes:@{NSForegroundColorAttributeName:Color(@"dc4437")} range:[string rangeOfString:@"驳回原因："]];
         self.authTipLabel.attributedText = reason;
     } else if ([self.state isEqualToString:@"4"]){
+        self.authScrollView.alpha = 1.0f;
         [self.submitButton setTitle:@"下一步" forState:UIControlStateNormal];
     }
     [self.stateLabel updateLayout];

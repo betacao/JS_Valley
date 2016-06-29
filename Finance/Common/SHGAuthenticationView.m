@@ -47,6 +47,8 @@
     [self.QButton setImage:[UIImage imageNamed:@"enterprise_gray"] forState:UIControlStateNormal];
     [self.QButton addTarget:self action:@selector(QButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
 
+    self.VButton.hidden = self.QButton.hidden = YES;
+    
     [self sd_addSubviews:@[self.VButton, self.QButton]];
 }
 
@@ -69,6 +71,7 @@
 
 - (void)updateWithVStatus:(BOOL)vStatus enterpriseStatus:(BOOL)enterpriseStatus
 {
+    self.VButton.hidden = self.QButton.hidden = NO;
     self.vStatus = vStatus;
     self.enterpriseStatus = enterpriseStatus;
 

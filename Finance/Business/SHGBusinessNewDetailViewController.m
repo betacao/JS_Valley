@@ -140,8 +140,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
         _titleLabel = [[UILabel alloc] init];
         _titleLabel.font = FontFactor(kNavBarTitleFontSize);
         _titleLabel.text = @"业务详情";
-        _titleLabel.alpha = 0.0f;
-        _titleLabel.textColor = [UIColor clearColor];
+        _titleLabel.textColor = [UIColor whiteColor];
         [_titleLabel sizeToFit];
     }
     return _titleLabel;
@@ -498,8 +497,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
 {
     self.businessRepresentLabel.text = @"业务描述";
     [self.headerView sd_addSubviews:@[self.redView,self.moneyAndUserView,self.businessMessageView,self.BPView,self.companyView,self.representView]];
-    self.navigationItem.titleView = self.titleLabel;
-    self.navigationItem.titleView.alpha = 0.0f;
+
     [self.userButton setEnlargeEdgeWithTop:10.0f right:0.0f bottom:10.0f left:150.0f];
     UITapGestureRecognizer *tableHeaderViewRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapTableHeaderView:)];
     [self.headerView addGestureRecognizer:tableHeaderViewRecognizer];
@@ -945,17 +943,21 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
 {
     [self.companyTextView resignFirstResponder];
     [self.contentTextView resignFirstResponder];
-    self.titleLabel.textColor = [UIColor whiteColor];
-    if (scrollView.contentOffset.y > CGRectGetHeight(self.redView.frame)){
-        self.titleLabel.alpha = 1.0f;
-        [self.navigationController.navigationBar setShadowImage:nil];
-        [self.navigationController.navigationBar setBackgroundImage:[CommonMethod imageWithColor:Color(@"d43c33")] forBarMetrics:UIBarMetricsDefault];
+    if (!self.navigationItem.titleView) {
+        self.navigationItem.titleView = self.titleLabel;
     }
-    if (scrollView.contentOffset.y < CGRectGetHeight(self.redView.frame)){
-        self.titleLabel.alpha = scrollView.contentOffset.y  / CGRectGetHeight(self.redView.frame);
-        NSLog(@"alpha%f;%f",self.navigationItem.titleView.alpha,scrollView.contentOffset.y);
-        [self.navigationController.navigationBar setShadowImage:[[UIImage alloc] init]];
-        [self.navigationController.navigationBar setBackgroundImage:[CommonMethod imageWithColor:Color(@"f04f46")] forBarMetrics:UIBarMetricsDefault];
+
+    if (scrollView.contentSize.height > CGRectGetMaxX(self.view.frame) + CGRectGetHeight(self.redView.frame)) {
+        if (scrollView.contentOffset.y > CGRectGetHeight(self.redView.frame)){
+            self.titleLabel.alpha = 1.0f;
+            [self.navigationController.navigationBar setShadowImage:nil];
+            [self.navigationController.navigationBar setBackgroundImage:[CommonMethod imageWithColor:Color(@"d43c33")] forBarMetrics:UIBarMetricsDefault];
+        }
+        if (scrollView.contentOffset.y < CGRectGetHeight(self.redView.frame)){
+            self.titleLabel.alpha = scrollView.contentOffset.y  / CGRectGetHeight(self.redView.frame);
+            [self.navigationController.navigationBar setShadowImage:[[UIImage alloc] init]];
+            [self.navigationController.navigationBar setBackgroundImage:[CommonMethod imageWithColor:Color(@"f04f46")] forBarMetrics:UIBarMetricsDefault];
+        }
     }
 }
 
