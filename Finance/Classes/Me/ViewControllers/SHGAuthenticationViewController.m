@@ -265,7 +265,13 @@
     }else if ([self.state isEqualToString:@"3"]){
         self.stateLabel.text = @"认证失败";
         self.stateLabel.textColor = [UIColor colorWithHexString:@"f04241"];
-        [self.submitButton setTitle:@"下一步" forState:UIControlStateNormal];
+        if (self.authState) {
+            self.authScrollView.alpha = 1.0f;
+            [self.submitButton setTitle:@"下一步" forState:UIControlStateNormal];
+        } else{
+            self.authScrollView.alpha = 0.0f;
+            [self.submitButton setTitle:@"更新" forState:UIControlStateNormal];
+        }
         self.authTipLabel.hidden = NO;
         self.authTipLabel.textAlignment = NSTextAlignmentLeft;
         NSString *string = [@"驳回原因：\n" stringByAppendingFormat:@"%@", self.rejectReason];
@@ -570,15 +576,6 @@
 - (void)initView
 {
     self.title = @"身份认证";
-    
-    if (!self.licenseUrl) {
-        self.licenseUrl = @"";
-        [self loadUserState];
-    } else{
-        //为了执行下载图片
-        self.licenseUrl = self.licenseUrl;
-    }
-
     __weak typeof(self) weakSelf = self;
     self.warningView = [[SHGAuthenticationWarningView alloc] init];
     self.warningView.text = @"上传营业执照每日可查看10条业务联系方式（选填）";
@@ -630,6 +627,20 @@
     [self.submitButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.submitButton addTarget:self action:@selector(submitButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.submitButton];
+
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    if (!self.licenseUrl) {
+        self.licenseUrl = @"";
+        [self loadUserState];
+    } else{
+        //为了执行下载图片
+        self.licenseUrl = self.licenseUrl;
+    }
 
 }
 

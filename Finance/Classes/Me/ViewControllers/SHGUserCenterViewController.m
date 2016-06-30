@@ -833,10 +833,10 @@
                     [weakSelf.authAlertView show];
                 }
             } else if ([weakSelf.auditState isEqualToString:@"1"]){
+                [weakSelf.authButton setImage:[UIImage imageNamed:@"me_authering"] forState:UIControlStateNormal];
+            } else if ([weakSelf.auditState isEqualToString:@"2"]){
                 [weakSelf.authButton setImage:[UIImage imageNamed:@"me_authed"] forState:UIControlStateNormal];
                 weakSelf.editButton.hidden = NO;
-            } else if ([weakSelf.auditState isEqualToString:@"2"]){
-                [weakSelf.authButton setImage:[UIImage imageNamed:@"me_authering"] forState:UIControlStateNormal];
             } else if ([weakSelf.auditState isEqualToString:@"3"]){
                 [weakSelf.authButton setImage:[UIImage imageNamed:@"me_rejected"] forState:UIControlStateNormal];
             } else{
