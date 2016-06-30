@@ -27,6 +27,7 @@
 #define rBaseAddressForHttpProd         [NSString stringWithFormat:@"%@/v2/prod",rBaseAddRessHttp]
 #define rBaseAddressForHttpUser         [NSString stringWithFormat:@"%@/v2/user",rBaseAddRessHttp]
 #define rBaseAddressForHttpUBpush		[NSString stringWithFormat:@"%@/v2/device/baidupush",rBaseAddRessHttp]
+#define rBaseAddressForHttpBusinessShar @"http://www.daniuq.com/api/v2"
 #define rBaseAddressForHttpShare		[NSString stringWithFormat:@"%@/v2/share/postDetail?rid=",rBaseAddRessHttp]
 #define rBaseAddressForHttpProductShare [NSString stringWithFormat:@"%@/productDetail/productDetail.html?pid=",rBaseAddRessHttp]
 #define SHARE_YAOQING_URL               [NSString stringWithFormat:@"%@/Invitation/invite.html",rBaseAddRessHttp]

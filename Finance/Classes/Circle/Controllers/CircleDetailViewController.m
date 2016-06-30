@@ -262,7 +262,8 @@
     .rightEqualToView(self.btnAttention)
     .topSpaceToView(self.lblContent, MarginFactor(16.0f))
     .heightIs(0.0f);
-    
+
+
     [self.btnShare sizeToFit];
     CGSize shareSize = self.btnShare.frame.size;
     self.btnShare.sd_layout
@@ -548,7 +549,7 @@
 
     self.actionView.sd_resetLayout
     .leftEqualToView(self.imageHeader)
-    .rightSpaceToView(self.viewHeader, MarginFactor(12.0f))
+    .rightEqualToView(self.btnAttention)
     .topSpaceToView(self.photoView, 0.0f)
     .heightIs(MarginFactor(49.0f));
 

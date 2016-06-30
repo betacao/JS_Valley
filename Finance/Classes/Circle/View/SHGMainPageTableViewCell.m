@@ -80,15 +80,15 @@
     [self.attentionButton setEnlargeEdgeWithTop:10.0f right:10.0f bottom:10.0f left:10.0f];
     
     self.praiseButton.titleLabel.font = kMainNameFont;
-    self.praiseButton.titleEdgeInsets = UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, -1.0f);
+    self.praiseButton.titleEdgeInsets = UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, -10.0f);
     [self.praiseButton setTitleColor:kMainActionColor forState:UIControlStateNormal];
 
     self.commentButton.titleLabel.font = kMainNameFont;
-    self.commentButton.titleEdgeInsets = UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, -1.0f);
+    self.commentButton.titleEdgeInsets = UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, -10.0f);
     [self.commentButton setTitleColor:kMainActionColor forState:UIControlStateNormal];
 
     self.shareButton.titleLabel.font = kMainNameFont;
-    self.shareButton.titleEdgeInsets = UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, -1.0f);
+    self.shareButton.titleEdgeInsets = UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, -10.0f);
     [self.shareButton setTitleColor:kMainActionColor forState:UIControlStateNormal];
 
     self.commentView.backgroundColor = kMainCommentBackgroundColor;
@@ -154,25 +154,27 @@
     CGSize size = self.shareButton.currentImage.size;
     self.shareButton.sd_layout
     .rightSpaceToView(self.actionView, MarginFactor(12.0f))
-    .topSpaceToView(self.actionView, kMainActionTopMargin)
+    .centerYEqualToView(self.actionView)
     .widthIs(size.width)
     .heightIs(size.height);
 
     size = self.commentButton.currentImage.size;
     self.commentButton.sd_layout
+    .rightSpaceToView(self.shareButton, MarginFactor(24.0f))
     .centerYEqualToView(self.shareButton)
     .widthIs(size.width)
     .heightIs(size.height);
 
     size = self.praiseButton.currentImage.size;
     self.praiseButton.sd_layout
+    .rightSpaceToView(self.commentButton, MarginFactor(24.0f))
     .centerYEqualToView(self.shareButton)
     .widthIs(size.width)
     .heightIs(size.height);
 
     size = self.deleteButton.currentImage.size;
     self.deleteButton.sd_layout
-    .rightSpaceToView(self.praiseButton, kMainActionTopMargin)
+    .rightSpaceToView(self.praiseButton, MarginFactor(24.0f))
     .centerYEqualToView(self.shareButton)
     .widthIs(size.width)
     .heightIs(size.height);
