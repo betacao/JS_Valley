@@ -56,14 +56,14 @@
     self.VButton.sd_layout
     .leftSpaceToView(self, MarginFactor(5.0f))
     .bottomSpaceToView(self, 0.0f)
-    .widthIs(self.VButton.image.size.width)
-    .heightIs(self.VButton.image.size.height);
+    .widthIs(MarginFactor(self.VButton.image.size.width))
+    .heightIs(MarginFactor(self.VButton.image.size.height));
 
     self.QButton.sd_layout
     .leftSpaceToView(self.VButton, MarginFactor(5.0f))
     .bottomSpaceToView(self, 0.0f)
-    .widthIs(self.QButton.image.size.width)
-    .heightIs(self.QButton.image.size.height);
+    .widthIs(MarginFactor(self.QButton.image.size.width))
+    .heightIs(MarginFactor(self.QButton.image.size.height));
 
     [self setupAutoWidthWithRightView:self.QButton rightMargin:MarginFactor(5.0f)];
 }
@@ -95,14 +95,14 @@
             self.QButton.sd_resetLayout
             .leftSpaceToView(self.VButton, MarginFactor(5.0f))
             .bottomSpaceToView(self, 0.0f)
-            .widthIs(self.QButton.image.size.width)
-            .heightIs(self.QButton.image.size.height);
+            .widthIs(MarginFactor(self.QButton.image.size.width))
+            .heightIs(MarginFactor(self.QButton.image.size.height));
         } else{
             self.QButton.sd_resetLayout
             .leftSpaceToView(self, MarginFactor(5.0f))
             .bottomSpaceToView(self, 0.0f)
-            .widthIs(self.QButton.image.size.width)
-            .heightIs(self.QButton.image.size.height);
+            .widthIs(MarginFactor(self.QButton.image.size.width))
+            .heightIs(MarginFactor(self.QButton.image.size.height));
         }
         [self setupAutoWidthWithRightView:enterpriseStatus ? self.QButton : self.VButton rightMargin:(enterpriseStatus | self.vStatus) ? MarginFactor(5.0f) : -self.VButton.image.size.width];
     }
