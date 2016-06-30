@@ -246,7 +246,7 @@
     self.btnAttention.sd_layout
     .rightSpaceToView(self.personView, MarginFactor(12.0f))
     .centerYEqualToView(self.imageHeader)
-    .widthIs(attentionSize.width)
+    .widthIs(attentionSize.width )
     .heightIs(attentionSize.height);
 
     self.lblContent.sd_layout
@@ -269,7 +269,7 @@
     self.btnShare.sd_layout
     .rightSpaceToView(self.actionView, kMainActionTopMargin)
     .centerYEqualToView(self.actionView)
-    .widthIs(shareSize.width)
+    .widthIs(shareSize.width + MarginFactor(10.0f))
     .heightIs(shareSize.height);
 
     [self.btnComment sizeToFit];
@@ -277,7 +277,7 @@
     self.btnComment.sd_layout
     .rightSpaceToView(self.btnShare, kMainActionTopMargin * 1.5f)
     .centerYEqualToView(self.btnShare)
-    .widthIs(commentSize.width)
+    .widthIs(commentSize.width + MarginFactor(10.0f))
     .heightIs(commentSize.height);
 
     [self.btnPraise sizeToFit];
@@ -285,7 +285,7 @@
     self.btnPraise.sd_layout
     .rightSpaceToView(self.btnComment, kMainActionTopMargin * 1.5f)
     .centerYEqualToView(self.btnShare)
-    .widthIs(praiseSize.width)
+    .widthIs(praiseSize.width + MarginFactor(10.0f))
     .heightIs(praiseSize.height);
 
     [self.btnCollet sizeToFit];
