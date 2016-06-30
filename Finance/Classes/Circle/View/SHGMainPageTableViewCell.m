@@ -407,7 +407,7 @@
     [self.commentButton sizeToFit];
     [self.shareButton setTitle:object.sharenum forState:UIControlStateNormal];
     [self.shareButton sizeToFit];
- 
+
     self.actionView.sd_resetLayout
     .leftEqualToView(self.headerView)
     .rightEqualToView(self.attentionButton)
