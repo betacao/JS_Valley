@@ -49,6 +49,7 @@
 #define rBaseAddressForHttpUBpush		[NSString stringWithFormat:@"%@/v2/device/baidupush",rBaseAddRessHttp]
 
 //微信分享单独拿出来
+#define rBaseAddressForHttpBusinessShar @"http://www.daniuq.com/api/v2"
 #define rBaseAddressForHttpShare		@"http://www.daniuq.com/api/v2/share/postDetail?rid="
 
 #define rBaseAddressForHttpProductShare [NSString stringWithFormat:@"%@/productDetail/productDetail.html?pid=",rBaseAddRessHttp]

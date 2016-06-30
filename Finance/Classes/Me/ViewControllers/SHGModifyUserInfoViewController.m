@@ -58,6 +58,7 @@
     [super viewDidLoad];
     self.title = @"个人信息";
     self.authView.hidden = YES;
+    self.bgScrollView.hidden = YES;
     self.nickName = [self.userInfo objectForKey:kNickName];
     self.department = [self.userInfo objectForKey:kDepartment];
     self.company = [self.userInfo objectForKey:kCompany];
@@ -74,6 +75,7 @@
     __weak typeof(self)weakSelf = self;
     [[SHGGloble sharedGloble] requestUserVerifyStatusCompletion:^(BOOL state,NSString *auditState) {
         if (state) {
+            self.bgScrollView.hidden = NO;
             if ([auditState isEqualToString:@"1"]){
                 [weakSelf.authView removeFromSuperview];
                 weakSelf.nextButton.alpha = 0.0f;

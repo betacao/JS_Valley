@@ -116,6 +116,7 @@
     self.nameLabel.sd_layout
     .topEqualToView(self.headerView)
     .leftSpaceToView(self.headerView, kMainNameToHeaderViewLeftMargin)
+    .offset(-1.0f)
     .autoHeightRatio(0.0f);
     [self.nameLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
 
@@ -126,7 +127,7 @@
 
     self.timeLabel.sd_layout
     .bottomEqualToView(self.headerView)
-    .leftSpaceToView(self.authenticationView, MarginFactor(7.0f))
+    .leftSpaceToView(self.authenticationView, MarginFactor(2.0f))
     .autoHeightRatio(0.0f);
     [self.timeLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
 
@@ -152,21 +153,19 @@
     //actionView
     CGSize size = self.shareButton.currentImage.size;
     self.shareButton.sd_layout
-    .rightSpaceToView(self.actionView, 0.0f)
+    .rightSpaceToView(self.actionView, MarginFactor(12.0f))
     .topSpaceToView(self.actionView, kMainActionTopMargin)
     .widthIs(size.width)
     .heightIs(size.height);
 
     size = self.commentButton.currentImage.size;
     self.commentButton.sd_layout
-    .rightSpaceToView(self.shareButton, kMainActionTopMargin)
     .centerYEqualToView(self.shareButton)
     .widthIs(size.width)
     .heightIs(size.height);
 
     size = self.praiseButton.currentImage.size;
     self.praiseButton.sd_layout
-    .rightSpaceToView(self.commentButton, kMainActionTopMargin)
     .centerYEqualToView(self.shareButton)
     .widthIs(size.width)
     .heightIs(size.height);
@@ -398,13 +397,13 @@
         [self.praiseButton setImage:[UIImage imageNamed:@"home_yizan"] forState:UIControlStateNormal];
     }
 
-    [self.praiseButton setTitle:[@" " stringByAppendingString:object.praisenum]forState:UIControlStateNormal];
-    [self.praiseButton sizeToFit];
-    [self.commentButton setTitle:[@" " stringByAppendingString:object.cmmtnum]forState:UIControlStateNormal];
-    [self.commentButton sizeToFit];
-    [self.shareButton setTitle:[@" " stringByAppendingString:object.sharenum] forState:UIControlStateNormal];
-    [self.shareButton sizeToFit];
-
+    [self.praiseButton setTitle:object.praisenum forState:UIControlStateNormal];
+//    [self.praiseButton sizeToFit];
+    [self.commentButton setTitle:object.cmmtnum forState:UIControlStateNormal];
+//    [self.commentButton sizeToFit];
+    [self.shareButton setTitle:object.sharenum forState:UIControlStateNormal];
+//    [self.shareButton sizeToFit];
+ 
     self.actionView.sd_resetLayout
     .leftEqualToView(self.headerView)
     .rightEqualToView(self.attentionButton)

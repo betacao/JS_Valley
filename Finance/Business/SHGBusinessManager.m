@@ -354,7 +354,7 @@
 - (void)shareAction:(SHGBusinessObject *)object baseController:(UIViewController *)controller finishBlock:(void (^)(BOOL))block
 {
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
-    NSString *request = [rBaseAddressForHttp stringByAppendingFormat:@"/business/share/businessDetail?rowId=%@&uid=%@&businessType=%@",object.businessID, uid, object.type];
+    NSString *request = [rBaseAddressForHttpBusinessShar stringByAppendingFormat:@"/business/share/businessDetail?rowId=%@&uid=%@&businessType=%@",object.businessID, uid, object.type];
     UIImage *png = [UIImage imageNamed:@"80.png"];
     id<ISSCAttachment> image  = [ShareSDK pngImageWithImage:png];
     NSString *theme = object.businessTitle;

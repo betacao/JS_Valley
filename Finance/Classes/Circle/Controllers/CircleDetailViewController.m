@@ -214,6 +214,7 @@
     self.nickName.sd_layout
     .topEqualToView(self.imageHeader)
     .leftSpaceToView(self.imageHeader, MarginFactor(12.0f))
+    .offset(-1.0f)
     .autoHeightRatio(0.0f);
     [self.nickName setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
 
@@ -235,7 +236,7 @@
     .heightIs(MarginFactor(13.0f));
 
     self.lblTime.sd_layout
-    .leftSpaceToView(self.authenticationView, 0.0f)
+    .leftSpaceToView(self.authenticationView, MarginFactor(2.0f))
     .bottomEqualToView(self.imageHeader)
     .autoHeightRatio(0.0f);
     [self.lblTime setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
@@ -261,12 +262,11 @@
     .rightEqualToView(self.btnAttention)
     .topSpaceToView(self.lblContent, MarginFactor(16.0f))
     .heightIs(0.0f);
-
-
+    
     [self.btnShare sizeToFit];
     CGSize shareSize = self.btnShare.frame.size;
     self.btnShare.sd_layout
-    .rightSpaceToView(self.actionView, 0.0f)
+    .rightSpaceToView(self.actionView, MarginFactor(12.0f))
     .centerYEqualToView(self.actionView)
     .widthIs(shareSize.width)
     .heightIs(shareSize.height);
@@ -548,7 +548,7 @@
 
     self.actionView.sd_resetLayout
     .leftEqualToView(self.imageHeader)
-    .rightEqualToView(self.btnAttention)
+    .rightSpaceToView(self.viewHeader, MarginFactor(12.0f))
     .topSpaceToView(self.photoView, 0.0f)
     .heightIs(MarginFactor(49.0f));
 

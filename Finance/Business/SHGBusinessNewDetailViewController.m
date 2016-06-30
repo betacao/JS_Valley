@@ -1288,7 +1288,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
     __weak typeof(self) weakSelf = self;
     contactAlert.leftBlock = ^{
         [SHGBusinessManager getBusinessCheckedNum:weakSelf.responseObject success:^(NSString *num) {
-            if (num > 0) {
+            if ([num integerValue]> 0) {
                 [weakSelf sendMessage];
             } else{
                 [weakSelf showAlertView:@"该业务联系次数今日已达上限，\n明天早点哦~" leftTitle:nil rightTitle:@"确定"];
@@ -1298,7 +1298,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
     };
     contactAlert.rightBlock = ^{
         [SHGBusinessManager getBusinessCheckedNum:weakSelf.responseObject success:^(NSString *num) {
-            if (num > 0) {
+            if ([num integerValue] > 0) {
                 [weakSelf callPhone];
             } else{
                 [weakSelf showAlertView:@"该业务联系次数今日已达上限，\n明天早点哦~" leftTitle:nil rightTitle:@"确定"];
