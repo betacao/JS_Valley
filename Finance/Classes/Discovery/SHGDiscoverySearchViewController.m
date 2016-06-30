@@ -36,6 +36,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    //刷新关注按钮用到的
     if (self.dataArr.count > 0) {
         [self.tableView reloadData];
     }
@@ -63,12 +64,16 @@
 
 - (void)initView
 {
+    __weak typeof(self) weakSelf = self;
     [self.view addSubview:self.searchBar];
     [self addHeaderRefresh:self.tableView headerRefesh:NO andFooter:YES];
     self.tableView.mj_footer.automaticallyHidden = YES;
     self.tableView.tableFooterView = [[UIView alloc] init];
     self.middleImageView.image = [UIImage imageNamed:@"discovery_search"];
     self.searchText = @"";
+    self.tableHeaderView.didFinishAutoLayoutBlock = ^(CGRect rect){
+        [weakSelf.tableView reloadData];
+    };
     [SHGGlobleOperation registerAttationClass:[self class] method:@selector(loadAttationState:attationState:)];
 }
 
