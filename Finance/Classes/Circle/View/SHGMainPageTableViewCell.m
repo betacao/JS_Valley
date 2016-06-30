@@ -120,7 +120,7 @@
     [self.nameLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
 
     self.authenticationView.sd_layout
-    .leftSpaceToView(self.headerView, MarginFactor(7.0f))
+    .leftSpaceToView(self.headerView, MarginFactor(8.0f))
     .bottomEqualToView(self.headerView)
     .heightIs(MarginFactor(13.0f));
 

@@ -230,7 +230,7 @@
     [self.lbldepartName setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
 
     self.authenticationView.sd_layout
-    .leftSpaceToView(self.imageHeader, MarginFactor(7.0f))
+    .leftSpaceToView(self.imageHeader, MarginFactor(8.0f))
     .bottomEqualToView(self.imageHeader)
     .heightIs(MarginFactor(13.0f));
 
