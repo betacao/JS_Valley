@@ -126,15 +126,15 @@
     self.lblTime.textColor = kMainTimeColor;
 
     [self.btnComment setTitleColor:kMainActionColor forState:UIControlStateNormal];
-    self.btnComment.titleEdgeInsets = UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, -10.0f);
+    self.btnComment.titleEdgeInsets = UIEdgeInsetsMake(0.0f, 0.0f, 0.0f,  -kMainActionTopMargin);
     self.btnComment.titleLabel.font = kMainActionFont;
 
     [self.btnShare setTitleColor:kMainActionColor forState:UIControlStateNormal];
-    self.btnShare.titleEdgeInsets = UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, -10.0f);
+    self.btnShare.titleEdgeInsets = UIEdgeInsetsMake(0.0f, 0.0f, 0.0f,  -kMainActionTopMargin);
     self.btnShare.titleLabel.font = kMainActionFont;
 
     [self.btnPraise setTitleColor:kMainActionColor forState:UIControlStateNormal];
-    self.btnPraise.titleEdgeInsets = UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, -10.0f);
+    self.btnPraise.titleEdgeInsets = UIEdgeInsetsMake(0.0f, 0.0f, 0.0f,  -kMainActionTopMargin);
     self.btnPraise.titleLabel.font = kMainActionFont;
 
     CTTextStyleModel *model = [[CTTextStyleModel alloc] init];
@@ -267,7 +267,7 @@
     [self.btnShare sizeToFit];
     CGSize shareSize = self.btnShare.frame.size;
     self.btnShare.sd_layout
-    .rightSpaceToView(self.actionView, MarginFactor(12.0f))
+    .rightSpaceToView(self.actionView, kMainActionTopMargin)
     .centerYEqualToView(self.actionView)
     .widthIs(shareSize.width)
     .heightIs(shareSize.height);
@@ -275,7 +275,7 @@
     [self.btnComment sizeToFit];
     CGSize commentSize = self.btnComment.frame.size;
     self.btnComment.sd_layout
-    .rightSpaceToView(self.btnShare, MarginFactor(24.0f))
+    .rightSpaceToView(self.btnShare, kMainActionTopMargin * 1.5f)
     .centerYEqualToView(self.btnShare)
     .widthIs(commentSize.width)
     .heightIs(commentSize.height);
@@ -283,7 +283,7 @@
     [self.btnPraise sizeToFit];
     CGSize praiseSize = self.btnPraise.frame.size;
     self.btnPraise.sd_layout
-    .rightSpaceToView(self.btnComment, MarginFactor(24.0f))
+    .rightSpaceToView(self.btnComment, kMainActionTopMargin * 1.5f)
     .centerYEqualToView(self.btnShare)
     .widthIs(praiseSize.width)
     .heightIs(praiseSize.height);
@@ -291,7 +291,7 @@
     [self.btnCollet sizeToFit];
     CGSize colletSize = self.btnCollet.frame.size;
     self.btnCollet.sd_layout
-    .rightSpaceToView(self.btnPraise, MarginFactor(24.0f))
+    .rightSpaceToView(self.btnPraise, kMainActionTopMargin * 1.5f)
     .centerYEqualToView(self.btnShare)
     .widthIs(colletSize.width)
     .heightIs(colletSize.height);
@@ -299,7 +299,7 @@
     [self.btnDelete sizeToFit];
     CGSize delteSize = self.btnDelete.frame.size;
     self.btnDelete.sd_layout
-    .rightSpaceToView(self.btnCollet, MarginFactor(24.0f))
+    .rightSpaceToView(self.btnCollet, kMainActionTopMargin * 1.5f)
     .centerYEqualToView(self.btnShare)
     .widthIs(delteSize.width)
     .heightIs(delteSize.height);

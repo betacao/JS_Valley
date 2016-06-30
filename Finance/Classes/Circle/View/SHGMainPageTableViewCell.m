@@ -80,15 +80,15 @@
     [self.attentionButton setEnlargeEdgeWithTop:10.0f right:10.0f bottom:10.0f left:10.0f];
     
     self.praiseButton.titleLabel.font = kMainNameFont;
-    self.praiseButton.titleEdgeInsets = UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, -10.0f);
+    self.praiseButton.titleEdgeInsets = UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, -kMainActionTopMargin);
     [self.praiseButton setTitleColor:kMainActionColor forState:UIControlStateNormal];
 
     self.commentButton.titleLabel.font = kMainNameFont;
-    self.commentButton.titleEdgeInsets = UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, -10.0f);
+    self.commentButton.titleEdgeInsets = UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, -kMainActionTopMargin);
     [self.commentButton setTitleColor:kMainActionColor forState:UIControlStateNormal];
 
     self.shareButton.titleLabel.font = kMainNameFont;
-    self.shareButton.titleEdgeInsets = UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, -10.0f);
+    self.shareButton.titleEdgeInsets = UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, -kMainActionTopMargin);
     [self.shareButton setTitleColor:kMainActionColor forState:UIControlStateNormal];
 
     self.commentView.backgroundColor = kMainCommentBackgroundColor;
@@ -153,28 +153,28 @@
     //actionView
     CGSize size = self.shareButton.currentImage.size;
     self.shareButton.sd_layout
-    .rightSpaceToView(self.actionView, MarginFactor(12.0f))
+    .rightSpaceToView(self.actionView, kMainActionTopMargin)
     .centerYEqualToView(self.actionView)
     .widthIs(size.width)
     .heightIs(size.height);
 
     size = self.commentButton.currentImage.size;
     self.commentButton.sd_layout
-    .rightSpaceToView(self.shareButton, MarginFactor(24.0f))
+    .rightSpaceToView(self.shareButton, kMainActionTopMargin * 1.5f)
     .centerYEqualToView(self.shareButton)
     .widthIs(size.width)
     .heightIs(size.height);
 
     size = self.praiseButton.currentImage.size;
     self.praiseButton.sd_layout
-    .rightSpaceToView(self.commentButton, MarginFactor(24.0f))
+    .rightSpaceToView(self.commentButton, kMainActionTopMargin * 1.5f)
     .centerYEqualToView(self.shareButton)
     .widthIs(size.width)
     .heightIs(size.height);
 
     size = self.deleteButton.currentImage.size;
     self.deleteButton.sd_layout
-    .rightSpaceToView(self.praiseButton, MarginFactor(24.0f))
+    .rightSpaceToView(self.praiseButton, kMainActionTopMargin * 1.5f)
     .centerYEqualToView(self.shareButton)
     .widthIs(size.width)
     .heightIs(size.height);
@@ -184,8 +184,6 @@
     .centerYEqualToView(self.shareButton)
     .autoHeightRatio(0.0f);
     [self.relationLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
-
-    [self.actionView setupAutoHeightWithBottomViewsArray:@[self.relationLabel, self.deleteButton, self.praiseButton, self.commentButton, self.shareButton] bottomMargin:kMainActionBottomMargin];
 
     //评论区域
     self.firstCommentLabel.sd_layout
@@ -409,7 +407,8 @@
     self.actionView.sd_resetLayout
     .leftEqualToView(self.headerView)
     .rightEqualToView(self.attentionButton)
-    .topSpaceToView(self.photoView, 0.0f);
+    .topSpaceToView(self.photoView, 0.0f)
+    .heightIs(MarginFactor(49.0f));
 }
 
 - (void)loadCommentView:(CircleListObj *)object
