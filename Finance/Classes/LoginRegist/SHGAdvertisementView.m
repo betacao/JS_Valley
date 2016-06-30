@@ -65,6 +65,8 @@
                 }
             });
         } else{
+            NSString *imageName = [NSString stringWithFormat:@"%ldx%ld",(long)SCREENWIDTH * 2, (long)SCREENHEIGHT * 2];
+            self.imageView.image = [UIImage imageNamed:imageName];
             if (dissmissBlock) {
                 dissmissBlock();
             }
@@ -105,6 +107,9 @@
         }];
         if (dictionary) {
             NSData *data = [NSJSONSerialization dataWithJSONObject:dictionary options:NSJSONWritingPrettyPrinted error:nil];
+            [data writeToFile:kSplashScreenAdCacheLocalPath atomically:YES];
+        } else{
+            NSData *data = [@"" dataUsingEncoding:NSUTF8StringEncoding];
             [data writeToFile:kSplashScreenAdCacheLocalPath atomically:YES];
         }
     } failed:nil];
