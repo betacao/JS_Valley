@@ -150,8 +150,7 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
     self.authenticationView.sd_layout
     .leftSpaceToView(self.departmentLabel, 0.0f)
     .centerYEqualToView(self.departmentLabel)
-    .offset(MarginFactor(1.0f))
-    .heightIs(13.0f);
+    .heightIs(MarginFactor(13.0f));
     
     self.companyLabel.sd_layout
     .leftEqualToView(self.userNameLabel)

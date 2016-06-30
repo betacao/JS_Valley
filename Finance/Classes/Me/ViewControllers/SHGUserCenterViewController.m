@@ -128,8 +128,7 @@
     self.authenticationView.sd_layout
     .leftSpaceToView(self.departmentLabel, 0.0f)
     .centerYEqualToView(self.departmentLabel)
-    .offset(MarginFactor(1.0f))
-    .heightIs(13.0f);
+    .heightIs(MarginFactor(13.0f));
 
     self.authenTipView.sd_layout
     .centerXEqualToView(self.view)

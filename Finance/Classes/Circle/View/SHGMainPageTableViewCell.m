@@ -122,7 +122,7 @@
     self.authenticationView.sd_layout
     .leftSpaceToView(self.headerView, MarginFactor(7.0f))
     .bottomEqualToView(self.headerView)
-    .heightIs(13.0f);
+    .heightIs(MarginFactor(13.0f));
 
     self.timeLabel.sd_layout
     .bottomEqualToView(self.headerView)
