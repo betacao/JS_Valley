@@ -346,7 +346,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
     self.businessMessageBpttomLine.sd_layout
     .leftSpaceToView(self.headerView, 0.0f)
     .rightSpaceToView(self.headerView, 0.0f)
-    .topSpaceToView(self.businessMessageView, MarginFactor(13.0f))
+    .topSpaceToView(self.businessMessageView, MarginFactor(8.0f))
     .heightIs(1 / SCALE);
     
     self.secondGrayView.sd_layout
@@ -720,8 +720,6 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
 - (void)loadBusinessMessageView
 {
     self.businessMessageLabel.text = @"业务信息";
-    NSString *titleStr = @"";
-    NSString *detailceStr = @"";
     NSMutableArray *tempArray = [NSMutableArray arrayWithArray:self.middleContentArray];
     for (NSString *obj in tempArray) {
             if ([obj containsString:@"地区"]) {
@@ -735,8 +733,6 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
     __block NSMutableArray *rightArray = [[NSMutableArray alloc] init];
     [leftArray removeAllObjects];
     [rightArray removeAllObjects];
-    [leftArray addObject:titleStr];
-    [rightArray addObject:detailceStr];
     [self.middleContentArray enumerateObjectsUsingBlock:^(NSString *obj, NSUInteger idx, BOOL * _Nonnull stop) {
         NSArray *array = [obj componentsSeparatedByString:@"："];
         [leftArray addObject:[array firstObject]];
