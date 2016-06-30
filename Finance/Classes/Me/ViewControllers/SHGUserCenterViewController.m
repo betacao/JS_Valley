@@ -126,7 +126,7 @@
 
     //v+企
     self.authenticationView.sd_layout
-    .leftSpaceToView(self.departmentLabel, MarginFactor(-7.0f))
+    .leftSpaceToView(self.departmentLabel, 0.0f)
     .centerYEqualToView(self.departmentLabel)
     .offset(MarginFactor(1.0f))
     .heightIs(13.0f);
@@ -1077,6 +1077,7 @@
     self.labelImageView.sd_layout
     .centerXEqualToView(self.contentView)
     .centerYEqualToView(self.contentView)
+    .offset(3.0f)
     .widthIs(MarginFactor(self.labelImageView.image.size.width))
     .heightIs(MarginFactor(self.labelImageView.image.size.height));
 }

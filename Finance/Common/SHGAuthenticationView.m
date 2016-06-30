@@ -39,10 +39,10 @@
 
 - (void)initView
 {
+//    self.backgroundColor = [UIColor greenColor];
     self.VButton = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"v_gray"]];
 
     self.QButton = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"enterprise_gray"]];
-
     self.VButton.hidden = self.QButton.hidden = YES;
     
     [self sd_addSubviews:@[self.VButton, self.QButton]];
@@ -54,7 +54,7 @@
 - (void)addAutoLayout
 {
     self.VButton.sd_layout
-    .leftSpaceToView(self, MarginFactor(12.0f))
+    .leftSpaceToView(self, MarginFactor(5.0f))
     .bottomSpaceToView(self, 0.0f)
     .widthIs(self.VButton.image.size.width)
     .heightIs(self.VButton.image.size.height);
@@ -65,7 +65,7 @@
     .widthIs(self.QButton.image.size.width)
     .heightIs(self.QButton.image.size.height);
 
-    [self setupAutoWidthWithRightView:self.QButton rightMargin:MarginFactor(12.0f)];
+    [self setupAutoWidthWithRightView:self.QButton rightMargin:MarginFactor(5.0f)];
 }
 
 - (void)updateWithVStatus:(BOOL)vStatus enterpriseStatus:(BOOL)enterpriseStatus
@@ -99,12 +99,12 @@
             .heightIs(self.QButton.image.size.height);
         } else{
             self.QButton.sd_resetLayout
-            .leftSpaceToView(self, MarginFactor(12.0f))
+            .leftSpaceToView(self, MarginFactor(5.0f))
             .bottomSpaceToView(self, 0.0f)
             .widthIs(self.QButton.image.size.width)
             .heightIs(self.QButton.image.size.height);
         }
-        [self setupAutoWidthWithRightView:enterpriseStatus ? self.QButton : self.VButton rightMargin:(enterpriseStatus | self.vStatus) ? MarginFactor(12.0f) : - self.VButton.image.size.width];
+        [self setupAutoWidthWithRightView:enterpriseStatus ? self.QButton : self.VButton rightMargin:(enterpriseStatus | self.vStatus) ? MarginFactor(5.0f) : -self.VButton.image.size.width];
     }
 }
 
@@ -113,15 +113,6 @@
     if (self.block) {
         self.block();
     }
-}
-
-- (void)layoutSubviews
-{
-    [super layoutSubviews];
-    CGRect frame = self.frame;
-    frame.origin.x = floorf(frame.origin.x);
-    frame.origin.y = floorf(frame.origin.y);
-    self.frame = frame;
 }
 
 @end

@@ -342,7 +342,7 @@
 
     self.authenticationView.sd_layout
     .centerYEqualToView(self.firstLabel)
-    .offset(MarginFactor(2.0f))
+    .offset(MarginFactor(1.0f))
     .leftSpaceToView(self.firstLabel, 0.0f)
     .heightIs(13.0f);
 

@@ -401,7 +401,7 @@
     self.label.textAlignment = NSTextAlignmentCenter;
     
     self.leftBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    self.leftBtn.backgroundColor = Color(@"66c1d1");
+    self.leftBtn.backgroundColor = Color(@"90bec6");
     [self.leftBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.leftBtn setTitle:self.leftTitle forState:UIControlStateNormal];
     [self.leftBtn addTarget:self action:@selector(leftBtnClicked:) forControlEvents:UIControlEventTouchUpInside];

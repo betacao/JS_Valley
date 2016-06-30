@@ -52,28 +52,13 @@
 - (void)addAutoLayout
 {
     self.imageButton.sd_layout
-    .topSpaceToView(self.contentView, 0.0f)
-    .leftSpaceToView(self.contentView, 0.0f)
-    .rightSpaceToView(self.contentView, 0.0f)
-    .heightIs(0.0f);
+    .spaceToSuperView(UIEdgeInsetsZero);
 }
 
 - (void)setTipUrl:(NSString *)tipUrl
 {
     _tipUrl = tipUrl;
-    if (CGRectGetHeight(self.imageButton.frame) > 0) {
-        return;
-    }
-    __weak typeof(self)weakSelf = self;
-    [[SDWebImageManager sharedManager] downloadImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage, tipUrl]] options:SDWebImageLowPriority|SDWebImageRetryFailed progress:^(NSInteger receivedSize, NSInteger expectedSize) {
-
-    } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            CGFloat height = ceilf(SCREENWIDTH * image.size.height / image.size.width);
-            weakSelf.imageButton.height = height;
-            [weakSelf.imageButton setBackgroundImage:image forState:UIControlStateNormal];
-        });
-    }];
+    [self.imageButton sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage, tipUrl]] forState:UIControlStateNormal];
 }
 
 

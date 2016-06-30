@@ -120,13 +120,13 @@
     [self.nameLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
 
     self.authenticationView.sd_layout
-    .leftSpaceToView(self.headerView, 0.0f)
+    .leftSpaceToView(self.headerView, MarginFactor(7.0f))
     .bottomEqualToView(self.headerView)
     .heightIs(13.0f);
 
     self.timeLabel.sd_layout
     .bottomEqualToView(self.headerView)
-    .leftSpaceToView(self.authenticationView, 0.0f)
+    .leftSpaceToView(self.authenticationView, MarginFactor(7.0f))
     .autoHeightRatio(0.0f);
     [self.timeLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
 

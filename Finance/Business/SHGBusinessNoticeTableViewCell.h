@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "SHGBusinessObject.h"
 
-#define kImageTableViewCellHeight 206.0f * SCREENWIDTH / 960.0f
+#define kImageTableViewCellHeight ceilf(206.0f * SCREENWIDTH / 960.0f)
 
 @interface SHGBusinessNoticeTableViewCell : UITableViewCell
 
