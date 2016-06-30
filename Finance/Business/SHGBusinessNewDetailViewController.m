@@ -767,7 +767,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
         leftLabel.textColor = Color(@"8d8d8d");
         leftLabel.font = FontFactor(14.0f);
         leftLabel.text = [leftArray objectAtIndex:i];
-        leftLabel.frame = CGRectMake(0.0f, height +  i * topMargin - 1, MarginFactor(100.0f),leftLabel.font.lineHeight);
+        leftLabel.frame = CGRectMake(0.0f, height +  i * topMargin - 1, MarginFactor(120.0f),leftLabel.font.lineHeight);
         [self.businessMessageLabelView addSubview:leftLabel];
         
         height =  height + size.height  ;
