@@ -360,7 +360,6 @@
 @interface SHGBusinessContactAlertView()
 
 @property (strong, nonatomic) UIView *backgroundView;
-@property (strong, nonatomic) UIView *contentView;
 @property (strong, nonatomic) UIImageView *imageView;
 @property (strong, nonatomic) UILabel *label;
 
@@ -386,7 +385,7 @@
 
 - (void)initView
 {
-    self.contentView = [[UIView alloc] init];
+    self.customView = [[UIView alloc] init];
 
     self.backgroundView = [[UIView alloc] init];
     self.backgroundView.backgroundColor = [UIColor whiteColor];
@@ -398,6 +397,7 @@
     self.label = [[UILabel alloc] init];
     self.label.font = FontFactor(15.0f);
     self.label.textColor = Color(@"8d8d8d");
+    self.label.numberOfLines = 0;
     self.label.textAlignment = NSTextAlignmentCenter;
     
     self.leftBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -415,59 +415,35 @@
     self.leftBtn.layer.masksToBounds = self.rightBtn.layer.masksToBounds = YES;
     self.leftBtn.layer.cornerRadius = self.rightBtn.layer.cornerRadius = 3.0f;
     
-    [self addSubview:self.contentView];
+    [self addSubview:self.customView];
     
-    [self.contentView sd_addSubviews:@[self.backgroundView, self.imageView, self.label, self.rightBtn, self.leftBtn]];
+    [self.customView sd_addSubviews:@[self.backgroundView, self.imageView, self.label, self.rightBtn, self.leftBtn]];
 
-    self.customView = self.contentView;
 }
 
 - (void)addAutoLayout
 {
-    self.contentView.sd_layout
+    self.customView.sd_layout
     .widthIs(MarginFactor(290.0f));
 
+    self.backgroundView.sd_layout
+    .spaceToSuperView(UIEdgeInsetsZero);
+
     self.imageView.sd_layout
-    .centerXEqualToView(self.contentView)
-    .topSpaceToView(self.contentView, 0.0f)
+    .centerXEqualToView(self.customView)
+    .topSpaceToView(self.customView, MarginFactor(15.0f))
     .widthIs(self.imageView.image.size.width)
     .heightIs(self.imageView.image.size.height);
 
-    self.backgroundView.sd_layout
-    .leftSpaceToView(self.contentView, 0.0f)
-    .rightSpaceToView(self.contentView, 0.0f)
-    .topSpaceToView(self.contentView, MarginFactor(45.0f))
-    .bottomSpaceToView(self.contentView, 0.0f);
-
     self.label.sd_layout
-    .leftSpaceToView(self.contentView, MarginFactor(27.0f))
-    .rightSpaceToView(self.contentView, MarginFactor(27.0f))
-    .topSpaceToView(self.imageView, MarginFactor(25.0f))
-    .autoHeightRatio(0.0f);
+    .leftSpaceToView(self.customView, MarginFactor(27.0f))
+    .rightSpaceToView(self.customView, MarginFactor(27.0f))
+    .topSpaceToView(self.imageView, 0.0f)
+    .bottomSpaceToView(self.rightBtn, 0.0f);
 
-    if (self.leftTitle) {
-        self.leftBtn.sd_layout
-        .leftEqualToView(self.label)
-        .topSpaceToView(self.imageView, MarginFactor(40.0f))
-        .heightIs(MarginFactor(38.0f))
-        .widthIs(MarginFactor(116.0f));
+    [self.customView setupAutoHeightWithBottomView:self.rightBtn bottomMargin:MarginFactor(15.0f)];
 
-        self.rightBtn.sd_layout
-        .rightEqualToView(self.label)
-        .topEqualToView(self.leftBtn)
-        .widthRatioToView(self.leftBtn, 1.0f)
-        .heightRatioToView(self.leftBtn, 1.0f);
-    } else{
-        self.rightBtn.sd_layout
-        .centerXEqualToView(self.contentView)
-        .topSpaceToView(self.imageView, MarginFactor(40.0f))
-        .widthIs(MarginFactor(227.0f))
-        .heightIs(MarginFactor(38.0f));
-    }
-
-    [self.contentView setupAutoHeightWithBottomView:self.rightBtn bottomMargin:MarginFactor(40.0f)];
-
-    [self setupAutoHeightWithBottomView:self.contentView bottomMargin:0.0f];
+    [self setupAutoHeightWithBottomView:self.customView bottomMargin:0.0f];
 
     [self setNeedsLayout];
     [self layoutIfNeeded];
@@ -476,24 +452,16 @@
 - (void)setText:(NSAttributedString *)text
 {
     _text = text;
-    
     self.label.attributedText = text;
-    
-    if (text == nil) {
-        self.label.sd_layout
-        .leftSpaceToView(self.contentView, MarginFactor(27.0f))
-        .rightSpaceToView(self.contentView, MarginFactor(27.0f))
-        .topSpaceToView(self.imageView, MarginFactor(15.0f))
-        .autoHeightRatio(0.0f);
-    }
+
     if (self.leftTitle) {
-        self.leftBtn.sd_resetNewLayout
+        self.leftBtn.sd_layout
         .leftEqualToView(self.label)
-        .topSpaceToView(self.label, MarginFactor(25.0f))
+        .topSpaceToView(self.imageView, text.length > 0 ? MarginFactor(79.0f) : MarginFactor(26.0f))
         .heightIs(MarginFactor(38.0f))
         .widthIs(MarginFactor(116.0f));
         
-        self.rightBtn.sd_resetNewLayout
+        self.rightBtn.sd_layout
         .rightEqualToView(self.label)
         .topEqualToView(self.leftBtn)
         .widthRatioToView(self.leftBtn, 1.0f)
@@ -501,17 +469,11 @@
     } else{
         
         self.rightBtn.sd_layout
-        .centerXEqualToView(self.contentView)
-        .topSpaceToView(self.label, MarginFactor(25.0f))
+        .centerXEqualToView(self.customView)
+        .topSpaceToView(self.imageView, text.length > 0 ? MarginFactor(79.0f) : MarginFactor(26.0f))
         .widthIs(MarginFactor(227.0f))
         .heightIs(MarginFactor(38.0f));
     }
-    if (text == nil) {
-        [self.contentView setupAutoHeightWithBottomView:self.rightBtn bottomMargin:MarginFactor(40.0f)];
-    } else{
-       [self.contentView setupAutoHeightWithBottomView:self.rightBtn bottomMargin:MarginFactor(25.0f)];
-    }
-    
     
     [self setNeedsLayout];
     [self layoutIfNeeded];
