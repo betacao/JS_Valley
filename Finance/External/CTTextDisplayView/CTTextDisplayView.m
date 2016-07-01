@@ -384,10 +384,6 @@
     
     CGPoint location = [(UITouch *)[touches anyObject] locationInView:self];
     CGPoint runLocation = CGPointMake(location.x, self.frame.size.height - location.y);
-    
-    if (self.keyRectDict.count == 0) {
-        [super touchesBegan:touches withEvent:event];
-    }
 
     [self.keyRectDict enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop){
         
@@ -401,6 +397,10 @@
             }
         }
     }];
+    if (self.currentKeyRectArray.count == 0) {
+        [super touchesBegan:touches withEvent:event];
+    }
+
 }
 
 - (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
