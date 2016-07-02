@@ -26,10 +26,10 @@
 @property (weak, nonatomic) IBOutlet UIView *photoView;
 @property (weak, nonatomic) IBOutlet UIView *actionView;
 @property (weak, nonatomic) IBOutlet UILabel *relationLabel;
-@property (weak, nonatomic) IBOutlet UIButton *deleteButton;
-@property (weak, nonatomic) IBOutlet UIButton *praiseButton;
-@property (weak, nonatomic) IBOutlet UIButton *commentButton;
-@property (weak, nonatomic) IBOutlet UIButton *shareButton;
+@property (weak, nonatomic) IBOutlet SHGHorizontalTitleImageButton *deleteButton;
+@property (weak, nonatomic) IBOutlet SHGHorizontalTitleImageButton *praiseButton;
+@property (weak, nonatomic) IBOutlet SHGHorizontalTitleImageButton *commentButton;
+@property (weak, nonatomic) IBOutlet SHGHorizontalTitleImageButton *shareButton;
 @property (weak, nonatomic) IBOutlet UIView *commentView;
 @property (weak, nonatomic) IBOutlet UIView *lineView;
 @property (weak, nonatomic) IBOutlet UIView *splitView;
@@ -74,21 +74,29 @@
     self.relationLabel.textColor = kMainRelationColor;
     
     [self.deleteButton setEnlargeEdgeWithTop:10.0f right:0.0f bottom:10.0f left:20.0f];
+    [self.deleteButton setImage:[UIImage imageNamed:@"home_delete"] forState:UIControlStateNormal];
+
     [self.praiseButton setEnlargeEdgeWithTop:10.0f right:0.0f bottom:10.0f left:10.0f];
+    [self.praiseButton setImage:[UIImage imageNamed:@"home_weizan"] forState:UIControlStateNormal];
+    self.praiseButton.margin = MarginFactor(6.0f);
+
     [self.commentButton setEnlargeEdgeWithTop:10.0f right:0.0f bottom:10.0f left:10.0f];
+    [self.commentButton setImage:[UIImage imageNamed:@"home_comment"] forState:UIControlStateNormal];
+    self.commentButton.margin = MarginFactor(6.0f);
+
     [self.shareButton setEnlargeEdgeWithTop:10.0f right:0.0f bottom:10.0f left:10.0f];
+    [self.shareButton setImage:[UIImage imageNamed:@"homeShare"] forState:UIControlStateNormal];
+    self.shareButton.margin = MarginFactor(6.0f);
+
     [self.attentionButton setEnlargeEdgeWithTop:10.0f right:10.0f bottom:10.0f left:10.0f];
     
     self.praiseButton.titleLabel.font = kMainNameFont;
-    self.praiseButton.titleEdgeInsets = UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, -kMainActionTopMargin);
     [self.praiseButton setTitleColor:kMainActionColor forState:UIControlStateNormal];
 
     self.commentButton.titleLabel.font = kMainNameFont;
-    self.commentButton.titleEdgeInsets = UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, -kMainActionTopMargin);
     [self.commentButton setTitleColor:kMainActionColor forState:UIControlStateNormal];
 
     self.shareButton.titleLabel.font = kMainNameFont;
-    self.shareButton.titleEdgeInsets = UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, -kMainActionTopMargin);
     [self.shareButton setTitleColor:kMainActionColor forState:UIControlStateNormal];
 
     self.commentView.backgroundColor = kMainCommentBackgroundColor;
@@ -151,37 +159,21 @@
     .heightIs(image.size.height);
 
     //actionView
-    [self.shareButton sizeToFit];
-    CGSize shareButtonSize = self.shareButton.frame.size;
     self.shareButton.sd_layout
-    .rightSpaceToView(self.actionView, kMainActionTopMargin)
-    .centerYEqualToView(self.actionView)
-    .widthIs(shareButtonSize.width + MarginFactor(10.0f))
-    .heightIs(shareButtonSize.height);
+    .rightSpaceToView(self.actionView, 0.0f)
+    .centerYEqualToView(self.actionView);
 
-    [self.commentButton sizeToFit];
-    CGSize commentButtonSize = self.commentButton.frame.size;
     self.commentButton.sd_layout
-    .rightSpaceToView(self.shareButton, MarginFactor(24.0f) )
-    .centerYEqualToView(self.shareButton)
-    .widthIs(commentButtonSize.width + MarginFactor(10.0f))
-    .heightIs(commentButtonSize.height);
+    .rightSpaceToView(self.shareButton, MarginFactor(18.0f))
+    .centerYEqualToView(self.shareButton);
 
-    [self.praiseButton sizeToFit];
-    CGSize praiseButtonSize = self.praiseButton.frame.size;
     self.praiseButton.sd_layout
-    .rightSpaceToView(self.commentButton, kMainActionTopMargin * 1.5f)
-    .centerYEqualToView(self.shareButton)
-    .widthIs(praiseButtonSize.width + MarginFactor(10.0f))
-    .heightIs(praiseButtonSize.height);
+    .rightSpaceToView(self.commentButton, MarginFactor(18.0f))
+    .centerYEqualToView(self.shareButton);
 
-    [self.deleteButton sizeToFit];
-    CGSize deleteButtonSize = self.deleteButton.frame.size;
     self.deleteButton.sd_layout
-    .rightSpaceToView(self.praiseButton, kMainActionTopMargin * 1.5f)
-    .centerYEqualToView(self.shareButton)
-    .widthIs(deleteButtonSize.width)
-    .heightIs(deleteButtonSize.height);
+    .rightSpaceToView(self.praiseButton, MarginFactor(18.0f))
+    .centerYEqualToView(self.shareButton);
 
     self.relationLabel.sd_layout
     .leftSpaceToView(self.actionView, 0.0f)
@@ -402,11 +394,8 @@
     }
 
     [self.praiseButton setTitle:object.praisenum forState:UIControlStateNormal];
-    [self.praiseButton sizeToFit];
     [self.commentButton setTitle:object.cmmtnum forState:UIControlStateNormal];
-    [self.commentButton sizeToFit];
     [self.shareButton setTitle:object.sharenum forState:UIControlStateNormal];
-    [self.shareButton sizeToFit];
 
     self.actionView.sd_resetLayout
     .leftEqualToView(self.headerView)

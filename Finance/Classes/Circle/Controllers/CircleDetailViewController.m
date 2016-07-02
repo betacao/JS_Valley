@@ -31,17 +31,17 @@
     NSString *commentRid;
 
 }
-@property (weak, nonatomic) IBOutlet UIButton *btnDelete;
 @property (weak, nonatomic) IBOutlet UIButton *btnSend;
 @property (weak, nonatomic) IBOutlet UIView *viewInput;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollPraise;
 @property (weak, nonatomic) IBOutlet UILabel *nickName;
-@property (weak, nonatomic) IBOutlet UIButton *btnCollet;
-@property (weak, nonatomic) IBOutlet UIButton *btnComment;
-@property (weak, nonatomic) IBOutlet UIButton *btnPraise;
+@property (weak, nonatomic) IBOutlet SHGHorizontalTitleImageButton *btnCollet;
+@property (weak, nonatomic) IBOutlet SHGHorizontalTitleImageButton *btnComment;
+@property (weak, nonatomic) IBOutlet SHGHorizontalTitleImageButton *btnPraise;
+@property (weak, nonatomic) IBOutlet SHGHorizontalTitleImageButton *btnShare;
+@property (weak, nonatomic) IBOutlet SHGHorizontalTitleImageButton *btnDelete;
 @property (weak, nonatomic) IBOutlet UIView *viewPraise;
 @property (weak, nonatomic) IBOutlet UIButton *praisebtn;
-@property (weak, nonatomic) IBOutlet UIButton *btnShare;
 @property (weak, nonatomic) IBOutlet UITableView *listTable;
 @property (weak, nonatomic) IBOutlet UIView *actionView;
 @property (weak, nonatomic) IBOutlet CTTextDisplayView *lblContent;
@@ -125,17 +125,27 @@
     self.lblTime.font = kMainTimeFont;
     self.lblTime.textColor = kMainTimeColor;
 
+    [self.btnCollet setImage:[UIImage imageNamed:@"homeDetailCollection"] forState:UIControlStateNormal];
+    [self.btnCollet setTitle:@"" forState:UIControlStateNormal];
+
+    [self.btnDelete setImage:[UIImage imageNamed:@"home_delete"] forState:UIControlStateNormal];
+    [self.btnDelete setTitle:@"" forState:UIControlStateNormal];
+
+    [self.btnPraise setTitleColor:kMainActionColor forState:UIControlStateNormal];
+    [self.btnPraise setImage:[UIImage imageNamed:@"home_weizan"] forState:UIControlStateNormal];
+    self.btnPraise.margin = MarginFactor(6.0f);
+    self.btnPraise.titleLabel.font = kMainActionFont;
+
     [self.btnComment setTitleColor:kMainActionColor forState:UIControlStateNormal];
-    self.btnComment.titleEdgeInsets = UIEdgeInsetsMake(0.0f, 0.0f, 0.0f,  -kMainActionTopMargin);
+    [self.btnComment setImage:[UIImage imageNamed:@"home_comment"] forState:UIControlStateNormal];
+    self.btnComment.margin = MarginFactor(6.0f);
     self.btnComment.titleLabel.font = kMainActionFont;
 
     [self.btnShare setTitleColor:kMainActionColor forState:UIControlStateNormal];
-    self.btnShare.titleEdgeInsets = UIEdgeInsetsMake(0.0f, 0.0f, 0.0f,  -kMainActionTopMargin);
+    [self.btnShare setImage:[UIImage imageNamed:@"homeShare"] forState:UIControlStateNormal];
+    self.btnShare.margin = MarginFactor(6.0f);
     self.btnShare.titleLabel.font = kMainActionFont;
 
-    [self.btnPraise setTitleColor:kMainActionColor forState:UIControlStateNormal];
-    self.btnPraise.titleEdgeInsets = UIEdgeInsetsMake(0.0f, 0.0f, 0.0f,  -kMainActionTopMargin);
-    self.btnPraise.titleLabel.font = kMainActionFont;
 
     CTTextStyleModel *model = [[CTTextStyleModel alloc] init];
     model.numberOfLines = -1;
@@ -263,47 +273,25 @@
     .topSpaceToView(self.lblContent, MarginFactor(16.0f))
     .heightIs(0.0f);
 
-
-    [self.btnShare sizeToFit];
-    CGSize shareSize = self.btnShare.frame.size;
     self.btnShare.sd_layout
-    .rightSpaceToView(self.actionView, kMainActionTopMargin)
-    .centerYEqualToView(self.actionView)
-    .widthIs(shareSize.width + MarginFactor(10.0f))
-    .heightIs(shareSize.height);
+    .rightSpaceToView(self.actionView, 0.0f)
+    .centerYEqualToView(self.actionView);
 
-    [self.btnComment sizeToFit];
-    CGSize commentSize = self.btnComment.frame.size;
     self.btnComment.sd_layout
-    .rightSpaceToView(self.btnShare, kMainActionTopMargin * 1.5f)
-    .centerYEqualToView(self.btnShare)
-    .widthIs(commentSize.width + MarginFactor(10.0f))
-    .heightIs(commentSize.height);
+    .rightSpaceToView(self.btnShare, MarginFactor(18.0f))
+    .centerYEqualToView(self.btnShare);
 
-    [self.btnPraise sizeToFit];
-    CGSize praiseSize = self.btnPraise.frame.size;
     self.btnPraise.sd_layout
-    .rightSpaceToView(self.btnComment, kMainActionTopMargin * 1.5f)
-    .centerYEqualToView(self.btnShare)
-    .widthIs(praiseSize.width + MarginFactor(10.0f))
-    .heightIs(praiseSize.height);
+    .rightSpaceToView(self.btnComment, MarginFactor(18.0f))
+    .centerYEqualToView(self.btnShare);
 
-    [self.btnCollet sizeToFit];
-    CGSize colletSize = self.btnCollet.frame.size;
     self.btnCollet.sd_layout
-    .rightSpaceToView(self.btnPraise, kMainActionTopMargin * 1.5f)
-    .centerYEqualToView(self.btnShare)
-    .widthIs(colletSize.width)
-    .heightIs(colletSize.height);
+    .rightSpaceToView(self.btnPraise, MarginFactor(18.0f))
+    .centerYEqualToView(self.btnShare);
 
-    [self.btnDelete sizeToFit];
-    CGSize delteSize = self.btnDelete.frame.size;
     self.btnDelete.sd_layout
-    .rightSpaceToView(self.btnCollet, kMainActionTopMargin * 1.5f)
-    .centerYEqualToView(self.btnShare)
-    .widthIs(delteSize.width)
-    .heightIs(delteSize.height);
-
+    .rightSpaceToView(self.btnCollet, MarginFactor(18.0f))
+    .centerYEqualToView(self.btnShare);
 
     [self.praisebtn sizeToFit];
     CGSize praiseBtnSize = self.praisebtn.frame.size;
@@ -487,11 +475,8 @@
 
     self.lblTime.text = obj.publishdate;
     [self.btnShare setTitle:obj.sharenum forState:UIControlStateNormal];
-    [self.btnShare sizeToFit];
     [self.btnComment setTitle:obj.cmmtnum forState:UIControlStateNormal];
-    [self.btnComment sizeToFit];
     [self.btnPraise setTitle:obj.praisenum forState:UIControlStateNormal];
-    [self.btnPraise sizeToFit];
 
     if (obj.isAttention){
         [self.btnAttention setImage:[UIImage imageNamed:@"newAttention"] forState:UIControlStateNormal] ;

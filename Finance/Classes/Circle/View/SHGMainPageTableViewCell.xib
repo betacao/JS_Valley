@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
     </dependencies>
     <objects>
@@ -80,38 +79,38 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="2hI-6w-4kN">
-                                <rect key="frame" x="83" y="25" width="14" height="22"/>
+                            <view contentMode="scaleToFill" id="iyD-7g-v1T" customClass="SHGHorizontalTitleImageButton">
+                                <rect key="frame" x="40" y="0.0" width="240" height="128"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" image="home_delete"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <connections>
-                                    <action selector="deleteButtonClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="Pd2-Y2-deb"/>
+                                    <action selector="deleteButtonClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="rh8-kF-bRf"/>
                                 </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="bM6-Pq-J7w">
-                                <rect key="frame" x="200" y="25" width="50" height="34"/>
+                            </view>
+                            <view contentMode="scaleToFill" id="4UZ-8x-c0s" customClass="SHGHorizontalTitleImageButton">
+                                <rect key="frame" x="40" y="0.0" width="240" height="128"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" image="home_comment"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <connections>
-                                    <action selector="commentButtonClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="DDd-UQ-ON0"/>
+                                    <action selector="praiseButtonClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="lCr-K5-k9w"/>
                                 </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="kmK-Pa-UO9">
-                                <rect key="frame" x="272" y="25" width="50" height="34"/>
+                            </view>
+                            <view contentMode="scaleToFill" id="Sqj-yw-aSc" customClass="SHGHorizontalTitleImageButton">
+                                <rect key="frame" x="40" y="0.0" width="240" height="128"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" image="homeShare"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <connections>
-                                    <action selector="shareButtonClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="sOI-uZ-OBF"/>
+                                    <action selector="commentButtonClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="zEo-zS-s75"/>
                                 </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="1Ri-hV-DCa">
-                                <rect key="frame" x="137" y="25" width="50" height="34"/>
+                            </view>
+                            <view contentMode="scaleToFill" id="6Q8-OE-YuR" customClass="SHGHorizontalTitleImageButton">
+                                <rect key="frame" x="40" y="0.0" width="240" height="128"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" image="home_weizan"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <connections>
-                                    <action selector="praiseButtonClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="UgH-cU-j42"/>
+                                    <action selector="shareButtonClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="YMB-s7-UDP"/>
                                 </connections>
-                            </button>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -166,11 +165,11 @@
                 <outlet property="actionView" destination="zBg-2q-FN1" id="JZB-bv-lKd"/>
                 <outlet property="attentionButton" destination="sJ7-tc-eYm" id="JML-VD-o9X"/>
                 <outlet property="authenticationView" destination="Qdx-Ls-zFp" id="3JH-st-eE0"/>
-                <outlet property="commentButton" destination="bM6-Pq-J7w" id="V8K-TE-MP3"/>
+                <outlet property="commentButton" destination="Sqj-yw-aSc" id="8pz-fM-Mec"/>
                 <outlet property="commentView" destination="2TC-Px-Pbb" id="MSY-ge-6zW"/>
                 <outlet property="companyLabel" destination="4BK-24-OGa" id="R2z-7n-K9g"/>
                 <outlet property="contentLabel" destination="oLW-AH-vpY" id="BxX-Fv-ESY"/>
-                <outlet property="deleteButton" destination="2hI-6w-4kN" id="roY-sV-a8b"/>
+                <outlet property="deleteButton" destination="iyD-7g-v1T" id="U9d-Cd-UHA"/>
                 <outlet property="departmentLabel" destination="Cxj-lu-SLg" id="wJq-4q-aIo"/>
                 <outlet property="firstCommentLabel" destination="dw3-cj-bCn" id="nqa-Xk-Dih"/>
                 <outlet property="fourthCommentLabel" destination="AWj-Sh-nGN" id="82I-hy-CwD"/>
@@ -178,10 +177,10 @@
                 <outlet property="lineView" destination="ijE-hm-Hvh" id="Sc7-Ah-nqi"/>
                 <outlet property="nameLabel" destination="VYP-1X-dvu" id="lJ4-8H-uk3"/>
                 <outlet property="photoView" destination="yti-tJ-RH2" id="Rjz-qJ-SAp"/>
-                <outlet property="praiseButton" destination="1Ri-hV-DCa" id="3dt-OQ-ZXT"/>
+                <outlet property="praiseButton" destination="4UZ-8x-c0s" id="GbX-r1-DAT"/>
                 <outlet property="relationLabel" destination="E1m-kW-NkC" id="efW-bi-4Dc"/>
                 <outlet property="secondCommentLabel" destination="qjr-ed-EWG" id="lzW-84-WPv"/>
-                <outlet property="shareButton" destination="kmK-Pa-UO9" id="Ycb-gY-VE0"/>
+                <outlet property="shareButton" destination="6Q8-OE-YuR" id="W6n-1U-aj4"/>
                 <outlet property="splitView" destination="JCV-Rd-rmW" id="K4M-OG-yYq"/>
                 <outlet property="thirdCommentLabel" destination="nQh-th-STQ" id="139-9f-zyU"/>
                 <outlet property="timeLabel" destination="eGv-gi-Bah" id="2aa-3e-2EF"/>
@@ -189,10 +188,4 @@
             <point key="canvasLocation" x="164" y="66"/>
         </tableViewCell>
     </objects>
-    <resources>
-        <image name="homeShare" width="13" height="12"/>
-        <image name="home_comment" width="13" height="14"/>
-        <image name="home_delete" width="14" height="14"/>
-        <image name="home_weizan" width="14" height="14"/>
-    </resources>
 </document>

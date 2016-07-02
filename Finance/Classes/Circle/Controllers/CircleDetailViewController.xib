@@ -11,12 +11,12 @@
                 <outlet property="authenticationView" destination="bWR-WX-0kG" id="qXg-hS-Hzu"/>
                 <outlet property="backImageView" destination="AC2-KC-3Lg" id="wKZ-Fq-5TK"/>
                 <outlet property="btnAttention" destination="Kgd-tr-IWO" id="UTm-WJ-xop"/>
-                <outlet property="btnCollet" destination="h3Y-4G-plf" id="mz2-sT-ld1"/>
-                <outlet property="btnComment" destination="jTv-Gm-ZGF" id="un2-D9-5GC"/>
-                <outlet property="btnDelete" destination="wJ4-Up-4Rh" id="59j-G2-jYr"/>
-                <outlet property="btnPraise" destination="OyJ-4H-wTc" id="hkP-cn-P8Y"/>
+                <outlet property="btnCollet" destination="e4b-9V-3uy" id="7bN-q0-xe9"/>
+                <outlet property="btnComment" destination="reJ-Af-hEG" id="H8I-t8-0ki"/>
+                <outlet property="btnDelete" destination="X1w-5Q-8gX" id="Eee-z9-Moc"/>
+                <outlet property="btnPraise" destination="Y2b-Pm-f2e" id="1SA-ub-3zN"/>
                 <outlet property="btnSend" destination="a0u-4d-vNm" id="NjW-6P-Ql5"/>
-                <outlet property="btnShare" destination="eU6-gQ-ToL" id="HzG-zM-C5r"/>
+                <outlet property="btnShare" destination="vkj-nB-6k2" id="sCW-6i-dXk"/>
                 <outlet property="faSongBtn" destination="Roo-oo-srH" id="iBm-TK-Ofo"/>
                 <outlet property="faceBtn" destination="ys0-he-oJB" id="oEu-wD-s4x"/>
                 <outlet property="imageHeader" destination="9Sx-ef-Sas" id="1RY-fp-lPg"/>
@@ -190,71 +190,46 @@
                     <rect key="frame" x="14" y="73" width="292" height="34"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="OyJ-4H-wTc">
-                            <rect key="frame" x="126" y="8" width="14" height="17"/>
+                        <view contentMode="scaleToFill" id="e4b-9V-3uy" customClass="SHGHorizontalTitleImageButton">
+                            <rect key="frame" x="26" y="-47" width="240" height="128"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                            <inset key="titleEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
-                            <state key="normal" image="home_weizan">
-                                <color key="titleColor" red="0.70196078431372544" green="0.70196078431372544" blue="0.70196078431372544" alpha="1" colorSpace="calibratedRGB"/>
-                                <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </state>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
-                                <action selector="actionPraise:" destination="-1" eventType="touchUpInside" id="WPh-As-fJN"/>
+                                <action selector="actionCollection:" destination="-1" eventType="touchUpInside" id="CNK-zz-iky"/>
                             </connections>
-                        </button>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="eU6-gQ-ToL">
-                            <rect key="frame" x="208" y="0.0" width="50" height="34"/>
+                        </view>
+                        <view contentMode="scaleToFill" id="reJ-Af-hEG" customClass="SHGHorizontalTitleImageButton">
+                            <rect key="frame" x="26" y="-47" width="240" height="128"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                            <inset key="titleEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
-                            <state key="normal" image="homeShare">
-                                <color key="titleColor" red="0.70196078431372544" green="0.70196078431372544" blue="0.70196078431372544" alpha="1" colorSpace="calibratedRGB"/>
-                                <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </state>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
-                                <action selector="actionShare:" destination="-1" eventType="touchUpInside" id="AQY-OT-Fsq"/>
+                                <action selector="actionComment:" destination="-1" eventType="touchUpInside" id="cRm-M5-b5J"/>
                             </connections>
-                        </button>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="jTv-Gm-ZGF">
-                            <rect key="frame" x="158" y="0.0" width="50" height="34"/>
+                        </view>
+                        <view contentMode="scaleToFill" id="Y2b-Pm-f2e" customClass="SHGHorizontalTitleImageButton">
+                            <rect key="frame" x="26" y="-47" width="240" height="128"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                            <inset key="titleEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
-                            <state key="normal" image="home_comment">
-                                <color key="titleColor" red="0.70196078431372544" green="0.70196078431372544" blue="0.70196078431372544" alpha="1" colorSpace="calibratedRGB"/>
-                                <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </state>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
-                                <action selector="actionComment:" destination="-1" eventType="touchUpInside" id="j00-zl-mhw"/>
+                                <action selector="actionPraise:" destination="-1" eventType="touchUpInside" id="YaA-lt-IEG"/>
                             </connections>
-                        </button>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="wJ4-Up-4Rh">
-                            <rect key="frame" x="74" y="0.0" width="34" height="34"/>
+                        </view>
+                        <view contentMode="scaleToFill" id="vkj-nB-6k2" customClass="SHGHorizontalTitleImageButton">
+                            <rect key="frame" x="26" y="-47" width="240" height="128"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                            <inset key="titleEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
-                            <state key="normal" image="home_delete">
-                                <color key="titleColor" red="0.0" green="0.21960784310000001" blue="0.3803921569" alpha="1" colorSpace="calibratedRGB"/>
-                                <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </state>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
-                                <action selector="actionDelete:" destination="-1" eventType="touchUpInside" id="dMl-k8-bsa"/>
+                                <action selector="actionShare:" destination="-1" eventType="touchUpInside" id="nGw-g3-II7"/>
                             </connections>
-                        </button>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="h3Y-4G-plf">
-                            <rect key="frame" x="46" y="7" width="20" height="20"/>
+                        </view>
+                        <view contentMode="scaleToFill" id="X1w-5Q-8gX" customClass="SHGHorizontalTitleImageButton">
+                            <rect key="frame" x="26" y="-47" width="240" height="128"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                            <inset key="titleEdgeInsets" minX="20" minY="0.0" maxX="0.0" maxY="0.0"/>
-                            <state key="normal" image="homeDetailCollection">
-                                <color key="titleColor" red="0.23137254900000001" green="0.23137254900000001" blue="0.23137254900000001" alpha="1" colorSpace="calibratedRGB"/>
-                                <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </state>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
-                                <action selector="actionCollection:" destination="-1" eventType="touchUpInside" id="kLr-pY-QtZ"/>
+                                <action selector="actionDelete:" destination="-1" eventType="touchUpInside" id="JOr-cS-5xh"/>
                             </connections>
-                        </button>
+                        </view>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
@@ -275,11 +250,6 @@
     <resources>
         <image name="commentWei_zan" width="14" height="13"/>
         <image name="comment_backimage" width="25" height="25"/>
-        <image name="homeDetailCollection" width="16" height="15"/>
-        <image name="homeShare" width="13" height="12"/>
-        <image name="home_comment" width="13" height="14"/>
-        <image name="home_delete" width="14" height="14"/>
-        <image name="home_weizan" width="14" height="14"/>
         <image name="keyBoard_emoji" width="25" height="25"/>
         <image name="newAddAttention" width="50" height="22"/>
     </resources>
