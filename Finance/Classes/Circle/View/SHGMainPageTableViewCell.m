@@ -78,15 +78,15 @@
 
     [self.praiseButton setEnlargeEdgeWithTop:10.0f right:0.0f bottom:10.0f left:10.0f];
     [self.praiseButton setImage:[UIImage imageNamed:@"home_weizan"] forState:UIControlStateNormal];
-    self.praiseButton.margin = MarginFactor(6.0f);
+    self.praiseButton.margin = MarginFactor(7.0f);
 
     [self.commentButton setEnlargeEdgeWithTop:10.0f right:0.0f bottom:10.0f left:10.0f];
     [self.commentButton setImage:[UIImage imageNamed:@"home_comment"] forState:UIControlStateNormal];
-    self.commentButton.margin = MarginFactor(6.0f);
+    self.commentButton.margin = MarginFactor(7.0f);
 
     [self.shareButton setEnlargeEdgeWithTop:10.0f right:0.0f bottom:10.0f left:10.0f];
     [self.shareButton setImage:[UIImage imageNamed:@"homeShare"] forState:UIControlStateNormal];
-    self.shareButton.margin = MarginFactor(6.0f);
+    self.shareButton.margin = MarginFactor(7.0f);
 
     [self.attentionButton setEnlargeEdgeWithTop:10.0f right:10.0f bottom:10.0f left:10.0f];
     
@@ -164,15 +164,15 @@
     .centerYEqualToView(self.actionView);
 
     self.commentButton.sd_layout
-    .rightSpaceToView(self.shareButton, MarginFactor(18.0f))
+    .rightSpaceToView(self.shareButton, kMainActionButtonMargin)
     .centerYEqualToView(self.shareButton);
 
     self.praiseButton.sd_layout
-    .rightSpaceToView(self.commentButton, MarginFactor(18.0f))
+    .rightSpaceToView(self.commentButton, kMainActionButtonMargin)
     .centerYEqualToView(self.shareButton);
 
     self.deleteButton.sd_layout
-    .rightSpaceToView(self.praiseButton, MarginFactor(18.0f))
+    .rightSpaceToView(self.praiseButton, kMainActionButtonMargin)
     .centerYEqualToView(self.shareButton);
 
     self.relationLabel.sd_layout

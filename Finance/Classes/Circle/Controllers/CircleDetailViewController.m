@@ -133,17 +133,17 @@
 
     [self.btnPraise setTitleColor:kMainActionColor forState:UIControlStateNormal];
     [self.btnPraise setImage:[UIImage imageNamed:@"home_weizan"] forState:UIControlStateNormal];
-    self.btnPraise.margin = MarginFactor(6.0f);
+    self.btnPraise.margin = MarginFactor(7.0f);
     self.btnPraise.titleLabel.font = kMainActionFont;
 
     [self.btnComment setTitleColor:kMainActionColor forState:UIControlStateNormal];
     [self.btnComment setImage:[UIImage imageNamed:@"home_comment"] forState:UIControlStateNormal];
-    self.btnComment.margin = MarginFactor(6.0f);
+    self.btnComment.margin = MarginFactor(7.0f);
     self.btnComment.titleLabel.font = kMainActionFont;
 
     [self.btnShare setTitleColor:kMainActionColor forState:UIControlStateNormal];
     [self.btnShare setImage:[UIImage imageNamed:@"homeShare"] forState:UIControlStateNormal];
-    self.btnShare.margin = MarginFactor(6.0f);
+    self.btnShare.margin = MarginFactor(7.0f);
     self.btnShare.titleLabel.font = kMainActionFont;
 
 
@@ -278,19 +278,19 @@
     .centerYEqualToView(self.actionView);
 
     self.btnComment.sd_layout
-    .rightSpaceToView(self.btnShare, MarginFactor(18.0f))
+    .rightSpaceToView(self.btnShare, kMainActionButtonMargin)
     .centerYEqualToView(self.btnShare);
 
     self.btnPraise.sd_layout
-    .rightSpaceToView(self.btnComment, MarginFactor(18.0f))
+    .rightSpaceToView(self.btnComment, kMainActionButtonMargin)
     .centerYEqualToView(self.btnShare);
 
     self.btnCollet.sd_layout
-    .rightSpaceToView(self.btnPraise, MarginFactor(18.0f))
+    .rightSpaceToView(self.btnPraise, kMainActionButtonMargin)
     .centerYEqualToView(self.btnShare);
 
     self.btnDelete.sd_layout
-    .rightSpaceToView(self.btnCollet, MarginFactor(18.0f))
+    .rightSpaceToView(self.btnCollet, kMainActionButtonMargin)
     .centerYEqualToView(self.btnShare);
 
     [self.praisebtn sizeToFit];
@@ -483,13 +483,13 @@
     } else{
         [self.btnAttention setImage:[UIImage imageNamed:@"newAddAttention"] forState:UIControlStateNormal];
     }
-
-    self.lblContent.text = [[SHGGloble sharedGloble] formatStringToHtml:obj.detail];
+    NSString *detail = [[SHGGloble sharedGloble] formatStringToHtml:obj.detail];
+    self.lblContent.text = detail;
     self.lblContent.sd_resetLayout
     .topSpaceToView(self.personView, 0.0f)
     .leftEqualToView(self.imageHeader)
     .rightEqualToView(self.btnAttention)
-    .heightIs([CTTextDisplayView getRowHeightWithText:obj.detail rectSize:CGSizeMake(SCREENWIDTH -  2 * kMainItemLeftMargin, CGFLOAT_MAX) styleModel:self.lblContent.styleModel]);
+    .heightIs([CTTextDisplayView getRowHeightWithText:detail rectSize:CGSizeMake(SCREENWIDTH -  2 * kMainItemLeftMargin, CGFLOAT_MAX) styleModel:self.lblContent.styleModel]);
 
 
     if ([self.responseObject.type isEqualToString:TYPE_PHOTO]){

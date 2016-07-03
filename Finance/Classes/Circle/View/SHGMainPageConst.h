@@ -37,6 +37,7 @@
 #define kMainActionBottomMargin MarginFactor(15.0f)//actionView的上间距
 #define kMainActionFont FontFactor(13.0f)//用户活动
 #define kMainActionColor [UIColor colorWithHexString:@"b3b3b3"]
+#define kMainActionButtonMargin MarginFactor(20.0f)//actionView按钮图片和文字的间距
 
 #define kMainCommentBackgroundColor [UIColor colorWithHexString:@"f7f7f7"]
 #define kMainCommentContentLeftMargin MarginFactor(10.0f)//评论内容的左右间距
