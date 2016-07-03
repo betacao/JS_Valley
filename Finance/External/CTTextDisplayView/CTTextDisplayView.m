@@ -418,7 +418,7 @@
     CGPoint location = [(UITouch *)[touches anyObject] locationInView:self];
     CGPoint runLocation = CGPointMake(location.x, self.frame.size.height - location.y);
 
-    if (self.keyRectDict.count == 0) {
+    if (self.currentKeyRectArray.count == 0) {
         [super touchesEnded:touches withEvent:event];
     }
 

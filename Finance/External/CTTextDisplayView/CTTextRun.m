@@ -73,11 +73,11 @@ CGFloat RunDelegateGetTagImgWidthCallback(void *refCon)
     self.regularResult = [NSMutableArray new];
 }
 
-#pragma mark - phone
+#pragma mark - mobile
 + (void)runsPhoneWithAttString:(NSMutableAttributedString *)attString regularResults:(NSMutableArray *)regularResults  styleModel:(CTTextStyleModel *)styleModel{
     NSMutableString * attStr = attString.mutableString;
     NSError *error = nil;
-    NSString *regulaStr = @"\\d{3}-\\d{8}|\\d{3}-\\d{7}|\\d{4}-\\d{8}|\\d{4}-\\d{7}|1+[358]+\\d{9}|\\d{8}|\\d{7}";
+    NSString *regulaStr = @"((13|15|18|17)[0-9]{9})";
     
     NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:regulaStr
                                                                            options:NSRegularExpressionCaseInsensitive
@@ -112,6 +112,48 @@ CGFloat RunDelegateGetTagImgWidthCallback(void *refCon)
                 [attString addAttribute:(NSString *)kCTUnderlineStyleAttributeName value:(id)[NSNumber numberWithInt:kCTUnderlineStyleSingle] range:matchRange];
             }
             
+        }
+    }
+}
+#pragma mark - phone
++ (void)runsMobileWithAttString:(NSMutableAttributedString *)attString regularResults:(NSMutableArray *)regularResults  styleModel:(CTTextStyleModel *)styleModel{
+    NSMutableString * attStr = attString.mutableString;
+    NSError *error = nil;
+    NSString *regulaStr = @"(0[1,2]{1}\\d{1}-?\\d{8})|(0[3-9] {1}\\d{2}-?\\d{7,8})|(0[1,2]{1}\\d{1}-?\\d{8}-(\\d{1,4}))|(0[3-9]{1}\\d{2}-? \\d{7,8}-(\\d{1,4}))|0[7,8]\\d{2}-?\\d{8}|0\\d{2,3}-?\\d{7,8}";
+
+    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:regulaStr
+                                                                           options:NSRegularExpressionCaseInsensitive
+                                                                             error:&error];
+    if (error == nil)
+    {
+        NSArray *arrayOfAllMatches = [regex matchesInString:attStr
+                                                    options:0
+                                                      range:NSMakeRange(0, [attStr length])];
+
+        for (NSTextCheckingResult *match in arrayOfAllMatches){
+
+            NSRange matchRange = match.range;
+
+            BOOL isContinue = NO;
+            for(NSValue * value in regularResults){
+                if(NSMaxRange(NSIntersectionRange(matchRange, value.rangeValue)) > 0){
+                    isContinue = YES;
+                    break;
+                }
+            }
+            if(isContinue){
+                continue;
+            }
+
+            NSString* substringForMatch = [attStr substringWithRange:matchRange];
+            NSValue * valueRange = [NSValue valueWithRange:matchRange];
+
+            [attString addAttribute:(NSString *)kCTForegroundColorAttributeName value:(id)styleModel.phoneColor.CGColor range:matchRange];
+            [attString addAttribute:@"keyAttribute" value:[NSString stringWithFormat:@"P%@{%@}",substringForMatch,valueRange] range:matchRange];
+            if(styleModel.phoneUnderLine){
+                [attString addAttribute:(NSString *)kCTUnderlineStyleAttributeName value:(id)[NSNumber numberWithInt:kCTUnderlineStyleSingle] range:matchRange];
+            }
+
         }
     }
 }
@@ -539,7 +581,8 @@ CGFloat RunDelegateGetTagImgWidthCallback(void *refCon)
     
     //phone: 电话号码比较特殊，有可能是URL、Email的一部分，所以放在URL、Email后面匹配，在URL Email中把匹配表达式的字符串存起来，而在电话规则里面不用存储
     [CTTextRun runsPhoneWithAttString:attString regularResults:_regularResult styleModel:_styleModel];
-    
+    [CTTextRun runsMobileWithAttString:attString regularResults:_regularResult styleModel:_styleModel];
+
     //@#$<at><key><subject>..
     [CTTextRun runsOtherWithAttString:attString regularResults:_regularResult styleModel:_styleModel emojis:_emojis emojisDelegate:self];
     
