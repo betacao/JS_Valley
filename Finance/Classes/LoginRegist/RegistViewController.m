@@ -136,7 +136,7 @@ typedef NS_ENUM(NSInteger, RegistType)
     UIImage * image = [UIImage imageNamed:@"regist_check_box"];
     CGSize checkSize = image.size;
     self.protocolCheckButton.sd_layout
-    .topSpaceToView(self.secondView, MarginFactor(5.0f))
+    .topSpaceToView(self.secondView, MarginFactor(16.0f))
     .leftSpaceToView(self.view, MarginFactor(19.0f))
     .widthIs(checkSize.width)
     .heightIs(checkSize.height);
