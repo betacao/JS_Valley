@@ -23,6 +23,7 @@
 #import "SHGRecommendTableViewCell.h"
 #import "EMSearchBar.h"
 #import "SHGNewFriendTableViewCell.h"
+#import "SHGCircleDetailViewController.h"
 
 
 @interface SHGHomeViewController ()<CircleListDelegate, UISearchBarDelegate>
@@ -347,7 +348,7 @@
     NSDictionary *param = @{@"uid":uid, @"type":@"all", @"target":target, @"rid":@(rid), @"num": rRequestNum, @"tagId" : @"-1"};
 
     __weak typeof(self) weakSelf = self;
-    [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,dynamicAndNews] class:[CircleListObj class] parameters:param success:^(MOCHTTPResponse *response){
+    [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,dynamicNew] class:[CircleListObj class] parameters:param success:^(MOCHTTPResponse *response){
         [Hud hideHud];
         weakSelf.isRefreshing = NO;
         [weakSelf assembleDictionary:response.dataDictionary target:target];
@@ -678,6 +679,9 @@
                 NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:obj.praisenum, kPraiseNum,obj.sharenum,kShareNum,obj.cmmtnum,kCommentNum, nil];
                 viewController.itemInfoDictionary = dictionary;
                 [self.navigationController pushViewController:viewController animated:YES];
+
+//                SHGCircleDetailViewController *controller = [[SHGCircleDetailViewController alloc] init];
+//                [self.navigationController pushViewController:controller animated:YES];
             }
         }
     }

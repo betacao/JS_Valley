@@ -22,6 +22,7 @@
 @property (weak, nonatomic) IBOutlet SHGAuthenticationView *authenticationView;
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
 @property (weak, nonatomic) IBOutlet UIButton *attentionButton;
+@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet CTTextDisplayView *contentLabel;
 @property (weak, nonatomic) IBOutlet UIView *photoView;
 @property (weak, nonatomic) IBOutlet UIView *actionView;
@@ -54,6 +55,9 @@
 - (void)initView
 {
     [self.contentView bringSubviewToFront:self.headerView];
+
+    self.titleLabel.textColor = kMainTitleColor;
+    self.titleLabel.font = kMainTitleFont;
 
     self.contentLabel.delegate = self;
     self.contentLabel.styleModel = self.styleModel;
@@ -90,13 +94,13 @@
 
     [self.attentionButton setEnlargeEdgeWithTop:10.0f right:10.0f bottom:10.0f left:10.0f];
     
-    self.praiseButton.titleLabel.font = kMainNameFont;
+    self.praiseButton.titleLabel.font = kMainActionFont;
     [self.praiseButton setTitleColor:kMainActionColor forState:UIControlStateNormal];
 
-    self.commentButton.titleLabel.font = kMainNameFont;
+    self.commentButton.titleLabel.font = kMainActionFont;
     [self.commentButton setTitleColor:kMainActionColor forState:UIControlStateNormal];
 
-    self.shareButton.titleLabel.font = kMainNameFont;
+    self.shareButton.titleLabel.font = kMainActionFont;
     [self.shareButton setTitleColor:kMainActionColor forState:UIControlStateNormal];
 
     self.commentView.backgroundColor = kMainCommentBackgroundColor;
@@ -129,13 +133,13 @@
     [self.nameLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
 
     self.authenticationView.sd_layout
-    .leftSpaceToView(self.headerView, MarginFactor(8.0f))
+    .leftEqualToView(self.nameLabel)
     .bottomEqualToView(self.headerView)
     .heightIs(MarginFactor(13.0f));
 
     self.timeLabel.sd_layout
     .bottomEqualToView(self.headerView)
-    .leftSpaceToView(self.authenticationView, MarginFactor(2.0f))
+    .leftSpaceToView(self.authenticationView, MarginFactor(5.0f))
     .autoHeightRatio(0.0f);
     [self.timeLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
 
@@ -191,19 +195,19 @@
     self.secondCommentLabel.sd_layout
     .leftSpaceToView(self.commentView, kMainCommentContentLeftMargin)
     .rightSpaceToView(self.commentView, kMainCommentContentLeftMargin)
-    .topSpaceToView(self.firstCommentLabel, 0.0f)
+    .topSpaceToView(self.firstCommentLabel, kMainCommentContentMargin)
     .autoHeightRatio(0.0f);
 
     self.thirdCommentLabel.sd_layout
     .leftSpaceToView(self.commentView, kMainCommentContentLeftMargin)
     .rightSpaceToView(self.commentView, kMainCommentContentLeftMargin)
-    .topSpaceToView(self.secondCommentLabel, 0.0f)
+    .topSpaceToView(self.secondCommentLabel, kMainCommentContentMargin)
     .autoHeightRatio(0.0f);
 
     self.fourthCommentLabel.sd_layout
     .leftSpaceToView(self.commentView, kMainCommentContentLeftMargin)
     .rightSpaceToView(self.commentView, kMainCommentContentLeftMargin)
-    .topSpaceToView(self.thirdCommentLabel, 0.0f)
+    .topSpaceToView(self.thirdCommentLabel, kMainCommentContentMargin)
     .autoHeightRatio(0.0f);
 
     [self setupAutoHeightWithBottomView:self.splitView bottomMargin:0.0f];
@@ -308,17 +312,33 @@
 
 - (void)loadContent:(CircleListObj *)object
 {
+    NSString *title = object.groupPostTitle;
+    self.titleLabel.text = title;
+    if (title.length > 0) {
+        self.titleLabel.sd_resetLayout
+        .topSpaceToView(self.headerView, kMainContentTopMargin)
+        .leftEqualToView(self.headerView)
+        .rightEqualToView(self.attentionButton)
+        .autoHeightRatio(0.0f);
+    } else {
+        self.titleLabel.sd_resetLayout
+        .topSpaceToView(self.headerView, 0.0f)
+        .leftEqualToView(self.headerView)
+        .rightEqualToView(self.attentionButton)
+        .heightIs(0.0f);
+    }
+
     NSString *detail = [[SHGGloble sharedGloble] formatStringToHtml:object.detail];
     self.contentLabel.text = detail;
     if (detail.length > 0) {
         self.contentLabel.sd_resetLayout
-        .topSpaceToView(self.headerView, kMainContentTopMargin)
+        .topSpaceToView(self.titleLabel, kMainContentTopMargin / 2.0f)
         .leftEqualToView(self.headerView)
         .rightEqualToView(self.attentionButton)
         .heightIs([CTTextDisplayView getRowHeightWithText:detail rectSize:CGSizeMake(SCREENWIDTH -  2 * kMainItemLeftMargin, CGFLOAT_MAX) styleModel:self.styleModel]);
     } else{
         self.contentLabel.sd_resetLayout
-        .topSpaceToView(self.headerView, 0.0f)
+        .topSpaceToView(self.titleLabel, 0.0f)
         .leftEqualToView(self.headerView)
         .rightEqualToView(self.attentionButton)
         .heightIs(0.0);
@@ -338,12 +358,13 @@
             [temp addObject:item];
         }];
         photoGroup.photoItemArray = temp;
+        photoGroup.style = SDPhotoGroupStyleThumbnail;
         [self.photoView addSubview:photoGroup];
 
         self.photoView.sd_resetLayout
         .leftEqualToView(self.headerView)
         .rightEqualToView(self.attentionButton)
-        .topSpaceToView(self.contentLabel, kMainContentTopMargin)
+        .topSpaceToView(self.contentLabel, kMainPhotoViewTopMargin)
         .heightIs(CGRectGetHeight(photoGroup.frame));
     } else{
         self.photoView.sd_resetLayout
@@ -401,7 +422,7 @@
     .leftEqualToView(self.headerView)
     .rightEqualToView(self.attentionButton)
     .topSpaceToView(self.photoView, 0.0f)
-    .heightIs(MarginFactor(49.0f));
+    .heightIs(kMainActionHeight);
 }
 
 - (void)loadCommentView:(CircleListObj *)object

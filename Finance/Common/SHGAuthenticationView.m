@@ -54,7 +54,7 @@
 - (void)addAutoLayout
 {
     self.VButton.sd_layout
-    .leftSpaceToView(self, MarginFactor(5.0f))
+    .leftSpaceToView(self, 0.0f)
     .bottomSpaceToView(self, 0.0f)
     .widthIs(MarginFactor(self.VButton.image.size.width))
     .heightIs(MarginFactor(self.VButton.image.size.height));
@@ -65,7 +65,7 @@
     .widthIs(MarginFactor(self.QButton.image.size.width))
     .heightIs(MarginFactor(self.QButton.image.size.height));
 
-    [self setupAutoWidthWithRightView:self.QButton rightMargin:MarginFactor(5.0f)];
+    [self setupAutoWidthWithRightView:self.QButton rightMargin:0.0f];
 }
 
 - (void)updateWithVStatus:(BOOL)vStatus enterpriseStatus:(BOOL)enterpriseStatus
@@ -99,12 +99,12 @@
             .heightIs(MarginFactor(self.QButton.image.size.height));
         } else{
             self.QButton.sd_resetLayout
-            .leftSpaceToView(self, MarginFactor(5.0f))
+            .leftSpaceToView(self, 0.0f)
             .bottomSpaceToView(self, 0.0f)
             .widthIs(MarginFactor(self.QButton.image.size.width))
             .heightIs(MarginFactor(self.QButton.image.size.height));
         }
-        [self setupAutoWidthWithRightView:enterpriseStatus ? self.QButton : self.VButton rightMargin:(enterpriseStatus | self.vStatus) ? MarginFactor(5.0f) : -self.VButton.image.size.width];
+        [self setupAutoWidthWithRightView:enterpriseStatus ? self.QButton : self.VButton rightMargin:(enterpriseStatus | self.vStatus) ? 0.0f : -self.VButton.image.size.width];
     }
 }
 

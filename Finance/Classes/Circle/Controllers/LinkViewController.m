@@ -22,7 +22,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"详情";
-    if ([self.url hasPrefix:@"http://"]||[self.url hasPrefix:@"https://"]){
+    if ([self.url hasPrefix:@"http://"] || [self.url hasPrefix:@"https://"]){
         NSLog(@"1");
         self.stringUrl  = self.url;
     }

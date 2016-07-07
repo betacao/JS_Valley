@@ -8,7 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SDPhotoGroup : UIView 
+typedef NS_ENUM(NSInteger, SDPhotoGroupStyle)
+{
+    SDPhotoGroupStyleNormal = 0,
+    SDPhotoGroupStyleThumbnail
+};
+
+@interface SDPhotoGroup : UIView
+
+@property (assign, nonatomic) SDPhotoGroupStyle style;
 
 @property (nonatomic, strong) NSArray *photoItemArray;
 

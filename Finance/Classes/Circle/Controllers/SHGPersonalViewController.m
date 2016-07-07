@@ -148,7 +148,7 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
     [self.departmentLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
 
     self.authenticationView.sd_layout
-    .leftSpaceToView(self.departmentLabel, 0.0f)
+    .leftSpaceToView(self.departmentLabel, MarginFactor(5.0f))
     .centerYEqualToView(self.departmentLabel)
     .heightIs(MarginFactor(13.0f));
     

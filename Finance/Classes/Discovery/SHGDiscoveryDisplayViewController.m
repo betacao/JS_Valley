@@ -342,7 +342,7 @@
 
     self.authenticationView.sd_layout
     .centerYEqualToView(self.firstLabel)
-    .leftSpaceToView(self.firstLabel, 0.0f)
+    .leftSpaceToView(self.firstLabel, MarginFactor(5.0f))
     .heightIs(MarginFactor(13.0f));
 
     self.secondLabel.sd_layout
@@ -417,7 +417,7 @@
 
     self.relationShipImageView.sd_layout
     .centerYEqualToView(self.firstLabel)
-    .leftSpaceToView(self.authenticationView, 0.0f)
+    .leftSpaceToView(self.authenticationView, MarginFactor(5.0f))
     .heightIs(self.relationShipImageView.image.size.height)
     .widthIs(self.relationShipImageView.image.size.width);
 }

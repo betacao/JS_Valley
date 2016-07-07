@@ -946,6 +946,8 @@
 		F9BF4E8E1CB6332700D0155C /* SHGBusinessSelectCategoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9BF4E8C1CB6332700D0155C /* SHGBusinessSelectCategoryViewController.m */; };
 		F9BF4E8F1CB6332700D0155C /* SHGBusinessSelectCategoryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9BF4E8D1CB6332700D0155C /* SHGBusinessSelectCategoryViewController.xib */; };
 		F9C41F901C9FBB0400962A49 /* SHGProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = F9C41F8F1C9FBB0400962A49 /* SHGProgressHUD.m */; };
+		F9CA56A81D2D1A8400972B10 /* SHGCircleDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9CA56A61D2D1A8400972B10 /* SHGCircleDetailViewController.m */; };
+		F9CA56A91D2D1A8400972B10 /* SHGCircleDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9CA56A71D2D1A8400972B10 /* SHGCircleDetailViewController.xib */; };
 		F9D296D61C8F02F100A1446C /* SHGMainPageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F9D296D41C8F02F100A1446C /* SHGMainPageTableViewCell.m */; };
 		F9D296D71C8F02F100A1446C /* SHGMainPageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9D296D51C8F02F100A1446C /* SHGMainPageTableViewCell.xib */; };
 		F9D296DC1C8FCB9C00A1446C /* SHGExtendTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F9D296DA1C8FCB9C00A1446C /* SHGExtendTableViewCell.m */; };
@@ -982,6 +984,8 @@
 		F9F349B71C1945920090F111 /* SHGBadgeStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = F9F349B41C1945920090F111 /* SHGBadgeStyle.m */; };
 		F9F349B81C1945920090F111 /* SHGBadgeView.m in Sources */ = {isa = PBXBuildFile; fileRef = F9F349B61C1945920090F111 /* SHGBadgeView.m */; };
 		F9F349DB1C199E730090F111 /* SHGComBoxView.m in Sources */ = {isa = PBXBuildFile; fileRef = F9F349D81C199E730090F111 /* SHGComBoxView.m */; };
+		F9FCF38C1D2DF97B00508A8B /* SHGWebTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F9FCF38A1D2DF97B00508A8B /* SHGWebTableViewCell.m */; };
+		F9FCF38D1D2DF97B00508A8B /* SHGWebTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9FCF38B1D2DF97B00508A8B /* SHGWebTableViewCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -2283,6 +2287,9 @@
 		F9BF4E8D1CB6332700D0155C /* SHGBusinessSelectCategoryViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGBusinessSelectCategoryViewController.xib; sourceTree = "<group>"; };
 		F9C41F8E1C9FBB0400962A49 /* SHGProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGProgressHUD.h; sourceTree = "<group>"; };
 		F9C41F8F1C9FBB0400962A49 /* SHGProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGProgressHUD.m; sourceTree = "<group>"; };
+		F9CA56A51D2D1A8400972B10 /* SHGCircleDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGCircleDetailViewController.h; sourceTree = "<group>"; };
+		F9CA56A61D2D1A8400972B10 /* SHGCircleDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGCircleDetailViewController.m; sourceTree = "<group>"; };
+		F9CA56A71D2D1A8400972B10 /* SHGCircleDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGCircleDetailViewController.xib; sourceTree = "<group>"; };
 		F9D296D31C8F02F100A1446C /* SHGMainPageTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGMainPageTableViewCell.h; sourceTree = "<group>"; };
 		F9D296D41C8F02F100A1446C /* SHGMainPageTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGMainPageTableViewCell.m; sourceTree = "<group>"; };
 		F9D296D51C8F02F100A1446C /* SHGMainPageTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGMainPageTableViewCell.xib; sourceTree = "<group>"; };
@@ -2346,6 +2353,9 @@
 		F9F349B61C1945920090F111 /* SHGBadgeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGBadgeView.m; sourceTree = "<group>"; };
 		F9F349D71C199E730090F111 /* SHGComBoxView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGComBoxView.h; sourceTree = "<group>"; };
 		F9F349D81C199E730090F111 /* SHGComBoxView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGComBoxView.m; sourceTree = "<group>"; };
+		F9FCF3891D2DF97B00508A8B /* SHGWebTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGWebTableViewCell.h; sourceTree = "<group>"; };
+		F9FCF38A1D2DF97B00508A8B /* SHGWebTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGWebTableViewCell.m; sourceTree = "<group>"; };
+		F9FCF38B1D2DF97B00508A8B /* SHGWebTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGWebTableViewCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -3020,6 +3030,9 @@
 				F95F42AC1C8E993C003EDA30 /* SHGCircleSendViewController.h */,
 				F95F42AD1C8E993C003EDA30 /* SHGCircleSendViewController.m */,
 				F95F42AE1C8E993C003EDA30 /* SHGCircleSendViewController.xib */,
+				F9CA56A51D2D1A8400972B10 /* SHGCircleDetailViewController.h */,
+				F9CA56A61D2D1A8400972B10 /* SHGCircleDetailViewController.m */,
+				F9CA56A71D2D1A8400972B10 /* SHGCircleDetailViewController.xib */,
 				6145FF151AE4A3450074AB49 /* CircleDetailViewController.h */,
 				6145FF161AE4A3450074AB49 /* CircleDetailViewController.m */,
 				6145FF171AE4A3450074AB49 /* CircleDetailViewController.xib */,
@@ -3082,6 +3095,9 @@
 				F9F332661C993658009156BA /* SHGNewFriendTableViewCell.h */,
 				F9F332671C993658009156BA /* SHGNewFriendTableViewCell.m */,
 				F9F332681C993658009156BA /* SHGNewFriendTableViewCell.xib */,
+				F9FCF3891D2DF97B00508A8B /* SHGWebTableViewCell.h */,
+				F9FCF38A1D2DF97B00508A8B /* SHGWebTableViewCell.m */,
+				F9FCF38B1D2DF97B00508A8B /* SHGWebTableViewCell.xib */,
 				611B8CD41AFD5C09009CB21F /* ReplyTableViewCell.h */,
 				611B8CD51AFD5C09009CB21F /* ReplyTableViewCell.m */,
 				611B8CD61AFD5C09009CB21F /* ReplyTableViewCell.xib */,
@@ -5193,6 +5209,7 @@
 				B080FEA01B81E30100426579 /* emoji_face_n.png in Resources */,
 				615234B21B0E146B00011EAC /* 一度跳转页面@3x.jpg in Resources */,
 				408D8AEC1AF8618C0055810C /* chatListCellHead@2x.png in Resources */,
+				F9CA56A91D2D1A8400972B10 /* SHGCircleDetailViewController.xib in Resources */,
 				616405431B29FE920071A18D /* 通讯录更新@3x.png in Resources */,
 				408D8B071AF8618C0055810C /* VoiceSearchFeedback010.png in Resources */,
 				408D8B3F1AF8618C0055810C /* chatBar_faceSelected.png in Resources */,
@@ -5574,6 +5591,7 @@
 				F916B6231D0D395300AE217F /* d_jiyan@3x.png in Resources */,
 				614A59891AD3AEA1005DAB04 /* Images.xcassets in Resources */,
 				408D8AF61AF8618C0055810C /* VoiceSearchFeedback001@2x.png in Resources */,
+				F9FCF38D1D2DF97B00508A8B /* SHGWebTableViewCell.xib in Resources */,
 				61E83CDD1AF7C78E00703651 /* 搜索框@2x.png in Resources */,
 				98765FB91CFC744900C8C590 /* SHGMyFansViewController.xib in Resources */,
 				F916B6131D0D395300AE217F /* d_guzhang@2x.png in Resources */,
@@ -5942,6 +5960,7 @@
 				F91982CC1C59F9FA00A450B9 /* SHGUserCenterViewController.m in Sources */,
 				B04355CE1B4BD3560033BBBF /* LinkViewController.m in Sources */,
 				6187D2E51AF1C693008E1D21 /* EMChatTimeCell.m in Sources */,
+				F9FCF38C1D2DF97B00508A8B /* SHGWebTableViewCell.m in Sources */,
 				986FFF131CBC857200D9FE04 /* SHGBusinessLocationView.m in Sources */,
 				F93FCBC81C856D5A004E356E /* UIColor+extend.m in Sources */,
 				F9B18C081BA0521600EA0314 /* SHGNoticeView.m in Sources */,
@@ -6007,6 +6026,7 @@
 				F90684921CBF33F00003B123 /* SHGBusinessSearchViewController.m in Sources */,
 				6187D30F1AF1C693008E1D21 /* SRRefreshView.m in Sources */,
 				F9A2EF871CF3EE180054AE1C /* SHGDiscoveryManager.m in Sources */,
+				F9CA56A81D2D1A8400972B10 /* SHGCircleDetailViewController.m in Sources */,
 				40302B151AEF5C3500F22EB6 /* AddAddressViewController.m in Sources */,
 				6187D2E21AF1C693008E1D21 /* EMChatLocationBubbleView.m in Sources */,
 				980D0D591C99026E00351F8C /* SHGCardCollectionViewController.m in Sources */,

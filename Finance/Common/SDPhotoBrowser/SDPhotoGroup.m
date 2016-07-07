@@ -73,7 +73,25 @@
     }
 
     self.frame = CGRectMake(0.0f, 0.0f, SCREENWIDTH - kPhotoViewRightMargin - kPhotoViewLeftMargin, totalHeight);
-    
+}
+
+- (void)setStyle:(SDPhotoGroupStyle)style
+{
+    _style = style;
+    switch (style) {
+        case SDPhotoGroupStyleThumbnail:{
+            CGFloat width = ceilf((SCREENWIDTH - kPhotoViewRightMargin - kPhotoViewLeftMargin - CELL_PHOTO_SEP * 2.0f) / 3.0f);
+            CGFloat height = width;
+            if(self.subviews.count == 1){
+                UIImageView *imageView = (UIImageView *)[self.subviews firstObject];
+                imageView.frame = CGRectMake(0.0f, 0.0f, width, height);
+                self.frame = CGRectMake(0.0f, 0.0f, width, width);
+            }
+        }
+
+        default:
+            break;
+    }
 }
 
 - (void)imageViewDidTap:(UITapGestureRecognizer *)recognizer

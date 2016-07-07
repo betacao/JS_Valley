@@ -30,6 +30,7 @@
                 <outlet property="personView" destination="XOQ-nE-ewr" id="4h8-k0-k9L"/>
                 <outlet property="praisebtn" destination="G5n-2p-xA3" id="J1u-yS-ec9"/>
                 <outlet property="scrollPraise" destination="aWm-Lk-eH9" id="KIK-W2-uD9"/>
+                <outlet property="titleLabel" destination="nN6-7N-7cV" id="itJ-CU-Sst"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
                 <outlet property="viewHeader" destination="Zk8-gE-mjJ" id="omM-Qh-SA3"/>
                 <outlet property="viewInput" destination="QyD-ga-fkw" id="FTy-DG-HJn"/>
@@ -233,6 +234,13 @@
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="nN6-7N-7cV">
+                    <rect key="frame" x="139" y="114" width="42" height="21"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
                 <view contentMode="scaleToFill" id="qYe-1m-FgM" customClass="CTTextDisplayView">
                     <rect key="frame" x="0.0" y="-159" width="320" height="568"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>

@@ -34,6 +34,7 @@
     .centerYEqualToView(self)
     .widthIs(image.size.width)
     .heightIs(image.size.height);
+    [self setTitle:@"" forState:state];
     [self setupAutoWidthWithRightView:self.titleLabel rightMargin:0.0f];
     [self setupAutoHeightWithBottomViewsArray:@[self.imageView, self.titleLabel] bottomMargin:0.0f];
 }

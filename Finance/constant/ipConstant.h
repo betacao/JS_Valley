@@ -12,7 +12,7 @@
 /**
  *  各环境接口定义
  */
-//#define kSitTest
+#define kSitTest
 #define kReleaseH
 
 #ifdef kSitTest
@@ -75,6 +75,6 @@
 #define circleBak               @"circleBak"
 #define circleNew               @"circleNew"
 #define circleListNew           @"circleListNew"
-#define dynamicAndNews          @"dynamic/dynamicAndNews"
+#define dynamicNew              @"dynamic/dynamicNew"
 #define signCode                @"dLaQd27R9VzpHV78l8KVbmj6m9QWAJ6Ou+yT6TScNbkOEBGczycc32ivA79Qzgx1m3Tf0xGzufnkBlvkw2plKrlslKVtP2fR3mTePR8PM6u01Y36/1P7egMCmbe94c0N6oC88fay37yCbuA7Ulkclp5b//yS30jB1MDiZPll9per8V65epLyMEKPbZTsh7hG7psMiZdE67EBG4hE0DU3d3Yc7yZJQFJGIhT5KCzJC9+cCrbDEwe6EojP2hRcOV8D2CyoDSaVRAI="
 #endif

@@ -61,6 +61,12 @@
 @property (strong, nonatomic)  NSString *realname;
 
 @property (assign, nonatomic) BOOL businessStatus;
+/**
+ @brief 动态标题
+
+ @since 1.8.4
+ */
+@property (strong, nonatomic)  NSString *groupPostTitle;
 
 
 @end

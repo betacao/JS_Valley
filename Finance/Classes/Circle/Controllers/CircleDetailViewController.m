@@ -44,6 +44,8 @@
 @property (weak, nonatomic) IBOutlet UIButton *praisebtn;
 @property (weak, nonatomic) IBOutlet UITableView *listTable;
 @property (weak, nonatomic) IBOutlet UIView *actionView;
+
+@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet CTTextDisplayView *lblContent;
 @property (weak, nonatomic) IBOutlet UIButton *btnAttention;
 @property (weak, nonatomic) IBOutlet UILabel *lblTime;
@@ -64,24 +66,9 @@
 
 @property (strong, nonatomic) CircleListObj *responseObject;
 
-- (IBAction)actionAttention:(id)sender;
-- (IBAction)actionComment:(id)sender;
-- (IBAction)actionPraise:(id)sender;
-- (IBAction)actionShare:(id)sender;
-- (IBAction)actionCollection:(id)sender;
-- (IBAction)actionDelete:(id)sender;
-
 @end
 
 @implementation CircleDetailViewController
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self){
-
-    }
-    return self;
-}
 
 - (void)viewDidLoad
 {
@@ -126,10 +113,8 @@
     self.lblTime.textColor = kMainTimeColor;
 
     [self.btnCollet setImage:[UIImage imageNamed:@"homeDetailCollection"] forState:UIControlStateNormal];
-    [self.btnCollet setTitle:@"" forState:UIControlStateNormal];
 
     [self.btnDelete setImage:[UIImage imageNamed:@"home_delete"] forState:UIControlStateNormal];
-    [self.btnDelete setTitle:@"" forState:UIControlStateNormal];
 
     [self.btnPraise setTitleColor:kMainActionColor forState:UIControlStateNormal];
     [self.btnPraise setImage:[UIImage imageNamed:@"home_weizan"] forState:UIControlStateNormal];
@@ -146,6 +131,8 @@
     self.btnShare.margin = MarginFactor(7.0f);
     self.btnShare.titleLabel.font = kMainActionFont;
 
+    self.titleLabel.textColor = kMainTitleColor;
+    self.titleLabel.font = kMainTitleFont;
 
     CTTextStyleModel *model = [[CTTextStyleModel alloc] init];
     model.numberOfLines = -1;
@@ -185,13 +172,13 @@
     [self.faceBtn sizeToFit];
     CGSize faceSize = self.faceBtn.frame.size;
     self.faceBtn.sd_layout
-    .leftSpaceToView(self.viewInput, MarginFactor(12.0f))
+    .leftSpaceToView(self.viewInput, kMainItemLeftMargin)
     .centerYEqualToView(self.viewInput)
     .widthIs(faceSize.width)
     .heightIs(faceSize.height);
 
     self.faSongBtn.sd_layout
-    .rightSpaceToView(self.viewInput, MarginFactor(12.0f))
+    .rightSpaceToView(self.viewInput, kMainItemLeftMargin)
     .centerYEqualToView(self.viewInput)
     .widthIs(MarginFactor(70.0f))
     .heightIs(MarginFactor(35.0f));
@@ -211,11 +198,11 @@
     self.personView.sd_layout
     .topSpaceToView(self.viewHeader, 0.0f)
     .leftSpaceToView(self.viewHeader, 0.0f)
-    .rightSpaceToView(self.viewHeader, 0.0f)
-    .heightIs(MarginFactor(67.0f));
+    .rightSpaceToView(self.viewHeader, 0.0f);
+    [self.personView setupAutoHeightWithBottomView:self.imageHeader bottomMargin:0.0f];
 
     self.imageHeader.sd_layout
-    .leftSpaceToView(self.personView, MarginFactor(12.0f))
+    .leftSpaceToView(self.personView, kMainItemLeftMargin)
     .topSpaceToView(self.personView, MarginFactor(16.0f))
     .topEqualToView(self.personView)
     .widthIs(MarginFactor(35.0f))
@@ -223,7 +210,7 @@
 
     self.nickName.sd_layout
     .topEqualToView(self.imageHeader)
-    .leftSpaceToView(self.imageHeader, MarginFactor(12.0f))
+    .leftSpaceToView(self.imageHeader, kMainItemLeftMargin)
     .offset(-1.0f)
     .autoHeightRatio(0.0f);
     [self.nickName setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
@@ -241,12 +228,12 @@
     [self.lbldepartName setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
 
     self.authenticationView.sd_layout
-    .leftSpaceToView(self.imageHeader, MarginFactor(8.0f))
+    .leftEqualToView(self.nickName)
     .bottomEqualToView(self.imageHeader)
     .heightIs(MarginFactor(13.0f));
 
     self.lblTime.sd_layout
-    .leftSpaceToView(self.authenticationView, MarginFactor(2.0f))
+    .leftSpaceToView(self.authenticationView, MarginFactor(5.0f))
     .bottomEqualToView(self.imageHeader)
     .autoHeightRatio(0.0f);
     [self.lblTime setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
@@ -254,23 +241,29 @@
     UIImage *attentionImage = [UIImage imageNamed:@"newAttention"];
     CGSize attentionSize = attentionImage.size;
     self.btnAttention.sd_layout
-    .rightSpaceToView(self.personView, MarginFactor(12.0f))
+    .rightSpaceToView(self.personView, kMainItemLeftMargin)
     .centerYEqualToView(self.imageHeader)
     .widthIs(attentionSize.width )
     .heightIs(attentionSize.height);
 
-    self.lblContent.sd_layout
+    self.titleLabel.sd_layout
     .topSpaceToView(self.personView, 0.0f)
-    .leftEqualToView(self.imageHeader)
-    .rightEqualToView(self.btnAttention)
+    .leftSpaceToView(self.viewHeader, kMainItemLeftMargin)
+    .rightSpaceToView(self.viewHeader, kMainItemLeftMargin)
+    .autoHeightRatio(0.0f);
+
+    self.lblContent.sd_layout
+    .topSpaceToView(self.titleLabel, 0.0f)
+    .leftSpaceToView(self.viewHeader, kMainItemLeftMargin)
+    .rightSpaceToView(self.viewHeader, kMainItemLeftMargin)
     .heightIs(0.0f);
 
     self.photoView = [[UIView alloc]init];
     [self.viewHeader addSubview:self.photoView];
     self.photoView.sd_layout
-    .leftEqualToView(self.imageHeader)
-    .rightEqualToView(self.btnAttention)
-    .topSpaceToView(self.lblContent, MarginFactor(16.0f))
+    .leftSpaceToView(self.viewHeader, kMainItemLeftMargin)
+    .rightSpaceToView(self.viewHeader, kMainItemLeftMargin)
+    .topSpaceToView(self.lblContent, 0.0f)
     .heightIs(0.0f);
 
     self.btnShare.sd_layout
@@ -386,6 +379,7 @@
     self.responseObject.userstatus = [dic objectForKey:@"userstatus"];
     self.responseObject.businessStatus = [[dic objectForKey:@"businessstatus"] boolValue];
     self.responseObject.userid = [dic objectForKey:@"userid"];
+    self.responseObject.groupPostTitle = [dic objectForKey:@"groupposttitle"];
     NSDictionary *link = [dic objectForKey:@"link"];
     if ([self.responseObject.type isEqualToString:@"link"]){
         linkOBj *linkObj = [[linkOBj alloc] init];
@@ -483,14 +477,38 @@
     } else{
         [self.btnAttention setImage:[UIImage imageNamed:@"newAddAttention"] forState:UIControlStateNormal];
     }
+
+    NSString *title = obj.groupPostTitle;
+    self.titleLabel.text = title;
+    if (title.length > 0) {
+        self.titleLabel.sd_resetLayout
+        .topSpaceToView(self.personView, kMainContentTopMargin)
+        .leftSpaceToView(self.viewHeader, kMainItemLeftMargin)
+        .rightSpaceToView(self.viewHeader, kMainItemLeftMargin)
+        .autoHeightRatio(0.0f);
+    } else {
+        self.titleLabel.sd_resetLayout
+        .topSpaceToView(self.personView, 0.0f)
+        .leftSpaceToView(self.viewHeader, kMainItemLeftMargin)
+        .rightSpaceToView(self.viewHeader, kMainItemLeftMargin)
+        .heightIs(0.0f);
+    }
+
     NSString *detail = [[SHGGloble sharedGloble] formatStringToHtml:obj.detail];
     self.lblContent.text = detail;
-    self.lblContent.sd_resetLayout
-    .topSpaceToView(self.personView, 0.0f)
-    .leftEqualToView(self.imageHeader)
-    .rightEqualToView(self.btnAttention)
-    .heightIs([CTTextDisplayView getRowHeightWithText:detail rectSize:CGSizeMake(SCREENWIDTH -  2 * kMainItemLeftMargin, CGFLOAT_MAX) styleModel:self.lblContent.styleModel]);
-
+    if (detail.length > 0) {
+        self.lblContent.sd_resetLayout
+        .topSpaceToView(self.titleLabel, kMainContentTopMargin / 2.0f)
+        .leftSpaceToView(self.viewHeader, kMainItemLeftMargin)
+        .rightSpaceToView(self.viewHeader, kMainItemLeftMargin)
+        .heightIs([CTTextDisplayView getRowHeightWithText:detail rectSize:CGSizeMake(SCREENWIDTH -  2 * kMainItemLeftMargin, CGFLOAT_MAX) styleModel:self.lblContent.styleModel]);
+    } else{
+        self.lblContent.sd_resetLayout
+        .topSpaceToView(self.titleLabel, 0.0f)
+        .leftSpaceToView(self.viewHeader, kMainItemLeftMargin)
+        .rightSpaceToView(self.viewHeader, kMainItemLeftMargin)
+        .heightIs(0.0);
+    }
 
     if ([self.responseObject.type isEqualToString:TYPE_PHOTO]){
         SDPhotoGroup *photoGroup = [[SDPhotoGroup alloc] init];
@@ -502,10 +520,11 @@
             [temp addObject:item];
         }];
         photoGroup.photoItemArray = temp;
+        photoGroup.style = SDPhotoGroupStyleThumbnail;
         [self.photoView addSubview:photoGroup];
         self.photoView.sd_resetLayout
-        .leftSpaceToView(self.viewHeader, MarginFactor(12.0f))
-        .topSpaceToView(self.lblContent, MarginFactor(16.0f))
+        .leftSpaceToView(self.viewHeader, kMainItemLeftMargin)
+        .topSpaceToView(self.lblContent, kMainPhotoViewTopMargin)
         .widthIs(CGRectGetWidth(photoGroup.frame))
         .heightIs(CGRectGetHeight(photoGroup.frame));
 
@@ -533,14 +552,14 @@
     }
 
     self.actionView.sd_resetLayout
-    .leftEqualToView(self.imageHeader)
-    .rightEqualToView(self.btnAttention)
+    .leftSpaceToView(self.viewHeader, kMainItemLeftMargin)
+    .rightSpaceToView(self.viewHeader, kMainItemLeftMargin)
     .topSpaceToView(self.photoView, 0.0f)
-    .heightIs(MarginFactor(49.0f));
+    .heightIs(kMainActionHeight);
 
     self.viewPraise.sd_resetLayout
-    .leftSpaceToView(self.viewHeader, MarginFactor(12.0f))
-    .rightSpaceToView(self.viewHeader, MarginFactor(12.0f))
+    .leftSpaceToView(self.viewHeader, kMainItemLeftMargin)
+    .rightSpaceToView(self.viewHeader, kMainItemLeftMargin)
     .topSpaceToView(self.actionView, 0.0f)
     .heightIs(MarginFactor(56.0f));
 
