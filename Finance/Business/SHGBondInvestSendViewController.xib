@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -12,9 +12,13 @@
                 <outlet property="areaSelectImage" destination="dH5-p5-BAa" id="NdA-a3-8cD"/>
                 <outlet property="areaTitleLabel" destination="Ziq-X4-Teu" id="gTJ-aE-Eue"/>
                 <outlet property="areaView" destination="kXM-BN-pFR" id="Bfa-Bh-rnS"/>
+                <outlet property="businessCompanyNameView" destination="XaL-ZG-4tF" id="DKD-av-nQc"/>
                 <outlet property="capitalSourceButtonView" destination="wM3-dK-6kV" id="vQ5-7H-00i"/>
                 <outlet property="capitalSourceLabel" destination="kEd-zG-Tdw" id="mpN-tt-rof"/>
                 <outlet property="capitalSourceView" destination="Hot-Qu-NEk" id="wcc-vK-TBZ"/>
+                <outlet property="companyNameImage" destination="15V-V8-Nxn" id="NMC-43-CgX"/>
+                <outlet property="companyNameLabel" destination="KIW-p8-xBh" id="03V-Hs-9wd"/>
+                <outlet property="companyNametextField" destination="OzM-3j-ohn" id="c4n-0S-MIa"/>
                 <outlet property="industryLabel" destination="GLg-ww-l9d" id="LHr-Jk-b61"/>
                 <outlet property="industrySelectButton" destination="GZd-Bn-xPl" id="WBW-Xr-LqR"/>
                 <outlet property="industrySelectImage" destination="b5U-6I-3Zu" id="uM3-wp-GOf"/>
@@ -261,6 +265,32 @@
             <color key="backgroundColor" red="0.97254901960784312" green="0.97254901960784312" blue="0.97254901960784312" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <point key="canvasLocation" x="-367" y="310.5"/>
+        </view>
+        <view contentMode="scaleToFill" id="XaL-ZG-4tF">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="76"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="biXuan" id="15V-V8-Nxn">
+                    <rect key="frame" x="155" y="9" width="23" height="23"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="业务公司名称" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="KIW-p8-xBh">
+                    <rect key="frame" x="0.0" y="9" width="147" height="21"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" id="OzM-3j-ohn">
+                    <rect key="frame" x="0.0" y="42" width="201" height="30"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits"/>
+                </textField>
+            </subviews>
+            <color key="backgroundColor" red="0.97254901959999995" green="0.97254901959999995" blue="0.97254901959999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="-341" y="466"/>
         </view>
     </objects>
     <resources>

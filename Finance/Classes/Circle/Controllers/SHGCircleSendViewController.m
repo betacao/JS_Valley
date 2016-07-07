@@ -59,6 +59,7 @@
 {
     [super viewWillAppear:animated];
     self.navigationController.interactivePopGestureRecognizer.enabled = NO;
+    [self.textView becomeFirstResponder];
 }
 - (void)viewDidAppear:(BOOL)animated
 {

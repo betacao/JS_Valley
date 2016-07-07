@@ -29,6 +29,12 @@
 @property (weak, nonatomic) IBOutlet UITextField *phoneNumTextField;
 @property (weak, nonatomic) IBOutlet UIImageView *phoneNumSelectImage;
 
+//业务公司名称
+@property (strong, nonatomic) IBOutlet UIView *businessCompanyNameView;
+@property (weak, nonatomic) IBOutlet UIImageView *companyNameImage;
+@property (weak, nonatomic) IBOutlet UILabel *companyNameLabel;
+@property (weak, nonatomic) IBOutlet UITextField *companyNametextField;
+
 //业务类型
 @property (strong, nonatomic) IBOutlet UIView *marketCategoryView;
 @property (weak, nonatomic) IBOutlet UILabel *marketCategoryLabel;
@@ -91,6 +97,7 @@
     self.buttonSelectBgImage = [self.buttonSelectBgImage resizableImageWithCapInsets:UIEdgeInsetsMake(10.0f, 10.0f, 10.0f, 10.0f) resizingMode:UIImageResizingModeStretch];
     [self.scrollView addSubview:self.nameView];
     [self.scrollView addSubview:self.phoneNumView];
+    [self.scrollView addSubview:self.businessCompanyNameView];
     [self.scrollView addSubview:self.marketCategoryView];
     [self.scrollView addSubview:self.monenyView];
     [self.scrollView addSubview:self.areaView];
@@ -197,9 +204,37 @@
     .heightIs(kButtonHeight);
     [self.phoneNumView setupAutoHeightWithBottomView:self.phoneNumTextField bottomMargin:ktopToView];
     
+    //公司名称
+    self.businessCompanyNameView.sd_layout
+    .topSpaceToView(self.phoneNumView, kLeftToView)
+    .leftSpaceToView(self.scrollView, 0.0f)
+    .rightSpaceToView(self.scrollView, 0.0f);
+    
+    self.companyNameLabel.sd_layout
+    .topSpaceToView(self.businessCompanyNameView, ktopToView)
+    .leftSpaceToView(self.businessCompanyNameView, kLeftToView)
+    .heightIs(ceilf(self.phoneNumLabel.font.lineHeight));
+    [self.companyNameLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
+    
+    self.companyNameImage.sd_layout
+    .leftSpaceToView(self.companyNameLabel, kLeftToView)
+    .centerYEqualToView(self.companyNameLabel)
+    .widthIs(size.width)
+    .heightIs(size.height);
+    
+    self.companyNametextField.sd_layout
+    .leftEqualToView(self.companyNameLabel)
+    .rightSpaceToView(self.businessCompanyNameView, kLeftToView)
+    .topSpaceToView(self.companyNameLabel, ktopToView)
+    .heightIs(kCategoryButtonHeight);
+    
+    
+    [self.businessCompanyNameView setupAutoHeightWithBottomView:self.companyNametextField bottomMargin:ktopToView];
+    
+
     //业务类型
     self.marketCategoryView.sd_layout
-    .topSpaceToView(self.phoneNumView, kLeftToView)
+    .topSpaceToView(self.businessCompanyNameView, kLeftToView)
     .leftSpaceToView(self.scrollView, 0.0f)
     .rightSpaceToView(self.scrollView, 0.0f);
     
@@ -337,6 +372,12 @@
 }
 - (void)initView
 {
+    self.companyNameLabel.textColor = Color(@"161616");
+    self.companyNameLabel.font = FontFactor(13.0f);
+    self.companyNametextField.font = FontFactor(15.0f);
+    self.companyNametextField.leftView = [[UIView alloc]initWithFrame:CGRectMake(0.0f, 0.0f, 6.0f, 0.0f)];
+    self.companyNametextField.leftViewMode = UITextFieldViewModeAlways;
+    [self.companyNametextField setValue:[UIColor colorWithHexString:@"bebebe"] forKeyPath:@"_placeholderLabel.textColor"];
     self.monenyTextField.keyboardType = UIKeyboardTypeNumberPad;
     self.phoneNumTextField.keyboardType = UIKeyboardTypeNumberPad;
     self.nextButton.titleLabel.font = FontFactor(19.0f);
@@ -380,6 +421,8 @@
     [self.areaSelectButton setTitleColor:Color(@"161616") forState:UIControlStateNormal];
     self.areaNewSelectButton.titleLabel.font = FontFactor(15.0f);
     [self.areaNewSelectButton setTitleColor:Color(@"0078ee") forState:UIControlStateNormal];
+    self.companyNametextField.layer.borderColor = Color(@"cecece").CGColor;
+    self.companyNametextField.layer.borderWidth = 1.0 / scale;
     self.nameTextField.layer.borderColor = Color(@"cecece").CGColor;
     self.nameTextField.layer.borderWidth = 1.0f / scale;
     
@@ -462,6 +505,9 @@
     if (self.phoneNumTextField.text.length == 0) {
         [Hud showMessageWithText:@"请填写联系方式"];
         return NO;
+    }
+    if (self.companyNametextField.text.length == 0) {
+        [Hud showMessageWithText:@"请填写公司名称"];
     }
     if (self.marketCategoryButtonView.selectedArray.count == 0) {
         [Hud showMessageWithText:@"请选择业务类型"];

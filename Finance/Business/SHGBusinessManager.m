@@ -11,6 +11,7 @@
 #import "SHGBusinessScrollView.h"
 #import "SHGBusinessListViewController.h"
 #import "SHGBusinessSendSuccessViewController.h"
+#import "SHGBusinessShareToDynamicViewController.h"
 @interface SHGBusinessManager()
 
 @property (strong, nonatomic) NSArray *secondListArray;
@@ -388,20 +389,41 @@
         [self shareToFriendController:controller content:friendContent];
     }];
     NSArray *shareArray = nil;
-    if ([WXApi isWXAppSupportApi]) {
-        if ([QQApiInterface isQQSupportApi]) {
-            shareArray = [ShareSDK customShareListWithType: item0, item1, SHARE_TYPE_NUMBER(ShareTypeQQ), item2, item3, nil];
+    if ([controller isKindOfClass:[SHGBusinessSendSuccessViewController class]]) {
+        id<ISSShareActionSheetItem> item4 = [ShareSDK shareActionSheetItemWithTitle:@"动态" icon:[UIImage imageNamed:@"圈子图标"] clickHandler:^{
+            [self businessShareToDynamicController:controller object:object];
+        }];
+        if ([WXApi isWXAppSupportApi]) {
+            if ([QQApiInterface isQQSupportApi]) {
+                shareArray = [ShareSDK customShareListWithType: item0, item1, SHARE_TYPE_NUMBER(ShareTypeQQ), item2, item3,item4, nil];
+            } else{
+                shareArray = [ShareSDK customShareListWithType: item0, item1, item2, item3,item4, nil];
+            }
         } else{
-            shareArray = [ShareSDK customShareListWithType: item0, item1, item2, item3, nil];
+            if ([QQApiInterface isQQSupportApi]) {
+                shareArray = [ShareSDK customShareListWithType: SHARE_TYPE_NUMBER(ShareTypeQQ), item2, item3,item4, nil];
+            } else{
+                shareArray = [ShareSDK customShareListWithType: item2, item3,item4, nil];
+            }
         }
     } else{
-        if ([QQApiInterface isQQSupportApi]) {
-            shareArray = [ShareSDK customShareListWithType: SHARE_TYPE_NUMBER(ShareTypeQQ), item2, item3, nil];
+        if ([WXApi isWXAppSupportApi]) {
+            if ([QQApiInterface isQQSupportApi]) {
+                shareArray = [ShareSDK customShareListWithType: item0, item1, SHARE_TYPE_NUMBER(ShareTypeQQ), item2, item3, nil];
+            } else{
+                shareArray = [ShareSDK customShareListWithType: item0, item1, item2, item3, nil];
+            }
         } else{
-            shareArray = [ShareSDK customShareListWithType: item2, item3, nil];
+            if ([QQApiInterface isQQSupportApi]) {
+                shareArray = [ShareSDK customShareListWithType: SHARE_TYPE_NUMBER(ShareTypeQQ), item2, item3, nil];
+            } else{
+                shareArray = [ShareSDK customShareListWithType: item2, item3, nil];
+            }
         }
+
     }
-    NSString *shareUrl = request;
+    
+       NSString *shareUrl = request;
 
     //构造分享内容
     id<ISSContent> publishContent = [ShareSDK content:shareContent defaultContent:shareContent image:image title:SHARE_TITLE url:shareUrl description:shareContent mediaType:SHARE_TYPE];
@@ -419,6 +441,13 @@
         }
     }];
 }
+//分享到动态
+- (void)businessShareToDynamicController:(UIViewController *)controller object:(SHGBusinessObject *)object
+{
+    SHGBusinessShareToDynamicViewController *viewController = [[SHGBusinessShareToDynamicViewController alloc] init];
+    [controller.navigationController pushViewController:viewController animated:YES];
+}
+
 //分享给好友
 - (void)shareToFriendController:(UIViewController *)controller content:(NSString *)content
 {

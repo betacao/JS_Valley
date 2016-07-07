@@ -672,6 +672,8 @@
 		985CBDBA1C03FD0B002B3D9D /* SHGCardTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 985CBDB81C03FD0B002B3D9D /* SHGCardTableViewCell.m */; };
 		985CBDBB1C03FD0B002B3D9D /* SHGCardTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 985CBDB91C03FD0B002B3D9D /* SHGCardTableViewCell.xib */; };
 		985CBDC31C04042C002B3D9D /* SHGCollectCardClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 985CBDC21C04042C002B3D9D /* SHGCollectCardClass.m */; };
+		98621FEC1D2CB2780063CF1B /* SHGBusinessShareToDynamicViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98621FEA1D2CB2780063CF1B /* SHGBusinessShareToDynamicViewController.m */; };
+		98621FED1D2CB2780063CF1B /* SHGBusinessShareToDynamicViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98621FEB1D2CB2780063CF1B /* SHGBusinessShareToDynamicViewController.xib */; };
 		986C89F21CD1D63D001AF201 /* SHGBusinessSendSuccessViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 986C89F01CD1D63D001AF201 /* SHGBusinessSendSuccessViewController.m */; };
 		986C89F31CD1D63D001AF201 /* SHGBusinessSendSuccessViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 986C89F11CD1D63D001AF201 /* SHGBusinessSendSuccessViewController.xib */; };
 		986DC1431D0EB92C0027EE15 /* NSCharacterSet+Common.m in Sources */ = {isa = PBXBuildFile; fileRef = 986DC1421D0EB92C0027EE15 /* NSCharacterSet+Common.m */; };
@@ -1909,6 +1911,9 @@
 		985CBDB91C03FD0B002B3D9D /* SHGCardTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGCardTableViewCell.xib; sourceTree = "<group>"; };
 		985CBDC11C04042C002B3D9D /* SHGCollectCardClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGCollectCardClass.h; sourceTree = "<group>"; };
 		985CBDC21C04042C002B3D9D /* SHGCollectCardClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGCollectCardClass.m; sourceTree = "<group>"; };
+		98621FE91D2CB2780063CF1B /* SHGBusinessShareToDynamicViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGBusinessShareToDynamicViewController.h; sourceTree = "<group>"; };
+		98621FEA1D2CB2780063CF1B /* SHGBusinessShareToDynamicViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGBusinessShareToDynamicViewController.m; sourceTree = "<group>"; };
+		98621FEB1D2CB2780063CF1B /* SHGBusinessShareToDynamicViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGBusinessShareToDynamicViewController.xib; sourceTree = "<group>"; };
 		986C89EF1CD1D63D001AF201 /* SHGBusinessSendSuccessViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SHGBusinessSendSuccessViewController.h; path = ../Classes/Circle/Controllers/SHGBusinessSendSuccessViewController.h; sourceTree = "<group>"; };
 		986C89F01CD1D63D001AF201 /* SHGBusinessSendSuccessViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SHGBusinessSendSuccessViewController.m; path = ../Classes/Circle/Controllers/SHGBusinessSendSuccessViewController.m; sourceTree = "<group>"; };
 		986C89F11CD1D63D001AF201 /* SHGBusinessSendSuccessViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SHGBusinessSendSuccessViewController.xib; path = ../Classes/Circle/Controllers/SHGBusinessSendSuccessViewController.xib; sourceTree = "<group>"; };
@@ -4745,6 +4750,9 @@
 				986C89EF1CD1D63D001AF201 /* SHGBusinessSendSuccessViewController.h */,
 				986C89F01CD1D63D001AF201 /* SHGBusinessSendSuccessViewController.m */,
 				986C89F11CD1D63D001AF201 /* SHGBusinessSendSuccessViewController.xib */,
+				98621FE91D2CB2780063CF1B /* SHGBusinessShareToDynamicViewController.h */,
+				98621FEA1D2CB2780063CF1B /* SHGBusinessShareToDynamicViewController.m */,
+				98621FEB1D2CB2780063CF1B /* SHGBusinessShareToDynamicViewController.xib */,
 			);
 			name = Business;
 			path = Finance/Business;
@@ -5392,6 +5400,7 @@
 				61E83CF11AF7C78E00703651 /* 发送按钮-按下@2x.png in Resources */,
 				61E83D811AF7C78E00703651 /* 意见反馈@3x.png in Resources */,
 				408D8B041AF8618C0055810C /* VoiceSearchFeedback008@2x.png in Resources */,
+				98621FED1D2CB2780063CF1B /* SHGBusinessShareToDynamicViewController.xib in Resources */,
 				61D62C071ADE3E85002DD395 /* 2.png in Resources */,
 				408D8B021AF8618C0055810C /* VoiceSearchFeedback007@2x.png in Resources */,
 				408D8B091AF8618C0055810C /* VoiceSearchFeedback011.png in Resources */,
@@ -5917,6 +5926,7 @@
 				F916B5FE1D0D395300AE217F /* CTTextStyleModel.m in Sources */,
 				F93FCBC31C856D5A004E356E /* NSDate+Customized.m in Sources */,
 				6187D2FA1AF1C693008E1D21 /* XHMessageTextView.m in Sources */,
+				98621FEC1D2CB2780063CF1B /* SHGBusinessShareToDynamicViewController.m in Sources */,
 				98E04A061CAE11DF006A8773 /* SHGBondInvestNextViewController.m in Sources */,
 				980D0D9C1C9A41BC00351F8C /* SHGCircleCollectionViewController.m in Sources */,
 				98DCFE0C1D05662D00F6C16A /* SHGBusinessNewDetailViewController.m in Sources */,

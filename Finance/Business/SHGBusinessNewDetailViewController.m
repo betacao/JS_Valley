@@ -833,12 +833,14 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
 
 - (void)loadCompanyView
 {
-    if (self.responseObject.companyDetail.length > 0) {
-        self.companyView.hidden = NO;
-        self.companyLabel.text = @"企业信息";
+     self.companyLabel.text = @"企业信息";
+     self.companyTextView.text = @"江苏生活谷信息科技有限责任公司";
+//    if (self.responseObject.companyDetail.length > 0) {
+//        self.companyView.hidden = NO;
+//        self.companyLabel.text = @"企业信息";
         NSMutableParagraphStyle * contentParagraphStyle = [[NSMutableParagraphStyle alloc] init];
         [contentParagraphStyle setLineSpacing:MarginFactor(5.0f)];
-        NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:self.responseObject.companyDetail attributes:@{NSFontAttributeName:FontFactor(14.0f), NSForegroundColorAttributeName: Color(@"3a3a3a"), NSParagraphStyleAttributeName:contentParagraphStyle}];
+        NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:@"江苏生活谷信息科技有限责任公司" attributes:@{NSFontAttributeName:FontFactor(14.0f), NSForegroundColorAttributeName: Color(@"3a3a3a"), NSParagraphStyleAttributeName:contentParagraphStyle}];
         self.companyTextView.attributedText = attributedString;
         
         CGSize size = [self.companyTextView sizeThatFits:CGSizeMake(SCREENWIDTH - 2 * MarginFactor(12.0f), CGFLOAT_MAX)];
@@ -847,18 +849,18 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
         .rightSpaceToView(self.companyView, MarginFactor(14.0f))
         .topSpaceToView(self.companyCenterLineView, MarginFactor(15.0f))
         .heightIs(size.height);
-    } else{
-        self.companyView.hidden = YES;
-        self.BPView.sd_resetLayout
-        .leftSpaceToView(self.headerView, 0.0f)
-        .rightSpaceToView(self.headerView, 0.0f)
-        .topSpaceToView(self.secondGrayView, 0.0f);
-        
-        self.representView.sd_resetLayout
-        .leftSpaceToView(self.headerView, 0.0f)
-        .rightSpaceToView(self.headerView, 0.0f)
-        .topSpaceToView(self.secondGrayView, 0.0f);
-    }
+//    } else{
+//        self.companyView.hidden = YES;
+//        self.BPView.sd_resetLayout
+//        .leftSpaceToView(self.headerView, 0.0f)
+//        .rightSpaceToView(self.headerView, 0.0f)
+//        .topSpaceToView(self.secondGrayView, 0.0f);
+//        
+//        self.representView.sd_resetLayout
+//        .leftSpaceToView(self.headerView, 0.0f)
+//        .rightSpaceToView(self.headerView, 0.0f)
+//        .topSpaceToView(self.secondGrayView, 0.0f);
+//    }
 }
 
 - (void)pdfButtonClick:(SHGBusinessCategoryButton *)btn
