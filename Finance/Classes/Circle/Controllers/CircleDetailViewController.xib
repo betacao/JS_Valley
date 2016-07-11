@@ -25,16 +25,17 @@
                 <outlet property="lblTime" destination="nr5-PN-i9k" id="rYI-57-daI"/>
                 <outlet property="lbldepartName" destination="Scx-sD-Z3A" id="x0b-lT-v5E"/>
                 <outlet property="lineView" destination="XRh-HR-PlL" id="yoq-jd-uHV"/>
-                <outlet property="listTable" destination="4Dg-M9-dvf" id="k3v-po-Yo0"/>
                 <outlet property="nickName" destination="zks-5y-PN6" id="yRz-R7-tg0"/>
                 <outlet property="personView" destination="XOQ-nE-ewr" id="4h8-k0-k9L"/>
                 <outlet property="praisebtn" destination="G5n-2p-xA3" id="J1u-yS-ec9"/>
                 <outlet property="scrollPraise" destination="aWm-Lk-eH9" id="KIK-W2-uD9"/>
+                <outlet property="tableView" destination="4Dg-M9-dvf" id="uKR-53-xXO"/>
                 <outlet property="titleLabel" destination="nN6-7N-7cV" id="itJ-CU-Sst"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
                 <outlet property="viewHeader" destination="Zk8-gE-mjJ" id="omM-Qh-SA3"/>
                 <outlet property="viewInput" destination="QyD-ga-fkw" id="FTy-DG-HJn"/>
                 <outlet property="viewPraise" destination="ffx-YA-YXJ" id="Kft-j5-qR0"/>
+                <outlet property="webView" destination="duR-by-bUo" id="myV-UA-cvX"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -159,34 +160,26 @@
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                 </view>
-                <view contentMode="scaleToFill" id="ffx-YA-YXJ">
-                    <rect key="frame" x="14" y="116" width="292" height="55"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="nN6-7N-7cV">
+                    <rect key="frame" x="139" y="114" width="42" height="21"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <subviews>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="comment_backimage" id="AC2-KC-3Lg">
-                            <rect key="frame" x="0.0" y="0.0" width="292" height="55"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        </imageView>
-                        <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="aWm-Lk-eH9">
-                            <rect key="frame" x="36" y="1" width="220" height="53"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <connections>
-                                <outlet property="delegate" destination="-1" id="Wo2-da-g0q"/>
-                            </connections>
-                        </scrollView>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="G5n-2p-xA3">
-                            <rect key="frame" x="8" y="16" width="25" height="23"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <state key="normal" image="commentWei_zan"/>
-                        </button>
-                        <view contentMode="scaleToFill" id="XRh-HR-PlL">
-                            <rect key="frame" x="0.0" y="54" width="292" height="1"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <color key="backgroundColor" red="0.90196078431372551" green="0.90588235294117647" blue="0.90980392156862744" alpha="1" colorSpace="calibratedRGB"/>
-                        </view>
-                    </subviews>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <view contentMode="scaleToFill" id="qYe-1m-FgM" customClass="CTTextDisplayView">
+                    <rect key="frame" x="0.0" y="-159" width="320" height="568"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
+                <webView contentMode="scaleToFill" id="duR-by-bUo">
+                    <rect key="frame" x="40" y="61" width="240" height="128"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="deviceRGB"/>
+                    <connections>
+                        <outlet property="delegate" destination="-1" id="oZd-uQ-msv"/>
+                    </connections>
+                </webView>
                 <view contentMode="scaleToFill" id="HFs-C6-FpA">
                     <rect key="frame" x="14" y="73" width="292" height="34"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -234,16 +227,32 @@
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="nN6-7N-7cV">
-                    <rect key="frame" x="139" y="114" width="42" height="21"/>
+                <view contentMode="scaleToFill" id="ffx-YA-YXJ">
+                    <rect key="frame" x="14" y="116" width="292" height="55"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                    <nil key="highlightedColor"/>
-                </label>
-                <view contentMode="scaleToFill" id="qYe-1m-FgM" customClass="CTTextDisplayView">
-                    <rect key="frame" x="0.0" y="-159" width="320" height="568"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="comment_backimage" id="AC2-KC-3Lg">
+                            <rect key="frame" x="0.0" y="0.0" width="292" height="55"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        </imageView>
+                        <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="aWm-Lk-eH9">
+                            <rect key="frame" x="36" y="1" width="220" height="53"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <connections>
+                                <outlet property="delegate" destination="-1" id="Wo2-da-g0q"/>
+                            </connections>
+                        </scrollView>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="G5n-2p-xA3">
+                            <rect key="frame" x="8" y="16" width="25" height="23"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <state key="normal" image="commentWei_zan"/>
+                        </button>
+                        <view contentMode="scaleToFill" id="XRh-HR-PlL">
+                            <rect key="frame" x="0.0" y="54" width="292" height="1"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="backgroundColor" red="0.90196078431372551" green="0.90588235294117647" blue="0.90980392156862744" alpha="1" colorSpace="calibratedRGB"/>
+                        </view>
+                    </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
             </subviews>

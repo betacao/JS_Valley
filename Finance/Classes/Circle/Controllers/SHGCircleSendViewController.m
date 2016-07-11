@@ -289,6 +289,10 @@
 - (void)rightItemClick:(id)sender
 {
     [self.textView resignFirstResponder];
+    if (self.textField.text.length == 0) {
+        [Hud showMessageWithText:@"标题不能为空"];
+        return;
+    }
     if ((self.imageArray.count == 0 && self.textView.text.validLength.length == 0)){
         [Hud showMessageWithText:@"说点什么吧"];
         return;
@@ -347,9 +351,9 @@
             size = [NSString stringWithFormat:@"%@,%@",size,imageSize];
         }
         size = [size substringFromIndex:1];
-        param  = @{@"uid":UID, @"detail":self.textView.text, @"photos":photoStr?:@"", @"type":@"photo", @"sizes":size, @"currCity":cityName};
+        param  = @{@"uid":UID, @"detail":self.textView.text, @"photos":photoStr?:@"", @"type":@"photo", @"sizes":size, @"currCity":cityName, @"title":self.textField.text};
     } else{
-        param = @{@"uid":UID, @"detail":self.textView.text, @"type":@"", @"sizes":@"", @"currCity":cityName};
+        param = @{@"uid":UID, @"detail":self.textView.text, @"type":@"", @"sizes":@"", @"currCity":cityName, @"title":self.textField.text};
     }
 
     [MOCHTTPRequestOperationManager postWithURL:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttpCircle,actioncircle] class:nil parameters:param success:^(MOCHTTPResponse *response) {

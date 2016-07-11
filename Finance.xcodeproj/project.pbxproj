@@ -257,8 +257,6 @@
 		610FF0451AD621500027EBA6 /* PopoverListObj.m in Sources */ = {isa = PBXBuildFile; fileRef = 610FF0441AD621500027EBA6 /* PopoverListObj.m */; };
 		611B8CD71AFD5C09009CB21F /* ReplyTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 611B8CD51AFD5C09009CB21F /* ReplyTableViewCell.m */; };
 		611B8CD81AFD5C09009CB21F /* ReplyTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 611B8CD61AFD5C09009CB21F /* ReplyTableViewCell.xib */; };
-		613CAC511AFFFFDE00EA8C23 /* CircleLinkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 613CAC4F1AFFFFDE00EA8C23 /* CircleLinkViewController.m */; };
-		613CAC521AFFFFDE00EA8C23 /* CircleLinkViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 613CAC501AFFFFDE00EA8C23 /* CircleLinkViewController.xib */; };
 		613CAC551B000F0A00EA8C23 /* 未收藏@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 613CAC531B000F0A00EA8C23 /* 未收藏@2x.png */; };
 		613CAC561B000F0A00EA8C23 /* 未收藏@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 613CAC541B000F0A00EA8C23 /* 未收藏@3x.png */; };
 		613CAC581B000F1800EA8C23 /* 消息-选中@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 613CAC571B000F1800EA8C23 /* 消息-选中@2x.png */; };
@@ -946,8 +944,6 @@
 		F9BF4E8E1CB6332700D0155C /* SHGBusinessSelectCategoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9BF4E8C1CB6332700D0155C /* SHGBusinessSelectCategoryViewController.m */; };
 		F9BF4E8F1CB6332700D0155C /* SHGBusinessSelectCategoryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9BF4E8D1CB6332700D0155C /* SHGBusinessSelectCategoryViewController.xib */; };
 		F9C41F901C9FBB0400962A49 /* SHGProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = F9C41F8F1C9FBB0400962A49 /* SHGProgressHUD.m */; };
-		F9CA56A81D2D1A8400972B10 /* SHGCircleDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9CA56A61D2D1A8400972B10 /* SHGCircleDetailViewController.m */; };
-		F9CA56A91D2D1A8400972B10 /* SHGCircleDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9CA56A71D2D1A8400972B10 /* SHGCircleDetailViewController.xib */; };
 		F9D296D61C8F02F100A1446C /* SHGMainPageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F9D296D41C8F02F100A1446C /* SHGMainPageTableViewCell.m */; };
 		F9D296D71C8F02F100A1446C /* SHGMainPageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9D296D51C8F02F100A1446C /* SHGMainPageTableViewCell.xib */; };
 		F9D296DC1C8FCB9C00A1446C /* SHGExtendTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F9D296DA1C8FCB9C00A1446C /* SHGExtendTableViewCell.m */; };
@@ -1292,9 +1288,6 @@
 		611B8CD41AFD5C09009CB21F /* ReplyTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReplyTableViewCell.h; sourceTree = "<group>"; };
 		611B8CD51AFD5C09009CB21F /* ReplyTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReplyTableViewCell.m; sourceTree = "<group>"; };
 		611B8CD61AFD5C09009CB21F /* ReplyTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ReplyTableViewCell.xib; sourceTree = "<group>"; };
-		613CAC4E1AFFFFDE00EA8C23 /* CircleLinkViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CircleLinkViewController.h; sourceTree = "<group>"; };
-		613CAC4F1AFFFFDE00EA8C23 /* CircleLinkViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CircleLinkViewController.m; sourceTree = "<group>"; };
-		613CAC501AFFFFDE00EA8C23 /* CircleLinkViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CircleLinkViewController.xib; sourceTree = "<group>"; };
 		613CAC531B000F0A00EA8C23 /* 未收藏@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "未收藏@2x.png"; sourceTree = "<group>"; };
 		613CAC541B000F0A00EA8C23 /* 未收藏@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "未收藏@3x.png"; sourceTree = "<group>"; };
 		613CAC571B000F1800EA8C23 /* 消息-选中@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "消息-选中@2x.png"; sourceTree = "<group>"; };
@@ -2287,9 +2280,6 @@
 		F9BF4E8D1CB6332700D0155C /* SHGBusinessSelectCategoryViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGBusinessSelectCategoryViewController.xib; sourceTree = "<group>"; };
 		F9C41F8E1C9FBB0400962A49 /* SHGProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGProgressHUD.h; sourceTree = "<group>"; };
 		F9C41F8F1C9FBB0400962A49 /* SHGProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGProgressHUD.m; sourceTree = "<group>"; };
-		F9CA56A51D2D1A8400972B10 /* SHGCircleDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGCircleDetailViewController.h; sourceTree = "<group>"; };
-		F9CA56A61D2D1A8400972B10 /* SHGCircleDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGCircleDetailViewController.m; sourceTree = "<group>"; };
-		F9CA56A71D2D1A8400972B10 /* SHGCircleDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGCircleDetailViewController.xib; sourceTree = "<group>"; };
 		F9D296D31C8F02F100A1446C /* SHGMainPageTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGMainPageTableViewCell.h; sourceTree = "<group>"; };
 		F9D296D41C8F02F100A1446C /* SHGMainPageTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGMainPageTableViewCell.m; sourceTree = "<group>"; };
 		F9D296D51C8F02F100A1446C /* SHGMainPageTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGMainPageTableViewCell.xib; sourceTree = "<group>"; };
@@ -3030,15 +3020,9 @@
 				F95F42AC1C8E993C003EDA30 /* SHGCircleSendViewController.h */,
 				F95F42AD1C8E993C003EDA30 /* SHGCircleSendViewController.m */,
 				F95F42AE1C8E993C003EDA30 /* SHGCircleSendViewController.xib */,
-				F9CA56A51D2D1A8400972B10 /* SHGCircleDetailViewController.h */,
-				F9CA56A61D2D1A8400972B10 /* SHGCircleDetailViewController.m */,
-				F9CA56A71D2D1A8400972B10 /* SHGCircleDetailViewController.xib */,
 				6145FF151AE4A3450074AB49 /* CircleDetailViewController.h */,
 				6145FF161AE4A3450074AB49 /* CircleDetailViewController.m */,
 				6145FF171AE4A3450074AB49 /* CircleDetailViewController.xib */,
-				613CAC4E1AFFFFDE00EA8C23 /* CircleLinkViewController.h */,
-				613CAC4F1AFFFFDE00EA8C23 /* CircleLinkViewController.m */,
-				613CAC501AFFFFDE00EA8C23 /* CircleLinkViewController.xib */,
 				B04355CB1B4BD3560033BBBF /* LinkViewController.h */,
 				B04355CC1B4BD3560033BBBF /* LinkViewController.m */,
 				B04355CD1B4BD3560033BBBF /* LinkViewController.xib */,
@@ -5209,7 +5193,6 @@
 				B080FEA01B81E30100426579 /* emoji_face_n.png in Resources */,
 				615234B21B0E146B00011EAC /* 一度跳转页面@3x.jpg in Resources */,
 				408D8AEC1AF8618C0055810C /* chatListCellHead@2x.png in Resources */,
-				F9CA56A91D2D1A8400972B10 /* SHGCircleDetailViewController.xib in Resources */,
 				616405431B29FE920071A18D /* 通讯录更新@3x.png in Resources */,
 				408D8B071AF8618C0055810C /* VoiceSearchFeedback010.png in Resources */,
 				408D8B3F1AF8618C0055810C /* chatBar_faceSelected.png in Resources */,
@@ -5585,7 +5568,6 @@
 				61E83D981AF7C78E00703651 /* 接受按钮-默认@3x.png in Resources */,
 				40302B1B1AEF61B600F22EB6 /* MyTeamViewController.xib in Resources */,
 				F916B6321D0D395300AE217F /* photo@3x.png in Resources */,
-				613CAC521AFFFFDE00EA8C23 /* CircleLinkViewController.xib in Resources */,
 				61E83D121AF7C78E00703651 /* 取消-按下@2x.png in Resources */,
 				61E83D9D1AF7C78E00703651 /* 选中好友@3x.png in Resources */,
 				F916B6231D0D395300AE217F /* d_jiyan@3x.png in Resources */,
@@ -5995,7 +5977,6 @@
 				985088191BF424F800FE9B04 /* SHGTableHeaderView.m in Sources */,
 				569C6D401B7CB5B300AD59C3 /* SetPassWordViewController.m in Sources */,
 				6187D2CB1AF1C693008E1D21 /* ContactView.m in Sources */,
-				613CAC511AFFFFDE00EA8C23 /* CircleLinkViewController.m in Sources */,
 				5331DF311AFC21BF00E035B8 /* MessageTableViewCell.m in Sources */,
 				F9C41F901C9FBB0400962A49 /* SHGProgressHUD.m in Sources */,
 				F93FCBC51C856D5A004E356E /* NSString+Check.m in Sources */,
@@ -6026,7 +6007,6 @@
 				F90684921CBF33F00003B123 /* SHGBusinessSearchViewController.m in Sources */,
 				6187D30F1AF1C693008E1D21 /* SRRefreshView.m in Sources */,
 				F9A2EF871CF3EE180054AE1C /* SHGDiscoveryManager.m in Sources */,
-				F9CA56A81D2D1A8400972B10 /* SHGCircleDetailViewController.m in Sources */,
 				40302B151AEF5C3500F22EB6 /* AddAddressViewController.m in Sources */,
 				6187D2E21AF1C693008E1D21 /* EMChatLocationBubbleView.m in Sources */,
 				980D0D591C99026E00351F8C /* SHGCardCollectionViewController.m in Sources */,

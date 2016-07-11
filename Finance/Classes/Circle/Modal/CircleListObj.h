@@ -67,6 +67,7 @@
  @since 1.8.4
  */
 @property (strong, nonatomic)  NSString *groupPostTitle;
+@property (strong, nonatomic)  NSString *groupPostUrl;
 
 
 @end

@@ -23,7 +23,6 @@
 #import "SHGRecommendTableViewCell.h"
 #import "EMSearchBar.h"
 #import "SHGNewFriendTableViewCell.h"
-#import "SHGCircleDetailViewController.h"
 
 
 @interface SHGHomeViewController ()<CircleListDelegate, UISearchBarDelegate>
@@ -652,17 +651,12 @@
                 [self.navigationController pushViewController:controller animated:YES];
             } else {
                 [[SHGGloble sharedGloble] recordUserAction:object.rid type:@"dynamic_viewAllComment"];
-                if ([object.postType isEqualToString:@"normalpc"]) {
-                    SHGCircleDetailViewController *controller = [[SHGCircleDetailViewController alloc] init];
-                    [self.navigationController pushViewController:controller animated:YES];
-                } else{
-                    CircleDetailViewController *controller = [[CircleDetailViewController alloc] init];
-                    controller.delegate = [SHGUnifiedTreatment sharedTreatment];
-                    controller.rid = object.rid;
-                    NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:object.praisenum, kPraiseNum,object.sharenum,kShareNum,object.cmmtnum,kCommentNum, nil];
-                    controller.itemInfoDictionary = dictionary;
-                    [self.navigationController pushViewController:controller animated:YES];
-                }
+                CircleDetailViewController *controller = [[CircleDetailViewController alloc] init];
+                controller.delegate = [SHGUnifiedTreatment sharedTreatment];
+                controller.rid = object.rid;
+                NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:object.praisenum, kPraiseNum,object.sharenum,kShareNum,object.cmmtnum,kCommentNum, nil];
+                controller.itemInfoDictionary = dictionary;
+                [self.navigationController pushViewController:controller animated:YES];
             }
         }
     }

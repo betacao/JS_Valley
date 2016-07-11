@@ -13,7 +13,6 @@
 #import "SDPhotoItem.h"
 #import "SHGPersonalViewController.h"
 #import "CircleListDelegate.h"
-#import "CircleLinkViewController.h"
 #import "ReplyTableViewCell.h"
 #import "CTTextDisplayView.h"
 #import "SHGAuthenticationView.h"
@@ -23,7 +22,7 @@
 #define PRAISE_WIDTH 28.0f
 #define kItemMargin 7.0f * XFACTOR
 
-@interface CircleDetailViewController ()<CircleListDelegate, ReplyDelegate, CTTextDisplayViewDelegate>
+@interface CircleDetailViewController ()<CircleListDelegate, ReplyDelegate, CTTextDisplayViewDelegate, UIWebViewDelegate>
 {
     UIControl *backView;
     UIView *PickerBackView;
@@ -42,11 +41,12 @@
 @property (weak, nonatomic) IBOutlet SHGHorizontalTitleImageButton *btnDelete;
 @property (weak, nonatomic) IBOutlet UIView *viewPraise;
 @property (weak, nonatomic) IBOutlet UIButton *praisebtn;
-@property (weak, nonatomic) IBOutlet UITableView *listTable;
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIView *actionView;
 
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet CTTextDisplayView *lblContent;
+@property (weak, nonatomic) IBOutlet UIWebView *webView;
 @property (weak, nonatomic) IBOutlet UIButton *btnAttention;
 @property (weak, nonatomic) IBOutlet UILabel *lblTime;
 @property (weak, nonatomic) IBOutlet SHGAuthenticationView *authenticationView;
@@ -97,8 +97,9 @@
 
 - (void)initView
 {
-    self.listTable.tableFooterView = [[UIView alloc] init];
-    self.listTable.backgroundColor = [UIColor whiteColor];
+    [self.webView.scrollView addObserver:self forKeyPath:@"contentSize" options:NSKeyValueObservingOptionNew context:nil];
+    self.tableView.tableFooterView = [[UIView alloc] init];
+    self.tableView.backgroundColor = [UIColor whiteColor];
 
     self.nickName.font = kMainNameFont;
     self.nickName.textColor = kMainNameColor;
@@ -134,8 +135,12 @@
     self.titleLabel.textColor = kMainTitleColor;
     self.titleLabel.font = kMainTitleFont;
 
+    self.webView.scrollView.bounces = NO;
+    self.webView.hidden = YES;
+
     CTTextStyleModel *model = [[CTTextStyleModel alloc] init];
     model.numberOfLines = -1;
+    model.lineSpace = MarginFactor(10.0f);
     self.lblContent.styleModel = model;
     self.lblContent.delegate = self;
 
@@ -188,7 +193,7 @@
     .leftSpaceToView(self.faceBtn, MarginFactor(10.0f))
     .centerYEqualToView(self.viewInput);
 
-    self.listTable.sd_layout
+    self.tableView.sd_layout
     .topSpaceToView(self.view, 0.0f)
     .leftSpaceToView(self.view, 0.0f)
     .rightSpaceToView(self.view, 0.0f)
@@ -246,11 +251,17 @@
     .widthIs(attentionSize.width )
     .heightIs(attentionSize.height);
 
-    self.titleLabel.sd_layout
+    self.webView.sd_layout
     .topSpaceToView(self.personView, 0.0f)
     .leftSpaceToView(self.viewHeader, kMainItemLeftMargin)
     .rightSpaceToView(self.viewHeader, kMainItemLeftMargin)
-    .autoHeightRatio(0.0f);
+    .heightIs(1.0f);
+
+    self.titleLabel.sd_layout
+    .topSpaceToView(self.personView, self.lblContent.styleModel.lineSpace)
+    .leftSpaceToView(self.viewHeader, kMainItemLeftMargin)
+    .rightSpaceToView(self.viewHeader, kMainItemLeftMargin)
+    .heightIs(0.0f);
 
     self.lblContent.sd_layout
     .topSpaceToView(self.titleLabel, 0.0f)
@@ -258,13 +269,8 @@
     .rightSpaceToView(self.viewHeader, kMainItemLeftMargin)
     .heightIs(0.0f);
 
-    self.photoView = [[UIView alloc]init];
+    self.photoView = [[UIView alloc] init];
     [self.viewHeader addSubview:self.photoView];
-    self.photoView.sd_layout
-    .leftSpaceToView(self.viewHeader, kMainItemLeftMargin)
-    .rightSpaceToView(self.viewHeader, kMainItemLeftMargin)
-    .topSpaceToView(self.lblContent, 0.0f)
-    .heightIs(0.0f);
 
     self.btnShare.sd_layout
     .rightSpaceToView(self.actionView, 0.0f)
@@ -314,7 +320,7 @@
     self.viewHeader.hidden = YES;
 
     [self.viewHeader setupAutoHeightWithBottomView:self.viewPraise bottomMargin:0.0f];
-    self.listTable.tableHeaderView = self.viewHeader;
+    self.tableView.tableHeaderView = self.viewHeader;
 
 }
 
@@ -380,6 +386,8 @@
     self.responseObject.businessStatus = [[dic objectForKey:@"businessstatus"] boolValue];
     self.responseObject.userid = [dic objectForKey:@"userid"];
     self.responseObject.groupPostTitle = [dic objectForKey:@"groupposttitle"];
+    self.responseObject.groupPostUrl = [dic objectForKey:@"groupposturl"];
+    self.responseObject.postType = [dic objectForKey:@"type"];
     NSDictionary *link = [dic objectForKey:@"link"];
     if ([self.responseObject.type isEqualToString:@"link"]){
         linkOBj *linkObj = [[linkOBj alloc] init];
@@ -478,36 +486,33 @@
         [self.btnAttention setImage:[UIImage imageNamed:@"newAddAttention"] forState:UIControlStateNormal];
     }
 
-    NSString *title = obj.groupPostTitle;
-    self.titleLabel.text = title;
-    if (title.length > 0) {
-        self.titleLabel.sd_resetLayout
-        .topSpaceToView(self.personView, kMainContentTopMargin)
-        .leftSpaceToView(self.viewHeader, kMainItemLeftMargin)
-        .rightSpaceToView(self.viewHeader, kMainItemLeftMargin)
-        .autoHeightRatio(0.0f);
-    } else {
-        self.titleLabel.sd_resetLayout
-        .topSpaceToView(self.personView, 0.0f)
-        .leftSpaceToView(self.viewHeader, kMainItemLeftMargin)
-        .rightSpaceToView(self.viewHeader, kMainItemLeftMargin)
-        .heightIs(0.0f);
-    }
-
-    NSString *detail = [[SHGGloble sharedGloble] formatStringToHtml:obj.detail];
-    self.lblContent.text = detail;
-    if (detail.length > 0) {
-        self.lblContent.sd_resetLayout
-        .topSpaceToView(self.titleLabel, kMainContentTopMargin / 2.0f)
-        .leftSpaceToView(self.viewHeader, kMainItemLeftMargin)
-        .rightSpaceToView(self.viewHeader, kMainItemLeftMargin)
-        .heightIs([CTTextDisplayView getRowHeightWithText:detail rectSize:CGSizeMake(SCREENWIDTH -  2 * kMainItemLeftMargin, CGFLOAT_MAX) styleModel:self.lblContent.styleModel]);
+    UIView *contentView = nil;
+    if ([self.responseObject.postType isEqualToString:@"normalpc"]) {
+        self.webView.hidden = NO;
+        self.titleLabel.hidden = self.lblContent.hidden = YES;
+        contentView = self.webView;
+        [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.responseObject.groupPostUrl]]];
     } else{
-        self.lblContent.sd_resetLayout
-        .topSpaceToView(self.titleLabel, 0.0f)
-        .leftSpaceToView(self.viewHeader, kMainItemLeftMargin)
-        .rightSpaceToView(self.viewHeader, kMainItemLeftMargin)
-        .heightIs(0.0);
+        contentView = self.lblContent;
+        NSString *title = obj.groupPostTitle;
+        self.titleLabel.text = title;
+        if (title.length > 0) {
+            self.titleLabel.sd_resetLayout
+            .topSpaceToView(self.personView, 0.0f)
+            .leftSpaceToView(self.viewHeader, kMainItemLeftMargin)
+            .rightSpaceToView(self.viewHeader, kMainItemLeftMargin)
+            .heightIs(MarginFactor(60.0f));
+        }
+
+        NSString *detail = [[SHGGloble sharedGloble] formatStringToHtml:obj.detail];
+        self.lblContent.text = detail;
+        if (detail.length > 0) {
+            self.lblContent.sd_resetLayout
+            .topSpaceToView(self.titleLabel, -self.lblContent.styleModel.lineSpace)
+            .leftSpaceToView(self.viewHeader, kMainItemLeftMargin)
+            .rightSpaceToView(self.viewHeader, kMainItemLeftMargin)
+            .heightIs([CTTextDisplayView getRowHeightWithText:detail rectSize:CGSizeMake(SCREENWIDTH -  2 * kMainItemLeftMargin, CGFLOAT_MAX) styleModel:self.lblContent.styleModel]);
+        }
     }
 
     if ([self.responseObject.type isEqualToString:TYPE_PHOTO]){
@@ -524,10 +529,15 @@
         [self.photoView addSubview:photoGroup];
         self.photoView.sd_resetLayout
         .leftSpaceToView(self.viewHeader, kMainItemLeftMargin)
-        .topSpaceToView(self.lblContent, kMainPhotoViewTopMargin)
+        .topSpaceToView(contentView, kMainPhotoViewTopMargin)
         .widthIs(CGRectGetWidth(photoGroup.frame))
         .heightIs(CGRectGetHeight(photoGroup.frame));
-
+    } else {
+        self.photoView.sd_resetLayout
+        .leftSpaceToView(self.viewHeader, kMainItemLeftMargin)
+        .rightSpaceToView(self.viewHeader, kMainItemLeftMargin)
+        .topSpaceToView(contentView, 0.0f)
+        .heightIs(0.0f);
     }
 
     CGFloat praiseWidth = 0;
@@ -564,10 +574,11 @@
     .heightIs(MarginFactor(56.0f));
 
     self.viewHeader.hidden = NO;
-    [self.viewHeader layoutSubviews];
-    self.listTable.tableHeaderView = self.viewHeader;
 
-    [self.listTable reloadData];
+    [self.viewHeader setNeedsLayout];
+    [self.viewHeader layoutIfNeeded];
+    self.tableView.tableHeaderView = self.viewHeader;
+    [self.tableView reloadData];
 }
 
 - (void)cnickClick:(NSInteger)index
@@ -669,7 +680,7 @@
             [self.responseObject.comments addObject:obj];
             self.responseObject.cmmtnum = [NSString stringWithFormat:@"%ld",(long)([self.responseObject.cmmtnum integerValue] + 1)];
         }
-        [self.listTable reloadData];
+        [self.tableView reloadData];
         [self loadDatasWithObj:self.responseObject];
         [self.delegate detailCommentWithRid:self.responseObject.rid commentNum:self.responseObject.cmmtnum comments:self.responseObject.comments];
         [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:KEY_MEMORY];
@@ -708,7 +719,7 @@
             self.responseObject.cmmtnum = [NSString stringWithFormat:@"%ld",(long)([self.responseObject.cmmtnum integerValue] + 1)];
             [MobClick event:@"ActionCommentClick" label:@"onClick"];
         }
-        [self.listTable reloadData];
+        [self.tableView reloadData];
         [self loadDatasWithObj:self.responseObject];
         [self.delegate detailCommentWithRid:self.responseObject.rid commentNum:self.responseObject.cmmtnum comments:self.responseObject.comments];
         [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:KEY_MEMORY];
@@ -766,7 +777,7 @@
                 [Hud showMessageWithText:@"赞成功"];
                 [MobClick event:@"ActionPraiseClicked_On" label:@"onClick"];
                 [self loadDatasWithObj:self.responseObject];
-                [self.listTable reloadData];
+                [self.tableView reloadData];
 
                 [self.delegate detailPraiseWithRid:self.responseObject.rid praiseNum:self.responseObject.praisenum isPraised:@"Y"];
                 [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_COLLECT_PRAISE_CLICK object:self.responseObject];
@@ -796,7 +807,7 @@
                 [Hud showMessageWithText:@"取消点赞"];
                 [MobClick event:@"ActionPraiseClicked_Off" label:@"onClick"];
                 [weakSelf loadDatasWithObj:self.responseObject];
-                [weakSelf.listTable reloadData];
+                [weakSelf.tableView reloadData];
 
                 [weakSelf.delegate detailPraiseWithRid:self.responseObject.rid praiseNum:self.responseObject.praisenum isPraised:@"N"];
                 [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_COLLECT_PRAISE_CLICK object:weakSelf.responseObject];
@@ -922,7 +933,7 @@
             [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_COLLECT_SHARE_CLIC object:obj];
 
             [weakSelf loadDatasWithObj:obj];
-            [weakSelf.listTable reloadData];
+            [weakSelf.tableView reloadData];
             [Hud showMessageWithText:@"帖子分享成功"];
         }
     } failed:^(MOCHTTPResponse *response) {
@@ -1112,26 +1123,42 @@
     }
 }
 
--(void)linkTap:(DDTapGestureRecognizer *)ges
+- (void)webViewDidStartLoad:(UIWebView *)webView
 {
-    CircleLinkViewController *vc = [[CircleLinkViewController alloc] init];
-    vc.link = self.responseObject.linkObj.link;
-    self.title = @"视频";
-    UINavigationController *nav =  (UINavigationController *)[AppDelegate currentAppdelegate].window.rootViewController;
-    [nav pushViewController:vc animated:YES];
+    [Hud showWait];
 }
 
+- (void)webViewDidFinishLoad:(UIWebView *)webView
+{
+    [Hud hideHud];
+}
 
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context
+{
+    if ([keyPath isEqualToString:@"contentSize"]) {
+        CGFloat height = [[change objectForKey:@"new"] CGSizeValue].height;
+        if (height > 0 && height != CGRectGetHeight(self.webView.frame)) {
 
-#pragma mark - textFieldDelegate
+            self.webView.sd_resetLayout
+            .topSpaceToView(self.personView, 0.0f)
+            .leftSpaceToView(self.viewHeader, kMainItemLeftMargin)
+            .rightSpaceToView(self.viewHeader, kMainItemLeftMargin)
+            .heightIs(height);
+
+            [self.viewHeader setNeedsLayout];
+            [self.viewHeader layoutIfNeeded];
+            self.tableView.tableHeaderView = self.viewHeader;
+        }
+    }
+}
 
 #pragma mark detailDelagte
 
--(void)detailDeleteWithRid:(NSString *)rid
+- (void)detailDeleteWithRid:(NSString *)rid
 {
     [self.delegate detailDeleteWithRid:rid];
     [self loadDatasWithObj:self.responseObject];
-    [self.listTable reloadData];
+    [self.tableView reloadData];
 
 }
 
@@ -1144,7 +1171,7 @@
 
     [self loadDatasWithObj:self.responseObject];
 
-    [self.listTable reloadData];
+    [self.tableView reloadData];
     [self.delegate detailPraiseWithRid:rid praiseNum:num isPraised:isPrased];
 
 }
@@ -1155,7 +1182,7 @@
         self.responseObject.sharenum = num;
     }
     [self loadDatasWithObj:self.responseObject];
-    [self.listTable reloadData];
+    [self.tableView reloadData];
     [self.delegate detailShareWithRid:rid shareNum:num];
 
 }
@@ -1167,7 +1194,7 @@
         self.responseObject.comments = comments;
     }
     [self loadDatasWithObj:self.responseObject];
-    [self.listTable reloadData];
+    [self.tableView reloadData];
     [self.delegate detailCommentWithRid:rid commentNum:num comments:comments];
 
 }
@@ -1228,8 +1255,8 @@
 - (void)longPressGesturecognized:(UIGestureRecognizer *)recognizer
 {
     UIGestureRecognizerState state = recognizer.state;//这是长按手势的状态   下面switch用到了
-    CGPoint location = [recognizer locationInView:self.listTable];
-    NSIndexPath *indexPath = [self.listTable indexPathForRowAtPoint:location];
+    CGPoint location = [recognizer locationInView:self.tableView];
+    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:location];
     switch (state){
         case UIGestureRecognizerStateBegan:{
             if (indexPath){
@@ -1260,7 +1287,6 @@
                     [PickerBackView addSubview:button];
                     [self.view addSubview:PickerBackView];
                     [self.view bringSubviewToFront:PickerBackView];
-                    //[self.view sendSubviewToBack:PickerBackView];
                 }
             }
             break;
@@ -1318,9 +1344,7 @@
 //复制
 - (void)copyButton
 {
-    NSLog(@"....%@",copyString);
     [UIPasteboard generalPasteboard].string = copyString;
-    self.listTable.frame = CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT);
     [self.view sendSubviewToBack:PickerBackView];
 }
 
@@ -1340,16 +1364,21 @@
             }
         }
         [self loadDatasWithObj:self.responseObject];
-        [self.listTable reloadData];
+        [self.tableView reloadData];
         [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_COLLECT_COMMENT_CLIC object:self.responseObject];
     } failed:^(MOCHTTPResponse *response){
         [Hud showMessageWithText:response.errorMessage];
         NSLog(@"response.errorMessage==%@",response.errorMessage);
     }];
-    //listTable适应屏幕
-    self.listTable.frame = CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT);
+    //tableView适应屏幕
+    self.tableView.frame = CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT);
     [self.view sendSubviewToBack:PickerBackView];
     
+}
+
+- (void)dealloc
+{
+    [self.webView.scrollView removeObserver:self forKeyPath:@"contentSize"];
 }
 
 @end

@@ -33,7 +33,7 @@
     self.faceSize = CGSizeMake(28,28);
     self.tagImgSize = CGSizeMake(14, 14);
     self.faceOffset = 8.0f;
-    self.lineSpace = 6.0f;
+    self.lineSpace = MarginFactor(3.0f);
     self.numberOfLines = 5;
     self.highlightBackgroundRadius = 2;
     self.highlightBackgroundAdjustHeight = 2;
@@ -41,6 +41,7 @@
     self.autoHeight = NO;
     self.urlColor = Color(@"4277B2");
     self.phoneColor = Color(@"4277B2");
+    self.emailColor = Color(@"4277B2");
     self.textColor = kMainContentColor;
     self.maxLength = NSIntegerMax;
 }
