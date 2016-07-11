@@ -21,7 +21,12 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"详情";
+    if (self.linkTitle.length > 0) {
+        self.title = self.linkTitle;
+    } else{
+       self.title = @"详情"; 
+    }
+    
     if ([self.url hasPrefix:@"http://"] || [self.url hasPrefix:@"https://"]){
         NSLog(@"1");
         self.stringUrl  = self.url;

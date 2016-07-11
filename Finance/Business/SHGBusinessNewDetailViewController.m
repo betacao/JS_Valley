@@ -18,7 +18,7 @@
 #import "SHGBondFinanceSendViewController.h"
 #import "SHGEquityFinanceSendViewController.h"
 #import "SHGSameAndCommixtureSendViewController.h"
-#import "CircleLinkViewController.h"
+#import "LinkViewController.h"
 #import "SHGEmptyDataView.h"
 #import "NSCharacterSet+Common.h"
 #import "SHGAlertView.h"
@@ -868,11 +868,11 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
     SHGBusinessPDFObject *obj = [[SHGBusinessPDFObject alloc] init];
     obj = btn.pdfObject;
     [[SHGGloble sharedGloble] recordUserAction:[NSString stringWithFormat:@"%@#%@",self.responseObject.businessID,self.responseObject.type] type:@"business_bp"];
-    CircleLinkViewController *viewControll = [[CircleLinkViewController alloc] init];
+    LinkViewController *viewController = [[LinkViewController alloc] init];
     NSString *url = [NSString stringWithFormat:@"%@%@",rBaseAddressForImage,obj.bpPath];
-    viewControll.linkTitle = obj.bpName;
-    viewControll.link = url;
-    [self.navigationController pushViewController:viewControll animated:YES];
+    viewController.linkTitle = obj.bpName;
+    viewController.url = url;
+    [self.navigationController pushViewController:viewController animated:YES];
 }
 
 #pragma mark ----tableView----

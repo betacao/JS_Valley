@@ -13,4 +13,5 @@
 
 @property (strong,nonatomic) NSString *url;
 @property (strong, nonatomic) CircleListObj *object;
+@property (strong, nonatomic) NSString *linkTitle;
 @end
