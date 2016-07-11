@@ -16,6 +16,7 @@
 #import "ReplyTableViewCell.h"
 #import "CTTextDisplayView.h"
 #import "SHGAuthenticationView.h"
+#import "SHGMainPageTableViewCell.h"
 
 #define PRAISE_SEPWIDTH     10
 #define PRAISE_RIGHTWIDTH     40
@@ -46,6 +47,7 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet CTTextDisplayView *lblContent;
+@property (weak, nonatomic) IBOutlet SHGMainPageBusinessView *businessView;
 @property (weak, nonatomic) IBOutlet UIWebView *webView;
 @property (weak, nonatomic) IBOutlet UIButton *btnAttention;
 @property (weak, nonatomic) IBOutlet UILabel *lblTime;
@@ -55,7 +57,7 @@
 @property (weak, nonatomic) IBOutlet SHGUserHeaderView *imageHeader;
 @property (strong, nonatomic) BRCommentView *popupView;
 
-@property (strong, nonatomic) IBOutlet UIView *viewHeader;
+@property (strong, nonatomic) IBOutlet UIView *tableHeaderView;
 @property (weak, nonatomic) IBOutlet UIView *personView;
 @property (weak, nonatomic) IBOutlet UIImageView *backImageView;
 @property (weak, nonatomic) IBOutlet UIView *lineView;
@@ -85,7 +87,7 @@
         NSLog(@"%@  arr === %@",response.data,response.dataDictionary);
         if (response.dataDictionary) {
             [weakSelf parseDataWithDictionary:response.dataDictionary];
-            [weakSelf loadDatasWithObj:weakSelf.responseObject];
+            [weakSelf resetView];
             [weakSelf detailHomeListShouldRefresh:weakSelf.responseObject];
         }
     } failed:^(MOCHTTPResponse *response) {
@@ -101,6 +103,7 @@
     self.tableView.tableFooterView = [[UIView alloc] init];
     self.tableView.backgroundColor = [UIColor whiteColor];
 
+    self.personView.backgroundColor = Color(@"f7f7f7");
     self.nickName.font = kMainNameFont;
     self.nickName.textColor = kMainNameColor;
 
@@ -137,6 +140,8 @@
 
     self.webView.scrollView.bounces = NO;
     self.webView.hidden = YES;
+
+    self.businessView.hidden = YES;
 
     CTTextStyleModel *model = [[CTTextStyleModel alloc] init];
     model.numberOfLines = -1;
@@ -201,15 +206,14 @@
 
     //headerView
     self.personView.sd_layout
-    .topSpaceToView(self.viewHeader, 0.0f)
-    .leftSpaceToView(self.viewHeader, 0.0f)
-    .rightSpaceToView(self.viewHeader, 0.0f);
-    [self.personView setupAutoHeightWithBottomView:self.imageHeader bottomMargin:0.0f];
+    .topSpaceToView(self.tableHeaderView, 0.0f)
+    .leftSpaceToView(self.tableHeaderView, 0.0f)
+    .rightSpaceToView(self.tableHeaderView, 0.0f)
+    .heightIs(MarginFactor(55.0f));
 
     self.imageHeader.sd_layout
     .leftSpaceToView(self.personView, kMainItemLeftMargin)
-    .topSpaceToView(self.personView, MarginFactor(16.0f))
-    .topEqualToView(self.personView)
+    .centerYEqualToView(self.personView)
     .widthIs(MarginFactor(35.0f))
     .heightIs(MarginFactor(35.0f));
 
@@ -243,34 +247,32 @@
     .autoHeightRatio(0.0f);
     [self.lblTime setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
 
-    UIImage *attentionImage = [UIImage imageNamed:@"newAttention"];
-    CGSize attentionSize = attentionImage.size;
     self.btnAttention.sd_layout
     .rightSpaceToView(self.personView, kMainItemLeftMargin)
     .centerYEqualToView(self.imageHeader)
-    .widthIs(attentionSize.width )
-    .heightIs(attentionSize.height);
+    .widthIs(self.btnAttention.currentImage.size.width)
+    .heightIs(self.btnAttention.currentImage.size.height);
 
     self.webView.sd_layout
     .topSpaceToView(self.personView, 0.0f)
-    .leftSpaceToView(self.viewHeader, kMainItemLeftMargin)
-    .rightSpaceToView(self.viewHeader, kMainItemLeftMargin)
+    .leftSpaceToView(self.tableHeaderView, kMainItemLeftMargin)
+    .rightSpaceToView(self.tableHeaderView, kMainItemLeftMargin)
     .heightIs(1.0f);
 
     self.titleLabel.sd_layout
     .topSpaceToView(self.personView, self.lblContent.styleModel.lineSpace)
-    .leftSpaceToView(self.viewHeader, kMainItemLeftMargin)
-    .rightSpaceToView(self.viewHeader, kMainItemLeftMargin)
+    .leftSpaceToView(self.tableHeaderView, kMainItemLeftMargin)
+    .rightSpaceToView(self.tableHeaderView, kMainItemLeftMargin)
     .heightIs(0.0f);
 
     self.lblContent.sd_layout
     .topSpaceToView(self.titleLabel, 0.0f)
-    .leftSpaceToView(self.viewHeader, kMainItemLeftMargin)
-    .rightSpaceToView(self.viewHeader, kMainItemLeftMargin)
+    .leftSpaceToView(self.tableHeaderView, kMainItemLeftMargin)
+    .rightSpaceToView(self.tableHeaderView, kMainItemLeftMargin)
     .heightIs(0.0f);
 
     self.photoView = [[UIView alloc] init];
-    [self.viewHeader addSubview:self.photoView];
+    [self.tableHeaderView addSubview:self.photoView];
 
     self.btnShare.sd_layout
     .rightSpaceToView(self.actionView, 0.0f)
@@ -292,13 +294,11 @@
     .rightSpaceToView(self.btnCollet, kMainActionButtonMargin)
     .centerYEqualToView(self.btnShare);
 
-    [self.praisebtn sizeToFit];
-    CGSize praiseBtnSize = self.praisebtn.frame.size;
     self.praisebtn.sd_layout
     .leftSpaceToView(self.viewPraise, MarginFactor(11.0f))
     .centerYEqualToView(self.btnShare)
-    .widthIs(praiseBtnSize.width)
-    .heightIs(praiseBtnSize.height);
+    .widthIs(self.praisebtn.currentImage.size.width)
+    .heightIs(self.praisebtn.currentImage.size.height);
 
     self.backImageView.sd_layout
     .leftSpaceToView(self.viewPraise, 0.0f)
@@ -317,10 +317,10 @@
     .bottomSpaceToView(self.viewPraise,0.0f)
     .heightIs(0.5f);
 
-    self.viewHeader.hidden = YES;
+    self.tableHeaderView.hidden = YES;
 
-    [self.viewHeader setupAutoHeightWithBottomView:self.viewPraise bottomMargin:0.0f];
-    self.tableView.tableHeaderView = self.viewHeader;
+    [self.tableHeaderView setupAutoHeightWithBottomView:self.viewPraise bottomMargin:0.0f];
+    self.tableView.tableHeaderView = self.tableHeaderView;
 
 }
 
@@ -388,6 +388,7 @@
     self.responseObject.groupPostTitle = [dic objectForKey:@"groupposttitle"];
     self.responseObject.groupPostUrl = [dic objectForKey:@"groupposturl"];
     self.responseObject.postType = [dic objectForKey:@"type"];
+    self.responseObject.businessID = [dic objectForKey:@"businessid"];
     NSDictionary *link = [dic objectForKey:@"link"];
     if ([self.responseObject.type isEqualToString:@"link"]){
         linkOBj *linkObj = [[linkOBj alloc] init];
@@ -428,59 +429,59 @@
 }
 
 
-- (void)loadDatasWithObj:(CircleListObj *)obj
+- (void)resetView
 {
-    self.responseObject.photoArr = (NSArray *)obj.photos;
-    if ([obj.userid isEqualToString:UID] || [obj.userid isEqualToString:CHATID_MANAGER]) {
+    self.responseObject.photoArr = (NSArray *)self.responseObject.photos;
+    if ([self.responseObject.userid isEqualToString:UID] || [self.responseObject.userid isEqualToString:CHATID_MANAGER]) {
         self.btnAttention.hidden = YES;
     }
-    if ([obj.userid isEqualToString:UID]){
+    if ([self.responseObject.userid isEqualToString:UID]){
         self.btnDelete.hidden = NO;
     } else{
         self.btnDelete.hidden = YES;
     }
 
-    BOOL status = [obj.userstatus isEqualToString:@"true"] ? YES : NO;
-    [self.imageHeader updateHeaderView:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,obj.potname] placeholderImage:[UIImage imageNamed:@"default_head"] status:status userID:obj.userid];
-    [self.authenticationView updateWithVStatus:status enterpriseStatus:obj.businessStatus];
-    if (![obj.ispraise isEqualToString:@"Y"]) {
+    BOOL status = [self.responseObject.userstatus isEqualToString:@"true"] ? YES : NO;
+    [self.imageHeader updateHeaderView:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,self.responseObject.potname] placeholderImage:[UIImage imageNamed:@"default_head"] status:status userID:self.responseObject.userid];
+    [self.authenticationView updateWithVStatus:status enterpriseStatus:self.responseObject.businessStatus];
+    if (![self.responseObject.ispraise isEqualToString:@"Y"]) {
         [self.btnPraise setImage:[UIImage imageNamed:@"home_weizan"] forState:UIControlStateNormal];
     } else{
         [self.btnPraise setImage:[UIImage imageNamed:@"home_yizan"] forState:UIControlStateNormal];
     }
-    if (![obj.iscollection isEqualToString:@"Y"]) {
+    if (![self.responseObject.iscollection isEqualToString:@"Y"]) {
         [self.btnCollet setImage:[UIImage imageNamed:@"homeDetailNoCollection"] forState:UIControlStateNormal];
     } else{
         [self.btnCollet setImage:[UIImage imageNamed:@"homeDetailCollection"] forState:UIControlStateNormal];
     }
-    NSString *name = obj.nickname;
-    if (obj.nickname.length > 4){
-        name = [obj.nickname substringToIndex:4];
+    NSString *name = self.responseObject.nickname;
+    if (self.responseObject.nickname.length > 4){
+        name = [self.responseObject.nickname substringToIndex:4];
         name = [NSString stringWithFormat:@"%@...",name];
     }
     self.nickName.text = name;
     //设置公司名称
-    NSString *comp = obj.company;
-    if (obj.company.length > 6) {
-        NSString *str = [obj.company substringToIndex:6];
-        comp = [NSString stringWithFormat:@"%@...",str];
+    NSString *company = self.responseObject.company;
+    if (self.responseObject.company.length > 6) {
+        NSString *str = [self.responseObject.company substringToIndex:6];
+        company = [NSString stringWithFormat:@"%@...",str];
     }
-    self.lblCompanyName.text = comp;
+    self.lblCompanyName.text = company;
     [self.lblCompanyName sizeToFit];
     //设置职位名称
-    NSString *str = obj.title;
-    if (obj.title.length > 4){
-        str= [obj.title substringToIndex:4];
-        str = [NSString stringWithFormat:@"%@...",str];
+    NSString *department = self.responseObject.title;
+    if (self.responseObject.title.length > 4){
+        department = [self.responseObject.title substringToIndex:4];
+        department = [NSString stringWithFormat:@"%@...",department];
     }
-    self.lbldepartName.text = str;
+    self.lbldepartName.text = department;
 
-    self.lblTime.text = obj.publishdate;
-    [self.btnShare setTitle:obj.sharenum forState:UIControlStateNormal];
-    [self.btnComment setTitle:obj.cmmtnum forState:UIControlStateNormal];
-    [self.btnPraise setTitle:obj.praisenum forState:UIControlStateNormal];
+    self.lblTime.text = self.responseObject.publishdate;
+    [self.btnShare setTitle:self.responseObject.sharenum forState:UIControlStateNormal];
+    [self.btnComment setTitle:self.responseObject.cmmtnum forState:UIControlStateNormal];
+    [self.btnPraise setTitle:self.responseObject.praisenum forState:UIControlStateNormal];
 
-    if (obj.isAttention){
+    if (self.responseObject.isAttention){
         [self.btnAttention setImage:[UIImage imageNamed:@"newAttention"] forState:UIControlStateNormal] ;
     } else{
         [self.btnAttention setImage:[UIImage imageNamed:@"newAddAttention"] forState:UIControlStateNormal];
@@ -489,28 +490,60 @@
     UIView *contentView = nil;
     if ([self.responseObject.postType isEqualToString:@"normalpc"]) {
         self.webView.hidden = NO;
-        self.titleLabel.hidden = self.lblContent.hidden = YES;
         contentView = self.webView;
+        self.titleLabel.hidden = self.lblContent.hidden = YES;
         [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.responseObject.groupPostUrl]]];
-    } else{
-        contentView = self.lblContent;
-        NSString *title = obj.groupPostTitle;
+    } else if ([self.responseObject.postType isEqualToString:@"business"]) {
+        contentView = self.businessView;
+        self.businessView.hidden = NO;
+        self.lblContent.hidden = YES;
+
+        NSString *title = self.responseObject.groupPostTitle;
         self.titleLabel.text = title;
         if (title.length > 0) {
             self.titleLabel.sd_resetLayout
             .topSpaceToView(self.personView, 0.0f)
-            .leftSpaceToView(self.viewHeader, kMainItemLeftMargin)
-            .rightSpaceToView(self.viewHeader, kMainItemLeftMargin)
+            .leftSpaceToView(self.tableHeaderView, kMainItemLeftMargin)
+            .rightSpaceToView(self.tableHeaderView, kMainItemLeftMargin)
             .heightIs(MarginFactor(60.0f));
         }
 
-        NSString *detail = [[SHGGloble sharedGloble] formatStringToHtml:obj.detail];
+
+        NSString *businessID = self.responseObject.businessID;
+        SHGBusinessObject *businessObject = [[SHGBusinessObject alloc] init];
+        NSArray *array = [businessID componentsSeparatedByString:@"#"];
+        if (array.count == 2) {
+            businessObject.businessTitle = self.responseObject.detail;
+            businessObject.businessID = [array firstObject];
+            businessObject.type = [array lastObject];
+            self.businessView.object = businessObject;
+        }
+
+        self.businessView.sd_resetLayout
+        .topSpaceToView(self.titleLabel, 0.0f)
+        .leftSpaceToView(self.tableHeaderView, 0.0f)
+        .rightSpaceToView(self.tableHeaderView, 0.0f)
+        .heightIs(MarginFactor(59.0f));
+
+    } else {
+        contentView = self.lblContent;
+        NSString *title = self.responseObject.groupPostTitle;
+        self.titleLabel.text = title;
+        if (title.length > 0) {
+            self.titleLabel.sd_resetLayout
+            .topSpaceToView(self.personView, 0.0f)
+            .leftSpaceToView(self.tableHeaderView, kMainItemLeftMargin)
+            .rightSpaceToView(self.tableHeaderView, kMainItemLeftMargin)
+            .heightIs(MarginFactor(60.0f));
+        }
+
+        NSString *detail = [[SHGGloble sharedGloble] formatStringToHtml:self.responseObject.detail];
         self.lblContent.text = detail;
         if (detail.length > 0) {
             self.lblContent.sd_resetLayout
             .topSpaceToView(self.titleLabel, -self.lblContent.styleModel.lineSpace)
-            .leftSpaceToView(self.viewHeader, kMainItemLeftMargin)
-            .rightSpaceToView(self.viewHeader, kMainItemLeftMargin)
+            .leftSpaceToView(self.tableHeaderView, kMainItemLeftMargin)
+            .rightSpaceToView(self.tableHeaderView, kMainItemLeftMargin)
             .heightIs([CTTextDisplayView getRowHeightWithText:detail rectSize:CGSizeMake(SCREENWIDTH -  2 * kMainItemLeftMargin, CGFLOAT_MAX) styleModel:self.lblContent.styleModel]);
         }
     }
@@ -518,24 +551,24 @@
     if ([self.responseObject.type isEqualToString:TYPE_PHOTO]){
         SDPhotoGroup *photoGroup = [[SDPhotoGroup alloc] init];
         NSMutableArray *temp = [NSMutableArray array];
-        [obj.photoArr enumerateObjectsUsingBlock:^(NSString *src, NSUInteger idx, BOOL *stop) {
+        [self.responseObject.photoArr enumerateObjectsUsingBlock:^(NSString *src, NSUInteger idx, BOOL *stop) {
             SDPhotoItem *item = [[SDPhotoItem alloc] init];
             item.thumbnail_pic = [NSString stringWithFormat:@"%@%@",rBaseAddressForImage,src];
-            item.object = obj;
+            item.object = self.responseObject;
             [temp addObject:item];
         }];
         photoGroup.photoItemArray = temp;
         photoGroup.style = SDPhotoGroupStyleThumbnail;
         [self.photoView addSubview:photoGroup];
         self.photoView.sd_resetLayout
-        .leftSpaceToView(self.viewHeader, kMainItemLeftMargin)
+        .leftSpaceToView(self.tableHeaderView, kMainItemLeftMargin)
         .topSpaceToView(contentView, kMainPhotoViewTopMargin)
         .widthIs(CGRectGetWidth(photoGroup.frame))
         .heightIs(CGRectGetHeight(photoGroup.frame));
     } else {
         self.photoView.sd_resetLayout
-        .leftSpaceToView(self.viewHeader, kMainItemLeftMargin)
-        .rightSpaceToView(self.viewHeader, kMainItemLeftMargin)
+        .leftSpaceToView(self.tableHeaderView, kMainItemLeftMargin)
+        .rightSpaceToView(self.tableHeaderView, kMainItemLeftMargin)
         .topSpaceToView(contentView, 0.0f)
         .heightIs(0.0f);
     }
@@ -556,28 +589,27 @@
             [_scrollPraise addSubview:head];
         }
         [self.scrollPraise setContentSize:CGSizeMake(self.responseObject.heads.count *(praiseWidth+PRAISE_SEPWIDTH), CGRectGetHeight(self.scrollPraise.frame))];
-        self.viewPraise.hidden = NO;
     } else{
         [self.scrollPraise removeAllSubviews];
     }
 
     self.actionView.sd_resetLayout
-    .leftSpaceToView(self.viewHeader, kMainItemLeftMargin)
-    .rightSpaceToView(self.viewHeader, kMainItemLeftMargin)
+    .leftSpaceToView(self.tableHeaderView, kMainItemLeftMargin)
+    .rightSpaceToView(self.tableHeaderView, kMainItemLeftMargin)
     .topSpaceToView(self.photoView, 0.0f)
     .heightIs(kMainActionHeight);
 
     self.viewPraise.sd_resetLayout
-    .leftSpaceToView(self.viewHeader, kMainItemLeftMargin)
-    .rightSpaceToView(self.viewHeader, kMainItemLeftMargin)
+    .leftSpaceToView(self.tableHeaderView, kMainItemLeftMargin)
+    .rightSpaceToView(self.tableHeaderView, kMainItemLeftMargin)
     .topSpaceToView(self.actionView, 0.0f)
     .heightIs(MarginFactor(56.0f));
 
-    self.viewHeader.hidden = NO;
+    self.tableHeaderView.hidden = NO;
 
-    [self.viewHeader setNeedsLayout];
-    [self.viewHeader layoutIfNeeded];
-    self.tableView.tableHeaderView = self.viewHeader;
+    [self.tableHeaderView setNeedsLayout];
+    [self.tableHeaderView layoutIfNeeded];
+    self.tableView.tableHeaderView = self.tableHeaderView;
     [self.tableView reloadData];
 }
 
@@ -681,7 +713,7 @@
             self.responseObject.cmmtnum = [NSString stringWithFormat:@"%ld",(long)([self.responseObject.cmmtnum integerValue] + 1)];
         }
         [self.tableView reloadData];
-        [self loadDatasWithObj:self.responseObject];
+        [self resetView];
         [self.delegate detailCommentWithRid:self.responseObject.rid commentNum:self.responseObject.cmmtnum comments:self.responseObject.comments];
         [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:KEY_MEMORY];
         [self loadCommentBtnState];
@@ -720,7 +752,7 @@
             [MobClick event:@"ActionCommentClick" label:@"onClick"];
         }
         [self.tableView reloadData];
-        [self loadDatasWithObj:self.responseObject];
+        [self resetView];
         [self.delegate detailCommentWithRid:self.responseObject.rid commentNum:self.responseObject.cmmtnum comments:self.responseObject.comments];
         [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:KEY_MEMORY];
         [self loadCommentBtnState];
@@ -776,7 +808,7 @@
 
                 [Hud showMessageWithText:@"赞成功"];
                 [MobClick event:@"ActionPraiseClicked_On" label:@"onClick"];
-                [self loadDatasWithObj:self.responseObject];
+                [self resetView];
                 [self.tableView reloadData];
 
                 [self.delegate detailPraiseWithRid:self.responseObject.rid praiseNum:self.responseObject.praisenum isPraised:@"Y"];
@@ -806,7 +838,7 @@
                 }
                 [Hud showMessageWithText:@"取消点赞"];
                 [MobClick event:@"ActionPraiseClicked_Off" label:@"onClick"];
-                [weakSelf loadDatasWithObj:self.responseObject];
+                [weakSelf resetView];
                 [weakSelf.tableView reloadData];
 
                 [weakSelf.delegate detailPraiseWithRid:self.responseObject.rid praiseNum:self.responseObject.praisenum isPraised:@"N"];
@@ -932,7 +964,7 @@
             [weakSelf.delegate detailShareWithRid:obj.rid shareNum:obj.sharenum];
             [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_COLLECT_SHARE_CLIC object:obj];
 
-            [weakSelf loadDatasWithObj:obj];
+            [weakSelf resetView];
             [weakSelf.tableView reloadData];
             [Hud showMessageWithText:@"帖子分享成功"];
         }
@@ -952,7 +984,7 @@
                 NSString *code = [response.data valueForKey:@"code"];
                 if ([code isEqualToString:@"000"]) {
                     self.responseObject.sharenum = [NSString stringWithFormat:@"%ld",(long)([self.responseObject.sharenum integerValue] + 1)];
-                    [self loadDatasWithObj:self.responseObject];
+                    [self resetView];
                     [Hud showMessageWithText:@"帖子分享成功"];
                     [self.delegate detailShareWithRid:obj.rid shareNum:obj.sharenum];
                     [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_COLLECT_SHARE_CLIC object:obj];
@@ -986,7 +1018,7 @@
             if ([code isEqualToString:@"000"]) {
                 weakSelf.responseObject.iscollection = @"Y";
             }
-            [weakSelf loadDatasWithObj:weakSelf.responseObject];
+            [weakSelf resetView];
             [Hud showMessageWithText:@"收藏成功"];
             [MobClick event:@"ActionCollection_On" label:@"onClick"];
             if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(detailCollectionWithRid:collected:)]){
@@ -1004,7 +1036,7 @@
             if ([code isEqualToString:@"000"]) {
                 weakSelf.responseObject.iscollection = @"N";
             }
-            [weakSelf loadDatasWithObj:weakSelf.responseObject];
+            [weakSelf resetView];
             if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(detailCollectionWithRid:collected:)]){
                 [weakSelf.delegate detailCollectionWithRid:weakSelf.responseObject.rid collected:weakSelf.responseObject.iscollection];
             }
@@ -1141,13 +1173,13 @@
 
             self.webView.sd_resetLayout
             .topSpaceToView(self.personView, 0.0f)
-            .leftSpaceToView(self.viewHeader, kMainItemLeftMargin)
-            .rightSpaceToView(self.viewHeader, kMainItemLeftMargin)
+            .leftSpaceToView(self.tableHeaderView, kMainItemLeftMargin)
+            .rightSpaceToView(self.tableHeaderView, kMainItemLeftMargin)
             .heightIs(height);
 
-            [self.viewHeader setNeedsLayout];
-            [self.viewHeader layoutIfNeeded];
-            self.tableView.tableHeaderView = self.viewHeader;
+            [self.tableHeaderView setNeedsLayout];
+            [self.tableHeaderView layoutIfNeeded];
+            self.tableView.tableHeaderView = self.tableHeaderView;
         }
     }
 }
@@ -1157,7 +1189,7 @@
 - (void)detailDeleteWithRid:(NSString *)rid
 {
     [self.delegate detailDeleteWithRid:rid];
-    [self loadDatasWithObj:self.responseObject];
+    [self resetView];
     [self.tableView reloadData];
 
 }
@@ -1169,7 +1201,7 @@
         self.responseObject.ispraise = isPrased;
     }
 
-    [self loadDatasWithObj:self.responseObject];
+    [self resetView];
 
     [self.tableView reloadData];
     [self.delegate detailPraiseWithRid:rid praiseNum:num isPraised:isPrased];
@@ -1181,7 +1213,7 @@
     if ([self.responseObject.rid isEqualToString:rid]) {
         self.responseObject.sharenum = num;
     }
-    [self loadDatasWithObj:self.responseObject];
+    [self resetView];
     [self.tableView reloadData];
     [self.delegate detailShareWithRid:rid shareNum:num];
 
@@ -1193,7 +1225,7 @@
         self.responseObject.cmmtnum = num;
         self.responseObject.comments = comments;
     }
-    [self loadDatasWithObj:self.responseObject];
+    [self resetView];
     [self.tableView reloadData];
     [self.delegate detailCommentWithRid:rid commentNum:num comments:comments];
 
@@ -1363,7 +1395,7 @@
                 break;
             }
         }
-        [self loadDatasWithObj:self.responseObject];
+        [self resetView];
         [self.tableView reloadData];
         [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_COLLECT_COMMENT_CLIC object:self.responseObject];
     } failed:^(MOCHTTPResponse *response){

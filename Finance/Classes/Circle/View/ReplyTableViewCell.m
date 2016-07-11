@@ -41,7 +41,7 @@
     UILabel *replyLabel = [[UILabel alloc] initWithFrame:frame];
     replyLabel.numberOfLines = 0;
     replyLabel.lineBreakMode = NSLineBreakByWordWrapping;
-    replyLabel.font = FontFactor(14.0f);
+    replyLabel.font = kMainCommentNameFont;
     replyLabel.userInteractionEnabled = YES;
     replyLabel.textAlignment = NSTextAlignmentLeft;
     NSString *text = @"";

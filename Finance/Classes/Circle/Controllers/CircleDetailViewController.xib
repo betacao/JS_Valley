@@ -17,6 +17,7 @@
                 <outlet property="btnPraise" destination="Y2b-Pm-f2e" id="1SA-ub-3zN"/>
                 <outlet property="btnSend" destination="a0u-4d-vNm" id="NjW-6P-Ql5"/>
                 <outlet property="btnShare" destination="vkj-nB-6k2" id="sCW-6i-dXk"/>
+                <outlet property="businessView" destination="8BD-Vd-XrX" id="fvc-8k-CuQ"/>
                 <outlet property="faSongBtn" destination="Roo-oo-srH" id="iBm-TK-Ofo"/>
                 <outlet property="faceBtn" destination="ys0-he-oJB" id="oEu-wD-s4x"/>
                 <outlet property="imageHeader" destination="9Sx-ef-Sas" id="1RY-fp-lPg"/>
@@ -29,10 +30,10 @@
                 <outlet property="personView" destination="XOQ-nE-ewr" id="4h8-k0-k9L"/>
                 <outlet property="praisebtn" destination="G5n-2p-xA3" id="J1u-yS-ec9"/>
                 <outlet property="scrollPraise" destination="aWm-Lk-eH9" id="KIK-W2-uD9"/>
+                <outlet property="tableHeaderView" destination="Zk8-gE-mjJ" id="d3i-HO-tW9"/>
                 <outlet property="tableView" destination="4Dg-M9-dvf" id="uKR-53-xXO"/>
                 <outlet property="titleLabel" destination="nN6-7N-7cV" id="itJ-CU-Sst"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
-                <outlet property="viewHeader" destination="Zk8-gE-mjJ" id="omM-Qh-SA3"/>
                 <outlet property="viewInput" destination="QyD-ga-fkw" id="FTy-DG-HJn"/>
                 <outlet property="viewPraise" destination="ffx-YA-YXJ" id="Kft-j5-qR0"/>
                 <outlet property="webView" destination="duR-by-bUo" id="myV-UA-cvX"/>
@@ -169,6 +170,11 @@
                 </label>
                 <view contentMode="scaleToFill" id="qYe-1m-FgM" customClass="CTTextDisplayView">
                     <rect key="frame" x="0.0" y="-159" width="320" height="568"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </view>
+                <view contentMode="scaleToFill" id="8BD-Vd-XrX" customClass="SHGMainPageBusinessView">
+                    <rect key="frame" x="40" y="61" width="240" height="128"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </view>

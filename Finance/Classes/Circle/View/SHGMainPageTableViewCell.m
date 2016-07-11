@@ -12,6 +12,7 @@
 #import "CTTextDisplayView.h"
 #import "LinkViewController.h"
 #import "SHGAuthenticationView.h"
+#import "SHGBusinessNewDetailViewController.h"
 
 @interface SHGMainPageTableViewCell()<CTTextDisplayViewDelegate>
 
@@ -24,6 +25,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *attentionButton;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet CTTextDisplayView *contentLabel;
+@property (weak, nonatomic) IBOutlet SHGMainPageBusinessView *businessView;
 @property (weak, nonatomic) IBOutlet UIView *photoView;
 @property (weak, nonatomic) IBOutlet UIView *actionView;
 @property (weak, nonatomic) IBOutlet UILabel *relationLabel;
@@ -155,12 +157,11 @@
     .autoHeightRatio(0.0f);
     [self.departmentLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
 
-    UIImage *image = [UIImage imageNamed:@"newAddAttention"];
     self.attentionButton.sd_layout
     .topEqualToView(self.headerView)
     .rightSpaceToView(self.contentView, kMainItemLeftMargin)
-    .widthIs(image.size.width)
-    .heightIs(image.size.height);
+    .widthIs(self.attentionButton.currentImage.size.width)
+    .heightIs(self.attentionButton.currentImage.size.height);
 
     //actionView
     self.shareButton.sd_layout
@@ -226,7 +227,6 @@
 {
     if (!_styleModel) {
         _styleModel = [[CTTextStyleModel alloc] init];
-        _styleModel.maxLength = 52;
     }
     return _styleModel;
 }
@@ -253,20 +253,6 @@
     self.secondCommentLabel.frame = CGRectZero;
     self.thirdCommentLabel.frame = CGRectZero;
     self.fourthCommentLabel.frame = CGRectZero;
-
-    self.nameLabel.text = @"";
-    self.companyLabel.text = @"";
-    self.departmentLabel.text = @"";
-    self.timeLabel.text = @"";
-    self.contentLabel.text = @"";
-    self.relationLabel.text = @"";
-
-    self.nameLabel.frame = CGRectZero;
-    self.companyLabel.frame = CGRectZero;
-    self.departmentLabel.frame = CGRectZero;
-    self.timeLabel.frame = CGRectZero;
-    self.contentLabel.frame = CGRectZero;
-    self.relationLabel.frame = CGRectZero;
 }
 
 - (void)loadUserInfo:(CircleListObj *)object
@@ -314,7 +300,6 @@
 - (void)loadContent:(CircleListObj *)object
 {
     NSString *title = object.groupPostTitle;
-    self.titleLabel.text = title;
     if (title.length > 0) {
         self.titleLabel.sd_resetLayout
         .topSpaceToView(self.headerView, kMainContentTopMargin)
@@ -328,9 +313,31 @@
         .rightEqualToView(self.attentionButton)
         .heightIs(0.0f);
     }
+    self.titleLabel.text = title;
+
+    if ([object.postType isEqualToString:@"business"]) {
+        self.businessView.hidden = NO;
+        self.contentLabel.hidden = YES;
+        NSString *businessID = self.object.businessID;
+        SHGBusinessObject *businessObject = [[SHGBusinessObject alloc] init];
+        NSArray *array = [businessID componentsSeparatedByString:@"#"];
+        if (array.count == 2) {
+            businessObject.businessTitle = object.detail;
+            businessObject.businessID = [array firstObject];
+            businessObject.type = [array lastObject];
+            self.businessView.object = businessObject;
+        }
+    } else {
+        self.businessView.hidden = YES;
+        self.contentLabel.hidden = NO;
+    }
+    self.businessView.sd_resetLayout
+    .topSpaceToView(self.titleLabel, kMainContentTopMargin)
+    .leftSpaceToView(self.contentView, 0.0f)
+    .rightSpaceToView(self.contentView, 0.0f)
+    .heightIs(MarginFactor(59.0f));
 
     NSString *detail = [[SHGGloble sharedGloble] formatStringToHtml:object.detail];
-    self.contentLabel.text = detail;
     if (detail.length > 0) {
         self.contentLabel.sd_resetLayout
         .topSpaceToView(self.titleLabel, kMainContentTopMargin / 2.0f)
@@ -344,11 +351,13 @@
         .rightEqualToView(self.attentionButton)
         .heightIs(0.0);
     }
+    self.contentLabel.text = detail;
 }
 
 - (void)loadPhotoView:(CircleListObj *)object
 {
     [self.photoView removeAllSubviews];
+    UIView *view = self.businessView.hidden ? self.contentLabel : self.businessView;
     if ([object.type isEqualToString:TYPE_PHOTO]){
         SDPhotoGroup *photoGroup = [[SDPhotoGroup alloc] init];
         NSMutableArray *temp = [NSMutableArray array];
@@ -365,13 +374,13 @@
         self.photoView.sd_resetLayout
         .leftEqualToView(self.headerView)
         .rightEqualToView(self.attentionButton)
-        .topSpaceToView(self.contentLabel, kMainPhotoViewTopMargin)
+        .topSpaceToView(view, kMainPhotoViewTopMargin)
         .heightIs(CGRectGetHeight(photoGroup.frame));
     } else{
         self.photoView.sd_resetLayout
         .leftEqualToView(self.headerView)
         .rightEqualToView(self.attentionButton)
-        .topSpaceToView(self.contentLabel, 0.0f)
+        .topSpaceToView(view, 0.0f)
         .heightIs(0.0f);
     }
 }
@@ -556,9 +565,80 @@
     return [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str]];
 }
 
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated
+@end
+
+
+
+@interface SHGMainPageBusinessView()
+
+@property (strong, nonatomic) UIView *contentView;
+@property (strong, nonatomic) UIImageView *imageView;
+@property (strong, nonatomic) UILabel *label;
+
+@end
+
+@implementation SHGMainPageBusinessView
+
+- (void)awakeFromNib
 {
-    [super setSelected:selected animated:animated];
+    [super awakeFromNib];
+    [self initView];
+    [self addAutoLayout];
+}
+
+- (void)initView
+{
+    self.contentView = [[UIView alloc] init];
+    self.contentView.backgroundColor = kMainCommentBackgroundColor;
+
+    self.imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"team_head"]];
+
+    self.label = [[UILabel alloc] init];
+    self.label.textColor = kMainContentColor;
+    self.label.font = kMainContentFont;
+
+    [self.contentView sd_addSubviews:@[self.label, self.imageView]];
+    [self addSubview:self.contentView];
+}
+
+- (void)addAutoLayout
+{
+    self.contentView.sd_layout
+    .spaceToSuperView(UIEdgeInsetsMake(0.0f, kMainItemLeftMargin, 0.0f, kMainItemLeftMargin));
+
+    self.imageView.sd_layout
+    .leftSpaceToView(self.contentView, MarginFactor(8.0f))
+    .topSpaceToView(self.contentView, MarginFactor(8.0f))
+    .bottomSpaceToView(self.contentView, MarginFactor(8.0f))
+    .widthEqualToHeight();
+
+    self.label.sd_layout
+    .leftSpaceToView(self.imageView, MarginFactor(12.0f))
+    .centerYEqualToView(self.contentView)
+    .heightIs(self.label.font.lineHeight);
+    [self.label setSingleLineAutoResizeWithMaxWidth:SCREENWIDTH];
+
+}
+
+- (void)setObject:(SHGBusinessObject *)object
+{
+    _object = object;
+    self.label.text = object.businessTitle;
+}
+
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+{
+    [super touchesBegan:touches withEvent:event];
+}
+
+- (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+{
+    [super touchesEnded:touches withEvent:event];
+    if (self.object) {
+        SHGBusinessNewDetailViewController *controller = [[SHGBusinessNewDetailViewController alloc] init];
+        controller.object = self.object;
+        [[SHGHomeViewController sharedController].navigationController pushViewController:controller animated:YES];
+    }
 }
 
 @end

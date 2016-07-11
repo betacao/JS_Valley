@@ -68,6 +68,7 @@
  */
 @property (strong, nonatomic)  NSString *groupPostTitle;
 @property (strong, nonatomic)  NSString *groupPostUrl;
+@property (strong, nonatomic)  NSString *businessID;
 
 
 @end

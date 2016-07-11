@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SHGBusinessObject.h"
 #import "CircleListDelegate.h"
 
 @interface SHGMainPageTableViewCell : UITableViewCell
@@ -16,5 +17,12 @@
 @property (weak, nonatomic) id<CircleListDelegate> delegate;
 
 @property (strong ,nonatomic) CircleListObj *object;
+
+@end
+
+
+@interface SHGMainPageBusinessView : UIView
+
+@property (strong, nonatomic) SHGBusinessObject *object;
 
 @end

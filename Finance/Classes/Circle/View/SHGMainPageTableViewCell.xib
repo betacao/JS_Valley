@@ -66,6 +66,11 @@
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <view contentMode="scaleToFill" id="4oc-kh-9iy" customClass="SHGMainPageBusinessView">
+                        <rect key="frame" x="40" y="218" width="240" height="128"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
                     <view contentMode="scaleToFill" id="oLW-AH-vpY" customClass="CTTextDisplayView">
                         <rect key="frame" x="40" y="218" width="240" height="128"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -173,6 +178,7 @@
                 <outlet property="actionView" destination="zBg-2q-FN1" id="JZB-bv-lKd"/>
                 <outlet property="attentionButton" destination="sJ7-tc-eYm" id="JML-VD-o9X"/>
                 <outlet property="authenticationView" destination="Qdx-Ls-zFp" id="3JH-st-eE0"/>
+                <outlet property="businessView" destination="4oc-kh-9iy" id="Dzo-Eu-HQZ"/>
                 <outlet property="commentButton" destination="Sqj-yw-aSc" id="8pz-fM-Mec"/>
                 <outlet property="commentView" destination="2TC-Px-Pbb" id="MSY-ge-6zW"/>
                 <outlet property="companyLabel" destination="4BK-24-OGa" id="R2z-7n-K9g"/>

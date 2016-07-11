@@ -34,7 +34,7 @@
     self.tagImgSize = CGSizeMake(14, 14);
     self.faceOffset = 8.0f;
     self.lineSpace = MarginFactor(3.0f);
-    self.numberOfLines = 5;
+    self.numberOfLines = 3;
     self.highlightBackgroundRadius = 2;
     self.highlightBackgroundAdjustHeight = 2;
     self.highlightBackgroundOffset = 3;
