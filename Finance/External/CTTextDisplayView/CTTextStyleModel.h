@@ -32,6 +32,8 @@
 @property (nonatomic,assign) CGFloat highlightBackgroundOffset;   //高亮背景偏移
 @property (nonatomic,assign) CGFloat highlightBackgroundAdjustHeight;   //高亮背景高度调整
 
+@property (nonatomic, assign) NSInteger maxLength;
+
 @property (nonatomic,assign,getter=isAutoHeight) BOOL autoHeight;  //是否自动计算并调整高度()，如果打开，效率将降低一丢丢儿
 
 @property (nonatomic,strong) UIColor * atColor;           //@

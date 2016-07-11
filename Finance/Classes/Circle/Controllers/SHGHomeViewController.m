@@ -41,18 +41,11 @@
 @property (strong, nonatomic) NSString *circleType;
 @property (strong, nonatomic) UITableViewCell *emptyCell;
 @property (strong, nonatomic) SHGEmptyDataView *emptyView;
-@property (strong, nonatomic) EMSearchBar *searchBar;
+
 @property (strong, nonatomic) NSMutableDictionary *heightDictionary;
 @end
 
 @implementation SHGHomeViewController
--(id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self){
-    }
-    return  self;
-}
 
 + (instancetype)sharedController
 {
@@ -187,17 +180,6 @@
     }
     return _heightDictionary;
 }
-
-- (EMSearchBar *)searchBar
-{
-    if (!_searchBar) {
-        _searchBar = [[EMSearchBar alloc] init];
-        _searchBar.delegate = self;
-        _searchBar.placeholder = @"大家都在搜：";
-    }
-    return _searchBar;
-}
-
 
 - (void)requestRecommendFriends
 {
@@ -526,8 +508,7 @@
             }
             SHGNewFriendObject *object = [self.dataArr objectAtIndex:indexPath.row];
             cell.object = object;
-            cell.sd_tableView = tableView;
-            cell.sd_indexPath = indexPath;
+            [cell useCellFrameCacheWithIndexPath:indexPath tableView:tableView];
             return cell;
 
         } else{
@@ -542,8 +523,7 @@
                     cell.index = indexPath.row;
                     cell.object = obj;
                     cell.delegate = [SHGUnifiedTreatment sharedTreatment];
-                    cell.sd_tableView = tableView;
-                    cell.sd_indexPath = indexPath;
+                    [cell useCellFrameCacheWithIndexPath:indexPath tableView:tableView];
                     return cell;
                 }
             } else{
@@ -554,8 +534,7 @@
                         cell = [[[NSBundle mainBundle] loadNibNamed:@"SHGExtendTableViewCell" owner:self options:nil] lastObject];
                     }
                     cell.object = obj;
-                    cell.sd_tableView = tableView;
-                    cell.sd_indexPath = indexPath;
+                    [cell useCellFrameCacheWithIndexPath:indexPath tableView:tableView];
                     return cell;
                 }
             }
@@ -601,7 +580,7 @@
     if (self.dataArr.count == 0) {
         return CGRectGetHeight(self.view.frame) - kTabBarHeight;
     }
-    CircleListObj *obj = self.dataArr[indexPath.row];
+    CircleListObj *obj = [self.dataArr objectAtIndex:indexPath.row];
 
     if([obj isKindOfClass:[CircleListObj class]]){
 
@@ -661,37 +640,32 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (self.dataArr.count > 0) {
-        CircleListObj *obj = self.dataArr[indexPath.row];
+        CircleListObj *object = self.dataArr[indexPath.row];
 
-        if([obj isKindOfClass:[CircleListObj class]]){
-            if (!IsStrEmpty(obj.feedhtml)){
-                NSLog(@"%@",obj.feedhtml);
-                [[SHGGloble sharedGloble] recordUserAction:obj.rid type:@"dynamic_spread"];
+        if([object isKindOfClass:[CircleListObj class]]){
+            if (!IsStrEmpty(object.feedhtml)){
+                NSLog(@"%@",object.feedhtml);
+                [[SHGGloble sharedGloble] recordUserAction:object.rid type:@"dynamic_spread"];
                 LinkViewController *controller = [[LinkViewController alloc]init];
-                controller.url = obj.feedhtml;
-                controller.object = obj;
+                controller.url = object.feedhtml;
+                controller.object = object;
                 [self.navigationController pushViewController:controller animated:YES];
-            } else{
-                [[SHGGloble sharedGloble] recordUserAction:obj.rid type:@"dynamic_viewAllComment"];
-                CircleDetailViewController *viewController = [[CircleDetailViewController alloc] initWithNibName:@"CircleDetailViewController" bundle:nil];
-                viewController.delegate = [SHGUnifiedTreatment sharedTreatment];
-                viewController.rid = obj.rid;
-                NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:obj.praisenum, kPraiseNum,obj.sharenum,kShareNum,obj.cmmtnum,kCommentNum, nil];
-                viewController.itemInfoDictionary = dictionary;
-                [self.navigationController pushViewController:viewController animated:YES];
-
-//                SHGCircleDetailViewController *controller = [[SHGCircleDetailViewController alloc] init];
-//                [self.navigationController pushViewController:controller animated:YES];
+            } else {
+                [[SHGGloble sharedGloble] recordUserAction:object.rid type:@"dynamic_viewAllComment"];
+                if ([object.postType isEqualToString:@"normalpc"]) {
+                    SHGCircleDetailViewController *controller = [[SHGCircleDetailViewController alloc] init];
+                    [self.navigationController pushViewController:controller animated:YES];
+                } else{
+                    CircleDetailViewController *controller = [[CircleDetailViewController alloc] init];
+                    controller.delegate = [SHGUnifiedTreatment sharedTreatment];
+                    controller.rid = object.rid;
+                    NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:object.praisenum, kPraiseNum,object.sharenum,kShareNum,object.cmmtnum,kCommentNum, nil];
+                    controller.itemInfoDictionary = dictionary;
+                    [self.navigationController pushViewController:controller animated:YES];
+                }
             }
         }
     }
-}
-
-#pragma mark ------searchBarDelegate
-
-- (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar
-{
-    return NO;
 }
 
 - (void)didReceiveMemoryWarning

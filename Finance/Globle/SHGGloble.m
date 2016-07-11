@@ -701,10 +701,22 @@
     NSString *urlRegular = @"((http[s]{0,1}|ftp)://[a-zA-Z0-9\\.\\-]+\\.([a-zA-Z]{2,4})(:\\d+)?(/[a-zA-Z0-9\\.\\-~!@#$%^&*+?:_/=<>]*)?)|(www.[a-zA-Z0-9\\.\\-]+\\.([a-zA-Z]{2,4})(:\\d+)?(/[a-zA-Z0-9\\.\\-~!@#$%^&*+?:_/=<>]*)?)";
 
     NSRegularExpression *expression = [NSRegularExpression regularExpressionWithPattern:urlRegular options:0 error:nil];
-    [expression enumerateMatchesInString:copyString options:0 range:NSMakeRange(0, copyString.length) usingBlock:^(NSTextCheckingResult * _Nullable result, NSMatchingFlags flags, BOOL * _Nonnull stop) {
-        NSString *subString = [copyString substringWithRange:result.range];
-        NSString *replaceString = [NSString stringWithFormat:@"<a href='%@'>网页链接</a>",subString];
-        copyString = [copyString stringByReplacingOccurrencesOfString:subString withString:replaceString];
+    NSArray *resultArray = [expression matchesInString:string options:NSMatchingReportProgress range:NSMakeRange(0, string.length)];
+    resultArray = [resultArray sortedArrayUsingComparator:^NSComparisonResult(NSTextCheckingResult *obj1, NSTextCheckingResult *obj2) {
+        if (obj1.range.location < obj2.range.location) {
+            return NSOrderedAscending;
+        }
+        return NSOrderedDescending;
+    }];
+
+    NSMutableArray *titleArray = [NSMutableArray array];
+    [resultArray enumerateObjectsUsingBlock:^(NSTextCheckingResult *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        [titleArray insertUniqueObject:[string substringWithRange:obj.range]];
+    }];
+
+    [titleArray enumerateObjectsUsingBlock:^(NSString *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        NSString *replaceString = [NSString stringWithFormat:@"<a href='%@'>网页链接</a>",obj];
+        copyString = [copyString stringByReplacingOccurrencesOfString:obj withString:replaceString];
     }];
     return copyString;
 }

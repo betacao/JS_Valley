@@ -25,8 +25,8 @@
 
 - (void)initView
 {
+    self.title = @"动态详情";
     self.webView.scrollView.scrollEnabled = NO;
-    [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"http://120.26.114.154:8080/jinrong/feed/20160629113026.html"]]];
 }
 
 - (void)addAutoLayout
@@ -43,10 +43,6 @@
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
     [Hud hideHud];
-    CGFloat webViewHeight = [webView.scrollView contentSize].height;
-    CGRect newFrame = webView.frame;
-    newFrame.size.height  =  webViewHeight;
-    webView.frame = newFrame;
 }
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error

@@ -7,7 +7,6 @@
 //
 
 #import "BRCommentView.h"
-#import "CPTextViewPlaceholder.h"
 #import "TWEmojiKeyBoard.h"
 @interface BRCommentView () < UITextViewDelegate >
 {

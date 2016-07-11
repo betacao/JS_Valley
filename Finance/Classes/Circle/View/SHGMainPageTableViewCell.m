@@ -226,6 +226,7 @@
 {
     if (!_styleModel) {
         _styleModel = [[CTTextStyleModel alloc] init];
+        _styleModel.maxLength = 52;
     }
     return _styleModel;
 }
@@ -494,7 +495,7 @@
     .topSpaceToView(self.commentView, margin)
     .leftSpaceToView(self.contentView, 0.0f)
     .rightSpaceToView(self.contentView, 0.0f)
-    .heightIs(0.5f);
+    .heightIs(1 / SCALE);
 
     //分割线
     self.splitView.sd_resetLayout

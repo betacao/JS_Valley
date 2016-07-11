@@ -30,6 +30,8 @@
 @property (weak, nonatomic) IBOutlet UIView *bottomLine1;
 @property (weak, nonatomic) IBOutlet UIView *bottomLine2;
 @property (weak, nonatomic) IBOutlet UIView *photoView;
+@property (weak, nonatomic) IBOutlet UITextField *textField;
+@property (weak, nonatomic) IBOutlet UIView *spliteView;
 @property (weak, nonatomic) IBOutlet CPTextViewPlaceholder *textView;
 @property (weak, nonatomic) IBOutlet UIButton *addButton;
 
@@ -76,12 +78,20 @@
 
 - (void)initView
 {
+    self.textField.placeholder = @"来个标题";
+    self.textField.font = FontFactor(16.0f);
+    [self.textField setValue:Color(@"919291") forKeyPath:@"_placeholderLabel.textColor"];
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, MarginFactor(6.0f), 0.0f)];
+    self.textField.leftView = view;
+    self.textField.leftViewMode = UITextFieldViewModeAlways;
+
+    self.spliteView.backgroundColor = Color(@"e6e7e8");
+
     self.textView.placeholder = @"来说点什么吧...";
     self.textView.bounces = NO;
-    self.textView.placeholderColor = [UIColor colorWithHexString:@"919291"];
-    self.textView.textColor = [UIColor colorWithHexString:@"161616"];
+    self.textView.placeholderColor = Color(@"919291");
+    self.textView.textColor = Color(@"161616");
     self.textView.font = FontFactor(16.0f);
-
     self.textView.inputAccessoryView = self.inputAccessoryView;
 
     self.inputAccessoryView.backgroundColor = [UIColor colorWithHexString:@"f4f4f4"];
@@ -121,13 +131,13 @@
     .leftSpaceToView(self.bottomView, 0.0f)
     .topSpaceToView(self.bottomView, 0.0f)
     .widthRatioToView(self.bottomView, 1.0f)
-    .heightIs(0.5f);
+    .heightIs(1 / SCALE);
 
     self.bottomLine2.sd_layout
     .leftSpaceToView(self.bottomView, 0.0f)
     .bottomSpaceToView(self.bottomView, 0.0f)
     .widthRatioToView(self.bottomView, 1.0f)
-    .heightIs(0.5f);
+    .heightIs(1 / SCALE);
 
     //scrollView
     self.scrollView.sd_layout
@@ -136,10 +146,22 @@
     .rightSpaceToView(self.view, 0.0f)
     .bottomSpaceToView(self.bottomView, 0.0f);
 
-    self.textView.sd_layout
+    self.textField.sd_layout
     .topSpaceToView(self.scrollView, 0.0f)
     .leftSpaceToView(self.scrollView, kImageViewLeftMargin)
     .rightSpaceToView(self.scrollView, kImageViewLeftMargin)
+    .heightIs(MarginFactor(48.0f));
+
+    self.spliteView.sd_layout
+    .topSpaceToView(self.textField, 0.0f)
+    .leftSpaceToView(self.scrollView, 0.0f)
+    .rightSpaceToView(self.scrollView, 0.0f)
+    .heightIs(1 / SCALE);
+
+    self.textView.sd_layout
+    .topSpaceToView(self.spliteView, 0.0f)
+    .leftEqualToView(self.textField)
+    .rightEqualToView(self.textField)
     .heightIs(kTextViewMinHeight);
 
     self.photoView.sd_layout
@@ -186,13 +208,13 @@
     .leftSpaceToView(self.inputAccessoryView, 0.0f)
     .topSpaceToView(self.inputAccessoryView, 0.0f)
     .widthRatioToView(self.inputAccessoryView, 1.0f)
-    .heightIs(0.5f);
+    .heightIs(1 / SCALE);
 
     self.accessoryLine2.sd_layout
     .leftSpaceToView(self.inputAccessoryView, 0.0f)
     .bottomSpaceToView(self.inputAccessoryView, 0.0f)
     .widthRatioToView(self.inputAccessoryView, 1.0f)
-    .heightIs(0.5f);
+    .heightIs(1 / SCALE);
 
 }
 

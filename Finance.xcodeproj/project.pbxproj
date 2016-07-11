@@ -6207,7 +6207,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: JiangSu Yunli Technology and Information Company (6FFGT2HSCN)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: xie jian (A35C7Q22SB)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_BITCODE = NO;
@@ -6232,9 +6232,9 @@
 					"$(PROJECT_DIR)/Finance/External/ShareSDK/Extend/WeChatSDK",
 				);
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.appstore.daniu;
+				PRODUCT_BUNDLE_IDENTIFIER = com.danniuquan.apptest;
 				PRODUCT_NAME = "大牛圈";
-				PROVISIONING_PROFILE = "96a6a054-0f5e-41f2-a79d-890ec7551297";
+				PROVISIONING_PROFILE = "7df34bc8-26d7-4701-bdde-6fd16acb8585";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -6246,7 +6246,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: JiangSu Yunli Technology and Information Company (6FFGT2HSCN)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: xie jian (A35C7Q22SB)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_BITCODE = NO;
@@ -6271,9 +6271,9 @@
 					"$(PROJECT_DIR)/Finance/External/ShareSDK/Extend/WeChatSDK",
 				);
 				ONLY_ACTIVE_ARCH = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = com.appstore.daniu;
+				PRODUCT_BUNDLE_IDENTIFIER = com.danniuquan.apptest;
 				PRODUCT_NAME = "大牛圈";
-				PROVISIONING_PROFILE = "96a6a054-0f5e-41f2-a79d-890ec7551297";
+				PROVISIONING_PROFILE = "7df34bc8-26d7-4701-bdde-6fd16acb8585";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -6323,7 +6323,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: JiangSu Yunli Technology and Information Company (6FFGT2HSCN)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: xie jian (A35C7Q22SB)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -6347,9 +6347,9 @@
 					"$(PROJECT_DIR)/Finance/External/ShareSDK/Extend/WeChatSDK",
 				);
 				ONLY_ACTIVE_ARCH = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = com.appstore.daniu;
+				PRODUCT_BUNDLE_IDENTIFIER = com.danniuquan.apptest;
 				PRODUCT_NAME = "大牛圈";
-				PROVISIONING_PROFILE = "96a6a054-0f5e-41f2-a79d-890ec7551297";
+				PROVISIONING_PROFILE = "7df34bc8-26d7-4701-bdde-6fd16acb8585";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 			};

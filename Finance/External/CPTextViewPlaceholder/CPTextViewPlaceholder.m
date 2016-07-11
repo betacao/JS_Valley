@@ -90,7 +90,7 @@ CGFloat const UI_PLACEHOLDER_TEXT_CHANGED_ANIMATION_DURATION = 0.25;
     {
         if (_placeHolderLabel == nil )
         {
-            _placeHolderLabel = [[UILabel alloc] initWithFrame:CGRectMake(6,8,self.bounds.size.width - 16,0)];
+            _placeHolderLabel = [[UILabel alloc] initWithFrame:CGRectMake(MarginFactor(6.0f), 8.0f ,self.bounds.size.width - 16,0)];
             _placeHolderLabel.lineBreakMode = NSLineBreakByWordWrapping;
             _placeHolderLabel.numberOfLines = 0;
             _placeHolderLabel.font = self.font;

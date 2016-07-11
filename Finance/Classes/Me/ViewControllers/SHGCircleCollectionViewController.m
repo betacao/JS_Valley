@@ -215,8 +215,7 @@
             }
             cell.index = indexPath.row;
             cell.object = obj;
-            cell.sd_tableView = tableView;
-            cell.sd_indexPath = indexPath;
+            [cell useCellFrameCacheWithIndexPath:indexPath tableView:tableView];
             return cell;
         } else{
             NSString *cellIdentifier = @"noListIdentifier";

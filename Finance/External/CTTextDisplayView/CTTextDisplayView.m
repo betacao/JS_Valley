@@ -103,7 +103,11 @@
     CTTextRun * textRun = [[CTTextRun alloc] init];
     textRun.styleModel = styleModel;
     [textRun runsWithAttString:attString];
-    
+
+    if (attString.length > styleModel.maxLength) {
+        [attString deleteCharactersInRange:NSMakeRange(styleModel.maxLength, attString.length - styleModel.maxLength)];
+    }
+
     CGRect viewRect = CGRectMake(0, 0, rectSize.width, rectSize.height);//CGRectGetHeight(self.bounds)
     
     //创建一个用来描画文字的路径，其区域为当前视图的bounds  CGPath
@@ -171,7 +175,9 @@
     CTTextRun * textRun = [[CTTextRun alloc] init];
     textRun.styleModel = _styleModel;
     [textRun runsWithAttString:attString];
-    
+    if (attString.length > _styleModel.maxLength) {
+        [attString deleteCharactersInRange:NSMakeRange(_styleModel.maxLength, attString.length - _styleModel.maxLength)];
+    }
     //绘图上下文
     CGContextRef contextRef = UIGraphicsGetCurrentContext();
     CGContextSetStrokeColorWithColor(contextRef, self.backgroundColor.CGColor);

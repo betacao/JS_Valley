@@ -42,6 +42,7 @@
     self.urlColor = Color(@"4277B2");
     self.phoneColor = Color(@"4277B2");
     self.textColor = kMainContentColor;
+    self.maxLength = NSIntegerMax;
 }
 
 

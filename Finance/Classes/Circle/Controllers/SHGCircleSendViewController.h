@@ -14,5 +14,7 @@
 @end
 
 @interface SHGCircleSendImageView : UIImageView
+
 @property (strong, nonatomic) RecommendTypeObj *object;
+
 @end
