@@ -853,6 +853,10 @@
         if ([WXApi isWXAppSupportApi]){
             WXMediaMessage *message = [WXMediaMessage message];
             NSString *detail = obj.detail;
+            if ([obj.postType isEqualToString:@"business"]) {
+                detail = [NSString stringWithFormat:@"【业务】%@",obj.detail];
+            }
+            NSString *title = obj.groupPostTitle;
             if (obj.detail.length > 0) {
                 if (obj.detail.length > 15){
                     detail = [NSString stringWithFormat:@"%@...",[obj.detail substringToIndex:15]];
@@ -862,7 +866,7 @@
             }
             message.messageExt = [NSString stringWithFormat:@"%@%@",rBaseAddressForHttpShare,obj.rid];
             if (scene == 0) {
-                message.title = @"大牛圈";
+                message.title = title;
             } else{
                 message.title = detail;
             }
@@ -924,14 +928,14 @@
     }
 }
 
-- (void)shareActionToWeChat:(NSInteger)type content:(NSString *)content url:(NSString *)url
+- (void)shareActionToWeChat:(NSInteger)type content:(NSString *)content title:(NSString *)title url:(NSString *)url
 {
     if ([WXApi isWXAppSupportApi]){
         WXMediaMessage *message = [WXMediaMessage message];
         NSString *detail = content;
         message.messageExt = url;
         if (type == 0) {
-            message.title = @"大牛圈";
+            message.title = title;
         } else{
             message.title = detail;
         }

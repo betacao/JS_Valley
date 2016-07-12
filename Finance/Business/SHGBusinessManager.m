@@ -12,6 +12,7 @@
 #import "SHGBusinessListViewController.h"
 #import "SHGBusinessSendSuccessViewController.h"
 #import "SHGBusinessShareToDynamicViewController.h"
+#import "SHGBusinessNewDetailViewController.h"
 @interface SHGBusinessManager()
 
 @property (strong, nonatomic) NSArray *secondListArray;
@@ -359,28 +360,29 @@
     UIImage *png = [UIImage imageNamed:@"80.png"];
     id<ISSCAttachment> image  = [ShareSDK pngImageWithImage:png];
     NSString *theme = object.businessTitle;
-    if (theme.length > 15) {
-        theme = [NSString stringWithFormat:@"%@...",[theme substringToIndex:15]];
+    NSString *detail = object.detail;
+    if (detail.length > 15) {
+        detail = [NSString stringWithFormat:@"%@...",[detail substringToIndex:15]];
     }
-    NSString *postContent = [NSString stringWithFormat:@"【业务】%@", theme];
-    NSString *shareContent = [NSString stringWithFormat:@"【业务】%@", theme];
+    NSString *postContent = [NSString stringWithFormat:@"【业务】%@", detail];
+    NSString *shareContent = [NSString stringWithFormat:@"【业务】%@", detail];
     NSString *friendContent = @"";
     NSString *messageContent = @"";
     if ([controller isKindOfClass:[SHGBusinessSendSuccessViewController class]] || [uid isEqualToString:object.createBy]) {
-        friendContent = [NSString stringWithFormat:@"%@\"%@\"%@%@",@"Hi，我发布了一个非常棒的业务,关于",theme,@"，赶快去业务版块查看吧！",request];
-        messageContent = [NSString stringWithFormat:@"%@\"%@\"%@%@",@"Hi，我在金融大牛圈上发布了一个非常棒的业务,关于",theme,@"，赶快下载大牛圈查看吧！",@"https://itunes.apple.com/cn/app/da-niu-quan-jin-rong-zheng/id984379568?mt=8"];
+        friendContent = [NSString stringWithFormat:@"%@\"%@\"%@%@",@"Hi，我发布了一个非常棒的业务,关于",detail,@"，赶快去业务版块查看吧！",request];
+        messageContent = [NSString stringWithFormat:@"%@\"%@\"%@%@",@"Hi，我在金融大牛圈上发布了一个非常棒的业务,关于",detail,@"，赶快下载大牛圈查看吧！",@"https://itunes.apple.com/cn/app/da-niu-quan-jin-rong-zheng/id984379568?mt=8"];
         
     } else{
-        friendContent = [NSString stringWithFormat:@"%@\"%@\"%@%@",@"Hi，我看到了一个非常棒的业务,关于",theme,@"，赶快去业务版块查看吧！",request];
-        messageContent = [NSString stringWithFormat:@"%@\"%@\"%@%@",@"Hi，我在金融大牛圈上看到了一个非常棒的业务,关于",theme,@"，赶快下载大牛圈查看吧！",@"https://itunes.apple.com/cn/app/da-niu-quan-jin-rong-zheng/id984379568?mt=8"];
+        friendContent = [NSString stringWithFormat:@"%@\"%@\"%@%@",@"Hi，我看到了一个非常棒的业务,关于",detail,@"，赶快去业务版块查看吧！",request];
+        messageContent = [NSString stringWithFormat:@"%@\"%@\"%@%@",@"Hi，我在金融大牛圈上看到了一个非常棒的业务,关于",detail,@"，赶快下载大牛圈查看吧！",@"https://itunes.apple.com/cn/app/da-niu-quan-jin-rong-zheng/id984379568?mt=8"];
     }
 
    
-    id<ISSShareActionSheetItem> item0 = [ShareSDK shareActionSheetItemWithTitle:@"微信好友" icon:[UIImage imageNamed:@"sns_icon_22"] clickHandler:^{
-        [[AppDelegate currentAppdelegate] shareActionToWeChat:0 content:postContent url:request];
+    id<ISSShareActionSheetItem> item0 = [ShareSDK shareActionSheetItemWithTitle:@"微信" icon:[UIImage imageNamed:@"sns_icon_22"] clickHandler:^{
+        [[AppDelegate currentAppdelegate] shareActionToWeChat:0 content:postContent title:theme url:request];
     }];
     id<ISSShareActionSheetItem> item1 = [ShareSDK shareActionSheetItemWithTitle:@"朋友圈" icon:[UIImage imageNamed:@"sns_icon_23"] clickHandler:^{
-        [[AppDelegate currentAppdelegate] shareActionToWeChat:1 content:postContent url:request];
+        [[AppDelegate currentAppdelegate] shareActionToWeChat:1 content:postContent title:theme url:request];
     }];
     id<ISSShareActionSheetItem> item2 = [ShareSDK shareActionSheetItemWithTitle:@"短信" icon:[UIImage imageNamed:@"sns_icon_19"] clickHandler:^{
         [[AppDelegate currentAppdelegate] shareActionToSMS:messageContent];
@@ -388,49 +390,32 @@
     id<ISSShareActionSheetItem> item3 = [ShareSDK shareActionSheetItemWithTitle:@"圈内好友" icon:[UIImage imageNamed:@"圈内好友图标"] clickHandler:^{
         [self shareToFriendController:controller content:friendContent];
     }];
+    
+    id<ISSShareActionSheetItem> item4 = [ShareSDK shareActionSheetItemWithTitle:@"动态" icon:[UIImage imageNamed:@"圈子图标"] clickHandler:^{
+        [self businessShareToDynamicController:controller object:object];
+    }];
     NSArray *shareArray = nil;
-    if ([controller isKindOfClass:[SHGBusinessSendSuccessViewController class]]) {
-        id<ISSShareActionSheetItem> item4 = [ShareSDK shareActionSheetItemWithTitle:@"动态" icon:[UIImage imageNamed:@"圈子图标"] clickHandler:^{
-            [self businessShareToDynamicController:controller object:object];
-        }];
-        if ([WXApi isWXAppSupportApi]) {
-            if ([QQApiInterface isQQSupportApi]) {
-                shareArray = [ShareSDK customShareListWithType: item0, item1, SHARE_TYPE_NUMBER(ShareTypeQQ), item2, item3,item4, nil];
-            } else{
-                shareArray = [ShareSDK customShareListWithType: item0, item1, item2, item3,item4, nil];
-            }
+    if ([WXApi isWXAppSupportApi]) {
+        if ([QQApiInterface isQQSupportApi]) {
+            shareArray = [ShareSDK customShareListWithType: item4, item1, item0, SHARE_TYPE_NUMBER(ShareTypeQQ), item2, item3,nil];
         } else{
-            if ([QQApiInterface isQQSupportApi]) {
-                shareArray = [ShareSDK customShareListWithType: SHARE_TYPE_NUMBER(ShareTypeQQ), item2, item3,item4, nil];
-            } else{
-                shareArray = [ShareSDK customShareListWithType: item2, item3,item4, nil];
-            }
+            shareArray = [ShareSDK customShareListWithType: item4, item1, item0, item2, item3, nil];
         }
     } else{
-        if ([WXApi isWXAppSupportApi]) {
-            if ([QQApiInterface isQQSupportApi]) {
-                shareArray = [ShareSDK customShareListWithType: item0, item1, SHARE_TYPE_NUMBER(ShareTypeQQ), item2, item3, nil];
-            } else{
-                shareArray = [ShareSDK customShareListWithType: item0, item1, item2, item3, nil];
-            }
+        if ([QQApiInterface isQQSupportApi]) {
+            shareArray = [ShareSDK customShareListWithType: item4, SHARE_TYPE_NUMBER(ShareTypeQQ), item2, item3,nil];
         } else{
-            if ([QQApiInterface isQQSupportApi]) {
-                shareArray = [ShareSDK customShareListWithType: SHARE_TYPE_NUMBER(ShareTypeQQ), item2, item3, nil];
-            } else{
-                shareArray = [ShareSDK customShareListWithType: item2, item3, nil];
-            }
+            shareArray = [ShareSDK customShareListWithType: item4, item2, item3,nil];
         }
-
     }
     
-       NSString *shareUrl = request;
-
+    NSString *shareUrl = request;
+    
     //构造分享内容
-    id<ISSContent> publishContent = [ShareSDK content:shareContent defaultContent:shareContent image:image title:SHARE_TITLE url:shareUrl description:shareContent mediaType:SHARE_TYPE];
+    id<ISSContent> publishContent = [ShareSDK content:shareContent defaultContent:shareContent image:image title:theme url:shareUrl description:shareContent mediaType:SHARE_TYPE];
     //创建弹出菜单容器
     id<ISSContainer> container = [ShareSDK container];
     [container setIPadContainerWithView:controller.view arrowDirect:UIPopoverArrowDirectionUp];
-
     //弹出分享菜单
     [ShareSDK showShareActionSheet:container shareList:shareArray content:publishContent statusBarTips:YES authOptions:nil shareOptions:nil result:^(ShareType type, SSResponseState state, id<ISSPlatformShareInfo> statusInfo, id<ICMErrorInfo> error, BOOL end) {
         if (state == SSResponseStateSuccess){
@@ -445,6 +430,8 @@
 - (void)businessShareToDynamicController:(UIViewController *)controller object:(SHGBusinessObject *)object
 {
     SHGBusinessShareToDynamicViewController *viewController = [[SHGBusinessShareToDynamicViewController alloc] init];
+    viewController.object = object;
+    viewController.controller = (UIViewController *)[SHGBusinessNewDetailViewController class];
     [controller.navigationController pushViewController:viewController animated:YES];
 }
 

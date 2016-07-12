@@ -453,6 +453,7 @@
 
                     SHGBusinessObject *object = [[SHGBusinessObject alloc]init];
                     object.type = type;
+                    object.detail = weakSelf.marketExplainTextView.text;
                     NSDictionary *param = @{@"uid":UID, @"type": type, @"moneysideType": @"equityInvest",@"contact":contact,@"financingStage":financingStage, @"investAmount": investAmount, @"area": area, @"industry": industry,@"fundSource":fundSource ,@"totalshareRate":weakSelf.retributionTextField.text, @"vestYears": vestYears,@"detail": weakSelf.marketExplainTextView.text,@"photo": weakSelf.imageName,@"anonymous": anonymous,@"title": title, @"version":[SHGGloble sharedGloble].currentVersion};
                     [SHGBusinessManager createNewBusiness:param success:^(BOOL success, NSString *bussinessId) {
                         if (success) {

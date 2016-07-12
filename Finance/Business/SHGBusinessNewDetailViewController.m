@@ -404,7 +404,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
     self.BPView.sd_layout
     .leftSpaceToView(self.headerView, 0.0f)
     .rightSpaceToView(self.headerView, 0.0f)
-    .topSpaceToView(self.companyView,0.0f);
+    .topSpaceToView(self.secondGrayView,0.0f);
     
     self.BPTopLine.sd_layout
     .leftSpaceToView(self.BPView, 0.0f)
@@ -448,7 +448,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
     self.representView.sd_layout
     .leftSpaceToView(self.headerView, 0.0f)
     .rightSpaceToView(self.headerView, 0.0f)
-    .topSpaceToView(self.companyView, 0.0f);
+    .topSpaceToView(self.secondGrayView, 0.0f);
     
     self.representLabelTopine.sd_layout
     .leftSpaceToView(self.representView, 0.0f)
@@ -495,6 +495,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
 
 - (void)initView
 {
+    self.companyView.hidden = YES;
     self.businessRepresentLabel.text = @"业务描述";
     [self.headerView sd_addSubviews:@[self.redView,self.moneyAndUserView,self.businessMessageView,self.BPView,self.companyView,self.representView]];
 
@@ -578,7 +579,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
     
     [self loadBusinessMessageView];
     
-    [self loadCompanyView];
+   // [self loadCompanyView];
     
     [self loadBPView];
     if ([UID isEqualToString:self.responseObject.createBy]) {
@@ -835,9 +836,6 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
 {
      self.companyLabel.text = @"企业信息";
      self.companyTextView.text = @"江苏生活谷信息科技有限责任公司";
-//    if (self.responseObject.companyDetail.length > 0) {
-//        self.companyView.hidden = NO;
-//        self.companyLabel.text = @"企业信息";
         NSMutableParagraphStyle * contentParagraphStyle = [[NSMutableParagraphStyle alloc] init];
         [contentParagraphStyle setLineSpacing:MarginFactor(5.0f)];
         NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:@"江苏生活谷信息科技有限责任公司" attributes:@{NSFontAttributeName:FontFactor(14.0f), NSForegroundColorAttributeName: Color(@"3a3a3a"), NSParagraphStyleAttributeName:contentParagraphStyle}];
@@ -849,18 +847,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
         .rightSpaceToView(self.companyView, MarginFactor(14.0f))
         .topSpaceToView(self.companyCenterLineView, MarginFactor(15.0f))
         .heightIs(size.height);
-//    } else{
-//        self.companyView.hidden = YES;
-//        self.BPView.sd_resetLayout
-//        .leftSpaceToView(self.headerView, 0.0f)
-//        .rightSpaceToView(self.headerView, 0.0f)
-//        .topSpaceToView(self.secondGrayView, 0.0f);
-//        
-//        self.representView.sd_resetLayout
-//        .leftSpaceToView(self.headerView, 0.0f)
-//        .rightSpaceToView(self.headerView, 0.0f)
-//        .topSpaceToView(self.secondGrayView, 0.0f);
-//    }
+
 }
 
 - (void)pdfButtonClick:(SHGBusinessCategoryButton *)btn

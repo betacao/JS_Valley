@@ -524,6 +524,7 @@
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
 {
     if (![text isEqualToString:@""] && textView.text.length + text.length > MAX_TEXT_LENGTH){
+        [textView resignFirstResponder];
         [Hud showMessageWithText:@"帖子过长，不能超过2000个字"];
         return NO;
     }

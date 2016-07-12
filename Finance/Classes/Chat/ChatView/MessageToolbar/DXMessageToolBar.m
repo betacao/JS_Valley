@@ -179,7 +179,8 @@
         if ([self.delegate respondsToSelector:@selector(didSendText:)]) {
             [self.delegate didSendText:textView.text];
             self.inputTextView.text = @"";
-            [self willShowInputTextViewToHeight:[self getTextViewContentH:self.inputTextView]];;
+            [self willShowInputTextViewToHeight:[self getTextViewContentH:self.inputTextView]];
+            [textView resignFirstResponder];
         }
         
         return NO;

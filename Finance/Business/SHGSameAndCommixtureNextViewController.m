@@ -225,6 +225,7 @@
                         NSString *title = [businessDic objectForKey:@"title"];
                         SHGBusinessObject *object = [[SHGBusinessObject alloc] init];
                         object.type = type;
+                        object.detail = weakSelf.marketExplainTextView.text;
 
                         NSDictionary *param = @{@"uid":UID,@"type": type, @"contact":contact, @"businessType":businessType, @"investAmount": investAmount, @"area": area, @"detail": weakSelf.marketExplainTextView.text,@"photo": weakSelf.imageName,@"anonymous": anonymous,@"title": title, @"version":[SHGGloble sharedGloble].currentVersion};
                         NSLog(@"%@",param);

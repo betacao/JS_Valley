@@ -7,6 +7,19 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SHGBusinessShareToDynamicViewController">
             <connections>
+                <outlet property="accessoryLine1" destination="QPd-hg-0HK" id="JiR-Id-75S"/>
+                <outlet property="accessoryLine2" destination="EzA-Cq-IJ1" id="7aP-nD-1ue"/>
+                <outlet property="accessory_emoji" destination="VgH-Tr-Htf" id="qgL-0e-WtI"/>
+                <outlet property="accessory_url" destination="umc-vA-qGX" id="ytJ-Ge-Khu"/>
+                <outlet property="bottomLine1" destination="p11-yg-meK" id="XMX-Tj-9cx"/>
+                <outlet property="bottomLine2" destination="Q3V-U1-ZSL" id="AA1-5u-oe6"/>
+                <outlet property="bottomView" destination="kXH-UI-TfW" id="Gnq-ag-zM5"/>
+                <outlet property="bottom_emoji" destination="s4I-xo-tHC" id="Pkz-Pp-qkV"/>
+                <outlet property="bottom_url" destination="b9Q-Z8-hdL" id="X5g-SO-PZa"/>
+                <outlet property="detailView" destination="Cxc-lX-Yp8" id="CzY-Tk-V0s"/>
+                <outlet property="inputAccessoryView" destination="G2E-bX-Cga" id="VyX-oD-J7q"/>
+                <outlet property="scrollView" destination="4s7-wi-1Rr" id="ROa-4f-sX7"/>
+                <outlet property="textView" destination="5dB-sJ-ggf" id="kg8-tc-qFF"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -14,9 +27,102 @@
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" id="kXH-UI-TfW">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="s4I-xo-tHC">
+                            <rect key="frame" x="34" y="51" width="25" height="25"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <state key="normal" image="circleSend_emoji"/>
+                            <connections>
+                                <action selector="emojiButtonClick:" destination="-1" eventType="touchUpInside" id="9I9-s8-IjE"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="b9Q-Z8-hdL">
+                            <rect key="frame" x="104" y="47" width="25" height="25"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <state key="normal" image="circleSend_url"/>
+                            <connections>
+                                <action selector="urlButtonClick:" destination="-1" eventType="touchUpInside" id="OTD-kd-FzF"/>
+                            </connections>
+                        </button>
+                        <view contentMode="scaleToFill" id="p11-yg-meK">
+                            <rect key="frame" x="-38" y="-52" width="240" height="128"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </view>
+                        <view contentMode="scaleToFill" id="Q3V-U1-ZSL">
+                            <rect key="frame" x="-30" y="59" width="240" height="128"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </view>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </view>
+                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="4s7-wi-1Rr">
+                    <rect key="frame" x="40" y="220" width="240" height="128"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" id="5dB-sJ-ggf" customClass="CPTextViewPlaceholder">
+                            <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                        </textView>
+                        <view contentMode="scaleToFill" id="Cxc-lX-Yp8" customClass="SHGMainPageBusinessView">
+                            <rect key="frame" x="-5" y="35" width="250" height="58"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </view>
+                    </subviews>
+                    <connections>
+                        <outlet property="delegate" destination="-1" id="Yaz-L0-qwe"/>
+                    </connections>
+                </scrollView>
+            </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
-            <point key="canvasLocation" x="256" y="236"/>
+            <point key="canvasLocation" x="105" y="129"/>
+        </view>
+        <view contentMode="scaleToFill" id="G2E-bX-Cga">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="VgH-Tr-Htf">
+                    <rect key="frame" x="34" y="51" width="25" height="25"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <state key="normal" image="circleSend_emoji"/>
+                    <connections>
+                        <action selector="emojiButtonClick:" destination="-1" eventType="touchUpInside" id="g0k-cH-IaR"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="umc-vA-qGX">
+                    <rect key="frame" x="104" y="47" width="25" height="25"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <state key="normal" image="circleSend_url"/>
+                    <connections>
+                        <action selector="urlButtonClick:" destination="-1" eventType="touchUpInside" id="gdE-2T-CPd"/>
+                    </connections>
+                </button>
+                <view contentMode="scaleToFill" id="QPd-hg-0HK">
+                    <rect key="frame" x="-38" y="-52" width="240" height="128"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </view>
+                <view contentMode="scaleToFill" id="EzA-Cq-IJ1">
+                    <rect key="frame" x="-30" y="59" width="240" height="128"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
         </view>
     </objects>
+    <resources>
+        <image name="circleSend_emoji" width="25" height="25"/>
+        <image name="circleSend_url" width="25" height="25"/>
+    </resources>
 </document>

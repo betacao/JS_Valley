@@ -146,9 +146,9 @@
 {
     UIImage *png = [UIImage imageNamed:@"80.png"];
     id<ISSCAttachment> image  = [ShareSDK pngImageWithImage:png];
+    NSString *title = obj.groupPostTitle;
     NSString *postContent;
     NSString *shareContent;
-
     NSString *shareTitle ;
     if (IsStrEmpty(obj.detail)) {
         postContent = SHARE_CONTENT;
@@ -207,7 +207,7 @@
     NSString *shareUrl = [NSString stringWithFormat:@"%@%@",rBaseAddressForHttpShare,obj.rid];
 
     //构造分享内容
-    id<ISSContent> publishContent = [ShareSDK content:shareContent defaultContent:shareContent image:image title:SHARE_TITLE url:shareUrl description:shareContent mediaType:SHARE_TYPE];
+    id<ISSContent> publishContent = [ShareSDK content:shareContent defaultContent:shareContent image:image title:title url:shareUrl description:shareContent mediaType:SHARE_TYPE];
     //创建弹出菜单容器
     id<ISSContainer> container = [ShareSDK container];
     [container setIPadContainerWithView:[SHGSegmentController sharedSegmentController].selectedViewController.view arrowDirect:UIPopoverArrowDirectionUp];

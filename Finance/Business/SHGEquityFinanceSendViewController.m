@@ -106,7 +106,7 @@
     self.buttonSelectBgImage = [self.buttonSelectBgImage resizableImageWithCapInsets:UIEdgeInsetsMake(10.0f, 10.0f, 10.0f, 10.0f) resizingMode:UIImageResizingModeStretch];
     [self.scrollView addSubview:self.nameView];
     [self.scrollView addSubview:self.phoneNumView];
-    [self.scrollView addSubview:self.businessCompanyNameView];
+    //[self.scrollView addSubview:self.businessCompanyNameView];
     [self.scrollView addSubview:self.bondStageView];
     [self.scrollView addSubview:self.monenyView];
     [self.scrollView addSubview:self.areaView];
@@ -248,7 +248,7 @@
 
     //融资阶段
     self.bondStageView.sd_layout
-    .topSpaceToView(self.businessCompanyNameView, kLeftToView)
+    .topSpaceToView(self.phoneNumView, kLeftToView)
     .leftSpaceToView(self.scrollView, 0.0f)
     .rightSpaceToView(self.scrollView, 0.0f);
     
@@ -613,9 +613,10 @@
         [Hud showMessageWithText:@"请填写联系方式"];
         return NO;
     }
-    if (self.companyNametextField.text.length == 0) {
-        [Hud showMessageWithText:@"请填写公司名称"];
-    }
+//    if (self.companyNametextField.text.length == 0) {
+//        [Hud showMessageWithText:@"请填写公司名称"];
+//        return NO;
+//    }
     if (self.bondStageButtonView.selectedArray.count == 0) {
         [Hud showMessageWithText:@"请选择融资阶段"];
         return NO;
