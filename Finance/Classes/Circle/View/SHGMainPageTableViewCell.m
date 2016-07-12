@@ -614,16 +614,21 @@
 
     self.label.sd_layout
     .leftSpaceToView(self.imageView, MarginFactor(12.0f))
+    .rightSpaceToView(self.contentView, MarginFactor(12.0f))
     .centerYEqualToView(self.contentView)
-    .heightIs(self.label.font.lineHeight);
-    [self.label setSingleLineAutoResizeWithMaxWidth:SCREENWIDTH];
+    .autoHeightRatio(0.0f);
 
 }
 
 - (void)setObject:(SHGBusinessObject *)object
 {
     _object = object;
-    self.label.text = object.businessTitle;
+    NSString *title = object.businessTitle;
+    if (title.length > 20) {
+        title = [[title substringToIndex:20] stringByAppendingString:@"..."];
+    }
+    title = [@"【业务】 " stringByAppendingString:object.businessTitle];
+    self.label.text = title;
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event

@@ -452,7 +452,7 @@
     for (NSInteger i = 0; i < self.dataArr.count; i++) {
         CircleListObj *obj = self.dataArr[i];
         if([obj isKindOfClass:[CircleListObj class]]){
-            if([obj.postType isEqualToString:@"normal"]){
+            if([obj.postType isEqualToString:@"normal"] || [obj.postType isEqualToString:@"normalpc"] || [obj.postType isEqualToString:@"business"]){
                 rid = obj.rid;
                 break;
             }
@@ -467,7 +467,7 @@
     for(NSInteger i = self.dataArr.count - 1; i >=0; i--){
         CircleListObj *obj = self.dataArr[i];
         if([obj isKindOfClass:[CircleListObj class]]){
-            if([obj.postType isEqualToString:@"normal"]){
+            if([obj.postType isEqualToString:@"normal"] || [obj.postType isEqualToString:@"normalpc"] || [obj.postType isEqualToString:@"business"]){
                 rid = obj.rid;
                 break;
             }

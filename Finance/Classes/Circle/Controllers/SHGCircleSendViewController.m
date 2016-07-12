@@ -159,7 +159,7 @@
     .heightIs(1 / SCALE);
 
     self.textView.sd_layout
-    .topSpaceToView(self.spliteView, 0.0f)
+    .topSpaceToView(self.spliteView, MarginFactor(14.0f))
     .leftEqualToView(self.textField)
     .rightEqualToView(self.textField)
     .heightIs(kTextViewMinHeight);
@@ -292,9 +292,8 @@
     if (self.textField.text.length == 0) {
         [Hud showMessageWithText:@"标题不能为空"];
         return;
-    }
-    if ((self.imageArray.count == 0 && self.textView.text.validLength.length == 0)){
-        [Hud showMessageWithText:@"说点什么吧"];
+    } else if (self.textField.text.length > 18){
+        [Hud showMessageWithText:@"标题字数不得超过18个字"];
         return;
     }
     if (self.textView.text.length > MAX_TEXT_LENGTH){

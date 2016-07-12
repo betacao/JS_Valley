@@ -144,6 +144,7 @@ NSString *moc_http_request_operation_manager_token;
         return nil;
     }
     NSMutableDictionary *param = [NSMutableDictionary dictionaryWithDictionary:parameters];
+    [param setObject:[SHGGloble sharedGloble].currentVersion forKey:@"version"];
     [param setObject:@([[NSDate date] timeIntervalSince1970] * 1000) forKey:@"authTimestamp"];
     NSString *secret = [client sortParameter:param];
 
@@ -157,7 +158,6 @@ NSString *moc_http_request_operation_manager_token;
     }
     [param setObject:secret forKey:@"sign"];
     parameters = [client packageParameters:param];
-    NSLog(@"%@   parameters:%@", URLString, param);
     return [client.manager POST:URLString parameters:parameters constructingBodyWithBlock:block progress:uploadProgress success:success failure:failure];
 }
 
@@ -173,6 +173,7 @@ NSString *moc_http_request_operation_manager_token;
     }
 
     NSMutableDictionary *param = [NSMutableDictionary dictionaryWithDictionary:parameters];
+    [param setObject:[SHGGloble sharedGloble].currentVersion forKey:@"version"];
     [param setObject:@([[NSDate date] timeIntervalSince1970] * 1000) forKey:@"authTimestamp"];
     NSString *secret = [client sortParameter:param];
 
@@ -186,7 +187,6 @@ NSString *moc_http_request_operation_manager_token;
     }
     [param setObject:secret forKey:@"sign"];
     parameters = [client packageParameters:param];
-    NSLog(@"%@   parameters:%@", url,param);
 
     if([method isEqualToString:@"post"]){
         [client.manager POST:url parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
@@ -230,8 +230,6 @@ NSString *moc_http_request_operation_manager_token;
 #pragma mark -
 //data为对应部分的数据
 - (void)parseResponseSuccess:(id)responseObject class:(Class)class success:(MOCResponseBlock)success failed:(MOCResponseBlock)failed logInfo:(NSString *)info{
-
-    NSLog(@"%@:%@",info,(NSDictionary *)responseObject);
     
     self.response.data = responseObject;
     
