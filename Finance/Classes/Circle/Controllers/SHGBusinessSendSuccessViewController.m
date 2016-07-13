@@ -58,7 +58,7 @@
     self.titleImageView.image = [UIImage imageNamed:@"businessShareToCircle"];
     self.shareView.backgroundColor = Color(@"ffffff");
     CGFloat margin = MarginFactor(20.0f);
-    CGFloat topMargin = MarginFactor(40.0f);
+    CGFloat topMargin = MarginFactor(30.0f);
     CGFloat width = (SCREENWIDTH - 4 * margin) / 3.0f;
     NSArray *imageTitleArray = [[NSArray alloc] init];
     NSArray *imageArray = [[NSArray alloc] init];
@@ -94,13 +94,13 @@
         self.shareView.sd_resetLayout
         .leftSpaceToView(self.view, 0.0f)
         .rightSpaceToView(self.view, 0.0f)
-        .topSpaceToView(self.titleImageView, MarginFactor(91.0f))
+        .topSpaceToView(self.titleImageView, MarginFactor(95.0f))
         .heightIs(margin + 2 * width);
     } else{
         self.shareView.sd_resetLayout
         .leftSpaceToView(self.view, 0.0f)
         .rightSpaceToView(self.view, 0.0f)
-        .topSpaceToView(self.titleImageView, MarginFactor(91.0f))
+        .topSpaceToView(self.titleImageView, MarginFactor(95.0f))
         .heightIs(width);
     }
     

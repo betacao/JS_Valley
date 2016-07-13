@@ -38,7 +38,7 @@
 
 #define kMainPhotoViewTopMargin MarginFactor(16.0f)//图片上间距
 
-#define kMainActionHeight MarginFactor(45.0f)//actionView的高度
+#define kMainActionHeight MarginFactor(49.0f)//actionView的高度
 #define kMainActionFont FontFactor(13.0f)//用户活动
 #define kMainActionColor [UIColor colorWithHexString:@"b3b3b3"]
 #define kMainActionButtonMargin MarginFactor(20.0f)//actionView按钮图片和文字的间距
