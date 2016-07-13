@@ -376,22 +376,25 @@
         friendContent = [NSString stringWithFormat:@"%@\"%@\"%@%@",@"Hi，我看到了一个非常棒的业务,关于",detail,@"，赶快去业务版块查看吧！",request];
         messageContent = [NSString stringWithFormat:@"%@\"%@\"%@%@",@"Hi，我在金融大牛圈上看到了一个非常棒的业务,关于",detail,@"，赶快下载大牛圈查看吧！",@"https://itunes.apple.com/cn/app/da-niu-quan-jin-rong-zheng/id984379568?mt=8"];
     }
-
-   
+    
     id<ISSShareActionSheetItem> item0 = [ShareSDK shareActionSheetItemWithTitle:@"微信" icon:[UIImage imageNamed:@"sns_icon_22"] clickHandler:^{
+        //[[SHGGloble sharedGloble] recordUserAction:object.businessID type:@"dynamic_shareMicroFriend"];
         [[AppDelegate currentAppdelegate] shareActionToWeChat:0 content:postContent title:theme url:request];
     }];
     id<ISSShareActionSheetItem> item1 = [ShareSDK shareActionSheetItemWithTitle:@"朋友圈" icon:[UIImage imageNamed:@"sns_icon_23"] clickHandler:^{
+        //[[SHGGloble sharedGloble] recordUserAction:object.businessID type:@"dynamic_shareMicroCircle"];
         [[AppDelegate currentAppdelegate] shareActionToWeChat:1 content:postContent title:theme url:request];
     }];
     id<ISSShareActionSheetItem> item2 = [ShareSDK shareActionSheetItemWithTitle:@"短信" icon:[UIImage imageNamed:@"sns_icon_19"] clickHandler:^{
         [[AppDelegate currentAppdelegate] shareActionToSMS:messageContent];
     }];
     id<ISSShareActionSheetItem> item3 = [ShareSDK shareActionSheetItemWithTitle:@"圈内好友" icon:[UIImage imageNamed:@"圈内好友图标"] clickHandler:^{
+        //[[SHGGloble sharedGloble] recordUserAction:object.businessID type:@"dynamic_shareSystemUser"];
         [self shareToFriendController:controller content:friendContent];
     }];
     
     id<ISSShareActionSheetItem> item4 = [ShareSDK shareActionSheetItemWithTitle:@"动态" icon:[UIImage imageNamed:@"圈子图标"] clickHandler:^{
+        //[[SHGGloble sharedGloble] recordUserAction:object.businessID type:@"dynamic_shareDynamic"];
         [self businessShareToDynamicController:controller object:object];
     }];
     NSArray *shareArray = nil;

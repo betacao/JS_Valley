@@ -73,6 +73,9 @@
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits"/>
+                            <connections>
+                                <outlet property="delegate" destination="-1" id="zih-dh-Z3s"/>
+                            </connections>
                         </textField>
                         <view contentMode="scaleToFill" id="caA-nA-Fsw">
                             <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>

@@ -14,11 +14,12 @@
 
 #import "ApplyFriendCell.h"
 #import "InvitationManager.h"
-
+#import "SHGEmptyDataView.h"
 static ApplyViewController *controller = nil;
 
 @interface ApplyViewController ()<ApplyFriendCellDelegate>
-
+@property (strong, nonatomic) UITableViewCell *emptyCell;
+@property (strong, nonatomic) SHGEmptyDataView *emptyView;
 @end
 
 @implementation ApplyViewController
@@ -61,6 +62,25 @@ static ApplyViewController *controller = nil;
     
     [self loadDataSourceFromLocalDB];
 }
+- (UITableViewCell *)emptyCell
+{
+    if (!_emptyCell) {
+        _emptyCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+        _emptyCell.selectionStyle = UITableViewCellSelectionStyleNone;
+        [_emptyCell.contentView addSubview:self.emptyView];
+    }
+    return _emptyCell;
+}
+
+
+- (SHGEmptyDataView *)emptyView
+{
+    if (!_emptyView) {
+        _emptyView = [[SHGEmptyDataView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, SCREENWIDTH, SCREENHEIGHT)];
+    }
+    return _emptyView;
+}
+
 
 - (void) returnClick
 {
@@ -108,11 +128,20 @@ static ApplyViewController *controller = nil;
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return [self.dataSource count];
+    if (self.dataSource.count == 0) {
+        return 1;
+    } else {
+        return [self.dataSource count];
+    }
+    
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if (self.dataSource.count == 0) {
+        self.emptyView.type = SHGEmptyDateNormal;
+        return self.emptyCell;
+    }
     static NSString *CellIdentifier = @"ApplyFriendCell";
     ApplyFriendCell *cell = (ApplyFriendCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
@@ -164,8 +193,13 @@ static ApplyViewController *controller = nil;
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    ApplyEntity *entity = [self.dataSource objectAtIndex:indexPath.row];
-    return [ApplyFriendCell heightWithContent:entity.reason];
+    if (self.dataSource.count > 0) {
+        ApplyEntity *entity = [self.dataSource objectAtIndex:indexPath.row];
+        return [ApplyFriendCell heightWithContent:entity.reason];
+    } else{
+        return CGRectGetHeight(self.view.frame);
+    }
+    
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

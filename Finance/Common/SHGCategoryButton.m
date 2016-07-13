@@ -34,9 +34,9 @@
     .centerYEqualToView(self)
     .widthIs(image.size.width)
     .heightIs(image.size.height);
-    [self setTitle:@"" forState:state];
-    [self setupAutoWidthWithRightView:self.titleLabel rightMargin:0.0f];
-    [self setupAutoHeightWithBottomViewsArray:@[self.imageView, self.titleLabel] bottomMargin:0.0f];
+    if (!self.titleLabel.text) {
+        [self setTitle:@"" forState:state];
+    }
 }
 
 - (void)setTitle:(NSString *)title forState:(UIControlState)state
@@ -48,12 +48,14 @@
     .heightIs(ceilf(self.titleLabel.font.lineHeight));
     [self.titleLabel setSingleLineAutoResizeWithMaxWidth:MAXFLOAT];
     
+    [self setupAutoWidthWithRightView:self.titleLabel rightMargin:0.0f];
+    [self setupAutoHeightWithBottomViewsArray:@[self.imageView, self.titleLabel] bottomMargin:0.0f];
 }
 
 - (void)setMargin:(CGFloat)margin
 {
     _margin = margin;
-    self.titleLabel.sd_layout
+    self.titleLabel.sd_resetLayout
     .leftSpaceToView(self.imageView, margin)
     .centerYEqualToView(self)
     .heightIs(ceilf(self.titleLabel.font.lineHeight));

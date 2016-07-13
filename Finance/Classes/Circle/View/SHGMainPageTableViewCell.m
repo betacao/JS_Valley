@@ -80,31 +80,29 @@
     self.relationLabel.font = kMainRelationFont;
     self.relationLabel.textColor = kMainRelationColor;
     
+    self.deleteButton.titleLabel.font = kMainActionFont;
     [self.deleteButton setEnlargeEdgeWithTop:10.0f right:0.0f bottom:10.0f left:20.0f];
     [self.deleteButton setImage:[UIImage imageNamed:@"home_delete"] forState:UIControlStateNormal];
 
+    self.praiseButton.titleLabel.font = kMainActionFont;
+    [self.praiseButton setTitleColor:kMainActionColor forState:UIControlStateNormal];
     [self.praiseButton setEnlargeEdgeWithTop:10.0f right:0.0f bottom:10.0f left:10.0f];
     [self.praiseButton setImage:[UIImage imageNamed:@"home_weizan"] forState:UIControlStateNormal];
     self.praiseButton.margin = MarginFactor(7.0f);
 
+    self.commentButton.titleLabel.font = kMainActionFont;
+    [self.commentButton setTitleColor:kMainActionColor forState:UIControlStateNormal];
     [self.commentButton setEnlargeEdgeWithTop:10.0f right:0.0f bottom:10.0f left:10.0f];
     [self.commentButton setImage:[UIImage imageNamed:@"home_comment"] forState:UIControlStateNormal];
     self.commentButton.margin = MarginFactor(7.0f);
-
+    
+    self.shareButton.titleLabel.font = kMainActionFont;
+    [self.shareButton setTitleColor:kMainActionColor forState:UIControlStateNormal];
     [self.shareButton setEnlargeEdgeWithTop:10.0f right:0.0f bottom:10.0f left:10.0f];
     [self.shareButton setImage:[UIImage imageNamed:@"homeShare"] forState:UIControlStateNormal];
     self.shareButton.margin = MarginFactor(7.0f);
 
     [self.attentionButton setEnlargeEdgeWithTop:10.0f right:10.0f bottom:10.0f left:10.0f];
-    
-    self.praiseButton.titleLabel.font = kMainActionFont;
-    [self.praiseButton setTitleColor:kMainActionColor forState:UIControlStateNormal];
-
-    self.commentButton.titleLabel.font = kMainActionFont;
-    [self.commentButton setTitleColor:kMainActionColor forState:UIControlStateNormal];
-
-    self.shareButton.titleLabel.font = kMainActionFont;
-    [self.shareButton setTitleColor:kMainActionColor forState:UIControlStateNormal];
 
     self.commentView.backgroundColor = kMainCommentBackgroundColor;
     self.firstCommentLabel.isAttributedContent = YES;
@@ -422,14 +420,13 @@
     } else{
         self.relationLabel.text = object.friendship;
     }
-
     //是否显示删除按钮
     if ([object.userid isEqualToString:UID]){
         self.deleteButton.hidden = NO;
     } else{
         self.deleteButton.hidden = YES;
     }
-
+    
     if (![object.ispraise isEqualToString:@"Y"]) {
         [self.praiseButton setImage:[UIImage imageNamed:@"home_weizan"] forState:UIControlStateNormal];
     }else{
@@ -445,6 +442,9 @@
     .rightEqualToView(self.attentionButton)
     .topSpaceToView(self.photoView, 0.0f)
     .heightIs(kMainActionHeight);
+    
+    [self.actionView setNeedsLayout];
+    [self.actionView layoutIfNeeded];
 }
 
 - (void)loadCommentView:(CircleListObj *)object

@@ -27,7 +27,7 @@
 {
     [super viewDidLoad];
     self.title = @"发布成功";
-    self.view.backgroundColor = Color(@"efeeef");
+    self.view.backgroundColor = Color(@"ffffff");
     if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
         self.navigationController.interactivePopGestureRecognizer.enabled = NO;
     }
@@ -50,14 +50,15 @@
     self.shareView.sd_layout
     .leftSpaceToView(self.view, 0.0f)
     .rightSpaceToView(self.view, 0.0f)
-    .centerYEqualToView(self.view);
+    .centerYIs(self.view.centerY + MarginFactor(20.0f));
 }
 
 - (void)initView
 {
     self.titleImageView.image = [UIImage imageNamed:@"businessShareToCircle"];
-    self.shareView.backgroundColor = Color(@"efeeef");
+    self.shareView.backgroundColor = Color(@"ffffff");
     CGFloat margin = MarginFactor(20.0f);
+    CGFloat topMargin = MarginFactor(40.0f);
     CGFloat width = (SCREENWIDTH - 4 * margin) / 3.0f;
     NSArray *imageTitleArray = [[NSArray alloc] init];
     NSArray *imageArray = [[NSArray alloc] init];
@@ -82,8 +83,8 @@
    
     for (NSInteger i = 0; i < imageTitleArray.count; i ++) {
         SHGTitleLabelCenterButton * button = [SHGTitleLabelCenterButton buttonWithType:UIButtonTypeCustom];
-        button.frame = CGRectMake(margin + i%3 * (width + margin), i/3 * (width + margin), width, width);
-        button.titleLabel.font = FontFactor(10.0f);
+        button.frame = CGRectMake(margin + i%3 * (width + margin), i/3 * (width + topMargin), width, width);
+        button.titleLabel.font = FontFactor(14.0f);
         [button setTitleColor:Color(@"787878") forState:UIControlStateNormal];
         [button setTitle:[imageTitleArray objectAtIndex:i] image:[UIImage imageNamed:[imageArray objectAtIndex:i]]];
         [button addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchUpInside];
@@ -93,13 +94,13 @@
         self.shareView.sd_resetLayout
         .leftSpaceToView(self.view, 0.0f)
         .rightSpaceToView(self.view, 0.0f)
-        .centerYIs(self.view.centerY + MarginFactor(20.0f))
+        .topSpaceToView(self.titleImageView, MarginFactor(91.0f))
         .heightIs(margin + 2 * width);
     } else{
         self.shareView.sd_resetLayout
         .leftSpaceToView(self.view, 0.0f)
         .rightSpaceToView(self.view, 0.0f)
-        .centerYIs(self.view.centerY + MarginFactor(20.0f))
+        .topSpaceToView(self.titleImageView, MarginFactor(91.0f))
         .heightIs(width);
     }
     
@@ -133,8 +134,10 @@
     publishContent = self.publishContent;
     if ([btn.titleLabel.text isEqualToString:@"微信"]) {
         shareType = ShareTypeWeixiSession;
+        //[[SHGGloble sharedGloble] recordUserAction:self.object.businessID type:@"dynamic_shareMicroFriend"];
     } else if ([btn.titleLabel.text isEqualToString:@"朋友圈"]){
         shareType = ShareTypeWeixiTimeline;
+        //[[SHGGloble sharedGloble] recordUserAction:self.object.businessID type:@"dynamic_shareMicroCircle"];
     } else if ([btn.titleLabel.text isEqualToString:@"QQ"]){
         shareType = ShareTypeQQ;
     } else if ([btn.titleLabel.text isEqualToString:@"短信"]){
@@ -142,12 +145,14 @@
         publishContent = self.smsPublishContent;
     } else if ([btn.titleLabel.text isEqualToString:@"圈内好友"]){
         shareType = ShareTypeOther;
+        //[[SHGGloble sharedGloble] recordUserAction:self.object.businessID type:@"dynamic_shareSystemUser"];
         FriendsListViewController *vc = [[FriendsListViewController alloc] init];
         vc.isShare = YES;
         vc.shareContent = self.friendContent;
         [self.navigationController pushViewController:vc animated:YES];
     } else if ([btn.titleLabel.text isEqualToString:@"动态"]){
         shareType = ShareTypeOther;
+       // [[SHGGloble sharedGloble] recordUserAction:self.object.businessID type:@"dynamic_shareDynamic"];
         SHGBusinessShareToDynamicViewController *viewController = [[SHGBusinessShareToDynamicViewController alloc] init];
         viewController.object = self.object;
         viewController.controller = self;

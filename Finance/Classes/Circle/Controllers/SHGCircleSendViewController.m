@@ -17,9 +17,10 @@
 #define kImageViewLeftMargin MarginFactor(12.0f)
 #define kImageViewMargin MarginFactor(18.0f)
 #define MAX_TEXT_LENGTH         2000
-
+#define MAX_STRING_LENGTH         2000
 @interface SHGCircleSendViewController ()<UITextViewDelegate, UIActionSheetDelegate, ZYQAssetPickerControllerDelegate, UIImagePickerControllerDelegate,UINavigationControllerDelegate>
-
+@property (assign, nonatomic) BOOL isTextField;
+@property (assign, nonatomic) NSInteger index;
 @property (assign, nonatomic) BOOL isEmoji;
 @property (strong, nonatomic) TWEmojiKeyBoard *emojiKeyBoard;
 
@@ -61,7 +62,7 @@
 {
     [super viewWillAppear:animated];
     self.navigationController.interactivePopGestureRecognizer.enabled = NO;
-    [self.textView becomeFirstResponder];
+    [self.textField becomeFirstResponder];
 }
 - (void)viewDidAppear:(BOOL)animated
 {
@@ -72,7 +73,7 @@
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+[[NSNotificationCenter defaultCenter] removeObserver:self];
     self.navigationController.interactivePopGestureRecognizer.enabled = YES;
 }
 
@@ -87,7 +88,7 @@
 
     self.spliteView.backgroundColor = Color(@"e6e7e8");
 
-    self.textView.placeholder = @"来说点什么吧...";
+    self.textView.placeholder = @"说两句吧...";
     self.textView.bounces = NO;
     self.textView.placeholderColor = Color(@"919291");
     self.textView.textColor = Color(@"161616");
@@ -278,6 +279,7 @@
 
 - (void)btnBackClick:(id)sender
 {
+    [self.textField resignFirstResponder];
     [self.textView resignFirstResponder];
     SHGAlertView *alertView = [[SHGAlertView alloc] initWithTitle:@"提示" contentText:@"退出此次编辑?" leftButtonTitle:@"取消" rightButtonTitle:@"退出"];
     alertView.rightBlock = ^{
@@ -288,9 +290,13 @@
 
 - (void)rightItemClick:(id)sender
 {
+    [self.textField resignFirstResponder];
     [self.textView resignFirstResponder];
     if (self.textField.text.length == 0) {
         [Hud showMessageWithText:@"标题不能为空"];
+        return;
+    } else if (self.textView.text.length == 0){
+        [Hud showMessageWithText:@"正文不能为空"];
         return;
     } else if (self.textField.text.length > 18){
         [Hud showMessageWithText:@"标题字数不得超过18个字"];
@@ -385,19 +391,46 @@
 
 - (IBAction)emojiButtonClick:(UIButton *)sender
 {
-    [self.textView resignFirstResponder];
-    if (!self.isEmoji){
-        self.isEmoji = YES;
-        [self.emojiKeyBoard bindKeyBoardWithTextField:(UITextField *)self.textView];
+    if ([self.textField isEditing]) {
+        [self.textField resignFirstResponder];
+        if (!self.isEmoji){
+            self.isEmoji = YES;
+            [self.emojiKeyBoard bindKeyBoardWithTextField:self.textField];
+            
+        } else{
+            [self.emojiKeyBoard unbindKeyBoard];
+            self.isEmoji = NO;
+        }
+        [self.textField becomeFirstResponder];
     } else{
-        [self.emojiKeyBoard unbindKeyBoard];
-        self.isEmoji = NO;
+        [self.textView resignFirstResponder];
+        if (!self.isEmoji){
+            self.isEmoji = YES;
+            [self.emojiKeyBoard bindKeyBoardWithTextField:(UITextField *)self.textView];
+            
+        } else{
+            [self.emojiKeyBoard unbindKeyBoard];
+            self.isEmoji = NO;
+        }
+        
+        [self.textView becomeFirstResponder];
+        
     }
-    [self.textView becomeFirstResponder];
 }
 
 - (IBAction)urlButtonClick:(UIButton *)sender
 {
+    if ([self.textField isEditing]) {
+        self.isTextField = YES;
+        UITextPosition* beginning = self.textField.beginningOfDocument;
+        UITextRange* selectedRange = self.textField.selectedTextRange;
+        UITextPosition* selectionStart = selectedRange.start;
+        NSInteger location = [self.textField offsetFromPosition:beginning toPosition:selectionStart];
+        self.index = location;
+        NSLog(@"%ld",location);
+    } else{
+        self.isTextField = NO;
+    }
     UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:nil message:@"将您复制的信息粘贴在此" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
     alertView.alertViewStyle = UIAlertViewStylePlainTextInput;
     [alertView show];
@@ -412,7 +445,15 @@
         return;
     } else {
         UITextField *textfield = [alertView textFieldAtIndex:0];
-        [self.textView insertText:textfield.text];
+        if (self.isTextField) {
+            [self.textField becomeFirstResponder];
+            NSMutableString *content = [[NSMutableString alloc] initWithString:self.textField.text];
+            [content insertString:textfield.text atIndex:self.index];
+            self.textField.text = content;
+        } else{
+            [self.textView insertText:textfield.text];
+        }
+        
     }
 }
 
@@ -527,6 +568,25 @@
         [textView resignFirstResponder];
         [Hud showMessageWithText:@"帖子过长，不能超过2000个字"];
         return NO;
+    }
+    return YES;
+}
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    if (textField == self.textField) {
+        if (string.length == 0)
+        {
+            return YES;
+        }
+        NSInteger existedLength = self.textField.text.length;
+        NSInteger selectedLength = range.length;
+        NSInteger replaceLength = string.length;
+        if (existedLength - selectedLength + replaceLength > 18) {
+            [Hud showMessageWithText:@"标题最多可输入18个字"];
+            [self.textField resignFirstResponder];
+            return NO;
+        }
     }
     return YES;
 }

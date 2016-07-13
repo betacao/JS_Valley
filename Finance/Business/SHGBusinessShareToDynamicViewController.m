@@ -172,6 +172,7 @@
 }
 - (void)initView
 {
+
     self.detailView.object = self.object;
     self.textView.placeholder = @"说两句吧...";
     self.textView.bounces = NO;

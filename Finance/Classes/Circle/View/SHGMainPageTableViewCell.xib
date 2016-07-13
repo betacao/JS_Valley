@@ -91,12 +91,12 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <view contentMode="scaleToFill" id="iyD-7g-v1T" customClass="SHGHorizontalTitleImageButton">
+                            <view contentMode="scaleToFill" id="9Wh-fl-yVp" customClass="SHGHorizontalTitleImageButton">
                                 <rect key="frame" x="40" y="0.0" width="240" height="128"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <connections>
-                                    <action selector="deleteButtonClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="rh8-kF-bRf"/>
+                                    <action selector="deleteButtonClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="lGv-LD-f7J"/>
                                 </connections>
                             </view>
                             <view contentMode="scaleToFill" id="4UZ-8x-c0s" customClass="SHGHorizontalTitleImageButton">
@@ -182,7 +182,7 @@
                 <outlet property="commentView" destination="2TC-Px-Pbb" id="MSY-ge-6zW"/>
                 <outlet property="companyLabel" destination="4BK-24-OGa" id="R2z-7n-K9g"/>
                 <outlet property="contentLabel" destination="oLW-AH-vpY" id="BxX-Fv-ESY"/>
-                <outlet property="deleteButton" destination="iyD-7g-v1T" id="U9d-Cd-UHA"/>
+                <outlet property="deleteButton" destination="9Wh-fl-yVp" id="V3w-Be-5MV"/>
                 <outlet property="departmentLabel" destination="Cxj-lu-SLg" id="wJq-4q-aIo"/>
                 <outlet property="firstCommentLabel" destination="dw3-cj-bCn" id="nqa-Xk-Dih"/>
                 <outlet property="fourthCommentLabel" destination="AWj-Sh-nGN" id="82I-hy-CwD"/>
