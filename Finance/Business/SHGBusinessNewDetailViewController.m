@@ -422,7 +422,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
     .leftEqualToView(self.BPLabel)
     .rightEqualToView(self.BPLabel)
     .topSpaceToView(self.BPLabel, 0.0f)
-    .heightIs(0.5f);
+    .heightIs(1 / SCALE);
     
     self.BPButtonView.sd_layout
     .leftSpaceToView(self.BPView, 0.0f)
@@ -434,7 +434,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
     .leftSpaceToView(self.BPView, 0.0f)
     .rightSpaceToView(self.BPView, 0.0f)
     .topSpaceToView(self.BPButtonView, 0.0f)
-    .heightIs(0.5f);
+    .heightIs(1 / SCALE);
     
     self.thirdGaryView.sd_layout
     .leftEqualToView(self.BPButtonView)

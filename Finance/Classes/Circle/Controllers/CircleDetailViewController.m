@@ -32,7 +32,11 @@
 
 }
 @property (weak, nonatomic) IBOutlet UIButton *btnSend;
+@property (weak, nonatomic) IBOutlet UIButton *faceBtn;
+@property (weak, nonatomic) IBOutlet UIButton *faSongBtn;
 @property (weak, nonatomic) IBOutlet UIView *viewInput;
+@property (weak, nonatomic) IBOutlet UIView *spliteView;
+
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollPraise;
 @property (weak, nonatomic) IBOutlet UILabel *nickName;
 @property (weak, nonatomic) IBOutlet SHGHorizontalTitleImageButton *btnCollet;
@@ -45,7 +49,7 @@
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIView *actionView;
 
-@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
+@property (weak, nonatomic) IBOutlet CTTextDisplayView *titleLabel;
 @property (weak, nonatomic) IBOutlet CTTextDisplayView *lblContent;
 @property (weak, nonatomic) IBOutlet SHGMainPageBusinessView *businessView;
 @property (weak, nonatomic) IBOutlet UIWebView *webView;
@@ -63,8 +67,6 @@
 @property (weak, nonatomic) IBOutlet UIView *lineView;
 
 @property (strong, nonatomic) UIView *photoView;
-@property (weak, nonatomic) IBOutlet UIButton *faceBtn;
-@property (weak, nonatomic) IBOutlet UIButton *faSongBtn;
 
 @property (strong, nonatomic) CircleListObj *responseObject;
 
@@ -135,9 +137,6 @@
     self.btnShare.margin = MarginFactor(7.0f);
     self.btnShare.titleLabel.font = kMainActionFont;
 
-    self.titleLabel.textColor = kMainTitleColor;
-    self.titleLabel.font = kMainTitleFont;
-
     self.webView.scrollView.bounces = NO;
     self.webView.hidden = YES;
 
@@ -148,6 +147,14 @@
     model.lineSpace = MarginFactor(5.0f);
     self.lblContent.styleModel = model;
     self.lblContent.delegate = self;
+
+    CTTextStyleModel *titleModel = [[CTTextStyleModel alloc] init];
+    model.numberOfLines = -1;
+    titleModel.textColor = kMainTitleColor;
+    titleModel.font = kMainTitleFont;
+    self.titleLabel.styleModel = titleModel;
+    self.titleLabel.delegate = self;
+
 
     self.btnSend.titleLabel.font = FontFactor(15.0f);
     self.btnSend.layer.masksToBounds = YES;
@@ -160,6 +167,8 @@
 
     self.lineView.backgroundColor = [UIColor colorWithHexString:@"e6e7e8"];
 
+    self.spliteView.backgroundColor = Color(@"e2e2e2");
+    
     UIImage *image = self.backImageView.image;
     image = [image resizableImageWithCapInsets:UIEdgeInsetsMake(15.0f, 35.0f, 9.0f, 11.0f) resizingMode:UIImageResizingModeStretch];
     self.backImageView.image = image;
@@ -179,13 +188,11 @@
     .bottomSpaceToView(self.view, 0.0f)
     .heightIs(MarginFactor(45.0f));
 
-    [self.faceBtn sizeToFit];
-    CGSize faceSize = self.faceBtn.frame.size;
     self.faceBtn.sd_layout
     .leftSpaceToView(self.viewInput, kMainItemLeftMargin)
     .centerYEqualToView(self.viewInput)
-    .widthIs(faceSize.width)
-    .heightIs(faceSize.height);
+    .widthIs(self.faceBtn.currentImage.size.width)
+    .heightIs(self.faceBtn.currentImage.size.height);
 
     self.faSongBtn.sd_layout
     .rightSpaceToView(self.viewInput, kMainItemLeftMargin)
@@ -197,6 +204,12 @@
     .rightSpaceToView(self.faSongBtn, MarginFactor(10.0f))
     .leftSpaceToView(self.faceBtn, MarginFactor(10.0f))
     .centerYEqualToView(self.viewInput);
+
+    self.spliteView.sd_layout
+    .topSpaceToView(self.viewInput, 0.0f)
+    .leftSpaceToView(self.viewInput, 0.0f)
+    .rightSpaceToView(self.viewInput, 0.0f)
+    .heightIs(1 / SCALE);
 
     self.tableView.sd_layout
     .topSpaceToView(self.view, 0.0f)
@@ -260,7 +273,7 @@
     .heightIs(1.0f);
 
     self.titleLabel.sd_layout
-    .topSpaceToView(self.personView, self.lblContent.styleModel.lineSpace)
+    .topSpaceToView(self.personView, 0.0f)
     .leftSpaceToView(self.tableHeaderView, kMainItemLeftMargin)
     .rightSpaceToView(self.tableHeaderView, kMainItemLeftMargin)
     .heightIs(0.0f);
@@ -502,12 +515,11 @@
         self.titleLabel.text = title;
         if (title.length > 0) {
             self.titleLabel.sd_resetLayout
-            .topSpaceToView(self.personView, 0.0f)
+            .topSpaceToView(self.personView, kMainContentTopMargin)
             .leftSpaceToView(self.tableHeaderView, kMainItemLeftMargin)
             .rightSpaceToView(self.tableHeaderView, kMainItemLeftMargin)
-            .heightIs(MarginFactor(60.0f));
+            .heightIs([CTTextDisplayView getRowHeightWithText:title rectSize:CGSizeMake(SCREENWIDTH -  2 * kMainItemLeftMargin, CGFLOAT_MAX) styleModel:self.titleLabel.styleModel]);
         }
-
 
         NSString *businessID = self.responseObject.businessID;
         SHGBusinessObject *businessObject = [[SHGBusinessObject alloc] init];
@@ -520,7 +532,7 @@
         }
 
         self.businessView.sd_resetLayout
-        .topSpaceToView(self.titleLabel, 0.0f)
+        .topSpaceToView(self.titleLabel, kMainContentTopMargin)
         .leftSpaceToView(self.tableHeaderView, 0.0f)
         .rightSpaceToView(self.tableHeaderView, 0.0f)
         .heightIs(MarginFactor(59.0f));
@@ -531,17 +543,17 @@
         self.titleLabel.text = title;
         if (title.length > 0) {
             self.titleLabel.sd_resetLayout
-            .topSpaceToView(self.personView, 0.0f)
+            .topSpaceToView(self.personView, kMainContentTopMargin)
             .leftSpaceToView(self.tableHeaderView, kMainItemLeftMargin)
             .rightSpaceToView(self.tableHeaderView, kMainItemLeftMargin)
-            .heightIs(MarginFactor(60.0f));
+            .heightIs([CTTextDisplayView getRowHeightWithText:title rectSize:CGSizeMake(SCREENWIDTH -  2 * kMainItemLeftMargin, CGFLOAT_MAX) styleModel:self.titleLabel.styleModel]);
         }
 
         NSString *detail = [[SHGGloble sharedGloble] formatStringToHtml:self.responseObject.detail];
         self.lblContent.text = detail;
         if (detail.length > 0) {
             self.lblContent.sd_resetLayout
-            .topSpaceToView(self.titleLabel, -self.lblContent.styleModel.lineSpace)
+            .topSpaceToView(self.titleLabel, kMainContentTopMargin / 2.0f)
             .leftSpaceToView(self.tableHeaderView, kMainItemLeftMargin)
             .rightSpaceToView(self.tableHeaderView, kMainItemLeftMargin)
             .heightIs([CTTextDisplayView getRowHeightWithText:detail rectSize:CGSizeMake(SCREENWIDTH -  2 * kMainItemLeftMargin, CGFLOAT_MAX) styleModel:self.lblContent.styleModel]);
@@ -1140,19 +1152,14 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"You Click At Section: %ld Row: %ld",(long)indexPath.section,(long)indexPath.row);
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     commentOBj *obj = self.responseObject.comments[indexPath.row];
     copyString = obj.cdetail;
     commentRid = obj.rid;
     if ([obj.cnickname isEqualToString:[[NSUserDefaults standardUserDefaults]objectForKey:KEY_USER_NAME]]) {
-        NSLog(@"%@",obj.cnickname);
-        //复制删除试图
         [self createPickerView];
     } else{
         [self replyClick:indexPath.row];
-        NSLog(@"%@",obj.cnickname);
-        NSLog(@"%@",self.responseObject.nickname);
     }
 }
 

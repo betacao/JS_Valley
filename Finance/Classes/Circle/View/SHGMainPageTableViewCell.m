@@ -238,6 +238,7 @@
         _titleStyleModel = [[CTTextStyleModel alloc] init];
         _titleStyleModel.textColor = kMainTitleColor;
         _titleStyleModel.font = kMainTitleFont;
+        _titleStyleModel.numberOfLines = -1;
     }
     return _titleStyleModel;
 }

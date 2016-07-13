@@ -30,9 +30,10 @@
                 <outlet property="personView" destination="XOQ-nE-ewr" id="4h8-k0-k9L"/>
                 <outlet property="praisebtn" destination="G5n-2p-xA3" id="J1u-yS-ec9"/>
                 <outlet property="scrollPraise" destination="aWm-Lk-eH9" id="KIK-W2-uD9"/>
+                <outlet property="spliteView" destination="6hs-23-uGR" id="wIO-jH-Rgn"/>
                 <outlet property="tableHeaderView" destination="Zk8-gE-mjJ" id="d3i-HO-tW9"/>
                 <outlet property="tableView" destination="4Dg-M9-dvf" id="uKR-53-xXO"/>
-                <outlet property="titleLabel" destination="nN6-7N-7cV" id="itJ-CU-Sst"/>
+                <outlet property="titleLabel" destination="xYm-k0-B9c" id="gXv-p8-x4f"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
                 <outlet property="viewInput" destination="QyD-ga-fkw" id="FTy-DG-HJn"/>
                 <outlet property="viewPraise" destination="ffx-YA-YXJ" id="Kft-j5-qR0"/>
@@ -48,6 +49,11 @@
                     <rect key="frame" x="0.0" y="459" width="320" height="45"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
+                        <view contentMode="scaleToFill" id="6hs-23-uGR">
+                            <rect key="frame" x="40" y="-41" width="240" height="128"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </view>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="a0u-4d-vNm">
                             <rect key="frame" x="41" y="5" width="209" height="34"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -161,13 +167,11 @@
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                 </view>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="nN6-7N-7cV">
-                    <rect key="frame" x="139" y="114" width="42" height="21"/>
+                <view contentMode="scaleToFill" id="xYm-k0-B9c" customClass="CTTextDisplayView">
+                    <rect key="frame" x="40" y="61" width="240" height="128"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                    <nil key="highlightedColor"/>
-                </label>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </view>
                 <view contentMode="scaleToFill" id="qYe-1m-FgM" customClass="CTTextDisplayView">
                     <rect key="frame" x="0.0" y="-159" width="320" height="568"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
