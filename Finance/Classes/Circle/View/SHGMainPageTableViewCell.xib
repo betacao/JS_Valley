@@ -11,7 +11,7 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="564"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="563.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="563"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" id="wny-XQ-u6x" customClass="SHGUserHeaderView">
@@ -60,13 +60,11 @@
                             <action selector="attentionButtonClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="J5n-Ko-HYb"/>
                         </connections>
                     </button>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="m2M-f3-gja">
-                        <rect key="frame" x="139" y="272" width="42" height="21"/>
+                    <view contentMode="scaleToFill" id="CIN-RB-CFz" customClass="CTTextDisplayView">
+                        <rect key="frame" x="40" y="218" width="240" height="128"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                        <nil key="highlightedColor"/>
-                    </label>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
                     <view contentMode="scaleToFill" id="4oc-kh-9iy" customClass="SHGMainPageBusinessView">
                         <rect key="frame" x="40" y="218" width="240" height="128"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -199,7 +197,7 @@
                 <outlet property="splitView" destination="JCV-Rd-rmW" id="K4M-OG-yYq"/>
                 <outlet property="thirdCommentLabel" destination="nQh-th-STQ" id="139-9f-zyU"/>
                 <outlet property="timeLabel" destination="eGv-gi-Bah" id="2aa-3e-2EF"/>
-                <outlet property="titleLabel" destination="m2M-f3-gja" id="rF5-jC-6Ry"/>
+                <outlet property="titleLabel" destination="CIN-RB-CFz" id="SGO-df-65u"/>
             </connections>
             <point key="canvasLocation" x="164" y="66"/>
         </tableViewCell>

@@ -23,7 +23,7 @@
 @property (weak, nonatomic) IBOutlet SHGAuthenticationView *authenticationView;
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
 @property (weak, nonatomic) IBOutlet UIButton *attentionButton;
-@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
+@property (weak, nonatomic) IBOutlet CTTextDisplayView *titleLabel;
 @property (weak, nonatomic) IBOutlet CTTextDisplayView *contentLabel;
 @property (weak, nonatomic) IBOutlet SHGMainPageBusinessView *businessView;
 @property (weak, nonatomic) IBOutlet UIView *photoView;
@@ -43,6 +43,7 @@
 
 @property (strong, nonatomic) NSArray *commentLabelArray;
 @property (strong, nonatomic) CTTextStyleModel *styleModel;
+@property (strong, nonatomic) CTTextStyleModel *titleStyleModel;
 @end
 
 @implementation SHGMainPageTableViewCell
@@ -58,9 +59,9 @@
 {
     [self.contentView bringSubviewToFront:self.headerView];
 
-    self.titleLabel.textColor = kMainTitleColor;
-    self.titleLabel.font = kMainTitleFont;
-
+    self.titleLabel.delegate = self;
+    self.titleLabel.styleModel = self.titleStyleModel;
+    
     self.contentLabel.delegate = self;
     self.contentLabel.styleModel = self.styleModel;
 
@@ -231,6 +232,15 @@
     return _styleModel;
 }
 
+- (CTTextStyleModel *)titleStyleModel
+{
+    if (!_titleStyleModel) {
+        _titleStyleModel = [[CTTextStyleModel alloc] init];
+        _titleStyleModel.textColor = kMainTitleColor;
+        _titleStyleModel.font = kMainTitleFont;
+    }
+    return _titleStyleModel;
+}
 - (void)setObject:(CircleListObj *)object
 {
     _object = object;
@@ -299,20 +309,21 @@
 
 - (void)loadContent:(CircleListObj *)object
 {
-    NSString *title = object.groupPostTitle;
+    NSString *title = [[SHGGloble sharedGloble] formatStringToHtml:object.groupPostTitle];
     if (title.length > 0) {
         self.titleLabel.sd_resetLayout
         .topSpaceToView(self.headerView, kMainContentTopMargin)
         .leftEqualToView(self.headerView)
         .rightEqualToView(self.attentionButton)
-        .autoHeightRatio(0.0f);
-    } else {
+        .heightIs([CTTextDisplayView getRowHeightWithText:title rectSize:CGSizeMake(SCREENWIDTH -  2 * kMainItemLeftMargin, CGFLOAT_MAX) styleModel:self.titleStyleModel]);
+    } else{
         self.titleLabel.sd_resetLayout
         .topSpaceToView(self.headerView, 0.0f)
         .leftEqualToView(self.headerView)
         .rightEqualToView(self.attentionButton)
-        .heightIs(0.0f);
+        .heightIs(0.0);
     }
+
     self.titleLabel.text = title;
 
     if ([object.postType isEqualToString:@"business"]) {
@@ -627,7 +638,7 @@
     if (title.length > 20) {
         title = [[title substringToIndex:20] stringByAppendingString:@"..."];
     }
-    title = [@"【业务】 " stringByAppendingString:object.businessTitle];
+    title = [@"【业务】 " stringByAppendingString:title];
     self.label.text = title;
 }
 
