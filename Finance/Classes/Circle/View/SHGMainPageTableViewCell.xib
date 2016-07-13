@@ -53,8 +53,9 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="sJ7-tc-eYm">
-                        <rect key="frame" x="137" y="267" width="46" height="30"/>
+                        <rect key="frame" x="135" y="271" width="50" height="22"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <state key="normal" image="newAttention"/>
                         <connections>
                             <action selector="attentionButtonClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="J5n-Ko-HYb"/>
                         </connections>
@@ -203,4 +204,7 @@
             <point key="canvasLocation" x="164" y="66"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="newAttention" width="50" height="22"/>
+    </resources>
 </document>

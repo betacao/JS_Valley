@@ -281,19 +281,16 @@
         str = [NSString stringWithFormat:@"%@...",str];
     }
     self.departmentLabel.text = str;
-    
+
     self.timeLabel.text = object.publishdate;
-    if ([object.userid isEqualToString:CHATID_MANAGER]) {
+
+    if ([object.userid isEqualToString:UID]) {
         self.attentionButton.hidden = YES;
     } else{
-        if ([object.userid isEqualToString:UID]) {
-            self.attentionButton.hidden = YES;
-        } else{
-            self.attentionButton.hidden = NO;
-        }
+        self.attentionButton.hidden = NO;
     }
-    
-    if (self.object.isAttention){
+
+    if (self.object.isAttention || [object.userid isEqualToString:CHATID_MANAGER]){
         [self.attentionButton setImage:[UIImage imageNamed:@"newAttention"] forState:UIControlStateNormal] ;
     } else{
         [self.attentionButton setImage:[UIImage imageNamed:@"newAddAttention"] forState:UIControlStateNormal] ;
