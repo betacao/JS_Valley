@@ -29,8 +29,8 @@
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.backgroundColor = [UIColor colorWithHexString:@"efeeef"];
-    [self addHeaderRefresh:self.tableView headerRefesh:YES andFooter:YES];
-    [self requestPostListWithTarget:@"first" time:@"0"];
+    [self addHeaderRefresh:self.tableView headerRefesh:NO andFooter:YES];
+    [self requestPostListWithTarget:@"first" rid:@"-1"];
     [SHGGlobleOperation registerAttationClass:[self class] method:@selector(loadAttationState:attationState:)];
 }
 
@@ -60,7 +60,7 @@
 
 - (void)refreshData
 {
-    [self requestPostListWithTarget:@"first" time:@"0"];
+    [self requestPostListWithTarget:@"first" rid:@"-1"];
 }
 
 - (void)loadAttationState:(NSString *)targetUserID attationState:(BOOL)attationState
@@ -87,17 +87,15 @@
     return _emptyCell;
 }
 
-- (void)requestPostListWithTarget:(NSString *)target time:(NSString *)time
+- (void)requestPostListWithTarget:(NSString *)target rid:(NSString *)rid
 {
-    NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
-  
-    NSDictionary * param = @{@"uid":uid, @"target":target, @"time":time, @"num":@"100"};
-    
+    NSDictionary * param = @{@"uid":UID, @"target":target, @"rid":rid, @"num":@"10"};
+
     [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttp,@"collection",@"mycirclelist"] class:[CircleListObj class] parameters:param success:^(MOCHTTPResponse *response) {
         if ([target isEqualToString:@"first"]) {
             [self.dataArr removeAllObjects];
             [self.dataArr addObjectsFromArray:response.dataArray];
-            
+
         }
         if ([target isEqualToString:@"refresh"]) {
             [self.dataArr removeAllObjects];
@@ -106,9 +104,9 @@
                     CircleListObj *obj = response.dataArray[i];
                     [self.dataArr insertObject:obj atIndex:0];
                 }
-                
+
             }
-            
+
         }
         if ([target isEqualToString:@"load"]) {
             [self.dataArr addObjectsFromArray:response.dataArray];
@@ -117,7 +115,7 @@
         [self.tableView.mj_header endRefreshing];
         [self.tableView.mj_footer endRefreshing];
         [Hud hideHud];
-        
+
     } failed:^(MOCHTTPResponse *response) {
         NSLog(@"%@",response.errorMessage);
         [Hud hideHud];
@@ -125,13 +123,13 @@
         [self.tableView.mj_header endRefreshing];
         [self performSelector:@selector(endFoot) withObject:nil afterDelay:1.0];
     }];
-    
+
 }
 
 - (void)endFoot
 {
     [self.tableView.mj_footer endRefreshing];
-    
+
 }
 
 - (SHGEmptyDataView *)emptyView
@@ -142,16 +140,12 @@
     return _emptyView;
 }
 
-
-- (void)refreshHeader
-{
-    [self requestPostListWithTarget:@"refresh" time:@""];
-}
-
 - (void)refreshFooter
 {
-    [self requestPostListWithTarget:@"load" time:@""];
-    
+    if (self.dataArr.count > 0){
+        CircleListObj *obj = [self.dataArr lastObject];
+        [self requestPostListWithTarget:@"load" rid:obj.rid];
+    }
 }
 #pragma mark ------tableview代理
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -195,7 +189,7 @@
                 return MarginFactor(198.0f);
             }
 
-        } 
+        }
         return SCREENWIDTH;
     }
     return SCREENHEIGHT;
@@ -225,7 +219,7 @@
             }
             cell.textLabel.text = @"原帖已删除";
             cell.textLabel.font = FontFactor(16.0f);
-            
+
             return cell;
         }
     } else{
@@ -244,12 +238,12 @@
 
 - (void)changeCardCollection
 {
-    [self requestPostListWithTarget:@"first" time:@"-1"];
+    [self requestPostListWithTarget:@"first" rid:@"-1"];
 }
 
 - (void)deleteClicked:(CircleListObj *)obj
 {
-    
+
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"确认删除吗" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"删除", nil];
     _deleteObj = obj;
     [alert show];
@@ -293,7 +287,7 @@
                 obj.ispraise = @"Y";
                 obj.praisenum = [NSString stringWithFormat:@"%ld",(long)[obj.praisenum integerValue] +1];
                 [Hud showMessageWithText:@"赞成功"];
-                
+
                 [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_COLLECT_PRAISE_CLICK object:obj];
             }
             [Hud hideHud];
@@ -302,7 +296,7 @@
             [Hud hideHud];
             [Hud showMessageWithText:response.errorMessage];
         }];
-        
+
     } else{
         [Hud showWait];
         [MOCHTTPRequestOperationManager deleteWithURL:url parameters:param success:^(MOCHTTPResponse *response) {
@@ -340,13 +334,13 @@
 - (void)shareClicked:(CircleListObj *)obj
 {
     id<ISSCAttachment> image  = [ShareSDK pngImageWithImage:[UIImage imageNamed:@"80"]];
-    
+
     if (!IsArrEmpty(obj.photoArr)  ) {
         //  image = [ShareSDK imageWithUrl:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,_obj.photoArr[0]]];
     }
     NSString *postContent;
     NSString *shareContent;
-    
+
     NSString *shareTitle ;
     if (IsStrEmpty(obj.detail)) {
         postContent = SHARE_CONTENT;
@@ -365,36 +359,36 @@
     }
     if (obj.detail.length > 15)
     {
-        
+
         shareTitle = [obj.detail substringToIndex:15];
-        
+
         shareContent = [NSString stringWithFormat:@"%@...",[obj.detail substringToIndex:15]];
-        
+
     }
     NSString *content = [NSString stringWithFormat:@"%@\"%@\"%@%@",@"Hi，我在金融大牛圈上看到了一个非常棒的帖子,关于",postContent,@"，赶快下载大牛圈查看吧！",[NSString stringWithFormat:@"%@%@",rBaseAddressForHttpShare,obj.rid]];
     id<ISSShareActionSheetItem> item1 = [ShareSDK shareActionSheetItemWithTitle:@"大牛说" icon:[UIImage imageNamed:@"圈子图标"] clickHandler:^{
         [self circleShareWithObj:obj];
     }];
     id<ISSShareActionSheetItem> item2 = [ShareSDK shareActionSheetItemWithTitle:@"圈内好友" icon:[UIImage imageNamed:@"圈内好友图标"] clickHandler:^{
-        
+
         NSString *shareText = [NSString stringWithFormat:@"转自:%@的帖子：%@",obj.nickname,obj.detail];
         [self shareToFriendWithText:shareText rid:obj.rid];
     }];
-    
+
     id<ISSShareActionSheetItem> item3 = [ShareSDK shareActionSheetItemWithTitle:@"短信" icon:[UIImage imageNamed:@"sns_icon_19"] clickHandler:^{
         [self shareToSMS:content  rid:obj.rid];
     }];
     id<ISSShareActionSheetItem> item0 = [ShareSDK shareActionSheetItemWithTitle:@"新浪微博" icon:[UIImage imageNamed:@"sns_icon_1"] clickHandler:^{
         [self shareToWeibo:content rid:obj.rid];
     }];
-    
+
     id<ISSShareActionSheetItem> item4 = [ShareSDK shareActionSheetItemWithTitle:@"微信朋友圈" icon:[UIImage imageNamed:@"sns_icon_23"] clickHandler:^{
         [[AppDelegate currentAppdelegate]wechatShare:obj shareType:1];
     }];
     id<ISSShareActionSheetItem> item5 = [ShareSDK shareActionSheetItemWithTitle:@"微信好友" icon:[UIImage imageNamed:@"sns_icon_22"] clickHandler:^{
         [[AppDelegate currentAppdelegate]wechatShare:obj shareType:0];
     }];
-    
+
     //    NSArray *shareList = [ShareSDK customShareListWithType: item3, item5, item4, item0, item1, item2, nil];
     NSArray *shareArray = nil;
     if ([WXApi isWXAppSupportApi]) {
@@ -409,18 +403,18 @@
         } else{
             shareArray = [ShareSDK customShareListWithType: item3, item1, item2, nil];
         }
-        
+
     }
-    
+
     NSString *shareUrl = [NSString stringWithFormat:@"%@%@",rBaseAddressForHttpShare,obj.rid];
     //构造分享内容
     id<ISSContent> publishContent = [ShareSDK content:shareContent defaultContent:shareContent image:image title:SHARE_TITLE url:shareUrl description:shareContent mediaType:SHARE_TYPE];
     //创建弹出菜单容器
-    
+
     //创建弹出菜单容器
     id<ISSContainer> container = [ShareSDK container];
     [container setIPadContainerWithView:self.view arrowDirect:UIPopoverArrowDirectionUp];
-    
+
     //弹出分享菜单
     [ShareSDK showShareActionSheet:container shareList:shareArray content:publishContent statusBarTips:YES authOptions:nil shareOptions:nil result:^(ShareType type, SSResponseState state, id<ISSPlatformShareInfo> statusInfo, id<ICMErrorInfo> error, BOOL end) {
         if (state == SSResponseStateSuccess){
@@ -428,10 +422,10 @@
             [[SHGGloble sharedGloble] recordUserAction:obj.rid type:@"dynamic_shareQQ"];
         } else if (state == SSResponseStateFail){
             NSLog(NSLocalizedString(@"TEXT_ShARE_FAI", @"帖子分享失败,错误码:%d,错误描述:%@"), [error errorCode], [error errorDescription]);
-            
+
         }
     }];
-    
+
 }
 -(void)shareToWeibo:(NSString *)text rid:(NSString *)rid
 {
@@ -439,7 +433,7 @@
 }
 -(void)shareToFriendWithText:(NSString *)text rid:(NSString *)rid
 {
-    
+
     FriendsListViewController *vc=[[FriendsListViewController alloc] init];
     vc.isShare = YES;
     vc.shareRid = rid;
@@ -449,7 +443,7 @@
 
 -(void)shareToFriendWithObj:(CircleListObj *)obj
 {
-    
+
     [self circleShareWithObj:obj];
     FriendsListViewController *vc=[[FriendsListViewController alloc] init];
     vc.isShare = YES;
@@ -462,18 +456,18 @@
     NSString *url = [NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttpCircle,@"circle",obj.rid];
     NSDictionary *param = @{@"uid":[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID]};
     [MOCHTTPRequestOperationManager postWithURL:url class:nil parameters:param success:^(MOCHTTPResponse *response) {
-        
+
         NSString *code = [response.data valueForKey:@"code"];
         if ([code isEqualToString:@"000"]) {
             obj.sharenum = [NSString stringWithFormat:@"%ld",(long)[obj.sharenum integerValue]+1];
             [self.tableView reloadData];
             [Hud showMessageWithText:@"分享成功"];
             [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_COLLECT_SHARE_CLIC object:obj];
-            
+
         }
     } failed:^(MOCHTTPResponse *response) {
         [Hud showMessageWithText:response.errorMessage];
-        
+
     }];
 }
 
@@ -515,10 +509,10 @@
             obj.praisenum = num;
             obj.ispraise = isPrased;
             [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_COLLECT_PRAISE_CLICK object:obj];
-            
+
             break;
         }
-        
+
     }
     [self.tableView reloadData];
 }
@@ -533,7 +527,7 @@
         }
     }
     [self.tableView reloadData];
-    
+
 }
 
 -(void)detailCommentWithRid:(NSString *)rid commentNum:(NSString*)num comments:(NSMutableArray *)comments
@@ -547,18 +541,18 @@
         }
     }
     [self.tableView reloadData];
-    
+
 }
 -(void)detailCollectionWithRid:(NSString *)rid collected:(NSString *)isColle
 {
-    [self requestPostListWithTarget:@"first" time:@"-1"];
+    [self requestPostListWithTarget:@"first" rid:@"-1"];
     //[self requestMarketCollectWithTarget:@"first" time:@"-1"];
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-
+    
 }
 
 @end

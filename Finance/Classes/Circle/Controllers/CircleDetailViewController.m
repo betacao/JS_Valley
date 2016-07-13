@@ -145,7 +145,7 @@
 
     CTTextStyleModel *model = [[CTTextStyleModel alloc] init];
     model.numberOfLines = -1;
-    model.lineSpace = MarginFactor(10.0f);
+    model.lineSpace = MarginFactor(5.0f);
     self.lblContent.styleModel = model;
     self.lblContent.delegate = self;
 

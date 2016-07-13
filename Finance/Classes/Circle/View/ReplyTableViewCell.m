@@ -61,13 +61,13 @@
         [cnickButton setFrame:CGRectMake(0, 0, cSize.width, cSize.height)];
         [cnickButton.titleLabel setTextAlignment:NSTextAlignmentCenter];
         [cnickButton setTitle:[NSString stringWithFormat:@"%@:",comobj.cnickname] forState:UIControlStateNormal];
-        [cnickButton setTitleColor:[UIColor colorWithHexString:@"4277B2"] forState:UIControlStateNormal];
+        [cnickButton setTitleColor:kMainCommentMoreColor forState:UIControlStateNormal];
         [cnickButton.titleLabel setFont:replyLabel.font];
         [replyLabel addSubview:cnickButton];
         str = [[NSMutableAttributedString alloc] initWithString:text];
 
         [str addAttribute:NSForegroundColorAttributeName value:[UIColor clearColor] range:NSMakeRange(0,comobj.cnickname.length + 1 + 1)];
-        [str addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"3C3C3C"] range:NSMakeRange(comobj.cnickname.length + 1 + 1,str.length - comobj.cnickname.length - 1 - 1)];
+        [str addAttribute:NSForegroundColorAttributeName value:kMainContentColor range:NSMakeRange(comobj.cnickname.length + 1 + 1,str.length - comobj.cnickname.length - 1 - 1)];
     } else{
         text = [NSString stringWithFormat:@"%@回复%@:x%@",comobj.cnickname,comobj.rnickname,comobj.cdetail];
         CGSize cSize = [comobj.cnickname sizeForFont:replyLabel.font constrainedToSize:CGSizeMake(200, 15) lineBreakMode:replyLabel.lineBreakMode];
@@ -85,7 +85,7 @@
 
         [rnickButton setFrame:CGRectMake(leftSize.width+cSize.width, 0, rSize.width, rSize.height)];
         [rnickButton setTitle:[NSString stringWithFormat:@"%@:",comobj.rnickname] forState:UIControlStateNormal];
-        [rnickButton setTitleColor:[UIColor colorWithHexString:@"4277B2"] forState:UIControlStateNormal];
+        [rnickButton setTitleColor:kMainCommentMoreColor forState:UIControlStateNormal];
         [rnickButton.titleLabel setFont:replyLabel.font];
         [rnickButton.titleLabel setTextAlignment:NSTextAlignmentLeft];
         [replyLabel addSubview:rnickButton];
@@ -98,8 +98,8 @@
         [str addAttribute:NSForegroundColorAttributeName value:[UIColor clearColor] range:NSMakeRange(comobj.cnickname.length + 2,1 + comobj.rnickname.length +1)];
 
         NSRange range = NSMakeRange(comobj.cnickname.length + 2,1 + comobj.rnickname.length +1);
-        [str addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"3C3C3C"] range:NSMakeRange(range.location + range.length,str.length - range.length - range.location)];
-        [str addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"3C3C3C"] range:NSMakeRange(comobj.cnickname.length, 2)];
+        [str addAttribute:NSForegroundColorAttributeName value:kMainContentColor range:NSMakeRange(range.location + range.length,str.length - range.length - range.location)];
+        [str addAttribute:NSForegroundColorAttributeName value:kMainContentColor range:NSMakeRange(comobj.cnickname.length, 2)];
     }
     [cnickButton addTarget:self action:@selector(cnickClick:) forControlEvents:UIControlEventTouchUpInside];
     [rnickButton addTarget:self action:@selector(rnickClick:) forControlEvents:UIControlEventTouchUpInside];
