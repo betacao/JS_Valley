@@ -201,9 +201,9 @@
 {
     NSString *uid = UID;
     NSString *title = self.textView.text;
-    if (self.textView.text.length == 0) {
-        title = @"业务分享";
-    }
+//    if (self.textView.text.length == 0) {
+//        title = @"业务分享";
+//    }
     NSString *detail = obj.businessTitle;
     NSString *businessId =[NSString stringWithFormat:@"%@#%@",obj.businessID,obj.type];
     NSString *url = [NSString stringWithFormat:@"%@/%@",rBaseAddressForHttpCircle,@"businessTocircle"];
