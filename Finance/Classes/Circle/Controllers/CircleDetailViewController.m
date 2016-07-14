@@ -11,7 +11,6 @@
 #import "TWEmojiKeyBoard.h"
 #import "SDPhotoGroup.h"
 #import "SDPhotoItem.h"
-#import "SHGPersonalViewController.h"
 #import "CircleListDelegate.h"
 #import "ReplyTableViewCell.h"
 #import "CTTextDisplayView.h"
@@ -168,7 +167,7 @@
     self.lineView.backgroundColor = [UIColor colorWithHexString:@"e6e7e8"];
 
     self.spliteView.backgroundColor = Color(@"e2e2e2");
-    
+
     UIImage *image = self.backImageView.image;
     image = [image resizableImageWithCapInsets:UIEdgeInsetsMake(15.0f, 35.0f, 9.0f, 11.0f) resizingMode:UIImageResizingModeStretch];
     self.backImageView.image = image;
@@ -307,28 +306,26 @@
     .rightSpaceToView(self.btnCollet, kMainActionButtonMargin)
     .centerYEqualToView(self.btnShare);
 
-    self.praisebtn.sd_layout
-    .leftSpaceToView(self.viewPraise, MarginFactor(11.0f))
-    .centerYEqualToView(self.btnShare)
-    .widthIs(self.praisebtn.currentImage.size.width)
-    .heightIs(self.praisebtn.currentImage.size.height);
-
     self.backImageView.sd_layout
-    .leftSpaceToView(self.viewPraise, 0.0f)
-    .rightSpaceToView(self.viewPraise, 0.0f)
-    .topEqualToView(self.viewPraise)
-    .bottomEqualToView(self.viewPraise);
+    .spaceToSuperView(UIEdgeInsetsZero);
 
     self.scrollPraise.sd_layout
     .leftSpaceToView(self.praisebtn, MarginFactor(10.0f))
+    .centerYEqualToView(self.viewPraise)
     .rightSpaceToView(self.viewPraise, MarginFactor(10.0f) + CGRectGetMaxX(self.praisebtn.frame))
-    .centerYEqualToView(self.viewPraise);
+    .heightIs(MarginFactor(30.0f));
+
+    self.praisebtn.sd_layout
+    .leftSpaceToView(self.viewPraise, MarginFactor(11.0f))
+    .centerYEqualToView(self.scrollPraise)
+    .widthIs(self.praisebtn.currentImage.size.width)
+    .heightIs(self.praisebtn.currentImage.size.height);
 
     self.lineView.sd_layout
     .leftSpaceToView(self.viewPraise, 0.0f)
     .rightSpaceToView(self.viewPraise, 0.0f)
-    .bottomSpaceToView(self.viewPraise,0.0f)
-    .heightIs(0.5f);
+    .bottomSpaceToView(self.viewPraise, 0.0f)
+    .heightIs(1 / SCALE);
 
     self.tableHeaderView.hidden = YES;
 
@@ -585,25 +582,16 @@
         .heightIs(0.0f);
     }
 
-    CGFloat praiseWidth = 0;
-    if ([self.responseObject.praisenum intValue] > 0){
-        for (UIView *subView in self.scrollPraise.subviews){
-            if (subView.tag >=1000) {
-                [subView removeFromSuperview];
-            }
-        }
-        for (int i = 0; i < self.responseObject.heads.count; i ++ ) {
-            praiseOBj *obj = self.responseObject.heads[i];
-            praiseWidth = MarginFactor(30.0f);
-            CGRect rect = CGRectMake((praiseWidth + MarginFactor(7.0f)) * i , MarginFactor(13.0f), praiseWidth, praiseWidth);
-            SHGUserHeaderView *head = [[SHGUserHeaderView alloc] initWithFrame:rect];
-            [head updateHeaderView:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,obj.ppotname] placeholderImage:[UIImage imageNamed:@"default_head"] status:NO userID:obj.puserid];
-            [_scrollPraise addSubview:head];
-        }
-        [self.scrollPraise setContentSize:CGSizeMake(self.responseObject.heads.count *(praiseWidth+PRAISE_SEPWIDTH), CGRectGetHeight(self.scrollPraise.frame))];
-    } else{
-        [self.scrollPraise removeAllSubviews];
+    CGFloat praiseWidth = CGRectGetHeight(self.scrollPraise.frame);
+    [self.scrollPraise removeAllSubviews];
+    for (NSInteger i = 0; i < self.responseObject.heads.count; i ++ ) {
+        praiseOBj *obj = [self.responseObject.heads objectAtIndex:i];
+        CGRect rect = CGRectMake((praiseWidth + MarginFactor(7.0f)) * i , 0.0f, praiseWidth, praiseWidth);
+        SHGUserHeaderView *headerView = [[SHGUserHeaderView alloc] initWithFrame:rect];
+        [headerView updateHeaderView:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,obj.ppotname] placeholderImage:[UIImage imageNamed:@"default_head"] status:NO userID:obj.puserid];
+        [self.scrollPraise addSubview:headerView];
     }
+    [self.scrollPraise setContentSize:CGSizeMake(self.responseObject.heads.count *(praiseWidth + PRAISE_SEPWIDTH), praiseWidth)];
 
     self.actionView.sd_resetLayout
     .leftSpaceToView(self.tableHeaderView, kMainItemLeftMargin)
@@ -623,27 +611,6 @@
     [self.tableHeaderView layoutIfNeeded];
     self.tableView.tableHeaderView = self.tableHeaderView;
     [self.tableView reloadData];
-}
-
-- (void)cnickClick:(NSInteger)index
-{
-    commentOBj *obj = self.responseObject.comments[index];
-    [self gotoSomeOneWithId:obj.cid name:obj.cnickname];
-}
-
--(void)gotoSomeOneWithId:(NSString *)uid name:(NSString *)name
-{
-    SHGPersonalViewController *controller = [[SHGPersonalViewController alloc] initWithNibName:@"SHGPersonalViewController" bundle:nil];
-    controller.hidesBottomBarWhenPushed = YES;
-    controller.userId = uid;
-    controller.delegate = self;
-    [self.navigationController pushViewController:controller animated:YES];
-}
-
-- (void)rnickClick:(NSInteger)index
-{
-    commentOBj *obj = self.responseObject.comments[index];
-    [self gotoSomeOneWithId:obj.replyid name:obj.rnickname];
 }
 
 -(void)replyClick:(NSInteger )index
@@ -1086,6 +1053,11 @@
     return 1;
 }
 
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return self.responseObject.comments.count;
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     commentOBj *obj = self.responseObject.comments[indexPath.row];
@@ -1102,6 +1074,9 @@
     } else if(indexPath.row == self.responseObject.comments.count - 1){
         type = SHGCommentTypeLast;
     }
+    if (indexPath.row == 0 && indexPath.row == self.responseObject.comments.count - 1) {
+        type = SHGCommentTypeOnly;
+    }
     cell.dataArray = @[obj, @(type)];
     return cell;
 }
@@ -1115,13 +1090,11 @@
     } else if(indexPath.row == self.responseObject.comments.count - 1){
         type = SHGCommentTypeLast;
     }
+    if (indexPath.row == 0 && indexPath.row == self.responseObject.comments.count - 1) {
+        type = SHGCommentTypeOnly;
+    }
     CGFloat height = [tableView cellHeightForIndexPath:indexPath model:@[obj, @(type)] keyPath:@"dataArray" cellClass:[ReplyTableViewCell class] contentViewWidth:SCREENWIDTH];
     return height;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    return self.responseObject.comments.count;
 }
 
 #pragma mark =============  UITableView Delegate  =============

@@ -336,7 +336,7 @@
 {
     __weak typeof(self) weakSelf = self;
     if (!_authenticationView) {
-        _authenticationView = [SHGAuthenticationView buttonWithType:UIButtonTypeCustom];
+        _authenticationView = [[SHGAuthenticationView alloc] init];;
         _authenticationView.block = ^{
             CGFloat toAlpha = ABS(weakSelf.authenTipView.alpha - 1.0f);
             [UIView animateWithDuration:0.3f animations:^{

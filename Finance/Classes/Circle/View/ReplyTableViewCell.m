@@ -14,7 +14,6 @@
 
 @property (weak, nonatomic) IBOutlet UIView *bgView;
 @property (weak, nonatomic) IBOutlet TTTAttributedLabel *label;
-@property (weak, nonatomic) IBOutlet UIView *spliteView;
 
 @property (copy, nonatomic) TTTAttributedLabelLinkBlock linkTapBlock;
 
@@ -43,10 +42,6 @@
     self.label.linkAttributes = [NSDictionary dictionaryWithDictionary:mutableLinkAttributes];
     self.label.activeLinkAttributes = [NSDictionary dictionaryWithDictionary:mutableLinkAttributes];
 
-    self.spliteView.backgroundColor = [UIColor clearColor];
-
-    [self setupAutoHeightWithBottomViewsArray:@[self.label, self.spliteView] bottomMargin:0.0f];
-
     __weak typeof(self) weakSelf = self;
     self.linkTapBlock = ^(TTTAttributedLabel *label, TTTAttributedLabelLink *link){
         SHGPersonalViewController *controller = [[SHGPersonalViewController alloc] initWithNibName:@"SHGPersonalViewController" bundle:nil];
@@ -59,52 +54,47 @@
 - (void)setDataArray:(NSArray *)dataArray
 {
     _dataArray = dataArray;
-
     SHGCommentType type = [[dataArray lastObject] integerValue];
+    if (type == SHGCommentTypeOnly) {
 
-    CGFloat margin = 0.0f;
-    if (type == SHGCommentTypeFirst) {
-        margin = kCommentTopMargin;
-        self.spliteView.sd_resetNewLayout
-        .topSpaceToView(self.contentView, 0.0f)
-        .leftSpaceToView(self.contentView, 0.0f)
-        .rightSpaceToView(self.contentView, 0.0f)
-        .heightIs(margin);
-
-        self.label.sd_resetNewLayout
-        .topSpaceToView(self.spliteView, 0.0f)
+        self.label.sd_resetLayout
+        .topSpaceToView(self.contentView, kCommentTopMargin)
         .leftSpaceToView(self.contentView, kMainItemLeftMargin + kCommentMargin)
         .rightSpaceToView(self.contentView, kMainItemLeftMargin + kCommentMargin)
         .autoHeightRatio(0.0f);
+
+        [self setupAutoHeightWithBottomView:self.label bottomMargin:kCommentBottomMargin];
+
+    } else if (type == SHGCommentTypeFirst) {
+
+        self.label.sd_resetLayout
+        .topSpaceToView(self.contentView, kCommentTopMargin)
+        .leftSpaceToView(self.contentView, kMainItemLeftMargin + kCommentMargin)
+        .rightSpaceToView(self.contentView, kMainItemLeftMargin + kCommentMargin)
+        .autoHeightRatio(0.0f);
+
+        [self setupAutoHeightWithBottomView:self.label bottomMargin:0.0f];
 
     } else if (type == SHGCommentTypeNormal) {
-        margin = kCommentMargin;
-        self.spliteView.sd_resetNewLayout
-        .topSpaceToView(self.contentView, 0.0f)
-        .leftSpaceToView(self.contentView, 0.0f)
-        .rightSpaceToView(self.contentView, 0.0f)
-        .heightIs(margin);
 
-        self.label.sd_resetNewLayout
-        .topSpaceToView(self.spliteView, 0.0f)
-        .leftSpaceToView(self.contentView, kMainItemLeftMargin + kCommentMargin)
-        .rightSpaceToView(self.contentView, kMainItemLeftMargin + kCommentMargin)
-        .autoHeightRatio(0.0f);
-
-    } else {
-        margin = kCommentBottomMargin;
-
-        self.label.sd_resetNewLayout
+        self.label.sd_resetLayout
         .topSpaceToView(self.contentView, kCommentMargin)
         .leftSpaceToView(self.contentView, kMainItemLeftMargin + kCommentMargin)
         .rightSpaceToView(self.contentView, kMainItemLeftMargin + kCommentMargin)
         .autoHeightRatio(0.0f);
 
-        self.spliteView.sd_resetNewLayout
-        .topSpaceToView(self.label, 0.0f)
-        .leftSpaceToView(self.contentView, 0.0f)
-        .rightSpaceToView(self.contentView, 0.0f)
-        .heightIs(margin);
+        [self setupAutoHeightWithBottomView:self.label bottomMargin:0.0f];
+
+    } else {
+
+        self.label.sd_resetLayout
+        .topSpaceToView(self.contentView, kCommentMargin)
+        .leftSpaceToView(self.contentView, kMainItemLeftMargin + kCommentMargin)
+        .rightSpaceToView(self.contentView, kMainItemLeftMargin + kCommentMargin)
+        .autoHeightRatio(0.0f);
+
+        [self setupAutoHeightWithBottomView:self.label bottomMargin:kCommentBottomMargin];
+
     }
 
     commentOBj *object = [dataArray firstObject];

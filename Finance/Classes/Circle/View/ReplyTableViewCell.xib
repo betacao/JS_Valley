@@ -24,17 +24,11 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <view contentMode="scaleToFill" id="1LU-tl-0A7">
-                        <rect key="frame" x="40" y="-42" width="240" height="128"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
                 </subviews>
             </tableViewCellContentView>
             <connections>
                 <outlet property="bgView" destination="cCz-BM-HaU" id="Vh7-wh-f1t"/>
                 <outlet property="label" destination="YiT-vF-OYR" id="YFV-nf-Gjn"/>
-                <outlet property="spliteView" destination="1LU-tl-0A7" id="pqm-eF-6xd"/>
             </connections>
             <point key="canvasLocation" x="258" y="174"/>
         </tableViewCell>

@@ -14,7 +14,8 @@ typedef NS_ENUM(NSInteger, SHGCommentType)
 {
     SHGCommentTypeFirst = 0,
     SHGCommentTypeNormal,
-    SHGCommentTypeLast
+    SHGCommentTypeLast,
+    SHGCommentTypeOnly
 };
 
 @interface ReplyTableViewCell : UITableViewCell

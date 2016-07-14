@@ -247,7 +247,7 @@
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         </imageView>
                         <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="aWm-Lk-eH9">
-                            <rect key="frame" x="36" y="1" width="220" height="53"/>
+                            <rect key="frame" x="36" y="1" width="220" height="0.0"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <connections>
                                 <outlet property="delegate" destination="-1" id="Wo2-da-g0q"/>

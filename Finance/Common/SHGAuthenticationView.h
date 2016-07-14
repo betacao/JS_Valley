@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SHGAuthenticationView : UIButton
+@interface SHGAuthenticationView : UIView
 
 @property (assign, nonatomic) BOOL showGray;
 

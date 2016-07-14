@@ -26,7 +26,7 @@
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <view contentMode="scaleToFill" id="wCR-7h-4oq" customClass="SHGAuthenticationView">
+                    <view contentMode="scaleToFill" id="I8g-eC-syI" customClass="SHGAuthenticationView">
                         <rect key="frame" x="40" y="26" width="240" height="128"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -61,7 +61,7 @@
                 </subviews>
             </tableViewCellContentView>
             <connections>
-                <outlet property="authenticationView" destination="wCR-7h-4oq" id="Kyb-qp-BwA"/>
+                <outlet property="authenticationView" destination="I8g-eC-syI" id="MgB-eq-Xd4"/>
                 <outlet property="button" destination="IBo-Pv-KoI" id="PCO-vV-lkM"/>
                 <outlet property="firstLabel" destination="5qy-La-jf7" id="1Rg-Cm-5oV"/>
                 <outlet property="headerView" destination="GZq-qR-Pua" id="xX4-3J-Pli"/>
