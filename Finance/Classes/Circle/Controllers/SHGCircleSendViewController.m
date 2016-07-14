@@ -67,13 +67,13 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardDidShow:) name:UIKeyboardDidShowNotification object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardDidShow:) name:UIKeyboardDidShowNotification object:nil];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-[[NSNotificationCenter defaultCenter] removeObserver:self];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     self.navigationController.interactivePopGestureRecognizer.enabled = YES;
 }
 
@@ -380,10 +380,12 @@
 
 - (IBAction)plusButtonClick:(UIButton *)sender
 {
+    
     if (self.imageArray.count >= 6) {
         [Hud showMessageWithText:@"亲最多只能选6张哦~"];
         return;
     }
+    [self.textField resignFirstResponder];
     [self.textView resignFirstResponder];
     UIActionSheet *takeSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"拍照",@"选图", nil];
     [takeSheet showInView:self.view];
@@ -451,6 +453,7 @@
             [content insertString:textfield.text atIndex:self.index];
             self.textField.text = content;
         } else{
+            [self.textView becomeFirstResponder];
             [self.textView insertText:textfield.text];
         }
         
@@ -490,6 +493,7 @@
 
 - (void)longTap:(UILongPressGestureRecognizer *)recognizer
 {
+    [self.textField resignFirstResponder];
     [self.textView resignFirstResponder];
     self.selectedImageView = (SHGCircleSendImageView *)recognizer.view;
     if(recognizer.state == UIGestureRecognizerStateBegan){
@@ -600,25 +604,26 @@
     return YES;
 }
 
-- (void)keyBoardDidShow:(NSNotification *)notification
-{
-    NSDictionary *info = [notification userInfo];
-    NSValue *value = [info objectForKey:UIKeyboardFrameEndUserInfoKey];
-    CGSize keyboardSize = [value CGRectValue].size;
-
-    CGFloat maxHeight = CGRectGetHeight(self.view.frame) - keyboardSize.height - CGRectGetHeight(self.inputAccessoryView.frame);
-
-    CGFloat cursorPosition = [self.textView caretRectForPosition:self.textView.selectedTextRange.start].origin.y;
-
-    if (cursorPosition > maxHeight) {
-        [self.scrollView setContentOffset:CGPointMake(0.0f, cursorPosition - maxHeight) animated:YES];
-    }
-}
+//- (void)keyBoardDidShow:(NSNotification *)notification
+//{
+//    NSDictionary *info = [notification userInfo];
+//    NSValue *value = [info objectForKey:UIKeyboardFrameEndUserInfoKey];
+//    CGSize keyboardSize = [value CGRectValue].size;
+//
+//    CGFloat maxHeight = CGRectGetHeight(self.view.frame) - keyboardSize.height - CGRectGetHeight(self.inputAccessoryView.frame);
+//
+//    CGFloat cursorPosition = [self.textView caretRectForPosition:self.textView.selectedTextRange.start].origin.y;
+//
+//    if (cursorPosition > maxHeight) {
+//        [self.scrollView setContentOffset:CGPointMake(0.0f, cursorPosition - maxHeight) animated:YES];
+//    }
+//}
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
 {
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.textView resignFirstResponder];
+        [self.textField resignFirstResponder];
     });
 }
 
