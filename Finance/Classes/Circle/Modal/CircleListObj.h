@@ -15,7 +15,7 @@
 #define kCellContentWidth 292.0f * XFACTOR
 #define kPhotoViewTopMargin 10.0f * XFACTOR
 #define kCommentTopMargin MarginFactor(13.0f)
-#define kCommentMargin MarginFactor(2.0f)
+#define kCommentMargin MarginFactor(4.0f)
 #define kCommentBottomMargin MarginFactor(13.0f)
 
 @class linkOBj;

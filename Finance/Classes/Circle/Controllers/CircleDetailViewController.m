@@ -23,7 +23,7 @@
 #define PRAISE_WIDTH 28.0f
 #define kItemMargin 7.0f * XFACTOR
 
-@interface CircleDetailViewController ()<CircleListDelegate, ReplyDelegate, CTTextDisplayViewDelegate, UIWebViewDelegate>
+@interface CircleDetailViewController ()<CircleListDelegate, CTTextDisplayViewDelegate, UIWebViewDelegate>
 {
     UIControl *backView;
     UIView *PickerBackView;
@@ -511,7 +511,7 @@
         self.businessView.hidden = NO;
         self.lblContent.hidden = YES;
 
-        NSString *title = self.responseObject.groupPostTitle;
+        NSString *title = [[SHGGloble sharedGloble] formatStringToHtml:self.responseObject.groupPostTitle];
         self.titleLabel.text = title;
         if (title.length > 0) {
             self.titleLabel.sd_resetLayout
@@ -539,7 +539,7 @@
 
     } else {
         contentView = self.lblContent;
-        NSString *title = self.responseObject.groupPostTitle;
+        NSString *title = [[SHGGloble sharedGloble] formatStringToHtml:self.responseObject.groupPostTitle];
         self.titleLabel.text = title;
         if (title.length > 0) {
             self.titleLabel.sd_resetLayout
@@ -629,7 +629,6 @@
 {
     commentOBj *obj = self.responseObject.comments[index];
     [self gotoSomeOneWithId:obj.cid name:obj.cnickname];
-
 }
 
 -(void)gotoSomeOneWithId:(NSString *)uid name:(NSString *)name
@@ -641,7 +640,7 @@
     [self.navigationController pushViewController:controller animated:YES];
 }
 
--(void)rnickClick:(NSInteger)index
+- (void)rnickClick:(NSInteger)index
 {
     commentOBj *obj = self.responseObject.comments[index];
     [self gotoSomeOneWithId:obj.replyid name:obj.rnickname];
@@ -1090,56 +1089,33 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     commentOBj *obj = self.responseObject.comments[indexPath.row];
-    static NSString *cellIdentifier = @"cellIdentifier";
-    ReplyTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    ReplyTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ReplyTableViewCell"];
     if (!cell) {
         cell = [[[NSBundle mainBundle] loadNibNamed:@"ReplyTableViewCell" owner:self options:nil] lastObject];
         UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(longPressGesturecognized:)];
         [cell.contentView addGestureRecognizer:longPress];
     }
-    cell.delegate = self;
-    cell.index = indexPath.row;
+    cell.controller = self;
     SHGCommentType type = SHGCommentTypeNormal;
     if(indexPath.row == 0){
         type = SHGCommentTypeFirst;
     } else if(indexPath.row == self.responseObject.comments.count - 1){
         type = SHGCommentTypeLast;
     }
-    [cell loadUIWithObj:obj commentType:type];
+    cell.dataArray = @[obj, @(type)];
     return cell;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     commentOBj *obj = self.responseObject.comments[indexPath.row];
-    UIFont *font = FontFactor(14.0f);
-
-    NSString *text;
-    if (IsStrEmpty(obj.rnickname)){
-        text = [NSString stringWithFormat:@"%@:x%@",obj.cnickname,obj.cdetail];
-    } else{
-        text = [NSString stringWithFormat:@"%@回复%@:x%@",obj.cnickname,obj.rnickname,obj.cdetail];
-    }
-    NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:text];
-    [string addAttribute:NSFontAttributeName value:font range:NSMakeRange(0, text.length)];
-    NSMutableParagraphStyle * paragraphStyle1 = [[NSMutableParagraphStyle alloc] init];
-    [paragraphStyle1 setLineSpacing:3];
-    [string addAttribute:NSParagraphStyleAttributeName value:paragraphStyle1 range:NSMakeRange(0, [string length])];
-    UILabel *replyLabel = [[UILabel alloc] init];
-    replyLabel.numberOfLines = 0;
-    replyLabel.lineBreakMode = NSLineBreakByWordWrapping;
-    replyLabel.font = [UIFont systemFontOfSize:14.0f];
-    replyLabel.attributedText = string;
-    CGSize size = [replyLabel sizeThatFits:CGSizeMake(SCREENWIDTH - kPhotoViewRightMargin - kPhotoViewLeftMargin - CELLRIGHT_COMMENT_WIDTH, MAXFLOAT)];
-    NSLog(@"%f",size.height);
-    CGFloat height = size.height;
+    SHGCommentType type = SHGCommentTypeNormal;
     if(indexPath.row == 0){
-        height += kCommentTopMargin;
+        type = SHGCommentTypeFirst;
+    } else if(indexPath.row == self.responseObject.comments.count - 1){
+        type = SHGCommentTypeLast;
     }
-    if (indexPath.row == self.responseObject.comments.count - 1){
-        height += kCommentBottomMargin;
-    }
-    height += kCommentMargin;
+    CGFloat height = [tableView cellHeightForIndexPath:indexPath model:@[obj, @(type)] keyPath:@"dataArray" cellClass:[ReplyTableViewCell class] contentViewWidth:SCREENWIDTH];
     return height;
 }
 

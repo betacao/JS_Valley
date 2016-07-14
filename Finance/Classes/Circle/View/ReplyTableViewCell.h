@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "CircleListObj.h"
+#import "CircleDetailViewController.h"
 
 typedef NS_ENUM(NSInteger, SHGCommentType)
 {
@@ -16,16 +17,9 @@ typedef NS_ENUM(NSInteger, SHGCommentType)
     SHGCommentTypeLast
 };
 
-@protocol ReplyDelegate<NSObject>
-
--(void)cnickClick:(NSInteger)index;
--(void)rnickClick:(NSInteger)index;
-
-@end
 @interface ReplyTableViewCell : UITableViewCell
-@property (nonatomic, assign) NSInteger index;
 
-@property (nonatomic,weak)id<ReplyDelegate> delegate;
-- (void)loadUIWithObj:(commentOBj *)comobj commentType:(SHGCommentType)type;
--(void)makeFirstCell;
+@property (weak, nonatomic) CircleDetailViewController *controller;
+@property (strong, nonatomic) NSArray *dataArray;
+
 @end

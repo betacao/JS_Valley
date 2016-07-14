@@ -46,7 +46,8 @@
 #define kMainCommentBackgroundColor [UIColor colorWithHexString:@"f7f7f7"]
 #define kMainCommentContentLeftMargin MarginFactor(10.0f)//评论内容的左右间距
 #define kMainCommentContentTopMargin MarginFactor(13.0f)//评论内容整体的上下间距
-#define kMainCommentContentMargin MarginFactor(2.0f)//每条评论的间距
+#define kMainCommentContentMargin MarginFactor(4.0f)//每条评论的间距
+#define kMainCommentContentLineSpace 0.0f
 #define kMainCommentNameFont FontFactor(15.0f)//点赞的用户名
 #define kMainCommentNameColor [UIColor colorWithHexString:@"4277b2"]
 

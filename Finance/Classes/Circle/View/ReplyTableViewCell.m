@@ -7,153 +7,127 @@
 //
 
 #import "ReplyTableViewCell.h"
-@interface ReplyTableViewCell()
-@property (weak, nonatomic) IBOutlet UIView *bgView;
-@property (weak, nonatomic) IBOutlet UIImageView *imageBgView;
+#import "TTTAttributedLabel.h"
+#import "SHGPersonalViewController.h"
 
-@property (assign, nonatomic) SHGCommentType commentType;
+@interface ReplyTableViewCell()<TTTAttributedLabelDelegate>
+
+@property (weak, nonatomic) IBOutlet UIView *bgView;
+@property (weak, nonatomic) IBOutlet TTTAttributedLabel *label;
+@property (weak, nonatomic) IBOutlet UIView *spliteView;
+
+
 @end
 
 @implementation ReplyTableViewCell
 
 - (void)awakeFromNib
 {
+    [super awakeFromNib];
+
+    self.bgView.sd_layout
+    .spaceToSuperView(UIEdgeInsetsMake(0.0f, kMainItemLeftMargin, 0.0f, kMainItemLeftMargin));
+
+    self.label.font = kMainCommentNameFont;
+    self.label.isAttributedContent = YES;
+    self.label.delegate = self;
+    self.label.numberOfLines = 0;
+    self.label.textColor = kMainContentColor;
+    self.label.backgroundColor = [UIColor clearColor];
+
+    NSMutableDictionary *mutableLinkAttributes = [NSMutableDictionary dictionary];
+    [mutableLinkAttributes setObject:[NSNumber numberWithBool:NO] forKey:(NSString *)kCTUnderlineStyleAttributeName];
+
+    [mutableLinkAttributes setObject:kMainCommentMoreColor forKey:(NSString *)kCTForegroundColorAttributeName];
+
+    self.label.linkAttributes = [NSDictionary dictionaryWithDictionary:mutableLinkAttributes];
+    self.label.activeLinkAttributes = [NSDictionary dictionaryWithDictionary:mutableLinkAttributes];
     
+    self.spliteView.backgroundColor = [UIColor clearColor];
+
+    [self setupAutoHeightWithBottomViewsArray:@[self.label, self.spliteView] bottomMargin:0.0f];
 }
 
-- (void)loadUIWithObj:(commentOBj *)comobj commentType:(SHGCommentType)type
+- (void)setDataArray:(NSArray *)dataArray
 {
-    self.commentType = type;
-    CGRect frame = CGRectZero;
-    switch (type) {
-        case SHGCommentTypeFirst:
-            frame = CGRectMake(CELLRIGHT_COMMENT_WIDTH,kCommentTopMargin, SCREENWIDTH - kPhotoViewLeftMargin - kPhotoViewRightMargin - CELLRIGHT_COMMENT_WIDTH, 0.0f);
+    _dataArray = dataArray;
 
-            break;
-        case SHGCommentTypeNormal:
-            frame = CGRectMake(CELLRIGHT_COMMENT_WIDTH,0.0f, SCREENWIDTH - kPhotoViewLeftMargin - kPhotoViewRightMargin - CELLRIGHT_COMMENT_WIDTH, 0.0f);
-            break;
-        default:
-            frame = CGRectMake(CELLRIGHT_COMMENT_WIDTH,0.0f, SCREENWIDTH - kPhotoViewLeftMargin - kPhotoViewRightMargin - CELLRIGHT_COMMENT_WIDTH, 0.0f);
-            break;
+    SHGCommentType type = [[dataArray lastObject] integerValue];
+
+    CGFloat margin = 0.0f;
+    if (type == SHGCommentTypeFirst) {
+        margin = kCommentTopMargin;
+        self.spliteView.sd_resetNewLayout
+        .topSpaceToView(self.contentView, 0.0f)
+        .leftSpaceToView(self.contentView, 0.0f)
+        .rightSpaceToView(self.contentView, 0.0f)
+        .heightIs(margin);
+
+        self.label.sd_resetNewLayout
+        .topSpaceToView(self.spliteView, 0.0f)
+        .leftSpaceToView(self.contentView, kMainItemLeftMargin)
+        .rightSpaceToView(self.contentView, kMainItemLeftMargin)
+        .autoHeightRatio(0.0f);
+
+    } else if (type == SHGCommentTypeNormal) {
+        margin = kCommentMargin;
+        self.spliteView.sd_resetNewLayout
+        .topSpaceToView(self.contentView, 0.0f)
+        .leftSpaceToView(self.contentView, 0.0f)
+        .rightSpaceToView(self.contentView, 0.0f)
+        .heightIs(margin);
+
+        self.label.sd_resetNewLayout
+        .topSpaceToView(self.spliteView, 0.0f)
+        .leftSpaceToView(self.contentView, kMainItemLeftMargin)
+        .rightSpaceToView(self.contentView, kMainItemLeftMargin)
+        .autoHeightRatio(0.0f);
+
+    } else {
+        margin = kCommentBottomMargin;
+
+        self.label.sd_resetNewLayout
+        .topSpaceToView(self.contentView, kCommentMargin)
+        .leftSpaceToView(self.contentView, kMainItemLeftMargin)
+        .rightSpaceToView(self.contentView, kMainItemLeftMargin)
+        .autoHeightRatio(0.0f);
+
+        self.spliteView.sd_resetNewLayout
+        .topSpaceToView(self.label, 0.0f)
+        .leftSpaceToView(self.contentView, 0.0f)
+        .rightSpaceToView(self.contentView, 0.0f)
+        .heightIs(margin);
     }
-    
-    UILabel *replyLabel = [[UILabel alloc] initWithFrame:frame];
-    replyLabel.numberOfLines = 0;
-    replyLabel.lineBreakMode = NSLineBreakByWordWrapping;
-    replyLabel.font = kMainCommentNameFont;
-    replyLabel.userInteractionEnabled = YES;
-    replyLabel.textAlignment = NSTextAlignmentLeft;
-    NSString *text = @"";
-    NSMutableAttributedString *str;
-    UIButton *cnickButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    UIButton *rnickButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    cnickButton.backgroundColor = [UIColor clearColor];
-    rnickButton.backgroundColor = [UIColor clearColor];
-    [cnickButton setBackgroundImage:[UIImage imageWithColor:BTN_SELECT_BACK_COLOR andSize:CGSizeMake(40, 40)] forState:UIControlStateHighlighted];
-    [rnickButton setBackgroundImage:[UIImage imageWithColor:BTN_SELECT_BACK_COLOR andSize:CGSizeMake(40, 40)] forState:UIControlStateHighlighted];
-    cnickButton.tag = self.index;
-    rnickButton.tag = self.index;
-    if (IsStrEmpty(comobj.rnickname)){
-        text = [NSString stringWithFormat:@"%@:x%@",comobj.cnickname,comobj.cdetail];
 
-        CGSize cSize = [[NSString stringWithFormat:@"%@:",comobj.cnickname] sizeForFont:replyLabel.font constrainedToSize:CGSizeMake(200, 15) lineBreakMode:replyLabel.lineBreakMode];
-        [cnickButton setFrame:CGRectMake(0, 0, cSize.width, cSize.height)];
-        [cnickButton.titleLabel setTextAlignment:NSTextAlignmentCenter];
-        [cnickButton setTitle:[NSString stringWithFormat:@"%@:",comobj.cnickname] forState:UIControlStateNormal];
-        [cnickButton setTitleColor:kMainCommentMoreColor forState:UIControlStateNormal];
-        [cnickButton.titleLabel setFont:replyLabel.font];
-        [replyLabel addSubview:cnickButton];
-        str = [[NSMutableAttributedString alloc] initWithString:text];
-
-        [str addAttribute:NSForegroundColorAttributeName value:[UIColor clearColor] range:NSMakeRange(0,comobj.cnickname.length + 1 + 1)];
-        [str addAttribute:NSForegroundColorAttributeName value:kMainContentColor range:NSMakeRange(comobj.cnickname.length + 1 + 1,str.length - comobj.cnickname.length - 1 - 1)];
+    commentOBj *object = [dataArray firstObject];
+    NSString *string = @"";
+    if (IsStrEmpty(object.rnickname)){
+        string = [NSString stringWithFormat:@"%@:x%@",object.cnickname,object.cdetail];
+        self.label.text = string;
+        [self.label addLinkToPhoneNumber:object.cid withRange:[string rangeOfString:object.cnickname]];
     } else{
-        text = [NSString stringWithFormat:@"%@回复%@:x%@",comobj.cnickname,comobj.rnickname,comobj.cdetail];
-        CGSize cSize = [comobj.cnickname sizeForFont:replyLabel.font constrainedToSize:CGSizeMake(200, 15) lineBreakMode:replyLabel.lineBreakMode];
-        [cnickButton setFrame:CGRectMake(0, 0, cSize.width, cSize.height)];
-        [cnickButton.titleLabel setTextAlignment:NSTextAlignmentCenter];
-        [cnickButton setTitle:comobj.cnickname forState:UIControlStateNormal];
-        [cnickButton setTitleColor:[UIColor colorWithHexString:@"4277B2"] forState:UIControlStateNormal];
-        [cnickButton.titleLabel setFont:replyLabel.font];
-        [replyLabel addSubview:cnickButton];
-
-        NSString *leftText = [NSString stringWithFormat:@"回复"];
-        
-        CGSize leftSize = [leftText sizeForFont:replyLabel.font constrainedToSize:CGSizeMake(200, 15) lineBreakMode:replyLabel.lineBreakMode];
-        CGSize rSize = [[NSString stringWithFormat:@"%@:",comobj.rnickname] sizeForFont:replyLabel.font constrainedToSize:CGSizeMake(200, 15) lineBreakMode:replyLabel.lineBreakMode];
-
-        [rnickButton setFrame:CGRectMake(leftSize.width+cSize.width, 0, rSize.width, rSize.height)];
-        [rnickButton setTitle:[NSString stringWithFormat:@"%@:",comobj.rnickname] forState:UIControlStateNormal];
-        [rnickButton setTitleColor:kMainCommentMoreColor forState:UIControlStateNormal];
-        [rnickButton.titleLabel setFont:replyLabel.font];
-        [rnickButton.titleLabel setTextAlignment:NSTextAlignmentLeft];
-        [replyLabel addSubview:rnickButton];
-
-
-        str = [[NSMutableAttributedString alloc] initWithString:text];
-
-        [str addAttribute:NSForegroundColorAttributeName value:[UIColor clearColor] range:NSMakeRange(0,comobj.cnickname.length)];
-
-        [str addAttribute:NSForegroundColorAttributeName value:[UIColor clearColor] range:NSMakeRange(comobj.cnickname.length + 2,1 + comobj.rnickname.length +1)];
-
-        NSRange range = NSMakeRange(comobj.cnickname.length + 2,1 + comobj.rnickname.length +1);
-        [str addAttribute:NSForegroundColorAttributeName value:kMainContentColor range:NSMakeRange(range.location + range.length,str.length - range.length - range.location)];
-        [str addAttribute:NSForegroundColorAttributeName value:kMainContentColor range:NSMakeRange(comobj.cnickname.length, 2)];
+        string = [NSString stringWithFormat:@"%@回复%@:x%@",object.cnickname,object.rnickname,object.cdetail];
+        self.label.text = string;
+        [self.label addLinkToPhoneNumber:object.cid withRange:[string rangeOfString:object.cnickname]];
+        [self.label addLinkToAddress:@{@"replyid":object.replyid} withRange:[string rangeOfString:object.rnickname]];
     }
-    [cnickButton addTarget:self action:@selector(cnickClick:) forControlEvents:UIControlEventTouchUpInside];
-    [rnickButton addTarget:self action:@selector(rnickClick:) forControlEvents:UIControlEventTouchUpInside];
-    [str addAttribute:NSFontAttributeName value:replyLabel.font range:NSMakeRange(0, text.length)];
-    NSMutableParagraphStyle * paragraphStyle1 = [[NSMutableParagraphStyle alloc] init];
-    [paragraphStyle1 setLineSpacing:3];
-    [str addAttribute:NSParagraphStyleAttributeName value:paragraphStyle1 range:NSMakeRange(0, [str length])];
-
-    replyLabel.attributedText = str;
-
-    CGRect replyRect = replyLabel.frame;
-    CGSize size = [replyLabel sizeThatFits:CGSizeMake(SCREENWIDTH - kPhotoViewRightMargin - kPhotoViewLeftMargin - CELLRIGHT_COMMENT_WIDTH, CGFLOAT_MAX)];
-    NSLog(@"%f",size.height);
-    replyRect.size = size;
-    replyLabel.frame = replyRect;
-    [self.bgView addSubview:replyLabel];
-
 }
 
-- (void)layoutSubviews
+
+- (void)attributedLabel:(TTTAttributedLabel *)label didSelectLinkWithPhoneNumber:(NSString *)phoneNumber
 {
-    [super layoutSubviews];
-    CGRect bgFrame = self.bgView.frame;
-    bgFrame.origin.x = MarginFactor(12.0f);
-    bgFrame.size.width = SCREENWIDTH - 2 * MarginFactor(12.0f);
-    
-    self.bgView.frame = bgFrame;
-
+    SHGPersonalViewController *controller = [[SHGPersonalViewController alloc] initWithNibName:@"SHGPersonalViewController" bundle:nil];
+    controller.userId = phoneNumber;
+    controller.delegate = self.controller;
+    [[TabBarViewController tabBar].navigationController pushViewController:controller animated:YES];
 }
 
--(void)makeFirstCell
+- (void)attributedLabel:(TTTAttributedLabel *)label didSelectLinkWithAddress:(NSDictionary *)addressComponents;
 {
-    self.bgView.backgroundColor = [UIColor clearColor];
-    self.imageBgView.image = [UIImage imageNamed:@"comment_backimage"];
-    UIImage *image = self.imageBgView.image;;
-    image = [image resizableImageWithCapInsets:UIEdgeInsetsMake(15.0f, 35.0f, 9.0f, 11.0f) resizingMode:UIImageResizingModeStretch];
-    self.imageBgView.image = image;
-   
-}
-
--(void)cnickClick:(UIButton *)sender
-{
-    [self.delegate cnickClick:self.index];
-}
-
--(void)rnickClick:(UIButton *)sender
-{
-    [self.delegate rnickClick:self.index];
-}
-
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
-
-    // Configure the view for the selected state
+    SHGPersonalViewController *controller = [[SHGPersonalViewController alloc] initWithNibName:@"SHGPersonalViewController" bundle:nil];
+    controller.userId = [addressComponents objectForKey:@"replyid"];
+    controller.delegate = self.controller;
+    [[TabBarViewController tabBar].navigationController pushViewController:controller animated:YES];
 }
 
 @end
