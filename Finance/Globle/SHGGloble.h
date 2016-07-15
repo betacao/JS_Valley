@@ -277,4 +277,16 @@ typedef void (^SHHomeDataCompletionBlock)(NSArray *allList, NSArray *normalList,
  @since 1.8.2
  */
 - (NSString *)formatStringToHtml:(NSString *)string;
+
+/**
+ @brief 判断是否是emoji符号
+
+ @param string 字符串
+
+ @return 返回YES OR NO
+
+ @since 1.8.4
+ */
++ (BOOL)stringContainsEmoji:(NSString *)string;
+
 @end

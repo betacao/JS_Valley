@@ -18,6 +18,8 @@
 #define kImageViewMargin MarginFactor(18.0f)
 #define MAX_TEXT_LENGTH         2000
 #define MAX_STRING_LENGTH         2000
+#define MAX_STARWORDS_LENGTH 18
+
 @interface SHGCircleSendViewController ()<UITextViewDelegate, UIActionSheetDelegate, ZYQAssetPickerControllerDelegate, UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 @property (assign, nonatomic) BOOL isTextField;
 @property (assign, nonatomic) NSInteger index;
@@ -68,12 +70,13 @@
 {
     [super viewDidAppear:animated];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardDidShow:) name:UIKeyboardDidShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textFieldDidChange:) name:UITextFieldTextDidChangeNotification object:nil];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-[[NSNotificationCenter defaultCenter] removeObserver:self];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     self.navigationController.interactivePopGestureRecognizer.enabled = YES;
 }
 
@@ -298,9 +301,6 @@
     } else if (self.textView.text.length == 0){
         [Hud showMessageWithText:@"正文不能为空"];
         return;
-    } else if (self.textField.text.length > 18){
-        [Hud showMessageWithText:@"标题字数不得超过18个字"];
-        return;
     }
     if (self.textView.text.length > MAX_TEXT_LENGTH){
         [Hud showMessageWithText:@"帖子过长，不能超过2000个字"];
@@ -356,7 +356,7 @@
             size = [NSString stringWithFormat:@"%@,%@",size,imageSize];
         }
         size = [size substringFromIndex:1];
-        param  = @{@"uid":UID, @"detail":self.textView.text, @"photos":photoStr?:@"", @"type":@"photo", @"sizes":size, @"currCity":cityName, @"title":self.textField.text};
+        param = @{@"uid":UID, @"detail":self.textView.text, @"photos":photoStr?:@"", @"type":@"photo", @"sizes":size, @"currCity":cityName, @"title":self.textField.text};
     } else{
         param = @{@"uid":UID, @"detail":self.textView.text, @"type":@"", @"sizes":@"", @"currCity":cityName, @"title":self.textField.text};
     }
@@ -396,10 +396,9 @@
         if (!self.isEmoji){
             self.isEmoji = YES;
             [self.emojiKeyBoard bindKeyBoardWithTextField:self.textField];
-            
-        } else{
-            [self.emojiKeyBoard unbindKeyBoard];
+        } else {
             self.isEmoji = NO;
+            [self.emojiKeyBoard unbindKeyBoard];
         }
         [self.textField becomeFirstResponder];
     } else{
@@ -407,14 +406,11 @@
         if (!self.isEmoji){
             self.isEmoji = YES;
             [self.emojiKeyBoard bindKeyBoardWithTextField:(UITextField *)self.textView];
-            
-        } else{
-            [self.emojiKeyBoard unbindKeyBoard];
+        } else {
             self.isEmoji = NO;
+            [self.emojiKeyBoard unbindKeyBoard];
         }
-        
         [self.textView becomeFirstResponder];
-        
     }
 }
 
@@ -427,7 +423,6 @@
         UITextPosition* selectionStart = selectedRange.start;
         NSInteger location = [self.textField offsetFromPosition:beginning toPosition:selectionStart];
         self.index = location;
-        NSLog(@"%ld",location);
     } else{
         self.isTextField = NO;
     }
@@ -561,7 +556,6 @@
 
 }
 
-
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
 {
     if (![text isEqualToString:@""] && textView.text.length + text.length > MAX_TEXT_LENGTH){
@@ -572,31 +566,38 @@
     return YES;
 }
 
-- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+- (void)textFieldDidChange:(NSNotification *)notification
 {
-    if (textField == self.textField) {
-        if (string.length == 0)
-        {
-            return YES;
-        }
-        NSInteger existedLength = self.textField.text.length;
-        NSInteger selectedLength = range.length;
-        NSInteger replaceLength = string.length;
-        if (existedLength - selectedLength + replaceLength > 18) {
-            [Hud showMessageWithText:@"标题最多可输入18个字"];
-            [self.textField resignFirstResponder];
-            return NO;
+    UITextField *textField = (UITextField *)notification.object;
+    NSString *toBeString = textField.text;
+    //获取高亮部分
+    UITextRange *selectedRange = [textField markedTextRange];
+    UITextPosition *position = [textField positionFromPosition:selectedRange.start offset:0];
+    // 没有高亮选择的字，则对已输入的文字进行字数统计和限制
+    if (!position) {
+        if (toBeString.length > MAX_STARWORDS_LENGTH) {
+            NSRange rangeIndex = [toBeString rangeOfComposedCharacterSequenceAtIndex:MAX_STARWORDS_LENGTH];
+            if (rangeIndex.length == 1) {
+                textField.text = [toBeString substringToIndex:MAX_STARWORDS_LENGTH];
+            } else {
+                NSRange rangeRange = [toBeString rangeOfComposedCharacterSequencesForRange:NSMakeRange(0, MAX_STARWORDS_LENGTH)];
+                textField.text = [toBeString substringWithRange:rangeRange];
+            }
+            [Hud showMessageWithText:[NSString stringWithFormat:@"标题最多可输入%d个字", MAX_STARWORDS_LENGTH]];
+            [textField resignFirstResponder];
         }
     }
-    return YES;
 }
 
 - (BOOL)textViewShouldEndEditing:(UITextView *)textView
 {
     CGSize size = [textView sizeThatFits:CGSizeMake(CGRectGetWidth(textView.frame), MAXFLOAT)];
-    CGRect frame = textView.frame;
-    frame.size.height = size.height > kTextViewMinHeight ? size.height : kTextViewMinHeight;
-    textView.frame = frame;
+    CGFloat height = size.height > kTextViewMinHeight ? size.height : kTextViewMinHeight;
+    self.textView.sd_resetLayout
+    .topSpaceToView(self.spliteView, MarginFactor(14.0f))
+    .leftEqualToView(self.textField)
+    .rightEqualToView(self.textField)
+    .heightIs(height);
     return YES;
 }
 

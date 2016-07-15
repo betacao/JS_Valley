@@ -59,8 +59,8 @@
 
         self.label.sd_resetLayout
         .topSpaceToView(self.contentView, kCommentTopMargin)
-        .leftSpaceToView(self.contentView, kMainItemLeftMargin + kCommentMargin)
-        .rightSpaceToView(self.contentView, kMainItemLeftMargin + kCommentMargin)
+        .leftSpaceToView(self.contentView, kMainItemLeftMargin + kMainCommentContentLeftMargin)
+        .rightSpaceToView(self.contentView, kMainItemLeftMargin + kMainCommentContentLeftMargin)
         .autoHeightRatio(0.0f);
 
         [self setupAutoHeightWithBottomView:self.label bottomMargin:kCommentBottomMargin];
@@ -69,8 +69,8 @@
 
         self.label.sd_resetLayout
         .topSpaceToView(self.contentView, kCommentTopMargin)
-        .leftSpaceToView(self.contentView, kMainItemLeftMargin + kCommentMargin)
-        .rightSpaceToView(self.contentView, kMainItemLeftMargin + kCommentMargin)
+        .leftSpaceToView(self.contentView, kMainItemLeftMargin + kMainCommentContentLeftMargin)
+        .rightSpaceToView(self.contentView, kMainItemLeftMargin + kMainCommentContentLeftMargin)
         .autoHeightRatio(0.0f);
 
         [self setupAutoHeightWithBottomView:self.label bottomMargin:0.0f];
@@ -79,8 +79,8 @@
 
         self.label.sd_resetLayout
         .topSpaceToView(self.contentView, kCommentMargin)
-        .leftSpaceToView(self.contentView, kMainItemLeftMargin + kCommentMargin)
-        .rightSpaceToView(self.contentView, kMainItemLeftMargin + kCommentMargin)
+        .leftSpaceToView(self.contentView, kMainItemLeftMargin + kMainCommentContentLeftMargin)
+        .rightSpaceToView(self.contentView, kMainItemLeftMargin + kMainCommentContentLeftMargin)
         .autoHeightRatio(0.0f);
 
         [self setupAutoHeightWithBottomView:self.label bottomMargin:0.0f];
@@ -89,8 +89,8 @@
 
         self.label.sd_resetLayout
         .topSpaceToView(self.contentView, kCommentMargin)
-        .leftSpaceToView(self.contentView, kMainItemLeftMargin + kCommentMargin)
-        .rightSpaceToView(self.contentView, kMainItemLeftMargin + kCommentMargin)
+        .leftSpaceToView(self.contentView, kMainItemLeftMargin + kMainCommentContentLeftMargin)
+        .rightSpaceToView(self.contentView, kMainItemLeftMargin + kMainCommentContentLeftMargin)
         .autoHeightRatio(0.0f);
 
         [self setupAutoHeightWithBottomView:self.label bottomMargin:kCommentBottomMargin];
