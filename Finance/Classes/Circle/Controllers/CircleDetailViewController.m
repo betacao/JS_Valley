@@ -556,7 +556,6 @@
             .heightIs([CTTextDisplayView getRowHeightWithText:detail rectSize:CGSizeMake(SCREENWIDTH -  2 * kMainItemLeftMargin, CGFLOAT_MAX) styleModel:self.lblContent.styleModel]);
         }
     }
-
     if ([self.responseObject.type isEqualToString:TYPE_PHOTO]){
         SDPhotoGroup *photoGroup = [[SDPhotoGroup alloc] init];
         NSMutableArray *temp = [NSMutableArray array];
@@ -571,14 +570,14 @@
         [self.photoView addSubview:photoGroup];
         self.photoView.sd_resetLayout
         .leftSpaceToView(self.tableHeaderView, kMainItemLeftMargin)
-        .topSpaceToView(contentView, kMainPhotoViewTopMargin)
+        .topSpaceToView(contentView, kMainPhotoViewTopMargin - self.lblContent.styleModel.lineSpace)
         .widthIs(CGRectGetWidth(photoGroup.frame))
         .heightIs(CGRectGetHeight(photoGroup.frame));
     } else {
         self.photoView.sd_resetLayout
         .leftSpaceToView(self.tableHeaderView, kMainItemLeftMargin)
         .rightSpaceToView(self.tableHeaderView, kMainItemLeftMargin)
-        .topSpaceToView(contentView, 0.0f)
+        .topSpaceToView(contentView, -self.lblContent.styleModel.lineSpace)
         .heightIs(0.0f);
     }
 
@@ -592,7 +591,6 @@
         [self.scrollPraise addSubview:headerView];
     }
     [self.scrollPraise setContentSize:CGSizeMake(self.responseObject.heads.count *(praiseWidth + PRAISE_SEPWIDTH), praiseWidth)];
-
     self.actionView.sd_resetLayout
     .leftSpaceToView(self.tableHeaderView, kMainItemLeftMargin)
     .rightSpaceToView(self.tableHeaderView, kMainItemLeftMargin)
