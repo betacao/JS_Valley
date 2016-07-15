@@ -126,6 +126,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
     self.rightItemImageName = @"newBusiness_share";
     [super viewDidLoad];
     self.isChangeCollection = YES;
+    [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:KEY_MEMORY];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shareToFriendSuccess:) name:NOTIFI_ACTION_SHARE_TO_FRIENDSUCCESS object:nil];
     [self.tableView setTableFooterView:[[UIView alloc] init]];
     [self initView];
@@ -1107,7 +1108,6 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
             self.popupView.type = @"comment";
             self.popupView.fid = @"-1";
             self.popupView.detail = @"";
-            self.popupView.isBusinessComment = YES;
             [self.navigationController.view addSubview:self.popupView];
             [self.popupView showWithAnimated:YES];
             [self.navigationController.view addSubview:_popupView];
@@ -1134,7 +1134,6 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
             self.popupView.detail = @"";
             self.popupView.rid = obj.commentId;
             self.popupView.type = @"repley";
-            self.popupView.isBusinessComment = YES;
             [self.navigationController.view addSubview:self.popupView];
             [self.popupView showWithAnimated:YES];
         } else{

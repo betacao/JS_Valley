@@ -297,6 +297,15 @@
     if (!content) {
         content = @"";
     }
+    if (content.length > 60) {
+        if ([otherId isEqualToString:@"-1"]) {
+            [Hud showMessageWithText:@"评论字数不能大于60"];
+            return;
+        } else{
+            [Hud showMessageWithText:@"回复字数不能大于60"];
+            return;
+        }
+    }
     SHGBusinessCommentObject *targetCommentObject = nil;
     for (SHGBusinessCommentObject *obj in object.commentList) {
         if ([obj.commentUserId isEqualToString:otherId]) {

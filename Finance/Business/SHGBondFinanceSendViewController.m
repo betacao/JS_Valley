@@ -98,9 +98,12 @@
         __weak typeof(self) weakSelf = self;
         if ([[SHGGloble sharedGloble].provinceName isEqualToString:@""]) {
             [[CCLocationManager shareLocation] getCity:nil];
+        }else{
+            [[CCLocationManager shareLocation] getCity:^{
+                [weakSelf.areaSelectButton setTitle:[SHGGloble sharedGloble].provinceName forState:UIControlStateNormal];
+                [weakSelf.areaSelectButton setTitleColor:Color(@"161616") forState:UIControlStateNormal];
+            }];
         }
-        [weakSelf.areaSelectButton setTitle:[SHGGloble sharedGloble].provinceName forState:UIControlStateNormal];
-        [weakSelf.areaSelectButton setTitleColor:Color(@"161616") forState:UIControlStateNormal];
     }
     self.businessCategoryButtonView.showMode = SHGBusinessButtonShowModeSingleChoice;
     self.buttonBgImage = [UIImage imageNamed:@"business_SendButtonBg"];

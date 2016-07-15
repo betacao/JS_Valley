@@ -678,7 +678,7 @@
     NSValue *value = [info objectForKey:UIKeyboardFrameEndUserInfoKey];
     CGSize keyboardSize = [value CGRectValue].size;
     UIView *view = (UIView *)self.currentContext;
-    CGPoint point = CGPointMake(0.0f, CGRectGetMidY(view.frame));
+    CGPoint point = CGPointMake(0.0f, CGRectGetMidY(view.frame) + kNavigationBarHeight);
     point = [view.superview convertPoint:point toView:self.scrollView];
     point.y = MAX(0.0f, keyboardSize.height + point.y - CGRectGetHeight(self.view.frame));
     dispatch_async(dispatch_get_main_queue(), ^{
