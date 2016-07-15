@@ -1107,6 +1107,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
             self.popupView.type = @"comment";
             self.popupView.fid = @"-1";
             self.popupView.detail = @"";
+            self.popupView.isBusinessComment = YES;
             [self.navigationController.view addSubview:self.popupView];
             [self.popupView showWithAnimated:YES];
             [self.navigationController.view addSubview:_popupView];
@@ -1133,6 +1134,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
             self.popupView.detail = @"";
             self.popupView.rid = obj.commentId;
             self.popupView.type = @"repley";
+            self.popupView.isBusinessComment = YES;
             [self.navigationController.view addSubview:self.popupView];
             [self.popupView showWithAnimated:YES];
         } else{

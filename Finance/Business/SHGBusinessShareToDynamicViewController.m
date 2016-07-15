@@ -12,12 +12,12 @@
 #import "SHGBusinessListViewController.h"
 #import "SHGBusinessNewDetailViewController.h"
 #import "SHGBusinessSendSuccessViewController.h"
+#import "CCLocationManager.h"
 #define kTextViewMinHeight MarginFactor(82.0f)
 #define kImageViewWidth MarginFactor(105.0f)
 #define kImageViewHeight MarginFactor(105.0f)
 #define kImageViewLeftMargin MarginFactor(12.0f)
 #define kImageViewMargin MarginFactor(18.0f)
-#define MAX_TEXT_LENGTH         18
 
 @interface SHGBusinessShareToDynamicViewController ()<UITextViewDelegate>
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
@@ -38,6 +38,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *accessory_url;
 @property (weak, nonatomic) IBOutlet UIView *accessoryLine1;
 @property (weak, nonatomic) IBOutlet UIView *accessoryLine2;
+
 @end
 
 @implementation SHGBusinessShareToDynamicViewController
@@ -47,6 +48,9 @@
     self.rightItemtitleName = @"发送";
     [super viewDidLoad];
     self.title = @"分享业务至动态";
+    if ([[SHGGloble sharedGloble].cityName isEqualToString:@""]) {
+        [[CCLocationManager shareLocation] getCity:nil];
+    }
     self.textView.delegate = self;
     [self initView];
     [self addSDLayout];
@@ -61,7 +65,6 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardDidShow:) name:UIKeyboardDidShowNotification object:nil];
 }
 
 - (void)addSDLayout
@@ -194,6 +197,10 @@
 - (void)rightItemClick:(id)sender
 {
     [self.textView resignFirstResponder];
+    if (self.textView.text.length > 18) {
+        [Hud showMessageWithText:@"标题最多可输入18个字"];
+        return;
+    }
     [self businessShareWithObj:self.object];
 }
 
@@ -201,9 +208,6 @@
 {
     NSString *uid = UID;
     NSString *title = self.textView.text;
-//    if (self.textView.text.length == 0) {
-//        title = @"业务分享";
-//    }
     NSString *detail = obj.businessTitle;
     NSString *businessId =[NSString stringWithFormat:@"%@#%@",obj.businessID,obj.type];
     NSString *url = [NSString stringWithFormat:@"%@/%@",rBaseAddressForHttpCircle,@"businessTocircle"];
@@ -259,16 +263,6 @@
     }
 }
 
-- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
-{
-    if (![text isEqualToString:@""] && textView.text.length + text.length > MAX_TEXT_LENGTH){
-        [textView resignFirstResponder];
-        [Hud showMessageWithText:@"标题最多可输入18个字"];
-        return NO;
-    }
-    return YES;
-}
-
 - (BOOL)textViewShouldEndEditing:(UITextView *)textView
 {
     CGSize size = [textView sizeThatFits:CGSizeMake(CGRectGetWidth(textView.frame), MAXFLOAT)];
@@ -276,21 +270,6 @@
     frame.size.height = size.height > kTextViewMinHeight ? size.height : kTextViewMinHeight;
     textView.frame = frame;
     return YES;
-}
-
-- (void)keyBoardDidShow:(NSNotification *)notification
-{
-    NSDictionary *info = [notification userInfo];
-    NSValue *value = [info objectForKey:UIKeyboardFrameEndUserInfoKey];
-    CGSize keyboardSize = [value CGRectValue].size;
-    
-    CGFloat maxHeight = CGRectGetHeight(self.view.frame) - keyboardSize.height - CGRectGetHeight(self.inputAccessoryView.frame);
-    
-    CGFloat cursorPosition = [self.textView caretRectForPosition:self.textView.selectedTextRange.start].origin.y;
-    
-    if (cursorPosition > maxHeight) {
-        [self.scrollView setContentOffset:CGPointMake(0.0f, cursorPosition - maxHeight) animated:YES];
-    }
 }
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView

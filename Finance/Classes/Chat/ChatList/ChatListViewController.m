@@ -360,7 +360,7 @@ static NSString * const kCommonFNum			= @"commonnum";
         cell = [[ChatListCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identify];
     }
 
-    if(indexPath.row == 0){
+    if(indexPath.row == 2){
         ChatModel *model = [[ChatModel alloc] init];
         model.placeholderImage = [UIImage imageNamed:@"申请头像图标"];
         model.name = @"群申请与通知";
@@ -369,7 +369,7 @@ static NSString * const kCommonFNum			= @"commonnum";
         model.time = @"";
         cell.model = model;
         [cell.contentView addSubview:self.unapplyCountLabel];
-    } else if(indexPath.row == 1){
+    } else if(indexPath.row == 0){
         ChatModel *model = [[ChatModel alloc] init];
         model.placeholderImage = [UIImage imageNamed:@"消息通知"];
         model.imageURL = nil;
@@ -377,7 +377,7 @@ static NSString * const kCommonFNum			= @"commonnum";
         model.detailMsg = @"";
         model.time = @"";
         cell.model = model;
-    } else if (indexPath.row == 2){
+    } else if (indexPath.row == 1){
         ChatModel *model = [[ChatModel alloc] init];
         if (![UID isEqualToString:@"-2"]) {
             cell.rightImage.hidden = YES;
@@ -480,14 +480,14 @@ static NSString * const kCommonFNum			= @"commonnum";
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    if(indexPath.row == 0){
+    if(indexPath.row == 2){
         [[SHGGloble sharedGloble] recordUserAction:@"" type:@"msg_groupApply"];
         ApplyViewController *vc=[ApplyViewController shareController];
         [self.navigationController pushViewController:vc animated:YES];
-    } else if(indexPath.row == 1){
+    } else if(indexPath.row == 0){
         MessageViewController *mViewController=[[MessageViewController alloc] init];
         [self.navigationController pushViewController:mViewController animated:YES];
-    } else if (indexPath.row == 2){
+    } else if (indexPath.row == 1){
         ChatViewController *chatController;
         chatController = [[ChatViewController alloc] initWithChatter:@"-2" isGroup:NO];
         chatController.title = @"大牛助手";

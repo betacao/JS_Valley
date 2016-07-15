@@ -32,4 +32,6 @@
 @property (nonatomic, strong) NSString *fid;
 @property (nonatomic, strong) NSString *detail;
 @property (nonatomic, strong) NSString *memoryString;
+
+@property (nonatomic, assign) BOOL isBusinessComment;
 @end

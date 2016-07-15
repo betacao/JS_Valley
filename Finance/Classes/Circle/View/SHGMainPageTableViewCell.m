@@ -399,9 +399,9 @@
 {
     //判断好友是一度好友还是二度好友
     if ([object.friendship isEqualToString:@"一度"]) {
-        object.friendship = @"我的好友";
+        object.friendship = @"一度人脉";
     } else if ([object.friendship isEqualToString:@"二度"]){
-        object.friendship = @"好友的好友";
+        object.friendship = @"二度人脉";
     }
     //设置好友关系、定位标签的内容
     if(![object.postType isEqualToString:@"pc"]){

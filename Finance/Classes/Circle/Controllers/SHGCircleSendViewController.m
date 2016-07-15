@@ -10,6 +10,7 @@
 #import "CPTextViewPlaceholder.h"
 #import "TWEmojiKeyBoard.h"
 #import "ZYQAssetPickerController.h"
+#import "CCLocationManager.h"
 
 #define kTextViewMinHeight MarginFactor(75.0f)
 #define kImageViewWidth MarginFactor(105.0f)
@@ -43,7 +44,6 @@
 @property (weak, nonatomic) IBOutlet UIButton *accessory_url;
 @property (weak, nonatomic) IBOutlet UIView *accessoryLine1;
 @property (weak, nonatomic) IBOutlet UIView *accessoryLine2;
-
 @property (strong, nonatomic) NSMutableArray *imageArray;
 @property (weak, nonatomic) SHGCircleSendImageView *selectedImageView;
 @end
@@ -55,10 +55,13 @@
     self.leftItemtitleName = @"取消";
     self.rightItemtitleName = @"发送";
     [super viewDidLoad];
+    if ([[SHGGloble sharedGloble].cityName isEqualToString:@""]) {
+        [[CCLocationManager shareLocation] getCity:nil];
+    }
+    [self.textField becomeFirstResponder];
     self.title = @"发帖";
     [self initView];
     [self addAutoLayout];
-    [self.textField becomeFirstResponder];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -70,7 +73,6 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textFieldDidChange:) name:UITextFieldTextDidChangeNotification object:nil];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -298,11 +300,15 @@
     if (self.textField.text.length == 0) {
         [Hud showMessageWithText:@"标题不能为空"];
         return;
-    } else if (self.textView.text.length == 0){
+    } else if (self.textField.text.length > 18) {
+        [Hud showMessageWithText:@"标题最多可输入18个字"];
+        return;
+        
+    }
+    if (self.textView.text.length == 0){
         [Hud showMessageWithText:@"正文不能为空"];
         return;
-    }
-    if (self.textView.text.length > MAX_TEXT_LENGTH){
+    } else if (self.textView.text.length > MAX_TEXT_LENGTH){
         [Hud showMessageWithText:@"帖子过长，不能超过2000个字"];
         return;
     }
@@ -342,7 +348,6 @@
 - (void)sendCircleWithPhotos:(NSArray *)photos
 {
     __weak typeof(self) weakSelf = self;
-    NSString *cityName = [SHGGloble sharedGloble].cityName;
     NSDictionary *param = @{};
     if (!IsArrEmpty(photos)){
         NSString *photoStr = [photos componentsJoinedByString:@","];
@@ -356,9 +361,9 @@
             size = [NSString stringWithFormat:@"%@,%@",size,imageSize];
         }
         size = [size substringFromIndex:1];
-        param = @{@"uid":UID, @"detail":self.textView.text, @"photos":photoStr?:@"", @"type":@"photo", @"sizes":size, @"currCity":cityName, @"title":self.textField.text};
+        param  = @{@"uid":UID, @"detail":self.textView.text, @"photos":photoStr?:@"", @"type":@"photo", @"sizes":size, @"currCity":[SHGGloble sharedGloble].cityName ,@"title":self.textField.text};
     } else{
-        param = @{@"uid":UID, @"detail":self.textView.text, @"type":@"", @"sizes":@"", @"currCity":cityName, @"title":self.textField.text};
+        param = @{@"uid":UID, @"detail":self.textView.text, @"type":@"", @"sizes":@"", @"currCity":[SHGGloble sharedGloble].cityName, @"title":self.textField.text};
     }
 
     [MOCHTTPRequestOperationManager postWithURL:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttpCircle,actioncircle] class:nil parameters:param success:^(MOCHTTPResponse *response) {
@@ -570,28 +575,6 @@
     return YES;
 }
 
-- (void)textFieldDidChange:(NSNotification *)notification
-{
-    UITextField *textField = (UITextField *)notification.object;
-    NSString *toBeString = textField.text;
-    //获取高亮部分
-    UITextRange *selectedRange = [textField markedTextRange];
-    UITextPosition *position = [textField positionFromPosition:selectedRange.start offset:0];
-    // 没有高亮选择的字，则对已输入的文字进行字数统计和限制
-    if (!position) {
-        if (toBeString.length > MAX_STARWORDS_LENGTH) {
-            NSRange rangeIndex = [toBeString rangeOfComposedCharacterSequenceAtIndex:MAX_STARWORDS_LENGTH];
-            if (rangeIndex.length == 1) {
-                textField.text = [toBeString substringToIndex:MAX_STARWORDS_LENGTH];
-            } else {
-                NSRange rangeRange = [toBeString rangeOfComposedCharacterSequencesForRange:NSMakeRange(0, MAX_STARWORDS_LENGTH)];
-                textField.text = [toBeString substringWithRange:rangeRange];
-            }
-            [Hud showMessageWithText:[NSString stringWithFormat:@"标题最多可输入%d个字", MAX_STARWORDS_LENGTH]];
-            [textField resignFirstResponder];
-        }
-    }
-}
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
 {

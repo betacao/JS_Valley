@@ -101,12 +101,11 @@
     } else{
         self.title = @"发布债权投资";
         __weak typeof(self) weakSelf = self;
-        [[CCLocationManager shareLocation] getCity:^{
-            NSString * provinceName = [SHGGloble sharedGloble].provinceName;
-                [weakSelf.areaSelectButton setTitle:provinceName forState:UIControlStateNormal];
-                [weakSelf.areaSelectButton setTitleColor:Color(@"161616") forState:UIControlStateNormal];
-           
-        }];
+        if ([[SHGGloble sharedGloble].provinceName isEqualToString:@""]) {
+            [[CCLocationManager shareLocation] getCity:nil];
+        }
+        [weakSelf.areaSelectButton setTitle:[SHGGloble sharedGloble].provinceName forState:UIControlStateNormal];
+        [weakSelf.areaSelectButton setTitleColor:Color(@"161616") forState:UIControlStateNormal];
         self.sendType = 0;
     }
     self.marketCategoryButtonView.showMode = 2;
@@ -135,7 +134,7 @@
 {
     [super viewWillAppear:YES];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardDidShow:) name:UIKeyboardDidShowNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textFieldDidChange:) name:UITextFieldTextDidChangeNotification object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textFieldDidChange:) name:UITextFieldTextDidChangeNotification object:nil];
     self.navigationController.interactivePopGestureRecognizer.enabled = NO;
 }
 
@@ -686,8 +685,12 @@
 
 - (BOOL)checkInputMessage
 {
+
     if (self.nameTextField.text.length == 0) {
         [Hud showMessageWithText:@"请填写业务名称"];
+        return NO;
+    } else if (self.nameTextField.text.length > 20){
+        [Hud showMessageWithText:@"业务名称最多可输入20个字"];
         return NO;
     }
     if (self.phoneNumTextField.text.length == 0) {
@@ -763,23 +766,23 @@
     });
 }
 
-- (void)textFieldDidChange:(NSNotification *)notification
-{
-    UITextField *textField = notification.object;
-    if ([textField isEqual:self.nameTextField]) {
-        if (textField.text.length > 20) {
-            textField.text = [textField.text substringToIndex:20];
-        }
-    } else if ([textField isEqual:self.phoneNumTextField]) {
-        if (textField.text.length > 20){
-            textField.text = [textField.text substringToIndex:20];
-        }
-    } else if ([textField isEqual:self.monenyTextField]) {
-        if (textField.text.length > 20) {
-            textField.text = [textField.text substringToIndex:20];
-        }
-    }
-}
+//- (void)textFieldDidChange:(NSNotification *)notification
+//{
+//    UITextField *textField = notification.object;
+//    if ([textField isEqual:self.nameTextField]) {
+//        if (textField.text.length > 20) {
+//            textField.text = [textField.text substringToIndex:20];
+//        }
+//    } else if ([textField isEqual:self.phoneNumTextField]) {
+//        if (textField.text.length > 20){
+//            textField.text = [textField.text substringToIndex:20];
+//        }
+//    } else if ([textField isEqual:self.monenyTextField]) {
+//        if (textField.text.length > 20) {
+//            textField.text = [textField.text substringToIndex:20];
+//        }
+//    }
+//}
 
 -(void)scrollerTapAction:(UITapGestureRecognizer *)ges
 {

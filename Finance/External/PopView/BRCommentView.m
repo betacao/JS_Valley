@@ -156,8 +156,16 @@
         }
         return;
     }
-    
-    if (comment.length > 300) {
+    if (self.isBusinessComment) {
+        if (comment.length > 60) {
+            if([_type isEqualToString:@"reply"]){
+                [Hud showMessageWithText:[NSString stringWithFormat:@"回复字数不能大于%d",60]];
+            } else{
+                [Hud showMessageWithText:[NSString stringWithFormat:@"评论字数不能大于%d",60]];
+            }
+            return;
+        }
+    } else if (comment.length > 300) {
         if([_type isEqualToString:@"reply"]){
             [Hud showMessageWithText:[NSString stringWithFormat:@"回复字数不能大于%d",300]];
         } else{

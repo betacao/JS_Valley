@@ -96,11 +96,11 @@
         self.title = @"发布债权融资";
         self.sendType = 0;
         __weak typeof(self) weakSelf = self;
-        [[CCLocationManager shareLocation] getCity:^{
-            NSString * provinceName = [SHGGloble sharedGloble].provinceName;
-            [weakSelf.areaSelectButton setTitle:provinceName forState:UIControlStateNormal];
-            [weakSelf.areaSelectButton setTitleColor:Color(@"161616") forState:UIControlStateNormal];
-        }];
+        if ([[SHGGloble sharedGloble].provinceName isEqualToString:@""]) {
+            [[CCLocationManager shareLocation] getCity:nil];
+        }
+        [weakSelf.areaSelectButton setTitle:[SHGGloble sharedGloble].provinceName forState:UIControlStateNormal];
+        [weakSelf.areaSelectButton setTitleColor:Color(@"161616") forState:UIControlStateNormal];
     }
     self.businessCategoryButtonView.showMode = SHGBusinessButtonShowModeSingleChoice;
     self.buttonBgImage = [UIImage imageNamed:@"business_SendButtonBg"];
@@ -138,7 +138,6 @@
 {
     [super viewWillAppear:YES];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardDidShow:) name:UIKeyboardDidShowNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textFieldDidChange:) name:UITextFieldTextDidChangeNotification object:nil];
     self.navigationController.interactivePopGestureRecognizer.enabled = NO;
 }
 
@@ -591,11 +590,14 @@
     if (self.nameTextField.text.length == 0) {
         [Hud showMessageWithText:@"请填写业务名称"];
         return NO;
+    } else if (self.nameTextField.text.length > 20){
+        [Hud showMessageWithText:@"业务名称最多可输入20个字"];
+        return NO;
     }
     if (self.phoneNumTextField.text.length == 0) {
         [Hud showMessageWithText:@"请填写联系方式"];
         return NO;
-    }
+    } 
 //    if (self.companyNametextField.text.length == 0) {
 //        [Hud showMessageWithText:@"请填写公司名称"];
 //        return NO;
@@ -667,23 +669,7 @@
 
 }
 
-- (void)textFieldDidChange:(NSNotification *)notification
-{
-    UITextField *textField = notification.object;
-    if ([textField isEqual:self.nameTextField]) {
-        if (textField.text.length > 20) {
-            textField.text = [textField.text substringToIndex:20];
-        }
-    } else if ([textField isEqual:self.phoneNumTextField]) {
-        if (textField.text.length > 20){
-            textField.text = [textField.text substringToIndex:20];
-        }
-    } else if ([textField isEqual:self.monenyTextField]) {
-        if (textField.text.length > 20) {
-            textField.text = [textField.text substringToIndex:20];
-        }
-    }
-}
+
 -(void)scrollerTapAction:(UITapGestureRecognizer *)ges
 {
     [self.currentContext resignFirstResponder];

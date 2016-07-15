@@ -73,7 +73,6 @@
         ((SHGEquityFinanceSendViewController *)self.superController).sendType = 0;
     }
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardDidShow:) name:UIKeyboardDidShowNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textFieldDidChange:) name:UITextFieldTextDidChangeNotification object:nil];
     self.buttonBgImage = [UIImage imageNamed:@"business_SendButtonBg"];
     self.buttonBgImage = [self.buttonBgImage resizableImageWithCapInsets:UIEdgeInsetsMake(10.0f, 10.0f, 10.0f, 10.0f) resizingMode:UIImageResizingModeStretch];
     
@@ -94,8 +93,6 @@
 {
     [super viewWillAppear:YES];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardDidShow:) name:UIKeyboardDidShowNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textFieldDidChange:) name:UITextFieldTextDidChangeNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textViewDidChangeText:) name:UITextViewTextDidChangeNotification object:nil];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -476,6 +473,9 @@
     if (self.marketExplainTextView.text.length == 0) {
         [Hud showMessageWithText:@"请填写业务说明"];
         return NO;
+    } else if (self.marketExplainTextView.text.length > 600){
+        [Hud showMessageWithText:@"业务说明最多可输入600个字"];
+        return NO;
     }
     return YES;
 }
@@ -574,33 +574,13 @@
     NSValue *value = [info objectForKey:UIKeyboardFrameEndUserInfoKey];
     CGSize keyboardSize = [value CGRectValue].size;
     UIView *view = (UIView *)self.currentContext;
-    CGPoint point = CGPointMake(0.0f, CGRectGetMidY(view.frame));
+    CGPoint point = CGPointMake(0.0f, CGRectGetMidY(view.frame) + kNavigationBarHeight);
     point = [view.superview convertPoint:point toView:self.scrollView];
     point.y = MAX(0.0f, keyboardSize.height + point.y - CGRectGetHeight(self.view.frame));
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.scrollView setContentOffset:point animated:YES];
         
     });
-}
-
-- (void)textFieldDidChange:(NSNotification *)notification
-{
-    UITextField *textField = notification.object;
-    if ([textField isEqual:self.retributionTextField]) {
-        if (textField.text.length > 20) {
-            textField.text = [textField.text substringToIndex:20];
-        }
-    }
-}
-
-- (void)textViewDidChangeText:(NSNotification *)notification
-{
-    UITextView *textView = notification.object;
-    if ([textView isEqual:self.marketExplainTextView]) {
-        if (textView.text.length > 600) {
-            textView.text = [textView.text substringToIndex:600];
-        }
-    }
 }
 
 -(void)scrollerTapAction:(UITapGestureRecognizer *)ges

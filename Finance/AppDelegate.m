@@ -24,6 +24,8 @@
 #import "LinkViewController.h"
 #import "SHGBusinessObject.h"
 #import "SHGBusinessNewDetailViewController.h"
+#import "CCLocationManager.h"
+
 //for mac
 #include <sys/socket.h>
 #include <sys/sysctl.h>
@@ -97,7 +99,7 @@
     [MagicalRecord setupCoreDataStackWithAutoMigratingSqliteStoreNamed:@"Finance.sqlite"];
     [self addObserver:self forKeyPath:@"pushInfo" options:NSKeyValueObservingOptionNew context:nil];
     [self startSdkWith:kAppId appKey:kAppKey appSecret:kAppSecret];
-
+    [[CCLocationManager shareLocation] getCity:nil];
     // App 是用户点击推送消息启动
     NSDictionary *userInfo = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
     RootViewController *rootVC =[[RootViewController alloc]init];
