@@ -53,6 +53,7 @@
     self.leftItemtitleName = @"取消";
     self.rightItemtitleName = @"发送";
     [super viewDidLoad];
+    [self.textField becomeFirstResponder];
     self.title = @"发帖";
     [self initView];
     [self addAutoLayout];
@@ -62,7 +63,7 @@
 {
     [super viewWillAppear:animated];
     self.navigationController.interactivePopGestureRecognizer.enabled = NO;
-    [self.textField becomeFirstResponder];
+    
 }
 - (void)viewDidAppear:(BOOL)animated
 {
