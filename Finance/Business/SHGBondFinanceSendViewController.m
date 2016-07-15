@@ -94,15 +94,16 @@
         self.sendType = 1;
     } else{
         self.title = @"发布债权融资";
-        self.sendType = 0;
+        self.sendType = SHGBondFinaceSendTypeNew;
         __weak typeof(self) weakSelf = self;
         if ([[SHGGloble sharedGloble].provinceName isEqualToString:@""]) {
-            [[CCLocationManager shareLocation] getCity:nil];
-        }else{
             [[CCLocationManager shareLocation] getCity:^{
                 [weakSelf.areaSelectButton setTitle:[SHGGloble sharedGloble].provinceName forState:UIControlStateNormal];
                 [weakSelf.areaSelectButton setTitleColor:Color(@"161616") forState:UIControlStateNormal];
             }];
+        } else{
+            [weakSelf.areaSelectButton setTitle:[SHGGloble sharedGloble].provinceName forState:UIControlStateNormal];
+            [weakSelf.areaSelectButton setTitleColor:Color(@"161616") forState:UIControlStateNormal];
         }
     }
     self.businessCategoryButtonView.showMode = SHGBusinessButtonShowModeSingleChoice;

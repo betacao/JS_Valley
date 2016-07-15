@@ -88,17 +88,17 @@
 
     } else{
         self.title = @"发布股权投资";
+        self.sendType = SHGEquityInvestSendTypeNew;
         __weak typeof(self) weakSelf = self;
         if ([[SHGGloble sharedGloble].provinceName isEqualToString:@""]) {
-            [[CCLocationManager shareLocation] getCity:nil];
-            
-        } else{
             [[CCLocationManager shareLocation] getCity:^{
                 [weakSelf.areaSelectButton setTitle:[SHGGloble sharedGloble].provinceName forState:UIControlStateNormal];
                 [weakSelf.areaSelectButton setTitleColor:Color(@"161616") forState:UIControlStateNormal];
             }];
+        } else{
+            [weakSelf.areaSelectButton setTitle:[SHGGloble sharedGloble].provinceName forState:UIControlStateNormal];
+            [weakSelf.areaSelectButton setTitleColor:Color(@"161616") forState:UIControlStateNormal];
         }
-        self.sendType = SHGEquityInvestSendTypeNew;
     }
     self.scrollView.delegate = self;
     self.nameTextField.delegate = self;

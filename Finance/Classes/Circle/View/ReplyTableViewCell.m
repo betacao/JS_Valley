@@ -100,11 +100,11 @@
     commentOBj *object = [dataArray firstObject];
     NSString *string = @"";
     if (IsStrEmpty(object.rnickname)){
-        string = [NSString stringWithFormat:@"%@:x%@",object.cnickname,object.cdetail];
+        string = [NSString stringWithFormat:@"%@：%@",object.cnickname,object.cdetail];
         self.label.text = string;
         [self.label addLinkToPhoneNumber:object.cid withRange:[string rangeOfString:object.cnickname]].linkTapBlock = self.linkTapBlock;
     } else{
-        string = [NSString stringWithFormat:@"%@回复%@:x%@",object.cnickname,object.rnickname,object.cdetail];
+        string = [NSString stringWithFormat:@"%@回复%@：%@",object.cnickname,object.rnickname,object.cdetail];
         self.label.text = string;
         [self.label addLinkToPhoneNumber:object.cid withRange:[string rangeOfString:object.cnickname]].linkTapBlock = self.linkTapBlock;
         [self.label addLinkToPhoneNumber:object.replyid withRange:[string rangeOfString:object.rnickname]].linkTapBlock = self.linkTapBlock;

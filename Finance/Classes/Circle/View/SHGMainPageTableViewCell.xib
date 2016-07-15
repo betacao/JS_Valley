@@ -11,7 +11,7 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="564"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="563"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="563.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" id="wny-XQ-u6x" customClass="SHGUserHeaderView">
@@ -91,38 +91,6 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <view contentMode="scaleToFill" id="9Wh-fl-yVp" customClass="SHGHorizontalTitleImageButton">
-                                <rect key="frame" x="40" y="0.0" width="240" height="128"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <connections>
-                                    <action selector="deleteButtonClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="lGv-LD-f7J"/>
-                                </connections>
-                            </view>
-                            <view contentMode="scaleToFill" id="4UZ-8x-c0s" customClass="SHGHorizontalTitleImageButton">
-                                <rect key="frame" x="40" y="0.0" width="240" height="128"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <connections>
-                                    <action selector="praiseButtonClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="lCr-K5-k9w"/>
-                                </connections>
-                            </view>
-                            <view contentMode="scaleToFill" id="Sqj-yw-aSc" customClass="SHGHorizontalTitleImageButton">
-                                <rect key="frame" x="40" y="0.0" width="240" height="128"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <connections>
-                                    <action selector="commentButtonClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="zEo-zS-s75"/>
-                                </connections>
-                            </view>
-                            <view contentMode="scaleToFill" id="6Q8-OE-YuR" customClass="SHGHorizontalTitleImageButton">
-                                <rect key="frame" x="40" y="0.0" width="240" height="128"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <connections>
-                                    <action selector="shareButtonClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="YMB-s7-UDP"/>
-                                </connections>
-                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -178,11 +146,9 @@
                 <outlet property="attentionButton" destination="sJ7-tc-eYm" id="JML-VD-o9X"/>
                 <outlet property="authenticationView" destination="Qdx-Ls-zFp" id="3JH-st-eE0"/>
                 <outlet property="businessView" destination="4oc-kh-9iy" id="Dzo-Eu-HQZ"/>
-                <outlet property="commentButton" destination="Sqj-yw-aSc" id="8pz-fM-Mec"/>
                 <outlet property="commentView" destination="2TC-Px-Pbb" id="MSY-ge-6zW"/>
                 <outlet property="companyLabel" destination="4BK-24-OGa" id="R2z-7n-K9g"/>
                 <outlet property="contentLabel" destination="oLW-AH-vpY" id="BxX-Fv-ESY"/>
-                <outlet property="deleteButton" destination="9Wh-fl-yVp" id="V3w-Be-5MV"/>
                 <outlet property="departmentLabel" destination="Cxj-lu-SLg" id="wJq-4q-aIo"/>
                 <outlet property="firstCommentLabel" destination="dw3-cj-bCn" id="nqa-Xk-Dih"/>
                 <outlet property="fourthCommentLabel" destination="AWj-Sh-nGN" id="82I-hy-CwD"/>
@@ -190,10 +156,8 @@
                 <outlet property="lineView" destination="ijE-hm-Hvh" id="Sc7-Ah-nqi"/>
                 <outlet property="nameLabel" destination="VYP-1X-dvu" id="lJ4-8H-uk3"/>
                 <outlet property="photoView" destination="yti-tJ-RH2" id="Rjz-qJ-SAp"/>
-                <outlet property="praiseButton" destination="4UZ-8x-c0s" id="GbX-r1-DAT"/>
                 <outlet property="relationLabel" destination="E1m-kW-NkC" id="efW-bi-4Dc"/>
                 <outlet property="secondCommentLabel" destination="qjr-ed-EWG" id="lzW-84-WPv"/>
-                <outlet property="shareButton" destination="6Q8-OE-YuR" id="W6n-1U-aj4"/>
                 <outlet property="splitView" destination="JCV-Rd-rmW" id="K4M-OG-yYq"/>
                 <outlet property="thirdCommentLabel" destination="nQh-th-STQ" id="139-9f-zyU"/>
                 <outlet property="timeLabel" destination="eGv-gi-Bah" id="2aa-3e-2EF"/>

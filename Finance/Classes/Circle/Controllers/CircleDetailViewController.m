@@ -38,11 +38,11 @@
 
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollPraise;
 @property (weak, nonatomic) IBOutlet UILabel *nickName;
-@property (weak, nonatomic) IBOutlet SHGHorizontalTitleImageButton *btnCollet;
-@property (weak, nonatomic) IBOutlet SHGHorizontalTitleImageButton *btnComment;
-@property (weak, nonatomic) IBOutlet SHGHorizontalTitleImageButton *btnPraise;
-@property (weak, nonatomic) IBOutlet SHGHorizontalTitleImageButton *btnShare;
-@property (weak, nonatomic) IBOutlet SHGHorizontalTitleImageButton *btnDelete;
+@property (strong, nonatomic) SHGHorizontalTitleImageView *btnCollet;
+@property (strong, nonatomic) SHGHorizontalTitleImageView *btnComment;
+@property (strong, nonatomic) SHGHorizontalTitleImageView *btnPraise;
+@property (strong, nonatomic) SHGHorizontalTitleImageView *btnShare;
+@property (strong, nonatomic) SHGHorizontalTitleImageView *btnDelete;
 @property (weak, nonatomic) IBOutlet UIView *viewPraise;
 @property (weak, nonatomic) IBOutlet UIButton *praisebtn;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -117,25 +117,37 @@
     self.lblTime.font = kMainTimeFont;
     self.lblTime.textColor = kMainTimeColor;
 
-    [self.btnCollet setImage:[UIImage imageNamed:@"homeDetailCollection"] forState:UIControlStateNormal];
 
-    [self.btnDelete setImage:[UIImage imageNamed:@"home_delete"] forState:UIControlStateNormal];
+    self.btnCollet = [[SHGHorizontalTitleImageView alloc] init];
+    [self.btnCollet target:self addSeletor:@selector(actionCollection:)];
 
-    [self.btnPraise setTitleColor:kMainActionColor forState:UIControlStateNormal];
-    [self.btnPraise setImage:[UIImage imageNamed:@"home_weizan"] forState:UIControlStateNormal];
+    self.btnDelete = [[SHGHorizontalTitleImageView alloc] init];
+    [self.btnDelete target:self addSeletor:@selector(actionDelete:)];
+
+    self.btnPraise = [[SHGHorizontalTitleImageView alloc] init];
+    [self.btnPraise target:self addSeletor:@selector(actionPraise:)];
+
+    self.btnComment = [[SHGHorizontalTitleImageView alloc] init];
+    [self.btnComment target:self addSeletor:@selector(actionComment:)];
+
+    self.btnShare = [[SHGHorizontalTitleImageView alloc] init];
+    [self.btnShare target:self addSeletor:@selector(actionShare:)];
+
+    [self.actionView sd_addSubviews:@[self.btnCollet, self.btnDelete, self.btnPraise, self.btnComment, self.btnShare]];
+
+    [self.btnCollet addImage:[UIImage imageNamed:@"homeDetailCollection"]];
+
+    [self.btnDelete addImage:[UIImage imageNamed:@"home_delete"]];
+
+    [self.btnPraise addImage:[UIImage imageNamed:@"home_weizan"]];
     self.btnPraise.margin = MarginFactor(7.0f);
-    self.btnPraise.titleLabel.font = kMainActionFont;
 
-    [self.btnComment setTitleColor:kMainActionColor forState:UIControlStateNormal];
-    [self.btnComment setImage:[UIImage imageNamed:@"home_comment"] forState:UIControlStateNormal];
+    [self.btnComment addImage:[UIImage imageNamed:@"home_comment"]];
     self.btnComment.margin = MarginFactor(7.0f);
-    self.btnComment.titleLabel.font = kMainActionFont;
 
-    [self.btnShare setTitleColor:kMainActionColor forState:UIControlStateNormal];
-    [self.btnShare setImage:[UIImage imageNamed:@"homeShare"] forState:UIControlStateNormal];
+    [self.btnShare addImage:[UIImage imageNamed:@"homeShare"]];
     self.btnShare.margin = MarginFactor(7.0f);
-    self.btnShare.titleLabel.font = kMainActionFont;
-
+    
     self.webView.scrollView.bounces = NO;
     self.webView.hidden = YES;
 
@@ -154,7 +166,6 @@
     self.titleLabel.styleModel = titleModel;
     self.titleLabel.delegate = self;
 
-
     self.btnSend.titleLabel.font = FontFactor(15.0f);
     self.btnSend.layer.masksToBounds = YES;
     self.btnSend.layer.cornerRadius = 3.0f;
@@ -171,12 +182,6 @@
     UIImage *image = self.backImageView.image;
     image = [image resizableImageWithCapInsets:UIEdgeInsetsMake(15.0f, 35.0f, 9.0f, 11.0f) resizingMode:UIImageResizingModeStretch];
     self.backImageView.image = image;
-
-    [self.btnDelete setEnlargeEdgeWithTop:10.0f right:10.0f bottom:10.0f left:0.0f];
-    [self.btnCollet setEnlargeEdgeWithTop:10.0f right:10.0f bottom:10.0f left:0.0f];
-    [self.btnPraise setEnlargeEdgeWithTop:10.0f right:10.0f bottom:10.0f left:0.0f];
-    [self.btnComment setEnlargeEdgeWithTop:10.0f right:10.0f bottom:10.0f left:0.0f];
-    [self.btnShare setEnlargeEdgeWithTop:10.0f right:10.0f bottom:10.0f left:0.0f];
 }
 
 - (void)addSdLayout
@@ -455,14 +460,14 @@
     [self.imageHeader updateHeaderView:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,self.responseObject.potname] placeholderImage:[UIImage imageNamed:@"default_head"] status:status userID:self.responseObject.userid];
     [self.authenticationView updateWithVStatus:status enterpriseStatus:self.responseObject.businessStatus];
     if (![self.responseObject.ispraise isEqualToString:@"Y"]) {
-        [self.btnPraise setImage:[UIImage imageNamed:@"home_weizan"] forState:UIControlStateNormal];
+        [self.btnPraise addImage:[UIImage imageNamed:@"home_weizan"]];
     } else{
-        [self.btnPraise setImage:[UIImage imageNamed:@"home_yizan"] forState:UIControlStateNormal];
+        [self.btnPraise addImage:[UIImage imageNamed:@"home_yizan"]];
     }
     if (![self.responseObject.iscollection isEqualToString:@"Y"]) {
-        [self.btnCollet setImage:[UIImage imageNamed:@"homeDetailNoCollection"] forState:UIControlStateNormal];
+        [self.btnCollet addImage:[UIImage imageNamed:@"homeDetailNoCollection"]];
     } else{
-        [self.btnCollet setImage:[UIImage imageNamed:@"homeDetailCollection"] forState:UIControlStateNormal];
+        [self.btnCollet addImage:[UIImage imageNamed:@"homeDetailCollection"]];
     }
     NSString *name = self.responseObject.nickname;
     if (self.responseObject.nickname.length > 4){
@@ -487,9 +492,9 @@
     self.lbldepartName.text = department;
 
     self.lblTime.text = self.responseObject.publishdate;
-    [self.btnShare setTitle:self.responseObject.sharenum forState:UIControlStateNormal];
-    [self.btnComment setTitle:self.responseObject.cmmtnum forState:UIControlStateNormal];
-    [self.btnPraise setTitle:self.responseObject.praisenum forState:UIControlStateNormal];
+    [self.btnShare addTitle:self.responseObject.sharenum];
+    [self.btnComment addTitle:self.responseObject.cmmtnum];
+    [self.btnPraise addTitle:self.responseObject.praisenum];
 
     if (self.responseObject.isAttention){
         [self.btnAttention setImage:[UIImage imageNamed:@"newAttention"] forState:UIControlStateNormal] ;
@@ -762,7 +767,7 @@
 
 }
 
-- (IBAction)actionPraise:(id)sender
+- (void)actionPraise:(id)sender
 {
     NSString *url = [NSString stringWithFormat:@"%@/%@",rBaseAddressForHttpCircle,@"praisesend"];
     NSDictionary *param = @{@"uid":[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID],@"rid":self.responseObject.rid};
@@ -827,7 +832,7 @@
     }
 }
 
-- (IBAction)actionShare:(id)sender
+- (void)actionShare:(id)sender
 {
     id<ISSCAttachment> image  = [ShareSDK pngImageWithImage:[UIImage imageNamed:@"80"]];
     NSString *postContent = @"";
@@ -982,7 +987,7 @@
 }
 
 #pragma mark -收藏
-- (IBAction)actionCollection:(id)sender
+- (void)actionCollection:(id)sender
 {
     [Hud showWait];
     __weak typeof(self) weakSelf = self;
@@ -1203,7 +1208,7 @@
     }];
 }
 
-- (IBAction)actionDelete:(id)sender
+- (void)actionDelete:(id)sender
 {
     //删除
     __weak typeof(self)weakSelf = self;

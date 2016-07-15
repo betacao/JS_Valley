@@ -29,10 +29,10 @@
 @property (weak, nonatomic) IBOutlet UIView *photoView;
 @property (weak, nonatomic) IBOutlet UIView *actionView;
 @property (weak, nonatomic) IBOutlet UILabel *relationLabel;
-@property (weak, nonatomic) IBOutlet SHGHorizontalTitleImageButton *deleteButton;
-@property (weak, nonatomic) IBOutlet SHGHorizontalTitleImageButton *praiseButton;
-@property (weak, nonatomic) IBOutlet SHGHorizontalTitleImageButton *commentButton;
-@property (weak, nonatomic) IBOutlet SHGHorizontalTitleImageButton *shareButton;
+@property (strong, nonatomic) SHGHorizontalTitleImageView *deleteButton;
+@property (strong, nonatomic) SHGHorizontalTitleImageView *praiseButton;
+@property (strong, nonatomic) SHGHorizontalTitleImageView *commentButton;
+@property (strong, nonatomic) SHGHorizontalTitleImageView *shareButton;
 @property (weak, nonatomic) IBOutlet UIView *commentView;
 @property (weak, nonatomic) IBOutlet UIView *lineView;
 @property (weak, nonatomic) IBOutlet UIView *splitView;
@@ -57,11 +57,9 @@
 
 - (void)initView
 {
-    [self.contentView bringSubviewToFront:self.headerView];
-
     self.titleLabel.delegate = self;
     self.titleLabel.styleModel = self.titleStyleModel;
-    
+
     self.contentLabel.delegate = self;
     self.contentLabel.styleModel = self.styleModel;
 
@@ -79,27 +77,30 @@
 
     self.relationLabel.font = kMainRelationFont;
     self.relationLabel.textColor = kMainRelationColor;
-    
-    self.deleteButton.titleLabel.font = kMainActionFont;
-    [self.deleteButton setEnlargeEdgeWithTop:10.0f right:0.0f bottom:10.0f left:20.0f];
-    [self.deleteButton setImage:[UIImage imageNamed:@"home_delete"] forState:UIControlStateNormal];
 
-    self.praiseButton.titleLabel.font = kMainActionFont;
-    [self.praiseButton setTitleColor:kMainActionColor forState:UIControlStateNormal];
-    [self.praiseButton setEnlargeEdgeWithTop:10.0f right:0.0f bottom:10.0f left:10.0f];
-    [self.praiseButton setImage:[UIImage imageNamed:@"home_weizan"] forState:UIControlStateNormal];
+    self.deleteButton = [[SHGHorizontalTitleImageView alloc] init];
+    [self.deleteButton target:self addSeletor:@selector(deleteButtonClick:)];
+
+    self.praiseButton = [[SHGHorizontalTitleImageView alloc] init];
+    [self.praiseButton target:self addSeletor:@selector(praiseButtonClick:)];
+
+    self.commentButton = [[SHGHorizontalTitleImageView alloc] init];
+    [self.commentButton target:self addSeletor:@selector(commentButtonClick:)];
+
+    self.shareButton = [[SHGHorizontalTitleImageView alloc] init];
+    [self.shareButton target:self addSeletor:@selector(shareButtonClick:)];
+
+    [self.actionView sd_addSubviews:@[self.deleteButton, self.praiseButton, self.commentButton, self.shareButton]];
+
+    [self.deleteButton addImage:[UIImage imageNamed:@"home_delete"]];
+
+    [self.praiseButton addImage:[UIImage imageNamed:@"home_weizan"]];
     self.praiseButton.margin = MarginFactor(7.0f);
 
-    self.commentButton.titleLabel.font = kMainActionFont;
-    [self.commentButton setTitleColor:kMainActionColor forState:UIControlStateNormal];
-    [self.commentButton setEnlargeEdgeWithTop:10.0f right:0.0f bottom:10.0f left:10.0f];
-    [self.commentButton setImage:[UIImage imageNamed:@"home_comment"] forState:UIControlStateNormal];
+    [self.commentButton addImage:[UIImage imageNamed:@"home_comment"]];
     self.commentButton.margin = MarginFactor(7.0f);
-    
-    self.shareButton.titleLabel.font = kMainActionFont;
-    [self.shareButton setTitleColor:kMainActionColor forState:UIControlStateNormal];
-    [self.shareButton setEnlargeEdgeWithTop:10.0f right:0.0f bottom:10.0f left:10.0f];
-    [self.shareButton setImage:[UIImage imageNamed:@"homeShare"] forState:UIControlStateNormal];
+
+    [self.shareButton addImage:[UIImage imageNamed:@"homeShare"]];
     self.shareButton.margin = MarginFactor(7.0f);
 
     [self.attentionButton setEnlargeEdgeWithTop:10.0f right:10.0f bottom:10.0f left:10.0f];
@@ -115,6 +116,8 @@
     self.lineView.backgroundColor = kMainLineViewColor;
 
     self.splitView.backgroundColor = kMainSplitLineColor;
+
+    [self.contentView bringSubviewToFront:self.headerView];
 }
 
 - (void)addAutoLayout
@@ -269,7 +272,7 @@
     BOOL status = [object.userstatus isEqualToString:@"true"] ? YES : NO;
     [self.headerView updateHeaderView:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,object.potname] placeholderImage:[UIImage imageNamed:@"default_head"] status:status userID:object.userid];
     [self.authenticationView updateWithVStatus:status enterpriseStatus:object.businessStatus];
-    
+
     NSString *name = object.nickname;
     if (object.nickname.length > 4){
         name = [object.nickname substringToIndex:4];
@@ -286,7 +289,7 @@
 
     NSString *str = object.title;
     if (object.title.length > 4) {
-        str= [object.title substringToIndex:4];
+        str = [object.title substringToIndex:4];
         str = [NSString stringWithFormat:@"%@...",str];
     }
     self.departmentLabel.text = str;
@@ -426,25 +429,22 @@
     } else{
         self.deleteButton.hidden = YES;
     }
-    
+
     if (![object.ispraise isEqualToString:@"Y"]) {
-        [self.praiseButton setImage:[UIImage imageNamed:@"home_weizan"] forState:UIControlStateNormal];
+        [self.praiseButton addImage:[UIImage imageNamed:@"home_weizan"]];
     }else{
-        [self.praiseButton setImage:[UIImage imageNamed:@"home_yizan"] forState:UIControlStateNormal];
+        [self.praiseButton addImage:[UIImage imageNamed:@"home_yizan"]];
     }
 
-    [self.praiseButton setTitle:object.praisenum forState:UIControlStateNormal];
-    [self.commentButton setTitle:object.cmmtnum forState:UIControlStateNormal];
-    [self.shareButton setTitle:object.sharenum forState:UIControlStateNormal];
+    [self.praiseButton addTitle:object.praisenum];
+    [self.commentButton addTitle:object.cmmtnum];
+    [self.shareButton addTitle:object.sharenum];
 
     self.actionView.sd_resetLayout
     .leftEqualToView(self.headerView)
     .rightEqualToView(self.attentionButton)
     .topSpaceToView(self.photoView, 0.0f)
     .heightIs(kMainActionHeight);
-    
-    [self.actionView setNeedsLayout];
-    [self.actionView layoutIfNeeded];
 }
 
 - (void)loadCommentView:(CircleListObj *)object
@@ -535,22 +535,22 @@
     [SHGGlobleOperation addAttation:self.object];
 }
 
-- (IBAction)deleteButtonClick:(UIButton *)sender
+- (void)deleteButtonClick:(UIButton *)sender
 {
     [self.delegate deleteClicked:self.object];
 }
 
-- (IBAction)praiseButtonClick:(UIButton *)sender
+- (void)praiseButtonClick:(UIButton *)sender
 {
     [self.delegate praiseClicked:self.object];
 }
 
-- (IBAction)commentButtonClick:(UIButton *)sender
+- (void)commentButtonClick:(UIButton *)sender
 {
     [self.delegate clicked:self.index];
 }
 
-- (IBAction)shareButtonClick:(UIButton *)sender
+- (void)shareButtonClick:(UIButton *)sender
 {
     [self.delegate shareClicked:self.object];
 }

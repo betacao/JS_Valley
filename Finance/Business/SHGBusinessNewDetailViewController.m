@@ -485,6 +485,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
     .heightIs(0.0f);
     
     [self.headerView setupAutoHeightWithBottomView:self.photoView bottomMargin:MarginFactor(15.0f)];
+    self.headerView.hidden = YES;
     [self.tableView setTableHeaderView:self.headerView];
     
     self.tableView.sd_layout
@@ -618,6 +619,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
         photoGroup.photoItemArray = temp;
         [self.photoView addSubview:photoGroup];
     }
+    self.headerView.hidden = NO;
     [self.headerView layoutSubviews];
     self.tableView.tableHeaderView = self.headerView;
     
@@ -1468,10 +1470,12 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
         [self.collectionController changeBusinessCollection];
     }
 }
+
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
+
 @end
 
 @interface SHGBusinessCategoryButton()

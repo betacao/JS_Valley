@@ -11,12 +11,7 @@
                 <outlet property="authenticationView" destination="bWR-WX-0kG" id="qXg-hS-Hzu"/>
                 <outlet property="backImageView" destination="AC2-KC-3Lg" id="wKZ-Fq-5TK"/>
                 <outlet property="btnAttention" destination="Kgd-tr-IWO" id="UTm-WJ-xop"/>
-                <outlet property="btnCollet" destination="e4b-9V-3uy" id="7bN-q0-xe9"/>
-                <outlet property="btnComment" destination="reJ-Af-hEG" id="H8I-t8-0ki"/>
-                <outlet property="btnDelete" destination="X1w-5Q-8gX" id="Eee-z9-Moc"/>
-                <outlet property="btnPraise" destination="Y2b-Pm-f2e" id="1SA-ub-3zN"/>
                 <outlet property="btnSend" destination="a0u-4d-vNm" id="NjW-6P-Ql5"/>
-                <outlet property="btnShare" destination="vkj-nB-6k2" id="sCW-6i-dXk"/>
                 <outlet property="businessView" destination="8BD-Vd-XrX" id="fvc-8k-CuQ"/>
                 <outlet property="faSongBtn" destination="Roo-oo-srH" id="iBm-TK-Ofo"/>
                 <outlet property="faceBtn" destination="ys0-he-oJB" id="oEu-wD-s4x"/>
@@ -194,48 +189,6 @@
                 <view contentMode="scaleToFill" id="HFs-C6-FpA">
                     <rect key="frame" x="14" y="73" width="292" height="34"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <subviews>
-                        <view contentMode="scaleToFill" id="e4b-9V-3uy" customClass="SHGHorizontalTitleImageButton">
-                            <rect key="frame" x="26" y="-47" width="240" height="128"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            <connections>
-                                <action selector="actionCollection:" destination="-1" eventType="touchUpInside" id="CNK-zz-iky"/>
-                            </connections>
-                        </view>
-                        <view contentMode="scaleToFill" id="reJ-Af-hEG" customClass="SHGHorizontalTitleImageButton">
-                            <rect key="frame" x="26" y="-47" width="240" height="128"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            <connections>
-                                <action selector="actionComment:" destination="-1" eventType="touchUpInside" id="cRm-M5-b5J"/>
-                            </connections>
-                        </view>
-                        <view contentMode="scaleToFill" id="Y2b-Pm-f2e" customClass="SHGHorizontalTitleImageButton">
-                            <rect key="frame" x="26" y="-47" width="240" height="128"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            <connections>
-                                <action selector="actionPraise:" destination="-1" eventType="touchUpInside" id="YaA-lt-IEG"/>
-                            </connections>
-                        </view>
-                        <view contentMode="scaleToFill" id="vkj-nB-6k2" customClass="SHGHorizontalTitleImageButton">
-                            <rect key="frame" x="26" y="-47" width="240" height="128"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            <connections>
-                                <action selector="actionShare:" destination="-1" eventType="touchUpInside" id="nGw-g3-II7"/>
-                            </connections>
-                        </view>
-                        <view contentMode="scaleToFill" id="X1w-5Q-8gX" customClass="SHGHorizontalTitleImageButton">
-                            <rect key="frame" x="26" y="-47" width="240" height="128"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            <connections>
-                                <action selector="actionDelete:" destination="-1" eventType="touchUpInside" id="JOr-cS-5xh"/>
-                            </connections>
-                        </view>
-                    </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
                 <view contentMode="scaleToFill" id="ffx-YA-YXJ">

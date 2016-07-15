@@ -868,6 +868,9 @@
 		F924C2CA1CACCC780070286F /* SHGBusinessManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F924C2C91CACCC780070286F /* SHGBusinessManager.m */; };
 		F928141C1C045F8900C7782D /* SHGItemChooseView.m in Sources */ = {isa = PBXBuildFile; fileRef = F928141B1C045F8900C7782D /* SHGItemChooseView.m */; };
 		F93242BA1BE9EE92003B7F07 /* SHGUnifiedTreatment.m in Sources */ = {isa = PBXBuildFile; fileRef = F93242B91BE9EE92003B7F07 /* SHGUnifiedTreatment.m */; };
+		F93286241D38948E004A9CC2 /* SHGBusinessRecommendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F93286221D38948E004A9CC2 /* SHGBusinessRecommendViewController.m */; };
+		F93286251D38948E004A9CC2 /* SHGBusinessRecommendViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F93286231D38948E004A9CC2 /* SHGBusinessRecommendViewController.xib */; };
+		F93286271D38950B004A9CC2 /* SHGBusinessRecommendTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F93286261D38950B004A9CC2 /* SHGBusinessRecommendTableViewCell.xib */; };
 		F9352BF91CFBCDBC00778635 /* SHGGloble.m in Sources */ = {isa = PBXBuildFile; fileRef = F9352BF61CFBCDBC00778635 /* SHGGloble.m */; };
 		F9352BFA1CFBCDBC00778635 /* SHGGlobleTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F9352BF81CFBCDBC00778635 /* SHGGlobleTableViewCell.m */; };
 		F9352BFD1CFBCEC700778635 /* SHGGlobleOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = F9352BFC1CFBCEC700778635 /* SHGGlobleOperation.m */; };
@@ -2147,6 +2150,10 @@
 		F93242B81BE9EE92003B7F07 /* SHGUnifiedTreatment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGUnifiedTreatment.h; sourceTree = "<group>"; };
 		F93242B91BE9EE92003B7F07 /* SHGUnifiedTreatment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGUnifiedTreatment.m; sourceTree = "<group>"; };
 		F93242BB1BE9F73E003B7F07 /* CircleActionDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CircleActionDelegate.h; sourceTree = "<group>"; };
+		F93286211D38948E004A9CC2 /* SHGBusinessRecommendViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGBusinessRecommendViewController.h; sourceTree = "<group>"; };
+		F93286221D38948E004A9CC2 /* SHGBusinessRecommendViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGBusinessRecommendViewController.m; sourceTree = "<group>"; };
+		F93286231D38948E004A9CC2 /* SHGBusinessRecommendViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGBusinessRecommendViewController.xib; sourceTree = "<group>"; };
+		F93286261D38950B004A9CC2 /* SHGBusinessRecommendTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGBusinessRecommendTableViewCell.xib; sourceTree = "<group>"; };
 		F9352BF51CFBCDBC00778635 /* SHGGloble.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGGloble.h; sourceTree = "<group>"; };
 		F9352BF61CFBCDBC00778635 /* SHGGloble.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGGloble.m; sourceTree = "<group>"; };
 		F9352BF71CFBCDBC00778635 /* SHGGlobleTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGGlobleTableViewCell.h; sourceTree = "<group>"; };
@@ -4742,6 +4749,10 @@
 				988C27EA1D2E48FF005FF8CD /* SHGBusinessCompanyViewController.xib */,
 				988C27F31D2F811C005FF8CD /* SHGTitleLabelCenterButton.h */,
 				988C27F41D2F811C005FF8CD /* SHGTitleLabelCenterButton.m */,
+				F93286211D38948E004A9CC2 /* SHGBusinessRecommendViewController.h */,
+				F93286221D38948E004A9CC2 /* SHGBusinessRecommendViewController.m */,
+				F93286231D38948E004A9CC2 /* SHGBusinessRecommendViewController.xib */,
+				F93286261D38950B004A9CC2 /* SHGBusinessRecommendTableViewCell.xib */,
 			);
 			name = Business;
 			path = Finance/Business;
@@ -5107,6 +5118,7 @@
 				B080FE941B81E30100426579 /* emoji_characters_s.png in Resources */,
 				615234B01B0E146B00011EAC /* 二度跳转页面@3x.jpg in Resources */,
 				6186DF3D1AFB7F3800960934 /* 未收藏@3x副本.png in Resources */,
+				F93286251D38948E004A9CC2 /* SHGBusinessRecommendViewController.xib in Resources */,
 				F916B6141D0D395300AE217F /* d_guzhang@3x.png in Resources */,
 				F916B6061D0D395300AE217F /* d_bishi@3x.png in Resources */,
 				61E83D831AF7C78E00703651 /* 检查更新@3x.png in Resources */,
@@ -5306,6 +5318,7 @@
 				61E83D4C1AF7C78E00703651 /* 短信图标@3x.png in Resources */,
 				F916B6291D0D395300AE217F /* d_ku@3x.png in Resources */,
 				408D8B5E1AF8618C0055810C /* chatBar_more_cameraSelected@2x.png in Resources */,
+				F93286271D38950B004A9CC2 /* SHGBusinessRecommendTableViewCell.xib in Resources */,
 				61616FE81B02F29100E5A837 /* 关注按钮@3x.png in Resources */,
 				61E83CDA1AF7C78E00703651 /* 扣扣好友图标@2x.png in Resources */,
 				61E83CD01AF7C78E00703651 /* 免费预约按钮-按下@2x.png in Resources */,
@@ -6029,6 +6042,7 @@
 				98D73C2D1C194E7E0055AF75 /* SHGNewsTableViewCell.m in Sources */,
 				5331DF261AFC02B400E035B8 /* EMAlertView.m in Sources */,
 				5331DF1D1AFC017600E035B8 /* ApplyViewController.m in Sources */,
+				F93286241D38948E004A9CC2 /* SHGBusinessRecommendViewController.m in Sources */,
 				F9EDD5F61BABFBCF00506C0C /* SDBrowserImageView.m in Sources */,
 				61425B7B1AFAB75E00758BCB /* ResetPasswardViewController.m in Sources */,
 				6187D2F41AF1C693008E1D21 /* EMTextView.m in Sources */,

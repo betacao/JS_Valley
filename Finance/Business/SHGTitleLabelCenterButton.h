@@ -9,5 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface SHGTitleLabelCenterButton : UIButton
+
 - (void)setTitle:(NSString *)title image:(UIImage *)image;
+
 @end

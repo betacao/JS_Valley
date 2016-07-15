@@ -15,7 +15,12 @@
 @end
 
 //必须先设置图片，再设置文字
-@interface SHGHorizontalTitleImageButton : UIButton
+@interface SHGHorizontalTitleImageView : UIView
 
 @property (assign, nonatomic) CGFloat margin;
+
+- (void)addImage:(UIImage *)image;
+- (void)addTitle:(NSString *)title;
+- (void)target:(id)target addSeletor:(SEL)selector;
+
 @end
