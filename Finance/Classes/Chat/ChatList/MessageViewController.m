@@ -13,6 +13,12 @@
 #import "SHGBusinessObject.h"
 #import "SHGBusinessNewDetailViewController.h"
 #import "SHGBusinessRecommendViewController.h"
+#import "SHGEquityInvestSendViewController.h"
+#import "SHGBondInvestSendViewController.h"
+#import "SHGBondFinanceSendViewController.h"
+#import "SHGEquityFinanceSendViewController.h"
+#import "SHGSameAndCommixtureSendViewController.h"
+#import "SHGBusinessMineViewController.h"
 
 @interface MessageViewController ()
 {
@@ -212,6 +218,16 @@
         object.type = businessType;
         controller.object = object;
         [self.navigationController pushViewController:controller animated:YES];
+    } else if ([obj.code isEqualToString:@"1015"]){
+        NSString *businessId = obj.oid;
+        NSString *type = obj.unionID;
+        SHGBusinessObject *object = [[SHGBusinessObject alloc] init];
+        object.businessID = businessId;
+        object.type = type;
+        SHGBusinessNewDetailViewController *controller = [[SHGBusinessNewDetailViewController alloc] init];
+        controller.object = object;
+        [self.navigationController pushViewController:controller animated:YES];
+        
     } else if ([obj.code isEqualToString:@"1016"]){
         //新版业务的推送
         NSString *businessId = obj.oid;
@@ -221,6 +237,10 @@
         object.businessID = businessId;
         object.type = businessType;
         controller.object = object;
+        controller.time = [[obj.time componentsSeparatedByString:@" "] firstObject];
+        [self.navigationController pushViewController:controller animated:YES];
+    } else if ([obj.code isEqualToString:@"1017"]){
+        SHGBusinessMineViewController *controller = [[SHGBusinessMineViewController alloc] init];
         [self.navigationController pushViewController:controller animated:YES];
     } else if ([obj.code isEqualToString:@"1002"] || [obj.code isEqualToString:@"1003"] || [obj.code isEqualToString:@"1007"] || [obj.code isEqualToString:@"1008"]){
         //进入帖子详情

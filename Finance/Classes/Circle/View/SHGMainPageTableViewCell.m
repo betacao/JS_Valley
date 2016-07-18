@@ -295,8 +295,8 @@
     self.departmentLabel.text = str;
 
     self.timeLabel.text = object.publishdate;
-
-    if ([object.userid isEqualToString:UID]) {
+    
+    if ([object.userid isEqualToString:UID] || [object.userid isEqualToString:@"-2"]) {
         self.attentionButton.hidden = YES;
     } else{
         self.attentionButton.hidden = NO;

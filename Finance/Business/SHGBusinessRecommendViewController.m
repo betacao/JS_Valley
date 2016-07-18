@@ -8,11 +8,10 @@
 
 #import "SHGBusinessRecommendViewController.h"
 #import "SHGBusinessManager.h"
-
+#import "SHGBusinessNewDetailViewController.h"
 @interface SHGBusinessRecommendViewController ()<UITableViewDelegate, UITableViewDataSource>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-
 @property (strong, nonatomic) NSArray *dataArray;
 
 @end
@@ -22,21 +21,25 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self initView];
+    self.title = @"今日优质业务";
     [self addAutoLayout];
+    [self initView];
     [self loadData];
 }
 
 - (void)initView
 {
     self.tableView.backgroundColor = Color(@"f6f7f8");
+
 }
 
 - (void)addAutoLayout
 {
     self.tableView.sd_layout
     .spaceToSuperView(UIEdgeInsetsZero);
+    
 }
+
 
 - (void)loadData
 {
@@ -46,6 +49,7 @@
         [weakSelf.tableView reloadData];
     }];
 }
+
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -60,6 +64,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     SHGBusinessRecommendTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SHGBusinessRecommendTableViewCell"];
     if (!cell) {
         cell = [[[NSBundle mainBundle] loadNibNamed:@"SHGBusinessRecommendTableViewCell" owner:self options:nil] lastObject];
@@ -67,6 +72,15 @@
     SHGBusinessObject *object = [self.dataArray objectAtIndex:indexPath.row];
     cell.object = object;
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    SHGBusinessObject *object = [self.dataArray objectAtIndex:indexPath.row];
+    SHGBusinessNewDetailViewController *controller = [[SHGBusinessNewDetailViewController alloc] init];
+    controller.object = object;
+    [self.navigationController pushViewController:controller animated:YES];
 }
 
 - (void)didReceiveMemoryWarning
@@ -153,7 +167,7 @@
     .heightIs(self.accessoryImageView.image.size.height);
 
     self.titleLabel.sd_layout
-    .leftEqualToView(self.typeImageView)
+    .leftEqualToView(self.typeLine)
     .centerYEqualToView(self.accessoryImageView)
     .rightSpaceToView(self.contentView, MarginFactor(62.0f))
     .heightIs(self.titleLabel.font.lineHeight);
@@ -161,11 +175,11 @@
     self.firstLabel.sd_layout
     .leftEqualToView(self.titleLabel)
     .topSpaceToView(self.titleLabel, MarginFactor(19.0f))
+    .rightEqualToView(self.accessoryImageView)
     .heightIs(self.firstLabel.font.lineHeight);
-    [self.firstLabel setSingleLineAutoResizeWithMaxWidth:SCREENWIDTH];
 
     self.secondLabel.sd_layout
-    .leftSpaceToView(self.contentView, MarginFactor(225.0f))
+    .leftSpaceToView(self.contentView, MarginFactor(210.0f))
     .topEqualToView(self.firstLabel)
     .heightIs(self.secondLabel.font.lineHeight);
     [self.secondLabel setSingleLineAutoResizeWithMaxWidth:SCREENWIDTH];
@@ -195,21 +209,38 @@
 {
     _object = object;
     self.titleLabel.text = object.title;
-    NSString *firstText = [[SHGGloble sharedGloble] businessKeysForValues:object.businessShow showEmptyKeys:NO];
-    NSArray *array = [firstText componentsSeparatedByString:@"，"];
-    if (array.count > 1) {
-        firstText = [[array firstObject] stringByAppendingString:@"..."];
+    UIImage *image = nil;
+    if ([object.type isEqualToString:@"bondfinancing"]) {
+        //债权融资
+        image = [UIImage imageNamed:@"bond_fanancing_type"];
+        self.firstLabel.text = object.investAmount;
+        self.secondLabel.text = [[SHGGloble sharedGloble] businessKeysForValues:object.clarifyingWay showEmptyKeys:NO];
+        self.thirdLabel.text = [[SHGGloble sharedGloble] businessKeysForValues:object.industry showEmptyKeys:NO];
+        self.fourthLabel.text = [[SHGGloble sharedGloble] businessKeysForValues:object.fundUsetime showEmptyKeys:NO];
+    } else if ([object.type isEqualToString:@"equityfinancing"]) {
+        //股权融资
+        image = [UIImage imageNamed:@"equity_fanancing_type"];
+        self.firstLabel.text = object.investAmount;
+        self.secondLabel.text = [[SHGGloble sharedGloble] businessKeysForValues:object.totalshareRate showEmptyKeys:NO];
+        self.thirdLabel.text = [[SHGGloble sharedGloble] businessKeysForValues:object.industry showEmptyKeys:NO];
+        self.fourthLabel.text = [[SHGGloble sharedGloble] businessKeysForValues:object.shortestquitYears showEmptyKeys:NO];
+    } else  if ([object.type isEqualToString:@"trademixed"]) {
+        //银证业务
+        image = [UIImage imageNamed:@"bankcard_business_type"];
+        self.firstLabel.text = [[SHGGloble sharedGloble] businessKeysForValues:object.businessType showEmptyKeys:NO];
+        NSString * string = [[SHGGloble sharedGloble] businessKeysForValues:object.detail showEmptyKeys:NO];
+        if (string.length > 32) {
+            string = [[string substringToIndex:32] stringByAppendingString:@"..."];
+        }
+        self.thirdLabel.text = string;
     }
-    self.firstLabel.text = firstText;
-    self.secondLabel.text = [[SHGGloble sharedGloble] businessKeysForValues:object.investAmount showEmptyKeys:NO];
-//    self.thirdLabel.text = [@"地区：" stringByAppendingString:[object.area isEqualToString:@""] ? @"全国" : object.area];
-//    self.fourthLabel.text = [@"时间：" stringByAppendingString:object.createTime];
+    self.typeImageView.image = image;
+    self.typeImageView.sd_resetLayout
+    .leftSpaceToView(self.contentView, 0.0f)
+    .topSpaceToView(self.spliteLine, 0.0f)
+    .widthIs(image.size.width)
+    .heightIs(image.size.height);
 
-    //    self.typeImageView.sd_resetLayout
-    //    .leftSpaceToView(self.contentView, 0.0f)
-    //    .topSpaceToView(self.spliteLine, 0.0f)
-    //    .widthIs(self.typeImageView.image.size.width)
-    //    .heightIs(self.typeImageView.image.size.height);
 }
 
 

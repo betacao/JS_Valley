@@ -96,7 +96,6 @@
     self.title.text = object.title;
     NSDate *date = [self dateFromString:object.time];
     self.time.text = [self stringFromDate:date];
-
     self.content.text = object.content;
 }
 

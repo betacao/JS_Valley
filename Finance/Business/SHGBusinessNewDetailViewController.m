@@ -553,7 +553,6 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
     }];
 }
 
-
 - (void)didCreateOrModifyBusiness
 {
     [self initData];

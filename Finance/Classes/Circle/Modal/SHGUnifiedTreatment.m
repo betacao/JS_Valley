@@ -11,7 +11,7 @@
 #import "SHGSegmentController.h"
 #import "RecmdFriendObj.h"
 #import "SHGPersonalViewController.h"
-
+#import "CCLocationManager.h"
 @implementation SHGUnifiedTreatment
 
 
@@ -286,6 +286,9 @@
 //动态分享
 - (void)circleShareWithObj:(CircleListObj *)obj
 {
+    if ([[SHGGloble sharedGloble].cityName isEqualToString:@""]) {
+        [[CCLocationManager shareLocation] getCity:nil];
+    }
     NSString *url = [NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttpCircle,@"circle",obj.rid];
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
     NSString *cityName = [SHGGloble sharedGloble].cityName;

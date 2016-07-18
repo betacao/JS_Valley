@@ -12,7 +12,7 @@
 @interface SHGBusinessRecommendViewController : BaseViewController
 
 @property (strong, nonatomic) SHGBusinessObject *object;
-
+@property (strong, nonatomic) NSString *time;
 @end
 
 

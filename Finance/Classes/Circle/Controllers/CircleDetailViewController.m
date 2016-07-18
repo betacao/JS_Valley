@@ -18,7 +18,7 @@
 #import "SHGMainPageTableViewCell.h"
 #import <JavaScriptCore/JavaScriptCore.h>
 #import "SDPhotoBrowser.h"
-
+#import "CCLocationManager.h"
 
 #define PRAISE_SEPWIDTH     10
 #define PRAISE_RIGHTWIDTH     40
@@ -936,6 +936,7 @@
 
 - (void)otherShareWithObj:(CircleListObj *)obj
 {
+    
     NSString *url = [NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttpCircle,@"circle",obj.rid];
     NSDictionary *param = @{@"uid":UID};
     __weak typeof(self) weakSelf = self;
@@ -957,10 +958,18 @@
 
 -(void)circleShareWithObj:(CircleListObj *)obj
 {
+    if ([[SHGGloble sharedGloble].cityName isEqualToString:@""]) {
+        [[CCLocationManager shareLocation] getCity:nil];
+    }
     [[SHGGloble sharedGloble] requestUserVerifyStatusCompletion:^(BOOL state,NSString *auditState) {
         if (state) {
             NSString *url = [NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttpCircle,@"circle",obj.rid];
-            NSDictionary *param = @{@"uid":[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID]};
+            NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
+            NSString *cityName = [SHGGloble sharedGloble].cityName;
+            if(!cityName){
+                cityName = @"";
+            }
+            NSDictionary *param = @{@"uid":uid,@"currCity":cityName};
             [MOCHTTPRequestOperationManager postWithURL:url class:nil parameters:param success:^(MOCHTTPResponse *response) {
 
                 NSString *code = [response.data valueForKey:@"code"];

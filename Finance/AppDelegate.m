@@ -495,15 +495,30 @@
         object.type = businessType;
         controller.object = object;
         [self pushIntoViewController:TopVC newViewController:controller];
+    } else if ([ridCode isEqualToString:@"1015"]){
+        NSString *businessId = [userInfo objectForKey:@"rid"];
+        NSString *type = [userInfo objectForKey:@"unionid"];
+        SHGBusinessObject *object = [[SHGBusinessObject alloc] init];
+        object.businessID = businessId;
+        object.type = type;
+        SHGBusinessNewDetailViewController *controller = [[SHGBusinessNewDetailViewController alloc] init];
+        controller.object = object;
+        [self pushIntoViewController:TopVC newViewController:controller];
     } else if ([ridCode isEqualToString:@"1016"]){
         //优质业务的推送
         NSString *businessId = [userInfo objectForKey:@"rid"];
-        NSString *businessType = [userInfo objectForKey:@"businessType"];
+        NSString *businessType = [userInfo objectForKey:@"unionid"];
+        NSString *time = [userInfo objectForKey:@"time"];
         SHGBusinessRecommendViewController *controller = [[SHGBusinessRecommendViewController alloc] init];
         SHGBusinessObject *object = [[SHGBusinessObject alloc] init];
         object.businessID = businessId;
         object.type = businessType;
+        controller.time = time;
         controller.object = object;
+        [self pushIntoViewController:TopVC newViewController:controller];
+        
+    } else if ([ridCode isEqualToString:@"1017"]){
+        SHGBusinessMineViewController *controller = [[SHGBusinessMineViewController alloc] init];
         [self pushIntoViewController:TopVC newViewController:controller];
     } else if ([ridCode isEqualToString:@"1002"] || [ridCode isEqualToString:@"1003"] || [ridCode isEqualToString:@"1007"] || [ridCode isEqualToString:@"1008"]){ //进入帖子详情
         CircleDetailViewController *vc = [[CircleDetailViewController alloc] initWithNibName:@"CircleDetailViewController" bundle:nil];

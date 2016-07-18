@@ -21,6 +21,7 @@
 @property (strong, nonatomic) NSString *anonymous;
 @property (strong, nonatomic) NSString *area;
 @property (strong, nonatomic) NSString *bondType;
+@property (strong, nonatomic) NSString *shortestquitYears;
 @property (strong, nonatomic) NSString *clarifyingWay;
 @property (strong, nonatomic) NSString *contact;
 @property (strong, nonatomic) NSString *detail;

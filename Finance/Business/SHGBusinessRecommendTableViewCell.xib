@@ -7,11 +7,11 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SHGBusinessRecommendTableViewCell" rowHeight="416" id="HXd-Ju-SPJ" customClass="SHGBusinessRecommendTableViewCell">
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="SHGBusinessRecommendTableViewCell" rowHeight="416" id="HXd-Ju-SPJ" customClass="SHGBusinessRecommendTableViewCell">
             <rect key="frame" x="0.0" y="0.0" width="320" height="416"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="HXd-Ju-SPJ" id="Uk8-5H-HzV">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="415.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="415"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="iu6-SR-Mcf">
