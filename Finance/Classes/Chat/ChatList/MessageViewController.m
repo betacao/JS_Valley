@@ -222,17 +222,13 @@
         object.type = businessType;
         controller.object = object;
         [self.navigationController pushViewController:controller animated:YES];
-    } else{
+    } else if ([obj.code isEqualToString:@"1002"] || [obj.code isEqualToString:@"1003"] || [obj.code isEqualToString:@"1007"] || [obj.code isEqualToString:@"1008"]){
         //进入帖子详情
         CircleDetailViewController *vc = [[CircleDetailViewController alloc] initWithNibName:@"CircleDetailViewController" bundle:nil];
         MessageObj *obj = self.dataArr[indexPath.row];
         vc.rid = obj.oid;
         [self.navigationController pushViewController:vc animated:YES];
     }
-
-    NSLog(@"You Click At Section: %ld Row: %ld",(long)indexPath.section,(long)indexPath.row);
-
-
 }
 
 - (void)didReceiveMemoryWarning {

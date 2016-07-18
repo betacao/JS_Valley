@@ -16,13 +16,16 @@
 #import "CTTextDisplayView.h"
 #import "SHGAuthenticationView.h"
 #import "SHGMainPageTableViewCell.h"
+#import <JavaScriptCore/JavaScriptCore.h>
+#import "SDPhotoBrowser.h"
+
 
 #define PRAISE_SEPWIDTH     10
 #define PRAISE_RIGHTWIDTH     40
 #define PRAISE_WIDTH 28.0f
 #define kItemMargin 7.0f * XFACTOR
 
-@interface CircleDetailViewController ()<CircleListDelegate, CTTextDisplayViewDelegate, UIWebViewDelegate>
+@interface CircleDetailViewController ()<CircleListDelegate, CTTextDisplayViewDelegate, UIWebViewDelegate, SDPhotoBrowserDelegate>
 {
     UIControl *backView;
     UIView *PickerBackView;
@@ -67,6 +70,7 @@
 
 @property (strong, nonatomic) UIView *photoView;
 
+@property (strong, nonatomic) NSArray *webPhotoArray;
 @property (strong, nonatomic) CircleListObj *responseObject;
 
 @end
@@ -149,9 +153,6 @@
     self.btnShare.margin = MarginFactor(7.0f);
     
     self.webView.scrollView.bounces = NO;
-    self.webView.hidden = YES;
-
-    self.businessView.hidden = YES;
 
     CTTextStyleModel *model = [[CTTextStyleModel alloc] init];
     model.numberOfLines = -1;
@@ -273,8 +274,7 @@
     self.webView.sd_layout
     .topSpaceToView(self.personView, 0.0f)
     .leftSpaceToView(self.tableHeaderView, kMainItemLeftMargin)
-    .rightSpaceToView(self.tableHeaderView, kMainItemLeftMargin)
-    .heightIs(1.0f);
+    .rightSpaceToView(self.tableHeaderView, kMainItemLeftMargin);
 
     self.titleLabel.sd_layout
     .topSpaceToView(self.personView, 0.0f)
@@ -504,15 +504,14 @@
 
     UIView *contentView = nil;
     if ([self.responseObject.postType isEqualToString:@"normalpc"]) {
-        self.webView.hidden = NO;
         contentView = self.webView;
-        self.titleLabel.hidden = self.lblContent.hidden = YES;
+        self.webView.hidden = NO;
+        self.titleLabel.hidden = self.lblContent.hidden = self.businessView.hidden = YES;
         [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.responseObject.groupPostUrl]]];
     } else if ([self.responseObject.postType isEqualToString:@"business"]) {
         contentView = self.businessView;
         self.businessView.hidden = NO;
-        self.lblContent.hidden = YES;
-
+        self.lblContent.hidden = self.webView.hidden = YES;
         NSString *title = [[SHGGloble sharedGloble] formatStringToHtml:self.responseObject.groupPostTitle];
         self.titleLabel.text = title;
         if (title.length > 0) {
@@ -541,6 +540,7 @@
 
     } else {
         contentView = self.lblContent;
+        self.businessView.hidden = self.webView.hidden = YES;
         NSString *title = [[SHGGloble sharedGloble] formatStringToHtml:self.responseObject.groupPostTitle];
         self.titleLabel.text = title;
         if (title.length > 0) {
@@ -1123,6 +1123,19 @@
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
     [Hud hideHud];
+    __weak typeof(self) weakSelf = self;
+    [SHGGloble addHtmlListener:webView key:@"openImageBrowser" block:^{
+        NSArray *args = [JSContext currentArguments];
+        NSInteger index = 0;
+        index = [[args firstObject] toInt32];
+        weakSelf.webPhotoArray = [[args lastObject] toArray];
+
+        SDPhotoBrowser *browser = [[SDPhotoBrowser alloc] initWithFrame:CGRectMake(0.0f, 0.0f, CGRectGetWidth([UIScreen mainScreen].bounds), CGRectGetHeight([UIScreen mainScreen].bounds))];
+        browser.imageCount = weakSelf.webPhotoArray.count;
+        browser.currentImageIndex = index;
+        browser.delegate = weakSelf;
+        [browser show];
+    }];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context
@@ -1131,11 +1144,9 @@
         CGFloat height = [[change objectForKey:@"new"] CGSizeValue].height;
         if (height > 0 && height != CGRectGetHeight(self.webView.frame)) {
 
-            self.webView.sd_resetLayout
-            .topSpaceToView(self.personView, 0.0f)
-            .leftSpaceToView(self.tableHeaderView, kMainItemLeftMargin)
-            .rightSpaceToView(self.tableHeaderView, kMainItemLeftMargin)
-            .heightIs(height);
+            CGRect frame = self.webView.frame;
+            frame.size.height = height;
+            self.webView.frame = frame;
 
             [self.tableHeaderView setNeedsLayout];
             [self.tableHeaderView layoutIfNeeded];
@@ -1366,6 +1377,11 @@
     self.tableView.frame = CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT);
     [self.view sendSubviewToBack:PickerBackView];
     
+}
+
+- (NSURL *)photoBrowser:(SDPhotoBrowser *)browser highQualityImageURLForIndex:(NSInteger)index
+{
+    return [self.webPhotoArray objectAtIndex:index];
 }
 
 - (void)dealloc

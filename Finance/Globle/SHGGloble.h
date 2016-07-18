@@ -279,14 +279,12 @@ typedef void (^SHHomeDataCompletionBlock)(NSArray *allList, NSArray *normalList,
 - (NSString *)formatStringToHtml:(NSString *)string;
 
 /**
- @brief 判断是否是emoji符号
+ @brief 增加网页和本地交互
 
- @param string 字符串
-
- @return 返回YES OR NO
+ @param webView webview
 
  @since 1.8.4
  */
-+ (BOOL)stringContainsEmoji:(NSString *)string;
++ (void)addHtmlListener:(UIWebView *)webView key:(NSString *)key block:(void(^)(void))block;
 
 @end

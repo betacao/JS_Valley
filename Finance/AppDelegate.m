@@ -505,7 +505,7 @@
         object.type = businessType;
         controller.object = object;
         [self pushIntoViewController:TopVC newViewController:controller];
-    } else{  //进入帖子详情
+    } else if ([ridCode isEqualToString:@"1002"] || [ridCode isEqualToString:@"1003"] || [ridCode isEqualToString:@"1007"] || [ridCode isEqualToString:@"1008"]){ //进入帖子详情
         CircleDetailViewController *vc = [[CircleDetailViewController alloc] initWithNibName:@"CircleDetailViewController" bundle:nil];
         NSString* rid = [userInfo objectForKey:@"rid"];
         vc.rid = rid;

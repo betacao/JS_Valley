@@ -7,7 +7,6 @@
 //
 
 #import "LinkViewController.h"
-#import <JavaScriptCore/JavaScriptCore.h>  
 #import "SHGUnifiedTreatment.h"
 
 @interface LinkViewController ()<UIWebViewDelegate>
@@ -56,26 +55,15 @@
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
-    [self addHtmlListener];
     [Hud hideHud];
+    [SHGGloble addHtmlListener:webView key:@"openShare" block:^{
+        [[SHGUnifiedTreatment sharedTreatment] shareFeedhtmlString:self.object];
+    }];
 }
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
 {
-
-}
-
-- (void)addHtmlListener
-{
-    JSContext *context = [self.webView valueForKeyPath:@"documentView.webView.mainFrame.javaScriptContext"];
-    context[@"openShare"] = ^() {
-        NSLog(@"+++++++Begin Log+++++++");
-        NSArray *args = [JSContext currentArguments];
-        for (JSValue *jsVal in args) {
-            NSLog(@"%@", jsVal);
-        }
-        [[SHGUnifiedTreatment sharedTreatment] shareFeedhtmlString:self.object];
-    };
+    [Hud hideHud];
 }
 
 - (void)didReceiveMemoryWarning
