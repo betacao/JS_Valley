@@ -24,6 +24,7 @@
 #import "LinkViewController.h"
 #import "SHGBusinessObject.h"
 #import "SHGBusinessNewDetailViewController.h"
+#import "SHGBusinessRecommendViewController.h"
 #import "CCLocationManager.h"
 
 //for mac
@@ -489,6 +490,16 @@
         NSString *businessId = [userInfo objectForKey:@"rid"];
         NSString *businessType = [userInfo objectForKey:@"businessType"];
         SHGBusinessNewDetailViewController *controller = [[SHGBusinessNewDetailViewController alloc] init];
+        SHGBusinessObject *object = [[SHGBusinessObject alloc] init];
+        object.businessID = businessId;
+        object.type = businessType;
+        controller.object = object;
+        [self pushIntoViewController:TopVC newViewController:controller];
+    } else if ([ridCode isEqualToString:@"1016"]){
+        //优质业务的推送
+        NSString *businessId = [userInfo objectForKey:@"rid"];
+        NSString *businessType = [userInfo objectForKey:@"businessType"];
+        SHGBusinessRecommendViewController *controller = [[SHGBusinessRecommendViewController alloc] init];
         SHGBusinessObject *object = [[SHGBusinessObject alloc] init];
         object.businessID = businessId;
         object.type = businessType;

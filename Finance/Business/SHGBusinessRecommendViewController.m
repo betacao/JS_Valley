@@ -7,10 +7,13 @@
 //
 
 #import "SHGBusinessRecommendViewController.h"
+#import "SHGBusinessManager.h"
 
-@interface SHGBusinessRecommendViewController ()
+@interface SHGBusinessRecommendViewController ()<UITableViewDelegate, UITableViewDataSource>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+
+@property (strong, nonatomic) NSArray *dataArray;
 
 @end
 
@@ -21,17 +24,49 @@
     [super viewDidLoad];
     [self initView];
     [self addAutoLayout];
+    [self loadData];
 }
 
 - (void)initView
 {
-
+    self.tableView.backgroundColor = Color(@"f6f7f8");
 }
 
 - (void)addAutoLayout
 {
     self.tableView.sd_layout
     .spaceToSuperView(UIEdgeInsetsZero);
+}
+
+- (void)loadData
+{
+    __weak typeof(self) weakSelf = self;
+    [SHGBusinessManager gradebusiness:@{@"businessId":self.object.businessID, @"type":self.object.type} block:^(NSArray *dataArray) {
+        weakSelf.dataArray = [NSArray arrayWithArray:dataArray];
+        [weakSelf.tableView reloadData];
+    }];
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return self.dataArray.count;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    SHGBusinessObject *object = [self.dataArray objectAtIndex:indexPath.row];
+    return [tableView cellHeightForIndexPath:indexPath model:object keyPath:@"object" cellClass:[SHGBusinessRecommendTableViewCell class] contentViewWidth:SCREENWIDTH];
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    SHGBusinessRecommendTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SHGBusinessRecommendTableViewCell"];
+    if (!cell) {
+        cell = [[[NSBundle mainBundle] loadNibNamed:@"SHGBusinessRecommendTableViewCell" owner:self options:nil] lastObject];
+    }
+    SHGBusinessObject *object = [self.dataArray objectAtIndex:indexPath.row];
+    cell.object = object;
+    return cell;
 }
 
 - (void)didReceiveMemoryWarning
@@ -76,6 +111,7 @@
     self.spliteLine.backgroundColor = Color(@"e5e5e5");
     self.typeImageView.contentMode = UIViewContentModeScaleAspectFit;
     self.typeLine.backgroundColor = Color(@"e5e5e5");
+    self.accessoryImageView.image = [UIImage imageNamed:@"business_type_accessory"];
     self.titleLabel.textColor = Color(@"3e3e3e");
     self.titleLabel.font = FontFactor(17.0f);
     self.firstLabel.textColor = self.secondLabel.textColor = self.thirdLabel.textColor = self.fourthLabel.textColor = Color(@"b8b8b8");
@@ -133,13 +169,13 @@
     .topEqualToView(self.firstLabel)
     .heightIs(self.secondLabel.font.lineHeight);
     [self.secondLabel setSingleLineAutoResizeWithMaxWidth:SCREENWIDTH];
-    
+
     self.thirdLabel.sd_layout
     .leftEqualToView(self.titleLabel)
     .topSpaceToView(self.firstLabel, MarginFactor(16.0f))
     .heightIs(self.thirdLabel.font.lineHeight);
     [self.thirdLabel setSingleLineAutoResizeWithMaxWidth:SCREENWIDTH];
-    
+
     self.fourthLabel.sd_layout
     .leftEqualToView(self.secondLabel)
     .topEqualToView(self.thirdLabel)
@@ -158,12 +194,22 @@
 - (void)setObject:(SHGBusinessObject *)object
 {
     _object = object;
+    self.titleLabel.text = object.title;
+    NSString *firstText = [[SHGGloble sharedGloble] businessKeysForValues:object.businessShow showEmptyKeys:NO];
+    NSArray *array = [firstText componentsSeparatedByString:@"，"];
+    if (array.count > 1) {
+        firstText = [[array firstObject] stringByAppendingString:@"..."];
+    }
+    self.firstLabel.text = firstText;
+    self.secondLabel.text = [[SHGGloble sharedGloble] businessKeysForValues:object.investAmount showEmptyKeys:NO];
+//    self.thirdLabel.text = [@"地区：" stringByAppendingString:[object.area isEqualToString:@""] ? @"全国" : object.area];
+//    self.fourthLabel.text = [@"时间：" stringByAppendingString:object.createTime];
 
-    self.typeImageView.sd_resetLayout
-    .leftSpaceToView(self.contentView, 0.0f)
-    .topSpaceToView(self.spliteLine, 0.0f)
-    .widthIs(0.0f)
-    .heightIs(0.0f);
+    //    self.typeImageView.sd_resetLayout
+    //    .leftSpaceToView(self.contentView, 0.0f)
+    //    .topSpaceToView(self.spliteLine, 0.0f)
+    //    .widthIs(self.typeImageView.image.size.width)
+    //    .heightIs(self.typeImageView.image.size.height);
 }
 
 

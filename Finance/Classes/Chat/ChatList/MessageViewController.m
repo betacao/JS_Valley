@@ -12,6 +12,7 @@
 #import "LinkViewController.h"
 #import "SHGBusinessObject.h"
 #import "SHGBusinessNewDetailViewController.h"
+#import "SHGBusinessRecommendViewController.h"
 
 @interface MessageViewController ()
 {
@@ -48,18 +49,15 @@
 -(void)requestDataWithTarget:(NSString *)target time:(NSString *)time
 {
     [Hud showWait];
-    NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
-    
-    NSDictionary *param;
+    NSDictionary *param = nil;
     if([@"-1" isEqualToString:time]){
-        param= @{@"uid":uid, @"target":target, @"num":rRequestNum};
+        param= @{@"uid":UID, @"target":target, @"num":rRequestNum};
     } else{
-        param= @{@"uid":uid, @"target":target, @"time":time, @"num":rRequestNum};
+        param= @{@"uid":UID, @"target":target, @"time":time, @"num":rRequestNum};
     }
 
     [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttpUser,@"notice"] class:[MessageObj class] parameters:param success:^(MOCHTTPResponse *response) {
         [Hud hideHud];
-        NSLog(@"=data = %@",response.dataArray);
         if ([target isEqualToString:@"first"]){
             [self.dataArr removeAllObjects];
             [self.dataArr addObjectsFromArray:response.dataArray];
@@ -77,18 +75,18 @@
         if ([target isEqualToString:@"load"]) {
             [self.dataArr addObjectsFromArray:response.dataArray];
         }
-        
+
         if (IsArrEmpty(response.dataArray)){
             hasDataFinished = YES;
         } else{
             hasDataFinished = NO;
         }
-        
+
         [self.tableView.mj_header endRefreshing];
         [self.tableView.mj_footer endRefreshing];
         self.tableView.mj_footer.hidden = NO;
         [self.tableView reloadData];
-        
+
     } failed:^(MOCHTTPResponse *response) {
         self.tableView.mj_footer.hidden = NO;
         [Hud showMessageWithText:response.errorMessage];
@@ -97,7 +95,7 @@
         [self performSelector:@selector(endrefresh) withObject:nil afterDelay:0.5];
         [Hud hideHud];
 
-        
+
     }];
 }
 
@@ -148,7 +146,7 @@
     MessageObj *obj = self.dataArr[indexPath.row];
     CGFloat height = [tableView cellHeightForIndexPath:indexPath model:obj keyPath:@"object" cellClass:[MessageTableViewCell class] contentViewWidth:SCREENWIDTH];
     return  height;
-    
+
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -177,7 +175,7 @@
     if ([obj.code isEqualToString:@"1001"])
     {
         //进入通知
-        
+
     } else if ([obj.code isEqualToString:@"1004"]){
         //进入关注人个人主页
         //进入帖子详情
@@ -185,7 +183,7 @@
         SHGPersonalViewController *controller = [[SHGPersonalViewController alloc] initWithNibName:@"SHGPersonalViewController" bundle:nil];
         controller.userId = obj.oid;
         [self.navigationController pushViewController:controller animated:YES];
-        
+
     } else if ([obj.code isEqualToString:@"1005"] || [obj.code isEqualToString:@"1006"]){
         //进入认证页面
         SHGAuthenticationViewController *controller = [[SHGAuthenticationViewController alloc] init];
@@ -214,17 +212,27 @@
         object.type = businessType;
         controller.object = object;
         [self.navigationController pushViewController:controller animated:YES];
-    }  else{
+    } else if ([obj.code isEqualToString:@"1016"]){
+        //新版业务的推送
+        NSString *businessId = obj.oid;
+        NSString *businessType = obj.unionID;
+        SHGBusinessRecommendViewController *controller = [[SHGBusinessRecommendViewController alloc] init];
+        SHGBusinessObject *object = [[SHGBusinessObject alloc] init];
+        object.businessID = businessId;
+        object.type = businessType;
+        controller.object = object;
+        [self.navigationController pushViewController:controller animated:YES];
+    } else{
         //进入帖子详情
         CircleDetailViewController *vc = [[CircleDetailViewController alloc] initWithNibName:@"CircleDetailViewController" bundle:nil];
         MessageObj *obj = self.dataArr[indexPath.row];
         vc.rid = obj.oid;
         [self.navigationController pushViewController:vc animated:YES];
     }
-                                                     
+
     NSLog(@"You Click At Section: %ld Row: %ld",(long)indexPath.section,(long)indexPath.row);
-    
-    
+
+
 }
 
 - (void)didReceiveMemoryWarning {

@@ -74,8 +74,8 @@
         [Hud showMessageWithText:@"发布业务失败"];
     }];
 }
-//判断当日发布业务次数是否达到上限
 
+//判断当日发布业务次数是否达到上限
 + (void)createBusinessNum:(void(^)(BOOL,NSString *allowCreate))block
 {
     NSString *request = [rBaseAddressForHttp stringByAppendingString:@"/business/beforeCreateBusiness"];
@@ -387,23 +387,19 @@
     }
     
     id<ISSShareActionSheetItem> item0 = [ShareSDK shareActionSheetItemWithTitle:@"微信" icon:[UIImage imageNamed:@"sns_icon_22"] clickHandler:^{
-        //[[SHGGloble sharedGloble] recordUserAction:object.businessID type:@"dynamic_shareMicroFriend"];
         [[AppDelegate currentAppdelegate] shareActionToWeChat:0 content:postContent title:theme url:request];
     }];
     id<ISSShareActionSheetItem> item1 = [ShareSDK shareActionSheetItemWithTitle:@"朋友圈" icon:[UIImage imageNamed:@"sns_icon_23"] clickHandler:^{
-        //[[SHGGloble sharedGloble] recordUserAction:object.businessID type:@"dynamic_shareMicroCircle"];
         [[AppDelegate currentAppdelegate] shareActionToWeChat:1 content:postContent title:theme url:request];
     }];
     id<ISSShareActionSheetItem> item2 = [ShareSDK shareActionSheetItemWithTitle:@"短信" icon:[UIImage imageNamed:@"sns_icon_19"] clickHandler:^{
         [[AppDelegate currentAppdelegate] shareActionToSMS:messageContent];
     }];
     id<ISSShareActionSheetItem> item3 = [ShareSDK shareActionSheetItemWithTitle:@"圈内好友" icon:[UIImage imageNamed:@"圈内好友图标"] clickHandler:^{
-        //[[SHGGloble sharedGloble] recordUserAction:object.businessID type:@"dynamic_shareSystemUser"];
         [self shareToFriendController:controller content:friendContent];
     }];
     
     id<ISSShareActionSheetItem> item4 = [ShareSDK shareActionSheetItemWithTitle:@"动态" icon:[UIImage imageNamed:@"圈子图标"] clickHandler:^{
-        //[[SHGGloble sharedGloble] recordUserAction:object.businessID type:@"dynamic_shareDynamic"];
         [self businessShareToDynamicController:controller object:object];
     }];
     NSArray *shareArray = nil;
@@ -482,6 +478,17 @@
         [Hud showMessageWithText:@"刷新成功"];
     } failed:^(MOCHTTPResponse *response) {
         [Hud showMessageWithText:@"刷新失败"];
+    }];
+}
+
++ (void)gradebusiness:(NSDictionary *)param block:(void (^)(NSArray *))block
+{
+    [MOCHTTPRequestOperationManager postWithURL:[rBaseAddressForHttp stringByAppendingString:@"/business/gradebusiness"] parameters:param success:^(MOCHTTPResponse *response) {
+        NSArray *array = [[SHGGloble sharedGloble] parseServerJsonArrayToJSONModel:[response.dataDictionary objectForKey:@"businesslist"] class:[SHGBusinessObject class]];
+        if (block) {
+            block(array);
+        }
+    } failed:^(MOCHTTPResponse *response) {
     }];
 }
 

@@ -101,7 +101,7 @@
 {
     [super viewWillAppear:animated];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardDidShow:) name:UIKeyboardDidShowNotification object:nil];
-    
+
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -123,154 +123,154 @@
 {
     UIImage *image = [UIImage imageNamed:@"biXuan"];
     CGSize size = image.size;
-    
+
     self.scrollView.sd_layout
     .topSpaceToView(self.view, 0.0f)
     .leftSpaceToView(self.view, 0.0f)
     .rightSpaceToView(self.view, 0.0f)
     .bottomSpaceToView(self.view, MarginFactor(50.0f));
-    
+
     self.sureButton.sd_layout
     .leftSpaceToView(self.view, 0.0f)
     .rightSpaceToView(self.view, 0.0f)
     .bottomSpaceToView(self.view, 0.0f)
     .heightIs(MarginFactor(50.0f));
-    
+
     //增信要求
     self.addRequireView.sd_layout
     .topSpaceToView(self.scrollView, 0.0f)
     .leftSpaceToView(self.scrollView, 0.0f)
     .rightSpaceToView(self.scrollView, 0.0f);
-    
+
     self.addRequireTitleLabel.sd_layout
     .topSpaceToView(self.addRequireView, ktopToView)
     .leftSpaceToView(self.addRequireView, kLeftToView)
     .heightIs(ceilf(self.addRequireTitleLabel.font.lineHeight));
     [self.addRequireTitleLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
-    
+
     self.addRequireImage.sd_layout
     .leftSpaceToView(self.addRequireTitleLabel, kLeftToView)
     .centerYEqualToView(self.addRequireTitleLabel)
     .widthIs(size.width)
     .heightIs(size.height);
-    
+
     self.addRequireButtonView.sd_layout
     .leftSpaceToView(self.addRequireView, 0.0f)
     .rightSpaceToView(self.addRequireView, 0.0f)
     .topSpaceToView(self.addRequireTitleLabel, ktopToView)
     .heightIs(MarginFactor(36.0f));
-    
+
     [self.addRequireView setupAutoHeightWithBottomView:self.addRequireButtonView bottomMargin:ktopToView];
     //最低回报要求
     self.retributionView.sd_layout
     .topSpaceToView(self.addRequireView, kLeftToView)
     .leftSpaceToView(self.scrollView, 0.0f)
     .rightSpaceToView(self.scrollView, 0.0f);
-    
+
     self.retributionTitleLabel.sd_layout
     .topSpaceToView(self.retributionView, ktopToView)
     .leftSpaceToView(self.retributionView, kLeftToView)
     .heightIs(ceilf(self.retributionTitleLabel.font.lineHeight));
     [self.retributionTitleLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
-    
+
     self.retributionTextField.sd_layout
     .leftEqualToView(self.retributionTitleLabel)
     .topSpaceToView(self.retributionTitleLabel, ktopToView)
     .widthIs(MarginFactor(212.0f))
     .heightIs(kButtonHeight);
-    
+
     self.retributionNumLabel.sd_layout
     .leftSpaceToView(self.retributionTextField, kLeftToView)
     .centerYEqualToView(self.retributionTextField)
     .heightIs(ceilf(self.retributionNumLabel.font.lineHeight));
     [self.retributionNumLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
-    
+
     [self.retributionView setupAutoHeightWithBottomView:self.retributionTextField bottomMargin:ktopToView];
-    
+
     //最短退出年限
     self.investTimeView.sd_layout
     .topSpaceToView(self.retributionView, kLeftToView)
     .leftSpaceToView(self.scrollView, 0.0f)
     .rightSpaceToView(self.scrollView, 0.0f);
-    
+
     self.investTimeTitleLabel.sd_layout
     .topSpaceToView(self.investTimeView, ktopToView)
     .leftSpaceToView(self.investTimeView, kLeftToView)
     .heightIs(ceilf(self.investTimeTitleLabel.font.lineHeight));
     [self.investTimeTitleLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
-    
+
     self.investTimeSelectImage.sd_layout
     .leftSpaceToView(self.investTimeTitleLabel, kLeftToView)
     .centerYEqualToView(self.investTimeTitleLabel)
     .widthIs(size.width)
     .heightIs(size.height);
-    
+
     self.investTimeButtonView.sd_layout
     .leftSpaceToView(self.investTimeView, 0.0f)
     .rightSpaceToView(self.investTimeView, 0.0f)
     .topSpaceToView(self.investTimeTitleLabel, ktopToView)
     .heightIs(kButtonHeight);
-    
+
     [self.investTimeView setupAutoHeightWithBottomView:self.investTimeButtonView bottomMargin:ktopToView];
     //业务说明
-    
+
     self.marketExplainView.sd_layout
     .topSpaceToView(self.investTimeView, kLeftToView)
     .leftSpaceToView(self.scrollView, 0.0f)
     .rightSpaceToView(self.scrollView, 0.0f);
-    
+
     self.marketExplainTitleLabel.sd_layout
     .topSpaceToView(self.marketExplainView, ktopToView)
     .leftSpaceToView(self.marketExplainView, kLeftToView)
     .heightIs(ceilf(self.marketExplainTitleLabel.font.lineHeight));
     [self.marketExplainTitleLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
-    
+
     self.marketExplainSelectImage.sd_layout
     .leftSpaceToView(self.marketExplainTitleLabel, kLeftToView)
     .centerYEqualToView(self.marketExplainTitleLabel)
     .widthIs(size.width)
     .heightIs(size.height);
-    
+
     self.marketExplainTextView.sd_layout
     .leftEqualToView(self.marketExplainTitleLabel)
     .topSpaceToView(self.marketExplainTitleLabel,ktopToView)
     .rightSpaceToView(self.marketExplainView, kLeftToView)
     .heightIs(MarginFactor(144.0f));
-    
+
     [self.marketExplainView setupAutoHeightWithBottomView:self.marketExplainTextView bottomMargin:ktopToView];
     //添加图片
     UIImage *addImage = [UIImage imageNamed:@"circle_plus"];
     CGSize addSize = addImage.size;
-    
+
     self.addImageView.sd_layout
     .topSpaceToView(self.marketExplainView, kLeftToView)
     .leftSpaceToView(self.scrollView, 0.0f)
     .rightSpaceToView(self.scrollView, 0.0f);
-    
+
     self.addImageTitleLabel.sd_layout
     .topSpaceToView(self.addImageView, ktopToView)
     .leftSpaceToView(self.addImageView, kLeftToView)
     .heightIs(ceilf(self.addImageTitleLabel.font.lineHeight));
     [self.addImageTitleLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
-    
+
     self.addImageButton.sd_layout
     .leftEqualToView(self.addImageTitleLabel)
     .topSpaceToView(self.addImageTitleLabel, ktopToView)
     .widthIs(addSize.width)
     .heightIs(addSize.height);
-    
+
     [self.addImageView setupAutoHeightWithBottomView:self.addImageButton bottomMargin:ktopToView];
-    
+
     self.authorizeButton.sd_layout
     .topSpaceToView(self.addImageView, MarginFactor(20.0f))
     .leftSpaceToView(self.scrollView, kLeftToView)
     .rightSpaceToView(self.scrollView, kLeftToView)
     .heightRatioToView(self.addImageTitleLabel, 1.0f);
-    
+
     [self.scrollView setupAutoHeightWithBottomView:self.authorizeButton bottomMargin:MarginFactor(20.0f)];
-    
-    
-    
+
+
+
 }
 
 - (void)editObject
@@ -283,40 +283,40 @@
         } else{
             self.authorizeButton.selected = NO;
         }
-        
+
         if (self.obj.url && self.obj.url.length > 0) {
             self.hasImage = YES;
             __weak typeof(self) weakSelf = self;
             [[SDWebImageManager sharedManager] downloadImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,self.obj.url]] options:SDWebImageRetryFailed|SDWebImageLowPriority progress:^(NSInteger receivedSize, NSInteger expectedSize) {
-                
+
             } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
                 [weakSelf.addImageButton setImage:image forState:UIControlStateNormal];
             }];
         }
-        
+
         NSString *result = [[SHGGloble sharedGloble] businessKeysForValues:self.obj.middleContent showEmptyKeys:YES];
         NSArray *nameArray = @[@"增信方式",@"可承担最高利息",@"期限"];
         NSArray *resultArray = [result componentsSeparatedByString:@"\n"];
         NSMutableArray * array = [[SHGGloble sharedGloble] editBusinessKeysForValues:nameArray middleContentArray:resultArray];
         NSLog(@"%@", array);
-        
-        
+
+
         //投资期限
         NSString *investTime = [array objectAtIndex:2];
-        
+
         for (NSInteger i = 0; i < self.investTimeButtonView.buttonArray.count; i ++) {
             UIButton *button = [self.investTimeButtonView.buttonArray objectAtIndex:i];
-            
+
             if ([button.titleLabel.text isEqualToString:investTime]) {
                 button.selected = YES;
             }
-            
+
         }
-        
+
         //可承担最高利息
         NSString *number = [array objectAtIndex:1];
         self.retributionTextField.text = [[number componentsSeparatedByString:@"%"] firstObject];
-        
+
         //增信方式
         NSString *addRequire = [array objectAtIndex:0];
         NSArray *addRequireArray = [addRequire componentsSeparatedByString:@"，"];
@@ -328,10 +328,10 @@
                 }
             }
 
-            
+
         }
-        
-        
+
+
     }
 
 }
@@ -341,22 +341,22 @@
     self.sureButton.titleLabel.font = FontFactor(19.0f);
     [self.sureButton setTitleColor:Color(@"ffffff") forState:UIControlStateNormal];
     [self.sureButton setBackgroundColor:Color(@"f04241")];
-    
+
     self.addRequireTitleLabel.textColor = Color(@"161616");
     self.addRequireTitleLabel.font = FontFactor(13.0f);
-    
+
     self.investTimeTitleLabel.textColor = Color(@"161616");
     self.investTimeTitleLabel.font = FontFactor(13.0f);
-    
+
     self.retributionTitleLabel.textColor = Color(@"161616");
     self.retributionTitleLabel.font = FontFactor(13.0f);
-    
+
     self.marketExplainTitleLabel.textColor = Color(@"161616");
     self.marketExplainTitleLabel.font = FontFactor(13.0f);
-    
+
     self.addImageTitleLabel.textColor = Color(@"161616");
     self.addImageTitleLabel.font = FontFactor(13.0f);
-    
+
     self.retributionNumLabel.font = FontFactor(15.0f);
     self.retributionNumLabel.textColor = Color(@"161616");
     CGFloat scale = [[UIScreen mainScreen] scale];
@@ -366,7 +366,7 @@
     self.retributionTextField.leftView = [[UIView alloc]initWithFrame:CGRectMake(0.0f, 0.0f, 6.0f, 0.0f)];
     self.retributionTextField.leftViewMode = UITextFieldViewModeAlways;
     [self.retributionTextField setValue:[UIColor colorWithHexString:@"bebebe"] forKeyPath:@"_placeholderLabel.textColor"];
-    
+
     NSArray *investTimeArray = @[@"1年以内",@"1-3年",@"3年以上"];
     for (NSInteger i = 0; i < investTimeArray.count; i ++) {
         UIButton * button = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -382,7 +382,7 @@
         [button addTarget:self action:@selector(investTimeButtonClick:) forControlEvents:UIControlEventTouchUpInside];
         [self.investTimeButtonView addSubview:button];
     }
-    
+
     NSArray *addRequireArray = @[@"抵押",@"质押",@"保证",@"信用"];
     for (NSInteger j = 0; j < addRequireArray.count; j ++) {
         UIButton * button = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -422,7 +422,7 @@
 {
     SHGBusinessButtonContentView *superView = (SHGBusinessButtonContentView *)btn.superview;
     [superView didClickButton:btn];
-    
+
 }
 
 - (IBAction)authorizeButtonClick:(UIButton *)sender
@@ -445,9 +445,9 @@
                             require = [NSString stringWithFormat:@"%@;%@",require,[businessSelectDic objectForKey:[weakSelf.addRequireButtonView.selectedArray objectAtIndex:i]]];
                         }
                         NSString *investTime = [businessSelectDic objectForKey:[weakSelf.investTimeButtonView.selectedArray objectAtIndex:0]];
-                        
+
                         NSString *anonymous = weakSelf.authorizeButton.isSelected ? @"1" : @"0";
-                        
+
                         NSString *type = [businessDic objectForKey:@"type"];
                         NSString *contact = [businessDic objectForKey:@"contact"];
                         NSString *bondType = [businessDic objectForKey:@"bondType"];
@@ -470,31 +470,31 @@
                             }
                         }];
                     }
-                    break;
-                    
-                case SHGBondFinaceSendTypeReSet:{
-                    NSLog(@"%@,%@",businessDic,businessSelectDic);
-                    NSString *require= [businessSelectDic objectForKey:[weakSelf.addRequireButtonView.selectedArray objectAtIndex:0]];
-                    for (NSInteger i = 1; i < weakSelf.addRequireButtonView.selectedArray.count; i ++ ) {
-                        require = [NSString stringWithFormat:@"%@;%@",require,[businessSelectDic objectForKey:[weakSelf.addRequireButtonView.selectedArray objectAtIndex:i]]];
-                    }
-                    NSString *investTime = [businessSelectDic objectForKey:[weakSelf.investTimeButtonView.selectedArray objectAtIndex:0]];
-                    
-                    NSString *anonymous = weakSelf.authorizeButton.isSelected ? @"1" : @"0";
-                    NSString *businessId = weakSelf.obj.businessID;
-                    NSString *type = [businessDic objectForKey:@"type"];
-                    NSString *contact = [businessDic objectForKey:@"contact"];
-                    NSString *bondType = [businessDic objectForKey:@"bondType"];
-                    NSString *investAmount = [businessDic objectForKey:@"investAmount"];
-                    NSLog(@"%@,%@,%@,%@",businessId,type,bondType,contact);
-                    NSString *area = [businessDic objectForKey:@"area"];
-                    NSString *industry = [businessDic objectForKey:@"industry"];
-                    NSString *title = [businessDic objectForKey:@"title"];
-                    SHGBusinessObject *object = [[SHGBusinessObject alloc]init];
-                    object.type =type;
-                    NSLog(@"%@,%@,%@",area,industry,title);
-                    NSLog(@"%@,%@,%@,%@,%@,%@",require,weakSelf.imageName,investTime,investAmount,anonymous,weakSelf.marketExplainTextView.text);
-                    NSDictionary *param = @{@"uid":UID,@"businessId":businessId, @"type": type, @"contact":contact, @"bondType":bondType, @"investAmount": investAmount, @"area": area, @"industry": industry,@"clarifyingWay":require, @"highestRate":weakSelf.retributionTextField.text, @"fundUsetime":investTime ,@"detail": weakSelf.marketExplainTextView.text,@"photo": weakSelf.imageName,@"anonymous": anonymous,@"title": title, @"version":[SHGGloble sharedGloble].currentVersion};
+                        break;
+
+                    case SHGBondFinaceSendTypeReSet:{
+                        NSLog(@"%@,%@",businessDic,businessSelectDic);
+                        NSString *require= [businessSelectDic objectForKey:[weakSelf.addRequireButtonView.selectedArray objectAtIndex:0]];
+                        for (NSInteger i = 1; i < weakSelf.addRequireButtonView.selectedArray.count; i ++ ) {
+                            require = [NSString stringWithFormat:@"%@;%@",require,[businessSelectDic objectForKey:[weakSelf.addRequireButtonView.selectedArray objectAtIndex:i]]];
+                        }
+                        NSString *investTime = [businessSelectDic objectForKey:[weakSelf.investTimeButtonView.selectedArray objectAtIndex:0]];
+
+                        NSString *anonymous = weakSelf.authorizeButton.isSelected ? @"1" : @"0";
+                        NSString *businessId = weakSelf.obj.businessID;
+                        NSString *type = [businessDic objectForKey:@"type"];
+                        NSString *contact = [businessDic objectForKey:@"contact"];
+                        NSString *bondType = [businessDic objectForKey:@"bondType"];
+                        NSString *investAmount = [businessDic objectForKey:@"investAmount"];
+                        NSLog(@"%@,%@,%@,%@",businessId,type,bondType,contact);
+                        NSString *area = [businessDic objectForKey:@"area"];
+                        NSString *industry = [businessDic objectForKey:@"industry"];
+                        NSString *title = [businessDic objectForKey:@"title"];
+                        SHGBusinessObject *object = [[SHGBusinessObject alloc]init];
+                        object.type =type;
+                        NSLog(@"%@,%@,%@",area,industry,title);
+                        NSLog(@"%@,%@,%@,%@,%@,%@",require,weakSelf.imageName,investTime,investAmount,anonymous,weakSelf.marketExplainTextView.text);
+                        NSDictionary *param = @{@"uid":UID,@"businessId":businessId, @"type": type, @"contact":contact, @"bondType":bondType, @"investAmount": investAmount, @"area": area, @"industry": industry,@"clarifyingWay":require, @"highestRate":weakSelf.retributionTextField.text, @"fundUsetime":investTime ,@"detail": weakSelf.marketExplainTextView.text,@"photo": weakSelf.imageName,@"anonymous": anonymous,@"title": title, @"version":[SHGGloble sharedGloble].currentVersion};
 
                         [SHGBusinessManager editBusiness:param success:^(BOOL success) {
                             if (success) {
@@ -507,26 +507,26 @@
                                     }
                                     if ([viewController isKindOfClass:[SHGBusinessMineViewController class]]){
                                         [(SHGBusinessMineViewController *)viewController didCreateOrModifyBusiness];
-                                        
+
                                     }
-                                    
+
                                 }
                             }
                         }];
+                    }
+
+                        break;
+                    default:
+                        break;
                 }
-                    
-                    break;
-                default:
-                    break;
-                }
-                
+
             }
         }];
-        
-        
+
+
     }
-    
-    
+
+
 }
 
 - (void)uploadImage:(void(^)(BOOL success))block
@@ -538,7 +538,7 @@
             NSData *imageData = UIImageJPEGRepresentation(self.addImageButton.imageView.image, 0.1);
             [formData appendPartWithFileData:imageData name:@"market.jpg" fileName:@"market.jpg" mimeType:@"image/jpeg"];
         } progress:^(NSProgress * _Nonnull uploadProgress) {
-            
+
         } success:^(NSURLSessionDataTask *operation, id responseObject) {
             NSLog(@"%@",responseObject);
             [Hud hideHud];
@@ -554,7 +554,7 @@
         self.imageName = @"";
         block(YES);
     }
-    
+
 }
 
 - (BOOL)checkInputMessage
@@ -563,7 +563,7 @@
         [Hud showMessageWithText:@"请选择增信方式"];
         return NO;
     }
-    
+
     if ([self.retributionTextField.text floatValue] > 100.0f) {
         [Hud showMessageWithText:@"抱歉，您输入的数字不可超过100"];
         return NO;
@@ -648,7 +648,7 @@
             return NO;
         }
     }
-    
+
     return YES;
 }
 
@@ -683,7 +683,7 @@
     point.y = MAX(0.0f, keyboardSize.height + point.y - CGRectGetHeight(self.view.frame));
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.scrollView setContentOffset:point animated:YES];
-
+        
     });
 }
 

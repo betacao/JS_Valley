@@ -52,4 +52,5 @@
 
 + (void)refreshBusiness:(SHGBusinessObject *)object success:(void (^)(BOOL success))block;
 
++ (void)gradebusiness:(NSDictionary *)param block:(void (^)(NSArray *dataArray))block;
 @end

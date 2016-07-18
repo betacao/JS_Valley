@@ -11,6 +11,8 @@
 
 @interface SHGBusinessRecommendViewController : BaseViewController
 
+@property (strong, nonatomic) SHGBusinessObject *object;
+
 @end
 
 
