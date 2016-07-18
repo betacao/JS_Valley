@@ -497,7 +497,7 @@
         [self pushIntoViewController:TopVC newViewController:controller];
     } else if ([ridCode isEqualToString:@"1015"]){
         NSString *businessId = [userInfo objectForKey:@"rid"];
-        NSString *type = [userInfo objectForKey:@"unionid"];
+        NSString *type = [userInfo objectForKey:@"businessType"];
         SHGBusinessObject *object = [[SHGBusinessObject alloc] init];
         object.businessID = businessId;
         object.type = type;
@@ -507,7 +507,7 @@
     } else if ([ridCode isEqualToString:@"1016"]){
         //优质业务的推送
         NSString *businessId = [userInfo objectForKey:@"rid"];
-        NSString *businessType = [userInfo objectForKey:@"unionid"];
+        NSString *businessType = [userInfo objectForKey:@"businessType"];
         NSString *time = [userInfo objectForKey:@"time"];
         SHGBusinessRecommendViewController *controller = [[SHGBusinessRecommendViewController alloc] init];
         SHGBusinessObject *object = [[SHGBusinessObject alloc] init];
