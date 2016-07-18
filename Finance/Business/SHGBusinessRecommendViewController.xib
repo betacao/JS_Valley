@@ -7,7 +7,10 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SHGBusinessRecommendViewController">
             <connections>
+                <outlet property="footerView" destination="bOJ-U8-Zih" id="wqg-gh-KpL"/>
+                <outlet property="spliteView" destination="GrY-3V-GiE" id="hup-tJ-00I"/>
                 <outlet property="tableView" destination="5iz-57-Lz9" id="RUA-qj-tPE"/>
+                <outlet property="timeLabel" destination="cFr-Vi-itK" id="WTH-e2-nre"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -28,6 +31,25 @@
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <point key="canvasLocation" x="-21" y="338"/>
+        </view>
+        <view contentMode="scaleToFill" id="bOJ-U8-Zih">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" id="GrY-3V-GiE">
+                    <rect key="frame" x="40" y="220" width="240" height="128"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </view>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="cFr-Vi-itK">
+                    <rect key="frame" x="111" y="171" width="42" height="21"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
         </view>
     </objects>
 </document>

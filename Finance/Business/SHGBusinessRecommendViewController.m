@@ -12,6 +12,11 @@
 @interface SHGBusinessRecommendViewController ()<UITableViewDelegate, UITableViewDataSource>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+
+@property (strong, nonatomic) IBOutlet UIView *footerView;
+@property (weak, nonatomic) IBOutlet UIView *spliteView;
+@property (weak, nonatomic) IBOutlet UILabel *timeLabel;
+
 @property (strong, nonatomic) NSArray *dataArray;
 
 @end
@@ -22,22 +27,42 @@
 {
     [super viewDidLoad];
     self.title = @"今日优质业务";
-    [self addAutoLayout];
     [self initView];
+    [self addAutoLayout];
     [self loadData];
 }
 
 - (void)initView
 {
-    self.tableView.backgroundColor = Color(@"f6f7f8");
-
+    self.timeLabel.font = FontFactor(12.0f);
+    self.timeLabel.textColor = Color(@"d4d4d4");
+    self.tableView.backgroundColor = self.spliteView.backgroundColor = self.footerView.backgroundColor = Color(@"f6f7f8");
 }
 
 - (void)addAutoLayout
 {
     self.tableView.sd_layout
     .spaceToSuperView(UIEdgeInsetsZero);
-    
+
+    self.spliteView.sd_layout
+    .leftSpaceToView(self.footerView, 0.0f)
+    .rightSpaceToView(self.footerView, 0.0f)
+    .topSpaceToView(self.footerView, 0.0f)
+    .heightIs(MarginFactor(25.0f));
+
+    self.timeLabel.sd_layout
+    .rightSpaceToView(self.footerView, MarginFactor(16.0f))
+    .topSpaceToView(self.spliteView, 0.0f)
+    .heightIs(self.timeLabel.font.lineHeight);
+    [self.timeLabel setSingleLineAutoResizeWithMaxWidth:SCREENWIDTH  ];
+
+    [self.footerView setupAutoHeightWithBottomView:self.timeLabel bottomMargin:0.0f];
+
+    self.timeLabel.text = self.time;
+
+    self.tableView.tableFooterView = self.footerView;
+    [self.timeLabel updateLayout];
+    self.tableView.tableFooterView = self.footerView;
 }
 
 

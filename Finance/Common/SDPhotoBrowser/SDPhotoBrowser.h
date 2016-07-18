@@ -11,11 +11,9 @@
 
 @protocol SDPhotoBrowserDelegate <NSObject>
 
-@required
+@optional
 
 - (UIImage *)photoBrowser:(SDPhotoBrowser *)browser placeholderImageForIndex:(NSInteger)index;
-
-@optional
 
 - (NSURL *)photoBrowser:(SDPhotoBrowser *)browser highQualityImageURLForIndex:(NSInteger)index;
 
