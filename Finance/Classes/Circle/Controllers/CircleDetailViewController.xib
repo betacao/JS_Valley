@@ -178,9 +178,10 @@
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
                 <webView contentMode="scaleToFill" id="duR-by-bUo">
-                    <rect key="frame" x="40" y="61" width="240" height="100"/>
+                    <rect key="frame" x="40" y="61" width="240" height="1"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="deviceRGB"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <dataDetectorType key="dataDetectorTypes"/>
                     <connections>
                         <outlet property="delegate" destination="-1" id="oZd-uQ-msv"/>

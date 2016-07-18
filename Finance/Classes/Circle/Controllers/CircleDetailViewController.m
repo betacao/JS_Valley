@@ -104,7 +104,6 @@
 
 - (void)initView
 {
-    [self.webView.scrollView addObserver:self forKeyPath:@"contentSize" options:NSKeyValueObservingOptionNew context:nil];
     self.tableView.tableFooterView = [[UIView alloc] init];
     self.tableView.backgroundColor = [UIColor whiteColor];
 
@@ -271,11 +270,6 @@
     .widthIs(self.btnAttention.currentImage.size.width)
     .heightIs(self.btnAttention.currentImage.size.height);
 
-    self.webView.sd_layout
-    .topSpaceToView(self.personView, 0.0f)
-    .leftSpaceToView(self.tableHeaderView, kMainItemLeftMargin)
-    .rightSpaceToView(self.tableHeaderView, kMainItemLeftMargin);
-
     self.titleLabel.sd_layout
     .topSpaceToView(self.personView, 0.0f)
     .leftSpaceToView(self.tableHeaderView, kMainItemLeftMargin)
@@ -287,6 +281,11 @@
     .leftSpaceToView(self.tableHeaderView, kMainItemLeftMargin)
     .rightSpaceToView(self.tableHeaderView, kMainItemLeftMargin)
     .heightIs(0.0f);
+
+    self.webView.sd_layout
+    .topSpaceToView(self.titleLabel, 0.0f)
+    .leftSpaceToView(self.tableHeaderView, kMainItemLeftMargin)
+    .rightSpaceToView(self.tableHeaderView, kMainItemLeftMargin);
 
     self.photoView = [[UIView alloc] init];
     [self.tableHeaderView addSubview:self.photoView];
@@ -502,25 +501,24 @@
         [self.btnAttention setImage:[UIImage imageNamed:@"newAddAttention"] forState:UIControlStateNormal];
     }
 
+    NSString *title = [[SHGGloble sharedGloble] formatStringToHtml:self.responseObject.groupPostTitle];
+    self.titleLabel.text = title;
+    if (title.length > 0) {
+        self.titleLabel.sd_resetLayout
+        .topSpaceToView(self.personView, kMainContentTopMargin)
+        .leftSpaceToView(self.tableHeaderView, kMainItemLeftMargin)
+        .rightSpaceToView(self.tableHeaderView, kMainItemLeftMargin)
+        .heightIs([CTTextDisplayView getRowHeightWithText:title rectSize:CGSizeMake(SCREENWIDTH -  2 * kMainItemLeftMargin, CGFLOAT_MAX) styleModel:self.titleLabel.styleModel]);
+    }
+
     UIView *contentView = nil;
     if ([self.responseObject.postType isEqualToString:@"normalpc"]) {
         contentView = self.webView;
-        self.webView.hidden = NO;
-        self.titleLabel.hidden = self.lblContent.hidden = self.businessView.hidden = YES;
+        self.lblContent.hidden = self.businessView.hidden = YES;
         [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.responseObject.groupPostUrl]]];
     } else if ([self.responseObject.postType isEqualToString:@"business"]) {
         contentView = self.businessView;
-        self.businessView.hidden = NO;
         self.lblContent.hidden = self.webView.hidden = YES;
-        NSString *title = [[SHGGloble sharedGloble] formatStringToHtml:self.responseObject.groupPostTitle];
-        self.titleLabel.text = title;
-        if (title.length > 0) {
-            self.titleLabel.sd_resetLayout
-            .topSpaceToView(self.personView, kMainContentTopMargin)
-            .leftSpaceToView(self.tableHeaderView, kMainItemLeftMargin)
-            .rightSpaceToView(self.tableHeaderView, kMainItemLeftMargin)
-            .heightIs([CTTextDisplayView getRowHeightWithText:title rectSize:CGSizeMake(SCREENWIDTH -  2 * kMainItemLeftMargin, CGFLOAT_MAX) styleModel:self.titleLabel.styleModel]);
-        }
 
         NSString *businessID = self.responseObject.businessID;
         SHGBusinessObject *businessObject = [[SHGBusinessObject alloc] init];
@@ -541,15 +539,6 @@
     } else {
         contentView = self.lblContent;
         self.businessView.hidden = self.webView.hidden = YES;
-        NSString *title = [[SHGGloble sharedGloble] formatStringToHtml:self.responseObject.groupPostTitle];
-        self.titleLabel.text = title;
-        if (title.length > 0) {
-            self.titleLabel.sd_resetLayout
-            .topSpaceToView(self.personView, kMainContentTopMargin)
-            .leftSpaceToView(self.tableHeaderView, kMainItemLeftMargin)
-            .rightSpaceToView(self.tableHeaderView, kMainItemLeftMargin)
-            .heightIs([CTTextDisplayView getRowHeightWithText:title rectSize:CGSizeMake(SCREENWIDTH -  2 * kMainItemLeftMargin, CGFLOAT_MAX) styleModel:self.titleLabel.styleModel]);
-        }
 
         NSString *detail = [[SHGGloble sharedGloble] formatStringToHtml:self.responseObject.detail];
         self.lblContent.text = detail;
@@ -964,13 +953,7 @@
     [[SHGGloble sharedGloble] requestUserVerifyStatusCompletion:^(BOOL state,NSString *auditState) {
         if (state) {
             NSString *url = [NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttpCircle,@"circle",obj.rid];
-            NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
-            NSString *cityName = [SHGGloble sharedGloble].cityName;
-            if(!cityName){
-                cityName = @"";
-            }
-            NSDictionary *param = @{@"uid":uid,@"currCity":cityName};
-            [MOCHTTPRequestOperationManager postWithURL:url class:nil parameters:param success:^(MOCHTTPResponse *response) {
+            [MOCHTTPRequestOperationManager postWithURL:url class:nil parameters:@{@"uid":UID,@"currCity":[SHGGloble sharedGloble].cityName} success:^(MOCHTTPResponse *response) {
 
                 NSString *code = [response.data valueForKey:@"code"];
                 if ([code isEqualToString:@"000"]) {
@@ -989,7 +972,7 @@
             [[SHGGloble sharedGloble] recordUserAction:@"" type:@"dynamic_identity"];
         }
 
-
+        
     } showAlert:YES leftBlock:^{
         [[SHGGloble sharedGloble] recordUserAction:@"" type:@"dynamic_identity_cancel"];
     } failString:@"认证后才能发起分享哦～"];
@@ -1124,6 +1107,14 @@
     }
 }
 
+- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
+{
+    if (![request.URL.absoluteString isEqualToString:self.responseObject.groupPostUrl]) {
+        return NO;
+    }
+    return YES;
+}
+
 - (void)webViewDidStartLoad:(UIWebView *)webView
 {
     [Hud showWait];
@@ -1145,23 +1136,15 @@
         browser.delegate = weakSelf;
         [browser show];
     }];
-}
 
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context
-{
-    if ([keyPath isEqualToString:@"contentSize"]) {
-        CGFloat height = [[change objectForKey:@"new"] CGSizeValue].height;
-        if (height > 0 && height != CGRectGetHeight(self.webView.frame)) {
+    CGRect frame = webView.frame;
+    CGSize fittingSize = [webView sizeThatFits:CGSizeZero];
+    frame.size = fittingSize;
+    webView.frame = frame;
 
-            CGRect frame = self.webView.frame;
-            frame.size.height = height;
-            self.webView.frame = frame;
-
-            [self.tableHeaderView setNeedsLayout];
-            [self.tableHeaderView layoutIfNeeded];
-            self.tableView.tableHeaderView = self.tableHeaderView;
-        }
-    }
+    [self.tableHeaderView setNeedsLayout];
+    [self.tableHeaderView layoutIfNeeded];
+    self.tableView.tableHeaderView = self.tableHeaderView;
 }
 
 #pragma mark detailDelagte
@@ -1393,9 +1376,5 @@
     return [self.webPhotoArray objectAtIndex:index];
 }
 
-- (void)dealloc
-{
-    [self.webView.scrollView removeObserver:self forKeyPath:@"contentSize"];
-}
 
 @end
