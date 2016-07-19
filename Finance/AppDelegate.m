@@ -92,7 +92,12 @@
         [[NSUserDefaults standardUserDefaults] setObject:[formater stringFromDate:nowTime] forKey:@"LastLauncnTime"];
         [[NSUserDefaults standardUserDefaults] synchronize];
     }
-    
+
+
+    if ([[SHGGloble sharedGloble].platform compare:@"iPhone5,4" options:NSNumericSearch] == NSOrderedAscending) {
+        [SDImageCache sharedImageCache].shouldDecompressImages = NO;
+    }
+
     [MOCHTTPRequestOperationManager setupRequestOperationManager:resultcodekey successCode:successcode dataKey:datakey messageKey:messagekey];
     [self easemobApplication:application didFinishLaunchingWithOptions:launchOptions];
     [self setupShare];

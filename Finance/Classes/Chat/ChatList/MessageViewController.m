@@ -232,13 +232,12 @@
         //新版业务的推送
         NSString *businessId = obj.oid;
         NSString *businessType = obj.unionID;
-        NSString *time = obj.time;
         SHGBusinessRecommendViewController *controller = [[SHGBusinessRecommendViewController alloc] init];
         SHGBusinessObject *object = [[SHGBusinessObject alloc] init];
         object.businessID = businessId;
         object.type = businessType;
         controller.object = object;
-        controller.time = time;
+        controller.time = [[obj.time componentsSeparatedByString:@" "] firstObject];
         [self.navigationController pushViewController:controller animated:YES];
     } else if ([obj.code isEqualToString:@"1017"]){
         SHGBusinessMineViewController *controller = [[SHGBusinessMineViewController alloc] init];

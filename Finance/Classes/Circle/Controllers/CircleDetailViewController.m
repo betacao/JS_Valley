@@ -605,12 +605,12 @@
     [self.tableView reloadData];
 }
 
--(void)replyClick:(NSInteger )index
+- (void)replyClick:(NSInteger )index
 {
     [self replyClicked:self.responseObject commentIndex:index];
 }
 
--(void)sizeUIWithObj:(CircleListObj *)obj
+- (void)sizeUIWithObj:(CircleListObj *)obj
 {
     NSString *name = obj.nickname;
     if (obj.nickname.length > 4) {
@@ -1122,29 +1122,31 @@
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
-    [Hud hideHud];
-    __weak typeof(self) weakSelf = self;
-    [SHGGloble addHtmlListener:webView key:@"openImageBrowser" block:^{
-        NSArray *args = [JSContext currentArguments];
-        NSInteger index = 0;
-        index = [[args firstObject] toInt32];
-        weakSelf.webPhotoArray = [[args lastObject] toArray];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [Hud hideHud];
+        __weak typeof(self) weakSelf = self;
+        [SHGGloble addHtmlListener:webView key:@"openImageBrowser" block:^{
+            NSArray *args = [JSContext currentArguments];
+            NSInteger index = 0;
+            index = [[args firstObject] toInt32];
+            weakSelf.webPhotoArray = [[args lastObject] toArray];
 
-        SDPhotoBrowser *browser = [[SDPhotoBrowser alloc] initWithFrame:CGRectMake(0.0f, 0.0f, CGRectGetWidth([UIScreen mainScreen].bounds), CGRectGetHeight([UIScreen mainScreen].bounds))];
-        browser.imageCount = weakSelf.webPhotoArray.count;
-        browser.currentImageIndex = index;
-        browser.delegate = weakSelf;
-        [browser show];
-    }];
+            SDPhotoBrowser *browser = [[SDPhotoBrowser alloc] initWithFrame:CGRectMake(0.0f, 0.0f, CGRectGetWidth([UIScreen mainScreen].bounds), CGRectGetHeight([UIScreen mainScreen].bounds))];
+            browser.imageCount = weakSelf.webPhotoArray.count;
+            browser.currentImageIndex = index;
+            browser.delegate = weakSelf;
+            [browser show];
+        }];
 
-    CGRect frame = webView.frame;
-    CGSize fittingSize = [webView sizeThatFits:CGSizeZero];
-    frame.size = fittingSize;
-    webView.frame = frame;
+        CGRect frame = webView.frame;
+        CGSize fittingSize = [webView sizeThatFits:CGSizeZero];
+        frame.size = fittingSize;
+        webView.frame = frame;
 
-    [self.tableHeaderView setNeedsLayout];
-    [self.tableHeaderView layoutIfNeeded];
-    self.tableView.tableHeaderView = self.tableHeaderView;
+        [self.tableHeaderView setNeedsLayout];
+        [self.tableHeaderView layoutIfNeeded];
+        self.tableView.tableHeaderView = self.tableHeaderView;
+    });
 }
 
 #pragma mark detailDelagte
