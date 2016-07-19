@@ -465,7 +465,7 @@ static NSString * const kCommonFNum			= @"commonnum";
 {
     CGFloat height;
     if ([UID isEqualToString:@"-2"]) {
-        if (indexPath.row == 2) {
+        if (indexPath.row == 1) {
             height = 0.0f;
         } else{
             height = MarginFactor(55.0f);
