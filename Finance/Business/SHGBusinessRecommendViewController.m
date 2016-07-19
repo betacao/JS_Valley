@@ -182,20 +182,21 @@
     self.typeLine.sd_layout
     .leftSpaceToView(self.contentView, MarginFactor(16.0f))
     .rightSpaceToView(self.contentView, MarginFactor(16.0f))
-    .topSpaceToView(self.typeImageView, 0.0f)
+    .topSpaceToView(self.spliteLine, MarginFactor(42.0f))
     .heightIs(1 / SCALE);
 
-    self.accessoryImageView.sd_layout
-    .topSpaceToView(self.typeLine, MarginFactor(21.0f))
-    .rightEqualToView(self.typeLine)
-    .widthIs(self.accessoryImageView.image.size.width)
-    .heightIs(self.accessoryImageView.image.size.height);
 
     self.titleLabel.sd_layout
     .leftEqualToView(self.typeLine)
-    .centerYEqualToView(self.accessoryImageView)
+    .topSpaceToView(self.typeLine, MarginFactor(21.0f))
     .rightSpaceToView(self.contentView, MarginFactor(62.0f))
     .heightIs(self.titleLabel.font.lineHeight);
+    
+    self.accessoryImageView.sd_layout
+    .topEqualToView(self.titleLabel)
+    .rightEqualToView(self.typeLine)
+    .widthIs(self.accessoryImageView.image.size.width)
+    .heightIs(self.accessoryImageView.image.size.height);
 
     self.firstLabel.sd_layout
     .leftEqualToView(self.titleLabel)
@@ -206,14 +207,16 @@
     self.secondLabel.sd_layout
     .leftSpaceToView(self.contentView, MarginFactor(210.0f))
     .topEqualToView(self.firstLabel)
+    .rightEqualToView(self.accessoryImageView)
     .heightIs(self.secondLabel.font.lineHeight);
-    [self.secondLabel setSingleLineAutoResizeWithMaxWidth:SCREENWIDTH];
+    //[self.secondLabel setSingleLineAutoResizeWithMaxWidth:SCREENWIDTH];
 
     self.thirdLabel.sd_layout
     .leftEqualToView(self.titleLabel)
+    .rightEqualToView(self.accessoryImageView)
     .topSpaceToView(self.firstLabel, MarginFactor(16.0f))
-    .heightIs(self.thirdLabel.font.lineHeight);
-    [self.thirdLabel setSingleLineAutoResizeWithMaxWidth:SCREENWIDTH];
+    .autoHeightRatio(0.0f);
+   // [self.thirdLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
 
     self.fourthLabel.sd_layout
     .leftEqualToView(self.secondLabel)
@@ -233,31 +236,37 @@
 - (void)setObject:(SHGBusinessObject *)object
 {
     _object = object;
+    [self.thirdLabel sizeToFit];
     self.titleLabel.text = object.title;
+    object.investAmount = [object.investAmount stringByReplacingOccurrencesOfString:@":" withString:@"："];
     UIImage *image = nil;
     if ([object.type isEqualToString:@"bondfinancing"]) {
         //债权融资
         image = [UIImage imageNamed:@"bond_fanancing_type"];
         self.firstLabel.text = object.investAmount;
         self.secondLabel.text = [[SHGGloble sharedGloble] businessKeysForValues:object.clarifyingWay showEmptyKeys:NO];
-        self.thirdLabel.text = [[SHGGloble sharedGloble] businessKeysForValues:object.industry showEmptyKeys:NO];
+        NSString *string = [[SHGGloble sharedGloble] businessKeysForValues:object.industry showEmptyKeys:NO];
+        self.thirdLabel.text = [string substringToIndex:string.length - 1];
         self.fourthLabel.text = [[SHGGloble sharedGloble] businessKeysForValues:object.fundUsetime showEmptyKeys:NO];
     } else if ([object.type isEqualToString:@"equityfinancing"]) {
         //股权融资
         image = [UIImage imageNamed:@"equity_fanancing_type"];
         self.firstLabel.text = object.investAmount;
         self.secondLabel.text = [[SHGGloble sharedGloble] businessKeysForValues:object.totalshareRate showEmptyKeys:NO];
-        self.thirdLabel.text = [[SHGGloble sharedGloble] businessKeysForValues:object.industry showEmptyKeys:NO];
+        NSString *string = [[SHGGloble sharedGloble] businessKeysForValues:object.industry showEmptyKeys:NO];
+        self.thirdLabel.text = [string substringToIndex:string.length - 1];
         self.fourthLabel.text = [[SHGGloble sharedGloble] businessKeysForValues:object.shortestquitYears showEmptyKeys:NO];
     } else  if ([object.type isEqualToString:@"trademixed"]) {
         //银证业务
         image = [UIImage imageNamed:@"bankcard_business_type"];
         self.firstLabel.text = [[SHGGloble sharedGloble] businessKeysForValues:object.businessType showEmptyKeys:NO];
         NSString * string = [[SHGGloble sharedGloble] businessKeysForValues:object.detail showEmptyKeys:NO];
-        if (string.length > 32) {
-            string = [[string substringToIndex:32] stringByAppendingString:@"..."];
+        string = [string substringToIndex:string.length - 1];
+        if (string.length > 38) {
+            string = [[string substringToIndex:38] stringByAppendingString:@"..."];
         }
         self.thirdLabel.text = string;
+        
     }
     self.typeImageView.image = image;
     self.typeImageView.sd_resetLayout

@@ -299,10 +299,12 @@
     }
     if (content.length > 60) {
         if ([otherId isEqualToString:@"-1"]) {
-            [Hud showMessageWithText:@"评论字数不能大于60"];
+            [Hud showMessageWithText:@"评论不能长于60字"];
+            [[NSUserDefaults standardUserDefaults] setObject:content forKey:KEY_MEMORY];
             return;
         } else{
-            [Hud showMessageWithText:@"回复字数不能大于60"];
+            [Hud showMessageWithText:@"回复不能长于60字"];
+             [[NSUserDefaults standardUserDefaults] setObject:content forKey:KEY_MEMORY];
             return;
         }
     }
@@ -326,9 +328,17 @@
         newObject.commentOtherName = targetCommentObject.commentUserName;
         newObject.commentUserId = UID;
         newObject.commentUserName = userName;
-        [object.commentList addObject:newObject];
-        [Hud showMessageWithText:@"评论成功"];
-        [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:KEY_MEMORY];
+        if ([newObject.commentId isEqualToString:@"-100"]) {
+            [Hud showMessageWithText:@"每天评论不能多于5次"];
+            [[NSUserDefaults standardUserDefaults] setObject:content forKey:KEY_MEMORY];
+            return ;
+        } else{
+            [object.commentList addObject:newObject];
+            [Hud showMessageWithText:@"评论成功"];
+            [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:KEY_MEMORY];
+        }
+        
+        
         if (block) {
             block(YES);
         }

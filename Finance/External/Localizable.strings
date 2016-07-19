@@ -211,7 +211,7 @@
 "title.groupSetting" = "群设置";
 "title.apnsSetting" = "消息推送设置";
 "title.buddyBlock" = "黑名单";
-"title.apply" = "群申请与通知";
+"title.apply" = "群通知";
 "title.groupApply" = "群组通知";
 "title.groupSubjectChanging" = "修改群组名称";
 

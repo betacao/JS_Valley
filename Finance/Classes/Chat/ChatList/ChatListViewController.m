@@ -363,7 +363,7 @@ static NSString * const kCommonFNum			= @"commonnum";
     if(indexPath.row == 2){
         ChatModel *model = [[ChatModel alloc] init];
         model.placeholderImage = [UIImage imageNamed:@"申请头像图标"];
-        model.name = @"群申请与通知";
+        model.name = @"群通知";
         model.imageURL = nil;
         model.detailMsg = @"";
         model.time = @"";
