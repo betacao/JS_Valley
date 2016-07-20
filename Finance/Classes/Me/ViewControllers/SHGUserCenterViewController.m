@@ -120,7 +120,7 @@
     //职位
     self.departmentLabel.sd_layout
     .leftSpaceToView(self.nickNameLabel, MarginFactor(10.0f))
-    .bottomEqualToView(self.nickNameLabel)
+    .centerYEqualToView(self.nickNameLabel)
     .heightIs(self.departmentLabel.font.lineHeight);
     [self.departmentLabel setSingleLineAutoResizeWithMaxWidth:kLabelWidth * 2.0f];
 

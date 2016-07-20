@@ -320,12 +320,12 @@
     self.clientId = clientId;
     if (self.deviceToken) {
         [GeTuiSdk registerDeviceToken:self.deviceToken];
-        [[NSUserDefaults standardUserDefaults] setObject:clientId forKey:KEY_BPUSH_CHANNELID];
-        [[NSUserDefaults standardUserDefaults] setObject:@"getui" forKey:KEY_BPUSH_USERID];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-        if (clientId && !IsStrEmpty(UID)) {
-            [self registerToken:clientId];
-        }
+    }
+    [[NSUserDefaults standardUserDefaults] setObject:clientId forKey:KEY_BPUSH_CHANNELID];
+    [[NSUserDefaults standardUserDefaults] setObject:@"getui" forKey:KEY_BPUSH_USERID];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    if (clientId && !IsStrEmpty(UID)) {
+        [self registerToken:clientId];
     }
 }
 

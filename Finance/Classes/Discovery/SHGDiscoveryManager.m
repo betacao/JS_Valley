@@ -77,7 +77,7 @@
 
 + (void)loadDiscoveryMyDepartmentData:(NSDictionary *)param block:(void (^)(NSArray *, NSArray *))block
 {
-    [Hud showWait];
+    [Hud showGrayWait];
     [MOCHTTPRequestOperationManager postWithURL:[rBaseAddressForHttp stringByAppendingString: @"/neo4j/friend/searchNeo4jFriend"] parameters:param success:^(MOCHTTPResponse *response) {
         NSArray *firstArray = [[SHGGloble sharedGloble] parseServerJsonArrayToJSONModel:[response.dataDictionary objectForKey:@"friendlist"] class:[SHGDiscoveryDepartmentObject class]];
         NSArray *secondArray = [[SHGGloble sharedGloble] parseServerJsonArrayToJSONModel:[response.dataDictionary objectForKey:@"list"] class:[SHGDiscoveryRecommendObject class]];

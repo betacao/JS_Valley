@@ -60,7 +60,7 @@
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer
 {
     if (gestureRecognizer == self.interactivePopGestureRecognizer) {
-        return (self.currentShowVC == self.topViewController);
+        return (self.currentShowVC == self.topViewController && self.interactivePopGestureRecognizer.enabled);
     }
     return YES;
 }

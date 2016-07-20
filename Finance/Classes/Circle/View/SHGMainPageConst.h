@@ -51,7 +51,7 @@
 #define kMainCommentNameFont FontFactor(15.0f)//点赞的用户名
 #define kMainCommentNameColor [UIColor colorWithHexString:@"4277b2"]
 
-#define kMainCommentMoreFont FontFactor(13.0f)//查看全部
+#define kMainCommentMoreFont FontFactor(14.0f)//查看全部
 #define kMainCommentMoreColor [UIColor colorWithHexString:@"4277b2"]
 
 #define kMainLineViewColor [UIColor colorWithHexString:@"e6e7e8"];//描边

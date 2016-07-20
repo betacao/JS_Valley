@@ -17,7 +17,6 @@
 #import "ConvertToCommonEmoticonsHelper.h"
 #import "BasePeopleObject.h"
 #import "BasePeopleTableViewCell.h"
-#import "ApplyViewController.h"
 #import "MessageViewController.h"
 #import "ChatListViewController.h"
 #import "HeadImage.h"

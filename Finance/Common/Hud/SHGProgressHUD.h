@@ -8,9 +8,17 @@
 
 #import <UIKit/UIKit.h>
 
+typedef NS_ENUM(NSInteger, SHGProgressHUDType)
+{
+    SHGProgressHUDTypeNormal = 0,
+    SHGProgressHUDTypeGray
+};
+
 @interface SHGProgressHUD : UIView
 
 @property (assign, nonatomic) BOOL shouldAutoMediate;
+
+@property (assign, nonatomic) SHGProgressHUDType type;
 
 - (void)startAnimation;
 

@@ -9,7 +9,6 @@
 #import "TabBarViewController.h"
 #import "SHGHomeViewController.h"
 #import "SHGUserCenterViewController.h"
-#import "ApplyViewController.h"
 #import "CircleDetailViewController.h"
 #import "SHGDiscoveryViewController.h"
 #import "headImage.h"

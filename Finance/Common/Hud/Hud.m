@@ -52,10 +52,32 @@
     }
 }
 
++ (void)showGratOnMainThread
+{
+    if ([[AppDelegate currentAppdelegate].window.rootViewController isKindOfClass:[UINavigationController class]]){
+        UINavigationController *nav = (UINavigationController *)[AppDelegate currentAppdelegate].window.rootViewController;
+        UIViewController *topController = [nav.viewControllers lastObject];
+        UIView *view = topController.view;
+
+        MBProgressHUD *HUD = [MBProgressHUD showHUDAddedTo:view animated:YES];
+        SHGProgressHUD *progressHud = [[SHGProgressHUD alloc] initWithFrame:view.bounds];
+        progressHud.type = SHGProgressHUDTypeGray;
+        HUD.opacity = 0.0f;
+        HUD.mode = MBProgressHUDModeCustomView;
+        HUD.customView = progressHud;
+    }
+}
+
 + (void)showWait
 {
     [self performSelectorOnMainThread:@selector(hideHud) withObject:nil waitUntilDone:YES];
     [self performSelectorOnMainThread:@selector(showOnMainThread) withObject:nil waitUntilDone:YES];
+}
+
++ (void)showGrayWait
+{
+    [self performSelectorOnMainThread:@selector(hideHud) withObject:nil waitUntilDone:YES];
+    [self performSelectorOnMainThread:@selector(showGratOnMainThread) withObject:nil waitUntilDone:YES];
 }
 
 + (void)hideHud

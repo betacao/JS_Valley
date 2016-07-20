@@ -60,6 +60,7 @@
 //创建新业务
 + (void)createNewBusiness:(NSDictionary *)param success:(void (^)(BOOL ,NSString *))block
 {
+    [Hud showWait];
     NSString *request = [rBaseAddressForHttp stringByAppendingString:@"/business/saveBusiness"];
     [MOCHTTPRequestOperationManager postWithURL:request class:[SHGBusinessObject class] parameters:param success:^(MOCHTTPResponse *response) {
         [Hud hideHud];

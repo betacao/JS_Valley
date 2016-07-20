@@ -10,7 +10,6 @@
 #import "SHGRecommendHeaderView.h"
 #import "SHGRecommendCollectionView.h"
 #import "SHGPersonalViewController.h"
-#import "ApplyViewController.h"
 #import "CCLocationManager.h"
 #import "SHGDiscoveryObject.h"
 #import "SHGDiscoveryManager.h"

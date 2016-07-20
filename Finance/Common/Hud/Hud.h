@@ -11,6 +11,9 @@
 @interface Hud : NSObject
 
 + (void)showWait;
+
++ (void)showGrayWait;
+
 + (void)hideHud;
 
 + (void)showMessageWithText:(NSString *)text;
