@@ -827,7 +827,12 @@
     NSString *postContent = @"";
     NSString *shareContent = @"";
     NSString *shareTitle = @"";
-    NSString *title = self.responseObject.groupPostTitle;
+    NSString *title;
+    if (self.responseObject.groupPostTitle.length > 0) {
+        title = self.responseObject.groupPostTitle;
+    } else{
+        title = @" ";
+    }
     if(IsStrEmpty(self.responseObject.detail)){
         postContent = SHARE_CONTENT;
         shareTitle = SHARE_TITLE;

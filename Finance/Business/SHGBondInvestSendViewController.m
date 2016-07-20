@@ -679,6 +679,7 @@
 
 - (void)btnBackClick:(id)sender
 {
+    [self.currentContext resignFirstResponder];
     __weak typeof (self) weakSelf = self;
     SHGAlertView *alertView = [[SHGAlertView alloc] initWithTitle:@"提示" contentText:@"退出此次编辑?" leftButtonTitle:@"取消" rightButtonTitle:@"退出"];
     alertView.rightBlock = ^{
@@ -770,23 +771,7 @@
     });
 }
 
-//- (void)textFieldDidChange:(NSNotification *)notification
-//{
-//    UITextField *textField = notification.object;
-//    if ([textField isEqual:self.nameTextField]) {
-//        if (textField.text.length > 20) {
-//            textField.text = [textField.text substringToIndex:20];
-//        }
-//    } else if ([textField isEqual:self.phoneNumTextField]) {
-//        if (textField.text.length > 20){
-//            textField.text = [textField.text substringToIndex:20];
-//        }
-//    } else if ([textField isEqual:self.monenyTextField]) {
-//        if (textField.text.length > 20) {
-//            textField.text = [textField.text substringToIndex:20];
-//        }
-//    }
-//}
+
 
 -(void)scrollerTapAction:(UITapGestureRecognizer *)ges
 {
