@@ -303,12 +303,8 @@
     } else if (self.textField.text.length > 18) {
         [Hud showMessageWithText:@"标题最多可输入18个字"];
         return;
-        
     }
-    if (self.textView.text.length == 0){
-        [Hud showMessageWithText:@"正文不能为空"];
-        return;
-    } else if (self.textView.text.length > MAX_TEXT_LENGTH){
+    if (self.textView.text.length > MAX_TEXT_LENGTH){
         [Hud showMessageWithText:@"帖子过长，不能超过2000个字"];
         return;
     }

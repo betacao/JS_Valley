@@ -146,7 +146,7 @@
 {
     UIImage *png = [UIImage imageNamed:@"80.png"];
     id<ISSCAttachment> image  = [ShareSDK pngImageWithImage:png];
-    NSString *title = @"";
+    NSString *title = @" ";
     if (obj.groupPostTitle.length > 0) {
         title = obj.groupPostTitle;
     }

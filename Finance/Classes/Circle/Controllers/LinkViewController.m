@@ -40,8 +40,16 @@
     self.webView.delegate = self;
     self.webView.scalesPageToFit= YES;
 
-    NSString *Url = (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault,(CFStringRef)self.stringUrl,NULL,NULL,kCFStringEncodingUTF8));
-    NSURL *url = [NSURL URLWithString:Url];
+    NSString *string = self.stringUrl;
+    for(NSInteger i = 0; i < [self.stringUrl length]; i++){
+        unichar a = [string characterAtIndex:i];
+        if(a > 0x4e00 && a < 0x9fff) {
+            string = (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault,(CFStringRef)string,NULL,NULL,kCFStringEncodingUTF8));
+            break;
+        }
+    }
+
+    NSURL *url = [NSURL URLWithString:string];
 
     NSURLRequest *request = [[NSURLRequest alloc]initWithURL:url];
     [self.webView loadRequest:request];

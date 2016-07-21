@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface BaseViewController : UIViewController<UITextFieldDelegate>
-@property (weak, nonatomic) IBOutlet UILabel *lblCodeStr;
+
 @property (nonatomic, strong) NSString *leftItemImageName;
 @property (nonatomic, strong) NSString *leftItemtitleName;
 

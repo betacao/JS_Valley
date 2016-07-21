@@ -19,11 +19,7 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-
-    if (self)
-    {
-
-
+    if (self) {
     }
     return  self;
 }
@@ -93,7 +89,7 @@
 }
 
 
--(void)tapAction:(UITapGestureRecognizer *)ges
+- (void)tapAction:(UITapGestureRecognizer *)ges
 {
     for (UIView *subView in self.view.subviews)
     {
@@ -108,8 +104,6 @@
 
 - (BOOL)prefersStatusBarHidden
 {
-    //[[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
-    // 已经不起作用了
     return NO;
 }
 #endif
@@ -117,6 +111,7 @@
 {
     [self.navigationController popViewControllerAnimated:YES];
 }
+
 - (void)rightItemClick:(id)sender
 {
 

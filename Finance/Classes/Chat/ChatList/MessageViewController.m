@@ -52,9 +52,8 @@
     [self requestDataWithTarget:@"first" time:@"-1"];
 }
 
--(void)requestDataWithTarget:(NSString *)target time:(NSString *)time
+- (void)requestDataWithTarget:(NSString *)target time:(NSString *)time
 {
-    [Hud showWait];
     NSDictionary *param = nil;
     if([@"-1" isEqualToString:time]){
         param= @{@"uid":UID, @"target":target, @"num":rRequestNum};
@@ -63,7 +62,6 @@
     }
 
     [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttpUser,@"notice"] class:[MessageObj class] parameters:param success:^(MOCHTTPResponse *response) {
-        [Hud hideHud];
         if ([target isEqualToString:@"first"]){
             [self.dataArr removeAllObjects];
             [self.dataArr addObjectsFromArray:response.dataArray];
@@ -99,9 +97,6 @@
         NSLog(@"%@",response.errorMessage);
         [self.tableView.mj_header endRefreshing];
         [self performSelector:@selector(endrefresh) withObject:nil afterDelay:0.5];
-        [Hud hideHud];
-
-
     }];
 }
 
