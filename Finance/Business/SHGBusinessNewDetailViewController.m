@@ -564,8 +564,10 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
 {
     if ([self.responseObject.isDeleted isEqualToString:@"Y"]) {
         self.title = @"业务详情";
+        self.navigationItem.rightBarButtonItem = nil;
         [self.view addSubview:self.emptyView];
     }
+
 }
 
 - (void)loadData

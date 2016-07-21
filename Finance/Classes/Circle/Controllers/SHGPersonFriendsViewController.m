@@ -96,19 +96,9 @@
             }
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                 [HeadImage inertWithArr:self.contactsSource];
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [Hud hideHud];
-                    if(response.dataArray.count>0)
-                    {
-                        _tableView.hidden=NO;
-                        [self.tableView reloadData];
-                    } else{
-                        [_tableView.mj_footer endRefreshingWithNoMoreData];
-                    }
-                    [self.tableView.mj_header endRefreshing];
-                    [self.tableView.mj_footer endRefreshing];
-                });
             });
+            [self.tableView reloadData];
+            [Hud hideHud];
             
         } failed:^(MOCHTTPResponse *response) {
             [Hud hideHud];
@@ -143,25 +133,13 @@
             }
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                 [HeadImage inertWithArr:self.contactsSource];
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [Hud hideHud];
-                    if(response.dataArray.count>0)
-                    {
-                        _tableView.hidden=NO;
-                        [self.tableView reloadData];
-                    } else{
-                        [_tableView.mj_footer endRefreshingWithNoMoreData];
-                    }
-                    [self.tableView.mj_header endRefreshing];
-                    [self.tableView.mj_footer endRefreshing];
-                });
             });
+            [self.tableView reloadData];
+            [Hud hideHud];
             
         } failed:^(MOCHTTPResponse *response) {
             [Hud hideHud];
             [Hud showMessageWithText:response.errorMessage];
-            [self.tableView.mj_header endRefreshing];
-            [self.tableView.mj_footer endRefreshing];
         }];
 
     }else if([self.friend_status isEqualToString:@"all"])
@@ -188,20 +166,9 @@
             }
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                 [HeadImage inertWithArr:self.contactsSource];
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [Hud hideHud];
-                    if(response.dataArray.count>0)
-                    {
-                        _tableView.hidden=NO;
-                        [self.tableView reloadData];
-                    } else{
-                        [_tableView.mj_footer endRefreshingWithNoMoreData];
-                    }
-                    [self.tableView.mj_header endRefreshing];
-                    [self.tableView.mj_footer endRefreshing];
-                });
             });
-            
+            [self.tableView reloadData];
+            [Hud hideHud];
         } failed:^(MOCHTTPResponse *response) {
             [Hud hideHud];
             [Hud showMessageWithText:response.errorMessage];
