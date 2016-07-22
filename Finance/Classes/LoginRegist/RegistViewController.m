@@ -150,7 +150,7 @@ typedef NS_ENUM(NSInteger, RegistType)
     self.messageSendedLabel.sd_layout
     .leftSpaceToView(self.view, MarginFactor(12.0f))
     .rightSpaceToView(self.view, MarginFactor(12.0f))
-    .topSpaceToView(self.protocolCheckButton, MarginFactor(83.0f))
+    .bottomSpaceToView(self.nextStepButton, MarginFactor(5.0f))
     .autoHeightRatio(0.0f);
     
     self.nextStepButton.sd_layout
