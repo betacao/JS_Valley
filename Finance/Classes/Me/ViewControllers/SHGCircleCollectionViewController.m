@@ -335,9 +335,6 @@
 {
     id<ISSCAttachment> image  = [ShareSDK pngImageWithImage:[UIImage imageNamed:@"80"]];
 
-    if (!IsArrEmpty(obj.photoArr)  ) {
-        //  image = [ShareSDK imageWithUrl:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,_obj.photoArr[0]]];
-    }
     NSString *postContent;
     NSString *shareContent;
 

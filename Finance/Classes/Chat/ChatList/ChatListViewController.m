@@ -27,7 +27,6 @@
 #import "HeadImage.h"
 #import "UIImageView+WebCache.h"
 #import "AppDelegate.h"
-#import "MLKMenuPopover.h"
 #import "TabBarViewController.h"
 #import "popObj.h"
 #import "SHGPersonalViewController.h"
@@ -40,7 +39,7 @@ static NSString * const kCompany			= @"company";
 static NSString * const kCommonFriend			= @"commonfriend";
 static NSString * const kCommonFNum			= @"commonnum";
 
-@interface ChatListViewController ()<UITableViewDelegate,UITableViewDataSource, UISearchDisplayDelegate,SRRefreshDelegate, UISearchBarDelegate, IChatManagerDelegate,MLKMenuPopoverDelegate>
+@interface ChatListViewController ()<UITableViewDelegate,UITableViewDataSource, UISearchDisplayDelegate,SRRefreshDelegate, UISearchBarDelegate, IChatManagerDelegate>
 {
     NSInteger pageNum;
     NSString *area;
@@ -50,14 +49,9 @@ static NSString * const kCommonFNum			= @"commonnum";
 
 @property (strong, nonatomic) NSMutableArray        *dataSource;
 @property (strong, nonatomic) UITableView           *tableView;
-@property (nonatomic, strong) UIView                *networkStateView;
 @property (nonatomic, strong) UISegmentedControl *segmentControl;
 @property (nonatomic,strong)  UIView *titleView;
-@property (nonatomic, strong) UIBarButtonItem *rightBarButtonItem;
-@property (nonatomic, strong) UIBarButtonItem *leftBarButtonItem;
 @property (strong, nonatomic) UILabel *unapplyCountLabel;
-@property (nonatomic,strong) MLKMenuPopover *menuPopover;
-@property (nonatomic,strong) MLKMenuPopover1 *menuPopover1;
 @property (nonatomic,strong) NSArray *menuItems;
 @property (nonatomic,strong) GroupListViewController *groupVC;
 @property (nonatomic,strong) EMConversation * daNiuConversation;
@@ -98,7 +92,6 @@ static NSString * const kCommonFNum			= @"commonnum";
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshChatList) name:@"refreshFriendList" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshDataSource) name:NOTIFI_CHANGE_UPDATE_FRIEND_LIST object:nil];
-    [self networkStateView];
     [self refreshDataSource];
 }
 
@@ -109,19 +102,8 @@ static NSString * const kCommonFNum			= @"commonnum";
     [self.tableView.mj_header endRefreshing];
 }
 
-- (void)refreshFooter
-{
-    if (hasMoreData) {
-        pageNum ++;
-        [self refreshDataSource];
-    } else{
-        [self.tableView.mj_footer endRefreshingWithNoMoreData];
-    }
-}
-
 - (void)btnBackClick:(UIButton *)sender
 {
-
     [self.groupVC.searchController setActive:NO animated:YES];
     [self.navigationController popViewControllerAnimated:YES];
 }
@@ -131,49 +113,7 @@ static NSString * const kCommonFNum			= @"commonnum";
     [self.tableView reloadData];
 }
 
-- (void)rightBarButtonItemClicked:(UIButton *)sender
-{
-    if(self.menuPopover.isshow)
-    {
-        [self.menuPopover dismissMenuPopover];
-    } else{
-        self.menuItems = [NSArray arrayWithObjects:@"发起对话", @"发起群聊", nil];
-        self.menuPopover = [[MLKMenuPopover alloc] initWithFrame:CGRectMake(SCREENWIDTH-120, 0, 110, 88) menuItems:self.menuItems];
-        self.menuPopover.menuPopoverDelegate = self;
-        [self.menuPopover showInView:self.view];
-    }
-}
 
-#pragma mark MLKMenuPopoverDelegate
-- (void)menuPopover1:(MLKMenuPopover1 *)menuPopover didSelectMenuItemAtIndex:(NSInteger)selectedIndex
-{
-    [self.menuPopover1 dismissMenuPopover];
-    popObj *obj = self.arrCityCode[selectedIndex];
-    for (popObj *pObj in self.arrCityCode) {
-        pObj.selected = NO;
-    }
-    pageNum = 1;
-    obj.selected = YES;
-    //[self.tableView reloadData];
-    area = obj.code;
-    [rightButton setTitle:obj.name forState:UIControlStateNormal];
-
-    [self requestTwainContact];
-}
-#pragma mark -- sdc
-#pragma mark -- 发起群聊.发起会话
-- (void)menuPopover:(MLKMenuPopover *)menuPopover didSelectMenuItemAtIndex:(NSInteger)selectedIndex
-{
-    [self.menuPopover dismissMenuPopover];
-
-    if(selectedIndex == 0){
-        FriendsListViewController *vc=[[FriendsListViewController alloc] init];
-        [self.navigationController pushViewController:vc animated:YES];
-    } else if(selectedIndex == 1){
-        GroupListViewController *vc = [[GroupListViewController alloc] init];
-        [self.navigationController pushViewController:vc animated:YES];
-    }
-}
 
 - (void)didReceiveMemoryWarning
 {
@@ -233,26 +173,6 @@ static NSString * const kCommonFNum			= @"commonnum";
     return _tableView;
 }
 
-- (UIView *)networkStateView
-{
-    if (_networkStateView == nil) {
-        _networkStateView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 44)];
-        _networkStateView.backgroundColor = [UIColor colorWithRed:255 / 255.0 green:199 / 255.0 blue:199 / 255.0 alpha:0.5];
-
-        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, (_networkStateView.frame.size.height - 20) / 2, 20, 20)];
-        imageView.image = [UIImage imageNamed:@"messageSendFail"];
-        [_networkStateView addSubview:imageView];
-
-        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(imageView.frame) + 5, 0, _networkStateView.frame.size.width - (CGRectGetMaxX(imageView.frame) + 15), _networkStateView.frame.size.height)];
-        label.font = FontFactor(15.0f);
-        label.textColor = [UIColor grayColor];
-        label.backgroundColor = [UIColor clearColor];
-        label.text = NSLocalizedString(@"network.disconnection", @"Network disconnection");
-        [_networkStateView addSubview:label];
-    }
-
-    return _networkStateView;
-}
 
 #pragma mark - private
 
@@ -638,14 +558,6 @@ static NSString * const kCommonFNum			= @"commonnum";
 #pragma mark - public
 #pragma mark -- 我的好友
 
-- (void)refreshFriendShip
-{
-    [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"refresh"] parameters:nil success:^(MOCHTTPResponse *response) {
-
-    } failed:^(MOCHTTPResponse *response) {
-
-    }];
-}
 -(void)requestContact
 {
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
@@ -786,25 +698,6 @@ static NSString * const kCommonFNum			= @"commonnum";
 
 }
 
-- (void)isConnect:(BOOL)isConnect{
-    if (!isConnect) {
-        _tableView.tableHeaderView = _networkStateView;
-    }
-    else{
-        _tableView.tableHeaderView = nil;
-    }
-
-}
-
-- (void)networkChanged:(EMConnectionState)connectionState
-{
-    if (connectionState == eEMConnectionDisconnected) {
-        _tableView.tableHeaderView = _networkStateView;
-    }
-    else{
-        _tableView.tableHeaderView = nil;
-    }
-}
 
 - (void)willReceiveOfflineMessages{
     NSLog(NSLocalizedString(@"message.beginReceiveOffine", @"Begin to receive offline messages"));
@@ -891,30 +784,6 @@ static NSString * const kCommonFNum			= @"commonnum";
     return _titleView;
 }
 
-#pragma mark -- sdc
-#pragma mark -- 加号按钮
-- (UIBarButtonItem *)rightBarButtonItem
-{
-    if (!_rightBarButtonItem) {
-
-        UIButton *customButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        [customButton setFrame:CGRectMake(0, 0, 24, 24)];
-        [customButton setBackgroundImage:[UIImage imageNamed:@"right_add"] forState:UIControlStateNormal];
-        [customButton addTarget:self action:@selector(rightBarButtonItemClicked:) forControlEvents:UIControlEventTouchUpInside];
-        customButton.hidden = YES;
-        self.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:customButton];
-
-    }
-    return _rightBarButtonItem;
-}
-
-- (UIBarButtonItem *)leftBarButtonItem
-{
-    if (!_leftBarButtonItem) {
-    }
-
-    return _leftBarButtonItem;
-}
 #pragma mark -- sdc
 #pragma mark -- UISegmentedControl
 - (UISegmentedControl *)segmentControl

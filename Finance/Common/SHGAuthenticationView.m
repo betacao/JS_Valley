@@ -48,7 +48,6 @@
 
     UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selfClick:)];
     [self addGestureRecognizer:recognizer];
-//    [self setEnlargeEdge:20.0f];
 }
 
 - (void)addAutoLayout

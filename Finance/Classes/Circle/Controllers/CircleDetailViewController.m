@@ -403,14 +403,6 @@
     self.responseObject.groupPostUrl = [dic objectForKey:@"groupposturl"];
     self.responseObject.postType = [dic objectForKey:@"type"];
     self.responseObject.businessID = [dic objectForKey:@"businessid"];
-    NSDictionary *link = [dic objectForKey:@"link"];
-    if ([self.responseObject.type isEqualToString:@"link"]){
-        linkOBj *linkObj = [[linkOBj alloc] init];
-        linkObj.title = [link objectForKey:@"title"];
-        linkObj.desc = [link objectForKey:@"desc"];
-        linkObj.thumbnail = [link objectForKey:@"thumbnail"];
-        self.responseObject.linkObj = linkObj;
-    }
 
 }
 
@@ -445,7 +437,6 @@
 
 - (void)resetView
 {
-    self.responseObject.photoArr = (NSArray *)self.responseObject.photos;
     if ([self.responseObject.userid isEqualToString:UID] || [self.responseObject.userid isEqualToString:CHATID_MANAGER]) {
         self.btnAttention.hidden = YES;
     }
@@ -553,7 +544,7 @@
     if ([self.responseObject.type isEqualToString:TYPE_PHOTO]){
         SDPhotoGroup *photoGroup = [[SDPhotoGroup alloc] init];
         NSMutableArray *temp = [NSMutableArray array];
-        [self.responseObject.photoArr enumerateObjectsUsingBlock:^(NSString *src, NSUInteger idx, BOOL *stop) {
+        [self.responseObject.photos enumerateObjectsUsingBlock:^(NSString *src, NSUInteger idx, BOOL *stop) {
             SDPhotoItem *item = [[SDPhotoItem alloc] init];
             item.thumbnail_pic = [NSString stringWithFormat:@"%@%@",rBaseAddressForImage,src];
             item.object = self.responseObject;

@@ -18,7 +18,6 @@
 @interface CreateGroupViewController ()<UITextFieldDelegate, UITextViewDelegate, EMChooseViewDelegate>
 
 @property (strong, nonatomic) UIView *switchView;
-@property (strong, nonatomic) UIBarButtonItem *rightItem;
 @property (strong, nonatomic) UITextField *textField;
 @property (strong, nonatomic) EMTextView *textView;
 
@@ -376,27 +375,6 @@
 
 - (void)groupMemberChange:(UISwitch *)control
 {
-//    if (_isPublic) {
-//        _groupMemberTitleLabel.text = NSLocalizedString(@"group.create.occupantJoinPermissions", @"members join permissions");
-//        if(control.isOn)
-//        {
-//            _groupMemberLabel.text = NSLocalizedString(@"group.create.open", @"random join");
-//        }
-//        else{
-//            _groupMemberLabel.text = NSLocalizedString(@"group.create.needApply", @"you need administrator agreed to join the group");
-//        }
-//    }
-//    else{
-//        _groupMemberTitleLabel.text = NSLocalizedString(@"group.create.occupantPermissions", @"members invite permissions");
-//        if(control.isOn)
-//        {
-//            _groupMemberLabel.text = NSLocalizedString(@"group.create.allowedOccupantInvite", @"allows group members to invite others");
-//        }
-//        else{
-//            _groupMemberLabel.text = NSLocalizedString(@"group.create.unallowedOccupantInvite", @"don't allow group members to invite others");
-//        }
-//    }
-    
     _isMemberOn = control.isOn;
 }
 

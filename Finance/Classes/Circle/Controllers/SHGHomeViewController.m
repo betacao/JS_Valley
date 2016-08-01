@@ -34,10 +34,8 @@
 
 @property (assign, nonatomic) BOOL hasDataFinished;
 
-@property (strong, nonatomic) SHGNoticeView *newFriendNoticeView;
 @property (strong, nonatomic) SHGNoticeView *newMessageNoticeView;
 @property (assign, nonatomic) BOOL isRefreshing;
-@property (strong, nonatomic) NSString *circleType;
 @property (strong, nonatomic) UITableViewCell *emptyCell;
 @property (strong, nonatomic) SHGEmptyDataView *emptyView;
 
@@ -60,7 +58,6 @@
     [super viewDidLoad];
    
     self.tableView.backgroundColor = Color(@"efeeef");
-    self.circleType = @"all";
     self.needShowNewFriend = YES;
     self.tableView.sd_layout
     .leftSpaceToView(self.view, 0.0f)
@@ -133,15 +130,6 @@
         _recommendArray = [NSMutableArray array];
     }
     return _recommendArray;
-}
-
-- (SHGNoticeView *)newFriendNoticeView
-{
-    if(!_newFriendNoticeView){
-        _newFriendNoticeView = [[SHGNoticeView alloc] initWithFrame:CGRectZero type:SHGNoticeTypeNewFriend];
-        _newFriendNoticeView.superView = self.view;
-    }
-    return _newFriendNoticeView;
 }
 
 - (SHGNoticeView *)newMessageNoticeView

@@ -717,19 +717,6 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     [application scheduleLocalNotification:notification];
 }
 
-#pragma mark - IChatManagerDelegate 登陆回调（主要用于监听自动登录是否成功）
-
-- (void)didLoginWithInfo:(NSDictionary *)loginInfo error:(EMError *)error
-{
-    if (error) {
-        NSString *hintText = NSLocalizedString(@"reconnection.retry", @"Fail to log in your account, is try again... \nclick 'logout' button to jump to the login page \nclick 'continue to wait for' button for reconnection successful");
-        UIAlertView *alertView = [[UIAlertView alloc]  initWithTitle:NSLocalizedString(@"prompt", @"Prompt") message:hintText delegate:self cancelButtonTitle:NSLocalizedString(@"reconnection.wait", @"continue to wait") otherButtonTitles:NSLocalizedString(@"logout", @"Logout"), nil];
-        alertView.tag = 99;
-        [alertView show];
-        [_chatViewController isConnect:NO];
-    }
-}
-
 #pragma mark - IChatManagerDelegate 好友变化
 
 - (void)didReceiveBuddyRequest:(NSString *)username

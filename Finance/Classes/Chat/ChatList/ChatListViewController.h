@@ -12,7 +12,6 @@
 
 #import <UIKit/UIKit.h>
 #import "BaseTableViewController.h"
-#import "MLKMenuPopover1.h"
 #import "TwainContactInfo.h"
 typedef NS_ENUM(NSInteger, ChatListViewType)
 {
@@ -22,11 +21,11 @@ typedef NS_ENUM(NSInteger, ChatListViewType)
 
 };
 
-@interface ChatListViewController : BaseTableViewController<UINavigationControllerDelegate,MLKMenuPopover1Delegate>
+@interface ChatListViewController : BaseTableViewController<UINavigationControllerDelegate>
 
-- (void)refreshDataSource;
-- (void)isConnect:(BOOL)isConnect;
-- (void)networkChanged:(EMConnectionState)connectionState;
+//- (void)refreshDataSource;
+//- (void)isConnect:(BOOL)isConnect;
+//- (void)networkChanged:(EMConnectionState)connectionState;
 
 @property (nonatomic,assign) BOOL isResfresh;
 @property (strong ,nonatomic, readonly) UIView *titleView;

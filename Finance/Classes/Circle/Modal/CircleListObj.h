@@ -18,17 +18,15 @@
 #define kCommentMargin MarginFactor(4.0f)
 #define kCommentBottomMargin MarginFactor(13.0f)
 
-@class linkOBj;
-
 @interface CircleListObj : MTLModel<MTLJSONSerializing>
-@property (strong, nonatomic) NSString *businesstotal;
+@property (strong, nonatomic) NSArray  *photos;
+@property (strong, nonatomic) NSString *type;
 @property (strong, nonatomic) NSString *cmmtnum;
 @property (strong, nonatomic) NSMutableArray *comments;
 @property (strong, nonatomic) NSString *company;
 @property (strong, nonatomic) NSString *detail;
 @property (assign, nonatomic) BOOL isAttention;
 @property (strong, nonatomic) NSString *nickname;
-@property (strong, nonatomic) NSArray  *photos;
 @property (strong, nonatomic) NSString *potname;
 @property (strong, nonatomic) NSString *praisenum;
 @property (strong, nonatomic) NSMutableArray *heads;
@@ -38,13 +36,9 @@
 @property (strong, nonatomic) NSString *sharenum;
 @property (strong, nonatomic) NSString *status;
 @property (strong, nonatomic) NSString *title;
-@property (strong, nonatomic) linkOBj *linkObj;
 @property (strong, nonatomic) NSString *postType;
 @property (strong, nonatomic) NSString *userid;
-@property (strong, nonatomic) NSString *type;
 @property (assign, nonatomic) NSInteger cellHeight;
-@property (assign, nonatomic) BOOL isPull;
-@property (strong, nonatomic) NSArray *photoArr;
 @property (strong, nonatomic) NSString *ispraise;
 @property (strong, nonatomic) NSString *friendship; //好友关系
 @property (strong, nonatomic) NSString *userstatus;  //认证状态
@@ -53,13 +47,6 @@
 @property (strong, nonatomic) NSString *displayposition;//广告所在的位置
 @property (strong, nonatomic) NSString *pcurl;
 @property (strong, nonatomic) NSString *shareTitle;
-
-@property (strong, nonatomic)  NSString *companyname;
-@property (strong, nonatomic)  NSString *phone;
-@property (strong, nonatomic)  NSString *picname;
-@property (strong, nonatomic)  NSString *position;
-@property (strong, nonatomic)  NSString *realname;
-
 @property (assign, nonatomic) BOOL businessStatus;
 /**
  @brief 动态标题
@@ -95,14 +82,4 @@
 @property(strong, nonatomic)  NSString *ppotname;
 
 @end
-
-@interface linkOBj : MTLModel<MTLJSONSerializing>
-@property(strong, nonatomic)  NSString *title ;
-@property(strong, nonatomic)  NSString *desc;
-@property(strong, nonatomic)  NSString *link;
-@property(strong, nonatomic) NSString *thumbnail;
-
-@end
-
-
 

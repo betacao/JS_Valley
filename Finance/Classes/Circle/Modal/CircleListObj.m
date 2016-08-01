@@ -19,53 +19,18 @@
 {
     self = [super init];
     if (self) {
-        self.isPull = NO;
     }
     return self;
 }
 
-- (NSMutableArray*)heads
-{
-    if (!_heads) {
-        _heads = [NSMutableArray array];
-    }
-    return _heads;
-}
-
--(NSMutableArray *)comments
-{
-    if (!_comments)
-    {
-        _comments = [NSMutableArray array];
-    }
-    return _comments;
-    
-}
-
-- (NSArray *)photoArr
-{
-    if (!_photoArr)
-    {
-        _photoArr = [NSArray array];
-    }
-    return _photoArr;
-    
-}
-
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey{
-    return  @{@"businesstotal": @"businesstotal",@"realname": @"realname",@"position": @"position",@"picname": @"picname",@"phone": @"phone",@"companyname": @"companyname",@"cmmtnum": @"cmmtnum", @"nickname":@"nickname", @"comments": @"comments", @"company": @"company", @"detail": @"detail", @"isAttention": @"isattention", @"potname": @"potname", @"praisenum": @"praisenum", @"publishdate": @"publishdate", @"rid": @"rid", @"photos":@"attach", @"sharenum": @"sharenum", @"status": @"status", @"title": @"title", @"userid": @"userid", @"ispraise":@"ispraise", @"type":@"attachtype", @"linkObj":@"link", @"postType":@"type", @"friendship":@"friendship", @"userstatus":@"userstatus", @"currcity":@"currcity", @"feedhtml":@"feedhtml", @"displayposition":@"displayposition", @"pcurl":@"pcurl", @"shareTitle":@"sharetitle", @"businessStatus":@"businessstatus", @"groupPostTitle":@"groupposttitle", @"businessID":@"businessid"};
+    return  @{@"cmmtnum": @"cmmtnum", @"nickname":@"nickname", @"comments": @"comments", @"company": @"company", @"detail": @"detail", @"isAttention": @"isattention", @"potname": @"potname", @"praisenum": @"praisenum", @"publishdate": @"publishdate", @"rid": @"rid", @"photos":@"attach", @"sharenum": @"sharenum", @"status": @"status", @"title": @"title", @"userid": @"userid", @"ispraise":@"ispraise", @"type":@"attachtype", @"postType":@"type", @"friendship":@"friendship", @"userstatus":@"userstatus", @"currcity":@"currcity", @"feedhtml":@"feedhtml", @"displayposition":@"displayposition", @"pcurl":@"pcurl", @"shareTitle":@"sharetitle", @"businessStatus":@"businessstatus", @"groupPostTitle":@"groupposttitle", @"businessID":@"businessid"};
 }
 
 
 + (NSValueTransformer *)commentsJSONTransformer
 {
     return [MTLJSONAdapter arrayTransformerWithModelClass:[commentOBj class]];
-}
-
-+ (NSValueTransformer *)linkObjJSONTransformer
-{
-    return [MTLJSONAdapter dictionaryTransformerWithModelClass:[linkOBj class]];
 }
 
 + (NSValueTransformer *)JSONTransformerForKey:(NSString *)key
@@ -109,23 +74,5 @@
     
     return @{@"photos":@"photos"};
 }
-
-@end
-
-@implementation linkOBj
-
-- (id)init
-{
-    self = [super init];
-    if (self) {
-        self.thumbnail = @"1";
-    }
-    return self;
-}
-+ (NSDictionary *)JSONKeyPathsByPropertyKey
-{
-    return @{@"title":@"title", @"desc":@"desc", @"link":@"link", @"thumbnail":@"thumbnail"};
-}
-
 
 @end
