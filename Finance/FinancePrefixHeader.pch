@@ -9,8 +9,6 @@
 #ifndef Finance_FinancePrefixHeader_pch
 #define Finance_FinancePrefixHeader_pch
 #ifdef __OBJC__
-// Include any system framework and library headers here that should be included in all compilation units.
-// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
 #import <MagicalRecord/MagicalRecord.h>
 #import <MJRefresh/MJRefresh.h>
 #import <AFNetworking/AFNetworking.h>
@@ -49,7 +47,6 @@
 #import "UIColor+extend.h"
 #import "SHGAuthenticationViewController.h"
 #import "CircleDetailViewController.h"
-#import "SHGGloble.h"
 #import "SHGUserHeaderView.h"
 #import "NSArray+Category.h"
 #import "UIView+SDAutoLayout.h"
@@ -60,5 +57,6 @@
 #import "SHGCategoryButton.h"
 #import "SHGAlertView.h"
 #import "SHGGlobleOperation.h"
+#import "SHGGloble.h"
 #endif
 #endif

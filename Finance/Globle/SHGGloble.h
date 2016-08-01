@@ -162,7 +162,7 @@ typedef void (^SHHomeDataCompletionBlock)(NSArray *allList, NSArray *normalList,
 
  @since 1.5.0
  */
-- (NSArray *)parseServerJsonArrayToJSONModel:(NSArray *)array class:(Class)class;
+- (NSArray *)parseServerJsonArrayToJSONModel:(NSArray *)array class:(Class)aclass;
 
 /**
  @brief  获取用户认证状态

@@ -409,8 +409,8 @@
         if (results){
             dispatch_async(dispatch_get_main_queue(),^{
                 [self.searchController.resultsSource removeAllObjects];
-                EMGroup *grp=[[EMGroup alloc] initWithGroupId:@"-1"];
-                NSMutableArray *resultArr=[[NSMutableArray alloc] initWithArray:results];
+                EMGroup *grp = [EMGroup groupWithId:@"-1"];
+                NSMutableArray *resultArr = [[NSMutableArray alloc] initWithArray:results];
                 [resultArr removeObject:grp];
                 [self.searchController.resultsSource addObjectsFromArray:resultArr];
                 [self.searchController.searchResultsTableView reloadData];
@@ -443,7 +443,6 @@
 {
     if (!error){
         [self reloadDataSource];
-
         [[EaseMob sharedInstance].chatManager asyncFetchAllPublicGroups];
     }
 }
@@ -451,7 +450,6 @@
 - (void)didUpdateGroupList:(NSArray *)allGroups error:(EMError *)error
 {
     [self reloadDataSource];
-
     [[EaseMob sharedInstance].chatManager asyncFetchAllPublicGroups];
 }
 
@@ -473,20 +471,16 @@
     NSDictionary *loginInfo = [[[EaseMob sharedInstance] chatManager] loginInfo];
     [[EaseMob sharedInstance].chatManager asyncFetchMyGroupsListWithCompletion:^(NSArray *groups, EMError *error){
         for (EMGroup *group in groups){
-            [self.tableView.mj_header endRefreshing];
-            [[EaseMob sharedInstance].chatManager asyncFetchGroupInfo:group.groupId completion:^(EMGroup *group, EMError *error) {
-                if (!error){
-                    if (![group.owner isEqualToString:loginInfo[@"username"]]){
-                        [self.joinArr addObject:group];
-                    }else{
-                        [self.commonArr addObject:group];
-                    }
-                }
-                dispatch_async(dispatch_get_main_queue(), ^(){
-                    [self.tableView reloadData];
-                });
-            } onQueue:nil];
+            if (![group.owner isEqualToString:loginInfo[@"username"]]){
+                [self.joinArr addObject:group];
+            }else{
+                [self.commonArr addObject:group];
+            }
         }
+        dispatch_async(dispatch_get_main_queue(), ^(){
+            [self.tableView reloadData];
+        });
+        [self.tableView.mj_header endRefreshing];
     }
     onQueue:nil];
 }

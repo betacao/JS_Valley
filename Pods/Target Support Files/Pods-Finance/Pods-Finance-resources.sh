@@ -80,12 +80,15 @@ EOM
   esac
 }
 if [[ "$CONFIGURATION" == "Debug" ]]; then
+  install_resource "EaseMobSDKFull/EaseMobSDKFull/resources/EaseMob.bundle"
   install_resource "MJRefresh/MJRefresh/MJRefresh.bundle"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
+  install_resource "EaseMobSDKFull/EaseMobSDKFull/resources/EaseMob.bundle"
   install_resource "MJRefresh/MJRefresh/MJRefresh.bundle"
 fi
 if [[ "$CONFIGURATION" == "AdHoc" ]]; then
+  install_resource "EaseMobSDKFull/EaseMobSDKFull/resources/EaseMob.bundle"
   install_resource "MJRefresh/MJRefresh/MJRefresh.bundle"
 fi
 

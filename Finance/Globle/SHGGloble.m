@@ -385,14 +385,14 @@
 }
 
 
-- (NSArray *)parseServerJsonArrayToJSONModel:(NSArray *)array class:(Class)class
+- (NSArray *)parseServerJsonArrayToJSONModel:(NSArray *)array class:(Class)aclass
 {
-    if ([class isSubclassOfClass:[MTLModel class]]) {
+    if ([aclass isSubclassOfClass:[MTLModel class]]) {
         NSMutableArray *saveArray = [NSMutableArray array];
         for(id obj in array){
             if ([obj isKindOfClass:[NSDictionary class]]) {
                 NSError *error;
-                id model = [MTLJSONAdapter modelOfClass:class fromJSONDictionary:obj error:&error];
+                id model = [MTLJSONAdapter modelOfClass:aclass fromJSONDictionary:obj error:&error];
                 if (error) {
                     MOCLogDebug(error.domain);
                 }else{
