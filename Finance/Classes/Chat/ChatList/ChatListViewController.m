@@ -304,8 +304,8 @@ static NSString * const kCommonFNum			= @"commonnum";
             model.placeholderImage = [UIImage imageNamed:@"team_head"];
             model.imageURL = nil;
             model.name = @"大牛助手";
-            model.detailMsg = @"";
-            model.time = @"";
+            model.time = [self lastMessageTimeByConversation:self.daNiuConversation];
+            model.detailMsg = [self subTitleMessageByConversation:self.daNiuConversation];
             model.unreadCount = [self unreadMessageCountByConversation:self.daNiuConversation];
             cell.model = model;
         } else{

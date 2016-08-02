@@ -209,6 +209,13 @@
 
     }
 
+    if ([model.name isEqualToString:@"大牛助手"] && model.detailMsg.length > 0) {
+        self.nameLabel.sd_resetLayout
+        .leftSpaceToView(self.headerImageView, MarginFactor(10.0f))
+        .topEqualToView(self.headerImageView)
+        .autoHeightRatio(0.0f);
+        [self.nameLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
+    }
     self.timeLabel.sd_resetLayout
     .rightSpaceToView(self.contentView, MarginFactor(12.0f))
     .bottomEqualToView(self.nameLabel)
