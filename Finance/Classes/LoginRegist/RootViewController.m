@@ -12,6 +12,7 @@
 #import "LoginViewController.h"
 #import "SHGGuideView.h"
 #import "SHGAdvertisementView.h"
+#import <AVFoundation/AVFoundation.h>
 
 @interface RootViewController ()
 

@@ -11,5 +11,6 @@ pod 'SDWebImage'
 pod 'MagicalRecord'
 pod 'SDAutoLayout'
 pod 'TTTAttributedLabel'
+pod 'EaseMobSDKFull'
 
 end

@@ -26,6 +26,7 @@
 #import "ChatListViewController.h"
 #import "ApplyViewController.h"
 #import "HeadImage.h"
+#import "EMCDDeviceManager.h"
 
 //两次提示的默认间隔
 static const CGFloat kDefaultPlaySoundInterval = 3.0;
@@ -581,7 +582,7 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     NSArray *user = [HeadImage queryAll];
     BOOL hasExsist = NO;
     NSString *fromUser = @"";
-    if (message.isGroup) {
+    if (message.messageType == eMessageTypeGroupChat) {
         fromUser = message.groupSenderName;
     } else{
         fromUser = message.from;
@@ -604,7 +605,7 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
         }];
     }
 
-    BOOL needShowNotification = message.isGroup ? [self needShowNotification:message.conversationChatter] : YES;
+    BOOL needShowNotification = message.messageType == eMessageTypeGroupChat ? [self needShowNotification:message.conversationChatter] : YES;
     if (needShowNotification)
     {
 #if !TARGET_IPHONE_SIMULATOR
@@ -638,9 +639,9 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     self.lastPlaySoundDate = [NSDate date];
 
     // 收到消息时，播放音频
-    [[EaseMob sharedInstance].deviceManager asyncPlayNewMessageSound];
+    [[EMCDDeviceManager sharedInstance] playNewMessageSound];
     // 收到消息时，震动
-    [[EaseMob sharedInstance].deviceManager asyncPlayVibration];
+    [[EMCDDeviceManager sharedInstance] playVibration];
 }
 
 - (void)showNotificationWithMessage:(EMMessage *)message
@@ -653,7 +654,7 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     if (options.displayStyle == ePushNotificationDisplayStyle_messageSummary) {
 
         NSString *title = message.from;
-        if (message.isGroup) {
+        if (message.messageType == eMessageTypeGroupChat) {
             NSArray *groupArray = [[EaseMob sharedInstance].chatManager groupList];
             for (EMGroup *group in groupArray) {
                 if ([group.groupId isEqualToString:message.conversationChatter]) {

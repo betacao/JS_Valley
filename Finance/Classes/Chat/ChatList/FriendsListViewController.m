@@ -10,7 +10,6 @@
 #import "SRRefreshView.h"
 #import "ChatListCell.h"
 #import "EMSearchBar.h"
-#import "NSDate+Category.h"
 #import "RealtimeSearchUtil.h"
 #import "ChatViewController.h"
 #import "EMSearchDisplayController.h"

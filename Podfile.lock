@@ -14,6 +14,7 @@ PODS:
   - AFNetworking/Serialization (3.0.4)
   - AFNetworking/UIKit (3.0.4):
     - AFNetworking/NSURLSession
+  - EaseMobSDKFull (2.2.6)
   - MagicalRecord (2.3.2):
     - MagicalRecord/Core (= 2.3.2)
   - MagicalRecord/Core (2.3.2)
@@ -30,6 +31,7 @@ PODS:
 
 DEPENDENCIES:
   - AFNetworking
+  - EaseMobSDKFull
   - MagicalRecord
   - Mantle
   - MBProgressHUD
@@ -40,6 +42,7 @@ DEPENDENCIES:
 
 SPEC CHECKSUMS:
   AFNetworking: a0075feb321559dc78d9d85b55d11caa19eabb93
+  EaseMobSDKFull: ea532260888e112f024d41cb6431e950d5d32d56
   MagicalRecord: 53bed74b4323b930992a725be713e53b37d19755
   Mantle: 299966b00759634931699f69cb6a30b9239b944d
   MBProgressHUD: 1569cf7ace17a8bac47aabfbb8580a49690386d1
@@ -48,6 +51,6 @@ SPEC CHECKSUMS:
   SDWebImage: 35f9627a3e44b4f292a8a8ce6a531fa488239b91
   TTTAttributedLabel: 0a2ac7b2dd726d32a070dafb01446026b11e624f
 
-PODFILE CHECKSUM: ac27f8d1ef1362ea169e5e40d143a54185f90cfe
+PODFILE CHECKSUM: ba0ba79f292b129cda6328abba81441b4f232e07
 
 COCOAPODS: 1.0.1

@@ -13,7 +13,6 @@
 #import "MessageModelManager.h"
 #import "ConvertToCommonEmoticonsHelper.h"
 #import "MessageModel.h"
-#import "EaseMob.h"
 
 @implementation MessageModelManager
 
@@ -22,33 +21,33 @@
     id<IEMMessageBody> messageBody = [message.messageBodies firstObject];
     NSDictionary *userInfo = [[EaseMob sharedInstance].chatManager loginInfo];
     NSString *login = [userInfo objectForKey:kSDKUsername];
-    BOOL isSender = [login isEqualToString:message.from] ? YES : NO;
-    
+    NSString *sender = (message.messageType == eMessageTypeChat) ? message.from : message.groupSenderName;
+    BOOL isSender = [login isEqualToString:sender] ? YES : NO;
+
     MessageModel *model = [[MessageModel alloc] init];
     model.isRead = message.isRead;
     model.messageBody = messageBody;
     model.message = message;
     model.type = messageBody.messageBodyType;
-    model.messageId = message.messageId;
     model.isSender = isSender;
     model.isPlaying = NO;
-    model.isChatGroup = message.isGroup;
-    if (model.isChatGroup) {
+    model.messageType = message.messageType;
+    if (model.messageType != eMessageTypeChat) {
         model.username = message.groupSenderName;
     }
     else{
         model.username = message.from;
     }
-    
-    if (isSender) {
-        model.headImageURL = nil;
-        model.status = message.deliveryState;
-    }
-    else{
-        model.headImageURL = nil;
-        model.status = eMessageDeliveryState_Delivered;
-    }
-    
+
+    /*
+     if (isSender) {
+     model.headImageURL = nil;
+     }
+     else{
+     model.headImageURL = nil;
+     }
+     */
+
     switch (messageBody.messageBodyType) {
         case eMessageBodyType_Text:
         {
@@ -110,7 +109,7 @@
         default:
             break;
     }
-    
+
     return model;
 }
 

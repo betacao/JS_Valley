@@ -328,7 +328,7 @@ static NSString * const kCommonFNum			= @"commonnum";
 
             }
         }
-        if (conversation.isGroup){
+        if (conversation.conversationType == eConversationTypeGroupChat){
             NSString *imageName = @"message_defaultImage";
             NSArray *groupArray = [[EaseMob sharedInstance].chatManager groupList];
             for (EMGroup *group in groupArray){
@@ -417,7 +417,7 @@ static NSString * const kCommonFNum			= @"commonnum";
         conversation = [self.dataSource objectAtIndex:indexPath.row];
         ChatViewController *chatController;
         NSString *title = conversation.chatter;
-        if (conversation.isGroup) {
+        if (conversation.conversationType == eConversationTypeGroupChat) {
             NSArray *groupArray = [[EaseMob sharedInstance].chatManager groupList];
             for (EMGroup *group in groupArray) {
                 if ([group.groupId isEqualToString:conversation.chatter]) {
@@ -428,13 +428,13 @@ static NSString * const kCommonFNum			= @"commonnum";
         }
         NSString *chatter = conversation.chatter;
         NSString *titleName = @"";
-        chatController = [[ChatViewController alloc] initWithChatter:chatter isGroup:conversation.isGroup];
+        chatController = [[ChatViewController alloc] initWithChatter:chatter isGroup:conversation.conversationType == eConversationTypeGroupChat];
         for (BasePeopleObject *obj in self.contactsSource) {
             if ([obj.uid isEqualToString:conversation.chatter]) {
                 titleName = obj.name;
             }
         }
-        if (conversation.isGroup){
+        if (conversation.conversationType == eConversationTypeGroupChat){
             chatController.title = title;
         } else{
             chatController.title=titleName;
