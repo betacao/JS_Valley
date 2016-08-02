@@ -528,14 +528,17 @@
     } else if([eventName isEqualToString:kResendButtonTapEventName]){
         EMChatViewCell *resendCell = [userInfo objectForKey:kShouldResendCell];
         MessageModel *messageModel = resendCell.messageModel;
-        messageModel.status = eMessageDeliveryState_Delivering;
+        if ((messageModel.status != eMessageDeliveryState_Failure) && (messageModel.status != eMessageDeliveryState_Pending))
+        {
+            return;
+        }
+        id <IChatManager> chatManager = [[EaseMob sharedInstance] chatManager];
+        [chatManager asyncResendMessage:messageModel.message progress:nil];
         NSIndexPath *indexPath = [self.tableView indexPathForCell:resendCell];
         [self.tableView beginUpdates];
         [self.tableView reloadRowsAtIndexPaths:@[indexPath]
                               withRowAnimation:UITableViewRowAnimationNone];
         [self.tableView endUpdates];
-        id <IChatManager> chatManager = [[EaseMob sharedInstance] chatManager];
-        [chatManager asyncResendMessage:messageModel.message progress:nil];
     } else if([eventName isEqualToString:kRouterEventChatCellVideoTapEventName]){
         [self chatVideoCellPressed:model];
     } else if([eventName isEqualToString:kRouterEventChatHeadImageTapEventName]){
@@ -709,7 +712,7 @@
 
 #pragma mark - IChatManagerDelegate
 
--(void)didSendMessage:(EMMessage *)message error:(EMError *)error
+- (void)didSendMessage:(EMMessage *)message error:(EMError *)error
 {
     [self reloadTableViewDataWithMessage:message];
 }
@@ -798,7 +801,6 @@
                 MessageModel *currentModel = [self.dataSource objectAtIndex:i];
                 EMMessage *currMsg = [currentModel message];
                 if ([messageId isEqualToString:currMsg.messageId]) {
-                    currentModel.status = eMessageDeliveryState_Failure;
                     currMsg.deliveryState = eMessageDeliveryState_Failure;
                     MessageModel *cellModel = [MessageModelManager modelWithMessage:currMsg];
                     dispatch_async(dispatch_get_main_queue(), ^{
@@ -1217,20 +1219,11 @@
     __weak ChatViewController *weakSelf = self;
     dispatch_async(_messageQueue, ^{
         NSArray *messages = [weakSelf formatMessage:message];
-        NSMutableArray *indexPaths = [[NSMutableArray alloc] init];
-        
-        for (int i = 0; i < messages.count; i++) {
-            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:weakSelf.dataSource.count+i inSection:0];
-            [indexPaths addObject:indexPath];
-        }
-        
+
         dispatch_async(dispatch_get_main_queue(), ^{
-            [weakSelf.tableView beginUpdates];
             [weakSelf.dataSource addObjectsFromArray:messages];
-            [weakSelf.tableView insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationNone];
-            [weakSelf.tableView endUpdates];
-            
-            [weakSelf.tableView scrollToRowAtIndexPath:[indexPaths lastObject] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+            [weakSelf.tableView reloadData];
+            [weakSelf.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:[weakSelf.dataSource count] - 1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
         });
     });
 }
