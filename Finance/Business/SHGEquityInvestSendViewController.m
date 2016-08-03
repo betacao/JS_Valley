@@ -13,6 +13,7 @@
 #import "SHGBusinessButtonContentView.h"
 #import "SHGBusinessLocationView.h"
 #import "CCLocationManager.h"
+#import "ForbidCopyTextField.h"
 @interface SHGEquityInvestSendViewController ()<UITextFieldDelegate,UIScrollViewDelegate>
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UIButton *nextButton;
@@ -44,7 +45,7 @@
 //金额
 @property (strong, nonatomic) IBOutlet UIView *monenyView;
 @property (weak, nonatomic) IBOutlet UILabel *monenyLabel;
-@property (weak, nonatomic) IBOutlet UITextField *monenyTextField;
+@property (weak, nonatomic) IBOutlet ForbidCopyTextField *monenyTextField;
 @property (weak, nonatomic) IBOutlet UILabel *moneyMonad;
 
 //地区

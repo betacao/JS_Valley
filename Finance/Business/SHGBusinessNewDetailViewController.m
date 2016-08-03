@@ -932,7 +932,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
 {
     [self.companyTextView resignFirstResponder];
     [self.contentTextView resignFirstResponder];
-    if (scrollView.contentSize.height > CGRectGetHeight(self.view.frame) + CGRectGetHeight(self.redView.frame)) {
+    if (scrollView.contentSize.height > CGRectGetHeight(scrollView.frame) + CGRectGetHeight(self.redView.frame)) {
         
         if (!self.navigationItem.titleView) {
             self.navigationItem.titleView = self.titleLabel;
