@@ -654,7 +654,7 @@
 		985CBDBA1C03FD0B002B3D9D /* SHGCardTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 985CBDB81C03FD0B002B3D9D /* SHGCardTableViewCell.m */; };
 		985CBDBB1C03FD0B002B3D9D /* SHGCardTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 985CBDB91C03FD0B002B3D9D /* SHGCardTableViewCell.xib */; };
 		985CBDC31C04042C002B3D9D /* SHGCollectCardClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 985CBDC21C04042C002B3D9D /* SHGCollectCardClass.m */; };
-		985FF7AB1D520AD200BC434D /* ForbidCopyTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 985FF7AA1D520AD100BC434D /* ForbidCopyTextField.m */; };
+		985FF7AB1D520AD200BC434D /* SHGForbidCopyTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 985FF7AA1D520AD100BC434D /* SHGForbidCopyTextField.m */; };
 		98621FEC1D2CB2780063CF1B /* SHGBusinessShareToDynamicViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98621FEA1D2CB2780063CF1B /* SHGBusinessShareToDynamicViewController.m */; };
 		98621FED1D2CB2780063CF1B /* SHGBusinessShareToDynamicViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98621FEB1D2CB2780063CF1B /* SHGBusinessShareToDynamicViewController.xib */; };
 		986C89F21CD1D63D001AF201 /* SHGBusinessSendSuccessViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 986C89F01CD1D63D001AF201 /* SHGBusinessSendSuccessViewController.m */; };
@@ -1792,8 +1792,8 @@
 		985CBDB91C03FD0B002B3D9D /* SHGCardTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGCardTableViewCell.xib; sourceTree = "<group>"; };
 		985CBDC11C04042C002B3D9D /* SHGCollectCardClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGCollectCardClass.h; sourceTree = "<group>"; };
 		985CBDC21C04042C002B3D9D /* SHGCollectCardClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGCollectCardClass.m; sourceTree = "<group>"; };
-		985FF7A91D520AD100BC434D /* ForbidCopyTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ForbidCopyTextField.h; sourceTree = "<group>"; };
-		985FF7AA1D520AD100BC434D /* ForbidCopyTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ForbidCopyTextField.m; sourceTree = "<group>"; };
+		985FF7A91D520AD100BC434D /* SHGForbidCopyTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGForbidCopyTextField.h; sourceTree = "<group>"; };
+		985FF7AA1D520AD100BC434D /* SHGForbidCopyTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGForbidCopyTextField.m; sourceTree = "<group>"; };
 		98621FE91D2CB2780063CF1B /* SHGBusinessShareToDynamicViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGBusinessShareToDynamicViewController.h; sourceTree = "<group>"; };
 		98621FEA1D2CB2780063CF1B /* SHGBusinessShareToDynamicViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGBusinessShareToDynamicViewController.m; sourceTree = "<group>"; };
 		98621FEB1D2CB2780063CF1B /* SHGBusinessShareToDynamicViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGBusinessShareToDynamicViewController.xib; sourceTree = "<group>"; };
@@ -2689,8 +2689,8 @@
 				538964CE1AFC6BEB00041548 /* UIViewController+DismissKeyboard.m */,
 				538964CF1AFC6BEB00041548 /* UIViewController+HUD.h */,
 				538964D01AFC6BEB00041548 /* UIViewController+HUD.m */,
-				985FF7A91D520AD100BC434D /* ForbidCopyTextField.h */,
-				985FF7AA1D520AD100BC434D /* ForbidCopyTextField.m */,
+				985FF7A91D520AD100BC434D /* SHGForbidCopyTextField.h */,
+				985FF7AA1D520AD100BC434D /* SHGForbidCopyTextField.m */,
 			);
 			path = Category;
 			sourceTree = "<group>";
@@ -5710,7 +5710,7 @@
 				F9352BFD1CFBCEC700778635 /* SHGGlobleOperation.m in Sources */,
 				F91F43DF1CDC2D1C005604A0 /* SHGAlertView.m in Sources */,
 				6149CFE91B2605FC006E45FE /* TwainContactInfo.m in Sources */,
-				985FF7AB1D520AD200BC434D /* ForbidCopyTextField.m in Sources */,
+				985FF7AB1D520AD200BC434D /* SHGForbidCopyTextField.m in Sources */,
 				F95F42AF1C8E993C003EDA30 /* SHGCircleSendViewController.m in Sources */,
 				F9BF4E8A1CB5F4B100D0155C /* SHGBusinessMainSendView.m in Sources */,
 				F99B95531D4F3CC600641ADF /* EMCDDeviceManager+Media.m in Sources */,

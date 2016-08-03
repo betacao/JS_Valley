@@ -14,7 +14,7 @@
 #import "SHGBusinessLocationView.h"
 #import "SHGBusinessButtonContentView.h"
 #import "CCLocationManager.h"
-#import "ForbidCopyTextField.h"
+#import "SHGForbidCopyTextField.h"
 @interface SHGBondFinanceSendViewController ()<UITextFieldDelegate,UIScrollViewDelegate,UITextViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;

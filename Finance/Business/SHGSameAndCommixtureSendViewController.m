@@ -12,7 +12,7 @@
 #import "SHGBusinessLocationView.h"
 #import "SHGBusinessButtonContentView.h"
 #import "CCLocationManager.h"
-#import "ForbidCopyTextField.h"
+#import "SHGForbidCopyTextField.h"
 
 @interface SHGSameAndCommixtureSendViewController ()<UITextFieldDelegate,UIScrollViewDelegate>
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;

@@ -6,9 +6,9 @@
 //  Copyright © 2016年 HuMin. All rights reserved.
 //
 
-#import "ForbidCopyTextField.h"
+#import "SHGForbidCopyTextField.h"
 
-@implementation ForbidCopyTextField
+@implementation SHGForbidCopyTextField
 
 - (id)init
 {

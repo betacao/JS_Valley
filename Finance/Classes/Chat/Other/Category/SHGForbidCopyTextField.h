@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ForbidCopyTextField : UITextField
+@interface SHGForbidCopyTextField : UITextField
 
 @end
