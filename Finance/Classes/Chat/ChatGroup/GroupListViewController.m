@@ -63,8 +63,9 @@
 {
     [super viewWillAppear:animated];
     self.view.frame = self.parnetVC.view.bounds;
-    self.tableView.tableFooterView = [[UIView alloc] init];;
+    self.tableView.tableFooterView = [[UIView alloc] init];
     self.tableView.tableHeaderView = self.searchBar;
+    self.tableView.showsVerticalScrollIndicator = NO;
     [self searchController];
     [MobClick event:@"GroupListViewController" label:@"onClick"];
 }
@@ -458,6 +459,7 @@
 -(void)didFetchAllPublicGroups:(NSArray *)groups error:(EMError*)error
 {
     [self hideHud];
+    [self.dataSource removeAllObjects];
     [self.dataSource addObjectsFromArray:groups];
     [self.tableView reloadData];
 }
@@ -465,22 +467,22 @@
 - (void)reloadDataSource
 {
     //增加点击进入增加群组
-    [self.dataSource removeAllObjects];
-    [self.joinArr removeAllObjects];
-    [self.commonArr removeAllObjects];
     NSDictionary *loginInfo = [[[EaseMob sharedInstance] chatManager] loginInfo];
+    __weak typeof(self)weakSelf = self;
     [[EaseMob sharedInstance].chatManager asyncFetchMyGroupsListWithCompletion:^(NSArray *groups, EMError *error){
-        for (EMGroup *group in groups){
+        [weakSelf.joinArr removeAllObjects];
+        [weakSelf.commonArr removeAllObjects];
+        for (EMGroup *group in groups) {
             if (![group.owner isEqualToString:loginInfo[@"username"]]){
-                [self.joinArr addObject:group];
-            }else{
-                [self.commonArr addObject:group];
+                [weakSelf.joinArr addObject:group];
+            } else {
+                [weakSelf.commonArr addObject:group];
             }
         }
         dispatch_async(dispatch_get_main_queue(), ^(){
-            [self.tableView reloadData];
+            [weakSelf.tableView reloadData];
+            [weakSelf.tableView.mj_header endRefreshing];
         });
-        [self.tableView.mj_header endRefreshing];
     }
     onQueue:nil];
 }

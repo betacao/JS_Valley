@@ -37,7 +37,7 @@
     apnsCertName = @"daniuquan";
 #endif
 
-    [[EaseMob sharedInstance] registerSDKWithAppKey:KEY_HUANXIN apnsCertName:apnsCertName otherConfig:@{kSDKConfigEnableConsoleLogger:[NSNumber numberWithBool:YES]}];
+    [[EaseMob sharedInstance] registerSDKWithAppKey:KEY_HUANXIN apnsCertName:apnsCertName otherConfig:@{kSDKConfigEnableConsoleLogger:[NSNumber numberWithBool:NO]}];
     
     // 登录成功后，自动去取好友列表
     // SDK获取结束后，会回调
@@ -148,7 +148,6 @@
 // 注册推送
 - (void)registerRemoteNotification
 {
-
     UIApplication *application = [UIApplication sharedApplication];
     application.applicationIconBadgeNumber = 0;
 

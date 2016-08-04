@@ -253,7 +253,6 @@
 		61046C761AE0FF440065F59D /* RecommendView.m in Sources */ = {isa = PBXBuildFile; fileRef = 61046C751AE0FF440065F59D /* RecommendView.m */; };
 		61046C791AE0FFBA0065F59D /* RecommendTypeObj.m in Sources */ = {isa = PBXBuildFile; fileRef = 61046C781AE0FFBA0065F59D /* RecommendTypeObj.m */; };
 		610BC8221AFBC76B001F07EC /* default_image.png in Resources */ = {isa = PBXBuildFile; fileRef = 610BC8211AFBC76B001F07EC /* default_image.png */; };
-		610FF0451AD621500027EBA6 /* PopoverListObj.m in Sources */ = {isa = PBXBuildFile; fileRef = 610FF0441AD621500027EBA6 /* PopoverListObj.m */; };
 		611B8CD71AFD5C09009CB21F /* ReplyTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 611B8CD51AFD5C09009CB21F /* ReplyTableViewCell.m */; };
 		611B8CD81AFD5C09009CB21F /* ReplyTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 611B8CD61AFD5C09009CB21F /* ReplyTableViewCell.xib */; };
 		613CAC551B000F0A00EA8C23 /* 未收藏@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 613CAC531B000F0A00EA8C23 /* 未收藏@2x.png */; };
@@ -292,7 +291,6 @@
 		614BA7E91AE73FDA009480CD /* storeSearch@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 614BA7E71AE73FDA009480CD /* storeSearch@3x.png */; };
 		614BA7EB1AE7421E009480CD /* add@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 614BA7EA1AE7421E009480CD /* add@2x.png */; };
 		614DC88C1AD65F9C00F610D4 /* CommonMethod.m in Sources */ = {isa = PBXBuildFile; fileRef = 614DC88B1AD65F9C00F610D4 /* CommonMethod.m */; };
-		614DC8931AD66B3200F610D4 /* BRCommonPopup.m in Sources */ = {isa = PBXBuildFile; fileRef = 614DC8921AD66B3200F610D4 /* BRCommonPopup.m */; };
 		614EFEBF1AEF1FD200F2BDD1 /* mycrowd@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 614EFEBD1AEF1FD200F2BDD1 /* mycrowd@2x.png */; };
 		614EFEC01AEF1FD200F2BDD1 /* myreservation@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 614EFEBE1AEF1FD200F2BDD1 /* myreservation@2x.png */; };
 		614EFED61AEF69A400F2BDD1 /* financesuccess@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 614EFED51AEF69A400F2BDD1 /* financesuccess@2x.png */; };
@@ -350,7 +348,6 @@
 		6187D2CA1AF1C693008E1D21 /* ContactSelectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6187D2221AF1C692008E1D21 /* ContactSelectionViewController.m */; };
 		6187D2CB1AF1C693008E1D21 /* ContactView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6187D2241AF1C692008E1D21 /* ContactView.m */; };
 		6187D2CC1AF1C693008E1D21 /* CreateGroupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6187D2261AF1C692008E1D21 /* CreateGroupViewController.m */; };
-		6187D2CD1AF1C693008E1D21 /* GroupBansViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6187D2281AF1C692008E1D21 /* GroupBansViewController.m */; };
 		6187D2CE1AF1C693008E1D21 /* GroupListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6187D22A1AF1C692008E1D21 /* GroupListViewController.m */; };
 		6187D2CF1AF1C693008E1D21 /* GroupSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6187D22C1AF1C692008E1D21 /* GroupSettingViewController.m */; };
 		6187D2D01AF1C693008E1D21 /* GroupSubjectChangingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6187D22E1AF1C692008E1D21 /* GroupSubjectChangingViewController.m */; };
@@ -1283,8 +1280,6 @@
 		61046C771AE0FFBA0065F59D /* RecommendTypeObj.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecommendTypeObj.h; sourceTree = "<group>"; };
 		61046C781AE0FFBA0065F59D /* RecommendTypeObj.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecommendTypeObj.m; sourceTree = "<group>"; };
 		610BC8211AFBC76B001F07EC /* default_image.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = default_image.png; sourceTree = "<group>"; };
-		610FF0431AD621500027EBA6 /* PopoverListObj.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PopoverListObj.h; sourceTree = "<group>"; };
-		610FF0441AD621500027EBA6 /* PopoverListObj.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PopoverListObj.m; sourceTree = "<group>"; };
 		611B8CD41AFD5C09009CB21F /* ReplyTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReplyTableViewCell.h; sourceTree = "<group>"; };
 		611B8CD51AFD5C09009CB21F /* ReplyTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReplyTableViewCell.m; sourceTree = "<group>"; };
 		611B8CD61AFD5C09009CB21F /* ReplyTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ReplyTableViewCell.xib; sourceTree = "<group>"; };
@@ -1341,8 +1336,6 @@
 		614BA7EA1AE7421E009480CD /* add@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "add@2x.png"; sourceTree = "<group>"; };
 		614DC88A1AD65F9C00F610D4 /* CommonMethod.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommonMethod.h; sourceTree = "<group>"; };
 		614DC88B1AD65F9C00F610D4 /* CommonMethod.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommonMethod.m; sourceTree = "<group>"; };
-		614DC8911AD66B3200F610D4 /* BRCommonPopup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRCommonPopup.h; sourceTree = "<group>"; };
-		614DC8921AD66B3200F610D4 /* BRCommonPopup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BRCommonPopup.m; sourceTree = "<group>"; };
 		614EFEBD1AEF1FD200F2BDD1 /* mycrowd@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "mycrowd@2x.png"; sourceTree = "<group>"; };
 		614EFEBE1AEF1FD200F2BDD1 /* myreservation@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "myreservation@2x.png"; sourceTree = "<group>"; };
 		614EFED51AEF69A400F2BDD1 /* financesuccess@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "financesuccess@2x.png"; sourceTree = "<group>"; };
@@ -1414,8 +1407,6 @@
 		6187D2241AF1C692008E1D21 /* ContactView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactView.m; sourceTree = "<group>"; };
 		6187D2251AF1C692008E1D21 /* CreateGroupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateGroupViewController.h; sourceTree = "<group>"; };
 		6187D2261AF1C692008E1D21 /* CreateGroupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateGroupViewController.m; sourceTree = "<group>"; };
-		6187D2271AF1C692008E1D21 /* GroupBansViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupBansViewController.h; sourceTree = "<group>"; };
-		6187D2281AF1C692008E1D21 /* GroupBansViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GroupBansViewController.m; sourceTree = "<group>"; };
 		6187D2291AF1C692008E1D21 /* GroupListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupListViewController.h; sourceTree = "<group>"; };
 		6187D22A1AF1C692008E1D21 /* GroupListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GroupListViewController.m; sourceTree = "<group>"; };
 		6187D22B1AF1C692008E1D21 /* GroupSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupSettingViewController.h; sourceTree = "<group>"; };
@@ -2726,15 +2717,6 @@
 			path = Recommend;
 			sourceTree = "<group>";
 		};
-		610FF0421AD621500027EBA6 /* PopoverList */ = {
-			isa = PBXGroup;
-			children = (
-				610FF0431AD621500027EBA6 /* PopoverListObj.h */,
-				610FF0441AD621500027EBA6 /* PopoverListObj.m */,
-			);
-			path = PopoverList;
-			sourceTree = "<group>";
-		};
 		610FF0861AD62DB60027EBA6 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
@@ -3100,8 +3082,6 @@
 				6145FF101AE49D4A0074AB49 /* BRCommentView.m */,
 				6145FF0C1AE49D180074AB49 /* BasePopupView.h */,
 				6145FF0D1AE49D180074AB49 /* BasePopupView.m */,
-				614DC8911AD66B3200F610D4 /* BRCommonPopup.h */,
-				614DC8921AD66B3200F610D4 /* BRCommonPopup.m */,
 			);
 			path = PopView;
 			sourceTree = "<group>";
@@ -3243,8 +3223,6 @@
 				6187D2241AF1C692008E1D21 /* ContactView.m */,
 				6187D2251AF1C692008E1D21 /* CreateGroupViewController.h */,
 				6187D2261AF1C692008E1D21 /* CreateGroupViewController.m */,
-				6187D2271AF1C692008E1D21 /* GroupBansViewController.h */,
-				6187D2281AF1C692008E1D21 /* GroupBansViewController.m */,
 				6187D2291AF1C692008E1D21 /* GroupListViewController.h */,
 				6187D22A1AF1C692008E1D21 /* GroupListViewController.m */,
 				53BD2BE01B04732800342B2E /* GroupListViewController.xib */,
@@ -3652,7 +3630,6 @@
 				6147ADFC1B050E7F00DFBD50 /* MPNotificationView */,
 				5331DF271AFC12EA00E035B8 /* Localizable.strings */,
 				614DC8901AD66B3200F610D4 /* PopView */,
-				610FF0421AD621500027EBA6 /* PopoverList */,
 				615010DF1AD61C1800827F82 /* CPTextViewPlaceholder */,
 				615010D51AD61BD700827F82 /* ZSYPopoverListView */,
 				615010D81AD61BD700827F82 /* ZYQAssetPickerController */,
@@ -5544,7 +5521,6 @@
 				6187D2F61AF1C693008E1D21 /* EMRemarkImageView.m in Sources */,
 				F93FCBC61C856D5A004E356E /* NSString+Customized.m in Sources */,
 				6187D2CA1AF1C693008E1D21 /* ContactSelectionViewController.m in Sources */,
-				6187D2CD1AF1C693008E1D21 /* GroupBansViewController.m in Sources */,
 				569C6D2F1B7CA9EB00AD59C3 /* BindPhoneViewController.m in Sources */,
 				F9D296DC1C8FCB9C00A1446C /* SHGExtendTableViewCell.m in Sources */,
 				6187D2D31AF1C693008E1D21 /* ChatListCell.m in Sources */,
@@ -5655,7 +5631,6 @@
 				53AFF7841AFBF5F700D04B6B /* THProgressView.m in Sources */,
 				F99B95521D4F3CC600641ADF /* EMAudioRecorderUtil.m in Sources */,
 				F9A2EF8B1CF3EE680054AE1C /* SHGDiscoveryViewController.m in Sources */,
-				610FF0451AD621500027EBA6 /* PopoverListObj.m in Sources */,
 				538964D11AFC6BEB00041548 /* AppDelegate+EaseMob.m in Sources */,
 				F916B5FB1D0D395300AE217F /* CTTextDisplayView.m in Sources */,
 				F951C61A1CF57BCB007FA198 /* SHGDiscoveryGroupingViewController.m in Sources */,
@@ -5730,7 +5705,6 @@
 				61046C791AE0FFBA0065F59D /* RecommendTypeObj.m in Sources */,
 				F93242BA1BE9EE92003B7F07 /* SHGUnifiedTreatment.m in Sources */,
 				614A597B1AD3AEA1005DAB04 /* AppDelegate.m in Sources */,
-				614DC8931AD66B3200F610D4 /* BRCommonPopup.m in Sources */,
 				F9EDD5F71BABFBCF00506C0C /* SDPhotoBrowser.m in Sources */,
 				9855F02A1CACFD72006F760F /* SHGBondInvestSendViewController.m in Sources */,
 				6187D2DB1AF1C693008E1D21 /* DXFaceView.m in Sources */,

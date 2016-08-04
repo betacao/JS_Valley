@@ -56,14 +56,15 @@
 -(void)viewDidLoad
 {
     [super viewDidLoad];
+
+    self.tabBar.tintColor = RGB(255, 57, 67);
+
     [self.tabBar setBackgroundImage:[[UIImage alloc] init]];
     [self.tabBar setShadowImage:[CommonMethod imageWithColor:Color(@"e2e2e2")]];
     [self addObserver:[AppDelegate currentAppdelegate] forKeyPath:@"isViewLoad" options:NSKeyValueObservingOptionNew context:nil];
     NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:RGB(51, 51, 51), NSForegroundColorAttributeName, nil];;
     [[UITabBarItem appearance] setTitleTextAttributes:dic forState:UIControlStateNormal];
 
-    self.tabBar.tintColor = RGB(255, 57, 67);
-    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setupUntreatedApplyCount) name:@"setupUntreatedApplyCount" object:nil];
 
     dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
