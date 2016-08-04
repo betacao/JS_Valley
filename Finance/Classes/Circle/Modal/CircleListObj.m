@@ -15,10 +15,11 @@
 
 @implementation CircleListObj
 
-- (id)init
+- (instancetype)init
 {
     self = [super init];
     if (self) {
+        self.heads = [NSMutableArray array];
     }
     return self;
 }
