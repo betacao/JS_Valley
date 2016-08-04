@@ -812,7 +812,7 @@
             if(!placeImage){
                 placeImage = [UIImage imageNamed:@"default_head"];
             }
-            [weakSelf.userHeaderView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,headImageUrl]] placeholderImage:placeImage];
+            [weakSelf.userHeaderView yy_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,headImageUrl]] placeholder:placeImage];
         }
         [weakSelf.authenticationView updateWithVStatus:[[response.dataDictionary objectForKey:@"userstatus"] isEqualToString:@"true"] ? YES : NO enterpriseStatus:[[response.dataDictionary objectForKey:@"businessstatus"] boolValue]];
 

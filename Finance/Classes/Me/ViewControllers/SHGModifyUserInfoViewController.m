@@ -276,7 +276,7 @@
 
 - (void)initObject
 {
-    [self.headerImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,self.head_img]] placeholderImage:[UIImage imageNamed:@"default_head"]];
+    [self.headerImage yy_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,self.head_img]] placeholder:[UIImage imageNamed:@"default_head"]];
     self.nameField.text = [self.userInfo objectForKey:kNickName];
     self.industryField.text = [self codeToIndustry: [self.userInfo objectForKey:kIndustry]];
     NSString *company = [self.userInfo objectForKey:kCompany];

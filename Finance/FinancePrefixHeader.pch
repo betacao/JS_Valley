@@ -18,12 +18,12 @@
 #import <TencentOpenAPI/QQApiInterface.h>
 #import <TencentOpenAPI/TencentOAuth.h>
 #import <AddressBook/AddressBook.h>
+#import "YYWebImage.h"
 #import "CircleActionDelegate.h"
 #import "MobClick.h"
 #import "Constant.h"
 #import "EaseMob.h"
 #import "MBProgressHUD.h"
-#import "UIImageView+WebCache.h"
 #import "BaseNavigationController.h"
 #import "BaseTableViewController.h"
 #import "BaseViewController.h"

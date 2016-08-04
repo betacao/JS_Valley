@@ -41,7 +41,7 @@
         self.titleLabel.frame =CGRectMake(self.titleLabel.frame.origin.x,self.titleLabel.frame.origin.y, self.titleLabel.frame.size.width, actualsize.height);
 
         NSString * str = [arr objectAtIndex:0];
-        [self.headerImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,str]]];
+        [self.headerImage yy_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,str]] options:kNilOptions];
     }
    //图片加边框
     CALayer * layer = [self.headerImage layer];

@@ -24,10 +24,14 @@ PODS:
   - MBProgressHUD (0.9.2)
   - MJRefresh (3.1.0)
   - SDAutoLayout (2.1.2)
-  - SDWebImage (3.8.1):
-    - SDWebImage/Core (= 3.8.1)
-  - SDWebImage/Core (3.8.1)
   - TTTAttributedLabel (1.13.4)
+  - YYCache (1.0.3)
+  - YYImage (1.0.3):
+    - YYImage/Core (= 1.0.3)
+  - YYImage/Core (1.0.3)
+  - YYWebImage (1.0.4):
+    - YYCache
+    - YYImage
 
 DEPENDENCIES:
   - AFNetworking
@@ -37,8 +41,8 @@ DEPENDENCIES:
   - MBProgressHUD
   - MJRefresh
   - SDAutoLayout
-  - SDWebImage
   - TTTAttributedLabel
+  - YYWebImage
 
 SPEC CHECKSUMS:
   AFNetworking: a0075feb321559dc78d9d85b55d11caa19eabb93
@@ -48,9 +52,11 @@ SPEC CHECKSUMS:
   MBProgressHUD: 1569cf7ace17a8bac47aabfbb8580a49690386d1
   MJRefresh: 743e6404967d1c2c688472ea3ecfde247d872db4
   SDAutoLayout: 4910758003bbb043003700915b00f53fbc2bf512
-  SDWebImage: 35f9627a3e44b4f292a8a8ce6a531fa488239b91
   TTTAttributedLabel: 0a2ac7b2dd726d32a070dafb01446026b11e624f
+  YYCache: 282f35b5b0990833d0b7a06d864a87141a021da2
+  YYImage: 362f44ffba1fc498f2152060f3bb54ed84600981
+  YYWebImage: 0431ed108e104527669b86f75efd58958425cca2
 
-PODFILE CHECKSUM: ba0ba79f292b129cda6328abba81441b4f232e07
+PODFILE CHECKSUM: 1b3a72d970d9b578ca9ed569d6d0e2fe8bbb4182
 
 COCOAPODS: 1.0.1

@@ -7,7 +7,6 @@
 //
 
 #import "SHGAdvertisementView.h"
-#import "SDWebImageManager.h"
 
 @interface SHGAdvertisementView()
 
@@ -56,17 +55,18 @@
     _dissmissBlock = dissmissBlock;
     __weak typeof(self)weakSelf = self;
     [SHGAdvertisementManager loadLocalAdvertisementBlock:^(BOOL show, NSString *photoUrl) {
+        NSString *imageName = [NSString stringWithFormat:@"%ldx%ld",(long)(SCREENWIDTH * SCALE), (long)(SCREENHEIGHT * SCALE)];
+        UIImage *image = [UIImage imageNamed:imageName];
+
         if (show && photoUrl) {
-            UIImage *image = [UIImage imageWithContentsOfFile:photoUrl];
-            weakSelf.imageView.image = image;
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3.0f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [weakSelf.imageView yy_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,photoUrl]] placeholder:image options:kNilOptions manager:[SHGAdvertisementManager adImageManager] progress:nil transform:nil completion:nil];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 if (dissmissBlock) {
                     dissmissBlock();
                 }
             });
         } else{
-            NSString *imageName = [NSString stringWithFormat:@"%ldx%ld",(long)(SCREENWIDTH * SCALE), (long)(SCREENHEIGHT * SCALE)];
-            self.imageView.image = [UIImage imageNamed:imageName];
+            weakSelf.imageView.image = image;
             if (dissmissBlock) {
                 dissmissBlock();
             }
@@ -89,7 +89,8 @@
 {
     if ([[NSFileManager defaultManager] fileExistsAtPath:kSplashScreenAdCacheLocalPath]) {
         NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:[NSData dataWithContentsOfURL:[NSURL fileURLWithPath:kSplashScreenAdCacheLocalPath]] options:NSJSONReadingAllowFragments error:nil];
-        NSString *phototUrl = kSplashScreenAdCacheImgLocalPath;
+        dictionary = [dictionary objectForKey:@"appimage"];
+        NSString *phototUrl = [dictionary objectForKey:@"phototurl"];
         block([[dictionary objectForKey:@"flag"] isEqualToString:@"1"], phototUrl);
     } else{
         block(NO, nil);
@@ -99,20 +100,25 @@
 + (void)loadRemoteAdvertisement
 {
     [MOCHTTPRequestOperationManager postWithURL:[rBaseAddressForHttp stringByAppendingString:@"/appImage/getStartAppImage"] parameters:@{@"os":@"ios", @"width":@(SCREENWIDTH * SCALE), @"height":@(SCREENHEIGHT * SCALE)} success:^(MOCHTTPResponse *response) {
-        NSDictionary *dictionary = [response.dataDictionary objectForKey:@"appimage"];
-        NSString *phototUrl = [dictionary objectForKey:@"phototurl"];
-        [[SDWebImageManager sharedManager] downloadImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,phototUrl]] options:SDWebImageRetryFailed|SDWebImageLowPriority progress:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
-            NSData *data = UIImageJPEGRepresentation(image, 1.0f);
-            [data writeToFile:kSplashScreenAdCacheImgLocalPath atomically:YES];
-        }];
-        if (dictionary) {
-            NSData *data = [NSJSONSerialization dataWithJSONObject:dictionary options:NSJSONWritingPrettyPrinted error:nil];
-            [data writeToFile:kSplashScreenAdCacheLocalPath atomically:YES];
-        } else{
-            NSData *data = [@"" dataUsingEncoding:NSUTF8StringEncoding];
-            [data writeToFile:kSplashScreenAdCacheLocalPath atomically:YES];
-        }
+        NSData *data = [NSJSONSerialization dataWithJSONObject:response.data options:NSJSONWritingPrettyPrinted error:nil];
+        NSLog(@"%@", kSplashScreenAdCacheLocalPath);
+        [data writeToFile:kSplashScreenAdCacheLocalPath atomically:YES];
     } failed:nil];
+}
+
++ (YYWebImageManager *)adImageManager
+{
+    static YYWebImageManager *manager;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        NSString *path = kSplashScreenAdCacheImgLocalPath;
+        YYImageCache *cache = [[YYImageCache alloc] initWithPath:path];
+        manager = [[YYWebImageManager alloc] initWithCache:cache queue:[YYWebImageManager sharedManager].queue];
+        manager.sharedTransformBlock = ^(UIImage *image, NSURL *url) {
+            return image;
+        };
+    });
+    return manager;
 }
 
 

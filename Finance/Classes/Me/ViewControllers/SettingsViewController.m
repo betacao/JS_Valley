@@ -158,11 +158,9 @@
     } else if ([obj.content isEqualToString:@"清除缓存"]){
         UILabel *label = [[UILabel alloc] init];
         label.textAlignment = NSTextAlignmentRight;
-        label.text = [NSString stringWithFormat:@"%0.1fM",[self folderSizeAtPath]];
         label.font = FontFactor(14.0f);
         label.textColor = [UIColor colorWithHexString:@"919291"];
-        [label sizeToFit];
-        cell.accessoryView = label;
+        [self tableViewCell:cell folderSizeAtPath:label];
     }
     return cell;
 }
@@ -198,7 +196,7 @@
         __weak typeof(self) weakSelf = self;
         alert.rightBlock = ^{
             [Hud showWait];
-            [[SDImageCache sharedImageCache] clearDiskOnCompletion:^{
+            [[YYImageCache sharedCache].diskCache removeAllObjectsWithBlock:^{
                 [Hud hideHud];
                 [Hud showMessageWithText:@"清除缓存成功"];
                 [weakSelf.tableView reloadData];
@@ -322,8 +320,13 @@
     return 0;
 }
 
-- (CGFloat) folderSizeAtPath{
-    CGFloat cacheSize = [[SDImageCache sharedImageCache] getSize] / (1024.0f * 1024.0f);
-    return cacheSize;
+- (void)tableViewCell:(UITableViewCell *)cell folderSizeAtPath:(UILabel *)label
+{
+    [[YYImageCache sharedCache].diskCache totalCostWithBlock:^(NSInteger totalCost) {
+        CGFloat cacheSize = totalCost / (1024.0f * 1024.0f);
+        label.text = [NSString stringWithFormat:@"%0.1fM",cacheSize];
+        [label sizeToFit];
+        cell.accessoryView = label;
+    }];
 }
 @end

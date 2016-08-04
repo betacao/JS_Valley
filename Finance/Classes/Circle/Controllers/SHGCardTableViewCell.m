@@ -74,7 +74,7 @@
 {
     
     _object = object;
-    [self.headerImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,self.object.headerImageUrl]] placeholderImage:[UIImage imageNamed:@"default_head"]];
+    [self.headerImageView yy_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,self.object.headerImageUrl]] placeholder:[UIImage imageNamed:@"default_head"]];
     
     self.userNameLabel.text = object.name;
     [self.userNameLabel sizeToFit];

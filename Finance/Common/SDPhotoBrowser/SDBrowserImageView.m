@@ -7,7 +7,6 @@
 //
 
 #import "SDBrowserImageView.h"
-#import "UIImageView+WebCache.h"
 #import "SDPhotoBrowserConfig.h"
 
 @interface SDBrowserImageView ()
@@ -71,14 +70,11 @@
     
     __weak SDBrowserImageView *imageViewWeak = self;
 
-    [self sd_setImageWithURL:url placeholderImage:placeholder options:SDWebImageRetryFailed progress:^(NSInteger receivedSize, NSInteger expectedSize) {
-        
+    [self yy_setImageWithURL:url placeholder:placeholder options:kNilOptions progress:^(NSInteger receivedSize, NSInteger expectedSize) {
         imageViewWeak.progress = (CGFloat)receivedSize / expectedSize;
-        
-    } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-        
+    } transform:nil completion:^(UIImage * _Nullable image, NSURL * _Nonnull url, YYWebImageFromType from, YYWebImageStage stage, NSError * _Nullable error) {
         [imageViewWeak removeWaitingView];
-        
+
         if (error) {
             UILabel *label = [[UILabel alloc] init];
             label.bounds = CGRectMake(0, 0, 160, 30);
@@ -92,7 +88,6 @@
             label.textAlignment = NSTextAlignmentCenter;
             [imageViewWeak addSubview:label];
         }
-   
     }];
 }
 

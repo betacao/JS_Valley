@@ -97,7 +97,7 @@
 
     NSArray *array = (NSArray *)object.photos;
     if (array && array.count > 0){
-        [self.extendImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,[array firstObject]]] placeholderImage:[UIImage imageNamed:@"default_image"]];
+        [self.extendImageView yy_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,[array firstObject]]] placeholder:[UIImage imageNamed:@"default_image"]];
     } else{
         self.extendImageView.image = [UIImage imageNamed:@"default_image"];
     }

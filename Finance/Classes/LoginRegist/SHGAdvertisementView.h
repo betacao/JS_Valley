@@ -18,6 +18,8 @@ typedef void(^SHGAdvertisementViewDismissBlock)(void);
 
 @interface SHGAdvertisementManager : NSObject
 
++ (YYWebImageManager *)adImageManager;
+
 + (void)loadLocalAdvertisementBlock:(void (^)(BOOL show, NSString *photoUrl))block;
 
 + (void)loadRemoteAdvertisement;

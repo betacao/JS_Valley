@@ -79,8 +79,6 @@ NSString *const kRouterEventChatHeadImageTapEventName = @"kRouterEventChatHeadIm
 {
     _messageModel = messageModel;
     
-//    _nameLabel.hidden = !messageModel.isChatGroup;
-
     self.nameLabel.text = messageModel.nickName;
     [self.nameLabel sizeToFit];
     UIImage *placeholderImage;
@@ -90,7 +88,7 @@ NSString *const kRouterEventChatHeadImageTapEventName = @"kRouterEventChatHeadIm
         placeholderImage = [UIImage imageNamed:@"default_head"];
     }
     
-    [self.headImageView sd_setImageWithURL:_messageModel.headImageURL placeholderImage:placeholderImage];
+    [self.headImageView yy_setImageWithURL:_messageModel.headImageURL placeholder:placeholderImage];
 }
 
 #pragma mark - private

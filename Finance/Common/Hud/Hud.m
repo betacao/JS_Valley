@@ -15,6 +15,11 @@
 
 + (void)showMessageWithText:(NSString *)text
 {
+    [self performSelectorOnMainThread:@selector(showMessageOnMainThreadWithText:) withObject:text waitUntilDone:YES];
+}
+
++ (void)showMessageOnMainThreadWithText:(NSString *)text
+{
     UILabel *label = [[UILabel alloc] init];
     label.text = text;
     label.textColor = [UIColor whiteColor];
@@ -34,7 +39,13 @@
     hud.opacity = 0.85f;
     hud.margin = MarginFactor(18.0f);
     [hud hide:YES afterDelay:2.0f];
+}
 
+
++ (void)showWait
+{
+    [self hideHud];
+    [self performSelectorOnMainThread:@selector(showOnMainThread) withObject:nil waitUntilDone:YES];
 }
 
 + (void)showOnMainThread
@@ -50,6 +61,12 @@
         HUD.mode = MBProgressHUDModeCustomView;
         HUD.customView = progressHud;
     }
+}
+
++ (void)showGrayWait
+{
+    [self hideHud];
+    [self performSelectorOnMainThread:@selector(showGratOnMainThread) withObject:nil waitUntilDone:YES];
 }
 
 + (void)showGratOnMainThread
@@ -68,19 +85,12 @@
     }
 }
 
-+ (void)showWait
-{
-    [self performSelectorOnMainThread:@selector(hideHud) withObject:nil waitUntilDone:YES];
-    [self performSelectorOnMainThread:@selector(showOnMainThread) withObject:nil waitUntilDone:YES];
-}
-
-+ (void)showGrayWait
-{
-    [self performSelectorOnMainThread:@selector(hideHud) withObject:nil waitUntilDone:YES];
-    [self performSelectorOnMainThread:@selector(showGratOnMainThread) withObject:nil waitUntilDone:YES];
-}
-
 + (void)hideHud
+{
+    [self performSelectorOnMainThread:@selector(hideHudOnMianThread) withObject:nil waitUntilDone:YES];
+}
+
++ (void)hideHudOnMianThread
 {
     if ([[AppDelegate currentAppdelegate].window.rootViewController isKindOfClass:[UINavigationController class]]){
         UINavigationController *nav = (UINavigationController *)[AppDelegate currentAppdelegate].window.rootViewController;
@@ -91,6 +101,7 @@
             }
         }
     }
+    
 }
 
 @end

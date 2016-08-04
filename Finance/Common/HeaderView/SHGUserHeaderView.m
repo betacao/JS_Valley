@@ -86,10 +86,7 @@
         self.VImageView.hidden = YES;
     }
     self.userId = userId;
-    self.headerImageView.image = placeImage;
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:sourceUrl]];
-    [request addValue:@"image/*" forHTTPHeaderField:@"Accept"];
-    [self.headerImageView setImageWithURLRequest:request placeholderImage:placeImage success:nil failure:nil];
+    [self.headerImageView.layer yy_setImageWithURL:[NSURL URLWithString:sourceUrl] placeholder:placeImage];
 }
 
 

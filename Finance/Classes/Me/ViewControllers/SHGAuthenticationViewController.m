@@ -7,12 +7,10 @@
 //
 
 #import "SHGAuthenticationViewController.h"
-#import "UIButton+WebCache.h"
 #import "SHGItemChooseView.h"
 #import "SHGProvincesViewController.h"
 #import "CCLocationManager.h"
 #import "SHGAuthenticationWarningView.h"
-#import "SDWebImageManager.h"
 
 @interface SHGAuthenticationViewController ()<UITextFieldDelegate, UIActionSheetDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, SHGItemChooseDelegate, SHGAreaDelegate>
 //
@@ -281,7 +279,7 @@
     [self.stateLabel updateLayout];
     __weak typeof(self) weakSelf = self;
     if (!IsStrEmpty(self.authImageUrl)) {
-        [self.authImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,self.authImageUrl]] placeholderImage:[UIImage imageNamed:@"default_head"]completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+        [self.authImageView yy_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,self.authImageUrl]] placeholder:[UIImage imageNamed:@"default_head"] options:kNilOptions completion:^(UIImage * _Nullable image, NSURL * _Nonnull url, YYWebImageFromType from, YYWebImageStage stage, NSError * _Nullable error) {
             weakSelf.authImage = image;
             [weakSelf.plusButton setImage:image forState:UIControlStateNormal];
         }];
@@ -323,7 +321,7 @@
 
         weakSelf.departmentField.text = [self codeToIndustry:[response.dataDictionary objectForKey:@"industrycode"]];
         weakSelf.headerImageUrl = [response.dataDictionary objectForKey:@"head_img"];
-        [weakSelf.headerButton sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,weakSelf.headerImageUrl]] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"uploadHead"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+        [weakSelf.headerButton yy_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,weakSelf.headerImageUrl]] forState:UIControlStateNormal placeholder:[UIImage imageNamed:@"uploadHead"] options:kNilOptions completion:^(UIImage * _Nullable image, NSURL * _Nonnull url, YYWebImageFromType from, YYWebImageStage stage, NSError * _Nullable error) {
             weakSelf.headerImage = image;
         }];
     }failed:^(MOCHTTPResponse *response) {
@@ -724,7 +722,7 @@
     _licenseUrl = licenseUrl;
     if (licenseUrl && licenseUrl.length > 0 && [self isViewLoaded]) {
         __weak typeof(self) weakSelf = self;
-        [[SDWebImageManager sharedManager] downloadImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,self.licenseUrl]] options:SDWebImageLowPriority|SDWebImageRetryFailed progress:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
+        [[YYWebImageManager sharedManager] requestImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,self.licenseUrl]] options:kNilOptions progress:nil transform:nil completion:^(UIImage * _Nullable image, NSURL * _Nonnull url, YYWebImageFromType from, YYWebImageStage stage, NSError * _Nullable error) {
             weakSelf.image = image;
         }];
     }

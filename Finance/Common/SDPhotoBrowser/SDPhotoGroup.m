@@ -8,7 +8,6 @@
 
 #import "SDPhotoGroup.h"
 #import "SDPhotoItem.h"
-#import "UIButton+WebCache.h"
 #import "SDPhotoBrowser.h"
 
 @interface SDPhotoGroup () <SDPhotoBrowserDelegate>
@@ -21,8 +20,6 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        // 清除图片缓存，便于测试
-//        [[SDWebImageManager sharedManager].imageCache clearDisk];
         self.clipsToBounds = YES;
     }
     return self;
@@ -39,7 +36,7 @@
         imageView.tag = idx;
         UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(imageViewDidTap:)];
         [imageView addGestureRecognizer:recognizer];
-        [imageView sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:[UIImage imageNamed:@"default_image"]];
+        [imageView.layer yy_setImageWithURL:[NSURL URLWithString:url] placeholder:[UIImage imageNamed:@"default_image"]];
         [self addSubview:imageView];
     }];
     [self makeupSubViews];

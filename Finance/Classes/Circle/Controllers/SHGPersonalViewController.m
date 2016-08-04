@@ -235,7 +235,7 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
 
 - (void)loadData
 {
-    [self.headerImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,self.potName]] placeholderImage:[UIImage imageNamed:@"default_head"]];
+    [self.headerImageView yy_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,self.potName]] placeholder:[UIImage imageNamed:@"default_head"]];
     BOOL userStatus = [self.userStatus boolValue];
     [self.authenticationView updateWithVStatus:userStatus enterpriseStatus:self.businessStatus];
     if (self.department.length > 6) {

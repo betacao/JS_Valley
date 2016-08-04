@@ -191,7 +191,7 @@
     self.detailLabel.text = model.detailMsg;
     self.timeLabel.text = model.time;
 
-    [self.headerImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,model.imageURL]] placeholderImage:model.placeholderImage];
+    [self.headerImageView yy_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,model.imageURL]] placeholder:model.placeholderImage];
 
     if([model.name isEqualToString:@"群通知"] || [model.name isEqualToString:@"通知"] || [model.name isEqualToString:@"大牛助手"]){
         self.nameLabel.sd_resetLayout

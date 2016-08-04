@@ -246,19 +246,15 @@
 {
     static NSString *CellIdentifier = @"ContactListCell";
     BaseTableViewCell *cell = (BaseTableViewCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    
-    // Configure the cell...
     if (cell == nil) {
         cell = [[BaseTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
-    
+
     BasePeopleObject *buddy = [[_dataSource objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
-    
-//    cell.imageView.image = [UIImage imageNamed:@"default_head"];
-    [cell.imageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,buddy.headImageUrl]] placeholderImage:[UIImage imageNamed:@"default_head"]];
-    
+    [cell.imageView yy_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,buddy.headImageUrl]] placeholder:[UIImage imageNamed:@"default_head"]];
+
     cell.textLabel.text = buddy.name;
-    
+
     return cell;
 }
 
@@ -378,8 +374,7 @@
     for (int i = 0; i < count; i++) {
         BasePeopleObject *buddy = [self.selectedContacts objectAtIndex:i];
         EMRemarkImageView *remarkView = [[EMRemarkImageView alloc] initWithFrame:CGRectMake(i * imageSize, 0, imageSize, imageSize)];
-//        remarkView.image = [UIImage imageNamed:@"default_head"];
-        [remarkView.imageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,buddy.headImageUrl]] placeholderImage:[UIImage imageNamed:@"default_head"]];
+        [remarkView.imageView yy_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,buddy.headImageUrl]] placeholder:[UIImage imageNamed:@"default_head"]];
         
         remarkView.remark = buddy.name;
         [self.footerScrollView addSubview:remarkView];
@@ -429,21 +424,18 @@
 {
     if (_delegate && [_delegate respondsToSelector:@selector(viewController:didFinishSelectedSources:)]) {
         if ([_blockSelectedUsernames count] == 0) {
-            NSMutableArray *resultArray=[NSMutableArray array];
-            for(BasePeopleObject *buddy in self.self.selectedContacts)
-            {
-                EMBuddy *bu=[EMBuddy buddyWithUsername:buddy.uid];
+            NSMutableArray *resultArray = [NSMutableArray array];
+            for(BasePeopleObject *buddy in self.self.selectedContacts) {
+                EMBuddy *bu = [EMBuddy buddyWithUsername:buddy.uid];
                 [resultArray addObject:bu];
             }
             [_delegate viewController:self didFinishSelectedSources:resultArray];
             [self.navigationController popViewControllerAnimated:NO];
-        }
-        else{
+        } else {
             NSMutableArray *resultArray = [NSMutableArray array];
             for (BasePeopleObject *buddy in self.selectedContacts) {
-                if(![self isBlockUsername:buddy.name])
-                {
-                    EMBuddy *bu=[EMBuddy buddyWithUsername:buddy.uid];
+                if(![self isBlockUsername:buddy.name]){
+                    EMBuddy *bu = [EMBuddy buddyWithUsername:buddy.uid];
                     [resultArray addObject:bu];
                 }
             }

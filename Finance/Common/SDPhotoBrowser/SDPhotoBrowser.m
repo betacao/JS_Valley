@@ -7,7 +7,6 @@
 //
 
 #import "SDPhotoBrowser.h"
-#import "UIImageView+WebCache.h"
 #import "SDBrowserImageView.h"
  
 //  ============在这里方便配置样式相关设置===========
@@ -105,7 +104,7 @@
     SDBrowserImageView *imageView = [[[self.scrollView.subviews objectAtIndex:index]subviews] objectAtIndex:0];
     if (imageView.hasLoadedImage) return;
     if ([self highQualityImageURLForIndex:index]) {
-        [imageView sd_setImageWithURL:[self highQualityImageURLForIndex:index] placeholderImage:nil];
+        [imageView yy_setImageWithURL:[self highQualityImageURLForIndex:index] placeholder:nil];
     } else {
         imageView.image = [self placeholderImageForIndex:index];
     }

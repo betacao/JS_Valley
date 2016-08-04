@@ -243,6 +243,7 @@
     }
     return _titleStyleModel;
 }
+
 - (void)setObject:(CircleListObj *)object
 {
     _object = object;

@@ -9,7 +9,6 @@
 #import "SHGBondInvestNextViewController.h"
 #import "EMTextView.h"
 #import "SHGBusinessMargin.h"
-#import "UIButton+WebCache.h"
 #import "SHGBusinessButtonContentView.h"
 #import "SHGBusinessManager.h"
 #import "SHGBusinessListViewController.h"
@@ -266,12 +265,7 @@
         
         if (self.obj.url && self.obj.url.length > 0) {
             self.hasImage = YES;
-            __weak typeof(self) weakSelf = self;
-            [[SDWebImageManager sharedManager] downloadImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,self.obj.url]] options:SDWebImageRetryFailed|SDWebImageLowPriority progress:^(NSInteger receivedSize, NSInteger expectedSize) {
-                
-            } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
-                [weakSelf.addImageButton setImage:image forState:UIControlStateNormal];
-            }];
+            [self.addImageButton yy_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,self.obj.url]] forState:UIControlStateNormal placeholder:self.addImageButton.currentImage];
         }
         
         NSString *result = [[SHGGloble sharedGloble] businessKeysForValues:self.obj.middleContent showEmptyKeys:YES];

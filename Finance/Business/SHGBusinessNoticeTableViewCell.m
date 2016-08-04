@@ -7,7 +7,6 @@
 //
 
 #import "SHGBusinessNoticeTableViewCell.h"
-#import "UIButton+WebCache.h"
 #import "SHGBusinessListViewController.h"
 
 @interface SHGBusinessNoticeTableViewCell ()
@@ -58,7 +57,7 @@
 - (void)setTipUrl:(NSString *)tipUrl
 {
     _tipUrl = tipUrl;
-    [self.imageButton sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage, tipUrl]] forState:UIControlStateNormal];
+    [self.imageButton yy_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage, tipUrl]] forState:UIControlStateNormal options:kNilOptions];
 }
 
 

@@ -25,7 +25,6 @@
 #import "MessageViewController.h"
 #import "FriendsListViewController.h"
 #import "HeadImage.h"
-#import "UIImageView+WebCache.h"
 #import "AppDelegate.h"
 #import "TabBarViewController.h"
 #import "popObj.h"
