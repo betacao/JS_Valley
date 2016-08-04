@@ -47,7 +47,7 @@
 //金额
 @property (strong, nonatomic) IBOutlet UIView *monenyView;
 @property (weak, nonatomic) IBOutlet UILabel *monenyLabel;
-@property (weak, nonatomic) IBOutlet ForbidCopyTextField *monenyTextField;
+@property (weak, nonatomic) IBOutlet SHGForbidCopyTextField *monenyTextField;
 @property (weak, nonatomic) IBOutlet UILabel *moneyMonad;
 
 //地区
