@@ -120,7 +120,7 @@
 
 - (void)searchNormalBusinessList:(NSString *)target businessId:(NSString *)businessId
 {
-    __weak typeof(self) weakSelf = self;
+    WEAK(self, weakSelf);
     NSMutableDictionary *dictionary = [NSMutableDictionary dictionaryWithDictionary:self.param];
     [dictionary setObject:target forKey:@"target"];
     [dictionary setObject:businessId forKey:@"businessId"];

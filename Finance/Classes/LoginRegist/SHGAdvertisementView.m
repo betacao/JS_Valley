@@ -53,7 +53,7 @@
 - (void)setDissmissBlock:(SHGAdvertisementViewDismissBlock)dissmissBlock
 {
     _dissmissBlock = dissmissBlock;
-    __weak typeof(self)weakSelf = self;
+    WEAK(self, weakSelf);
     [SHGAdvertisementManager loadLocalAdvertisementBlock:^(BOOL show, NSString *photoUrl) {
         NSString *imageName = [NSString stringWithFormat:@"%ldx%ld",(long)(SCREENWIDTH * SCALE), (long)(SCREENHEIGHT * SCALE)];
         UIImage *image = [UIImage imageNamed:imageName];

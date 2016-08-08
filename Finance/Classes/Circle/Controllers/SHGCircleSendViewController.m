@@ -176,7 +176,7 @@
     .rightEqualToView(self.textView)
     .heightIs(2.0f * kImageViewHeight + kImageViewMargin);
 
-    __weak typeof(self)weakSelf = self;
+    WEAK(self, weakSelf);
     self.photoView.didFinishAutoLayoutBlock = ^(CGRect rect){
         CGFloat maxY = MAX(CGRectGetMaxY(rect), CGRectGetHeight(self.scrollView.frame) + 1.0f);
         if (weakSelf.scrollView.contentSize.height != maxY) {
@@ -322,7 +322,7 @@
 
 - (void)sendPhotos
 {
-    __weak typeof(self) weakSelf = self;
+    WEAK(self, weakSelf);
     [MOCHTTPRequestOperationManager POST:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"image/base"] parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
         for (NSInteger i = 0; i < weakSelf.imageArray.count; i++){
             RecommendTypeObj *obj = weakSelf.imageArray[i];
@@ -343,7 +343,7 @@
 
 - (void)sendCircleWithPhotos:(NSArray *)photos
 {
-    __weak typeof(self) weakSelf = self;
+    WEAK(self, weakSelf);
     NSDictionary *param = @{};
     if (!IsArrEmpty(photos)){
         NSString *photoStr = [photos componentsJoinedByString:@","];
@@ -513,7 +513,7 @@
 
 - (void)assetPickerController:(ZYQAssetPickerController *)picker didFinishPickingAssets:(NSArray *)assets
 {
-    __weak typeof(self) weakSelf = self;
+    WEAK(self, weakSelf);
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         for (NSInteger i = 0; i < assets.count; i++){
             ALAsset *asset = assets[i];

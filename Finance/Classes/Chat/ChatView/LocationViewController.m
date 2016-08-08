@@ -128,7 +128,7 @@ static LocationViewController *defaultLocation = nil;
 
 - (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
 {
-    __weak typeof(self) weakSelf = self;
+    WEAK(self, weakSelf);
     CLGeocoder *geocoder = [[CLGeocoder alloc] init];
     [geocoder reverseGeocodeLocation:userLocation.location completionHandler:^(NSArray *array, NSError *error) {
         if (!error && array.count > 0) {

@@ -90,7 +90,7 @@
     } else{
         self.title = @"发布股权投资";
         self.sendType = SHGEquityInvestSendTypeNew;
-        __weak typeof(self) weakSelf = self;
+        WEAK(self, weakSelf);
         if ([[SHGGloble sharedGloble].provinceName isEqualToString:@""]) {
             [[CCLocationManager shareLocation] getCity:^{
                 [weakSelf.areaSelectButton setTitle:[SHGGloble sharedGloble].provinceName forState:UIControlStateNormal];
@@ -113,7 +113,7 @@
     self.buttonSelectBgImage = [self.buttonSelectBgImage resizableImageWithCapInsets:UIEdgeInsetsMake(10.0f, 10.0f, 10.0f, 10.0f) resizingMode:UIImageResizingModeStretch];
     [self.scrollView addSubview:self.nameView];
     [self.scrollView addSubview:self.phoneNumView];
-   // [self.scrollView addSubview:self.businessCompanyNameView];
+    [self.scrollView addSubview:self.businessCompanyNameView];
     [self.scrollView addSubview:self.bondStageView];
     [self.scrollView addSubview:self.monenyView];
     [self.scrollView addSubview:self.areaView];
@@ -216,6 +216,34 @@
     .heightIs(kButtonHeight);
     [self.nameView setupAutoHeightWithBottomView:self.nameTextField bottomMargin:ktopToView];
     
+    //公司名称
+    self.businessCompanyNameView.sd_layout
+    .topSpaceToView(self.nameView, kLeftToView)
+    .leftSpaceToView(self.scrollView, 0.0f)
+    .rightSpaceToView(self.scrollView, 0.0f);
+    
+    self.companyNameLabel.sd_layout
+    .topSpaceToView(self.businessCompanyNameView, ktopToView)
+    .leftSpaceToView(self.businessCompanyNameView, kLeftToView)
+    .heightIs(ceilf(self.companyNameLabel.font.lineHeight));
+    [self.companyNameLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
+    
+    self.companyNameImage.sd_layout
+    .leftSpaceToView(self.companyNameLabel, kLeftToView)
+    .centerYEqualToView(self.companyNameLabel)
+    .widthIs(size.width)
+    .heightIs(size.height);
+    
+    self.companyNametextField.sd_layout
+    .leftEqualToView(self.companyNameLabel)
+    .rightSpaceToView(self.businessCompanyNameView, kLeftToView)
+    .topSpaceToView(self.companyNameLabel, ktopToView)
+    .heightIs(kCategoryButtonHeight);
+    
+    
+    [self.businessCompanyNameView setupAutoHeightWithBottomView:self.companyNametextField bottomMargin:ktopToView];
+    
+
     //联系电话
     self.phoneNumView.sd_layout
     .topSpaceToView(self.nameView, kLeftToView)
@@ -241,34 +269,7 @@
     .heightIs(kButtonHeight);
     [self.phoneNumView setupAutoHeightWithBottomView:self.phoneNumTextField bottomMargin:ktopToView];
     
-    //公司名称
-    self.businessCompanyNameView.sd_layout
-    .topSpaceToView(self.phoneNumView, kLeftToView)
-    .leftSpaceToView(self.scrollView, 0.0f)
-    .rightSpaceToView(self.scrollView, 0.0f);
-    
-    self.companyNameLabel.sd_layout
-    .topSpaceToView(self.businessCompanyNameView, ktopToView)
-    .leftSpaceToView(self.businessCompanyNameView, kLeftToView)
-    .heightIs(ceilf(self.phoneNumLabel.font.lineHeight));
-    [self.companyNameLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
-    
-    self.companyNameImage.sd_layout
-    .leftSpaceToView(self.companyNameLabel, kLeftToView)
-    .centerYEqualToView(self.companyNameLabel)
-    .widthIs(size.width)
-    .heightIs(size.height);
-    
-    self.companyNametextField.sd_layout
-    .leftEqualToView(self.companyNameLabel)
-    .rightSpaceToView(self.businessCompanyNameView, kLeftToView)
-    .topSpaceToView(self.companyNameLabel, ktopToView)
-    .heightIs(kCategoryButtonHeight);
-    
-    
-    [self.businessCompanyNameView setupAutoHeightWithBottomView:self.companyNametextField bottomMargin:ktopToView];
-    
-
+   
     //融资阶段
     self.bondStageView.sd_layout
     .topSpaceToView(self.phoneNumView, kLeftToView)
@@ -570,10 +571,10 @@
         [Hud showMessageWithText:@"请填写联系方式"];
         return NO;
     }
-//    if (self.companyNametextField.text.length == 0) {
-//        [Hud showMessageWithText:@"请填写公司名称"];
-//        return NO;
-//    }
+    if (self.companyNametextField.text.length == 0) {
+        [Hud showMessageWithText:@"请填写公司名称"];
+        return NO;
+    }
     if (self.bondStageButtonView.selectedArray.count == 0) {
         [Hud showMessageWithText:@"请选择投资阶段"];
         return NO;
@@ -624,6 +625,10 @@
         weakSelf.industrySelectArray = array;
         [weakSelf.industrySelectButton setTitle:string forState:UIControlStateNormal];
         [weakSelf.industrySelectButton setTitleColor:Color(@"161616") forState:UIControlStateNormal];
+        if (string.length == 0) {
+            [weakSelf.industrySelectButton setTitle:@"请选择行业" forState:UIControlStateNormal];
+            [weakSelf.industrySelectButton setTitleColor:Color(@"bebebe") forState:UIControlStateNormal];
+        }
     };
     [self.view.window addSubview:self.selectViewController];
 }
@@ -632,15 +637,27 @@
 {
     [self.currentContext resignFirstResponder];
     __weak typeof (self) weakSelf = self;
-    SHGAlertView *alertView = [[SHGAlertView alloc] initWithTitle:@"提示" contentText:@"退出此次编辑?" leftButtonTitle:@"取消" rightButtonTitle:@"退出"];
-    alertView.rightBlock = ^{
+    if ([weakSelf checkInputEmpty]) {
+        SHGAlertView *alertView = [[SHGAlertView alloc] initWithTitle:@"提示" contentText:@"退出此次编辑?" leftButtonTitle:@"取消" rightButtonTitle:@"退出"];
+        alertView.rightBlock = ^{
+            [weakSelf.navigationController popViewControllerAnimated:YES];
+        };
+        [alertView show];
+    } else{
         [weakSelf.navigationController popViewControllerAnimated:YES];
-    };
-    [alertView show];
+    }
 }
+
+- (BOOL)checkInputEmpty
+{
+    if (self.nameTextField.text.length == 0 && self.phoneNumTextField.text.length == 0 && [self.bondStageButtonView selectedArray].count == 0 && [self.industrySelectButton.titleLabel.text isEqualToString:@"请选择行业"] && self.monenyTextField.text.length == 0 ){
+        return NO;
+    } else{
+        return YES;
+    }
+}
+
 //键盘消失
-
-
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
 {
     return YES;

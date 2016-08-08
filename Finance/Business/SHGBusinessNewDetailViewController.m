@@ -541,7 +541,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
 
 - (void)initData
 {
-    __weak typeof(self) weakSelf = self;
+    WEAK(self, weakSelf);
     [SHGBusinessManager getBusinessDetail:weakSelf.object success:^(SHGBusinessObject *detailObject) {
         weakSelf.responseObject = detailObject;
         NSString *value = [[SHGGloble sharedGloble] businessKeysForValues:self.responseObject.middleContent showEmptyKeys:NO];
@@ -1052,7 +1052,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
 //删除
 - (void)deleteButton
 {
-    __weak typeof(self)weakSelf = self;
+    WEAK(self, weakSelf);
     [SHGBusinessManager deleteCommentWithID:self.commentObject.commentId finishBlock:^(BOOL finish) {
         if (finish) {
             [weakSelf.responseObject.commentList removeObject:weakSelf.commentObject];
@@ -1172,7 +1172,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
 
 - (void)commentViewDidComment:(NSString *)comment rid:(NSString *)rid
 {
-    __weak typeof(self) weakSelf = self;
+    WEAK(self, weakSelf);
     [self.popupView hideWithAnimated:YES];
     
     [SHGBusinessManager addCommentWithObject:self.responseObject content:comment toOther:nil finishBlock:^(BOOL finish) {
@@ -1185,7 +1185,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
 
 - (void)commentViewDidComment:(NSString *)comment reply:(NSString *)reply fid:(NSString *)fid rid:(NSString *)rid
 {
-    __weak typeof(self) weakSelf = self;
+    WEAK(self, weakSelf);
     [self.popupView hideWithAnimated:YES];
     [SHGBusinessManager addCommentWithObject:self.responseObject content:comment toOther:fid finishBlock:^(BOOL finish) {
         if (finish) {
@@ -1205,7 +1205,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
    
     [[SHGGloble sharedGloble] requestUserVerifyStatusCompletion:^(BOOL state,NSString *auditState) {
         if (state) {
-            __weak typeof(self) weakSelf = self;
+            WEAK(self, weakSelf);
             [weakSelf makePhoneNum];
             NSString *leftTitle = @"发短信";
             if (self.mobileArray.count == 0 ) {
@@ -1214,7 +1214,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
             if (self.mobileArray.count > 0 || self.phoneArray.count > 0) {
                 [SHGBusinessManager getBusinessContactAuth:weakSelf.responseObject success:^(SHGBusinessContactAuthObject *contactAuthObject) {
                     weakSelf.contactAuthObject = contactAuthObject;
-                    NSMutableAttributedString *textString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"打电话或发短信将消耗1次联系\n对方的机会，当前剩余%@次",weakSelf.contactAuthObject.userContactLimit] attributes:@{NSFontAttributeName:FontFactor(15.0f),NSForegroundColorAttributeName:Color(@"8d8d8d")}];
+                    NSMutableAttributedString *textString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"打电话或发短信将消耗1次联系\n对方的机会，今日剩余%@次",weakSelf.contactAuthObject.userContactLimit] attributes:@{NSFontAttributeName:FontFactor(15.0f),NSForegroundColorAttributeName:Color(@"8d8d8d")}];
                     [textString addAttribute:NSForegroundColorAttributeName value:Color(@"f95c53") range:NSMakeRange(25, weakSelf.contactAuthObject.userContactLimit.length)];
                     if (weakSelf.contactAuthObject.contactShow) {
                         if (weakSelf.contactAuthObject.tipFlag) {
@@ -1263,7 +1263,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
     
     SHGAlertView *alert = [[SHGAlertView alloc] initWithTitle:@"无法查看" contentText:message leftButtonTitle:leftTitle rightButtonTitle:rightTitle];
     if ([rightTitle isEqualToString:@"现在认证"]) {
-        __weak typeof(self)weakSelf = self;
+        WEAK(self, weakSelf);
         alert.rightBlock = ^{
             SHGAuthenticationNextViewController *controller = [[SHGAuthenticationNextViewController alloc] init];
             [weakSelf.navigationController pushViewController:controller animated:YES];
@@ -1278,7 +1278,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
     SHGBusinessContactAlertView *contactAlert = [[SHGBusinessContactAlertView alloc] initWithLeftButtonTitle:leftTitle rightButtonTitle:@"打电话"];
     contactAlert.text = text;
     contactAlert.touchOtherDismiss = YES;
-    __weak typeof(self) weakSelf = self;
+    WEAK(self, weakSelf);
     contactAlert.leftBlock = ^{
         [SHGBusinessManager getBusinessCheckedNum:weakSelf.responseObject success:^(NSString *num) {
             if ([num integerValue]> 0) {
@@ -1311,7 +1311,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
 }
 
 - (IBAction)collectionClick:(UIButton *)sender {
-    __weak typeof(self)weakSelf = self;
+    WEAK(self, weakSelf);
     
     if (self.responseObject.isCollection) {
         [SHGBusinessManager unCollectBusiness:self.responseObject success:^(BOOL success) {

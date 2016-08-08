@@ -166,7 +166,7 @@ typedef NS_ENUM(NSInteger, RegistType)
     NSString *userId = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_BPUSH_USERID];
 
     NSDictionary *param = @{@"loginNum":thirdUid, @"loginType":logType, @"ctype":@"iphone", @"phone":phoneText.text, @"validateCode":authCodeText.text, @"os":@"ios", @"osv":osv, @"appv":LOCAL_Version, @"yuncid":channelId?:@"", @"yunuid":userId?:@""};
-    __weak typeof(self) weakSelf = self;
+    WEAK(self, weakSelf);
     [MOCHTTPRequestOperationManager postWithURL:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"thirdLogin/bindingPhone"] class:nil parameters:param success:^(MOCHTTPResponse *response){
         [Hud hideHud];
         NSString *isthirdlogin = response.dataDictionary[@"bindresult"];
@@ -212,7 +212,7 @@ typedef NS_ENUM(NSInteger, RegistType)
 
     NSString *token = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_TOKEN];
     NSDictionary *param = @{@"uid":uid, @"t":token?:@"", @"channelid":channelId?:@"", @"channeluid":@"getui"};
-    __weak typeof(self) weakSelf = self;
+    WEAK(self, weakSelf);
 
     [[SHGGloble sharedGloble] registerToken:param block:^(BOOL success, MOCHTTPResponse *response) {
         if (success) {

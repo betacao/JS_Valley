@@ -308,7 +308,7 @@
 {
     [self showHudInView:self.view hint:NSLocalizedString(@"group.addingOccupant", @"add a group member...")];
     
-    __weak typeof(self) weakSelf = self;
+    WEAK(self, weakSelf);
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSMutableArray *source = [NSMutableArray array];
         for (EMBuddy *buddy in selectedSources) {
@@ -337,7 +337,7 @@
 
 - (void)fetchGroupInfo
 {
-    __weak typeof(self) weakSelf = self;
+    WEAK(self, weakSelf);
     [Hud showWait];
     [[EaseMob sharedInstance].chatManager asyncFetchGroupInfo:_chatGroup.groupId completion:^(EMGroup *group, EMError *error) {
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -403,7 +403,7 @@
 - (void)configUser:(BOOL)showAddButton
 {
     __block NSString *param = @"";
-    __weak typeof(self)weakSelf = self;
+    WEAK(self, weakSelf);
     [self.dataSource enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         param = [param stringByAppendingFormat:@"%@,",obj];
     }];
@@ -570,7 +570,7 @@
 //清空聊天记录
 - (void)clearAction
 {
-    __weak typeof(self) weakSelf = self;
+    WEAK(self, weakSelf);
     
     SHGAlertView *alert = [[SHGAlertView alloc] initWithTitle:NSLocalizedString(@"prompt", @"Prompt") contentText:NSLocalizedString(@"sureToDelete", @"please make sure to delete") leftButtonTitle:NSLocalizedString(@"cancel", @"Cancel") rightButtonTitle:NSLocalizedString(@"ok", @"OK")];
     alert.rightBlock = ^{
@@ -584,7 +584,7 @@
 {
     //提示
     SHGAlertView *alert = [[SHGAlertView alloc] initWithTitle:NSLocalizedString(@"prompt", @"Prompt") contentText:@"确定解散该群组?" leftButtonTitle:@"取消" rightButtonTitle:@"确定"];
-    __weak typeof(self)weakSelf = self;
+    WEAK(self, weakSelf);
     alert.rightBlock = ^{
         [weakSelf dissolveActionOperator];
     };
@@ -593,7 +593,7 @@
 
 -(void) dissolveActionOperator
 {
-    __weak typeof(self) weakSelf = self;
+    WEAK(self, weakSelf);
     [self showHudInView:self.view hint:NSLocalizedString(@"group.destroy", @"dissolution of the group")];
     [[EaseMob sharedInstance].chatManager asyncDestroyGroup:_chatGroup.groupId completion:^(EMGroup *group, EMGroupLeaveReason reason, EMError *error) {
         [weakSelf hideHud];
@@ -617,7 +617,7 @@
 //退出群组
 - (void)exitAction
 {
-    __weak typeof(self) weakSelf = self;
+    WEAK(self, weakSelf);
     SHGAlertView *alert = [[SHGAlertView alloc] initWithTitle:@"提示" contentText:@"确定退出该群组?" leftButtonTitle:@"取消" rightButtonTitle:@"确定"];
     alert.rightBlock = ^{
         [weakSelf showHudInView:self.view hint:NSLocalizedString(@"group.leave", @"quit the group")];

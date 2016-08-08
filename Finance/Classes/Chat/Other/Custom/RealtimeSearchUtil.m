@@ -84,7 +84,7 @@ static RealtimeSearchUtil *defaultUtil = nil;
 
 - (void)searchBegin:(NSString *)string
 {
-    __weak typeof(self) weakSelf = self;
+    WEAK(self, weakSelf);
     dispatch_async(self.searchQueue, ^{
         if (string.length == 0) {
             weakSelf.resultBlock(weakSelf.source);

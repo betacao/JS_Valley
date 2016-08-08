@@ -7,11 +7,11 @@
 //
 
 #import "SHGModifyUserInfoViewController.h"
-#import "SHGItemChooseView.h"
+#import "SHGIndustrySelectView.h"
 #import "SHGProvincesViewController.h"
 #import "SHGAuthenticationWarningView.h"
 
-@interface SHGModifyUserInfoViewController ()<UIActionSheetDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, SHGItemChooseDelegate,SHGAreaDelegate>
+@interface SHGModifyUserInfoViewController ()<UIActionSheetDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate,SHGAreaDelegate>
 
 @property (weak, nonatomic) IBOutlet UIScrollView *bgScrollView;
 @property (weak, nonatomic) IBOutlet UIView *bgView;
@@ -72,7 +72,7 @@
     [self initView];
     [self addSdLayout];
     //请求状态
-    __weak typeof(self)weakSelf = self;
+    WEAK(self, weakSelf);
     [[SHGGloble sharedGloble] requestUserVerifyStatusCompletion:^(BOOL state,NSString *auditState) {
         if (state) {
             self.bgScrollView.hidden = NO;
@@ -118,7 +118,7 @@
 
 - (void)initView
 {
-    __weak typeof(self) weakSelf = self;
+    WEAK(self, weakSelf);
     self.warningView.block = ^{
         [UIView animateWithDuration:0.25f animations:^{
             weakSelf.warningView.sd_layout
@@ -335,7 +335,7 @@
 {
     //头像需要压缩 跟其他的上传图片接口不一样了
     if([self checkInputMessageValid]){
-        __weak typeof(self) weakSelf = self;
+        WEAK(self, weakSelf);
         [Hud showWait];
         [MOCHTTPRequestOperationManager POST:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"image/basephoto"] parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
             NSData *imageData = UIImageJPEGRepresentation(image, 0.1f);
@@ -362,7 +362,7 @@
 {
     if([self checkInputMessageValid]){
         [Hud showWait];
-        __weak typeof(self) weakSelf = self;
+        WEAK(self, weakSelf);
         NSString *city = @"";
         if (![self.cityButton.titleLabel.text isEqualToString:@"所在地"]) {
             city = self.cityButton.titleLabel.text;
@@ -388,7 +388,7 @@
 - (void)delayPostNotification
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_SENDPOST object:nil];
-    __weak typeof(self) weakSelf = self;
+    WEAK(self, weakSelf);
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [weakSelf.navigationController popViewControllerAnimated:YES];
     });
@@ -505,18 +505,12 @@
 
 - (void)showIndustryChoiceView
 {
-    SHGItemChooseView *view = [[SHGItemChooseView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, SCREENWIDTH, SCREENHEIGHT) lineNumber:9];
-    view.delegate = self;
-    view.dataArray = @[@"银行机构", @"证券公司", @"PE/VC",@"公募基金",@"信托公司",@"三方理财", @"担保小贷", @"上市公司", @"其他"];
-    [self.view.window addSubview:view];
-}
-
-#pragma mark ------ 选择行业代理
-- (void)didSelectItem:(NSString *)item
-{
-    self.industryField.text = item;
-    self.industry = [self industryToCode:item];
-
+    SHGIndustrySelectView *view = [[SHGIndustrySelectView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, SCREENWIDTH, SCREENHEIGHT) andSelctIndustry:self.industryField.text];
+    WEAK(self, weakSelf);
+    view.returnTextBlock = ^(NSString *string){
+        weakSelf.industryField.text = string;
+    };
+    [weakSelf.view.window addSubview:view];
 }
 
 - (NSString *)industryToCode:(NSString *)industry
@@ -527,6 +521,8 @@
         return @"bond";
     } else if ([industry isEqualToString:@"PE/VC"]) {
         return  @"pevc";
+    } else if ([industry isEqualToString:@"债权机构"]) {
+        return @"bondAgency";
     } else if ([industry isEqualToString:@"公募基金"]) {
         return @"fund";
     } else if ([industry isEqualToString:@"信托公司"]) {
@@ -537,6 +533,8 @@
         return @"bonding";
     } else if ([industry isEqualToString:@"上市公司"]) {
         return @"public";
+    } else if ([industry isEqualToString:@"融资企业"]) {
+        return @"financingEnterprise";
     } else if ([industry isEqualToString:@"其他"]) {
         return @"other";
     }
@@ -552,6 +550,8 @@
         return @"证券公司";
     } else if ([code isEqualToString:@"pevc"]) {
         return  @"PE/VC";
+    } else if ([code isEqualToString:@"bondAgency"]) {
+        return @"债权机构";
     } else if ([code isEqualToString:@"fund"]) {
         return @"公募基金";
     } else if ([code isEqualToString:@"entrust"]) {
@@ -562,6 +562,8 @@
         return @"担保小贷";
     } else if ([code isEqualToString:@"public"]) {
         return @"上市公司";
+    } else if ([code isEqualToString:@"financingEnterprise"]) {
+        return @"融资企业";
     } else if ([code isEqualToString:@"other"]) {
         return @"其他";
     }

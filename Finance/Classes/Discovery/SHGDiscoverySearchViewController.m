@@ -64,7 +64,7 @@
 
 - (void)initView
 {
-    __weak typeof(self) weakSelf = self;
+    WEAK(self, weakSelf);
     [self.view addSubview:self.searchBar];
     [self addHeaderRefresh:self.tableView headerRefesh:NO andFooter:YES];
     self.tableView.mj_footer.automaticallyHidden = YES;
@@ -142,7 +142,7 @@
 - (void)loadDataWithTarget:(NSString *)target
 {
     NSDictionary *param = @{@"target":target, @"indexCondition":self.searchText, @"userId":[target isEqualToString:@"first"] ? @"-1" : [self minUserID], @"pageSize":@"10", @"uid":UID};
-    __weak typeof(self)weakSelf = self;
+    WEAK(self, weakSelf);
     [SHGDiscoveryManager searchDiscovery:param block:^(NSArray *dataArray, NSString *total) {
 
         weakSelf.tableHeaderView.total = total;

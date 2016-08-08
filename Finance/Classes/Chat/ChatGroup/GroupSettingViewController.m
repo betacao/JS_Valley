@@ -233,7 +233,7 @@
 - (void)saveAction:(id)sender
 {
     if (_blockSwitch.isOn != _group.isBlocked) {
-        __weak typeof(self) weakSelf = self;
+        WEAK(self, weakSelf);
         [self showHudInView:self.view hint:NSLocalizedString(@"group.setting.save", @"set properties")];
         if (_blockSwitch.isOn) {
             [[EaseMob sharedInstance].chatManager asyncBlockGroup:_group.groupId completion:^(EMGroup *group, EMError *error) {

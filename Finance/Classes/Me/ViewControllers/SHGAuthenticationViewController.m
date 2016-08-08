@@ -7,12 +7,11 @@
 //
 
 #import "SHGAuthenticationViewController.h"
-#import "SHGItemChooseView.h"
 #import "SHGProvincesViewController.h"
 #import "CCLocationManager.h"
 #import "SHGAuthenticationWarningView.h"
-
-@interface SHGAuthenticationViewController ()<UITextFieldDelegate, UIActionSheetDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, SHGItemChooseDelegate, SHGAreaDelegate>
+#import "SHGIndustrySelectView.h"
+@interface SHGAuthenticationViewController ()<UITextFieldDelegate, UIActionSheetDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, SHGAreaDelegate>
 //
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UIView *topView;
@@ -79,7 +78,7 @@
     self.authTipLabel.isAttributedContent = YES;
 
     //
-    __weak typeof(self) weakSelf = self;
+    WEAK(self, weakSelf);
     self.warningView = [[SHGAuthenticationWarningView alloc] init];
     self.warningView.text = @"完成个人认证每日可查看5条业务联系方式";
     self.warningView.block = ^{
@@ -277,7 +276,7 @@
         [self.submitButton setTitle:@"下一步" forState:UIControlStateNormal];
     }
     [self.stateLabel updateLayout];
-    __weak typeof(self) weakSelf = self;
+    WEAK(self, weakSelf);
     if (!IsStrEmpty(self.authImageUrl)) {
         [self.authImageView yy_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,self.authImageUrl]] placeholder:[UIImage imageNamed:@"default_head"] options:kNilOptions completion:^(UIImage * _Nullable image, NSURL * _Nonnull url, YYWebImageFromType from, YYWebImageStage stage, NSError * _Nullable error) {
             weakSelf.authImage = image;
@@ -288,7 +287,7 @@
 
 - (void)loadUserState
 {
-    __weak typeof(self)weakSelf = self;
+    WEAK(self, weakSelf);
     [Hud showWait];
     [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttp,@"user",@"myidentity"] parameters:@{@"uid":UID,@"version":[SHGGloble sharedGloble].currentVersion}success:^(MOCHTTPResponse *response) {
         [Hud hideHud];
@@ -307,7 +306,7 @@
 
 - (void)loadUserInfo
 {
-    __weak typeof(self) weakSelf = self;
+    WEAK(self, weakSelf);
     [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttp,@"user",@"personaluser"] parameters:@{@"uid":UID} success:^(MOCHTTPResponse *response) {
         weakSelf.company = [response.dataDictionary objectForKey:@"companyname"];
         if ([[response.dataDictionary objectForKey:@"position"] length] > 0) {
@@ -386,10 +385,12 @@
 
 - (void)showIndustryChoiceView
 {
-    SHGItemChooseView *view = [[SHGItemChooseView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, SCREENWIDTH, SCREENHEIGHT) lineNumber:9];
-    view.delegate = self;
-    view.dataArray = @[@"银行机构", @"证券公司", @"PE/VC",@"公募基金",@"信托公司",@"三方理财", @"担保小贷", @"上市公司", @"其他"];
-    [self.view.window addSubview:view];
+    SHGIndustrySelectView *view = [[SHGIndustrySelectView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, SCREENWIDTH, SCREENHEIGHT) andSelctIndustry:self.departmentField.text];
+    WEAK(self, weakSelf);
+    view.returnTextBlock = ^(NSString *string){
+        weakSelf.departmentField.text = string;
+    };
+    [weakSelf.view.window addSubview:view];
 }
 
 - (void)showLocationChoiceView
@@ -410,6 +411,8 @@
         return @"bond";
     } else if ([industry isEqualToString:@"PE/VC"]) {
         return  @"pevc";
+    } else if ([industry isEqualToString:@"债权机构"]) {
+        return @"bondAgency";
     } else if ([industry isEqualToString:@"公募基金"]) {
         return @"fund";
     } else if ([industry isEqualToString:@"信托公司"]) {
@@ -420,6 +423,8 @@
         return @"bonding";
     } else if ([industry isEqualToString:@"上市公司"]) {
         return @"public";
+    } else if ([industry isEqualToString:@"融资企业"]) {
+        return @"financingEnterprise";
     } else if ([industry isEqualToString:@"其他"]) {
         return @"other";
     }
@@ -435,6 +440,8 @@
         return @"证券公司";
     } else if ([code isEqualToString:@"pevc"]) {
         return  @"PE/VC";
+    } else if ([code isEqualToString:@"bondAgency"]) {
+        return @"债权机构";
     } else if ([code isEqualToString:@"fund"]) {
         return @"公募基金";
     } else if ([code isEqualToString:@"entrust"]) {
@@ -445,6 +452,8 @@
         return @"担保小贷";
     } else if ([code isEqualToString:@"public"]) {
         return @"上市公司";
+    } else if ([code isEqualToString:@"financingEnterprise"]) {
+        return @"融资企业";
     } else if ([code isEqualToString:@"other"]) {
         return @"其他";
     }
@@ -503,12 +512,6 @@
         [self showIndustryChoiceView];
     }
     return NO;
-}
-
-#pragma mark ------ 选择行业代理
-- (void)didSelectItem:(NSString *)item
-{
-    self.departmentField.text = item;
 }
 
 #pragma mark ------ 选择城市代理
@@ -570,7 +573,7 @@
 - (void)initView
 {
     self.title = @"身份认证";
-    __weak typeof(self) weakSelf = self;
+    WEAK(self, weakSelf);
     self.warningView = [[SHGAuthenticationWarningView alloc] init];
     self.warningView.text = @"上传营业执照每日可查看10条业务联系方式（选填）";
     self.warningView.block = ^{
@@ -682,7 +685,7 @@
 
 - (void)loadUserState
 {
-    __weak typeof(self)weakSelf = self;
+    WEAK(self, weakSelf);
     [Hud showWait];
     [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttp,@"user",@"myidentity"] parameters:@{@"uid":UID,@"version":[SHGGloble sharedGloble].currentVersion}success:^(MOCHTTPResponse *response) {
         [Hud hideHud];
@@ -698,7 +701,7 @@
 
 - (void)loadUserInfo
 {
-    __weak typeof(self) weakSelf = self;
+    WEAK(self, weakSelf);
     [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttp,@"user",@"personaluser"] parameters:@{@"uid":UID} success:^(MOCHTTPResponse *response) {
         weakSelf.company = [response.dataDictionary objectForKey:@"companyname"];
         if ([[response.dataDictionary objectForKey:@"position"] length] > 0) {
@@ -721,7 +724,7 @@
 {
     _licenseUrl = licenseUrl;
     if (licenseUrl && licenseUrl.length > 0 && [self isViewLoaded]) {
-        __weak typeof(self) weakSelf = self;
+        WEAK(self, weakSelf);
         [[YYWebImageManager sharedManager] requestImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,self.licenseUrl]] options:kNilOptions progress:nil transform:nil completion:^(UIImage * _Nullable image, NSURL * _Nonnull url, YYWebImageFromType from, YYWebImageStage stage, NSError * _Nullable error) {
             weakSelf.image = image;
         }];
@@ -812,7 +815,7 @@
     //头像需要压缩 跟其他的上传图片接口不一样了
     [Hud showWait];
     if (self.headerImage && !self.headerImageUrl) {
-        __weak typeof(self) weakSelf = self;
+        WEAK(self, weakSelf);
         [MOCHTTPRequestOperationManager POST:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"image/basephoto"] parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
             NSData *imageData = UIImageJPEGRepresentation(weakSelf.headerImage, 0.1);
             [formData appendPartWithFileData:imageData name:@"hahaggg.jpg" fileName:@"hahaggg.jpg" mimeType:@"image/jpeg"];
@@ -840,7 +843,7 @@
 //更新服务器端
 - (void)putHeadImage
 {
-    __weak typeof(self) weakSelf = self;
+    WEAK(self, weakSelf);
     [MOCHTTPRequestOperationManager putWithURL:[NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttp,@"user",@"modifyuser"] class:nil parameters:@{@"uid":UID, @"type":@"headimage", @"value":self.headerImageUrl, @"title":self.departmentCode, @"company":self.company} success:^(MOCHTTPResponse *response) {
         NSString *code = [response.data valueForKey:@"code"];
         if ([code isEqualToString:@"000"]) {
@@ -855,7 +858,7 @@
 - (void)uploadAuthImage
 {
     [Hud showWait];
-    __weak typeof(self) weakSelf = self;
+    WEAK(self, weakSelf);
     if (self.authImage && !self.authImageUrl) {
         [MOCHTTPRequestOperationManager POST:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"image/basephoto"] parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
             NSData *imageData = UIImageJPEGRepresentation(weakSelf.authImage, 0.1);
@@ -881,7 +884,7 @@
 {
     [Hud showWait];
     if (self.image) {
-        __weak typeof(self) weakSelf = self;
+        WEAK(self, weakSelf);
         [MOCHTTPRequestOperationManager POST:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"image/businessLicense"] parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
             NSData *imageData = UIImageJPEGRepresentation(weakSelf.image, 0.1);
             [formData appendPartWithFileData:imageData name:@"haha.jpg" fileName:@"haha.jpg" mimeType:@"image/jpeg"];
@@ -904,7 +907,7 @@
 
 - (void)submitMaterial
 {
-    __weak typeof(self)weakSelf = self;
+    WEAK(self, weakSelf);
     [MOCHTTPRequestOperationManager putWithURL:[rBaseAddressForHttp stringByAppendingString:@"/user/identityAuth"]class:nil parameters:@{@"uid":UID, @"potname":self.authImageUrl, @"industrycode": self.departmentCode, @"area":self.location, @"photoUrl":self.licenseUrl,@"version":[SHGGloble sharedGloble].currentVersion} success:^(MOCHTTPResponse *response) {
         NSString *code = [response.data valueForKey:@"code"];
         if ([code isEqualToString:@"000"]) {

@@ -421,7 +421,7 @@
                     }
                     model.nickName = hi.nickname;
                 } else{
-                    __weak typeof(self) weakSelf = self;
+                    WEAK(self, weakSelf);
                     [[SHGGloble sharedGloble] refreshFriendListWithUid:model.username finishBlock:^(BasePeopleObject *object) {
                         model.headImageURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,object.headImageUrl]];
                         model.nickName = object.name;
@@ -973,7 +973,7 @@
  */
 - (void)didFinishRecoingVoiceAction:(UIView *)recordView
 {
-    __weak typeof(self) weakSelf = self;
+    WEAK(self, weakSelf);
     [[EMCDDeviceManager sharedInstance] asyncStopRecordingWithCompletion:^(NSString *recordPath, NSInteger aDuration, NSError *error) {
         if (!error) {
             EMChatVoice *voice = [[EMChatVoice alloc] initWithFile:recordPath
@@ -1102,7 +1102,7 @@
 
 - (void)loadMoreMessages
 {
-    __weak typeof(self) weakSelf = self;
+    WEAK(self, weakSelf);
     dispatch_async(_messageQueue, ^{
         long long timestamp = [[NSDate date] timeIntervalSince1970] * 1000 + 1;
         
@@ -1265,7 +1265,7 @@
         }
     }
     else{
-        __weak typeof(self) weakSelf = self;
+        WEAK(self, weakSelf);
         SHGAlertView *alert = [[SHGAlertView alloc] initWithTitle:NSLocalizedString(@"prompt", @"Prompt") contentText:NSLocalizedString(@"sureToDelete", @"please make sure to delete") leftButtonTitle:NSLocalizedString(@"cancel", @"Cancel") rightButtonTitle:NSLocalizedString(@"ok", @"OK")];
         alert.rightBlock = ^{
             [weakSelf.conversation removeAllMessages];

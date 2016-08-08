@@ -131,7 +131,7 @@
 
 - (SHGBusinessFilterView *)filterView
 {
-    __weak typeof(self)weakSelf = self;
+    WEAK(self, weakSelf);
     if (!_filterView) {
         _filterView = [[SHGBusinessFilterView alloc] init];
         _filterView.hidden = YES;
@@ -408,7 +408,7 @@
 
 - (void)loadDataWithTarget:(NSString *)target
 {
-    __weak typeof(self) weakSelf = self;
+    WEAK(self, weakSelf);
     if (self.refreshing) {
         return;
     }

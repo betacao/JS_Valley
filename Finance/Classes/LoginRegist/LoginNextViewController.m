@@ -91,7 +91,7 @@
         return;
     }
     [Hud showWait];
-    __weak typeof(self) weakSelf = self;
+    WEAK(self, weakSelf);
     NSString *password = [_lblPassward.text md5];
     NSString *channelId = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_BPUSH_CHANNELID];
     NSString *userId = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_BPUSH_USERID];
@@ -131,7 +131,7 @@
 
     NSString *token = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_TOKEN];
     NSDictionary *param = @{@"uid":uid, @"t":token?:@"", @"channelid":channelId?:@"", @"channeluid":@"getui"};
-    __weak typeof(self) weakSelf = self;
+    WEAK(self, weakSelf);
 
     [[SHGGloble sharedGloble] registerToken:param block:^(BOOL success, MOCHTTPResponse *response) {
         if (success) {

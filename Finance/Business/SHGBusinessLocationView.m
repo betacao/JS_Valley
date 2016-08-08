@@ -240,7 +240,7 @@
 
 - (void)newSelectLocationClick:(UIButton *)btn
 {
-    __weak typeof(self) weakSelf = self;
+    WEAK(self, weakSelf);
     [[CCLocationManager shareLocation] getCity:^{
         weakSelf.locationTitleLabel.text = [SHGGloble sharedGloble].provinceName;
     }];

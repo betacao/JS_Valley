@@ -85,7 +85,7 @@
     [self initView];
     [self addSdLayout];
 
-    __weak typeof(self) weakSelf = self;
+    WEAK(self, weakSelf);
     [Hud showWait];
     [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttpCircle,@"circledetail"] parameters:@{@"rid":self.rid,@"uid":UID} success:^(MOCHTTPResponse *response) {
         [Hud hideHud];
@@ -787,7 +787,7 @@
 
     } else{
         [Hud showWait];
-        __weak typeof(self) weakSelf = self;
+        WEAK(self, weakSelf);
 
         [MOCHTTPRequestOperationManager deleteWithURL:url parameters:param success:^(MOCHTTPResponse *response) {
             [Hud hideHud];
@@ -926,7 +926,7 @@
     
     NSString *url = [NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttpCircle,@"circle",obj.rid];
     NSDictionary *param = @{@"uid":UID};
-    __weak typeof(self) weakSelf = self;
+    WEAK(self, weakSelf);
     [MOCHTTPRequestOperationManager putWithURL:url class:nil parameters:param success:^(MOCHTTPResponse *response) {
         NSString *code = [response.data valueForKey:@"code"];
         if ([code isEqualToString:@"000"]) {
@@ -980,7 +980,7 @@
 - (void)actionCollection:(id)sender
 {
     [Hud showWait];
-    __weak typeof(self) weakSelf = self;
+    WEAK(self, weakSelf);
     NSString *url = [NSString stringWithFormat:@"%@/%@",rBaseAddressForHttpCircle,@"circlestore"];
     NSDictionary *param = @{@"uid":UID, @"rid":self.responseObject.rid};
     if (![self.responseObject.iscollection isEqualToString:@"Y"]){
@@ -1122,7 +1122,7 @@
 {
     dispatch_async(dispatch_get_main_queue(), ^{
         [Hud hideHud];
-        __weak typeof(self) weakSelf = self;
+        WEAK(self, weakSelf);
         [SHGGloble addHtmlListener:webView key:@"openImageBrowser" block:^{
             NSArray *args = [JSContext currentArguments];
             NSInteger index = 0;
@@ -1198,7 +1198,7 @@
 {
     NSString *url = [NSString stringWithFormat:@"%@/%@",rBaseAddressForHttpCircle,@"circle"];
     NSDictionary *dic = @{@"rid":self.responseObject.rid, @"uid":self.responseObject.userid};
-    __weak typeof(self) weakSelf = self;
+    WEAK(self, weakSelf);
     [MOCHTTPRequestOperationManager deleteWithURL:url parameters:dic success:^(MOCHTTPResponse *response) {
 
         NSString *code = [response.data valueForKey:@"code"];
@@ -1214,7 +1214,7 @@
 - (void)actionDelete:(id)sender
 {
     //删除
-    __weak typeof(self)weakSelf = self;
+    WEAK(self, weakSelf);
     SHGAlertView *alert = [[SHGAlertView alloc] initWithTitle:@"提示" contentText:@"确认删除吗?" leftButtonTitle:@"取消" rightButtonTitle:@"删除"];
     alert.rightBlock = ^{
         [weakSelf deleteSelf];

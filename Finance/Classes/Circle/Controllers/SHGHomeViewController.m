@@ -74,7 +74,7 @@
 - (void)loadPreLoadingData
 {
     [Hud showWait];
-    __weak typeof(self) weakSelf = self;
+    WEAK(self, weakSelf);
     [SHGGloble sharedGloble].CompletionBlock = ^(NSArray *allArray, NSArray *normalArray, NSArray *adArray){
         [Hud hideHud];
         if(allArray && [allArray count] > 0){
@@ -173,7 +173,7 @@
     [self.heightDictionary removeAllObjects];
     [self.dataArr removeObject:self.recommendArray];
     [self.recommendArray removeAllObjects];
-    __weak typeof(self) weakSelf = self;
+    WEAK(self, weakSelf);
     [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/recommended/friends/recommendedFriendGrade",rBaseAddressForHttp] class:[RecmdFriendObj class] parameters:@{@"uid":UID} success:^(MOCHTTPResponse *response){
         [weakSelf.recommendArray addObjectsFromArray:response.dataArray];
         [weakSelf insertRecomandArray];
@@ -234,7 +234,7 @@
 
 - (void)setNeedRefreshTableView:(BOOL)needRefreshTableView
 {
-    __weak typeof(self) weakSelf = self;
+    WEAK(self, weakSelf);
     if (needRefreshTableView && !_needRefreshTableView) {
         _needRefreshTableView = YES;
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -256,7 +256,7 @@
 
 - (void)refreshData
 {
-    __weak typeof(self) weakSelf = self;
+    WEAK(self, weakSelf);
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [weakSelf refreshHeader];
     });
@@ -266,7 +266,7 @@
 {
     [self.dataArr removeObject:self.friendObject];
     self.friendObject = nil;
-    __weak typeof(self) weakSelf = self;
+    WEAK(self, weakSelf);
     [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@%@",rBaseAddressForHttp,@"/recommended/friends/registerPushFriendGrade"] parameters:@{@"uid":UID} success:^(MOCHTTPResponse *response) {
         NSDictionary *dictionary = response.dataDictionary;
         if (dictionary) {
@@ -316,7 +316,7 @@
     NSInteger rid = [time integerValue];
     NSDictionary *param = @{@"uid":uid, @"type":@"all", @"target":target, @"rid":@(rid), @"num": rRequestNum, @"tagId" : @"-1"};
 
-    __weak typeof(self) weakSelf = self;
+    WEAK(self, weakSelf);
     [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,dynamicNew] class:[CircleListObj class] parameters:param success:^(MOCHTTPResponse *response){
         [Hud hideHud];
         weakSelf.isRefreshing = NO;

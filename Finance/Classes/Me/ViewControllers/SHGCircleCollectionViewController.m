@@ -260,7 +260,7 @@
     //删除
     NSString *url = [NSString stringWithFormat:@"%@/%@",rBaseAddressForHttpCircle,@"circle"];
     NSDictionary *dic = @{@"rid":obj.rid, @"uid":obj.userid};
-    __weak typeof(self) weakSelf = self;
+    WEAK(self, weakSelf);
 
     [MOCHTTPRequestOperationManager deleteWithURL:url parameters:dic success:^(MOCHTTPResponse *response) {
         NSString *code = [response.data valueForKey:@"code"];
@@ -277,7 +277,7 @@
 {
     NSString *url = [NSString stringWithFormat:@"%@/%@",rBaseAddressForHttpCircle,@"praisesend"];
     NSDictionary *param = @{@"uid":[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID],@"rid":obj.rid};
-    __weak typeof(self) weakSelf = self;
+    WEAK(self, weakSelf);
     if (![obj.ispraise isEqualToString:@"Y"]) {
         [Hud showWait];
         [MOCHTTPRequestOperationManager postWithURL:url class:nil parameters:param success:^(MOCHTTPResponse *response) {

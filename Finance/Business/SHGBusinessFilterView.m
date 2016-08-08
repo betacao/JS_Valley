@@ -130,7 +130,7 @@
 {
     _expand = expand;
 
-    __weak typeof(self)weakSelf = self;
+    WEAK(self, weakSelf);
     if (expand) {
         [[SHGBusinessListViewController sharedController] loadFilterTitleAndParam:^(NSArray *array, NSDictionary *param, NSArray *selectedArray) {
             weakSelf.dataArray = [NSMutableArray arrayWithArray:array];

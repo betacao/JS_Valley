@@ -145,7 +145,7 @@
 
 - (void)loadDataWithTarget:(NSString *)target
 {
-    __weak typeof(self) weakSelf = self;
+    WEAK(self, weakSelf);
     if (self.refreshing) {
         return;
     }

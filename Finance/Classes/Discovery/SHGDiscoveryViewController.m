@@ -121,7 +121,7 @@
 
 - (void)loadData
 {
-    __weak typeof(self) weakSelf = self;
+    WEAK(self, weakSelf);
     [SHGDiscoveryManager loadDiscoveryData:@{@"uid":UID} block:^(NSArray *firstArray, NSArray *secondArray) {
         weakSelf.recommendContactArray = nil;
         if ([self isViewLoaded]) {
@@ -283,7 +283,10 @@
         object.industryNum = @"0";
         object.industryName = [[dictionary allKeys] firstObject];
         object.industry =[[dictionary allValues] firstObject];
-        [self.dataArray addObject:object];
+        if (![object.industryName isEqualToString:@"融资企业"]) {
+            [self.dataArray addObject:object];
+        }
+        
     }];
 
     CGFloat width = (SCREENWIDTH - 2 * 1 / SCALE) / 3;
@@ -304,6 +307,14 @@
         lastButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [self.buttonView addSubview:lastButton];
     }
+    UIView *whiteView = [[UIView alloc] init];
+    whiteView.backgroundColor = [UIColor whiteColor];
+    [self.buttonView addSubview:whiteView];
+    whiteView.sd_layout
+    .topEqualToView(lastButton)
+    .leftSpaceToView(lastButton, 1 / SCALE)
+    .rightSpaceToView(self.buttonView, 0.0f)
+    .heightIs(width);
 
     self.buttonView.sd_layout
     .topSpaceToView(self.topView, 0.0f)

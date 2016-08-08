@@ -15,6 +15,10 @@
 		<string>pevc</string>
 	</dict>
 	<dict>
+		<key>债权机构</key>
+		<string>bondAgency</string>
+	</dict>
+	<dict>
 		<key>公募基金</key>
 		<string>fund</string>
 	</dict>
@@ -33,6 +37,10 @@
 	<dict>
 		<key>上市公司</key>
 		<string>public</string>
+	</dict>
+	<dict>
+		<key>融资企业</key>
+		<string>financingEnterprise</string>
 	</dict>
 	<dict>
 		<key>其他</key>

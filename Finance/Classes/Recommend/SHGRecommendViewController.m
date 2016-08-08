@@ -86,7 +86,7 @@
 
 - (void)loadData
 {
-    __weak typeof(self) weakSelf = self;
+    WEAK(self, weakSelf);
     NSString *url = [NSString stringWithFormat:@"%@/%@/%@/%@",rBaseAddressForHttp,@"recommended",@"friends",@"getFirstRecommendedFriend"];
     NSDictionary *parameters = @{@"uid":UID};
     [MOCHTTPRequestOperationManager postWithURL:url class:nil parameters:parameters success:^(MOCHTTPResponse *response){
@@ -99,7 +99,7 @@
 
 - (void)rightItemClick:(id)sender
 {
-    __weak typeof(self) weakSelf = self;
+    WEAK(self, weakSelf);
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.25f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [weakSelf loginSuccess];
     });

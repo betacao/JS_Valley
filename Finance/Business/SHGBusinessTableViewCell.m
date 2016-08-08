@@ -179,7 +179,7 @@
 
 - (IBAction)deleteBusiness:(UIButton *)button
 {
-    __weak typeof(self)weakSelf = self;
+    WEAK(self, weakSelf);
     SHGAlertView *alertView = [[SHGAlertView alloc] initWithTitle:@"提示" contentText:@"确认删除吗?" leftButtonTitle:@"取消" rightButtonTitle:@"删除"];
     alertView.rightBlock = ^{
         [SHGBusinessManager deleteBusiness:weakSelf.object success:^(BOOL success) {
@@ -198,7 +198,7 @@
 }
 - (IBAction)refreshButtonClick:(UIButton *)sender
 {
-    __weak typeof(self)weakSelf = self;
+    WEAK(self, weakSelf);
     if ([self.object.isRefresh isEqualToString:@"true"]) {
         [SHGBusinessManager refreshBusiness:self.object success:^(BOOL success) {
             if (success) {

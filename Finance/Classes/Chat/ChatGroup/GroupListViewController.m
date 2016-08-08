@@ -468,7 +468,7 @@
 {
     //增加点击进入增加群组
     NSDictionary *loginInfo = [[[EaseMob sharedInstance] chatManager] loginInfo];
-    __weak typeof(self)weakSelf = self;
+    WEAK(self, weakSelf);
     [[EaseMob sharedInstance].chatManager asyncFetchMyGroupsListWithCompletion:^(NSArray *groups, EMError *error){
         [weakSelf.joinArr removeAllObjects];
         [weakSelf.commonArr removeAllObjects];

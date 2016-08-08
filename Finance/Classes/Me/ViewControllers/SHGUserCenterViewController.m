@@ -333,7 +333,7 @@
 
 - (SHGAuthenticationView *)authenticationView
 {
-    __weak typeof(self) weakSelf = self;
+    WEAK(self, weakSelf);
     if (!_authenticationView) {
         _authenticationView = [[SHGAuthenticationView alloc] init];;
     }
@@ -472,7 +472,7 @@
     if (!_authAlertView) {
         _authAlertView = [[SHGAlertView alloc] initWithCustomView:self.authMaskImageView leftButtonTitle:nil rightButtonTitle:nil];
         _authAlertView.touchOtherDismiss = YES;
-        __weak typeof(self) weakSelf = self;
+        WEAK(self, weakSelf);
         _authAlertView.leftBlock = ^{
             SHGAuthenticationViewController *controller = [[SHGAuthenticationViewController alloc] init];
             controller.hidesBottomBarWhenPushed = YES;
@@ -565,7 +565,7 @@
 - (void)editButtonClicked:(UIButton *)button
 {
     SHGModifyUserInfoViewController *controller = [[SHGModifyUserInfoViewController alloc]init];
-    __weak typeof(self)weakSelf = self;
+    WEAK(self, weakSelf);
     controller.hidesBottomBarWhenPushed = YES;
     controller.userInfo = @{kNickName:weakSelf.nickName, kDepartment:weakSelf.department, kCompany:weakSelf.company, kLocation:weakSelf.location, kIndustry:weakSelf.industry, kHeaderImage:weakSelf.imageUrl};
     [self.navigationController pushViewController:controller animated:YES];
@@ -629,7 +629,7 @@
 {
     //头像需要压缩 跟其他的上传图片接口不一样了
     [Hud showWait];
-    __weak typeof(self) weakSelf = self;
+    WEAK(self, weakSelf);
     [MOCHTTPRequestOperationManager POST:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"image/basephoto"] parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
         NSData *imageData = UIImageJPEGRepresentation(image, 0.1);
         [formData appendPartWithFileData:imageData name:@"hahaggg.jpg" fileName:@"hahaggg.jpg" mimeType:@"image/jpeg"];
@@ -668,7 +668,7 @@
 #pragma mark -邀请好友
 - (void)actionInvite
 {
-    __weak typeof(self) weakSelf = self;
+    WEAK(self, weakSelf);
     id<ISSCAttachment> image  = [ShareSDK pngImageWithImage:[UIImage imageNamed:@"80"]];
     NSString *contentOther =[NSString stringWithFormat:@"%@",@"诚邀您加入大牛圈--金融业务互助平台"];
     NSString *content =[NSString stringWithFormat:@"%@%@",@"诚邀您加入大牛圈--金融业务互助平台！这里有业务互助、人脉嫁接！赶快加入吧！",[NSString stringWithFormat:@"%@?uid=%@",SHARE_YAOQING_URL,[[NSUserDefaults standardUserDefaults]objectForKey:KEY_UID]]];
@@ -732,7 +732,7 @@
 - (void)getMyselfMaterial
 {
     [self.userHeaderView setImage:[UIImage imageNamed:@"default_head"]];
-    __weak typeof(self) weakSelf = self;
+    WEAK(self, weakSelf);
     [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttp,@"user",@"personaluser"] parameters:@{@"uid":UID,@"version":[SHGGloble sharedGloble].currentVersion} success:^(MOCHTTPResponse *response) {
 
         NSString *circles = [response.dataDictionary valueForKey:@"circles"];
@@ -911,7 +911,7 @@
             [Hud showMessageWithText:@"您刚刚更新过好友"];
         } else{
             SHGAlertView *alert = [[SHGAlertView alloc] initWithTitle:@"提示" contentText:@"更新好友将更新您一度人脉中手机通讯录，将有效拓展您的人脉。" leftButtonTitle:@"取消" rightButtonTitle:@"更新"];
-            __weak typeof(self) weakSelf = self;
+            WEAK(self, weakSelf);
             alert.rightBlock = ^{
                 [weakSelf uploadContact];
             };

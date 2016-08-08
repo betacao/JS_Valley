@@ -79,7 +79,7 @@
     } else{
         self.title = @"发布银证业务";
         self.sendType = SHGSameAndCommixtureSendTypeNew;
-        __weak typeof(self) weakSelf = self;
+        WEAK(self, weakSelf);
         if ([[SHGGloble sharedGloble].provinceName isEqualToString:@""]) {
             [[CCLocationManager shareLocation] getCity:^{
                 [weakSelf.areaSelectButton setTitle:[SHGGloble sharedGloble].provinceName forState:UIControlStateNormal];
@@ -102,7 +102,7 @@
     self.buttonSelectBgImage = [self.buttonSelectBgImage resizableImageWithCapInsets:UIEdgeInsetsMake(10.0f, 10.0f, 10.0f, 10.0f) resizingMode:UIImageResizingModeStretch];
     [self.scrollView addSubview:self.nameView];
     [self.scrollView addSubview:self.phoneNumView];
-    //[self.scrollView addSubview:self.businessCompanyNameView];
+    [self.scrollView addSubview:self.businessCompanyNameView];
     [self.scrollView addSubview:self.marketCategoryView];
     [self.scrollView addSubview:self.monenyView];
     [self.scrollView addSubview:self.areaView];
@@ -183,6 +183,34 @@
     .heightIs(kButtonHeight);
     [self.nameView setupAutoHeightWithBottomView:self.nameTextField bottomMargin:ktopToView];
     
+    //公司名称
+    self.businessCompanyNameView.sd_layout
+    .topSpaceToView(self.nameView, kLeftToView)
+    .leftSpaceToView(self.scrollView, 0.0f)
+    .rightSpaceToView(self.scrollView, 0.0f);
+    
+    self.companyNameLabel.sd_layout
+    .topSpaceToView(self.businessCompanyNameView, ktopToView)
+    .leftSpaceToView(self.businessCompanyNameView, kLeftToView)
+    .heightIs(ceilf(self.companyNameLabel.font.lineHeight));
+    [self.companyNameLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
+    
+    self.companyNameImage.sd_layout
+    .leftSpaceToView(self.companyNameLabel, kLeftToView)
+    .centerYEqualToView(self.companyNameLabel)
+    .widthIs(size.width)
+    .heightIs(size.height);
+    
+    self.companyNametextField.sd_layout
+    .leftEqualToView(self.companyNameLabel)
+    .rightSpaceToView(self.businessCompanyNameView, kLeftToView)
+    .topSpaceToView(self.companyNameLabel, ktopToView)
+    .heightIs(kCategoryButtonHeight);
+    
+    
+    [self.businessCompanyNameView setupAutoHeightWithBottomView:self.companyNametextField bottomMargin:ktopToView];
+    
+
     //联系电话
     self.phoneNumView.sd_layout
     .topSpaceToView(self.nameView, kLeftToView)
@@ -207,35 +235,7 @@
     .topSpaceToView(self.phoneNumLabel, ktopToView)
     .heightIs(kButtonHeight);
     [self.phoneNumView setupAutoHeightWithBottomView:self.phoneNumTextField bottomMargin:ktopToView];
-    
-    //公司名称
-    self.businessCompanyNameView.sd_layout
-    .topSpaceToView(self.phoneNumView, kLeftToView)
-    .leftSpaceToView(self.scrollView, 0.0f)
-    .rightSpaceToView(self.scrollView, 0.0f);
-    
-    self.companyNameLabel.sd_layout
-    .topSpaceToView(self.businessCompanyNameView, ktopToView)
-    .leftSpaceToView(self.businessCompanyNameView, kLeftToView)
-    .heightIs(ceilf(self.phoneNumLabel.font.lineHeight));
-    [self.companyNameLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
-    
-    self.companyNameImage.sd_layout
-    .leftSpaceToView(self.companyNameLabel, kLeftToView)
-    .centerYEqualToView(self.companyNameLabel)
-    .widthIs(size.width)
-    .heightIs(size.height);
-    
-    self.companyNametextField.sd_layout
-    .leftEqualToView(self.companyNameLabel)
-    .rightSpaceToView(self.businessCompanyNameView, kLeftToView)
-    .topSpaceToView(self.companyNameLabel, ktopToView)
-    .heightIs(kCategoryButtonHeight);
-    
-    
-    [self.businessCompanyNameView setupAutoHeightWithBottomView:self.companyNametextField bottomMargin:ktopToView];
-    
-
+ 
     //业务类型
     self.marketCategoryView.sd_layout
     .topSpaceToView(self.phoneNumView, kLeftToView)
@@ -494,12 +494,26 @@
 {
     [self.currentContext resignFirstResponder];
     __weak typeof (self) weakSelf = self;
+    if ([weakSelf checkInputEmpty]) {
     SHGAlertView *alertView = [[SHGAlertView alloc] initWithTitle:@"提示" contentText:@"退出此次编辑?" leftButtonTitle:@"取消" rightButtonTitle:@"退出"];
     alertView.rightBlock = ^{
         [weakSelf.navigationController popViewControllerAnimated:YES];
     };
     [alertView show];
+    } else{
+        [weakSelf.navigationController popViewControllerAnimated:YES];
+    }
 }
+
+- (BOOL)checkInputEmpty
+{
+    if (self.nameTextField.text.length == 0 && self.phoneNumTextField.text.length == 0 && [self.marketCategoryButtonView selectedArray].count == 0 && self.monenyTextField.text.length == 0 ){
+        return NO;
+    } else{
+        return YES;
+    }
+}
+
 
 - (BOOL)checkInputMessage
 {
@@ -514,10 +528,10 @@
         [Hud showMessageWithText:@"请填写联系方式"];
         return NO;
     }
-//    if (self.companyNametextField.text.length == 0) {
-//        [Hud showMessageWithText:@"请填写公司名称"];
-//        return NO;
-//    }
+    if (self.companyNametextField.text.length == 0) {
+        [Hud showMessageWithText:@"请填写公司名称"];
+        return NO;
+    }
     if (self.marketCategoryButtonView.selectedArray.count == 0) {
         [Hud showMessageWithText:@"请选择业务类型"];
         return NO;

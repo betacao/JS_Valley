@@ -40,7 +40,7 @@
 
 - (void)loadData
 {
-    __weak typeof(self)weakSelf = self;
+    WEAK(self, weakSelf);
     [[SHGBusinessManager shareManager] getSecondListBlock:^(NSArray *array, NSString *cityName) {
         if (array) {
             weakSelf.listArray = array;

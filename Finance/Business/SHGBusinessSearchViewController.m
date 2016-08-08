@@ -38,7 +38,7 @@
 
     [self initView];
     [self addAutoLayout];
-    __weak typeof(self) weakSelf = self;
+    WEAK(self, weakSelf);
     [SHGBusinessManager loadHotSearchWordFinishBlock:^(NSArray *array) {
         weakSelf.dataArray = [NSArray arrayWithArray:array];
         [weakSelf addHotItem];

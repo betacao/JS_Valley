@@ -174,7 +174,7 @@
 
 - (void)loadData
 {
-    __weak typeof(self)weakSelf = self;
+    WEAK(self, weakSelf);
     void(^block)(NSArray *firstArray, NSArray *secondArray) = ^(NSArray *firstArray, NSArray *secondArray) {
         weakSelf.emptyView.hidden = YES;
 
@@ -584,7 +584,7 @@
 
 - (void)loadDataWithTarget:(NSString *)target
 {
-    __weak typeof(self)weakSelf = self;
+    WEAK(self, weakSelf);
     void(^block)(NSArray *firstArray, NSArray *secondArray) = ^(NSArray *firstArray, NSArray *secondArray) {
         if ([target isEqualToString:@"first"]) {
             [weakSelf.dataArr removeAllObjects];

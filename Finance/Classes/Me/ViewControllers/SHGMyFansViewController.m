@@ -124,7 +124,7 @@
 {
     NSString *uid = UID;
     NSDictionary *param = @{@"uid":uid, @"target":target, @"time":time, @"num":@"100"};
-    __weak typeof(self)weakSelf = self;
+    WEAK(self, weakSelf);
     [MOCHTTPRequestOperationManager getWithURL:[rBaseAddressForHttp stringByAppendingString:@"/attention/myfanslist"] class:[SHGFollowAndFansObject class] parameters:param success:^(MOCHTTPResponse *response) {
         NSMutableArray *array = [NSMutableArray arrayWithArray:response.dataArray];
         [array enumerateObjectsUsingBlock:^(SHGFollowAndFansObject *obj, NSUInteger idx, BOOL * _Nonnull stop) {
@@ -197,7 +197,7 @@
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
 {
-    __weak typeof(self)weakSelf = self;
+    WEAK(self, weakSelf);
     [[RealtimeSearchUtil currentUtil] realtimeSearchWithSource:self.currentArray searchText:(NSString *)searchText collationStringSelector:@selector(name) resultBlock:^(NSArray *results) {
         if (results) {
             dispatch_async(dispatch_get_main_queue(), ^{

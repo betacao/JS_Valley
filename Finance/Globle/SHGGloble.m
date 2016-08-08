@@ -165,7 +165,7 @@
     [[SHGHomeViewController sharedController] loadRegisterPushFriend];
     NSDictionary *param = @{@"uid":UID, @"type":@"all", @"target":@"first", @"rid":@(0), @"num": rRequestNum, @"tagId": @"-1"};
 
-    __weak typeof(self) weakSelf = self;
+    WEAK(self, weakSelf);
     [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,dynamicNew] class:[CircleListObj class] parameters:param success:^(MOCHTTPResponse *response){
         NSLog(@"首页预加载数据成功");
         NSArray *array = [response.dataDictionary objectForKey:@"normalpostlist"];
@@ -228,7 +228,7 @@
         block();
         return;
     }
-    __weak typeof(self) weakSelf = self;
+    WEAK(self, weakSelf);
     [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/user/tag/baseUserTag",rBaseAddressForHttp] class:[SHGUserTagModel class] parameters:nil success:^(MOCHTTPResponse *response) {
         [weakSelf.tagsArray removeAllObjects];
         [weakSelf.tagsArray addObjectsFromArray:response.dataArray];
@@ -241,7 +241,7 @@
 - (void)downloadUserSelectedInfo:(void (^)())block
 {
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
-    __weak typeof(self) weakSelf = self;
+    WEAK(self, weakSelf);
     [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/user/tag/getUserSelectedTags",rBaseAddressForHttp] class:[SHGUserTagModel class] parameters:@{@"uid":uid} success:^(MOCHTTPResponse *response) {
         [weakSelf.selectedTagsArray removeAllObjects];
         [weakSelf.selectedTagsArray addObjectsFromArray:response.dataArray];
@@ -265,7 +265,7 @@
         string = [string substringFromIndex:1];
     }
 
-    __weak typeof(self) weakSelf = self;
+    WEAK(self, weakSelf);
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
     NSDictionary *param = [NSDictionary dictionaryWithObjectsAndKeys:uid,@"uid",string,@"tagIds",@"edit",@"flag", nil];
     [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/user/tag/saveOrUpdateUserTag",rBaseAddressForHttp] parameters:param success:^(MOCHTTPResponse *response) {
@@ -281,7 +281,7 @@
 
 - (void)getUserAddressList:(void (^)(BOOL))block
 {
-    __weak typeof(self) weakSelf = self;
+    WEAK(self, weakSelf);
     ABAddressBookRef addressBook = ABAddressBookCreate();
     ABAddressBookRequestAccessWithCompletion(addressBook, ^(bool granted, CFErrorRef error){
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0), ^{

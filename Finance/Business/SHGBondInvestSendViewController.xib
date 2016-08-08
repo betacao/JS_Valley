@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
     </dependencies>
     <objects>
@@ -16,7 +17,7 @@
                 <outlet property="capitalSourceLabel" destination="kEd-zG-Tdw" id="mpN-tt-rof"/>
                 <outlet property="capitalSourceView" destination="Hot-Qu-NEk" id="wcc-vK-TBZ"/>
                 <outlet property="companyNameImage" destination="15V-V8-Nxn" id="NMC-43-CgX"/>
-                <outlet property="companyNameLabel" destination="KIW-p8-xBh" id="03V-Hs-9wd"/>
+                <outlet property="companyNameLabel" destination="KIW-p8-xBh" id="ms4-BN-5TG"/>
                 <outlet property="companyNametextField" destination="OzM-3j-ohn" id="c4n-0S-MIa"/>
                 <outlet property="industryLabel" destination="GLg-ww-l9d" id="LHr-Jk-b61"/>
                 <outlet property="industrySelectButton" destination="GZd-Bn-xPl" id="WBW-Xr-LqR"/>
@@ -280,8 +281,8 @@
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" id="OzM-3j-ohn">
-                    <rect key="frame" x="0.0" y="42" width="201" height="30"/>
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="请输入公司名称" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" id="OzM-3j-ohn">
+                    <rect key="frame" x="0.0" y="40" width="201" height="30"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits"/>

@@ -127,7 +127,7 @@
 //二级分类
 - (void)getSecondListBlock:(void (^)(NSArray *, NSString *))block
 {
-    __weak typeof(self) weakSelf = self;
+    WEAK(self, weakSelf);
     if (self.secondListArray.count > 0) {
         NSInteger index = [[SHGBusinessScrollView sharedBusinessScrollView] currentIndex] == 0 ? 1 : [[SHGBusinessScrollView sharedBusinessScrollView] currentIndex];
         NSArray *array = [NSArray arrayWithArray:[self.secondListArray objectAtIndex:index - 1]];

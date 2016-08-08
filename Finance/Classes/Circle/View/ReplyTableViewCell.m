@@ -42,7 +42,7 @@
     self.label.linkAttributes = [NSDictionary dictionaryWithDictionary:mutableLinkAttributes];
     self.label.activeLinkAttributes = [NSDictionary dictionaryWithDictionary:mutableLinkAttributes];
 
-    __weak typeof(self) weakSelf = self;
+    WEAK(self, weakSelf);
     self.linkTapBlock = ^(TTTAttributedLabel *label, TTTAttributedLabelLink *link){
         SHGPersonalViewController *controller = [[SHGPersonalViewController alloc] initWithNibName:@"SHGPersonalViewController" bundle:nil];
         controller.userId = link.result.phoneNumber;

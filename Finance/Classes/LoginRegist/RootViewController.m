@@ -31,7 +31,7 @@
 {
     [super viewDidLoad];
 
-    __weak typeof(self) weakSelf = self;
+    WEAK(self, weakSelf);
     self.advertisementView.dissmissBlock = ^{
         if([[SHGGloble sharedGloble] isShowGuideView]){
             [weakSelf startGuideView];
@@ -43,7 +43,7 @@
 
 - (void)startGuideView
 {
-    __weak typeof(self) weakSelf = self;
+    WEAK(self, weakSelf);
     self.guideView = [[SHGGuideView alloc] init];
     self.guideView.block = ^{
         [weakSelf moveToHomePage];
@@ -96,7 +96,7 @@
     playerLayer.frame = CGRectMake(0.0f, 0.0f, SCREENWIDTH, SCREENHEIGHT);
 
     [playerLayer addObserver:self forKeyPath:@"readyForDisplay" options:0 context:nil];
-    __weak typeof(self) weakSelf = self;
+    WEAK(self, weakSelf);
     dispatch_async(dispatch_get_main_queue(), ^{
         [weakSelf.view.layer addSublayer:playerLayer];
         [weakSelf.view addSubview:skipVideoButton];
@@ -115,7 +115,7 @@
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
 
-    __weak typeof(self) weakSelf = self;
+    WEAK(self, weakSelf);
     if ([keyPath isEqualToString:@"readyForDisplay"]) {
         AVPlayerLayer* layer = (AVPlayerLayer*) object;
         if (layer.readyForDisplay) {
@@ -153,7 +153,7 @@
         [self showLoginViewController];
         return;
     }
-    __weak typeof(self)weakSelf = self;
+    WEAK(self, weakSelf);
     NSDictionary *param = @{@"ctype":@"iPhone", @"os":@"iOS", @"osv":[UIDevice currentDevice].systemVersion, @"uid":key_Uid,@"t":key_Token, @"appv":LOCAL_Version, @"phoneType":[SHGGloble sharedGloble].platform};
     [MOCHTTPRequestOperationManager postWithURL:[NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttp,@"login",@"auto"] class:nil parameters:param success:^(MOCHTTPResponse *response){
         NSString *code =[response.data valueForKey:@"code"];
@@ -261,7 +261,7 @@
 */
 - (void)loginSuccess
 {
-    __weak typeof(self) weakSelf = self;
+    WEAK(self, weakSelf);
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.2f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [[AppDelegate currentAppdelegate] moveToRootController:weakSelf.rid];
     });

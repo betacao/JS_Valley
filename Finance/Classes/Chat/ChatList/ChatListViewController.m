@@ -351,7 +351,7 @@ static NSString * const kCommonFNum			= @"commonnum";
                 }
                 model.name = hi.nickname;
             } else{
-                __weak typeof(self) weakSelf = self;
+                WEAK(self, weakSelf);
                 [[SHGGloble sharedGloble] refreshFriendListWithUid:conversation.chatter finishBlock:^(BasePeopleObject *object) {
                     [weakSelf.contactsSource addObject:object];
                     dispatch_async(dispatch_get_main_queue(), ^{

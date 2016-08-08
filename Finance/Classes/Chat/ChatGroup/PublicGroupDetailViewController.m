@@ -153,7 +153,7 @@
 
 - (void)getGroupManagerName
 {
-    __weak typeof(self) weakSelf = self;
+    WEAK(self, weakSelf);
     NSString * uid = weakSelf.group.owner;
     if (uid.length > 0) {
         [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttp,@"user",@"personaluser"] parameters:@{@"uid":uid}success:^(MOCHTTPResponse *response) {
@@ -361,7 +361,7 @@
 - (void)applyJoinGroup:(NSString *)groupId withGroupname:(NSString *)groupName message:(NSString *)message
 {
     [self showHudInView:self.view hint:NSLocalizedString(@"group.sendingApply", @"send group of application...")];
-    __weak typeof(self) weakSelf = self;
+    WEAK(self, weakSelf);
     [[EaseMob sharedInstance].chatManager asyncApplyJoinPublicGroup:groupId withGroupname:groupName message:message completion:^(EMGroup *group, EMError *error) {
         [weakSelf hideHud];
         if (!error) {

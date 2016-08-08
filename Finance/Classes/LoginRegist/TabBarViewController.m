@@ -121,7 +121,7 @@
 - (void)initSubpage
 {
     //业务
-    __weak typeof(self)weakSelf = self;
+    WEAK(self, weakSelf);
     UIImage *image = [UIImage imageNamed:@"business"];
     image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     UIImage *selectedImage = [UIImage imageNamed:@"business_height"];

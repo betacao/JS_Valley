@@ -121,7 +121,7 @@
     .rightSpaceToView(self.scrollView, 0.0f)
     .heightIs(MarginFactor(59.0f));
 
-    __weak typeof(self)weakSelf = self;
+    WEAK(self, weakSelf);
     self.detailView.didFinishAutoLayoutBlock = ^(CGRect rect){
         CGFloat maxY = MAX(CGRectGetMaxY(rect), CGRectGetHeight(self.scrollView.frame) + 1.0f);
         if (weakSelf.scrollView.contentSize.height != maxY) {

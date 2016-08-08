@@ -216,7 +216,7 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
     }
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
     [Hud showWait];
-    __weak typeof(self) weakSelf = self;
+    WEAK(self, weakSelf);
     NSDictionary *param = @{@"uid":uid, @"target":target, @"rid":[NSNumber numberWithInt:[time intValue]], @"num":rRequestNum};
     [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttpCircle,@"queryCircleById",self.userId] class:[CircleListObj class] parameters:param success:^(MOCHTTPResponse *response) {
         [Hud hideHud];
@@ -401,7 +401,7 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
 
 -(void)addCollected
 {
-    __weak typeof(self) weakSelf = self;
+    WEAK(self, weakSelf);
     NSString *url = [NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttp,@"userCard",@"collect"];
     NSDictionary *param = @{@"uid":[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID],@"beCollectedId":self.userId};
     [MOCHTTPRequestOperationManager postWithURL:url class:nil parameters:param success:^(MOCHTTPResponse *response) {
@@ -418,7 +418,7 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
 }
 -(void)deleteCollected
 {
-    __weak typeof(self) weakSelf = self;
+    WEAK(self, weakSelf);
     NSString *url = [NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttp,@"userCard",@"cancleCollect"];
     NSDictionary *param = @{@"uid":[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID],@"beCollectedId":self.userId};
     [MOCHTTPRequestOperationManager postWithURL:url class:nil parameters:param success:^(MOCHTTPResponse *response) {
@@ -442,7 +442,12 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.listArray.count;
+    if([self.userId isEqualToString:@"-2"] && ![UID isEqualToString:@"-2"]){
+        return 0;
+    } else{
+       return self.listArray.count;
+    }
+    
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath

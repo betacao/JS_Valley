@@ -68,7 +68,7 @@
 
 - (void)loadData
 {
-    __weak typeof(self) weakSelf = self;
+    WEAK(self, weakSelf);
     [SHGBusinessManager gradebusiness:@{@"businessId":self.object.businessID, @"type":self.object.type} block:^(NSArray *dataArray) {
         weakSelf.dataArray = [NSArray arrayWithArray:dataArray];
         [weakSelf.tableView reloadData];

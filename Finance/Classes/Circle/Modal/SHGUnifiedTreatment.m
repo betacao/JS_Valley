@@ -43,7 +43,7 @@
 - (void)deleteClicked:(CircleListObj *)obj
 {
     SHGAlertView *alert = [[SHGAlertView alloc] initWithTitle:@"提示" contentText:@"确认删除吗?" leftButtonTitle:@"取消" rightButtonTitle:@"删除"];
-    __weak typeof(self)weakSelf = self;
+    WEAK(self, weakSelf);
     alert.rightBlock = ^{
         [weakSelf deletepostWithObj:obj];
     };
@@ -52,7 +52,7 @@
 
 - (void)deletepostWithObj:(CircleListObj *)obj
 {
-    __weak typeof(self)weakSelf = self;
+    WEAK(self, weakSelf);
     NSString *url = [NSString stringWithFormat:@"%@/%@",rBaseAddressForHttpCircle,@"circle"];
     NSDictionary *dic = @{@"rid":obj.rid, @"uid":obj.userid};
 

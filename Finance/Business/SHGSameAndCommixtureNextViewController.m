@@ -203,7 +203,7 @@
 {
 
     if ([self checkInputMessage]) {
-        __weak typeof(self) weakSelf = self;
+        WEAK(self, weakSelf);
         NSDictionary *businessDic = ((SHGSameAndCommixtureSendViewController *)weakSelf.superController).firstDic;
         [self uploadImage:^(BOOL success) {
             if (success) {
@@ -283,7 +283,7 @@
 {
     [Hud showWait];
     if (self.hasImage) {
-        __weak typeof(self) weakSelf = self;
+        WEAK(self, weakSelf);
         [MOCHTTPRequestOperationManager POST:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"image/uploadPhotoCompress"] parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
             NSData *imageData = UIImageJPEGRepresentation(self.addImageButton.imageView.image, 0.1);
             [formData appendPartWithFileData:imageData name:@"market.jpg" fileName:@"market.jpg" mimeType:@"image/jpeg"];

@@ -153,7 +153,7 @@
         _slime.hidden = NO;
         _refleshView.hidden = NO;
         _refleshView.layer.transform = CATransform3DIdentity;
-        __weak typeof(self) weakSelf = self;
+        WEAK(self, weakSelf);
         [UIView transitionWithView:_scrollView
                           duration:0.3f
                            options:UIViewAnimationOptionBeginFromCurrentState

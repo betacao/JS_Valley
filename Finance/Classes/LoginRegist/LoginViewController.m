@@ -222,7 +222,7 @@
         [Hud hideHud];
         if (result){
             [Hud showWait];
-            __weak typeof(self) weakSelf = self;
+            WEAK(self, weakSelf);
             NSString *channelId = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_BPUSH_CHANNELID];
             NSString *userId = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_BPUSH_USERID];
             NSDictionary *param = @{@"loginNum":[userInfo uid], @"loginType":logType, @"ctype":@"iPhone", @"os":@"iOS", @"osv":[UIDevice currentDevice].systemVersion, @"appv":LOCAL_Version, @"yuncid":channelId?:@"", @"yunuid":userId?:@"", @"phoneType":[SHGGloble sharedGloble].platform};
@@ -275,7 +275,7 @@
 
     NSString *token = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_TOKEN];
     NSDictionary *param = @{@"uid":uid, @"t":token?:@"", @"channelid":channelId?:@"", @"channeluid":@"getui"};
-    __weak typeof(self) weakSelf = self;
+    WEAK(self, weakSelf);
 
     [[SHGGloble sharedGloble] registerToken:param block:^(BOOL success, MOCHTTPResponse *response) {
         if (success) {

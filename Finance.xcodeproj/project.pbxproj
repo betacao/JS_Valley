@@ -553,6 +553,7 @@
 		98E04A071CAE11DF006A8773 /* SHGBondInvestNextViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98E04A051CAE11DF006A8773 /* SHGBondInvestNextViewController.xib */; };
 		98E3022B1BFB0708001D4A69 /* SHGAuthenticationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98E302291BFB0708001D4A69 /* SHGAuthenticationViewController.m */; };
 		98E3022C1BFB0708001D4A69 /* SHGAuthenticationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98E3022A1BFB0708001D4A69 /* SHGAuthenticationViewController.xib */; };
+		98FFF6561D587C400029E85B /* SHGIndustrySelectView.m in Sources */ = {isa = PBXBuildFile; fileRef = 98FFF6551D587C400029E85B /* SHGIndustrySelectView.m */; };
 		B04355CE1B4BD3560033BBBF /* LinkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B04355CC1B4BD3560033BBBF /* LinkViewController.m */; };
 		B04355CF1B4BD3560033BBBF /* LinkViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B04355CD1B4BD3560033BBBF /* LinkViewController.xib */; };
 		B04D032E1B43F88A009BE7C2 /* ZYExceptionHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = B04D032D1B43F88A009BE7C2 /* ZYExceptionHandler.m */; };
@@ -1544,6 +1545,8 @@
 		98E302281BFB0708001D4A69 /* SHGAuthenticationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGAuthenticationViewController.h; sourceTree = "<group>"; };
 		98E302291BFB0708001D4A69 /* SHGAuthenticationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGAuthenticationViewController.m; sourceTree = "<group>"; };
 		98E3022A1BFB0708001D4A69 /* SHGAuthenticationViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGAuthenticationViewController.xib; sourceTree = "<group>"; };
+		98FFF6541D587C400029E85B /* SHGIndustrySelectView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGIndustrySelectView.h; sourceTree = "<group>"; };
+		98FFF6551D587C400029E85B /* SHGIndustrySelectView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGIndustrySelectView.m; sourceTree = "<group>"; };
 		A4D946A4AD798CCD6903D76E /* libPods-Finance.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Finance.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B04355CB1B4BD3560033BBBF /* LinkViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LinkViewController.h; sourceTree = "<group>"; };
 		B04355CC1B4BD3560033BBBF /* LinkViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LinkViewController.m; sourceTree = "<group>"; };
@@ -3099,6 +3102,8 @@
 		61B992F11ADB94580025BE7B /* View */ = {
 			isa = PBXGroup;
 			children = (
+				98FFF6541D587C400029E85B /* SHGIndustrySelectView.h */,
+				98FFF6551D587C400029E85B /* SHGIndustrySelectView.m */,
 				4088DDCF1AF1065100393855 /* SettingQuestionCell.h */,
 				4088DDD01AF1065100393855 /* SettingQuestionCell.m */,
 				4088DDD11AF1065100393855 /* SettingQuestionCell.xib */,
@@ -4833,6 +4838,7 @@
 				61D6E7D41AD50FCB0016C13A /* BaseViewController.m in Sources */,
 				532AF6B01AFC432A007D3E4B /* HeadImage.m in Sources */,
 				538964D61AFC6BEB00041548 /* UIViewController+DismissKeyboard.m in Sources */,
+				98FFF6561D587C400029E85B /* SHGIndustrySelectView.m in Sources */,
 				40302B1A1AEF61B600F22EB6 /* MyTeamViewController.m in Sources */,
 				F9ED07F41C3B6A530079A1A9 /* SHGModifyUserInfoViewController.m in Sources */,
 				9842E9D41C0180240008B6AF /* SHGPersonFriendsTableViewCell.m in Sources */,

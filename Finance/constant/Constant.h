@@ -44,6 +44,8 @@
 #define MarginFactor(x) floorf(SCREENWIDTH / 375.0f * x)
 
 #define Color(color) [UIColor colorWithHexString: color]
+
+#define WEAK(self, weakSelf) __weak typeof(self) weakSelf = self
 //计算颜色
 #define RGB(r,g,b) [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:1.0]
 

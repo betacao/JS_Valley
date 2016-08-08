@@ -291,7 +291,7 @@
     
     //每个section内的数组排序
     if (_comparisonObjectSelector) {
-        __weak typeof(self) weakSelf = self;
+        WEAK(self, weakSelf);
         for (int i = 0; i < [sortedArray count]; i++) {
             NSArray *tmpArray = [[sortedArray objectAtIndex:i] sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
                 return weakSelf.comparisonObjectSelector(obj1, obj2);

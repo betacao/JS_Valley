@@ -96,7 +96,7 @@
 
     self.arrValues = @[array0, array2, array3];
 
-    __weak typeof(self)weakSelf = self;
+    WEAK(self, weakSelf);
     [[SHGGloble sharedGloble] checkForUpdate:^(BOOL state) {
         if (state) {
             weakSelf.arrValues = @[array0, array1, array2, array3];
@@ -193,7 +193,7 @@
     } else if ([object.content isEqualToString:@"清除缓存"]){
          [[SHGGloble sharedGloble] recordUserAction:@"" type:@"user_setting_clearCache"];
         SHGAlertView *alert = [[SHGAlertView alloc] initWithTitle:@"提示" contentText:@"是否确认清除本地缓存？" leftButtonTitle:@"取消" rightButtonTitle:@"确定"];
-        __weak typeof(self) weakSelf = self;
+        WEAK(self, weakSelf);
         alert.rightBlock = ^{
             [Hud showWait];
             [[YYImageCache sharedCache].diskCache removeAllObjectsWithBlock:^{
@@ -216,7 +216,7 @@
     } else if([object.content isEqualToString:@"个人信息"]){
         SHGModifyUserInfoViewController *controller = [[SHGModifyUserInfoViewController alloc] init];
         controller.userInfo = self.userInfo;
-        __weak typeof(self)weakSelf = self;
+        WEAK(self, weakSelf);
         controller.block = ^(NSDictionary *info){
             weakSelf.userInfo = info;
         };
@@ -284,7 +284,7 @@
 
 - (IBAction)messageSwitch:(id)sender {
     if (self.switchView.isOn) {
-        __weak typeof(self)weakSelf = self;
+        WEAK(self, weakSelf);
         NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
         NSString *pushFlag = @"1";
         [Hud showWait];
@@ -297,7 +297,7 @@
             [Hud showMessageWithText:@"打开通知失败"];
         }];
     }else{
-        __weak typeof(self)weakSelf = self;
+        WEAK(self, weakSelf);
         NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
         NSString *pushFlag = @"0";
         [Hud showWait];

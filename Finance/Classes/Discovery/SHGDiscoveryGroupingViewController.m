@@ -30,7 +30,7 @@
         self.title = @"地区分组";
         param = @{@"uid":UID, @"aliasName":@"position"};
     }
-    __weak typeof(self)weakSelf = self;
+    WEAK(self, weakSelf);
     [SHGDiscoveryManager loadDiscoveryGroupUser:param block:^(NSArray *dataArray) {
         weakSelf.dataArray = [NSMutableArray arrayWithArray:dataArray];
         [weakSelf.tableView reloadData];

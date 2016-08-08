@@ -275,7 +275,7 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
 //发布
 - (void)actionPost:(UIButton *)button
 {
-    __weak typeof(self)weakSelf = self;
+    WEAK(self, weakSelf);
 
     [[SHGGloble sharedGloble] requestUserVerifyStatusCompletion:^(BOOL state,NSString *auditState) {
         if (state) {
@@ -387,7 +387,7 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
         }
         else if (fromViewController == nil)  // don't animate
         {
-            __weak typeof(self) weakSelf = self;
+            WEAK(self, weakSelf);
             toViewController.view.frame = contentContainerView.bounds;
             [contentContainerView addSubview:toViewController.view];
             if ([weakSelf.delegate respondsToSelector:@selector(SHG_SegmentController:didSelectViewController:atIndex:)])
@@ -584,7 +584,7 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     }
     
     if (!hasExsist){
-        __weak typeof(self) weakSelf = self;
+        WEAK(self, weakSelf);
         [[SHGGloble sharedGloble] refreshFriendListWithUid:fromUser finishBlock:^(BasePeopleObject *object) {
             [weakSelf.chatViewController.contactsSource addObject:object];
             dispatch_async(dispatch_get_main_queue(), ^{

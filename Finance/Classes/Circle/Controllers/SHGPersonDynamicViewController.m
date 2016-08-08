@@ -54,7 +54,7 @@
 {
     [Hud showWait];
 
-    __weak typeof(self) weakSelf = self;
+    WEAK(self, weakSelf);
     NSDictionary *param = @{@"uid":UID, @"target":target, @"rid":[NSNumber numberWithInt:[time intValue]], @"num":rRequestNum};
     [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttpCircle,@"queryCircleListById",self.userId] class:[CircleListObj class] parameters:param success:^(MOCHTTPResponse *response) {
         [Hud hideHud];
@@ -319,7 +319,7 @@
 {
     NSString *url = [NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttpCircle,@"circle",obj.rid];
     NSDictionary *param = @{@"uid":UID};
-    __weak typeof(self) weakSelf = self;
+    WEAK(self, weakSelf);
     [MOCHTTPRequestOperationManager putWithURL:url class:nil parameters:param success:^(MOCHTTPResponse *response) {
         NSString *code = [response.data valueForKey:@"code"];
         if ([code isEqualToString:@"000"]) {
@@ -375,7 +375,7 @@
 - (void)deleteClicked:(CircleListObj *)obj
 {
     //删除
-    __weak typeof(self) weakSelf = self;
+    WEAK(self, weakSelf);
     SHGAlertView *alert = [[SHGAlertView alloc] initWithTitle:@"提示" contentText:@"确认删除吗?" leftButtonTitle:@"取消" rightButtonTitle:@"删除"];
     alert.rightBlock = ^{
         NSString *url = [NSString stringWithFormat:@"%@/%@",rBaseAddressForHttpCircle,@"circle"];
@@ -408,7 +408,7 @@
 #pragma mark ------点赞
 - (void)praiseClicked:(CircleListObj *)obj
 {
-    __weak typeof(self) weakSelf = self;
+    WEAK(self, weakSelf);
     NSString *url = [NSString stringWithFormat:@"%@/%@",rBaseAddressForHttpCircle,@"praisesend"];
     NSDictionary *param = @{@"uid":[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID],@"rid":obj.rid};
 

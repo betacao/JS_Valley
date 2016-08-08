@@ -33,7 +33,7 @@
     [leftButton addTarget:self action:@selector(btnBackClick:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:leftButton];
     self.navigationItem.leftBarButtonItem = leftItem;
-    __weak typeof(self) weakSelf = self;
+    WEAK(self, weakSelf);
     [[CCLocationManager shareLocation] getCity:^{
         [weakSelf.indicator removeFromSuperview];
         weakSelf.gpsCell.textLabel.text = [SHGGloble sharedGloble].cityName;

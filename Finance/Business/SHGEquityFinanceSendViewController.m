@@ -88,7 +88,7 @@
     } else{
         self.title = @"发布股权融资";
         self.sendType = SHGEquityFinaceSendTypeNew;
-        __weak typeof(self) weakSelf = self;
+        WEAK(self, weakSelf);
         if ([[SHGGloble sharedGloble].provinceName isEqualToString:@""]) {
             [[CCLocationManager shareLocation] getCity:^{
                 [weakSelf.areaSelectButton setTitle:[SHGGloble sharedGloble].provinceName forState:UIControlStateNormal];
@@ -581,6 +581,10 @@
         weakSelf.industrySelectArray = array;
         [weakSelf.industrySelectButton setTitle:string forState:UIControlStateNormal];
         [weakSelf.industrySelectButton setTitleColor:Color(@"161616") forState:UIControlStateNormal];
+        if (string.length == 0) {
+            [weakSelf.industrySelectButton setTitle:@"请选择行业" forState:UIControlStateNormal];
+            [weakSelf.industrySelectButton setTitleColor:Color(@"bebebe") forState:UIControlStateNormal];
+        }
     };
     [self.view.window addSubview:self.selectViewController];
 }
@@ -602,12 +606,26 @@
 {
     [self.currentContext resignFirstResponder];
     __weak typeof (self) weakSelf = self;
+    if ([weakSelf checkInputEmpty]) {
     SHGAlertView *alertView = [[SHGAlertView alloc] initWithTitle:@"提示" contentText:@"退出此次编辑?" leftButtonTitle:@"取消" rightButtonTitle:@"退出"];
     alertView.rightBlock = ^{
         [weakSelf.navigationController popViewControllerAnimated:YES];
     };
     [alertView show];
+    } else{
+        [weakSelf.navigationController popViewControllerAnimated:YES];
+    }
 }
+
+- (BOOL)checkInputEmpty
+{
+    if (self.nameTextField.text.length == 0 && self.phoneNumTextField.text.length == 0 && [self.bondStageButtonView selectedArray].count == 0 && [self.industrySelectButton.titleLabel.text isEqualToString:@"请选择行业"] && self.monenyTextField.text.length == 0 ){
+        return NO;
+    } else{
+        return YES;
+    }
+}
+
 - (BOOL)checkInputMessage
 {
     if (self.nameTextField.text.length == 0) {

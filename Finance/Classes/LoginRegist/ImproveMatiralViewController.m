@@ -13,7 +13,7 @@
 #import "CCLocationManager.h"
 #import "SHGProvincesViewController.h"
 #import "SHGUserTagModel.h"
-#import "SHGItemChooseView.h"
+#import "SHGIndustrySelectView.h"
 
 #define kPersonCategoryLeftMargin 13.0f * XFACTOR
 #define kPersonCategoryTopMargin 10.0f * XFACTOR
@@ -21,7 +21,7 @@
 #define kPersonCategoryVerticalMargin 9.0f * XFACTOR
 #define kPersonCategoryHeight 22.0f * XFACTOR
 
-@interface ImproveMatiralViewController ()<UIScrollViewDelegate, SHGGlobleDelegate, SHGAreaDelegate, SHGItemChooseDelegate>
+@interface ImproveMatiralViewController ()<UIScrollViewDelegate, SHGGlobleDelegate, SHGAreaDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextField *nameTextField;
 @property (weak, nonatomic) IBOutlet UITextField *companyTextField;
@@ -225,7 +225,7 @@
 {
     if([self checkInputMessageValid]){
         [Hud showWait];
-        __weak typeof(self) weakSelf = self;
+        WEAK(self, weakSelf);
         //头像需要压缩 跟其他的上传图片接口不一样了
         [MOCHTTPRequestOperationManager POST:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"image/basephoto"] parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
             NSData *imageData = UIImageJPEGRepresentation(image, 0.1);
@@ -271,7 +271,7 @@
 - (void)uploadMaterial
 {
     if([self checkInputMessageValid]){
-        __weak typeof(self)weakSelf = self;
+        WEAK(self, weakSelf);
         NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
 
         NSDictionary *param = @{@"uid":uid, @"head_img":self.headImageName ? self.headImageName : @"", @"name":self.nameTextField.text, @"industrycode":self.instustryCode, @"company":self.companyTextField.text, @"title":self.titleTextField.text, @"position":self.userLocation ? self.userLocation : @""};
@@ -321,7 +321,7 @@
 
 - (void)downloadUserSelectedInfo
 {
-    __weak typeof(self) weakSelf = self;
+    WEAK(self, weakSelf);
     [[SHGGloble sharedGloble] downloadUserTagInfo:^{
         [weakSelf.personCategoryView updateViewWithArray:[SHGGloble sharedGloble].tagsArray finishBlock:^{
             CGPoint point = CGPointMake(0.0f, CGRectGetMaxY(weakSelf.personCategoryView.frame) + 2 * kPersonCategoryTopMargin);
@@ -337,7 +337,7 @@
 
 - (void)uploadUserSelectedInfo
 {
-    __weak typeof(self) weakSelf = self;
+    WEAK(self, weakSelf);
     NSArray *array = [self.personCategoryView userSelectedTags];
     [[SHGGloble sharedGloble] uploadUserSelectedInfo:array completion:^(BOOL finished) {
         if(finished){
@@ -351,7 +351,7 @@
 
 - (void)didUploadAllUserInfo
 {
-    __weak typeof(self) weakSelf = self;
+    WEAK(self, weakSelf);
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.2f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [Hud hideHud];
         [weakSelf loginSuccess];
@@ -434,7 +434,7 @@
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     [textField resignFirstResponder];
-    __weak typeof(self)weakSelf = self;
+    WEAK(self, weakSelf);
     dispatch_async(dispatch_get_main_queue(), ^{
         [weakSelf.bgScrollView setContentOffset:CGPointZero animated:YES];
     });
@@ -502,10 +502,12 @@
 
 - (void)showIndustryChoiceView
 {
-    SHGItemChooseView *view = [[SHGItemChooseView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, SCREENWIDTH, SCREENHEIGHT) lineNumber:9];
-    view.delegate = self;
-    view.dataArray = @[@"银行机构", @"证券公司", @"PE/VC",@"公募基金",@"信托公司",@"三方理财", @"担保小贷", @"上市公司", @"其他"];
-    [self.view.window addSubview:view];
+    SHGIndustrySelectView *view = [[SHGIndustrySelectView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, SCREENWIDTH, SCREENHEIGHT) andSelctIndustry:self.industrycodeTextField.text];
+    WEAK(self, weakSelf);
+    view.returnTextBlock = ^(NSString *string){
+        weakSelf.industrycodeTextField.text = string;
+    };
+    [weakSelf.view.window addSubview:view];
 }
 
 #pragma mark ------ 选择行业代理
@@ -518,6 +520,8 @@
         self.instustryCode = @"bond";
     } else if ([industry isEqualToString:@"PE/VC"]) {
         self.instustryCode = @"pevc";
+    } else if ([industry isEqualToString:@"债权机构"]) {
+        self.instustryCode = @"bondAgency";
     } else if ([industry isEqualToString:@"公募基金"]) {
         self.instustryCode = @"fund";
     } else if ([industry isEqualToString:@"信托公司"]) {
@@ -528,6 +532,8 @@
         self.instustryCode = @"bonding";
     } else if ([industry isEqualToString:@"上市公司"]) {
         self.instustryCode = @"public";
+    } else if ([industry isEqualToString:@"融资企业"]){
+        self.instustryCode = @"financingEnterprise";
     } else if ([industry isEqualToString:@"其他"]) {
         self.instustryCode = @"other";
     } 
