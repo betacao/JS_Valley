@@ -5161,7 +5161,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/Finance/External/EaseMobSDK/lib",
 					"$(PROJECT_DIR)/Finance/External/Mob",
 					"$(PROJECT_DIR)/Finance/External/GeTui",
 					"$(PROJECT_DIR)/Finance/External/ShareSDK/Extend/SinaWeiboSDK",
@@ -5206,7 +5205,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/Finance/External/EaseMobSDK/lib",
 					"$(PROJECT_DIR)/Finance/External/Mob",
 					"$(PROJECT_DIR)/Finance/External/GeTui",
 					"$(PROJECT_DIR)/Finance/External/ShareSDK/Extend/SinaWeiboSDK",
@@ -5288,7 +5286,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/Finance/External/EaseMobSDK/lib",
 					"$(PROJECT_DIR)/Finance/External/Mob",
 					"$(PROJECT_DIR)/Finance/External/GeTui",
 					"$(PROJECT_DIR)/Finance/External/ShareSDK/Extend/SinaWeiboSDK",

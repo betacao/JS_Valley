@@ -86,7 +86,7 @@
         self.VImageView.hidden = YES;
     }
     self.userId = userId;
-    [self.headerImageView.layer yy_setImageWithURL:[NSURL URLWithString:sourceUrl] placeholder:placeImage];
+    [self.headerImageView yy_setImageWithURL:[NSURL URLWithString:sourceUrl] placeholder:placeImage];
 }
 
 

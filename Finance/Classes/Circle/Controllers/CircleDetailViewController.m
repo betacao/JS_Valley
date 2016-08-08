@@ -260,8 +260,7 @@
 
     self.authenticationView.sd_layout
     .leftEqualToView(self.nickName)
-    .bottomEqualToView(self.imageHeader)
-    .heightIs(MarginFactor(13.0f));
+    .bottomEqualToView(self.imageHeader);
 
     self.lblTime.sd_layout
     .leftSpaceToView(self.authenticationView, MarginFactor(5.0f))
@@ -453,7 +452,7 @@
 
     BOOL status = [self.responseObject.userstatus isEqualToString:@"true"] ? YES : NO;
     [self.imageHeader updateHeaderView:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,self.responseObject.potname] placeholderImage:[UIImage imageNamed:@"default_head"] status:status userID:self.responseObject.userid];
-    [self.authenticationView updateWithVStatus:status enterpriseStatus:self.responseObject.businessStatus];
+    [self.authenticationView updateWithStatus:status];
     if (![self.responseObject.ispraise isEqualToString:@"Y"]) {
         [self.btnPraise addImage:[UIImage imageNamed:@"home_weizan"]];
     } else{

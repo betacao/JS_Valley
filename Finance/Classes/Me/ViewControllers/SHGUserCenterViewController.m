@@ -127,8 +127,7 @@
     //v+企
     self.authenticationView.sd_layout
     .leftSpaceToView(self.departmentLabel, MarginFactor(5.0f))
-    .centerYEqualToView(self.departmentLabel)
-    .heightIs(MarginFactor(13.0f));
+    .centerYEqualToView(self.departmentLabel);
 
     self.authenTipView.sd_layout
     .centerXEqualToView(self.view)
@@ -337,13 +336,6 @@
     __weak typeof(self) weakSelf = self;
     if (!_authenticationView) {
         _authenticationView = [[SHGAuthenticationView alloc] init];;
-        _authenticationView.block = ^{
-            CGFloat toAlpha = ABS(weakSelf.authenTipView.alpha - 1.0f);
-            [UIView animateWithDuration:0.3f animations:^{
-                weakSelf.authenTipView.alpha = toAlpha;
-            }];
-        };
-        _authenticationView.showGray = YES;
     }
     return _authenticationView;
 }
@@ -814,7 +806,7 @@
             }
             [weakSelf.userHeaderView yy_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,headImageUrl]] placeholder:placeImage];
         }
-        [weakSelf.authenticationView updateWithVStatus:[[response.dataDictionary objectForKey:@"userstatus"] isEqualToString:@"true"] ? YES : NO enterpriseStatus:[[response.dataDictionary objectForKey:@"businessstatus"] boolValue]];
+        [weakSelf.authenticationView updateWithStatus:[[response.dataDictionary objectForKey:@"userstatus"] isEqualToString:@"true"] ? YES : NO];
 
         if ([response.dataDictionary objectForKey:@"auditstate"]) {
             weakSelf.editButton.hidden = YES;

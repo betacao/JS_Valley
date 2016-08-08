@@ -142,8 +142,7 @@
 
     self.authenticationView.sd_layout
     .leftEqualToView(self.nameLabel)
-    .bottomEqualToView(self.headerView)
-    .heightIs(MarginFactor(13.0f));
+    .bottomEqualToView(self.headerView);
 
     self.timeLabel.sd_layout
     .bottomEqualToView(self.headerView)
@@ -276,7 +275,7 @@
 {
     BOOL status = [object.userstatus isEqualToString:@"true"] ? YES : NO;
     [self.headerView updateHeaderView:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,object.potname] placeholderImage:[UIImage imageNamed:@"default_head"] status:status userID:object.userid];
-    [self.authenticationView updateWithVStatus:status enterpriseStatus:object.businessStatus];
+    [self.authenticationView updateWithStatus:status];
 
     NSString *name = object.nickname;
     if (object.nickname.length > 4){

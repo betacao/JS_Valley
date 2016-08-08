@@ -10,12 +10,6 @@
 
 @interface SHGAuthenticationView : UIView
 
-@property (assign, nonatomic) BOOL showGray;
-
-@property (nonatomic, copy) dispatch_block_t block;
-
-- (void)initView;
-- (void)addAutoLayout;
-- (void)updateWithVStatus:(BOOL)vStatus enterpriseStatus:(BOOL)enterpriseStatus;
+- (void)updateWithStatus:(BOOL)status;
 
 @end
