@@ -23,4 +23,7 @@
 - (void)addTitle:(NSString *)title;
 - (void)target:(id)target addSeletor:(SEL)selector;
 
+- (void)setEnlargeEdge:(CGFloat) size;
+- (void)setEnlargeEdgeWithTop:(CGFloat) top right:(CGFloat) right bottom:(CGFloat) bottom left:(CGFloat) left;
+
 @end

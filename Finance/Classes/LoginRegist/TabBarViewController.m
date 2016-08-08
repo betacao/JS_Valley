@@ -34,15 +34,6 @@
 
 @implementation TabBarViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-
 + (TabBarViewController *)tabBar
 {
     static TabBarViewController *tabBar = nil;
@@ -169,9 +160,6 @@
     self.meViewController.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"我" image:image selectedImage:selectedImage];
     self.meViewController.tabBarItem.tag = 4000;
     
-    [[UITabBarItem appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor colorWithHexString:@"949494"],NSForegroundColorAttributeName, nil] forState:UIControlStateNormal];
-    [[UITabBarItem appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor colorWithHexString:@"E21F0D"],NSForegroundColorAttributeName, nil] forState:UIControlStateSelected];
-
     self.viewControllers = [NSArray arrayWithObjects:self.businessListViewController,self.homeSegmentViewController,self.discoveryViewController ,self.meViewController ,nil];
     self.selectedIndex = 0;
     

@@ -63,8 +63,6 @@ NSString *const kRouterEventTextURLTapEventName = @"kRouterEventTextURLTapEventN
         [paragraphStyle setLineSpacing:[[self class] lineSpacing]];//调整行间距
         
         retSize = [self.model.content boundingRectWithSize:textBlockMinSize options:NSStringDrawingUsesLineFragmentOrigin attributes:@{ NSFontAttributeName:[[self class] textLabelFont], NSParagraphStyleAttributeName:paragraphStyle} context:nil].size;
-    }else{
-        retSize = [self.model.content sizeWithFont:[[self class] textLabelFont] constrainedToSize:textBlockMinSize lineBreakMode:[[self class] textLabelLineBreakModel]];
     }
     
     CGFloat height = 40;

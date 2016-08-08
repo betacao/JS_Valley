@@ -79,15 +79,19 @@
     self.relationLabel.textColor = kMainRelationColor;
 
     self.deleteButton = [[SHGHorizontalTitleImageView alloc] init];
+    [self.deleteButton setEnlargeEdge:kMainActionButtonMargin / 2.0f];
     [self.deleteButton target:self addSeletor:@selector(deleteButtonClick:)];
 
     self.praiseButton = [[SHGHorizontalTitleImageView alloc] init];
+    [self.praiseButton setEnlargeEdge:kMainActionButtonMargin / 2.0f];
     [self.praiseButton target:self addSeletor:@selector(praiseButtonClick:)];
 
     self.commentButton = [[SHGHorizontalTitleImageView alloc] init];
+    [self.commentButton setEnlargeEdge:kMainActionButtonMargin / 2.0f];
     [self.commentButton target:self addSeletor:@selector(commentButtonClick:)];
 
     self.shareButton = [[SHGHorizontalTitleImageView alloc] init];
+    [self.shareButton setEnlargeEdge:kMainActionButtonMargin / 2.0f];
     [self.shareButton target:self addSeletor:@selector(shareButtonClick:)];
 
     [self.actionView sd_addSubviews:@[self.deleteButton, self.praiseButton, self.commentButton, self.shareButton]];

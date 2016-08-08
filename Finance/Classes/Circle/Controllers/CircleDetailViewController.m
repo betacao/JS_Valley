@@ -122,18 +122,23 @@
 
 
     self.btnCollet = [[SHGHorizontalTitleImageView alloc] init];
+    [self.btnCollet setEnlargeEdge:kMainActionButtonMargin / 2.0f];
     [self.btnCollet target:self addSeletor:@selector(actionCollection:)];
 
     self.btnDelete = [[SHGHorizontalTitleImageView alloc] init];
+    [self.btnDelete setEnlargeEdge:kMainActionButtonMargin / 2.0f];
     [self.btnDelete target:self addSeletor:@selector(actionDelete:)];
 
     self.btnPraise = [[SHGHorizontalTitleImageView alloc] init];
+    [self.btnPraise setEnlargeEdge:kMainActionButtonMargin / 2.0f];
     [self.btnPraise target:self addSeletor:@selector(actionPraise:)];
 
     self.btnComment = [[SHGHorizontalTitleImageView alloc] init];
+    [self.btnComment setEnlargeEdge:kMainActionButtonMargin / 2.0f];
     [self.btnComment target:self addSeletor:@selector(actionComment:)];
 
     self.btnShare = [[SHGHorizontalTitleImageView alloc] init];
+    [self.btnShare setEnlargeEdge:kMainActionButtonMargin / 2.0f];
     [self.btnShare target:self addSeletor:@selector(actionShare:)];
 
     [self.actionView sd_addSubviews:@[self.btnCollet, self.btnDelete, self.btnPraise, self.btnComment, self.btnShare]];

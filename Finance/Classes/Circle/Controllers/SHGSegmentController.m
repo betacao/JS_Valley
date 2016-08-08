@@ -27,6 +27,7 @@
 #import "ApplyViewController.h"
 #import "HeadImage.h"
 #import "EMCDDeviceManager.h"
+#import "UITabBar+badge.h"
 
 //两次提示的默认间隔
 static const CGFloat kDefaultPlaySoundInterval = 3.0;
@@ -34,7 +35,6 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
 @interface SHGSegmentController ()<IChatManagerDelegate>
 
 @property (nonatomic, strong) UIBarButtonItem *rightBarButtonItem;
-@property (nonatomic, strong) UIBarButtonItem *leftBarButtonItem;
 @property (strong, nonatomic) ChatListViewController *chatViewController;
 @property (strong, nonatomic) NSDate *lastPlaySoundDate;
 @property (strong, nonatomic) UILabel *titleLabel;
@@ -160,22 +160,6 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
         _rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:rightButton];
     }
     return _rightBarButtonItem;
-}
-
-- (UIBarButtonItem *)leftBarButtonItem
-{
-    if (!_leftBarButtonItem)
-    {
-        UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        [leftButton setFrame:CGRectZero];
-        UIImage *image = [UIImage imageNamed:@"newNews"];
-        [leftButton setBackgroundImage:image forState:UIControlStateNormal];
-        [leftButton.imageView setContentMode:UIViewContentModeScaleAspectFill];
-        [leftButton addTarget:self action:@selector(jumpToMessageViewController:) forControlEvents:UIControlEventTouchUpInside];
-        [leftButton sizeToFit];
-        _leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:leftButton];
-    }
-    return _leftBarButtonItem;
 }
 
 - (ChatListViewController *)chatViewController
@@ -492,13 +476,15 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
         unreadCount += conversation.unreadMessagesCount;
     }
     unreadCount = unreadCount + [[[ApplyViewController shareController] dataSource] count];
-    UIButton *leftButton = (UIButton *)self.leftBarButtonItem.customView;
     if (unreadCount > 0) {
-        [leftButton setBadgeNumber:[NSString stringWithFormat:@"%i",(int)unreadCount]];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [UITabBar tabBar:[TabBarViewController tabBar].tabBar addBadgeValue:[NSString stringWithFormat:@"%ld",(long)unreadCount] atIndex:3];
+        });
     } else{
-        [leftButton removeBadgeNumber];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [UITabBar tabBar:[TabBarViewController tabBar].tabBar hideBadgeOnItemIndex:3];
+        });
     }
-
     UIApplication *application = [UIApplication sharedApplication];
     [application setApplicationIconBadgeNumber:unreadCount];
 }
@@ -510,13 +496,15 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     for (EMConversation *conversation in conversations) {
         unreadCount += conversation.unreadMessagesCount;
     }
-
-    unreadCount = unreadCount+[[[ApplyViewController shareController] dataSource] count];
-    UIButton *leftButton = (UIButton *)self.leftBarButtonItem.customView;
+    unreadCount = unreadCount + [[[ApplyViewController shareController] dataSource] count];
     if (unreadCount > 0) {
-        [leftButton setBadgeNumber:[NSString stringWithFormat:@"%i",(int)unreadCount]];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [UITabBar tabBar:[TabBarViewController tabBar].tabBar addBadgeValue:[NSString stringWithFormat:@"%ld",(long)unreadCount] atIndex:3];
+        });
     } else{
-        [leftButton removeBadgeNumber];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [UITabBar tabBar:[TabBarViewController tabBar].tabBar hideBadgeOnItemIndex:3];
+        });
     }
 }
 

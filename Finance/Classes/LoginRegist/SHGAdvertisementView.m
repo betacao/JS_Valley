@@ -100,7 +100,7 @@
 + (void)loadRemoteAdvertisement
 {
     [MOCHTTPRequestOperationManager postWithURL:[rBaseAddressForHttp stringByAppendingString:@"/appImage/getStartAppImage"] parameters:@{@"os":@"ios", @"width":@(SCREENWIDTH * SCALE), @"height":@(SCREENHEIGHT * SCALE)} success:^(MOCHTTPResponse *response) {
-        NSData *data = [NSJSONSerialization dataWithJSONObject:response.data options:NSJSONWritingPrettyPrinted error:nil];
+        NSData *data = [NSJSONSerialization dataWithJSONObject:response.dataDictionary options:NSJSONWritingPrettyPrinted error:nil];
         NSLog(@"%@", kSplashScreenAdCacheLocalPath);
         [data writeToFile:kSplashScreenAdCacheLocalPath atomically:YES];
     } failed:nil];
