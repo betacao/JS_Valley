@@ -21,6 +21,8 @@
 
 - (void)addImage:(UIImage *)image;
 - (void)addTitle:(NSString *)title;
+
+- (void)addTitleWithDictionary:(NSDictionary *)dictionary;
 - (void)target:(id)target addSeletor:(SEL)selector;
 
 - (void)setEnlargeEdge:(CGFloat) size;

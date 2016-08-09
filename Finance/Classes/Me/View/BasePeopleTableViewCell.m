@@ -64,8 +64,7 @@
     [self.nameLabel sizeToFit];
     self.followButton.hidden = object.followRelationHiden;
     UIImage *placeHolder = [UIImage imageNamed:@"default_head"];
-    BOOL status = [object.userstatus isEqualToString:@"true"] ? YES : NO;
-    [self.headerView updateHeaderView:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,object.headImageUrl] placeholderImage:placeHolder status:status userID:object.uid];
+    [self.headerView updateHeaderView:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,object.headImageUrl] placeholderImage:placeHolder userID:object.uid];
     
     if (object.followRelation == 0) {
         [self.followButton setImage:[UIImage imageNamed:@"me_follow"] forState:UIControlStateNormal];

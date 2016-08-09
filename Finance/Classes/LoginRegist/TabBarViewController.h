@@ -14,7 +14,6 @@
 }
 
 + (TabBarViewController *)tabBar;
-- (void)jumpToChatList;
 - (void)setupUntreatedApplyCount;
 
 @property (nonatomic, assign) BOOL isViewLoad;

@@ -104,7 +104,7 @@
         self.secondLabel.text = recommendObject.realName;
         self.thirdLabel.text = recommendObject.title;
         self.fourthLabel.text = recommendObject.position;
-        [self.headerView updateHeaderView:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,recommendObject.picName] placeholderImage:[UIImage imageNamed:@"default_head"] status:recommendObject.userStatus userID:recommendObject.userID];
+        [self.headerView updateHeaderView:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,recommendObject.picName] placeholderImage:[UIImage imageNamed:@"default_head"] userID:recommendObject.userID];
         if (recommendObject.isAttention) {
             [self.button setImage:[UIImage imageNamed:@"me_followed"] forState:UIControlStateNormal];
         } else {

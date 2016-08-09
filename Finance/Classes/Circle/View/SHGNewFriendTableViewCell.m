@@ -127,7 +127,7 @@
     [self clearCell];
 
     UIImage *placeHolder = [UIImage imageNamed:@"default_head"];
-    [self.headerView updateHeaderView:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,object.picName] placeholderImage:placeHolder status:NO userID:object.uid];
+    [self.headerView updateHeaderView:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,object.picName] placeholderImage:placeHolder userID:object.uid];
     self.nameLabel.text = object.realName;
     self.companyLabel.text = object.company;
     self.departmentLabel.text = object.title;

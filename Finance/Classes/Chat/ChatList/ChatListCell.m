@@ -66,7 +66,7 @@
     self.detailLabel.sd_layout
     .leftSpaceToView(self.headerImageView, MarginFactor(10.0f))
     .bottomEqualToView(self.headerImageView)
-    .heightIs(self.detailLabel.font.lineHeight);;
+    .heightIs(self.detailLabel.font.lineHeight);
     [self.detailLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
 
     

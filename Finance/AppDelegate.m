@@ -112,6 +112,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pushCircle:) name:kMPNotificationViewTapReceivedNotification object:nil];
     //设置导航title字体
     [[UINavigationBar appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:kNavBarTitleFontSize],NSForegroundColorAttributeName:NavRTitleColor}];
+    [[UINavigationBar appearance] setBackgroundImage:[CommonMethod imageWithColor:Color(@"f04f46")] forBarMetrics:UIBarMetricsDefault];
     self.window.rootViewController = rootVC;
     [self.window makeKeyAndVisible];
     return YES;
@@ -283,7 +284,11 @@
     // App 收到推送的通知
     NSLog(@"%@",userInfo);
     if ([TabBarViewController tabBar]){
-        [[TabBarViewController tabBar] jumpToChatList];
+        [[TabBarViewController tabBar].navigationController popToRootViewControllerAnimated:YES];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.2f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [[TabBarViewController tabBar].navigationController pushViewController:[ChatListViewController sharedController] animated:YES];
+        });
+
     }
     if (application.applicationState != UIApplicationStateActive){
         [self presentViewControllerWithUserInfo:userInfo];
@@ -302,10 +307,12 @@
 
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(nonnull UILocalNotification *)notification
 {
-    if ([TabBarViewController tabBar]) {
-        [[TabBarViewController tabBar] jumpToChatList];
+    if ([TabBarViewController tabBar]){
+        [[TabBarViewController tabBar].navigationController popToRootViewControllerAnimated:YES];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.2f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [[TabBarViewController tabBar].navigationController pushViewController:[ChatListViewController sharedController] animated:YES];
+        });
     }
-
 }
 
 #pragma mark 个推 Delegate

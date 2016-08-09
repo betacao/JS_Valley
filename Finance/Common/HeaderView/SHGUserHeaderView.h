@@ -10,6 +10,8 @@
 
 @interface SHGUserHeaderView : UIView
 
-- (void)updateHeaderView:(NSString *)sourceUrl placeholderImage:(UIImage *)placeImage status:(BOOL)status userID:(NSString *)userId;
+@property (strong, nonatomic) UIImage *image;
+
+- (void)updateHeaderView:(NSString *)sourceUrl placeholderImage:(UIImage *)placeImage userID:(NSString *)userId;
 
 @end

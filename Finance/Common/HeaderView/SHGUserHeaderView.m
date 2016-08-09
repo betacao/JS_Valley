@@ -11,7 +11,6 @@
 #import "SHGPersonalViewController.h"
 
 @interface SHGUserHeaderView ()
-@property (strong, nonatomic) UIImageView *VImageView;
 @property (strong, nonatomic) UIImageView *headerImageView;
 @property (strong, nonatomic) NSString *userId;
 
@@ -32,61 +31,39 @@
         .bottomSpaceToView(self, 0.0f)
         .rightSpaceToView(self, 0.0f);
 
-        self.VImageView = [[UIImageView alloc] init];
-        self.VImageView.image = [UIImage imageNamed:@"V"];
-        [self.VImageView sizeToFit];
-//        [self addSubview:self.VImageView];
-
-        self.VImageView.hidden = YES;
-
         UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapUserHeaderView)];
         [self addGestureRecognizer:recognizer];
-        
+
     }
     return self;
 }
 
 - (void)awakeFromNib
 {
-    
     self.headerImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"default_head"]];
     [self addSubview:self.headerImageView];
-    
+
     self.headerImageView.sd_layout
     .topSpaceToView(self, 0.0f)
     .leftSpaceToView(self, 0.0f)
     .bottomSpaceToView(self, 0.0f)
     .rightSpaceToView(self, 0.0f);
-    
-    
-    self.VImageView = [[UIImageView alloc] init];
-    self.VImageView.image = [UIImage imageNamed:@"V"];
-    [self.VImageView sizeToFit];
-//    [self addSubview:self.VImageView];
-
-    self.VImageView.hidden = YES;
 
     UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapUserHeaderView)];
     [self addGestureRecognizer:recognizer];
 }
 
-- (void)layoutSubviews
-{
-    [super layoutSubviews];
-    CGRect bounds = self.bounds;
-    self.VImageView.center = self.VImageView.center = CGPointMake(CGRectGetMaxX(bounds) - 2.0f, CGRectGetMaxY(bounds) - 2.0f);
-}
 
-
-- (void)updateHeaderView:(NSString *)sourceUrl placeholderImage:(UIImage *)placeImage status:(BOOL)status userID:(NSString *)userId
+- (void)updateHeaderView:(NSString *)sourceUrl placeholderImage:(UIImage *)placeImage userID:(NSString *)userId
 {
-    if(status){
-        self.VImageView.hidden = NO;
-    } else{
-        self.VImageView.hidden = YES;
-    }
     self.userId = userId;
     [self.headerImageView yy_setImageWithURL:[NSURL URLWithString:sourceUrl] placeholder:placeImage];
+}
+
+- (void)setImage:(UIImage *)image
+{
+    _image = image;
+    self.headerImageView.image = image;
 }
 
 

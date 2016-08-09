@@ -9,7 +9,6 @@
 #import "SHGHomeViewController.h"
 #import "CircleListObj.h"
 #import "SHGCircleSendViewController.h"
-#import "ChatViewController.h"
 #import "LinkViewController.h"
 #import "RecmdFriendObj.h"
 #import "SHGNoticeView.h"

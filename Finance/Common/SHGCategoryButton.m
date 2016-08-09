@@ -80,6 +80,22 @@ static char leftNameKey;
     .heightIs(ceilf(self.label.font.lineHeight));
 }
 
+- (void)addTitleWithDictionary:(NSDictionary *)dictionary
+{
+    NSString *text = [dictionary objectForKey:@"text"];
+    UIFont *font = [dictionary objectForKey:NSFontAttributeName];
+    UIColor *color = [dictionary objectForKey:NSForegroundColorAttributeName];
+
+    self.label.text = text;
+    self.label.font = font;
+    self.label.textColor = color;
+
+    self.label.sd_resetLayout
+    .leftSpaceToView(self.imageView, self.margin)
+    .centerYEqualToView(self)
+    .heightIs(ceilf(self.label.font.lineHeight));
+}
+
 - (void)setMargin:(CGFloat)margin
 {
     _margin = margin;

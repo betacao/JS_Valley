@@ -92,7 +92,7 @@
 {
     [self clearCell];
     _object = object;
-    [self.headerView updateHeaderView:nil placeholderImage:[UIImage imageNamed:@"logo"] status:NO userID:nil];
+    [self.headerView updateHeaderView:nil placeholderImage:[UIImage imageNamed:@"logo"] userID:nil];
     self.title.text = object.title;
     NSDate *date = [self dateFromString:object.time];
     self.time.text = [self stringFromDate:date];
@@ -112,20 +112,20 @@
 }
 
 - (NSDate *)dateFromString:(NSString *)dateString{
-    
+
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat: @"yyyy-MM-dd HH:mm:ss"];
     NSDate *destDate= [dateFormatter dateFromString:dateString];
     return destDate;
 }
 - (NSString *)stringFromDate:(NSDate *)date{
-    
+
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"MM-dd HH:mm:ss"];
     NSString *destDateString = [dateFormatter stringFromDate:date];
-    
+
     return destDateString;
-    
+
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated

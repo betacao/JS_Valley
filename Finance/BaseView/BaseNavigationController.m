@@ -9,6 +9,7 @@
 #import "BaseNavigationController.h"
 #import "BaseViewController.h"
 #import "SHGBusinessNewDetailViewController.h"
+#import "SHGNewUserCenterViewController.h"
 
 @interface BaseNavigationController ()<UINavigationControllerDelegate,UIGestureRecognizerDelegate>
 @property(nonatomic, weak) UIViewController *currentShowVC;
@@ -37,10 +38,8 @@
 
 - (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated
 {
-    if ([viewController isKindOfClass:[SHGBusinessNewDetailViewController class]]) {
-
+    if ([viewController isKindOfClass:[SHGBusinessNewDetailViewController class]] || ([viewController isKindOfClass:[TabBarViewController class]] && [TabBarViewController tabBar].selectedIndex == 3)) {
         [self.navigationBar setShadowImage:[[UIImage alloc] init]];
-        [self.navigationBar setBackgroundImage:[CommonMethod imageWithColor:Color(@"f04f46")] forBarMetrics:UIBarMetricsDefault];
     }
 }
 
@@ -51,9 +50,8 @@
     } else {
         self.currentShowVC = viewController;
     }
-    if (![viewController isKindOfClass:[SHGBusinessNewDetailViewController class]]) {
+    if (![viewController isKindOfClass:[SHGBusinessNewDetailViewController class]] && !([viewController isKindOfClass:[TabBarViewController class]] && [TabBarViewController tabBar].selectedIndex == 3)) {
         [self.navigationBar setShadowImage:nil];
-        [self.navigationBar setBackgroundImage:[CommonMethod imageWithColor:Color(@"d43c33")] forBarMetrics:UIBarMetricsDefault];
     }
 }
 

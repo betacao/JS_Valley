@@ -23,9 +23,7 @@ typedef NS_ENUM(NSInteger, ChatListViewType)
 
 @interface ChatListViewController : BaseTableViewController<UINavigationControllerDelegate>
 
-//- (void)refreshDataSource;
-//- (void)isConnect:(BOOL)isConnect;
-//- (void)networkChanged:(EMConnectionState)connectionState;
++ (instancetype)sharedController;
 
 @property (nonatomic,assign) BOOL isResfresh;
 @property (strong ,nonatomic, readonly) UIView *titleView;

@@ -372,7 +372,7 @@
     if ([object isKindOfClass:[SHGDiscoveryPeopleObject class]]) {
         //发现的搜索
         SHGDiscoveryPeopleObject *peopleObject = (SHGDiscoveryPeopleObject *)object;
-        [self.headerView updateHeaderView:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,peopleObject.headImg] placeholderImage:[UIImage imageNamed:@"default_head"] status:peopleObject.status userID:peopleObject.userID];
+        [self.headerView updateHeaderView:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,peopleObject.headImg] placeholderImage:[UIImage imageNamed:@"default_head"] userID:peopleObject.userID];
         [self.authenticationView updateWithStatus:peopleObject.status];
         self.firstLabel.text = peopleObject.realName;
         self.secondLabel.text = peopleObject.company.length == 0 ? @"暂未提供公司信息" : peopleObject.company;
@@ -395,7 +395,7 @@
     } else if ([object isKindOfClass:[SHGDiscoveryDepartmentObject class]]) {
         //我的人脉
         SHGDiscoveryDepartmentObject *depentmentObject = (SHGDiscoveryDepartmentObject *)object;
-        [self.headerView updateHeaderView:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,depentmentObject.headImg] placeholderImage:[UIImage imageNamed:@"default_head"] status:depentmentObject.userStatus userID:depentmentObject.userID];
+        [self.headerView updateHeaderView:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,depentmentObject.headImg] placeholderImage:[UIImage imageNamed:@"default_head"] userID:depentmentObject.userID];
         [self.authenticationView updateWithStatus:depentmentObject.userStatus];
         self.firstLabel.text = depentmentObject.realName;
         self.secondLabel.text = depentmentObject.company.length == 0 ? @"暂未提供公司信息" : depentmentObject.company;

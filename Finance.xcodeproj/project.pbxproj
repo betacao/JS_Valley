@@ -33,8 +33,6 @@
 		4088DD881AF0EEA200393855 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4088DD861AF0EEA200393855 /* SettingsViewController.m */; };
 		4088DD891AF0EEA200393855 /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4088DD871AF0EEA200393855 /* SettingsViewController.xib */; };
 		4088DD8C1AF0FB2B00393855 /* SettingsObj.m in Sources */ = {isa = PBXBuildFile; fileRef = 4088DD8B1AF0FB2B00393855 /* SettingsObj.m */; };
-		4088DDAD1AF102FE00393855 /* DingDQRCodeShareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4088DD8E1AF102FE00393855 /* DingDQRCodeShareViewController.m */; };
-		4088DDAF1AF102FE00393855 /* DingDQRCodeShareViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4088DD901AF102FE00393855 /* DingDQRCodeShareViewController.xib */; };
 		4088DDB01AF102FE00393855 /* SettingAboutUsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4088DD921AF102FE00393855 /* SettingAboutUsViewController.m */; };
 		4088DDB21AF102FE00393855 /* SettingAboutUsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4088DD941AF102FE00393855 /* SettingAboutUsViewController.xib */; };
 		4088DDB31AF102FE00393855 /* SettingModifyPWDViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4088DD961AF102FE00393855 /* SettingModifyPWDViewController.m */; };
@@ -611,6 +609,8 @@
 		B09BF7721B7C6C1F008260B3 /* 邀请@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = B09BF7681B7C6C1F008260B3 /* 邀请@3x.png */; };
 		B0BAA36B1B69EAF30036C367 /* CCLocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B0BAA36A1B69EAF30036C367 /* CCLocationManager.m */; };
 		B0BAA36E1B6A059E0036C367 /* TWEmojiKeyBoard.m in Sources */ = {isa = PBXBuildFile; fileRef = B0BAA36D1B6A059E0036C367 /* TWEmojiKeyBoard.m */; };
+		F901640B1D58562C005AF3F3 /* SHGNewUserCenterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F90164091D58562C005AF3F3 /* SHGNewUserCenterViewController.m */; };
+		F901640C1D58562C005AF3F3 /* SHGNewUserCenterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F901640A1D58562C005AF3F3 /* SHGNewUserCenterViewController.xib */; };
 		F90684921CBF33F00003B123 /* SHGBusinessSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F90684901CBF33F00003B123 /* SHGBusinessSearchViewController.m */; };
 		F90684931CBF33F00003B123 /* SHGBusinessSearchViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F90684911CBF33F00003B123 /* SHGBusinessSearchViewController.xib */; };
 		F90684971CBF34560003B123 /* SHGBusinessSearchResultViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F90684951CBF34560003B123 /* SHGBusinessSearchResultViewController.m */; };
@@ -821,8 +821,6 @@
 		F9EDD5FA1BABFBCF00506C0C /* SDWaitingView.m in Sources */ = {isa = PBXBuildFile; fileRef = F9EDD5F51BABFBCF00506C0C /* SDWaitingView.m */; };
 		F9F332691C993658009156BA /* SHGNewFriendTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F9F332671C993658009156BA /* SHGNewFriendTableViewCell.m */; };
 		F9F3326A1C993658009156BA /* SHGNewFriendTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9F332681C993658009156BA /* SHGNewFriendTableViewCell.xib */; };
-		F9F349B71C1945920090F111 /* SHGBadgeStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = F9F349B41C1945920090F111 /* SHGBadgeStyle.m */; };
-		F9F349B81C1945920090F111 /* SHGBadgeView.m in Sources */ = {isa = PBXBuildFile; fileRef = F9F349B61C1945920090F111 /* SHGBadgeView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -868,9 +866,6 @@
 		4088DD871AF0EEA200393855 /* SettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsViewController.xib; sourceTree = "<group>"; };
 		4088DD8A1AF0FB2B00393855 /* SettingsObj.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsObj.h; sourceTree = "<group>"; };
 		4088DD8B1AF0FB2B00393855 /* SettingsObj.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsObj.m; sourceTree = "<group>"; };
-		4088DD8D1AF102FE00393855 /* DingDQRCodeShareViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DingDQRCodeShareViewController.h; path = Settings/DingDQRCodeShareViewController.h; sourceTree = "<group>"; };
-		4088DD8E1AF102FE00393855 /* DingDQRCodeShareViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DingDQRCodeShareViewController.m; path = Settings/DingDQRCodeShareViewController.m; sourceTree = "<group>"; };
-		4088DD901AF102FE00393855 /* DingDQRCodeShareViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = DingDQRCodeShareViewController.xib; path = Settings/DingDQRCodeShareViewController.xib; sourceTree = "<group>"; };
 		4088DD911AF102FE00393855 /* SettingAboutUsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SettingAboutUsViewController.h; path = Settings/SettingAboutUsViewController.h; sourceTree = "<group>"; };
 		4088DD921AF102FE00393855 /* SettingAboutUsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SettingAboutUsViewController.m; path = Settings/SettingAboutUsViewController.m; sourceTree = "<group>"; };
 		4088DD941AF102FE00393855 /* SettingAboutUsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SettingAboutUsViewController.xib; path = Settings/SettingAboutUsViewController.xib; sourceTree = "<group>"; };
@@ -1612,6 +1607,9 @@
 		B0BAA36C1B6A059E0036C367 /* TWEmojiKeyBoard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TWEmojiKeyBoard.h; sourceTree = "<group>"; };
 		B0BAA36D1B6A059E0036C367 /* TWEmojiKeyBoard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TWEmojiKeyBoard.m; sourceTree = "<group>"; };
 		CC97A9C0392BEE63129DACEA /* Pods-Finance.adhoc.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Finance.adhoc.xcconfig"; path = "Pods/Target Support Files/Pods-Finance/Pods-Finance.adhoc.xcconfig"; sourceTree = "<group>"; };
+		F90164081D58562C005AF3F3 /* SHGNewUserCenterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGNewUserCenterViewController.h; sourceTree = "<group>"; };
+		F90164091D58562C005AF3F3 /* SHGNewUserCenterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGNewUserCenterViewController.m; sourceTree = "<group>"; };
+		F901640A1D58562C005AF3F3 /* SHGNewUserCenterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGNewUserCenterViewController.xib; sourceTree = "<group>"; };
 		F906848F1CBF33F00003B123 /* SHGBusinessSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGBusinessSearchViewController.h; sourceTree = "<group>"; };
 		F90684901CBF33F00003B123 /* SHGBusinessSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGBusinessSearchViewController.m; sourceTree = "<group>"; };
 		F90684911CBF33F00003B123 /* SHGBusinessSearchViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGBusinessSearchViewController.xib; sourceTree = "<group>"; };
@@ -1942,10 +1940,6 @@
 		F9F332661C993658009156BA /* SHGNewFriendTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGNewFriendTableViewCell.h; sourceTree = "<group>"; };
 		F9F332671C993658009156BA /* SHGNewFriendTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGNewFriendTableViewCell.m; sourceTree = "<group>"; };
 		F9F332681C993658009156BA /* SHGNewFriendTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGNewFriendTableViewCell.xib; sourceTree = "<group>"; };
-		F9F349B31C1945920090F111 /* SHGBadgeStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGBadgeStyle.h; sourceTree = "<group>"; };
-		F9F349B41C1945920090F111 /* SHGBadgeStyle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGBadgeStyle.m; sourceTree = "<group>"; };
-		F9F349B51C1945920090F111 /* SHGBadgeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGBadgeView.h; sourceTree = "<group>"; };
-		F9F349B61C1945920090F111 /* SHGBadgeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGBadgeView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -2049,9 +2043,6 @@
 		4088DD841AF0EE7C00393855 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
-				4088DD8D1AF102FE00393855 /* DingDQRCodeShareViewController.h */,
-				4088DD8E1AF102FE00393855 /* DingDQRCodeShareViewController.m */,
-				4088DD901AF102FE00393855 /* DingDQRCodeShareViewController.xib */,
 				4088DD911AF102FE00393855 /* SettingAboutUsViewController.h */,
 				4088DD921AF102FE00393855 /* SettingAboutUsViewController.m */,
 				4088DD941AF102FE00393855 /* SettingAboutUsViewController.xib */,
@@ -2716,7 +2707,6 @@
 			isa = PBXGroup;
 			children = (
 				F95A88C41CAA782200D7F9BD /* SHGGifHeader */,
-				F9F349B21C1945920090F111 /* SHGBadgeView */,
 				F9EDD5EA1BABFBCF00506C0C /* SDPhotoBrowser */,
 				F99B60291B9E7D9500759AAC /* HeaderView */,
 				614EFEDC1AEF8F5800F2BDD1 /* Hud */,
@@ -3132,6 +3122,9 @@
 				4088DD841AF0EE7C00393855 /* Settings */,
 				F91982C91C59F9FA00A450B9 /* SHGUserCenterViewController.h */,
 				F91982CA1C59F9FA00A450B9 /* SHGUserCenterViewController.m */,
+				F90164081D58562C005AF3F3 /* SHGNewUserCenterViewController.h */,
+				F90164091D58562C005AF3F3 /* SHGNewUserCenterViewController.m */,
+				F901640A1D58562C005AF3F3 /* SHGNewUserCenterViewController.xib */,
 				980D0D531C99026E00351F8C /* SHGCardCollectionViewController.h */,
 				980D0D541C99026E00351F8C /* SHGCardCollectionViewController.m */,
 				980D0D551C99026E00351F8C /* SHGCardCollectionViewController.xib */,
@@ -4138,17 +4131,6 @@
 			path = SDPhotoBrowser;
 			sourceTree = "<group>";
 		};
-		F9F349B21C1945920090F111 /* SHGBadgeView */ = {
-			isa = PBXGroup;
-			children = (
-				F9F349B31C1945920090F111 /* SHGBadgeStyle.h */,
-				F9F349B41C1945920090F111 /* SHGBadgeStyle.m */,
-				F9F349B51C1945920090F111 /* SHGBadgeView.h */,
-				F9F349B61C1945920090F111 /* SHGBadgeView.m */,
-			);
-			path = SHGBadgeView;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -4318,6 +4300,7 @@
 				982EB7EC1CB38734003EEBE6 /* SHGBondFinanceNextViewController.xib in Resources */,
 				56F2D5121B5A67DB008E2855 /* 删除.png in Resources */,
 				408D8B3D1AF8618C0055810C /* chatBar_face.png in Resources */,
+				F901640C1D58562C005AF3F3 /* SHGNewUserCenterViewController.xib in Resources */,
 				408D8B231AF8618C0055810C /* call_silence_h.png in Resources */,
 				408D8B0A1AF8618C0055810C /* VoiceSearchFeedback011@2x.png in Resources */,
 				408D8B631AF8618C0055810C /* chatBar_more_photo.png in Resources */,
@@ -4421,7 +4404,6 @@
 				61E83D281AF7C78E00703651 /* 密码图标@2x.png in Resources */,
 				F90684981CBF34570003B123 /* SHGBusinessSearchResultViewController.xib in Resources */,
 				F916B60D1D0D395300AE217F /* d_dahaqi@2x.png in Resources */,
-				4088DDAF1AF102FE00393855 /* DingDQRCodeShareViewController.xib in Resources */,
 				B080FEAA1B81E30100426579 /* emoji_tab_bg.png in Resources */,
 				F916B6001D0D395300AE217F /* d_aini@3x.png in Resources */,
 				408D8B371AF8618C0055810C /* chat_location_preview.png in Resources */,
@@ -4799,6 +4781,7 @@
 				6187D2CC1AF1C693008E1D21 /* CreateGroupViewController.m in Sources */,
 				40302B221AEF673200F22EB6 /* TeamDetailTableViewCell.m in Sources */,
 				F924C2C71CACCC5F0070286F /* SHGBusinessObject.m in Sources */,
+				F901640B1D58562C005AF3F3 /* SHGNewUserCenterViewController.m in Sources */,
 				6187D2F61AF1C693008E1D21 /* EMRemarkImageView.m in Sources */,
 				F93FCBC61C856D5A004E356E /* NSString+Customized.m in Sources */,
 				6187D2CA1AF1C693008E1D21 /* ContactSelectionViewController.m in Sources */,
@@ -4906,7 +4889,6 @@
 				614AD1AF1AD7AC4D00DDF43E /* RegistViewController.m in Sources */,
 				F9E2A4B01BE99A4C00ECB234 /* SHGSegmentController.m in Sources */,
 				B085B5381B749E2000DC592E /* Extend_Description.m in Sources */,
-				4088DDAD1AF102FE00393855 /* DingDQRCodeShareViewController.m in Sources */,
 				6187D2CE1AF1C693008E1D21 /* GroupListViewController.m in Sources */,
 				9804FC731CCF554F00C2BB25 /* SHGRecommendHeaderView.m in Sources */,
 				6187D2F31AF1C693008E1D21 /* EMSearchBar.m in Sources */,
@@ -4998,7 +4980,6 @@
 				F9A227B31BF586090054F8D7 /* SHGPersonDynamicViewController.m in Sources */,
 				40302B451AF0C67F00F22EB6 /* MyAppointmentTableViewCell.m in Sources */,
 				538964D71AFC6BEB00041548 /* UIViewController+HUD.m in Sources */,
-				F9F349B71C1945920090F111 /* SHGBadgeStyle.m in Sources */,
 				98D73C2D1C194E7E0055AF75 /* SHGNewsTableViewCell.m in Sources */,
 				5331DF261AFC02B400E035B8 /* EMAlertView.m in Sources */,
 				5331DF1D1AFC017600E035B8 /* ApplyViewController.m in Sources */,
@@ -5024,7 +5005,6 @@
 				982EB7FF1CB3A269003EEBE6 /* SHGEquityFinanceNextViewController.m in Sources */,
 				614EFEDF1AEF8F7300F2BDD1 /* Hud.m in Sources */,
 				4088DDB01AF102FE00393855 /* SettingAboutUsViewController.m in Sources */,
-				F9F349B81C1945920090F111 /* SHGBadgeView.m in Sources */,
 				986C89F21CD1D63D001AF201 /* SHGBusinessSendSuccessViewController.m in Sources */,
 				6187D2D41AF1C693008E1D21 /* ChatListViewController.m in Sources */,
 				40302B101AEF57F600F22EB6 /* MyAddressTableViewCell.m in Sources */,

@@ -61,7 +61,7 @@ typedef void(^loadViewFinishBlock)(UIView *view);
 - (void)setSelectedViewController:(UIViewController *)viewController animated:(BOOL)animated;
 
 //消息界面的函数
-- (void)jumpToChatList;
+- (void)setupUnreadMessageCount;
 - (void)setupUntreatedApplyCount;
 @end
 

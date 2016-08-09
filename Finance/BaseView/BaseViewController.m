@@ -8,7 +8,6 @@
 
 #import "BaseViewController.h"
 #import "SHGHomeViewController.h"
-#import "SHGUserCenterViewController.h"
 #import "ChatListViewController.h"
 @interface BaseViewController ()
 

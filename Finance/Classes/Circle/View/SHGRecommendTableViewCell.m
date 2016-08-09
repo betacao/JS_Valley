@@ -233,7 +233,7 @@
         UILabel *detailLabel = [view viewWithTag:105];
         UIButton *button = [view viewWithTag:106];
 
-        [header updateHeaderView:[rBaseAddressForImage stringByAppendingString: object.headimg] placeholderImage:[UIImage imageNamed:@"default_head"] status:NO userID:object.uid];
+        [header updateHeaderView:[rBaseAddressForImage stringByAppendingString: object.headimg] placeholderImage:[UIImage imageNamed:@"default_head"] userID:object.uid];
 
 
         NSString *name = object.username;

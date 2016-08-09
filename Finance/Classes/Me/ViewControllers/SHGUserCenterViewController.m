@@ -333,7 +333,6 @@
 
 - (SHGAuthenticationView *)authenticationView
 {
-    WEAK(self, weakSelf);
     if (!_authenticationView) {
         _authenticationView = [[SHGAuthenticationView alloc] init];;
     }

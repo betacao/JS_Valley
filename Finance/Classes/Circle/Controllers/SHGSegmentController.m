@@ -28,6 +28,7 @@
 #import "HeadImage.h"
 #import "EMCDDeviceManager.h"
 #import "UITabBar+badge.h"
+#import "SHGNewUserCenterViewController.h"
 
 //两次提示的默认间隔
 static const CGFloat kDefaultPlaySoundInterval = 3.0;
@@ -292,11 +293,6 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     } failString:@"认证后才能发起动态哦～"];
     
 }
-//进入消息界面
-- (void)jumpToMessageViewController:(UIButton *)button
-{
-    [self.selectedViewController.navigationController pushViewController:self.chatViewController animated:YES];
-}
 
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -479,10 +475,12 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     if (unreadCount > 0) {
         dispatch_async(dispatch_get_main_queue(), ^{
             [UITabBar tabBar:[TabBarViewController tabBar].tabBar addBadgeValue:[NSString stringWithFormat:@"%ld",(long)unreadCount] atIndex:3];
+            [SHGNewUserCenterViewController sharedController].unReadNumber = unreadCount;
         });
     } else{
         dispatch_async(dispatch_get_main_queue(), ^{
             [UITabBar tabBar:[TabBarViewController tabBar].tabBar hideBadgeOnItemIndex:3];
+            [SHGNewUserCenterViewController sharedController].unReadNumber = 0;
         });
     }
     UIApplication *application = [UIApplication sharedApplication];
@@ -500,10 +498,12 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     if (unreadCount > 0) {
         dispatch_async(dispatch_get_main_queue(), ^{
             [UITabBar tabBar:[TabBarViewController tabBar].tabBar addBadgeValue:[NSString stringWithFormat:@"%ld",(long)unreadCount] atIndex:3];
+            [SHGNewUserCenterViewController sharedController].unReadNumber = unreadCount;
         });
     } else{
         dispatch_async(dispatch_get_main_queue(), ^{
             [UITabBar tabBar:[TabBarViewController tabBar].tabBar hideBadgeOnItemIndex:3];
+            [SHGNewUserCenterViewController sharedController].unReadNumber = 0;
         });
     }
 }
@@ -856,18 +856,6 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-#pragma mark - public
-- (void)jumpToChatList
-{
-    if(self.chatViewController)
-    {
-        [self.navigationController popToRootViewControllerAnimated:YES];
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.2f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [self jumpToMessageViewController:nil];
-        });
-
-    }
-}
 
 -(void)dealloc
 {

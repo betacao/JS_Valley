@@ -8,7 +8,7 @@
 
 #import "TabBarViewController.h"
 #import "SHGHomeViewController.h"
-#import "SHGUserCenterViewController.h"
+#import "SHGNewUserCenterViewController.h"
 #import "CircleDetailViewController.h"
 #import "SHGDiscoveryViewController.h"
 #import "headImage.h"
@@ -25,7 +25,7 @@
 @property (strong, nonatomic) SHGHomeViewController *homeViewController;
 @property (strong, nonatomic) SHGNewsViewController *newsViewController;
 @property (strong, nonatomic) SHGDiscoveryViewController *discoveryViewController;
-@property (strong, nonatomic) SHGUserCenterViewController *meViewController;
+@property (strong, nonatomic) SHGNewUserCenterViewController *meViewController;
 @property (strong, nonatomic) SHGBusinessListViewController *businessListViewController;
 @property (strong, nonatomic) NSDate *lastPlaySoundDate;
 @property (strong, nonatomic) UIView *homeSegmentTitleView;
@@ -91,6 +91,7 @@
 - (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item
 {
     self.navigationItem.titleView = nil;
+    [self.navigationController.navigationBar setShadowImage:nil];
     self.navigationItem.rightBarButtonItems = nil;
     if (item.tag == 1000){
         self.navigationItem.titleView = self.businessSegmentTitleView;
@@ -111,7 +112,7 @@
         [MobClick event:@"DiscoverViewController" label:@"onClick"];
 
     } else if (item.tag == 4000){
-        self.navigationItem.titleView = self.meViewController.titleLabel;
+        [self.navigationController.navigationBar setShadowImage:[[UIImage alloc] init]];
         self.navigationItem.leftBarButtonItem = nil;
         [MobClick event:@"MeViewController" label:@"onClick"];
     }
@@ -204,10 +205,10 @@
     return [SHGDiscoveryViewController sharedController];
 }
 
-- (SHGUserCenterViewController *)meViewController
+- (SHGNewUserCenterViewController *)meViewController
 {
     if (!_meViewController){
-        _meViewController = [SHGUserCenterViewController sharedController];
+        _meViewController = [SHGNewUserCenterViewController sharedController];
     }
     return _meViewController;
 }
@@ -223,10 +224,6 @@
     [super didReceiveMemoryWarning];
 }
 
-- (void)jumpToChatList
-{
-    [self.homeSegmentViewController jumpToChatList];
-}
 
 - (void)setupUntreatedApplyCount
 {

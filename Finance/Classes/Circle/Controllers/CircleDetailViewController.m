@@ -451,7 +451,7 @@
     }
 
     BOOL status = [self.responseObject.userstatus isEqualToString:@"true"] ? YES : NO;
-    [self.imageHeader updateHeaderView:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,self.responseObject.potname] placeholderImage:[UIImage imageNamed:@"default_head"] status:status userID:self.responseObject.userid];
+    [self.imageHeader updateHeaderView:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,self.responseObject.potname] placeholderImage:[UIImage imageNamed:@"default_head"] userID:self.responseObject.userid];
     [self.authenticationView updateWithStatus:status];
     if (![self.responseObject.ispraise isEqualToString:@"Y"]) {
         [self.btnPraise addImage:[UIImage imageNamed:@"home_weizan"]];
@@ -576,7 +576,7 @@
         praiseOBj *obj = [self.responseObject.heads objectAtIndex:i];
         CGRect rect = CGRectMake((praiseWidth + MarginFactor(7.0f)) * i , 0.0f, praiseWidth, praiseWidth);
         SHGUserHeaderView *headerView = [[SHGUserHeaderView alloc] initWithFrame:rect];
-        [headerView updateHeaderView:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,obj.ppotname] placeholderImage:[UIImage imageNamed:@"default_head"] status:NO userID:obj.puserid];
+        [headerView updateHeaderView:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,obj.ppotname] placeholderImage:[UIImage imageNamed:@"default_head"] userID:obj.puserid];
         [self.scrollPraise addSubview:headerView];
     }
     [self.scrollPraise setContentSize:CGSizeMake(self.responseObject.heads.count *(praiseWidth + PRAISE_SEPWIDTH), praiseWidth)];

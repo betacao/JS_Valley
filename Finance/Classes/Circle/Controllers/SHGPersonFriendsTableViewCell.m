@@ -59,9 +59,8 @@
 {
     [self clearCell];
     _obj = obj;
-    
-    BOOL status = [obj.userstatus isEqualToString:@"true"] ? YES : NO;
-    [self.headeimage updateHeaderView:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,obj.headImageUrl] placeholderImage:[UIImage imageNamed:@"default_head"] status:status userID:obj.uid];
+
+    [self.headeimage updateHeaderView:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,obj.headImageUrl] placeholderImage:[UIImage imageNamed:@"default_head"] userID:obj.uid];
     self.headeimage.backgroundColor = [UIColor redColor];
     self.nameLabel.text = obj.name;
     self.companyLabel.text = obj.company;
