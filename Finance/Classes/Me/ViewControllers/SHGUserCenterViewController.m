@@ -8,9 +8,6 @@
 
 #import "SHGUserCenterViewController.h"
 #import "SHGPersonalViewController.h"
-#import "MyTeamViewController.h"
-#import "MyMoneyViewController.h"
-#import "MyAppointmentViewController.h"
 #import "SHGBusinessMineViewController.h"
 #import "SettingsViewController.h"
 #import "SHGCardCollectionViewController.h"

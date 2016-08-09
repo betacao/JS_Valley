@@ -576,7 +576,7 @@
         self.selectViewController = [[SHGBusinessSelectView alloc]initWithFrame:CGRectMake(0.0f, 0.0f, SCREENWIDTH, SCREENHEIGHT) array:array statu:NO industryArray:self.editIndustryArray];
     }
     
-    __weak typeof (self) weakSelf = self;
+    WEAK(self, weakSelf);
     self.selectViewController.returnTextBlock = ^(NSString *string, NSMutableArray *array){
         weakSelf.industrySelectArray = array;
         [weakSelf.industrySelectButton setTitle:string forState:UIControlStateNormal];
@@ -605,7 +605,7 @@
 - (void)btnBackClick:(id)sender
 {
     [self.currentContext resignFirstResponder];
-    __weak typeof (self) weakSelf = self;
+    WEAK(self, weakSelf);
     if ([weakSelf checkInputEmpty]) {
     SHGAlertView *alertView = [[SHGAlertView alloc] initWithTitle:@"提示" contentText:@"退出此次编辑?" leftButtonTitle:@"取消" rightButtonTitle:@"退出"];
     alertView.rightBlock = ^{

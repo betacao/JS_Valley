@@ -11,6 +11,12 @@
 #import "SettingsViewController.h"
 #import "SHGPersonalViewController.h"
 #import "ChatListViewController.h"
+#import "SHGFriendCollectionViewController.h"
+#import "SHGBusinessCollectionViewController.h"
+#import "SHGDynamicCollectionViewController.h"
+#import "SHGBusinessMineViewController.h"
+#import "SHGBusinessCollectionListViewController.h"
+
 
 @interface SHGNewUserCenterViewController ()<UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIActionSheetDelegate>
 
@@ -114,6 +120,7 @@
     [self.friendButton addImage:[UIImage imageNamed:@"me_friend"]];
     [self.friendButton addTitleWithDictionary:@{NSFontAttributeName:FontFactor(16.0f), NSForegroundColorAttributeName:Color(@"3a3a3a"), @"text":@"好友"}];
     self.friendButton.margin = MarginFactor(7.0f);
+    [self.friendButton target:self addSeletor:@selector(gotoMyFriends)];
 
     [self.actionView sd_addSubviews:@[self.businessButton, self.circleButton, self.friendButton]];
 
@@ -328,7 +335,6 @@
 
 - (void)loadData
 {
-    self.headerView.image = [UIImage imageNamed:@"default_head"];
     __weak typeof(self) weakSelf = self;
     [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttp,@"user",@"personaluser"] parameters:@{@"uid":UID,@"version":[SHGGloble sharedGloble].currentVersion} success:^(MOCHTTPResponse *response) {
 
@@ -527,25 +533,32 @@
 
 - (void)goToMyCircle
 {
-    [[SHGGloble sharedGloble] recordUserAction:@"" type:@"user_dynamic"];
-    SHGPersonalViewController *controller = [[SHGPersonalViewController alloc] initWithNibName:@"SHGPersonalViewController" bundle:nil];
+    SHGDynamicCollectionViewController *controller = [[SHGDynamicCollectionViewController alloc] init];
     controller.hidesBottomBarWhenPushed = YES;
-    controller.userId = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
     [self.navigationController pushViewController:controller animated:YES];
 }
 
 - (void)goToMyBusiness
 {
-    //    [[SHGGloble sharedGloble] recordUserAction:@"" type:@"user_business"];
-    //    SHGBusinessMineViewController *controller = [[SHGBusinessMineViewController alloc] initWithNibName:@"SHGBusinessMineViewController" bundle:nil];
-    //    controller.hidesBottomBarWhenPushed = YES;
-    //    [self.navigationController pushViewController:controller animated:YES];
+    SHGBusinessCollectionViewController *controller = [[SHGBusinessCollectionViewController alloc] init];
+
+    SHGBusinessMineViewController *controller1 = [[SHGBusinessMineViewController alloc] init];
+    SHGBusinessCollectionListViewController *controller2 = [[SHGBusinessCollectionListViewController alloc] init];
+    controller.viewControllers = @[controller1, controller2];
+    controller.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:controller animated:YES];
 }
 
+- (void)gotoMyFriends
+{
+    SHGFriendCollectionViewController *controller = [[SHGFriendCollectionViewController alloc] init];
+    controller.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:controller animated:YES];
+}
 
 - (void)jumpToChatList
 {
-    [[TabBarViewController tabBar].navigationController pushViewController:[ChatListViewController sharedController] animated:YES];
+    [self.navigationController pushViewController:[ChatListViewController sharedController] animated:YES];
 }
 
 - (void)tapUserHeaderView:(UIGestureRecognizer *)recognizer
