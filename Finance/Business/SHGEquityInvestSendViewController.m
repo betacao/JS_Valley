@@ -246,7 +246,7 @@
 
     //联系电话
     self.phoneNumView.sd_layout
-    .topSpaceToView(self.nameView, kLeftToView)
+    .topSpaceToView(self.businessCompanyNameView, kLeftToView)
     .leftSpaceToView(self.scrollView, 0.0f)
     .rightSpaceToView(self.scrollView, 0.0f);
     
