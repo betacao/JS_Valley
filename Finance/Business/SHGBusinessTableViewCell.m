@@ -24,6 +24,7 @@
 @property (weak, nonatomic) IBOutlet UIView *spliteView;
 @property (weak, nonatomic) IBOutlet UIButton *refreshButton;
 
+
 @end
 
 @implementation SHGBusinessTableViewCell
@@ -129,7 +130,7 @@
     .leftSpaceToView(self.contentView, 0.0f)
     .rightSpaceToView(self.contentView, 0.0f)
     .topSpaceToView(self.thirdLabel, MarginFactor(13.0f))
-    .heightIs(0.5f);
+    .heightIs(1 / SCALE);
 
     self.spliteView.sd_layout
     .leftEqualToView(self.lineView)

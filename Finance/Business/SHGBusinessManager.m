@@ -503,4 +503,13 @@
     }];
 }
 
++ (void)getBusinessComplainBlock:(void(^)(BOOL success, NSString *allowCreate))block
+{
+    [MOCHTTPRequestOperationManager postWithURL:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"complain/business/beforeSave"] parameters:@{@"uid":UID} success:^(MOCHTTPResponse *response) {
+        NSString *allowCreate = [response.dataDictionary objectForKey:@"allowcreate"];
+        block(YES,allowCreate);
+    } failed:^(MOCHTTPResponse *response) {
+//        [Hud showMessageWithText:@"111"];
+    }];
+}
 @end

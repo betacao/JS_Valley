@@ -85,6 +85,7 @@
         SHGTitleLabelCenterButton * button = [SHGTitleLabelCenterButton buttonWithType:UIButtonTypeCustom];
         button.frame = CGRectMake(margin + i%3 * (width + margin), i/3 * (width + topMargin), width, width);
         button.titleLabel.font = FontFactor(14.0f);
+        button.margain = MarginFactor(10.0f);
         [button setTitleColor:Color(@"787878") forState:UIControlStateNormal];
         [button setTitle:[imageTitleArray objectAtIndex:i] image:[UIImage imageNamed:[imageArray objectAtIndex:i]]];
         [button addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchUpInside];

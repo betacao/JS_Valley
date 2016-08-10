@@ -16,6 +16,7 @@
 #import "SHGDynamicCollectionViewController.h"
 #import "SHGBusinessMineViewController.h"
 #import "SHGBusinessCollectionListViewController.h"
+#import "SHGMyComplainViewController.h"
 
 
 @interface SHGNewUserCenterViewController ()<UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIActionSheetDelegate>
@@ -704,6 +705,8 @@
         [self actionAuth];
     } else if ([text containsString:@"我的投诉"]){
         //        [self actionAuth];
+        SHGMyComplainViewController *viewController = [[SHGMyComplainViewController alloc] init];
+        [self.navigationController pushViewController:viewController animated:YES];
     } else if ([text containsString:@"设置"]){
         if (self.nickName.length > 0){
             SettingsViewController *controller = [[SettingsViewController alloc] init];

@@ -27,10 +27,10 @@
     CGPoint buttonBoundsCenter = CGPointMake(CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds));
     
     // 找出imageView最终的center
-    CGPoint endImageViewCenter = CGPointMake(buttonBoundsCenter.x, buttonBoundsCenter.y - (MarginFactor(10.0f) + CGRectGetHeight(self.imageView.frame)) / 2.0f);
+    CGPoint endImageViewCenter = CGPointMake(buttonBoundsCenter.x, buttonBoundsCenter.y - (self.margain + CGRectGetHeight(self.imageView.frame)) / 2.0f);
     
     // 找出titleLabel最终的center
-    CGPoint endTitleLabelCenter = CGPointMake(buttonBoundsCenter.x, buttonBoundsCenter.y + (MarginFactor(10.0f) + CGRectGetHeight(self.titleLabel.frame)) / 2.0f);
+    CGPoint endTitleLabelCenter = CGPointMake(buttonBoundsCenter.x, buttonBoundsCenter.y + (self.margain + CGRectGetHeight(self.titleLabel.frame)) / 2.0f);
     
     // 取得imageView最初的center
     CGPoint startImageViewCenter = self.imageView.center;

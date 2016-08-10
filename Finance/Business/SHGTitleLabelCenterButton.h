@@ -11,5 +11,5 @@
 @interface SHGTitleLabelCenterButton : UIButton
 
 - (void)setTitle:(NSString *)title image:(UIImage *)image;
-
+@property (nonatomic, assign) NSInteger margain;
 @end
