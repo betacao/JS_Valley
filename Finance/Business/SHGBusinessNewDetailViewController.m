@@ -1258,14 +1258,6 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
 {
     
     SHGAlertView *alert = [[SHGAlertView alloc] initWithTitle:@"无法查看" contentText:message leftButtonTitle:leftTitle rightButtonTitle:rightTitle];
-    if ([rightTitle isEqualToString:@"现在认证"]) {
-        WEAK(self, weakSelf);
-        alert.rightBlock = ^{
-            SHGAuthenticationNextViewController *controller = [[SHGAuthenticationNextViewController alloc] init];
-            [weakSelf.navigationController pushViewController:controller animated:YES];
-            [[SHGGloble sharedGloble] recordUserAction:@"" type:@"business_identity"];
-        };
-    }
     [alert show];
 }
 
@@ -1277,7 +1269,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
     WEAK(self, weakSelf);
     contactAlert.leftBlock = ^{
         [SHGBusinessManager getBusinessCheckedNum:weakSelf.responseObject success:^(NSString *num) {
-            if ([num integerValue]> 0) {
+            if ([num integerValue] > 0) {
                 [weakSelf sendMessage];
             } else{
                 [weakSelf showAlertView:@"该业务联系次数今日已达上限，\n明天早点哦~" leftTitle:nil rightTitle:@"确定"];

@@ -689,7 +689,6 @@
 		F924C2C41CACCBE50070286F /* SHGBusinessTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F924C2C21CACCBE50070286F /* SHGBusinessTableViewCell.xib */; };
 		F924C2C71CACCC5F0070286F /* SHGBusinessObject.m in Sources */ = {isa = PBXBuildFile; fileRef = F924C2C61CACCC5F0070286F /* SHGBusinessObject.m */; };
 		F924C2CA1CACCC780070286F /* SHGBusinessManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F924C2C91CACCC780070286F /* SHGBusinessManager.m */; };
-		F928141C1C045F8900C7782D /* SHGItemChooseView.m in Sources */ = {isa = PBXBuildFile; fileRef = F928141B1C045F8900C7782D /* SHGItemChooseView.m */; };
 		F93242BA1BE9EE92003B7F07 /* SHGUnifiedTreatment.m in Sources */ = {isa = PBXBuildFile; fileRef = F93242B91BE9EE92003B7F07 /* SHGUnifiedTreatment.m */; };
 		F93286241D38948E004A9CC2 /* SHGBusinessRecommendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F93286221D38948E004A9CC2 /* SHGBusinessRecommendViewController.m */; };
 		F93286251D38948E004A9CC2 /* SHGBusinessRecommendViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F93286231D38948E004A9CC2 /* SHGBusinessRecommendViewController.xib */; };
@@ -1696,8 +1695,6 @@
 		F924C2C61CACCC5F0070286F /* SHGBusinessObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGBusinessObject.m; sourceTree = "<group>"; };
 		F924C2C81CACCC780070286F /* SHGBusinessManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGBusinessManager.h; sourceTree = "<group>"; };
 		F924C2C91CACCC780070286F /* SHGBusinessManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGBusinessManager.m; sourceTree = "<group>"; };
-		F928141A1C045F8900C7782D /* SHGItemChooseView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGItemChooseView.h; sourceTree = "<group>"; };
-		F928141B1C045F8900C7782D /* SHGItemChooseView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGItemChooseView.m; sourceTree = "<group>"; };
 		F93242B81BE9EE92003B7F07 /* SHGUnifiedTreatment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGUnifiedTreatment.h; sourceTree = "<group>"; };
 		F93242B91BE9EE92003B7F07 /* SHGUnifiedTreatment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGUnifiedTreatment.m; sourceTree = "<group>"; };
 		F93242BB1BE9F73E003B7F07 /* CircleActionDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CircleActionDelegate.h; sourceTree = "<group>"; };
@@ -2536,8 +2533,6 @@
 				40D6CC081B064122005F61C8 /* ProtocolViewController.h */,
 				40D6CC091B064122005F61C8 /* ProtocolViewController.m */,
 				40D6CC0A1B064122005F61C8 /* ProtocolViewController.xib */,
-				F928141A1C045F8900C7782D /* SHGItemChooseView.h */,
-				F928141B1C045F8900C7782D /* SHGItemChooseView.m */,
 			);
 			path = LoginRegist;
 			sourceTree = "<group>";
@@ -4975,7 +4970,6 @@
 				4088DD8C1AF0FB2B00393855 /* SettingsObj.m in Sources */,
 				6187D2C91AF1C693008E1D21 /* ChatGroupDetailViewController.m in Sources */,
 				98727B501CFE11EB008AEF6B /* SHGFollowAndFansTableViewCell.m in Sources */,
-				F928141C1C045F8900C7782D /* SHGItemChooseView.m in Sources */,
 				982EB7FF1CB3A269003EEBE6 /* SHGEquityFinanceNextViewController.m in Sources */,
 				614EFEDF1AEF8F7300F2BDD1 /* Hud.m in Sources */,
 				4088DDB01AF102FE00393855 /* SettingAboutUsViewController.m in Sources */,

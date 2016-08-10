@@ -297,7 +297,6 @@
 - (void)authButtonClicked:(UIButton *)button
 {
     SHGAuthenticationViewController *controller = [[SHGAuthenticationViewController alloc] init];
-    controller.authState = YES;
     [self.navigationController pushViewController:controller animated:YES];
 }
 

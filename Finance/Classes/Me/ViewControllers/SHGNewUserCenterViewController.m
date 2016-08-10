@@ -158,6 +158,7 @@
     self.nameLabel.sd_layout
     .leftSpaceToView(self.headerBgView, MarginFactor(11.0f))
     .topEqualToView(self.headerBgView)
+    .offset(MarginFactor(2.0f))
     .heightIs(self.nameLabel.font.lineHeight);
     [self.nameLabel setSingleLineAutoResizeWithMaxWidth:SCREENWIDTH];
 
@@ -169,7 +170,8 @@
 
     self.companyLabel.sd_layout
     .leftEqualToView(self.nameLabel)
-    .topSpaceToView(self.nameLabel, MarginFactor(20.0f))
+    .bottomEqualToView(self.headerBgView)
+    .offset(MarginFactor(-2.0f))
     .heightIs(self.companyLabel.font.lineHeight);
     [self.companyLabel setSingleLineAutoResizeWithMaxWidth:SCREENWIDTH];
 
@@ -384,13 +386,9 @@
         }
 
         SHGUserCenterTableViewCell *cell = [weakSelf.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
-        if ([[response.dataDictionary objectForKey:@"userstatus"] isEqualToString:@"true"]) {
-            [cell addViewToFrontView:weakSelf.vImageView];
-        } else {
-            [cell addViewToFrontView:nil];
-        }
 
         if ([response.dataDictionary objectForKey:@"auditstate"]) {
+            [cell addViewToFrontView:nil];
             weakSelf.modifyButton.hidden = YES;
             weakSelf.auditState = [response.dataDictionary objectForKey:@"auditstate"];
             if ([weakSelf.auditState isEqualToString:@"0"]) {
@@ -407,13 +405,12 @@
                 weakSelf.authLabel.text = @"已审核";
                 weakSelf.authLabel.textColor = Color(@"17bb27");
                 weakSelf.modifyButton.hidden = NO;
+                [cell addViewToFrontView:weakSelf.vImageView];
             } else if ([weakSelf.auditState isEqualToString:@"3"]){
                 weakSelf.authLabel.text = @"已驳回";
                 weakSelf.authLabel.textColor = Color(@"f04f46");
-            } else{
-                weakSelf.authLabel.text = @"已审核";
-                weakSelf.authLabel.textColor = Color(@"17bb27");
-                weakSelf.modifyButton.hidden = NO;
+            } else {
+                weakSelf.authLabel.text = @"";
             }
             [weakSelf.authLabel sizeToFit];
             [cell addViewTolastView: weakSelf.authLabel];
@@ -518,7 +515,6 @@
 {
     SHGAuthenticationViewController *controller = [[SHGAuthenticationViewController alloc] init];
     controller.hidesBottomBarWhenPushed = YES;
-    controller.authState = NO;
     [self.navigationController pushViewController:controller animated:YES];
 }
 

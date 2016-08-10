@@ -31,20 +31,14 @@
 @property (weak, nonatomic) IBOutlet UILabel *tipLabel;
 @property (strong, nonatomic) UIButton *currentButton;
 //
-
 @property (strong, nonatomic) SHGAuthenticationWarningView *warningView;
-@property (strong, nonatomic) SHGAuthenticationNextViewController *nextController;
-
-//
-@property (strong, nonatomic) NSString *headerImageUrl;
 @property (strong, nonatomic) UIImage *headerImage;
 @property (strong, nonatomic) NSString *state;//认证状态
 @property (strong, nonatomic) NSString *authImageUrl;//已经上传的图片链接
 @property (strong, nonatomic) UIImage *authImage;//认证的图片
 @property (strong, nonatomic) NSString *departmentCode;
 @property (strong, nonatomic) NSString *company;//保存一下 没什么用
-@property (strong, nonatomic) NSString *rejectReason;//驳回理由
-
+@property (strong, nonatomic) NSString *rejectReason;//
 @end
 
 @implementation SHGAuthenticationViewController
@@ -55,13 +49,13 @@
     self.title = @"身份认证";
     [self initView];
     [self addAutoLayout];
+    self.authScrollView.alpha = 0.0f;
     [self loadUserState];
 }
 
 - (void)initView
 {
     //
-
     self.view.backgroundColor = Color(@"f7f8f9");
     self.topView.backgroundColor = [UIColor whiteColor];
     self.stateNameLabel.font = self.stateLabel.font = FontFactor(16.0f);
@@ -71,7 +65,7 @@
     self.stateLabel.textColor = Color(@"3588c8");
 
     self.authImageView.layer.borderColor = [UIColor lightGrayColor].CGColor;
-    self.authImageView.layer.borderWidth = 1.0f / SCALE;
+    self.authImageView.layer.borderWidth = 1.0f / [UIScreen mainScreen].scale;
 
     self.authTipLabel.font = FontFactor(13.0f);
     self.authTipLabel.textColor = Color(@"999999");
@@ -91,11 +85,9 @@
     [self.authScrollView addSubview:self.warningView];
 
     self.authScrollView.backgroundColor = Color(@"f7f8f9");
-    self.authScrollView.alpha = 0.0f;
-
     self.departmentField.textColor = self.locationField.textColor = Color(@"161616");
     self.departmentField.font = self.locationField.font = FontFactor(15.0f);
-    self.departmentField.layer.borderColor = self.locationField.layer.borderColor = Color(@"cdcdcd").CGColor;
+    self.departmentField.layer.borderColor = self.locationField.layer.borderColor = [UIColor lightGrayColor].CGColor;
 
     self.departmentField.layer.borderWidth = self.locationField.layer.borderWidth = 1.0f / [UIScreen mainScreen].scale;
     [self.departmentField setValue:Color(@"bebebe")forKeyPath:@"_placeholderLabel.textColor"];
@@ -107,9 +99,9 @@
     self.tipLabel.textColor = Color(@"8f8f8f");
     self.tipLabel.font = FontFactor(14.0f);
 
-    
     self.submitButton.titleLabel.font = FontFactor(15.0f);
     self.submitButton.backgroundColor = Color(@"f04241");
+    [self.submitButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
 }
 
 - (void)addAutoLayout
@@ -188,7 +180,6 @@
     .leftSpaceToView(self.roundCornerView, MarginFactor(30.0f))
     .widthIs(self.plusButton.currentImage.size.width)
     .heightIs(self.plusButton.currentImage.size.height);
-    self.plusButton.sd_cornerRadius = @(10.0f);
 
     self.tipLabel.sd_layout
     .centerYEqualToView(self.roundCornerView)
@@ -224,22 +215,14 @@
     return string;
 }
 
-- (SHGAuthenticationNextViewController *)nextController
-{
-    if (!_nextController) {
-        _nextController = [[SHGAuthenticationNextViewController alloc] init];
-    }
-    return _nextController;
-}
-
 - (void)resetView
 {
+    self.authScrollView.alpha = [self.state isEqualToString:@"0"] ? 1.0f : 0.0f;
     self.authTipLabel.hidden = YES;
     if ([self.state isEqualToString:@"0"]) {
         self.stateLabel.text = @"未认证";
         self.stateLabel.textColor = [UIColor colorWithHexString:@"f04241"];
-        [self.submitButton setTitle:@"下一步" forState:UIControlStateNormal];
-        self.authScrollView.alpha = 1.0f;
+        [self.submitButton setTitle:@"提交" forState:UIControlStateNormal];
     }else if ([self.state isEqualToString:@"1"]){
         self.stateLabel.text = @"审核中";
         self.stateLabel.textColor = [UIColor colorWithHexString:@"f04241"];
@@ -251,32 +234,20 @@
     }else if ([self.state isEqualToString:@"2"]){
         self.stateLabel.text = @"已认证";
         self.stateLabel.textColor = [UIColor colorWithHexString:@"3588c8"];
-        if (self.authState) {
-            self.authScrollView.alpha = 1.0f;
-            [self.submitButton setTitle:@"下一步" forState:UIControlStateNormal];
-        } else{
-            self.authScrollView.alpha = 0.0f;
-            [self.submitButton setTitle:@"更新" forState:UIControlStateNormal];
-        }
-        
+        [self.submitButton setTitle:@"更新" forState:UIControlStateNormal];
     }else if ([self.state isEqualToString:@"3"]){
         self.stateLabel.text = @"认证失败";
         self.stateLabel.textColor = [UIColor colorWithHexString:@"f04241"];
-        self.authScrollView.alpha = 0.0f;
         [self.submitButton setTitle:@"更新" forState:UIControlStateNormal];
-        
         self.authTipLabel.hidden = NO;
         self.authTipLabel.textAlignment = NSTextAlignmentLeft;
         NSString *string = [@"驳回原因：\n" stringByAppendingFormat:@"%@", self.rejectReason];
         NSMutableAttributedString *reason = [[NSMutableAttributedString alloc] initWithString:string attributes:@{NSFontAttributeName:FontFactor(13.0f), NSForegroundColorAttributeName:Color(@"999999")}];
         [reason addAttributes:@{NSForegroundColorAttributeName:Color(@"dc4437")} range:[string rangeOfString:@"驳回原因："]];
         self.authTipLabel.attributedText = reason;
-    } else if ([self.state isEqualToString:@"4"]){
-        self.authScrollView.alpha = 1.0f;
-        [self.submitButton setTitle:@"下一步" forState:UIControlStateNormal];
     }
     [self.stateLabel updateLayout];
-    WEAK(self, weakSelf);
+    __weak typeof(self) weakSelf = self;
     if (!IsStrEmpty(self.authImageUrl)) {
         [self.authImageView yy_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,self.authImageUrl]] placeholder:[UIImage imageNamed:@"default_head"] options:kNilOptions completion:^(UIImage * _Nullable image, NSURL * _Nonnull url, YYWebImageFromType from, YYWebImageStage stage, NSError * _Nullable error) {
             weakSelf.authImage = image;
@@ -287,14 +258,13 @@
 
 - (void)loadUserState
 {
-    WEAK(self, weakSelf);
+    __weak typeof(self)weakSelf = self;
     [Hud showWait];
-    [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttp,@"user",@"myidentity"] parameters:@{@"uid":UID,@"version":[SHGGloble sharedGloble].currentVersion}success:^(MOCHTTPResponse *response) {
+    [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttp,@"user",@"myidentity"] parameters:@{@"uid":UID}success:^(MOCHTTPResponse *response) {
         [Hud hideHud];
         weakSelf.state = [response.dataDictionary valueForKey:@"state"];
         weakSelf.authImageUrl = [response.dataDictionary valueForKey:@"potname"];
         weakSelf.rejectReason = [response.dataDictionary valueForKey:@"reason"];
-        weakSelf.nextController.licenseUrl = [response.dataDictionary objectForKey:@"photourl"];
         [weakSelf loadUserInfo];
         [weakSelf resetView];
 
@@ -306,25 +276,26 @@
 
 - (void)loadUserInfo
 {
-    WEAK(self, weakSelf);
+    __weak typeof(self) weakSelf = self;
     [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttp,@"user",@"personaluser"] parameters:@{@"uid":UID} success:^(MOCHTTPResponse *response) {
         weakSelf.company = [response.dataDictionary objectForKey:@"companyname"];
         if ([[response.dataDictionary objectForKey:@"position"] length] > 0) {
-            weakSelf.locationField.text = [response.dataDictionary objectForKey:@"position"];
+             weakSelf.locationField.text = [response.dataDictionary objectForKey:@"position"];
         } else{
             [[CCLocationManager shareLocation] getCity:^{
                 NSString * cityName = [SHGGloble sharedGloble].cityName;
                 weakSelf.locationField.text = cityName;
             }];
         }
-
+       
         weakSelf.departmentField.text = [self codeToIndustry:[response.dataDictionary objectForKey:@"industrycode"]];
-        weakSelf.headerImageUrl = [response.dataDictionary objectForKey:@"head_img"];
-        [weakSelf.headerButton yy_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,weakSelf.headerImageUrl]] forState:UIControlStateNormal placeholder:[UIImage imageNamed:@"uploadHead"] options:kNilOptions completion:^(UIImage * _Nullable image, NSURL * _Nonnull url, YYWebImageFromType from, YYWebImageStage stage, NSError * _Nullable error) {
+        NSString *head_img = [response.dataDictionary objectForKey:@"head_img"];
+
+        [weakSelf.headerButton yy_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,head_img]] forState:UIControlStateNormal placeholder:[UIImage imageNamed:@"uploadHead"] options:kNilOptions completion:^(UIImage * _Nullable image, NSURL * _Nonnull url, YYWebImageFromType from, YYWebImageStage stage, NSError * _Nullable error) {
             weakSelf.headerImage = image;
         }];
     }failed:^(MOCHTTPResponse *response) {
-
+        
     }];
 }
 
@@ -348,20 +319,12 @@
         [UIView animateWithDuration:0.25f animations:^{
             self.authScrollView.alpha = 1.0f;
         }];
-        [sender setTitle:@"下一步" forState:UIControlStateNormal];
+        [sender setTitle:@"提交" forState:UIControlStateNormal];
     } else {
-        if ([self checkInputMessage]){
-            self.nextController.headerImage = self.headerImage;
-            self.nextController.departmentCode = self.departmentCode;
-            self.nextController.location = self.locationField.text;
-            self.nextController.authImage = self.authImage;
-            self.nextController.company = self.company;
-            self.nextController.headerImageUrl = self.headerImageUrl;
-            self.nextController.authImageUrl = self.authImageUrl;
-            [self.navigationController pushViewController:self.nextController animated:YES];
+        if ([self checkInputMessage]) {
+            [self uploadHeaderImage];
         }
     }
-
 }
 
 - (BOOL)checkInputMessage
@@ -383,6 +346,88 @@
     return YES;
 }
 
+- (void)uploadHeaderImage
+{
+    //头像需要压缩 跟其他的上传图片接口不一样了
+    [Hud showWait];
+    if (self.headerImage) {
+        __weak typeof(self) weakSelf = self;
+        [MOCHTTPRequestOperationManager POST:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"image/basephoto"] parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+            NSData *imageData = UIImageJPEGRepresentation(weakSelf.headerImage, 0.1);
+            [formData appendPartWithFileData:imageData name:@"hahaggg.jpg" fileName:@"hahaggg.jpg" mimeType:@"image/jpeg"];
+        } progress:^(NSProgress * _Nonnull uploadProgress) {
+
+        } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+            NSLog(@"%@",responseObject);
+            NSDictionary *dic = [(NSString *)[responseObject valueForKey:@"data"] parseToArrayOrNSDictionary];
+            NSString *newHeadImageName = [(NSArray *)[dic valueForKey:@"pname"] objectAtIndex:0];
+            [[NSUserDefaults standardUserDefaults] setObject:newHeadImageName forKey:KEY_HEAD_IMAGE];
+            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_SENDPOST object:nil];
+
+            [weakSelf putHeadImage:newHeadImageName];
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+            NSLog(@"%@",error);
+            [Hud hideHud];
+            [Hud showMessageWithText:@"上传图片失败"];
+        }];
+    } else {
+        [self uploadAuthImage];
+    }
+}
+
+
+//更新服务器端
+- (void)putHeadImage:(NSString *)headImageName
+{
+    __weak typeof(self) weakSelf = self;
+    [MOCHTTPRequestOperationManager putWithURL:[NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttp,@"user",@"modifyuser"] class:nil parameters:@{@"uid":UID, @"type":@"headimage", @"value":headImageName, @"title":self.departmentCode, @"company":self.company} success:^(MOCHTTPResponse *response) {
+        NSString *code = [response.data valueForKey:@"code"];
+        if ([code isEqualToString:@"000"]) {
+            [Hud hideHud];
+            [weakSelf uploadAuthImage];
+        }
+    } failed:^(MOCHTTPResponse *response) {
+        [Hud hideHud];
+    }];
+}
+
+- (void)uploadAuthImage
+{
+    [Hud showWait];
+    __weak typeof(self) weakSelf = self;
+    [MOCHTTPRequestOperationManager POST:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"image/basephoto"] parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+        NSData *imageData = UIImageJPEGRepresentation(weakSelf.authImage, 0.1);
+        [formData appendPartWithFileData:imageData name:@"haha.jpg" fileName:@"haha.jpg" mimeType:@"image/jpeg"];
+    } progress:^(NSProgress * _Nonnull uploadProgress) {
+
+    } success:^(NSURLSessionDataTask *operation, id responseObject) {
+        NSLog(@"%@",responseObject);
+        NSDictionary *dic = [(NSString *)[responseObject valueForKey:@"data"] parseToArrayOrNSDictionary];
+        weakSelf.authImageUrl = [(NSArray *)[dic valueForKey:@"pname"] objectAtIndex:0];
+        [weakSelf submitMaterial];
+    } failure:^(NSURLSessionDataTask *operation, NSError *error) {
+        NSLog(@"%@",error);
+        [Hud hideHud];
+        [Hud showMessageWithText:@"上传认证图片失败"];
+    }];
+}
+
+- (void)submitMaterial
+{
+    __weak typeof(self)weakSelf = self;
+    [MOCHTTPRequestOperationManager putWithURL:[rBaseAddressForHttp stringByAppendingString:@"/user/identityAuth"]class:nil parameters:@{@"uid":UID, @"potname":self.authImageUrl, @"industrycode": self.departmentCode, @"area":self.locationField.text} success:^(MOCHTTPResponse *response) {
+        NSString *code = [response.data valueForKey:@"code"];
+        if ([code isEqualToString:@"000"]) {
+            [Hud hideHud];
+            [Hud showMessageWithText:@"提交成功，我们将在一个工作日内\n通知您认证结果"];
+            [weakSelf.navigationController performSelector:@selector(popViewControllerAnimated:) withObject:@(YES) afterDelay:1.20f];
+        }
+    } failed:^(MOCHTTPResponse *response) {
+        [Hud hideHud];
+    }];
+}
+
+
 - (void)showIndustryChoiceView
 {
     SHGIndustrySelectView *view = [[SHGIndustrySelectView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, SCREENWIDTH, SCREENHEIGHT) andSelctIndustry:self.departmentField.text];
@@ -390,7 +435,11 @@
     view.returnTextBlock = ^(NSString *string){
         weakSelf.departmentField.text = string;
     };
+    view.alpha = 0.0f;
     [weakSelf.view.window addSubview:view];
+    [UIView animateWithDuration:0.25f animations:^{
+        view.alpha = 1.0f;
+    }];
 }
 
 - (void)showLocationChoiceView
@@ -406,7 +455,7 @@
 - (NSString *)industryToCode:(NSString *)industry
 {
     if ([industry isEqualToString:@"银行机构"]) {
-        return @"bank";
+        return  @"bank";
     } else if ([industry isEqualToString:@"证券公司"]) {
         return @"bond";
     } else if ([industry isEqualToString:@"PE/VC"]) {
@@ -528,10 +577,8 @@
     [self.currentButton setImage:image forState:UIControlStateNormal];
     if ([self.currentButton isEqual:self.plusButton]) {
         self.authImage = image;
-        self.authImageUrl = nil;
     } else {
         self.headerImage = image;
-        self.headerImageUrl = nil;
     }
 }
 
@@ -539,394 +586,5 @@
 {
     [super didReceiveMemoryWarning];
 }
-
-@end
-
-
-
-
-@interface SHGAuthenticationNextViewController()<UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
-
-@property (strong, nonatomic) SHGAuthenticationWarningView *warningView;
-
-@property (strong, nonatomic) UIView *contentView;
-@property (strong, nonatomic) UIImageView *imageView;
-
-@property (strong, nonatomic) UILabel *label;
-@property (strong, nonatomic) UIButton *button;
-@property (strong, nonatomic) UIButton *deleteButton;
-@property (strong, nonatomic) UIImage *image;
-
-@property (strong, nonatomic) UIButton *submitButton;
-
-@end
-
-@implementation SHGAuthenticationNextViewController
-
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    [self initView];
-    [self addAutoLayout];
-}
-
-- (void)initView
-{
-    self.title = @"身份认证";
-    WEAK(self, weakSelf);
-    self.warningView = [[SHGAuthenticationWarningView alloc] init];
-    self.warningView.text = @"上传营业执照每日可查看10条业务联系方式（选填）";
-    self.warningView.block = ^{
-        [UIView animateWithDuration:0.25f animations:^{
-            weakSelf.warningView.sd_layout
-            .heightIs(0.0f);
-            [weakSelf.warningView updateLayout];
-        }];
-    };
-    [self.view addSubview:self.warningView];
-
-    self.contentView = [[UIView alloc] init];
-    self.contentView.backgroundColor = Color(@"eeeff0");
-    self.contentView.layer.cornerRadius = 10.0f;
-    self.contentView.clipsToBounds = YES;
-    
-
-    self.button = [UIButton buttonWithType:UIButtonTypeCustom];
-    [self.button setImage:[UIImage imageNamed:@"circle_plus"] forState:UIControlStateNormal];
-    [self.button addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchUpInside];
-
-    self.label = [[UILabel alloc] init];
-    self.label.textColor = Color(@"8f8f8f");
-    self.label.font = FontFactor(14.0f);
-    self.label.text = @"请上传您公司的企业营业执照";
-
-    self.imageView = [[UIImageView alloc] init];
-    self.imageView.userInteractionEnabled = YES;
-    self.imageView.hidden = YES;
-    self.imageView.contentMode = UIViewContentModeScaleAspectFill;
-
-    self.deleteButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    self.deleteButton.backgroundColor = [UIColor colorWithWhite:0.0f alpha:0.5f];
-    self.deleteButton.titleLabel.font = FontFactor(14.0f);
-    [self.deleteButton setTitle:@"删除" forState:UIControlStateNormal];
-    [self.deleteButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [self.deleteButton addTarget:self action:@selector(deleteButtonClick:) forControlEvents:UIControlEventTouchUpInside];
-
-    [self.view addSubview:self.contentView];
-
-    [self.contentView sd_addSubviews:@[self.button, self.label, self.imageView]];
-    [self.imageView addSubview:self.deleteButton];
-
-    self.submitButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [self.submitButton setTitle:@"提交" forState:UIControlStateNormal];
-    self.submitButton.titleLabel.font = FontFactor(15.0f);
-    self.submitButton.backgroundColor = Color(@"f04241");
-    [self.submitButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [self.submitButton addTarget:self action:@selector(submitButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:self.submitButton];
-
-}
-
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-    
-    if (!self.licenseUrl) {
-        self.licenseUrl = @"";
-        [self loadUserState];
-    } else{
-        //为了执行下载图片
-        self.licenseUrl = self.licenseUrl;
-    }
-
-}
-
-- (void)addAutoLayout
-{
-    self.warningView.sd_layout
-    .leftSpaceToView(self.view, 0.0f)
-    .rightSpaceToView(self.view, 0.0f)
-    .topSpaceToView(self.view, 0.0f)
-    .heightIs(MarginFactor(39.0f));
-
-    self.contentView.sd_layout
-    .topSpaceToView(self.warningView, MarginFactor(32.0f))
-    .leftSpaceToView(self.view, MarginFactor(12.0f))
-    .rightSpaceToView(self.view, MarginFactor(12.0f))
-    .heightIs(MarginFactor(150.0f));
-
-    self.button.sd_layout
-    .centerYEqualToView(self.contentView)
-    .leftSpaceToView(self.contentView, MarginFactor(30.0f))
-    .widthIs(self.button.currentImage.size.width)
-    .heightIs(self.button.currentImage.size.height);
-
-    self.label.sd_layout
-    .centerYEqualToView(self.contentView)
-    .leftSpaceToView(self.button, MarginFactor(22.0f))
-    .rightSpaceToView(self.contentView, MarginFactor(22.0f))
-    .autoHeightRatio(0.0f);
-
-    self.imageView.sd_layout
-    .spaceToSuperView(UIEdgeInsetsZero);
-
-    self.deleteButton.sd_layout
-    .leftSpaceToView(self.imageView, 0.0f)
-    .rightSpaceToView(self.imageView, 0.0f)
-    .bottomSpaceToView(self.imageView, 0.0f)
-    .heightIs(MarginFactor(28.0f));
-
-    self.submitButton.sd_layout
-    .leftSpaceToView(self.view, MarginFactor(15.0f))
-    .rightSpaceToView(self.view, MarginFactor(15.0f))
-    .bottomSpaceToView(self.view, MarginFactor(19.0f))
-    .heightIs(MarginFactor(40.0f));
-}
-
-- (void)loadUserState
-{
-    WEAK(self, weakSelf);
-    [Hud showWait];
-    [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttp,@"user",@"myidentity"] parameters:@{@"uid":UID,@"version":[SHGGloble sharedGloble].currentVersion}success:^(MOCHTTPResponse *response) {
-        [Hud hideHud];
-        weakSelf.authImageUrl = [response.dataDictionary valueForKey:@"potname"];
-        weakSelf.licenseUrl = [response.dataDictionary objectForKey:@"photourl"];
-        [weakSelf loadUserInfo];
-        
-    } failed:^(MOCHTTPResponse *response) {
-        [Hud hideHud];
-        [Hud showMessageWithText:@"获取身份信息失败"];
-    }];
-}
-
-- (void)loadUserInfo
-{
-    WEAK(self, weakSelf);
-    [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttp,@"user",@"personaluser"] parameters:@{@"uid":UID} success:^(MOCHTTPResponse *response) {
-        weakSelf.company = [response.dataDictionary objectForKey:@"companyname"];
-        if ([[response.dataDictionary objectForKey:@"position"] length] > 0) {
-            weakSelf.location = [response.dataDictionary objectForKey:@"position"];
-        } else{
-            [[CCLocationManager shareLocation] getCity:^{
-                NSString *cityName = [SHGGloble sharedGloble].cityName;
-                weakSelf.location = cityName;
-            }];
-        }
-        
-        weakSelf.departmentCode = [response.dataDictionary objectForKey:@"industrycode"];
-
-    }failed:^(MOCHTTPResponse *response) {
-        
-    }];
-}
-
-- (void)setLicenseUrl:(NSString *)licenseUrl
-{
-    _licenseUrl = licenseUrl;
-    if (licenseUrl && licenseUrl.length > 0 && [self isViewLoaded]) {
-        WEAK(self, weakSelf);
-        [[YYWebImageManager sharedManager] requestImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,self.licenseUrl]] options:kNilOptions progress:nil transform:nil completion:^(UIImage * _Nullable image, NSURL * _Nonnull url, YYWebImageFromType from, YYWebImageStage stage, NSError * _Nullable error) {
-            weakSelf.image = image;
-        }];
-    }
-}
-
-- (void)setImage:(UIImage *)image
-{
-    _image = image;
-    self.imageView.image = image;
-    self.imageView.hidden = !image;
-}
-
-- (void)buttonClick:(UIButton *)button
-{
-    UIActionSheet *takeSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"拍照",@"选图", nil];
-    [takeSheet showInView:self.view];
-}
-
-- (void)deleteButtonClick:(UIButton *)button
-{
-    [UIView animateWithDuration:0.25f animations:^{
-        self.imageView.alpha = 0.0f;
-    } completion:^(BOOL finished) {
-        self.imageView.alpha = 1.0f;
-        self.image = nil;
-        self.licenseUrl = @"";
-    }];
-}
-
-- (void)submitButtonClicked:(UIButton *)sender
-{
-    [self uploadHeaderImage];
-}
-
-- (void)cameraClick
-{
-    UIImagePickerController *pickerImage = [[UIImagePickerController alloc] init];
-
-    if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
-        pickerImage.sourceType = UIImagePickerControllerSourceTypeCamera;
-        pickerImage.mediaTypes = [UIImagePickerController availableMediaTypesForSourceType:pickerImage.sourceType];
-        pickerImage.delegate = self;
-        pickerImage.allowsEditing = YES;
-        [self presentViewController:pickerImage animated:YES completion:nil];
-    }
-}
-
-- (void)photosClick
-{
-    UIImagePickerController *pickerImage = [[UIImagePickerController alloc] init];
-
-    if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]) {
-        pickerImage.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-        pickerImage.mediaTypes = [UIImagePickerController availableMediaTypesForSourceType:pickerImage.sourceType];
-        pickerImage.delegate = self;
-        pickerImage.allowsEditing = YES;
-        [self.navigationController presentViewController:pickerImage animated:YES completion:nil];
-    }
-}
-
-#pragma mark ------actionSheet代理
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    if (buttonIndex == 0) {
-        NSLog(@"拍照");
-        [self cameraClick];
-    }  else if (buttonIndex == 1) {
-        NSLog(@"选图");
-        [self photosClick];
-    } else if (buttonIndex == 2){
-        NSLog(@"取消");
-    }
-}
-
-#pragma mark ------选图代理
-- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
-{
-    [picker dismissViewControllerAnimated:YES completion:nil];
-    UIImage *image = info[UIImagePickerControllerEditedImage];
-    self.image = image;
-}
-
-
-#pragma mark ------上传信息模块
-- (void)uploadHeaderImage
-{
-    //头像需要压缩 跟其他的上传图片接口不一样了
-    [Hud showWait];
-    if (self.headerImage && !self.headerImageUrl) {
-        WEAK(self, weakSelf);
-        [MOCHTTPRequestOperationManager POST:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"image/basephoto"] parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
-            NSData *imageData = UIImageJPEGRepresentation(weakSelf.headerImage, 0.1);
-            [formData appendPartWithFileData:imageData name:@"hahaggg.jpg" fileName:@"hahaggg.jpg" mimeType:@"image/jpeg"];
-        } progress:^(NSProgress * _Nonnull uploadProgress) {
-
-        } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-            NSLog(@"%@",responseObject);
-            NSDictionary *dic = [(NSString *)[responseObject valueForKey:@"data"] parseToArrayOrNSDictionary];
-            weakSelf.headerImageUrl = [(NSArray *)[dic valueForKey:@"pname"] objectAtIndex:0];
-            [[NSUserDefaults standardUserDefaults] setObject:weakSelf.headerImageUrl forKey:KEY_HEAD_IMAGE];
-            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_SENDPOST object:nil];
-
-            [weakSelf putHeadImage];
-        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-            NSLog(@"%@",error);
-            [Hud hideHud];
-            [Hud showMessageWithText:@"上传图片失败"];
-        }];
-    } else {
-        [self uploadAuthImage];
-    }
-}
-
-
-//更新服务器端
-- (void)putHeadImage
-{
-    WEAK(self, weakSelf);
-    [MOCHTTPRequestOperationManager putWithURL:[NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttp,@"user",@"modifyuser"] class:nil parameters:@{@"uid":UID, @"type":@"headimage", @"value":self.headerImageUrl, @"title":self.departmentCode, @"company":self.company} success:^(MOCHTTPResponse *response) {
-        NSString *code = [response.data valueForKey:@"code"];
-        if ([code isEqualToString:@"000"]) {
-            [Hud hideHud];
-            [weakSelf uploadAuthImage];
-        }
-    } failed:^(MOCHTTPResponse *response) {
-        [Hud hideHud];
-    }];
-}
-
-- (void)uploadAuthImage
-{
-    [Hud showWait];
-    WEAK(self, weakSelf);
-    if (self.authImage && !self.authImageUrl) {
-        [MOCHTTPRequestOperationManager POST:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"image/basephoto"] parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
-            NSData *imageData = UIImageJPEGRepresentation(weakSelf.authImage, 0.1);
-            [formData appendPartWithFileData:imageData name:@"haha.jpg" fileName:@"haha.jpg" mimeType:@"image/jpeg"];
-        } progress:^(NSProgress * _Nonnull uploadProgress) {
-
-        } success:^(NSURLSessionDataTask *operation, id responseObject) {
-            NSLog(@"%@",responseObject);
-            NSDictionary *dic = [(NSString *)[responseObject valueForKey:@"data"] parseToArrayOrNSDictionary];
-            weakSelf.authImageUrl = [(NSArray *)[dic valueForKey:@"pname"] objectAtIndex:0];
-            [weakSelf uploadLicenseImage];
-        } failure:^(NSURLSessionDataTask *operation, NSError *error) {
-            NSLog(@"%@",error);
-            [Hud hideHud];
-            [Hud showMessageWithText:@"上传认证图片失败"];
-        }];
-    } else{
-        [self uploadLicenseImage];
-    }
-}
-
-- (void)uploadLicenseImage
-{
-    [Hud showWait];
-    if (self.image) {
-        WEAK(self, weakSelf);
-        [MOCHTTPRequestOperationManager POST:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"image/businessLicense"] parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
-            NSData *imageData = UIImageJPEGRepresentation(weakSelf.image, 0.1);
-            [formData appendPartWithFileData:imageData name:@"haha.jpg" fileName:@"haha.jpg" mimeType:@"image/jpeg"];
-        } progress:^(NSProgress * _Nonnull uploadProgress) {
-
-        } success:^(NSURLSessionDataTask *operation, id responseObject) {
-            NSLog(@"%@",responseObject);
-            NSDictionary *dic = [(NSString *)[responseObject valueForKey:@"data"] parseToArrayOrNSDictionary];
-            weakSelf.licenseUrl = [(NSArray *)[dic valueForKey:@"pname"] objectAtIndex:0];
-            [weakSelf submitMaterial];
-        } failure:^(NSURLSessionDataTask *operation, NSError *error) {
-            NSLog(@"%@",error);
-            [Hud hideHud];
-            [Hud showMessageWithText:@"上传营业执照失败"];
-        }];
-    } else{
-        [self submitMaterial];
-    }
-}
-
-- (void)submitMaterial
-{
-    WEAK(self, weakSelf);
-    [MOCHTTPRequestOperationManager putWithURL:[rBaseAddressForHttp stringByAppendingString:@"/user/identityAuth"]class:nil parameters:@{@"uid":UID, @"potname":self.authImageUrl, @"industrycode": self.departmentCode, @"area":self.location, @"photoUrl":self.licenseUrl,@"version":[SHGGloble sharedGloble].currentVersion} success:^(MOCHTTPResponse *response) {
-        NSString *code = [response.data valueForKey:@"code"];
-        if ([code isEqualToString:@"000"]) {
-            [Hud hideHud];
-            [Hud showMessageWithText:@"提交成功，我们将在一个工作日内\n通知您认证结果"];
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.2f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                [weakSelf.navigationController popToViewController:[TabBarViewController tabBar] animated:YES];
-            });
-        }
-    } failed:^(MOCHTTPResponse *response) {
-        [Hud hideHud];
-    }];
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-}
-
-
 
 @end

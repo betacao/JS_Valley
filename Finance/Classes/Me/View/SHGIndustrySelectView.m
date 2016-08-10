@@ -178,11 +178,21 @@
     if (self.returnTextBlock) {
         self.returnTextBlock(btn.titleLabel.text);
     }
-    [self removeFromSuperview];
+    [UIView animateWithDuration:0.25f animations:^{
+        self.alpha = 0.0f;
+    } completion:^(BOOL finished) {
+        [self removeFromSuperview];
+    }];
+    
 }
 
 - (void)quiteButtonClick:(UIButton *)btn
 {
-    [self removeFromSuperview];
+    [UIView animateWithDuration:0.25f animations:^{
+        self.alpha = 0.0f;
+    } completion:^(BOOL finished) {
+        [self removeFromSuperview];
+    }];
 }
+
 @end
