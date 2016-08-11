@@ -23,35 +23,53 @@
     self = [super initWithFrame:frame];
     if (self) {
         self.imageView = [[UIImageView alloc] init];
-        self.type = SHGEmptyDateNormal;
+        self.type = SHGEmptyDataNormal;
         [self addSubview:self.imageView];
     }
     return self;
 }
 
-- (void)setType:(SHGEmptyDateType)type
+- (void)awakeFromNib
+{
+    [super awakeFromNib];
+
+    self.imageView = [[UIImageView alloc] init];
+    self.type = SHGEmptyDataNormal;
+    [self addSubview:self.imageView];
+}
+
+- (void)setType:(SHGEmptyDataType)type
 {
     _type = type;
-    self.backgroundColor = [UIColor colorWithHexString:@"EFEEEF"];
+    self.backgroundColor = [UIColor colorWithHexString:@"f7f7f7"];
     switch (type) {
-        case SHGEmptyDateNormal:
+        case SHGEmptyDataNormal:
             self.imageView.image = [UIImage imageNamed:@"emptyBg"];
             [self.imageView sizeToFit];
             break;
-        case SHGEmptyDateMarketDeleted:
+        case SHGEmptyDataMarketDeleted:
             self.imageView.image = [UIImage imageNamed:@"deleted_market"];
             [self.imageView sizeToFit];
             break;
-        case SHGEmptyDateBusinessDeleted:
+        case SHGEmptyDataBusinessDeleted:
             self.imageView.image = [UIImage imageNamed:@"deleted_market"];
             [self.imageView sizeToFit];
             break;
-        case SHGEmptyDateDiscoverySearch:
+        case SHGEmptyDataDiscoverySearch:
             self.backgroundColor = [UIColor whiteColor];
             self.imageView.image = [UIImage imageNamed:@"discovery_search_none"];
             self.imageView.sd_layout
             .centerXEqualToView(self)
             .topSpaceToView(self, MarginFactor(65.0f))
+            .widthIs(self.imageView.image.size.width)
+            .heightIs(self.imageView.image.size.height);
+            break;
+        case SHGEmptyDataCompanySearch:
+            self.backgroundColor = [UIColor whiteColor];
+            self.imageView.image = [UIImage imageNamed:@"company_search_none"];
+            self.imageView.sd_layout
+            .centerXEqualToView(self)
+            .topSpaceToView(self, MarginFactor(240.0f))
             .widthIs(self.imageView.image.size.width)
             .heightIs(self.imageView.image.size.height);
             break;
@@ -65,7 +83,7 @@
 - (void)layoutSubviews
 {
     [super layoutSubviews];
-    if (self.type == SHGEmptyDateNormal ||self.type == SHGEmptyDateMarketDeleted||self.type == SHGEmptyDateBusinessDeleted) {
+    if (self.type == SHGEmptyDataNormal ||self.type == SHGEmptyDataMarketDeleted||self.type == SHGEmptyDataBusinessDeleted) {
         CGPoint point = self.window.center;
         point = [self convertPoint:point fromView:self.window];
         self.imageView.center = point;

@@ -21,6 +21,7 @@
 
 @interface SHGNewUserCenterViewController ()<UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIActionSheetDelegate>
 
+@property (weak, nonatomic) IBOutlet UIView *tableViewBackgroundView;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) IBOutlet UIView *tableHeaderView;
 @property (weak, nonatomic) IBOutlet UIImageView *bgImageView;
@@ -90,12 +91,13 @@
 
 - (void)initView
 {
-    self.tableView.backgroundColor = Color(@"f6f7f8");
-    self.tableView.bounces = NO;
+    self.view.backgroundColor = Color(@"f6f7f8");
+    self.tableView.backgroundColor = [UIColor clearColor];
+    self.tableViewBackgroundView.backgroundColor = Color(@"f04f46");
 
     self.headerBgView.backgroundColor = ColorA(@"f5f5f5", 0.2f);
     UITapGestureRecognizer *recognizer = [self.headerView.gestureRecognizers firstObject];
-    #pragma clang diagnostic ignored"-Wundeclared-selector"
+#pragma clang diagnostic ignored"-Wundeclared-selector"
     [recognizer removeTarget:self.headerView action:@selector(tapUserHeaderView)];
     [recognizer addTarget:self action:@selector(tapUserHeaderView:)];
     [self.headerView addGestureRecognizer:recognizer];
@@ -243,6 +245,13 @@
         [self loadData];
     } else{
         self.shouldRefresh = YES;
+    }
+    if (CGRectEqualToRect(self.tableViewBackgroundView.frame, CGRectZero)) {
+        self.tableViewBackgroundView.sd_layout
+        .leftSpaceToView(self.view, 0.0f)
+        .topSpaceToView(self.view, 0.0f)
+        .rightSpaceToView(self.view, 0.0f)
+        .heightIs(CGRectGetHeight(self.tableHeaderView.frame) + [self.tableView cellsTotalHeight]);
     }
 }
 
@@ -639,7 +648,7 @@
             [Hud showMessageWithText:@"修改成功"];
         }
     } failed:^(MOCHTTPResponse *response) {
-        
+
     }];
 }
 
@@ -704,7 +713,6 @@
     } else if ([text containsString:@"身份认证"]){
         [self actionAuth];
     } else if ([text containsString:@"我的投诉"]){
-        //        [self actionAuth];
         SHGMyComplainViewController *viewController = [[SHGMyComplainViewController alloc] init];
         [self.navigationController pushViewController:viewController animated:YES];
     } else if ([text containsString:@"设置"]){
@@ -714,6 +722,13 @@
             controller.userInfo = @{kNickName:self.nickName, kDepartment:self.department, kCompany:self.company, kLocation:self.location, kIndustry:self.industry, kHeaderImage:self.imageUrl};
             [self.navigationController	pushViewController:controller animated:YES];
         }
+    }
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    if (scrollView.contentOffset.y > 0.0f) {
+        scrollView.contentOffset = CGPointMake(0.0f, 0.0f);
     }
 }
 

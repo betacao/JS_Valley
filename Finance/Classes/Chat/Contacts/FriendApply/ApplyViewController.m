@@ -139,7 +139,7 @@ static ApplyViewController *controller = nil;
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (self.dataSource.count == 0) {
-        self.emptyView.type = SHGEmptyDateNormal;
+        self.emptyView.type = SHGEmptyDataNormal;
         return self.emptyCell;
     }
     static NSString *CellIdentifier = @"ApplyFriendCell";

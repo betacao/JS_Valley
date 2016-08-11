@@ -22,7 +22,7 @@
 
 - (void)getSecondListBlock:(void (^)(NSArray *array, NSString *cityName))block;
 
-+ (void)createNewBusiness:(NSDictionary *)param success:(void (^)( BOOL success,NSString *businessId))block;
++ (void)createNewBusiness:(NSDictionary *)param success:(void (^)(BOOL success,NSString *businessId))block;
 
 + (void)createBusinessNum:(void(^)(BOOL success, NSString *allowCreate))block;
 

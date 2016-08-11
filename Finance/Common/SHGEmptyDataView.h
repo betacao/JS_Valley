@@ -7,15 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
-typedef NS_ENUM(NSInteger, SHGEmptyDateType) {
-    SHGEmptyDateNormal = 0,//普通的无数据
-    SHGEmptyDateMarketDeleted = 1,
-    SHGEmptyDateBusinessDeleted = 2,
-    SHGEmptyDateDiscoverySearch = 3
+typedef NS_ENUM(NSInteger, SHGEmptyDataType) {
+    SHGEmptyDataNormal = 0,//普通的无数据
+    SHGEmptyDataMarketDeleted = 1,
+    SHGEmptyDataBusinessDeleted = 2,
+    SHGEmptyDataDiscoverySearch = 3,
+    SHGEmptyDataCompanySearch = 4
 };
 
 @interface SHGEmptyDataView : UIView
 
-@property (assign, nonatomic) SHGEmptyDateType type;
+@property (assign, nonatomic) SHGEmptyDataType type;
 
 @end

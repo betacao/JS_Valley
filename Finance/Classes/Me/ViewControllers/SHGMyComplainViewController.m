@@ -120,7 +120,7 @@
         cell.object = [self.dataArray objectAtIndex:indexPath.row];
         return cell;
     } else{
-        self.emptyView.type = SHGEmptyDateNormal;
+        self.emptyView.type = SHGEmptyDataNormal;
         return self.emptyCell;
     }
    

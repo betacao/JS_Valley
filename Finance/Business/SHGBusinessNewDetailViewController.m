@@ -23,6 +23,10 @@
 #import "NSCharacterSet+Common.h"
 #import "SHGAlertView.h"
 #import "SHGBusinessComplainViewController.h"
+#import "SHGCompanyDisplayViewController.h"
+#import "SHGCompanyBrowserViewController.h"
+#import "SHGCompanyManager.h"
+
 typedef NS_ENUM(NSInteger, SHGTapPhoneType)
 {
     SHGTapPhoneTypeDialNumber,
@@ -123,7 +127,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
 
 @property (assign, nonatomic) BOOL isChangeCollection;
 
-@property (strong, nonatomic) SHGAlertView *alert;
+@property (strong, nonatomic) SHGCompanyObject *companyObject;
 
 @end
 
@@ -143,8 +147,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
     [self.inPutView addSubview:self.complainLabel];
     [self initView];
     [self addSdLayout];
-    [self initData];
-    
+    [self loadData];
 }
 
 - (UILabel *)titleLabel
@@ -244,7 +247,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
 {
     if (!_emptyView) {
         _emptyView = [[SHGEmptyDataView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, SCREENWIDTH, SCREENHEIGHT)];
-        _emptyView.type = SHGEmptyDateBusinessDeleted;
+        _emptyView.type = SHGEmptyDataBusinessDeleted;
     }
     return _emptyView;
 }
@@ -663,7 +666,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
     
 }
 
-- (void)initData
+- (void)loadData
 {
     WEAK(self, weakSelf);
     [SHGBusinessManager getBusinessDetail:weakSelf.object success:^(SHGBusinessObject *detailObject) {
@@ -672,14 +675,22 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
         NSArray *array = [value componentsSeparatedByString:@"\n"];
         weakSelf.middleContentArray = [NSMutableArray arrayWithArray:array];
         NSLog(@"%@",weakSelf.responseObject);
-        [weakSelf loadData];
+        [weakSelf resetView];
         [weakSelf.tableView reloadData];
+    }];
+}
+
+- (void)loadCompanyInfo
+{
+    WEAK(self, weakSelf);
+    [SHGCompanyManager loadExactCompanyInfo:@{@"companyName":@"常德万达置业有限公司", @"needCollect":@"true"} success:^(SHGCompanyObject *object) {
+        weakSelf.companyObject = object;
     }];
 }
 
 - (void)didCreateOrModifyBusiness
 {
-    [self initData];
+    [self loadData];
     [self.businessMessageLabelView removeAllSubviews];
     [self.photoView removeAllSubviews];
 }
@@ -694,7 +705,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
 
 }
 
-- (void)loadData
+- (void)resetView
 {
     [self addEmptyViewIfNeeded];
     
@@ -971,8 +982,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
     self.companyLabel.text = @"公司信息";
     [self.messageButton setTitle:self.responseObject.company forState:UIControlStateNormal];
     [self.messageRightButton setImage:[UIImage imageNamed:@"rightArrowImage"] forState:UIControlStateNormal];
-    
-    
+    [self loadCompanyInfo];
 }
 
 - (void)pdfButtonClick:(SHGBusinessCategoryButton *)btn
@@ -1233,6 +1243,19 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
     
 }
 
+- (IBAction)comanyButtonClick:(UIButton *)button
+{
+    if (self.companyObject) {
+        SHGCompanyBrowserViewController *controller = [[SHGCompanyBrowserViewController alloc] init];
+        controller.url = [kCompanyDetailPrefix stringByAppendingString:self.companyObject.companyID];
+        [self.navigationController pushViewController:controller animated:YES];
+    } else {
+        SHGCompanyDisplayViewController *viewController = [[SHGCompanyDisplayViewController alloc] init];
+        viewController.companyName = button.titleLabel.text;
+        [self.navigationController pushViewController:viewController animated:YES];
+    }
+}
+
 - (IBAction)comment:(id)sender
 {
     [[SHGGloble sharedGloble] requestUserVerifyStatusCompletion:^(BOOL state,NSString *auditState) {
@@ -1293,7 +1316,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
     [self gotoSomeOneWithId:obj.commentUserId name:obj.commentUserName];
 }
 
--(void)gotoSomeOneWithId:(NSString *)uid name:(NSString *)name
+- (void)gotoSomeOneWithId:(NSString *)uid name:(NSString *)name
 {
     SHGPersonalViewController *controller = [[SHGPersonalViewController alloc] initWithNibName:@"SHGPersonalViewController" bundle:nil];
     controller.hidesBottomBarWhenPushed = YES;
@@ -1375,9 +1398,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
                             [weakSelf showAlertView:@"该业务联系次数今日已达上限，\n明天早点哦~" leftTitle:nil rightTitle:@"确定"];
                         }
                     }
-                    
                 }];
-
             }
             
         } else{

@@ -148,13 +148,24 @@ NSString *moc_http_request_operation_manager_token;
     [param setObject:@([[NSDate date] timeIntervalSince1970] * 1000) forKey:@"authTimestamp"];
     NSString *secret = [client sortParameter:param];
 
-    NSString *code = signCode;
-    for (NSInteger i = 0; i < 3; i++) {
-        code = [SHGEncryptionAlgorithm textFromBase64String:code];
-    }
-    secret = [secret stringByAppendingString:code];
-    for (NSInteger i = 0; i < 3; i++) {
-        secret = [secret md5];
+    if ([URLString hasPrefix:rBaseAddRessHttp]) {
+        NSString *code = signCode;
+        for (NSInteger i = 0; i < 3; i++) {
+            code = [SHGEncryptionAlgorithm textFromBase64String:code];
+        }
+        secret = [secret stringByAppendingString:code];
+        for (NSInteger i = 0; i < 3; i++) {
+            secret = [secret md5];
+        }
+    } else {
+        NSString *code = signCodeForCompany;
+        for (NSInteger i = 0; i < 3; i++) {
+            code = [SHGEncryptionAlgorithm textFromBase64String:code];
+        }
+        secret = [secret stringByAppendingString:code];
+        for (NSInteger i = 0; i < 4; i++) {
+            secret = [secret md5];
+        }
     }
     [param setObject:secret forKey:@"sign"];
     parameters = [client packageParameters:param];
@@ -177,13 +188,24 @@ NSString *moc_http_request_operation_manager_token;
     [param setObject:@([[NSDate date] timeIntervalSince1970] * 1000) forKey:@"authTimestamp"];
     NSString *secret = [client sortParameter:param];
 
-    NSString *code = signCode;
-    for (NSInteger i = 0; i < 3; i++) {
-        code = [SHGEncryptionAlgorithm textFromBase64String:code];
-    }
-    secret = [secret stringByAppendingString:code];
-    for (NSInteger i = 0; i < 3; i++) {
-        secret = [secret md5];
+    if ([url hasPrefix:rBaseAddRessHttp]) {
+        NSString *code = signCode;
+        for (NSInteger i = 0; i < 3; i++) {
+            code = [SHGEncryptionAlgorithm textFromBase64String:code];
+        }
+        secret = [secret stringByAppendingString:code];
+        for (NSInteger i = 0; i < 3; i++) {
+            secret = [secret md5];
+        }
+    } else {
+        NSString *code = signCodeForCompany;
+        for (NSInteger i = 0; i < 3; i++) {
+            code = [SHGEncryptionAlgorithm textFromBase64String:code];
+        }
+        secret = [secret stringByAppendingString:code];
+        for (NSInteger i = 0; i < 4; i++) {
+            secret = [secret md5];
+        }
     }
     [param setObject:secret forKey:@"sign"];
     parameters = [client packageParameters:param];

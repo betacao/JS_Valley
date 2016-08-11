@@ -20,6 +20,7 @@
                 <outlet property="spliteView" destination="Pgm-ab-vZh" id="L9S-EI-LXd"/>
                 <outlet property="tableHeaderView" destination="4Lf-1a-Tvj" id="GHY-2s-7Je"/>
                 <outlet property="tableView" destination="W0M-J0-uJL" id="i9h-Fs-7lS"/>
+                <outlet property="tableViewBackgroundView" destination="eim-Tj-TkR" id="b8T-9O-Xct"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -28,6 +29,10 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <view contentMode="scaleToFill" id="eim-Tj-TkR">
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </view>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="W0M-J0-uJL">
                     <rect key="frame" x="99" y="249" width="240" height="128"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>

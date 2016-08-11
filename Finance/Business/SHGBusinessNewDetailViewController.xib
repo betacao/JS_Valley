@@ -353,6 +353,9 @@
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="hVL-8v-g73">
                     <rect key="frame" x="8" y="91" width="166" height="30"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <connections>
+                        <action selector="comanyButtonClick:" destination="-1" eventType="touchUpInside" id="Fyr-2X-tuI"/>
+                    </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="gQC-r2-ane">
                     <rect key="frame" x="210" y="91" width="56" height="30"/>

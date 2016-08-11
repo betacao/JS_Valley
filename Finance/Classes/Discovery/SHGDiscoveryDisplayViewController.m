@@ -112,7 +112,7 @@
     if (!_emptyView) {
         _emptyView = [[SHGEmptyDataView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, SCREENWIDTH, SCREENHEIGHT)];
         _emptyView.hidden = YES;
-        _emptyView.type = SHGEmptyDateDiscoverySearch;
+        _emptyView.type = SHGEmptyDataDiscoverySearch;
     }
     return _emptyView;
 }
@@ -545,7 +545,7 @@
 {
     if (!_emptyView) {
         _emptyView = [[SHGEmptyDataView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, SCREENWIDTH, SCREENHEIGHT)];
-        _emptyView.type = SHGEmptyDateDiscoverySearch;
+        _emptyView.type = SHGEmptyDataDiscoverySearch;
         _emptyView.hidden = YES;
     }
     return _emptyView;
