@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "AppDelegate.h"
-@interface TabBarViewController : UITabBarController<UINavigationControllerDelegate,IChatManagerDelegate,UIAlertViewDelegate>
+@interface TabBarViewController : UITabBarController<UINavigationControllerDelegate,IChatManagerDelegate>
 {
     NSDictionary *pushInfo;
 }

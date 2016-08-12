@@ -27,8 +27,7 @@
 {
     self.title = self.object.companyName;
     self.webView.backgroundColor = Color(@"f04f46");
-    NSString *url = [kCompanyDetailPrefix stringByAppendingString:self.object.companyID];
-    [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:url]]];
+    [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.object.companyUrl]]];
 }
 
 - (void)addAutoLayout

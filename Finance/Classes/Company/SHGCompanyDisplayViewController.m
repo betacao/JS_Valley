@@ -67,9 +67,9 @@
             } else {
                 weakSelf.tableView.hidden = YES;
             }
-        }
-        if (!array || array.count == 0) {
-            [weakSelf.tableView.mj_footer endRefreshingWithNoMoreData];
+            if (array.count == 0) {
+                [weakSelf.tableView.mj_footer endRefreshingWithNoMoreData];
+            }
         }
     }];
     

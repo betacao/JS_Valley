@@ -232,10 +232,7 @@
 }
 
 // 申请加入群组被拒绝回调
-- (void)didReceiveRejectApplyToJoinGroupFrom:(NSString *)fromId
-                                   groupname:(NSString *)groupname
-                                      reason:(NSString *)reason
-                                       error:(EMError *)error{
+- (void)didReceiveRejectApplyToJoinGroupFrom:(NSString *)fromId groupname:(NSString *)groupname reason:(NSString *)reason error:(EMError *)error{
     if (!reason || reason.length == 0) {
         reason = [NSString stringWithFormat:NSLocalizedString(@"group.beRefusedToJoin", @"be refused to join the group\'%@\'"), groupname];
     }

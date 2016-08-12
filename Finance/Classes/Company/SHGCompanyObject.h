@@ -12,6 +12,7 @@
 
 @property (strong, nonatomic) NSString *companyID;
 @property (strong, nonatomic) NSString *companyName;
+@property (strong, nonatomic) NSString *companyUrl;
 
 @end
 

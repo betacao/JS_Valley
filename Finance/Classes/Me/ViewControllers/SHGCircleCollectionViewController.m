@@ -243,7 +243,6 @@
 
 - (void)deleteClicked:(CircleListObj *)obj
 {
-
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"确认删除吗" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"删除", nil];
     _deleteObj = obj;
     [alert show];
