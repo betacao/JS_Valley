@@ -105,12 +105,14 @@
         NSString *name = response.dataDictionary[@"name"];
         NSString *head_img = response.dataDictionary[@"head_img"];
         NSString *area = response.dataDictionary[@"area"];
+        NSString *companyName = response.dataDictionary[@"companyname"];
         weakSelf.isFull = response.dataDictionary[@"isfull"];
         weakSelf.recommend = response.dataDictionary[@"recommend"];
         [[NSUserDefaults standardUserDefaults] setObject:uid forKey:KEY_UID];
         [[NSUserDefaults standardUserDefaults] setObject:password forKey:KEY_PASSWORD];
         [[NSUserDefaults standardUserDefaults] setObject:state forKey:KEY_AUTHSTATE];
         [[NSUserDefaults standardUserDefaults] setObject:name forKey:KEY_USER_NAME];
+        [[NSUserDefaults standardUserDefaults] setObject:companyName forKey:KEY_COMPANYNAME];
         [[NSUserDefaults standardUserDefaults] setObject:head_img forKey:KEY_HEAD_IMAGE];
         [[NSUserDefaults standardUserDefaults] setObject:token forKey:KEY_TOKEN];
         [[NSUserDefaults standardUserDefaults] setObject:area forKey:KEY_USER_AREA];

@@ -251,6 +251,7 @@
             [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:KEY_PASSWORD];
             [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:KEY_USER_NAME];
             [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:KEY_USER_AREA];
+            [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:KEY_COMPANYNAME];
             [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:KEY_TOKEN];
             [[NSUserDefaults standardUserDefaults] setObject:@"0" forKey:KEY_AUTOLOGIN];
             [[NSUserDefaults standardUserDefaults]synchronize];

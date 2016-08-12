@@ -298,6 +298,7 @@ typedef NS_ENUM(NSInteger, RegistType)
         NSString *name = response.dataDictionary[@"name"];
         NSString *head_img = response.dataDictionary[@"head_img"];
         NSString *area = response.dataDictionary[@"area"];
+        NSString *companyName = response.dataDictionary[@"companyname"];
 
         [[NSUserDefaults standardUserDefaults] setObject:uid forKey:KEY_UID];
         [[NSUserDefaults standardUserDefaults] setObject:self.phoneNumber forKey:KEY_PHONE];
@@ -308,6 +309,7 @@ typedef NS_ENUM(NSInteger, RegistType)
         [[NSUserDefaults standardUserDefaults] setObject:area forKey:KEY_USER_AREA];
         [[NSUserDefaults standardUserDefaults] setObject:token forKey:KEY_TOKEN];
         [[NSUserDefaults standardUserDefaults] setObject:@"1" forKey:KEY_AUTOLOGIN];
+        [[NSUserDefaults standardUserDefaults] setObject:companyName forKey:KEY_COMPANYNAME];
         [[NSUserDefaults standardUserDefaults] synchronize];
         [self chatLoagin];
         

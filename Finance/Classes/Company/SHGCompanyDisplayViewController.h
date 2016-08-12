@@ -9,9 +9,13 @@
 #import "BaseViewController.h"
 #import "SHGCompanyObject.h"
 
+typedef void(^SHGCompanyDisplayBlock)(NSString *companyName);
+
 @interface SHGCompanyDisplayViewController : BaseTableViewController
 
 @property (strong, nonatomic) NSString *companyName;
+
+@property (copy, nonatomic) SHGCompanyDisplayBlock block;
 
 @end
 

@@ -72,6 +72,7 @@
         NSString *head_img = response.dataDictionary[@"head_img"];
         NSString *isfull = response.dataDictionary[@"isfull"];
         NSString *area = response.dataDictionary[@"area"];
+        NSString *companyName = response.dataDictionary[@"companyname"];
         [[NSUserDefaults standardUserDefaults] setObject:uid forKey:KEY_UID];
         [[NSUserDefaults standardUserDefaults] setObject:isfull forKey:KEY_ISFULL];
         [[NSUserDefaults standardUserDefaults] setObject:state forKey:KEY_AUTHSTATE];
@@ -80,6 +81,7 @@
         [[NSUserDefaults standardUserDefaults] setObject:area forKey:KEY_USER_AREA];
         [[NSUserDefaults standardUserDefaults] setObject:token forKey:KEY_TOKEN];
         [[NSUserDefaults standardUserDefaults] setObject:@"1" forKey:KEY_AUTOLOGIN];
+        [[NSUserDefaults standardUserDefaults] setObject:companyName forKey:KEY_COMPANYNAME];
         [[NSUserDefaults standardUserDefaults] setObject:[passWordText.text md5] forKey:KEY_PASSWORD];
         [[NSUserDefaults standardUserDefaults] synchronize];
 

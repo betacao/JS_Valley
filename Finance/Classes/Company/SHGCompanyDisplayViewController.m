@@ -108,9 +108,13 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     SHGCompanyObject *object = [self.dataArr objectAtIndex:indexPath.row];
-    SHGCompanyBrowserViewController *controller = [[SHGCompanyBrowserViewController alloc] init];
-    controller.object = object;
-    [self.navigationController pushViewController:controller animated:YES];
+    if (self.block) {
+        self.block(object.companyName);
+    } else {
+        SHGCompanyBrowserViewController *controller = [[SHGCompanyBrowserViewController alloc] init];
+        controller.object = object;
+        [self.navigationController pushViewController:controller animated:YES];
+    }
 }
 
 - (void)didReceiveMemoryWarning

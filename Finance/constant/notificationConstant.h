@@ -52,6 +52,7 @@
 #define KEY_AUTHCODE @"com.Finance.AuthCode"
 #define KEY_USER_NAME     @"com.Finance.keyUserName"
 #define KEY_USER_AREA       @"com.Finance.keyUserArea"
+#define KEY_COMPANYNAME     @"com.Finance.keyCompanyName"
 
 #define KEY_AUTOLOGIN  @"com.Finance.autoLogin"
 

@@ -178,6 +178,7 @@ typedef NS_ENUM(NSInteger, RegistType)
         weakSelf.isFull = response.dataDictionary[@"isfull"];
         NSString *pwd =response.dataDictionary[@"pwd"];
         NSString *area =response.dataDictionary[@"area"];
+        NSString *companyName = response.dataDictionary[@"companyname"];
         [[NSUserDefaults standardUserDefaults] setObject:uid forKey:KEY_UID];
         [[NSUserDefaults standardUserDefaults] setObject:weakSelf.isFull forKey:KEY_ISFULL];
         [[NSUserDefaults standardUserDefaults] setObject:state forKey:KEY_AUTHSTATE];
@@ -189,6 +190,7 @@ typedef NS_ENUM(NSInteger, RegistType)
         [[NSUserDefaults standardUserDefaults] setObject:area forKey:KEY_USER_AREA];
         [[NSUserDefaults standardUserDefaults] setObject:authCodeText.text forKey:KEY_AUTHCODE];
         [[NSUserDefaults standardUserDefaults] setObject:phoneText.text forKey:KEY_PHONE];
+        [[NSUserDefaults standardUserDefaults] setObject:companyName forKey:KEY_COMPANYNAME];
         [[NSUserDefaults standardUserDefaults] synchronize];
 
         if ([isthirdlogin isEqualToString:@"false"]){ //输入密码

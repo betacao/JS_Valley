@@ -15,6 +15,11 @@
 #import "CCLocationManager.h"
 #import "SHGForbidCopyTextField.h"
 #import "SHGCitySelectViewController.h"
+#import "SHGCompanyManager.h"
+#import "SHGCompanyObject.h"
+#import "SHGCompanyDisplayViewController.h"
+
+
 @interface SHGEquityInvestSendViewController ()<UITextFieldDelegate,UIScrollViewDelegate>
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UIButton *nextButton;
@@ -398,7 +403,9 @@
     self.companyNametextField.leftView = [[UIView alloc]initWithFrame:CGRectMake(0.0f, 0.0f, 6.0f, 0.0f)];
     self.companyNametextField.leftViewMode = UITextFieldViewModeAlways;
     [self.companyNametextField setValue:[UIColor colorWithHexString:@"bebebe"] forKeyPath:@"_placeholderLabel.textColor"];
-    
+    self.companyNametextField.text = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_COMPANYNAME];
+
+
     self.monenyTextField.keyboardType = UIKeyboardTypeNumberPad;
     self.phoneNumTextField.keyboardType = UIKeyboardTypeNumberPad;
     self.nextButton.titleLabel.font = FontFactor(19.0f);
@@ -551,14 +558,35 @@
 - (IBAction)nextButtonClick:(UIButton *)sender
 {
     if ([self checkInputMessage]) {
-
-        if (!self.equityInvestNextViewController) {
-            self.equityInvestNextViewController = [[SHGEquityInvestNextViewController alloc] init];
-        }
-        self.equityInvestNextViewController.superController = self;
-        [self.navigationController pushViewController:self.equityInvestNextViewController animated:YES];
-
-   }
+        void(^block)(void) = ^() {
+            if (!self.equityInvestNextViewController) {
+                self.equityInvestNextViewController = [[SHGEquityInvestNextViewController alloc] init];
+            }
+            self.equityInvestNextViewController.superController = self;
+            [self.navigationController pushViewController:self.equityInvestNextViewController animated:YES];
+        };
+        WEAK(self, weakSelf);
+        [SHGCompanyManager loadBlurCompanyInfo:@{@"companyName":self.companyNametextField.text, @"page":@(1), @"pageSize":@(10)} success:^(NSArray *array) {
+            if (array.count == 0) {
+                SHGAlertView *alertView = [[SHGAlertView alloc] initWithTitle:@"请确认公司名称" contentText:@"您输入的公司名称没有查询到，是否继续？" leftButtonTitle:@"取消" rightButtonTitle:@"确认"];
+                alertView.rightBlock = block;
+                [alertView show];
+            } else if (array.count == 1) {
+                SHGCompanyObject *object = [array firstObject];
+                weakSelf.companyNametextField.text = object.companyName;
+                block();
+            } else {
+                SHGCompanyDisplayViewController *controller = [[SHGCompanyDisplayViewController alloc] init];
+                controller.companyName = weakSelf.companyNametextField.text;
+                WEAK(controller, weakController);
+                controller.block = ^(NSString *companyName){
+                    weakSelf.companyNametextField.text = companyName;
+                    [weakController.navigationController popViewControllerAnimated:YES];
+                };
+                [self.navigationController pushViewController:controller animated:YES];
+            }
+        }];
+    }
 }
 
 - (BOOL)checkInputMessage
@@ -568,6 +596,10 @@
         return NO;
     } else if (self.nameTextField.text.length > 20){
         [Hud showMessageWithText:@"业务名称最多可输入20个字"];
+        return NO;
+    }
+    if (self.companyNametextField.text.length == 0 ) {
+        [Hud showMessageWithText:@"请填写公司名称"];
         return NO;
     }
     if (self.phoneNumTextField.text.length == 0) {

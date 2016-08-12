@@ -17,8 +17,8 @@
 #define kReleaseH
 
 #ifdef kSitTest
-#define rBaseAddRessHttp                @"http://120.26.114.154:8080/api"
-//#define rBaseAddRessHttp                @"http://192.168.1.123:8080/api"
+//#define rBaseAddRessHttp                @"http://120.26.114.154:8080/api"
+#define rBaseAddRessHttp                @"http://192.168.1.123:8080/api"
 //#define rBaseAddRessHttp                @"http://192.168.0.117:8080/api"
 //#define rBaseAddRessHttp                @"http://192.168.1.112:8080/api"
 
@@ -79,7 +79,4 @@
 #define dynamicNew              @"dynamic/dynamicNew"
 #define signCode                @"dLaQd27R9VzpHV78l8KVbmj6m9QWAJ6Ou+yT6TScNbkOEBGczycc32ivA79Qzgx1m3Tf0xGzufnkBlvkw2plKrlslKVtP2fR3mTePR8PM6u01Y36/1P7egMCmbe94c0N6oC88fay37yCbuA7Ulkclp5b//yS30jB1MDiZPll9per8V65epLyMEKPbZTsh7hG7psMiZdE67EBG4hE0DU3d3Yc7yZJQFJGIhT5KCzJC9+cCrbDEwe6EojP2hRcOV8D2CyoDSaVRAI="
 #define signCodeForCompany      @"dLaQd27R9VzpHV78l8KVbpvG02esKA15x5GqRZyEP3xggwTZ/hPTAlTHTN8G/PAHkmW4jSFysu64rY6J3cQ0YrlslKVtP2fR3mTePR8PM6uKSakfjIOx7urUwryFIldQ+mFpfNm1zI4w3Y37sv15A55b//yS30jB1MDiZPll9per8V65epLyMEKPbZTsh7hGO0wn25gQdQAZ37kFEkBIxhB5xMldiRzt/qLabKdNtWWcCrbDEwe6EojP2hRcOV8D2CyoDSaVRAI="
-
-
-#define kCompanyDetailPrefix @"http://hellotwoworld.ticp.io:14080/shgoo/html5/pages/indexhome.html?cid="
 #endif

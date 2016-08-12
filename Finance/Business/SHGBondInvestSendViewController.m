@@ -16,6 +16,9 @@
 #import "SHGBusinessLocationViewController.h"
 #import "SHGForbidCopyTextField.h"
 #import "SHGCitySelectViewController.h"
+#import "SHGCompanyManager.h"
+#import "SHGCompanyObject.h"
+#import "SHGCompanyDisplayViewController.h"
 
 @interface SHGBondInvestSendViewController ()<UITextFieldDelegate,UIScrollViewDelegate,UITextViewDelegate>
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
@@ -141,7 +144,6 @@
 {
     [super viewWillAppear:YES];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardDidShow:) name:UIKeyboardDidShowNotification object:nil];
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textFieldDidChange:) name:UITextFieldTextDidChangeNotification object:nil];
     self.navigationController.interactivePopGestureRecognizer.enabled = NO;
 }
 
@@ -167,6 +169,7 @@
     }
     return _editIndustryArray;
 }
+
 - (NSDictionary *)firstDic
 {
     NSDictionary *dictionary = [NSDictionary dictionary];
@@ -200,14 +203,11 @@
     NSArray *array = [self.marketCategoryButtonView selectedArray];
     //业务类型多选字段
     NSString *businesstype = [businessSelectDic objectForKey:[array objectAtIndex:0]];
-//    if ([[array firstObject] isEqualToString:@"不限"]) {
-//        businesstype = @"";
-//    } else{
-        for (NSInteger i = 1 ;i < array.count ; i++) {
-            businesstype = [NSString stringWithFormat:@"%@;%@",businesstype,[businessSelectDic objectForKey:[array objectAtIndex:i]]];
-        }
-//    }
-    
+
+    for (NSInteger i = 1 ;i < array.count ; i++) {
+        businesstype = [NSString stringWithFormat:@"%@;%@",businesstype,[businessSelectDic objectForKey:[array objectAtIndex:i]]];
+    }
+
     dictionary = @{@"uid":UID, @"type": @"moneyside", @"contact": self.phoneNumTextField.text, @"investAmount": self.monenyTextField.text, @"area": self.areaSelectButton.titleLabel.text, @"industry":industry ,@"title":self.nameTextField.text ,@"businessType":businesstype,@"fundSource":self.moneyButtonString};
     
     return dictionary;
@@ -499,10 +499,7 @@
                 button.selected = YES;
             }
         }
-        
     }
-  
-  
 }
 
 - (void)initView
@@ -513,6 +510,7 @@
     self.companyNametextField.leftView = [[UIView alloc]initWithFrame:CGRectMake(0.0f, 0.0f, 6.0f, 0.0f)];
     self.companyNametextField.leftViewMode = UITextFieldViewModeAlways;
     [self.companyNametextField setValue:[UIColor colorWithHexString:@"bebebe"] forKeyPath:@"_placeholderLabel.textColor"];
+    self.companyNametextField.text = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_COMPANYNAME];
     
     self.monenyTextField.keyboardType = UIKeyboardTypeNumberPad;
     self.phoneNumTextField.keyboardType = UIKeyboardTypeNumberPad;
@@ -646,7 +644,6 @@
 {
     SHGBusinessButtonContentView *superView = (SHGBusinessButtonContentView *)btn.superview;
     [superView didClickButton:btn];
-
 }
 
 
@@ -676,19 +673,40 @@
 {
     [self.currentContext resignFirstResponder];
     if ([self checkInputMessage]) {
-        if (!self.bondInvestNextViewController) {
-            self.bondInvestNextViewController = [[SHGBondInvestNextViewController alloc] init];
-        }
-        self.bondInvestNextViewController.superController = self;
-        [self.navigationController pushViewController:self.bondInvestNextViewController animated:YES];
+        void(^block)(void) = ^() {
+            if (!self.bondInvestNextViewController) {
+                self.bondInvestNextViewController = [[SHGBondInvestNextViewController alloc] init];
+            }
+            self.bondInvestNextViewController.superController = self;
+            [self.navigationController pushViewController:self.bondInvestNextViewController animated:YES];
+        };
+        WEAK(self, weakSelf);
+        [SHGCompanyManager loadBlurCompanyInfo:@{@"companyName":self.companyNametextField.text, @"page":@(1), @"pageSize":@(10)} success:^(NSArray *array) {
+            if (array.count == 0) {
+                SHGAlertView *alertView = [[SHGAlertView alloc] initWithTitle:@"请确认公司名称" contentText:@"您输入的公司名称没有查询到，是否继续？" leftButtonTitle:@"取消" rightButtonTitle:@"确认"];
+                alertView.rightBlock = block;
+                [alertView show];
+            } else if (array.count == 1) {
+                SHGCompanyObject *object = [array firstObject];
+                weakSelf.companyNametextField.text = object.companyName;
+                block();
+            } else {
+                SHGCompanyDisplayViewController *controller = [[SHGCompanyDisplayViewController alloc] init];
+                controller.companyName = weakSelf.companyNametextField.text;
+                WEAK(controller, weakController);
+                controller.block = ^(NSString *companyName){
+                    weakSelf.companyNametextField.text = companyName;
+                    [weakController.navigationController popViewControllerAnimated:YES];
+                };
+                [self.navigationController pushViewController:controller animated:YES];
+            }
+        }];
     }
 }
 
 - (void)btnBackClick:(id)sender
 {
     [self.currentContext resignFirstResponder];
-//    NSArray *isEditArray = [NSArray arrayWithObjects:self.phoneNumTextField.text,self.monenyTextField.text,industry,self.nameTextField.text,businesstype,self.moneyButtonString, nil];
-    
     WEAK(self, weakSelf);
     if ([weakSelf checkInputEmpty]) {
         SHGAlertView *alertView = [[SHGAlertView alloc] initWithTitle:@"提示" contentText:@"退出此次编辑?" leftButtonTitle:@"取消" rightButtonTitle:@"退出"];
@@ -719,6 +737,10 @@
         return NO;
     } else if (self.nameTextField.text.length > 20){
         [Hud showMessageWithText:@"业务名称最多可输入20个字"];
+        return NO;
+    }
+    if (self.companyNametextField.text.length == 0 ) {
+        [Hud showMessageWithText:@"请填写公司名称"];
         return NO;
     }
     if (self.phoneNumTextField.text.length == 0) {

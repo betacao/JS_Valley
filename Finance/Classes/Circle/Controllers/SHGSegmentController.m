@@ -803,31 +803,7 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
 #pragma mark - IChatManagerDelegate 登录状态变化
 - (void)didLoginFromOtherDevice
 {
-//    [[EaseMob sharedInstance].chatManager asyncLogoffWithUnbindDeviceToken:NO completion:^(NSDictionary *info, EMError *error) {
-//        SHGAlertView *alertView = [[SHGAlertView alloc] initWithTitle:NSLocalizedString(@"prompt", @"Prompt") contentText:NSLocalizedString(@"loginAtOtherDevice", @"your login account has been in other places") leftButtonTitle:nil rightButtonTitle:NSLocalizedString(@"ok", @"OK")];
-//        alertView.rightBlock = ^{
-//            [[EaseMob sharedInstance].chatManager asyncLogoffWithUnbindDeviceToken:YES completion:^(NSDictionary *info, EMError *error) {
-//                if (error && error.errorCode != EMErrorServerNotLogin) {
-//                }
-//                else{
-//                    LoginViewController *splitViewController =[[[LoginViewController alloc] init] initWithNibName:@"LoginViewController" bundle:nil];
-//                    BaseNavigationController *nav = [[BaseNavigationController alloc] initWithRootViewController:splitViewController];
-//                    //设置导航title字体
-//                    [[UINavigationBar appearance] setTitleTextAttributes: @{NSFontAttributeName:[UIFont systemFontOfSize:kNavBarTitleFontSize], NSForegroundColorAttributeName:NavRTitleColor}];
-//                    //清除配置信息
-//                    [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:KEY_UID];
-//                    [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:KEY_PASSWORD];
-//                    [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:KEY_USER_NAME];
-//                    [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:KEY_USER_AREA];
-//                    [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:KEY_TOKEN];
-//                    [[NSUserDefaults standardUserDefaults] setObject:@"0" forKey:KEY_AUTOLOGIN];
-//                    [AppDelegate currentAppdelegate].window.rootViewController = nav;
-//                }
-//            } onQueue:nil];
-//        };
-//        [alertView show];
-//
-//    } onQueue:nil];
+
 }
 
 

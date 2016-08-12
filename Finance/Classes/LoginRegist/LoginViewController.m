@@ -237,6 +237,7 @@
                 NSString *head_img = response.dataDictionary[@"head_img"];
                 NSString *pwd = response.dataDictionary[@"pwd"];
                 NSString *area = response.dataDictionary[@"area"];
+                NSString *companyName = response.dataDictionary[@"companyname"];
                 weakSelf.isFull = response.dataDictionary[@"isfull"];
                 [[NSUserDefaults standardUserDefaults] setObject:uid forKey:KEY_UID];
                 [[NSUserDefaults standardUserDefaults] setObject:[userInfo uid] forKey:KEY_THIRDPARTY_UID];
@@ -249,6 +250,7 @@
                 [[NSUserDefaults standardUserDefaults] setObject:token forKey:KEY_TOKEN];
                 [[NSUserDefaults standardUserDefaults] setObject:@"1" forKey: KEY_AUTOLOGIN];
                 [[NSUserDefaults standardUserDefaults] setObject:pwd forKey:KEY_PASSWORD];
+                [[NSUserDefaults standardUserDefaults] setObject:companyName forKey:KEY_COMPANYNAME];
                 [[NSUserDefaults standardUserDefaults] synchronize];
 
                 if ([isthirdlogin isEqualToString:@"false"]){

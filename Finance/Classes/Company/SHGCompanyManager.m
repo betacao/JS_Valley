@@ -14,13 +14,13 @@
 {
     [Hud showWait];
     [MOCHTTPRequestOperationManager getWithURL:kCompanyBlurSearch parameters:param success:^(MOCHTTPResponse *response) {
+        [Hud hideHud];
         NSArray *array = [response.dataDictionary objectForKey:@"companies"];
         array = [[SHGGloble sharedGloble] parseServerJsonArrayToJSONModel:array class:[SHGCompanyObject class]];
         block(array);
-        [Hud hideHud];
     } failed:^(MOCHTTPResponse *response) {
-        block(nil);
         [Hud hideHud];
+        block(nil);
     }];
 }
 
