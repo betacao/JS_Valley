@@ -683,7 +683,8 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
 - (void)loadCompanyInfo
 {
     WEAK(self, weakSelf);
-    [SHGCompanyManager loadExactCompanyInfo:@{@"companyName":@"常德万达置业有限公司", @"needCollect":@"true"} success:^(SHGCompanyObject *object) {
+    NSString *companyName = IsStrEmpty(self.messageButton.titleLabel.text) ? @"" : self.messageButton.titleLabel.text;
+    [SHGCompanyManager loadExactCompanyInfo:@{@"companyName":companyName, @"needCollect":@"true"} success:^(SHGCompanyObject *object) {
         weakSelf.companyObject = object;
     }];
 }
@@ -974,7 +975,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
     } else{
         self.BPView.hidden = YES;
     }
-    
+
 }
 
 - (void)loadCompanyView
@@ -1199,7 +1200,6 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
 
 - (IBAction)editButtonClick:(UIButton *)sender
 {
-    
     if ([self.responseObject.type isEqualToString:@"moneyside"]) {
         if ([self.responseObject.moneysideType isEqualToString:@"equityInvest"]) {
             SHGEquityInvestSendViewController *viewController = [[SHGEquityInvestSendViewController alloc] init];
@@ -1247,11 +1247,11 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
 {
     if (self.companyObject) {
         SHGCompanyBrowserViewController *controller = [[SHGCompanyBrowserViewController alloc] init];
-        controller.url = [kCompanyDetailPrefix stringByAppendingString:self.companyObject.companyID];
+        controller.object = self.companyObject;
         [self.navigationController pushViewController:controller animated:YES];
     } else {
         SHGCompanyDisplayViewController *viewController = [[SHGCompanyDisplayViewController alloc] init];
-        viewController.companyName = button.titleLabel.text;
+        viewController.companyName = IsStrEmpty(button.titleLabel.text) ? @"" : button.titleLabel.text;
         [self.navigationController pushViewController:viewController animated:YES];
     }
 }

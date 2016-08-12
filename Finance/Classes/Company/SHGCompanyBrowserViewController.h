@@ -7,9 +7,10 @@
 //
 
 #import "BaseViewController.h"
+#import "SHGCompanyObject.h"
 
 @interface SHGCompanyBrowserViewController : BaseViewController
 
-@property (strong , nonatomic) NSString *url;
+@property (strong , nonatomic) SHGCompanyObject *object;
 
 @end

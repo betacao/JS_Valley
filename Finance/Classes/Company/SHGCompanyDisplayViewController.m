@@ -109,7 +109,7 @@
 {
     SHGCompanyObject *object = [self.dataArr objectAtIndex:indexPath.row];
     SHGCompanyBrowserViewController *controller = [[SHGCompanyBrowserViewController alloc] init];
-    controller.url = [kCompanyDetailPrefix stringByAppendingString:object.companyID];
+    controller.object = object;
     [self.navigationController pushViewController:controller animated:YES];
 }
 

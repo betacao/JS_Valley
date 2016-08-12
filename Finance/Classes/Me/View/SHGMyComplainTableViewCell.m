@@ -38,7 +38,7 @@
     self.topLineView.sd_layout
     .topSpaceToView(self.contentView, 0.0f)
     .leftSpaceToView(self.contentView, MarginFactor(43.0f))
-    .widthIs(0.5f)
+    .widthIs(1 / SCALE)
     .heightIs(MarginFactor(24.0f));
     
     self.timeLabel.sd_layout
@@ -47,7 +47,7 @@
     .heightIs(self.timeLabel.font.lineHeight);
     [self.timeLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
     
-    UIImage *image = [UIImage imageNamed:@"complainRound"];
+    UIImage *image = [UIImage imageNamed:@"complain_Round"];
     CGSize size = image.size;
     self.roundImage.sd_layout
     .centerXEqualToView(self.timeLabel)
@@ -59,7 +59,7 @@
     .centerXEqualToView(self.topLineView)
     .topSpaceToView(self.roundImage, 0.0f)
     .bottomSpaceToView(self.contentView, 0.0f)
-    .widthIs(0.5f);
+    .widthIs(1 / SCALE);
     
     self.bgView.sd_layout
     .topSpaceToView(self.contentView, MarginFactor(15.0f))
@@ -123,10 +123,9 @@
     self.detailLabel.font = FontFactor(13.0f);
     self.detailLabel.numberOfLines = 0;
     
-    self.roundImage.image = [UIImage imageNamed:@"complainRound"];
+    self.roundImage.image = [UIImage imageNamed:@"complain_Round"];
     
-    UIImage *topImage = [UIImage imageNamed:@"complain_bg"];
-    [topImage resizableImageWithCapInsets:UIEdgeInsetsMake(30.0f, 10.0f, 8.0f, 10.0f) resizingMode:UIImageResizingModeStretch];
+    UIImage *topImage = [[UIImage imageNamed:@"complain_bg"] resizableImageWithCapInsets:UIEdgeInsetsMake(30.0f, 10.0f, 8.0f, 10.0f) resizingMode:UIImageResizingModeStretch];
     self.topImageVIew.image = topImage;
 
 }
@@ -146,19 +145,10 @@
         self.auditStateImageView.hidden = NO;
         self.auditStateImageView.image = [UIImage imageNamed:@"complain_reject"];
     }
-    
-    if (self.firstTopLine == YES) {
-        self.topLineView.hidden = YES;
-    } else{
-        self.topLineView.hidden = NO;
-    }
-    if (self.lastBottomLine == YES) {
-        self.bottomLineView.hidden = YES;
-        self.roundImage.hidden = YES;
-    } else{
-        self.bottomLineView.hidden = NO;
-        self.roundImage.hidden = NO;
-    }
+
+    self.topLineView.hidden = self.firstTopLine;
+    self.bottomLineView.hidden = self.lastBottomLine;
+    self.roundImage.hidden = self.lastBottomLine;
 }
 
 @end
