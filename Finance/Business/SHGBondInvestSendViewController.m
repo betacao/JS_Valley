@@ -15,6 +15,8 @@
 #import "CCLocationManager.h"
 #import "SHGBusinessLocationViewController.h"
 #import "SHGForbidCopyTextField.h"
+#import "SHGCitySelectViewController.h"
+
 @interface SHGBondInvestSendViewController ()<UITextFieldDelegate,UIScrollViewDelegate,UITextViewDelegate>
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UIButton *nextButton;
@@ -74,6 +76,7 @@
 @property (strong, nonatomic) SHGBondInvestNextViewController *bondInvestNextViewController;
 @property (strong, nonatomic) SHGBusinessLocationView *locationView;
 @property (strong, nonatomic) SHGBusinessSelectView *selectViewController;
+@property (strong, nonatomic) SHGCitySelectViewController *selectCityViewController;
 
 
 @property (strong, nonatomic) NSMutableArray *industrySelectArray;
@@ -626,15 +629,16 @@
 
 - (IBAction)locationSelectClick:(UIButton *)sender
 {
-    if (!self.locationView) {
-        self.locationView = [[SHGBusinessLocationView alloc]initWithFrame:CGRectMake(0.0f, 0.0f, SCREENWIDTH, SCREENHEIGHT) locationString:self.areaSelectButton.titleLabel.text];
+    if (!self.selectCityViewController) {
+        self.selectCityViewController = [[SHGCitySelectViewController alloc] init];
     }
-    __weak typeof (self)weakSelf = self;
-    self.locationView.returnLocationBlock = ^(NSString *string){
+    WEAK(self, weakSelf);
+    weakSelf.selectCityViewController.returnCityBlock = ^(NSString *string){
         [weakSelf.areaSelectButton setTitle:string forState:UIControlStateNormal];
-        [weakSelf.areaSelectButton setTitleColor:Color(@"161616") forState:UIControlStateNormal];
     };
-    [self.view.window addSubview:self.locationView];
+    self.selectCityViewController.superController = self;
+    [self.navigationController pushViewController:self.selectCityViewController animated:YES];
+    
 
 }
 
