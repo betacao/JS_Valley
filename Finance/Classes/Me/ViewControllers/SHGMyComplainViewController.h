@@ -7,7 +7,8 @@
 //
 
 #import "BaseTableViewController.h"
-
+#import "SHGBusinessObject.h"
 @interface SHGMyComplainViewController : BaseTableViewController
-
+@property (strong, nonatomic) NSString *type;
+@property (strong, nonatomic) SHGBusinessObject *object;
 @end

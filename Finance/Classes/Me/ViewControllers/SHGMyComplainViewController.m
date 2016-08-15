@@ -25,22 +25,43 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.title = @"我的投诉";
+    if ([self.type isEqualToString:@"mine"]) {
+        self.title = @"我的投诉";
+        [self loadMineComplianData];
+    } else if ([self.type isEqualToString:@"other"]){
+        self.title = @"投诉列表";
+        [self loadOtherComplianData];
+    }
+    
     self.tableView.backgroundColor = Color(@"f7f7f7");
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.sd_layout
     .spaceToSuperView(UIEdgeInsetsZero);
     
+}
+
+- (void)loadMineComplianData
+{
     WEAK(self, weakSelf);
     [MOCHTTPRequestOperationManager postWithURL:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"complain/business/myComplain"] parameters:@{@"uid":UID,@"pageSize":@"10",@"target":@"first"} success:^(MOCHTTPResponse *response) {
         NSArray *array = [[SHGGloble sharedGloble] parseServerJsonArrayToJSONModel:[response.dataDictionary objectForKey:@"list"] class:[SHGMyComplianObject class]];
         [weakSelf.dataArray addObjectsFromArray:array];
         [weakSelf.tableView reloadData];
     } failed:^(MOCHTTPResponse *response) {
-         
+        
     }];
-    
-    
+}
+
+- (void)loadOtherComplianData
+{
+    WEAK(self, weakSelf);
+    [MOCHTTPRequestOperationManager postWithURL:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"complain/business/complainByList"] parameters:@{@"uid":UID,@"businessId":weakSelf.object.businessID,@"businessType":weakSelf.object.type,@"pageSize":@"10",@"target":@"first"} success:^(MOCHTTPResponse *response) {
+        NSArray *array = [[SHGGloble sharedGloble] parseServerJsonArrayToJSONModel:[response.dataDictionary objectForKey:@"list"] class:[SHGMyComplianObject class]];
+        [weakSelf.dataArray addObjectsFromArray:array];
+        [weakSelf.tableView reloadData];
+    } failed:^(MOCHTTPResponse *response) {
+        
+    }];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -107,6 +128,7 @@
         if (!cell) {
             cell = [[[NSBundle mainBundle] loadNibNamed:@"SHGMyComplainTableViewCell" owner:self options:nil] lastObject];
         }
+        cell.type = self.type;
         if (indexPath.row == 0) {
             cell.firstTopLine = YES;
         } else{

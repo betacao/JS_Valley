@@ -21,6 +21,7 @@
 {
     [super viewDidLoad];
     [self initView];
+    [self reloadTabButtons];
 }
 
 - (void)initView

@@ -8,7 +8,7 @@
 
 #import "SHGBusinessCollectionViewController.h"
 #import "SHGSegmentTitleView.h"
-
+#import "SHGBusinessMineViewController.h"
 @interface SHGBusinessCollectionViewController ()
 
 @property (strong, nonatomic) UIView *contentContainerView;
@@ -24,6 +24,16 @@
     [self reloadTabButtons];
 }
 
+- (void)didCreateOrModifyBusiness
+{
+    for (UIViewController *viewController in _viewControllers) {
+        if ([viewController isKindOfClass:[SHGBusinessMineViewController class]]){
+            [(SHGBusinessMineViewController *)viewController didCreateOrModifyBusiness];
+        }
+        
+    }
+    
+}
 - (void)initView
 {
     self.view.backgroundColor = [UIColor whiteColor];

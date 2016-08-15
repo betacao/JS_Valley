@@ -13,5 +13,5 @@
 @property (nonatomic, copy) NSArray *viewControllers;
 @property (nonatomic, weak) UIViewController *selectedViewController;
 @property (nonatomic, assign) NSUInteger selectedIndex;
-
+- (void)didCreateOrModifyBusiness;
 @end

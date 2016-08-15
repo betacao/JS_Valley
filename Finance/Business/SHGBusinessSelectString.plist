@@ -69,11 +69,11 @@
 	<key>混业</key>
 	<string>commixtureIndustry</string>
 	<key>债权融资</key>
-	<string>bondFinance</string>
+	<string>bondfinancing</string>
 	<key>债权投资</key>
 	<string>bondInvest</string>
 	<key>股权融资</key>
-	<string>equityFinance</string>
+	<string>equityfinancing</string>
 	<key>股权投资</key>
 	<string>equityInvest</string>
 	<key>票据类</key>
@@ -88,5 +88,7 @@
 	<string>bondClass</string>
 	<key>委投&amp;通道类</key>
 	<string>investmentChannel</string>
+	<key>银证业务</key>
+	<string>trademixed</string>
 </dict>
 </plist>

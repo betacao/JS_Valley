@@ -13,8 +13,13 @@
 #import "SHGBusinessTableViewCell.h"
 #import "SHGEmptyDataView.h"
 #import "SHGBusinessNewDetailViewController.h"
-
-@interface SHGBusinessMineViewController ()<UITableViewDelegate, UITableViewDataSource>
+#import "SHGBusinessMyTableViewCell.h"
+#import "SHGBondInvestSendViewController.h"
+#import "SHGEquityInvestSendViewController.h"
+#import "SHGBondFinanceSendViewController.h"
+#import "SHGEquityFinanceSendViewController.h"
+#import "SHGSameAndCommixtureSendViewController.h"
+@interface SHGBusinessMineViewController ()<UITableViewDelegate, UITableViewDataSource,SHGBusinessMyTableViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (assign, nonatomic) BOOL refreshing;
 @property (strong, nonatomic) SHGNoticeView *noticeView;
@@ -71,7 +76,6 @@
 {
     dispatch_async(dispatch_get_main_queue(), ^{
         [self loadDataWithTarget:@"first"];
-        
     });
 
 }
@@ -209,21 +213,33 @@
     if (self.dataArr.count == 0) {
         self.emptyView.type = SHGEmptyDataNormal;
         return self.emptyCell;
-    }
-    NSString *identifier = @"SHGBusinessTableViewCell";
-    SHGBusinessTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
-    if (!cell) {
-        cell = [[[NSBundle mainBundle] loadNibNamed:identifier owner:self options:nil] lastObject];
-    }
-    if (self.userId) {
-        cell.style = SHGBusinessTableViewCellStyleOther;
     } else{
-        cell.style = SHGBusinessTableViewCellStyleMine;
+        if (self.userId) {
+            NSString *identifier = @"SHGBusinessTableViewCell";
+            SHGBusinessTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+            if (!cell) {
+                cell = [[[NSBundle mainBundle] loadNibNamed:identifier owner:self options:nil] lastObject];
+            }
+            cell.style = SHGBusinessTableViewCellStyleOther;
+            cell.object = [self.dataArr objectAtIndex:indexPath.row];
+            [cell useCellFrameCacheWithIndexPath:indexPath tableView:tableView];
+            return cell;
+        } else{
+            NSString *identifier = @"SHGBusinessMyTableViewCell";
+            SHGBusinessMyTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+            if (!cell) {
+                cell = [[[NSBundle mainBundle] loadNibNamed:identifier owner:self options:nil] lastObject];
+            }
+            cell.delegate = self;
+            cell.array = @[[self.dataArr objectAtIndex:indexPath.row],@"mine"];
+            [cell useCellFrameCacheWithIndexPath:indexPath tableView:tableView];
+            return cell;
+
+        }
+        
     }
-    
-    cell.object = [self.dataArr objectAtIndex:indexPath.row];
-    [cell useCellFrameCacheWithIndexPath:indexPath tableView:tableView];
-    return cell;
+
+    return nil;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -238,9 +254,17 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (self.dataArr.count > 0) {
-        SHGBusinessObject *object = [self.dataArr objectAtIndex:indexPath.row];
-        CGFloat height = [self.tableView cellHeightForIndexPath:indexPath model:object keyPath:@"object" cellClass:[SHGBusinessTableViewCell class] contentViewWidth:SCREENWIDTH];
-        return height;
+        if (self.userId) {
+            SHGBusinessObject *object = [self.dataArr objectAtIndex:indexPath.row];
+            CGFloat height = [self.tableView cellHeightForIndexPath:indexPath model:object keyPath:@"object" cellClass:[SHGBusinessTableViewCell class] contentViewWidth:SCREENWIDTH];
+            return height;
+        } else{
+            SHGBusinessObject *object = [self.dataArr objectAtIndex:indexPath.row];
+            NSArray *array = @[object,@"mine"];
+            CGFloat height = [self.tableView cellHeightForIndexPath:indexPath model:array keyPath:@"array" cellClass:[SHGBusinessMyTableViewCell class] contentViewWidth:SCREENWIDTH];
+            return height;
+        }
+
     } else{
         return CGRectGetHeight(self.view.frame);
     }
@@ -258,6 +282,34 @@
     }
 }
 
+- (void)goToEditBusiness:(SHGBusinessObject *)object
+{
+    if ([object.type isEqualToString:@"moneyside"]) {
+        if ([object.moneysideType isEqualToString:@"equityInvest"]) {
+            SHGEquityInvestSendViewController *viewController = [[SHGEquityInvestSendViewController alloc] init];
+            viewController.object = object;
+            [self.navigationController pushViewController:viewController animated:YES];
+            
+        } else if ([object.moneysideType isEqualToString:@"bondInvest"]){
+            SHGBondInvestSendViewController *viewController = [[SHGBondInvestSendViewController alloc] init];
+            viewController.object = object;
+            [self.navigationController pushViewController:viewController animated:YES];
+        }
+    } else if ([object.type isEqualToString:@"bondfinancing"]){
+        SHGBondFinanceSendViewController *viewController = [[SHGBondFinanceSendViewController alloc] init];
+        viewController.object = object;
+        [self.navigationController pushViewController:viewController animated:YES];
+    } else if ([object.type isEqualToString:@"equityfinancing"]){
+        SHGEquityFinanceSendViewController *viewController = [[SHGEquityFinanceSendViewController alloc] init];
+        viewController.object = object;
+        [self.navigationController pushViewController:viewController animated:YES];
+    } else if ([object.type isEqualToString:@"trademixed"]){
+        SHGSameAndCommixtureSendViewController *viewController = [[SHGSameAndCommixtureSendViewController alloc] init];
+        viewController.object = object;
+        [self.navigationController pushViewController:viewController animated:YES];
+    }
+
+}
 
 - (void)didReceiveMemoryWarning
 {

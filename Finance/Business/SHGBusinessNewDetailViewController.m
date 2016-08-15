@@ -26,6 +26,7 @@
 #import "SHGCompanyDisplayViewController.h"
 #import "SHGCompanyBrowserViewController.h"
 #import "SHGCompanyManager.h"
+#import "SHGMyComplainViewController.h"
 
 typedef NS_ENUM(NSInteger, SHGTapPhoneType)
 {
@@ -49,7 +50,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
 @property (weak, nonatomic) IBOutlet UIView *firstHorizontalLine;
 @property (weak, nonatomic) IBOutlet UIButton *typeButton;
 @property (weak, nonatomic) IBOutlet UIButton *areaButton;
-@property (weak, nonatomic) IBOutlet UILabel *complainNumLabel;
+@property (weak, nonatomic) IBOutlet UIButton *complianNumButton;
 
 //money和userView
 @property (weak, nonatomic) IBOutlet UIView *moneyAndUserView;
@@ -365,11 +366,11 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
     .widthIs(10.0f)
     .heightIs(10.0f);
     
-    self.complainNumLabel.sd_layout
+    self.complianNumButton.sd_layout
     .rightSpaceToView(self.redView, MarginFactor(19.0f))
     .centerYEqualToView(self.typeButton)
-    .heightIs(self.complainNumLabel.font.lineHeight);
-    [self.complainNumLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
+    .widthIs(MarginFactor(100.0f))
+    .heightIs(MarginFactor(20.0f));
     
     //moneyAndUserView
     self.moneyAndUserView.sd_layout
@@ -658,10 +659,10 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
     self.messageButton.titleLabel.font = FontFactor(14.0f);
     self.messageButton.titleLabel.textAlignment = NSTextAlignmentLeft;
     
-    self.complainNumLabel.textAlignment = NSTextAlignmentRight;
-    self.complainNumLabel.textColor = Color(@"ffffff");
-    self.complainNumLabel.alpha = 0.75;
-    self.complainNumLabel.font = FontFactor(13.0f);
+    self.complianNumButton.titleLabel.textAlignment = NSTextAlignmentRight;
+    [self.complianNumButton setTitleColor:Color(@"ffffff") forState:UIControlStateNormal];
+    self.complianNumButton.alpha = 0.75;
+    self.complianNumButton.titleLabel.font = FontFactor(13.0f);
     
     
 }
@@ -768,7 +769,12 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
 
 - (void)loadRedView
 {
-    self.complainNumLabel.text = [NSString stringWithFormat:@"投诉:%@",self.responseObject.complainNum];
+    if ([self.responseObject.complainNum isEqualToString:@"0"]) {
+        self.complianNumButton.hidden = YES;
+    } else{
+        self.complianNumButton.hidden = NO;
+    }
+    [self.complianNumButton setTitle:[NSString stringWithFormat:@"投诉:%@",self.responseObject.complainNum] forState:UIControlStateNormal];
     NSString *title = self.responseObject.businessTitle;
     self.titleDetailLabel.textAlignment = NSTextAlignmentCenter;
     self.titleDetailLabel.lineBreakMode = NSLineBreakByTruncatingTail;
@@ -1489,6 +1495,13 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
     }
 }
 
+- (IBAction)complianNumButtonClick:(UIButton *)sender
+{
+    SHGMyComplainViewController *viewController = [[SHGMyComplainViewController alloc] init];
+    viewController.type = @"other";
+    viewController.object = self.responseObject;
+    [self.navigationController pushViewController:viewController animated:YES];
+}
 
 
 - (IBAction)userButton:(UIButton *)sender

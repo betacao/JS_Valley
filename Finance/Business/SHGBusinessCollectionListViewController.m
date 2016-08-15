@@ -13,6 +13,7 @@
 #import "SHGBusinessTableViewCell.h"
 #import "SHGBusinessNewDetailViewController.h"
 #import "SHGNoticeView.h"
+#import "SHGBusinessMyTableViewCell.h"
 @interface SHGBusinessCollectionListViewController ()<UITabBarDelegate, UITableViewDataSource>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) UITableViewCell *emptyCell;
@@ -199,7 +200,8 @@
 {
     if (self.dataArr.count > 0) {
         SHGBusinessObject *object = [self.dataArr objectAtIndex:indexPath.row];
-        CGFloat height = [self.tableView cellHeightForIndexPath:indexPath model:object keyPath:@"object" cellClass:[SHGBusinessTableViewCell class] contentViewWidth:SCREENWIDTH];
+        NSArray *array = @[object,@"other"];
+        CGFloat height = [self.tableView cellHeightForIndexPath:indexPath model:array keyPath:@"array" cellClass:[SHGBusinessMyTableViewCell class] contentViewWidth:SCREENWIDTH];
         return height;
         
     } else{
@@ -212,12 +214,11 @@
     if (self.dataArr.count == 0) {
         return self.emptyCell;
     } else {
-        SHGBusinessTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SHGBusinessTableViewCell"];
+        SHGBusinessMyTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SHGBusinessMyTableViewCell"];
         if (!cell) {
-            cell = [[[NSBundle mainBundle] loadNibNamed:@"SHGBusinessTableViewCell" owner:self options:nil] lastObject];
+            cell = [[[NSBundle mainBundle] loadNibNamed:@"SHGBusinessMyTableViewCell" owner:self options:nil] lastObject];
         }
-        [cell useCellFrameCacheWithIndexPath:indexPath tableView:tableView];
-        cell.object = [self.dataArr objectAtIndex:indexPath.row];
+        cell.array = @[[self.dataArr objectAtIndex:indexPath.row],@"other"];
         [cell useCellFrameCacheWithIndexPath:indexPath tableView:tableView];
         return cell;
     }

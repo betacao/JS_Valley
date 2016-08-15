@@ -35,6 +35,7 @@
 @property (strong, nonatomic) NSString *photo;
 @property (strong, nonatomic) NSString *companyDetail;
 @property (strong, nonatomic) NSString *complainNum;
+@property (strong, nonatomic) NSString *auditState;
 //资金方
 @property (strong, nonatomic) NSString *businessType;
 @property (strong, nonatomic) NSString *clarifyingRequire;

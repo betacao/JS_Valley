@@ -30,7 +30,7 @@
                 <outlet property="companyTopLIneView" destination="nos-X8-ILI" id="sZH-VS-3JV"/>
                 <outlet property="companyView" destination="mEb-fi-qKr" id="I3d-kZ-q2e"/>
                 <outlet property="complainButton" destination="Xl4-f2-qRL" id="XOa-i9-CmT"/>
-                <outlet property="complainNumLabel" destination="HqF-8s-KMr" id="O4f-sJ-LK3"/>
+                <outlet property="complianNumButton" destination="Qqe-cu-poC" id="Piz-Zm-wzM"/>
                 <outlet property="contentTextView" destination="3XK-2z-R7U" id="h1g-PV-xHs"/>
                 <outlet property="editButton" destination="atG-Mq-Thv" id="3gw-hK-gwi"/>
                 <outlet property="firstGrayView" destination="z5K-Hd-AdY" id="jYZ-Ee-JzI"/>
@@ -159,13 +159,13 @@
                     <rect key="frame" x="106" y="103" width="90" height="30"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 </button>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="HqF-8s-KMr">
-                    <rect key="frame" x="238" y="124" width="69" height="21"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Qqe-cu-poC">
+                    <rect key="frame" x="220" y="123" width="77" height="30"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                    <nil key="highlightedColor"/>
-                </label>
+                    <connections>
+                        <action selector="complianNumButtonClick:" destination="-1" eventType="touchUpInside" id="x57-G9-afP"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" red="0.94117647059999998" green="0.25882352939999997" blue="0.25490196079999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>

@@ -17,7 +17,11 @@
 #import "SHGBusinessMineViewController.h"
 #import "SHGBusinessCollectionListViewController.h"
 #import "SHGMyComplainViewController.h"
-
+#import "SHGPersonDynamicViewController.h"
+#import "SHGCircleCollectionViewController.h"
+#import "SHGMyFollowViewController.h"
+#import "SHGMyFansViewController.h"
+#import "SHGCardCollectionViewController.h"
 
 @interface SHGNewUserCenterViewController ()<UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIActionSheetDelegate>
 
@@ -540,6 +544,10 @@
 - (void)goToMyCircle
 {
     SHGDynamicCollectionViewController *controller = [[SHGDynamicCollectionViewController alloc] init];
+    SHGPersonDynamicViewController *controller1 = [[SHGPersonDynamicViewController alloc] init];
+    SHGCircleCollectionViewController *controller2 = [[SHGCircleCollectionViewController alloc] init];
+    controller1.userId = UID;
+    controller.viewControllers = @[controller1, controller2];
     controller.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:controller animated:YES];
 }
@@ -558,6 +566,10 @@
 - (void)gotoMyFriends
 {
     SHGFriendCollectionViewController *controller = [[SHGFriendCollectionViewController alloc] init];
+    SHGMyFollowViewController *controller1 = [[SHGMyFollowViewController alloc] init];
+    SHGMyFansViewController *controller2 = [[SHGMyFansViewController alloc] init];
+    SHGCardCollectionViewController *controller3 = [[SHGCardCollectionViewController alloc] init];
+    controller.viewControllers = @[controller1, controller2,controller3];
     controller.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:controller animated:YES];
 }
@@ -714,6 +726,7 @@
         [self actionAuth];
     } else if ([text containsString:@"我的投诉"]){
         SHGMyComplainViewController *viewController = [[SHGMyComplainViewController alloc] init];
+        viewController.type = @"mine";
         [self.navigationController pushViewController:viewController animated:YES];
     } else if ([text containsString:@"设置"]){
         if (self.nickName.length > 0){

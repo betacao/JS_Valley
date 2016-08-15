@@ -60,6 +60,7 @@
     .topSpaceToView(self.roundImage, 0.0f)
     .bottomSpaceToView(self.contentView, 0.0f)
     .widthIs(1 / SCALE);
+
     
     self.bgView.sd_layout
     .topSpaceToView(self.contentView, MarginFactor(15.0f))
@@ -121,7 +122,7 @@
     self.detailLabel.textColor = Color(@"434343");
     self.detailLabel.textAlignment = NSTextAlignmentLeft;
     self.detailLabel.font = FontFactor(13.0f);
-    self.detailLabel.numberOfLines = 0;
+    self.detailLabel.numberOfLines = 3;
     
     self.roundImage.image = [UIImage imageNamed:@"complain_Round"];
     
@@ -133,6 +134,21 @@
 - (void)setObject:(SHGMyComplianObject *)object
 {
     _object = object;
+    if ([self.type isEqualToString:@"mine"]) {
+        self.titleLabel.hidden = NO;
+        self.centerLineVIew.hidden = NO;
+        self.auditStateImageView.hidden = NO;
+    } else if([self.type isEqualToString:@"other"]){
+        self.titleLabel.hidden = YES;
+        self.centerLineVIew.hidden = YES;
+        self.auditStateImageView.hidden = YES;
+        self.detailLabel.sd_resetLayout
+        .leftSpaceToView(self.bgView, MarginFactor(15.0f) + MarginFactor(10.0f))
+        .rightSpaceToView(self.bgView, MarginFactor(15.0f))
+        .topSpaceToView(self.bgView, MarginFactor(13.0f))
+        .autoHeightRatio(0.0f);
+    
+    }
     self.timeLabel.text = object.createtime;
     self.titleLabel.text = object.title;
     self.detailLabel.text = object.content;
