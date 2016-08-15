@@ -17,9 +17,8 @@
 
 - (void)viewDidLoad
 {
-    [self initView];
+    [super initView];
     [super viewDidLoad];
-    [self reloadTabButtons];
 }
 
 - (void)didCreateOrModifyBusiness

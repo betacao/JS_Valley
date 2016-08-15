@@ -63,7 +63,6 @@
     [self addHeaderRefresh:self.tableView headerRefesh:NO andFooter:YES];
     self.tableView.mj_footer.automaticallyHidden = YES;
     self.tableView.tableFooterView = [[UIView alloc] init];
-    [SHGGlobleOperation registerAttationClass:[self class] method:@selector(loadAttationState:attationState:)];
 }
 
 - (NSMutableArray *)currentArray{
@@ -103,12 +102,11 @@
     }
 }
 
-- (void)loadAttationState:(NSString *)targetUserID attationState:(BOOL)attationState
+- (void)loadAttationState:(NSString *)targetUserID attationState:(NSNumber *)attationState
 {
     [self.dataArr enumerateObjectsUsingBlock:^(SHGFollowAndFansObject *object, NSUInteger idx, BOOL * _Nonnull stop) {
         if ([object.uid isEqualToString:targetUserID]) {
             [self.dataArr removeObject:object];
-            
         }
     }];
     [self.tableView reloadData];

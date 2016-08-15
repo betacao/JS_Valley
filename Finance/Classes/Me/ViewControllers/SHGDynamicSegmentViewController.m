@@ -33,8 +33,18 @@
     };
     self.navigationItem.titleView = titleView;
 
+    [SHGGlobleOperation registerAttationClass:[self class] method:@selector(loadAttationState:attationState:)];
 }
 
+
+- (void)loadAttationState:(NSString *)targetUserID attationState:(BOOL)attationState
+{
+    for (UIViewController *controller in self.viewControllers) {
+        if ([controller respondsToSelector:@selector(loadAttationState:attationState:)]) {
+            [controller performSelector:@selector(loadAttationState:attationState:) withObject:targetUserID withObject:@(attationState)];
+        }
+    }
+}
 
 - (void)didReceiveMemoryWarning
 {

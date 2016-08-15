@@ -31,7 +31,6 @@
     self.tableView.backgroundColor = [UIColor colorWithHexString:@"efeeef"];
     [self addHeaderRefresh:self.tableView headerRefesh:NO andFooter:YES];
     [self requestPostListWithTarget:@"first" rid:@"-1"];
-    [SHGGlobleOperation registerAttationClass:[self class] method:@selector(loadAttationState:attationState:)];
 }
 
 
@@ -63,13 +62,13 @@
     [self requestPostListWithTarget:@"first" rid:@"-1"];
 }
 
-- (void)loadAttationState:(NSString *)targetUserID attationState:(BOOL)attationState
+- (void)loadAttationState:(NSString *)targetUserID attationState:(NSNumber *)attationState
 {
     [self.dataArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         if ([obj isKindOfClass:[CircleListObj class]]) {
             CircleListObj *listObject = (CircleListObj *)obj;
             if ([listObject.userid isEqualToString:targetUserID]) {
-                listObject.isAttention = attationState;
+                listObject.isAttention = [attationState boolValue];
             }
         }
     }];

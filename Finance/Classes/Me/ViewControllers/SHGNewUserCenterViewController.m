@@ -544,8 +544,10 @@
 - (void)goToMyCircle
 {
     SHGDynamicSegmentViewController *controller = [[SHGDynamicSegmentViewController alloc] init];
+
     SHGPersonDynamicViewController *controller1 = [[SHGPersonDynamicViewController alloc] init];
     SHGCircleCollectionViewController *controller2 = [[SHGCircleCollectionViewController alloc] init];
+
     controller1.userId = UID;
     controller.viewControllers = @[controller1, controller2];
     controller.hidesBottomBarWhenPushed = YES;
@@ -558,6 +560,7 @@
 
     SHGBusinessMineViewController *controller1 = [[SHGBusinessMineViewController alloc] init];
     SHGBusinessCollectionListViewController *controller2 = [[SHGBusinessCollectionListViewController alloc] init];
+
     controller.viewControllers = @[controller1, controller2];
     controller.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:controller animated:YES];
@@ -566,9 +569,11 @@
 - (void)gotoMyFriends
 {
     SHGFriendSegmentViewController *controller = [[SHGFriendSegmentViewController alloc] init];
+
     SHGMyFollowViewController *controller1 = [[SHGMyFollowViewController alloc] init];
     SHGMyFansViewController *controller2 = [[SHGMyFansViewController alloc] init];
     SHGCardCollectionViewController *controller3 = [[SHGCardCollectionViewController alloc] init];
+    
     controller.viewControllers = @[controller1, controller2,controller3];
     controller.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:controller animated:YES];
