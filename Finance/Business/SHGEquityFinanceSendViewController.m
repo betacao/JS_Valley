@@ -600,34 +600,36 @@
 
 - (IBAction)nextButtonClick:(UIButton *)sender
 {
-    void(^block)(void) = ^() {
-        if (!self.equityFinanceNextViewController) {
-            self.equityFinanceNextViewController = [[SHGEquityFinanceNextViewController alloc] init];
-        }
-        self.equityFinanceNextViewController.superController = self;
-        [self.navigationController pushViewController:self.equityFinanceNextViewController animated:YES];
-    };
-    WEAK(self, weakSelf);
-    [SHGCompanyManager loadBlurCompanyInfo:@{@"companyName":self.companyNametextField.text, @"page":@(1), @"pageSize":@(10)} success:^(NSArray *array) {
-        if (array.count == 0) {
-            SHGAlertView *alertView = [[SHGAlertView alloc] initWithTitle:@"请确认公司名称" contentText:@"您输入的公司名称没有查询到，是否继续？" leftButtonTitle:@"取消" rightButtonTitle:@"确认"];
-            alertView.rightBlock = block;
-            [alertView show];
-        } else if (array.count == 1) {
-            SHGCompanyObject *object = [array firstObject];
-            weakSelf.companyNametextField.text = object.companyName;
-            block();
-        } else {
-            SHGCompanyDisplayViewController *controller = [[SHGCompanyDisplayViewController alloc] init];
-            controller.companyName = weakSelf.companyNametextField.text;
-            WEAK(controller, weakController);
-            controller.block = ^(NSString *companyName){
-                weakSelf.companyNametextField.text = companyName;
-                [weakController.navigationController popViewControllerAnimated:YES];
-            };
-            [self.navigationController pushViewController:controller animated:YES];
-        }
-    }];
+    if ([self checkInputMessage]) {
+        void(^block)(void) = ^() {
+            if (!self.equityFinanceNextViewController) {
+                self.equityFinanceNextViewController = [[SHGEquityFinanceNextViewController alloc] init];
+            }
+            self.equityFinanceNextViewController.superController = self;
+            [self.navigationController pushViewController:self.equityFinanceNextViewController animated:YES];
+        };
+        WEAK(self, weakSelf);
+        [SHGCompanyManager loadBlurCompanyInfo:@{@"companyName":self.companyNametextField.text, @"page":@(1), @"pageSize":@(10)} success:^(NSArray *array) {
+            if (array.count == 0) {
+                SHGAlertView *alertView = [[SHGAlertView alloc] initWithTitle:@"请确认公司名称" contentText:@"您输入的公司名称没有查询到，是否继续？" leftButtonTitle:@"取消" rightButtonTitle:@"确认"];
+                alertView.rightBlock = block;
+                [alertView show];
+            } else if (array.count == 1) {
+                SHGCompanyObject *object = [array firstObject];
+                weakSelf.companyNametextField.text = object.companyName;
+                block();
+            } else {
+                SHGCompanyDisplayViewController *controller = [[SHGCompanyDisplayViewController alloc] init];
+                controller.companyName = weakSelf.companyNametextField.text;
+                WEAK(controller, weakController);
+                controller.block = ^(NSString *companyName){
+                    weakSelf.companyNametextField.text = companyName;
+                    [weakController.navigationController popViewControllerAnimated:YES];
+                };
+                [self.navigationController pushViewController:controller animated:YES];
+            }
+        }];
+    }
 }
 
 - (void)btnBackClick:(id)sender
