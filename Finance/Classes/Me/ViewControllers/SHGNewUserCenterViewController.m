@@ -11,9 +11,9 @@
 #import "SettingsViewController.h"
 #import "SHGPersonalViewController.h"
 #import "ChatListViewController.h"
-#import "SHGFriendCollectionViewController.h"
-#import "SHGBusinessCollectionViewController.h"
-#import "SHGDynamicCollectionViewController.h"
+#import "SHGFriendSegmentViewController.h"
+#import "SHGBusinessSegmentViewController.h"
+#import "SHGDynamicSegmentViewController.h"
 #import "SHGBusinessMineViewController.h"
 #import "SHGBusinessCollectionListViewController.h"
 #import "SHGMyComplainViewController.h"
@@ -543,7 +543,7 @@
 
 - (void)goToMyCircle
 {
-    SHGDynamicCollectionViewController *controller = [[SHGDynamicCollectionViewController alloc] init];
+    SHGDynamicSegmentViewController *controller = [[SHGDynamicSegmentViewController alloc] init];
     SHGPersonDynamicViewController *controller1 = [[SHGPersonDynamicViewController alloc] init];
     SHGCircleCollectionViewController *controller2 = [[SHGCircleCollectionViewController alloc] init];
     controller1.userId = UID;
@@ -554,7 +554,7 @@
 
 - (void)goToMyBusiness
 {
-    SHGBusinessCollectionViewController *controller = [[SHGBusinessCollectionViewController alloc] init];
+    SHGBusinessSegmentViewController *controller = [[SHGBusinessSegmentViewController alloc] init];
 
     SHGBusinessMineViewController *controller1 = [[SHGBusinessMineViewController alloc] init];
     SHGBusinessCollectionListViewController *controller2 = [[SHGBusinessCollectionListViewController alloc] init];
@@ -565,7 +565,7 @@
 
 - (void)gotoMyFriends
 {
-    SHGFriendCollectionViewController *controller = [[SHGFriendCollectionViewController alloc] init];
+    SHGFriendSegmentViewController *controller = [[SHGFriendSegmentViewController alloc] init];
     SHGMyFollowViewController *controller1 = [[SHGMyFollowViewController alloc] init];
     SHGMyFansViewController *controller2 = [[SHGMyFansViewController alloc] init];
     SHGCardCollectionViewController *controller3 = [[SHGCardCollectionViewController alloc] init];

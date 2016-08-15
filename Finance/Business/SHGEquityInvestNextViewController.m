@@ -15,7 +15,7 @@
 #import "SHGBusinessListViewController.h"
 #import "SHGBusinessSendSuccessViewController.h"
 #import "SHGBusinessNewDetailViewController.h"
-#import "SHGBusinessCollectionViewController.h"
+#import "SHGBusinessSegmentViewController.h"
 @interface SHGEquityInvestNextViewController ()<UITextFieldDelegate,UIScrollViewDelegate,UITextViewDelegate,UIImagePickerControllerDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UIButton *sureButton;
@@ -499,8 +499,8 @@
                                     [(SHGBusinessNewDetailViewController *)viewController didCreateOrModifyBusiness];
                                     [self.navigationController popToViewController:viewController animated:YES];
                                 }
-                                if ([viewController isKindOfClass:[SHGBusinessCollectionViewController class]]){
-                                    [(SHGBusinessCollectionViewController *)viewController didCreateOrModifyBusiness];
+                                if ([viewController isKindOfClass:[SHGBusinessSegmentViewController class]]){
+                                    [(SHGBusinessSegmentViewController *)viewController didCreateOrModifyBusiness];
                                     [self.navigationController popToViewController:viewController animated:YES];
                                     
                                 }

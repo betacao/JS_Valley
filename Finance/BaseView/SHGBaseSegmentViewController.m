@@ -1,21 +1,20 @@
 //
-//  SHGBusinessCollectionViewController.m
+//  SHGBaseSegmentViewController.m
 //  Finance
 //
-//  Created by changxicao on 16/8/9.
+//  Created by changxicao on 16/8/15.
 //  Copyright © 2016年 HuMin. All rights reserved.
 //
 
-#import "SHGBusinessCollectionViewController.h"
-#import "SHGSegmentTitleView.h"
-#import "SHGBusinessMineViewController.h"
-@interface SHGBusinessCollectionViewController ()
+#import "SHGBaseSegmentViewController.h"
+
+@interface SHGBaseSegmentViewController ()
 
 @property (strong, nonatomic) UIView *contentContainerView;
 
 @end
 
-@implementation SHGBusinessCollectionViewController
+@implementation SHGBaseSegmentViewController
 
 - (void)viewDidLoad
 {
@@ -24,27 +23,9 @@
     [self reloadTabButtons];
 }
 
-- (void)didCreateOrModifyBusiness
-{
-    for (UIViewController *viewController in self.viewControllers) {
-        if ([viewController isKindOfClass:[SHGBusinessMineViewController class]]){
-            [(SHGBusinessMineViewController *)viewController didCreateOrModifyBusiness];
-        }
-    }
-}
-
 - (void)initView
 {
     self.view.backgroundColor = [UIColor whiteColor];
-
-    WEAK(self, weakSelf);
-    SHGSegmentTitleView *titleView = [[SHGSegmentTitleView alloc] init];
-    titleView.margin = MarginFactor(33.0f);
-    titleView.titleArray = @[@"我的发布", @"我的收藏"];
-    titleView.block = ^(NSInteger index){
-        [weakSelf setSelectedIndex:index animated:YES];
-    };
-    self.navigationItem.titleView = titleView;
 
     self.contentContainerView = [[UIView alloc] initWithFrame:self.view.bounds];
     self.contentContainerView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
@@ -172,12 +153,10 @@
     }
 }
 
-
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
 }
-
 
 
 @end
