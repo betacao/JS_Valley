@@ -131,7 +131,7 @@
 
 }
 
-- (void)setObject:(SHGMyComplianObject *)object
+- (void)setObject:(SHGComplianObject *)object
 {
     _object = object;
     if ([self.type isEqualToString:@"mine"]) {
@@ -147,17 +147,17 @@
         .rightSpaceToView(self.bgView, MarginFactor(15.0f))
         .topSpaceToView(self.bgView, MarginFactor(13.0f))
         .autoHeightRatio(0.0f);
-    
+
     }
-    self.timeLabel.text = object.createtime;
+    self.timeLabel.text = object.createTime;
     self.titleLabel.text = object.title;
     self.detailLabel.text = object.content;
-    if ([object.complainauditstate isEqualToString:@"0"]) {
+    if ([object.complainAuditstate isEqualToString:@"0"]) {
         self.auditStateImageView.hidden = YES;
-    } else if ([object.complainauditstate isEqualToString:@"1"]){
+    } else if ([object.complainAuditstate isEqualToString:@"1"]){
         self.auditStateImageView.hidden = NO;
         self.auditStateImageView.image = [UIImage imageNamed:@"complain_checked"];
-    } else if ([object.complainauditstate isEqualToString:@"9"]){
+    } else if ([object.complainAuditstate isEqualToString:@"9"]){
         self.auditStateImageView.hidden = NO;
         self.auditStateImageView.image = [UIImage imageNamed:@"complain_reject"];
     }

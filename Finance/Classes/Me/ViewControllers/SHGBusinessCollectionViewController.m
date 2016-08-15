@@ -26,14 +26,13 @@
 
 - (void)didCreateOrModifyBusiness
 {
-    for (UIViewController *viewController in _viewControllers) {
+    for (UIViewController *viewController in self.viewControllers) {
         if ([viewController isKindOfClass:[SHGBusinessMineViewController class]]){
             [(SHGBusinessMineViewController *)viewController didCreateOrModifyBusiness];
         }
-        
     }
-    
 }
+
 - (void)initView
 {
     self.view.backgroundColor = [UIColor whiteColor];

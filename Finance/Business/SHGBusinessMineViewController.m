@@ -37,8 +37,9 @@
     } else{
         self.title = @"TA的业务";
     }
-    
+
     [self addHeaderRefresh:self.tableView headerRefesh:YES andFooter:YES];
+    self.tableView.backgroundColor = Color(@"f7f7f7");
     self.tableView.sd_layout
     .spaceToSuperView(UIEdgeInsetsZero);
     [self loadDataWithTarget:@"first"];
@@ -234,11 +235,8 @@
             cell.array = @[[self.dataArr objectAtIndex:indexPath.row],@"mine"];
             [cell useCellFrameCacheWithIndexPath:indexPath tableView:tableView];
             return cell;
-
         }
-        
     }
-
     return nil;
 }
 

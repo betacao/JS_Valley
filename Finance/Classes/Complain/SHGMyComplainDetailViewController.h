@@ -9,5 +9,7 @@
 #import "BaseViewController.h"
 
 @interface SHGMyComplainDetailViewController : BaseViewController
+
 @property (nonatomic, strong) NSString *complainId;
+
 @end

@@ -8,7 +8,7 @@
 
 #import "SHGMyComplainViewController.h"
 #import "SHGMyComplainTableViewCell.h"
-#import "SHGMyComplianObject.h"
+#import "SHGComplianObject.h"
 #import "SHGEmptyDataView.h"
 #import "SHGMyComplainDetailViewController.h"
 
@@ -44,7 +44,7 @@
 {
     WEAK(self, weakSelf);
     [MOCHTTPRequestOperationManager postWithURL:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"complain/business/myComplain"] parameters:@{@"uid":UID,@"pageSize":@"10",@"target":@"first"} success:^(MOCHTTPResponse *response) {
-        NSArray *array = [[SHGGloble sharedGloble] parseServerJsonArrayToJSONModel:[response.dataDictionary objectForKey:@"list"] class:[SHGMyComplianObject class]];
+        NSArray *array = [[SHGGloble sharedGloble] parseServerJsonArrayToJSONModel:[response.dataDictionary objectForKey:@"list"] class:[SHGComplianObject class]];
         [weakSelf.dataArray addObjectsFromArray:array];
         [weakSelf.tableView reloadData];
     } failed:^(MOCHTTPResponse *response) {
@@ -56,7 +56,7 @@
 {
     WEAK(self, weakSelf);
     [MOCHTTPRequestOperationManager postWithURL:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"complain/business/complainByList"] parameters:@{@"uid":UID,@"businessId":weakSelf.object.businessID,@"businessType":weakSelf.object.type,@"pageSize":@"10",@"target":@"first"} success:^(MOCHTTPResponse *response) {
-        NSArray *array = [[SHGGloble sharedGloble] parseServerJsonArrayToJSONModel:[response.dataDictionary objectForKey:@"list"] class:[SHGMyComplianObject class]];
+        NSArray *array = [[SHGGloble sharedGloble] parseServerJsonArrayToJSONModel:[response.dataDictionary objectForKey:@"list"] class:[SHGComplianObject class]];
         [weakSelf.dataArray addObjectsFromArray:array];
         [weakSelf.tableView reloadData];
     } failed:^(MOCHTTPResponse *response) {
@@ -111,7 +111,7 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (self.dataArray.count > 0) {
-        SHGMyComplianObject *object = [self.dataArray objectAtIndex:indexPath.row];
+        SHGComplianObject *object = [self.dataArray objectAtIndex:indexPath.row];
         CGFloat height = [self.tableView cellHeightForIndexPath:indexPath model:object keyPath:@"object" cellClass:[SHGMyComplainTableViewCell class] contentViewWidth:SCREENWIDTH];
         return height;
     } else{
@@ -150,9 +150,9 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    SHGMyComplianObject *object = [self.dataArray objectAtIndex:indexPath.row];
+    SHGComplianObject *object = [self.dataArray objectAtIndex:indexPath.row];
     SHGMyComplainDetailViewController *viewController = [[SHGMyComplainDetailViewController alloc] init];
-    viewController.complainId = object.complainid;
+    viewController.complainId = object.complainID;
     [self.navigationController pushViewController:viewController animated:YES];
     
 }

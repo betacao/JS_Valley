@@ -7,7 +7,7 @@
 //
 
 #import "SHGMyComplainDetailViewController.h"
-#import "SHGMyComplianObject.h"
+#import "SHGComplianObject.h"
 #import "SDPhotoGroup.h"
 #import "SDPhotoItem.h"
 #import "SDPhotoBrowser.h"
@@ -29,7 +29,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *reasonDetailLabel;
 @property (weak, nonatomic) IBOutlet UILabel *urlLaebl;
 
-@property (strong, nonatomic) SHGMyComplianObject *object;
+@property (strong, nonatomic) SHGComplianObject *object;
 
 @property (strong, nonatomic) UIView *photoView;
 @property (weak, nonatomic) IBOutlet UIView *photobgView;
@@ -61,7 +61,7 @@
 {
     WEAK(self, weakSelf);
     [MOCHTTPRequestOperationManager postWithURL:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"complain/business/getComplainById"] parameters:@{@"uid":UID,@"complainId":weakSelf.complainId} success:^(MOCHTTPResponse *response) {
-        NSArray *array = [[SHGGloble sharedGloble] parseServerJsonArrayToJSONModel:@[response.dataDictionary ] class:[SHGMyComplianObject class]];
+        NSArray *array = [[SHGGloble sharedGloble] parseServerJsonArrayToJSONModel:@[response.dataDictionary ] class:[SHGComplianObject class]];
         weakSelf.object = [array firstObject];
         [self addSdLyout];
         [self initView];
@@ -152,7 +152,7 @@
 - (void)initView
 {
     self.nameDetailLabel.text = self.object.title;
-    self.timeDetailLabel.text = self.object.createtime;
+    self.timeDetailLabel.text = self.object.createTime;
     self.reasonDetailLabel.text = self.object.content;
     if (self.object.urlArray.count > 0) {
         self.urlLaebl.hidden = NO;
@@ -185,12 +185,12 @@
         self.photobgView.hidden = YES;
     }
 
-    if ([self.object.complainauditstate isEqualToString:@"0"]) {
+    if ([self.object.complainAuditstate isEqualToString:@"0"]) {
         self.stateImageView.hidden = YES;
-    } else if ([self.object.complainauditstate isEqualToString:@"1"]){
+    } else if ([self.object.complainAuditstate isEqualToString:@"1"]){
         self.stateImageView.hidden = NO;
         self.stateImageView.image = [UIImage imageNamed:@"complain_checked"];
-    } else if ([self.object.complainauditstate isEqualToString:@"9"]){
+    } else if ([self.object.complainAuditstate isEqualToString:@"9"]){
         self.stateImageView.hidden = NO;
         self.stateImageView.image = [UIImage imageNamed:@"complain_reject"];
     }

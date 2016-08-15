@@ -7,12 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "SHGMyComplianObject.h"
+#import "SHGComplianObject.h"
 
 @interface SHGMyComplainTableViewCell : UITableViewCell
 @property (nonatomic, assign) BOOL firstTopLine;
 @property (nonatomic, assign) BOOL lastBottomLine;
 @property (nonatomic, strong) NSString *type;
-@property(nonatomic, strong) SHGMyComplianObject *object;
+@property(nonatomic, strong) SHGComplianObject *object;
 
 @end

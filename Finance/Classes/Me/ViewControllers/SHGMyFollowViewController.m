@@ -103,7 +103,6 @@
     }
 }
 
-
 - (void)loadAttationState:(NSString *)targetUserID attationState:(BOOL)attationState
 {
     [self.dataArr enumerateObjectsUsingBlock:^(SHGFollowAndFansObject *object, NSUInteger idx, BOOL * _Nonnull stop) {

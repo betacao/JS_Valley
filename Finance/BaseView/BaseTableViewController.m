@@ -55,7 +55,7 @@
     tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     if (isHeaderFresh){
         SHGGifHeader *header = [SHGGifHeader headerWithRefreshingTarget:self refreshingAction:@selector(refreshHeader)];
-        header.backgroundColor = [UIColor whiteColor];
+        header.backgroundColor = [UIColor clearColor];
         tableView.mj_header = header;
     }
     if (isFooterRefresh){

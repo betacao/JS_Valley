@@ -343,8 +343,8 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
 
     self.titleDetailLabel.sd_layout
     .topSpaceToView(self.redView, 0.0f)
-    .centerXEqualToView(self.redView)
-    .widthIs(MarginFactor(240.0f))
+    .leftSpaceToView(self.redView, MarginFactor(14.0f))
+    .rightSpaceToView(self.redView, MarginFactor(14.0f))
     .heightIs(MarginFactor(83.0f));
     
     
@@ -499,8 +499,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
     .leftEqualToView(self.secondHorizontalLine)
     .rightEqualToView(self.secondHorizontalLine)
     .topSpaceToView(self.secondHorizontalLine, MarginFactor(14.0f));
-   
-    
+
     
     [self.businessMessageView setupAutoHeightWithBottomView:self.businessMessageLabelView bottomMargin:0.0f];
 
