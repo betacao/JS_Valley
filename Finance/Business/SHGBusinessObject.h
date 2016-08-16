@@ -36,6 +36,7 @@
 @property (strong, nonatomic) NSString *companyDetail;
 @property (strong, nonatomic) NSString *complainNum;
 @property (strong, nonatomic) NSString *auditState;
+@property (strong, nonatomic) NSString *businessauditstate;
 //资金方
 @property (strong, nonatomic) NSString *businessType;
 @property (strong, nonatomic) NSString *clarifyingRequire;
@@ -54,10 +55,14 @@
 @property (strong, nonatomic) NSString *createBy;//创建者
 @property (strong, nonatomic) NSString *realName;
 @property (strong, nonatomic) NSString *company;
+@property (strong, nonatomic) NSString *businessCompanyName;
 @property (strong, nonatomic) NSString *status;
 @property (strong, nonatomic) NSString *headImageUrl;
 @property (strong, nonatomic) NSString *url;
 @property (strong, nonatomic) NSString *businessTitle;
+
+@property (strong, nonatomic) NSString *cityName;
+@property (strong, nonatomic) NSString *position;
 
 @property (strong, nonatomic) NSMutableArray *bpnameList;
 @property (strong, nonatomic) NSMutableArray *bppathList;

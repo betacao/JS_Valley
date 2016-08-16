@@ -81,19 +81,39 @@
     if (self.object) {
         self.title = @"编辑银证业务";
         self.sendType = 1;
-        [self.areaSelectButton setTitle:self.object.area forState:UIControlStateNormal];
+        self.companyNametextField.text = self.object.businessCompanyName;
+        if ([self.object.position isEqualToString:self.object.cityName]) {
+            [self.areaSelectButton setTitle:self.object.cityName forState:UIControlStateNormal];
+        } else{
+            [self.areaSelectButton setTitle:[NSString stringWithFormat:@"%@ %@",self.object.position,self.object.cityName] forState:UIControlStateNormal];
+        }
         [self.areaSelectButton setTitleColor:Color(@"161616") forState:UIControlStateNormal];
     } else{
         self.title = @"发布银证业务";
         self.sendType = SHGSameAndCommixtureSendTypeNew;
         WEAK(self, weakSelf);
+        weakSelf.companyNametextField.text = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_COMPANYNAME];
+        __block NSString *provineceName = @"";
+        __block NSString *cityName = @"";
         if ([[SHGGloble sharedGloble].provinceName isEqualToString:@""]) {
             [[CCLocationManager shareLocation] getCity:^{
-                [weakSelf.areaSelectButton setTitle:[SHGGloble sharedGloble].provinceName forState:UIControlStateNormal];
+                provineceName = [SHGGloble sharedGloble].provinceName;
+                cityName = [SHGGloble sharedGloble].cityName;
+                if ([provineceName isEqualToString:cityName]) {
+                    [weakSelf.areaSelectButton setTitle:cityName forState:UIControlStateNormal];
+                } else{
+                    [weakSelf.areaSelectButton setTitle:[NSString stringWithFormat:@"%@ %@",provineceName,cityName] forState:UIControlStateNormal];
+                }
                 [weakSelf.areaSelectButton setTitleColor:Color(@"161616") forState:UIControlStateNormal];
             }];
         } else{
-            [weakSelf.areaSelectButton setTitle:[SHGGloble sharedGloble].provinceName forState:UIControlStateNormal];
+            provineceName = [SHGGloble sharedGloble].provinceName;
+            cityName = [SHGGloble sharedGloble].cityName;
+            if ([provineceName isEqualToString:cityName]) {
+                [weakSelf.areaSelectButton setTitle:cityName forState:UIControlStateNormal];
+            } else{
+                [weakSelf.areaSelectButton setTitle:[NSString stringWithFormat:@"%@ %@",provineceName,cityName] forState:UIControlStateNormal];
+            }
             [weakSelf.areaSelectButton setTitleColor:Color(@"161616") forState:UIControlStateNormal];
         }
     }
@@ -146,7 +166,7 @@
     }
 
     NSLog(@"%@",businessType);
-    dictonary = @{@"uid":UID, @"type": @"trademixed", @"contact": self.phoneNumTextField.text, @"investAmount": self.monenyTextField.text, @"area":self.areaSelectButton.titleLabel.text,@"title":self.nameTextField.text ,@"businessType":businessType};
+    dictonary = @{@"uid":UID, @"type": @"trademixed", @"contact": self.phoneNumTextField.text, @"investAmount": self.monenyTextField.text, @"area":self.areaSelectButton.titleLabel.text,@"title":self.nameTextField.text ,@"businessType":businessType,@"companyName":self.companyNametextField.text};
 
     return dictonary;
 }
@@ -389,7 +409,6 @@
     self.companyNametextField.leftView = [[UIView alloc]initWithFrame:CGRectMake(0.0f, 0.0f, 6.0f, 0.0f)];
     self.companyNametextField.leftViewMode = UITextFieldViewModeAlways;
     [self.companyNametextField setValue:[UIColor colorWithHexString:@"bebebe"] forKeyPath:@"_placeholderLabel.textColor"];
-    self.companyNametextField.text = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_COMPANYNAME];
 
     self.monenyTextField.keyboardType = UIKeyboardTypeNumberPad;
     self.phoneNumTextField.keyboardType = UIKeyboardTypeNumberPad;

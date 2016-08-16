@@ -196,11 +196,14 @@
 {
     [self.textView resignFirstResponder];
     if (self.textView.text.length == 0){
-        [Hud showMessageWithText:@"投诉内容不能为空"];
+        [Hud showMessageWithText:@"请填写投诉理由"];
+        return;
+    } else if (self.textView.text.length > 2000){
+        [Hud showMessageWithText:@"内容不能超过2000"];
         return;
     }
     
-    SHGAlertView *alertView = [[SHGAlertView alloc] initWithTitle:@"投诉确认" contentText:@"请确认您的投诉，我们将在一个工作日内进行审核，感谢您对大牛圈的支持！?" leftButtonTitle:@"取消" rightButtonTitle:@"确定"];
+    SHGAlertView *alertView = [[SHGAlertView alloc] initWithTitle:@"投诉确认" contentText:@"请确认您的投诉，我们将在一个工作日内进行审核，感谢您对大牛圈的支持！" leftButtonTitle:@"取消" rightButtonTitle:@"确定"];
     alertView.rightBlock = ^{
         if (self.imageArray.count == 0){
             //无图片
@@ -273,11 +276,16 @@
 -  (void)btnBackClick:(id)sender
 {
     [self.textView resignFirstResponder];
-    SHGAlertView *alertView = [[SHGAlertView alloc] initWithTitle:@"提示" contentText:@"退出此次编辑？" leftButtonTitle:@"取消" rightButtonTitle:@"退出"];
-    alertView.rightBlock = ^{
-        [self.navigationController performSelector:@selector(popToRootViewControllerAnimated:) withObject:@(YES) afterDelay:0.25f];
-    };
-    [alertView show];
+    if (self.textView.text.length == 0 && self.imageArray.count == 0) {
+        [self.navigationController performSelector:@selector(popViewControllerAnimated:) withObject:@(YES) afterDelay:0.25f];
+    } else{
+        SHGAlertView *alertView = [[SHGAlertView alloc] initWithTitle:@"提示" contentText:@"退出此次编辑？" leftButtonTitle:@"取消" rightButtonTitle:@"退出"];
+        alertView.rightBlock = ^{
+            [self.navigationController performSelector:@selector(popViewControllerAnimated:) withObject:@(YES) afterDelay:0.25f];
+        };
+        [alertView show];
+    }
+
 }
 
 - (IBAction)plusButtonClick:(UIButton *)sender

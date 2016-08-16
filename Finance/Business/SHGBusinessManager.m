@@ -64,7 +64,7 @@
     NSString *request = [rBaseAddressForHttp stringByAppendingString:@"/business/saveBusiness"];
     [MOCHTTPRequestOperationManager postWithURL:request class:[SHGBusinessObject class] parameters:param success:^(MOCHTTPResponse *response) {
         [Hud hideHud];
-        //[Hud showMessageWithText:@"发布业务成功"];
+        [Hud showMessageWithText:@"发布业务成功"];
         
         NSDictionary *dictionary = response.dataDictionary;
         NSLog(@"zzzzz%@",dictionary);
@@ -384,7 +384,7 @@
     if (detail.length > 15) {
         detail = [NSString stringWithFormat:@"%@...",[detail substringToIndex:15]];
     }
-    NSString *postContent = [NSString stringWithFormat:@"【业务】%@", detail];
+   __block NSString *postContent = @"";
     NSString *shareContent = [NSString stringWithFormat:@"【业务】%@", detail];
     NSString *friendContent = @"";
     NSString *messageContent = @"";
@@ -398,9 +398,15 @@
     }
     
     id<ISSShareActionSheetItem> item0 = [ShareSDK shareActionSheetItemWithTitle:@"微信" icon:[UIImage imageNamed:@"sns_icon_22"] clickHandler:^{
+        if (object.detail.length > 30) {
+            postContent = [NSString stringWithFormat:@"%@...",[object.detail substringToIndex:30]];
+        } else{
+            postContent  = object.detail;
+        }
         [[AppDelegate currentAppdelegate] shareActionToWeChat:0 content:postContent title:theme url:request];
     }];
     id<ISSShareActionSheetItem> item1 = [ShareSDK shareActionSheetItemWithTitle:@"朋友圈" icon:[UIImage imageNamed:@"sns_icon_23"] clickHandler:^{
+        postContent = [NSString stringWithFormat:@"%@【大牛圈】",theme];
         [[AppDelegate currentAppdelegate] shareActionToWeChat:1 content:postContent title:theme url:request];
     }];
     id<ISSShareActionSheetItem> item2 = [ShareSDK shareActionSheetItemWithTitle:@"短信" icon:[UIImage imageNamed:@"sns_icon_19"] clickHandler:^{

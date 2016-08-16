@@ -15,6 +15,7 @@
 #import "SHGBusinessSendSuccessViewController.h"
 #import "SHGBusinessNewDetailViewController.h"
 #import "SHGBusinessSegmentViewController.h"
+#import "SHGBusinessMineViewController.h"
 
 @interface SHGBondInvestNextViewController ()<UITextFieldDelegate,UIScrollViewDelegate,UITextViewDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
@@ -460,21 +461,31 @@
                         NSString *businessType = [businessDic objectForKey:@"businessType"];
                         NSString *fundSource = [businessDic objectForKey:@"fundSource"];
                         NSString *area = [businessDic objectForKey:@"area"];
+                        NSArray *cityArray = [area componentsSeparatedByString:@" "];
+                        NSString *cityName = @"";
+                        if (cityArray.count == 2) {
+                            area = [cityArray firstObject];
+                            cityName = [cityArray lastObject];
+                        } else{
+                            cityName = area;
+                        }
                         NSString *industry = [businessDic objectForKey:@"industry"];
                         NSString *title = [businessDic objectForKey:@"title"];
                         NSString *moneysideType = @"bondInvest";
+                        NSString *companyName = [businessDic objectForKey:@"companyName"];
                         NSLog(@"%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@",type,contact,businessType,fundSource,investAmount,area,industry,clarifyingRequire,weakSelf.retributionTextField.text,vestYears,weakSelf.marketExplainTextView.text,weakSelf.imageName,anonymous,title);
                         SHGBusinessObject *object = [[SHGBusinessObject alloc]init];
                         object.type = type;
                         object.detail = weakSelf.marketExplainTextView.text;
-                        NSDictionary *param = @{@"uid":UID, @"type": type, @"moneysideType":moneysideType ,@"contact":contact, @"businessType":businessType,@"fundSource":fundSource, @"investAmount": investAmount, @"area": area, @"industry": industry, @"clarifyingRequire":clarifyingRequire,@"lowestPaybackRate":weakSelf.retributionTextField.text, @"vestYears": vestYears,@"detail": weakSelf.marketExplainTextView.text,@"photo": weakSelf.imageName,@"anonymous": anonymous,@"title": title, @"version":[SHGGloble sharedGloble].currentVersion};
+                        NSDictionary *param = @{@"uid":UID,@"companyName":companyName, @"type": type, @"moneysideType":moneysideType ,@"contact":contact, @"businessType":businessType,@"fundSource":fundSource, @"investAmount": investAmount, @"area": area,@"cityName":cityName, @"industry": industry, @"clarifyingRequire":clarifyingRequire,@"lowestPaybackRate":weakSelf.retributionTextField.text, @"vestYears": vestYears,@"detail": weakSelf.marketExplainTextView.text,@"photo": weakSelf.imageName,@"anonymous": anonymous,@"title": title, @"version":[SHGGloble sharedGloble].currentVersion};
                         [SHGBusinessManager createNewBusiness:param success:^(BOOL success, NSString *bussinessId) {
                             if (success) {
-                                object.businessID = bussinessId;
-                                object.businessTitle = title;
-                                SHGBusinessSendSuccessViewController *viewController = [[SHGBusinessSendSuccessViewController alloc] init];
-                                viewController.object = object;
-                                [weakSelf.navigationController pushViewController:viewController animated:YES];
+                                SHGBusinessSegmentViewController *controller = [[SHGBusinessSegmentViewController alloc] init];
+                                SHGBusinessMineViewController *controller1 = [[SHGBusinessMineViewController alloc] init];
+                                SHGBusinessCollectionListViewController *controller2 = [[SHGBusinessCollectionListViewController alloc] init];
+                                controller.viewControllers = @[controller1, controller2];
+                                controller.hidesBottomBarWhenPushed = YES;
+                                [weakSelf.navigationController pushViewController:controller animated:YES];
                             }
                         }];
                     }
@@ -514,10 +525,10 @@
                         NSString *area = [businessDic objectForKey:@"area"];
                         NSString *industry = [businessDic objectForKey:@"industry"];
                         NSString *title = [businessDic objectForKey:@"title"];
-                        
+                        NSString *companyName = [businessDic objectForKey:@"companyName"];
                         SHGBusinessObject *object = [[SHGBusinessObject alloc]init];
                         object.type = type;
-                        NSDictionary *param = @{@"uid":UID,@"businessId":businessId, @"type": type,@"moneysideType": @"bondInvest",@"contact":contact, @"businessType":businessType,@"fundSource":fundSource, @"investAmount": investAmount, @"area": area, @"industry": industry, @"clarifyingRequire":clarifyingRequire,@"lowestPaybackRate":self.retributionTextField.text, @"vestYears": vestYears,@"detail": weakSelf.marketExplainTextView.text,@"photo": weakSelf.imageName,@"anonymous": anonymous,@"title": title, @"version":[SHGGloble sharedGloble].currentVersion};
+                        NSDictionary *param = @{@"uid":UID,@"businessId":businessId, @"type": type,@"companyName":companyName, @"moneysideType": @"bondInvest",@"contact":contact, @"businessType":businessType,@"fundSource":fundSource, @"investAmount": investAmount, @"area": area, @"industry": industry, @"clarifyingRequire":clarifyingRequire,@"lowestPaybackRate":self.retributionTextField.text, @"vestYears": vestYears,@"detail": weakSelf.marketExplainTextView.text,@"photo": weakSelf.imageName,@"anonymous": anonymous,@"title": title, @"version":[SHGGloble sharedGloble].currentVersion};
                        
                         [SHGBusinessManager editBusiness:param success:^(BOOL success) {
                             if (success) {

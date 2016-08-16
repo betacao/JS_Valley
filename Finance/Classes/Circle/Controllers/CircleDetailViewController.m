@@ -835,12 +835,12 @@
         shareTitle = self.responseObject.detail;
         shareContent = self.responseObject.detail;
     }
-    if(self.responseObject.detail.length > 15){
-        postContent = [NSString stringWithFormat:@"%@...",[self.responseObject.detail substringToIndex:15]];
+    if(self.responseObject.detail.length > 30){
+        postContent = [NSString stringWithFormat:@"%@...",[self.responseObject.detail substringToIndex:30]];
     }
-    if(self.responseObject.detail.length > 15){
+    if(self.responseObject.detail.length > 30){
         shareTitle = [self.responseObject.detail substringToIndex:15];
-        shareContent = [NSString stringWithFormat:@"%@...",[self.responseObject.detail substringToIndex:15]];
+        shareContent = [NSString stringWithFormat:@"%@...",[self.responseObject.detail substringToIndex:30]];
     }
     NSString *content = [NSString stringWithFormat:@"%@\"%@\"%@%@",@"Hi，我在金融大牛圈上看到了一个非常棒的帖子,关于",postContent,@"，赶快下载大牛圈查看吧！",[NSString stringWithFormat:@"%@%@",rBaseAddressForHttpShare,self.responseObject.rid]];
     id<ISSShareActionSheetItem> item1 = [ShareSDK shareActionSheetItemWithTitle:@"动态" icon:[UIImage imageNamed:@"圈子图标"] clickHandler:^{

@@ -708,7 +708,9 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
 
 - (void)resetView
 {
+    
     [self addEmptyViewIfNeeded];
+
     
     [self loadCollectButtonState];
     
@@ -732,6 +734,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
         self.collectionButton.hidden = NO;
         self.collectionLabel.hidden = NO;
     }
+    [self loadInPutView];
     
     NSMutableParagraphStyle * contentParagraphStyle = [[NSMutableParagraphStyle alloc] init];
     [contentParagraphStyle setLineSpacing:MarginFactor(5.0f)];
@@ -764,6 +767,56 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
     [self.headerView layoutSubviews];
     self.tableView.tableHeaderView = self.headerView;
     
+}
+
+- (void)loadInPutView
+{
+    if ([self.responseObject.createBy isEqualToString:UID]) {
+        self.complainButton.hidden = YES;
+        self.complainLabel.hidden = YES;
+        self.phoneButton.hidden = YES;
+        self.phoneLabel.hidden = YES;
+        UIImage *editImage = [UIImage imageNamed:@"newBusiness_edit"];
+        if ([self.responseObject.businessauditstate isEqualToString:@"0"] || [self.responseObject.businessauditstate isEqualToString:@"9"]){
+            [self.editButton setImage:editImage forState:UIControlStateNormal];
+            self.editButton.enabled = YES;
+        } else{
+            [self.editButton setImage:[UIImage imageNamed:@"newBusiness_unEdit"] forState:UIControlStateNormal];
+            self.editButton.enabled = NO;
+        }
+        
+        self.editButton.sd_resetLayout
+        .topSpaceToView(self.inputView, MarginFactor(8.0f))
+        .centerXIs(SCREENWIDTH/3)
+        .widthIs(SCREENWIDTH/4)
+        .heightIs(editImage.size.height);
+        
+        self.editLabel.sd_resetLayout
+        .topSpaceToView(self.editButton, MarginFactor(4.0f))
+        .centerXIs(SCREENWIDTH/3)
+        .widthIs(SCREENWIDTH/4)
+        .heightIs(self.editLabel.font.lineHeight);
+        
+        UIImage *commentImage = [UIImage imageNamed:@"red_businessComment"];
+        [self.commentButton setImage:commentImage forState:UIControlStateNormal];
+        self.commentButton.sd_resetLayout
+        .topSpaceToView(self.inputView, MarginFactor(8.0f))
+        .centerXIs(2 * SCREENWIDTH/3)
+        .widthIs(SCREENWIDTH/4)
+        .heightIs(commentImage.size.height);
+        
+        self.commentLabel.sd_resetLayout
+        .topSpaceToView(self.commentButton, MarginFactor(4.0f))
+        .centerXIs(2 * SCREENWIDTH/3)
+        .widthIs(SCREENWIDTH/4)
+        .heightIs(self.commentLabel.font.lineHeight);
+        
+    } else{
+        self.complainButton.hidden = NO;
+        self.complainLabel.hidden = NO;
+        self.phoneButton.hidden = NO;
+        self.phoneLabel.hidden = NO;
+    }
 }
 
 - (void)loadRedView
@@ -874,12 +927,17 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
     NSMutableArray *tempArray = [NSMutableArray arrayWithArray:self.middleContentArray];
     for (NSString *obj in tempArray) {
             if ([obj containsString:@"地区"]) {
-            NSArray *array = [obj componentsSeparatedByString:@"："];
-            [self.areaButton setTitle:[array lastObject] forState:UIControlStateNormal];
+//            NSArray *array = [obj componentsSeparatedByString:@"："];
+//            [self.areaButton setTitle:[array lastObject] forState:UIControlStateNormal];
             [self.middleContentArray removeObject:obj];
         }
     }
     
+    if (self.object.cityName.length == 0) {
+        [self.areaButton setTitle:self.responseObject.position forState:UIControlStateNormal];
+    } else{
+        [self.areaButton setTitle:self.responseObject.cityName forState:UIControlStateNormal];
+    }
     __block NSMutableArray *leftArray = [[NSMutableArray alloc] init];
     __block NSMutableArray *rightArray = [[NSMutableArray alloc] init];
     [leftArray removeAllObjects];
@@ -985,10 +1043,20 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
 
 - (void)loadCompanyView
 {
-    self.companyLabel.text = @"公司信息";
-    [self.messageButton setTitle:self.responseObject.company forState:UIControlStateNormal];
-    [self.messageRightButton setImage:[UIImage imageNamed:@"rightArrowImage"] forState:UIControlStateNormal];
-    [self loadCompanyInfo];
+    if (self.responseObject.businessCompanyName.length > 0) {
+        self.companyView.hidden = NO;
+        self.companyLabel.text = @"公司信息";
+        [self.messageButton setTitle:self.responseObject.businessCompanyName forState:UIControlStateNormal];
+        [self.messageRightButton setImage:[UIImage imageNamed:@"rightArrowImage"] forState:UIControlStateNormal];
+        [self loadCompanyInfo];
+    } else{
+        self.companyView.hidden = YES;
+        self.businessMessageView.sd_layout
+        .topSpaceToView(self.firstGrayView, 0.0f)
+        .leftSpaceToView(self.headerView, 0.0f)
+        .rightSpaceToView(self.headerView, 0.0f);
+    }
+
 }
 
 - (void)pdfButtonClick:(SHGBusinessCategoryButton *)btn
@@ -1234,17 +1302,28 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
 
 - (IBAction)complainButtonClick:(UIButton *)sender
 {
-    [SHGBusinessManager getBusinessComplainBlock:^(BOOL success, NSString *allowCreate) {
-        if (success) {
-            if ([allowCreate boolValue] == YES) {
-                SHGBusinessComplainViewController *viewController = [[SHGBusinessComplainViewController alloc] init];
-                viewController.object = self.responseObject;
-                [self.navigationController pushViewController:viewController animated:YES];
-            } else{
-                [Hud showMessageWithText:@"您今天的投诉次数已达到上限"];
-            }
+    [[SHGGloble sharedGloble] requestUserVerifyStatusCompletion:^(BOOL state,NSString *auditState) {
+        if (state) {
+            [SHGBusinessManager getBusinessComplainBlock:^(BOOL success, NSString *allowCreate) {
+                if (success) {
+                    if ([allowCreate boolValue] == YES) {
+                        SHGBusinessComplainViewController *viewController = [[SHGBusinessComplainViewController alloc] init];
+                        viewController.object = self.responseObject;
+                        [self.navigationController pushViewController:viewController animated:YES];
+                    } else{
+                        [Hud showMessageWithText:@"今日投诉次数已经用完"];
+                    }
+                }
+            }];
+            
+        } else{
+            SHGAuthenticationViewController *controller = [[SHGAuthenticationViewController alloc] init];
+            [self.navigationController pushViewController:controller animated:YES];
+            [[SHGGloble sharedGloble] recordUserAction:@"" type:@"business_identity"];
         }
-    }];
+    } showAlert:YES leftBlock:^{
+        [[SHGGloble sharedGloble] recordUserAction:@"" type:@"business_identity_cancel"];
+    } failString:@"认证后才能发起投诉哦～"];
     
 }
 
@@ -1387,7 +1466,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
                             if ([weakSelf.contactAuthObject.userContactLimit integerValue] > 0) {
                                 [weakSelf showContactAlertView:leftTitle text:textString];
                             } else{
-                                if (!weakSelf.contactAuthObject.businessLicenceFlag ) {
+                                if (!weakSelf.contactAuthObject.businessLicenceFlag) {
                                     if ([weakSelf.contactAuthObject.firstAuditValue integerValue] < 0) {
                                         [weakSelf showAlertView:[NSString stringWithFormat:@"您今日查看联系方式次数已用完，\n认证营业执照后每日可查看%@条\n联系方式~",weakSelf.contactAuthObject.secondAudit] leftTitle:@"我知道了" rightTitle:@"现在认证"];
                                     } else{

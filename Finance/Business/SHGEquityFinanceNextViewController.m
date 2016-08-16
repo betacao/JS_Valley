@@ -16,6 +16,7 @@
 #import "SHGBusinessSendSuccessViewController.h"
 #import "SHGBusinessNewDetailViewController.h"
 #import "SHGBusinessSegmentViewController.h"
+#import "SHGBusinessMineViewController.h"
 @interface SHGEquityFinanceNextViewController ()<UITextFieldDelegate,UIScrollViewDelegate,UITextViewDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UIButton *sureButton;
@@ -362,20 +363,30 @@
                     NSString *financingStage = [businessDic objectForKey:@"financingStage"];
                     NSString *investAmount = [businessDic objectForKey:@"investAmount"];
                     NSString *area = [businessDic objectForKey:@"area"];
+                    NSArray *cityArray = [area componentsSeparatedByString:@" "];
+                    NSString *cityName = @"";
+                    if (cityArray.count == 2) {
+                        area = [cityArray firstObject];
+                        cityName = [cityArray lastObject];
+                    } else{
+                        cityName = area;
+                    }
                     NSString *industry = [businessDic objectForKey:@"industry"];
                     NSString *title = [businessDic objectForKey:@"title"];
+                    NSString *companyName = [businessDic objectForKey:@"companyName"];
                     SHGBusinessObject *object = [[SHGBusinessObject alloc]init];
                     object.type = type;
                     object.detail = weakSelf.marketExplainTextView.text;
                     
-                    NSDictionary *param = @{@"uid":UID, @"type": type, @"contact":contact, @"financingStage":financingStage, @"investAmount": investAmount, @"area": area, @"industry": industry,@"totalshareRate": weakSelf.retributionTextField.text, @"shortestquitYears":vestYears, @"detail": weakSelf.marketExplainTextView.text,@"photo": weakSelf.imageName,@"anonymous": anonymous,@"title": title, @"version":[SHGGloble sharedGloble].currentVersion};
+                    NSDictionary *param = @{@"uid":UID, @"type": type,@"companyName":companyName, @"contact":contact, @"financingStage":financingStage, @"investAmount": investAmount, @"area": area,@"cityName":cityName, @"industry": industry,@"totalshareRate": weakSelf.retributionTextField.text, @"shortestquitYears":vestYears, @"detail": weakSelf.marketExplainTextView.text,@"photo": weakSelf.imageName,@"anonymous": anonymous,@"title": title, @"version":[SHGGloble sharedGloble].currentVersion};
                     [SHGBusinessManager createNewBusiness:param success:^(BOOL success, NSString *bussinessId) {
                         if (success) {
-                            object.businessID = bussinessId;
-                            object.businessTitle = title;
-                            SHGBusinessSendSuccessViewController *viewController = [[SHGBusinessSendSuccessViewController alloc] init];
-                            viewController.object = object;
-                            [weakSelf.navigationController pushViewController:viewController animated:YES];
+                            SHGBusinessSegmentViewController *controller = [[SHGBusinessSegmentViewController alloc] init];
+                            SHGBusinessMineViewController *controller1 = [[SHGBusinessMineViewController alloc] init];
+                            SHGBusinessCollectionListViewController *controller2 = [[SHGBusinessCollectionListViewController alloc] init];
+                            controller.viewControllers = @[controller1, controller2];
+                            controller.hidesBottomBarWhenPushed = YES;
+                            [weakSelf.navigationController pushViewController:controller animated:YES];
                         }
                     }];
                     
@@ -398,10 +409,11 @@
                     NSString *area = [businessDic objectForKey:@"area"];
                     NSString *industry = [businessDic objectForKey:@"industry"];
                     NSString *title = [businessDic objectForKey:@"title"];
+                    NSString *companyName = [businessDic objectForKey:@"companyName"];
                     SHGBusinessObject *object = [[SHGBusinessObject alloc]init];
                     object.type = type;
 
-                    NSDictionary *param = @{@"uid":UID,@"businessId":businessId, @"type": type, @"contact":contact, @"financingStage":financingStage, @"investAmount": investAmount, @"area": area, @"industry": industry,@"totalshareRate": weakSelf.retributionTextField.text, @"shortestquitYears":vestYears, @"detail": weakSelf.marketExplainTextView.text,@"photo": weakSelf.imageName,@"anonymous": anonymous,@"title": title, @"version":[SHGGloble sharedGloble].currentVersion};
+                    NSDictionary *param = @{@"uid":UID,@"businessId":businessId, @"type": type, @"contact":contact,@"companyName":companyName, @"financingStage":financingStage, @"investAmount": investAmount, @"area": area, @"industry": industry,@"totalshareRate": weakSelf.retributionTextField.text, @"shortestquitYears":vestYears, @"detail": weakSelf.marketExplainTextView.text,@"photo": weakSelf.imageName,@"anonymous": anonymous,@"title": title, @"version":[SHGGloble sharedGloble].currentVersion};
                     NSLog(@"%@",param);
                     [SHGBusinessManager editBusiness:param success:^(BOOL success) {
                         if (success) {

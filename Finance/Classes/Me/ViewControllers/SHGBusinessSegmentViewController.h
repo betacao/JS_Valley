@@ -11,5 +11,5 @@
 @interface SHGBusinessSegmentViewController : SHGBaseSegmentViewController
 
 - (void)didCreateOrModifyBusiness;
-
+- (void)deleteBusinessWithBusinessID:(NSString *)businessID;
 @end

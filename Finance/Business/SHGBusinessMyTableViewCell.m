@@ -10,7 +10,7 @@
 #import "SHGBusinessManager.h"
 #import "SHGBusinessMineViewController.h"
 #import "SHGBusinessListViewController.h"
-
+#import "SHGBusinessSegmentViewController.h"
 @interface SHGBusinessMyTableViewCell()
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *typeLabel;
@@ -144,12 +144,9 @@
 - (void)initView
 {
     [self.sendButton setTitle:@"再发布" forState:UIControlStateNormal];
-    [self.editButton setTitle:@"编辑" forState:UIControlStateNormal];
     [self.deleteButton setTitle:@"删除" forState:UIControlStateNormal];
     [self.sendButton setTitleColor:Color(@"ff2f00") forState:UIControlStateNormal];
-    [self.editButton setTitleColor:Color(@"ff2f00") forState:UIControlStateNormal];
     [self.deleteButton setTitleColor:Color(@"ff2f00") forState:UIControlStateNormal];
-    [self.editButton setBackgroundImage:[UIImage imageNamed:@"bussiness_myRedbutton"] forState:UIControlStateNormal];
     [self.deleteButton setBackgroundImage:[UIImage imageNamed:@"bussiness_myRedbutton"] forState:UIControlStateNormal];
     self.sendButton.titleLabel.font = self.editButton.titleLabel.font = self.deleteButton.titleLabel.font = FontFactor(12.0f);
     
@@ -215,7 +212,16 @@
     NSMutableAttributedString *complain = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"投诉%@次",object.complainNum] attributes:@{NSFontAttributeName:FontFactor(12.0f), NSForegroundColorAttributeName:Color(@"8d8d8d")}];
     [complain addAttributes:@{NSForegroundColorAttributeName:Color(@"ff3904")} range:NSMakeRange(2, object.complainNum.length)];
     self.complainNumLabel.attributedText = complain;
-
+    
+    if ([object.auditState isEqualToString:@"0"] || [object.auditState isEqualToString:@"9"]){
+        [self.editButton setTitle:@"编辑" forState:UIControlStateNormal];
+        [self.editButton setTitleColor:Color(@"ff2f00") forState:UIControlStateNormal];
+        [self.editButton setBackgroundImage:[UIImage imageNamed:@"bussiness_myRedbutton"] forState:UIControlStateNormal];
+    } else{
+        [self.editButton setTitle:@"编辑" forState:UIControlStateNormal];
+        [self.editButton setTitleColor:Color(@"9b9b9b") forState:UIControlStateNormal];
+        [self.editButton setBackgroundImage:[UIImage imageNamed:@"bussiness_myGraybutton"] forState:UIControlStateNormal];
+    }
     if ([object.auditState isEqualToString:@"0"]) {
         self.stateImageView.hidden = YES;
     } else if ([object.auditState isEqualToString:@"1"] || [object.auditState isEqualToString:@"2"]){
@@ -227,6 +233,7 @@
     }
     if ([object.isRefresh isEqualToString:@"true"]) {
         [self.sendButton setBackgroundImage:[UIImage imageNamed:@"bussiness_myRedbutton"] forState:UIControlStateNormal];
+        [self.sendButton setTitleColor:Color(@"ff2f00") forState:UIControlStateNormal];
     } else{
         [self.sendButton setTitleColor:Color(@"9b9b9b") forState:UIControlStateNormal];
         [self.sendButton setBackgroundImage:[UIImage imageNamed:@"bussiness_myGraybutton"] forState:UIControlStateNormal];
@@ -238,12 +245,17 @@
     WEAK(self, weakSelf);
     SHGBusinessObject *object = [[SHGBusinessObject alloc] init];
     object = [weakSelf.array firstObject];
-    [SHGBusinessManager getBusinessDetail:object success:^(SHGBusinessObject *detailObject) {
-        if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(goToEditBusiness:)]) {
-            [weakSelf.delegate goToEditBusiness:detailObject];
-        }
-        NSLog(@"%@",weakSelf.detailObject);
-    }];
+    if ([object.auditState isEqualToString:@"0"] || [object.auditState isEqualToString:@"9"]) {
+        [SHGBusinessManager getBusinessDetail:object success:^(SHGBusinessObject *detailObject) {
+            if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(goToEditBusiness:)]) {
+                [weakSelf.delegate goToEditBusiness:detailObject];
+            }
+            NSLog(@"%@",weakSelf.detailObject);
+        }];
+    } else{
+        
+    }
+    
     
 }
 
@@ -256,8 +268,8 @@
     alertView.rightBlock = ^{
         [SHGBusinessManager deleteBusiness:object success:^(BOOL success) {
             if (success) {
-                for (SHGBusinessMineViewController *controller in [SHGBusinessListViewController sharedController].navigationController.viewControllers) {
-                    if ([controller isKindOfClass:[SHGBusinessMineViewController class]]) {
+                for (SHGBusinessSegmentViewController  *controller in [SHGBusinessListViewController sharedController].navigationController.viewControllers) {
+                    if ([controller isKindOfClass:[SHGBusinessSegmentViewController class]]) {
                         [controller deleteBusinessWithBusinessID:object.businessID];
                     }
                 }
@@ -273,17 +285,22 @@
     WEAK(self, weakSelf);
     SHGBusinessObject *object = [[SHGBusinessObject alloc] init];
     object = [weakSelf.array firstObject];
-    if ([object.isRefresh isEqualToString:@"true"]) {
-        [SHGBusinessManager refreshBusiness:object success:^(BOOL success) {
-            if (success) {
-                [weakSelf.sendButton setBackgroundImage:[UIImage imageNamed:@"bussiness_myGraybutton"] forState:UIControlStateNormal];
-                [self.sendButton setTitleColor:Color(@"9b9b9b") forState:UIControlStateNormal];
-                object.isRefresh = @"false";
-            };
-        }];
-        
+    if ([object.auditState isEqualToString:@"0"] || [object.auditState isEqualToString:@"9"]) {
+        if ([object.isRefresh isEqualToString:@"true"]) {
+            [SHGBusinessManager refreshBusiness:object success:^(BOOL success) {
+                if (success) {
+                    [weakSelf.sendButton setBackgroundImage:[UIImage imageNamed:@"bussiness_myGraybutton"] forState:UIControlStateNormal];
+                    [self.sendButton setTitleColor:Color(@"9b9b9b") forState:UIControlStateNormal];
+                    object.isRefresh = @"false";
+                };
+            }];
+            
+        } else{
+            [Hud showMessageWithText:@"莫心急，24小时内只能刷新一次哦～"];
+        }
+
     } else{
-        [Hud showMessageWithText:@"莫心急，24小时内只能刷新一次哦～"];
+        
     }
 }
 

@@ -901,17 +901,21 @@
             }
             NSString *title = obj.groupPostTitle;
             if (obj.detail.length > 0) {
-                if (obj.detail.length > 15){
-                    detail = [NSString stringWithFormat:@"%@...",[obj.detail substringToIndex:15]];
+                if (obj.detail.length > 30){
+                    detail = [obj.detail substringToIndex:30];
                 }
             } else{
-                detail = @"大牛圈";
+                if (title.length > 30) {
+                    detail = [title substringToIndex:30];
+                } else{
+                    detail = title;
+                }
             }
             message.messageExt = [NSString stringWithFormat:@"%@%@",rBaseAddressForHttpShare,obj.rid];
             if (scene == 0) {
                 message.title = title;
             } else{
-                message.title = detail;
+                message.title = [NSString stringWithFormat:@"%@【大牛圈】",obj.groupPostTitle];
             }
             message.description =detail;
             [message setThumbImage:[UIImage imageNamed:@"80.png"]];

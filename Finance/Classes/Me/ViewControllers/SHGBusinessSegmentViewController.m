@@ -31,6 +31,15 @@
     }
 }
 
+- (void)deleteBusinessWithBusinessID:(NSString *)businessID
+{
+    for (UIViewController *viewController in self.viewControllers) {
+        if ([viewController isKindOfClass:[SHGBusinessMineViewController class]]){
+            [(SHGBusinessMineViewController *)viewController deleteBusinessWithBusinessID:businessID];
+        }
+    }
+}
+
 - (void)initView
 {
     WEAK(self, weakSelf);
