@@ -8,8 +8,6 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SHGBusinessSearchViewController">
             <connections>
                 <outlet property="contentView" destination="xlg-yz-Q5q" id="czk-Wj-Yal"/>
-                <outlet property="moreImageView" destination="qap-0U-8dp" id="9kQ-H1-Jm9"/>
-                <outlet property="moreLabel" destination="x7Q-PP-h8x" id="XYO-Cm-RTt"/>
                 <outlet property="titleLabel" destination="jVq-LX-BwH" id="vgC-gP-KlT"/>
                 <outlet property="view" destination="LCl-Rv-HHL" id="1Cx-p0-Zcs"/>
             </connections>
@@ -31,23 +29,9 @@
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                 </view>
-                <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="marketSearch_more" id="qap-0U-8dp">
-                    <rect key="frame" x="248" y="273" width="19" height="36"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                </imageView>
-                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="更多搜索条件" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="x7Q-PP-h8x">
-                    <rect key="frame" x="119" y="273" width="112" height="21"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <color key="textColor" red="0.48627450979999998" green="0.48627450979999998" blue="0.48627450979999998" alpha="1" colorSpace="calibratedRGB"/>
-                    <nil key="highlightedColor"/>
-                </label>
             </subviews>
             <color key="backgroundColor" red="0.95294117649999999" green="0.95686274510000002" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
             <point key="canvasLocation" x="319" y="269"/>
         </view>
     </objects>
-    <resources>
-        <image name="marketSearch_more" width="6" height="11"/>
-    </resources>
 </document>

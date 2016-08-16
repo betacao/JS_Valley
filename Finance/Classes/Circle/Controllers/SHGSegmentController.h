@@ -35,8 +35,8 @@ typedef void(^loadViewFinishBlock)(UIView *view);
 @property (nonatomic, assign) NSUInteger selectedIndex;
 @property (nonatomic, weak) id <SHGSegmentControllerDelegate> delegate;
 @property (nonatomic, copy) loadViewFinishBlock block;
-@property (strong ,nonatomic, readonly) UIBarButtonItem *rightBarButtonItem;
-@property (strong ,nonatomic, readonly) UIBarButtonItem *leftBarButtonItem;
+@property (strong ,nonatomic) UIBarButtonItem *rightBarButtonItem;
+@property (strong ,nonatomic) UIBarButtonItem *leftBarButtonItem;
 
 + (instancetype)sharedSegmentController;
 //刷新动态界面

@@ -83,7 +83,7 @@
 
     NSUserDefaults *standard = [NSUserDefaults standardUserDefaults];
     CLLocation *newLocation = [locations firstObject];
-    CLGeocoder *geocoder=[[CLGeocoder alloc]init];
+    CLGeocoder *geocoder = [[CLGeocoder alloc]init];
     [geocoder reverseGeocodeLocation:newLocation completionHandler:^(NSArray *placemarks,NSError *error){
         if (placemarks.count > 0) {
             CLPlacemark *placemark = [placemarks firstObject];
@@ -91,12 +91,12 @@
             self.lastPrivinceName = [NSString stringWithFormat:@"%@",placemark.administrativeArea];
             if([self.lastCityName rangeOfString:@"市"].location != NSNotFound){
                 self.lastCityName = [self.lastCityName substringToIndex:[self.lastCityName rangeOfString:@"市"].location];
-            }else{
+            } else {
                 self.lastCityName = @"";
             }
             if([self.lastPrivinceName rangeOfString:@"省"].location != NSNotFound){
                 self.lastPrivinceName = [self.lastPrivinceName substringToIndex:[self.lastPrivinceName rangeOfString:@"省"].location];
-            }else{
+            } else {
                 self.lastPrivinceName = @"";
             }
             [standard setObject:self.lastCityName forKey:CCLastCityName];//省市地址

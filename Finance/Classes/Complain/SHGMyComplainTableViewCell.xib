@@ -11,7 +11,7 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="154"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="153"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="153.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" id="gVz-AD-UH5">
@@ -39,7 +39,11 @@
                         <rect key="frame" x="63" y="8" width="240" height="128"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="cYh-ct-g90">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="complain_bg_top" id="cYh-ct-g90">
+                                <rect key="frame" x="0.0" y="-12" width="240" height="153"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="complain_bg_bottom" id="d9p-kT-tWJ">
                                 <rect key="frame" x="0.0" y="-12" width="240" height="153"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
@@ -74,16 +78,21 @@
             <connections>
                 <outlet property="auditStateImageView" destination="5T2-ns-Wkk" id="7Eu-wG-U6G"/>
                 <outlet property="bgView" destination="3BM-w5-7tk" id="Pk1-do-C21"/>
+                <outlet property="bottomImageView" destination="d9p-kT-tWJ" id="e9S-FW-ttw"/>
                 <outlet property="bottomLineView" destination="cen-AQ-jnq" id="NMB-Ps-L8n"/>
-                <outlet property="centerLineVIew" destination="aKz-pj-QPL" id="JnY-3G-QFh"/>
+                <outlet property="centerLineView" destination="aKz-pj-QPL" id="n1h-Pv-tF4"/>
                 <outlet property="detailLabel" destination="BXj-xR-1e0" id="PYw-oj-yQ1"/>
                 <outlet property="roundImage" destination="jbv-qM-zj8" id="PQi-nf-m0N"/>
                 <outlet property="timeLabel" destination="xKQ-l8-Y0d" id="C6C-Bg-q3L"/>
                 <outlet property="titleLabel" destination="o7H-Uh-ZsH" id="Lrc-QF-Q24"/>
-                <outlet property="topImageVIew" destination="cYh-ct-g90" id="9u4-f5-oEu"/>
+                <outlet property="topImageView" destination="cYh-ct-g90" id="Mgd-u1-JJx"/>
                 <outlet property="topLineView" destination="gVz-AD-UH5" id="ZQw-hV-CFf"/>
             </connections>
             <point key="canvasLocation" x="496" y="236"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="complain_bg_bottom" width="71" height="37"/>
+        <image name="complain_bg_top" width="71" height="20"/>
+    </resources>
 </document>

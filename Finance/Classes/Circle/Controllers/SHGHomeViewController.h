@@ -13,8 +13,8 @@
 @property (assign, nonatomic) BOOL needRefreshTableView;
 
 + (instancetype)sharedController;
-- (NSMutableArray *) currentDataArray;
-- (NSMutableArray *) currentListArray;
+- (NSMutableArray *)currentDataArray;
+- (NSMutableArray *)currentListArray;
 - (void)refreshHeader;
 - (void)requestRecommendFriends;
 - (void)loadRegisterPushFriend;

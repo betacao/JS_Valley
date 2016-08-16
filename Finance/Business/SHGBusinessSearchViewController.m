@@ -19,8 +19,6 @@
 @interface SHGBusinessSearchViewController ()<UISearchBarDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UIView *contentView;
-@property (weak, nonatomic) IBOutlet UILabel *moreLabel;
-@property (weak, nonatomic) IBOutlet UIImageView *moreImageView;
 
 @property (strong, nonatomic) EMSearchBar *searchBar;
 @property (strong, nonatomic) UIButton *backButton;
@@ -89,17 +87,10 @@
 - (void)initView
 {
     self.titleLabel.font = FontFactor(15.0f);
-    
-    self.moreLabel.font = FontFactor(14.0f);
-    [self.moreLabel sizeToFit];
-
-    [self.moreImageView sizeToFit];
 }
 
 - (void)addAutoLayout
 {
-    CGSize size = self.titleLabel.frame.size;
-
     self.titleLabel.sd_layout
     .topSpaceToView(self.view, MarginFactor(28.0f))
     .leftSpaceToView(self.view, MarginFactor(12.0f))
@@ -111,19 +102,6 @@
     .leftSpaceToView(self.view, 0.0f)
     .rightSpaceToView(self.view, 0.0f)
     .heightIs(MarginFactor(10.0f));
-
-    size = self.moreImageView.frame.size;
-    self.moreImageView.sd_layout
-    .topSpaceToView(self.contentView, MarginFactor(26.0f))
-    .rightSpaceToView(self.view, MarginFactor(12.0f))
-    .widthIs(size.width)
-    .heightIs(size.height);
-
-    self.moreLabel.sd_layout
-    .centerYEqualToView(self.moreImageView)
-    .rightSpaceToView(self.moreImageView, MarginFactor(10.0f))
-    .autoHeightRatio(0.0f);
-    [self.moreLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
 }
 
 - (void)addHotItem

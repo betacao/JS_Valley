@@ -32,12 +32,12 @@
         self.title = @"投诉列表";
         [self loadOtherComplianData];
     }
-    
+
     self.tableView.backgroundColor = Color(@"f7f7f7");
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.sd_layout
     .spaceToSuperView(UIEdgeInsetsZero);
-    
+
 }
 
 - (void)loadMineComplianData
@@ -48,7 +48,7 @@
         [weakSelf.dataArray addObjectsFromArray:array];
         [weakSelf.tableView reloadData];
     } failed:^(MOCHTTPResponse *response) {
-        
+
     }];
 }
 
@@ -60,14 +60,14 @@
         [weakSelf.dataArray addObjectsFromArray:array];
         [weakSelf.tableView reloadData];
     } failed:^(MOCHTTPResponse *response) {
-        
+
     }];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
+
 }
 
 - (UITableViewCell *)emptyCell
@@ -84,6 +84,7 @@
 {
     if (!_emptyView) {
         _emptyView = [[SHGEmptyDataView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, SCREENWIDTH, SCREENHEIGHT)];
+        _emptyView.type = SHGEmptyDataNormal;
     }
     return _emptyView;
 }
@@ -105,7 +106,7 @@
     } else{
         return 1;
     }
-    
+
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -117,7 +118,7 @@
     } else{
         return CGRectGetHeight(self.view.frame);
     }
-    
+
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -142,10 +143,9 @@
         cell.object = [self.dataArray objectAtIndex:indexPath.row];
         return cell;
     } else{
-        self.emptyView.type = SHGEmptyDataNormal;
         return self.emptyCell;
     }
-   
+
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -154,7 +154,7 @@
     SHGMyComplainDetailViewController *viewController = [[SHGMyComplainDetailViewController alloc] init];
     viewController.complainId = object.complainID;
     [self.navigationController pushViewController:viewController animated:YES];
-    
+
 }
 
 - (void)didReceiveMemoryWarning

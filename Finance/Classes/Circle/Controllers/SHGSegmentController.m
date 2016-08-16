@@ -35,7 +35,6 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
 
 @interface SHGSegmentController ()<IChatManagerDelegate>
 
-@property (nonatomic, strong) UIBarButtonItem *rightBarButtonItem;
 @property (strong, nonatomic) ChatListViewController *chatViewController;
 @property (strong, nonatomic) NSDate *lastPlaySoundDate;
 @property (strong, nonatomic) UILabel *titleLabel;
@@ -146,19 +145,29 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     [self setupUntreatedApplyCount];
 }
 
+- (UIBarButtonItem *)leftBarButtonItem
+{
+    if (!_leftBarButtonItem) {
+        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+        UIImage *image = [UIImage imageNamed:@"marketSearch"];
+        [button setImage:image forState:UIControlStateNormal];
+        [button addTarget:self action:@selector(actionPost:) forControlEvents:UIControlEventTouchUpInside];
+        [button sizeToFit];
+        _leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:button];
+    }
+    return _leftBarButtonItem;
+}
+
+
 - (UIBarButtonItem *)rightBarButtonItem
 {
-    
-    if (!_rightBarButtonItem)
-    {
-        UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        [rightButton setFrame:CGRectZero];
+    if (!_rightBarButtonItem) {
+        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
         UIImage *image = [UIImage imageNamed:@"sendCard"];
-        [rightButton setBackgroundImage:image forState:UIControlStateNormal];
-        [rightButton.imageView setContentMode:UIViewContentModeScaleAspectFill];
-        [rightButton addTarget:self action:@selector(actionPost:) forControlEvents:UIControlEventTouchUpInside];
-        [rightButton sizeToFit];
-        _rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:rightButton];
+        [button setImage:image forState:UIControlStateNormal];
+        [button addTarget:self action:@selector(actionPost:) forControlEvents:UIControlEventTouchUpInside];
+        [button sizeToFit];
+        _rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:button];
     }
     return _rightBarButtonItem;
 }
