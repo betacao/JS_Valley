@@ -546,7 +546,7 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
     } else{
         switch (indexPath.row) {
             case 0:{
-                SHGBusinessMineViewController *controller = [[SHGBusinessMineViewController alloc] initWithNibName:@"SHGBusinessMineViewController" bundle:nil];
+                SHGBusinessMineViewController *controller = [[SHGBusinessMineViewController alloc] init];
                 controller.userId = self.userId;
                 [self.navigationController pushViewController:controller animated:YES];
             }

@@ -51,6 +51,16 @@
     };
 }
 
+- (void)setController:(CircleDetailViewController *)controller
+{
+    if (!_controller) {
+        _controller = controller;
+        SEL selector = NSSelectorFromString(@"longPressGesturecognized:");
+        UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc]initWithTarget:controller action:selector];
+        [self.contentView addGestureRecognizer:longPress];
+    }
+}
+
 - (void)setDataArray:(NSArray *)dataArray
 {
     _dataArray = dataArray;

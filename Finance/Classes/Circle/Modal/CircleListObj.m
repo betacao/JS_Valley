@@ -20,6 +20,7 @@
     self = [super init];
     if (self) {
         self.heads = [NSMutableArray array];
+        self.comments = [NSMutableArray array];
     }
     return self;
 }

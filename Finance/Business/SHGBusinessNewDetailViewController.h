@@ -10,7 +10,6 @@
 #import "SHGBusinessObject.h"
 #import "SHGDiscoveryViewController.h"
 #import "SHGBusinessCollectionListViewController.h"
-#import "SHGBusinessMineViewController.h"
 
 @interface SHGBusinessNewDetailViewController : BaseTableViewController
 

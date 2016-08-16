@@ -25,6 +25,8 @@
 #import "SHGBusinessObject.h"
 #import "SHGBusinessNewDetailViewController.h"
 #import "SHGBusinessRecommendViewController.h"
+#import "SHGBusinessMineViewController.h"
+#import "SHGBusinessSegmentViewController.h"
 #import "CCLocationManager.h"
 
 //for mac
@@ -525,8 +527,14 @@
         [self pushIntoViewController:TopVC newViewController:controller];
         
     } else if ([ridCode isEqualToString:@"1017"]){
-        SHGBusinessMineViewController *controller = [[SHGBusinessMineViewController alloc] init];
+        SHGBusinessSegmentViewController *controller = [[SHGBusinessSegmentViewController alloc] init];
+
+        SHGBusinessMineViewController *controller1 = [[SHGBusinessMineViewController alloc] init];
+        SHGBusinessCollectionListViewController *controller2 = [[SHGBusinessCollectionListViewController alloc] init];
+
+        controller.viewControllers = @[controller1, controller2];
         [self pushIntoViewController:TopVC newViewController:controller];
+
     } else if ([ridCode isEqualToString:@"1002"] || [ridCode isEqualToString:@"1003"] || [ridCode isEqualToString:@"1007"] || [ridCode isEqualToString:@"1008"]){ //进入帖子详情
         CircleDetailViewController *vc = [[CircleDetailViewController alloc] initWithNibName:@"CircleDetailViewController" bundle:nil];
         NSString* rid = [userInfo objectForKey:@"rid"];

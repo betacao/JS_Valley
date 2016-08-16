@@ -9,6 +9,7 @@
 #import "SHGBusinessSegmentViewController.h"
 #import "SHGSegmentTitleView.h"
 #import "SHGBusinessMineViewController.h"
+
 @interface SHGBusinessSegmentViewController ()
 
 @end
@@ -40,6 +41,11 @@
         [weakSelf setSelectedIndex:index animated:YES];
     };
     self.navigationItem.titleView = titleView;
+}
+
+- (void)btnBackClick:(id)sender
+{
+    [self.navigationController popToViewController:[TabBarViewController tabBar] animated:YES];
 }
 
 - (void)didReceiveMemoryWarning

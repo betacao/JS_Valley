@@ -19,6 +19,7 @@
 #import "SHGEquityFinanceSendViewController.h"
 #import "SHGSameAndCommixtureSendViewController.h"
 #import "SHGBusinessMineViewController.h"
+#import "SHGBusinessSegmentViewController.h"
 
 @interface MessageViewController ()
 {
@@ -235,8 +236,15 @@
         controller.time = [[obj.time componentsSeparatedByString:@" "] firstObject];
         [self.navigationController pushViewController:controller animated:YES];
     } else if ([obj.code isEqualToString:@"1017"]){
-        SHGBusinessMineViewController *controller = [[SHGBusinessMineViewController alloc] init];
+        SHGBusinessSegmentViewController *controller = [[SHGBusinessSegmentViewController alloc] init];
+
+        SHGBusinessMineViewController *controller1 = [[SHGBusinessMineViewController alloc] init];
+        SHGBusinessCollectionListViewController *controller2 = [[SHGBusinessCollectionListViewController alloc] init];
+
+        controller.viewControllers = @[controller1, controller2];
+        controller.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:controller animated:YES];
+
     } else if ([obj.code isEqualToString:@"1002"] || [obj.code isEqualToString:@"1003"] || [obj.code isEqualToString:@"1007"] || [obj.code isEqualToString:@"1008"]){
         //进入帖子详情
         CircleDetailViewController *vc = [[CircleDetailViewController alloc] initWithNibName:@"CircleDetailViewController" bundle:nil];

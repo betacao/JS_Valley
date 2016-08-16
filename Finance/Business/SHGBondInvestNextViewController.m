@@ -13,9 +13,9 @@
 #import "SHGBusinessManager.h"
 #import "SHGBusinessListViewController.h"
 #import "SHGBusinessSendSuccessViewController.h"
-#import "SHGBusinessMineViewController.h"
 #import "SHGBusinessNewDetailViewController.h"
 #import "SHGBusinessSegmentViewController.h"
+
 @interface SHGBondInvestNextViewController ()<UITextFieldDelegate,UIScrollViewDelegate,UITextViewDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UIButton *sureButton;

@@ -566,7 +566,7 @@
         self.photoView.sd_resetLayout
         .leftSpaceToView(self.tableHeaderView, kMainItemLeftMargin)
         .rightSpaceToView(self.tableHeaderView, kMainItemLeftMargin)
-        .topSpaceToView(contentView, -self.lblContent.styleModel.lineSpace)
+        .topSpaceToView(contentView, 0.0f)
         .heightIs(0.0f);
     }
 
@@ -1048,7 +1048,8 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.responseObject.comments.count;
+    NSInteger count = self.responseObject.comments.count;
+    return count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -1057,9 +1058,8 @@
     ReplyTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ReplyTableViewCell"];
     if (!cell) {
         cell = [[[NSBundle mainBundle] loadNibNamed:@"ReplyTableViewCell" owner:self options:nil] lastObject];
-        UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(longPressGesturecognized:)];
-        [cell.contentView addGestureRecognizer:longPress];
     }
+
     cell.controller = self;
     SHGCommentType type = SHGCommentTypeNormal;
     if(indexPath.row == 0){
