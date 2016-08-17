@@ -10,7 +10,7 @@
 #import "SDPhotoGroup.h"
 #import "SDPhotoItem.h"
 #import "CTTextDisplayView.h"
-#import "LinkViewController.h"
+#import "SHGLinkViewController.h"
 #import "SHGAuthenticationView.h"
 #import "SHGBusinessNewDetailViewController.h"
 
@@ -565,7 +565,7 @@
         NSDictionary *dictionary = (NSDictionary *)obj;
         NSString *key = [[dictionary objectForKey:@"key"] lowercaseString];
         if ([key isEqualToString:@"u"]) {
-            LinkViewController *controller = [[LinkViewController alloc] init];
+            SHGLinkViewController *controller = [[SHGLinkViewController alloc] init];
             controller.url = [dictionary objectForKey:@"value"];
             [[SHGHomeViewController sharedController].navigationController pushViewController:controller animated:YES];
         } else if([key isEqualToString:@"p"]) {

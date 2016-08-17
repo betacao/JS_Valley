@@ -18,7 +18,7 @@
 #import "SHGBondFinanceSendViewController.h"
 #import "SHGEquityFinanceSendViewController.h"
 #import "SHGSameAndCommixtureSendViewController.h"
-#import "LinkViewController.h"
+#import "SHGLinkViewController.h"
 #import "SHGEmptyDataView.h"
 #import "NSCharacterSet+Common.h"
 #import "SHGAlertView.h"
@@ -1083,7 +1083,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
     SHGBusinessPDFObject *obj = [[SHGBusinessPDFObject alloc] init];
     obj = btn.pdfObject;
     [[SHGGloble sharedGloble] recordUserAction:[NSString stringWithFormat:@"%@#%@",self.responseObject.businessID,self.responseObject.type] type:@"business_bp"];
-    LinkViewController *viewController = [[LinkViewController alloc] init];
+    SHGLinkViewController *viewController = [[SHGLinkViewController alloc] init];
     NSString *url = [NSString stringWithFormat:@"%@%@",rBaseAddressForImage,obj.bpPath];
     viewController.linkTitle = obj.bpName;
     viewController.url = url;

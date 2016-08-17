@@ -9,7 +9,7 @@
 #import "MessageViewController.h"
 #import "MessageTableViewCell.h"
 #import "SHGPersonalViewController.h"
-#import "LinkViewController.h"
+#import "SHGLinkViewController.h"
 #import "SHGBusinessObject.h"
 #import "SHGBusinessNewDetailViewController.h"
 #import "SHGBusinessRecommendViewController.h"
@@ -198,7 +198,7 @@
         //feed流
         CircleListObj *object = [[CircleListObj alloc] init];
         object.feedhtml = obj.feedHtml;
-        LinkViewController *controller = [[LinkViewController alloc] init];
+        SHGLinkViewController *controller = [[SHGLinkViewController alloc] init];
         controller.url = object.feedhtml;
         controller.object = object;
         [self.navigationController pushViewController:controller animated:YES];

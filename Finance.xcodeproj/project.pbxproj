@@ -474,7 +474,6 @@
 		61ED1A681AD3C55B005B73E8 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61ED1A671AD3C55B005B73E8 /* Foundation.framework */; };
 		61ED1A6A1AD3C562005B73E8 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61ED1A691AD3C562005B73E8 /* UIKit.framework */; };
 		971549B0B0D45D638EF5F669 /* libPods-Finance.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A4D946A4AD798CCD6903D76E /* libPods-Finance.a */; };
-		9804FC731CCF554F00C2BB25 /* SHGRecommendHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9804FC721CCF554F00C2BB25 /* SHGRecommendHeaderView.m */; };
 		980D0D591C99026E00351F8C /* SHGCardCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 980D0D541C99026E00351F8C /* SHGCardCollectionViewController.m */; };
 		980D0D5A1C99026E00351F8C /* SHGCardCollectionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 980D0D551C99026E00351F8C /* SHGCardCollectionViewController.xib */; };
 		980D0D9C1C9A41BC00351F8C /* SHGCircleCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 980D0D9A1C9A41BC00351F8C /* SHGCircleCollectionViewController.m */; };
@@ -547,8 +546,6 @@
 		98E3022B1BFB0708001D4A69 /* SHGAuthenticationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98E302291BFB0708001D4A69 /* SHGAuthenticationViewController.m */; };
 		98E3022C1BFB0708001D4A69 /* SHGAuthenticationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98E3022A1BFB0708001D4A69 /* SHGAuthenticationViewController.xib */; };
 		98FFF6561D587C400029E85B /* SHGIndustrySelectView.m in Sources */ = {isa = PBXBuildFile; fileRef = 98FFF6551D587C400029E85B /* SHGIndustrySelectView.m */; };
-		B04355CE1B4BD3560033BBBF /* LinkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B04355CC1B4BD3560033BBBF /* LinkViewController.m */; };
-		B04355CF1B4BD3560033BBBF /* LinkViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B04355CD1B4BD3560033BBBF /* LinkViewController.xib */; };
 		B04D032E1B43F88A009BE7C2 /* ZYExceptionHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = B04D032D1B43F88A009BE7C2 /* ZYExceptionHandler.m */; };
 		B06F1C161B74B4AE005157A2 /* 矢量智能对象.png in Resources */ = {isa = PBXBuildFile; fileRef = B06F1C151B74B4AE005157A2 /* 矢量智能对象.png */; };
 		B080FE881B81E30100426579 /* btn_publish_face_a@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B080FE5F1B81E30100426579 /* btn_publish_face_a@2x.png */; };
@@ -672,6 +669,14 @@
 		F916B6321D0D395300AE217F /* photo@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = F916B5F81D0D395300AE217F /* photo@3x.png */; };
 		F916B6331D0D395300AE217F /* video@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F916B5F91D0D395300AE217F /* video@2x.png */; };
 		F916B6341D0D395300AE217F /* video@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = F916B5FA1D0D395300AE217F /* video@3x.png */; };
+		F9172D7B1D640006000BA546 /* SHGCircleCategorySelectView.m in Sources */ = {isa = PBXBuildFile; fileRef = F9172D7A1D640006000BA546 /* SHGCircleCategorySelectView.m */; };
+		F9172D7F1D64386C000BA546 /* SHGCircleSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9172D7D1D64386C000BA546 /* SHGCircleSearchViewController.m */; };
+		F9172D801D64386C000BA546 /* SHGCircleSearchViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9172D7E1D64386C000BA546 /* SHGCircleSearchViewController.xib */; };
+		F9172D841D643929000BA546 /* SHGLinkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9172D821D643929000BA546 /* SHGLinkViewController.m */; };
+		F9172D851D643929000BA546 /* SHGLinkViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9172D831D643929000BA546 /* SHGLinkViewController.xib */; };
+		F9172D881D643A67000BA546 /* SHGCircleManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F9172D871D643A67000BA546 /* SHGCircleManager.m */; };
+		F9172D8C1D643B28000BA546 /* SHGCircleSearchResultViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9172D8A1D643B28000BA546 /* SHGCircleSearchResultViewController.m */; };
+		F9172D8D1D643B28000BA546 /* SHGCircleSearchResultViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9172D8B1D643B28000BA546 /* SHGCircleSearchResultViewController.xib */; };
 		F91982B81C59B8F500A450B9 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = F91982B71C59B8F500A450B9 /* libsqlite3.tbd */; };
 		F91982BA1C59B92500A450B9 /* libz.1.2.5.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = F91982B91C59B92500A450B9 /* libz.1.2.5.tbd */; };
 		F91982BC1C59B93500A450B9 /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = F91982BB1C59B93500A450B9 /* libicucore.tbd */; };
@@ -1434,8 +1439,6 @@
 		61ED1A671AD3C55B005B73E8 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		61ED1A691AD3C562005B73E8 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		74B6DF08AEF4A086364FB341 /* Pods-Finance.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Finance.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Finance/Pods-Finance.debug.xcconfig"; sourceTree = "<group>"; };
-		9804FC711CCF554F00C2BB25 /* SHGRecommendHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGRecommendHeaderView.h; sourceTree = "<group>"; };
-		9804FC721CCF554F00C2BB25 /* SHGRecommendHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGRecommendHeaderView.m; sourceTree = "<group>"; };
 		980D0D531C99026E00351F8C /* SHGCardCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGCardCollectionViewController.h; sourceTree = "<group>"; };
 		980D0D541C99026E00351F8C /* SHGCardCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGCardCollectionViewController.m; sourceTree = "<group>"; };
 		980D0D551C99026E00351F8C /* SHGCardCollectionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGCardCollectionViewController.xib; sourceTree = "<group>"; };
@@ -1549,9 +1552,6 @@
 		98FFF6541D587C400029E85B /* SHGIndustrySelectView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGIndustrySelectView.h; sourceTree = "<group>"; };
 		98FFF6551D587C400029E85B /* SHGIndustrySelectView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGIndustrySelectView.m; sourceTree = "<group>"; };
 		A4D946A4AD798CCD6903D76E /* libPods-Finance.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Finance.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		B04355CB1B4BD3560033BBBF /* LinkViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LinkViewController.h; sourceTree = "<group>"; };
-		B04355CC1B4BD3560033BBBF /* LinkViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LinkViewController.m; sourceTree = "<group>"; };
-		B04355CD1B4BD3560033BBBF /* LinkViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LinkViewController.xib; sourceTree = "<group>"; };
 		B04D032C1B43F88A009BE7C2 /* ZYExceptionHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZYExceptionHandler.h; sourceTree = "<group>"; };
 		B04D032D1B43F88A009BE7C2 /* ZYExceptionHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZYExceptionHandler.m; sourceTree = "<group>"; };
 		B06F1C151B74B4AE005157A2 /* 矢量智能对象.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "矢量智能对象.png"; sourceTree = "<group>"; };
@@ -1690,6 +1690,19 @@
 		F916B5F81D0D395300AE217F /* photo@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "photo@3x.png"; sourceTree = "<group>"; };
 		F916B5F91D0D395300AE217F /* video@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "video@2x.png"; sourceTree = "<group>"; };
 		F916B5FA1D0D395300AE217F /* video@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "video@3x.png"; sourceTree = "<group>"; };
+		F9172D791D640006000BA546 /* SHGCircleCategorySelectView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGCircleCategorySelectView.h; sourceTree = "<group>"; };
+		F9172D7A1D640006000BA546 /* SHGCircleCategorySelectView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGCircleCategorySelectView.m; sourceTree = "<group>"; };
+		F9172D7C1D64386C000BA546 /* SHGCircleSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGCircleSearchViewController.h; sourceTree = "<group>"; };
+		F9172D7D1D64386C000BA546 /* SHGCircleSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGCircleSearchViewController.m; sourceTree = "<group>"; };
+		F9172D7E1D64386C000BA546 /* SHGCircleSearchViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGCircleSearchViewController.xib; sourceTree = "<group>"; };
+		F9172D811D643929000BA546 /* SHGLinkViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGLinkViewController.h; sourceTree = "<group>"; };
+		F9172D821D643929000BA546 /* SHGLinkViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGLinkViewController.m; sourceTree = "<group>"; };
+		F9172D831D643929000BA546 /* SHGLinkViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGLinkViewController.xib; sourceTree = "<group>"; };
+		F9172D861D643A67000BA546 /* SHGCircleManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGCircleManager.h; sourceTree = "<group>"; };
+		F9172D871D643A67000BA546 /* SHGCircleManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGCircleManager.m; sourceTree = "<group>"; };
+		F9172D891D643B28000BA546 /* SHGCircleSearchResultViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGCircleSearchResultViewController.h; sourceTree = "<group>"; };
+		F9172D8A1D643B28000BA546 /* SHGCircleSearchResultViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGCircleSearchResultViewController.m; sourceTree = "<group>"; };
+		F9172D8B1D643B28000BA546 /* SHGCircleSearchResultViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGCircleSearchResultViewController.xib; sourceTree = "<group>"; };
 		F91982B71C59B8F500A450B9 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		F91982B91C59B92500A450B9 /* libz.1.2.5.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.1.2.5.tbd; path = usr/lib/libz.1.2.5.tbd; sourceTree = SDKROOT; };
 		F91982BB1C59B93500A450B9 /* libicucore.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libicucore.tbd; path = usr/lib/libicucore.tbd; sourceTree = SDKROOT; };
@@ -2616,6 +2629,8 @@
 			children = (
 				F9E2A4AE1BE99A4C00ECB234 /* SHGSegmentController.h */,
 				F9E2A4AF1BE99A4C00ECB234 /* SHGSegmentController.m */,
+				F9172D861D643A67000BA546 /* SHGCircleManager.h */,
+				F9172D871D643A67000BA546 /* SHGCircleManager.m */,
 				614AD1BB1AD7AFED00DDF43E /* SHGHomeViewController.h */,
 				614AD1BC1AD7AFED00DDF43E /* SHGHomeViewController.m */,
 				614AD1BD1AD7AFED00DDF43E /* SHGHomeViewController.xib */,
@@ -2628,9 +2643,6 @@
 				6145FF151AE4A3450074AB49 /* CircleDetailViewController.h */,
 				6145FF161AE4A3450074AB49 /* CircleDetailViewController.m */,
 				6145FF171AE4A3450074AB49 /* CircleDetailViewController.xib */,
-				B04355CB1B4BD3560033BBBF /* LinkViewController.h */,
-				B04355CC1B4BD3560033BBBF /* LinkViewController.m */,
-				B04355CD1B4BD3560033BBBF /* LinkViewController.xib */,
 				F9ADAEB41BF2DB32001366F9 /* SHGPersonalViewController.h */,
 				F9ADAEB51BF2DB32001366F9 /* SHGPersonalViewController.m */,
 				F90F7B691BF48C4C00555F49 /* SHGPersonalViewController.xib */,
@@ -2649,8 +2661,14 @@
 				985CBDB71C03FD0B002B3D9D /* SHGCardTableViewCell.h */,
 				985CBDB81C03FD0B002B3D9D /* SHGCardTableViewCell.m */,
 				985CBDB91C03FD0B002B3D9D /* SHGCardTableViewCell.xib */,
-				9804FC711CCF554F00C2BB25 /* SHGRecommendHeaderView.h */,
-				9804FC721CCF554F00C2BB25 /* SHGRecommendHeaderView.m */,
+				F9172D791D640006000BA546 /* SHGCircleCategorySelectView.h */,
+				F9172D7A1D640006000BA546 /* SHGCircleCategorySelectView.m */,
+				F9172D7C1D64386C000BA546 /* SHGCircleSearchViewController.h */,
+				F9172D7D1D64386C000BA546 /* SHGCircleSearchViewController.m */,
+				F9172D7E1D64386C000BA546 /* SHGCircleSearchViewController.xib */,
+				F9172D891D643B28000BA546 /* SHGCircleSearchResultViewController.h */,
+				F9172D8A1D643B28000BA546 /* SHGCircleSearchResultViewController.m */,
+				F9172D8B1D643B28000BA546 /* SHGCircleSearchResultViewController.xib */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -2766,6 +2784,9 @@
 				F93FC9591D1B8E6800CBE7B8 /* SHGAuthenticationView.m */,
 				F93EA91E1D59BFC500161F47 /* SHGSegmentTitleView.h */,
 				F93EA91F1D59BFC500161F47 /* SHGSegmentTitleView.m */,
+				F9172D811D643929000BA546 /* SHGLinkViewController.h */,
+				F9172D821D643929000BA546 /* SHGLinkViewController.m */,
+				F9172D831D643929000BA546 /* SHGLinkViewController.xib */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -4401,6 +4422,7 @@
 				61E83D191AF7C78E00703651 /* 弹出行业框背景@2x.png in Resources */,
 				61909FD71AF92BAF0023935F /* comment_btn_ok@2x.png in Resources */,
 				61E83D641AF7C78E00703651 /* 产品-默认@3x.png in Resources */,
+				F9172D8D1D643B28000BA546 /* SHGCircleSearchResultViewController.xib in Resources */,
 				6145FF191AE4A3450074AB49 /* CircleDetailViewController.xib in Resources */,
 				61E83D921AF7C78E00703651 /* 输入框@3x.png in Resources */,
 				56F2D50F1B5A5CB3008E2855 /* 认证.png in Resources */,
@@ -4600,6 +4622,7 @@
 				408D8B771AF8618C0055810C /* chat_sender_audio_playing_001@2x.png in Resources */,
 				B080FE991B81E30100426579 /* emoji_close_s.png in Resources */,
 				408D8B5C1AF8618C0055810C /* chatBar_more_camera@2x.png in Resources */,
+				F9172D801D64386C000BA546 /* SHGCircleSearchViewController.xib in Resources */,
 				61E83D101AF7C78E00703651 /* 关于我们@2x.png in Resources */,
 				F916B6021D0D395300AE217F /* d_baibai@3x.png in Resources */,
 				B080FE971B81E30100426579 /* emoji_close_n@2x.png in Resources */,
@@ -4679,6 +4702,7 @@
 				569C6D391B7CAB6A00AD59C3 /* 手机@2x.png in Resources */,
 				61E83D221AF7C78E00703651 /* 行业选择图标@2x.png in Resources */,
 				F916B6041D0D395300AE217F /* d_beishang@3x.png in Resources */,
+				F9172D851D643929000BA546 /* SHGLinkViewController.xib in Resources */,
 				F916B6011D0D395300AE217F /* d_baibai@2x.png in Resources */,
 				61E83D701AF7C78E00703651 /* 消息-选中@3x.png in Resources */,
 				F9D296DD1C8FCB9C00A1446C /* SHGExtendTableViewCell.xib in Resources */,
@@ -4727,7 +4751,6 @@
 				408D8B401AF8618C0055810C /* chatBar_faceSelected@2x.png in Resources */,
 				F9EDD5E91BABF3E100506C0C /* expressionImage.plist in Resources */,
 				F9EBB7D01BB3F4470023E84E /* China_City.plist in Resources */,
-				B04355CF1B4BD3560033BBBF /* LinkViewController.xib in Resources */,
 				408D8B421AF8618C0055810C /* chatBar_keyboard@2x.png in Resources */,
 				6190274B1B2359C600D9EEA2 /* popTableViewCell.xib in Resources */,
 				61E83D1D1AF7C78E00703651 /* 清除缓存@2x.png in Resources */,
@@ -4908,6 +4931,7 @@
 				61D6E7D41AD50FCB0016C13A /* BaseViewController.m in Sources */,
 				532AF6B01AFC432A007D3E4B /* HeadImage.m in Sources */,
 				538964D61AFC6BEB00041548 /* UIViewController+DismissKeyboard.m in Sources */,
+				F9172D881D643A67000BA546 /* SHGCircleManager.m in Sources */,
 				98FFF6561D587C400029E85B /* SHGIndustrySelectView.m in Sources */,
 				F9ED07F41C3B6A530079A1A9 /* SHGModifyUserInfoViewController.m in Sources */,
 				9842E9D41C0180240008B6AF /* SHGPersonFriendsTableViewCell.m in Sources */,
@@ -4915,9 +4939,11 @@
 				F9EDD5F81BABFBCF00506C0C /* SDPhotoGroup.m in Sources */,
 				6187D2DC1AF1C693008E1D21 /* FacialView.m in Sources */,
 				61D62BEF1ADD1C4D002DD395 /* MOCHTTPResponse.m in Sources */,
+				F9172D841D643929000BA546 /* SHGLinkViewController.m in Sources */,
 				F916B5FC1D0D395300AE217F /* CTTextEmojiUtil.m in Sources */,
 				61D6E7D21AD50FCB0016C13A /* BaseNavigationController.m in Sources */,
 				F951C6211CF5A00A007FA198 /* SHGDiscoveryDisplayViewController.m in Sources */,
+				F9172D7B1D640006000BA546 /* SHGCircleCategorySelectView.m in Sources */,
 				6187D2E61AF1C693008E1D21 /* EMChatViewBaseCell.m in Sources */,
 				6187D2E41AF1C693008E1D21 /* EMChatVideoBubbleView.m in Sources */,
 				614DC88C1AD65F9C00F610D4 /* CommonMethod.m in Sources */,
@@ -4954,6 +4980,7 @@
 				98DCFE0C1D05662D00F6C16A /* SHGBusinessNewDetailViewController.m in Sources */,
 				4088DDCE1AF105FD00393855 /* SettingQuestionObj.m in Sources */,
 				61D62BF01ADD1C4D002DD395 /* MOCNetworkReachabilityManager.m in Sources */,
+				F9172D8C1D643B28000BA546 /* SHGCircleSearchResultViewController.m in Sources */,
 				F9352C011CFBD25C00778635 /* SHGNewsViewController.m in Sources */,
 				B082D6631B82EF1C00BB6C20 /* RecmdFriendObj.m in Sources */,
 				F96E10A31CBB9875006710A0 /* SHGCategoryButton.m in Sources */,
@@ -4962,7 +4989,6 @@
 				614BA7DC1AE5E96C009480CD /* LoginNextViewController.m in Sources */,
 				615010DC1AD61BD700827F82 /* ZSYPopoverListView.m in Sources */,
 				F91982CC1C59F9FA00A450B9 /* SHGUserCenterViewController.m in Sources */,
-				B04355CE1B4BD3560033BBBF /* LinkViewController.m in Sources */,
 				6187D2E51AF1C693008E1D21 /* EMChatTimeCell.m in Sources */,
 				986FFF131CBC857200D9FE04 /* SHGBusinessLocationView.m in Sources */,
 				F93FCBC81C856D5A004E356E /* UIColor+extend.m in Sources */,
@@ -4976,7 +5002,6 @@
 				F9E2A4B01BE99A4C00ECB234 /* SHGSegmentController.m in Sources */,
 				B085B5381B749E2000DC592E /* Extend_Description.m in Sources */,
 				6187D2CE1AF1C693008E1D21 /* GroupListViewController.m in Sources */,
-				9804FC731CCF554F00C2BB25 /* SHGRecommendHeaderView.m in Sources */,
 				6187D2F31AF1C693008E1D21 /* EMSearchBar.m in Sources */,
 				53AFF7841AFBF5F700D04B6B /* THProgressView.m in Sources */,
 				F99B95521D4F3CC600641ADF /* EMAudioRecorderUtil.m in Sources */,
@@ -5050,6 +5075,7 @@
 				6187D2E01AF1C693008E1D21 /* EMChatBaseBubbleView.m in Sources */,
 				F99B95991D4F423A00641ADF /* amrFileCodec.mm in Sources */,
 				56F2D50A1B5A45E6008E2855 /* UncaughtExceptionHandler.m in Sources */,
+				F9172D7F1D64386C000BA546 /* SHGCircleSearchViewController.m in Sources */,
 				F9A6C68C1CBE5FAB00AFEE49 /* SHGBusinessNoticeTableViewCell.m in Sources */,
 				F9E7CAED1CF82AFF0068EF4B /* SHGRecommendCollectionViewCell.m in Sources */,
 				F906849C1CBF64FC0003B123 /* SHGBusinessCommentTableViewCell.m in Sources */,

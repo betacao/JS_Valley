@@ -21,7 +21,7 @@
 #import "SHGPersonalViewController.h"
 #import "GeTuiSdk.h"
 #import "GeTuiSdkError.h"
-#import "LinkViewController.h"
+#import "SHGLinkViewController.h"
 #import "SHGBusinessObject.h"
 #import "SHGBusinessNewDetailViewController.h"
 #import "SHGBusinessRecommendViewController.h"
@@ -488,7 +488,7 @@
         //feed流
         CircleListObj *object = [[CircleListObj alloc] init];
         object.feedhtml = [userInfo objectForKey:@"feedHtml"];
-        LinkViewController *controller = [[LinkViewController alloc] init];
+        SHGLinkViewController *controller = [[SHGLinkViewController alloc] init];
         controller.url = object.feedhtml;
         controller.object = object;
         [self pushIntoViewController:TopVC newViewController:controller];

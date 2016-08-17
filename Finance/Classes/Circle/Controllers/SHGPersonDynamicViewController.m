@@ -8,7 +8,7 @@
 
 #import "SHGPersonDynamicViewController.h"
 #import "SHGMainPageTableViewCell.h"
-#import "LinkViewController.h"
+#import "SHGLinkViewController.h"
 #import "SHGEmptyDataView.h"
 @interface SHGPersonDynamicViewController ()<UITableViewDataSource, UITableViewDelegate, CircleListDelegate, CircleActionDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -364,7 +364,7 @@
 {
     if([obj.postType isEqualToString:@"pc"]){
         NSLog(@"1111");
-        LinkViewController *vc=  [[LinkViewController alloc] init];
+        SHGLinkViewController *vc=  [[SHGLinkViewController alloc] init];
         vc.url = obj.pcurl;
         [self.navigationController pushViewController:vc animated:YES];
     }

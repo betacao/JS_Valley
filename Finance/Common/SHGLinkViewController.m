@@ -6,26 +6,26 @@
 //  Copyright (c) 2015年 HuMin. All rights reserved.
 //
 
-#import "LinkViewController.h"
+#import "SHGLinkViewController.h"
 #import "SHGUnifiedTreatment.h"
 
-@interface LinkViewController ()<UIWebViewDelegate>
+@interface SHGLinkViewController ()<UIWebViewDelegate>
 
 @property (strong, nonatomic) NSString *stringUrl;
 @property (strong, nonatomic) UIWebView *webView;
 
 @end
 
-@implementation LinkViewController
+@implementation SHGLinkViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     if (self.linkTitle.length > 0) {
         self.title = self.linkTitle;
     } else{
-       self.title = @"详情"; 
+        self.title = @"详情";
     }
-    
+
     if ([self.url hasPrefix:@"http://"] || [self.url hasPrefix:@"https://"]){
         NSLog(@"1");
         self.stringUrl  = self.url;

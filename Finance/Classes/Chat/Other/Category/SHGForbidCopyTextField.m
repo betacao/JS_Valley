@@ -21,7 +21,6 @@
 
 - (BOOL)canPerformAction:(SEL)action withSender:(id)sender
 {
-    
     if (action == @selector(cut:)){
         if (self.text.length > 0) {
             return YES;

@@ -1,5 +1,5 @@
 //
-//  LinkViewController.h
+//  SHGLinkViewController.h
 //  Finance
 //
 //  Created by lizeng on 15/7/7.
@@ -9,7 +9,7 @@
 #import "BaseViewController.h"
 #import "CircleListObj.h"
 
-@interface LinkViewController : BaseViewController
+@interface SHGLinkViewController : BaseViewController
 
 @property (strong,nonatomic) NSString *url;
 @property (strong, nonatomic) CircleListObj *object;

@@ -2,17 +2,17 @@
  * \file MHTabBarController.m
  *
  * Copyright (c) 2011 Matthijs Hollemans
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -29,6 +29,9 @@
 #import "EMCDDeviceManager.h"
 #import "UITabBar+badge.h"
 #import "SHGNewUserCenterViewController.h"
+#import "SHGCircleSendViewController.h"
+#import "SHGCircleCategorySelectView.h"
+#import "SHGCircleSearchViewController.h"
 
 //两次提示的默认间隔
 static const CGFloat kDefaultPlaySoundInterval = 3.0;
@@ -37,14 +40,19 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
 
 @property (strong, nonatomic) ChatListViewController *chatViewController;
 @property (strong, nonatomic) NSDate *lastPlaySoundDate;
+
+@property (strong, nonatomic) UIButton *titleButton;
 @property (strong, nonatomic) UILabel *titleLabel;
+@property (strong, nonatomic) UIImageView *titleImageView;
+@property (strong, nonatomic) NSString *text;
+@property (strong, nonatomic) SHGCircleCategorySelectView *categorySelectView;
 
 @end
 
 @implementation SHGSegmentController
 {
-	UISegmentedControl *tabButtonsContainerView;
-	UIView *contentContainerView;
+    UISegmentedControl *tabButtonsContainerView;
+    UIView *contentContainerView;
 }
 
 @synthesize viewControllers = _viewControllers;
@@ -73,15 +81,15 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
 
 - (void)reloadTabButtons
 {
-	NSUInteger lastIndex = _selectedIndex;
-	_selectedIndex = NSNotFound;
-	self.selectedIndex = lastIndex;
+    NSUInteger lastIndex = _selectedIndex;
+    _selectedIndex = NSNotFound;
+    self.selectedIndex = lastIndex;
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	self.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    self.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     CGRect rect = CGRectMake(0, 50, 170, 26);
     tabButtonsContainerView = [[UISegmentedControl alloc] initWithItems: [NSArray arrayWithObjects:@"动态", @"资讯", nil]];
     tabButtonsContainerView.frame = rect;
@@ -109,26 +117,40 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
 
     [tabButtonsContainerView addTarget:self action:@selector(valueChange:) forControlEvents:UIControlEventValueChanged];
 
-	contentContainerView = [[UIView alloc] initWithFrame:self.view.bounds];
-	contentContainerView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-	[self.view addSubview:contentContainerView];
-	[self reloadTabButtons];
+    contentContainerView = [[UIView alloc] initWithFrame:self.view.bounds];
+    contentContainerView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    [self.view addSubview:contentContainerView];
+    [self reloadTabButtons];
     if(self.block){
-        self.block(self.titleLabel);
+        self.text = @"全部";
+        self.block(self.titleButton);
     }
     [SHGGlobleOperation registerAttationClass:[self class] method:@selector(loadAttationState:attationState:)];
+    [self.categorySelectView addObserver:self forKeyPath:@"alpha" options:NSKeyValueObservingOptionNew context:nil];
+    WEAK(self, weakSelf);
+    self.categorySelectView.block = ^(NSString *string){
+//weakSelf
+    };
 }
 
-- (UILabel *)titleLabel
+- (UIButton *)titleButton
 {
-    if (!_titleLabel){
-        _titleLabel = [[UILabel alloc] init];
-        _titleLabel.font = [UIFont systemFontOfSize:kNavBarTitleFontSize];
-        _titleLabel.textColor = TEXT_COLOR;
-        _titleLabel.text = @"动态";
-        [_titleLabel sizeToFit];
+    if (!_titleButton) {
+        _titleButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        _titleButton.backgroundColor = [UIColor clearColor];
+        [_titleButton addTarget:self action:@selector(showCircleCategorySelectView:) forControlEvents:UIControlEventTouchUpInside];
+
+        self.titleLabel = [[UILabel alloc] init];
+        self.titleLabel.font = FontFactor(15.0f);
+        self.titleLabel.textColor = [UIColor whiteColor];
+        [_titleButton addSubview:self.titleLabel];
+
+        self.titleImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"market_locationArrow"]];
+        [self.titleImageView sizeToFit];
+        self.titleImageView.origin = CGPointMake(CGRectGetMaxX(self.titleLabel.frame) + MarginFactor(4.0f), (CGRectGetHeight(self.titleLabel.frame) - CGRectGetHeight(self.titleImageView.frame)) / 2.0f);
+        [_titleButton addSubview:self.titleImageView];
     }
-    return _titleLabel;
+    return _titleButton;
 }
 
 - (void)loadAttationState:(id)object attationState:(BOOL)attationState
@@ -140,7 +162,6 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
 - (void)initMessageObject
 {
     [self registerEaseMobNotification];
-
     [self setupUnreadMessageCount];
     [self setupUntreatedApplyCount];
 }
@@ -151,7 +172,7 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
         UIImage *image = [UIImage imageNamed:@"marketSearch"];
         [button setImage:image forState:UIControlStateNormal];
-        [button addTarget:self action:@selector(actionPost:) forControlEvents:UIControlEventTouchUpInside];
+        [button addTarget:self action:@selector(actionSearch:) forControlEvents:UIControlEventTouchUpInside];
         [button sizeToFit];
         _leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:button];
     }
@@ -180,6 +201,19 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     return _chatViewController;
 }
 
+- (SHGCircleCategorySelectView *)categorySelectView
+{
+    if (!_categorySelectView) {
+        _categorySelectView = [[SHGCircleCategorySelectView alloc] init];
+        _categorySelectView.frame = CGRectMake(0.0f, kNavigationBarHeight + kStatusBarHeight, SCREENWIDTH, SCREENHEIGHT - kNavigationBarHeight - kStatusBarHeight);
+        _categorySelectView.alpha = 0.0f;
+    }
+    if (!_categorySelectView.superview) {
+        [self.view.window addSubview:_categorySelectView];
+    }
+    return _categorySelectView;
+}
+
 
 - (NSMutableArray *)dataArray
 {
@@ -195,6 +229,44 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
         return [self.selectedViewController performSelector:@selector(currentDataArray)];
     }
     return nil;
+}
+
+- (void)setText:(NSString *)text
+{
+    _text = text;
+    if (![text isEqualToString:self.titleLabel.text]) {
+        self.titleButton.frame = CGRectMake(2.0f, 0.0f, 0.0f, 0.0f);
+        self.titleLabel.text = text;
+        self.titleLabel.frame = CGRectMake(MarginFactor(4.0f), 0.0f, 0.0f, 0.0f);
+        [self.titleLabel sizeToFit];
+        self.titleImageView.origin = CGPointMake(CGRectGetMaxX(self.titleLabel.frame) + MarginFactor(4.0f), (CGRectGetHeight(self.titleLabel.frame) - CGRectGetHeight(self.titleImageView.frame)) / 2.0f);
+        self.titleButton.size = CGSizeMake(CGRectGetMaxX(self.titleImageView.frame) + MarginFactor(13.0f), CGRectGetHeight(self.titleLabel.frame));
+    }
+}
+
+- (void)showCircleCategorySelectView:(UIButton *)button
+{
+    if (self.categorySelectView.alpha == 0.0f) {
+        [UIView animateWithDuration:0.25f animations:^{
+            self.categorySelectView.alpha = 1.0f;
+        }];
+    } else {
+        [UIView animateWithDuration:0.25f animations:^{
+            self.categorySelectView.alpha = 0.0f;
+        }];
+    }
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context
+{
+    if ([keyPath isEqualToString:@"alpha"]) {
+        NSInteger alpha = [[change objectForKey:@"new"] integerValue];
+        if (alpha == 0) {
+            self.titleImageView.layer.transform = CATransform3DIdentity;
+        } else {
+            self.titleImageView.layer.transform = CATransform3DMakeRotation(0.000001 - M_PI, 0.0f, 0.0f, -1.0f);
+        }
+    }
 }
 
 - (void)reloadData
@@ -282,16 +354,21 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     }
 }
 
+//搜索
+- (void)actionSearch:(UIButton *)button
+{
+    SHGCircleSearchViewController *controller = [[SHGCircleSearchViewController alloc] init];
+    [self.navigationController pushViewController:controller animated:YES];
+}
+
 //发布
 - (void)actionPost:(UIButton *)button
 {
-    WEAK(self, weakSelf);
-
     [[SHGGloble sharedGloble] requestUserVerifyStatusCompletion:^(BOOL state,NSString *auditState) {
         if (state) {
-            if([weakSelf.selectedViewController respondsToSelector:@selector(actionPost:)]){
-                [weakSelf.selectedViewController performSelector:@selector(actionPost:) withObject:button];
-            }
+            SHGCircleSendViewController *controller = [[SHGCircleSendViewController alloc] init];
+            controller.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:controller animated:YES];
         } else{
             SHGAuthenticationViewController *controller = [[SHGAuthenticationViewController alloc] init];
             [self.selectedViewController.navigationController pushViewController:controller animated:YES];
@@ -300,95 +377,95 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     } showAlert:YES leftBlock:^{
         [[SHGGloble sharedGloble] recordUserAction:@"" type:@"dynamic_identity_cancel"];
     } failString:@"认证后才能发起动态哦～"];
-    
+
 }
 
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-	// Only rotate if all child view controllers agree on the new orientation.
-	for (UIViewController *viewController in self.viewControllers)
-	{
-		if (![viewController shouldAutorotateToInterfaceOrientation:interfaceOrientation])
-			return NO;
-	}
-	return YES;
+    // Only rotate if all child view controllers agree on the new orientation.
+    for (UIViewController *viewController in self.viewControllers)
+    {
+        if (![viewController shouldAutorotateToInterfaceOrientation:interfaceOrientation])
+            return NO;
+    }
+    return YES;
 }
 
 - (void)setViewControllers:(NSArray *)newViewControllers
 {
-	NSAssert([newViewControllers count] >= 2, @"MHTabBarController requires at least two view controllers");
+    NSAssert([newViewControllers count] >= 2, @"MHTabBarController requires at least two view controllers");
 
-	UIViewController *oldSelectedViewController = self.selectedViewController;
+    UIViewController *oldSelectedViewController = self.selectedViewController;
 
-	// Remove the old child view controllers.
-	for (UIViewController *viewController in _viewControllers)
-	{
-		[viewController willMoveToParentViewController:nil];
-		[viewController removeFromParentViewController];
-	}
+    // Remove the old child view controllers.
+    for (UIViewController *viewController in _viewControllers)
+    {
+        [viewController willMoveToParentViewController:nil];
+        [viewController removeFromParentViewController];
+    }
 
-	_viewControllers = [newViewControllers copy];
+    _viewControllers = [newViewControllers copy];
 
-	NSUInteger newIndex = [_viewControllers indexOfObject:oldSelectedViewController];
-	if (newIndex != NSNotFound)
-		_selectedIndex = newIndex;
-	else if (newIndex < [_viewControllers count])
-		_selectedIndex = newIndex;
-	else
-		_selectedIndex = 0;
+    NSUInteger newIndex = [_viewControllers indexOfObject:oldSelectedViewController];
+    if (newIndex != NSNotFound)
+        _selectedIndex = newIndex;
+    else if (newIndex < [_viewControllers count])
+        _selectedIndex = newIndex;
+    else
+        _selectedIndex = 0;
 
-	for (UIViewController *viewController in _viewControllers)
-	{
-		[self addChildViewController:viewController];
-		[viewController didMoveToParentViewController:self];
-	}
+    for (UIViewController *viewController in _viewControllers)
+    {
+        [self addChildViewController:viewController];
+        [viewController didMoveToParentViewController:self];
+    }
 
-	if ([self isViewLoaded])
-		[self reloadTabButtons];
+    if ([self isViewLoaded])
+        [self reloadTabButtons];
 }
 
 - (void)setSelectedIndex:(NSUInteger)newSelectedIndex
 {
-	[self setSelectedIndex:newSelectedIndex animated:NO];
+    [self setSelectedIndex:newSelectedIndex animated:NO];
 }
 
 - (void)setSelectedIndex:(NSUInteger)newSelectedIndex animated:(BOOL)animated
 {
-	NSAssert(newSelectedIndex < [self.viewControllers count], @"View controller index out of bounds");
+    NSAssert(newSelectedIndex < [self.viewControllers count], @"View controller index out of bounds");
 
-	if ([self.delegate respondsToSelector:@selector(SHG_SegmentController:shouldSelectViewController:atIndex:)])
-	{
-		UIViewController *toViewController = [self.viewControllers objectAtIndex:newSelectedIndex];
-		if (![self.delegate SHG_SegmentController:self shouldSelectViewController:toViewController atIndex:newSelectedIndex])
-			return;
-	}
+    if ([self.delegate respondsToSelector:@selector(SHG_SegmentController:shouldSelectViewController:atIndex:)])
+    {
+        UIViewController *toViewController = [self.viewControllers objectAtIndex:newSelectedIndex];
+        if (![self.delegate SHG_SegmentController:self shouldSelectViewController:toViewController atIndex:newSelectedIndex])
+            return;
+    }
 
-	if (![self isViewLoaded])
-	{
-		_selectedIndex = newSelectedIndex;
-	}
-	else if (_selectedIndex != newSelectedIndex)
-	{
-		UIViewController *fromViewController;
-		UIViewController *toViewController;
+    if (![self isViewLoaded])
+    {
+        _selectedIndex = newSelectedIndex;
+    }
+    else if (_selectedIndex != newSelectedIndex)
+    {
+        UIViewController *fromViewController;
+        UIViewController *toViewController;
 
-		if (_selectedIndex != NSNotFound)
-		{
-			fromViewController = self.selectedViewController;
-		}
+        if (_selectedIndex != NSNotFound)
+        {
+            fromViewController = self.selectedViewController;
+        }
 
-		NSUInteger oldSelectedIndex = _selectedIndex;
-		_selectedIndex = newSelectedIndex;
+        NSUInteger oldSelectedIndex = _selectedIndex;
+        _selectedIndex = newSelectedIndex;
 
-		if (_selectedIndex != NSNotFound)
-		{
-			toViewController = self.selectedViewController;
-		}
+        if (_selectedIndex != NSNotFound)
+        {
+            toViewController = self.selectedViewController;
+        }
 
-		if (toViewController == nil)  // don't animate
-		{
-			[fromViewController.view removeFromSuperview];
+        if (toViewController == nil)  // don't animate
+        {
+            [fromViewController.view removeFromSuperview];
         }
         else if (fromViewController == nil)  // don't animate
         {
@@ -403,7 +480,7 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
             CGRect rect = contentContainerView.bounds;
             if (oldSelectedIndex < newSelectedIndex)
                 rect.origin.x = rect.size.width;
-			else
+            else
                 rect.origin.x = -rect.size.width;
 
             toViewController.view.frame = rect;
@@ -432,27 +509,27 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
                 [self.delegate SHG_SegmentController:self didSelectViewController:toViewController atIndex:newSelectedIndex];
             }
         }
-	}
+    }
 }
 
 - (UIViewController *)selectedViewController
 {
-	if (self.selectedIndex != NSNotFound)
-		return [self.viewControllers objectAtIndex:self.selectedIndex];
-	else
-		return nil;
+    if (self.selectedIndex != NSNotFound)
+        return [self.viewControllers objectAtIndex:self.selectedIndex];
+    else
+        return nil;
 }
 
 - (void)setSelectedViewController:(UIViewController *)newSelectedViewController
 {
-	[self setSelectedViewController:newSelectedViewController animated:NO];
+    [self setSelectedViewController:newSelectedViewController animated:NO];
 }
 
 - (void)setSelectedViewController:(UIViewController *)newSelectedViewController animated:(BOOL)animated;
 {
-	NSUInteger index = [self.viewControllers indexOfObject:newSelectedViewController];
-	if (index != NSNotFound)
-		[self setSelectedIndex:index animated:animated];
+    NSUInteger index = [self.viewControllers indexOfObject:newSelectedViewController];
+    if (index != NSNotFound)
+        [self setSelectedIndex:index animated:animated];
 }
 
 - (void)valueChange:(UISegmentedControl *)seg
@@ -461,7 +538,7 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
         self.rightBarButtonItem = nil;
     }
 
-	[self setSelectedIndex:seg.selectedSegmentIndex animated:YES];
+    [self setSelectedIndex:seg.selectedSegmentIndex animated:YES];
 }
 
 - (void)viewDidUnload
@@ -591,7 +668,7 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
             break;
         }
     }
-    
+
     if (!hasExsist){
         WEAK(self, weakSelf);
         [[SHGGloble sharedGloble] refreshFriendListWithUid:fromUser finishBlock:^(BasePeopleObject *object) {
@@ -812,7 +889,7 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
 #pragma mark - IChatManagerDelegate 登录状态变化
 - (void)didLoginFromOtherDevice
 {
-
+    
 }
 
 
@@ -838,5 +915,6 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
 -(void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [self.categorySelectView removeObserver:self forKeyPath:@"alpha"];
 }
 @end

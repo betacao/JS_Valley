@@ -7,7 +7,7 @@
 //
 
 #import "CircleDetailViewController.h"
-#import "LinkViewController.h"
+#import "SHGLinkViewController.h"
 #import "TWEmojiKeyBoard.h"
 #import "SDPhotoGroup.h"
 #import "SDPhotoItem.h"
@@ -1230,7 +1230,7 @@
         NSDictionary *dictionary = (NSDictionary *)obj;
         NSString *key = [[dictionary objectForKey:@"key"] lowercaseString];
         if ([key isEqualToString:@"u"]) {
-            LinkViewController *controller = [[LinkViewController alloc] init];
+            SHGLinkViewController *controller = [[SHGLinkViewController alloc] init];
             controller.url = [dictionary objectForKey:@"value"];
             [[SHGHomeViewController sharedController].navigationController pushViewController:controller animated:YES];
         } else if([key isEqualToString:@"p"]) {

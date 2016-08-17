@@ -8,8 +8,7 @@
 
 #import "SHGHomeViewController.h"
 #import "CircleListObj.h"
-#import "SHGCircleSendViewController.h"
-#import "LinkViewController.h"
+#import "SHGLinkViewController.h"
 #import "RecmdFriendObj.h"
 #import "SHGNoticeView.h"
 #import "SHGMainPageTableViewCell.h"
@@ -97,7 +96,6 @@
         } else{
             [weakSelf.tableView.mj_header endRefreshing];
             [weakSelf.tableView.mj_footer endRefreshing];
-            [Hud showMessageWithText:@"获取首页数据失败"];
         }
     };
 }
@@ -179,7 +177,6 @@
 
     } failed:^(MOCHTTPResponse *response){
         NSLog(@"%@",response.error);
-
     }];
 }
 
@@ -227,7 +224,6 @@
                 [self.dataArr moveObjectAtIndex:index toIndex:3];
             }
         }
-
     }
 }
 
@@ -396,14 +392,6 @@
             self.hasDataFinished = NO;
         }
     }
-}
-
-//发帖
-- (void)actionPost:(UIButton *)sender
-{
-    SHGCircleSendViewController *controller = [[SHGCircleSendViewController alloc] init];
-    controller.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:controller animated:YES];
 }
 
 - (void)refreshHeader
@@ -632,7 +620,7 @@
             if (!IsStrEmpty(object.feedhtml)){
                 NSLog(@"%@",object.feedhtml);
                 [[SHGGloble sharedGloble] recordUserAction:object.rid type:@"dynamic_spread"];
-                LinkViewController *controller = [[LinkViewController alloc]init];
+                SHGLinkViewController *controller = [[SHGLinkViewController alloc]init];
                 controller.url = object.feedhtml;
                 controller.object = object;
                 [self.navigationController pushViewController:controller animated:YES];

@@ -7,7 +7,7 @@
 //
 
 #import "SHGUnifiedTreatment.h"
-#import "LinkViewController.h"
+#import "SHGLinkViewController.h"
 #import "SHGSegmentController.h"
 #import "RecmdFriendObj.h"
 #import "SHGPersonalViewController.h"
@@ -72,7 +72,7 @@
 {
     if([obj.postType isEqualToString:@"pc"]){
         NSLog(@"1111");
-        LinkViewController *controller = [[LinkViewController alloc] init];
+        SHGLinkViewController *controller = [[SHGLinkViewController alloc] init];
         controller.url = obj.pcurl;
         [[SHGSegmentController sharedSegmentController].selectedViewController.navigationController pushViewController:controller animated:YES];
     }

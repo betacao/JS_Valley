@@ -34,8 +34,6 @@
     UIImage *image2 = [[UIImage imageNamed:@"title_right"] resizableImageWithCapInsets:UIEdgeInsetsMake(2.0f, 16.0f, 2.0f, 2.0f) resizingMode:UIImageResizingModeStretch];
 
     self.leftImageView = [[UIImageView alloc] initWithImage:image1];
-//    self.leftImageView
-
     self.rightImageView = [[UIImageView alloc] initWithImage:image2];
 
     [self addSubview:self.leftImageView];

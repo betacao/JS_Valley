@@ -7,7 +7,6 @@
 //
 
 #import "SHGRecommendViewController.h"
-#import "SHGRecommendHeaderView.h"
 #import "SHGRecommendCollectionView.h"
 #import "SHGPersonalViewController.h"
 #import "CCLocationManager.h"
