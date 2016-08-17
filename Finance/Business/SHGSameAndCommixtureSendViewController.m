@@ -398,19 +398,16 @@
         NSString *rightText= [NSString stringWithFormat:@"%ld",money%10000];
         if (![leftText isEqualToString:@"0"]) {
             self.leftMoneyTextField.text = leftText;
-            if ([rightText isEqualToString:@"0"]) {
-                self.monenyTextField.text = @"";
-            } else{
-                self.monenyTextField.text = rightText;
-            }
         } else{
             self.leftMoneyTextField.text = @"";
-            if ([rightText isEqualToString:@"0"]) {
-                self.monenyTextField.text = @"";
-            } else{
-                self.monenyTextField.text = rightText;
-            }
         }
+        
+        if ([rightText isEqualToString:@"0"]) {
+            self.monenyTextField.text = @"";
+        } else{
+            self.monenyTextField.text = rightText;
+        }
+        
         //地区
         [self.areaSelectButton setTitle:[array objectAtIndex:2] forState:UIControlStateNormal];
         [self.areaSelectButton setTitleColor:Color(@"161616") forState:UIControlStateNormal];
@@ -654,6 +651,22 @@
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     [textField resignFirstResponder];
+    return YES;
+}
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    if (textField == self.leftMoneyTextField || textField == self.monenyTextField) {
+        if (string.length == 0) {
+            return YES;
+        }
+        NSString * toBeString = [textField.text stringByReplacingCharactersInRange:range withString:string];
+        if (range.location > 1 && [toBeString floatValue] > 9999) {
+            [Hud showMessageWithText:@"抱歉，您输入的数字不可超过9999"];
+            return NO;
+        }
+    }
+    
     return YES;
 }
 
