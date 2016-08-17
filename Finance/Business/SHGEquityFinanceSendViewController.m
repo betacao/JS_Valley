@@ -52,7 +52,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *monenyLabel;
 @property (weak, nonatomic) IBOutlet SHGForbidCopyTextField *monenyTextField;
 @property (weak, nonatomic) IBOutlet UILabel *moneyMonad;
-
+@property (weak, nonatomic) IBOutlet SHGForbidCopyTextField *leftMoneyTextField;
+@property (weak, nonatomic) IBOutlet UILabel *leftMoneyMonad;
 //地区
 @property (strong, nonatomic) IBOutlet UIView *areaView;
 @property (weak, nonatomic) IBOutlet UIButton *areaSelectButton;
@@ -130,6 +131,7 @@
     self.nameTextField.delegate = self;
     self.phoneNumTextField.delegate = self;
     self.monenyTextField.delegate = self;
+    self.leftMoneyTextField.delegate = self;
     self.bondStageButtonView.showMode = 1;
     self.buttonBgImage = [UIImage imageNamed:@"business_SendButtonBg"];
     self.buttonBgImage = [self.buttonBgImage resizableImageWithCapInsets:UIEdgeInsetsMake(10.0f, 10.0f, 10.0f, 10.0f) resizingMode:UIImageResizingModeStretch];
@@ -180,8 +182,10 @@
     } else{
         industry = [businessSelectDic objectForKey:self.industrySelectButton.titleLabel.text];
     }
-    
-    dictionary = @{@"userId":UID, @"type": @"equityfinancing", @"contact": self.phoneNumTextField.text, @"financingStage":financingStage, @"investAmount": self.monenyTextField.text, @"area": self.areaSelectButton.titleLabel.text, @"industry": industry,@"title":self.nameTextField.text,@"companyName":self.companyNametextField.text};
+    NSInteger leftTextFieldString = [self.leftMoneyTextField.text  integerValue];
+    NSInteger rightTextFieldString = [self.monenyTextField.text integerValue];
+    NSInteger  money=10000 * leftTextFieldString + rightTextFieldString;
+    dictionary = @{@"userId":UID, @"type": @"equityfinancing", @"contact": self.phoneNumTextField.text, @"financingStage":financingStage, @"investAmount": [NSString stringWithFormat:@"%ld",money], @"area": self.areaSelectButton.titleLabel.text, @"industry": industry,@"title":self.nameTextField.text,@"companyName":self.companyNametextField.text};
     return dictionary;
 }
 - (void)addSdLayout
@@ -315,11 +319,24 @@
     .heightIs(ceilf(self.monenyLabel.font.lineHeight));
     [self.monenyLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
     
-    self.monenyTextField.sd_layout
+    
+    self.leftMoneyTextField.sd_layout
     .leftEqualToView(self.monenyLabel)
-    .topSpaceToView(self.phoneNumLabel, ktopToView)
-    .widthIs(MarginFactor(212.0f))
-    .heightIs(kButtonHeight);
+    .topSpaceToView(self.monenyLabel, ktopToView)
+    .widthIs(MarginFactor(96.0f))
+    .heightIs(kCategoryButtonHeight);
+    
+    self.leftMoneyMonad.sd_layout
+    .leftSpaceToView(self.leftMoneyTextField, MarginFactor(12.0f))
+    .centerYEqualToView(self.leftMoneyTextField)
+    .heightIs(MarginFactor(15.0f));
+    [self.leftMoneyMonad setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
+    
+    self.monenyTextField.sd_layout
+    .leftSpaceToView(self.leftMoneyMonad, MarginFactor(12.0f))
+    .centerYEqualToView(self.leftMoneyTextField)
+    .widthIs(MarginFactor(96.0f))
+    .heightIs(kCategoryButtonHeight);
     
     self.moneyMonad.sd_layout
     .leftSpaceToView(self.monenyTextField, kLeftToView)
@@ -327,7 +344,7 @@
     .heightIs(MarginFactor(15.0f));
     [self.moneyMonad setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
     
-    [self.monenyView setupAutoHeightWithBottomView:self.monenyTextField bottomMargin:ktopToView];
+    [self.monenyView setupAutoHeightWithBottomView:self.leftMoneyTextField bottomMargin:ktopToView];
     
     //地区
     self.areaView.sd_layout
@@ -439,7 +456,7 @@
     self.companyNametextField.leftViewMode = UITextFieldViewModeAlways;
     [self.companyNametextField setValue:[UIColor colorWithHexString:@"bebebe"] forKeyPath:@"_placeholderLabel.textColor"];
     
-    self.monenyTextField.keyboardType = UIKeyboardTypeNumberPad;
+    self.leftMoneyTextField.keyboardType = self.monenyTextField.keyboardType = UIKeyboardTypeNumberPad;
     self.phoneNumTextField.keyboardType = UIKeyboardTypeNumberPad;
     self.nextButton.titleLabel.font = FontFactor(19.0f);
     [self.nextButton setTitleColor:Color(@"ffffff") forState:UIControlStateNormal];
@@ -473,13 +490,15 @@
     self.phoneNumTextField.leftViewMode = UITextFieldViewModeAlways;
     [self.phoneNumTextField setValue:[UIColor colorWithHexString:@"bebebe"] forKeyPath:@"_placeholderLabel.textColor"];
     
-    self.monenyTextField.font = FontFactor(15.0f);
+    self.leftMoneyTextField.font = self.monenyTextField.font = FontFactor(15.0f);
     self.monenyTextField.leftView = [[UIView alloc]initWithFrame:CGRectMake(0.0f, 0.0f, 6.0f, 0.0f)];
-    self.monenyTextField.leftViewMode = UITextFieldViewModeAlways;
+    self.leftMoneyTextField.leftViewMode = self.monenyTextField.leftViewMode = UITextFieldViewModeAlways;
     [self.monenyTextField setValue:[UIColor colorWithHexString:@"bebebe"] forKeyPath:@"_placeholderLabel.textColor"];
+    self.leftMoneyTextField.leftView = [[UIView alloc]initWithFrame:CGRectMake(0.0f, 0.0f, 6.0f, 0.0f)];
+    [self.leftMoneyTextField setValue:[UIColor colorWithHexString:@"bebebe"] forKeyPath:@"_placeholderLabel.textColor"];
     
-    self.moneyMonad.font = FontFactor(15.0f);
-    self.moneyMonad.textColor = Color(@"161616");
+    self.leftMoneyMonad.font = self.moneyMonad.font = FontFactor(15.0f);
+    self.leftMoneyMonad.textColor = self.moneyMonad.textColor = Color(@"161616");
     
     self.areaSelectButton.titleLabel.font = FontFactor(15.0f);
     [self.areaSelectButton setTitleColor:Color(@"161616") forState:UIControlStateNormal];
@@ -495,8 +514,8 @@
     self.nameTextField.layer.borderColor = Color(@"cecece").CGColor;
     self.nameTextField.layer.borderWidth = 1.0f / scale;
     
-    self.monenyTextField.layer.borderColor = Color(@"cecece").CGColor;
-    self.monenyTextField.layer.borderWidth = 1.0f / scale;
+    self.leftMoneyTextField.layer.borderColor = self.monenyTextField.layer.borderColor = Color(@"cecece").CGColor;
+    self.leftMoneyTextField.layer.borderWidth = self.monenyTextField.layer.borderWidth = 1.0f / scale;
     
     self.phoneNumTextField.layer.borderColor = Color(@"cecece").CGColor;
     self.phoneNumTextField.layer.borderWidth = 1.0f / scale;
@@ -538,16 +557,34 @@
         //金额
         self.phoneNumTextField.text = [array objectAtIndex:4];
         
-        NSString *money = [array objectAtIndex:1];
-        NSString *str = [money substringWithRange:NSMakeRange(money.length - 1, 1)];
-        if ([money isEqualToString:@"暂未说明"]) {
-            self.monenyTextField.text = @"";
-        } else if ([str isEqualToString:@"亿"]){
-            self.monenyTextField.text = [[money substringToIndex:money.length - 1] stringByAppendingString:@"0000"];
+//        NSString *money = [array objectAtIndex:1];
+//        NSString *str = [money substringWithRange:NSMakeRange(money.length - 1, 1)];
+//        if ([money isEqualToString:@"暂未说明"]) {
+//            self.monenyTextField.text = @"";
+//        } else if ([str isEqualToString:@"亿"]){
+//            self.monenyTextField.text = [[money substringToIndex:money.length - 1] stringByAppendingString:@"0000"];
+//        } else{
+//            self.monenyTextField.text = [money substringWithRange:NSMakeRange(0, money.length - 1)];
+//        }
+//
+        NSInteger money = [self.object.investmoney integerValue];
+        NSString *leftText= [NSString stringWithFormat:@"%ld",money/10000];
+        NSString *rightText= [NSString stringWithFormat:@"%ld",money%10000];
+        if (![leftText isEqualToString:@"0"]) {
+            self.leftMoneyTextField.text = leftText;
+            if ([rightText isEqualToString:@"0"]) {
+                self.monenyTextField.text = @"";
+            } else{
+                self.monenyTextField.text = rightText;
+            }
         } else{
-            self.monenyTextField.text = [money substringWithRange:NSMakeRange(0, money.length - 1)];
+            self.leftMoneyTextField.text = @"";
+            if ([rightText isEqualToString:@"0"]) {
+                self.monenyTextField.text = @"";
+            } else{
+                self.monenyTextField.text = rightText;
+            }
         }
-        
         //地区
         [self.areaSelectButton setTitle:[array objectAtIndex:2] forState:UIControlStateNormal];
         [self.areaSelectButton setTitleColor:Color(@"161616") forState:UIControlStateNormal];
@@ -668,7 +705,7 @@
 
 - (BOOL)checkInputEmpty
 {
-    if (self.nameTextField.text.length == 0 && self.phoneNumTextField.text.length == 0 && [self.bondStageButtonView selectedArray].count == 0 && [self.industrySelectButton.titleLabel.text isEqualToString:@"请选择行业"] && self.monenyTextField.text.length == 0 ){
+    if (self.nameTextField.text.length == 0 && self.phoneNumTextField.text.length == 0 && [self.bondStageButtonView selectedArray].count == 0 && [self.industrySelectButton.titleLabel.text isEqualToString:@"请选择行业"] && self.monenyTextField.text.length == 0 && self.leftMoneyTextField.text.length == 0 ){
         return NO;
     } else{
         return YES;

@@ -878,18 +878,37 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
     paragraphStyle.alignment = NSTextAlignmentCenter;
     [paragraphStyle setLineSpacing:MarginFactor(6.0f)];
     
-    NSString *money = @"";
+
     NSMutableArray *tempArray = [NSMutableArray arrayWithArray:self.middleContentArray];
     for (NSString *obj in tempArray) {
         if ([obj containsString:@"金额"]) {
-            NSArray *array = [obj componentsSeparatedByString:@"："];
-            if ([[array lastObject] length] == 0) {
-                money = @"暂未说明";
-            } else{
-                money = [array lastObject];
-            }
+//            NSArray *array = [obj componentsSeparatedByString:@"："];
+//            if ([[array lastObject] length] == 0) {
+//                money = @"暂未说明";
+            //            } else{
+            //                money = [array lastObject];
+            //            }
             [self.middleContentArray removeObject:obj];
         }
+    }
+    NSString *money = @"";
+    if ([self.responseObject.investmoney isEqualToString:@"暂未说明"]) {
+        money = self.responseObject.investmoney;
+    } else{
+        NSInteger moneyInt = [self.responseObject.investmoney integerValue];
+        NSString *leftText= [NSString stringWithFormat:@"%ld",moneyInt/10000];
+        NSString *rightText= [NSString stringWithFormat:@"%ld",moneyInt%10000];
+        if ([leftText isEqualToString:@"0"]) {
+            money = [NSString stringWithFormat:@"%@万",rightText];
+        } else{
+            if ([rightText isEqualToString:@"0"]) {
+                money = [NSString stringWithFormat:@"%@亿",leftText];
+            } else{
+                money = [NSString stringWithFormat:@"%@亿%@万",leftText,rightText];
+            }
+            
+        }
+        
     }
     
     NSString *allMoney = [NSString stringWithFormat:@"%@\n%@",@"金额",money];

@@ -24,6 +24,8 @@
                 <outlet property="industrySelectButton" destination="ES6-ej-a3o" id="0CT-xu-kSx"/>
                 <outlet property="industrySelectImage" destination="CGn-aZ-xHr" id="pUF-v2-Yuu"/>
                 <outlet property="industryView" destination="2f1-kY-rDL" id="Ofv-un-1AY"/>
+                <outlet property="leftMoneyMonad" destination="a6l-yz-IbU" id="v5d-jM-Ozs"/>
+                <outlet property="leftMoneyTextField" destination="sRL-6q-Ujf" id="GdE-1m-PJZ"/>
                 <outlet property="monenyLabel" destination="HyU-SV-mbM" id="Z9n-uv-o56"/>
                 <outlet property="monenyTextField" destination="oKj-S8-hx6" id="kSh-35-jRD"/>
                 <outlet property="monenyView" destination="MGP-E5-gWb" id="x66-v2-Lro"/>
@@ -140,8 +142,8 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="76"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
-                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入金额" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" id="oKj-S8-hx6" customClass="SHGForbidCopyTextField">
-                    <rect key="frame" x="0.0" y="38" width="230" height="30"/>
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="0-9999" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" id="oKj-S8-hx6" customClass="SHGForbidCopyTextField">
+                    <rect key="frame" x="182" y="44" width="93" height="30"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits"/>
@@ -154,7 +156,20 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="万" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="bA6-y8-rFS">
-                    <rect key="frame" x="170" y="42" width="42" height="21"/>
+                    <rect key="frame" x="278" y="47" width="42" height="21"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="0-9999" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" id="sRL-6q-Ujf" customClass="SHGForbidCopyTextField">
+                    <rect key="frame" x="0.0" y="43" width="93" height="30"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits"/>
+                </textField>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="亿" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="a6l-yz-IbU">
+                    <rect key="frame" x="99" y="46" width="42" height="21"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -163,7 +178,7 @@
             </subviews>
             <color key="backgroundColor" red="0.97254901959999995" green="0.97254901959999995" blue="0.97254901959999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <point key="canvasLocation" x="-729" y="336"/>
+            <point key="canvasLocation" x="-568" y="330"/>
         </view>
         <view contentMode="scaleToFill" id="Rrm-7y-VCe">
             <rect key="frame" x="0.0" y="0.0" width="320" height="76"/>

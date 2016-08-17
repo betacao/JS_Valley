@@ -29,6 +29,7 @@
 @property (strong, nonatomic) NSString *highestRate;
 @property (strong, nonatomic) NSString *industry;
 @property (strong, nonatomic) NSString *investAmount;
+@property (strong, nonatomic) NSString *investmoney;
 @property (strong, nonatomic) NSString *investModel;
 @property (strong, nonatomic) NSString *title;
 @property (strong, nonatomic) NSString *uid;
