@@ -677,6 +677,7 @@
 		F9172D881D643A67000BA546 /* SHGCircleManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F9172D871D643A67000BA546 /* SHGCircleManager.m */; };
 		F9172D8C1D643B28000BA546 /* SHGCircleSearchResultViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9172D8A1D643B28000BA546 /* SHGCircleSearchResultViewController.m */; };
 		F9172D8D1D643B28000BA546 /* SHGCircleSearchResultViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9172D8B1D643B28000BA546 /* SHGCircleSearchResultViewController.xib */; };
+		F9172D901D6451B5000BA546 /* SHGHomeCategoryView.m in Sources */ = {isa = PBXBuildFile; fileRef = F9172D8F1D6451B5000BA546 /* SHGHomeCategoryView.m */; };
 		F91982B81C59B8F500A450B9 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = F91982B71C59B8F500A450B9 /* libsqlite3.tbd */; };
 		F91982BA1C59B92500A450B9 /* libz.1.2.5.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = F91982B91C59B92500A450B9 /* libz.1.2.5.tbd */; };
 		F91982BC1C59B93500A450B9 /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = F91982BB1C59B93500A450B9 /* libicucore.tbd */; };
@@ -1703,6 +1704,8 @@
 		F9172D891D643B28000BA546 /* SHGCircleSearchResultViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGCircleSearchResultViewController.h; sourceTree = "<group>"; };
 		F9172D8A1D643B28000BA546 /* SHGCircleSearchResultViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGCircleSearchResultViewController.m; sourceTree = "<group>"; };
 		F9172D8B1D643B28000BA546 /* SHGCircleSearchResultViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGCircleSearchResultViewController.xib; sourceTree = "<group>"; };
+		F9172D8E1D6451B5000BA546 /* SHGHomeCategoryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGHomeCategoryView.h; sourceTree = "<group>"; };
+		F9172D8F1D6451B5000BA546 /* SHGHomeCategoryView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGHomeCategoryView.m; sourceTree = "<group>"; };
 		F91982B71C59B8F500A450B9 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		F91982B91C59B92500A450B9 /* libz.1.2.5.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.1.2.5.tbd; path = usr/lib/libz.1.2.5.tbd; sourceTree = SDKROOT; };
 		F91982BB1C59B93500A450B9 /* libicucore.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libicucore.tbd; path = usr/lib/libicucore.tbd; sourceTree = SDKROOT; };
@@ -2627,13 +2630,15 @@
 		614AD1BA1AD7AFED00DDF43E /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				F9E2A4AE1BE99A4C00ECB234 /* SHGSegmentController.h */,
-				F9E2A4AF1BE99A4C00ECB234 /* SHGSegmentController.m */,
 				F9172D861D643A67000BA546 /* SHGCircleManager.h */,
 				F9172D871D643A67000BA546 /* SHGCircleManager.m */,
+				F9E2A4AE1BE99A4C00ECB234 /* SHGSegmentController.h */,
+				F9E2A4AF1BE99A4C00ECB234 /* SHGSegmentController.m */,
 				614AD1BB1AD7AFED00DDF43E /* SHGHomeViewController.h */,
 				614AD1BC1AD7AFED00DDF43E /* SHGHomeViewController.m */,
 				614AD1BD1AD7AFED00DDF43E /* SHGHomeViewController.xib */,
+				F9172D8E1D6451B5000BA546 /* SHGHomeCategoryView.h */,
+				F9172D8F1D6451B5000BA546 /* SHGHomeCategoryView.m */,
 				F9352BFE1CFBD25C00778635 /* SHGNewsViewController.h */,
 				F9352BFF1CFBD25C00778635 /* SHGNewsViewController.m */,
 				F9352C001CFBD25C00778635 /* SHGNewsViewController.xib */,
@@ -4938,6 +4943,7 @@
 				5331DF1C1AFC017600E035B8 /* ApplyFriendCell.m in Sources */,
 				F9EDD5F81BABFBCF00506C0C /* SDPhotoGroup.m in Sources */,
 				6187D2DC1AF1C693008E1D21 /* FacialView.m in Sources */,
+				F9172D901D6451B5000BA546 /* SHGHomeCategoryView.m in Sources */,
 				61D62BEF1ADD1C4D002DD395 /* MOCHTTPResponse.m in Sources */,
 				F9172D841D643929000BA546 /* SHGLinkViewController.m in Sources */,
 				F916B5FC1D0D395300AE217F /* CTTextEmojiUtil.m in Sources */,

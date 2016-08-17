@@ -11,6 +11,7 @@
 #import "SHGBusinessListViewController.h"
 #import "SHGDiscoveryViewController.h"
 #import "SHGBusinessManager.h"
+#import "SHGCircleManager.h"
 #import "HeadImage.h"
 #import "sys/utsname.h"
 #import <MessageUI/MessageUI.h>
@@ -164,38 +165,34 @@
     [[SHGHomeViewController sharedController] requestRecommendFriends];
     [[SHGHomeViewController sharedController] loadRegisterPushFriend];
     NSDictionary *param = @{@"uid":UID, @"type":@"all", @"target":@"first", @"rid":@(0), @"num": rRequestNum, @"tagId": @"-1"};
-
     WEAK(self, weakSelf);
-    [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,dynamicNew] class:[CircleListObj class] parameters:param success:^(MOCHTTPResponse *response){
-        NSLog(@"首页预加载数据成功");
-        NSArray *array = [response.dataDictionary objectForKey:@"normalpostlist"];
-        array = [self parseServerJsonArrayToJSONModel:array class:[CircleListObj class]];
-        [weakSelf.homeListArray removeAllObjects];
-        [weakSelf.homeListArray addObjectsFromArray:array];
+    [SHGCircleManager getListDataWithParam:param block:^(NSArray *normalArray, NSArray *adArray) {
+        if (normalArray && adArray) {
+            [weakSelf.homeListArray removeAllObjects];
+            [weakSelf.homeListArray addObjectsFromArray:normalArray];
 
-        array = [response.dataDictionary objectForKey:@"adlist"];
-        array = [self parseServerJsonArrayToJSONModel:array class:[CircleListObj class]];
-        [weakSelf.homeAdArray removeAllObjects];
-        [weakSelf.homeAdArray addObjectsFromArray:array];
+            [weakSelf.homeAdArray removeAllObjects];
+            [weakSelf.homeAdArray addObjectsFromArray:adArray];
 
-        [weakSelf.homeArray removeAllObjects];
-        [weakSelf.homeArray addObjectsFromArray:weakSelf.homeListArray];
-        if(weakSelf.homeArray.count > 0){
-            for(CircleListObj *obj in weakSelf.homeAdArray){
-                NSInteger index = [obj.displayposition integerValue] - 1;
-                [weakSelf.homeArray insertObject:obj atIndex:index];
+            [weakSelf.homeArray removeAllObjects];
+            [weakSelf.homeArray addObjectsFromArray:weakSelf.homeListArray];
+            if(weakSelf.homeArray.count > 0){
+                for(CircleListObj *obj in weakSelf.homeAdArray){
+                    NSInteger index = [obj.displayposition integerValue] - 1;
+                    [weakSelf.homeArray insertObject:obj atIndex:index];
+                }
+            } else {
+                [weakSelf.homeArray addObjectsFromArray:weakSelf.homeAdArray];
             }
-        }else{
-            [weakSelf.homeArray addObjectsFromArray:weakSelf.homeAdArray];
-        }
 
-        if(weakSelf.CompletionBlock){
-            weakSelf.CompletionBlock(weakSelf.homeArray, weakSelf.homeListArray, weakSelf.homeAdArray);
-        }
-    } failed:^(MOCHTTPResponse *response){
-        [weakSelf.homeListArray removeAllObjects];
-        if(weakSelf.CompletionBlock){
-            weakSelf.CompletionBlock(weakSelf.homeArray, weakSelf.homeListArray, weakSelf.homeAdArray);
+            if(weakSelf.CompletionBlock){
+                weakSelf.CompletionBlock(weakSelf.homeArray, weakSelf.homeListArray, weakSelf.homeAdArray);
+            }
+        } else {
+            [weakSelf.homeListArray removeAllObjects];
+            if(weakSelf.CompletionBlock){
+                weakSelf.CompletionBlock(weakSelf.homeArray, weakSelf.homeListArray, weakSelf.homeAdArray);
+            }
         }
     }];
 }

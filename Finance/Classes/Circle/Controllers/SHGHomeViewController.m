@@ -21,23 +21,24 @@
 #import "SHGRecommendTableViewCell.h"
 #import "EMSearchBar.h"
 #import "SHGNewFriendTableViewCell.h"
+#import "SHGCircleManager.h"
+#import "SHGHomeCategoryView.h"
 
 
 @interface SHGHomeViewController ()<CircleListDelegate, UISearchBarDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (strong, nonatomic) SHGHomeCategoryView *categoryView;
 //判断是否已经加载过推荐列表
 @property (strong, nonatomic) NSMutableArray *recommendArray;
 @property (strong, nonatomic) SHGNewFriendObject *friendObject;
 
-@property (assign, nonatomic) BOOL hasDataFinished;
-
 @property (strong, nonatomic) SHGNoticeView *newMessageNoticeView;
 @property (assign, nonatomic) BOOL isRefreshing;
-@property (strong, nonatomic) UITableViewCell *emptyCell;
 @property (strong, nonatomic) SHGEmptyDataView *emptyView;
 
 @property (strong, nonatomic) NSMutableDictionary *heightDictionary;
+
 @end
 
 @implementation SHGHomeViewController
@@ -52,21 +53,29 @@
     return sharedGlobleInstance;
 }
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
-   
-    self.tableView.backgroundColor = Color(@"efeeef");
-    self.needShowNewFriend = YES;
-    self.tableView.sd_layout
-    .leftSpaceToView(self.view, 0.0f)
-    .rightSpaceToView(self.view, 0.0f)
-    .bottomSpaceToView(self.view, kTabBarHeight)
-    .topSpaceToView(self.view, 0.0f);
     
+    self.needShowNewFriend = YES;
+
+    self.tableView.backgroundColor = Color(@"efeeef");
+    self.tableView.hidden = YES;
+    self.tableView.sd_layout
+    .spaceToSuperView(UIEdgeInsetsMake(0.0f, 0.0f, kTabBarHeight, 0.0f));
+
+    self.emptyView.sd_layout
+    .spaceToSuperView(UIEdgeInsetsMake(0.0f, 0.0f, kTabBarHeight, 0.0f));
+
+    self.categoryView = [SHGHomeCategoryView shareCategoryView];
+    [self.view addSubview:self.categoryView];
+    
+    self.categoryView.sd_layout
+    .spaceToSuperView(UIEdgeInsetsMake(0.0f, 0.0f, kTabBarHeight, 0.0f));
+
     [self loadPreLoadingData];
     [self addHeaderRefresh:self.tableView headerRefesh:YES headerTitle:@{kRefreshStateIdle:@"下拉可以刷新", kRefreshStatePulling:@"释放后查看最新动态", kRefreshStateRefreshing:@"正在努力加载中"} andFooter:YES footerTitle:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshData) name:NOTIFI_SENDPOST object:nil];
-    
 }
 
 - (void)loadPreLoadingData
@@ -100,17 +109,6 @@
     };
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    [MobClick event:@"SHGHomeViewController" label:@"onClick"];
-}
-
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-}
-
 - (NSMutableArray *)currentDataArray
 {
     return self.dataArr;
@@ -138,21 +136,11 @@
     return _newMessageNoticeView;
 }
 
-- (UITableViewCell *)emptyCell
-{
-    if (!_emptyCell) {
-        _emptyCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
-        _emptyCell.selectionStyle = UITableViewCellSelectionStyleNone;
-        [_emptyCell.contentView addSubview:self.emptyView];
-    }
-    return _emptyCell;
-}
-
-
 - (SHGEmptyDataView *)emptyView
 {
     if (!_emptyView) {
         _emptyView = [[SHGEmptyDataView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, SCREENWIDTH, SCREENHEIGHT)];
+        [self.view insertSubview:_emptyView belowSubview:self.tableView];
     }
     return _emptyView;
 }
@@ -230,6 +218,7 @@
 - (void)setNeedRefreshTableView:(BOOL)needRefreshTableView
 {
     WEAK(self, weakSelf);
+    self.tableView.hidden = !(self.dataArr.count > 0);
     if (needRefreshTableView && !_needRefreshTableView) {
         _needRefreshTableView = YES;
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -294,50 +283,34 @@
             }];
         }
     }];
-    [self.tableView reloadData];
+    self.needRefreshTableView = YES;
 
 }
 
 - (void)requestDataWithTarget:(NSString *)target time:(NSString *)time
 {
     self.isRefreshing = YES;
-
-    if ([target isEqualToString:@"first"]){
-        [self.tableView.mj_footer resetNoMoreData];
-        self.hasDataFinished = NO;
-    }
-
-    NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
     NSInteger rid = [time integerValue];
-    NSDictionary *param = @{@"uid":uid, @"type":@"all", @"target":target, @"rid":@(rid), @"num": rRequestNum, @"tagId" : @"-1"};
+    NSDictionary *param = @{@"uid":UID, @"type":@"all", @"target":target, @"rid":@(rid), @"num": rRequestNum, @"tagId" : @"-1"};
 
     WEAK(self, weakSelf);
-    [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,dynamicNew] class:[CircleListObj class] parameters:param success:^(MOCHTTPResponse *response){
+    [SHGCircleManager getListDataWithParam:param block:^(NSArray *normalArray, NSArray *adArray) {
         [Hud hideHud];
-        weakSelf.isRefreshing = NO;
-        [weakSelf assembleDictionary:response.dataDictionary target:target];
-        weakSelf.needRefreshTableView = YES;
-        [weakSelf.tableView.mj_header endRefreshing];
-        [weakSelf.tableView.mj_footer endRefreshing];
-
-    } failed:^(MOCHTTPResponse *response){
-        weakSelf.isRefreshing = NO;
-        [Hud showMessageWithText:response.errorMessage];
-        NSLog(@"%@",response.errorMessage);
-        [weakSelf.tableView.mj_header endRefreshing];
-        [weakSelf.tableView.mj_footer endRefreshing];
-        [Hud hideHud];
+         weakSelf.isRefreshing = NO;
+        if (normalArray && adArray) {
+            [weakSelf assembleNormalArray:normalArray adArray:adArray target:target];
+            weakSelf.needRefreshTableView = YES;
+            [weakSelf.tableView.mj_header endRefreshing];
+            [weakSelf.tableView.mj_footer endRefreshing];
+        } else {
+            [weakSelf.tableView.mj_header endRefreshing];
+            [weakSelf.tableView.mj_footer endRefreshing];
+        }
     }];
 }
 
-- (void)assembleDictionary:(NSDictionary *)dictionary target:(NSString *)target
+- (void)assembleNormalArray:(NSArray *)normalArray adArray:(NSArray *)adArray target:(NSString *)target
 {
-    //普通数据
-    NSArray *normalArray = [dictionary objectForKey:@"normalpostlist"];
-    normalArray = [[SHGGloble sharedGloble] parseServerJsonArrayToJSONModel:normalArray class:[CircleListObj class]];
-    //推广数据
-    NSArray *adArray = [dictionary objectForKey:@"adlist"];
-    adArray = [[SHGGloble sharedGloble] parseServerJsonArrayToJSONModel:adArray class:[CircleListObj class]];
     [self.adArray removeAllObjects];
     [self.adArray addObjectsFromArray:adArray];
 
@@ -386,11 +359,6 @@
     } else if ([target isEqualToString:@"load"]){
         [self.listArray addObjectsFromArray:normalArray];
         [self.dataArr addObjectsFromArray:normalArray];
-        if (IsArrEmpty(normalArray)){
-            self.hasDataFinished = YES;
-        } else{
-            self.hasDataFinished = NO;
-        }
     }
 }
 
@@ -410,10 +378,6 @@
 
 - (void)refreshFooter
 {
-    if (self.hasDataFinished){
-        [self.tableView.mj_footer endRefreshingWithNoMoreData];
-        return;
-    }
     NSLog(@"refreshFooter");
     if (self.dataArr.count > 0){
         [self requestDataWithTarget:@"load" time:[self refreshMinRid]];
@@ -453,68 +417,59 @@
 
 #pragma mark =============  UITableView DataSource  =============
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    return 1;
-}
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (self.dataArr.count > 0) {
-        NSObject *obj = [self.dataArr objectAtIndex: indexPath.row];
-        if([obj isKindOfClass:[NSArray class]]){
-            NSString *identifier1 = @"SHGRecommendTableViewCell";
-            SHGRecommendTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier1];
-            if (!cell){
-                cell = [[[NSBundle mainBundle] loadNibNamed:@"SHGRecommendTableViewCell" owner:self options:nil] lastObject];
+    NSObject *obj = [self.dataArr objectAtIndex: indexPath.row];
+    if([obj isKindOfClass:[NSArray class]]){
+        NSString *identifier1 = @"SHGRecommendTableViewCell";
+        SHGRecommendTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier1];
+        if (!cell){
+            cell = [[[NSBundle mainBundle] loadNibNamed:@"SHGRecommendTableViewCell" owner:self options:nil] lastObject];
+        }
+        NSMutableArray *array = [self.dataArr objectAtIndex:indexPath.row];
+        cell.objectArray = array;
+        cell.controller = self;
+        return cell;
+
+    } else if ([obj isKindOfClass:[SHGNewFriendObject class]]){
+
+        NSString *identifier2 = @"SHGNewFriendTableViewCell";
+        SHGNewFriendTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier2];
+        if (!cell){
+            cell = [[[NSBundle mainBundle] loadNibNamed:@"SHGNewFriendTableViewCell" owner:self options:nil] lastObject];
+        }
+        SHGNewFriendObject *object = [self.dataArr objectAtIndex:indexPath.row];
+        cell.object = object;
+        [cell useCellFrameCacheWithIndexPath:indexPath tableView:tableView];
+        return cell;
+
+    } else{
+        CircleListObj *obj = [self.dataArr objectAtIndex:indexPath.row];
+        if (![obj.postType isEqualToString:@"ad"]){
+            if ([obj.status boolValue]){
+                NSString *identifier3 = @"SHGMainPageTableViewCell";
+                SHGMainPageTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier3];
+                if (!cell){
+                    cell = [[[NSBundle mainBundle] loadNibNamed:@"SHGMainPageTableViewCell" owner:self options:nil] lastObject];
+                }
+                cell.index = indexPath.row;
+                cell.object = obj;
+                cell.delegate = [SHGUnifiedTreatment sharedTreatment];
+                [cell useCellFrameCacheWithIndexPath:indexPath tableView:tableView];
+                return cell;
             }
-            NSMutableArray *array = [self.dataArr objectAtIndex:indexPath.row];
-            cell.objectArray = array;
-            cell.controller = self;
-            return cell;
-
-        } else if ([obj isKindOfClass:[SHGNewFriendObject class]]){
-
-            NSString *identifier2 = @"SHGNewFriendTableViewCell";
-            SHGNewFriendTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier2];
-            if (!cell){
-                cell = [[[NSBundle mainBundle] loadNibNamed:@"SHGNewFriendTableViewCell" owner:self options:nil] lastObject];
-            }
-            SHGNewFriendObject *object = [self.dataArr objectAtIndex:indexPath.row];
-            cell.object = object;
-            [cell useCellFrameCacheWithIndexPath:indexPath tableView:tableView];
-            return cell;
-
         } else{
-            CircleListObj *obj = [self.dataArr objectAtIndex:indexPath.row];
-            if (![obj.postType isEqualToString:@"ad"]){
-                if ([obj.status boolValue]){
-                    NSString *identifier3 = @"SHGMainPageTableViewCell";
-                    SHGMainPageTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier3];
-                    if (!cell){
-                        cell = [[[NSBundle mainBundle] loadNibNamed:@"SHGMainPageTableViewCell" owner:self options:nil] lastObject];
-                    }
-                    cell.index = indexPath.row;
-                    cell.object = obj;
-                    cell.delegate = [SHGUnifiedTreatment sharedTreatment];
-                    [cell useCellFrameCacheWithIndexPath:indexPath tableView:tableView];
-                    return cell;
+            if ([obj.status boolValue]){
+                NSString *identifier4 = @"SHGExtendTableViewCell";
+                SHGExtendTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier4];
+                if (!cell){
+                    cell = [[[NSBundle mainBundle] loadNibNamed:@"SHGExtendTableViewCell" owner:self options:nil] lastObject];
                 }
-            } else{
-                if ([obj.status boolValue]){
-                    NSString *identifier4 = @"SHGExtendTableViewCell";
-                    SHGExtendTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier4];
-                    if (!cell){
-                        cell = [[[NSBundle mainBundle] loadNibNamed:@"SHGExtendTableViewCell" owner:self options:nil] lastObject];
-                    }
-                    cell.object = obj;
-                    [cell useCellFrameCacheWithIndexPath:indexPath tableView:tableView];
-                    return cell;
-                }
+                cell.object = obj;
+                [cell useCellFrameCacheWithIndexPath:indexPath tableView:tableView];
+                return cell;
             }
         }
-    } else{
-        return self.emptyCell;
     }
     return nil;
 }
@@ -525,35 +480,29 @@
 
 - (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (self.dataArr.count > 0) {
-        id object = [self.dataArr objectAtIndex:indexPath.row];
-        if([object isKindOfClass:[CircleListObj class]]){
+    id object = [self.dataArr objectAtIndex:indexPath.row];
+    if([object isKindOfClass:[CircleListObj class]]){
 
-            if (![((CircleListObj *)object).postType isEqualToString:@"ad"]){
-                return SCREENWIDTH;
-            } else{
-                return MarginFactor(198.0f);
-            }
-
-        } else if([object isKindOfClass:[NSArray class]]){
-
-            return MarginFactor(60.0f) * ((NSArray *)object).count;
-
-        } else if ([object isKindOfClass:[SHGNewFriendObject class]]){
-
-            return MarginFactor(140.0f);
-
+        if (![((CircleListObj *)object).postType isEqualToString:@"ad"]){
+            return SCREENWIDTH;
+        } else{
+            return MarginFactor(198.0f);
         }
-        return SCREENWIDTH;
+
+    } else if([object isKindOfClass:[NSArray class]]){
+
+        return MarginFactor(60.0f) * ((NSArray *)object).count;
+
+    } else if ([object isKindOfClass:[SHGNewFriendObject class]]){
+
+        return MarginFactor(140.0f);
+
     }
-    return SCREENHEIGHT;
+    return SCREENWIDTH;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (self.dataArr.count == 0) {
-        return CGRectGetHeight(self.view.frame) - kTabBarHeight;
-    }
     CircleListObj *obj = [self.dataArr objectAtIndex:indexPath.row];
 
     if([obj isKindOfClass:[CircleListObj class]]){
@@ -600,39 +549,30 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (self.dataArr.count > 0) {
-        tableView.showsVerticalScrollIndicator = YES;
-        NSInteger count = self.dataArr.count;
-        return count;
-    } else{
-        tableView.showsVerticalScrollIndicator = NO;
-        return 1;
-    }
-
+    NSInteger count = self.dataArr.count;
+    return count;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (self.dataArr.count > 0) {
-        CircleListObj *object = self.dataArr[indexPath.row];
+    CircleListObj *object = self.dataArr[indexPath.row];
 
-        if([object isKindOfClass:[CircleListObj class]]){
-            if (!IsStrEmpty(object.feedhtml)){
-                NSLog(@"%@",object.feedhtml);
-                [[SHGGloble sharedGloble] recordUserAction:object.rid type:@"dynamic_spread"];
-                SHGLinkViewController *controller = [[SHGLinkViewController alloc]init];
-                controller.url = object.feedhtml;
-                controller.object = object;
-                [self.navigationController pushViewController:controller animated:YES];
-            } else {
-                [[SHGGloble sharedGloble] recordUserAction:object.rid type:@"dynamic_viewAllComment"];
-                CircleDetailViewController *controller = [[CircleDetailViewController alloc] init];
-                controller.delegate = [SHGUnifiedTreatment sharedTreatment];
-                controller.rid = object.rid;
-                NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:object.praisenum, kPraiseNum,object.sharenum,kShareNum,object.cmmtnum,kCommentNum, nil];
-                controller.itemInfoDictionary = dictionary;
-                [self.navigationController pushViewController:controller animated:YES];
-            }
+    if([object isKindOfClass:[CircleListObj class]]){
+        if (!IsStrEmpty(object.feedhtml)){
+            NSLog(@"%@",object.feedhtml);
+            [[SHGGloble sharedGloble] recordUserAction:object.rid type:@"dynamic_spread"];
+            SHGLinkViewController *controller = [[SHGLinkViewController alloc]init];
+            controller.url = object.feedhtml;
+            controller.object = object;
+            [self.navigationController pushViewController:controller animated:YES];
+        } else {
+            [[SHGGloble sharedGloble] recordUserAction:object.rid type:@"dynamic_viewAllComment"];
+            CircleDetailViewController *controller = [[CircleDetailViewController alloc] init];
+            controller.delegate = [SHGUnifiedTreatment sharedTreatment];
+            controller.rid = object.rid;
+            NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:object.praisenum, kPraiseNum,object.sharenum,kShareNum,object.cmmtnum,kCommentNum, nil];
+            controller.itemInfoDictionary = dictionary;
+            [self.navigationController pushViewController:controller animated:YES];
         }
     }
 }

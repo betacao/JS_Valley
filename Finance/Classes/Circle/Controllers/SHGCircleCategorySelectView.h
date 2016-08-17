@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-typedef void(^SHGCircleCategorySelectBlock)(NSString *string);
+typedef void(^SHGCircleCategorySelectBlock)(NSString *category);
 
 @interface SHGCircleCategorySelectView : UIView
 

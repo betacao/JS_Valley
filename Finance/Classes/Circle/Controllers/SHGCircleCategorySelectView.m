@@ -38,6 +38,7 @@
     self.contentView.backgroundColor = [UIColor whiteColor];
 
     self.titleArray = @[@"全部", @"债权融资", @"股权融资", @"资金", @"银证业务"];
+
     CGFloat width = ceilf((SCREENWIDTH - 4.0f * kButtonHorizontalMargin) / 3.0f);
     CGFloat height = MarginFactor(26.0f);
     UIImage *image = [[UIImage imageNamed:@"category_bg"] resizableImageWithCapInsets:UIEdgeInsetsMake(5.0f, 5.0f, 5.0f, 5.0f) resizingMode:UIImageResizingModeStretch];
@@ -72,23 +73,33 @@
 
 }
 
-- (void)buttonClick:(UIButton *)button
+- (void)setAlpha:(CGFloat)alpha
 {
     [UIView animateWithDuration:0.25f animations:^{
-        self.alpha = 0.0f;
+        [super setAlpha:alpha];
     }];
+}
+
+- (void)buttonClick:(UIButton *)button
+{
+    self.alpha = 0.0f;
     if (self.block) {
         self.block(button.titleLabel.text);
+    }
+}
+
+- (void)didMoveToSuperview
+{
+    [super didMoveToSuperview];
+    if (self.block) {
+        self.block([self.titleArray firstObject]);
     }
 }
 
 - (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
     [super touchesEnded:touches withEvent:event];
-
-    [UIView animateWithDuration:0.25f animations:^{
-        self.alpha = 0.0f;
-    }];
+    self.alpha = 0.0f;
 }
 
 @end

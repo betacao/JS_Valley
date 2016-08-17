@@ -10,6 +10,10 @@
 
 @interface SHGCircleManager : NSObject
 
++ (void)getListDataWithParam:(NSDictionary *)param block:(void (^)(NSArray *normalArray, NSArray *adArray))block;
+
 + (void)loadHotSearchWordFinishBlock:(void (^)(NSArray *array))block;
+
++ (void)getListDataWithCategory:(NSDictionary *)param block:(void (^)(NSArray *array))block;
 
 @end

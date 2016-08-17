@@ -32,6 +32,7 @@
 #import "SHGCircleSendViewController.h"
 #import "SHGCircleCategorySelectView.h"
 #import "SHGCircleSearchViewController.h"
+#import "SHGHomeCategoryView.h"
 
 //两次提示的默认间隔
 static const CGFloat kDefaultPlaySoundInterval = 3.0;
@@ -122,15 +123,23 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     [self.view addSubview:contentContainerView];
     [self reloadTabButtons];
     if(self.block){
-        self.text = @"全部";
         self.block(self.titleButton);
     }
     [SHGGlobleOperation registerAttationClass:[self class] method:@selector(loadAttationState:attationState:)];
     [self.categorySelectView addObserver:self forKeyPath:@"alpha" options:NSKeyValueObservingOptionNew context:nil];
     WEAK(self, weakSelf);
-    self.categorySelectView.block = ^(NSString *string){
-//weakSelf
+    self.categorySelectView.block = ^(NSString *category){
+        weakSelf.text = category;
+        [SHGHomeCategoryView shareCategoryView].category = category;
     };
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    if (!self.categorySelectView.superview) {
+        [self.view.window addSubview:self.categorySelectView];
+    }
 }
 
 - (UIButton *)titleButton
@@ -208,9 +217,6 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
         _categorySelectView.frame = CGRectMake(0.0f, kNavigationBarHeight + kStatusBarHeight, SCREENWIDTH, SCREENHEIGHT - kNavigationBarHeight - kStatusBarHeight);
         _categorySelectView.alpha = 0.0f;
     }
-    if (!_categorySelectView.superview) {
-        [self.view.window addSubview:_categorySelectView];
-    }
     return _categorySelectView;
 }
 
@@ -246,15 +252,7 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
 
 - (void)showCircleCategorySelectView:(UIButton *)button
 {
-    if (self.categorySelectView.alpha == 0.0f) {
-        [UIView animateWithDuration:0.25f animations:^{
-            self.categorySelectView.alpha = 1.0f;
-        }];
-    } else {
-        [UIView animateWithDuration:0.25f animations:^{
-            self.categorySelectView.alpha = 0.0f;
-        }];
-    }
+    self.categorySelectView.alpha = 1.0f - self.categorySelectView.alpha;
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context
@@ -357,6 +355,7 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
 //搜索
 - (void)actionSearch:(UIButton *)button
 {
+    self.categorySelectView.alpha = 0.0f;
     SHGCircleSearchViewController *controller = [[SHGCircleSearchViewController alloc] init];
     [self.navigationController pushViewController:controller animated:YES];
 }
@@ -364,6 +363,7 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
 //发布
 - (void)actionPost:(UIButton *)button
 {
+    self.categorySelectView.alpha = 0.0f;
     [[SHGGloble sharedGloble] requestUserVerifyStatusCompletion:^(BOOL state,NSString *auditState) {
         if (state) {
             SHGCircleSendViewController *controller = [[SHGCircleSendViewController alloc] init];
