@@ -122,15 +122,18 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     contentContainerView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     [self.view addSubview:contentContainerView];
     [self reloadTabButtons];
-    if(self.block){
-        self.block(self.titleButton);
-    }
     [SHGGlobleOperation registerAttationClass:[self class] method:@selector(loadAttationState:attationState:)];
+    [SHGGlobleOperation registerPraiseClass:[self class] method:@selector(loadPraiseState:praiseState:)];
+
     [self.categorySelectView addObserver:self forKeyPath:@"alpha" options:NSKeyValueObservingOptionNew context:nil];
     WEAK(self, weakSelf);
     self.categorySelectView.block = ^(NSString *category){
         weakSelf.text = category;
         [SHGHomeCategoryView shareCategoryView].category = category;
+
+        if(weakSelf.block){
+            weakSelf.block(weakSelf.titleButton);
+        }
     };
 }
 
@@ -164,7 +167,14 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
 
 - (void)loadAttationState:(id)object attationState:(BOOL)attationState
 {
-    [[SHGHomeViewController sharedController] loadAttationState:object attationState:attationState];
+    [[SHGHomeViewController sharedController] performSelector:@selector(loadAttationState:attationState:) withObject:object withObject:@(attationState)];
+    [[SHGHomeCategoryView shareCategoryView] performSelector:@selector(loadAttationState:attationState:) withObject:object withObject:@(attationState)];
+}
+
+- (void)loadPraiseState:(id)object praiseState:(BOOL)praiseState
+{
+    [[SHGHomeViewController sharedController] performSelector:@selector(loadPraiseState:praiseState:) withObject:object withObject:@(praiseState)];
+    [[SHGHomeCategoryView shareCategoryView] performSelector:@selector(loadPraiseState:praiseState:) withObject:object withObject:@(praiseState)];
 }
 
 
@@ -271,6 +281,11 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
 {
     SHGHomeViewController *controller = [SHGHomeViewController sharedController];
     controller.needRefreshTableView = YES;
+    
+    SEL selector = NSSelectorFromString(@"setNeedRefreshTableView:");
+    IMP imp = [[SHGHomeCategoryView shareCategoryView] methodForSelector:selector];
+    void (*func)(id, SEL, BOOL) = (void *)imp;
+    func([SHGHomeCategoryView shareCategoryView], selector, YES);
 }
 
 - (void)refreshHomeView
@@ -278,6 +293,7 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     if([[self.viewControllers firstObject] respondsToSelector:@selector(refreshHeader)]){
         [[self.viewControllers firstObject] performSelector:@selector(refreshHeader)];
     }
+    [[SHGHomeCategoryView shareCategoryView] performSelector:@selector(refreshHeader)];
 }
 
 - (void)removeObject:(CircleListObj *)object

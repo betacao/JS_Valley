@@ -31,6 +31,10 @@
     self.tableView.backgroundColor = [UIColor colorWithHexString:@"efeeef"];
     [self addHeaderRefresh:self.tableView headerRefesh:NO andFooter:YES];
     [self requestPostListWithTarget:@"first" rid:@"-1"];
+
+    //这里面注册2个 是因为有可能单独进到这个页面里面，而不是通过segment
+    [SHGGlobleOperation registerAttationClass:[self class] method:@selector(singleLoadAttationState:attationState:)];
+    [SHGGlobleOperation registerPraiseClass:[self class] method:@selector(singleLoadPraiseState:praiseState:)];
 }
 
 
@@ -69,6 +73,54 @@
             CircleListObj *listObject = (CircleListObj *)obj;
             if ([listObject.userid isEqualToString:targetUserID]) {
                 listObject.isAttention = [attationState boolValue];
+            }
+        }
+    }];
+    [self.tableView reloadData];
+}
+- (void)singleLoadAttationState:(NSString *)targetUserID attationState:(BOOL)attationState
+{
+    [self.dataArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if ([obj isKindOfClass:[CircleListObj class]]) {
+            CircleListObj *listObj = (CircleListObj *)obj;
+            if ([listObj.userid isEqualToString:targetUserID]) {
+                listObj.isAttention = attationState;
+            }
+        }
+    }];
+    [self.tableView reloadData];
+}
+
+- (void)loadPraiseState:(NSString *)targetID praiseState:(NSNumber *)praiseState
+{
+    [self.dataArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if ([obj isKindOfClass:[CircleListObj class]]) {
+            CircleListObj *listObject = (CircleListObj *)obj;
+            if ([listObject.rid isEqualToString:targetID]) {
+                listObject.ispraise = [praiseState boolValue] ? @"Y" : @"N";
+                if ([praiseState boolValue]) {
+                    listObject.praisenum = [NSString stringWithFormat:@"%ld", [listObject.praisenum integerValue] + 1];
+                } else {
+                    listObject.praisenum = [NSString stringWithFormat:@"%ld", [listObject.praisenum integerValue] - 1];
+                }
+            }
+        }
+    }];
+    [self.tableView reloadData];
+}
+
+- (void)singleLoadPraiseState:(NSString *)targetID praiseState:(BOOL)praiseState
+{
+    [self.dataArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if ([obj isKindOfClass:[CircleListObj class]]) {
+            CircleListObj *listObject = (CircleListObj *)obj;
+            if ([listObject.rid isEqualToString:targetID]) {
+                listObject.ispraise = praiseState ? @"Y" : @"N";
+                if (praiseState) {
+                    listObject.praisenum = [NSString stringWithFormat:@"%ld", [listObject.praisenum integerValue] + 1];
+                } else {
+                    listObject.praisenum = [NSString stringWithFormat:@"%ld", [listObject.praisenum integerValue] - 1];
+                }
             }
         }
     }];
@@ -271,64 +323,21 @@
     }];
 }
 
-- (void)praiseClicked:(CircleListObj *)obj
-{
-    NSString *url = [NSString stringWithFormat:@"%@/%@",rBaseAddressForHttpCircle,@"praisesend"];
-    NSDictionary *param = @{@"uid":[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID],@"rid":obj.rid};
-    WEAK(self, weakSelf);
-    if (![obj.ispraise isEqualToString:@"Y"]) {
-        [Hud showWait];
-        [MOCHTTPRequestOperationManager postWithURL:url class:nil parameters:param success:^(MOCHTTPResponse *response) {
-            NSLog(@"%@",response.data);
-            NSString *code = [response.data valueForKey:@"code"];
-            if ([code isEqualToString:@"000"]) {
-                obj.ispraise = @"Y";
-                obj.praisenum = [NSString stringWithFormat:@"%ld",(long)[obj.praisenum integerValue] +1];
-                [Hud showMessageWithText:@"赞成功"];
-
-                [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_COLLECT_PRAISE_CLICK object:obj];
-            }
-            [Hud hideHud];
-            [weakSelf.tableView reloadData];
-        } failed:^(MOCHTTPResponse *response) {
-            [Hud hideHud];
-            [Hud showMessageWithText:response.errorMessage];
-        }];
-
-    } else{
-        [Hud showWait];
-        [MOCHTTPRequestOperationManager deleteWithURL:url parameters:param success:^(MOCHTTPResponse *response) {
-            [Hud hideHud];
-            NSString *code = [response.data valueForKey:@"code"];
-            if ([code isEqualToString:@"000"]) {
-                obj.ispraise = @"N";
-                obj.praisenum = [NSString stringWithFormat:@"%ld",(long)[obj.praisenum integerValue] -1];
-                [Hud showMessageWithText:@"取消点赞"];
-                [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_COLLECT_PRAISE_CLICK object:obj];
-
-            }
-            [weakSelf.tableView reloadData];
-        } failed:^(MOCHTTPResponse *response) {
-            [Hud hideHud];
-            [Hud showMessageWithText:response.errorMessage];
-        }];
-    }
-}
-
 - (void)clicked:(NSInteger )index;
 {
     CircleDetailViewController *vc = [[CircleDetailViewController alloc] initWithNibName:@"CircleDetailViewController" bundle:nil];
     CircleListObj *obj = self.dataArr[index];
     vc.hidesBottomBarWhenPushed = YES;
-    // vc.obj = obj;
     vc.delegate = self;
     vc.rid = obj.rid;
     [self.navigationController pushViewController:vc animated:YES];
 }
+
 -(void)shareToSMS:(NSString *)text rid:(NSString *)rid
 {
     [[AppDelegate currentAppdelegate] sendSmsWithText:text rid:rid];
 }
+
 - (void)shareClicked:(CircleListObj *)obj
 {
     id<ISSCAttachment> image  = [ShareSDK pngImageWithImage:[UIImage imageNamed:@"80"]];
@@ -422,13 +431,14 @@
     }];
 
 }
--(void)shareToWeibo:(NSString *)text rid:(NSString *)rid
+
+- (void)shareToWeibo:(NSString *)text rid:(NSString *)rid
 {
     [[AppDelegate currentAppdelegate] sendmessageToShareWithObjContent:text rid:rid];
 }
--(void)shareToFriendWithText:(NSString *)text rid:(NSString *)rid
-{
 
+- (void)shareToFriendWithText:(NSString *)text rid:(NSString *)rid
+{
     FriendsListViewController *vc=[[FriendsListViewController alloc] init];
     vc.isShare = YES;
     vc.shareRid = rid;
@@ -436,7 +446,7 @@
     [self.navigationController pushViewController:vc animated:YES];
 }
 
--(void)shareToFriendWithObj:(CircleListObj *)obj
+- (void)shareToFriendWithObj:(CircleListObj *)obj
 {
 
     [self circleShareWithObj:obj];
@@ -446,7 +456,7 @@
     [self.navigationController pushViewController:vc animated:YES];
 }
 
--(void)circleShareWithObj:(CircleListObj *)obj
+- (void)circleShareWithObj:(CircleListObj *)obj
 {
     NSString *url = [NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttpCircle,@"circle",obj.rid];
     NSDictionary *param = @{@"uid":[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID]};
@@ -493,21 +503,6 @@
             [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_COLLECT_DELETE_CLICK object:obj];
             break;
         }
-    }
-    [self.tableView reloadData];
-}
-
-- (void)detailPraiseWithRid:(NSString *)rid praiseNum:(NSString *)num isPraised:(NSString *)isPrased
-{
-    for (CircleListObj *obj in self.dataArr) {
-        if ([obj.rid isEqualToString:rid]) {
-            obj.praisenum = num;
-            obj.ispraise = isPrased;
-            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_COLLECT_PRAISE_CLICK object:obj];
-
-            break;
-        }
-
     }
     [self.tableView reloadData];
 }

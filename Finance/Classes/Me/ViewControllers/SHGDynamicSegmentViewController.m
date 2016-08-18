@@ -34,6 +34,8 @@
     self.navigationItem.titleView = titleView;
 
     [SHGGlobleOperation registerAttationClass:[self class] method:@selector(loadAttationState:attationState:)];
+
+    [SHGGlobleOperation registerPraiseClass:[self class] method:@selector(loadPraiseState:praiseState:)];
 }
 
 
@@ -42,6 +44,15 @@
     for (UIViewController *controller in self.viewControllers) {
         if ([controller respondsToSelector:@selector(loadAttationState:attationState:)]) {
             [controller performSelector:@selector(loadAttationState:attationState:) withObject:targetUserID withObject:@(attationState)];
+        }
+    }
+}
+
+- (void)loadPraiseState:(NSString *)targetID praiseState:(BOOL)praiseState
+{
+    for (UIViewController *controller in self.viewControllers) {
+        if ([controller respondsToSelector:@selector(loadPraiseState:praiseState:)]) {
+            [controller performSelector:@selector(loadPraiseState:praiseState:) withObject:targetID withObject:@(praiseState)];
         }
     }
 }

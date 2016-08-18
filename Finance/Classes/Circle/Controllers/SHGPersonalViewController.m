@@ -80,7 +80,7 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
     [self initView];
     [self addSdLayout];
     self.tableView.separatorStyle = UITableViewCellSelectionStyleNone;
-    [self requestDataWithTarget:@"first" time:@""];
+    [self requestDataWithTarget:@"first" time:@"-1"];
     [SHGGlobleOperation registerAttationClass:[self class] method:@selector(loadAttationState:attationState:)];
 }
 

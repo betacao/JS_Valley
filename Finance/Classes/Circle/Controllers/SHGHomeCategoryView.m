@@ -115,6 +115,33 @@
     }
 }
 
+- (void)loadAttationState:(NSString *)targetUserID attationState:(NSNumber *)attationState
+{
+    [self.dataArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        CircleListObj *listObject = (CircleListObj *)obj;
+        if ([listObject.userid isEqualToString:targetUserID]) {
+            listObject.isAttention = [attationState boolValue];
+        }
+    }];
+    self.needRefreshTableView = YES;
+}
+
+- (void)loadPraiseState:(NSString *)targetID praiseState:(NSNumber *)praiseState
+{
+    [self.dataArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        CircleListObj *listObject = (CircleListObj *)obj;
+        if ([listObject.rid isEqualToString:targetID]) {
+            listObject.ispraise = [praiseState boolValue] ? @"Y" : @"N";
+            if ([praiseState boolValue]) {
+                listObject.praisenum = [NSString stringWithFormat:@"%ld", [listObject.praisenum integerValue] + 1];
+            } else {
+                listObject.praisenum = [NSString stringWithFormat:@"%ld", [listObject.praisenum integerValue] - 1];
+            }
+        }
+    }];
+    self.needRefreshTableView = YES;
+}
+
 - (void)refreshHeader
 {
     NSLog(@"refreshHeader");

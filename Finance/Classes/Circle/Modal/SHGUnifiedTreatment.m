@@ -32,7 +32,6 @@
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(smsShareSuccess:) name:NOTIFI_CHANGE_SHARE_TO_SMSSUCCESS object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(smsShareSuccess:) name:NOTIFI_CHANGE_SHARE_TO_FRIENDSUCCESS object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(commentsChanged:) name:NOTIFI_COLLECT_COMMENT_CLIC object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(praiseChanged:) name:NOTIFI_COLLECT_PRAISE_CLICK object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shareChanged:) name:NOTIFI_COLLECT_SHARE_CLIC object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(deleteChanged:) name:NOTIFI_COLLECT_DELETE_CLICK object:nil];
     }
@@ -77,56 +76,6 @@
         [[SHGSegmentController sharedSegmentController].selectedViewController.navigationController pushViewController:controller animated:YES];
     }
 }
-
-#pragma mark -点赞
-- (void)praiseClicked:(CircleListObj *)obj
-{
-    NSString *url = [NSString stringWithFormat:@"%@/%@",rBaseAddressForHttpCircle,@"praisesend"];
-    NSDictionary *param = @{@"uid":[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID],@"rid":obj.rid};
-    if (![obj.ispraise isEqualToString:@"Y"]){
-        [Hud showWait];
-        [MOCHTTPRequestOperationManager postWithURL:url class:nil parameters:param success:^(MOCHTTPResponse *response){
-            NSLog(@"%@",response.data);
-            NSString *code = [response.data valueForKey:@"code"];
-            if ([code isEqualToString:@"000"]){
-                NSArray *array = [[SHGSegmentController sharedSegmentController] targetObjectsByRid:obj.rid];
-                for (CircleListObj *object in array) {
-                    object.ispraise = @"Y";
-                    object.praisenum = [NSString stringWithFormat:@"%ld",(long)([object.praisenum integerValue] + 1)];
-                }
-                [Hud showMessageWithText:@"赞成功"];
-            }
-            [MobClick event:@"ActionPraiseClicked_On" label:@"onClick"];
-            [[SHGSegmentController sharedSegmentController] reloadData];
-            [Hud hideHud];
-        } failed:^(MOCHTTPResponse *response) {
-            [Hud hideHud];
-            [Hud showMessageWithText:response.errorMessage];
-        }];
-    } else{
-        [Hud showWait];
-        [MOCHTTPRequestOperationManager deleteWithURL:url parameters:param success:^(MOCHTTPResponse *response) {
-            [Hud hideHud];
-            NSString *code = [response.data valueForKey:@"code"];
-            if ([code isEqualToString:@"000"]) {
-                NSArray *array = [[SHGSegmentController sharedSegmentController] targetObjectsByRid:obj.rid];
-                for (CircleListObj *object in array) {
-                    object.ispraise = @"N";
-                    object.praisenum = [NSString stringWithFormat:@"%ld",(long)([object.praisenum integerValue] - 1)];
-                }
-                [Hud showMessageWithText:@"取消点赞"];
-            }
-            [MobClick event:@"ActionPraiseClicked_Off" label:@"onClick"];
-            [[SHGSegmentController sharedSegmentController] reloadData];
-        } failed:^(MOCHTTPResponse *response) {
-            [Hud hideHud];
-            [Hud showMessageWithText:response.errorMessage];
-        }];
-
-    }
-
-}
-
 
 #pragma mark -评论
 - (void)clicked:(NSInteger )index;
@@ -381,17 +330,6 @@
     }
 }
 
-- (void)detailPraiseWithRid:(NSString *)rid praiseNum:(NSString *)num isPraised:(NSString *)isPrased
-{
-    NSArray *array = [[SHGSegmentController sharedSegmentController] targetObjectsByRid:rid];
-    for (CircleListObj *obj in array){
-        obj.praisenum = num;
-        obj.ispraise = isPrased;
-
-    }
-    [[SHGSegmentController sharedSegmentController] reloadData];
-}
-
 - (void)detailShareWithRid:(NSString *)rid shareNum:(NSString *)num
 {
     NSArray *array = [[SHGSegmentController sharedSegmentController] targetObjectsByRid:rid];
@@ -434,13 +372,6 @@
 {
     CircleListObj *obj = noti.object;
     [self detailCommentWithRid:obj.rid commentNum:obj.cmmtnum comments:obj.comments];
-}
-
-
-- (void)praiseChanged:(NSNotification *)noti
-{
-    CircleListObj *obj = noti.object;
-    [self detailPraiseWithRid:obj.rid praiseNum:obj.praisenum isPraised:obj.ispraise];
 }
 
 - (void)shareChanged:(NSNotification *)noti

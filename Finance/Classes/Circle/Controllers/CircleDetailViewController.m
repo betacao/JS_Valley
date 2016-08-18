@@ -100,6 +100,7 @@
         [Hud showMessageWithText:response.errorMessage];
     }];
     [SHGGlobleOperation registerAttationClass:[self class] method:@selector(loadAttationState:attationState:)];
+    [SHGGlobleOperation registerPraiseClass:[self class] method:@selector(loadPraiseState:praiseState:)];
 }
 
 - (void)initView
@@ -753,67 +754,7 @@
 
 - (void)actionPraise:(id)sender
 {
-    NSString *url = [NSString stringWithFormat:@"%@/%@",rBaseAddressForHttpCircle,@"praisesend"];
-    NSDictionary *param = @{@"uid":[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID],@"rid":self.responseObject.rid};
-
-    if (![self.responseObject.ispraise isEqualToString:@"Y"]) {
-        [Hud showWait];
-
-        [MOCHTTPRequestOperationManager postWithURL:url class:nil parameters:param success:^(MOCHTTPResponse *response) {
-            NSLog(@"%@",response.data);
-            NSString *code = [response.data valueForKey:@"code"];
-            if ([code isEqualToString:@"000"]) {
-                self.responseObject.ispraise = @"Y";
-                self.responseObject.praisenum = [NSString stringWithFormat:@"%ld",(long)([self.responseObject.praisenum integerValue] + 1)];
-                praiseOBj *obj = [[praiseOBj alloc] init];
-                obj.pnickname = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_USER_NAME];
-                obj.ppotname = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_HEAD_IMAGE];
-                obj.puserid =[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
-                [self.responseObject.heads addObject:obj];
-
-                [Hud showMessageWithText:@"赞成功"];
-                [MobClick event:@"ActionPraiseClicked_On" label:@"onClick"];
-                [self resetView];
-                [self.tableView reloadData];
-
-                [self.delegate detailPraiseWithRid:self.responseObject.rid praiseNum:self.responseObject.praisenum isPraised:@"Y"];
-                [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_COLLECT_PRAISE_CLICK object:self.responseObject];
-            }
-            [Hud hideHud];
-        } failed:^(MOCHTTPResponse *response) {
-            [Hud hideHud];
-            [Hud showMessageWithText:response.errorMessage];
-        }];
-
-    } else{
-        [Hud showWait];
-        WEAK(self, weakSelf);
-
-        [MOCHTTPRequestOperationManager deleteWithURL:url parameters:param success:^(MOCHTTPResponse *response) {
-            [Hud hideHud];
-            NSString *code = [response.data valueForKey:@"code"];
-            if ([code isEqualToString:@"000"]){
-                weakSelf.responseObject.ispraise = @"N";
-                weakSelf.responseObject.praisenum = [NSString stringWithFormat:@"%ld",(long)([self.responseObject.praisenum integerValue] - 1)];
-                for (praiseOBj *obj in weakSelf.responseObject.heads) {
-                    if ([obj.puserid isEqualToString:[[NSUserDefaults standardUserDefaults]objectForKey:KEY_UID]]) {
-                        [weakSelf.responseObject.heads removeObject:obj];
-                        break;
-                    }
-                }
-                [Hud showMessageWithText:@"取消点赞"];
-                [MobClick event:@"ActionPraiseClicked_Off" label:@"onClick"];
-                [weakSelf resetView];
-                [weakSelf.tableView reloadData];
-
-                [weakSelf.delegate detailPraiseWithRid:self.responseObject.rid praiseNum:self.responseObject.praisenum isPraised:@"N"];
-                [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_COLLECT_PRAISE_CLICK object:weakSelf.responseObject];
-            }
-        } failed:^(MOCHTTPResponse *response) {
-            [Hud hideHud];
-            [Hud showMessageWithText:response.errorMessage];
-        }];
-    }
+    [SHGGlobleOperation addPraise:self.responseObject];
 }
 
 - (void)actionShare:(id)sender
@@ -1033,6 +974,30 @@
     }
 }
 
+- (void)loadPraiseState:(NSString *)targetID praiseState:(BOOL)praiseState
+{
+    if (praiseState) {
+        self.responseObject.ispraise = @"Y";
+        self.responseObject.praisenum = [NSString stringWithFormat:@"%ld",(long)([self.responseObject.praisenum integerValue] + 1)];
+        praiseOBj *obj = [[praiseOBj alloc] init];
+        obj.pnickname = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_USER_NAME];
+        obj.ppotname = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_HEAD_IMAGE];
+        obj.puserid =[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
+        [self.responseObject.heads addObject:obj];
+        [self resetView];
+    } else {
+        self.responseObject.ispraise = @"N";
+        self.responseObject.praisenum = [NSString stringWithFormat:@"%ld",(long)([self.responseObject.praisenum integerValue] - 1)];
+        for (praiseOBj *obj in self.responseObject.heads) {
+            if ([obj.puserid isEqualToString:UID]) {
+                [self.responseObject.heads removeObject:obj];
+                break;
+            }
+        }
+        [self resetView];
+    }
+}
+
 
 - (IBAction)actionAttention:(id)sender
 {
@@ -1154,20 +1119,6 @@
     [self.delegate detailDeleteWithRid:rid];
     [self resetView];
     [self.tableView reloadData];
-
-}
-
--(void)detailPraiseWithRid:(NSString *)rid praiseNum:(NSString *)num isPraised:(NSString *)isPrased
-{
-    if ([self.responseObject.rid isEqualToString:rid]) {
-        self.responseObject.praisenum = num;
-        self.responseObject.ispraise = isPrased;
-    }
-
-    [self resetView];
-
-    [self.tableView reloadData];
-    [self.delegate detailPraiseWithRid:rid praiseNum:num isPraised:isPrased];
 
 }
 

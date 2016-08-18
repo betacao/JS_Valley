@@ -12,8 +12,13 @@
 
 + (instancetype)sharedGloble;
 
+//关注
 + (void)registerAttationClass:(Class)CClass method:(SEL)selector;
 
 + (void)addAttation:(id)object;
 
+//动态点赞
++ (void)registerPraiseClass:(Class)CClass method:(SEL)selector;
+
++ (void)addPraise:(id)object;
 @end

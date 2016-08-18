@@ -20,6 +20,7 @@
 
 - (void)addRefreshFooterrWithTarget:(NSObject *)target
 {
+    #pragma clang diagnostic ignored"-Wundeclared-selector"
     MJRefreshAutoStateFooter *footer = [MJRefreshAutoStateFooter footerWithRefreshingTarget:target refreshingAction:@selector(refreshFooter)];
     footer.stateLabel.textColor = [UIColor colorWithHexString:@"606060"];
     footer.stateLabel.font = [UIFont systemFontOfSize:12.0f];

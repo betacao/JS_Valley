@@ -546,7 +546,7 @@
 
 - (void)praiseButtonClick:(UIButton *)sender
 {
-    [self.delegate praiseClicked:self.object];
+    [SHGGlobleOperation addPraise:self.object];
 }
 
 - (void)commentButtonClick:(UIButton *)sender

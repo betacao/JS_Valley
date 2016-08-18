@@ -8,8 +8,6 @@
 
 @protocol CircleListDelegate <NSObject>
 @optional
-//点赞代理
-- (void)praiseClicked:(CircleListObj *)obj;
 //评论代理
 - (void)commentClicked:(CircleListObj *)obj;
 - (void)replyClicked:(CircleListObj *)obj commentIndex:(NSInteger)index;

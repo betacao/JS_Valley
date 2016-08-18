@@ -14,6 +14,8 @@
 
 @property (strong, nonatomic) NSMutableArray *attationArray;
 
+@property (strong, nonatomic) NSMutableArray *praiseArray;
+
 @end
 
 @implementation SHGGlobleOperation
@@ -34,6 +36,14 @@
         _attationArray = [NSMutableArray array];
     }
     return _attationArray;
+}
+
+- (NSMutableArray *)praiseArray
+{
+    if (!_praiseArray) {
+        _praiseArray = [NSMutableArray array];
+    }
+    return _praiseArray;
 }
 
 + (void)registerAttationClass:(Class)CClass method:(SEL)selector
@@ -120,6 +130,74 @@
             }
         }
 
+    }];
+}
+
+
++ (void)registerPraiseClass:(Class)CClass method:(SEL)selector
+{
+    NSDictionary *dictionary = [NSDictionary dictionaryWithObject:NSStringFromClass(CClass) forKey:NSStringFromSelector(selector)];
+    [[SHGGlobleOperation sharedGloble].praiseArray insertUniqueObject:dictionary];
+}
+
++ (void)addPraise:(id)object
+{
+    [Hud showWait];
+    NSString *targetID = @"";
+    BOOL praiseState = NO;
+    if ([object isKindOfClass:[CircleListObj class]]) {
+        CircleListObj *circleListObject = (CircleListObj *)object;
+        targetID = circleListObject.rid;
+        praiseState = [circleListObject.ispraise isEqualToString:@"Y"];
+    }
+    NSString *url = [rBaseAddressForHttpCircle stringByAppendingString:@"/praisesend"];
+    NSDictionary *param = @{@"uid":UID,@"rid":targetID};
+    if (!praiseState) {
+        [MOCHTTPRequestOperationManager postWithURL:url class:nil parameters:param success:^(MOCHTTPResponse *response) {
+            [Hud hideHud];
+            NSString *code = [response.data valueForKey:@"code"];
+            if ([code isEqualToString:@"000"]){
+                //记录行为轨迹
+                [MobClick event:@"ActionPraiseClicked_On" label:@"onClick"];
+                [[SHGGlobleOperation sharedGloble] addAttationSuccess:targetID praiseState:YES];
+                [Hud showMessageWithText:@"点赞成功"];
+            }
+        } failed:^(MOCHTTPResponse *response) {
+            [Hud hideHud];
+            [Hud showMessageWithText:response.errorMessage];
+        }];
+    } else {
+        [MOCHTTPRequestOperationManager deleteWithURL:url parameters:param success:^(MOCHTTPResponse *response) {
+            [Hud hideHud];
+            NSString *code = [response.data valueForKey:@"code"];
+            if ([code isEqualToString:@"000"]) {
+                //记录行为轨迹
+                [MobClick event:@"ActionPraiseClicked_Off" label:@"onClick"];
+                [[SHGGlobleOperation sharedGloble] addAttationSuccess:targetID praiseState:NO];
+                [Hud showMessageWithText:@"取消点赞成功"];
+            }
+        } failed:^(MOCHTTPResponse *response) {
+            [Hud hideHud];
+            [Hud showMessageWithText:response.errorMessage];
+        }];
+    }
+}
+
+- (void)addAttationSuccess:(NSString *)targetID praiseState:(BOOL)praiseState
+{
+    UINavigationController *nav = (UINavigationController *)[AppDelegate currentAppdelegate].window.rootViewController;
+    NSMutableArray *controllerArray = [NSMutableArray arrayWithArray:nav.viewControllers];
+    [controllerArray addObjectsFromArray:[TabBarViewController tabBar].viewControllers];
+    [self.praiseArray enumerateObjectsUsingBlock:^(NSDictionary *dictionary, NSUInteger idx, BOOL * _Nonnull stop) {
+        Class class = NSClassFromString([dictionary.allValues firstObject]);
+        SEL selector = NSSelectorFromString([dictionary.allKeys firstObject]);
+        for (UIViewController *controller in controllerArray) {
+            if ([controller isKindOfClass:class]) {
+                IMP imp = [controller methodForSelector:selector];
+                void (*func)(id, SEL, id, BOOL) = (void *)imp;
+                func(controller, selector, targetID, praiseState);
+            }
+        }
     }];
 }
 
