@@ -99,6 +99,7 @@
     self.phoneNumTextField.delegate = self;
     self.monenyTextField.delegate = self;
     self.leftMoneyTextField.delegate = self;
+    self.companyNametextField.delegate = self;
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(scrollerTapAction:)];
     [self.scrollView addGestureRecognizer:tap];
     if (self.object) {
@@ -515,9 +516,6 @@
             self.monenyTextField.text = rightText;
         }
         
-        //地区
-        [self.areaSelectButton setTitle:[array objectAtIndex:2] forState:UIControlStateNormal];
-        [self.areaSelectButton setTitleColor:Color(@"161616") forState:UIControlStateNormal];
         
         //行业
         NSString *industry = [array objectAtIndex:3];
@@ -688,6 +686,7 @@
     weakSelf.selectCityViewController.returnCityBlock = ^(NSString *string){
         [weakSelf.areaSelectButton setTitle:string forState:UIControlStateNormal];
     };
+    self.selectCityViewController.momentCity = self.areaSelectButton.titleLabel.text;
     self.selectCityViewController.superController = self;
     [self.navigationController pushViewController:self.selectCityViewController animated:YES];
     

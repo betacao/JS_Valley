@@ -77,7 +77,8 @@
     if (!_searchBar) {
         _searchBar = [[EMSearchBar alloc] init];
         _searchBar.delegate = self;
-        _searchBar.placeholder = @"请输入姓名/公司名";
+        _searchBar.placeholder = @"搜索";
+        _searchBar.cancelButtonTitleColor = Color(@"a7a7a7");
     }
     return _searchBar;
 }

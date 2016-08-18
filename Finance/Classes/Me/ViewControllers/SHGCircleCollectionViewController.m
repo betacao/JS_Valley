@@ -256,8 +256,8 @@
             SHGMainPageTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
             if (!cell) {
                 cell = [[[NSBundle mainBundle] loadNibNamed:@"SHGMainPageTableViewCell" owner:self options:nil] lastObject];
-                cell.delegate = self;
             }
+            cell.delegate = self;
             cell.index = indexPath.row;
             cell.object = obj;
             [cell useCellFrameCacheWithIndexPath:indexPath tableView:tableView];
@@ -341,92 +341,78 @@
 - (void)shareClicked:(CircleListObj *)obj
 {
     id<ISSCAttachment> image  = [ShareSDK pngImageWithImage:[UIImage imageNamed:@"80"]];
-
     NSString *postContent;
     NSString *shareContent;
-
+    
     NSString *shareTitle ;
     if (IsStrEmpty(obj.detail)) {
         postContent = SHARE_CONTENT;
         shareTitle = SHARE_TITLE;
         shareContent = SHARE_CONTENT;
-    }
-    else
-    {
+    } else{
         postContent = obj.detail;
         shareTitle = obj.detail;
         shareContent = obj.detail;
     }
-    if (obj.detail.length > 15)
-    {
+    
+    if (obj.detail.length > 15){
         postContent = [NSString stringWithFormat:@"%@...",[obj.detail substringToIndex:15]];
     }
-    if (obj.detail.length > 15)
-    {
-
+    if (obj.detail.length > 15){
         shareTitle = [obj.detail substringToIndex:15];
-
         shareContent = [NSString stringWithFormat:@"%@...",[obj.detail substringToIndex:15]];
-
     }
     NSString *content = [NSString stringWithFormat:@"%@\"%@\"%@%@",@"Hi，我在金融大牛圈上看到了一个非常棒的帖子,关于",postContent,@"，赶快下载大牛圈查看吧！",[NSString stringWithFormat:@"%@%@",rBaseAddressForHttpShare,obj.rid]];
-    id<ISSShareActionSheetItem> item1 = [ShareSDK shareActionSheetItemWithTitle:@"大牛说" icon:[UIImage imageNamed:@"圈子图标"] clickHandler:^{
+    id<ISSShareActionSheetItem> item1 = [ShareSDK shareActionSheetItemWithTitle:@"动态" icon:[UIImage imageNamed:@"圈子图标"] clickHandler:^{
         [self circleShareWithObj:obj];
     }];
     id<ISSShareActionSheetItem> item2 = [ShareSDK shareActionSheetItemWithTitle:@"圈内好友" icon:[UIImage imageNamed:@"圈内好友图标"] clickHandler:^{
-
-        NSString *shareText = [NSString stringWithFormat:@"转自:%@的帖子：%@",obj.nickname,obj.detail];
-        [self shareToFriendWithText:shareText rid:obj.rid];
+        [self shareToFriendWithObj:obj];
     }];
-
+    
     id<ISSShareActionSheetItem> item3 = [ShareSDK shareActionSheetItemWithTitle:@"短信" icon:[UIImage imageNamed:@"sns_icon_19"] clickHandler:^{
-        [self shareToSMS:content  rid:obj.rid];
+        [self shareToSMS:content rid:obj.rid];
     }];
-    id<ISSShareActionSheetItem> item0 = [ShareSDK shareActionSheetItemWithTitle:@"新浪微博" icon:[UIImage imageNamed:@"sns_icon_1"] clickHandler:^{
-        [self shareToWeibo:content rid:obj.rid];
-    }];
-
+    
     id<ISSShareActionSheetItem> item4 = [ShareSDK shareActionSheetItemWithTitle:@"微信朋友圈" icon:[UIImage imageNamed:@"sns_icon_23"] clickHandler:^{
-        [[AppDelegate currentAppdelegate]wechatShare:obj shareType:1];
+        [[AppDelegate currentAppdelegate] wechatShare:obj shareType:1];
     }];
     id<ISSShareActionSheetItem> item5 = [ShareSDK shareActionSheetItemWithTitle:@"微信好友" icon:[UIImage imageNamed:@"sns_icon_22"] clickHandler:^{
-        [[AppDelegate currentAppdelegate]wechatShare:obj shareType:0];
+        [[AppDelegate currentAppdelegate] wechatShare:obj shareType:0];
     }];
-
-    //    NSArray *shareList = [ShareSDK customShareListWithType: item3, item5, item4, item0, item1, item2, nil];
+    
     NSArray *shareArray = nil;
     if ([WXApi isWXAppSupportApi]) {
-        if ([WeiboSDK isCanShareInWeiboAPP]) {
-            shareArray = [ShareSDK customShareListWithType:  item5, item4, item0, item3, item1, item2, nil];
+        if ([QQApiInterface isQQSupportApi]) {
+            shareArray = [ShareSDK customShareListWithType:  item5, item4, SHARE_TYPE_NUMBER(ShareTypeQQ), item3,item1,item2,nil];
         } else{
-            shareArray = [ShareSDK customShareListWithType: item5, item4, item3, item1, item2, nil];
+            shareArray = [ShareSDK customShareListWithType:  item5, item4, item3, item1, item2, nil];
         }
     } else{
-        if ([WeiboSDK isCanShareInWeiboAPP]) {
-            shareArray = [ShareSDK customShareListWithType: item0,  item3, item1, item2, nil];
+        if ([QQApiInterface isQQSupportApi]) {
+            shareArray = [ShareSDK customShareListWithType: SHARE_TYPE_NUMBER(ShareTypeQQ), item3, item1, item2, nil];
         } else{
             shareArray = [ShareSDK customShareListWithType: item3, item1, item2, nil];
         }
-
     }
-
+    
     NSString *shareUrl = [NSString stringWithFormat:@"%@%@",rBaseAddressForHttpShare,obj.rid];
+    
     //构造分享内容
     id<ISSContent> publishContent = [ShareSDK content:shareContent defaultContent:shareContent image:image title:SHARE_TITLE url:shareUrl description:shareContent mediaType:SHARE_TYPE];
-    //创建弹出菜单容器
-
+    
     //创建弹出菜单容器
     id<ISSContainer> container = [ShareSDK container];
     [container setIPadContainerWithView:self.view arrowDirect:UIPopoverArrowDirectionUp];
-
+    
     //弹出分享菜单
     [ShareSDK showShareActionSheet:container shareList:shareArray content:publishContent statusBarTips:YES authOptions:nil shareOptions:nil result:^(ShareType type, SSResponseState state, id<ISSPlatformShareInfo> statusInfo, id<ICMErrorInfo> error, BOOL end) {
         if (state == SSResponseStateSuccess){
+            NSLog(NSLocalizedString(@"TEXT_ShARE_SUC", @"分享成功"));
             [self otherShareWithObj:obj];
             [[SHGGloble sharedGloble] recordUserAction:obj.rid type:@"dynamic_shareQQ"];
         } else if (state == SSResponseStateFail){
-            NSLog(NSLocalizedString(@"TEXT_ShARE_FAI", @"帖子分享失败,错误码:%d,错误描述:%@"), [error errorCode], [error errorDescription]);
-
+            NSLog(NSLocalizedString(@"TEXT_ShARE_FAI", @"分享失败,错误码:%d,错误描述:%@"), [error errorCode], [error errorDescription]);
         }
     }];
 

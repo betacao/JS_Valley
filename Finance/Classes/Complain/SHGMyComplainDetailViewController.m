@@ -151,6 +151,10 @@
 
 - (void)initView
 {
+    self.nameLabel.text = @"业务名称";
+    self.timeLabel.text = @"投诉时间";
+    self.reasonLabel.text = @"投诉原因";
+    self.urlLaebl.text = @"附件";
     self.nameDetailLabel.text = self.object.title;
     self.timeDetailLabel.text = self.object.createTime;
     self.reasonDetailLabel.text = self.object.content;

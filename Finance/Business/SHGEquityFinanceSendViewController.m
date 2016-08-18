@@ -132,6 +132,7 @@
     self.phoneNumTextField.delegate = self;
     self.monenyTextField.delegate = self;
     self.leftMoneyTextField.delegate = self;
+    self.companyNametextField.delegate = self;
     self.bondStageButtonView.showMode = 1;
     self.buttonBgImage = [UIImage imageNamed:@"business_SendButtonBg"];
     self.buttonBgImage = [self.buttonBgImage resizableImageWithCapInsets:UIEdgeInsetsMake(10.0f, 10.0f, 10.0f, 10.0f) resizingMode:UIImageResizingModeStretch];
@@ -140,7 +141,7 @@
     self.buttonSelectBgImage = [self.buttonSelectBgImage resizableImageWithCapInsets:UIEdgeInsetsMake(10.0f, 10.0f, 10.0f, 10.0f) resizingMode:UIImageResizingModeStretch];
     [self.scrollView addSubview:self.nameView];
     [self.scrollView addSubview:self.phoneNumView];
-    //[self.scrollView addSubview:self.businessCompanyNameView];
+    [self.scrollView addSubview:self.businessCompanyNameView];
     [self.scrollView addSubview:self.bondStageView];
     [self.scrollView addSubview:self.monenyView];
     [self.scrollView addSubview:self.areaView];
@@ -228,6 +229,33 @@
     .heightIs(kButtonHeight);
     [self.nameView setupAutoHeightWithBottomView:self.nameTextField bottomMargin:ktopToView];
     
+    //公司名称
+    self.businessCompanyNameView.sd_layout
+    .topSpaceToView(self.nameView, kLeftToView)
+    .leftSpaceToView(self.scrollView, 0.0f)
+    .rightSpaceToView(self.scrollView, 0.0f);
+    
+    self.companyNameLabel.sd_layout
+    .topSpaceToView(self.businessCompanyNameView, ktopToView)
+    .leftSpaceToView(self.businessCompanyNameView, kLeftToView)
+    .heightIs(ceilf(self.phoneNumLabel.font.lineHeight));
+    [self.companyNameLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
+    
+    self.companyNameImage.sd_layout
+    .leftSpaceToView(self.companyNameLabel, kLeftToView)
+    .centerYEqualToView(self.companyNameLabel)
+    .widthIs(size.width)
+    .heightIs(size.height);
+    
+    self.companyNametextField.sd_layout
+    .leftEqualToView(self.companyNameLabel)
+    .rightSpaceToView(self.businessCompanyNameView, kLeftToView)
+    .topSpaceToView(self.companyNameLabel, ktopToView)
+    .heightIs(kCategoryButtonHeight);
+    
+    
+    [self.businessCompanyNameView setupAutoHeightWithBottomView:self.companyNametextField bottomMargin:ktopToView];
+    
     //联系电话
     self.phoneNumView.sd_layout
     .topSpaceToView(self.businessCompanyNameView, kLeftToView)
@@ -252,33 +280,6 @@
     .topSpaceToView(self.phoneNumLabel, ktopToView)
     .heightIs(kButtonHeight);
     [self.phoneNumView setupAutoHeightWithBottomView:self.phoneNumTextField bottomMargin:ktopToView];
-    
-    //公司名称
-    self.businessCompanyNameView.sd_layout
-    .topSpaceToView(self.phoneNumView, kLeftToView)
-    .leftSpaceToView(self.scrollView, 0.0f)
-    .rightSpaceToView(self.scrollView, 0.0f);
-    
-    self.companyNameLabel.sd_layout
-    .topSpaceToView(self.businessCompanyNameView, ktopToView)
-    .leftSpaceToView(self.businessCompanyNameView, kLeftToView)
-    .heightIs(ceilf(self.phoneNumLabel.font.lineHeight));
-    [self.companyNameLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
-    
-    self.companyNameImage.sd_layout
-    .leftSpaceToView(self.companyNameLabel, kLeftToView)
-    .centerYEqualToView(self.companyNameLabel)
-    .widthIs(size.width)
-    .heightIs(size.height);
-    
-    self.companyNametextField.sd_layout
-    .leftEqualToView(self.companyNameLabel)
-    .rightSpaceToView(self.businessCompanyNameView, kLeftToView)
-    .topSpaceToView(self.companyNameLabel, ktopToView)
-    .heightIs(kCategoryButtonHeight);
-    
-    
-    [self.businessCompanyNameView setupAutoHeightWithBottomView:self.companyNametextField bottomMargin:ktopToView];
     
 
     //融资阶段
@@ -582,10 +583,6 @@
             self.monenyTextField.text = rightText;
         }
         
-        //地区
-        [self.areaSelectButton setTitle:[array objectAtIndex:2] forState:UIControlStateNormal];
-        [self.areaSelectButton setTitleColor:Color(@"161616") forState:UIControlStateNormal];
-        
         //行业
         NSString *industry = [array objectAtIndex:3];
         NSArray *industryArray = [industry componentsSeparatedByString:@"，"];
@@ -628,6 +625,7 @@
     weakSelf.selectCityViewController.returnCityBlock = ^(NSString *string){
         [weakSelf.areaSelectButton setTitle:string forState:UIControlStateNormal];
     };
+    self.selectCityViewController.momentCity = self.areaSelectButton.titleLabel.text;
     self.selectCityViewController.superController = self;
     [self.navigationController pushViewController:self.selectCityViewController animated:YES];
 }

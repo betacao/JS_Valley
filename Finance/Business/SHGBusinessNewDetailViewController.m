@@ -138,6 +138,11 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
     self.rightItemImageName = @"newBusiness_share";
     [super viewDidLoad];
     self.isChangeCollection = YES;
+//    self.editButton.hidden = YES;
+//    self.editLabel.hidden = YES;
+//    self.collectionButton.hidden = YES;
+//    self.collectionLabel.hidden = YES;
+    self.inputView.hidden = YES;
     [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:KEY_MEMORY];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shareToFriendSuccess:) name:NOTIFI_ACTION_SHARE_TO_FRIENDSUCCESS object:nil];
     [self.tableView setTableFooterView:[[UIView alloc] init]];
@@ -633,7 +638,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
     [self.complainButton setTitleColor:Color(@"565656") forState:UIControlStateNormal];
 
     self.editButton.titleLabel.font = self.collectionButton.titleLabel.font = self.commentButton.titleLabel.font = self.phoneButton.titleLabel.font = self.complainButton.titleLabel.font = FontFactor(12.0f);
-    
+    self.complainButton.adjustsImageWhenDisabled = self.phoneButton.adjustsImageWhenDisabled =  self.complainButton.adjustsImageWhenDisabled = NO;
     //redView
     self.redView.backgroundColor = Color(@"f04f46");
     self.firstHorizontalLine.backgroundColor = Color(@"fd665d");
@@ -723,17 +728,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
     [self loadCompanyView];
     
     [self loadBPView];
-    if ([UID isEqualToString:self.responseObject.createBy]) {
-        self.editButton.hidden = NO;
-        self.editLabel.hidden = NO;
-        self.collectionButton.hidden = YES;
-        self.collectionLabel.hidden = YES;
-    } else {
-        self.editButton.hidden = YES;
-        self.editLabel.hidden = YES;
-        self.collectionButton.hidden = NO;
-        self.collectionLabel.hidden = NO;
-    }
+    
     [self loadInPutView];
     
     NSMutableParagraphStyle * contentParagraphStyle = [[NSMutableParagraphStyle alloc] init];
@@ -772,6 +767,10 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
 - (void)loadInPutView
 {
     if ([self.responseObject.createBy isEqualToString:UID]) {
+        self.editButton.hidden = NO;
+        self.editLabel.hidden = NO;
+        self.collectionButton.hidden = YES;
+        self.collectionLabel.hidden = YES;
         self.complainButton.hidden = YES;
         self.complainLabel.hidden = YES;
         self.phoneButton.hidden = YES;
@@ -779,10 +778,8 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
         UIImage *editImage = [UIImage imageNamed:@"newBusiness_edit"];
         if ([self.responseObject.businessauditstate isEqualToString:@"0"] || [self.responseObject.businessauditstate isEqualToString:@"9"]){
             [self.editButton setImage:editImage forState:UIControlStateNormal];
-            self.editButton.enabled = YES;
         } else{
             [self.editButton setImage:[UIImage imageNamed:@"newBusiness_unEdit"] forState:UIControlStateNormal];
-            self.editButton.enabled = NO;
         }
         
         self.editButton.sd_resetLayout
@@ -816,7 +813,12 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
         self.complainLabel.hidden = NO;
         self.phoneButton.hidden = NO;
         self.phoneLabel.hidden = NO;
+        self.editButton.hidden = YES;
+        self.editLabel.hidden = YES;
+        self.collectionButton.hidden = NO;
+        self.collectionLabel.hidden = NO;
     }
+    self.inputView.hidden = NO;
 }
 
 - (void)loadRedView
@@ -1292,6 +1294,9 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
 
 - (IBAction)editButtonClick:(UIButton *)sender
 {
+    sender.enabled = NO;
+    [self performSelector:@selector(timeEnough:) withObject:sender afterDelay:1.0];
+    if ([self.responseObject.businessauditstate isEqualToString:@"0"] || [self.responseObject.businessauditstate isEqualToString:@"0"]) {
     if ([self.responseObject.type isEqualToString:@"moneyside"]) {
         if ([self.responseObject.moneysideType isEqualToString:@"equityInvest"]) {
             SHGEquityInvestSendViewController *viewController = [[SHGEquityInvestSendViewController alloc] init];
@@ -1316,11 +1321,16 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
         viewController.object = self.responseObject;
         [self.navigationController pushViewController:viewController animated:YES];
     }
+    } else{
+        [Hud showMessageWithText:@"业务审核中，请耐心等待"];
+    }
     
 }
 
 - (IBAction)complainButtonClick:(UIButton *)sender
 {
+    sender.enabled = NO;
+    [self performSelector:@selector(timeEnough:) withObject:sender afterDelay:1.0];
     [[SHGGloble sharedGloble] requestUserVerifyStatusCompletion:^(BOOL state,NSString *auditState) {
         if (state) {
             [SHGBusinessManager getBusinessComplainBlock:^(BOOL success, NSString *allowCreate) {
@@ -1344,6 +1354,11 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
         [[SHGGloble sharedGloble] recordUserAction:@"" type:@"business_identity_cancel"];
     } failString:@"认证后才能发起投诉哦～"];
     
+}
+
+- (void)timeEnough:(UIButton *)btn
+{
+    btn.enabled = YES;
 }
 
 - (IBAction)comanyButtonClick:(UIButton *)button
@@ -1460,7 +1475,8 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
 
 - (IBAction)phoneNumClick:(UIButton *)sender
 {
-   
+    sender.enabled = NO;
+    [self performSelector:@selector(timeEnough:) withObject:sender afterDelay:1.0];
     [[SHGGloble sharedGloble] requestUserVerifyStatusCompletion:^(BOOL state,NSString *auditState) {
         if (state) {
             WEAK(self, weakSelf);

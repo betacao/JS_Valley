@@ -95,6 +95,7 @@
 
 - (void)initView
 {
+    [self.modifyButton setEnlargeEdgeWithTop:10.0f right:10.0f bottom:10.0f left:10.0f];
     self.view.backgroundColor = Color(@"f6f7f8");
     self.tableView.backgroundColor = [UIColor clearColor];
     self.tableViewBackgroundView.backgroundColor = Color(@"f04f46");

@@ -8,6 +8,7 @@
 
 #import "SHGIndustrySelectView.h"
 #import "SHGBusinessButtonContentView.h"
+#import "UIButton+EnlargeEdge.h"
 
 @interface SHGIndustrySelectView ()
 @property (strong, nonatomic)UIView *topView;
@@ -149,6 +150,7 @@
 {
     if (!_quiteButton) {
         _quiteButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [self.quiteButton setEnlargeEdgeWithTop:5.0 right:10.0 bottom:10.0f left:10.0f];
         [_quiteButton setImage:[UIImage imageNamed:@"industryQuite"] forState:UIControlStateNormal];
         [_quiteButton addTarget:self action:@selector(quiteButtonClick:) forControlEvents:UIControlEventTouchUpInside];
         [self.topView addSubview:_quiteButton];

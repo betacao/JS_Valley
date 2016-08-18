@@ -368,6 +368,7 @@
 
 - (void)reloadPhotoView
 {
+    [self.textView resignFirstResponder];
     [self.photoView.subviews enumerateObjectsUsingBlock:^(__kindof UIView * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         if ([obj isKindOfClass:[UIImageView class]]) {
             [obj removeFromSuperview];
@@ -477,7 +478,7 @@
         
         [self reloadPhotoView];
     }
-    
+    [self.textView resignFirstResponder];
 }
 
 

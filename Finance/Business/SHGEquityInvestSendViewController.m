@@ -136,6 +136,7 @@
     self.phoneNumTextField.delegate = self;
     self.monenyTextField.delegate = self;
     self.leftMoneyTextField.delegate = self;
+    self.companyNametextField.delegate = self;
 
     self.bondStageButtonView.showMode = 2;
     self.buttonBgImage = [UIImage imageNamed:@"business_SendButtonBg"];
@@ -569,10 +570,6 @@
             self.monenyTextField.text = rightText;
         }
         
-        //地区
-        [self.areaSelectButton setTitle:[array objectAtIndex:2] forState:UIControlStateNormal];
-        [self.areaSelectButton setTitleColor:Color(@"161616") forState:UIControlStateNormal];
-        
         //行业
         NSString *industry = [array objectAtIndex:3];
         NSArray *industryArray = [industry componentsSeparatedByString:@"，"];
@@ -698,6 +695,7 @@
     weakSelf.selectCityViewController.returnCityBlock = ^(NSString *string){
         [weakSelf.areaSelectButton setTitle:string forState:UIControlStateNormal];
     };
+    self.selectCityViewController.momentCity = self.areaSelectButton.titleLabel.text;
     self.selectCityViewController.superController = self;
     [self.navigationController pushViewController:self.selectCityViewController animated:YES];
 }

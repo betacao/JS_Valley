@@ -89,7 +89,7 @@
     [self.timeLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
     
     self.browaseNumLabel.sd_layout
-    .topSpaceToView(self.typeLabel, MarginFactor(7.0f))
+    .topSpaceToView(self.typeLabel, MarginFactor(3.0f))
     .leftEqualToView(self.typeLabel)
     .heightIs(self.browaseNumLabel.font.lineHeight);
     [self.browaseNumLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
@@ -207,7 +207,7 @@
     self.titleLabel.text = object.title;
     NSArray *globleKeyArray =[[[SHGGloble  sharedGloble]getBusinessKeysAndValues] allKeys];
     NSArray *globleValueArray = [[[SHGGloble  sharedGloble]getBusinessKeysAndValues] allValues];
-    if (object.businessType) {
+    if (object.businessType.length > 0) {
         self.typeLabel.text = [globleKeyArray objectAtIndex:[globleValueArray indexOfObject:object.businessType]];
     }
     
@@ -261,7 +261,7 @@
             NSLog(@"%@",weakSelf.detailObject);
         }];
     } else{
-        
+        [Hud showMessageWithText:@"业务审核中，请耐心等待"];
     }
 }
 
@@ -291,7 +291,7 @@
     WEAK(self, weakSelf);
     SHGBusinessObject *object = [[SHGBusinessObject alloc] init];
     object = [weakSelf.array firstObject];
-    if ([object.auditState isEqualToString:@"0"] || [object.auditState isEqualToString:@"9"]) {
+    if ([object.auditState isEqualToString:@"0"]) {
         if ([object.isRefresh isEqualToString:@"true"]) {
             [SHGBusinessManager refreshBusiness:object success:^(BOOL success) {
                 if (success) {
@@ -305,8 +305,10 @@
             [Hud showMessageWithText:@"莫心急，24小时内只能刷新一次哦～"];
         }
 
-    } else{
-        
+    } else if([object.auditState isEqualToString:@"9"]) {
+        [Hud showMessageWithText:@"业务已驳回，不能再次发布"];
+    } else if([object.auditState isEqualToString:@"1"] || [object.auditState isEqualToString:@"2"]) {
+        [Hud showMessageWithText:@"业务审核中，请耐心等待"];
     }
 }
 

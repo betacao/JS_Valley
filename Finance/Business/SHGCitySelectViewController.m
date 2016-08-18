@@ -33,33 +33,14 @@
     [super viewDidLoad];
     self.title = @"城市选择";
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    self.areaLabel.text = self.momentCity;
     NSArray *array = [[NSArray alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"China_City" ofType:@"plist"]];
     [array enumerateObjectsUsingBlock:^(NSDictionary *obj, NSUInteger idx, BOOL * _Nonnull stop) {
         [self.provinces addObject:[obj objectForKey:@"state"]];
         NSArray *cityArray = [obj objectForKey:@"cities"];
         [self.citys addObject:cityArray];
     }];
-    WEAK(self, weakSelf);
-    if ([[SHGGloble sharedGloble].provinceName isEqualToString:@""]) {
-        [[CCLocationManager shareLocation] getCity:^{
-            NSString *provinceName = [SHGGloble sharedGloble].provinceName;
-            NSString *city = [SHGGloble sharedGloble].cityName;
-            if ([provinceName isEqualToString:city]) {
-                weakSelf.areaLabel.text = city;
-            } else{
-                weakSelf.areaLabel.text = [NSString stringWithFormat:@"%@ %@",provinceName,city];
-            }
-            
-        }];
-    } else{
-        NSString *provinceName = [SHGGloble sharedGloble].provinceName;
-        NSString *city = [SHGGloble sharedGloble].cityName;
-        if ([provinceName isEqualToString:city]) {
-            weakSelf.areaLabel.text = city;
-        } else{
-            weakSelf.areaLabel.text = [NSString stringWithFormat:@"%@ %@",provinceName,city];
-        }
-    }
+    
     self.currentIndex = 0;
     if ([[self.citys objectAtIndex:self.currentIndex] count] == 0) {
         [self.dataArray addObject:[self.provinces objectAtIndex:self.currentIndex]];
@@ -264,8 +245,10 @@
     if (weakSelf.returnCityBlock) {
         if ([provinceName isEqualToString:city]) {
             weakSelf.returnCityBlock(city);
+            weakSelf.areaLabel.text = city;
         } else{
              weakSelf.returnCityBlock([NSString stringWithFormat:@"%@ %@",provinceName,city]);
+            weakSelf.areaLabel.text = [NSString stringWithFormat:@"%@ %@",provinceName,city];
         }
        
     }

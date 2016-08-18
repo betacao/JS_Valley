@@ -12,6 +12,7 @@ typedef void (^SHGReturnCityBlock)(NSString *showText);
 @interface SHGCitySelectViewController : BaseViewController
 @property (nonatomic, copy) SHGReturnCityBlock returnCityBlock;
 @property (weak, nonatomic) UIViewController *superController;
+@property (strong, nonatomic) NSString *momentCity;
 
 @end
 
