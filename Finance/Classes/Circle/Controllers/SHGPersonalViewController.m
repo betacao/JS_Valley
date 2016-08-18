@@ -217,7 +217,7 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
     [Hud showWait];
     WEAK(self, weakSelf);
-    NSDictionary *param = @{@"uid":uid, @"target":target, @"rid":[NSNumber numberWithInt:[time intValue]], @"num":rRequestNum};
+    NSDictionary *param = @{@"uid":uid, @"target":target, @"rid":time, @"num":@(10)};
     [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttpCircle,@"queryCircleById",self.userId] class:[CircleListObj class] parameters:param success:^(MOCHTTPResponse *response) {
         [Hud hideHud];
         NSLog(@"=========data = %@",response.dataDictionary);

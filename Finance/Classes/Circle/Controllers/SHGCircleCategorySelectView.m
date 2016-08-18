@@ -7,6 +7,7 @@
 //
 
 #import "SHGCircleCategorySelectView.h"
+#import "SHGBusinessButtonContentView.h"
 
 #define kButtonHorizontalMargin MarginFactor(25.0f)
 #define kButtonVerticalMargin MarginFactor(19.0f)
@@ -14,7 +15,7 @@
 @interface SHGCircleCategorySelectView()
 
 @property (strong, nonatomic) NSArray *titleArray;
-@property (strong, nonatomic) UIView *contentView;
+@property (strong, nonatomic) SHGBusinessButtonContentView *contentView;
 
 @end
 
@@ -25,7 +26,6 @@
     self = [super initWithFrame:frame];
     if (self) {
         [self initView];
-        [self addAutoLayout];
     }
     return self;
 }
@@ -34,14 +34,15 @@
 {
     self.clipsToBounds = YES;
     self.backgroundColor = ColorA(@"000000", 0.5f);
-    self.contentView = [[UIView alloc] init];
+    self.contentView = [[SHGBusinessButtonContentView alloc] initWithMode:SHGBusinessButtonShowModeSingleChoice];
     self.contentView.backgroundColor = [UIColor whiteColor];
 
     self.titleArray = @[@"全部", @"债权融资", @"股权融资", @"资金", @"银证业务"];
 
     CGFloat width = ceilf((SCREENWIDTH - 4.0f * kButtonHorizontalMargin) / 3.0f);
     CGFloat height = MarginFactor(26.0f);
-    UIImage *image = [[UIImage imageNamed:@"category_bg"] resizableImageWithCapInsets:UIEdgeInsetsMake(5.0f, 5.0f, 5.0f, 5.0f) resizingMode:UIImageResizingModeStretch];
+    UIImage *defaultImage = [[UIImage imageNamed:@"cornerRect_gray"] resizableImageWithCapInsets:UIEdgeInsetsMake(5.0f, 5.0f, 5.0f, 5.0f) resizingMode:UIImageResizingModeStretch];
+    UIImage *selectedImage = [[UIImage imageNamed:@"cornerRect_red"] resizableImageWithCapInsets:UIEdgeInsetsMake(5.0f, 5.0f, 5.0f, 5.0f) resizingMode:UIImageResizingModeStretch];
     __block UIButton *lastButton = nil;
     [self.titleArray enumerateObjectsUsingBlock:^(NSString *text, NSUInteger idx, BOOL * _Nonnull stop) {
         NSInteger num = idx / 3;
@@ -49,12 +50,15 @@
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
         [button setTitle:text forState:UIControlStateNormal];
         [button setTitleColor:Color(@"8a8a8a") forState:UIControlStateNormal];
-        [button setBackgroundImage:image forState:UIControlStateNormal];
+        [button setBackgroundImage:defaultImage forState:UIControlStateNormal];
         [button addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchUpInside];
         CGRect frame = CGRectMake(kButtonHorizontalMargin + col * (width + kButtonHorizontalMargin), kButtonVerticalMargin + num * (height + kButtonVerticalMargin), width, height);
         button.frame = frame;
         button.titleLabel.font = FontFactor(14.0f);
-        button.adjustsImageWhenHighlighted = NO;
+        if (idx) {
+            [button setBackgroundImage:selectedImage forState:UIControlStateSelected];
+            [button setTitleColor:Color(@"f04f46") forState:UIControlStateSelected];
+        }
         [self.contentView addSubview:button];
         lastButton = button;
     }];
@@ -68,11 +72,6 @@
 
 }
 
-- (void)addAutoLayout
-{
-
-}
-
 - (void)setAlpha:(CGFloat)alpha
 {
     [UIView animateWithDuration:0.25f animations:^{
@@ -82,10 +81,13 @@
 
 - (void)buttonClick:(UIButton *)button
 {
-    self.alpha = 0.0f;
-    if (self.block) {
-        self.block(button.titleLabel.text);
+    if (!button.isSelected) {
+        [self.contentView didClickButton:button];
+        if (self.block) {
+            self.block(button.titleLabel.text);
+        }
     }
+    self.alpha = 0.0f;
 }
 
 - (void)didMoveToSuperview

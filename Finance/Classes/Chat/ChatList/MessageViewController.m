@@ -57,9 +57,9 @@
 {
     NSDictionary *param = nil;
     if([@"-1" isEqualToString:time]){
-        param= @{@"uid":UID, @"target":target, @"num":rRequestNum};
+        param= @{@"uid":UID, @"target":target, @"num":@(10)};
     } else{
-        param= @{@"uid":UID, @"target":target, @"time":time, @"num":rRequestNum};
+        param= @{@"uid":UID, @"target":target, @"time":time, @"num":@(10)};
     }
 
     [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttpUser,@"notice"] class:[MessageObj class] parameters:param success:^(MOCHTTPResponse *response) {

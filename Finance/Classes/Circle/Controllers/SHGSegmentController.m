@@ -537,7 +537,6 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     if (seg.selectedSegmentIndex == 1) {
         self.rightBarButtonItem = nil;
     }
-
     [self setSelectedIndex:seg.selectedSegmentIndex animated:YES];
 }
 

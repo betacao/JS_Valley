@@ -164,7 +164,7 @@
     }
     [[SHGHomeViewController sharedController] requestRecommendFriends];
     [[SHGHomeViewController sharedController] loadRegisterPushFriend];
-    NSDictionary *param = @{@"uid":UID, @"type":@"all", @"target":@"first", @"rid":@(0), @"num": rRequestNum, @"tagId": @"-1"};
+    NSDictionary *param = @{@"uid":UID, @"type":@"all", @"target":@"first", @"rid":@(0), @"num": @(10), @"tagId": @"-1"};
     WEAK(self, weakSelf);
     [SHGCircleManager getListDataWithParam:param block:^(NSArray *normalArray, NSArray *adArray) {
         if (normalArray && adArray) {
@@ -630,7 +630,6 @@
             if ([key isEqualToString:[nameArray objectAtIndex:i]]) {
                 [resultArray addObject:value];
             }
-
         }
     }];
     return resultArray;

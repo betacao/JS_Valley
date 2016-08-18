@@ -43,7 +43,7 @@
 
 + (void)getListDataWithCategory:(NSDictionary *)param block:(void (^)(NSArray *))block
 {
-    [MOCHTTPRequestOperationManager getWithURL:[rBaseAddressForHttp stringByAppendingString:@"/dynamic/classifyDynamic"] parameters:param success:^(MOCHTTPResponse *response){
+    [MOCHTTPRequestOperationManager postWithURL:[rBaseAddressForHttp stringByAppendingString:@"/dynamic/classifyDynamic"] parameters:param success:^(MOCHTTPResponse *response){
         NSArray *array = [response.dataDictionary objectForKey:@"normalpostlist"];
         array = [[SHGGloble sharedGloble] parseServerJsonArrayToJSONModel:array class:[CircleListObj class]];
         block(array);

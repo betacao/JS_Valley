@@ -10,7 +10,7 @@
 typedef void (^SHGReturnTextBlock)(NSString *showText, NSMutableArray *array);
 
 @interface SHGBusinessSelectView : UIView
-- (instancetype)initWithFrame:(CGRect)frame array:(NSArray *)array statu:(BOOL) statu industryArray:(NSArray *)industryArray;
+- (instancetype)initWithFrame:(CGRect)frame array:(NSArray *)array status:(BOOL) status industryArray:(NSArray *)industryArray;
 @property (nonatomic, copy) SHGReturnTextBlock returnTextBlock;
 
 @end

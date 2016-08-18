@@ -15,7 +15,7 @@
 @property (nonatomic, strong) SHGBusinessButtonContentView *radioButtonView;
 @property (nonatomic, strong) NSArray *businessArry;
 @property (nonatomic, strong) NSString *businessName;
-@property (nonatomic, assign) BOOL statu;
+@property (nonatomic, assign) BOOL status;
 @property (nonatomic, strong) UIButton *currentButton;
 @property (nonatomic, strong) NSString *buttonString;
 @property (nonatomic, strong) NSMutableArray *buttonStrongArray;
@@ -26,14 +26,14 @@
 
 @implementation SHGBusinessSelectView
 
-- (instancetype)initWithFrame:(CGRect)frame array:(NSArray *)array statu:(BOOL)statu industryArray:(NSArray *)industryArray
+- (instancetype)initWithFrame:(CGRect)frame array:(NSArray *)array status:(BOOL)status industryArray:(NSArray *)industryArray
 {
     if (self = [super initWithFrame:frame]) {
         self.backgroundColor = [UIColor whiteColor];
         self.businessArry = array;
         self.strongArray = industryArray;
-        self.statu = statu;
-        if (statu) {
+        self.status = status;
+        if (status) {
             [self addSubview:self.buttonView];
         } else{
             [self addSubview:self.radioButtonView];
@@ -62,9 +62,7 @@
 - (SHGBusinessButtonContentView *)buttonView
 {
     if (!_buttonView) {
-        
         _buttonView = [[SHGBusinessButtonContentView alloc] initWithMode:SHGBusinessButtonShowModeExclusiveChoice];
-        
     }
     return _buttonView;
 }
@@ -97,7 +95,7 @@
 {
     SHGBusinessButtonContentView *superView =(SHGBusinessButtonContentView *)btn.superview;
     [superView didClickButton:btn];
-    if (self.statu) {
+    if (self.status) {
         if (superView.selectedArray.count > 0) {
             self.buttonString = [superView.selectedArray objectAtIndex:0];
             for (NSInteger i = 1; i < superView.selectedArray.count; i ++ ) {
@@ -127,7 +125,7 @@
 
 - (void)quiteClick:(UIButton *)btn
 {
-    if (self.statu) {
+    if (self.status) {
         self.buttonStrongArray = self.buttonView.selectedArray;
     } else{
         self.buttonStrongArray = self.radioButtonView.selectedArray;
@@ -196,7 +194,7 @@
         
         button.frame = CGRectMake(kLeftToView + i%3 * (kThreeButtonWidth + MarginFactor(9.0f)), i/3 * (kButtonHeight + MarginFactor(30.0f)), kThreeButtonWidth, kCategoryButtonHeight);
         [button addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchUpInside];
-        if (self.statu) {
+        if (self.status) {
             [self.buttonView.selectedArray addObjectsFromArray:self.strongArray];
             [self.buttonView addSubview:button];
         } else{

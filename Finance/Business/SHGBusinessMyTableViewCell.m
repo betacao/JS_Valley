@@ -38,10 +38,10 @@
 {
     [super awakeFromNib];
     self.selectionStyle = UITableViewCellSelectionStyleNone;
-    UIImage *redImage = [UIImage imageNamed:@"bussiness_myRedbutton"];
+    UIImage *redImage = [UIImage imageNamed:@"cornerRect_gray"];
     self.redImage = [redImage resizableImageWithCapInsets:UIEdgeInsetsMake(10.0f, 10.0f, 10.0f, 10.0f) resizingMode:UIImageResizingModeStretch];
     
-    UIImage *grayImage = [UIImage imageNamed:@"bussiness_myGraybutton"];
+    UIImage *grayImage = [UIImage imageNamed:@"cornerRect_red"];
     self.grayImage = [grayImage resizableImageWithCapInsets:UIEdgeInsetsMake(10.0f, 10.0f, 10.0f, 10.0f) resizingMode:UIImageResizingModeStretch];
     [self addSdLayout];
     [self initView];
@@ -148,6 +148,7 @@
     }
     return _detailObject;
 }
+
 - (void)initView
 {
     [self.sendButton setTitle:@"再发布" forState:UIControlStateNormal];
@@ -262,8 +263,6 @@
     } else{
         
     }
-    
-    
 }
 
 - (IBAction)deleteBusiness:(UIButton *)button

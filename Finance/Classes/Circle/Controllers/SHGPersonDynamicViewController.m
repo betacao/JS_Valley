@@ -54,7 +54,7 @@
     [Hud showWait];
 
     WEAK(self, weakSelf);
-    NSDictionary *param = @{@"uid":UID, @"target":target, @"rid":[NSNumber numberWithInt:[time intValue]], @"num":rRequestNum};
+    NSDictionary *param = @{@"uid":UID, @"target":target, @"rid":time, @"num":@(10)};
     [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttpCircle,@"queryCircleListById",self.userId] class:[CircleListObj class] parameters:param success:^(MOCHTTPResponse *response) {
         [Hud hideHud];
         [weakSelf.tableView.mj_header endRefreshing];

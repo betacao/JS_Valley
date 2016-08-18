@@ -12,8 +12,6 @@
 #ifndef Finance_Constant_h
 #define Finance_Constant_h
 
-#define rRequestNum     @10
-
 #define labletextColor    [UIColor colorWithRed:51/255.0 green:51/255.0 blue:51/255.0 alpha:1.0]
 
 #define kNavBarTitleFontSize    17

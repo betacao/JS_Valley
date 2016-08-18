@@ -680,6 +680,7 @@
 		F9172D8C1D643B28000BA546 /* SHGCircleSearchResultViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9172D8A1D643B28000BA546 /* SHGCircleSearchResultViewController.m */; };
 		F9172D8D1D643B28000BA546 /* SHGCircleSearchResultViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9172D8B1D643B28000BA546 /* SHGCircleSearchResultViewController.xib */; };
 		F9172D901D6451B5000BA546 /* SHGHomeCategoryView.m in Sources */ = {isa = PBXBuildFile; fileRef = F9172D8F1D6451B5000BA546 /* SHGHomeCategoryView.m */; };
+		F9172D931D648527000BA546 /* UITableView+MJRefresh.m in Sources */ = {isa = PBXBuildFile; fileRef = F9172D921D648527000BA546 /* UITableView+MJRefresh.m */; };
 		F91982B81C59B8F500A450B9 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = F91982B71C59B8F500A450B9 /* libsqlite3.tbd */; };
 		F91982BA1C59B92500A450B9 /* libz.1.2.5.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = F91982B91C59B92500A450B9 /* libz.1.2.5.tbd */; };
 		F91982BC1C59B93500A450B9 /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = F91982BB1C59B93500A450B9 /* libicucore.tbd */; };
@@ -1711,6 +1712,8 @@
 		F9172D8B1D643B28000BA546 /* SHGCircleSearchResultViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGCircleSearchResultViewController.xib; sourceTree = "<group>"; };
 		F9172D8E1D6451B5000BA546 /* SHGHomeCategoryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGHomeCategoryView.h; sourceTree = "<group>"; };
 		F9172D8F1D6451B5000BA546 /* SHGHomeCategoryView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGHomeCategoryView.m; sourceTree = "<group>"; };
+		F9172D911D648527000BA546 /* UITableView+MJRefresh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableView+MJRefresh.h"; sourceTree = "<group>"; };
+		F9172D921D648527000BA546 /* UITableView+MJRefresh.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableView+MJRefresh.m"; sourceTree = "<group>"; };
 		F91982B71C59B8F500A450B9 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		F91982B91C59B92500A450B9 /* libz.1.2.5.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.1.2.5.tbd; path = usr/lib/libz.1.2.5.tbd; sourceTree = SDKROOT; };
 		F91982BB1C59B93500A450B9 /* libicucore.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libicucore.tbd; path = usr/lib/libicucore.tbd; sourceTree = SDKROOT; };
@@ -3933,6 +3936,8 @@
 				F93891BD1CA11B2900B182F7 /* UINavigationItem+Custom.m */,
 				F923AB1F1D543A0E00518040 /* UITabBar+badge.h */,
 				F923AB201D543A0E00518040 /* UITabBar+badge.m */,
+				F9172D911D648527000BA546 /* UITableView+MJRefresh.h */,
+				F9172D921D648527000BA546 /* UITableView+MJRefresh.m */,
 			);
 			name = Category;
 			path = Finance/Category;
@@ -4981,6 +4986,7 @@
 				98765FB81CFC744900C8C590 /* SHGMyFansViewController.m in Sources */,
 				9842E9CF1C017FCA0008B6AF /* SHGPersonFriendsViewController.m in Sources */,
 				F90EAF491CAB772700B58E75 /* SHGEncryptionAlgorithm.m in Sources */,
+				F9172D931D648527000BA546 /* UITableView+MJRefresh.m in Sources */,
 				982EB8091CB3AD47003EEBE6 /* SHGSameAndCommixtureNextViewController.m in Sources */,
 				F93FCBCB1C856D5A004E356E /* UIImage+Rotation.m in Sources */,
 				F9E7CAE71CF8290C0068EF4B /* SHGRecommendCollectionView.m in Sources */,

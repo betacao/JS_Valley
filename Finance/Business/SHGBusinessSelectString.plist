@@ -90,5 +90,9 @@
 	<string>investmentChannel</string>
 	<key>银证业务</key>
 	<string>trademixed</string>
+	<key>投资机构</key>
+	<string>moneyside</string>
+	<key>资金</key>
+	<string>moneyside</string>
 </dict>
 </plist>

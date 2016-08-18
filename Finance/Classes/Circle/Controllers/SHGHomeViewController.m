@@ -291,7 +291,7 @@
 {
     self.isRefreshing = YES;
     NSInteger rid = [time integerValue];
-    NSDictionary *param = @{@"uid":UID, @"type":@"all", @"target":target, @"rid":@(rid), @"num": rRequestNum, @"tagId" : @"-1"};
+    NSDictionary *param = @{@"uid":UID, @"type":@"all", @"target":target, @"rid":@(rid), @"num": @(10), @"tagId" : @"-1"};
 
     WEAK(self, weakSelf);
     [SHGCircleManager getListDataWithParam:param block:^(NSArray *normalArray, NSArray *adArray) {

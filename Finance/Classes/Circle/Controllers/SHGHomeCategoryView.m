@@ -12,11 +12,13 @@
 #import "SHGCircleManager.h"
 #import "SHGNoticeView.h"
 #import "SHGEmptyDataView.h"
+#import "UITableView+MJRefresh.h"
 
 @interface SHGHomeCategoryView()<UITableViewDelegate, UITableViewDataSource>
 
 @property (strong, nonatomic) UITableView *tableView;
 @property (strong, nonatomic) SHGNoticeView *newMessageNoticeView;
+@property (strong, nonatomic) SHGEmptyDataView *emptyView;
 
 @property (strong, nonatomic) NSMutableArray *dataArray;
 
@@ -55,14 +57,17 @@
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
+    [self.tableView addRefreshFooterrWithTarget:self];
+    [self.tableView addRefreshHeaderWithTarget:self];
     [self addSubview:self.tableView];
-
-//    [self add]
 }
 
 - (void)addAutoLayout
 {
     self.tableView.sd_layout
+    .spaceToSuperView(UIEdgeInsetsZero);
+
+    self.emptyView.sd_layout
     .spaceToSuperView(UIEdgeInsetsZero);
 }
 
@@ -73,6 +78,15 @@
         _newMessageNoticeView.superView = self;
     }
     return _newMessageNoticeView;
+}
+
+- (SHGEmptyDataView *)emptyView
+{
+    if (!_emptyView) {
+        _emptyView = [[SHGEmptyDataView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, SCREENWIDTH, SCREENHEIGHT)];
+        [self insertSubview:_emptyView belowSubview:self.tableView];
+    }
+    return _emptyView;
 }
 
 - (void)setNeedRefreshTableView:(BOOL)needRefreshTableView
@@ -90,11 +104,13 @@
 
 - (void)setCategory:(NSString *)category
 {
-    _category = category;
-    if ([category isEqualToString:@"全部"]) {
+    NSDictionary *dictionary = [[SHGGloble sharedGloble] getBusinessKeysAndValues];
+    _category = [dictionary objectForKey:category];
+    if (!_category) {
         self.hidden = YES;
     } else {
         self.hidden = NO;
+        [self.dataArray removeAllObjects];
         [self requestDataWithTarget:@"first" time:@""];
     }
 }
@@ -157,19 +173,22 @@
 {
     self.isRefreshing = YES;
     NSInteger rid = [time integerValue];
-    NSDictionary *param = @{@"uid":UID, @"busType":self.category, @"target":target, @"rid":@(rid), @"pageSize":rRequestNum};
+    NSDictionary *param = @{@"uid":UID, @"busType":self.category, @"target":target, @"rid":@(rid), @"pageSize":@(10)};
 
     WEAK(self, weakSelf);
     [SHGCircleManager getListDataWithCategory:param block:^(NSArray *array) {
         [Hud hideHud];
+        [weakSelf.tableView.mj_header endRefreshing];
         weakSelf.isRefreshing = NO;
         if (array) {
             [weakSelf assembleArray:array target:target];
             weakSelf.needRefreshTableView = YES;
-            [weakSelf.tableView.mj_header endRefreshing];
-            [weakSelf.tableView.mj_footer endRefreshing];
+            if (array.count < 10) {
+                [weakSelf.tableView.mj_footer endRefreshingWithNoMoreData];
+            } else {
+                [weakSelf.tableView.mj_footer endRefreshing];
+            }
         } else {
-            [weakSelf.tableView.mj_header endRefreshing];
             [weakSelf.tableView.mj_footer endRefreshing];
         }
     }];
