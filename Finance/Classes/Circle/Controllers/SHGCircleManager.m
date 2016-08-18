@@ -7,7 +7,7 @@
 //
 
 #import "SHGCircleManager.h"
-
+#import "CircleListObj.h"
 @implementation SHGCircleManager
 
 + (void)getListDataWithParam:(NSDictionary *)param block:(void (^)(NSArray *, NSArray *))block
@@ -16,7 +16,7 @@
         NSLog(@"首页预加载数据成功");
         NSArray *normalArray = [response.dataDictionary objectForKey:@"normalpostlist"];
         normalArray = [[SHGGloble sharedGloble] parseServerJsonArrayToJSONModel:normalArray class:[CircleListObj class]];
-
+        
         NSArray *adArray = [response.dataDictionary objectForKey:@"adlist"];
         adArray = [[SHGGloble sharedGloble] parseServerJsonArrayToJSONModel:adArray class:[CircleListObj class]];
         block(normalArray, adArray);
@@ -40,6 +40,7 @@
     }];
 }
 
+
 + (void)getListDataWithCategory:(NSDictionary *)param block:(void (^)(NSArray *))block
 {
     [MOCHTTPRequestOperationManager getWithURL:[rBaseAddressForHttp stringByAppendingString:@"/dynamic/classifyDynamic"] parameters:param success:^(MOCHTTPResponse *response){
@@ -48,6 +49,23 @@
         block(array);
     } failed:^(MOCHTTPResponse *response){
         block(nil);
+    }];
+}
+
++ (void)getMyorSearchDataWithParam:(NSDictionary *)param block:(void (^)(NSArray *, NSString *))block
+{
+    NSMutableDictionary *mutableParam = [NSMutableDictionary dictionaryWithDictionary:param];
+    NSString *request = [rBaseAddressForHttp stringByAppendingString:@"/dynamic/searchDynamic"];
+    [MOCHTTPRequestOperationManager postWithURL:request class:nil parameters:mutableParam success:^(MOCHTTPResponse *response) {
+        [Hud hideHud];
+        NSDictionary *dictionary = response.dataDictionary;
+        NSArray *dataArray = [[SHGGloble sharedGloble] parseServerJsonArrayToJSONModel:[dictionary objectForKey:@"normalpostlist"] class:[CircleListObj class]];
+        NSString *total = [dictionary objectForKey:@"total"];
+        block(dataArray, total);
+    } failed:^(MOCHTTPResponse *response) {
+        [Hud hideHud];
+        block(nil, @"0");
+        [Hud showMessageWithText:@"获取列表数据失败"];
     }];
 }
 @end

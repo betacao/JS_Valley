@@ -11,8 +11,7 @@
 #import "TWEmojiKeyBoard.h"
 #import "ZYQAssetPickerController.h"
 #import "CCLocationManager.h"
-
-#define kTextViewMinHeight MarginFactor(75.0f)
+#define kTextViewMinHeight MarginFactor(100.0f)
 #define kImageViewWidth MarginFactor(105.0f)
 #define kImageViewHeight MarginFactor(105.0f)
 #define kImageViewLeftMargin MarginFactor(12.0f)
@@ -20,7 +19,7 @@
 #define MAX_TEXT_LENGTH         2000
 #define MAX_STRING_LENGTH         2000
 #define MAX_STARWORDS_LENGTH 18
-
+#define kFourButtonWidth floorf((SCREENWIDTH - 2 * MarginFactor(12.0f) - 3 * MarginFactor(19.0f)) / 4.0)
 @interface SHGCircleSendViewController ()<UITextViewDelegate, UIActionSheetDelegate, ZYQAssetPickerControllerDelegate, UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 @property (assign, nonatomic) BOOL isTextField;
 @property (assign, nonatomic) NSInteger index;
@@ -34,8 +33,12 @@
 @property (weak, nonatomic) IBOutlet UIView *bottomLine1;
 @property (weak, nonatomic) IBOutlet UIView *bottomLine2;
 @property (weak, nonatomic) IBOutlet UIView *photoView;
+@property (weak, nonatomic) IBOutlet UIView *typeView;
+@property (weak, nonatomic) IBOutlet UILabel *typeTitleLabel;
+@property (weak, nonatomic) IBOutlet UIView *typeButtonView;
+@property (weak, nonatomic) IBOutlet UIView *titleView;
 @property (weak, nonatomic) IBOutlet UITextField *textField;
-@property (weak, nonatomic) IBOutlet UIView *spliteView;
+@property (weak, nonatomic) IBOutlet UIView *detailView;
 @property (weak, nonatomic) IBOutlet CPTextViewPlaceholder *textView;
 @property (weak, nonatomic) IBOutlet UIButton *addButton;
 
@@ -46,6 +49,11 @@
 @property (weak, nonatomic) IBOutlet UIView *accessoryLine2;
 @property (strong, nonatomic) NSMutableArray *imageArray;
 @property (weak, nonatomic) SHGCircleSendImageView *selectedImageView;
+
+@property(strong, nonatomic) UIImage *buttonBgImage;
+@property(strong, nonatomic) UIImage *buttonSelectBgImage;
+
+@property (strong, nonatomic) UIButton *currentButton;
 @end
 
 @implementation SHGCircleSendViewController
@@ -55,6 +63,9 @@
     self.leftItemtitleName = @"取消";
     self.rightItemtitleName = @"发送";
     [super viewDidLoad];
+    self.buttonBgImage = [[UIImage imageNamed:@"business_SendButtonBg"] resizableImageWithCapInsets:UIEdgeInsetsMake(MarginFactor(5.0f), MarginFactor(5.0f), MarginFactor(5.0f), MarginFactor(5.0f)) resizingMode:UIImageResizingModeStretch];
+    
+    self.buttonSelectBgImage = [[UIImage imageNamed:@"business_SendButtonSelectBg"] resizableImageWithCapInsets:UIEdgeInsetsMake(MarginFactor(5.0f), MarginFactor(5.0f), MarginFactor(5.0f), MarginFactor(5.0f)) resizingMode:UIImageResizingModeStretch];
     if ([[SHGGloble sharedGloble].cityName isEqualToString:@""]) {
         [[CCLocationManager shareLocation] getCity:nil];
     }
@@ -84,20 +95,50 @@
 
 - (void)initView
 {
-    self.textField.placeholder = @"来个标题";
-    self.textField.font = FontFactor(16.0f);
-    [self.textField setValue:Color(@"919291") forKeyPath:@"_placeholderLabel.textColor"];
+    NSArray *typeArray = @[@"债权融资",@"股权融资",@"资金",@"银证业务"];
+    for (NSInteger i = 0; i < typeArray.count; i ++) {
+        UIButton * button = [UIButton buttonWithType:UIButtonTypeCustom];
+        button.titleLabel.font = FontFactor(14.0f);
+        button.adjustsImageWhenHighlighted = NO;
+        [button setTitle:[typeArray objectAtIndex:i] forState:UIControlStateNormal];
+        [button setTitleColor:Color(@"8a8a8a") forState:UIControlStateNormal];
+        [button setBackgroundImage:self.buttonBgImage forState:UIControlStateNormal];
+        if (i == 0) {
+            [button setBackgroundImage:self.buttonSelectBgImage forState:UIControlStateSelected];
+            [button setTitleColor:Color(@"f33300") forState:UIControlStateNormal];
+            self.currentButton = button;
+        }
+        
+        button.frame = CGRectMake(MarginFactor(12.0f) + i * (kFourButtonWidth + MarginFactor(19.0f)), 0.0f, kFourButtonWidth, MarginFactor(26.0f));
+        [button addTarget:self action:@selector(categoryButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+        [self.typeButtonView addSubview:button];
+    }
+    
+    self.typeTitleLabel.text = @"动态类型";
+    self.typeTitleLabel.textColor = Color(@"bebebe");
+    self.typeTitleLabel.font = FontFactor(15.0f);
+    
+    self.scrollView.backgroundColor = Color(@"f7f7f7");
+    
+    self.textField.placeholder = @"动态标题";
+    self.textField.textColor = Color(@"161616");
+    self.textField.font = FontFactor(15.0f);
+    [self.textField setValue:Color(@"bebebe") forKeyPath:@"_placeholderLabel.textColor"];
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, MarginFactor(6.0f), 0.0f)];
     self.textField.leftView = view;
     self.textField.leftViewMode = UITextFieldViewModeAlways;
-
-    self.spliteView.backgroundColor = Color(@"e6e7e8");
-
-    self.textView.placeholder = @"说两句吧...";
+    
+    self.textField.layer.borderWidth = 1/SCALE;
+    self.textField.layer.borderColor = Color(@"e4e4e4").CGColor;
+    
+    self.textView.layer.borderWidth = 1/SCALE;
+    self.textView.layer.borderColor = Color(@"e4e4e4").CGColor;
+    
+    self.textView.placeholder = @"动态描述";
     self.textView.bounces = NO;
-    self.textView.placeholderColor = Color(@"919291");
+    self.textView.placeholderColor = Color(@"bebebe");
     self.textView.textColor = Color(@"161616");
-    self.textView.font = FontFactor(16.0f);
+    self.textView.font = FontFactor(15.0f);
     self.textView.inputAccessoryView = self.inputAccessoryView;
 
     self.inputAccessoryView.backgroundColor = [UIColor colorWithHexString:@"f4f4f4"];
@@ -110,6 +151,18 @@
 
 }
 
+- (void)categoryButtonClick:(UIButton *)btn
+{
+    if (btn != self.currentButton) {
+        [self.currentButton setTitleColor:Color(@"8a8a8a") forState:UIControlStateNormal];
+        [self.currentButton setBackgroundImage:self.buttonBgImage forState:UIControlStateSelected];
+        
+        [btn setBackgroundImage:self.buttonSelectBgImage forState:UIControlStateSelected];
+        [btn setTitleColor:Color(@"f33300") forState:UIControlStateNormal];
+        self.currentButton = btn;
+    }
+    
+}
 - (void)addAutoLayout
 {
     //底部
@@ -152,29 +205,56 @@
     .rightSpaceToView(self.view, 0.0f)
     .bottomSpaceToView(self.bottomView, 0.0f);
 
-    self.textField.sd_layout
+    self.typeView.sd_layout
     .topSpaceToView(self.scrollView, 0.0f)
-    .leftSpaceToView(self.scrollView, kImageViewLeftMargin)
-    .rightSpaceToView(self.scrollView, kImageViewLeftMargin)
-    .heightIs(MarginFactor(48.0f));
-
-    self.spliteView.sd_layout
-    .topSpaceToView(self.textField, 0.0f)
+    .leftSpaceToView(self.scrollView, 0.0f)
+    .rightSpaceToView(self.scrollView, 0.0f);
+    
+    self.typeTitleLabel.sd_layout
+    .topSpaceToView(self.typeView, MarginFactor(10.0f))
+    .leftSpaceToView(self.typeView, MarginFactor(17.0f))
+    .heightIs(self.typeTitleLabel.font.lineHeight);
+    [self.typeTitleLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
+    
+    self.typeButtonView.sd_layout
+    .topSpaceToView(self.typeTitleLabel, MarginFactor(10.0f))
+    .leftSpaceToView(self.typeView, 0.0f)
+    .rightSpaceToView(self.typeView, 0.0f)
+    .heightIs(MarginFactor(26.0f));
+    [self.typeView setupAutoHeightWithBottomView:self.typeButtonView bottomMargin:MarginFactor(10.0f)];
+    
+    self.titleView.sd_layout
     .leftSpaceToView(self.scrollView, 0.0f)
     .rightSpaceToView(self.scrollView, 0.0f)
-    .heightIs(1 / SCALE);
+    .topSpaceToView(self.typeView, MarginFactor(11.0f));
+    
+    self.textField.sd_layout
+    .topSpaceToView(self.titleView, MarginFactor(10.0f))
+    .leftSpaceToView(self.titleView, kImageViewLeftMargin)
+    .rightSpaceToView(self.titleView, kImageViewLeftMargin)
+    .heightIs(MarginFactor(48.0f));
+    
+    [self.titleView setupAutoHeightWithBottomView:self.textField bottomMargin:MarginFactor(10.0f)];
 
+
+    self.detailView.sd_layout
+    .topSpaceToView(self.titleView, MarginFactor(11.0f))
+    .leftSpaceToView(self.scrollView, 0.0f)
+    .rightSpaceToView(self.scrollView, 0.0f);
+    
     self.textView.sd_layout
-    .topSpaceToView(self.spliteView, MarginFactor(14.0f))
-    .leftEqualToView(self.textField)
-    .rightEqualToView(self.textField)
+    .topSpaceToView(self.detailView, MarginFactor(10.0f))
+    .leftSpaceToView(self.detailView, kImageViewLeftMargin)
+    .rightSpaceToView(self.detailView, kImageViewLeftMargin)
     .heightIs(kTextViewMinHeight);
+    
+    [self.detailView setupAutoHeightWithBottomView:self.textView bottomMargin:MarginFactor(10.0f)];
 
     self.photoView.sd_layout
-    .topSpaceToView(self.textView, MarginFactor(25.0f))
-    .leftEqualToView(self.textView)
-    .rightEqualToView(self.textView)
-    .heightIs(2.0f * kImageViewHeight + kImageViewMargin);
+    .topSpaceToView(self.detailView, MarginFactor(11.0f))
+    .leftEqualToView(self.detailView)
+    .rightEqualToView(self.detailView)
+    .heightIs(2.0f * kImageViewHeight + kImageViewMargin + 2*MarginFactor(12.0f));
 
     WEAK(self, weakSelf);
     self.photoView.didFinishAutoLayoutBlock = ^(CGRect rect){
@@ -255,14 +335,14 @@
     } else{
         self.addButton.hidden = NO;
     }
-
+   
     NSInteger row = 0;
     NSInteger col = 0;
     CGRect frame = CGRectZero;
     for (NSInteger i = 0; i < self.imageArray.count; i++) {
         row = i / 3;
         col = i % 3;
-        frame = CGRectMake(col * (kImageViewWidth + kImageViewMargin), row * (kImageViewHeight + kImageViewMargin), kImageViewWidth, kImageViewHeight);
+        frame = CGRectMake(MarginFactor(12.0f) + col * (kImageViewWidth + kImageViewMargin), MarginFactor(12.0f) + row * (kImageViewHeight + kImageViewMargin), kImageViewWidth, kImageViewHeight);
         SHGCircleSendImageView *imageView = [[SHGCircleSendImageView alloc] initWithFrame:frame];
         RecommendTypeObj *obj = [self.imageArray objectAtIndex:i];
         imageView.object = obj;
@@ -278,7 +358,7 @@
     row = self.imageArray.count / 3;
     col = self.imageArray.count % 3;
     //更改+号位置
-    frame = CGRectMake(col * (kImageViewWidth + kImageViewMargin), row * (kImageViewHeight + kImageViewMargin), kImageViewWidth, kImageViewHeight);
+    frame = CGRectMake(MarginFactor(12.0f) + col * (kImageViewWidth + kImageViewMargin),MarginFactor(12.0f) + row * (kImageViewHeight + kImageViewMargin), kImageViewWidth, kImageViewHeight);
     self.addButton.frame = frame;
 }
 
@@ -344,6 +424,8 @@
 - (void)sendCircleWithPhotos:(NSArray *)photos
 {
     WEAK(self, weakSelf);
+    NSDictionary *businessSelectDic = [[SHGGloble sharedGloble] getBusinessKeysAndValues];
+    NSString *busType = [businessSelectDic objectForKey:weakSelf.currentButton.titleLabel.text];
     NSDictionary *param = @{};
     if (!IsArrEmpty(photos)){
         NSString *photoStr = [photos componentsJoinedByString:@","];
@@ -357,9 +439,9 @@
             size = [NSString stringWithFormat:@"%@,%@",size,imageSize];
         }
         size = [size substringFromIndex:1];
-        param  = @{@"uid":UID, @"detail":self.textView.text, @"photos":photoStr?:@"", @"type":@"photo", @"sizes":size, @"currCity":[SHGGloble sharedGloble].cityName ,@"title":self.textField.text};
+        param  = @{@"uid":UID, @"detail":self.textView.text, @"photos":photoStr?:@"", @"type":@"photo", @"sizes":size, @"currCity":[SHGGloble sharedGloble].cityName ,@"title":self.textField.text,@"busType":busType};
     } else{
-        param = @{@"uid":UID, @"detail":self.textView.text, @"type":@"", @"sizes":@"", @"currCity":[SHGGloble sharedGloble].cityName, @"title":self.textField.text};
+        param = @{@"uid":UID, @"detail":self.textView.text, @"type":@"", @"sizes":@"", @"currCity":[SHGGloble sharedGloble].cityName, @"title":self.textField.text,@"busType":busType};
     }
 
     [MOCHTTPRequestOperationManager postWithURL:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttpCircle,actioncircle] class:nil parameters:param success:^(MOCHTTPResponse *response) {

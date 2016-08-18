@@ -16,4 +16,6 @@
 
 + (void)getListDataWithCategory:(NSDictionary *)param block:(void (^)(NSArray *array))block;
 
+
++ (void)getMyorSearchDataWithParam:(NSDictionary *)param block:(void (^)(NSArray *, NSString *))block;
 @end

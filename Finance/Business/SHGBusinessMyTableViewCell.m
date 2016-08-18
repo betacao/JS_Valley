@@ -27,6 +27,8 @@
 @property (weak, nonatomic) IBOutlet UIButton *deleteButton;
 @property (weak, nonatomic) IBOutlet UIView *bottomLineView;
 @property (strong, nonatomic) SHGBusinessObject *detailObject;
+@property (strong, nonatomic) UIImage *redImage;
+@property (strong, nonatomic) UIImage *grayImage;
 
 @end
 
@@ -36,6 +38,11 @@
 {
     [super awakeFromNib];
     self.selectionStyle = UITableViewCellSelectionStyleNone;
+    UIImage *redImage = [UIImage imageNamed:@"bussiness_myRedbutton"];
+    self.redImage = [redImage resizableImageWithCapInsets:UIEdgeInsetsMake(10.0f, 10.0f, 10.0f, 10.0f) resizingMode:UIImageResizingModeStretch];
+    
+    UIImage *grayImage = [UIImage imageNamed:@"bussiness_myGraybutton"];
+    self.grayImage = [grayImage resizableImageWithCapInsets:UIEdgeInsetsMake(10.0f, 10.0f, 10.0f, 10.0f) resizingMode:UIImageResizingModeStretch];
     [self addSdLayout];
     [self initView];
     
@@ -110,19 +117,19 @@
     self.deleteButton.sd_layout
     .rightSpaceToView(self.buttonView, MarginFactor(12.0f))
     .centerYEqualToView(self.buttonView)
-    .widthIs(buttonImageSize.width)
+    .widthIs(MarginFactor(60.0f))
     .heightIs(buttonImageSize.height);
     
     self.editButton.sd_layout
     .rightSpaceToView(self.deleteButton, MarginFactor(12.0f))
     .centerYEqualToView(self.buttonView)
-    .widthIs(buttonImageSize.width)
+    .widthIs(MarginFactor(60.0f))
     .heightIs(buttonImageSize.height);
     
     self.sendButton.sd_layout
     .rightSpaceToView(self.editButton, MarginFactor(12.0f))
     .centerYEqualToView(self.buttonView)
-    .widthIs(buttonImageSize.width)
+    .widthIs(MarginFactor(60.0f))
     .heightIs(buttonImageSize.height);
     
     self.bottomLineView.sd_layout
@@ -147,7 +154,7 @@
     [self.deleteButton setTitle:@"删除" forState:UIControlStateNormal];
     [self.sendButton setTitleColor:Color(@"ff2f00") forState:UIControlStateNormal];
     [self.deleteButton setTitleColor:Color(@"ff2f00") forState:UIControlStateNormal];
-    [self.deleteButton setBackgroundImage:[UIImage imageNamed:@"bussiness_myRedbutton"] forState:UIControlStateNormal];
+    [self.deleteButton setBackgroundImage:self.redImage forState:UIControlStateNormal];
     self.sendButton.titleLabel.font = self.editButton.titleLabel.font = self.deleteButton.titleLabel.font = FontFactor(12.0f);
     
     [self.editButton addTarget:self action:@selector(editButtonClick:) forControlEvents:UIControlEventTouchUpInside];
@@ -212,15 +219,15 @@
     NSMutableAttributedString *complain = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"投诉%@次",object.complainNum] attributes:@{NSFontAttributeName:FontFactor(12.0f), NSForegroundColorAttributeName:Color(@"8d8d8d")}];
     [complain addAttributes:@{NSForegroundColorAttributeName:Color(@"ff3904")} range:NSMakeRange(2, object.complainNum.length)];
     self.complainNumLabel.attributedText = complain;
-    
+
     if ([object.auditState isEqualToString:@"0"] || [object.auditState isEqualToString:@"9"]){
         [self.editButton setTitle:@"编辑" forState:UIControlStateNormal];
         [self.editButton setTitleColor:Color(@"ff2f00") forState:UIControlStateNormal];
-        [self.editButton setBackgroundImage:[UIImage imageNamed:@"bussiness_myRedbutton"] forState:UIControlStateNormal];
+        [self.editButton setBackgroundImage:self.redImage forState:UIControlStateNormal];
     } else{
         [self.editButton setTitle:@"编辑" forState:UIControlStateNormal];
         [self.editButton setTitleColor:Color(@"9b9b9b") forState:UIControlStateNormal];
-        [self.editButton setBackgroundImage:[UIImage imageNamed:@"bussiness_myGraybutton"] forState:UIControlStateNormal];
+        [self.editButton setBackgroundImage:self.grayImage forState:UIControlStateNormal];
     }
     if ([object.auditState isEqualToString:@"0"]) {
         self.stateImageView.hidden = YES;
@@ -232,11 +239,11 @@
         self.stateImageView.image = [UIImage imageNamed:@"my_businessReject"];
     }
     if ([object.isRefresh isEqualToString:@"true"]) {
-        [self.sendButton setBackgroundImage:[UIImage imageNamed:@"bussiness_myRedbutton"] forState:UIControlStateNormal];
+        [self.sendButton setBackgroundImage:self.redImage forState:UIControlStateNormal];
         [self.sendButton setTitleColor:Color(@"ff2f00") forState:UIControlStateNormal];
     } else{
         [self.sendButton setTitleColor:Color(@"9b9b9b") forState:UIControlStateNormal];
-        [self.sendButton setBackgroundImage:[UIImage imageNamed:@"bussiness_myGraybutton"] forState:UIControlStateNormal];
+        [self.sendButton setBackgroundImage:self.grayImage forState:UIControlStateNormal];
     }
     
 }
@@ -289,7 +296,7 @@
         if ([object.isRefresh isEqualToString:@"true"]) {
             [SHGBusinessManager refreshBusiness:object success:^(BOOL success) {
                 if (success) {
-                    [weakSelf.sendButton setBackgroundImage:[UIImage imageNamed:@"bussiness_myGraybutton"] forState:UIControlStateNormal];
+                    [weakSelf.sendButton setBackgroundImage:self.grayImage forState:UIControlStateNormal];
                     [self.sendButton setTitleColor:Color(@"9b9b9b") forState:UIControlStateNormal];
                     object.isRefresh = @"false";
                 };

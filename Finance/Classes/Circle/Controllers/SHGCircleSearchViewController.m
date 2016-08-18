@@ -139,9 +139,9 @@
 
 - (void)buttonClick:(UIButton *)button
 {
-//    SHGCircleSearchResultViewController *controller = [[SHGCircleSearchResultViewController alloc] initWithType:SHGBusinessSearchTypeNormal];
-//    controller.param = @{@"uid":UID ,@"type":@"search" ,@"pageSize":@"10", @"keyword":button.titleLabel.text};
-//    [self.navigationController pushViewController:controller animated:YES];
+    SHGCircleSearchResultViewController *controller = [[SHGCircleSearchResultViewController alloc] init];
+    controller.param = @{@"uid":UID ,@"type":@"search" ,@"pageSize":@"10", @"keyword":button.titleLabel.text};
+    [self.navigationController pushViewController:controller animated:YES];
 }
 
 #pragma mark ------搜索的代理
@@ -153,10 +153,10 @@
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
-//    [[SHGGloble sharedGloble] recordUserAction:searchBar.text type:@"business_search_word"];
-//    SHGCircleSearchResultViewController *controller = [[SHGCircleSearchResultViewController alloc] initWithType:SHGBusinessSearchTypeNormal];
-//    controller.param = @{@"uid":UID ,@"type":@"search" ,@"pageSize":@"10", @"keyword":searchBar.text};
-//    [self.navigationController pushViewController:controller animated:YES];
+    [[SHGGloble sharedGloble] recordUserAction:searchBar.text type:@"business_search_word"];
+    SHGCircleSearchResultViewController *controller = [[SHGCircleSearchResultViewController alloc] init];
+    controller.param = @{@"uid":UID ,@"type":@"search" ,@"pageSize":@"10", @"keyword":searchBar.text};
+    [self.navigationController pushViewController:controller animated:YES];
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event

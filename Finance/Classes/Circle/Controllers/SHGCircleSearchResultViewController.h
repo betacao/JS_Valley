@@ -6,8 +6,9 @@
 //  Copyright © 2016年 HuMin. All rights reserved.
 //
 
-#import "BaseViewController.h"
+#import "BaseTableViewController.h"
 
-@interface SHGCircleSearchResultViewController : BaseViewController
+@interface SHGCircleSearchResultViewController : BaseTableViewController
 
+@property (strong, nonatomic) NSDictionary *param;
 @end
