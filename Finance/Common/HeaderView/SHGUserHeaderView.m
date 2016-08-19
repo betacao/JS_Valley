@@ -11,7 +11,11 @@
 #import "SHGPersonalViewController.h"
 
 @interface SHGUserHeaderView ()
+
 @property (strong, nonatomic) UIImageView *headerImageView;
+
+@property (strong, nonatomic) UIImageView *VImageView;
+
 @property (strong, nonatomic) NSString *userId;
 
 @end
@@ -22,14 +26,23 @@
 {
     self = [super initWithFrame:frame];
     if(self){
-        self.headerImageView = [[UIImageView alloc] initWithFrame:frame];
+        self.headerImageView = [[UIImageView alloc] init];
         [self addSubview:self.headerImageView];
 
         self.headerImageView.sd_layout
-        .topSpaceToView(self, 0.0f)
-        .leftSpaceToView(self, 0.0f)
-        .bottomSpaceToView(self, 0.0f)
-        .rightSpaceToView(self, 0.0f);
+        .spaceToSuperView(UIEdgeInsetsZero);
+
+        UIImage *VImage = [UIImage imageNamed:@"v_normal_gray"];
+        CGSize size = VImage.size;
+        self.VImageView = [[UIImageView alloc] initWithImage:VImage];
+        self.VImageView.hidden = YES;
+        [self addSubview:self.VImageView];
+
+        self.VImageView.sd_layout
+        .rightSpaceToView(self, -size.width / 3.0f)
+        .bottomSpaceToView(self, -size.height / 3.0f)
+        .widthIs(size.width)
+        .heightIs(size.height);
 
         UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapUserHeaderView)];
         [self addGestureRecognizer:recognizer];
@@ -44,10 +57,19 @@
     [self addSubview:self.headerImageView];
 
     self.headerImageView.sd_layout
-    .topSpaceToView(self, 0.0f)
-    .leftSpaceToView(self, 0.0f)
-    .bottomSpaceToView(self, 0.0f)
-    .rightSpaceToView(self, 0.0f);
+    .spaceToSuperView(UIEdgeInsetsZero);
+
+    UIImage *VImage = [UIImage imageNamed:@"v_normal_gray"];
+    CGSize size = VImage.size;
+    self.VImageView = [[UIImageView alloc] initWithImage:VImage];
+    self.VImageView.hidden = YES;
+    [self addSubview:self.VImageView];
+
+    self.VImageView.sd_layout
+    .rightSpaceToView(self, -size.width / 3.0f)
+    .bottomSpaceToView(self, -size.height / 3.0f)
+    .widthIs(size.width)
+    .heightIs(size.height);
 
     UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapUserHeaderView)];
     [self addGestureRecognizer:recognizer];
@@ -57,6 +79,18 @@
 - (void)updateHeaderView:(NSString *)sourceUrl placeholderImage:(UIImage *)placeImage userID:(NSString *)userId
 {
     self.userId = userId;
+    [self.headerImageView yy_setImageWithURL:[NSURL URLWithString:sourceUrl] placeholder:placeImage];
+}
+
+- (void)updateHeaderView:(NSString *)sourceUrl placeholderImage:(UIImage *)placeImage status:(BOOL)status userID:(NSString *)userId
+{
+    self.userId = userId;
+    self.VImageView.hidden = NO;
+    if (status) {
+        self.VImageView.image = [UIImage imageNamed:@"v_normal_gray"];
+    } else {
+        self.VImageView.image = [UIImage imageNamed:@"v_normal_yellow"];
+    }
     [self.headerImageView yy_setImageWithURL:[NSURL URLWithString:sourceUrl] placeholder:placeImage];
 }
 

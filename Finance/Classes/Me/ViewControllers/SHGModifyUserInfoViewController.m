@@ -298,13 +298,8 @@
 
 - (void)authButtonClicked:(UIButton *)button
 {
-    WEAK(self, weakSelf);
     SHGAuthenticationViewController *controller = [[SHGAuthenticationViewController alloc] init];
     controller.shouldForceAuth = YES;
-    controller.block = ^(NSString *state){
-        [weakSelf loadAuthState];
-        [weakSelf.navigationController popToViewController:self animated:YES];
-    };
     [self.navigationController pushViewController:controller animated:YES];
 }
 

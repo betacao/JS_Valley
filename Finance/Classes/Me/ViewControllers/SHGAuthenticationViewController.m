@@ -425,11 +425,7 @@
             [Hud hideHud];
             [Hud showMessageWithText:@"提交成功，我们将在一个工作日内\n通知您认证结果"];
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.2f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                if (weakSelf.block) {
-                    weakSelf.block(@"1");
-                } else {
-                    [weakSelf.navigationController performSelector:@selector(popViewControllerAnimated:) withObject:@(YES) afterDelay:1.20f];
-                }
+                [weakSelf.navigationController popToViewController:[TabBarViewController tabBar] animated:YES];
             });
         }
     } failed:^(MOCHTTPResponse *response) {
