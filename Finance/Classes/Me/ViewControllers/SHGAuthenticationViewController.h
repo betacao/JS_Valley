@@ -8,6 +8,11 @@
 
 #import "BaseViewController.h"
 
+typedef void(^SHGAuthenticationBlock)(NSString *state);
+
 @interface SHGAuthenticationViewController : BaseViewController
+
+@property (assign, nonatomic) BOOL shouldForceAuth;
+@property (copy, nonatomic) SHGAuthenticationBlock block;
 
 @end

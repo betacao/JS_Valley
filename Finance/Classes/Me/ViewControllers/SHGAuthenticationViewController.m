@@ -208,6 +208,7 @@
     [self.authScrollView setupAutoContentSizeWithBottomView:self.roundCornerView bottomMargin:MarginFactor(10.0f)];
 }
 
+
 - (NSString *)departmentCode
 {
     NSString *string = [self.departmentField.text stringByReplacingOccurrencesOfString:@" " withString:@""];
@@ -217,7 +218,7 @@
 
 - (void)resetView
 {
-    self.authScrollView.alpha = [self.state isEqualToString:@"0"] ? 1.0f : 0.0f;
+    self.authScrollView.alpha = [self.state isEqualToString:@"0"] || self.shouldForceAuth ? 1.0f : 0.0f;
     self.authTipLabel.hidden = YES;
     if ([self.state isEqualToString:@"0"]) {
         self.stateLabel.text = @"未认证";
@@ -231,11 +232,11 @@
         self.authTipLabel.hidden = NO;
         self.authTipLabel.textAlignment = NSTextAlignmentCenter;
         self.authTipLabel.text = @"大牛正在认证您的用户信息，我们将在一个工作日内通知您认证结果！感谢您对大牛圈的支持！";
-    }else if ([self.state isEqualToString:@"2"]){
+    } else if ([self.state isEqualToString:@"2"]) {
         self.stateLabel.text = @"已认证";
         self.stateLabel.textColor = [UIColor colorWithHexString:@"3588c8"];
         [self.submitButton setTitle:@"更新" forState:UIControlStateNormal];
-    }else if ([self.state isEqualToString:@"3"]){
+    } else if ([self.state isEqualToString:@"3"]) {
         self.stateLabel.text = @"认证失败";
         self.stateLabel.textColor = [UIColor colorWithHexString:@"f04241"];
         [self.submitButton setTitle:@"更新" forState:UIControlStateNormal];
@@ -245,6 +246,9 @@
         NSMutableAttributedString *reason = [[NSMutableAttributedString alloc] initWithString:string attributes:@{NSFontAttributeName:FontFactor(13.0f), NSForegroundColorAttributeName:Color(@"999999")}];
         [reason addAttributes:@{NSForegroundColorAttributeName:Color(@"dc4437")} range:[string rangeOfString:@"驳回原因："]];
         self.authTipLabel.attributedText = reason;
+    }
+    if (self.shouldForceAuth) {
+        [self.submitButton setTitle:@"提交" forState:UIControlStateNormal];
     }
     [self.stateLabel updateLayout];
     __weak typeof(self) weakSelf = self;
@@ -414,13 +418,19 @@
 
 - (void)submitMaterial
 {
-    __weak typeof(self)weakSelf = self;
+    WEAK(self, weakSelf);
     [MOCHTTPRequestOperationManager putWithURL:[rBaseAddressForHttp stringByAppendingString:@"/user/identityAuth"]class:nil parameters:@{@"uid":UID, @"potname":self.authImageUrl, @"industrycode": self.departmentCode, @"area":self.locationField.text} success:^(MOCHTTPResponse *response) {
         NSString *code = [response.data valueForKey:@"code"];
         if ([code isEqualToString:@"000"]) {
             [Hud hideHud];
             [Hud showMessageWithText:@"提交成功，我们将在一个工作日内\n通知您认证结果"];
-            [weakSelf.navigationController performSelector:@selector(popViewControllerAnimated:) withObject:@(YES) afterDelay:1.20f];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.2f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                if (weakSelf.block) {
+                    weakSelf.block(@"1");
+                } else {
+                    [weakSelf.navigationController performSelector:@selector(popViewControllerAnimated:) withObject:@(YES) afterDelay:1.20f];
+                }
+            });
         }
     } failed:^(MOCHTTPResponse *response) {
         [Hud hideHud];

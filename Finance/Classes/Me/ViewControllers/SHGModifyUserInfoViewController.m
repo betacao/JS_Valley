@@ -72,26 +72,7 @@
     [self initView];
     [self addSdLayout];
     //请求状态
-    WEAK(self, weakSelf);
-    [[SHGGloble sharedGloble] requestUserVerifyStatusCompletion:^(BOOL state,NSString *auditState) {
-        if (state) {
-            self.bgScrollView.hidden = NO;
-            if ([auditState isEqualToString:@"1"]){
-                [weakSelf.authView removeFromSuperview];
-                weakSelf.nextButton.alpha = 0.0f;
-            } else{
-                [weakSelf.authView removeFromSuperview];
-            }
-            
-        } else {
-            weakSelf.authView.hidden = NO;
-            if ([auditState isEqualToString:@"1"]) {
-                [weakSelf.authButton setTitle:@"审核中" forState:UIControlStateNormal];
-                weakSelf.authButton.enabled = NO;
-                weakSelf.authTipView.image = [UIImage imageNamed:@"messageIsChecked"];
-            }
-        }
-    } showAlert:NO leftBlock:nil failString:nil];
+    [self loadAuthState];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -104,16 +85,6 @@
 {
     [super viewDidDisappear:animated];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
-- (SHGAuthenticationWarningView *)warningView
-{
-    if (!_warningView) {
-        _warningView = [[SHGAuthenticationWarningView alloc] init];
-        _warningView.text = @"如需修改个人信息请重新认证";
-        [self.bgScrollView addSubview:_warningView];
-    }
-    return _warningView;
 }
 
 - (void)initView
@@ -274,6 +245,16 @@
     
 }
 
+- (SHGAuthenticationWarningView *)warningView
+{
+    if (!_warningView) {
+        _warningView = [[SHGAuthenticationWarningView alloc] init];
+        _warningView.text = @"如需修改个人信息请重新认证";
+        [self.bgScrollView addSubview:_warningView];
+    }
+    return _warningView;
+}
+
 - (void)initObject
 {
     [self.headerImage yy_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,self.head_img]] placeholder:[UIImage imageNamed:@"default_head"]];
@@ -294,9 +275,36 @@
     }
 }
 
+- (void)loadAuthState
+{
+    WEAK(self, weakSelf);
+    [[SHGGloble sharedGloble] requestUserVerifyStatusCompletion:^(BOOL state,NSString *auditState) {
+        if (state) {
+            self.bgScrollView.hidden = NO;
+            if ([auditState isEqualToString:@"1"]){
+                weakSelf.nextButton.alpha = 0.0f;
+            }
+
+        } else {
+            weakSelf.authView.hidden = NO;
+            if ([auditState isEqualToString:@"1"]) {
+                [weakSelf.authButton setTitle:@"审核中" forState:UIControlStateNormal];
+                weakSelf.authButton.enabled = NO;
+                weakSelf.authTipView.image = [UIImage imageNamed:@"messageIsChecked"];
+            }
+        }
+    } showAlert:NO leftBlock:nil failString:nil];
+}
+
 - (void)authButtonClicked:(UIButton *)button
 {
+    WEAK(self, weakSelf);
     SHGAuthenticationViewController *controller = [[SHGAuthenticationViewController alloc] init];
+    controller.shouldForceAuth = YES;
+    controller.block = ^(NSString *state){
+        [weakSelf loadAuthState];
+        [weakSelf.navigationController popToViewController:self animated:YES];
+    };
     [self.navigationController pushViewController:controller animated:YES];
 }
 
