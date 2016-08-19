@@ -107,6 +107,7 @@
         self.sendType = SHGEquityInvestSendTypeNew;
         WEAK(self, weakSelf);
         weakSelf.companyNametextField.text = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_COMPANYNAME];
+        weakSelf.phoneNumTextField.text = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_PHONE];
         __block NSString *provineceName = @"";
         __block NSString *cityName = @"";
         if ([[SHGGloble sharedGloble].provinceName isEqualToString:@""]) {
@@ -205,10 +206,13 @@
             industry = [NSString stringWithFormat:@"%@;%@",industry,[businessSelectDic objectForKey:[array objectAtIndex:i]]];
         }
     }
-    NSInteger leftTextFieldString = [self.leftMoneyTextField.text  integerValue];
+    NSInteger leftTextFieldString = 10000 * [self.leftMoneyTextField.text  integerValue];
     NSInteger rightTextFieldString = [self.monenyTextField.text integerValue];
-    NSInteger  money=10000 * leftTextFieldString + rightTextFieldString;
-    dictionary = @{@"uid":UID, @"type": @"moneyside", @"contact": self.phoneNumTextField.text, @"investAmount": [NSString stringWithFormat:@"%ld",money], @"area": self.areaSelectButton.titleLabel.text,@"industry":industry,@"title":self.nameTextField.text ,@"financingStage":businesstype,@"companyName":self.companyNametextField.text};
+    NSString *money = [NSString stringWithFormat:@"%ld",leftTextFieldString + rightTextFieldString];
+    if (self.leftMoneyTextField.text.length == 0 && self.monenyTextField.text.length == 0) {
+        money = @"";
+    }
+    dictionary = @{@"uid":UID, @"type": @"moneyside", @"contact": self.phoneNumTextField.text, @"investAmount": money, @"area": self.areaSelectButton.titleLabel.text,@"industry":industry,@"title":self.nameTextField.text ,@"financingStage":businesstype,@"companyName":self.companyNametextField.text};
     return dictionary;
 }
 - (void)addSdLayout
@@ -751,7 +755,7 @@
 
 - (BOOL)checkInputEmpty
 {
-    if (self.nameTextField.text.length == 0 && self.phoneNumTextField.text.length == 0 && [self.bondStageButtonView selectedArray].count == 0 && [self.industrySelectButton.titleLabel.text isEqualToString:@"请选择行业"] && self.monenyTextField.text.length == 0 && self.leftMoneyTextField.text.length == 0 ){
+    if (self.nameTextField.text.length == 0 && ![self.phoneNumTextField.text isEqualToString:KEY_PHONE]  && [self.bondStageButtonView selectedArray].count == 0 && [self.industrySelectButton.titleLabel.text isEqualToString:@"请选择行业"] && self.monenyTextField.text.length == 0 && self.leftMoneyTextField.text.length == 0 ){
         return NO;
     } else{
         return YES;

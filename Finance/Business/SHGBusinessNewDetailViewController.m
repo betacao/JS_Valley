@@ -135,13 +135,11 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
 @implementation SHGBusinessNewDetailViewController
 - (void)viewDidLoad
 {
-    self.rightItemImageName = @"newBusiness_share";
+    if ([self.object.auditState isEqualToString:@"0"]){
+        self.rightItemImageName = @"newBusiness_share";
+    }
     [super viewDidLoad];
     self.isChangeCollection = YES;
-//    self.editButton.hidden = YES;
-//    self.editLabel.hidden = YES;
-//    self.collectionButton.hidden = YES;
-//    self.collectionLabel.hidden = YES;
     self.inputView.hidden = YES;
     [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:KEY_MEMORY];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shareToFriendSuccess:) name:NOTIFI_ACTION_SHARE_TO_FRIENDSUCCESS object:nil];
@@ -617,13 +615,18 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
 
 - (void)initView
 {
-
+    [self.collectionButton setEnlargeEdgeWithTop:10.0f right:10.0f bottom:10.0f left:10.0f];
+    [self.editButton setEnlargeEdgeWithTop:10.0f right:10.0f bottom:10.0f left:10.0f];
+    [self.commentButton setEnlargeEdgeWithTop:10.0f right:10.0f bottom:10.0f left:10.0f];
+    [self.complainButton setEnlargeEdgeWithTop:10.0f right:10.0f bottom:10.0f left:10.0f];
+    [self.phoneButton setEnlargeEdgeWithTop:10.0f right:10.0f bottom:10.0f left:10.0f];
     self.businessRepresentLabel.text = @"业务描述";
     [self.headerView sd_addSubviews:@[self.redView,self.moneyAndUserView,self.businessMessageView,self.BPView,self.companyView,self.representView]];
 
     [self.userButton setEnlargeEdgeWithTop:10.0f right:0.0f bottom:10.0f left:150.0f];
     UITapGestureRecognizer *tableHeaderViewRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapTableHeaderView:)];
     [self.headerView addGestureRecognizer:tableHeaderViewRecognizer];
+    
     //inputView
     self.inPutView.backgroundColor = Color(@"f4f4f4");    
     self.inputTopLine.backgroundColor = Color(@"e2e2e2");
@@ -638,7 +641,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
     [self.complainButton setTitleColor:Color(@"565656") forState:UIControlStateNormal];
 
     self.editButton.titleLabel.font = self.collectionButton.titleLabel.font = self.commentButton.titleLabel.font = self.phoneButton.titleLabel.font = self.complainButton.titleLabel.font = FontFactor(12.0f);
-    self.complainButton.adjustsImageWhenDisabled = self.phoneButton.adjustsImageWhenDisabled =  self.complainButton.adjustsImageWhenDisabled = NO;
+    self.complainButton.adjustsImageWhenDisabled = self.phoneButton.adjustsImageWhenDisabled =  self.commentButton.adjustsImageWhenDisabled  = self.editButton.adjustsImageWhenDisabled = NO;
     //redView
     self.redView.backgroundColor = Color(@"f04f46");
     self.firstHorizontalLine.backgroundColor = Color(@"fd665d");
@@ -828,6 +831,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
     } else{
         self.complianNumButton.hidden = NO;
     }
+        
     [self.complianNumButton setTitle:[NSString stringWithFormat:@"投诉:%@",self.responseObject.complainNum] forState:UIControlStateNormal];
     NSString *title = self.responseObject.businessTitle;
     self.titleDetailLabel.textAlignment = NSTextAlignmentCenter;
@@ -902,6 +906,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
         NSString *rightText= [NSString stringWithFormat:@"%ld",moneyInt%10000];
         if ([leftText isEqualToString:@"0"]) {
             money = [NSString stringWithFormat:@"%@万",rightText];
+            
         } else{
             if ([rightText isEqualToString:@"0"]) {
                 money = [NSString stringWithFormat:@"%@亿",leftText];

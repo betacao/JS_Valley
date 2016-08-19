@@ -95,6 +95,7 @@
         self.sendType = SHGSameAndCommixtureSendTypeNew;
         WEAK(self, weakSelf);
         weakSelf.companyNametextField.text = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_COMPANYNAME];
+        weakSelf.phoneNumTextField.text = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_PHONE];
         __block NSString *provineceName = @"";
         __block NSString *cityName = @"";
         if ([[SHGGloble sharedGloble].provinceName isEqualToString:@""]) {
@@ -169,11 +170,14 @@
     for (NSInteger i = 1 ;i < array.count ; i++) {
         businessType = [NSString stringWithFormat:@"%@;%@",businessType,[businessSelectDic objectForKey:[array objectAtIndex:i]]];
     }
-    NSInteger leftTextFieldString = [self.leftMoneyTextField.text  integerValue];
+    NSInteger leftTextFieldString = 10000 * [self.leftMoneyTextField.text  integerValue];
     NSInteger rightTextFieldString = [self.monenyTextField.text integerValue];
-    NSInteger  money=10000 * leftTextFieldString + rightTextFieldString;
+    NSString *money = [NSString stringWithFormat:@"%ld",leftTextFieldString + rightTextFieldString];
+    if (self.leftMoneyTextField.text.length == 0 && self.monenyTextField.text.length == 0) {
+        money = @"";
+    }
     NSLog(@"%@",businessType);
-    dictonary = @{@"uid":UID, @"type": @"trademixed", @"contact": self.phoneNumTextField.text, @"investAmount": [NSString stringWithFormat:@"%ld",money], @"area":self.areaSelectButton.titleLabel.text,@"title":self.nameTextField.text ,@"businessType":businessType,@"companyName":self.companyNametextField.text};
+    dictonary = @{@"uid":UID, @"type": @"trademixed", @"contact": self.phoneNumTextField.text, @"investAmount": money, @"area":self.areaSelectButton.titleLabel.text,@"title":self.nameTextField.text ,@"businessType":businessType,@"companyName":self.companyNametextField.text};
 
     return dictonary;
 }
@@ -589,7 +593,7 @@
 
 - (BOOL)checkInputEmpty
 {
-    if (self.nameTextField.text.length == 0 && self.phoneNumTextField.text.length == 0 && [self.marketCategoryButtonView selectedArray].count == 0 && self.monenyTextField.text.length == 0  && self.leftMoneyTextField.text.length == 0 ){
+    if (self.nameTextField.text.length == 0 && ![self.phoneNumTextField.text isEqualToString:KEY_PHONE] && [self.marketCategoryButtonView selectedArray].count == 0 && self.monenyTextField.text.length == 0  && self.leftMoneyTextField.text.length == 0 ){
         return NO;
     } else{
         return YES;
