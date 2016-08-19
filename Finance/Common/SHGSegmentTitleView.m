@@ -45,7 +45,6 @@
     _titleArray = titleArray;
     [titleArray enumerateObjectsUsingBlock:^(NSString *obj, NSUInteger idx, BOOL * _Nonnull stop) {
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-        [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [button addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchUpInside];
         [button setTitle:obj forState:UIControlStateNormal];
         button.titleLabel.font = FontFactor(15.0f);
@@ -66,6 +65,10 @@
     if (self.block) {
         self.block([self.buttonArray indexOfObject:button]);
     }
+    [self.buttonArray enumerateObjectsUsingBlock:^(UIButton *subButton, NSUInteger idx, BOOL * _Nonnull stop) {
+        [subButton setTitleColor:Color(@"feb9b5")forState:UIControlStateNormal];
+    }];
+    [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     CGFloat x = button.centerX;
     CGRect frame1 = CGRectMake(0.0f - self.rightImageView.image.size.width / 2.0f, kNavigationBarHeight - self.leftImageView.image.size.height, x, self.leftImageView.image.size.height);
 

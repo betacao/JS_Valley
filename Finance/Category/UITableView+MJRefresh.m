@@ -18,7 +18,7 @@
     self.mj_header = header;
 }
 
-- (void)addRefreshFooterrWithTarget:(NSObject *)target
+- (void)addRefreshFooterWithTarget:(NSObject *)target
 {
     #pragma clang diagnostic ignored"-Wundeclared-selector"
     MJRefreshAutoStateFooter *footer = [MJRefreshAutoStateFooter footerWithRefreshingTarget:target refreshingAction:@selector(refreshFooter)];

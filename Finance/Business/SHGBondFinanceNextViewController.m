@@ -692,9 +692,19 @@
     });
 }
 
--(void)scrollerTapAction:(UITapGestureRecognizer *)ges
+- (void)scrollerTapAction:(UITapGestureRecognizer *)ges
 {
     [self.currentContext resignFirstResponder];
+}
+
+- (void)btnBackClick:(id)sender
+{
+    for (UIViewController *controller in self.navigationController.viewControllers) {
+        if ([controller isKindOfClass:[SHGBondFinanceSendViewController class]]) {
+            [self.navigationController popToViewController:controller animated:YES];
+            break;
+        }
+    }
 }
 
 - (void)didReceiveMemoryWarning

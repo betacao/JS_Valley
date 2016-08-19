@@ -117,6 +117,24 @@
     }
 }
 
+- (void)btnBackClick:(id)sender
+{
+    if (self.block) {
+        if (self.dataArr.count > 0) {
+            SHGAlertView *alertView = [[SHGAlertView alloc] initWithTitle:@"请确认公司名称" contentText:@"您输入的公司名称可能不完整，请从查询结果中选择正确的公司名称" leftButtonTitle:@"重选" rightButtonTitle:@"没有列出"];
+            alertView.rightBlock = ^{
+                self.block(self.companyName);
+            };
+            [alertView show];
+        } else {
+            self.block(nil);
+            [super btnBackClick:sender];
+        }
+    } else {
+        [super btnBackClick:sender];
+    }
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];

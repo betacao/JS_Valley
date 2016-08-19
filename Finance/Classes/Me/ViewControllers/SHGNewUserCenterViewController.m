@@ -160,7 +160,7 @@
     .heightRatioToView(self.headerBgView, 1.5f);
 
     self.headerView.sd_layout
-    .spaceToSuperView(UIEdgeInsetsMake(MarginFactor(7.0f), MarginFactor(7.0f), MarginFactor(7.0f), MarginFactor(7.0f)));
+    .spaceToSuperView(UIEdgeInsetsMake(MarginFactor(3.0f), MarginFactor(3.0f), MarginFactor(3.0f), MarginFactor(3.0f)));
     self.headerView.sd_cornerRadiusFromHeightRatio = @(0.5f);
 
     self.nameLabel.sd_layout
@@ -252,11 +252,12 @@
         self.shouldRefresh = YES;
     }
     if (CGRectEqualToRect(self.tableViewBackgroundView.frame, CGRectZero)) {
+        CGFloat height = MIN(CGRectGetHeight(self.tableHeaderView.frame) + [self.tableView cellsTotalHeight], SCREENHEIGHT - kNavigationBarHeight - kTabBarHeight - kStatusBarHeight);
         self.tableViewBackgroundView.sd_layout
         .leftSpaceToView(self.view, 0.0f)
         .topSpaceToView(self.view, 0.0f)
         .rightSpaceToView(self.view, 0.0f)
-        .heightIs(CGRectGetHeight(self.tableHeaderView.frame) + [self.tableView cellsTotalHeight]);
+        .heightIs(height);
     }
 }
 
@@ -746,8 +747,9 @@
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    if (scrollView.contentOffset.y > 0.0f) {
-        scrollView.contentOffset = CGPointMake(0.0f, 0.0f);
+    CGFloat margin = MAX(CGRectGetHeight(self.tableHeaderView.frame) + [self.tableView cellsTotalHeight] - (SCREENHEIGHT - kNavigationBarHeight - kTabBarHeight - kStatusBarHeight), 0.0f);
+    if (scrollView.contentOffset.y > margin) {
+        scrollView.contentOffset = CGPointMake(0.0f, margin);
     }
 }
 

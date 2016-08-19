@@ -404,11 +404,20 @@
     });
 }
 
--(void)scrollerTapAction:(UITapGestureRecognizer *)ges
+- (void)scrollerTapAction:(UITapGestureRecognizer *)ges
 {
     [self.currentContext resignFirstResponder];
 }
 
+- (void)btnBackClick:(id)sender
+{
+    for (UIViewController *controller in self.navigationController.viewControllers) {
+        if ([controller isKindOfClass:[SHGSameAndCommixtureSendViewController class]]) {
+            [self.navigationController popToViewController:controller animated:YES];
+            break;
+        }
+    }
+}
 
 - (void)didReceiveMemoryWarning
 {

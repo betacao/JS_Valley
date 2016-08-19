@@ -123,7 +123,6 @@ static BOOL isFetchingPublicGroupList = NO;
         _searchBar.placeholder = NSLocalizedString(@"search", @"Search");
         _searchBar.cancelButtonTitleColor = Color(@"bebebe");
     }
-    
     return _searchBar;
 }
 

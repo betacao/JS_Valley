@@ -57,7 +57,8 @@
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
-    [self.tableView addRefreshFooterrWithTarget:self];
+    self.tableView.estimatedRowHeight = SCREENWIDTH;
+    [self.tableView addRefreshFooterWithTarget:self];
     [self.tableView addRefreshHeaderWithTarget:self];
     [self addSubview:self.tableView];
 }
@@ -203,6 +204,9 @@
     NSDictionary *param = @{@"uid":UID, @"busType":self.category, @"target":target, @"rid":@(rid), @"pageSize":@(10)};
 
     WEAK(self, weakSelf);
+    if ([target isEqualToString:@"first"]) {
+        [Hud showWait];
+    }
     [SHGCircleManager getListDataWithCategory:param block:^(NSArray *array) {
         [Hud hideHud];
         [weakSelf.tableView.mj_header endRefreshing];
@@ -264,6 +268,19 @@
     cell.delegate = [SHGUnifiedTreatment sharedTreatment];
     [cell useCellFrameCacheWithIndexPath:indexPath tableView:tableView];
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    CircleListObj *object = [self.dataArray objectAtIndex:indexPath.row];
+
+    [[SHGGloble sharedGloble] recordUserAction:object.rid type:@"dynamic_viewAllComment"];
+    CircleDetailViewController *controller = [[CircleDetailViewController alloc] init];
+    controller.delegate = [SHGUnifiedTreatment sharedTreatment];
+    controller.rid = object.rid;
+    NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:object.praisenum, kPraiseNum,object.sharenum,kShareNum,object.cmmtnum,kCommentNum, nil];
+    controller.itemInfoDictionary = dictionary;
+    [[SHGHomeViewController sharedController].navigationController pushViewController:controller animated:YES];
 }
 
 @end

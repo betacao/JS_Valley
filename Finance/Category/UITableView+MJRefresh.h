@@ -12,6 +12,6 @@
 
 - (void)addRefreshHeaderWithTarget:(NSObject *)target;
 
-- (void)addRefreshFooterrWithTarget:(NSObject *)target;
+- (void)addRefreshFooterWithTarget:(NSObject *)target;
 
 @end

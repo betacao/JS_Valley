@@ -38,10 +38,10 @@
 {
     [super awakeFromNib];
     self.selectionStyle = UITableViewCellSelectionStyleNone;
-    UIImage *redImage = [UIImage imageNamed:@"cornerRect_gray"];
+    UIImage *redImage = [UIImage imageNamed:@"cornerRect_red"];
     self.redImage = [redImage resizableImageWithCapInsets:UIEdgeInsetsMake(10.0f, 10.0f, 10.0f, 10.0f) resizingMode:UIImageResizingModeStretch];
     
-    UIImage *grayImage = [UIImage imageNamed:@"cornerRect_red"];
+    UIImage *grayImage = [UIImage imageNamed:@"cornerRect_gray"];
     self.grayImage = [grayImage resizableImageWithCapInsets:UIEdgeInsetsMake(10.0f, 10.0f, 10.0f, 10.0f) resizingMode:UIImageResizingModeStretch];
     [self addSdLayout];
     [self initView];
@@ -112,7 +112,7 @@
     .rightSpaceToView(self.buttonView, 0.0f)
     .heightIs(1 / SCALE);
     
-    UIImage *buttonImage = [UIImage imageNamed:@"bussiness_myGraybutton"];
+    UIImage *buttonImage = [UIImage imageNamed:@"cornerRect_red"];
     CGSize buttonImageSize = buttonImage.size;
     self.deleteButton.sd_layout
     .rightSpaceToView(self.buttonView, MarginFactor(12.0f))

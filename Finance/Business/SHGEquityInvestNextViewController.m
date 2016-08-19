@@ -700,6 +700,17 @@
 {
     [self.currentContext resignFirstResponder];
 }
+
+- (void)btnBackClick:(id)sender
+{
+    for (UIViewController *controller in self.navigationController.viewControllers) {
+        if ([controller isKindOfClass:[SHGEquityInvestSendViewController class]]) {
+            [self.navigationController popToViewController:controller animated:YES];
+            break;
+        }
+    }
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
