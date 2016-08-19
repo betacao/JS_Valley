@@ -223,6 +223,7 @@
             }
             cell.style = SHGBusinessTableViewCellStyleOther;
             cell.object = [self.dataArr objectAtIndex:indexPath.row];
+            cell.object.auditState = @"0";
             [cell useCellFrameCacheWithIndexPath:indexPath tableView:tableView];
             return cell;
         } else{

@@ -12,6 +12,7 @@
 #import "CircleListDelegate.h"
 #import "SHGMainPageTableViewCell.h"
 #import "CircleDetailViewController.h"
+#import "SHGAlertView.h"
 @interface SHGCircleCollectionViewController ()<UITabBarDelegate, UITableViewDataSource,CircleListDelegate,UIAlertViewDelegate,CircleActionDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) UITableViewCell *emptyCell;
@@ -294,9 +295,14 @@
 
 - (void)deleteClicked:(CircleListObj *)obj
 {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"确认删除吗" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"删除", nil];
+    SHGAlertView *alert = [[SHGAlertView alloc] initWithTitle:@"提示" contentText:@"确认删除么？" leftButtonTitle:@"取消" rightButtonTitle:@"删除"];
     _deleteObj = obj;
+    alert.rightBlock = ^{
+        [self deleteSele:obj];
+    };
+    
     [alert show];
+    
 }
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {

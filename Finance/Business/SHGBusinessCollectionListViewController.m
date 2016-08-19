@@ -227,8 +227,10 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (self.dataArr.count > 0) {
+        SHGBusinessObject *object = [self.dataArr objectAtIndex:indexPath.row];
         SHGBusinessNewDetailViewController *controller = [[SHGBusinessNewDetailViewController alloc] init];
-        controller.object = [self.dataArr objectAtIndex:indexPath.row];
+        object.auditState = @"0";
+        controller.object = object;
         controller.collectionController = self;
         [self.navigationController pushViewController:controller animated:YES];
     }

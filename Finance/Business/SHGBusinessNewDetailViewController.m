@@ -1301,7 +1301,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
 {
     sender.enabled = NO;
     [self performSelector:@selector(timeEnough:) withObject:sender afterDelay:1.0];
-    if ([self.responseObject.businessauditstate isEqualToString:@"0"] || [self.responseObject.businessauditstate isEqualToString:@"0"]) {
+    if ([self.responseObject.businessauditstate isEqualToString:@"0"] || [self.responseObject.businessauditstate isEqualToString:@"9"]) {
     if ([self.responseObject.type isEqualToString:@"moneyside"]) {
         if ([self.responseObject.moneysideType isEqualToString:@"equityInvest"]) {
             SHGEquityInvestSendViewController *viewController = [[SHGEquityInvestSendViewController alloc] init];

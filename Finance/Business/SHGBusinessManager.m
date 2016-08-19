@@ -417,7 +417,17 @@
     }];
     
     id<ISSShareActionSheetItem> item4 = [ShareSDK shareActionSheetItemWithTitle:@"动态" icon:[UIImage imageNamed:@"圈子图标"] clickHandler:^{
-        [self businessShareToDynamicController:controller object:object];
+        [[SHGGloble sharedGloble] requestUserVerifyStatusCompletion:^(BOOL state,NSString *auditState) {
+            if (state) {
+                [self businessShareToDynamicController:controller object:object];
+            } else{
+                SHGAuthenticationViewController *authenController = [[SHGAuthenticationViewController alloc] init];
+                [controller.navigationController pushViewController:authenController animated:YES];
+                [[SHGGloble sharedGloble] recordUserAction:@"" type:@"business_identity"];
+            }
+        } showAlert:YES leftBlock:^{
+            [[SHGGloble sharedGloble] recordUserAction:@"" type:@"business_identity_cancel"];
+        } failString:@"认证后才能发起评论哦～"];
     }];
     NSArray *shareArray = nil;
     if ([WXApi isWXAppSupportApi]) {

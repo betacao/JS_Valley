@@ -46,6 +46,7 @@
 
 - (void)viewDidLoad
 {
+    self.leftItemtitleName = @"取消";
     self.rightItemtitleName = @"提交";
     [super viewDidLoad];
     self.title = @"投诉";

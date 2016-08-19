@@ -675,6 +675,7 @@
             }
         } else{
             SHGBusinessNewDetailViewController *controller = [[SHGBusinessNewDetailViewController alloc]init];
+            object.auditState = @"0";
             controller.object = object;
             [self.navigationController pushViewController:controller animated:YES];
             [[SHGGloble sharedGloble] recordUserAction:[NSString stringWithFormat:@"%@#%@", object.businessID, object.type] type:@"business_detail"];
