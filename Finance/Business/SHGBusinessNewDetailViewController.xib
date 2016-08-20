@@ -33,6 +33,7 @@
                 <outlet property="complianNumButton" destination="Qqe-cu-poC" id="Piz-Zm-wzM"/>
                 <outlet property="contentTextView" destination="3XK-2z-R7U" id="h1g-PV-xHs"/>
                 <outlet property="editButton" destination="atG-Mq-Thv" id="3gw-hK-gwi"/>
+                <outlet property="emailSendButton" destination="YhU-XW-ASA" id="GPf-bh-BM3"/>
                 <outlet property="firstGrayView" destination="z5K-Hd-AdY" id="jYZ-Ee-JzI"/>
                 <outlet property="firstHorizontalLine" destination="cW1-Fo-tbQ" id="wgZ-rn-0Mu"/>
                 <outlet property="headerView" destination="0hA-qi-jgP" id="SnV-L0-TgP"/>
@@ -281,6 +282,14 @@
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="YhU-XW-ASA">
+                    <rect key="frame" x="212" y="61" width="94" height="30"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <state key="normal" title="发送到邮箱"/>
+                    <connections>
+                        <action selector="emailSendButtonClick:" destination="-1" eventType="touchUpInside" id="ljS-Ae-qua"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>

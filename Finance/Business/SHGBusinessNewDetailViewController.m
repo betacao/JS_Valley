@@ -110,6 +110,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
 @property (weak, nonatomic) IBOutlet UIView *BPButtonView;
 @property (weak, nonatomic) IBOutlet UIView *BPTopLine;
 @property (weak, nonatomic) IBOutlet UIView *BPBottomLine;
+@property (weak, nonatomic) IBOutlet UIButton *emailSendButton;
 
 @property (strong, nonatomic) UIView *photoView;
 @property (strong, nonatomic) SHGBusinessObject *responseObject;
@@ -533,13 +534,19 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
     
     self.BPLabel.sd_layout
     .leftSpaceToView(self.BPView, MarginFactor(14.0f))
-    .rightSpaceToView(self.BPView, MarginFactor(14.0f))
+    .rightSpaceToView(self.BPView, MarginFactor(120.0f))
     .topSpaceToView(self.BPView, 1.0f)
     .heightIs(MarginFactor(44.0f));
     
+    self.emailSendButton.sd_layout
+    .rightSpaceToView(self.BPView, MarginFactor(14.0f))
+    .centerYEqualToView(self.BPLabel)
+    .widthIs(MarginFactor(100.0f))
+    .heightIs(26.0f);
+    
     self.BPLine.sd_layout
     .leftEqualToView(self.BPLabel)
-    .rightEqualToView(self.BPLabel)
+    .rightSpaceToView(self.BPView, MarginFactor(14.0f))
     .topSpaceToView(self.BPLabel, 0.0f)
     .heightIs(1 / SCALE);
     
@@ -615,6 +622,12 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
 
 - (void)initView
 {
+    UIImage *image = [UIImage imageNamed:@"cornerRect_red"];
+    image = [image resizableImageWithCapInsets:UIEdgeInsetsMake(10.0f, 10.0f, 10.f, 10.0f) resizingMode:UIImageResizingModeStretch];
+    [self.emailSendButton setTitleColor:Color(@"ff2f00") forState:UIControlStateNormal];
+    [self.emailSendButton setBackgroundImage:image forState:UIControlStateNormal];
+    self.emailSendButton.titleLabel.font = FontFactor(13.0f);
+    
     [self.collectionButton setEnlargeEdgeWithTop:10.0f right:10.0f bottom:10.0f left:10.0f];
     [self.editButton setEnlargeEdgeWithTop:10.0f right:10.0f bottom:10.0f left:10.0f];
     [self.commentButton setEnlargeEdgeWithTop:10.0f right:10.0f bottom:10.0f left:10.0f];
@@ -1673,6 +1686,8 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
 }
 
 
+- (IBAction)emailSendButtonClick:(UIButton *)sender {
+}
 
 - (void)makePhoneNum
 {
