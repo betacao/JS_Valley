@@ -592,7 +592,6 @@
 		B080FEAF1B81E30100426579 /* emoji_unselected_center_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B080FE861B81E30100426579 /* emoji_unselected_center_bg@2x.png */; };
 		B080FEB01B81E30100426579 /* EmojisList.plist in Resources */ = {isa = PBXBuildFile; fileRef = B080FE871B81E30100426579 /* EmojisList.plist */; };
 		B082D6631B82EF1C00BB6C20 /* RecmdFriendObj.m in Sources */ = {isa = PBXBuildFile; fileRef = B082D6621B82EF1C00BB6C20 /* RecmdFriendObj.m */; };
-		B085B5381B749E2000DC592E /* Extend_Description.m in Sources */ = {isa = PBXBuildFile; fileRef = B085B5371B749E2000DC592E /* Extend_Description.m */; };
 		B09BF7691B7C6C1F008260B3 /* 1度@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B09BF75F1B7C6C1F008260B3 /* 1度@2x.png */; };
 		B09BF76A1B7C6C1F008260B3 /* 1度@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = B09BF7601B7C6C1F008260B3 /* 1度@3x.png */; };
 		B09BF76B1B7C6C1F008260B3 /* 2度@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B09BF7611B7C6C1F008260B3 /* 2度@2x.png */; };
@@ -1606,8 +1605,6 @@
 		B080FE871B81E30100426579 /* EmojisList.plist */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = EmojisList.plist; sourceTree = "<group>"; };
 		B082D6611B82EF1C00BB6C20 /* RecmdFriendObj.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecmdFriendObj.h; sourceTree = "<group>"; };
 		B082D6621B82EF1C00BB6C20 /* RecmdFriendObj.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecmdFriendObj.m; sourceTree = "<group>"; };
-		B085B5361B749E2000DC592E /* Extend_Description.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Extend_Description.h; sourceTree = "<group>"; };
-		B085B5371B749E2000DC592E /* Extend_Description.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Extend_Description.m; sourceTree = "<group>"; };
 		B09BF75F1B7C6C1F008260B3 /* 1度@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "1度@2x.png"; sourceTree = "<group>"; };
 		B09BF7601B7C6C1F008260B3 /* 1度@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "1度@3x.png"; sourceTree = "<group>"; };
 		B09BF7611B7C6C1F008260B3 /* 2度@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "2度@2x.png"; sourceTree = "<group>"; };
@@ -2519,8 +2516,6 @@
 				56F2D5091B5A45E6008E2855 /* UncaughtExceptionHandler.m */,
 				B04D032C1B43F88A009BE7C2 /* ZYExceptionHandler.h */,
 				B04D032D1B43F88A009BE7C2 /* ZYExceptionHandler.m */,
-				B085B5361B749E2000DC592E /* Extend_Description.h */,
-				B085B5371B749E2000DC592E /* Extend_Description.m */,
 				614A59881AD3AEA1005DAB04 /* Images.xcassets */,
 				614A597C1AD3AEA1005DAB04 /* Finance.xcdatamodeld */,
 				532AF6AE1AFC432A007D3E4B /* HeadImage.h */,
@@ -5027,7 +5022,6 @@
 				F951C6151CF56F4D007FA198 /* SHGDiscoverySearchViewController.m in Sources */,
 				614AD1AF1AD7AC4D00DDF43E /* RegistViewController.m in Sources */,
 				F9E2A4B01BE99A4C00ECB234 /* SHGSegmentController.m in Sources */,
-				B085B5381B749E2000DC592E /* Extend_Description.m in Sources */,
 				6187D2CE1AF1C693008E1D21 /* GroupListViewController.m in Sources */,
 				6187D2F31AF1C693008E1D21 /* EMSearchBar.m in Sources */,
 				F932E8C31D66FFF800CBABDF /* SHGBPInputView.m in Sources */,

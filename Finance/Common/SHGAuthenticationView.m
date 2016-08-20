@@ -35,6 +35,7 @@
 
 - (void)initView
 {
+    self.clipsToBounds = YES;
     self.backgroundColor = [UIColor clearColor];
     self.imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"v_normal_yellow"]];
     [self addSubview:self.imageView];
@@ -47,13 +48,18 @@
     .topSpaceToView(self, 0.0f)
     .widthIs(MarginFactor(self.imageView.image.size.width))
     .heightIs(MarginFactor(self.imageView.image.size.height));
-    [self setupAutoWidthWithRightView:self.imageView rightMargin:0.0f];
+    [self setupAutoWidthWithRightView:self.imageView rightMargin:MarginFactor(5.0f)];
     [self setupAutoHeightWithBottomView:self.imageView bottomMargin:0.0f];
 }
 
 - (void)updateWithStatus:(BOOL)status
 {
-    self.imageView.image = status ? [UIImage imageNamed:@"v_normal_yellow"] : nil;
+    self.imageView.image = status ? [UIImage imageNamed:@"v_normal_yellow"] : [UIImage imageNamed:@"v_normal_gray"];
+    if (status) {
+        [self setupAutoWidthWithRightView:self.imageView rightMargin:MarginFactor(5.0f)];
+    } else {
+        [self setupAutoWidthWithRightView:self.imageView rightMargin:-MarginFactor(self.imageView.image.size.width)];
+    }
 }
 
 @end

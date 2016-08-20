@@ -89,7 +89,7 @@
     
     self.timeLabel.sd_layout
     .bottomEqualToView(self.headerView)
-    .leftSpaceToView(self.authenticationView, MarginFactor(5.0f))
+    .leftSpaceToView(self.authenticationView, 0.0f)
     .autoHeightRatio(0.0f);
     [self.timeLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
     

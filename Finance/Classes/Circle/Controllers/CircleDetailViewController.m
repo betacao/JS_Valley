@@ -242,8 +242,8 @@
 
     self.nickName.sd_layout
     .topEqualToView(self.imageHeader)
-    .leftSpaceToView(self.imageHeader, kMainItemLeftMargin)
     .offset(-1.0f)
+    .leftSpaceToView(self.imageHeader, kMainItemLeftMargin)
     .autoHeightRatio(0.0f);
     [self.nickName setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
 
@@ -264,7 +264,7 @@
     .bottomEqualToView(self.imageHeader);
 
     self.lblTime.sd_layout
-    .leftSpaceToView(self.authenticationView, MarginFactor(5.0f))
+    .leftSpaceToView(self.authenticationView, 0.0f)
     .bottomEqualToView(self.imageHeader)
     .autoHeightRatio(0.0f);
     [self.lblTime setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
@@ -454,14 +454,6 @@
     BOOL status = [self.responseObject.userstatus isEqualToString:@"true"] ? YES : NO;
     [self.imageHeader updateHeaderView:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,self.responseObject.potname] placeholderImage:[UIImage imageNamed:@"default_head"] userID:self.responseObject.userid];
     [self.authenticationView updateWithStatus:status];
-    if (status == NO) {
-        self.lblTime.sd_resetLayout
-        .leftEqualToView(self.nickName)
-        .bottomEqualToView(self.imageHeader)
-        .autoHeightRatio(0.0f);
-        [self.lblTime setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
-
-    }
     if (![self.responseObject.ispraise isEqualToString:@"Y"]) {
         [self.btnPraise addImage:[UIImage imageNamed:@"home_weizan"]];
     } else{
@@ -485,7 +477,6 @@
         company = [NSString stringWithFormat:@"%@...",str];
     }
     self.lblCompanyName.text = company;
-    [self.lblCompanyName sizeToFit];
     //设置职位名称
     NSString *department = self.responseObject.title;
     if (self.responseObject.title.length > 4){

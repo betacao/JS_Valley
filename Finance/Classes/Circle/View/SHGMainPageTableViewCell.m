@@ -146,7 +146,7 @@
 
     self.timeLabel.sd_layout
     .bottomEqualToView(self.headerView)
-    .leftSpaceToView(self.authenticationView, MarginFactor(5.0f))
+    .leftSpaceToView(self.authenticationView, 0.0f)
     .autoHeightRatio(0.0f);
     [self.timeLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
 
@@ -277,15 +277,6 @@
     [self.headerView updateHeaderView:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,object.potname] placeholderImage:[UIImage imageNamed:@"default_head"] userID:object.userid];
     [self.authenticationView updateWithStatus:status];
 
-    if (status == NO) {
-        self.timeLabel.sd_resetLayout
-        .bottomEqualToView(self.headerView)
-        .leftEqualToView(self.nameLabel)
-        .autoHeightRatio(0.0f);
-        [self.timeLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
-    }
-
-    
     NSString *name = object.nickname;
     if (object.nickname.length > 4){
         name = [object.nickname substringToIndex:4];

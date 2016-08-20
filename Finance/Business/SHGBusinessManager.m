@@ -533,7 +533,7 @@
     if ([email isValidateEmail]) {
         [SHGGloble saveBPInputData:email];
         [Hud showWait];
-        [MOCHTTPRequestOperationManager postWithURL:[rBaseAddressForHttp stringByAppendingString:@"/business/sendBusinessBp"] parameters:@{@"businessId":object.businessID, @"type":object.type, @"reciever":email} success:^(MOCHTTPResponse *response) {
+        [MOCHTTPRequestOperationManager postWithURL:[rBaseAddressForHttp stringByAppendingString:@"/business/sendBusinessBp"] parameters:@{@"uid":UID, @"businessId":object.businessID, @"type":object.type, @"reciever":email} success:^(MOCHTTPResponse *response) {
             [Hud hideHud];
             [Hud showMessageWithText:@"邮件发送成功"];
         } failed:^(MOCHTTPResponse *response) {
