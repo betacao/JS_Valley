@@ -10,14 +10,12 @@
 #import "SHGMainPageTableViewCell.h"
 #import "SHGUnifiedTreatment.h"
 #import "SHGCircleManager.h"
-#import "SHGNoticeView.h"
 #import "SHGEmptyDataView.h"
 #import "UITableView+MJRefresh.h"
 
 @interface SHGHomeCategoryView()<UITableViewDelegate, UITableViewDataSource>
 
 @property (strong, nonatomic) UITableView *tableView;
-@property (strong, nonatomic) SHGNoticeView *newMessageNoticeView;
 @property (strong, nonatomic) SHGEmptyDataView *emptyView;
 
 @property (strong, nonatomic) NSMutableArray *dataArray;
@@ -29,7 +27,7 @@
 
 @implementation SHGHomeCategoryView
 
-+ (instancetype)shareCategoryView
++ (instancetype)sharedCategoryView
 {
     static SHGHomeCategoryView *shareView = nil;
     static dispatch_once_t predicate;
@@ -51,6 +49,7 @@
 
 - (void)initView
 {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshData) name:NOTIFI_SENDPOST object:nil];
     self.dataArray = [NSMutableArray array];
 
     self.tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
@@ -70,15 +69,6 @@
 
     self.emptyView.sd_layout
     .spaceToSuperView(UIEdgeInsetsZero);
-}
-
-- (SHGNoticeView *)newMessageNoticeView
-{
-    if(!_newMessageNoticeView){
-        _newMessageNoticeView = [[SHGNoticeView alloc] initWithFrame:CGRectZero type:SHGNoticeTypeNewMessage];
-        _newMessageNoticeView.superView = self;
-    }
-    return _newMessageNoticeView;
 }
 
 - (SHGEmptyDataView *)emptyView
@@ -141,6 +131,27 @@
         }
     }];
     self.needRefreshTableView = YES;
+}
+
+- (void)loadDelete:(NSString *)targetID
+{
+    NSMutableArray *array = [NSMutableArray array];
+    [self.dataArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        CircleListObj *listObject = (CircleListObj *)obj;
+        if ([listObject.rid isEqualToString:targetID]) {
+            [array addObject:listObject];
+        }
+    }];
+    [self.dataArray removeObjectsInArray:array];
+    self.needRefreshTableView = YES;
+}
+
+- (void)refreshData
+{
+    WEAK(self, weakSelf);
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.25f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [weakSelf requestDataWithTarget:@"first" time:@"-1"];
+    });
 }
 
 - (void)refreshHeader
@@ -229,7 +240,7 @@
 {
     if ([target isEqualToString:@"first"]){
         [self.dataArray addObjectsFromArray:array];
-        [self.newMessageNoticeView showWithText:[NSString stringWithFormat:@"为您加载了%ld条新动态",(long)self.dataArray.count]];
+        [self.messageNoticeView showWithText:[NSString stringWithFormat:@"为您加载了%ld条新动态",(long)self.dataArray.count]];
     } else if ([target isEqualToString:@"refresh"]){
         if (array.count > 0){
             for (NSInteger i = array.count - 1; i >= 0; i--){
@@ -237,9 +248,9 @@
                 NSLog(@"%@",obj.rid);
                 [self.dataArray insertObject:obj atIndex:0];
             }
-            [self.newMessageNoticeView showWithText:[NSString stringWithFormat:@"为您加载了%ld条新动态",(long)array.count]];
+            [self.messageNoticeView showWithText:[NSString stringWithFormat:@"为您加载了%ld条新动态",(long)array.count]];
         } else{
-            [self.newMessageNoticeView showWithText:@"暂无新动态，休息一会儿"];
+            [self.messageNoticeView showWithText:@"暂无新动态，休息一会儿"];
         }
     } else if ([target isEqualToString:@"load"]){
         [self.dataArray addObjectsFromArray:array];

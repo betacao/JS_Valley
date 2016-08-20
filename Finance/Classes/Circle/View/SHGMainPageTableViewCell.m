@@ -88,7 +88,6 @@
 
     self.commentButton = [[SHGHorizontalTitleImageView alloc] init];
     [self.commentButton setEnlargeEdge:kMainActionButtonMargin / 2.0f];
-    [self.commentButton target:self addSeletor:@selector(commentButtonClick:)];
 
     self.shareButton = [[SHGHorizontalTitleImageView alloc] init];
     [self.shareButton setEnlargeEdge:kMainActionButtonMargin / 2.0f];
@@ -541,17 +540,12 @@
 
 - (void)deleteButtonClick:(UIButton *)sender
 {
-    [self.delegate deleteClicked:self.object];
+    [SHGGlobleOperation deleteObject:self.object];
 }
 
 - (void)praiseButtonClick:(UIButton *)sender
 {
     [SHGGlobleOperation addPraise:self.object];
-}
-
-- (void)commentButtonClick:(UIButton *)sender
-{
-    [self.delegate clicked:self.index];
 }
 
 - (void)shareButtonClick:(UIButton *)sender

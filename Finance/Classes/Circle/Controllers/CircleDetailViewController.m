@@ -101,6 +101,7 @@
     }];
     [SHGGlobleOperation registerAttationClass:[self class] method:@selector(loadAttationState:attationState:)];
     [SHGGlobleOperation registerPraiseClass:[self class] method:@selector(loadPraiseState:praiseState:)];
+    [SHGGlobleOperation registerDeleteClass:[self class] method:@selector(loadDelete:)];
 }
 
 - (void)initView
@@ -355,7 +356,6 @@
     if (self.popupView) {
         [self.popupView hideWithAnimated:NO];
     }
-
 }
 
 - (void)parseDataWithDictionary:(NSDictionary *)dictionary
@@ -613,12 +613,6 @@
         name = [NSString stringWithFormat:@"%@...",name];
     }
     self.nickName.text = name;
-
-
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
 }
 
 - (IBAction)actionComment:(id)sender
@@ -961,10 +955,10 @@
     }
 }
 
-- (void)loadAttationState:(NSString *)targetUserID attationState:(BOOL)attationState
+- (void)loadAttationState:(NSString *)targetUserID attationState:(NSNumber *)attationState
 {
     if ([self.responseObject.userid isEqualToString:targetUserID]) {
-        self.responseObject.isAttention = attationState;
+        self.responseObject.isAttention = [attationState boolValue];
         if (self.responseObject.isAttention){
             [self.btnAttention setImage:[UIImage imageNamed:@"newAttention"] forState:UIControlStateNormal] ;
         } else{
@@ -973,9 +967,9 @@
     }
 }
 
-- (void)loadPraiseState:(NSString *)targetID praiseState:(BOOL)praiseState
+- (void)loadPraiseState:(NSString *)targetID praiseState:(NSNumber *)praiseState
 {
-    if (praiseState) {
+    if ([praiseState boolValue]) {
         self.responseObject.ispraise = @"Y";
         self.responseObject.praisenum = [NSString stringWithFormat:@"%ld",(long)([self.responseObject.praisenum integerValue] + 1)];
         praiseOBj *obj = [[praiseOBj alloc] init];
@@ -997,6 +991,10 @@
     }
 }
 
+- (void)loadDelete:(NSString *)targetID
+{
+    [self.navigationController popViewControllerAnimated:YES];
+}
 
 - (IBAction)actionAttention:(id)sender
 {
@@ -1111,17 +1109,8 @@
     });
 }
 
-#pragma mark detailDelagte
 
-- (void)detailDeleteWithRid:(NSString *)rid
-{
-    [self.delegate detailDeleteWithRid:rid];
-    [self resetView];
-    [self.tableView reloadData];
-
-}
-
--(void)detailShareWithRid:(NSString *)rid shareNum:(NSString *)num
+- (void)detailShareWithRid:(NSString *)rid shareNum:(NSString *)num
 {
     if ([self.responseObject.rid isEqualToString:rid]) {
         self.responseObject.sharenum = num;
@@ -1144,33 +1133,9 @@
 
 }
 
-- (void)deleteSelf
-{
-    NSString *url = [NSString stringWithFormat:@"%@/%@",rBaseAddressForHttpCircle,@"circle"];
-    NSDictionary *dic = @{@"rid":self.responseObject.rid, @"uid":self.responseObject.userid};
-    WEAK(self, weakSelf);
-    [MOCHTTPRequestOperationManager deleteWithURL:url parameters:dic success:^(MOCHTTPResponse *response) {
-
-        NSString *code = [response.data valueForKey:@"code"];
-        if ([code isEqualToString:@"000"]){
-            [weakSelf.delegate detailDeleteWithRid:weakSelf.responseObject.rid];
-            [weakSelf.navigationController popViewControllerAnimated:YES];
-        }
-    } failed:^(MOCHTTPResponse *response) {
-        [Hud showMessageWithText:response.errorMessage];
-    }];
-}
-
 - (void)actionDelete:(id)sender
 {
-    //删除
-    WEAK(self, weakSelf);
-    SHGAlertView *alert = [[SHGAlertView alloc] initWithTitle:@"提示" contentText:@"确认删除吗?" leftButtonTitle:@"取消" rightButtonTitle:@"删除"];
-    alert.rightBlock = ^{
-        [weakSelf deleteSelf];
-
-    };
-    [alert show];
+    [SHGGlobleOperation deleteObject:self.responseObject];
 
 }
 
@@ -1326,5 +1291,9 @@
     return [self.webPhotoArray objectAtIndex:index];
 }
 
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+}
 
 @end

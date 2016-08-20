@@ -43,8 +43,6 @@ typedef void(^loadViewFinishBlock)(UIView *view);
 - (void)refreshHomeView;
 //简单的tableview刷新
 - (void)reloadData;
-//删除对象（只有动态界面才会有删除 已关注界面不存在删除）
-- (void)removeObject:(CircleListObj *)object;
 //通过rid查找对象 返回在动态界面和已关注界面的对象数组
 - (NSArray *)targetObjectsByRid:(NSString *)string;
 //通过userId查找对象 返回在动态界面和已关注界面的对象数组

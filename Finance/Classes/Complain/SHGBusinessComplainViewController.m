@@ -265,7 +265,6 @@
             [Hud showMessageWithText:@"投诉成功"];
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 [weakSelf.navigationController popViewControllerAnimated:YES];
-                [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_SENDPOST object:nil];
             });
         }
     } failed:^(MOCHTTPResponse *response) {

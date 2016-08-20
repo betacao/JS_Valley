@@ -33,37 +33,8 @@
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(smsShareSuccess:) name:NOTIFI_CHANGE_SHARE_TO_FRIENDSUCCESS object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(commentsChanged:) name:NOTIFI_COLLECT_COMMENT_CLIC object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shareChanged:) name:NOTIFI_COLLECT_SHARE_CLIC object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(deleteChanged:) name:NOTIFI_COLLECT_DELETE_CLICK object:nil];
     }
     return self;
-}
-
-#pragma mark -删除
-- (void)deleteClicked:(CircleListObj *)obj
-{
-    SHGAlertView *alert = [[SHGAlertView alloc] initWithTitle:@"提示" contentText:@"确认删除吗?" leftButtonTitle:@"取消" rightButtonTitle:@"删除"];
-    WEAK(self, weakSelf);
-    alert.rightBlock = ^{
-        [weakSelf deletepostWithObj:obj];
-    };
-    [alert show];
-}
-
-- (void)deletepostWithObj:(CircleListObj *)obj
-{
-    WEAK(self, weakSelf);
-    NSString *url = [NSString stringWithFormat:@"%@/%@",rBaseAddressForHttpCircle,@"circle"];
-    NSDictionary *dic = @{@"rid":obj.rid, @"uid":obj.userid};
-
-    [MOCHTTPRequestOperationManager deleteWithURL:url parameters:dic success:^(MOCHTTPResponse *response) {
-        NSString *code = [response.data valueForKey:@"code"];
-        if ([code isEqualToString:@"000"]){
-            [MobClick event:@"ActionDeletepost" label:@"onClick"];
-            [weakSelf detailDeleteWithRid:obj.rid];
-        }
-    } failed:^(MOCHTTPResponse *response) {
-        [Hud showMessageWithText:response.errorMessage];
-    }];
 }
 
 #pragma mark -点击查看更多
@@ -76,18 +47,6 @@
         [[SHGSegmentController sharedSegmentController].selectedViewController.navigationController pushViewController:controller animated:YES];
     }
 }
-
-#pragma mark -评论
-- (void)clicked:(NSInteger )index;
-{
-    CircleDetailViewController *vc = [[CircleDetailViewController alloc] initWithNibName:@"CircleDetailViewController" bundle:nil];
-    CircleListObj *obj = [[SHGSegmentController sharedSegmentController] targetObjectByIndex:index];
-    vc.hidesBottomBarWhenPushed = YES;
-    vc.rid = obj.rid;
-    vc.delegate = self;
-    [[SHGSegmentController sharedSegmentController].selectedViewController.navigationController pushViewController:vc animated:YES];
-}
-
 
 
 #pragma mark -分享
@@ -319,17 +278,6 @@
     }
 }
 
-#pragma mark -详情界面的代理
-- (void)detailDeleteWithRid:(NSString *)rid
-{
-    NSArray *array = [[SHGSegmentController sharedSegmentController] targetObjectsByRid:rid];
-    for (CircleListObj *obj in array){
-        [[SHGSegmentController sharedSegmentController] removeObject:obj];
-        [[SHGSegmentController sharedSegmentController] removeObject:obj];
-        [[SHGSegmentController sharedSegmentController] reloadData];
-    }
-}
-
 - (void)detailShareWithRid:(NSString *)rid shareNum:(NSString *)num
 {
     NSArray *array = [[SHGSegmentController sharedSegmentController] targetObjectsByRid:rid];
@@ -378,12 +326,6 @@
 {
     CircleListObj *obj = noti.object;
     [self detailShareWithRid:obj.rid shareNum:obj.sharenum];
-}
-
-- (void)deleteChanged:(NSNotification *)noti
-{
-    CircleListObj *obj = noti.object;
-    [self detailDeleteWithRid:obj.rid];
 }
 
 //获得详情后如果存在数据更新则在首页进行更新

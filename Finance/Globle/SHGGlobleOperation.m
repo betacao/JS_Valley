@@ -16,6 +16,10 @@
 
 @property (strong, nonatomic) NSMutableArray *praiseArray;
 
+@property (strong, nonatomic) NSMutableArray *commentArray;
+
+@property (strong, nonatomic) NSMutableArray *deleteArray;
+
 @end
 
 @implementation SHGGlobleOperation
@@ -46,6 +50,24 @@
     return _praiseArray;
 }
 
+- (NSMutableArray *)commentArray
+{
+    if (!_commentArray) {
+        _commentArray = [NSMutableArray array];
+    }
+    return _commentArray;
+}
+
+- (NSMutableArray *)deleteArray
+{
+    if (!_deleteArray) {
+        _deleteArray = [NSMutableArray array];
+    }
+    return _deleteArray;
+}
+
+
+#pragma mark ------关注
 + (void)registerAttationClass:(Class)CClass method:(SEL)selector
 {
     NSDictionary *dictionary = [NSDictionary dictionaryWithObject:NSStringFromClass(CClass) forKey:NSStringFromSelector(selector)];
@@ -125,15 +147,15 @@
         for (UIViewController *controller in controllerArray) {
             if ([controller isKindOfClass:class]) {
                 IMP imp = [controller methodForSelector:selector];
-                void (*func)(id, SEL, id, BOOL) = (void *)imp;
-                func(controller, selector, targetUserID, attationState);
+                void (*func)(id, SEL, id, NSNumber *) = (void *)imp;
+                func(controller, selector, targetUserID, @(attationState));
             }
         }
 
     }];
 }
 
-
+#pragma mark ------动态的点赞
 + (void)registerPraiseClass:(Class)CClass method:(SEL)selector
 {
     NSDictionary *dictionary = [NSDictionary dictionaryWithObject:NSStringFromClass(CClass) forKey:NSStringFromSelector(selector)];
@@ -159,7 +181,7 @@
             if ([code isEqualToString:@"000"]){
                 //记录行为轨迹
                 [MobClick event:@"ActionPraiseClicked_On" label:@"onClick"];
-                [[SHGGlobleOperation sharedGloble] addAttationSuccess:targetID praiseState:YES];
+                [[SHGGlobleOperation sharedGloble] addPraiseSuccess:targetID praiseState:YES];
                 [Hud showMessageWithText:@"点赞成功"];
             }
         } failed:^(MOCHTTPResponse *response) {
@@ -173,7 +195,7 @@
             if ([code isEqualToString:@"000"]) {
                 //记录行为轨迹
                 [MobClick event:@"ActionPraiseClicked_Off" label:@"onClick"];
-                [[SHGGlobleOperation sharedGloble] addAttationSuccess:targetID praiseState:NO];
+                [[SHGGlobleOperation sharedGloble] addPraiseSuccess:targetID praiseState:NO];
                 [Hud showMessageWithText:@"取消点赞成功"];
             }
         } failed:^(MOCHTTPResponse *response) {
@@ -183,7 +205,7 @@
     }
 }
 
-- (void)addAttationSuccess:(NSString *)targetID praiseState:(BOOL)praiseState
+- (void)addPraiseSuccess:(NSString *)targetID praiseState:(BOOL)praiseState
 {
     UINavigationController *nav = (UINavigationController *)[AppDelegate currentAppdelegate].window.rootViewController;
     NSMutableArray *controllerArray = [NSMutableArray arrayWithArray:nav.viewControllers];
@@ -194,8 +216,69 @@
         for (UIViewController *controller in controllerArray) {
             if ([controller isKindOfClass:class]) {
                 IMP imp = [controller methodForSelector:selector];
-                void (*func)(id, SEL, id, BOOL) = (void *)imp;
-                func(controller, selector, targetID, praiseState);
+                void (*func)(id, SEL, id, NSNumber *) = (void *)imp;
+                func(controller, selector, targetID, @(praiseState));
+            }
+        }
+    }];
+}
+
+#pragma mark ------动态的评论
+
+#pragma mark ------动态的删除
++ (void)registerDeleteClass:(Class)CClass method:(SEL)selector
+{
+    NSDictionary *dictionary = [NSDictionary dictionaryWithObject:NSStringFromClass(CClass) forKey:NSStringFromSelector(selector)];
+    [[SHGGlobleOperation sharedGloble].deleteArray insertUniqueObject:dictionary];
+}
+
++ (void)deleteObject:(id)object
+{
+    void(^block)(void) = ^() {
+        [Hud showWait];
+        NSString *targetID = @"";
+        NSString *targetUserID = @"";
+        if ([object isKindOfClass:[CircleListObj class]]) {
+            CircleListObj *circleListObject = (CircleListObj *)object;
+            targetID = circleListObject.rid;
+            targetUserID = circleListObject.userid;
+        }
+
+        NSString *url = [NSString stringWithFormat:@"%@/%@",rBaseAddressForHttpCircle,@"circle"];
+        NSDictionary *dic = @{@"rid":targetID, @"uid":targetUserID};
+
+        [MOCHTTPRequestOperationManager deleteWithURL:url parameters:dic success:^(MOCHTTPResponse *response) {
+            [Hud hideHud];
+            NSString *code = [response.data valueForKey:@"code"];
+            if ([code isEqualToString:@"000"]){
+                [Hud showMessageWithText:@"删除成功"];
+                [MobClick event:@"ActionDeletepost" label:@"onClick"];
+                [[SHGGlobleOperation sharedGloble] deleteObjectSuccess:targetID];
+            }
+        } failed:^(MOCHTTPResponse *response) {
+            [Hud hideHud];
+            [Hud showMessageWithText:response.errorMessage];
+        }];
+    };
+    SHGAlertView *alert = [[SHGAlertView alloc] initWithTitle:@"提示" contentText:@"确认删除吗?" leftButtonTitle:@"取消" rightButtonTitle:@"删除"];
+    alert.rightBlock = block;
+    [alert show];
+
+}
+
+- (void)deleteObjectSuccess:(NSString *)targetID
+{
+    UINavigationController *nav = (UINavigationController *)[AppDelegate currentAppdelegate].window.rootViewController;
+    NSMutableArray *controllerArray = [NSMutableArray arrayWithArray:nav.viewControllers];
+    [controllerArray addObjectsFromArray:[TabBarViewController tabBar].viewControllers];
+    [self.deleteArray enumerateObjectsUsingBlock:^(NSDictionary *dictionary, NSUInteger idx, BOOL * _Nonnull stop) {
+        Class class = NSClassFromString([dictionary.allValues firstObject]);
+        SEL selector = NSSelectorFromString([dictionary.allKeys firstObject]);
+        for (UIViewController *controller in controllerArray) {
+            if ([controller isKindOfClass:class]) {
+                IMP imp = [controller methodForSelector:selector];
+                void (*func)(id, SEL, id) = (void *)imp;
+                func(controller, selector, targetID);
             }
         }
     }];

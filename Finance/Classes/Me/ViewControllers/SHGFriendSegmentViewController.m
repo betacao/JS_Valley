@@ -35,11 +35,11 @@
     [SHGGlobleOperation registerAttationClass:[self class] method:@selector(loadAttationState:attationState:)];
 }
 
-- (void)loadAttationState:(NSString *)targetUserID attationState:(BOOL)attationState
+- (void)loadAttationState:(NSString *)targetUserID attationState:(NSNumber *)attationState
 {
     for (UIViewController *controller in self.viewControllers) {
         if ([controller respondsToSelector:@selector(loadAttationState:attationState:)]) {
-            [controller performSelector:@selector(loadAttationState:attationState:) withObject:targetUserID withObject:@(attationState)];
+            [controller performSelector:@selector(loadAttationState:attationState:) withObject:targetUserID withObject:attationState];
         }
     }
 }

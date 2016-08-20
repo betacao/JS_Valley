@@ -15,7 +15,6 @@
 #define NOTIFI_SENDPOST     @"notificationSendPost"
 
 #define NOTIFI_CIRCLELIESTRELOAD     @"notificationCircleReload"
-#define NOTIFI_COLLECT_DELETE_CLICK     @"notificationCircleDeleteCLick"
 #define NOTIFI_COLLECT_SHARE_CLIC     @"notificationCircleSHareCLick"
 #define NOTIFI_COLLECT_COMMENT_CLIC     @"notificationCircleCOmmentCLick"
 

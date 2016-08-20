@@ -38,8 +38,9 @@
     [self requestDataWithTarget:@"first" time:@"-1"];
 
     //这里面注册2个 是因为有可能单独进到这个页面里面，而不是通过segment
-    [SHGGlobleOperation registerAttationClass:[self class] method:@selector(singleLoadAttationState:attationState:)];
-    [SHGGlobleOperation registerPraiseClass:[self class] method:@selector(singleLoadPraiseState:praiseState:)];
+    [SHGGlobleOperation registerAttationClass:[self class] method:@selector(loadAttationState:attationState:)];
+    [SHGGlobleOperation registerPraiseClass:[self class] method:@selector(loadPraiseState:praiseState:)];
+    [SHGGlobleOperation registerDeleteClass:[self class] method:@selector(loadDelete:)];
 }
 
 - (void)loadAttationState:(NSString *)targetUserID attationState:(NSNumber *)attationState
@@ -49,19 +50,6 @@
             CircleListObj *listObj = (CircleListObj *)obj;
             if ([listObj.userid isEqualToString:targetUserID]) {
                 listObj.isAttention = [attationState boolValue];
-            }
-        }
-    }];
-    [self.tableView reloadData];
-}
-
-- (void)singleLoadAttationState:(NSString *)targetUserID attationState:(BOOL)attationState
-{
-    [self.dataArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        if ([obj isKindOfClass:[CircleListObj class]]) {
-            CircleListObj *listObj = (CircleListObj *)obj;
-            if ([listObj.userid isEqualToString:targetUserID]) {
-                listObj.isAttention = attationState;
             }
         }
     }];
@@ -86,25 +74,18 @@
     [self.tableView reloadData];
 }
 
-- (void)singleLoadPraiseState:(NSString *)targetID praiseState:(BOOL)praiseState
+- (void)loadDelete:(NSString *)targetID
 {
+    NSMutableArray *array = [NSMutableArray array];
     [self.dataArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        if ([obj isKindOfClass:[CircleListObj class]]) {
-            CircleListObj *listObject = (CircleListObj *)obj;
-            if ([listObject.rid isEqualToString:targetID]) {
-                listObject.ispraise = praiseState ? @"Y" : @"N";
-                if (praiseState) {
-                    listObject.praisenum = [NSString stringWithFormat:@"%ld", (long)[listObject.praisenum integerValue] + 1];
-                } else {
-                    listObject.praisenum = [NSString stringWithFormat:@"%ld", (long)[listObject.praisenum integerValue] - 1];
-                }
-            }
+        CircleListObj *listObject = (CircleListObj *)obj;
+        if ([listObject.rid isEqualToString:targetID]) {
+            [array addObject:listObject];
         }
     }];
+    [self.dataArr removeObjectsInArray:array];
     [self.tableView reloadData];
 }
-
-
 
 - (void)requestDataWithTarget:(NSString *)target time:(NSString *)time
 {
@@ -424,53 +405,6 @@
         vc.url = obj.pcurl;
         [self.navigationController pushViewController:vc animated:YES];
     }
-}
-
-#pragma mark ------删除
-- (void)deleteClicked:(CircleListObj *)obj
-{
-    //删除
-    WEAK(self, weakSelf);
-    SHGAlertView *alert = [[SHGAlertView alloc] initWithTitle:@"提示" contentText:@"确认删除吗?" leftButtonTitle:@"取消" rightButtonTitle:@"删除"];
-    alert.rightBlock = ^{
-        NSString *url = [NSString stringWithFormat:@"%@/%@",rBaseAddressForHttpCircle,@"circle"];
-        NSDictionary *dic = @{@"rid":obj.rid, @"uid":obj.userid};
-
-        [MOCHTTPRequestOperationManager deleteWithURL:url parameters:dic success:^(MOCHTTPResponse *response) {
-            NSString *code = [response.data valueForKey:@"code"];
-            if ([code isEqualToString:@"000"]){
-                [weakSelf detailDeleteWithRid:obj.rid];
-                [weakSelf.delegate detailDeleteWithRid:obj.rid];
-            }
-        } failed:^(MOCHTTPResponse *response) {
-            [Hud showMessageWithText:response.errorMessage];
-        }];
-
-    };
-    [alert show];
-}
-
-#pragma mark ------评论
-- (void)clicked:(NSInteger)index
-{
-    CircleListObj *obj = [self.dataArr objectAtIndex:index];
-    CircleDetailViewController *vc = [[CircleDetailViewController alloc] initWithNibName:@"CircleDetailViewController" bundle:nil];
-    vc.rid = obj.rid;
-    vc.delegate = self;
-    [self.navigationController pushViewController:vc animated:YES];
-}
-
-#pragma mark detailDelagte
-- (void)detailDeleteWithRid:(NSString *)rid
-{
-    for (CircleListObj *obj in self.dataArr) {
-        if ([obj.rid isEqualToString:rid]) {
-            [self.dataArr removeObject:obj];
-            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_COLLECT_DELETE_CLICK object:obj];
-            break;
-        }
-    }
-    [self.tableView reloadData];
 }
 
 - (void)detailShareWithRid:(NSString *)rid shareNum:(NSString *)num

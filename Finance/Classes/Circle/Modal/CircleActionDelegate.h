@@ -11,8 +11,6 @@
 @optional
 - (void)detailCommentWithRid:(NSString *)rid commentNum:(NSString *)num comments:(NSMutableArray *)comments;
 - (void)detailShareWithRid:(NSString *)rid shareNum:(NSString*)num;
-
-- (void)detailDeleteWithRid:(NSString *)rid ;
 - (void)detailCollectionWithRid:(NSString *)rid collected:(NSString *)isColle;
 - (void)detailHomeListShouldRefresh:(CircleListObj *)currentObj;
 

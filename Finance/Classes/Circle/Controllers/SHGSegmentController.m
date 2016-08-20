@@ -124,12 +124,13 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     [self reloadTabButtons];
     [SHGGlobleOperation registerAttationClass:[self class] method:@selector(loadAttationState:attationState:)];
     [SHGGlobleOperation registerPraiseClass:[self class] method:@selector(loadPraiseState:praiseState:)];
+    [SHGGlobleOperation registerDeleteClass:[self class] method:@selector(loadDelete:)];
 
     [self.categorySelectView addObserver:self forKeyPath:@"alpha" options:NSKeyValueObservingOptionNew context:nil];
     WEAK(self, weakSelf);
     self.categorySelectView.block = ^(NSString *category){
         weakSelf.text = category;
-        [SHGHomeCategoryView shareCategoryView].category = category;
+        [SHGHomeCategoryView sharedCategoryView].category = category;
 
         if(weakSelf.block){
             weakSelf.block(weakSelf.titleButton);
@@ -165,16 +166,22 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     return _titleButton;
 }
 
-- (void)loadAttationState:(id)object attationState:(BOOL)attationState
+- (void)loadAttationState:(id)object attationState:(NSNumber *)attationState
 {
-    [[SHGHomeViewController sharedController] performSelector:@selector(loadAttationState:attationState:) withObject:object withObject:@(attationState)];
-    [[SHGHomeCategoryView shareCategoryView] performSelector:@selector(loadAttationState:attationState:) withObject:object withObject:@(attationState)];
+    [[SHGHomeViewController sharedController] performSelector:@selector(loadAttationState:attationState:) withObject:object withObject:attationState];
+    [[SHGHomeCategoryView sharedCategoryView] performSelector:@selector(loadAttationState:attationState:) withObject:object withObject:attationState];
 }
 
-- (void)loadPraiseState:(id)object praiseState:(BOOL)praiseState
+- (void)loadPraiseState:(id)object praiseState:(NSNumber *)praiseState
 {
-    [[SHGHomeViewController sharedController] performSelector:@selector(loadPraiseState:praiseState:) withObject:object withObject:@(praiseState)];
-    [[SHGHomeCategoryView shareCategoryView] performSelector:@selector(loadPraiseState:praiseState:) withObject:object withObject:@(praiseState)];
+    [[SHGHomeViewController sharedController] performSelector:@selector(loadPraiseState:praiseState:) withObject:object withObject:praiseState];
+    [[SHGHomeCategoryView sharedCategoryView] performSelector:@selector(loadPraiseState:praiseState:) withObject:object withObject:praiseState];
+}
+
+- (void)loadDelete:(NSString *)targetID
+{
+    [[SHGHomeViewController sharedController] performSelector:@selector(loadDelete:) withObject:targetID];
+    [[SHGHomeCategoryView sharedCategoryView] performSelector:@selector(loadDelete:) withObject:targetID];
 }
 
 
@@ -283,9 +290,9 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     controller.needRefreshTableView = YES;
     
     SEL selector = NSSelectorFromString(@"setNeedRefreshTableView:");
-    IMP imp = [[SHGHomeCategoryView shareCategoryView] methodForSelector:selector];
+    IMP imp = [[SHGHomeCategoryView sharedCategoryView] methodForSelector:selector];
     void (*func)(id, SEL, BOOL) = (void *)imp;
-    func([SHGHomeCategoryView shareCategoryView], selector, YES);
+    func([SHGHomeCategoryView sharedCategoryView], selector, YES);
 }
 
 - (void)refreshHomeView
@@ -293,7 +300,7 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     if([[self.viewControllers firstObject] respondsToSelector:@selector(refreshHeader)]){
         [[self.viewControllers firstObject] performSelector:@selector(refreshHeader)];
     }
-    [[SHGHomeCategoryView shareCategoryView] performSelector:@selector(refreshHeader)];
+    [[SHGHomeCategoryView sharedCategoryView] performSelector:@selector(refreshHeader)];
 }
 
 - (void)removeObject:(CircleListObj *)object

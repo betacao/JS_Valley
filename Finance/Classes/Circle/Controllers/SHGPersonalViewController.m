@@ -84,7 +84,7 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
     [SHGGlobleOperation registerAttationClass:[self class] method:@selector(loadAttationState:attationState:)];
 }
 
-- (void)loadAttationState:(NSString *)targetUserID attationState:(BOOL)attationState
+- (void)loadAttationState:(NSString *)targetUserID attationState:(NSNumber *)attationState
 {
     if (attationState) {
         self.relationShip = @"1";

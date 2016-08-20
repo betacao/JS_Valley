@@ -33,7 +33,7 @@
 @property (strong, nonatomic) NSMutableArray *recommendArray;
 @property (strong, nonatomic) SHGNewFriendObject *friendObject;
 
-@property (strong, nonatomic) SHGNoticeView *newMessageNoticeView;
+@property (strong, nonatomic) SHGNoticeView *messageNoticeView;
 @property (assign, nonatomic) BOOL isRefreshing;
 @property (strong, nonatomic) SHGEmptyDataView *emptyView;
 
@@ -67,7 +67,8 @@
     self.emptyView.sd_layout
     .spaceToSuperView(UIEdgeInsetsMake(0.0f, 0.0f, kTabBarHeight, 0.0f));
 
-    self.categoryView = [SHGHomeCategoryView shareCategoryView];
+    self.categoryView = [SHGHomeCategoryView sharedCategoryView];
+    self.categoryView.messageNoticeView = self.messageNoticeView;
     [self.view addSubview:self.categoryView];
     
     self.categoryView.sd_layout
@@ -98,7 +99,7 @@
             [weakSelf.tableView.mj_header endRefreshing];
             [weakSelf.tableView.mj_footer endRefreshing];
 
-            [weakSelf.newMessageNoticeView showWithText:[NSString stringWithFormat:@"为您加载了%ld条新动态",(long)allArray.count]];
+            [weakSelf.messageNoticeView showWithText:[NSString stringWithFormat:@"为您加载了%ld条新动态",(long)allArray.count]];
             [weakSelf insertRecomandArray];
             [weakSelf insertNewFriendArray];
             weakSelf.needRefreshTableView = YES;
@@ -127,13 +128,13 @@
     return _recommendArray;
 }
 
-- (SHGNoticeView *)newMessageNoticeView
+- (SHGNoticeView *)messageNoticeView
 {
-    if(!_newMessageNoticeView){
-        _newMessageNoticeView = [[SHGNoticeView alloc] initWithFrame:CGRectZero type:SHGNoticeTypeNewMessage];
-        _newMessageNoticeView.superView = self.view;
+    if(!_messageNoticeView){
+        _messageNoticeView = [[SHGNoticeView alloc] initWithFrame:CGRectZero type:SHGNoticeTypeNewMessage];
+        _messageNoticeView.superView = self.view;
     }
-    return _newMessageNoticeView;
+    return _messageNoticeView;
 }
 
 - (SHGEmptyDataView *)emptyView
@@ -241,8 +242,8 @@
 - (void)refreshData
 {
     WEAK(self, weakSelf);
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [weakSelf refreshHeader];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.25f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [weakSelf requestDataWithTarget:@"first" time:@"-1"];
     });
 }
 
@@ -304,6 +305,20 @@
     self.needRefreshTableView = YES;
 }
 
+- (void)loadDelete:(NSString *)targetID
+{
+    NSMutableArray *array = [NSMutableArray array];
+    [self.dataArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        CircleListObj *listObject = (CircleListObj *)obj;
+        if ([listObject.rid isEqualToString:targetID]) {
+            [array addObject:listObject];
+        }
+    }];
+    [self.dataArr removeObjectsInArray:array];
+    [self.listArray removeObjectsInArray:array];
+    self.needRefreshTableView = YES;
+}
+
 - (void)requestDataWithTarget:(NSString *)target time:(NSString *)time
 {
     self.isRefreshing = YES;
@@ -347,7 +362,7 @@
         }
         [self insertRecomandArray];
         [self insertNewFriendArray];
-        [self.newMessageNoticeView showWithText:[NSString stringWithFormat:@"为您加载了%ld条新动态",(long)self.dataArr.count]];
+        [self.messageNoticeView showWithText:[NSString stringWithFormat:@"为您加载了%ld条新动态",(long)self.dataArr.count]];
     } else if ([target isEqualToString:@"refresh"]){
         if (normalArray.count > 0){
             for (NSInteger i = normalArray.count - 1; i >= 0; i--){
@@ -355,9 +370,9 @@
                 NSLog(@"%@",obj.rid);
                 [self.listArray insertObject:obj atIndex:0];
             }
-            [self.newMessageNoticeView showWithText:[NSString stringWithFormat:@"为您加载了%ld条新动态",(long)normalArray.count]];
+            [self.messageNoticeView showWithText:[NSString stringWithFormat:@"为您加载了%ld条新动态",(long)normalArray.count]];
         } else{
-            [self.newMessageNoticeView showWithText:@"暂无新动态，休息一会儿"];
+            [self.messageNoticeView showWithText:@"暂无新动态，休息一会儿"];
         }
         //总数据
         [self.dataArr removeAllObjects];
@@ -390,7 +405,6 @@
     } else{
         [self requestDataWithTarget:@"first" time:@""];
     }
-
 }
 
 - (void)refreshFooter

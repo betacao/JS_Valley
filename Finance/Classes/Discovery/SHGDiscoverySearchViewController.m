@@ -112,13 +112,13 @@
     [self loadDataWithTarget:@"load"];
 }
 
-- (void)loadAttationState:(NSString *)targetUserID attationState:(BOOL)attationState
+- (void)loadAttationState:(NSString *)targetUserID attationState:(NSNumber *)attationState
 {
     [self.dataArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         if ([obj isKindOfClass:[SHGDiscoveryPeopleObject class]]) {
             SHGDiscoveryPeopleObject *peopleObject = (SHGDiscoveryPeopleObject *)obj;
             if ([peopleObject.userID isEqualToString:targetUserID]) {
-                peopleObject.isAttention = attationState;
+                peopleObject.isAttention = [attationState boolValue];
             }
         }
     }];

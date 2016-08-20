@@ -147,14 +147,14 @@
     [self loadData];
 }
 
-- (void)loadAttationState:(NSString *)targetUserID attationState:(BOOL)attationState
+- (void)loadAttationState:(NSString *)targetUserID attationState:(NSNumber *)attationState
 {
     if (self.recommendCollectionView.dataArray.count > 0) {
         [self.recommendCollectionView.dataArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             if ([obj isKindOfClass:[SHGDiscoveryRecommendObject class]]) {
                 SHGDiscoveryRecommendObject *recommendObject = (SHGDiscoveryRecommendObject *)obj;
                 if ([recommendObject.userID isEqualToString:targetUserID]) {
-                    recommendObject.isAttention = attationState;
+                    recommendObject.isAttention = [attationState boolValue];
                 }
             }
         }];
@@ -164,7 +164,7 @@
             if ([obj isKindOfClass:[SHGDiscoveryDepartmentObject class]]) {
                 SHGDiscoveryDepartmentObject *departmentObject = (SHGDiscoveryDepartmentObject *)obj;
                 if ([departmentObject.userID isEqualToString:targetUserID]) {
-                    departmentObject.isAttention = attationState;
+                    departmentObject.isAttention = [attationState boolValue];
                 }
             }
         }];
@@ -556,13 +556,13 @@
     [self loadDataWithTarget:@"load"];
 }
 
-- (void)loadAttationState:(NSString *)targetUserID attationState:(BOOL)attationState
+- (void)loadAttationState:(NSString *)targetUserID attationState:(NSNumber *)attationState
 {
     [self.dataArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         if ([obj isKindOfClass:[SHGDiscoveryPeopleObject class]]) {
             SHGDiscoveryPeopleObject *peopleObject = (SHGDiscoveryPeopleObject *)obj;
             if ([peopleObject.userID isEqualToString:targetUserID]) {
-                peopleObject.isAttention = attationState;
+                peopleObject.isAttention = [attationState boolValue];
             }
         }
     }];

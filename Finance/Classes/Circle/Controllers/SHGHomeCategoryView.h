@@ -7,11 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SHGNoticeView.h"
 
 @interface SHGHomeCategoryView : UIView
 
-+ (instancetype)shareCategoryView;
++ (instancetype)sharedCategoryView;
 
 @property (strong, nonatomic) NSString *category;
+@property (strong, nonatomic) SHGNoticeView *messageNoticeView;
 
 @end

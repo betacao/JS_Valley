@@ -21,4 +21,10 @@
 + (void)registerPraiseClass:(Class)CClass method:(SEL)selector;
 
 + (void)addPraise:(id)object;
+
+//动态删除
++ (void)registerDeleteClass:(Class)CClass method:(SEL)selector;
+
++ (void)deleteObject:(id)object;
+
 @end

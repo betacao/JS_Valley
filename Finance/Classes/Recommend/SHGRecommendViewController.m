@@ -70,13 +70,13 @@
     }];
 }
 
-- (void)loadAttationState:(NSString *)targetUserID attationState:(BOOL)attationState
+- (void)loadAttationState:(NSString *)targetUserID attationState:(NSNumber *)attationState
 {
     [self.recommendCollectionView.dataArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         if ([obj isKindOfClass:[SHGDiscoveryRecommendObject class]]) {
             SHGDiscoveryRecommendObject *recommendObject = (SHGDiscoveryRecommendObject *)obj;
             if ([recommendObject.userID isEqualToString:targetUserID]) {
-                recommendObject.isAttention = attationState;
+                recommendObject.isAttention = [attationState boolValue];
             }
         }
     }];

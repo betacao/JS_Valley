@@ -8,15 +8,9 @@
 
 @protocol CircleListDelegate <NSObject>
 @optional
-//评论代理
-- (void)commentClicked:(CircleListObj *)obj;
-- (void)replyClicked:(CircleListObj *)obj commentIndex:(NSInteger)index;
 - (void)shareClicked:(CircleListObj *)obj;
-
-- (void)deleteClicked:(CircleListObj *)obj;
 - (void)moreMessageClicked:(CircleListObj *)obj;
 - (void)pullClicked:(CircleListObj *)obj;
-- (void)clicked:(NSInteger )index;
 - (void)cnickCLick:(NSString * )userId name:(NSString *)name;
 
 @end
