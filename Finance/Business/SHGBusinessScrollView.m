@@ -35,7 +35,6 @@
 
 - (instancetype)initWithFrame:(CGRect)frame
 {
-
     frame.size.height = kBusinessScrollViewHeight;
     self = [super initWithFrame:frame];
     if (self) {
@@ -43,6 +42,7 @@
         self.scrollView = [[UIScrollView alloc] initWithFrame:frame];
         self.scrollView.backgroundColor = [UIColor clearColor];
         self.scrollView.delegate = self;
+        self.scrollView.showsHorizontalScrollIndicator = NO;
 
         [self addSubview:self.scrollView];
 
@@ -60,7 +60,37 @@
     }
     [_categoryArray removeAllObjects];
     [_categoryArray addObjectsFromArray:categoryArray];
-    [self setNeedsLayout];
+
+    [self.scrollView removeAllSubviews];
+    [self.buttonArrays removeAllObjects];
+    self.categoryWidth = 0.0f;
+
+    __block NSString *string = @"";
+    [categoryArray enumerateObjectsUsingBlock:^(SHGBusinessFirstObject *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        string = [string stringByAppendingString:obj.name];
+    }];
+
+    CGFloat width = [string sizeWithAttributes:@{NSFontAttributeName:kBusinessNormalFont}].width;
+    CGFloat margin = MAX(floorf(ABS(375.0f - width) / categoryArray.count), floorf(ABS(SCREENWIDTH - width) / categoryArray.count));
+    [categoryArray enumerateObjectsUsingBlock:^(SHGBusinessFirstObject *object, NSUInteger idx, BOOL * _Nonnull stop) {
+        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+        [button setTitle:object.name forState:UIControlStateNormal];
+        [button setTitleColor:[UIColor colorWithHexString:@"333333"] forState:UIControlStateNormal];
+        [button addTarget:self action:@selector(clickButton:) forControlEvents:UIControlEventTouchUpInside];
+        button.titleLabel.font = kBusinessNormalFont;
+        CGSize size = [button sizeThatFits:CGSizeMake(CGFLOAT_MAX, CGRectGetHeight(self.frame))];
+        CGRect frame = button.frame;
+        frame.size.width = size.width + margin;
+        frame.size.height = CGRectGetHeight(self.frame);
+        frame.origin.x = self.categoryWidth;
+        frame.origin.y = 0.0f;
+        button.frame = frame;
+        self.categoryWidth = CGRectGetMaxX(frame);
+        [self.scrollView addSubview:button];
+        [self.buttonArrays addObject:button];
+    }];
+    self.scrollView.contentSize = CGSizeMake(self.categoryWidth, CGRectGetHeight(self.frame));
+    self.selectedIndex = 0;
 }
 
 - (NSMutableArray *)buttonArrays
@@ -157,46 +187,6 @@
 
     //移动scrollview到相应的位置
     [self.scrollView scrollRectToVisible:button.frame animated:YES];
-}
-
-
-- (void)layoutSubviews
-{
-    [super layoutSubviews];
-    if (self.categoryArray.count == 0) {
-        return;
-    }
-    [self.scrollView removeAllSubviews];
-    self.categoryWidth = 0.0f;
-    [self.buttonArrays removeAllObjects];
-
-    __block NSString *string = @"";
-    [self.categoryArray enumerateObjectsUsingBlock:^(SHGBusinessFirstObject *obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        string = [string stringByAppendingString:obj.name];
-    }];
-
-    CGFloat width = [string sizeWithAttributes:@{NSFontAttributeName:kBusinessNormalFont}].width;
-    CGFloat margin = MAX(floorf(ABS(375.0f - width) / self.categoryArray.count), floorf(ABS(SCREENWIDTH - width) / self.categoryArray.count));
-    [self.categoryArray enumerateObjectsUsingBlock:^(SHGBusinessFirstObject *object, NSUInteger idx, BOOL * _Nonnull stop) {
-        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-        [button setTitle:object.name forState:UIControlStateNormal];
-        [button setTitleColor:[UIColor colorWithHexString:@"333333"] forState:UIControlStateNormal];
-        [button addTarget:self action:@selector(clickButton:) forControlEvents:UIControlEventTouchUpInside];
-        button.titleLabel.font = kBusinessNormalFont;
-        CGSize size = [button sizeThatFits:CGSizeMake(CGFLOAT_MAX, CGRectGetHeight(self.frame))];
-        CGRect frame = button.frame;
-        frame.size.width = size.width + margin;
-        frame.size.height = CGRectGetHeight(self.frame);
-        frame.origin.x = self.categoryWidth;
-        frame.origin.y = 0.0f;
-        button.frame = frame;
-        self.categoryWidth = CGRectGetMaxX(frame);
-        [self.scrollView addSubview:button];
-        [self.buttonArrays addObject:button];
-    }];
-    self.scrollView.contentSize = CGSizeMake(self.categoryWidth, CGRectGetHeight(self.frame));
-    self.selectedIndex = 0;
-
 }
 
 - (void)clickButton:(UIButton *)button
