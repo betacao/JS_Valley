@@ -577,9 +577,9 @@
     [self.currentContext resignFirstResponder];
 }
 
-- (void)keyBoardDidShow:(NSNotification *)notificaiton
+- (void)keyBoardDidShow:(NSNotification *)notification
 {
-    NSDictionary *info = [notificaiton userInfo];
+    NSDictionary *info = [notification userInfo];
     NSValue *value = [info objectForKey:UIKeyboardFrameEndUserInfoKey];
     CGSize keyboardSize = [value CGRectValue].size;
     UIView *view = (UIView *)self.currentContext;

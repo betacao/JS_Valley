@@ -18,11 +18,12 @@
 - (void)show;
 - (void)showWithClose;
 
-@property (nonatomic, copy) dispatch_block_t leftBlock;
-@property (nonatomic, copy) dispatch_block_t rightBlock;
-@property (nonatomic, copy) dispatch_block_t dismissBlock;
-@property (nonatomic, assign) BOOL shouldDismiss;
-@property (nonatomic, assign) BOOL touchOtherDismiss;//点击黑色区域是否也消失
+@property (copy, nonatomic) dispatch_block_t leftBlock;
+@property (copy, nonatomic) dispatch_block_t rightBlock;
+@property (copy, nonatomic) dispatch_block_t dismissBlock;
+
+@property (assign, nonatomic) BOOL shouldDismiss;
+@property (assign, nonatomic) BOOL touchOtherDismiss;//点击黑色区域是否也消失
 
 @end
 

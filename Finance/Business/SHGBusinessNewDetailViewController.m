@@ -661,6 +661,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
     self.businessMessageLabel.textColor = self.businessRepresentLabel.textColor = self.companyLabel.textColor = Color(@"3A3A3A");
     
     self.contentTextView.textContainerInset = UIEdgeInsetsMake(0, -5.0f, 0, 0);
+    self.contentTextView.bounces = NO;
     
     [self.messageButton setTitleColor:Color(@"247ee2") forState:UIControlStateNormal];
     self.messageButton.titleLabel.font = FontFactor(14.0f);
@@ -888,12 +889,6 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
     NSMutableArray *tempArray = [NSMutableArray arrayWithArray:self.middleContentArray];
     for (NSString *obj in tempArray) {
         if ([obj containsString:@"金额"]) {
-//            NSArray *array = [obj componentsSeparatedByString:@"："];
-//            if ([[array lastObject] length] == 0) {
-//                money = @"暂未说明";
-            //            } else{
-            //                money = [array lastObject];
-            //            }
             [self.middleContentArray removeObject:obj];
         }
     }

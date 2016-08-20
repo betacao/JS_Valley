@@ -504,7 +504,7 @@
         object.type = businessType;
         controller.object = object;
         [self pushIntoViewController:TopVC newViewController:controller];
-    } else if ([ridCode isEqualToString:@"1015"]){
+    } else if ([ridCode isEqualToString:@"1015"]||[ridCode isEqualToString:@"1018"]){
         NSString *businessId = [userInfo objectForKey:@"rid"];
         NSString *type = [userInfo objectForKey:@"businessType"];
         SHGBusinessObject *object = [[SHGBusinessObject alloc] init];
@@ -526,7 +526,7 @@
         controller.object = object;
         [self pushIntoViewController:TopVC newViewController:controller];
         
-    } else if ([ridCode isEqualToString:@"1017"]){
+    } else if ([ridCode isEqualToString:@"1017"]||[ridCode isEqualToString:@"1019"]){
         SHGBusinessSegmentViewController *controller = [[SHGBusinessSegmentViewController alloc] init];
 
         SHGBusinessMineViewController *controller1 = [[SHGBusinessMineViewController alloc] init];

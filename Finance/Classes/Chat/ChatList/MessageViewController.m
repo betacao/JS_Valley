@@ -214,7 +214,7 @@
         object.type = businessType;
         controller.object = object;
         [self.navigationController pushViewController:controller animated:YES];
-    } else if ([obj.code isEqualToString:@"1015"]){
+    } else if ([obj.code isEqualToString:@"1015"]||[obj.code isEqualToString:@"1018"]){
         NSString *businessId = obj.oid;
         NSString *type = obj.unionID;
         SHGBusinessObject *object = [[SHGBusinessObject alloc] init];
@@ -235,7 +235,7 @@
         controller.object = object;
         controller.time = [[obj.time componentsSeparatedByString:@" "] firstObject];
         [self.navigationController pushViewController:controller animated:YES];
-    } else if ([obj.code isEqualToString:@"1017"]){
+    } else if ([obj.code isEqualToString:@"1017"]||[obj.code isEqualToString:@"1019"]){
         SHGBusinessSegmentViewController *controller = [[SHGBusinessSegmentViewController alloc] init];
 
         SHGBusinessMineViewController *controller1 = [[SHGBusinessMineViewController alloc] init];

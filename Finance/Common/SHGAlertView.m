@@ -179,6 +179,7 @@
 
             customView.sd_layout
             .heightIs(CGRectGetHeight(customView.frame))
+            .centerXEqualToView(self)
             .topSpaceToView(self.lineLabel, 0.0f);
 
             self.rightBtn.sd_layout
@@ -190,7 +191,7 @@
             [self.rightBtn setTitle:rightTitle forState:UIControlStateNormal];
 
         } else {
-            [self sd_addSubviews:@[customView, self.leftBtn, self.rightBtn]];
+            [self sd_addSubviews:@[self.leftBtn, self.rightBtn, customView]];
 
             customView.sd_layout
             .topSpaceToView(self.lineLabel, 0.0f);
