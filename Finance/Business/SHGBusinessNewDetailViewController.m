@@ -911,8 +911,8 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
         money = self.responseObject.investmoney;
     } else{
         NSInteger moneyInt = [self.responseObject.investmoney integerValue];
-        NSString *leftText= [NSString stringWithFormat:@"%ld",moneyInt/10000];
-        NSString *rightText= [NSString stringWithFormat:@"%ld",moneyInt%10000];
+        NSString *leftText = [NSString stringWithFormat:@"%ld", (long)moneyInt/10000];
+        NSString *rightText = [NSString stringWithFormat:@"%ld", (long)moneyInt%10000];
         if ([leftText isEqualToString:@"0"]) {
             money = [NSString stringWithFormat:@"%@万",rightText];
             

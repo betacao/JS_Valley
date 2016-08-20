@@ -172,7 +172,7 @@
     }
     NSInteger leftTextFieldString = 10000 * [self.leftMoneyTextField.text  integerValue];
     NSInteger rightTextFieldString = [self.monenyTextField.text integerValue];
-    NSString *money = [NSString stringWithFormat:@"%ld",leftTextFieldString + rightTextFieldString];
+    NSString *money = [NSString stringWithFormat:@"%ld",(long)(leftTextFieldString + rightTextFieldString)];
     if (self.leftMoneyTextField.text.length == 0 && self.monenyTextField.text.length == 0) {
         money = @"";
     }
@@ -391,8 +391,8 @@
         self.phoneNumTextField.text = [array objectAtIndex:3];
         
         NSInteger money = [self.object.investmoney integerValue];
-        NSString *leftText= [NSString stringWithFormat:@"%ld",money/10000];
-        NSString *rightText= [NSString stringWithFormat:@"%ld",money%10000];
+        NSString *leftText = [NSString stringWithFormat:@"%ld", (long)money/10000];
+        NSString *rightText = [NSString stringWithFormat:@"%ld", (long)money%10000];
         if (![leftText isEqualToString:@"0"]) {
             self.leftMoneyTextField.text = leftText;
         } else{

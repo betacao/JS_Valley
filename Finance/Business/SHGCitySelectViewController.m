@@ -146,7 +146,6 @@
             [button setBackgroundColor:Color(@"f7f7f7")];
         }
     }
-    NSLog(@"index%ld",index);
     [self.dataArray removeAllObjects];
     if ([[self.citys objectAtIndex:index] count] == 0) {
         [self.dataArray addObject:[self.provinces objectAtIndex:index]];

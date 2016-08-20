@@ -134,9 +134,9 @@
         if ([listObject.rid isEqualToString:targetID]) {
             listObject.ispraise = [praiseState boolValue] ? @"Y" : @"N";
             if ([praiseState boolValue]) {
-                listObject.praisenum = [NSString stringWithFormat:@"%ld", [listObject.praisenum integerValue] + 1];
+                listObject.praisenum = [NSString stringWithFormat:@"%ld", (long)[listObject.praisenum integerValue] + 1];
             } else {
-                listObject.praisenum = [NSString stringWithFormat:@"%ld", [listObject.praisenum integerValue] - 1];
+                listObject.praisenum = [NSString stringWithFormat:@"%ld", (long)[listObject.praisenum integerValue] - 1];
             }
         }
     }];
