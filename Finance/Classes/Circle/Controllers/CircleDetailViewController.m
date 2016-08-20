@@ -454,6 +454,14 @@
     BOOL status = [self.responseObject.userstatus isEqualToString:@"true"] ? YES : NO;
     [self.imageHeader updateHeaderView:[NSString stringWithFormat:@"%@%@",rBaseAddressForImage,self.responseObject.potname] placeholderImage:[UIImage imageNamed:@"default_head"] userID:self.responseObject.userid];
     [self.authenticationView updateWithStatus:status];
+    if (status == NO) {
+        self.lblTime.sd_resetLayout
+        .leftEqualToView(self.nickName)
+        .bottomEqualToView(self.imageHeader)
+        .autoHeightRatio(0.0f);
+        [self.lblTime setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
+
+    }
     if (![self.responseObject.ispraise isEqualToString:@"Y"]) {
         [self.btnPraise addImage:[UIImage imageNamed:@"home_weizan"]];
     } else{

@@ -53,7 +53,7 @@
 
 - (void)updateWithStatus:(BOOL)status
 {
-    self.imageView.image = status ? [UIImage imageNamed:@"v_normal_yellow"] : [UIImage imageNamed:@"v_normal_gray"];
+    self.imageView.image = status ? [UIImage imageNamed:@"v_normal_yellow"] : nil;
 }
 
 @end
