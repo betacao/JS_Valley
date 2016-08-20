@@ -15,5 +15,6 @@
 #define kSplashScreenAdCacheImgLocalPath ([kPathDocument stringByAppendingPathComponent:@"SplashScreenAdCacheImg.ad"])
 
 #define kSplashScreenAdCacheLocalPath ([kPathDocument stringByAppendingPathComponent:@"SplashScreenAdCache.ad"])
+#define kBPEmailLocalPath ([kPathDocument stringByAppendingPathComponent:@"kBPEmailLocalPath"])
 
 #endif

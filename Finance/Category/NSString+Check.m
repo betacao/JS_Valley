@@ -152,9 +152,9 @@
 }
 
 /*邮箱验证 MODIFIED BY HELENSONG*/
--(BOOL)isValidateEmail
+- (BOOL)isValidateEmail
 {
-    NSString *emailRegex = @"[A-Z0-9a-z._%--]-@[A-Za-z0-9.-]-\\.[A-Za-z]{2,4}";
+    NSString *emailRegex = @"[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}";
     NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", emailRegex];
     return [emailTest evaluateWithObject:self];
 }
@@ -162,25 +162,18 @@
 /*手机号码验证 MODIFIED BY HELENSONG*/
 - (BOOL) isValidateMobile
 {
-    //手机号以13， 15，18开头，八个 \d 数字字符
-        NSString *phoneRegex = @"^((13[0-9])|(15[^4,\\D])|(17[0-9])|(14[0-9])|(18[0,0-9]))\\d{8}$";
-   // NSString *phoneRegex = @"^[0-9]{11}$";
+    NSString *phoneRegex = @"^((13[0-9])|(15[^4,\\D])|(17[0-9])|(14[0-9])|(18[0,0-9]))\\d{8}$";
     NSPredicate *phoneTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@",phoneRegex];
-    //DLog(@"%d",[phoneTest evaluateWithObject:mobile]);
-    //    DLog(@"phoneTest is %@",phoneTest);
     return [phoneTest evaluateWithObject:self];
-    
+
 }
 
--(BOOL)isRightUserName
+- (BOOL)isRightUserName
 {
-    
     NSString *phoneRegex = @" ^([\\u4e00-\\u9fa5]-|([a-zA-Z]))$";
     NSPredicate *phoneTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@",phoneRegex];
     //DLog(@"%d",[phoneTest evaluateWithObject:mobile]);
     return [phoneTest evaluateWithObject:self];
-    
-    
 }
 
 - (id)parseToArrayOrNSDictionary{

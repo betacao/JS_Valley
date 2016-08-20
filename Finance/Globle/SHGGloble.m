@@ -53,6 +53,8 @@
  */
 @property (strong, nonatomic) NSDictionary *businessDictionary;
 
+@property (strong, nonatomic) YYDiskCache *BPDiskCache;
+
 @end
 
 @implementation SHGGloble
@@ -141,6 +143,14 @@
         _contactArray = [NSMutableArray array];
     }
     return _contactArray;
+}
+
+- (YYDiskCache *)BPDiskCache
+{
+    if (!_BPDiskCache) {
+        _BPDiskCache = [[YYDiskCache alloc] initWithPath:kBPEmailLocalPath];
+    }
+    return _BPDiskCache;
 }
 
 - (BOOL)isShowGuideView
@@ -723,6 +733,25 @@
 {
     JSContext *context = [webView valueForKeyPath:@"documentView.webView.mainFrame.javaScriptContext"];
     context[key] = block;
+}
+
++ (void)saveBPInputData:(NSString *)email
+{
+    NSInteger total = [[SHGGloble sharedGloble].BPDiskCache totalCount];
+    NSString *key = [NSString stringWithFormat:@"key_%ld", (long)total];
+    [[SHGGloble sharedGloble].BPDiskCache setObject:email forKey:key];
+}
+
++ (NSArray *)BPInputhistory
+{
+    NSMutableArray *array = [NSMutableArray array];
+    NSInteger total = [[SHGGloble sharedGloble].BPDiskCache totalCount];
+    for (NSInteger i = 0; i < total; i++) {
+        NSString *key = [NSString stringWithFormat:@"key_%ld", (long)i];
+        id string = [[SHGGloble sharedGloble].BPDiskCache objectForKey:key];
+        [array insertUniqueObject:string];
+    }
+    return array;
 }
 
 

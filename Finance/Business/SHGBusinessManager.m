@@ -525,7 +525,23 @@
         NSString *allowCreate = [response.dataDictionary objectForKey:@"allowcreate"];
         block(YES,allowCreate);
     } failed:^(MOCHTTPResponse *response) {
-//        [Hud showMessageWithText:@"111"];
     }];
+}
+
++ (void)object:(SHGBusinessObject *)object sendEmailToAddress:(NSString *)email
+{
+    if ([email isValidateEmail]) {
+        [SHGGloble saveBPInputData:email];
+        [Hud showWait];
+        [MOCHTTPRequestOperationManager postWithURL:[rBaseAddressForHttp stringByAppendingString:@"/business/sendBusinessBp"] parameters:@{@"businessId":object.businessID, @"type":object.type, @"reciever":email} success:^(MOCHTTPResponse *response) {
+            [Hud hideHud];
+            [Hud showMessageWithText:@"邮件发送成功"];
+        } failed:^(MOCHTTPResponse *response) {
+            [Hud hideHud];
+            [Hud showMessageWithText:@"邮件发送失败"];
+        }];
+    } else {
+        [Hud showMessageWithText:@"请输入正确的邮箱地址"];
+    }
 }
 @end

@@ -27,6 +27,7 @@
 #import "SHGCompanyBrowserViewController.h"
 #import "SHGCompanyManager.h"
 #import "SHGMyComplainViewController.h"
+#import "SHGBPInputView.h"
 
 typedef NS_ENUM(NSInteger, SHGTapPhoneType)
 {
@@ -1686,7 +1687,15 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
 }
 
 
-- (IBAction)emailSendButtonClick:(UIButton *)sender {
+- (IBAction)emailSendButtonClick:(UIButton *)sender
+{
+    WEAK(self, weakSelf);
+    SHGBPInputView *inputView = [[SHGBPInputView alloc] init];
+    SHGAlertView *alert = [[SHGAlertView alloc] initWithTitle:@"发送到邮箱" customView:inputView leftButtonTitle:@"取消" rightButtonTitle:@"发送"];
+    alert.rightBlock = ^{
+        [SHGBusinessManager object:weakSelf.responseObject sendEmailToAddress:inputView.inputText];
+    };
+    [alert show];
 }
 
 - (void)makePhoneNum

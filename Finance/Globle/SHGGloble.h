@@ -287,4 +287,22 @@ typedef void (^SHHomeDataCompletionBlock)(NSArray *allList, NSArray *normalList,
  */
 + (void)addHtmlListener:(UIWebView *)webView key:(NSString *)key block:(void(^)(void))block;
 
+/**
+ @brief 保存BP输入的历史记录
+
+ @param email email地址
+
+ @since 1.9.0
+ */
++ (void)saveBPInputData:(NSString *)email;
+
+/**
+ @brief 获取BP的历史记录
+
+ @return BP数组
+
+ @since 1.9.0
+ */
++ (NSArray *)BPInputhistory;
+
 @end

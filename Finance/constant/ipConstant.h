@@ -22,8 +22,8 @@
 //#define rBaseAddRessHttp                @"http://192.168.0.117:8080/api"
 //#define rBaseAddRessHttp                @"http://192.168.1.112:8080/api"
 
-#define kCompanyBlurSearch              @"http://192.168.1.2:14080/ntb/api/daniuq/selectCompanyByShortName.json"
-#define kCompanyExactSearch              @"http://192.168.1.2:14080/ntb/api/daniuq/selectCompanyByFullName.json"
+#define kCompanyBlurSearch              @"http://3ban.daniuq.com:14080/ntb/api/daniuq/selectCompanyByShortName.json"
+#define kCompanyExactSearch              @"http://3ban.daniuq.com:14080/ntb/api/daniuq/selectCompanyByFullName.json"
 #define rBaseAddressForHttp				[NSString stringWithFormat:@"%@/v2",rBaseAddRessHttp]
 #define rBaseAddressForHttpCircle		[NSString stringWithFormat:@"%@/v2/group",rBaseAddRessHttp]
 #define rBaseAddressForHttpProd         [NSString stringWithFormat:@"%@/v2/prod",rBaseAddRessHttp]
@@ -49,8 +49,8 @@
 #define rBaseAddressForHttpUser         [NSString stringWithFormat:@"%@/v2/user",rBaseAddRessHttp]
 #define rBaseAddressForHttpUBpush		[NSString stringWithFormat:@"%@/v2/device/baidupush",rBaseAddRessHttp]
 
-#define kCompanyBlurSearch              @"http://192.168.1.2:14080/ntb/api/daniuq/selectCompanyByShortName"
-#define kCompanyExactSearch              @"http://192.168.1.2:14080/ntb/api/daniuq/selectCompanyByFullName"
+#define kCompanyBlurSearch              @"http://3ban.daniuq.com:14080/ntb/api/daniuq/selectCompanyByShortName"
+#define kCompanyExactSearch              @"http://3ban.daniuq.com:14080/ntb/api/daniuq/selectCompanyByFullName"
 
 //微信分享单独拿出来
 #define rBaseAddressForHttpBusinessShar @"http://www.daniuq.com/api/v2"

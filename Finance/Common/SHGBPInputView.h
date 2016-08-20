@@ -10,6 +10,8 @@
 
 @interface SHGBPInputView : UIView
 
+@property (strong, nonatomic) NSString *inputText;
+
 @end
 
 

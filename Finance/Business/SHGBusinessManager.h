@@ -53,5 +53,9 @@
 + (void)refreshBusiness:(SHGBusinessObject *)object success:(void (^)(BOOL success))block;
 
 + (void)gradebusiness:(NSDictionary *)param block:(void (^)(NSArray *dataArray))block;
+
 + (void)getBusinessComplainBlock:(void(^)(BOOL success,NSString *allowCreate))block;
+
++ (void)object:(SHGBusinessObject *)object sendEmailToAddress:(NSString *)email;
+
 @end
