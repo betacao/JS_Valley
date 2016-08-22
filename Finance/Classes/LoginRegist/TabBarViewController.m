@@ -18,7 +18,6 @@
 #import "SHGPersonalViewController.h"
 #import "SHGBusinessListViewController.h"
 #import "GroupListViewController.h"
-//#import "CommonMethod.h"
 
 @interface TabBarViewController()<SHGSegmentControllerDelegate>
 @property (strong, nonatomic) SHGSegmentController *homeSegmentViewController;

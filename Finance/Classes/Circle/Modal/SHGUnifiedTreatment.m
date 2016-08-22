@@ -12,6 +12,8 @@
 #import "RecmdFriendObj.h"
 #import "SHGPersonalViewController.h"
 #import "CCLocationManager.h"
+#import "SHGHomeCategoryView.h"
+
 @implementation SHGUnifiedTreatment
 
 
@@ -211,7 +213,9 @@
     [MOCHTTPRequestOperationManager postWithURL:url class:nil parameters:param success:^(MOCHTTPResponse *response){
         NSString *code = [response.data valueForKey:@"code"];
         if ([code isEqualToString:@"000"]){
-            NSArray *array = [[SHGSegmentController sharedSegmentController] targetObjectsByRid:obj.rid];
+            NSMutableArray *array = [NSMutableArray array];
+            [array addObjectsFromArray:[[SHGSegmentController sharedSegmentController] targetObjectsByRid:obj.rid]];
+            [array addObjectsFromArray:[[SHGHomeCategoryView sharedCategoryView] targetObjectsByRid:obj.rid]];
             for (CircleListObj *object in array){
                 object.sharenum = [NSString stringWithFormat:@"%ld",(long)([object.sharenum integerValue] + 1)];
             }
@@ -233,7 +237,9 @@
     [MOCHTTPRequestOperationManager putWithURL:url class:nil parameters:param success:^(MOCHTTPResponse *response) {
         NSString *code = [response.data valueForKey:@"code"];
         if ([code isEqualToString:@"000"]) {
-            NSArray *array = [[SHGSegmentController sharedSegmentController] targetObjectsByRid:obj.rid];
+            NSMutableArray *array = [NSMutableArray array];
+            [array addObjectsFromArray:[[SHGSegmentController sharedSegmentController] targetObjectsByRid:obj.rid]];
+            [array addObjectsFromArray:[[SHGHomeCategoryView sharedCategoryView] targetObjectsByRid:obj.rid]];
             for (CircleListObj *object in array){
                 object.sharenum = [NSString stringWithFormat:@"%ld",(long)([object.sharenum integerValue] + 1)];
             }
@@ -272,7 +278,9 @@
     id obj = noti.object;
     if ([obj isKindOfClass:[NSString class]]){
         NSString *rid = obj;
-        NSArray *array = [[SHGSegmentController sharedSegmentController] targetObjectsByRid:rid];
+        NSMutableArray *array = [NSMutableArray array];
+        [array addObjectsFromArray:[[SHGSegmentController sharedSegmentController] targetObjectsByRid:rid]];
+        [array addObjectsFromArray:[[SHGHomeCategoryView sharedCategoryView] targetObjectsByRid:rid]];
         //这边只调用一次 下面的方法中会分开处理
         [self otherShareWithObj:[array firstObject]];
     }
@@ -280,7 +288,9 @@
 
 - (void)detailShareWithRid:(NSString *)rid shareNum:(NSString *)num
 {
-    NSArray *array = [[SHGSegmentController sharedSegmentController] targetObjectsByRid:rid];
+    NSMutableArray *array = [NSMutableArray array];
+    [array addObjectsFromArray:[[SHGSegmentController sharedSegmentController] targetObjectsByRid:rid]];
+    [array addObjectsFromArray:[[SHGHomeCategoryView sharedCategoryView] targetObjectsByRid:rid]];
     for (CircleListObj *obj in array){
         obj.sharenum = num;
     }
@@ -290,7 +300,9 @@
 
 - (void)detailCommentWithRid:(NSString *)rid commentNum:(NSString*)num comments:(NSMutableArray *)comments
 {
-    NSArray *array = [[SHGSegmentController sharedSegmentController] targetObjectsByRid:rid];
+    NSMutableArray *array = [NSMutableArray array];
+    [array addObjectsFromArray:[[SHGSegmentController sharedSegmentController] targetObjectsByRid:rid]];
+    [array addObjectsFromArray:[[SHGHomeCategoryView sharedCategoryView] targetObjectsByRid:rid]];
     for (CircleListObj *obj in array){
         obj.cmmtnum = num;
         if (comments.count > 3) {
@@ -331,17 +343,14 @@
 //获得详情后如果存在数据更新则在首页进行更新
 - (void)detailHomeListShouldRefresh:(CircleListObj *)currentObj
 {
-    NSArray *array = [[SHGSegmentController sharedSegmentController] targetObjectsByRid:currentObj.rid];
-    NSArray *indexArray = [[SHGSegmentController sharedSegmentController] indexOfObjectByRid:currentObj.rid];
-    if(array.count != indexArray.count){
-        return;
-    }
+    NSMutableArray *array = [NSMutableArray array];
+    [array addObjectsFromArray:[[SHGSegmentController sharedSegmentController] targetObjectsByRid:currentObj.rid]];
+    [array addObjectsFromArray:[[SHGHomeCategoryView sharedCategoryView] targetObjectsByRid:currentObj.rid]];
     for(CircleListObj *obj in array){
         obj.sharenum = currentObj.sharenum;
         obj.cmmtnum = currentObj.cmmtnum;
         obj.praisenum = currentObj.praisenum;
     }
-
     [[SHGSegmentController sharedSegmentController] reloadData];
 }
 

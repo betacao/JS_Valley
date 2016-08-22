@@ -9,14 +9,11 @@
 #ifndef Finance_notificationConstant_h
 #define Finance_notificationConstant_h
 
-#define TEL_ASK         @"111"
-
 //notification
 #define NOTIFI_SENDPOST     @"notificationSendPost"
 
-#define NOTIFI_CIRCLELIESTRELOAD     @"notificationCircleReload"
-#define NOTIFI_COLLECT_SHARE_CLIC     @"notificationCircleSHareCLick"
-#define NOTIFI_COLLECT_COMMENT_CLIC     @"notificationCircleCOmmentCLick"
+#define NOTIFI_COLLECT_SHARE_CLIC     @"notificationCircleShareCLick"
+#define NOTIFI_COLLECT_COMMENT_CLIC     @"notificationCircleCommentCLick"
 
 #define NOTIFI_CHANGE_UPDATE_AUTO_STATUE     @"notificationUpdateAuthState"
 #define NOTIFI_CHANGE_UPDATE_FRIEND_LIST     @"notificationUpdateFriendList"

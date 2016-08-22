@@ -210,6 +210,9 @@
 
 - (void)requestDataWithTarget:(NSString *)target time:(NSString *)time
 {
+    if (!self.category) {
+        return;
+    }
     self.isRefreshing = YES;
     NSInteger rid = [time integerValue];
     NSDictionary *param = @{@"uid":UID, @"busType":self.category, @"target":target, @"rid":@(rid), @"pageSize":@(10)};
@@ -255,6 +258,20 @@
     } else if ([target isEqualToString:@"load"]){
         [self.dataArray addObjectsFromArray:array];
     }
+}
+
+- (NSArray *)targetObjectsByRid:(NSString *)string
+{
+    NSMutableArray *result = [NSMutableArray array];
+    [self.dataArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if ([obj isKindOfClass:[CircleListObj class]]){
+            CircleListObj *object = (CircleListObj *)obj;
+            if([object.rid isEqualToString:string]){
+                [result addObject:object];
+            }
+        }
+    }];
+    return result;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section

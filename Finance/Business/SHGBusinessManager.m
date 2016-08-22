@@ -535,10 +535,10 @@
         [Hud showWait];
         [MOCHTTPRequestOperationManager postWithURL:[rBaseAddressForHttp stringByAppendingString:@"/business/sendBusinessBp"] parameters:@{@"uid":UID, @"businessId":object.businessID, @"type":object.type, @"reciever":email} success:^(MOCHTTPResponse *response) {
             [Hud hideHud];
-            [Hud showMessageWithText:@"邮件发送成功"];
+            [Hud showMessageWithText:@"发送成功"];
         } failed:^(MOCHTTPResponse *response) {
             [Hud hideHud];
-            [Hud showMessageWithText:@"邮件发送失败"];
+            [Hud showMessageWithText:@"发送失败，请稍后再试"];
         }];
     } else {
         [Hud showMessageWithText:@"请输入正确的邮箱地址"];

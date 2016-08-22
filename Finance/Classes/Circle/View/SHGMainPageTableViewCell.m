@@ -417,11 +417,13 @@
             NSString *string = @"";
             if(object.friendship && object.friendship.length > 0){
                 string = object.friendship;
+                if(object.currcity && object.currcity.length > 0){
+                    string = [string stringByAppendingFormat:@" , %@",object.currcity];
+                    self.relationLabel.text = string;
+                }
+            } else {
+                self.relationLabel.text = string;
             }
-            if(object.currcity && object.currcity.length > 0){
-                string = [string stringByAppendingFormat:@" , %@",object.currcity];
-            }
-            self.relationLabel.text = string;
         }
     } else{
         self.relationLabel.text = object.friendship;

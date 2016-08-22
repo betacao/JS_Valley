@@ -16,4 +16,6 @@
 @property (strong, nonatomic) NSString *category;
 @property (strong, nonatomic) SHGNoticeView *messageNoticeView;
 
+- (NSArray *)targetObjectsByRid:(NSString *)string;
+
 @end

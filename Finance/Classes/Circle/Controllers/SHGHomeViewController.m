@@ -309,9 +309,11 @@
 {
     NSMutableArray *array = [NSMutableArray array];
     [self.dataArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        CircleListObj *listObject = (CircleListObj *)obj;
-        if ([listObject.rid isEqualToString:targetID]) {
-            [array addObject:listObject];
+        if ([obj isKindOfClass:[CircleListObj class]]) {
+            CircleListObj *listObject = (CircleListObj *)obj;
+            if ([listObject.rid isEqualToString:targetID]) {
+                [array addObject:listObject];
+            }
         }
     }];
     [self.dataArr removeObjectsInArray:array];

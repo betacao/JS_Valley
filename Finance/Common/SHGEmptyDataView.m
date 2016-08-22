@@ -69,7 +69,7 @@
             self.imageView.image = [UIImage imageNamed:@"company_search_none"];
             self.imageView.sd_layout
             .centerXEqualToView(self)
-            .topSpaceToView(self, MarginFactor(240.0f))
+            .topSpaceToView(self, MarginFactor(105.0f))
             .widthIs(self.imageView.image.size.width)
             .heightIs(self.imageView.image.size.height);
             break;

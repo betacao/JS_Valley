@@ -69,7 +69,7 @@
         _searchBar.showsCancelButton = YES;
         _searchBar.delegate = self;
         _searchBar.needLineView = NO;
-        _searchBar.placeholder = @"请输入业务名称/地区关键字";
+        _searchBar.placeholder = @"输入动态名称/关键字";
         _searchBar.backgroundImageColor = Color(@"f04f46");
     }
     return _searchBar;
