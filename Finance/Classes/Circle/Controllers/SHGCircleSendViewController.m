@@ -63,9 +63,9 @@
     self.leftItemtitleName = @"取消";
     self.rightItemtitleName = @"发送";
     [super viewDidLoad];
-    self.buttonBgImage = [[UIImage imageNamed:@"business_SendButtonBg"] resizableImageWithCapInsets:UIEdgeInsetsMake(MarginFactor(5.0f), MarginFactor(5.0f), MarginFactor(5.0f), MarginFactor(5.0f)) resizingMode:UIImageResizingModeStretch];
+    self.buttonBgImage = [[UIImage imageNamed:@"circle_typeUnSelect"] resizableImageWithCapInsets:UIEdgeInsetsMake(MarginFactor(5.0f), MarginFactor(5.0f), MarginFactor(5.0f), MarginFactor(5.0f)) resizingMode:UIImageResizingModeStretch];
     
-    self.buttonSelectBgImage = [[UIImage imageNamed:@"business_SendButtonSelectBg"] resizableImageWithCapInsets:UIEdgeInsetsMake(MarginFactor(5.0f), MarginFactor(5.0f), MarginFactor(5.0f), MarginFactor(5.0f)) resizingMode:UIImageResizingModeStretch];
+    self.buttonSelectBgImage = [[UIImage imageNamed:@"circle_typeSelect"] resizableImageWithCapInsets:UIEdgeInsetsMake(MarginFactor(5.0f), MarginFactor(5.0f), MarginFactor(5.0f), MarginFactor(5.0f)) resizingMode:UIImageResizingModeStretch];
     if ([[SHGGloble sharedGloble].cityName isEqualToString:@""]) {
         [[CCLocationManager shareLocation] getCity:nil];
     }
@@ -104,7 +104,7 @@
         [button setTitleColor:Color(@"8a8a8a") forState:UIControlStateNormal];
         [button setBackgroundImage:self.buttonBgImage forState:UIControlStateNormal];
         if (i == 0) {
-            [button setBackgroundImage:self.buttonSelectBgImage forState:UIControlStateSelected];
+            [button setBackgroundImage:self.buttonSelectBgImage forState:UIControlStateNormal];
             [button setTitleColor:Color(@"f33300") forState:UIControlStateNormal];
             self.currentButton = button;
         }
@@ -155,9 +155,9 @@
 {
     if (btn != self.currentButton) {
         [self.currentButton setTitleColor:Color(@"8a8a8a") forState:UIControlStateNormal];
-        [self.currentButton setBackgroundImage:self.buttonBgImage forState:UIControlStateSelected];
+        [self.currentButton setBackgroundImage:self.buttonBgImage forState:UIControlStateNormal];
         
-        [btn setBackgroundImage:self.buttonSelectBgImage forState:UIControlStateSelected];
+        [btn setBackgroundImage:self.buttonSelectBgImage forState:UIControlStateNormal];
         [btn setTitleColor:Color(@"f33300") forState:UIControlStateNormal];
         self.currentButton = btn;
     }

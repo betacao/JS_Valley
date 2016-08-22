@@ -523,12 +523,20 @@
                         NSString *businessType = [businessDic objectForKey:@"businessType"];
                         NSString *fundSource = [businessDic objectForKey:@"fundSource"];
                         NSString *area = [businessDic objectForKey:@"area"];
+                        NSArray *cityArray = [area componentsSeparatedByString:@" "];
+                        NSString *cityName = @"";
+                        if (cityArray.count == 2) {
+                            area = [cityArray firstObject];
+                            cityName = [cityArray lastObject];
+                        } else{
+                            cityName = area;
+                        }
                         NSString *industry = [businessDic objectForKey:@"industry"];
                         NSString *title = [businessDic objectForKey:@"title"];
                         NSString *companyName = [businessDic objectForKey:@"companyName"];
                         SHGBusinessObject *object = [[SHGBusinessObject alloc]init];
                         object.type = type;
-                        NSDictionary *param = @{@"uid":UID,@"businessId":businessId, @"type": type,@"companyName":companyName, @"moneysideType": @"bondInvest",@"contact":contact, @"businessType":businessType,@"fundSource":fundSource, @"investAmount": investAmount, @"area": area, @"industry": industry, @"clarifyingRequire":clarifyingRequire,@"lowestPaybackRate":self.retributionTextField.text, @"vestYears": vestYears,@"detail": weakSelf.marketExplainTextView.text,@"photo": weakSelf.imageName,@"anonymous": anonymous,@"title": title, @"version":[SHGGloble sharedGloble].currentVersion};
+                        NSDictionary *param = @{@"uid":UID,@"businessId":businessId, @"type": type,@"companyName":companyName, @"moneysideType": @"bondInvest",@"contact":contact, @"businessType":businessType,@"fundSource":fundSource, @"investAmount": investAmount, @"area": area,@"cityName":cityName, @"industry": industry, @"clarifyingRequire":clarifyingRequire,@"lowestPaybackRate":self.retributionTextField.text, @"vestYears": vestYears,@"detail": weakSelf.marketExplainTextView.text,@"photo": weakSelf.imageName,@"anonymous": anonymous,@"title": title, @"version":[SHGGloble sharedGloble].currentVersion};
                        
                         [SHGBusinessManager editBusiness:param success:^(BOOL success) {
                             if (success) {

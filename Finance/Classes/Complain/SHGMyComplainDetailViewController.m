@@ -11,6 +11,8 @@
 #import "SDPhotoGroup.h"
 #import "SDPhotoItem.h"
 #import "SDPhotoBrowser.h"
+#import "SHGBusinessNewDetailViewController.h"
+#import "SHGBusinessObject.h"
 
 @interface SHGMyComplainDetailViewController ()<SDPhotoBrowserDelegate>
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
@@ -155,6 +157,11 @@
     self.timeLabel.text = @"投诉时间";
     self.reasonLabel.text = @"投诉原因";
     self.urlLaebl.text = @"附件";
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapNameLabel:)];
+
+    [self.nameDetailLabel addGestureRecognizer:tap];
+    self.nameDetailLabel.userInteractionEnabled = YES;
+    
     self.nameDetailLabel.text = self.object.title;
     self.timeDetailLabel.text = self.object.createTime;
     self.reasonDetailLabel.text = self.object.content;
@@ -214,6 +221,17 @@
     [self.scrollView setNeedsLayout];
     [self.scrollView layoutIfNeeded];
     
+}
+
+- (void)tapNameLabel:(UITapGestureRecognizer *)tap
+{
+    SHGBusinessObject *object = [[SHGBusinessObject alloc] init];
+    object.businessID = self.object.businessId;
+    object.type = self.object.businessType;
+    
+    SHGBusinessNewDetailViewController *controller = [[SHGBusinessNewDetailViewController alloc] init];
+    controller.object = object;
+    [self.navigationController pushViewController:controller animated:YES];
 }
 
 - (void)didReceiveMemoryWarning

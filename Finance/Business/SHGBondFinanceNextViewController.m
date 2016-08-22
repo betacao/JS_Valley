@@ -493,6 +493,14 @@
                         NSString *investAmount = [businessDic objectForKey:@"investAmount"];
                         NSLog(@"%@,%@,%@,%@",businessId,type,bondType,contact);
                         NSString *area = [businessDic objectForKey:@"area"];
+                        NSArray *cityArray = [area componentsSeparatedByString:@" "];
+                        NSString *cityName = @"";
+                        if (cityArray.count == 2) {
+                            area = [cityArray firstObject];
+                            cityName = [cityArray lastObject];
+                        } else{
+                            cityName = area;
+                        }
                         NSString *industry = [businessDic objectForKey:@"industry"];
                         NSString *title = [businessDic objectForKey:@"title"];
                         NSString *companyName = [businessDic objectForKey:@"companyName"];
@@ -500,7 +508,7 @@
                         object.type =type;
                         NSLog(@"%@,%@,%@",area,industry,title);
                         NSLog(@"%@,%@,%@,%@,%@,%@",require,weakSelf.imageName,investTime,investAmount,anonymous,weakSelf.marketExplainTextView.text);
-                        NSDictionary *param = @{@"uid":UID,@"businessId":businessId, @"type": type,@"companyName":companyName, @"contact":contact, @"bondType":bondType, @"investAmount": investAmount, @"area": area, @"industry": industry,@"clarifyingWay":require, @"highestRate":weakSelf.retributionTextField.text, @"fundUsetime":investTime ,@"detail": weakSelf.marketExplainTextView.text,@"photo": weakSelf.imageName,@"anonymous": anonymous,@"title": title, @"version":[SHGGloble sharedGloble].currentVersion};
+                        NSDictionary *param = @{@"uid":UID,@"businessId":businessId, @"type": type,@"companyName":companyName, @"contact":contact, @"bondType":bondType, @"investAmount": investAmount, @"area": area,@"cityName":cityName, @"industry": industry,@"clarifyingWay":require, @"highestRate":weakSelf.retributionTextField.text, @"fundUsetime":investTime ,@"detail": weakSelf.marketExplainTextView.text,@"photo": weakSelf.imageName,@"anonymous": anonymous,@"title": title, @"version":[SHGGloble sharedGloble].currentVersion};
 
                         [SHGBusinessManager editBusiness:param success:^(BOOL success) {
                             if (success) {

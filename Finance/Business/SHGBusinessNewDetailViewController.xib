@@ -8,7 +8,6 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SHGBusinessNewDetailViewController">
             <connections>
                 <outlet property="BPBottomLine" destination="rwF-Vg-dpJ" id="Cwg-Dt-H3h"/>
-                <outlet property="BPButtonView" destination="Csd-xq-8z6" id="zYS-sO-Wc3"/>
                 <outlet property="BPLabel" destination="QcV-dF-SyY" id="Sj6-b1-lIN"/>
                 <outlet property="BPLine" destination="R3D-oR-SaM" id="vo9-oj-tmi"/>
                 <outlet property="BPTopLine" destination="dwZ-27-bDe" id="oTZ-U6-rKg"/>
@@ -261,11 +260,6 @@
                     <rect key="frame" x="-9" y="32" width="320" height="4"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                </view>
-                <view contentMode="scaleToFill" id="Csd-xq-8z6">
-                    <rect key="frame" x="18" y="81" width="240" height="34"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
                 <view contentMode="scaleToFill" id="dwZ-27-bDe">
                     <rect key="frame" x="-53" y="14" width="320" height="4"/>

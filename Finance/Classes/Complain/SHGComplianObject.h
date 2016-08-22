@@ -21,5 +21,6 @@
 @property(nonatomic, strong) NSString *createTime;
 @property(nonatomic, strong) NSString *complainAuditstate;
 @property(nonatomic, strong) NSArray *urlArray;
+@property(nonatomic, strong) NSString *businessId;
 
 @end

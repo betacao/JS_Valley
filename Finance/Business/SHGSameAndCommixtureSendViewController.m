@@ -664,7 +664,7 @@
         }
         NSString * toBeString = [textField.text stringByReplacingCharactersInRange:range withString:string];
         if (range.location > 1 && [toBeString floatValue] > 9999) {
-            [Hud showMessageWithText:@"抱歉，您输入的数字不可超过9999"];
+            [Hud showMessageWithText:@"抱歉，您输入的数字不可超过四位"];
             return NO;
         }
     }

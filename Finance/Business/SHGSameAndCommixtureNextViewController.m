@@ -257,11 +257,19 @@
                         NSString *businessType = [businessDic objectForKey:@"businessType"];
                         NSString *investAmount = [businessDic objectForKey:@"investAmount"];
                         NSString *area = [businessDic objectForKey:@"area"];
+                        NSArray *cityArray = [area componentsSeparatedByString:@" "];
+                        NSString *cityName = @"";
+                        if (cityArray.count == 2) {
+                            area = [cityArray firstObject];
+                            cityName = [cityArray lastObject];
+                        } else{
+                            cityName = area;
+                        }
                         NSString *title = [businessDic objectForKey:@"title"];
                         NSString *companyName = [businessDic objectForKey:@"companyName"];
                         SHGBusinessObject *object = [[SHGBusinessObject alloc] init];
                         object.type = type;
-                        NSDictionary *param = @{@"uid":UID,@"businessId":businessId, @"type": type, @"contact":contact, @"businessType":businessType,@"companyName":companyName, @"investAmount": investAmount, @"area": area, @"detail": weakSelf.marketExplainTextView.text,@"photo": weakSelf.imageName,@"anonymous": anonymous,@"title": title, @"version":[SHGGloble sharedGloble].currentVersion};
+                        NSDictionary *param = @{@"uid":UID,@"businessId":businessId, @"type": type, @"contact":contact, @"businessType":businessType,@"companyName":companyName, @"investAmount": investAmount, @"area": area,@"cityName":cityName, @"detail": weakSelf.marketExplainTextView.text,@"photo": weakSelf.imageName,@"anonymous": anonymous,@"title": title, @"version":[SHGGloble sharedGloble].currentVersion};
                         NSLog(@"%@",param);
                         [SHGBusinessManager editBusiness:param success:^(BOOL success) {
                             if (success) {

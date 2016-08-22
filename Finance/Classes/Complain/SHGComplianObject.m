@@ -22,6 +22,6 @@
              @"businessType":@"businesstype",
              @"createTime":@"createtime",
              @"complainAuditstate":@"complainauditstate",
-             @"urlArray":@"urllist"};
+             @"urlArray":@"urllist",@"businessId":@"businessid"};
 }
 @end

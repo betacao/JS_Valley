@@ -481,6 +481,14 @@
                     NSString *businessId= self.obj.businessID;
                     NSString *financingStage = [businessDic objectForKey:@"financingStage"];
                     NSString *area = [businessDic objectForKey:@"area"];
+                    NSArray *cityArray = [area componentsSeparatedByString:@" "];
+                    NSString *cityName = @"";
+                    if (cityArray.count == 2) {
+                        area = [cityArray firstObject];
+                        cityName = [cityArray lastObject];
+                    } else{
+                        cityName = area;
+                    }
                     NSString *industry = [businessDic objectForKey:@"industry"];
                     NSString *title = [businessDic objectForKey:@"title"];
                     NSString *companyName = [businessDic objectForKey:@"companyName"];
@@ -500,7 +508,7 @@
                     }
                     
 
-                    NSDictionary *param = @{@"uid":UID, @"businessId":businessId,@"companyName":companyName,@"type": type, @"moneysideType": @"equityInvest",@"contact":contact,@"financingStage":financingStage, @"investAmount": investAmount, @"area": area, @"industry": industry,@"fundSource":fundSource ,@"totalshareRate":weakSelf.retributionTextField.text, @"vestYears": vestYears,@"detail": weakSelf.marketExplainTextView.text,@"photo": weakSelf.imageName,@"anonymous": anonymous,@"title": title, @"version":[SHGGloble sharedGloble].currentVersion};
+                    NSDictionary *param = @{@"uid":UID, @"businessId":businessId,@"companyName":companyName,@"type": type, @"moneysideType": @"equityInvest",@"contact":contact,@"financingStage":financingStage, @"investAmount": investAmount, @"area": area,@"cityName":cityName, @"industry": industry,@"fundSource":fundSource ,@"totalshareRate":weakSelf.retributionTextField.text, @"vestYears": vestYears,@"detail": weakSelf.marketExplainTextView.text,@"photo": weakSelf.imageName,@"anonymous": anonymous,@"title": title, @"version":[SHGGloble sharedGloble].currentVersion};
                     NSLog(@"%@",param);
                     [SHGBusinessManager editBusiness:param success:^(BOOL success) {
                         if (success) {
