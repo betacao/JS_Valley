@@ -427,7 +427,7 @@
             }
         } showAlert:YES leftBlock:^{
             [[SHGGloble sharedGloble] recordUserAction:@"" type:@"business_identity_cancel"];
-        } failString:@"认证后才能发起评论哦～"];
+        } failString:@"认证后才能发起分享哦～"];
     }];
     NSArray *shareArray = nil;
     if ([WXApi isWXAppSupportApi]) {
@@ -535,7 +535,7 @@
         [Hud showWait];
         [MOCHTTPRequestOperationManager postWithURL:[rBaseAddressForHttp stringByAppendingString:@"/business/sendBusinessBp"] parameters:@{@"uid":UID, @"businessId":object.businessID, @"type":object.type, @"reciever":email} success:^(MOCHTTPResponse *response) {
             [Hud hideHud];
-            [Hud showMessageWithText:@"发送成功"];
+            [Hud showMessageWithText:@"BP文件已发送至邮箱，请查收"];
         } failed:^(MOCHTTPResponse *response) {
             [Hud hideHud];
             [Hud showMessageWithText:@"发送失败，请稍后再试"];

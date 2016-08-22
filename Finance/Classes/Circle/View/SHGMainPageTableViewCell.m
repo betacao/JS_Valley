@@ -428,6 +428,10 @@
     } else{
         self.relationLabel.text = object.friendship;
     }
+    //聚合账号展示
+    if ([object.usertype isEqualToString:@"businessAccount"]) {
+        self.relationLabel.text = @"";
+    }
     //是否显示删除按钮
     if ([object.userid isEqualToString:UID]){
         self.deleteButton.hidden = NO;

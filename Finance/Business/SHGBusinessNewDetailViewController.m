@@ -108,6 +108,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
 @property (weak, nonatomic) IBOutlet UIView *thirdGaryView;
 @property (weak, nonatomic) IBOutlet UIView *BPLine;
 @property (weak, nonatomic) IBOutlet UILabel *BPLabel;
+@property (weak, nonatomic) IBOutlet UIView *BPButtonView;
 @property (weak, nonatomic) IBOutlet UIView *BPTopLine;
 @property (weak, nonatomic) IBOutlet UIView *BPBottomLine;
 @property (weak, nonatomic) IBOutlet UIButton *emailSendButton;
@@ -291,29 +292,29 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
     .widthIs(SCREENWIDTH/4)
     .heightIs(self.editLabel.font.lineHeight);
 
-    self.commentButton.sd_layout
-    .topSpaceToView(self.inputView, MarginFactor(8.0f))
-    .centerXIs(3 * SCREENWIDTH/8)
-    .widthIs(SCREENWIDTH/4)
-    .heightIs(self.commentButton.size.height);
-
-    self.commentLabel.sd_layout
-    .topSpaceToView(self.commentButton, MarginFactor(4.0f))
-    .centerXIs(3 * SCREENWIDTH/8)
-    .widthIs(SCREENWIDTH/4)
-    .heightIs(self.commentLabel.font.lineHeight);
-    
     self.complainButton.sd_layout
     .topSpaceToView(self.inputView, MarginFactor(8.0f))
-    .centerXIs(5 * SCREENWIDTH/8)
+    .centerXIs(3 * SCREENWIDTH/8)
     .widthIs(SCREENWIDTH/4)
     .heightIs(self.complainButton.size.height);
-    
+
     self.complainLabel.sd_layout
     .topSpaceToView(self.complainButton, MarginFactor(4.0f))
-    .centerXIs(5 * SCREENWIDTH/8)
+    .centerXIs(3 * SCREENWIDTH/8)
     .widthIs(SCREENWIDTH/4)
     .heightIs(self.complainLabel.font.lineHeight);
+    
+    self.commentButton.sd_layout
+    .topSpaceToView(self.inputView, MarginFactor(8.0f))
+    .centerXIs(5 * SCREENWIDTH/8)
+    .widthIs(SCREENWIDTH/4)
+    .heightIs(self.commentButton.size.height);
+    
+    self.commentLabel.sd_layout
+    .topSpaceToView(self.commentButton, MarginFactor(4.0f))
+    .centerXIs(5 * SCREENWIDTH/8)
+    .widthIs(SCREENWIDTH/4)
+    .heightIs(self.commentLabel.font.lineHeight);
 
     self.phoneButton.sd_layout
     .topSpaceToView(self.inputView, MarginFactor(8.0f))
@@ -550,15 +551,21 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
     .topSpaceToView(self.BPLabel, 0.0f)
     .heightIs(1 / SCALE);
     
-    self.BPBottomLine.sd_layout
+    self.BPButtonView.sd_layout
     .leftSpaceToView(self.BPView, 0.0f)
     .rightSpaceToView(self.BPView, 0.0f)
     .topSpaceToView(self.BPLine, 0.0f)
+    .heightIs(MarginFactor(110.0f));
+    
+    self.BPBottomLine.sd_layout
+    .leftSpaceToView(self.BPView, 0.0f)
+    .rightSpaceToView(self.BPView, 0.0f)
+    .topSpaceToView(self.BPButtonView, 0.0f)
     .heightIs(1 / SCALE);
     
     self.thirdGaryView.sd_layout
-    .leftSpaceToView(self.BPView,0.0f)
-    .rightSpaceToView(self.BPView,0.0f)
+    .leftEqualToView(self.BPButtonView)
+    .rightEqualToView(self.BPButtonView)
     .topSpaceToView(self.BPBottomLine,0.0f)
     .heightIs(MarginFactor(10.0f));
     
@@ -964,7 +971,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
         }
     }
     
-    if (self.object.cityName.length == 0) {
+    if (self.responseObject.cityName.length == 0) {
         [self.areaButton setTitle:self.responseObject.position forState:UIControlStateNormal];
     } else{
         [self.areaButton setTitle:self.responseObject.cityName forState:UIControlStateNormal];
@@ -1030,7 +1037,41 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
         .rightSpaceToView(self.headerView, 0.0f)
         .topSpaceToView(self.BPView, 0.0f);
         self.BPLabel.text = @"项目BP";
-
+        CGFloat buttonWidth = SCREENWIDTH / 3.0;
+        CGFloat labelWidth = (SCREENWIDTH - MarginFactor(60.0f)) / 3.0;
+        CGFloat buttonHeight = MarginFactor(95.0f);
+        for (NSInteger i = 0 ; i < self.responseObject.bpnameList.count ; i ++) {
+            SHGBusinessPDFObject *obj = [[SHGBusinessPDFObject alloc] init];
+            NSDictionary *dicName = [self.responseObject.bpnameList objectAtIndex:i];
+            NSDictionary *dicPath = [self.responseObject.bppathList objectAtIndex:i];
+            obj.bpName = [dicName valueForKey:@"bpname"];
+            obj.bpPath = [dicPath valueForKey:@"bppath"];
+            SHGBusinessCategoryButton *button = [SHGBusinessCategoryButton buttonWithType:UIButtonTypeCustom];
+            CGRect frame = CGRectMake(i * buttonWidth , MarginFactor(15.0f) , buttonWidth, buttonHeight);
+            button.frame = frame;
+            button.object = obj;
+            [self.BPButtonView addSubview:button];
+            [button addTarget:self action:@selector(pdfButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+            UILabel *nameLabel = [[UILabel alloc] init];
+            if (obj.bpName.length > 8) {
+                NSMutableString *name = [[NSMutableString alloc] initWithString:obj.bpName];
+                [name insertString:@"\n" atIndex:8];
+                if (name.length > 16) {
+                    nameLabel.text = [NSString stringWithFormat:@"%@...",[name substringToIndex:16]];
+                } else{
+                    nameLabel.text = name;
+                }
+            } else{
+                nameLabel.text = obj.bpName;
+            }
+            nameLabel.numberOfLines = 0;
+            nameLabel.font = FontFactor(11.0f);
+            nameLabel.textColor = Color(@"8d8d8d");
+            nameLabel.textAlignment = NSTextAlignmentCenter;
+            nameLabel.frame = CGRectMake(MarginFactor(10.0f) + i *(MarginFactor(20.0f) + labelWidth), MarginFactor(65.0f), labelWidth, MarginFactor(40.0f));
+            [self.BPButtonView addSubview:nameLabel];
+            
+        }
         
     } else{
         self.BPView.hidden = YES;

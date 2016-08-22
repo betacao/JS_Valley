@@ -48,6 +48,7 @@
 @property (strong, nonatomic) NSString *pcurl;
 @property (strong, nonatomic) NSString *shareTitle;
 @property (assign, nonatomic) BOOL businessStatus;
+@property (strong, nonatomic) NSString *usertype;//聚合账号
 /**
  @brief 动态标题
 

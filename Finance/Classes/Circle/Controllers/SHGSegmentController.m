@@ -154,7 +154,7 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
         [_titleButton addTarget:self action:@selector(showCircleCategorySelectView:) forControlEvents:UIControlEventTouchUpInside];
 
         self.titleLabel = [[UILabel alloc] init];
-        self.titleLabel.font = FontFactor(15.0f);
+        self.titleLabel.font = FontFactor(17.0f);
         self.titleLabel.textColor = [UIColor whiteColor];
         [_titleButton addSubview:self.titleLabel];
 

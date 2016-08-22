@@ -36,6 +36,7 @@
 - (void)initView
 {
     self.clipsToBounds = YES;
+    self.hidden = YES;
     self.backgroundColor = [UIColor clearColor];
     self.imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"v_normal_yellow"]];
     [self addSubview:self.imageView];
@@ -54,6 +55,7 @@
 
 - (void)updateWithStatus:(BOOL)status
 {
+    self.hidden = NO;
     self.imageView.image = status ? [UIImage imageNamed:@"v_normal_yellow"] : [UIImage imageNamed:@"v_normal_gray"];
     if (status) {
         [self setupAutoWidthWithRightView:self.imageView rightMargin:MarginFactor(5.0f)];

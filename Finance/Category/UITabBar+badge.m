@@ -20,8 +20,8 @@
     label.text = badgeValue;
     label.textAlignment = NSTextAlignmentCenter;
     label.textColor = [UIColor whiteColor];
-    label.font = FontFactor(11.0f);
-    label.backgroundColor = Color(@"f04f46");
+    label.font = FontFactor(10.0f);
+    label.backgroundColor = Color(@"d43c33");
     [badgeView addSubview:label];
     label.sd_layout
     .spaceToSuperView(UIEdgeInsetsMake(1.0f, 1.0f, 1.0f, 1.0f));

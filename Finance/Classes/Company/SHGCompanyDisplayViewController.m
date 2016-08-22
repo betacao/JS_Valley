@@ -120,8 +120,8 @@
 - (void)btnBackClick:(id)sender
 {
     if (self.block && self.dataArr.count > 0) {
-        SHGAlertView *alertView = [[SHGAlertView alloc] initWithTitle:@"请确认公司名称" contentText:@"您输入的公司名称可能不完整，请从查询结果中选择正确的公司名称" leftButtonTitle:@"重选" rightButtonTitle:@"没有列出"];
-        alertView.rightBlock = ^{
+        SHGAlertView *alertView = [[SHGAlertView alloc] initWithTitle:@"请确认公司名称" contentText:@"您输入的公司名称可能不完整，请从查询结果中选择正确的公司名称" leftButtonTitle:@"没有列出" rightButtonTitle:@"重选"];
+        alertView.leftBlock = ^{
             self.block(self.companyName);
         };
         [alertView show];

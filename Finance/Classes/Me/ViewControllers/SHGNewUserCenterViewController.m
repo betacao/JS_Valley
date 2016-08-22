@@ -170,11 +170,17 @@
     .heightIs(self.nameLabel.font.lineHeight);
     [self.nameLabel setSingleLineAutoResizeWithMaxWidth:SCREENWIDTH];
 
+    self.modifyButton.sd_layout
+    .rightSpaceToView(self.tableHeaderView, MarginFactor(19.0f))
+    .centerYEqualToView(self.nameLabel)
+    .widthIs(self.modifyButton.currentImage.size.width)
+    .heightIs(self.modifyButton.currentImage.size.height);
+    
     self.departmentLabel.sd_layout
     .leftSpaceToView(self.nameLabel, MarginFactor(11.0f))
     .centerYEqualToView(self.nameLabel)
+    .rightSpaceToView(self.modifyButton, MarginFactor(11.0f))
     .heightIs(self.departmentLabel.font.lineHeight);
-    [self.departmentLabel setSingleLineAutoResizeWithMaxWidth:SCREENWIDTH];
 
     self.companyLabel.sd_layout
     .leftEqualToView(self.nameLabel)
@@ -182,12 +188,6 @@
     .offset(MarginFactor(-2.0f))
     .heightIs(self.companyLabel.font.lineHeight);
     [self.companyLabel setSingleLineAutoResizeWithMaxWidth:SCREENWIDTH];
-
-    self.modifyButton.sd_layout
-    .rightSpaceToView(self.tableHeaderView, MarginFactor(19.0f))
-    .centerYEqualToView(self.nameLabel)
-    .widthIs(self.modifyButton.currentImage.size.width)
-    .heightIs(self.modifyButton.currentImage.size.height);
 
     self.actionView.sd_layout
     .leftSpaceToView(self.tableHeaderView, 0.0f)
@@ -233,7 +233,7 @@
     .widthIs(self.authMaskButton.currentImage.size.width)
     .heightIs(self.authMaskButton.currentImage.size.height);
 
-    [self.tableHeaderView setupAutoHeightWithBottomView:self.actionView bottomMargin:0.0f   ];
+    [self.tableHeaderView setupAutoHeightWithBottomView:self.actionView bottomMargin:0.0f ];
 
     [self.tableHeaderView setNeedsLayout];
     [self.tableHeaderView layoutIfNeeded];
@@ -306,10 +306,10 @@
         _badgeView = [[UIView alloc] init];
         _badgeView.clipsToBounds = YES;
         UILabel *label = [[UILabel alloc] init];
-        label.font = FontFactor(12.0f);
+        label.font = FontFactor(11.0f);
         label.textColor = [UIColor whiteColor];
         label.textAlignment = NSTextAlignmentCenter;
-        label.backgroundColor = Color(@"f04f46");
+        label.backgroundColor = Color(@"d43c33");
         [_badgeView addSubview:label];
     }
     return _badgeView;
@@ -371,7 +371,7 @@
         if([response.dataDictionary valueForKey:@"companyname"]){
             NSString *companyName = [response.dataDictionary valueForKey:@"companyname"];
             weakSelf.company = companyName;
-            if (companyName.length > 12) {
+            if (![companyName isEqualToString:@"认证可获取精准业务及优质人脉关注"] && companyName.length > 12) {
                 companyName = [companyName substringToIndex:12];
             }
             weakSelf.companyLabel.text = companyName;
@@ -419,7 +419,7 @@
                 weakSelf.authLabel.textColor = Color(@"f04f46");
             } else if ([weakSelf.auditState isEqualToString:@"2"]){
                 weakSelf.authLabel.text = @"已审核";
-                weakSelf.authLabel.textColor = Color(@"17bb27");
+                weakSelf.authLabel.textColor = Color(@"50bc5a");
                 weakSelf.modifyButton.hidden = NO;
                 [cell addViewToFrontView:weakSelf.vImageView];
             } else if ([weakSelf.auditState isEqualToString:@"3"]){

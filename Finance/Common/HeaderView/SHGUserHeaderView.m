@@ -85,11 +85,12 @@
 - (void)updateHeaderView:(NSString *)sourceUrl placeholderImage:(UIImage *)placeImage status:(BOOL)status userID:(NSString *)userId
 {
     self.userId = userId;
-    self.VImageView.hidden = NO;
     if (status) {
-        self.VImageView.image = [UIImage imageNamed:@"v_normal_gray"];
-    } else {
+        self.VImageView.hidden = NO;
         self.VImageView.image = [UIImage imageNamed:@"v_normal_yellow"];
+    } else {
+        self.VImageView.hidden = YES;
+        self.VImageView.image = [UIImage imageNamed:@"v_normal_gray"];
     }
     [self.headerImageView yy_setImageWithURL:[NSURL URLWithString:sourceUrl] placeholder:placeImage];
 }
