@@ -26,7 +26,7 @@
 - (void)initView
 {
     self.title = self.object.companyName;
-    self.webView.backgroundColor = Color(@"f04f46");
+    self.webView.backgroundColor = Color(@"d43c33");
     [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.object.companyUrl]]];
 }
 

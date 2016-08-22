@@ -98,7 +98,7 @@
     [self.modifyButton setEnlargeEdgeWithTop:10.0f right:10.0f bottom:10.0f left:10.0f];
     self.view.backgroundColor = Color(@"f6f7f8");
     self.tableView.backgroundColor = [UIColor clearColor];
-    self.tableViewBackgroundView.backgroundColor = Color(@"f04f46");
+    self.tableViewBackgroundView.backgroundColor = Color(@"d43c33");
 
     self.headerBgView.backgroundColor = ColorA(@"f5f5f5", 0.2f);
     UITapGestureRecognizer *recognizer = [self.headerView.gestureRecognizers firstObject];
@@ -409,14 +409,14 @@
             weakSelf.auditState = [response.dataDictionary objectForKey:@"auditstate"];
             if ([weakSelf.auditState isEqualToString:@"0"]) {
                 weakSelf.authLabel.text = @"未认证";
-                weakSelf.authLabel.textColor = Color(@"f04f46");
+                weakSelf.authLabel.textColor = Color(@"d43c33");
                 //弹出提示框
                 if ([TabBarViewController tabBar].selectedIndex == 3) {
                     [weakSelf.authAlertView show];
                 }
             } else if ([weakSelf.auditState isEqualToString:@"1"]){
                 weakSelf.authLabel.text = @"认证中";
-                weakSelf.authLabel.textColor = Color(@"f04f46");
+                weakSelf.authLabel.textColor = Color(@"d43c33");
             } else if ([weakSelf.auditState isEqualToString:@"2"]){
                 weakSelf.authLabel.text = @"已审核";
                 weakSelf.authLabel.textColor = Color(@"50bc5a");
@@ -424,7 +424,7 @@
                 [cell addViewToFrontView:weakSelf.vImageView];
             } else if ([weakSelf.auditState isEqualToString:@"3"]){
                 weakSelf.authLabel.text = @"已驳回";
-                weakSelf.authLabel.textColor = Color(@"f04f46");
+                weakSelf.authLabel.textColor = Color(@"d43c33");
             } else {
                 weakSelf.authLabel.text = @"";
             }
@@ -609,7 +609,7 @@
 {
     UIImagePickerController *pickerImage = [[UIImagePickerController alloc] init];
     [pickerImage.navigationBar setShadowImage:[[UIImage alloc] init]];
-    [pickerImage.navigationBar setBackgroundImage:[CommonMethod imageWithColor:Color(@"f04f46")] forBarMetrics:UIBarMetricsDefault];
+    [pickerImage.navigationBar setBackgroundImage:[CommonMethod imageWithColor:Color(@"d43c33")] forBarMetrics:UIBarMetricsDefault];
     pickerImage.navigationBar.tintColor = [UIColor whiteColor];
     if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]) {
         pickerImage.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;

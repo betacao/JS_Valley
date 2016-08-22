@@ -598,7 +598,7 @@
 {
     UIImagePickerController *pickerImage = [[UIImagePickerController alloc] init];
     [pickerImage.navigationBar setShadowImage:[[UIImage alloc] init]];
-    [pickerImage.navigationBar setBackgroundImage:[CommonMethod imageWithColor:Color(@"f04f46")] forBarMetrics:UIBarMetricsDefault];
+    [pickerImage.navigationBar setBackgroundImage:[CommonMethod imageWithColor:Color(@"d43c33")] forBarMetrics:UIBarMetricsDefault];
     pickerImage.navigationBar.tintColor = [UIColor whiteColor];
     if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]) {
         pickerImage.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;

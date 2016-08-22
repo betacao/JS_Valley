@@ -45,6 +45,10 @@
         || [viewController isKindOfClass:[SHGCompanyBrowserViewController class]]) {
         [self.navigationBar setShadowImage:[[UIImage alloc] init]];
     }
+
+    if ([viewController isKindOfClass:[SHGBusinessNewDetailViewController class]]) {
+        [self.navigationBar setBackgroundImage:[CommonMethod imageWithColor:Color(@"f04f46")] forBarMetrics:UIBarMetricsDefault];
+    }
 }
 
 - (void)navigationController:(UINavigationController *)navigationController didShowViewController:(UIViewController *)viewController animated:(BOOL)animated
@@ -59,6 +63,10 @@
         && viewController.navigationItem.titleView == nil
         && ![viewController isKindOfClass:[SHGCompanyBrowserViewController class]]) {
         [self.navigationBar setShadowImage:nil];
+    }
+
+    if (![viewController isKindOfClass:[SHGBusinessNewDetailViewController class]]) {
+        [self.navigationBar setBackgroundImage:[CommonMethod imageWithColor:Color(@"d43c33")] forBarMetrics:UIBarMetricsDefault];
     }
 }
 

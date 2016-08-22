@@ -118,7 +118,7 @@
         lastButton = button;
     }
     self.redView = [[UIView alloc] init];
-    self.redView.backgroundColor = Color(@"f04f46");
+    self.redView.backgroundColor = Color(@"d43c33");
     self.redView.frame = CGRectMake(0.0f, 0.0, 3.0f, MarginFactor(50.0f));
     [self.scrollview addSubview:self.redView];
     
