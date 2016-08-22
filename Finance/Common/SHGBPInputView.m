@@ -32,12 +32,15 @@
 {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardDidShowNotification object:nil];
 
+    self.dataArray = [SHGGloble BPInputhistory];
+
     self.textField = [[UITextField alloc] init];
     self.textField.placeholder = @"请输入邮箱地址～";
     self.textField.font = FontFactor(15.0f);
     self.textField.layer.borderColor = Color(@"efefef").CGColor;
     self.textField.layer.borderWidth = 1 / SCALE;
     self.textField.textColor = Color(@"3a3a3a");
+    self.textField.text = [self.dataArray lastObject];
     [self.textField setValue:Color(@"d2d1d1") forKeyPath:@"_placeholderLabel.textColor"];
 
     self.textField.leftView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, MarginFactor(6.0f), 0.0f)];
@@ -67,8 +70,6 @@
     self.tableView.dataSource = self;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.tableFooterView = [[UIView alloc] init];
-
-    self.dataArray = [SHGGloble BPInputhistory];
 
     [self addSubview:self.textField];
     [self addSubview:self.tableView];

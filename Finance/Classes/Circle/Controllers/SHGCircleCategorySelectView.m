@@ -41,8 +41,8 @@
 
     CGFloat width = ceilf((SCREENWIDTH - 4.0f * kButtonHorizontalMargin) / 3.0f);
     CGFloat height = MarginFactor(26.0f);
-    UIImage *defaultImage = [[UIImage imageNamed:@"cornerRect_gray"] resizableImageWithCapInsets:UIEdgeInsetsMake(5.0f, 5.0f, 5.0f, 5.0f) resizingMode:UIImageResizingModeStretch];
-    UIImage *selectedImage = [[UIImage imageNamed:@"cornerRect_red"] resizableImageWithCapInsets:UIEdgeInsetsMake(5.0f, 5.0f, 5.0f, 5.0f) resizingMode:UIImageResizingModeStretch];
+    UIImage *defaultImage = [[UIImage imageNamed:@"category_bg_gray"] resizableImageWithCapInsets:UIEdgeInsetsMake(5.0f, 5.0f, 5.0f, 5.0f) resizingMode:UIImageResizingModeStretch];
+    UIImage *selectedImage = [[UIImage imageNamed:@"category_bg_red"] resizableImageWithCapInsets:UIEdgeInsetsMake(5.0f, 5.0f, 5.0f, 5.0f) resizingMode:UIImageResizingModeStretch];
     __block UIButton *lastButton = nil;
     [self.titleArray enumerateObjectsUsingBlock:^(NSString *text, NSUInteger idx, BOOL * _Nonnull stop) {
         NSInteger num = idx / 3;
@@ -55,9 +55,10 @@
         CGRect frame = CGRectMake(kButtonHorizontalMargin + col * (width + kButtonHorizontalMargin), kButtonVerticalMargin + num * (height + kButtonVerticalMargin), width, height);
         button.frame = frame;
         button.titleLabel.font = FontFactor(14.0f);
+        button.adjustsImageWhenHighlighted = NO;
         if (idx) {
             [button setBackgroundImage:selectedImage forState:UIControlStateSelected];
-            [button setTitleColor:Color(@"f04f46") forState:UIControlStateSelected];
+            [button setTitleColor:Color(@"ff2f00") forState:UIControlStateSelected];
         }
         [self.contentView addSubview:button];
         lastButton = button;

@@ -311,14 +311,6 @@
     }
 }
 
-- (long long) fileSizeAtPath:(NSString*) filePath{
-    NSFileManager* manager = [NSFileManager defaultManager];
-    if ([manager fileExistsAtPath:filePath]){
-        return [[manager attributesOfItemAtPath:filePath error:nil] fileSize];
-    }
-    return 0;
-}
-
 - (void)tableViewCell:(UITableViewCell *)cell folderSizeAtPath:(UILabel *)label
 {
     [[YYImageCache sharedCache].diskCache totalCostWithBlock:^(NSInteger totalCost) {

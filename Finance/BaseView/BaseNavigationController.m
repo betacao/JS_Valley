@@ -39,7 +39,10 @@
 
 - (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated
 {
-    if ([viewController isKindOfClass:[SHGBusinessNewDetailViewController class]] || ([viewController isKindOfClass:[TabBarViewController class]] && [TabBarViewController tabBar].selectedIndex == 3) || viewController.navigationItem.titleView != nil || [viewController isKindOfClass:[SHGCompanyBrowserViewController class]]) {
+    if ([viewController isKindOfClass:[SHGBusinessNewDetailViewController class]]
+        || ([viewController isKindOfClass:[TabBarViewController class]] && [TabBarViewController tabBar].selectedIndex == 3)
+        || viewController.navigationItem.titleView != nil
+        || [viewController isKindOfClass:[SHGCompanyBrowserViewController class]]) {
         [self.navigationBar setShadowImage:[[UIImage alloc] init]];
     }
 }
@@ -51,7 +54,10 @@
     } else {
         self.currentShowVC = viewController;
     }
-    if (![viewController isKindOfClass:[SHGBusinessNewDetailViewController class]] && !([viewController isKindOfClass:[TabBarViewController class]] && [TabBarViewController tabBar].selectedIndex == 3) && viewController.navigationItem.titleView == nil && ![viewController isKindOfClass:[SHGCompanyBrowserViewController class]]) {
+    if (![viewController isKindOfClass:[SHGBusinessNewDetailViewController class]]
+        && !([viewController isKindOfClass:[TabBarViewController class]] && [TabBarViewController tabBar].selectedIndex == 3)
+        && viewController.navigationItem.titleView == nil
+        && ![viewController isKindOfClass:[SHGCompanyBrowserViewController class]]) {
         [self.navigationBar setShadowImage:nil];
     }
 }

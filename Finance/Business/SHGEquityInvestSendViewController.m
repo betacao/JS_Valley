@@ -610,7 +610,14 @@
         };
         WEAK(self, weakSelf);
         [SHGCompanyManager loadBlurCompanyInfo:@{@"companyName":self.companyNametextField.text, @"page":@(1), @"pageSize":@(10)} success:^(NSArray *array) {
-            if (array.count == 1) {
+            if (array.count == 0) {
+                SHGAlertView *alertView = [[SHGAlertView alloc] initWithTitle:@"请确认公司名称" contentText:@"您输入的公司名称没有查询到，是否继续？" leftButtonTitle:@"取消" rightButtonTitle:@"确认"];
+                alertView.rightBlock = block;
+                alertView.leftBlock = ^{
+                    [weakSelf.companyNametextField becomeFirstResponder];
+                };
+                [alertView show];
+            } else if (array.count == 1) {
                 SHGCompanyObject *object = [array firstObject];
                 if ([weakSelf.companyNametextField.text isEqualToString: object.companyName]) {
                     block();
@@ -626,22 +633,12 @@
 
 - (void)jumpToCompanyDisplayViewController:(void(^)())block
 {
-    WEAK(self, weakSelf);
     SHGCompanyDisplayViewController *controller = [[SHGCompanyDisplayViewController alloc] init];
     controller.companyName = self.companyNametextField.text;
     controller.block = ^(NSString *companyName){
         if (companyName) {
             self.companyNametextField.text = companyName;
             block();
-        } else {
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                SHGAlertView *alertView = [[SHGAlertView alloc] initWithTitle:@"请确认公司名称" contentText:@"您输入的公司名称没有查询到，是否继续？" leftButtonTitle:@"取消" rightButtonTitle:@"确认"];
-                alertView.rightBlock = block;
-                alertView.leftBlock = ^{
-                    [weakSelf.companyNametextField becomeFirstResponder];
-                };
-                [alertView show];
-            });
         }
     };
     [self.navigationController pushViewController:controller animated:YES];

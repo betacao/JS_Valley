@@ -82,12 +82,12 @@
 
 - (void)layoutSubviews
 {
-    [super layoutSubviews];
     if (self.type == SHGEmptyDataNormal ||self.type == SHGEmptyDataMarketDeleted||self.type == SHGEmptyDataBusinessDeleted) {
         CGPoint point = self.window.center;
         point = [self convertPoint:point fromView:self.window];
         self.imageView.center = point;
     }
+    [super layoutSubviews];
 }
 
 

@@ -350,6 +350,7 @@
         obj.sharenum = currentObj.sharenum;
         obj.cmmtnum = currentObj.cmmtnum;
         obj.praisenum = currentObj.praisenum;
+        obj.comments = currentObj.comments;
     }
     [[SHGSegmentController sharedSegmentController] reloadData];
 }
