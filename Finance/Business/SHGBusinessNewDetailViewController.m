@@ -1694,7 +1694,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
 {
     WEAK(self, weakSelf);
     SHGBPInputView *inputView = [[SHGBPInputView alloc] init];
-    SHGAlertView *alert = [[SHGAlertView alloc] initWithTitle:@"发送到邮箱" customView:inputView leftButtonTitle:@"取消" rightButtonTitle:@"发送"];
+    SHGAlertView *alert = [[SHGAlertView alloc] initWithTitle:@"发送至邮箱" customView:inputView leftButtonTitle:@"取消" rightButtonTitle:@"发送"];
     alert.rightBlock = ^{
         [SHGBusinessManager object:weakSelf.responseObject sendEmailToAddress:inputView.inputText];
     };

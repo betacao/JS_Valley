@@ -43,24 +43,28 @@
 - (void)loadMineComplianData
 {
     WEAK(self, weakSelf);
+    [Hud showWait];
     [MOCHTTPRequestOperationManager postWithURL:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"complain/business/myComplain"] parameters:@{@"uid":UID,@"pageSize":@"10",@"target":@"first"} success:^(MOCHTTPResponse *response) {
         NSArray *array = [[SHGGloble sharedGloble] parseServerJsonArrayToJSONModel:[response.dataDictionary objectForKey:@"list"] class:[SHGComplianObject class]];
         [weakSelf.dataArray addObjectsFromArray:array];
+        [Hud hideHud];
         [weakSelf.tableView reloadData];
     } failed:^(MOCHTTPResponse *response) {
-
+        [Hud hideHud];
     }];
 }
 
 - (void)loadOtherComplianData
 {
     WEAK(self, weakSelf);
+    [Hud showWait];
     [MOCHTTPRequestOperationManager postWithURL:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,@"complain/business/complainByList"] parameters:@{@"uid":UID,@"businessId":weakSelf.object.businessID,@"businessType":weakSelf.object.type,@"pageSize":@"10",@"target":@"first"} success:^(MOCHTTPResponse *response) {
         NSArray *array = [[SHGGloble sharedGloble] parseServerJsonArrayToJSONModel:[response.dataDictionary objectForKey:@"list"] class:[SHGComplianObject class]];
         [weakSelf.dataArray addObjectsFromArray:array];
+        [Hud hideHud];
         [weakSelf.tableView reloadData];
     } failed:^(MOCHTTPResponse *response) {
-
+        [Hud hideHud];
     }];
 }
 

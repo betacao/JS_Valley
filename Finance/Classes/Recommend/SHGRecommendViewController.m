@@ -91,7 +91,7 @@
     [MOCHTTPRequestOperationManager postWithURL:url class:nil parameters:parameters success:^(MOCHTTPResponse *response){
         weakSelf.recommendCollectionView.dataArray = [[SHGGloble sharedGloble] parseServerJsonArrayToJSONModel:[response.dataDictionary objectForKey:@"list"] class:[SHGDiscoveryRecommendObject class]];
     }failed:^(MOCHTTPResponse *response){
-
+        
     }];
 }
 
@@ -99,9 +99,26 @@
 - (void)rightItemClick:(id)sender
 {
     WEAK(self, weakSelf);
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.25f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [weakSelf loginSuccess];
-    });
+    NSString *channelId = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_BPUSH_CHANNELID];
+    NSString *uid =  [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
+    
+    NSString *token = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_TOKEN];
+    NSDictionary *param = @{@"uid":uid, @"t":token?:@"", @"channelid":channelId?:@"", @"channeluid":@"getui"};
+    
+    [[SHGGloble sharedGloble] registerToken:param block:^(BOOL success, MOCHTTPResponse *response) {
+        if (success) {
+            NSString *code = [response.data valueForKey:@"code"];
+            if ([code isEqualToString:@"000"]){
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.25f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    [weakSelf loginSuccess];
+                });
+            }
+        } else{
+            [Hud showMessageWithText:response.errorMessage];
+        }
+    }];
+    
+    
 }
 
 - (void)loginSuccess

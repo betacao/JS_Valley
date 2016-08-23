@@ -35,7 +35,7 @@
     self.dataArray = [[SHGGloble BPInputhistory] reverseArray];
 
     self.textField = [[UITextField alloc] init];
-    self.textField.placeholder = @"请输入邮箱地址～";
+    self.textField.placeholder = @"请输入您的邮箱地址～";
     self.textField.font = FontFactor(15.0f);
     self.textField.layer.borderColor = Color(@"efefef").CGColor;
     self.textField.layer.borderWidth = 1 / SCALE;
