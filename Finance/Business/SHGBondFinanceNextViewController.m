@@ -465,13 +465,14 @@
                         NSDictionary *param = @{@"uid":UID, @"type": type,@"companyName":companyName, @"contact":contact, @"bondType":bondType, @"investAmount": investAmount, @"area": area,@"cityName":cityName, @"industry": industry,@"clarifyingWay":require, @"fundUsetime":investTime, @"highestRate": weakSelf.retributionTextField.text,@"detail": weakSelf.marketExplainTextView.text,@"photo": weakSelf.imageName,@"anonymous": anonymous,@"title": title, @"version":[SHGGloble sharedGloble].currentVersion};
                         [SHGBusinessManager createNewBusiness:param success:^(BOOL success, NSString *bussinessId) {
                             if (success) {
+                                NSMutableArray *array = [NSMutableArray array];
+                                [array addObjectsFromArray: [self.navigationController.viewControllers arrayByKeepingObjectsOfClass:[TabBarViewController class]]];
                                 SHGBusinessSegmentViewController *controller = [[SHGBusinessSegmentViewController alloc] init];
                                 SHGBusinessMineViewController *controller1 = [[SHGBusinessMineViewController alloc] init];
                                 SHGBusinessCollectionListViewController *controller2 = [[SHGBusinessCollectionListViewController alloc] init];
                                 controller.viewControllers = @[controller1, controller2];
-                                controller.hidesBottomBarWhenPushed = YES;
-                                [weakSelf.navigationController pushViewController:controller animated:YES];
-
+                                [array addObject:controller];
+                                [self.navigationController setViewControllers:array animated:YES];
                             }
                         }];
                     }

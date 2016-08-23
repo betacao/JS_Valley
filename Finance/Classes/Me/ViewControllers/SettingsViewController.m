@@ -197,7 +197,9 @@
             [[YYImageCache sharedCache].diskCache removeAllObjectsWithBlock:^{
                 [Hud hideHud];
                 [Hud showMessageWithText:@"清除缓存成功"];
-                [weakSelf.tableView reloadData];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [weakSelf.tableView reloadData];
+                });
             }];
         };
         [alert show];

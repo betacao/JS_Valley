@@ -49,7 +49,6 @@
 
 - (void)initView
 {
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshData) name:NOTIFI_SENDPOST object:nil];
     self.dataArray = [NSMutableArray array];
 
     self.tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
@@ -146,14 +145,6 @@
     self.needRefreshTableView = YES;
 }
 
-- (void)refreshData
-{
-    WEAK(self, weakSelf);
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.25f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [weakSelf requestDataWithTarget:@"first" time:@"-1"];
-    });
-}
-
 - (void)refreshHeader
 {
     NSLog(@"refreshHeader");
@@ -228,7 +219,7 @@
         if (array) {
             [weakSelf assembleArray:array target:target];
             weakSelf.needRefreshTableView = YES;
-            if (array.count < 10) {
+            if (array.count < 10 && [target isEqualToString:@"load"]) {
                 [weakSelf.tableView.mj_footer endRefreshingWithNoMoreData];
             } else {
                 [weakSelf.tableView.mj_footer endRefreshing];

@@ -247,6 +247,8 @@
 - (void)refreshData
 {
     WEAK(self, weakSelf);
+    //发布新动态后 默认回到全部界面
+    self.categoryView.category = @"全部";
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.25f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [weakSelf requestDataWithTarget:@"first" time:@"-1"];
     });

@@ -144,6 +144,7 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     if (!self.categorySelectView.superview) {
         [self.view.window addSubview:self.categorySelectView];
     }
+    [self.view.window bringSubviewToFront:self.categorySelectView];
 }
 
 - (UIButton *)titleButton
