@@ -757,14 +757,25 @@
     NSString *shareContent = @"";
     NSString *title = @" ";
     if (self.responseObject.groupPostTitle.length > 0) {
-        title = self.responseObject.groupPostTitle;
+        if (self.responseObject.groupPostTitle.length > 15) {
+            title = [NSString stringWithFormat:@"%@...",[self.responseObject.groupPostTitle substringToIndex:15]];
+        } else{
+            title = self.responseObject.groupPostTitle;
+        }
+
     } else{
         title = SHARE_TITLE;
     }
     
     if(IsStrEmpty(self.responseObject.detail)){
-        postContent = SHARE_CONTENT;
-        shareContent = SHARE_CONTENT;
+        if ([title isEqualToString:SHARE_TITLE]) {
+            postContent = SHARE_CONTENT;
+            shareContent = SHARE_CONTENT;
+        } else{
+            postContent = [NSString stringWithFormat:@"%@...",[self.responseObject.groupPostTitle substringToIndex:15]];
+            shareContent = [NSString stringWithFormat:@"%@...",[self.responseObject.groupPostTitle substringToIndex:15]];
+        }
+        
     } else{
         if(self.responseObject.detail.length > 15){
             postContent = [NSString stringWithFormat:@"%@...",[self.responseObject.detail substringToIndex:15]];

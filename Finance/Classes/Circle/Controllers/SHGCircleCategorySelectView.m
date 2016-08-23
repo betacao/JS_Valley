@@ -16,7 +16,7 @@
 
 @property (strong, nonatomic) NSArray *titleArray;
 @property (strong, nonatomic) SHGBusinessButtonContentView *contentView;
-
+@property (strong, nonatomic) NSMutableArray *buttonArray;
 @end
 
 @implementation SHGCircleCategorySelectView
@@ -26,6 +26,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         [self initView];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshData) name:NOTIFI_SENDPOST object:nil];
     }
     return self;
 }
@@ -38,7 +39,7 @@
     self.contentView.backgroundColor = [UIColor whiteColor];
 
     self.titleArray = @[@"全部", @"债权融资", @"股权融资", @"资金", @"银证业务"];
-
+    self.buttonArray = [NSMutableArray array];
     CGFloat width = ceilf((SCREENWIDTH - 4.0f * kButtonHorizontalMargin) / 3.0f);
     CGFloat height = MarginFactor(26.0f);
     UIImage *defaultImage = [[UIImage imageNamed:@"category_bg_gray"] resizableImageWithCapInsets:UIEdgeInsetsMake(5.0f, 5.0f, 5.0f, 5.0f) resizingMode:UIImageResizingModeStretch];
@@ -60,6 +61,7 @@
             [button setBackgroundImage:selectedImage forState:UIControlStateSelected];
             [button setTitleColor:Color(@"ff2f00") forState:UIControlStateSelected];
         }
+        [self.buttonArray addObject:button];
         [self.contentView addSubview:button];
         lastButton = button;
     }];
@@ -78,6 +80,11 @@
     [UIView animateWithDuration:0.25f animations:^{
         [super setAlpha:alpha];
     }];
+}
+
+- (void)refreshData
+{
+    [self buttonClick:[self.buttonArray firstObject]];
 }
 
 - (void)buttonClick:(UIButton *)button
