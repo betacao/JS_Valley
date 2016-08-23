@@ -755,26 +755,25 @@
     id<ISSCAttachment> image  = [ShareSDK pngImageWithImage:[UIImage imageNamed:@"80"]];
     NSString *postContent = @"";
     NSString *shareContent = @"";
-    NSString *shareTitle = @"";
     NSString *title = @" ";
     if (self.responseObject.groupPostTitle.length > 0) {
         title = self.responseObject.groupPostTitle;
+    } else{
+        title = SHARE_TITLE;
     }
+    
     if(IsStrEmpty(self.responseObject.detail)){
         postContent = SHARE_CONTENT;
-        shareTitle = SHARE_TITLE;
         shareContent = SHARE_CONTENT;
     } else{
-        postContent = self.responseObject.detail;
-        shareTitle = self.responseObject.detail;
-        shareContent = self.responseObject.detail;
-    }
-    if(self.responseObject.detail.length > 30){
-        postContent = [NSString stringWithFormat:@"%@...",[self.responseObject.detail substringToIndex:30]];
-    }
-    if(self.responseObject.detail.length > 30){
-        shareTitle = [self.responseObject.detail substringToIndex:15];
-        shareContent = [NSString stringWithFormat:@"%@...",[self.responseObject.detail substringToIndex:30]];
+        if(self.responseObject.detail.length > 15){
+            postContent = [NSString stringWithFormat:@"%@...",[self.responseObject.detail substringToIndex:15]];
+            shareContent = [NSString stringWithFormat:@"%@...",[self.responseObject.detail substringToIndex:15]];
+        } else{
+            postContent = self.responseObject.detail;
+            shareContent = self.responseObject.detail;
+        }
+
     }
     NSString *content = [NSString stringWithFormat:@"%@\"%@\"%@%@",@"Hi，我在金融大牛圈上看到了一个非常棒的帖子,关于",postContent,@"，赶快下载大牛圈查看吧！",[NSString stringWithFormat:@"%@%@",rBaseAddressForHttpShare,self.responseObject.rid]];
     id<ISSShareActionSheetItem> item1 = [ShareSDK shareActionSheetItemWithTitle:@"动态" icon:[UIImage imageNamed:@"圈子图标"] clickHandler:^{

@@ -385,7 +385,13 @@
         detail = [NSString stringWithFormat:@"%@...",[detail substringToIndex:15]];
     }
    __block NSString *postContent = @"";
-    NSString *shareContent = [NSString stringWithFormat:@"【业务】%@", detail];
+    NSString *shareContent = @"";
+    NSString *str1 = [object.detail stringByReplacingOccurrencesOfString:@" " withString:@""];
+    NSString *str2 = [str1 stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+    NSString *str3 = [str2 stringByReplacingOccurrencesOfString:@"\r" withString:@""];
+    if (str3.length > 15) {
+        shareContent = [NSString stringWithFormat:@"%@...",[str3 substringToIndex:15]];
+    }
     NSString *friendContent = @"";
     NSString *messageContent = @"";
     if ([controller isKindOfClass:[SHGBusinessSendSuccessViewController class]] || [uid isEqualToString:object.createBy]) {
@@ -398,10 +404,13 @@
     }
     
     id<ISSShareActionSheetItem> item0 = [ShareSDK shareActionSheetItemWithTitle:@"微信" icon:[UIImage imageNamed:@"sns_icon_22"] clickHandler:^{
-        if (object.detail.length > 30) {
-            postContent = [NSString stringWithFormat:@"%@...",[object.detail substringToIndex:30]];
+        NSString *str1 = [object.detail stringByReplacingOccurrencesOfString:@" " withString:@""];
+        NSString *str2 = [str1 stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+        NSString *str3 = [str2 stringByReplacingOccurrencesOfString:@"\r" withString:@""];
+        if (str3.length > 30) {
+            postContent = [NSString stringWithFormat:@"%@...",[str3 substringToIndex:30]];
         } else{
-            postContent  = object.detail;
+            postContent  = str3;
         }
         [[AppDelegate currentAppdelegate] shareActionToWeChat:0 content:postContent title:theme url:request];
     }];

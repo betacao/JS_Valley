@@ -27,6 +27,7 @@
 {
     [super viewDidLoad];
     self.title = @"业务收藏";
+    [Hud showWait];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.sd_layout

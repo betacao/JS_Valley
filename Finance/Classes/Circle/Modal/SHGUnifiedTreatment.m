@@ -56,28 +56,27 @@
 {
     UIImage *png = [UIImage imageNamed:@"80.png"];
     id<ISSCAttachment> image  = [ShareSDK pngImageWithImage:png];
+    NSString *postContent = @"";
+    NSString *shareContent = @"";
     NSString *title = @" ";
     if (obj.groupPostTitle.length > 0) {
         title = obj.groupPostTitle;
+    } else{
+        title = SHARE_TITLE;
     }
-    NSString *postContent;
-    NSString *shareContent;
-    NSString *shareTitle ;
-    if (IsStrEmpty(obj.detail)) {
+    
+    if(IsStrEmpty(obj.detail)){
         postContent = SHARE_CONTENT;
-        shareTitle = SHARE_TITLE;
         shareContent = SHARE_CONTENT;
     } else{
-        postContent = obj.detail;
-        shareTitle = obj.detail;
-        shareContent = obj.detail;
-    }
-    if (obj.detail.length > 15){
-        postContent = [NSString stringWithFormat:@"%@...",[obj.detail substringToIndex:15]];
-    }
-    if (obj.detail.length > 15){
-        shareTitle = [obj.detail substringToIndex:15];
-        shareContent = [NSString stringWithFormat:@"%@...",[obj.detail substringToIndex:15]];
+        if(obj.detail.length > 15){
+            postContent = [NSString stringWithFormat:@"%@...",[obj.detail substringToIndex:15]];
+            shareContent = [NSString stringWithFormat:@"%@...",[obj.detail substringToIndex:15]];
+        } else{
+            postContent = obj.detail;
+            shareContent = obj.detail;
+        }
+        
     }
     NSString *content = [NSString stringWithFormat:@"%@\"%@\"%@%@",@"Hi，我在金融大牛圈上看到了一个非常棒的帖子,关于",postContent,@"，赶快下载大牛圈查看吧！",[NSString stringWithFormat:@"%@%@",rBaseAddressForHttpShare,obj.rid]];
 

@@ -901,14 +901,20 @@
             NSString *title = obj.groupPostTitle;
             if (obj.detail.length > 0) {
                 if (obj.detail.length > 30){
-                    detail = [obj.detail substringToIndex:30];
+                    detail = [NSString stringWithFormat:@"%@..",[obj.detail substringToIndex:30]];
                 }
             } else{
-                if (title.length > 30) {
-                    detail = [title substringToIndex:30];
+                if (title.length > 0) {
+                    if (title.length > 30) {
+                        detail = [title substringToIndex:30];
+                    } else{
+                        detail = title;
+                    }
                 } else{
-                    detail = title;
+                    detail = SHARE_CONTENT;
+                    title = SHARE_TITLE;
                 }
+              
             }
             message.messageExt = [NSString stringWithFormat:@"%@%@",rBaseAddressForHttpShare,obj.rid];
             if (scene == 0) {

@@ -29,6 +29,7 @@
 {
     [super viewDidLoad];
     self.title = @"我的粉丝";
+    [Hud showWait];
     [self initView];
     [self addSdLayout];
     [self requestFansListWithTarget:@"first" time:@"-1"];
@@ -207,6 +208,12 @@
             });
         }
     }];
+    
+    if (searchText.length > 0) {
+        [self.tableView.mj_footer removeFromSuperview];
+    } else{
+        [self addHeaderRefresh:self.tableView headerRefesh:NO andFooter:YES];
+    }
 }
 
 - (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar

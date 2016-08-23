@@ -203,6 +203,11 @@
             });
         }
     }];
+    if (searchText.length > 0) {
+        [self.tableView.mj_footer removeFromSuperview];
+    } else{
+        [self addHeaderRefresh:self.tableView headerRefesh:NO andFooter:YES];
+    }
 }
 
 - (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar

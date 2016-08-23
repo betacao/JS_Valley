@@ -37,7 +37,7 @@
     } else{
         self.title = @"TA的业务";
     }
-
+    [Hud showWait];
     [self addHeaderRefresh:self.tableView headerRefesh:YES andFooter:YES];
     self.tableView.backgroundColor = Color(@"f7f7f7");
     self.tableView.sd_layout
@@ -192,6 +192,7 @@
             }
 
             [weakSelf.tableView reloadData];
+            [Hud hideHud];
         }
     }];
 }
