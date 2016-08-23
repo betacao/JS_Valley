@@ -737,21 +737,14 @@
 
 + (void)saveBPInputData:(NSString *)email
 {
-    NSInteger total = [[SHGGloble sharedGloble].BPDiskCache totalCount];
-    NSString *key = [NSString stringWithFormat:@"key_%ld", (long)total];
-    [[SHGGloble sharedGloble].BPDiskCache setObject:email forKey:key];
+    NSMutableArray *array = [NSMutableArray arrayWithArray:[SHGGloble BPInputhistory]];
+    [array insertNewestUniqueObject:email];
+    [[SHGGloble sharedGloble].BPDiskCache setObject:array forKey:@"BPInputHistory"];
 }
 
 + (NSArray *)BPInputhistory
 {
-    NSMutableArray *array = [NSMutableArray array];
-    NSInteger total = [[SHGGloble sharedGloble].BPDiskCache totalCount];
-    for (NSInteger i = 0; i < total; i++) {
-        NSString *key = [NSString stringWithFormat:@"key_%ld", (long)i];
-        id string = [[SHGGloble sharedGloble].BPDiskCache objectForKey:key];
-        [array insertUniqueObject:string];
-    }
-    return array;
+    return (NSArray *)[[SHGGloble sharedGloble].BPDiskCache objectForKey:@"BPInputHistory"];
 }
 
 

@@ -167,15 +167,18 @@
 
 - (void)insertNewestUniqueObject:(id)anObject atIndex:(NSInteger)index
 {
+    NSMutableArray *array = [NSMutableArray array];
     [self enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         if ([obj isEqual:anObject]) {
-            [self removeObject:obj];
+            [array addObject:obj];
         }
     }];
+    [self removeObjectsInArray:array];
+    if (index < 0) {
+        return;
+    }
     if (index > [self count]) {
         [self addObject:anObject];
-    }
-    if (index < 0) {
         return;
     }
     [self insertObject:anObject atIndex:index];

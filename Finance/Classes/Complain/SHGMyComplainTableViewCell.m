@@ -134,8 +134,9 @@
     
     self.roundImage.image = [UIImage imageNamed:@"complain_Round"];
 
-    self.topImageView.image = [self.topImageView.image resizableImageWithCapInsets:UIEdgeInsetsMake(10.0f, 15.0f, 5.0f, 15.0f) resizingMode:UIImageResizingModeStretch];
-    self.bottomImageView.image = [self.bottomImageView.image resizableImageWithCapInsets:UIEdgeInsetsMake(8.0f, 15.0f, 15.0f, 15.0f) resizingMode:UIImageResizingModeStretch];
+    self.topImageView.image = [self.topImageView.image resizableImageWithCapInsets:UIEdgeInsetsMake(6.0f, 15.0f, 1.0f, 15.0f) resizingMode:UIImageResizingModeStretch];
+    self.bottomImageView.image = [self.bottomImageView.image resizableImageWithCapInsets:UIEdgeInsetsMake(8.0f, 15.0f, 6.0f, 15.0f) resizingMode:UIImageResizingModeStretch];
+
 }
 
 - (void)setObject:(SHGComplianObject *)object
