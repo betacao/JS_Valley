@@ -7,6 +7,7 @@
 //
 
 #import "SHGMyComplainTableViewCell.h"
+#import "TTTAttributedLabel.h"
 
 @interface SHGMyComplainTableViewCell()
 
@@ -17,7 +18,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *topImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *bottomImageView;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
-@property (weak, nonatomic) IBOutlet UILabel *detailLabel;
+@property (weak, nonatomic) IBOutlet TTTAttributedLabel *detailLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *auditStateImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *roundImage;
 @property (weak, nonatomic) IBOutlet UIView *bgView;
@@ -36,19 +37,19 @@
 }
 
 - (void)addSdLayout
-{    
+{
     self.topLineView.sd_layout
     .topSpaceToView(self.contentView, 0.0f)
     .leftSpaceToView(self.contentView, MarginFactor(43.0f))
     .widthIs(1 / SCALE)
     .heightIs(MarginFactor(24.0f));
-    
+
     self.timeLabel.sd_layout
     .centerXEqualToView(self.topLineView)
     .topSpaceToView(self.topLineView, MarginFactor(10.0f))
     .heightIs(self.timeLabel.font.lineHeight);
     [self.timeLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
-    
+
     UIImage *image = [UIImage imageNamed:@"complain_Round"];
     CGSize size = image.size;
     self.roundImage.sd_layout
@@ -56,45 +57,41 @@
     .topSpaceToView(self.timeLabel, MarginFactor(10.0f))
     .widthIs(size.width)
     .heightIs(size.height);
-    
+
     self.bottomLineView.sd_layout
     .centerXEqualToView(self.topLineView)
     .topSpaceToView(self.roundImage, 0.0f)
     .bottomSpaceToView(self.contentView, 0.0f)
     .widthIs(1 / SCALE);
-    
+
     self.bgView.sd_layout
     .topSpaceToView(self.contentView, MarginFactor(15.0f))
     .leftSpaceToView(self.timeLabel, MarginFactor(12.0f))
     .rightSpaceToView(self.contentView, MarginFactor(12.0f));
 
-
-    UIImage *stateImage = [UIImage imageNamed:@"complain_reject"];
-    CGSize stateSize = stateImage.size;
-
     self.titleLabel.sd_layout
-    .leftSpaceToView(self.bgView, MarginFactor(15.0f) + MarginFactor(10.0f))
-    .rightSpaceToView(self.bgView, MarginFactor(15.0f) + stateSize.width)
+    .leftSpaceToView(self.bgView, MarginFactor(14.0f) + MarginFactor(8.0f))
+    .rightSpaceToView(self.bgView, MarginFactor(14.0f) + self.auditStateImageView.image.size.width)
     .topSpaceToView(self.bgView, 0.0f)
     .heightIs(MarginFactor(30.0f));
-    
+
     self.auditStateImageView.sd_layout
-    .rightSpaceToView(self.bgView, MarginFactor(15.0f))
+    .rightSpaceToView(self.bgView, MarginFactor(14.0f))
     .centerYEqualToView(self.titleLabel)
-    .widthIs(stateSize.width)
-    .heightIs(stateSize.height);
-    
+    .widthIs(self.auditStateImageView.image.size.width)
+    .heightIs(self.auditStateImageView.image.size.height);
+
     self.centerLineView.sd_layout
     .leftEqualToView(self.titleLabel)
-    .rightSpaceToView(self.bgView, MarginFactor(15.0f))
-    .topSpaceToView(self.titleLabel, 0.0f)
+    .rightEqualToView(self.auditStateImageView)
+    .topSpaceToView(self.bgView, MarginFactor(30.0f))
     .heightIs(1/SCALE);
-    
+
     self.detailLabel.sd_layout
-    .leftSpaceToView(self.bgView, MarginFactor(15.0f) + MarginFactor(10.0f))
-    .rightSpaceToView(self.bgView, MarginFactor(15.0f))
-    .topSpaceToView(self.centerLineView, MarginFactor(13.0f))
-    .autoHeightRatio(0.0f);
+    .leftEqualToView(self.titleLabel)
+    .rightEqualToView(self.auditStateImageView)
+    .topSpaceToView(self.titleLabel, MarginFactor(13.0f))
+    .heightIs(0.0f);
 
     self.topImageView.sd_layout
     .topSpaceToView(self.bgView, 0.0f)
@@ -108,11 +105,11 @@
     .leftSpaceToView(self.bgView, 0.0f)
     .rightSpaceToView(self.bgView, 0.0f)
     .bottomSpaceToView(self.bgView, 0.0f);
-    
+
     [self.bgView setupAutoHeightWithBottomView:self.detailLabel bottomMargin:MarginFactor(13.0f)];
-    
+
     [self setupAutoHeightWithBottomView:self.bgView bottomMargin:0.0f];
-    
+
 }
 
 - (void)initView
@@ -122,16 +119,15 @@
     self.timeLabel.textColor = Color(@"8d8d8d");
     self.timeLabel.textAlignment = NSTextAlignmentCenter;
     self.timeLabel.font = FontFactor(12.0f);
-    
+
     self.titleLabel.textColor = Color(@"434343");
-    self.titleLabel.textAlignment = NSTextAlignmentLeft;
     self.titleLabel.font = FontFactor(13.0f);
-    
+
     self.detailLabel.textColor = Color(@"434343");
-    self.detailLabel.textAlignment = NSTextAlignmentLeft;
     self.detailLabel.font = FontFactor(13.0f);
-    [self.detailLabel setMaxNumberOfLinesToShow:3];
-    
+    self.detailLabel.lineSpacing = 2.0f;
+    self.detailLabel.numberOfLines = 3;
+
     self.roundImage.image = [UIImage imageNamed:@"complain_Round"];
 
     self.topImageView.image = [self.topImageView.image resizableImageWithCapInsets:UIEdgeInsetsMake(6.0f, 15.0f, 1.0f, 15.0f) resizingMode:UIImageResizingModeStretch];
@@ -150,16 +146,23 @@
         self.titleLabel.hidden = YES;
         self.centerLineView.hidden = YES;
         self.auditStateImageView.hidden = YES;
-        self.detailLabel.sd_resetLayout
-        .leftSpaceToView(self.bgView, MarginFactor(15.0f) + MarginFactor(10.0f))
-        .rightSpaceToView(self.bgView, MarginFactor(15.0f))
-        .topSpaceToView(self.bgView, MarginFactor(13.0f))
-        .autoHeightRatio(0.0f);
-
+        self.titleLabel.sd_resetLayout
+        .leftSpaceToView(self.bgView, MarginFactor(14.0f) + MarginFactor(10.0f))
+        .rightSpaceToView(self.bgView, MarginFactor(14.0f) + self.auditStateImageView.image.size.width)
+        .topSpaceToView(self.bgView, 0.0f)
+        .heightIs(0.0f);
     }
     self.timeLabel.text = object.createTime;
     self.titleLabel.text = object.title;
+
     self.detailLabel.text = object.content;
+
+    self.detailLabel.sd_resetLayout
+    .leftEqualToView(self.titleLabel)
+    .rightEqualToView(self.auditStateImageView)
+    .topSpaceToView(self.titleLabel, MarginFactor(13.0f))
+    .heightIs([self.detailLabel sizeThatFits:CGSizeMake(CGRectGetWidth(self.titleLabel.frame) + self.auditStateImageView.image.size.width, CGFLOAT_MAX)].height);
+    
     if ([object.complainAuditstate isEqualToString:@"0"]) {
         self.auditStateImageView.hidden = YES;
     } else if ([object.complainAuditstate isEqualToString:@"1"]){

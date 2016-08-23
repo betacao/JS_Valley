@@ -47,13 +47,6 @@
                                 <rect key="frame" x="0.0" y="-12" width="240" height="153"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="BXj-xR-1e0">
-                                <rect key="frame" x="99" y="54" width="42" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="o7H-Uh-ZsH">
                                 <rect key="frame" x="99" y="54" width="42" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -61,12 +54,17 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <view contentMode="scaleToFill" id="970-aN-n9Y" customClass="TTTAttributedLabel">
+                                <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
                             <view contentMode="scaleToFill" id="aKz-pj-QPL">
                                 <rect key="frame" x="0.0" y="56" width="240" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="5T2-ns-Wkk">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="complain_reject" id="5T2-ns-Wkk">
                                 <rect key="frame" x="180" y="22" width="52" height="39"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
@@ -81,7 +79,7 @@
                 <outlet property="bottomImageView" destination="d9p-kT-tWJ" id="e9S-FW-ttw"/>
                 <outlet property="bottomLineView" destination="cen-AQ-jnq" id="NMB-Ps-L8n"/>
                 <outlet property="centerLineView" destination="aKz-pj-QPL" id="n1h-Pv-tF4"/>
-                <outlet property="detailLabel" destination="BXj-xR-1e0" id="PYw-oj-yQ1"/>
+                <outlet property="detailLabel" destination="970-aN-n9Y" id="IO3-j0-fuc"/>
                 <outlet property="roundImage" destination="jbv-qM-zj8" id="PQi-nf-m0N"/>
                 <outlet property="timeLabel" destination="xKQ-l8-Y0d" id="C6C-Bg-q3L"/>
                 <outlet property="titleLabel" destination="o7H-Uh-ZsH" id="Lrc-QF-Q24"/>
@@ -92,7 +90,8 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="complain_bg_bottom" width="71" height="37"/>
-        <image name="complain_bg_top" width="71" height="20"/>
+        <image name="complain_bg_bottom" width="71" height="15"/>
+        <image name="complain_bg_top" width="71" height="8"/>
+        <image name="complain_reject" width="40" height="16"/>
     </resources>
 </document>
