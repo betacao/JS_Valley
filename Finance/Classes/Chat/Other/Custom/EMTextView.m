@@ -107,4 +107,12 @@
     }
 }
 
+- (void)_firstBaselineOffsetFromTop
+{
+}
+
+- (void)_baselineOffsetFromBottom
+{
+}
+
 @end

@@ -656,19 +656,8 @@
     return YES;
 }
 
-- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
-{
-    return YES;
-}
-
-- (BOOL)textViewShouldBeginEditing:(UITextView *)textView
-{
-    return YES;
-}
-
 - (void)textFieldDidBeginEditing:(UITextField *)textField
 {
-    
     self.currentContext = textField;
 }
 
@@ -680,9 +669,9 @@
 
 - (void)textViewDidBeginEditing:(UITextView *)textView
 {
-    [self.currentContext becomeFirstResponder];
     self.currentContext = textView;
 }
+
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
 {
     [self.currentContext resignFirstResponder];
