@@ -38,7 +38,7 @@
         self.title = @"TA的业务";
     }
     [Hud showWait];
-    [self addHeaderRefresh:self.tableView headerRefesh:YES andFooter:YES];
+    [self addHeaderRefresh:self.tableView headerRefesh:NO andFooter:YES];
     self.tableView.backgroundColor = Color(@"f7f7f7");
     self.tableView.sd_layout
     .spaceToSuperView(UIEdgeInsetsZero);
@@ -189,6 +189,11 @@
                 }
             } else if([target isEqualToString:@"load"]){
                 [weakSelf.dataArr addObjectsFromArray:dataArray];
+                if (dataArray.count == 0) {
+                    [self.tableView.mj_footer endRefreshingWithNoMoreData];
+                } else{
+                    [self.tableView.mj_footer endRefreshing];
+                }
             }
 
             [weakSelf.tableView reloadData];

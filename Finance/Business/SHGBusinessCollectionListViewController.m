@@ -33,7 +33,7 @@
     self.tableView.sd_layout
     .spaceToSuperView(UIEdgeInsetsZero);
     self.tableView.backgroundColor = [UIColor colorWithHexString:@"efeeef"];
-    [self addHeaderRefresh:self.tableView headerRefesh:YES andFooter:YES];
+    [self addHeaderRefresh:self.tableView headerRefesh:NO andFooter:YES];
     [self requestBusinessCollectWithTarget:@"first" ];
 }
 
@@ -69,7 +69,7 @@
         if ([target isEqualToString:@"first"]) {
             [self.dataArr removeAllObjects];
             [self.dataArr addObjectsFromArray:dataArray];
-             [self.noticeView showWithText:[NSString stringWithFormat:@"为您加载了%ld条新业务",(long)dataArray.count]];
+            [self.noticeView showWithText:[NSString stringWithFormat:@"为您加载了%ld条新业务",(long)dataArray.count]];
             [self.tableView reloadData];
         }
         if ([target isEqualToString:@"refresh"]) {
@@ -88,18 +88,18 @@
         }
         if ([target isEqualToString:@"load"]) {
             [self.dataArr addObjectsFromArray:dataArray];
-            [self.tableView.mj_footer endRefreshingWithNoMoreData];
-            
+            if (dataArray.count == 0) {
+                [self.tableView.mj_footer endRefreshingWithNoMoreData];
+            } else{
+                [self.tableView.mj_footer endRefreshing];
+            }
+
         }
         [self reloadData];
-        [self.tableView.mj_header endRefreshing];
-        [self.tableView.mj_footer endRefreshing];
         [Hud hideHud];
         
     } failed:^(MOCHTTPResponse *response) {
         NSLog(@"%@",response.errorMessage);
-        [self.tableView.mj_header endRefreshing];
-        [self.tableView.mj_footer endRefreshing];
         [Hud hideHud];
         
     }];

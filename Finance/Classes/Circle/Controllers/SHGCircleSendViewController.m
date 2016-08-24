@@ -34,8 +34,9 @@
 @property (weak, nonatomic) IBOutlet UIView *bottomLine2;
 @property (weak, nonatomic) IBOutlet UIView *photoView;
 @property (weak, nonatomic) IBOutlet UIView *typeView;
+@property (weak, nonatomic) IBOutlet UIScrollView *typeButtonScrollerView;
 @property (weak, nonatomic) IBOutlet UILabel *typeTitleLabel;
-@property (weak, nonatomic) IBOutlet UIView *typeButtonView;
+//@property (weak, nonatomic) IBOutlet UIView *typeButtonView;
 @property (weak, nonatomic) IBOutlet UIView *titleView;
 @property (weak, nonatomic) IBOutlet UITextField *textField;
 @property (weak, nonatomic) IBOutlet UIView *detailView;
@@ -54,6 +55,8 @@
 @property(strong, nonatomic) UIImage *buttonSelectBgImage;
 
 @property (strong, nonatomic) UIButton *currentButton;
+
+
 @end
 
 @implementation SHGCircleSendViewController
@@ -95,7 +98,12 @@
 
 - (void)initView
 {
-    NSArray *typeArray = @[@"债权融资",@"股权融资",@"资金",@"银证业务"];
+    self.scrollView.delegate = self;
+    self.typeButtonScrollerView.backgroundColor = [UIColor clearColor];
+    self.typeButtonScrollerView.delegate = self;
+    self.typeButtonScrollerView.showsHorizontalScrollIndicator = NO;
+    
+    NSArray *typeArray = @[@"债权融资",@"股权融资",@"资金",@"银证业务",@"其他"];
     for (NSInteger i = 0; i < typeArray.count; i ++) {
         UIButton * button = [UIButton buttonWithType:UIButtonTypeCustom];
         button.titleLabel.font = FontFactor(14.0f);
@@ -111,9 +119,10 @@
         
         button.frame = CGRectMake(MarginFactor(12.0f) + i * (kFourButtonWidth + MarginFactor(19.0f)), 0.0f, kFourButtonWidth, MarginFactor(26.0f));
         [button addTarget:self action:@selector(categoryButtonClick:) forControlEvents:UIControlEventTouchUpInside];
-        [self.typeButtonView addSubview:button];
+        [self.typeButtonScrollerView addSubview:button];
     }
     
+    self.typeButtonScrollerView.contentSize = CGSizeMake(5 * kFourButtonWidth + 4*MarginFactor(19.0f) + 2*MarginFactor(12.0f), MarginFactor(26.0f));
     self.typeTitleLabel.text = @"动态类型";
     self.typeTitleLabel.textColor = Color(@"bebebe");
     self.typeTitleLabel.font = FontFactor(15.0f);
@@ -216,12 +225,14 @@
     .heightIs(self.typeTitleLabel.font.lineHeight);
     [self.typeTitleLabel setSingleLineAutoResizeWithMaxWidth:CGFLOAT_MAX];
     
-    self.typeButtonView.sd_layout
-    .topSpaceToView(self.typeTitleLabel, MarginFactor(10.0f))
+    self.typeButtonScrollerView.sd_layout
+    .topSpaceToView(self.typeTitleLabel,MarginFactor(10.0f))
     .leftSpaceToView(self.typeView, 0.0f)
     .rightSpaceToView(self.typeView, 0.0f)
     .heightIs(MarginFactor(26.0f));
-    [self.typeView setupAutoHeightWithBottomView:self.typeButtonView bottomMargin:MarginFactor(10.0f)];
+    
+    [self.typeView setupAutoHeightWithBottomView:self.typeButtonScrollerView bottomMargin:MarginFactor(10.0f)];
+    
     
     self.titleView.sd_layout
     .leftSpaceToView(self.scrollView, 0.0f)

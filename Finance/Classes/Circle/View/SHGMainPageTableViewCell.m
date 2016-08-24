@@ -657,6 +657,7 @@
     [super touchesEnded:touches withEvent:event];
     if (self.object) {
         SHGBusinessNewDetailViewController *controller = [[SHGBusinessNewDetailViewController alloc] init];
+        self.object.auditState = @"0";
         controller.object = self.object;
         [[SHGHomeViewController sharedController].navigationController pushViewController:controller animated:YES];
     }

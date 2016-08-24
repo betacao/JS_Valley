@@ -228,7 +228,7 @@
     SHGBusinessObject *object = [[SHGBusinessObject alloc] init];
     object.businessID = self.object.businessId;
     object.type = self.object.businessType;
-    
+    object.auditState = @"0";
     SHGBusinessNewDetailViewController *controller = [[SHGBusinessNewDetailViewController alloc] init];
     controller.object = object;
     [self.navigationController pushViewController:controller animated:YES];

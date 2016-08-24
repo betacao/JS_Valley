@@ -772,8 +772,8 @@
             postContent = SHARE_CONTENT;
             shareContent = SHARE_CONTENT;
         } else{
-            postContent = [NSString stringWithFormat:@"%@...",[self.responseObject.groupPostTitle substringToIndex:15]];
-            shareContent = [NSString stringWithFormat:@"%@...",[self.responseObject.groupPostTitle substringToIndex:15]];
+            postContent = title;
+            shareContent = title;
         }
         
     } else{

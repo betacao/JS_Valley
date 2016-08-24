@@ -147,10 +147,13 @@
         }
         if ([target isEqualToString:@"load"]) {
             [self.dataArr addObjectsFromArray:response.dataArray];
+            if (response.dataArray.count == 0) {
+                [self.tableView.mj_footer endRefreshingWithNoMoreData];
+            } else{
+                [self.tableView.mj_footer endRefreshing];
+            }
         }
         [self.tableView reloadData];
-        [self.tableView.mj_header endRefreshing];
-        [self.tableView.mj_footer endRefreshing];
         [Hud hideHud];
 
     } failed:^(MOCHTTPResponse *response) {
@@ -305,8 +308,8 @@
             postContent = SHARE_CONTENT;
             shareContent = SHARE_CONTENT;
         } else{
-            postContent = [NSString stringWithFormat:@"%@...",[obj.groupPostTitle substringToIndex:15]];
-            shareContent = [NSString stringWithFormat:@"%@...",[obj.groupPostTitle substringToIndex:15]];
+            postContent = title;
+            shareContent = title;
         }
         
     } else{

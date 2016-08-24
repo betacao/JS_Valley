@@ -419,7 +419,7 @@
                 weakSelf.authLabel.textColor = Color(@"d43c33");
             } else if ([weakSelf.auditState isEqualToString:@"2"]){
                 weakSelf.authLabel.text = @"已审核";
-                weakSelf.authLabel.textColor = Color(@"50bc5a");
+                weakSelf.authLabel.textColor = Color(@"9ed4a3");
                 weakSelf.modifyButton.hidden = NO;
                 [cell addViewToFrontView:weakSelf.vImageView];
             } else if ([weakSelf.auditState isEqualToString:@"3"]){

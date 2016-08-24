@@ -128,13 +128,12 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
 
     [self.categorySelectView addObserver:self forKeyPath:@"alpha" options:NSKeyValueObservingOptionNew context:nil];
     WEAK(self, weakSelf);
+    if(self.block){
+        self.block(self.titleButton);
+    }
     self.categorySelectView.block = ^(NSString *category){
         weakSelf.text = category;
         [SHGHomeCategoryView sharedCategoryView].category = category;
-
-        if(weakSelf.block){
-            weakSelf.block(weakSelf.titleButton);
-        }
     };
 }
 

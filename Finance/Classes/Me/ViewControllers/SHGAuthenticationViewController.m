@@ -369,7 +369,6 @@
             NSString *newHeadImageName = [(NSArray *)[dic valueForKey:@"pname"] objectAtIndex:0];
             [[NSUserDefaults standardUserDefaults] setObject:newHeadImageName forKey:KEY_HEAD_IMAGE];
             [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_SENDPOST object:nil];
-
             [weakSelf putHeadImage:newHeadImageName];
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
             NSLog(@"%@",error);

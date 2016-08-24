@@ -26,7 +26,7 @@
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.backgroundColor = [UIColor colorWithHexString:@"efeeef"];
-    [self addHeaderRefresh:self.tableView headerRefesh:YES andFooter:YES];
+    [self addHeaderRefresh:self.tableView headerRefesh:NO andFooter:YES];
     [self requestCardListWithTarget:@"first" time:@"0"];
 }
 - (NSMutableArray *)currentDataArray
@@ -76,7 +76,6 @@
         if ([target isEqualToString:@"first"]) {
             [self.dataArr removeAllObjects];
             [self.dataArr addObjectsFromArray:response.dataArray];
-            [self.tableView reloadData];
         }
         if ([target isEqualToString:@"refresh"]) {
              [self.dataArr removeAllObjects];
@@ -85,18 +84,18 @@
                     SHGCollectCardClass *obj = response.dataArray[i];
                     [self.dataArr insertObject:obj atIndex:0];
                 }
-                [self.tableView reloadData];
             }
             
         }
         if ([target isEqualToString:@"load"]) {
             [self.dataArr addObjectsFromArray:response.dataArray];
-            [self.tableView.mj_footer endRefreshingWithNoMoreData];
-            [self.tableView reloadData];
+            if (response.dataArray.count == 0) {
+                [self.tableView.mj_footer endRefreshingWithNoMoreData];
+            } else{
+                [self.tableView.mj_footer endRefreshing];
+            }
         }
         [self.tableView reloadData];
-        [self.tableView.mj_header endRefreshing];
-        [self.tableView.mj_footer endRefreshing];
         [Hud hideHud];
         
     } failed:^(MOCHTTPResponse *response) {

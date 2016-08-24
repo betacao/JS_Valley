@@ -24,7 +24,7 @@
                 <outlet property="textField" destination="JFS-sb-0f4" id="cqe-5U-wQ6"/>
                 <outlet property="textView" destination="MJQ-OL-aZB" id="ozU-Xv-E0g"/>
                 <outlet property="titleView" destination="DD6-aC-zIy" id="EVK-1s-O5X"/>
-                <outlet property="typeButtonView" destination="icP-jX-jFx" id="wHg-gR-BvV"/>
+                <outlet property="typeButtonScrollerView" destination="abK-ix-Y7I" id="UKr-WP-Itx"/>
                 <outlet property="typeTitleLabel" destination="fao-95-LcI" id="fW0-MC-wbg"/>
                 <outlet property="typeView" destination="VHt-KV-Azy" id="KKz-0V-hdg"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -76,11 +76,10 @@
                             <rect key="frame" x="9" y="16" width="295" height="82"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
-                                <view contentMode="scaleToFill" id="icP-jX-jFx">
-                                    <rect key="frame" x="0.0" y="42" width="295" height="31"/>
+                                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="abK-ix-Y7I">
+                                    <rect key="frame" x="27" y="4" width="240" height="37"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </view>
+                                </scrollView>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="fao-95-LcI">
                                     <rect key="frame" x="8" y="0.0" width="157" height="27"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>

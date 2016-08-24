@@ -226,7 +226,7 @@
 
     self.titleLabel.font = FontFactor(14.0f);
     self.titleLabel.textColor = Color(@"161616");
-    self.titleLabel.text = @"我的人脉";
+    self.titleLabel.text = @"我的好友";
 
     self.bottomView.backgroundColor = Color(@"efeeef");
     self.bottomView.hidden = YES;

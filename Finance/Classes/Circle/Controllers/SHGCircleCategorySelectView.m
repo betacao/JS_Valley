@@ -37,13 +37,12 @@
     self.backgroundColor = ColorA(@"000000", 0.5f);
     self.contentView = [[SHGBusinessButtonContentView alloc] initWithMode:SHGBusinessButtonShowModeSingleChoice];
     self.contentView.backgroundColor = [UIColor whiteColor];
-
-    self.titleArray = @[@"全部", @"债权融资", @"股权融资", @"资金", @"银证业务"];
     self.buttonArray = [NSMutableArray array];
+    self.titleArray = @[@"全部",@"债权融资",@"股权融资",@"资金",@"银证业务",@"'其他"];
     CGFloat width = ceilf((SCREENWIDTH - 4.0f * kButtonHorizontalMargin) / 3.0f);
     CGFloat height = MarginFactor(26.0f);
-    UIImage *defaultImage = [[UIImage imageNamed:@"category_bg_gray"] resizableImageWithCapInsets:UIEdgeInsetsMake(5.0f, 5.0f, 5.0f, 5.0f) resizingMode:UIImageResizingModeStretch];
-    UIImage *selectedImage = [[UIImage imageNamed:@"category_bg_red"] resizableImageWithCapInsets:UIEdgeInsetsMake(5.0f, 5.0f, 5.0f, 5.0f) resizingMode:UIImageResizingModeStretch];
+    UIImage *defaultImage = [[UIImage imageNamed:@"circle_typeUnSelect"] resizableImageWithCapInsets:UIEdgeInsetsMake(5.0f, 5.0f, 5.0f, 5.0f) resizingMode:UIImageResizingModeStretch];
+    UIImage *selectedImage = [[UIImage imageNamed:@"circle_typeSelect"] resizableImageWithCapInsets:UIEdgeInsetsMake(5.0f, 5.0f, 5.0f, 5.0f) resizingMode:UIImageResizingModeStretch];
     __block UIButton *lastButton = nil;
     [self.titleArray enumerateObjectsUsingBlock:^(NSString *text, NSUInteger idx, BOOL * _Nonnull stop) {
         NSInteger num = idx / 3;
