@@ -646,6 +646,10 @@
 
 - (BOOL)checkInputMessage
 {
+    if ([self isEmpty:self.nameTextField.text] == YES) {
+        [Hud showMessageWithText:@"请填写业务名称"];
+        return NO;
+    }
     if (self.nameTextField.text.length == 0) {
         [Hud showMessageWithText:@"请填写业务名称"];
         return NO;
@@ -689,7 +693,20 @@
     return YES;
 }
 
-
+- (BOOL)isEmpty:(NSString *)str {
+    
+    if (!str) {
+        return YES;
+    } else {
+        NSString *trimedString = [str stringByReplacingOccurrencesOfString:@" " withString:@""];
+        
+        if (trimedString.length == 0) {
+            return YES;
+        } else {
+            return NO;
+        }
+    }
+}
 
 - (IBAction)locationSelectClick:(UIButton *)sender
 {

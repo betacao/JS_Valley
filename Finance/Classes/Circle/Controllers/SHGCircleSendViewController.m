@@ -388,6 +388,11 @@
 {
     [self.textField resignFirstResponder];
     [self.textView resignFirstResponder];
+    if ([self isEmpty:self.textField.text] == YES) {
+        [Hud showMessageWithText:@"标题不能为空"];
+        return;
+    }
+    
     if (self.textField.text.length == 0) {
         [Hud showMessageWithText:@"标题不能为空"];
         return;
@@ -395,6 +400,7 @@
         [Hud showMessageWithText:@"标题最多可输入18个字"];
         return;
     }
+    
     if (self.textView.text.length > MAX_TEXT_LENGTH){
         [Hud showMessageWithText:@"帖子过长，不能超过2000个字"];
         return;
@@ -410,6 +416,20 @@
     }
 }
 
+- (BOOL)isEmpty:(NSString *)str {
+    
+    if (!str) {
+        return YES;
+    } else {
+        NSString *trimedString = [str stringByReplacingOccurrencesOfString:@" " withString:@""];
+        
+        if (trimedString.length == 0) {
+            return YES;
+        } else {
+            return NO;
+        }
+    }
+}
 
 - (void)sendPhotos
 {
