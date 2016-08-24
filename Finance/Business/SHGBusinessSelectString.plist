@@ -24,6 +24,8 @@
 	<string>agriculture</string>
 	<key>其他行业</key>
 	<string>other</string>
+	<key>其他</key>
+	<string>other</string>
 	<key>企业类</key>
 	<string>enterprise</string>
 	<key>平台类</key>

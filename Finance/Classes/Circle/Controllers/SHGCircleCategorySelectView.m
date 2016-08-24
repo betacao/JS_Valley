@@ -38,7 +38,7 @@
     self.contentView = [[SHGBusinessButtonContentView alloc] initWithMode:SHGBusinessButtonShowModeSingleChoice];
     self.contentView.backgroundColor = [UIColor whiteColor];
     self.buttonArray = [NSMutableArray array];
-    self.titleArray = @[@"全部",@"债权融资",@"股权融资",@"资金",@"银证业务",@"'其他"];
+    self.titleArray = @[@"全部",@"债权融资",@"股权融资",@"资金",@"银证业务",@"其他"];
     CGFloat width = ceilf((SCREENWIDTH - 4.0f * kButtonHorizontalMargin) / 3.0f);
     CGFloat height = MarginFactor(26.0f);
     UIImage *defaultImage = [[UIImage imageNamed:@"circle_typeUnSelect"] resizableImageWithCapInsets:UIEdgeInsetsMake(5.0f, 5.0f, 5.0f, 5.0f) resizingMode:UIImageResizingModeStretch];
