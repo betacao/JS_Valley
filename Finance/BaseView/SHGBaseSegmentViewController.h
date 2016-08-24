@@ -2,7 +2,7 @@
 //  SHGBaseSegmentViewController.h
 //  Finance
 //
-//  Created by changxicao on 16/8/15.
+//  Created by changxicao on 16/8/24.
 //  Copyright © 2016年 HuMin. All rights reserved.
 //
 
@@ -10,11 +10,10 @@
 
 @interface SHGBaseSegmentViewController : BaseViewController
 
-@property (nonatomic, copy) NSArray *viewControllers;
-@property (nonatomic, weak) UIViewController *selectedViewController;
-@property (nonatomic, assign) NSUInteger selectedIndex;
+@property (strong, nonatomic) NSArray *viewControllers;
+@property (assign, nonatomic) NSUInteger selectedIndex;
 
 - (void)initView;
-- (void)setSelectedIndex:(NSUInteger)newSelectedIndex animated:(BOOL)animated;
+- (void)setSelectedIndex:(NSUInteger)selectedIndex animated:(BOOL)animated;
 
 @end

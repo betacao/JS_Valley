@@ -2,15 +2,15 @@
 //  SHGBaseSegmentViewController.m
 //  Finance
 //
-//  Created by changxicao on 16/8/15.
+//  Created by changxicao on 16/8/24.
 //  Copyright © 2016年 HuMin. All rights reserved.
 //
 
 #import "SHGBaseSegmentViewController.h"
 
-@interface SHGBaseSegmentViewController ()
+@interface SHGBaseSegmentViewController ()<UIScrollViewDelegate>
 
-@property (strong, nonatomic) UIView *contentContainerView;
+@property (strong, nonatomic) UIScrollView *scrollView;
 
 @end
 
@@ -20,143 +20,80 @@
 {
     [super viewDidLoad];
     [self initView];
-    [self reloadTabButtons];
+    [self addAutoLayout];
 }
 
 - (void)initView
 {
-    self.view.backgroundColor = [UIColor whiteColor];
+    self.scrollView = [[UIScrollView alloc] init];
+    self.scrollView.pagingEnabled = YES;
+    self.scrollView.delegate = self;
+    self.scrollView.showsVerticalScrollIndicator = NO;
+    self.scrollView.showsHorizontalScrollIndicator = NO;
+    self.scrollView.bounces = NO;
 
-    self.contentContainerView = [[UIView alloc] initWithFrame:self.view.bounds];
-    self.contentContainerView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-    [self.view addSubview:self.contentContainerView];
+    UIView *lastView = nil;
+    for (UIViewController *viewController in self.viewControllers) {
+        [self addChildViewController:viewController];
+        [self.scrollView addSubview:viewController.view];
+        viewController.view.sd_layout
+        .leftSpaceToView(lastView ? lastView : self.scrollView, 0.0f)
+        .topSpaceToView(self.scrollView, 0.0f)
+        .bottomSpaceToView(self.scrollView, 0.0f)
+        .widthIs(SCREENWIDTH);
+        lastView = viewController.view;
+    }
+    [self.scrollView setContentSize:CGSizeMake(self.viewControllers.count * SCREENWIDTH, 0.0f)];
+    [self.view addSubview:self.scrollView];
+    [self resetView];
 }
 
-- (void)reloadTabButtons
+- (void)addAutoLayout
 {
-    NSUInteger lastIndex = _selectedIndex;
-    _selectedIndex = NSNotFound;
-    self.selectedIndex = lastIndex;
+    self.scrollView.sd_layout
+    .spaceToSuperView(UIEdgeInsetsZero);
 }
 
-- (void)setViewControllers:(NSArray *)newViewControllers
+- (void)resetView
 {
-    NSAssert([newViewControllers count] >= 2, @"MHTabBarController requires at least two view controllers");
+    self.selectedIndex = 0;
+}
 
-    UIViewController *oldSelectedViewController = self.selectedViewController;
-    for (UIViewController *viewController in _viewControllers) {
-        [viewController willMoveToParentViewController:nil];
+- (void)setViewControllers:(NSArray *)viewControllers
+{
+    for (UIViewController *viewController in self.viewControllers) {
+        [viewController.view removeFromSuperview];
         [viewController removeFromParentViewController];
     }
+    _viewControllers = viewControllers;
 
-    _viewControllers = [newViewControllers copy];
-
-    NSUInteger newIndex = [_viewControllers indexOfObject:oldSelectedViewController];
-    if (newIndex != NSNotFound) {
-        _selectedIndex = newIndex;
-    } else if (newIndex < [_viewControllers count]) {
-        _selectedIndex = newIndex;
-    } else {
-        _selectedIndex = 0;
-    }
-
-    for (UIViewController *viewController in _viewControllers) {
-        [self addChildViewController:viewController];
-        [viewController didMoveToParentViewController:self];
-    }
-
-    if ([self isViewLoaded]) {
-        [self reloadTabButtons];
-    }
+    [self resetView];
 }
 
-- (void)setSelectedIndex:(NSUInteger)newSelectedIndex
+- (void)setSelectedIndex:(NSUInteger)selectedIndex
 {
-    [self setSelectedIndex:newSelectedIndex animated:NO];
+    _selectedIndex = selectedIndex;
+    [self setSelectedIndex:selectedIndex animated:NO];
 }
 
-- (void)setSelectedIndex:(NSUInteger)newSelectedIndex animated:(BOOL)animated
+- (void)setSelectedIndex:(NSUInteger)selectedIndex animated:(BOOL)animated;
 {
-    NSAssert(newSelectedIndex < [self.viewControllers count], @"View controller index out of bounds");
-
-    if (![self isViewLoaded]) {
-        _selectedIndex = newSelectedIndex;
-    } else if (_selectedIndex != newSelectedIndex) {
-        UIViewController *fromViewController;
-        UIViewController *toViewController;
-
-        if (_selectedIndex != NSNotFound) {
-            fromViewController = self.selectedViewController;
-        }
-
-        NSUInteger oldSelectedIndex = _selectedIndex;
-        _selectedIndex = newSelectedIndex;
-
-        if (_selectedIndex != NSNotFound) {
-            toViewController = self.selectedViewController;
-        }
-
-        if (toViewController == nil) {
-            [fromViewController.view removeFromSuperview];
-        } else if (fromViewController == nil) {
-            toViewController.view.frame = self.contentContainerView.bounds;
-            [self.contentContainerView addSubview:toViewController.view];
-        } else if (animated) {
-            CGRect rect = self.contentContainerView.bounds;
-            if (oldSelectedIndex < newSelectedIndex) {
-                rect.origin.x = rect.size.width;
-            } else {
-                rect.origin.x = -rect.size.width;
-            }
-
-            toViewController.view.frame = rect;
-
-            [self transitionFromViewController:fromViewController toViewController:toViewController duration:0.25f options:UIViewAnimationOptionLayoutSubviews | UIViewAnimationOptionCurveEaseOut animations:^{
-                CGRect rect = fromViewController.view.frame;
-                if (oldSelectedIndex < newSelectedIndex){
-                    rect.origin.x = -rect.size.width;
-                } else{
-                    rect.origin.x = rect.size.width;
-                }
-                fromViewController.view.frame = rect;
-                toViewController.view.frame = self.contentContainerView.bounds;
-            } completion:^(BOOL finished){
-
-            }];
-        } else {
-            [fromViewController.view removeFromSuperview];
-            toViewController.view.frame = self.contentContainerView.bounds;
-            [self.contentContainerView addSubview:toViewController.view];
-        }
+    if (self.selectedIndex == selectedIndex) {
+        return;
     }
+    _selectedIndex = selectedIndex;
+    CGPoint point = CGPointMake(selectedIndex * SCREENWIDTH, 0);
+    [self.scrollView setContentOffset:point animated:animated];
 }
 
-- (UIViewController *)selectedViewController
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
-    if (self.selectedIndex != NSNotFound) {
-        return [self.viewControllers objectAtIndex:self.selectedIndex];
-    } else {
-        return nil;
-    }
-}
-
-- (void)setSelectedViewController:(UIViewController *)newSelectedViewController
-{
-    [self setSelectedViewController:newSelectedViewController animated:NO];
-}
-
-- (void)setSelectedViewController:(UIViewController *)newSelectedViewController animated:(BOOL)animated;
-{
-    NSUInteger index = [self.viewControllers indexOfObject:newSelectedViewController];
-    if (index != NSNotFound) {
-        [self setSelectedIndex:index animated:animated];
-    }
+    self.selectedIndex = (NSInteger)(floorf(scrollView.contentOffset.x / SCREENWIDTH));
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
 }
-
 
 @end

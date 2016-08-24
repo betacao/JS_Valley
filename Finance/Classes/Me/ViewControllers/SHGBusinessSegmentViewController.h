@@ -6,9 +6,9 @@
 //  Copyright © 2016年 HuMin. All rights reserved.
 //
 
-#import "SHGNewBaseSegmentViewController.h"
+#import "SHGBaseSegmentViewController.h"
 
-@interface SHGBusinessSegmentViewController : SHGNewBaseSegmentViewController
+@interface SHGBusinessSegmentViewController : SHGBaseSegmentViewController
 
 - (void)didCreateOrModifyBusiness;
 - (void)deleteBusinessWithBusinessID:(NSString *)businessID;

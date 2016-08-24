@@ -6,9 +6,9 @@
 //  Copyright © 2016年 HuMin. All rights reserved.
 //
 
-#import "SHGNewBaseSegmentViewController.h"
+#import "SHGBaseSegmentViewController.h"
 
-@interface SHGFriendSegmentViewController : SHGNewBaseSegmentViewController
+@interface SHGFriendSegmentViewController : SHGBaseSegmentViewController
 
 
 @end
