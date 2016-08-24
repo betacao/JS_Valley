@@ -101,6 +101,7 @@
     } else {
         self.hidden = NO;
         [self.dataArray removeAllObjects];
+        [self.tableView reloadData];
         [self requestDataWithTarget:@"first" time:@""];
     }
 }

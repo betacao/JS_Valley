@@ -35,6 +35,13 @@
     [SHGGlobleOperation registerAttationClass:[self class] method:@selector(loadAttationState:attationState:)];
 }
 
+- (void)setSelectedIndex:(NSUInteger)selectedIndex
+{
+    [super setSelectedIndex:selectedIndex];
+    SHGSegmentTitleView *titleView = (SHGSegmentTitleView *)self.navigationItem.titleView;
+    titleView.selectedIndex = selectedIndex;
+}
+
 - (void)loadAttationState:(NSString *)targetUserID attationState:(NSNumber *)attationState
 {
     for (UIViewController *controller in self.viewControllers) {

@@ -30,7 +30,6 @@
     } else{
         self.title = @"TA的动态";
     }
-    [Hud showWait];
     [self addHeaderRefresh:self.tableView headerRefesh:NO andFooter:YES];
     self.tableView.sd_layout
     .spaceToSuperView(UIEdgeInsetsZero);
@@ -90,19 +89,18 @@
 
 - (void)requestDataWithTarget:(NSString *)target time:(NSString *)time
 {
-
     WEAK(self, weakSelf);
+    [self.view showLoading];
     NSDictionary *param = @{@"uid":UID, @"target":target, @"rid":time, @"num":@(10)};
     [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttpCircle,@"queryCircleListById",self.userId] class:[CircleListObj class] parameters:param success:^(MOCHTTPResponse *response) {
-        [Hud hideHud];
+        [weakSelf.view hideHud];
         [weakSelf.tableView.mj_header endRefreshing];
         [weakSelf.tableView.mj_footer endRefreshing];
         [weakSelf parseDataWithDic:response.dataDictionary];
         [weakSelf.tableView reloadData];
     } failed:^(MOCHTTPResponse *response) {
-        [Hud showMessageWithText:response.errorMessage];
-        [Hud hideHud];
-        NSLog(@"%@",response.errorMessage);
+        [weakSelf.view hideHud];
+        [weakSelf.view showWithText:response.errorMessage];
         [weakSelf.tableView.mj_header endRefreshing];
         [weakSelf.tableView.mj_footer endRefreshing];
     }];
@@ -373,11 +371,11 @@
         if ([code isEqualToString:@"000"]) {
             obj.sharenum = [NSString stringWithFormat:@"%ld",(long)([obj.sharenum integerValue] + 1)];
             [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_COLLECT_SHARE_CLIC object:obj];
-            [Hud showMessageWithText:@"分享成功"];
+            [weakSelf.view showWithText:@"分享成功"];
             [weakSelf.tableView reloadData];
         }
     } failed:^(MOCHTTPResponse *response) {
-        [Hud showMessageWithText:response.errorMessage];
+        [weakSelf.view showWithText:response.errorMessage];
     }];
 }
 
@@ -393,6 +391,7 @@
 
 - (void)circleShareWithObj:(CircleListObj *)obj
 {
+    WEAK(self, weakSelf);
     NSString *url = [NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttpCircle,@"circle",obj.rid];
     NSDictionary *param = @{@"uid":[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID]};
     [MOCHTTPRequestOperationManager postWithURL:url class:nil parameters:param success:^(MOCHTTPResponse *response) {
@@ -401,10 +400,10 @@
         if ([code isEqualToString:@"000"]) {
             obj.sharenum = [NSString stringWithFormat:@"%ld",(long)([obj.sharenum integerValue] + 1)];
             [self.tableView reloadData];
-            [Hud showMessageWithText:@"转发成功"];
+            [weakSelf.view showWithText:@"转发成功"];
         }
     } failed:^(MOCHTTPResponse *response) {
-        [Hud showMessageWithText:response.errorMessage];
+        [weakSelf.view showWithText:response.errorMessage];
 
     }];
 }

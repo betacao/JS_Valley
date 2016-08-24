@@ -38,6 +38,12 @@
     [SHGGlobleOperation registerDeleteClass:[self class] method:@selector(loadDelete:)];
 }
 
+- (void)setSelectedIndex:(NSUInteger)selectedIndex
+{
+    [super setSelectedIndex:selectedIndex];
+    SHGSegmentTitleView *titleView = (SHGSegmentTitleView *)self.navigationItem.titleView;
+    titleView.selectedIndex = selectedIndex;
+}
 
 - (void)loadAttationState:(NSString *)targetUserID attationState:(NSNumber *)attationState
 {

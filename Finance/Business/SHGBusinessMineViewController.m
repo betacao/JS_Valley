@@ -37,7 +37,6 @@
     } else{
         self.title = @"TA的业务";
     }
-    [Hud showWait];
     [self addHeaderRefresh:self.tableView headerRefesh:NO andFooter:YES];
     self.tableView.backgroundColor = Color(@"f7f7f7");
     self.tableView.sd_layout
@@ -160,6 +159,7 @@
     } else{
         uid = UID;
     }
+    [self.view showLoading];
     NSString *businessId = [target isEqualToString:@"refresh"] ? [self maxBusinessID] : [self minBusinessID];
 
     NSString *modifyTime = [target isEqualToString:@"refresh"] ? [self maxModifyTime] : [self minModifyTime];
@@ -197,7 +197,7 @@
             }
 
             [weakSelf.tableView reloadData];
-            [Hud hideHud];
+            [weakSelf.view hideHud];
         }
     }];
 }

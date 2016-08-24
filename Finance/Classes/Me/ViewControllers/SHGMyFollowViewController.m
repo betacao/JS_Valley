@@ -28,7 +28,6 @@
 {
     [super viewDidLoad];
     self.title = @"我的关注";
-    [Hud showWait];
     [self initView];
     [self addSdLayout];
     [self requestFollowListWithTarget:@"first" time:@"-1"];
@@ -115,8 +114,9 @@
 
 - (void)requestFollowListWithTarget:(NSString *)target time:(NSString *)time
 {
-    NSDictionary *param = @{@"uid":UID, @"target":target, @"time":time, @"num":@"100"};
+    [self.view showLoading];
     WEAK(self, weakSelf);
+    NSDictionary *param = @{@"uid":UID, @"target":target, @"time":time, @"num":@"100"};
     [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttp,@"attention",@"myattentionlist"] class:[SHGFollowAndFansObject class] parameters:param success:^(MOCHTTPResponse *response) {
         NSMutableArray *array = [NSMutableArray arrayWithArray:response.dataArray];
         [array enumerateObjectsUsingBlock:^(SHGFollowAndFansObject *obj, NSUInteger idx, BOOL * _Nonnull stop) {
@@ -140,10 +140,10 @@
             [weakSelf.tableView.mj_footer endRefreshing];
         }
         [weakSelf.tableView reloadData];
-        [Hud hideHud];
+        [weakSelf.view hideHud];
     } failed:^(MOCHTTPResponse *response) {
         [weakSelf.tableView.mj_footer endRefreshing];
-        [Hud hideHud];
+        [weakSelf.view hideHud];
     }];
 }
 

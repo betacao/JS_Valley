@@ -14,6 +14,7 @@ typedef void(^SHGSegmentTitleViewBlock)(NSInteger index);
 
 @property (assign, nonatomic) CGFloat margin;//先设置margin 后给title
 @property (strong, nonatomic) NSArray *titleArray;
+@property (assign, nonatomic) NSInteger selectedIndex;
 @property (copy, nonatomic) SHGSegmentTitleViewBlock block;
 
 @end

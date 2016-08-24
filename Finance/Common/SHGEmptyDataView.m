@@ -7,6 +7,8 @@
 //
 
 #import "SHGEmptyDataView.h"
+#import "UIViewController+Extend.h"
+
 #define kImageViewTopMargin 80.0f * XFACTOR
 #define kActionButtonFrame CGRectMake(kObjectMargin, CGRectGetMaxY(self.imageView.frame) + kImageViewTopMargin, SCREENWIDTH - 2 * kObjectMargin, 35.0f)
 
@@ -82,12 +84,14 @@
 
 - (void)layoutSubviews
 {
+    [super layoutSubviews];
+    UIViewController *controller = [UIViewController findSourceViewController:self];
     if (self.type == SHGEmptyDataNormal ||self.type == SHGEmptyDataMarketDeleted||self.type == SHGEmptyDataBusinessDeleted) {
         CGPoint point = self.window.center;
         point = [self convertPoint:point fromView:self.window];
+        point.x += CGRectGetMinX(controller.view.frame);
         self.imageView.center = point;
     }
-    [super layoutSubviews];
 }
 
 

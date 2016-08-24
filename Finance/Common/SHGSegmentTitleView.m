@@ -78,7 +78,14 @@
         self.leftImageView.frame = frame1;
         self.rightImageView.frame = frame2;
     }];
+    _selectedIndex = [self.buttonArray indexOfObject:button];
+}
 
+
+- (void)setSelectedIndex:(NSInteger)selectedIndex
+{
+    _selectedIndex = selectedIndex;
+    [self buttonClick:[self.buttonArray objectAtIndex:selectedIndex]];
 }
 
 @end

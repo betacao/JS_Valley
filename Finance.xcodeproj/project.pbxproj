@@ -724,6 +724,9 @@
 		F9352C021CFBD25C00778635 /* SHGNewsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9352C001CFBD25C00778635 /* SHGNewsViewController.xib */; };
 		F936A9201D4F5439001C3E32 /* NSDate+Category.m in Sources */ = {isa = PBXBuildFile; fileRef = F936A91F1D4F5439001C3E32 /* NSDate+Category.m */; };
 		F93891BE1CA11B2900B182F7 /* UINavigationItem+Custom.m in Sources */ = {isa = PBXBuildFile; fileRef = F93891BD1CA11B2900B182F7 /* UINavigationItem+Custom.m */; };
+		F939FAF21D6D2D7700049A57 /* SHGNewBaseSegmentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F939FAF11D6D2D7700049A57 /* SHGNewBaseSegmentViewController.m */; };
+		F939FAF51D6D43E900049A57 /* UIViewController+Extend.m in Sources */ = {isa = PBXBuildFile; fileRef = F939FAF41D6D43E900049A57 /* UIViewController+Extend.m */; };
+		F939FAF81D6D702800049A57 /* NSObject+Extend.m in Sources */ = {isa = PBXBuildFile; fileRef = F939FAF71D6D702800049A57 /* NSObject+Extend.m */; };
 		F93C22F71D1CC7F400A1F5E9 /* SHGAdvertisementView.m in Sources */ = {isa = PBXBuildFile; fileRef = F93C22F61D1CC7F400A1F5E9 /* SHGAdvertisementView.m */; };
 		F93D55D21CA0EA24008845C5 /* MessageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F93D55D11CA0EA24008845C5 /* MessageTableViewCell.xib */; };
 		F93EA9171D59BD8700161F47 /* SHGBusinessSegmentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F93EA9161D59BD8700161F47 /* SHGBusinessSegmentViewController.m */; };
@@ -740,7 +743,7 @@
 		F93FCBC81C856D5A004E356E /* UIColor+extend.m in Sources */ = {isa = PBXBuildFile; fileRef = F93FCBB41C856D5A004E356E /* UIColor+extend.m */; };
 		F93FCBCA1C856D5A004E356E /* UIImage+Customized.m in Sources */ = {isa = PBXBuildFile; fileRef = F93FCBB81C856D5A004E356E /* UIImage+Customized.m */; };
 		F93FCBCB1C856D5A004E356E /* UIImage+Rotation.m in Sources */ = {isa = PBXBuildFile; fileRef = F93FCBBA1C856D5A004E356E /* UIImage+Rotation.m */; };
-		F93FCBCD1C856D5A004E356E /* UIView+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = F93FCBBE1C856D5A004E356E /* UIView+Additions.m */; };
+		F93FCBCD1C856D5A004E356E /* UIView+HUD.m in Sources */ = {isa = PBXBuildFile; fileRef = F93FCBBE1C856D5A004E356E /* UIView+HUD.m */; };
 		F94BDC201D5C585500C6BB11 /* SHGCompanyManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F94BDC1F1D5C585500C6BB11 /* SHGCompanyManager.m */; };
 		F94BDC231D5C644C00C6BB11 /* SHGCompanyObject.m in Sources */ = {isa = PBXBuildFile; fileRef = F94BDC221D5C644C00C6BB11 /* SHGCompanyObject.m */; };
 		F94BDC271D5C70D600C6BB11 /* SHGCompanyBrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F94BDC251D5C70D600C6BB11 /* SHGCompanyBrowserViewController.m */; };
@@ -1783,6 +1786,12 @@
 		F936A91F1D4F5439001C3E32 /* NSDate+Category.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Category.m"; sourceTree = "<group>"; };
 		F93891BC1CA11B2900B182F7 /* UINavigationItem+Custom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationItem+Custom.h"; sourceTree = "<group>"; };
 		F93891BD1CA11B2900B182F7 /* UINavigationItem+Custom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationItem+Custom.m"; sourceTree = "<group>"; };
+		F939FAF01D6D2D7700049A57 /* SHGNewBaseSegmentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGNewBaseSegmentViewController.h; sourceTree = "<group>"; };
+		F939FAF11D6D2D7700049A57 /* SHGNewBaseSegmentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGNewBaseSegmentViewController.m; sourceTree = "<group>"; };
+		F939FAF31D6D43E900049A57 /* UIViewController+Extend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+Extend.h"; sourceTree = "<group>"; };
+		F939FAF41D6D43E900049A57 /* UIViewController+Extend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+Extend.m"; sourceTree = "<group>"; };
+		F939FAF61D6D702800049A57 /* NSObject+Extend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Extend.h"; sourceTree = "<group>"; };
+		F939FAF71D6D702800049A57 /* NSObject+Extend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Extend.m"; sourceTree = "<group>"; };
 		F93C22F51D1CC7F400A1F5E9 /* SHGAdvertisementView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGAdvertisementView.h; sourceTree = "<group>"; };
 		F93C22F61D1CC7F400A1F5E9 /* SHGAdvertisementView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGAdvertisementView.m; sourceTree = "<group>"; };
 		F93D55D11CA0EA24008845C5 /* MessageTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MessageTableViewCell.xib; sourceTree = "<group>"; };
@@ -1814,8 +1823,8 @@
 		F93FCBB81C856D5A004E356E /* UIImage+Customized.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Customized.m"; sourceTree = "<group>"; };
 		F93FCBB91C856D5A004E356E /* UIImage+Rotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Rotation.h"; sourceTree = "<group>"; };
 		F93FCBBA1C856D5A004E356E /* UIImage+Rotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Rotation.m"; sourceTree = "<group>"; };
-		F93FCBBD1C856D5A004E356E /* UIView+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Additions.h"; sourceTree = "<group>"; };
-		F93FCBBE1C856D5A004E356E /* UIView+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Additions.m"; sourceTree = "<group>"; };
+		F93FCBBD1C856D5A004E356E /* UIView+HUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+HUD.h"; sourceTree = "<group>"; };
+		F93FCBBE1C856D5A004E356E /* UIView+HUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+HUD.m"; sourceTree = "<group>"; };
 		F94BDC1E1D5C585500C6BB11 /* SHGCompanyManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGCompanyManager.h; sourceTree = "<group>"; };
 		F94BDC1F1D5C585500C6BB11 /* SHGCompanyManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGCompanyManager.m; sourceTree = "<group>"; };
 		F94BDC211D5C644C00C6BB11 /* SHGCompanyObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGCompanyObject.h; sourceTree = "<group>"; };
@@ -3273,6 +3282,8 @@
 				61D6E73A1AD50FCA0016C13A /* BaseViewController.m */,
 				F91F4DFC1D61C69D00D96A8A /* SHGBaseSegmentViewController.h */,
 				F91F4DFD1D61C69D00D96A8A /* SHGBaseSegmentViewController.m */,
+				F939FAF01D6D2D7700049A57 /* SHGNewBaseSegmentViewController.h */,
+				F939FAF11D6D2D7700049A57 /* SHGNewBaseSegmentViewController.m */,
 			);
 			path = BaseView;
 			sourceTree = "<group>";
@@ -3930,14 +3941,18 @@
 				F93FCBB81C856D5A004E356E /* UIImage+Customized.m */,
 				F93FCBB91C856D5A004E356E /* UIImage+Rotation.h */,
 				F93FCBBA1C856D5A004E356E /* UIImage+Rotation.m */,
-				F93FCBBD1C856D5A004E356E /* UIView+Additions.h */,
-				F93FCBBE1C856D5A004E356E /* UIView+Additions.m */,
+				F93FCBBD1C856D5A004E356E /* UIView+HUD.h */,
+				F93FCBBE1C856D5A004E356E /* UIView+HUD.m */,
 				F93891BC1CA11B2900B182F7 /* UINavigationItem+Custom.h */,
 				F93891BD1CA11B2900B182F7 /* UINavigationItem+Custom.m */,
 				F923AB1F1D543A0E00518040 /* UITabBar+badge.h */,
 				F923AB201D543A0E00518040 /* UITabBar+badge.m */,
 				F9172D911D648527000BA546 /* UITableView+MJRefresh.h */,
 				F9172D921D648527000BA546 /* UITableView+MJRefresh.m */,
+				F939FAF31D6D43E900049A57 /* UIViewController+Extend.h */,
+				F939FAF41D6D43E900049A57 /* UIViewController+Extend.m */,
+				F939FAF61D6D702800049A57 /* NSObject+Extend.h */,
+				F939FAF71D6D702800049A57 /* NSObject+Extend.m */,
 			);
 			name = Category;
 			path = Finance/Category;
@@ -4954,11 +4969,13 @@
 				F9172D881D643A67000BA546 /* SHGCircleManager.m in Sources */,
 				98FFF6561D587C400029E85B /* SHGIndustrySelectView.m in Sources */,
 				F9ED07F41C3B6A530079A1A9 /* SHGModifyUserInfoViewController.m in Sources */,
+				F939FAF51D6D43E900049A57 /* UIViewController+Extend.m in Sources */,
 				9842E9D41C0180240008B6AF /* SHGPersonFriendsTableViewCell.m in Sources */,
 				5331DF1C1AFC017600E035B8 /* ApplyFriendCell.m in Sources */,
 				F9EDD5F81BABFBCF00506C0C /* SDPhotoGroup.m in Sources */,
 				6187D2DC1AF1C693008E1D21 /* FacialView.m in Sources */,
 				F9172D901D6451B5000BA546 /* SHGHomeCategoryView.m in Sources */,
+				F939FAF81D6D702800049A57 /* NSObject+Extend.m in Sources */,
 				61D62BEF1ADD1C4D002DD395 /* MOCHTTPResponse.m in Sources */,
 				F9172D841D643929000BA546 /* SHGLinkViewController.m in Sources */,
 				F916B5FC1D0D395300AE217F /* CTTextEmojiUtil.m in Sources */,
@@ -5015,7 +5032,7 @@
 				986FFF131CBC857200D9FE04 /* SHGBusinessLocationView.m in Sources */,
 				F93FCBC81C856D5A004E356E /* UIColor+extend.m in Sources */,
 				F9B18C081BA0521600EA0314 /* SHGNoticeView.m in Sources */,
-				F93FCBCD1C856D5A004E356E /* UIView+Additions.m in Sources */,
+				F93FCBCD1C856D5A004E356E /* UIView+HUD.m in Sources */,
 				9876946A1D5C101900D394E6 /* SHGCitySelectViewController.m in Sources */,
 				6187D2D21AF1C693008E1D21 /* PublicGroupListViewController.m in Sources */,
 				6187D2D11AF1C693008E1D21 /* PublicGroupDetailViewController.m in Sources */,
@@ -5064,6 +5081,7 @@
 				408D8B821AF86CF20055810C /* MyMoneyDetailObject.m in Sources */,
 				F93FC95A1D1B8E6800CBE7B8 /* SHGAuthenticationView.m in Sources */,
 				F9D296D61C8F02F100A1446C /* SHGMainPageTableViewCell.m in Sources */,
+				F939FAF21D6D2D7700049A57 /* SHGNewBaseSegmentViewController.m in Sources */,
 				982EB8111CB6023E003EEBE6 /* SHGBusinessSelectView.m in Sources */,
 				6190274A1B2359C600D9EEA2 /* popTableViewCell.m in Sources */,
 				F9E7CAF51CF83C740068EF4B /* SHGRecommendViewController.m in Sources */,

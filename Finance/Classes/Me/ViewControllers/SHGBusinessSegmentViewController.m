@@ -52,6 +52,13 @@
     self.navigationItem.titleView = titleView;
 }
 
+- (void)setSelectedIndex:(NSUInteger)selectedIndex
+{
+    [super setSelectedIndex:selectedIndex];
+    SHGSegmentTitleView *titleView = (SHGSegmentTitleView *)self.navigationItem.titleView;
+    titleView.selectedIndex = selectedIndex;
+}
+
 - (void)btnBackClick:(id)sender
 {
     [self.navigationController popToViewController:[TabBarViewController tabBar] animated:YES];

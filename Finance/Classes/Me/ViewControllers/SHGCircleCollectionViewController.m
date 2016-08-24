@@ -27,17 +27,18 @@
 {
     [super viewDidLoad];
     self.title = @"动态收藏";
-    [Hud showWait];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.backgroundColor = [UIColor colorWithHexString:@"efeeef"];
     [self addHeaderRefresh:self.tableView headerRefesh:NO andFooter:YES];
-    [self requestPostListWithTarget:@"first" rid:@"-1"];
-
+    self.tableView.sd_layout
+    .spaceToSuperView(UIEdgeInsetsZero);
     //这里面注册2个 是因为有可能单独进到这个页面里面，而不是通过segment(区别就在第二个参数 不是id)
     [SHGGlobleOperation registerAttationClass:[self class] method:@selector(loadAttationState:attationState:)];
     [SHGGlobleOperation registerPraiseClass:[self class] method:@selector(loadPraiseState:praiseState:)];
     [SHGGlobleOperation registerDeleteClass:[self class] method:@selector(loadDelete:)];
+
+    [self requestPostListWithTarget:@"first" rid:@"-1"];
 
 }
 
@@ -126,24 +127,17 @@
 
 - (void)requestPostListWithTarget:(NSString *)target rid:(NSString *)rid
 {
-    NSDictionary * param = @{@"uid":UID, @"target":target, @"rid":rid, @"num":@"10"};
+    WEAK(self, weakSelf);
+    [self.view showLoading];
 
+    NSDictionary * param = @{@"uid":UID, @"target":target, @"rid":rid, @"num":@"10"};
     [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttp,@"collection",@"mycirclelist"] class:[CircleListObj class] parameters:param success:^(MOCHTTPResponse *response) {
+        [weakSelf.view hideHud];
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
         if ([target isEqualToString:@"first"]) {
             [self.dataArr removeAllObjects];
             [self.dataArr addObjectsFromArray:response.dataArray];
-
-        }
-        if ([target isEqualToString:@"refresh"]) {
-            [self.dataArr removeAllObjects];
-            if (response.dataArray.count > 0) {
-                for (NSInteger i = response.dataArray.count-1; i >= 0; i --) {
-                    CircleListObj *obj = response.dataArray[i];
-                    [self.dataArr insertObject:obj atIndex:0];
-                }
-
-            }
-
         }
         if ([target isEqualToString:@"load"]) {
             [self.dataArr addObjectsFromArray:response.dataArray];
@@ -154,12 +148,12 @@
             }
         }
         [self.tableView reloadData];
-        [Hud hideHud];
+        [weakSelf.view hideHud];
 
     } failed:^(MOCHTTPResponse *response) {
         NSLog(@"%@",response.errorMessage);
-        [Hud hideHud];
-        [Hud showMessageWithText:response.errorMessage];
+        [weakSelf.view hideHud];
+        [weakSelf.view showWithText:response.errorMessage];
         [self.tableView.mj_header endRefreshing];
         [self performSelector:@selector(endFoot) withObject:nil afterDelay:1.0];
     }];
@@ -232,7 +226,7 @@
         }
         return SCREENWIDTH;
     }
-    return SCREENHEIGHT;
+    return CGRectGetHeight(self.view.frame);
 }
 
 
@@ -240,28 +234,16 @@
 {
     if (self.dataArr.count > 0) {
         CircleListObj *obj = [self.dataArr objectAtIndex:indexPath.row];
-        if ([obj.status boolValue]) {
-            NSString *cellIdentifier = @"SHGMainPageTableViewCell";
-            SHGMainPageTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-            if (!cell) {
-                cell = [[[NSBundle mainBundle] loadNibNamed:@"SHGMainPageTableViewCell" owner:self options:nil] lastObject];
-            }
-            cell.delegate = self;
-            cell.index = indexPath.row;
-            cell.object = obj;
-            [cell useCellFrameCacheWithIndexPath:indexPath tableView:tableView];
-            return cell;
-        } else{
-            NSString *cellIdentifier = @"noListIdentifier";
-            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-            if (!cell) {
-                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
-            }
-            cell.textLabel.text = @"原帖已删除";
-            cell.textLabel.font = FontFactor(16.0f);
-
-            return cell;
+        NSString *cellIdentifier = @"SHGMainPageTableViewCell";
+        SHGMainPageTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+        if (!cell) {
+            cell = [[[NSBundle mainBundle] loadNibNamed:@"SHGMainPageTableViewCell" owner:self options:nil] lastObject];
         }
+        cell.delegate = self;
+        cell.index = indexPath.row;
+        cell.object = obj;
+        [cell useCellFrameCacheWithIndexPath:indexPath tableView:tableView];
+        return cell;
     } else{
         return self.emptyCell;
     }
@@ -404,6 +386,7 @@
 
 - (void)circleShareWithObj:(CircleListObj *)obj
 {
+    WEAK(self, weakSelf);
     NSString *url = [NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttpCircle,@"circle",obj.rid];
     NSDictionary *param = @{@"uid":[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID]};
     [MOCHTTPRequestOperationManager postWithURL:url class:nil parameters:param success:^(MOCHTTPResponse *response) {
@@ -412,18 +395,19 @@
         if ([code isEqualToString:@"000"]) {
             obj.sharenum = [NSString stringWithFormat:@"%ld",(long)[obj.sharenum integerValue]+1];
             [self.tableView reloadData];
-            [Hud showMessageWithText:@"分享成功"];
+            [weakSelf.view showWithText:@"分享成功"];
             [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_COLLECT_SHARE_CLIC object:obj];
 
         }
     } failed:^(MOCHTTPResponse *response) {
-        [Hud showMessageWithText:response.errorMessage];
+        [weakSelf.view showWithText:response.errorMessage];
 
     }];
 }
 
 - (void)otherShareWithObj:(CircleListObj *)obj
 {
+    WEAK(self, weakSelf);
     NSString *url = [NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttpCircle,@"circle",obj.rid];
     NSDictionary *param = @{@"uid":[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID]};
     [MOCHTTPRequestOperationManager putWithURL:url class:nil parameters:param success:^(MOCHTTPResponse *response) {
@@ -431,10 +415,10 @@
         if ([code isEqualToString:@"000"]) {
             obj.sharenum = [NSString stringWithFormat:@"%ld",(long)[obj.sharenum integerValue]+1];
             [self.tableView reloadData];
-            [Hud showMessageWithText:@"分享成功"];
+            [weakSelf.view showWithText:@"分享成功"];
         }
     } failed:^(MOCHTTPResponse *response) {
-        [Hud showMessageWithText:response.errorMessage];
+        [weakSelf.view showWithText:response.errorMessage];
     }];
 }
 
@@ -464,10 +448,10 @@
     [self.tableView reloadData];
 
 }
+
 -(void)detailCollectionWithRid:(NSString *)rid collected:(NSString *)isColle
 {
-    [self requestPostListWithTarget:@"first" rid:@"-1"];
-    //[self requestMarketCollectWithTarget:@"first" time:@"-1"];
+    [self requestPostListWithTarget:@"first" rid:@"-1"];\
 }
 
 - (void)didReceiveMemoryWarning

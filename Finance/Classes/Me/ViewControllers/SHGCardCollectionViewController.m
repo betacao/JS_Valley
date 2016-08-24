@@ -22,7 +22,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"名片收藏";
-    [Hud showWait];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.backgroundColor = [UIColor colorWithHexString:@"efeeef"];
@@ -58,18 +57,12 @@
 
 - (void)requestCardListWithTarget:(NSString *)target time:(NSString *)time
 {
-    if ([target isEqualToString:@"first"])
-    {
+    if ([target isEqualToString:@"first"]) {
         [self.tableView.mj_footer resetNoMoreData];
-        
     }
-    
-    NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
-    //[Hud showWait];
-    NSDictionary *param = @{@"uid":uid,
-                            @"target":target,
-                            @"time":time,
-                            @"num":@"100"};
+    WEAK(self, weakSelf);
+    [self.view showLoading];
+    NSDictionary *param = @{@"uid":UID, @"target":target, @"time":time, @"num":@"100"};
     [MOCHTTPRequestOperationManager getWithURL:[NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttp,@"userCard",@"myCardlist"] class:[SHGCollectCardClass class] parameters:param success:^(MOCHTTPResponse *response) {
         NSLog(@"=========%@",response.dataArray);
         
@@ -96,13 +89,13 @@
             }
         }
         [self.tableView reloadData];
-        [Hud hideHud];
+        [weakSelf.view hideHud];
         
     } failed:^(MOCHTTPResponse *response) {
         NSLog(@"%@",response.errorMessage);
         [self.tableView.mj_header endRefreshing];
         [self.tableView.mj_footer endRefreshing];
-        [Hud hideHud];
+        [weakSelf.view hideHud];
         
     }];
     

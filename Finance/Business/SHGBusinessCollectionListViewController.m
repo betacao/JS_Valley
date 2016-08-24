@@ -27,7 +27,6 @@
 {
     [super viewDidLoad];
     self.title = @"业务收藏";
-    [Hud showWait];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.sd_layout
@@ -53,12 +52,11 @@
 }
 - (void)requestBusinessCollectWithTarget:(NSString *)target
 {
-    if ([target isEqualToString:@"first"])
-    {
+    WEAK(self, weakSelf);
+    if ([target isEqualToString:@"first"]) {
         [self.tableView.mj_footer resetNoMoreData];
-        
     }
-    
+    [self.view showLoading];
     NSString *businessId = [target isEqualToString:@"refresh"] ? [self maxBusinessID] : [self minBusinessID];
     NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
     NSDictionary *param = @{@"uid":uid, @"target":target, @"businessId":businessId, @"pageSize":@"10", @"version":[SHGGloble sharedGloble].currentVersion};
@@ -72,20 +70,6 @@
             [self.noticeView showWithText:[NSString stringWithFormat:@"为您加载了%ld条新业务",(long)dataArray.count]];
             [self.tableView reloadData];
         }
-        if ([target isEqualToString:@"refresh"]) {
-            
-            if (dataArray.count > 0) {
-                for (NSInteger i = dataArray.count-1; i >= 0; i --) {
-                    SHGBusinessObject *obj = dataArray[i];
-                    [self.dataArr insertObject:obj atIndex:0];
-                    [self.noticeView showWithText:[NSString stringWithFormat:@"为您加载了%ld条新业务",(long)dataArray.count]];
-                }
-                [self.tableView reloadData];
-            } else{
-                [self.noticeView showWithText:@"暂无新业务，休息一会儿"];
-            }
-            
-        }
         if ([target isEqualToString:@"load"]) {
             [self.dataArr addObjectsFromArray:dataArray];
             if (dataArray.count == 0) {
@@ -96,11 +80,13 @@
 
         }
         [self reloadData];
-        [Hud hideHud];
+        [weakSelf.view hideHud];
         
     } failed:^(MOCHTTPResponse *response) {
         NSLog(@"%@",response.errorMessage);
-        [Hud hideHud];
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
+        [weakSelf.view hideHud];
         
     }];
     

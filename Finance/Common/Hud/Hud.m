@@ -60,16 +60,17 @@
         HUD.opacity = 0.0f;
         HUD.mode = MBProgressHUDModeCustomView;
         HUD.customView = progressHud;
+        [view bringSubviewToFront:HUD];
     }
 }
 
 + (void)showGrayWait
 {
     [self hideHud];
-    [self performSelectorOnMainThread:@selector(showGratOnMainThread) withObject:nil waitUntilDone:YES];
+    [self performSelectorOnMainThread:@selector(showGrayOnMainThread) withObject:nil waitUntilDone:YES];
 }
 
-+ (void)showGratOnMainThread
++ (void)showGrayOnMainThread
 {
     if ([[AppDelegate currentAppdelegate].window.rootViewController isKindOfClass:[UINavigationController class]]){
         UINavigationController *nav = (UINavigationController *)[AppDelegate currentAppdelegate].window.rootViewController;
@@ -82,6 +83,7 @@
         HUD.opacity = 0.0f;
         HUD.mode = MBProgressHUDModeCustomView;
         HUD.customView = progressHud;
+        [view bringSubviewToFront:HUD];
     }
 }
 

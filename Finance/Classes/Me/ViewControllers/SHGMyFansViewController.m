@@ -29,7 +29,6 @@
 {
     [super viewDidLoad];
     self.title = @"我的粉丝";
-    [Hud showWait];
     [self initView];
     [self addSdLayout];
     [self requestFansListWithTarget:@"first" time:@"-1"];
@@ -126,6 +125,7 @@
     NSString *uid = UID;
     NSDictionary *param = @{@"uid":uid, @"target":target, @"time":time, @"num":@"100"};
     WEAK(self, weakSelf);
+    [self.view showLoading];
     [MOCHTTPRequestOperationManager getWithURL:[rBaseAddressForHttp stringByAppendingString:@"/attention/myfanslist"] class:[SHGFollowAndFansObject class] parameters:param success:^(MOCHTTPResponse *response) {
         NSMutableArray *array = [NSMutableArray arrayWithArray:response.dataArray];
         [array enumerateObjectsUsingBlock:^(SHGFollowAndFansObject *obj, NSUInteger idx, BOOL * _Nonnull stop) {
@@ -150,10 +150,10 @@
         }
         
         [weakSelf.tableView reloadData];
-        [Hud hideHud];
+        [weakSelf.view hideHud];
     } failed:^(MOCHTTPResponse *response) {
         [weakSelf.tableView.mj_footer endRefreshing];
-        [Hud hideHud];
+        [weakSelf.view hideHud];
     }];
 }
 
