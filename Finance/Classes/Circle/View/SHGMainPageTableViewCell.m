@@ -404,10 +404,11 @@
 - (void)loadActionView:(CircleListObj *)object
 {
     //判断好友是一度好友还是二度好友
-    if ([object.friendship isEqualToString:@"一度"]) {
-        object.friendship = @"一度人脉";
-    } else if ([object.friendship isEqualToString:@"二度"]){
-        object.friendship = @"二度人脉";
+    NSString *friendShip = object.friendship;
+    if ([friendShip isEqualToString:@"一度"]) {
+        friendShip = @"一度人脉";
+    } else if ([friendShip isEqualToString:@"二度"]){
+        friendShip = @"二度人脉";
     }
     //设置好友关系、定位标签的内容
     if(![object.postType isEqualToString:@"pc"]){
@@ -415,18 +416,18 @@
             self.relationLabel.text = [NSString stringWithFormat:@"%@",object.currcity];
         } else{
             NSString *string = @"";
-            if(object.friendship && object.friendship.length > 0){
-                string = object.friendship;
+            if(friendShip && friendShip.length > 0){
+                string = friendShip;
                 if(object.currcity && object.currcity.length > 0){
                     string = [string stringByAppendingFormat:@" , %@",object.currcity];
-                    self.relationLabel.text = string;
                 }
+                self.relationLabel.text = string;
             } else {
                 self.relationLabel.text = string;
             }
         }
     } else{
-        self.relationLabel.text = object.friendship;
+        self.relationLabel.text = friendShip;
     }
     //聚合账号展示
     if ([object.usertype isEqualToString:@"businessAccount"]) {

@@ -5267,7 +5267,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer: xie jian (A35C7Q22SB)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -5297,7 +5297,7 @@
 				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.danniuquan.apptest;
 				PRODUCT_NAME = "大牛圈";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "377b0370-afb6-4581-ba22-c107fe5d513b";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -5341,7 +5341,7 @@
 				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.danniuquan.apptest;
 				PRODUCT_NAME = "大牛圈";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "377b0370-afb6-4581-ba22-c107fe5d513b";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -5393,7 +5393,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer: xie jian (A35C7Q22SB)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -5423,7 +5423,7 @@
 				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.danniuquan.apptest;
 				PRODUCT_NAME = "大牛圈";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "377b0370-afb6-4581-ba22-c107fe5d513b";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 			};

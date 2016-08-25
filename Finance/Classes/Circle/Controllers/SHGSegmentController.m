@@ -387,6 +387,7 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
 - (void)actionPost:(UIButton *)button
 {
     self.categorySelectView.alpha = 0.0f;
+    [Hud showWait];
     [[SHGGloble sharedGloble] requestUserVerifyStatusCompletion:^(BOOL state,NSString *auditState) {
         if (state) {
             SHGCircleSendViewController *controller = [[SHGCircleSendViewController alloc] init];

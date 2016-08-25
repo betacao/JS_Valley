@@ -421,6 +421,7 @@
 {
     NSString *request = [rBaseAddressForHttp stringByAppendingString:@"/auth/isAuth"];
     [MOCHTTPRequestOperationManager postWithURL:request parameters:@{@"uid":UID} success:^(MOCHTTPResponse *response) {
+        [Hud hideHud];
         //未认证
         NSString *auditState = [response.dataDictionary objectForKey:@"auditstate"];
         if ([[response.dataDictionary objectForKey:@"status"] isEqualToString:@"0"]) {
@@ -438,6 +439,7 @@
             completionblock(YES,auditState);
         }
     } failed:^(MOCHTTPResponse *response) {
+        [Hud hideHud];
         [Hud showMessageWithText:@"获取用户认证状态失败"];
     }];
 
