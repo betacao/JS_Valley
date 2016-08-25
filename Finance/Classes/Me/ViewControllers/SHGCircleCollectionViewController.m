@@ -387,22 +387,36 @@
 - (void)circleShareWithObj:(CircleListObj *)obj
 {
     WEAK(self, weakSelf);
-    NSString *url = [NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttpCircle,@"circle",obj.rid];
-    NSDictionary *param = @{@"uid":[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID]};
-    [MOCHTTPRequestOperationManager postWithURL:url class:nil parameters:param success:^(MOCHTTPResponse *response) {
-
-        NSString *code = [response.data valueForKey:@"code"];
-        if ([code isEqualToString:@"000"]) {
-            obj.sharenum = [NSString stringWithFormat:@"%ld",(long)[obj.sharenum integerValue]+1];
-            [self.tableView reloadData];
-            [weakSelf.view showWithText:@"分享成功"];
-            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_COLLECT_SHARE_CLIC object:obj];
-
+    [[SHGGloble sharedGloble] requestUserVerifyStatusCompletion:^(BOOL state,NSString *auditState) {
+        if (state) {
+            NSString *url = [NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttpCircle,@"circle",obj.rid];
+            NSDictionary *param = @{@"uid":[[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID]};
+            [MOCHTTPRequestOperationManager postWithURL:url class:nil parameters:param success:^(MOCHTTPResponse *response) {
+                
+                NSString *code = [response.data valueForKey:@"code"];
+                if ([code isEqualToString:@"000"]) {
+                    obj.sharenum = [NSString stringWithFormat:@"%ld",(long)[obj.sharenum integerValue]+1];
+                    [self.tableView reloadData];
+                    [weakSelf.view showWithText:@"分享成功"];
+                    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFI_COLLECT_SHARE_CLIC object:obj];
+                    
+                }
+            } failed:^(MOCHTTPResponse *response) {
+                [weakSelf.view showWithText:response.errorMessage];
+                
+            }];
+            
+        }else{
+            SHGAuthenticationViewController *controller = [[SHGAuthenticationViewController alloc] init];
+            [self.navigationController pushViewController:controller animated:YES];
+            [[SHGGloble sharedGloble] recordUserAction:@"" type:@"dynamic_identity"];
         }
-    } failed:^(MOCHTTPResponse *response) {
-        [weakSelf.view showWithText:response.errorMessage];
-
-    }];
+        
+        
+    } showAlert:YES leftBlock:^{
+        [[SHGGloble sharedGloble] recordUserAction:@"" type:@"dynamic_identity_cancel"];
+    } failString:@"认证后才能发起分享哦～"];
+    
 }
 
 - (void)otherShareWithObj:(CircleListObj *)obj

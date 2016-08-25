@@ -209,34 +209,47 @@
 //动态分享
 - (void)circleShareWithObj:(CircleListObj *)obj
 {
-    if ([[SHGGloble sharedGloble].cityName isEqualToString:@""]) {
-        [[CCLocationManager shareLocation] getCity:nil];
-    }
-    NSString *url = [NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttpCircle,@"circle",obj.rid];
-    NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
-    NSString *cityName = [SHGGloble sharedGloble].cityName;
-    if(!cityName){
-        cityName = @"";
-    }
-    NSDictionary *param = @{@"uid":uid,@"currCity":cityName};
-
-    [MOCHTTPRequestOperationManager postWithURL:url class:nil parameters:param success:^(MOCHTTPResponse *response){
-        NSString *code = [response.data valueForKey:@"code"];
-        if ([code isEqualToString:@"000"]){
-            NSMutableArray *array = [NSMutableArray array];
-            [array addObjectsFromArray:[[SHGSegmentController sharedSegmentController] targetObjectsByRid:obj.rid]];
-            [array addObjectsFromArray:[[SHGHomeCategoryView sharedCategoryView] targetObjectsByRid:obj.rid]];
-            for (CircleListObj *object in array){
-                object.sharenum = [NSString stringWithFormat:@"%ld",(long)([object.sharenum integerValue] + 1)];
+    [[SHGGloble sharedGloble] requestUserVerifyStatusCompletion:^(BOOL state,NSString *auditState) {
+        if (state) {
+            if ([[SHGGloble sharedGloble].cityName isEqualToString:@""]) {
+                [[CCLocationManager shareLocation] getCity:nil];
             }
-            [[SHGSegmentController sharedSegmentController] refreshHomeView];
-            [[SHGSegmentController sharedSegmentController] reloadData];
-            [Hud showMessageWithText:@"分享成功"];
+            NSString *url = [NSString stringWithFormat:@"%@/%@/%@",rBaseAddressForHttpCircle,@"circle",obj.rid];
+            NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_UID];
+            NSString *cityName = [SHGGloble sharedGloble].cityName;
+            if(!cityName){
+                cityName = @"";
+            }
+            NSDictionary *param = @{@"uid":uid,@"currCity":cityName};
+            
+            [MOCHTTPRequestOperationManager postWithURL:url class:nil parameters:param success:^(MOCHTTPResponse *response){
+                NSString *code = [response.data valueForKey:@"code"];
+                if ([code isEqualToString:@"000"]){
+                    NSMutableArray *array = [NSMutableArray array];
+                    [array addObjectsFromArray:[[SHGSegmentController sharedSegmentController] targetObjectsByRid:obj.rid]];
+                    [array addObjectsFromArray:[[SHGHomeCategoryView sharedCategoryView] targetObjectsByRid:obj.rid]];
+                    for (CircleListObj *object in array){
+                        object.sharenum = [NSString stringWithFormat:@"%ld",(long)([object.sharenum integerValue] + 1)];
+                    }
+                    [[SHGSegmentController sharedSegmentController] refreshHomeView];
+                    [[SHGSegmentController sharedSegmentController] reloadData];
+                    [Hud showMessageWithText:@"分享成功"];
+                }
+            } failed:^(MOCHTTPResponse *response) {
+                [Hud showMessageWithText:response.errorMessage];
+            }];
+
+        }else{
+            SHGAuthenticationViewController *controller = [[SHGAuthenticationViewController alloc] init];
+            [[SHGSegmentController sharedSegmentController].navigationController pushViewController:controller animated:YES];
+            [[SHGGloble sharedGloble] recordUserAction:@"" type:@"dynamic_identity"];
         }
-    } failed:^(MOCHTTPResponse *response) {
-        [Hud showMessageWithText:response.errorMessage];
-    }];
-}
+        
+        
+    } showAlert:YES leftBlock:^{
+        [[SHGGloble sharedGloble] recordUserAction:@"" type:@"dynamic_identity_cancel"];
+    } failString:@"认证后才能发起分享哦～"];
+    }
 
 //圈内好友分享
 - (void)otherShareWithObj:(CircleListObj *)obj
