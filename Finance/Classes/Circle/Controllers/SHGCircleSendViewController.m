@@ -36,7 +36,7 @@
 @property (weak, nonatomic) IBOutlet UIView *typeView;
 @property (weak, nonatomic) IBOutlet UIScrollView *typeButtonScrollerView;
 @property (weak, nonatomic) IBOutlet UILabel *typeTitleLabel;
-//@property (weak, nonatomic) IBOutlet UIView *typeButtonView;
+
 @property (weak, nonatomic) IBOutlet UIView *titleView;
 @property (weak, nonatomic) IBOutlet UITextField *textField;
 @property (weak, nonatomic) IBOutlet UIView *detailView;
@@ -277,8 +277,8 @@
 
     size = self.addButton.currentBackgroundImage.size;
     self.addButton.sd_layout
-    .widthIs(size.width)
-    .heightIs(size.height);
+    .widthIs(MarginFactor(size.width))
+    .heightIs(MarginFactor(size.height));
 
     //asscessView
     self.inputAccessoryView.sd_layout

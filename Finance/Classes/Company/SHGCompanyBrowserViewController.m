@@ -32,8 +32,18 @@
 - (void)initView
 {
     self.title = self.object.companyName;
+
+    NSHTTPCookie *cookie = nil;;
+    NSHTTPCookieStorage *storage = [NSHTTPCookieStorage sharedHTTPCookieStorage];
+    for (cookie in [storage cookies]) {
+        [storage deleteCookie:cookie];
+    }
+    [[NSURLCache sharedURLCache] removeAllCachedResponses];
+
     self.webView.backgroundColor = Color(@"d43c33");
-    [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.object.companyUrl]]];
+    self.webView.scrollView.bounces = NO;
+    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:self.object.companyUrl]cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:2.0f];
+    [self.webView loadRequest:request];
 }
 
 - (void)addAutoLayout
@@ -48,6 +58,11 @@
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView
+{
+    [Hud hideHud];
+}
+
+- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
 {
     [Hud hideHud];
 }
