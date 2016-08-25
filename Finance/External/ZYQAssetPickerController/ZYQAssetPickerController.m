@@ -690,11 +690,32 @@ static UIColor *titleColor;
 
 - (void)setupButtons
 {
-    self.navigationItem.rightBarButtonItem =
-    [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"完成", nil)
-                                     style:UIBarButtonItemStylePlain
-                                    target:self
-                                    action:@selector(finishPickingAssets:)];
+//    self.navigationItem.rightBarButtonItem =
+//    [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"完成", nil)
+//                                     style:UIBarButtonItemStylePlain
+//                                    target:self
+//                                    action:@selector(finishPickingAssets:)];
+    UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [leftButton setTitle:@"相簿" forState:UIControlStateNormal];
+    leftButton.titleLabel.font = FontFactor(14.0f);
+    [leftButton addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
+    [leftButton sizeToFit];
+    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:leftButton];
+    self.navigationItem.leftBarButtonItem=leftItem;
+    
+    UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [rightButton setTitle:@"完成" forState:UIControlStateNormal];
+    rightButton.titleLabel.font = FontFactor(14.0f);;
+    [rightButton addTarget:self action:@selector(finishPickingAssets:) forControlEvents:UIControlEventTouchUpInside];
+    [rightButton sizeToFit];
+    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:rightButton];
+    self.navigationItem.rightBarButtonItem=rightItem;
+
+}
+
+- (void)back
+{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)setupAssets
@@ -1008,16 +1029,24 @@ static UIColor *titleColor;
 
 - (void)setupButtons
 {
-    ZYQAssetPickerController *picker = (ZYQAssetPickerController *)self.navigationController;
-    
-    if (picker.showCancelButton)
-    {
-        self.navigationItem.rightBarButtonItem =
-        [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"取消", nil)
-                                         style:UIBarButtonItemStylePlain
-                                        target:self
-                                        action:@selector(dismiss:)];
-    }
+//    ZYQAssetPickerController *picker = (ZYQAssetPickerController *)self.navigationController;
+//    
+//    if (picker.showCancelButton)
+//    {
+//        self.navigationItem.rightBarButtonItem =
+//        [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"取消", nil)
+//                                         style:UIBarButtonItemStylePlain
+//                                        target:self
+//                                        action:@selector(dismiss:)];
+//    }
+    UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [rightButton setTitle:@"取消" forState:UIControlStateNormal];
+    rightButton.titleLabel.font = FontFactor(14.0f);
+    [rightButton addTarget:self action:@selector(dismiss:) forControlEvents:UIControlEventTouchUpInside];
+    [rightButton sizeToFit];
+    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:rightButton];
+    self.navigationItem.rightBarButtonItem=rightItem;
+
 }
 
 - (void)localize

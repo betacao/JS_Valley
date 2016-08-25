@@ -426,25 +426,30 @@
 - (void)assetPickerController:(ZYQAssetPickerController *)picker didFinishPickingAssets:(NSArray *)assets
 {
     WEAK(self, weakSelf);
+    NSInteger count = assets.count;
+    __block NSInteger temp = 0;
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         for (NSInteger i = 0; i < assets.count; i++){
-            ALAsset *asset = assets[i];
-            UIImage *tempImg = [UIImage imageWithCGImage:asset.defaultRepresentation.fullScreenImage scale:asset.defaultRepresentation.scale orientation:(UIImageOrientation)asset.defaultRepresentation.orientation];
-            if (tempImg){
-                CGSize size = CGSizeMake(CGRectGetWidth(self.view.frame) * 2.0f, CGRectGetWidth(self.view.frame) * 2.0f / tempImg.size.width * tempImg.size.height);
-                UIImage *imageNew = [tempImg reSizeImagetoSize:size];
-                NSData *dataImage = UIImageJPEGRepresentation(imageNew, 0.5f);//压缩
-                RecommendTypeObj *detailObj = [[RecommendTypeObj alloc] init];
-                detailObj.image = tempImg;
-                detailObj.type = RECOMMENDPICOBJTYPEPIC;
-                detailObj.content = dataImage;
-                [self.imageArray addObject:detailObj];
-            }
+            ZYQAsset *asset = [assets objectAtIndex:i];
+            asset.getFullScreenImage = ^(UIImage *result){
+                if (result){
+                    CGSize size = CGSizeMake(CGRectGetWidth(self.view.frame) * 2.0f, CGRectGetWidth(self.view.frame) * 2.0f / result.size.width * result.size.height);
+                    UIImage *imageNew = [result reSizeImagetoSize:size];
+                    NSData *dataImage = UIImageJPEGRepresentation(imageNew, 0.5f);//压缩
+                    RecommendTypeObj *detailObj = [[RecommendTypeObj alloc] init];
+                    detailObj.image = result;
+                    detailObj.type = RECOMMENDPICOBJTYPEPIC;
+                    detailObj.content = dataImage;
+                    [self.imageArray addObject:detailObj];
+                    temp++;
+                    if (temp >= count) {
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            [weakSelf reloadPhotoView];
+                        });
+                    }
+                }
+            };
         }
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [weakSelf reloadPhotoView];
-        });
-        
     });
 }
 
@@ -470,9 +475,8 @@
         
         [self reloadPhotoView];
     }
-    [self.textView resignFirstResponder];
+    
 }
-
 
 - (BOOL)textViewShouldEndEditing:(UITextView *)textView
 {

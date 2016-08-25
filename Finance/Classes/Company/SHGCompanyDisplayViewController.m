@@ -67,7 +67,7 @@
             } else {
                 weakSelf.tableView.hidden = YES;
             }
-            if (array.count == 0) {
+            if (array.count < 10) {
                 [weakSelf.tableView.mj_footer endRefreshingWithNoMoreData];
             }
         }
