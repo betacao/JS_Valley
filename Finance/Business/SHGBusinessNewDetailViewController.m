@@ -156,6 +156,24 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
     [self loadData];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self.navigationController.navigationBar setBackgroundImage:[CommonMethod imageWithColor:Color(@"f04f46")] forBarMetrics:UIBarMetricsDefault];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [self.navigationController.navigationBar setBackgroundImage:[CommonMethod imageWithColor:Color(@"f04f46")] forBarMetrics:UIBarMetricsDefault];
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    [self.navigationController.navigationBar setBackgroundImage:[CommonMethod imageWithColor:Color(@"d43c33")] forBarMetrics:UIBarMetricsDefault];
+}
+
 - (UILabel *)titleLabel
 {
     if (!_titleLabel) {
@@ -1770,6 +1788,8 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
     if (self.isChangeCollection == NO) {
         [self.collectionController changeBusinessCollection];
     }
+    [self.navigationController.navigationBar setBackgroundImage:[CommonMethod imageWithColor:Color(@"f04f46")] forBarMetrics:UIBarMetricsDefault];
+
 }
 
 - (void)dealloc

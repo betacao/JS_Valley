@@ -23,6 +23,12 @@
     [self addAutoLayout];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self.navigationController.navigationBar setBackgroundImage:[CommonMethod imageWithColor:Color(@"d43c33")] forBarMetrics:UIBarMetricsDefault];
+}
+
 - (void)initView
 {
     self.title = self.object.companyName;

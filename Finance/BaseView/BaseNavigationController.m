@@ -11,6 +11,7 @@
 #import "SHGBusinessNewDetailViewController.h"
 #import "SHGNewUserCenterViewController.h"
 #import "SHGCompanyBrowserViewController.h"
+#import "SHGSegmentTitleView.h"
 
 @interface BaseNavigationController ()<UINavigationControllerDelegate,UIGestureRecognizerDelegate>
 @property(nonatomic, weak) UIViewController *currentShowVC;
@@ -39,16 +40,16 @@
 
 - (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated
 {
-    if ([viewController isKindOfClass:[SHGBusinessNewDetailViewController class]]
-        || ([viewController isKindOfClass:[TabBarViewController class]] && [TabBarViewController tabBar].selectedIndex == 3)
-        || viewController.navigationItem.titleView != nil
-        || [viewController isKindOfClass:[SHGCompanyBrowserViewController class]]) {
+    if ([viewController isKindOfClass:[SHGBusinessNewDetailViewController class]]) {
+        [self.navigationBar setShadowImage:[[UIImage alloc] init]];
+    } else if ([viewController isKindOfClass:[TabBarViewController class]] && [TabBarViewController tabBar].selectedIndex == 3) {
+        [self.navigationBar setShadowImage:[[UIImage alloc] init]];
+    } else if([viewController.navigationItem.titleView isKindOfClass:[SHGSegmentTitleView class]]) {
+        [self.navigationBar setShadowImage:[[UIImage alloc] init]];
+    } else if ([viewController isKindOfClass:[SHGCompanyBrowserViewController class]]) {
         [self.navigationBar setShadowImage:[[UIImage alloc] init]];
     }
-
-    if ([viewController isKindOfClass:[SHGBusinessNewDetailViewController class]]) {
-        [self.navigationBar setBackgroundImage:[CommonMethod imageWithColor:Color(@"f04f46")] forBarMetrics:UIBarMetricsDefault];
-    }
+    
 }
 
 - (void)navigationController:(UINavigationController *)navigationController didShowViewController:(UIViewController *)viewController animated:(BOOL)animated
@@ -60,13 +61,9 @@
     }
     if (![viewController isKindOfClass:[SHGBusinessNewDetailViewController class]]
         && !([viewController isKindOfClass:[TabBarViewController class]] && [TabBarViewController tabBar].selectedIndex == 3)
-        && viewController.navigationItem.titleView == nil
+        && ![viewController.navigationItem.titleView isKindOfClass:[SHGSegmentTitleView class]]
         && ![viewController isKindOfClass:[SHGCompanyBrowserViewController class]]) {
         [self.navigationBar setShadowImage:nil];
-    }
-
-    if (![viewController isKindOfClass:[SHGBusinessNewDetailViewController class]]) {
-        [self.navigationBar setBackgroundImage:[CommonMethod imageWithColor:Color(@"d43c33")] forBarMetrics:UIBarMetricsDefault];
     }
 }
 
