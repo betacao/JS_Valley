@@ -288,62 +288,62 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
     
     self.collectionButton.sd_layout
     .topSpaceToView(self.inputView, MarginFactor(8.0f))
-    .centerXIs(SCREENWIDTH/8)
-    .widthIs(SCREENWIDTH/4)
+    .centerXIs(floorf(SCREENWIDTH/8.0f))
+    .widthIs(floorf(SCREENWIDTH/4.0f))
     .heightIs(self.collectionButton.frame.size.height);
 
     self.collectionLabel.sd_layout
     .topSpaceToView(self.collectionButton, MarginFactor(4.0f))
-    .centerXIs(SCREENWIDTH/8)
-    .widthIs(SCREENWIDTH/4)
+    .centerXIs(floorf(SCREENWIDTH/8.0f))
+    .widthIs(floorf(SCREENWIDTH/4.0f))
     .heightIs(self.collectionLabel.font.lineHeight);
 
     self.editButton.sd_layout
     .topSpaceToView(self.inputView, MarginFactor(8.0f))
-    .centerXIs(SCREENWIDTH/8)
-    .widthIs(SCREENWIDTH/4)
+    .centerXIs(floorf(SCREENWIDTH/8.0f))
+    .widthIs(floorf(SCREENWIDTH/4.0f))
     .heightIs(self.editButton.frame.size.height);
 
     self.editLabel.sd_layout
     .topSpaceToView(self.editButton, MarginFactor(4.0f))
-    .centerXIs(SCREENWIDTH/8)
-    .widthIs(SCREENWIDTH/4)
+    .centerXIs(floorf(SCREENWIDTH/8.0f))
+    .widthIs(floorf(SCREENWIDTH/4.0f))
     .heightIs(self.editLabel.font.lineHeight);
 
     self.complainButton.sd_layout
     .topSpaceToView(self.inputView, MarginFactor(8.0f))
-    .centerXIs(3 * SCREENWIDTH/8)
-    .widthIs(SCREENWIDTH/4)
+    .centerXIs(3 * floorf(floorf(SCREENWIDTH/8.0f)))
+    .widthIs(floorf(SCREENWIDTH/4))
     .heightIs(self.complainButton.size.height);
 
     self.complainLabel.sd_layout
     .topSpaceToView(self.complainButton, MarginFactor(4.0f))
-    .centerXIs(3 * SCREENWIDTH/8)
-    .widthIs(SCREENWIDTH/4)
+    .centerXIs(3 * floorf(SCREENWIDTH/8.0f))
+    .widthIs(floorf(SCREENWIDTH/4.0f))
     .heightIs(self.complainLabel.font.lineHeight);
     
     self.commentButton.sd_layout
     .topSpaceToView(self.inputView, MarginFactor(8.0f))
-    .centerXIs(5 * SCREENWIDTH/8)
-    .widthIs(SCREENWIDTH/4)
+    .centerXIs(5 * floorf(SCREENWIDTH/8.0f))
+    .widthIs(floorf(SCREENWIDTH/4.0f))
     .heightIs(self.commentButton.size.height);
     
     self.commentLabel.sd_layout
     .topSpaceToView(self.commentButton, MarginFactor(4.0f))
-    .centerXIs(5 * SCREENWIDTH/8)
-    .widthIs(SCREENWIDTH/4)
+    .centerXIs(5 * floorf(SCREENWIDTH/8.0f))
+    .widthIs(floorf(SCREENWIDTH/4.0f))
     .heightIs(self.commentLabel.font.lineHeight);
 
     self.phoneButton.sd_layout
     .topSpaceToView(self.inputView, MarginFactor(8.0f))
-    .centerXIs(7 * SCREENWIDTH/8)
-    .widthIs(SCREENWIDTH/4)
+    .centerXIs(7 * floorf(SCREENWIDTH/8.0f))
+    .widthIs(floorf(SCREENWIDTH/4.0f))
     .heightIs(self.phoneButton.size.height);
     
     self.phoneLabel.sd_layout
     .topSpaceToView(self.phoneButton, MarginFactor(4.0f))
-    .centerXIs(7 * SCREENWIDTH/8)
-    .widthIs(SCREENWIDTH/4)
+    .centerXIs(7 * floorf(SCREENWIDTH/8.0f))
+    .widthIs(floorf(SCREENWIDTH/4.0f))
     .heightIs(self.phoneLabel.font.lineHeight);
     
     self.inputTopLine.sd_layout
@@ -823,28 +823,28 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
         
         self.editButton.sd_resetLayout
         .topSpaceToView(self.inputView, MarginFactor(8.0f))
-        .centerXIs(SCREENWIDTH/3)
-        .widthIs(SCREENWIDTH/4)
+        .centerXIs(floorf(SCREENWIDTH/3.0f))
+        .widthIs(floorf(SCREENWIDTH/4.0f))
         .heightIs(editImage.size.height);
         
         self.editLabel.sd_resetLayout
         .topSpaceToView(self.editButton, MarginFactor(4.0f))
-        .centerXIs(SCREENWIDTH/3)
-        .widthIs(SCREENWIDTH/4)
+        .centerXIs(floorf(SCREENWIDTH/3.0f))
+        .widthIs(floorf(SCREENWIDTH/4.0f))
         .heightIs(self.editLabel.font.lineHeight);
         
         UIImage *commentImage = [UIImage imageNamed:@"red_businessComment"];
         [self.commentButton setImage:commentImage forState:UIControlStateNormal];
         self.commentButton.sd_resetLayout
         .topSpaceToView(self.inputView, MarginFactor(8.0f))
-        .centerXIs(2 * SCREENWIDTH/3)
-        .widthIs(SCREENWIDTH/4)
+        .centerXIs(2 * floorf(SCREENWIDTH/3.0f))
+        .widthIs(floorf(SCREENWIDTH/4.0f))
         .heightIs(commentImage.size.height);
         
         self.commentLabel.sd_resetLayout
         .topSpaceToView(self.commentButton, MarginFactor(4.0f))
-        .centerXIs(2 * SCREENWIDTH/3)
-        .widthIs(SCREENWIDTH/4)
+        .centerXIs(2 * floorf(SCREENWIDTH/3.0f))
+        .widthIs(floorf(SCREENWIDTH/4.0f))
         .heightIs(self.commentLabel.font.lineHeight);
         
     } else{
