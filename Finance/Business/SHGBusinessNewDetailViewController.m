@@ -1004,7 +1004,7 @@ typedef NS_ENUM(NSInteger, SHGTapPhoneType)
         [rightArray addObject:[array lastObject]];
     }];
     [leftArray insertObject:@"发布时间" atIndex:0];
-    [rightArray insertObject:[self.responseObject.modifyTime substringToIndex:10] atIndex:0];
+    [rightArray insertObject:[self.responseObject.createTime substringToIndex:10] atIndex:0];
     NSInteger topMargin = MarginFactor(21.0f);
     NSString *rightString = @"";
     CGFloat height = 0.0f;
