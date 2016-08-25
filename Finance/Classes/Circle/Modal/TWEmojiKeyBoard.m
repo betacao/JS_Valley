@@ -146,11 +146,14 @@
     
     UIButton *btn=[[UIButton alloc]initWithFrame:CGRectMake(KEYBOARD_WIDTH-47, 0, 47, 36)];
     
+    btn.hidden = YES;
+    
     [btn setImage:[UIImage imageNamed:@"emoji_close_n"] forState:0];
     
     [btn setImage:[UIImage imageNamed:@"emoji_close_s"] forState:UIControlStateHighlighted];
     
     [emojKeyBorad addSubview:btn];
+    
     
     [btn addTarget:self action:@selector(stopEdit) forControlEvents:UIControlEventTouchUpInside];
     
