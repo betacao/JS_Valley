@@ -383,8 +383,8 @@
     [self startSdkWith:kAppId appKey:kAppKey appSecret:kAppSecret];
 }
 
-- (void)applicationWillTerminate:(UIApplication *)application {
-    [[SHGGloble sharedGloble] recordUserAction:@"" type:@"systemExit"];
+- (void)applicationWillTerminate:(UIApplication *)application
+{
     [MagicalRecord cleanUp];
     [self saveContext];
 }

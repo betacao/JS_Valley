@@ -27,9 +27,6 @@
     self.rightItemtitleName = @"下一步";
     [super viewDidLoad];
     self.title = @"大牛推荐";
-    UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:leftButton];
-    self.navigationItem.leftBarButtonItem = leftItem;
     [self initView];
     [self addAutoLayout];
     [self uploadData];
@@ -39,9 +36,22 @@
 
 - (void)initView
 {
+    UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:leftButton];
+    self.navigationItem.leftBarButtonItem = leftItem;
+    
     self.recommendCollectionView = [[SHGRecommendCollectionView alloc] init];
     [self.view addSubview:self.recommendCollectionView];
     [SHGGlobleOperation registerAttationClass:[self class] method:@selector(loadAttationState:attationState:)];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    self.navigationItem.rightBarButtonItem.customView.userInteractionEnabled = NO;
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        self.navigationItem.rightBarButtonItem.customView.userInteractionEnabled = YES;
+    });
 }
 
 - (void)addAutoLayout
@@ -57,16 +67,6 @@
         NSString *url = [NSString stringWithFormat:@"%@/%@/%@/%@",rBaseAddressForHttp,@"user",@"info",@"saveOrUpdateUserPosition"];
         NSDictionary *parameters = @{@"uid":UID,@"position":cityName};
         [MOCHTTPRequestOperationManager getWithURL:url parameters:parameters success:nil failed:nil];
-    }];
-
-    [[SHGGloble sharedGloble] getUserAddressList:^(BOOL finished) {
-        if(finished){
-            [[SHGGloble sharedGloble] uploadPhonesWithPhone:^(BOOL finish) {
-                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5.0f * NSEC_PER_SEC)), dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-                    [SHGDiscoveryManager loadDiscoveryData:@{@"uid":UID} block:nil];
-                });
-            }];
-        }
     }];
 }
 
@@ -104,16 +104,28 @@
     
     NSString *token = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_TOKEN];
     NSDictionary *param = @{@"uid":uid, @"t":token?:@"", @"channelid":channelId?:@"", @"channeluid":@"getui"};
-    
+
+    [Hud showWait];
     [[SHGGloble sharedGloble] registerToken:param block:^(BOOL success, MOCHTTPResponse *response) {
         if (success) {
             NSString *code = [response.data valueForKey:@"code"];
             if ([code isEqualToString:@"000"]){
-                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.25f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+
+                    [Hud hideHud];
                     [weakSelf loginSuccess];
+
+                    [[SHGGloble sharedGloble] getUserAddressList:^(BOOL finished) {
+                        if(finished){
+                            [[SHGGloble sharedGloble] uploadPhonesWithPhone:^(BOOL finish) {
+                            }];
+                        }
+                    }];
                 });
+                
             }
         } else{
+            [Hud hideHud];
             [Hud showMessageWithText:response.errorMessage];
         }
     }];

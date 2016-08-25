@@ -5265,7 +5265,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: xie jian (A35C7Q22SB)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: JiangSu Yunli Technology and Information Company (6FFGT2HSCN)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_BITCODE = NO;
@@ -5295,9 +5295,9 @@
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CPLUSPLUSFLAGS = "";
 				OTHER_LDFLAGS = "$(inherited)";
-				PRODUCT_BUNDLE_IDENTIFIER = com.danniuquan.apptest;
+				PRODUCT_BUNDLE_IDENTIFIER = com.appstore.daniu;
 				PRODUCT_NAME = "大牛圈";
-				PROVISIONING_PROFILE = "377b0370-afb6-4581-ba22-c107fe5d513b";
+				PROVISIONING_PROFILE = "96a6a054-0f5e-41f2-a79d-890ec7551297";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -5309,7 +5309,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: xie jian (A35C7Q22SB)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: JiangSu Yunli Technology and Information Company (6FFGT2HSCN)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_BITCODE = NO;
@@ -5339,9 +5339,9 @@
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CPLUSPLUSFLAGS = "";
 				OTHER_LDFLAGS = "$(inherited)";
-				PRODUCT_BUNDLE_IDENTIFIER = com.danniuquan.apptest;
+				PRODUCT_BUNDLE_IDENTIFIER = com.appstore.daniu;
 				PRODUCT_NAME = "大牛圈";
-				PROVISIONING_PROFILE = "377b0370-afb6-4581-ba22-c107fe5d513b";
+				PROVISIONING_PROFILE = "96a6a054-0f5e-41f2-a79d-890ec7551297";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -5391,7 +5391,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: xie jian (A35C7Q22SB)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: JiangSu Yunli Technology and Information Company (6FFGT2HSCN)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_BITCODE = NO;
@@ -5421,9 +5421,9 @@
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CPLUSPLUSFLAGS = "";
 				OTHER_LDFLAGS = "$(inherited)";
-				PRODUCT_BUNDLE_IDENTIFIER = com.danniuquan.apptest;
+				PRODUCT_BUNDLE_IDENTIFIER = com.appstore.daniu;
 				PRODUCT_NAME = "大牛圈";
-				PROVISIONING_PROFILE = "377b0370-afb6-4581-ba22-c107fe5d513b";
+				PROVISIONING_PROFILE = "96a6a054-0f5e-41f2-a79d-890ec7551297";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
