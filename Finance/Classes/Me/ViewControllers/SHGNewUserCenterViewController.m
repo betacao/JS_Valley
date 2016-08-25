@@ -418,9 +418,9 @@
                 weakSelf.authLabel.text = @"认证中";
                 weakSelf.authLabel.textColor = Color(@"d43c33");
             } else if ([weakSelf.auditState isEqualToString:@"2"]){
-                weakSelf.authLabel.text = @"已审核";
+                weakSelf.authLabel.text = @"已认证";
                 weakSelf.authLabel.textColor = Color(@"9ed4a3");
-                weakSelf.modifyButton.hidden = NO;
+//                weakSelf.modifyButton.hidden = NO;
                 [cell addViewToFrontView:weakSelf.vImageView];
             } else if ([weakSelf.auditState isEqualToString:@"3"]){
                 weakSelf.authLabel.text = @"已驳回";

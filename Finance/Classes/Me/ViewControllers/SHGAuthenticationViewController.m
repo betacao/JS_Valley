@@ -129,12 +129,12 @@
 
     self.authTipView.sd_layout
     .centerXEqualToView(self.scrollView)
-    .topSpaceToView(self.scrollView, MarginFactor(116.0f))
+    .topSpaceToView(self.scrollView, MarginFactor(119.0f))
     .widthIs(self.authTipView.image.size.width)
     .heightIs(self.authTipView.image.size.height);
 
     self.authImageView.sd_layout
-    .topSpaceToView(self.authTipView, MarginFactor(72.0f))
+    .topSpaceToView(self.authTipView, MarginFactor(69.0f))
     .leftSpaceToView(self.scrollView, MarginFactor(30.0f))
     .rightSpaceToView(self.scrollView, MarginFactor(30.0f))
     .heightIs(MarginFactor(184.0f));

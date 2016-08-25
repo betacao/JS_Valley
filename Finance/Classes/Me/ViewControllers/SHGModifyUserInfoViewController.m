@@ -222,14 +222,14 @@
     //认证界面
 
     self.authTitleTipView.sd_layout
-    .topSpaceToView(self.authView, 75.0f)
+    .topSpaceToView(self.authView, 85.0f)
     .centerXEqualToView(self.authView)
     .widthIs(self.authTitleTipView.image.size.width)
     .heightIs(self.authTitleTipView.image.size.height);
 
     //不用margin
     self.authTipView.sd_layout
-    .topSpaceToView(self.authTitleTipView, 95.0f)
+    .topSpaceToView(self.authTitleTipView, 85.0f)
     .centerXEqualToView(self.authView)
     .widthIs(self.authTipView.image.size.width)
     .heightIs(self.authTipView.image.size.height);
