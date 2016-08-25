@@ -56,6 +56,9 @@
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         </view>
                     </subviews>
+                    <connections>
+                        <outlet property="delegate" destination="-1" id="0td-kO-f4R"/>
+                    </connections>
                 </scrollView>
                 <view contentMode="scaleToFill" id="49I-8k-jsT">
                     <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>

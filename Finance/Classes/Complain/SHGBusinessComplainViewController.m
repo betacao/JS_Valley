@@ -51,6 +51,7 @@
     [super viewDidLoad];
     self.title = @"投诉";
     self.textView.delegate = self;
+    self.scrollView.delegate = self;
     [self initView];
     [self addSDLayout];
 }
@@ -475,7 +476,6 @@
         
         [self reloadPhotoView];
     }
-    
 }
 
 - (BOOL)textViewShouldEndEditing:(UITextView *)textView
