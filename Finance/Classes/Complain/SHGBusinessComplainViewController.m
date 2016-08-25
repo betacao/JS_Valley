@@ -349,17 +349,9 @@
 {
     ZYQAssetPickerController *picker = [[ZYQAssetPickerController alloc] init];
     picker.maximumNumberOfSelection = 6 - self.imageArray.count;
-    picker.assetsFilter = [ALAssetsFilter allPhotos];
+    picker.assetsFilter = ZYQAssetsFilterAllPhotos;
     picker.showEmptyGroups = NO;
-    picker.zyDelegate = self;
-    picker.selectionFilter = [NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings){
-        if ([[(ALAsset*)evaluatedObject valueForProperty:ALAssetPropertyType] isEqual:ALAssetTypeVideo]){
-            NSTimeInterval duration = [[(ALAsset*)evaluatedObject valueForProperty:ALAssetPropertyDuration] doubleValue];
-            return duration >= 5;
-        } else {
-            return YES;
-        }
-    }];
+    picker.delegate = self;
     
     [self presentViewController:picker animated:YES completion:NULL];
 }

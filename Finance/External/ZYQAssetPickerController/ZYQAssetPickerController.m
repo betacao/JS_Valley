@@ -9,6 +9,8 @@
 #import "ZYQAssetPickerController.h"
 
 #define IS_IOS7             ([[[UIDevice currentDevice] systemVersion] compare:@"7.0" options:NSNumericSearch] != NSOrderedAscending)
+#define IS_IOS8             ([[[UIDevice currentDevice] systemVersion] compare:@"8.0" options:NSNumericSearch] != NSOrderedAscending)
+
 #define kThumbnailLength    78.0f
 #define kThumbnailSize      CGSizeMake(kThumbnailLength, kThumbnailLength)
 #define kPopoverContentSize CGSizeMake(320, 480)
@@ -59,6 +61,228 @@
 
 @end
 
+#pragma mark - ZYQAssetsGroup
+
+@interface ZYQAssetsGroup(){
+    UIImage *_cacheThumbnail;
+}
+
+@end
+
+@implementation ZYQAssetsGroup : NSObject
+
+-(NSString*)groupName{
+    if (_originAssetGroup) {
+        if ([_originAssetGroup isKindOfClass:[PHCollection class]]) {
+            return [(PHCollection*)_originAssetGroup localizedTitle];
+        }
+        else if([_originAssetGroup isKindOfClass:[ALAssetsGroup class]]){
+            return [(ALAssetsGroup*)_originAssetGroup valueForProperty:ALAssetsGroupPropertyName];
+        }
+    }
+    return nil;
+}
+
+-(NSInteger)count{
+    if (_originAssetGroup) {
+        if ([_originAssetGroup isKindOfClass:[PHCollection class]]) {
+            if (!_originFetchResult) {
+                PHFetchOptions *fetchOptionsAlbums=[[PHFetchOptions alloc] init];
+                
+                _originFetchResult=[PHCollection fetchCollectionsInCollectionList:_originAssetGroup options:fetchOptionsAlbums];
+            }
+            return [(PHFetchResult*)_originFetchResult count];
+        }
+        else if([_originAssetGroup isKindOfClass:[ALAssetsGroup class]]){
+            return [(ALAssetsGroup*)_originAssetGroup numberOfAssets];
+        }
+    }
+    return 0;
+}
+
+-(void)setGetThumbnail:(void (^)(UIImage *))getThumbnail{
+    _getThumbnail=getThumbnail;
+    
+    if (_originAssetGroup) {
+        if (_cacheThumbnail) {
+            _getThumbnail(_cacheThumbnail);
+            return;
+        }
+        
+        if ([_originAssetGroup isKindOfClass:[ALAssetsGroup class]]) {
+            
+            CGImageRef posterImage      = [(ALAssetsGroup*)_originAssetGroup posterImage];
+            size_t height               = CGImageGetHeight(posterImage);
+            float scale                 = height / kThumbnailLength;
+            
+            _cacheThumbnail             = [UIImage imageWithCGImage:posterImage scale:scale orientation:UIImageOrientationUp];
+
+            _getThumbnail(_cacheThumbnail);
+        }
+        else if ([_originAssetGroup isKindOfClass:[PHCollection class]]){
+            if (!_originFetchResult) {
+                PHFetchOptions *fetchOptionsAlbums=[[PHFetchOptions alloc] init];
+                
+                _originFetchResult=[PHCollection fetchCollectionsInCollectionList:_originAssetGroup options:fetchOptionsAlbums];
+            }
+            PHFetchResult *tmpFetchResult=_originFetchResult;
+            PHAsset *tmpAsset=[tmpFetchResult objectAtIndex:tmpFetchResult.count-1];
+            
+            PHImageRequestOptions *requestOptions = [[PHImageRequestOptions alloc] init];
+            requestOptions.deliveryMode = PHImageRequestOptionsDeliveryModeOpportunistic;
+            requestOptions.resizeMode = PHImageRequestOptionsResizeModeExact;
+            [[PHImageManager defaultManager] requestImageForAsset:tmpAsset targetSize:CGSizeMake(200, 200) contentMode:PHImageContentModeAspectFill options:requestOptions resultHandler:^(UIImage *result, NSDictionary *info){
+                BOOL downloadFinined = ![[info objectForKey:PHImageCancelledKey] boolValue] && ![info objectForKey:PHImageErrorKey] && ![[info objectForKey:PHImageResultIsDegradedKey] boolValue];
+                
+                //设置BOOL判断，确定返回高清照片
+                if (downloadFinined) {
+                    float scale                 = result.size.height / kThumbnailLength;
+                    
+                    _cacheThumbnail=[UIImage imageWithCGImage:result.CGImage scale:scale orientation:UIImageOrientationUp];
+                    
+                    _getThumbnail(_cacheThumbnail);
+                    
+                }
+            }];
+        }
+    }
+}
+
+-(void)enumerateObjectsUsingBlock:(ZYQAssetsGroupEnumerationResultsBlock)enumerationBlock{
+    if (_originAssetGroup) {
+        if ([_originAssetGroup isKindOfClass:[PHCollection class]]) {
+            if (!_originFetchResult) {
+                PHFetchOptions *fetchOptionsAlbums=[[PHFetchOptions alloc] init];
+                
+                _originFetchResult=[PHCollection fetchCollectionsInCollectionList:_originAssetGroup options:fetchOptionsAlbums];
+            }
+            return [(PHFetchResult*)_originFetchResult enumerateObjectsUsingBlock:enumerationBlock];
+        }
+        else if([_originAssetGroup isKindOfClass:[ALAssetsGroup class]]){
+            return [(ALAssetsGroup*)_originAssetGroup enumerateAssetsUsingBlock:enumerationBlock];
+        }
+    }
+}
+
+@end
+#pragma mark - ZYQAsset
+@interface ZYQAsset(){
+    UIImage *_cacheThumbnail;
+    UIImage *_cacheFullScreenImage;
+}
+
+@end
+
+@implementation ZYQAsset : NSObject
+
+-(void)setGetThumbnail:(void (^)(UIImage *))getThumbnail{
+    _getThumbnail=getThumbnail;
+    
+    if (_originAsset) {
+        if (_cacheThumbnail) {
+            _getThumbnail(_cacheThumbnail);
+            return;
+        }
+        
+        if ([_originAsset isKindOfClass:[ALAsset class]]) {
+            _cacheThumbnail=[UIImage imageWithCGImage:[(ALAsset*)_originAsset thumbnail]];
+            _getThumbnail(_cacheThumbnail);
+        }
+        else if ([_originAsset isKindOfClass:[PHAsset class]]){
+            PHImageRequestOptions *requestOptions = [[PHImageRequestOptions alloc] init];
+            requestOptions.deliveryMode = PHImageRequestOptionsDeliveryModeOpportunistic;
+            requestOptions.resizeMode = PHImageRequestOptionsResizeModeExact;
+            [[PHImageManager defaultManager] requestImageForAsset:_originAsset targetSize:CGSizeMake(200, 200) contentMode:PHImageContentModeAspectFill options:requestOptions resultHandler:^(UIImage *result, NSDictionary *info){
+                BOOL downloadFinined = ![[info objectForKey:PHImageCancelledKey] boolValue] && ![info objectForKey:PHImageErrorKey] && ![[info objectForKey:PHImageResultIsDegradedKey] boolValue];
+                
+                //设置BOOL判断，确定返回高清照片
+                if (downloadFinined) {
+                    _cacheThumbnail=result;
+                    _getThumbnail(_cacheThumbnail);
+                }
+            }];
+        }
+    }
+}
+
+-(void)setGetFullScreenImage:(void (^)(UIImage *))getFullScreenImage{
+    _getFullScreenImage=getFullScreenImage;
+    
+    if (_originAsset) {
+        if (_cacheFullScreenImage) {
+            _getFullScreenImage(_cacheFullScreenImage);
+            return;
+        }
+        
+        if ([_originAsset isKindOfClass:[ALAsset class]]) {
+            _cacheFullScreenImage=[UIImage imageWithCGImage:[(ALAsset*)_originAsset defaultRepresentation].fullScreenImage];
+            _getFullScreenImage(_cacheFullScreenImage);
+        }
+        else if ([_originAsset isKindOfClass:[PHAsset class]]){
+            PHImageRequestOptions *requestOptions = [[PHImageRequestOptions alloc] init];
+            requestOptions.deliveryMode = PHImageRequestOptionsDeliveryModeOpportunistic;
+            requestOptions.resizeMode = PHImageRequestOptionsResizeModeExact;
+            
+            CGFloat photoWidth = [UIScreen mainScreen].bounds.size.width;
+            
+            CGFloat aspectRatio = ((PHAsset*)_originAsset).pixelWidth / (CGFloat)((PHAsset*)_originAsset).pixelHeight;
+            CGFloat multiple = [UIScreen mainScreen].scale;
+            CGFloat pixelWidth = photoWidth * multiple;
+            CGFloat pixelHeight = pixelWidth / aspectRatio;
+            
+            [[PHImageManager defaultManager] requestImageForAsset:_originAsset targetSize:CGSizeMake(pixelWidth, pixelHeight) contentMode:PHImageContentModeAspectFill options:requestOptions resultHandler:^(UIImage *result, NSDictionary *info){
+                BOOL downloadFinined = ![[info objectForKey:PHImageCancelledKey] boolValue] && ![info objectForKey:PHImageErrorKey] && ![[info objectForKey:PHImageResultIsDegradedKey] boolValue];
+                
+                //设置BOOL判断，确定返回高清照片
+                if (downloadFinined) {
+                    _cacheFullScreenImage=result;
+                    _getFullScreenImage(_cacheFullScreenImage);
+                }
+            }];
+        }
+    }
+}
+
+-(NSTimeInterval)duration{
+    if (_originAsset) {
+        if ([_originAsset isKindOfClass:[ALAsset class]]) {
+            return [[(ALAsset*)_originAsset valueForProperty:ALAssetPropertyDuration] doubleValue];
+        }
+        else if ([_originAsset isKindOfClass:[PHAsset class]]){
+            return [(PHAsset*)_originAsset duration];
+        }
+    }
+    return 0;
+}
+
+-(ZYQAssetMediaType)mediaType{
+    if (_originAsset) {
+        if ([_originAsset isKindOfClass:[ALAsset class]]) {
+            if ([[(ALAsset*)_originAsset valueForProperty:ALAssetPropertyType] isEqual:ALAssetTypePhoto]) {
+                return ZYQAssetMediaTypeImage;
+            }
+            if ([[(ALAsset*)_originAsset valueForProperty:ALAssetPropertyType] isEqual:ALAssetTypeVideo]) {
+                return ZYQAssetMediaTypeVideo;
+            }
+        }
+        else if ([_originAsset isKindOfClass:[PHAsset class]]){
+            switch ([(PHAsset*)_originAsset mediaType]) {
+                case PHAssetMediaTypeImage:
+                    return ZYQAssetMediaTypeImage;
+                case PHAssetMediaTypeVideo:
+                    return ZYQAssetMediaTypeVideo;
+                case PHAssetMediaTypeAudio:
+                    return ZYQAssetMediaTypeAudio;
+                default:
+                    break;
+            }
+        }
+    }
+    return ZYQAssetMediaTypeUnknown;
+}
+
+@end
+
 #pragma mark - ZYQAssetPickerController
 
 @interface ZYQAssetPickerController ()
@@ -82,7 +306,8 @@
     
     CGColorSpaceRef baseSpace   = CGColorSpaceCreateDeviceRGB();
     CGGradientRef gradient      = CGGradientCreateWithColorComponents(baseSpace, colors, locations, 2);
-    
+    CGColorSpaceRelease(baseSpace);
+
     CGContextRef context    = UIGraphicsGetCurrentContext();
     
     CGFloat height          = rect.size.height;
@@ -91,16 +316,11 @@
     
     CGContextDrawLinearGradient(context, gradient, startPoint, endPoint, kCGGradientDrawsBeforeStartLocation);
     
+    CGGradientRelease(gradient);
+
     CGSize titleSize        = [self.text sizeWithAttributes:@{NSFontAttributeName:self.font}];
-    [self.textColor set];
-//    [self.text drawAtPoint:CGPointMake(rect.size.width - titleSize.width - 2 , (height - 12) / 2)
-//                   forWidth:kThumbnailLength
-//                   withFont:self.font
-//                   fontSize:12
-//              lineBreakMode:NSLineBreakByTruncatingTail
-//         baselineAdjustment:UIBaselineAdjustmentAlignCenters];
-//
-   [self.text drawAtPoint:CGPointMake(rect.size.width - titleSize.width - 2 , (height - 12) / 2) withAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12.0f]}];
+    [self.text drawAtPoint:CGPointMake(rect.size.width - titleSize.width - 2 , (height - 12) / 2) withAttributes:@{NSFontAttributeName:self.font}];
+
     UIImage *videoIcon=[UIImage imageWithContentsOfFile:[[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"ZYQAssetPicker.Bundle/Images/AssetsPickerVideo@2x.png"]];
     
     [videoIcon drawAtPoint:CGPointMake(2, (height - videoIcon.size.height) / 2)];
@@ -143,8 +363,8 @@ static UIColor *disabledColor;
         return;
     }
     
-    if (_delegate!=nil&&[_delegate respondsToSelector:@selector(shouldTap)]) {
-        if (![_delegate shouldTap]&&!_selected) {
+    if (_delegate!=nil&&[_delegate respondsToSelector:@selector(shouldTap:)]) {
+        if (![_delegate shouldTap:_selected]&&!_selected) {
             return;
         }
     }
@@ -196,7 +416,7 @@ static UIColor *disabledColor;
 
 @interface ZYQAssetView ()<ZYQTapAssetViewDelegate>
 
-@property (nonatomic, strong) ALAsset *asset;
+@property (nonatomic, strong) ZYQAsset *asset;
 
 @property (nonatomic, weak) id<ZYQAssetViewDelegate> delegate;
 
@@ -215,7 +435,7 @@ static UIColor *titleColor;
 
 + (void)initialize
 {
-    titleFont       = [UIFont systemFontOfSize:12.0f];
+    titleFont       = [UIFont systemFontOfSize:12];
     titleHeight     = 20.0f;
     titleColor      = [UIColor whiteColor];
 }
@@ -247,30 +467,36 @@ static UIColor *titleColor;
     return self;
 }
 
-- (void)bind:(ALAsset *)asset selectionFilter:(NSPredicate*)selectionFilter isSeleced:(BOOL)isSeleced
+- (void)bind:(ZYQAsset*)asset selectionFilter:(NSPredicate*)selectionFilter isSeleced:(BOOL)isSeleced
 {
     self.asset=asset;
+
+    __weak typeof(self) weakSelf=self;
+    [_asset setGetThumbnail:^(UIImage *result) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            weakSelf.imageView.image=result;
+        });
+    }];
     
-    [_imageView setImage:[UIImage imageWithCGImage:asset.thumbnail]];
     
-    if ([[asset valueForProperty:ALAssetPropertyType] isEqual:ALAssetTypeVideo]) {
+    if (_asset.mediaType==ZYQAssetMediaTypeVideo) {
         _videoTitle.hidden=NO;
-        _videoTitle.text=[NSDate timeDescriptionOfTimeInterval:[[asset valueForProperty:ALAssetPropertyDuration] doubleValue]];
+        _videoTitle.text=[NSDate timeDescriptionOfTimeInterval:_asset.duration];
     }
     else{
         _videoTitle.hidden=YES;
     }
     
-    _tapAssetView.disabled=! [selectionFilter evaluateWithObject:asset];
+    _tapAssetView.disabled=! [selectionFilter evaluateWithObject:_asset];
     
     _tapAssetView.selected=isSeleced;
 }
 
 #pragma mark - ZYQTapAssetView Delegate
 
--(BOOL)shouldTap{
-    if (_delegate!=nil&&[_delegate respondsToSelector:@selector(shouldSelectAsset:)]) {
-        return [_delegate shouldSelectAsset:_asset];
+-(BOOL)shouldTap:(BOOL)select{
+    if (_delegate!=nil&&[_delegate respondsToSelector:@selector(shouldSelectAsset:select:)]) {
+        return [_delegate shouldSelectAsset:_asset select:select];
     }
     return YES;
 }
@@ -294,7 +520,7 @@ static UIColor *titleColor;
 @implementation ZYQAssetViewCell
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
-    if ([super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
+    if (self=[super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
         [self setSelectionStyle:UITableViewCellSelectionStyleNone];
     }
     return self;
@@ -333,14 +559,14 @@ static UIColor *titleColor;
 
 #pragma mark - ZYQAssetView Delegate
 
--(BOOL)shouldSelectAsset:(ALAsset *)asset{
-    if (_delegate!=nil&&[_delegate respondsToSelector:@selector(shouldSelectAsset:)]) {
-        return [_delegate shouldSelectAsset:asset];
+-(BOOL)shouldSelectAsset:(ZYQAsset*)asset select:(BOOL)select{
+    if (_delegate!=nil&&[_delegate respondsToSelector:@selector(shouldSelectAsset:select:)]) {
+        return [_delegate shouldSelectAsset:asset select:select];
     }
     return YES;
 }
 
--(void)tapSelectHandle:(BOOL)select asset:(ALAsset *)asset{
+-(void)tapSelectHandle:(BOOL)select asset:(ZYQAsset*)asset{
     if (select) {
         if (_delegate!=nil&&[_delegate respondsToSelector:@selector(didSelectAsset:)]) {
             [_delegate didSelectAsset:asset];
@@ -378,32 +604,32 @@ static UIColor *titleColor;
 
 - (id)init
 {
-    _indexPathsForSelectedItems=[[NSMutableArray alloc] init];
-    
-    if (UIInterfaceOrientationIsLandscape(self.interfaceOrientation))
-    {
-        self.tableView.contentInset=UIEdgeInsetsMake(9.0, 2.0, 0, 2.0);
-        
-        minimumInteritemSpacing=3;
-        minimumLineSpacing=3;
-        
-    }
-    else
-    {
-        self.tableView.contentInset=UIEdgeInsetsMake(9.0, 0, 0, 0);
-        
-        minimumInteritemSpacing=2;
-        minimumLineSpacing=2;
-    }
-    
     if (self = [super init])
     {
+        _indexPathsForSelectedItems=[[NSMutableArray alloc] init];
+        
+        if (UIInterfaceOrientationIsLandscape(self.interfaceOrientation))
+        {
+            self.tableView.contentInset=UIEdgeInsetsMake(9.0, 2.0, 0, 2.0);
+            
+            minimumInteritemSpacing=3;
+            minimumLineSpacing=3;
+            
+        }
+        else
+        {
+            self.tableView.contentInset=UIEdgeInsetsMake(9.0, 0, 0, 0);
+            
+            minimumInteritemSpacing=2;
+            minimumLineSpacing=2;
+        }
+        
         if ([self respondsToSelector:@selector(setEdgesForExtendedLayout:)])
             [self setEdgesForExtendedLayout:UIRectEdgeNone];
         
         if ([self respondsToSelector:@selector(setContentSizeForViewInPopover:)])
-            //[self setContentSizeForViewInPopover:kPopoverContentSize];
-            self.preferredContentSize = kPopoverContentSize;
+            [self setPreferredContentSize:kPopoverContentSize];
+        
     }
     
     [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
@@ -464,32 +690,16 @@ static UIColor *titleColor;
 
 - (void)setupButtons
 {
-    UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [leftButton setTitle:@"相簿" forState:UIControlStateNormal];
-    leftButton.titleLabel.font = [UIFont systemFontOfSize:14.0f * XFACTOR];
-    [leftButton addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
-    [leftButton sizeToFit];
-    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:leftButton];
-    self.navigationItem.leftBarButtonItem=leftItem;
-    
-    UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [rightButton setTitle:@"完成" forState:UIControlStateNormal];
-    rightButton.titleLabel.font = [UIFont systemFontOfSize:14.0f * XFACTOR];
-    [rightButton addTarget:self action:@selector(finishPickingAssets:) forControlEvents:UIControlEventTouchUpInside];
-    [rightButton sizeToFit];
-    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:rightButton];
-    self.navigationItem.rightBarButtonItem=rightItem;
-
-}
-
-- (void)back
-{
-    [self.navigationController popViewControllerAnimated:YES];
+    self.navigationItem.rightBarButtonItem =
+    [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"完成", nil)
+                                     style:UIBarButtonItemStylePlain
+                                    target:self
+                                    action:@selector(finishPickingAssets:)];
 }
 
 - (void)setupAssets
 {
-    self.title = [self.assetsGroup valueForProperty:ALAssetsGroupPropertyName];
+    self.title = self.assetsGroup.groupName;
     self.numberOfPhotos = 0;
     self.numberOfVideos = 0;
     
@@ -498,29 +708,35 @@ static UIColor *titleColor;
     else
         [self.assets removeAllObjects];
     
-    ALAssetsGroupEnumerationResultsBlock resultsBlock = ^(ALAsset *asset, NSUInteger index, BOOL *stop) {
-        
-        if (asset)
+    [self.assetsGroup enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if (obj)
         {
+            ZYQAsset *asset=[[ZYQAsset alloc] init];
+            asset.originAsset=obj;
+            
             [self.assets addObject:asset];
             
-            NSString *type = [asset valueForProperty:ALAssetPropertyType];
-            
-            if ([type isEqual:ALAssetTypePhoto])
-                self.numberOfPhotos ++;
-            if ([type isEqual:ALAssetTypeVideo])
-                self.numberOfVideos ++;
+            switch ([asset mediaType]) {
+                case ZYQAssetMediaTypeImage:
+                    self.numberOfPhotos ++;
+                    break;
+                case ZYQAssetMediaTypeVideo:
+                    self.numberOfVideos ++;
+                    break;
+                default:
+                    break;
+            }
         }
         
         else if (self.assets.count > 0)
         {
             [self.tableView reloadData];
-
+            
             [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:ceil(self.assets.count*1.0/columns)  inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
         }
-    };
+        
+    }];
     
-    [self.assetsGroup enumerateAssetsUsingBlock:resultsBlock];
 }
 
 #pragma mark - UITableView DataSource
@@ -531,7 +747,7 @@ static UIColor *titleColor;
         
         if (cell==nil) {
             cell=[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cellFooter"];
-            cell.textLabel.font=[UIFont systemFontOfSize:18.0f];
+            cell.textLabel.font=[UIFont systemFontOfSize:18];
             cell.textLabel.backgroundColor=[UIColor clearColor];
             cell.textLabel.textAlignment=NSTextAlignmentCenter;
             cell.textLabel.textColor=[UIColor blackColor];
@@ -589,41 +805,41 @@ static UIColor *titleColor;
 
 #pragma mark - ZYQAssetViewCell Delegate
 
-- (BOOL)shouldSelectAsset:(ALAsset *)asset
+- (BOOL)shouldSelectAsset:(id)asset select:(BOOL)select
 {
     ZYQAssetPickerController *vc = (ZYQAssetPickerController *)self.navigationController;
     BOOL selectable = [vc.selectionFilter evaluateWithObject:asset];
-    if (_indexPathsForSelectedItems.count > vc.maximumNumberOfSelection) {
-        if (vc.zyDelegate!=nil&&[vc.zyDelegate respondsToSelector:@selector(assetPickerControllerDidMaximum:)]) {
-            [vc.zyDelegate assetPickerControllerDidMaximum:vc];
+    if (_indexPathsForSelectedItems.count >= vc.maximumNumberOfSelection&&!select) {
+        if (vc.delegate!=nil&&[vc.delegate respondsToSelector:@selector(assetPickerControllerDidMaximum:)]) {
+            [vc.delegate assetPickerControllerDidMaximum:vc];
         }
     }
-    
+
     return (selectable && _indexPathsForSelectedItems.count < vc.maximumNumberOfSelection);
 }
 
-- (void)didSelectAsset:(ALAsset *)asset
+- (void)didSelectAsset:(id)asset
 {
     [_indexPathsForSelectedItems addObject:asset];
     
     ZYQAssetPickerController *vc = (ZYQAssetPickerController *)self.navigationController;
     vc.indexPathsForSelectedItems = _indexPathsForSelectedItems;
     
-    if (vc.zyDelegate!=nil&&[vc.zyDelegate respondsToSelector:@selector(assetPickerController:didSelectAsset:)])
-        [vc.zyDelegate assetPickerController:vc didSelectAsset:asset];
+    if (vc.delegate!=nil&&[vc.delegate respondsToSelector:@selector(assetPickerController:didSelectAsset:)])
+        [vc.delegate assetPickerController:vc didSelectAsset:asset];
     
     [self setTitleWithSelectedIndexPaths:_indexPathsForSelectedItems];
 }
 
-- (void)didDeselectAsset:(ALAsset *)asset
+- (void)didDeselectAsset:(id)asset
 {
     [_indexPathsForSelectedItems removeObject:asset];
     
     ZYQAssetPickerController *vc = (ZYQAssetPickerController *)self.navigationController;
     vc.indexPathsForSelectedItems = _indexPathsForSelectedItems;
     
-    if (vc.zyDelegate!=nil&&[vc.zyDelegate respondsToSelector:@selector(assetPickerController:didDeselectAsset:)])
-        [vc.zyDelegate assetPickerController:vc didDeselectAsset:asset];
+    if (vc.delegate!=nil&&[vc.delegate respondsToSelector:@selector(assetPickerController:didDeselectAsset:)])
+        [vc.delegate assetPickerController:vc didDeselectAsset:asset];
     
     [self setTitleWithSelectedIndexPaths:_indexPathsForSelectedItems];
 }
@@ -633,10 +849,9 @@ static UIColor *titleColor;
 
 - (void)setTitleWithSelectedIndexPaths:(NSArray *)indexPaths
 {
-    // Reset title to group name
     if (indexPaths.count == 0)
     {
-        self.title = [self.assetsGroup valueForProperty:ALAssetsGroupPropertyName];
+        self.title = self.assetsGroup.groupName;
         return;
     }
     
@@ -644,17 +859,17 @@ static UIColor *titleColor;
     BOOL videoSelected  = NO;
     
     for (int i=0; i<indexPaths.count; i++) {
-        ALAsset *asset = indexPaths[i];
+        ZYQAsset *asset = indexPaths[i];
         
-        if ([[asset valueForProperty:ALAssetPropertyType] isEqual:ALAssetTypePhoto])
+        if (asset.mediaType==ZYQAssetMediaTypeImage)
             photosSelected  = YES;
         
-        if ([[asset valueForProperty:ALAssetPropertyType] isEqual:ALAssetTypeVideo])
+        if (asset.mediaType==ZYQAssetMediaTypeVideo)
             videoSelected   = YES;
         
         if (photosSelected && videoSelected)
             break;
-
+        
     }
     
     NSString *format;
@@ -669,6 +884,7 @@ static UIColor *titleColor;
         format = (indexPaths.count > 1) ? NSLocalizedString(@"已选择 %ld 部视频", nil) : NSLocalizedString(@"已选择 %ld 部视频 ", nil);
     
     self.title = [NSString stringWithFormat:format, (long)indexPaths.count];
+
 }
 
 
@@ -680,14 +896,14 @@ static UIColor *titleColor;
     ZYQAssetPickerController *picker = (ZYQAssetPickerController *)self.navigationController;
     
     if (_indexPathsForSelectedItems.count < picker.minimumNumberOfSelection) {
-        if (picker.zyDelegate!=nil&&[picker.zyDelegate respondsToSelector:@selector(assetPickerControllerDidMaximum:)]) {
-            [picker.zyDelegate assetPickerControllerDidMaximum:picker];
+        if (picker.delegate!=nil&&[picker.delegate respondsToSelector:@selector(assetPickerControllerDidMaximum:)]) {
+            [picker.delegate assetPickerControllerDidMaximum:picker];
         }
     }
     
 
-    if ([picker.zyDelegate respondsToSelector:@selector(assetPickerController:didFinishPickingAssets:)])
-        [picker.zyDelegate assetPickerController:picker didFinishPickingAssets:_indexPathsForSelectedItems];
+    if ([picker.delegate respondsToSelector:@selector(assetPickerController:didFinishPickingAssets:)])
+        [picker.delegate assetPickerController:picker didFinishPickingAssets:_indexPathsForSelectedItems];
     
     if (picker.isFinishDismissViewController) {
         [picker.presentingViewController dismissViewControllerAnimated:YES completion:NULL];
@@ -700,32 +916,34 @@ static UIColor *titleColor;
 
 @interface ZYQAssetGroupViewCell ()
 
-@property (nonatomic, strong) ALAssetsGroup *assetsGroup;
+@property (nonatomic, strong) ZYQAssetsGroup *assetsGroup;
 
 @end
 
 @implementation ZYQAssetGroupViewCell
 
 
-- (void)bind:(ALAssetsGroup *)assetsGroup
+- (void)bind:(ZYQAssetsGroup*)assetsGroup
 {
     self.assetsGroup            = assetsGroup;
     
-    CGImageRef posterImage      = assetsGroup.posterImage;
-    size_t height               = CGImageGetHeight(posterImage);
-    float scale                 = height / kThumbnailLength;
+    __weak typeof(self) weakSelf=self;
     
-    self.imageView.image        = [UIImage imageWithCGImage:posterImage scale:scale orientation:UIImageOrientationUp];
-    self.textLabel.text         = [assetsGroup valueForProperty:ALAssetsGroupPropertyName];
-    self.detailTextLabel.text   = [NSString stringWithFormat:@"%ld", (long)[assetsGroup numberOfAssets]];
+    [_assetsGroup setGetThumbnail:^(UIImage *result) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            weakSelf.imageView.image=result;
+            [weakSelf setNeedsLayout];
+        });
+    }];
+    
+    self.textLabel.text=_assetsGroup.groupName;
+    self.detailTextLabel.text   = [NSString stringWithFormat:@"%zi", _assetsGroup.count];
     self.accessoryType          = UITableViewCellAccessoryDisclosureIndicator;
 }
 
 - (NSString *)accessibilityLabel
 {
-    NSString *label = [self.assetsGroup valueForProperty:ALAssetsGroupPropertyName];
-    
-    return [label stringByAppendingFormat:NSLocalizedString(@"%ld 张照片", nil), (long)[self.assetsGroup numberOfAssets]];
+    return [_assetsGroup.groupName stringByAppendingFormat:NSLocalizedString(@"%ld 张照片", nil), (long)_assetsGroup.count];
 }
 
 @end
@@ -794,18 +1012,11 @@ static UIColor *titleColor;
     
     if (picker.showCancelButton)
     {
-        UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        [rightButton setTitle:@"取消" forState:UIControlStateNormal];
-        rightButton.titleLabel.font = [UIFont systemFontOfSize:14.0f * XFACTOR];
-        [rightButton addTarget:self action:@selector(dismiss:) forControlEvents:UIControlEventTouchUpInside];
-        [rightButton sizeToFit];
-        UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:rightButton];
-        self.navigationItem.rightBarButtonItem=rightItem;
-//        self.navigationItem.rightBarButtonItem =
-//        [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"取消", nil)
-//                                         style:UIBarButtonItemStylePlain
-//                                        target:self
-//                                        action:@selector(dismiss:)];
+        self.navigationItem.rightBarButtonItem =
+        [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"取消", nil)
+                                         style:UIBarButtonItemStylePlain
+                                        target:self
+                                        action:@selector(dismiss:)];
     }
 }
 
@@ -816,51 +1027,140 @@ static UIColor *titleColor;
 
 - (void)setupGroup
 {
-    if (!self.assetsLibrary)
-        self.assetsLibrary = [self.class defaultAssetsLibrary];
-    
     if (!self.groups)
         self.groups = [[NSMutableArray alloc] init];
     else
         [self.groups removeAllObjects];
     
-    ZYQAssetPickerController *picker = (ZYQAssetPickerController *)self.navigationController;
-    ALAssetsFilter *assetsFilter = picker.assetsFilter;
     
-    ALAssetsLibraryGroupsEnumerationResultsBlock resultsBlock = ^(ALAssetsGroup *group, BOOL *stop) {
+    if (IS_IOS8) {
+        __block BOOL showNotAllowed=YES;
+        ZYQAssetPickerController *picker = (ZYQAssetPickerController *)self.navigationController;
         
-        if (group)
-        {
-            [group setAssetsFilter:assetsFilter];
-            if (group.numberOfAssets > 0 || picker.showEmptyGroups)
-                [self.groups addObject:group];
+        PHFetchOptions *fetchOptions = [[PHFetchOptions alloc]init];
+        
+        PHFetchResult *smartAlbumsFetchResult = [PHAssetCollection fetchAssetCollectionsWithType:PHAssetCollectionTypeSmartAlbum subtype:PHAssetCollectionSubtypeSmartAlbumUserLibrary options:fetchOptions];
+        //遍历相机胶卷
+        [smartAlbumsFetchResult enumerateObjectsUsingBlock:^(PHAssetCollection * _Nonnull collection, NSUInteger idx, BOOL *stop) {
+            showNotAllowed=NO;
+            PHFetchOptions *fetchOptionsAlbums=[[PHFetchOptions alloc] init];
+            
+            switch (picker.assetsFilter) {
+                case ZYQAssetsFilterAllVideos:
+                    fetchOptionsAlbums.predicate = [NSPredicate predicateWithFormat:@"mediaType == %d", PHAssetMediaTypeVideo];
+                    break;
+                case ZYQAssetsFilterAllPhotos:
+                    fetchOptionsAlbums.predicate = [NSPredicate predicateWithFormat:@"mediaType == %d", PHAssetMediaTypeImage];
+                    break;
+                default:
+                    break;
+            }
+            PHFetchResult *fetchResult = [PHAsset fetchAssetsInAssetCollection:collection options:fetchOptionsAlbums];
+            
+            
+            if (![collection.localizedTitle isEqualToString:@"Videos"]) {
+                if (fetchResult.count>0) {
+                    ZYQAssetsGroup *tmpGroup=[[ZYQAssetsGroup alloc] init];
+                    tmpGroup.originAssetGroup=collection;
+                    tmpGroup.originFetchResult=fetchResult;
+                    [self.groups addObject:tmpGroup];
+                }
+            }
+        }];
+        //遍历自建相册
+        PHFetchResult *customAlbumsFetchResult = [PHAssetCollection fetchTopLevelUserCollectionsWithOptions:fetchOptions];
+        [customAlbumsFetchResult enumerateObjectsUsingBlock:^(PHAssetCollection * _Nonnull collection, NSUInteger idx, BOOL *stop) {
+            showNotAllowed=NO;
+
+            PHFetchOptions *fetchOptionsAlbums=[[PHFetchOptions alloc] init];
+            
+            switch (picker.assetsFilter) {
+                case ZYQAssetsFilterAllVideos:
+                    fetchOptionsAlbums.predicate = [NSPredicate predicateWithFormat:@"mediaType == %d", PHAssetMediaTypeVideo];
+                    break;
+                case ZYQAssetsFilterAllPhotos:
+                    fetchOptionsAlbums.predicate = [NSPredicate predicateWithFormat:@"mediaType == %d", PHAssetMediaTypeImage];
+                    break;
+                default:
+                    break;
+            }
+            PHFetchResult *fetchResult = [PHAsset fetchAssetsInAssetCollection:collection options:fetchOptionsAlbums];
+            
+            if (fetchResult.count>0) {
+                ZYQAssetsGroup *tmpGroup=[[ZYQAssetsGroup alloc] init];
+                tmpGroup.originAssetGroup=collection;
+                tmpGroup.originFetchResult=fetchResult;
+                [self.groups addObject:tmpGroup];
+            }
+
+        }];
+        
+        if (showNotAllowed) {
+            [self showNotAllowed];
         }
         else
         {
             [self reloadData];
         }
-    };
-    
-    
-    ALAssetsLibraryAccessFailureBlock failureBlock = ^(NSError *error) {
+    }
+    else{
+        if (!self.assetsLibrary)
+            self.assetsLibrary = [self.class defaultAssetsLibrary];
         
-        [self showNotAllowed];
+        ZYQAssetPickerController *picker = (ZYQAssetPickerController *)self.navigationController;
         
-    };
+        ALAssetsFilter *assetsFilter = [ALAssetsFilter allAssets];
+        
+        switch (picker.assetsFilter) {
+            case ZYQAssetsFilterAllPhotos:
+                assetsFilter=[ALAssetsFilter allPhotos];
+                break;
+            case ZYQAssetsFilterAllVideos:
+                assetsFilter=[ALAssetsFilter allVideos];
+                break;
+            default:
+                break;
+        }
+        
+        ALAssetsLibraryGroupsEnumerationResultsBlock resultsBlock = ^(ALAssetsGroup *group, BOOL *stop) {
+            
+            if (group)
+            {
+                [group setAssetsFilter:assetsFilter];
+                if (group.numberOfAssets > 0 || picker.showEmptyGroups){
+                    ZYQAssetsGroup *tmpGroup=[[ZYQAssetsGroup alloc] init];
+                    tmpGroup.originAssetGroup=group;
+                    [self.groups addObject:tmpGroup];
+                }
+            }
+            else
+            {
+                [self reloadData];
+            }
+        };
+        
+        
+        ALAssetsLibraryAccessFailureBlock failureBlock = ^(NSError *error) {
+            
+            [self showNotAllowed];
+            
+        };
+        
+        // Enumerate Camera roll first
+        [self.assetsLibrary enumerateGroupsWithTypes:ALAssetsGroupSavedPhotos
+                                          usingBlock:resultsBlock
+                                        failureBlock:failureBlock];
+        
+        // Then all other groups
+        NSUInteger type =
+        ALAssetsGroupLibrary | ALAssetsGroupAlbum | ALAssetsGroupEvent |
+        ALAssetsGroupFaces | ALAssetsGroupPhotoStream;
+        
+        [self.assetsLibrary enumerateGroupsWithTypes:type
+                                          usingBlock:resultsBlock
+                                        failureBlock:failureBlock];
+    }
     
-    // Enumerate Camera roll first
-    [self.assetsLibrary enumerateGroupsWithTypes:ALAssetsGroupSavedPhotos
-                                      usingBlock:resultsBlock
-                                    failureBlock:failureBlock];
-    
-    // Then all other groups
-    NSUInteger type =
-    ALAssetsGroupLibrary | ALAssetsGroupAlbum | ALAssetsGroupEvent |
-    ALAssetsGroupFaces | ALAssetsGroupPhotoStream;
-    
-    [self.assetsLibrary enumerateGroupsWithTypes:type
-                                      usingBlock:resultsBlock
-                                    failureBlock:failureBlock];
 }
 
 
@@ -909,13 +1209,13 @@ static UIColor *titleColor;
     message.preferredMaxLayoutWidth = 304.0f;
     
     title.text              = NSLocalizedString(@"此应用无法使用您的照片或视频。", nil);
-    title.font              = [UIFont systemFontOfSize:17.0f];
+    title.font              = [UIFont boldSystemFontOfSize:17.0];
     title.textColor         = [UIColor colorWithRed:129.0/255.0 green:136.0/255.0 blue:148.0/255.0 alpha:1];
     title.textAlignment     = NSTextAlignmentCenter;
     title.numberOfLines     = 5;
     
     message.text            = NSLocalizedString(@"你可以在「隐私设置」中启用存取。", nil);
-    message.font            = [UIFont systemFontOfSize:14.0f];
+    message.font            = [UIFont systemFontOfSize:14.0];
     message.textColor       = [UIColor colorWithRed:129.0/255.0 green:136.0/255.0 blue:148.0/255.0 alpha:1];
     message.textAlignment   = NSTextAlignmentCenter;
     message.numberOfLines   = 5;
@@ -957,13 +1257,13 @@ static UIColor *titleColor;
     message.preferredMaxLayoutWidth = 304.0f;
     
     title.text              = NSLocalizedString(@"没有照片或视频。", nil);
-    title.font              = [UIFont systemFontOfSize:26.0f];
+    title.font              = [UIFont systemFontOfSize:26.0];
     title.textColor         = [UIColor colorWithRed:153.0/255.0 green:153.0/255.0 blue:153.0/255.0 alpha:1];
     title.textAlignment     = NSTextAlignmentCenter;
     title.numberOfLines     = 5;
     
     message.text            = NSLocalizedString(@"您可以使用 iTunes 将照片和视频\n同步到 iPhone。", nil);
-    message.font            = [UIFont systemFontOfSize:18.0f];
+    message.font            = [UIFont systemFontOfSize:18.0];
     message.textColor       = [UIColor colorWithRed:153.0/255.0 green:153.0/255.0 blue:153.0/255.0 alpha:1];
     message.textAlignment   = NSTextAlignmentCenter;
     message.numberOfLines   = 5;
@@ -1041,8 +1341,8 @@ static UIColor *titleColor;
 {
     ZYQAssetPickerController *picker = (ZYQAssetPickerController *)self.navigationController;
     
-    if ([picker.zyDelegate respondsToSelector:@selector(assetPickerControllerDidCancel:)])
-        [picker.zyDelegate assetPickerControllerDidCancel:picker];
+    if ([picker.delegate respondsToSelector:@selector(assetPickerControllerDidCancel:)])
+        [picker.delegate assetPickerControllerDidCancel:picker];
     
     [picker.presentingViewController dismissViewControllerAnimated:YES completion:NULL];
 }
@@ -1053,6 +1353,8 @@ static UIColor *titleColor;
 
 @implementation ZYQAssetPickerController
 
+@dynamic delegate;
+
 - (id)init
 {
     ZYQAssetGroupViewController *groupViewController = [[ZYQAssetGroupViewController alloc] init];
@@ -1061,7 +1363,7 @@ static UIColor *titleColor;
     {
         _maximumNumberOfSelection      = 10;
         _minimumNumberOfSelection      = 0;
-        _assetsFilter                  = [ALAssetsFilter allAssets];
+        _assetsFilter                  = ZYQAssetsFilterAllAssets;
         _showCancelButton              = YES;
         _showEmptyGroups               = NO;
         _selectionFilter               = [NSPredicate predicateWithValue:YES];

@@ -278,9 +278,6 @@
 		614EFF0A1AF114D800F2BDD1 /* mine.png in Resources */ = {isa = PBXBuildFile; fileRef = 614EFF071AF114D800F2BDD1 /* mine.png */; };
 		614EFF0D1AF1152200F2BDD1 /* squre_press.png in Resources */ = {isa = PBXBuildFile; fileRef = 614EFF0B1AF1152200F2BDD1 /* squre_press.png */; };
 		614EFF0E1AF1152200F2BDD1 /* squre.png in Resources */ = {isa = PBXBuildFile; fileRef = 614EFF0C1AF1152200F2BDD1 /* squre.png */; };
-		615010DC1AD61BD700827F82 /* ZSYPopoverListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 615010D71AD61BD700827F82 /* ZSYPopoverListView.m */; };
-		615010DD1AD61BD700827F82 /* ZYQAssetPicker.Bundle in Resources */ = {isa = PBXBuildFile; fileRef = 615010D91AD61BD700827F82 /* ZYQAssetPicker.Bundle */; };
-		615010DE1AD61BD700827F82 /* ZYQAssetPickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 615010DB1AD61BD700827F82 /* ZYQAssetPickerController.m */; };
 		615010E21AD61C1800827F82 /* CPTextViewPlaceholder.m in Sources */ = {isa = PBXBuildFile; fileRef = 615010E11AD61C1800827F82 /* CPTextViewPlaceholder.m */; };
 		615234871B0D92B200011EAC /* 一度@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 615234801B0D92B200011EAC /* 一度@2x.png */; };
 		615234881B0D92B200011EAC /* 二度@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 615234811B0D92B200011EAC /* 二度@2x.png */; };
@@ -831,6 +828,8 @@
 		F9E7CAF11CF833F00068EF4B /* SHGRecommendManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F9E7CAF01CF833F00068EF4B /* SHGRecommendManager.m */; };
 		F9E7CAF51CF83C740068EF4B /* SHGRecommendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9E7CAF21CF83C740068EF4B /* SHGRecommendViewController.m */; };
 		F9E7CAF61CF83C740068EF4B /* SHGRecommendViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9E7CAF41CF83C740068EF4B /* SHGRecommendViewController.xib */; };
+		F9E9B9461D6E9F74006B1BF5 /* ZYQAssetPicker.Bundle in Resources */ = {isa = PBXBuildFile; fileRef = F9E9B9431D6E9F74006B1BF5 /* ZYQAssetPicker.Bundle */; };
+		F9E9B9471D6E9F74006B1BF5 /* ZYQAssetPickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9E9B9451D6E9F74006B1BF5 /* ZYQAssetPickerController.m */; };
 		F9EBB7D01BB3F4470023E84E /* China_City.plist in Resources */ = {isa = PBXBuildFile; fileRef = F9EBB7CF1BB3F4470023E84E /* China_City.plist */; };
 		F9EBB7D41BB3F4A00023E84E /* SHGProvincesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9EBB7D21BB3F4A00023E84E /* SHGProvincesViewController.m */; };
 		F9EBB7D51BB3F4A00023E84E /* SHGProvincesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9EBB7D31BB3F4A00023E84E /* SHGProvincesViewController.xib */; };
@@ -1184,11 +1183,6 @@
 		614EFF071AF114D800F2BDD1 /* mine.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mine.png; sourceTree = "<group>"; };
 		614EFF0B1AF1152200F2BDD1 /* squre_press.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = squre_press.png; sourceTree = "<group>"; };
 		614EFF0C1AF1152200F2BDD1 /* squre.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = squre.png; sourceTree = "<group>"; };
-		615010D61AD61BD700827F82 /* ZSYPopoverListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSYPopoverListView.h; sourceTree = "<group>"; };
-		615010D71AD61BD700827F82 /* ZSYPopoverListView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSYPopoverListView.m; sourceTree = "<group>"; };
-		615010D91AD61BD700827F82 /* ZYQAssetPicker.Bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = ZYQAssetPicker.Bundle; sourceTree = "<group>"; };
-		615010DA1AD61BD700827F82 /* ZYQAssetPickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZYQAssetPickerController.h; sourceTree = "<group>"; };
-		615010DB1AD61BD700827F82 /* ZYQAssetPickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZYQAssetPickerController.m; sourceTree = "<group>"; };
 		615010E01AD61C1800827F82 /* CPTextViewPlaceholder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CPTextViewPlaceholder.h; sourceTree = "<group>"; };
 		615010E11AD61C1800827F82 /* CPTextViewPlaceholder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CPTextViewPlaceholder.m; sourceTree = "<group>"; };
 		615010E41AD61D9C00827F82 /* Constant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constant.h; sourceTree = "<group>"; };
@@ -1983,6 +1977,9 @@
 		F9E7CAF21CF83C740068EF4B /* SHGRecommendViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGRecommendViewController.m; sourceTree = "<group>"; };
 		F9E7CAF31CF83C740068EF4B /* SHGRecommendViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGRecommendViewController.h; sourceTree = "<group>"; };
 		F9E7CAF41CF83C740068EF4B /* SHGRecommendViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGRecommendViewController.xib; sourceTree = "<group>"; };
+		F9E9B9431D6E9F74006B1BF5 /* ZYQAssetPicker.Bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = ZYQAssetPicker.Bundle; sourceTree = "<group>"; };
+		F9E9B9441D6E9F74006B1BF5 /* ZYQAssetPickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZYQAssetPickerController.h; sourceTree = "<group>"; };
+		F9E9B9451D6E9F74006B1BF5 /* ZYQAssetPickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZYQAssetPickerController.m; sourceTree = "<group>"; };
 		F9EBB7CF1BB3F4470023E84E /* China_City.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = China_City.plist; sourceTree = "<group>"; };
 		F9EBB7D11BB3F4A00023E84E /* SHGProvincesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGProvincesViewController.h; sourceTree = "<group>"; };
 		F9EBB7D21BB3F4A00023E84E /* SHGProvincesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGProvincesViewController.m; sourceTree = "<group>"; };
@@ -2835,25 +2832,6 @@
 			path = Hud;
 			sourceTree = "<group>";
 		};
-		615010D51AD61BD700827F82 /* ZSYPopoverListView */ = {
-			isa = PBXGroup;
-			children = (
-				615010D61AD61BD700827F82 /* ZSYPopoverListView.h */,
-				615010D71AD61BD700827F82 /* ZSYPopoverListView.m */,
-			);
-			path = ZSYPopoverListView;
-			sourceTree = "<group>";
-		};
-		615010D81AD61BD700827F82 /* ZYQAssetPickerController */ = {
-			isa = PBXGroup;
-			children = (
-				615010D91AD61BD700827F82 /* ZYQAssetPicker.Bundle */,
-				615010DA1AD61BD700827F82 /* ZYQAssetPickerController.h */,
-				615010DB1AD61BD700827F82 /* ZYQAssetPickerController.m */,
-			);
-			path = ZYQAssetPickerController;
-			sourceTree = "<group>";
-		};
 		615010DF1AD61C1800827F82 /* CPTextViewPlaceholder */ = {
 			isa = PBXGroup;
 			children = (
@@ -3302,6 +3280,7 @@
 		61D6E7401AD50FCA0016C13A /* External */ = {
 			isa = PBXGroup;
 			children = (
+				F9E9B9421D6E9F74006B1BF5 /* ZYQAssetPickerController */,
 				F99B95891D4F423A00641ADF /* VoiceConvert */,
 				F99B953C1D4F3CC600641ADF /* DeviceUtil */,
 				F916B5B91D0D395300AE217F /* CTTextDisplayView */,
@@ -3312,8 +3291,6 @@
 				5331DF271AFC12EA00E035B8 /* Localizable.strings */,
 				614DC8901AD66B3200F610D4 /* PopView */,
 				615010DF1AD61C1800827F82 /* CPTextViewPlaceholder */,
-				615010D51AD61BD700827F82 /* ZSYPopoverListView */,
-				615010D81AD61BD700827F82 /* ZYQAssetPickerController */,
 				61D6E7CF1AD50FCB0016C13A /* Mob */,
 			);
 			path = External;
@@ -4240,6 +4217,16 @@
 			path = Recommend;
 			sourceTree = "<group>";
 		};
+		F9E9B9421D6E9F74006B1BF5 /* ZYQAssetPickerController */ = {
+			isa = PBXGroup;
+			children = (
+				F9E9B9431D6E9F74006B1BF5 /* ZYQAssetPicker.Bundle */,
+				F9E9B9441D6E9F74006B1BF5 /* ZYQAssetPickerController.h */,
+				F9E9B9451D6E9F74006B1BF5 /* ZYQAssetPickerController.m */,
+			);
+			path = ZYQAssetPickerController;
+			sourceTree = "<group>";
+		};
 		F9EDD5EA1BABFBCF00506C0C /* SDPhotoBrowser */ = {
 			isa = PBXGroup;
 			children = (
@@ -4403,6 +4390,7 @@
 				B080FEA01B81E30100426579 /* emoji_face_n.png in Resources */,
 				408D8AEC1AF8618C0055810C /* chatListCellHead@2x.png in Resources */,
 				408D8B071AF8618C0055810C /* VoiceSearchFeedback010.png in Resources */,
+				F9E9B9461D6E9F74006B1BF5 /* ZYQAssetPicker.Bundle in Resources */,
 				408D8B3F1AF8618C0055810C /* chatBar_faceSelected.png in Resources */,
 				53C9D98F1AFF44C900827169 /* 添加群组@2x.png in Resources */,
 				408D8B1C1AF8618C0055810C /* VoiceSearchFeedback020@2x.png in Resources */,
@@ -4710,7 +4698,6 @@
 				614AD1C11AD7AFED00DDF43E /* SHGHomeViewController.xib in Resources */,
 				408D8B621AF8618C0055810C /* chatBar_more_locationSelected@2x.png in Resources */,
 				408D8B0B1AF8618C0055810C /* VoiceSearchFeedback012.png in Resources */,
-				615010DD1AD61BD700827F82 /* ZYQAssetPicker.Bundle in Resources */,
 				61E83D041AF7C78E00703651 /* 我的-选中@2x.png in Resources */,
 				408D8B601AF8618C0055810C /* chatBar_more_location@2x.png in Resources */,
 				F916B6051D0D395300AE217F /* d_bishi@2x.png in Resources */,
@@ -4952,7 +4939,6 @@
 				6187D2D01AF1C693008E1D21 /* GroupSubjectChangingViewController.m in Sources */,
 				F916B5FD1D0D395300AE217F /* CTTextRun.m in Sources */,
 				4088DDB31AF102FE00393855 /* SettingModifyPWDViewController.m in Sources */,
-				615010DE1AD61BD700827F82 /* ZYQAssetPickerController.m in Sources */,
 				40302B0C1AEF578700F22EB6 /* AddressObject.m in Sources */,
 				982EB7F51CB39062003EEBE6 /* SHGEquityInvestNextViewController.m in Sources */,
 				6187D2D81AF1C693008E1D21 /* ConvertToCommonEmoticonsHelper.m in Sources */,
@@ -5021,7 +5007,6 @@
 				6187D2E81AF1C693008E1D21 /* MessageModel.m in Sources */,
 				F93FCBC21C856D5A004E356E /* NSArray+Category.m in Sources */,
 				614BA7DC1AE5E96C009480CD /* LoginNextViewController.m in Sources */,
-				615010DC1AD61BD700827F82 /* ZSYPopoverListView.m in Sources */,
 				F91982CC1C59F9FA00A450B9 /* SHGUserCenterViewController.m in Sources */,
 				6187D2E51AF1C693008E1D21 /* EMChatTimeCell.m in Sources */,
 				986FFF131CBC857200D9FE04 /* SHGBusinessLocationView.m in Sources */,
@@ -5054,6 +5039,7 @@
 				F986CADC1D1A2C1A0086FC42 /* SHGAuthenticationWarningView.m in Sources */,
 				F93EA9171D59BD8700161F47 /* SHGBusinessSegmentViewController.m in Sources */,
 				6187D2EA1AF1C693008E1D21 /* MessageReadManager.m in Sources */,
+				F9E9B9471D6E9F74006B1BF5 /* ZYQAssetPickerController.m in Sources */,
 				F91F4DF51D61C0BD00D96A8A /* SHGMyComplainDetailViewController.m in Sources */,
 				F9203D161CF449E000F55373 /* SHGDiscoveryObject.m in Sources */,
 				985CBDC31C04042C002B3D9D /* SHGCollectCardClass.m in Sources */,
