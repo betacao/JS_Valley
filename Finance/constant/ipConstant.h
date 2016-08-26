@@ -42,7 +42,8 @@
 #define kAppSecret  @"ryyfVg7IiI6LIaUVGYVzr3"
 
 #else
-#define rBaseAddRessHttp                 @"http://120.26.114.181:8080/api"
+
+#define rBaseAddRessHttp                 @"http://www.daniuq.com:8080/api"
 #define rBaseAddressForHttp				[NSString stringWithFormat:@"%@/v2",rBaseAddRessHttp]
 #define rBaseAddressForHttpCircle		[NSString stringWithFormat:@"%@/v2/group",rBaseAddRessHttp]
 #define rBaseAddressForHttpProd         [NSString stringWithFormat:@"%@/v2/prod",rBaseAddRessHttp]
