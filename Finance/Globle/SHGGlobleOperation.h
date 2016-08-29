@@ -27,4 +27,9 @@
 
 + (void)deleteObject:(id)object;
 
+//动态收藏
++ (void)registerCollectClass:(Class)CClass method:(SEL)selector;
+
++ (void)collectObject:(id)object;
+
 @end

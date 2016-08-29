@@ -31,7 +31,7 @@
     self.tableView.dataSource = self;
     self.tableView.sd_layout
     .spaceToSuperView(UIEdgeInsetsZero);
-    self.tableView.backgroundColor = [UIColor colorWithHexString:@"efeeef"];
+    self.tableView.backgroundColor = [UIColor colorWithHexString:@"f7f7f7"];
     [self addHeaderRefresh:self.tableView headerRefesh:NO andFooter:YES];
     [self requestBusinessCollectWithTarget:@"first" ];
 }

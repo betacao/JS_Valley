@@ -10,7 +10,7 @@
 #import "AppDelegate.h"
 #import "CircleListObj.h"
 #import "SHGHomeViewController.h"
-
+#import "SHGCircleCollectionViewController.h"
 #define kShareNum       @"shareNum"
 #define kCommentNum     @"commentNum"
 #define kPraiseNum      @"praiseNum"
@@ -19,7 +19,7 @@
 @property (weak, nonatomic)     id<CircleActionDelegate> delegate;
 @property (strong, nonatomic)   NSString *rid;
 @property (strong, nonatomic)   NSDictionary *itemInfoDictionary;
-
+@property (weak, nonatomic) SHGCircleCollectionViewController *controller;
 - (void)smsShareSuccess:(NSNotification *)noti;
 
 @end

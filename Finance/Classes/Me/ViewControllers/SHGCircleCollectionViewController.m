@@ -29,7 +29,7 @@
     self.title = @"动态收藏";
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
-    self.tableView.backgroundColor = [UIColor colorWithHexString:@"efeeef"];
+    self.tableView.backgroundColor = [UIColor colorWithHexString:@"f7f7f7"];
     [self addHeaderRefresh:self.tableView headerRefesh:NO andFooter:YES];
     self.tableView.sd_layout
     .spaceToSuperView(UIEdgeInsetsZero);
@@ -242,6 +242,7 @@
         cell.delegate = self;
         cell.index = indexPath.row;
         cell.object = obj;
+        cell.collectionHidden = YES;
         [cell useCellFrameCacheWithIndexPath:indexPath tableView:tableView];
         return cell;
     } else{

@@ -18,6 +18,7 @@
 
 @property (strong ,nonatomic) CircleListObj *object;
 
+@property (assign, nonatomic) BOOL collectionHidden;
 @end
 
 

@@ -125,6 +125,7 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     [SHGGlobleOperation registerAttationClass:[self class] method:@selector(loadAttationState:attationState:)];
     [SHGGlobleOperation registerPraiseClass:[self class] method:@selector(loadPraiseState:praiseState:)];
     [SHGGlobleOperation registerDeleteClass:[self class] method:@selector(loadDelete:)];
+        [SHGGlobleOperation registerCollectClass:[self class] method:@selector(loadCollection: collectionState:)];
 
     [self.categorySelectView addObserver:self forKeyPath:@"alpha" options:NSKeyValueObservingOptionNew context:nil];
     WEAK(self, weakSelf);
@@ -184,6 +185,11 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     [[SHGHomeCategoryView sharedCategoryView] performSelector:@selector(loadDelete:) withObject:targetID];
 }
 
+- (void)loadCollection:(id)object collectionState:(NSNumber *)collectionState
+{
+    [[SHGHomeViewController sharedController] performSelector:@selector(loadCollection:collectionState:) withObject:object withObject:collectionState];
+    [[SHGHomeCategoryView sharedCategoryView] performSelector:@selector(loadCollection:collectionState:) withObject:object withObject:collectionState];
+}
 
 - (void)initMessageObject
 {

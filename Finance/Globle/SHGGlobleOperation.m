@@ -20,6 +20,8 @@
 
 @property (strong, nonatomic) NSMutableArray *deleteArray;
 
+@property (strong, nonatomic) NSMutableArray *collectionArray;
+
 @end
 
 @implementation SHGGlobleOperation
@@ -66,6 +68,13 @@
     return _deleteArray;
 }
 
+- (NSMutableArray *)collectionArray
+{
+    if (!_collectionArray) {
+        _collectionArray = [NSMutableArray array];
+    }
+    return _collectionArray;
+}
 
 #pragma mark ------关注
 + (void)registerAttationClass:(Class)CClass method:(SEL)selector
@@ -284,5 +293,74 @@
     }];
 }
 
+#pragma mark ---动态列表收藏---
+
++ (void)registerCollectClass:(Class)CClass method:(SEL)selector
+{
+    NSDictionary *dictionary = [NSDictionary dictionaryWithObject:NSStringFromClass(CClass) forKey:NSStringFromSelector(selector)];
+    [[SHGGlobleOperation sharedGloble].collectionArray insertUniqueObject:dictionary];
+}
+
++ (void)collectObject:(id)object
+{
+    [Hud showWait];
+    NSString *targetID = @"";
+    BOOL collectionState = NO;
+    if ([object isKindOfClass:[CircleListObj class]]) {
+        CircleListObj *circleListObject = (CircleListObj *)object;
+        targetID = circleListObject.rid;
+        collectionState = [circleListObject.iscollection isEqualToString:@"Y"];
+    }
+    NSString *url = [NSString stringWithFormat:@"%@/%@",rBaseAddressForHttpCircle,@"circlestore"];
+    NSDictionary *param = @{@"uid":UID, @"rid":targetID};
+    if (!collectionState){
+        [MOCHTTPRequestOperationManager postWithURL:url class:nil parameters:param success:^(MOCHTTPResponse *response) {
+            [Hud hideHud];
+            NSString *code = [response.data valueForKey:@"code"];
+            if ([code isEqualToString:@"000"]) {
+                [Hud showMessageWithText:@"收藏成功"];
+                [MobClick event:@"ActionCollection_On" label:@"onClick"];
+                [[SHGGlobleOperation sharedGloble] addcollectState:targetID collectState:YES];
+            }
+        } failed:^(MOCHTTPResponse *response) {
+            [Hud hideHud];
+            [Hud showMessageWithText:response.errorMessage];
+        }];
+    } else{
+        
+        [MOCHTTPRequestOperationManager deleteWithURL:url parameters:param success:^(MOCHTTPResponse *response) {
+            [Hud hideHud];
+            NSString *code = [response.data valueForKey:@"code"];
+            if ([code isEqualToString:@"000"]) {
+                [MobClick event:@"ActionCollection_Off" label:@"onClick"];
+                [Hud showMessageWithText:@"取消收藏"];
+                [[SHGGlobleOperation sharedGloble] addcollectState:targetID collectState:NO];
+            }
+            
+        } failed:^(MOCHTTPResponse *response) {
+            [Hud hideHud];
+            [Hud showMessageWithText:response.errorMessage];
+        }];
+    }
+
+}
+
+- (void)addcollectState:(NSString *)targetID collectState:(BOOL)collectState
+{
+    UINavigationController *nav = (UINavigationController *)[AppDelegate currentAppdelegate].window.rootViewController;
+    NSMutableArray *controllerArray = [NSMutableArray arrayWithArray:nav.viewControllers];
+    [controllerArray addObjectsFromArray:[TabBarViewController tabBar].viewControllers];
+    [self.collectionArray enumerateObjectsUsingBlock:^(NSDictionary *dictionary, NSUInteger idx, BOOL * _Nonnull stop) {
+        Class class = NSClassFromString([dictionary.allValues firstObject]);
+        SEL selector = NSSelectorFromString([dictionary.allKeys firstObject]);
+        for (UIViewController *controller in controllerArray) {
+            if ([controller isKindOfClass:class]) {
+                IMP imp = [controller methodForSelector:selector];
+                void (*func)(id, SEL, id, NSNumber *) = (void *)imp;
+                func(controller, selector, targetID, @(collectState));
+            }
+        }
+    }];
+}
 @end
 

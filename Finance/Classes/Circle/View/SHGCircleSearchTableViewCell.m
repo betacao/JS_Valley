@@ -143,9 +143,11 @@
     [self.authenticationView updateWithStatus:status];
     
     NSString *name = object.nickname;
-    if (object.nickname.length > 4){
-        name = [object.nickname substringToIndex:4];
-        name = [NSString stringWithFormat:@"%@...",name];
+    if (![object.usertype isEqualToString:@"businessAccount"]) {
+        if (object.nickname.length > 4){
+            name = [object.nickname substringToIndex:4];
+            name = [NSString stringWithFormat:@"%@...",name];
+        }
     }
     self.nameLabel.text = name;
     

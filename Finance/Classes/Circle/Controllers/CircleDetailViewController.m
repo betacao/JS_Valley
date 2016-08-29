@@ -20,6 +20,7 @@
 #import "SDPhotoBrowser.h"
 #import "CCLocationManager.h"
 
+
 #define PRAISE_SEPWIDTH     10
 #define PRAISE_RIGHTWIDTH     40
 #define PRAISE_WIDTH 28.0f
@@ -73,6 +74,7 @@
 @property (strong, nonatomic) NSArray *webPhotoArray;
 @property (strong, nonatomic) CircleListObj *responseObject;
 
+@property (assign, nonatomic) BOOL collectionChange;
 @end
 
 @implementation CircleDetailViewController
@@ -81,6 +83,7 @@
 {
     [super viewDidLoad];
     self.title = @"动态详情";
+    self.collectionChange = YES;
     [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:KEY_MEMORY];
     [self initView];
     [self addSdLayout];
@@ -102,6 +105,8 @@
     [SHGGlobleOperation registerAttationClass:[self class] method:@selector(loadAttationState:attationState:)];
     [SHGGlobleOperation registerPraiseClass:[self class] method:@selector(loadPraiseState:praiseState:)];
     [SHGGlobleOperation registerDeleteClass:[self class] method:@selector(loadDelete:)];
+    
+    [SHGGlobleOperation registerCollectClass:[self class] method:@selector(loadCollection: collectionState:)];
 }
 
 - (void)initView
@@ -356,6 +361,9 @@
     if (self.popupView) {
         [self.popupView hideWithAnimated:NO];
     }
+    if (self.collectionChange == NO) {
+        [self.controller changeCardCollection];
+    }
 }
 
 - (void)parseDataWithDictionary:(NSDictionary *)dictionary
@@ -408,6 +416,7 @@
     self.responseObject.groupPostUrl = [dic objectForKey:@"groupposturl"];
     self.responseObject.postType = [dic objectForKey:@"type"];
     self.responseObject.businessID = [dic objectForKey:@"businessid"];
+    self.responseObject.usertype = [dic objectForKey:@"usertype"];
 
 }
 
@@ -461,13 +470,17 @@
     }
     if (![self.responseObject.iscollection isEqualToString:@"Y"]) {
         [self.btnCollet addImage:[UIImage imageNamed:@"homeDetailNoCollection"]];
+        self.collectionChange = NO;
     } else{
         [self.btnCollet addImage:[UIImage imageNamed:@"homeDetailCollection"]];
+        self.collectionChange = YES;
     }
     NSString *name = self.responseObject.nickname;
-    if (self.responseObject.nickname.length > 4){
-        name = [self.responseObject.nickname substringToIndex:4];
-        name = [NSString stringWithFormat:@"%@...",name];
+    if (![self.responseObject.usertype isEqualToString:@"businessAccount"]) {
+        if (self.responseObject.nickname.length > 4){
+            name = [self.responseObject.nickname substringToIndex:4];
+            name = [NSString stringWithFormat:@"%@...",name];
+        }
     }
     self.nickName.text = name;
     //设置公司名称
@@ -608,10 +621,13 @@
 - (void)sizeUIWithObj:(CircleListObj *)obj
 {
     NSString *name = obj.nickname;
-    if (obj.nickname.length > 4) {
-        name = [obj.nickname substringToIndex:4];
-        name = [NSString stringWithFormat:@"%@...",name];
+    if (![obj.usertype isEqualToString:@"businessAccount"]) {
+        if (obj.nickname.length > 4) {
+            name = [obj.nickname substringToIndex:4];
+            name = [NSString stringWithFormat:@"%@...",name];
+        }
     }
+    
     self.nickName.text = name;
 }
 
@@ -743,6 +759,11 @@
         [[SHGGloble sharedGloble] recordUserAction:@"" type:@"dynamic_identity_cancel"];
     } failString:@"认证后才能发起评论哦～"];
 
+}
+
+- (void)actionCollection:(id)sende
+{
+    [SHGGlobleOperation collectObject:self.responseObject];
 }
 
 - (void)actionPraise:(id)sender
@@ -921,49 +942,6 @@
 }
 
 #pragma mark -收藏
-- (void)actionCollection:(id)sender
-{
-    [Hud showWait];
-    WEAK(self, weakSelf);
-    NSString *url = [NSString stringWithFormat:@"%@/%@",rBaseAddressForHttpCircle,@"circlestore"];
-    NSDictionary *param = @{@"uid":UID, @"rid":self.responseObject.rid};
-    if (![self.responseObject.iscollection isEqualToString:@"Y"]){
-        [MOCHTTPRequestOperationManager postWithURL:url class:nil parameters:param success:^(MOCHTTPResponse *response) {
-            [Hud hideHud];
-            NSString *code = [response.data valueForKey:@"code"];
-            if ([code isEqualToString:@"000"]) {
-                weakSelf.responseObject.iscollection = @"Y";
-            }
-            [weakSelf resetView];
-            [Hud showMessageWithText:@"收藏成功"];
-            [MobClick event:@"ActionCollection_On" label:@"onClick"];
-            if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(detailCollectionWithRid:collected:)]){
-                [weakSelf.delegate detailCollectionWithRid:weakSelf.responseObject.rid collected:weakSelf.responseObject.iscollection];
-            }
-        } failed:^(MOCHTTPResponse *response) {
-            [Hud hideHud];
-            [Hud showMessageWithText:response.errorMessage];
-        }];
-    } else{
-
-        [MOCHTTPRequestOperationManager deleteWithURL:url parameters:param success:^(MOCHTTPResponse *response) {
-            [Hud hideHud];
-            NSString *code = [response.data valueForKey:@"code"];
-            if ([code isEqualToString:@"000"]) {
-                weakSelf.responseObject.iscollection = @"N";
-            }
-            [weakSelf resetView];
-            if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(detailCollectionWithRid:collected:)]){
-                [weakSelf.delegate detailCollectionWithRid:weakSelf.responseObject.rid collected:weakSelf.responseObject.iscollection];
-            }
-            [MobClick event:@"ActionCollection_Off" label:@"onClick"];
-            [Hud showMessageWithText:@"取消收藏"];
-        } failed:^(MOCHTTPResponse *response) {
-            [Hud hideHud];
-            [Hud showMessageWithText:response.errorMessage];
-        }];
-    }
-}
 
 - (void)loadAttationState:(NSString *)targetUserID attationState:(NSNumber *)attationState
 {
@@ -999,6 +977,16 @@
         }
         [self resetView];
     }
+}
+
+- (void)loadCollection:(NSString *)targetID collectionState:(NSNumber *)collectionState
+{
+    if ([collectionState boolValue]) {
+        self.responseObject.iscollection = @"Y";
+    } else{
+        self.responseObject.iscollection = @"N";
+    }
+    [self resetView];
 }
 
 - (void)loadDelete:(NSString *)targetID

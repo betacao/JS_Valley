@@ -30,6 +30,7 @@
     } else{
         self.title = @"TA的动态";
     }
+    self.tableView.backgroundColor = Color(@"f7f7f7");
     [self addHeaderRefresh:self.tableView headerRefesh:NO andFooter:YES];
     self.tableView.sd_layout
     .spaceToSuperView(UIEdgeInsetsZero);

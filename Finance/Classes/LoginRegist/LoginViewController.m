@@ -317,7 +317,16 @@
         }
     } failed:^(MOCHTTPResponse *response){
         [Hud hideHud];
-        [Hud showMessageWithText:response.errorMessage];
+        //[Hud showMessageWithText:response.errorMessage];
+        SHGAlertView *alert = [[SHGAlertView alloc] initWithTitle:@"提示" contentText:response.errorMessage leftButtonTitle:@"重试" rightButtonTitle:@"退出"];
+        alert.rightBlock = ^{
+            [[AppDelegate currentAppdelegate] exitApplication];
+        };
+        
+        alert.leftBlock = ^{
+            [self login];
+        };
+        [alert show];
         NSLog(@"%@",response.data);
         NSLog(@"%@",response.errorMessage);
 

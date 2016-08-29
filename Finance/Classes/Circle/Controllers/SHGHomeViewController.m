@@ -311,6 +311,21 @@
     self.needRefreshTableView = YES;
 }
 
+- (void)loadCollection:(NSString *)targetID collectionState:(NSNumber *)collectionState
+{
+    [self.dataArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if ([obj isKindOfClass:[CircleListObj class]]) {
+            CircleListObj *listObject = (CircleListObj *)obj;
+            if ([listObject.rid isEqualToString:targetID]) {
+                listObject.iscollection = [collectionState boolValue] ? @"Y" : @"N";
+            }
+        }
+
+    }];
+    self.needRefreshTableView = YES;
+    
+}
+
 - (void)loadDelete:(NSString *)targetID
 {
     NSMutableArray *array = [NSMutableArray array];

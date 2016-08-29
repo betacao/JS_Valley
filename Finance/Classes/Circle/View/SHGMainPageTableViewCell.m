@@ -29,6 +29,7 @@
 @property (weak, nonatomic) IBOutlet UIView *photoView;
 @property (weak, nonatomic) IBOutlet UIView *actionView;
 @property (weak, nonatomic) IBOutlet UILabel *relationLabel;
+@property (strong, nonatomic) SHGHorizontalTitleImageView *btnCollet;
 @property (strong, nonatomic) SHGHorizontalTitleImageView *deleteButton;
 @property (strong, nonatomic) SHGHorizontalTitleImageView *praiseButton;
 @property (strong, nonatomic) SHGHorizontalTitleImageView *commentButton;
@@ -57,6 +58,7 @@
 
 - (void)initView
 {
+
     self.titleLabel.delegate = self;
     self.titleLabel.styleModel = self.titleStyleModel;
 
@@ -77,6 +79,10 @@
 
     self.relationLabel.font = kMainRelationFont;
     self.relationLabel.textColor = kMainRelationColor;
+    
+    self.btnCollet = [[SHGHorizontalTitleImageView alloc] init];
+    [self.btnCollet setEnlargeEdge:kMainActionButtonMargin / 2.0f];
+    [self.btnCollet target:self addSeletor:@selector(actionCollection:)];
 
     self.deleteButton = [[SHGHorizontalTitleImageView alloc] init];
     [self.deleteButton setEnlargeEdge:kMainActionButtonMargin / 2.0f];
@@ -93,8 +99,9 @@
     [self.shareButton setEnlargeEdge:kMainActionButtonMargin / 2.0f];
     [self.shareButton target:self addSeletor:@selector(shareButtonClick:)];
 
-    [self.actionView sd_addSubviews:@[self.deleteButton, self.praiseButton, self.commentButton, self.shareButton]];
+    [self.actionView sd_addSubviews:@[self.btnCollet, self.deleteButton, self.praiseButton, self.commentButton, self.shareButton]];
 
+    [self.btnCollet addImage:[UIImage imageNamed:@"homeDetailCollection"]];
     [self.deleteButton addImage:[UIImage imageNamed:@"home_delete"]];
 
     [self.praiseButton addImage:[UIImage imageNamed:@"home_weizan"]];
@@ -179,6 +186,10 @@
     self.praiseButton.sd_layout
     .rightSpaceToView(self.commentButton, kMainActionButtonMargin)
     .centerYEqualToView(self.shareButton);
+    
+    self.btnCollet.sd_layout
+    .rightSpaceToView(self.praiseButton, kMainActionButtonMargin)
+    .centerYEqualToView(self.praiseButton);
 
     self.deleteButton.sd_layout
     .rightSpaceToView(self.praiseButton, kMainActionButtonMargin)
@@ -277,9 +288,11 @@
     [self.authenticationView updateWithStatus:status];
 
     NSString *name = object.nickname;
-    if (object.nickname.length > 4){
-        name = [object.nickname substringToIndex:4];
-        name = [NSString stringWithFormat:@"%@...",name];
+    if (![object.usertype isEqualToString:@"businessAccount"]) {
+        if (object.nickname.length > 4){
+            name = [object.nickname substringToIndex:4];
+            name = [NSString stringWithFormat:@"%@...",name];
+        }
     }
     self.nameLabel.text = name;
 
@@ -403,6 +416,7 @@
 
 - (void)loadActionView:(CircleListObj *)object
 {
+
     //判断好友是一度好友还是二度好友
     NSString *friendShip = object.friendship;
     if ([friendShip isEqualToString:@"一度"]) {
@@ -445,7 +459,16 @@
     }else{
         [self.praiseButton addImage:[UIImage imageNamed:@"home_yizan"]];
     }
-
+    if (self.collectionHidden == YES) {
+        [self.btnCollet addImage:nil];
+    } else{
+        if (![object.iscollection isEqualToString:@"Y"]) {
+            [self.btnCollet addImage:[UIImage imageNamed:@"homeDetailNoCollection"]];
+        } else{
+            [self.btnCollet addImage:[UIImage imageNamed:@"homeDetailCollection"]];
+        }
+    }
+    
     [self.praiseButton addTitle:object.praisenum];
     [self.commentButton addTitle:object.cmmtnum];
     [self.shareButton addTitle:object.sharenum];
@@ -558,6 +581,11 @@
 - (void)shareButtonClick:(UIButton *)sender
 {
     [self.delegate shareClicked:self.object];
+}
+
+- (void)actionCollection:(UIButton *)sender
+{
+    [SHGGlobleOperation collectObject:self.object];
 }
 
 - (void)ct_textDisplayView:(CTTextDisplayView *)textDisplayView obj:(id)obj

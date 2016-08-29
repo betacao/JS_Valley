@@ -91,12 +91,18 @@
         return;
     }
     [Hud showWait];
+    [self login];
+
+}
+
+- (void)login
+{
     WEAK(self, weakSelf);
     NSString *password = [_lblPassward.text md5];
     NSString *channelId = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_BPUSH_CHANNELID];
     NSString *userId = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_BPUSH_USERID];
     NSDictionary *param = @{@"phone":self.phone, @"pwd":[_lblPassward.text md5], @"ctype":@"iPhone", @"os":@"iOS", @"osv":[UIDevice currentDevice].systemVersion, @"appv":LOCAL_Version, @"yuncid":channelId?:@"", @"yunuid":userId?:@"", @"phoneType":[SHGGloble sharedGloble].platform};
-
+    
     [MOCHTTPRequestOperationManager postWithURL:[NSString stringWithFormat:@"%@/%@",rBaseAddressForHttp,actionlogin] class:nil parameters:param success:^(MOCHTTPResponse *response){
         [Hud hideHud];
         NSString *uid = response.dataDictionary[@"uid"];
@@ -121,9 +127,18 @@
         //环信登录
         [weakSelf registerToken];
     } failed:^(MOCHTTPResponse *response){
-         [Hud showMessageWithText:response.errorMessage];
-         [Hud hideHud];
-     }];
+        //[Hud showMessageWithText:response.errorMessage];
+        SHGAlertView *alert = [[SHGAlertView alloc] initWithTitle:@"提示" contentText:response.errorMessage leftButtonTitle:@"重试" rightButtonTitle:@"退出"];
+        alert.rightBlock = ^{
+            [[AppDelegate currentAppdelegate] exitApplication];
+        };
+        
+        alert.leftBlock = ^{
+            [self login];
+        };
+        [alert show];
+        [Hud hideHud];
+    }];
 }
 
 - (void)registerToken

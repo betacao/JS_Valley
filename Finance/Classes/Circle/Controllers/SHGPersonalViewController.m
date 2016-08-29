@@ -88,7 +88,7 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
 
 - (void)loadAttationState:(NSString *)targetUserID attationState:(NSNumber *)attationState
 {
-    if (attationState) {
+    if ([attationState boolValue]) {
         self.relationShip = @"1";
     } else {
         self.relationShip = @"0";
@@ -308,21 +308,35 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
 
 - (void)refreshFriendShip
 {
-    if ([self.relationShip integerValue] == 0){
-        //未关注
-        [self.sendMessageButton setTitle:@"+关注" forState:UIControlStateNormal];
-        [self.sendMessageButton setTitleColor:[UIColor colorWithHexString:@"F7514A"] forState:UIControlStateNormal];
-       
-    } else if ([self.relationShip intValue] == 1){
-        //已关注
-        [self.sendMessageButton setTitle:@"发消息" forState:UIControlStateNormal];
-        [self.sendMessageButton setTitleColor:[UIColor colorWithHexString:@"919291"] forState:UIControlStateNormal];
+    if (self.userType == SHGUserTypeBusinessAccount){
+        if ([self.relationShip integerValue] == 0){
+            //未关注
+            [self.sendMessageButton setTitle:@"+关注" forState:UIControlStateNormal];
+            [self.sendMessageButton setTitleColor:[UIColor colorWithHexString:@"F7514A"] forState:UIControlStateNormal];
+            
+        } else{
+            //取消关注
+            [self.sendMessageButton setTitle:@"取消关注" forState:UIControlStateNormal];
+            [self.sendMessageButton setTitleColor:[UIColor colorWithHexString:@"919291"] forState:UIControlStateNormal];
+        }
     } else{
-        //互相关注
-        [self.sendMessageButton setTitle:@"发消息" forState:UIControlStateNormal];
-        [self.sendMessageButton setTitleColor:[UIColor colorWithHexString:@"1D5798"] forState:UIControlStateNormal];
-    }
+        if ([self.relationShip integerValue] == 0){
+            //未关注
+            [self.sendMessageButton setTitle:@"+关注" forState:UIControlStateNormal];
+            [self.sendMessageButton setTitleColor:[UIColor colorWithHexString:@"F7514A"] forState:UIControlStateNormal];
+            
+        } else if ([self.relationShip intValue] == 1){
+            //已关注
+            [self.sendMessageButton setTitle:@"发消息" forState:UIControlStateNormal];
+            [self.sendMessageButton setTitleColor:[UIColor colorWithHexString:@"919291"] forState:UIControlStateNormal];
+        } else{
+            //互相关注
+            [self.sendMessageButton setTitle:@"发消息" forState:UIControlStateNormal];
+            [self.sendMessageButton setTitleColor:[UIColor colorWithHexString:@"1D5798"] forState:UIControlStateNormal];
+        }
 
+    }
+    
 }
 -(void)refreshCollection
 {
@@ -376,18 +390,34 @@ typedef NS_ENUM(NSInteger, SHGUserType) {
 }
 - (IBAction)sendMessageButtonClick:(UIButton *)sender
 {
-    if ([self.relationShip integerValue] == 0) {
-        CircleListObj *object = [[CircleListObj alloc] init];
-        object.userid = self.userId;
-        object.isAttention = NO;
-        [SHGGlobleOperation addAttation:object];
-    } else if ([self.relationShip integerValue] == 1){
-        [Hud hideHud];
-        [Hud showMessageWithText:@"您与对方还不是好友,对方关注您后\n可进行对话"];
+    if (self.userType == SHGUserTypeBusinessAccount) {
+        if ([self.relationShip integerValue] == 0) {
+            CircleListObj *object = [[CircleListObj alloc] init];
+            object.userid = self.userId;
+            object.isAttention = NO;
+            [SHGGlobleOperation addAttation:object];
+        } else{
+            CircleListObj *object = [[CircleListObj alloc] init];
+            object.userid = self.userId;
+            object.isAttention = YES;
+            [SHGGlobleOperation addAttation:object];
+        
+        }
     } else{
-        [self chat];
-    }
+        if ([self.relationShip integerValue] == 0) {
+            CircleListObj *object = [[CircleListObj alloc] init];
+            object.userid = self.userId;
+            object.isAttention = NO;
+            [SHGGlobleOperation addAttation:object];
+        } else if ([self.relationShip integerValue] == 1){
+            [Hud hideHud];
+            [Hud showMessageWithText:@"您与对方还不是好友,对方关注您后\n可进行对话"];
+        } else{
+            [self chat];
+        }
 
+    }
+    
 }
 
 - (void)chat

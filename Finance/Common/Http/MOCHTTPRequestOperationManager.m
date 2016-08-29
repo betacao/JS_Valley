@@ -12,9 +12,9 @@
 #import "MOCNetworkReachabilityManager.h"
 #import "SHGEncryptionAlgorithm.h"
 
-NSString * const moc_http_request_operation_manager_response_server_error_message = @"亲，您现在的网络不给力哦，请您稍后重试";
+NSString * const moc_http_request_operation_manager_response_server_error_message = @"网络不给力，请稍后再试或者\n检查网络设置";
 NSString * const moc_http_request_operation_manager_response_server_error_code = @"-9989";
-NSString * const moc_http_request_operation_manager_response_network_error_message = @"当前网络状态不可用,请检查网络设置";
+NSString * const moc_http_request_operation_manager_response_network_error_message = @"网络不给力，请稍后再试或者\n检查网络设置";
 NSString * const moc_http_request_operation_manager_response_network_error_code = @"-9998";
 NSString * const moc_http_request_operation_manager_response_token_error_message = @"token错误";
 NSString * const moc_http_request_operation_manager_response_token_error_code = @"-9899";
