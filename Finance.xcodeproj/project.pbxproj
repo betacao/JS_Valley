@@ -1851,6 +1851,7 @@
 		F98B16EC1BC7947D000A577C /* GeTuiSdk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeTuiSdk.h; sourceTree = "<group>"; };
 		F98B16ED1BC7947D000A577C /* GeTuiSdkError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeTuiSdkError.h; sourceTree = "<group>"; };
 		F98B16EE1BC7947D000A577C /* libGeTuiSdk-1.2.1.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libGeTuiSdk-1.2.1.a"; sourceTree = "<group>"; };
+		F98D097E1D7044B3004A71B7 /* 大牛圈.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "大牛圈.entitlements"; sourceTree = "<group>"; };
 		F99625801D4F486E000E365E /* wav.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wav.h; sourceTree = "<group>"; };
 		F99625811D4F486E000E365E /* wav.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = wav.mm; sourceTree = "<group>"; };
 		F99B602A1B9E7D9500759AAC /* SHGUserHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGUserHeaderView.h; sourceTree = "<group>"; };
@@ -2505,6 +2506,7 @@
 		614A59741AD3AEA1005DAB04 /* Finance */ = {
 			isa = PBXGroup;
 			children = (
+				F98D097E1D7044B3004A71B7 /* 大牛圈.entitlements */,
 				615010E31AD61D9C00827F82 /* constant */,
 				F9352BF41CFBCD8800778635 /* Globle */,
 				614DC8891AD65F6900F610D4 /* Common */,
@@ -4280,6 +4282,11 @@
 					614A59711AD3AEA1005DAB04 = {
 						CreatedOnToolsVersion = 6.1;
 						DevelopmentTeam = 6FFGT2HSCN;
+						SystemCapabilities = {
+							com.apple.SafariKeychain = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -5265,6 +5272,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_ENTITLEMENTS = "Finance/大牛圈.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer: xie jian (A35C7Q22SB)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -5297,7 +5305,7 @@
 				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.danniuquan.apptest;
 				PRODUCT_NAME = "大牛圈";
-				PROVISIONING_PROFILE = "377b0370-afb6-4581-ba22-c107fe5d513b";
+				PROVISIONING_PROFILE = "5db33ca3-7663-47eb-a6fd-b7dd017ee543";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -5309,6 +5317,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_ENTITLEMENTS = "Finance/大牛圈.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer: xie jian (A35C7Q22SB)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -5341,7 +5350,7 @@
 				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.danniuquan.apptest;
 				PRODUCT_NAME = "大牛圈";
-				PROVISIONING_PROFILE = "377b0370-afb6-4581-ba22-c107fe5d513b";
+				PROVISIONING_PROFILE = "5db33ca3-7663-47eb-a6fd-b7dd017ee543";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -5391,6 +5400,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_ENTITLEMENTS = "Finance/大牛圈.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer: xie jian (A35C7Q22SB)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -5423,7 +5433,7 @@
 				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.danniuquan.apptest;
 				PRODUCT_NAME = "大牛圈";
-				PROVISIONING_PROFILE = "377b0370-afb6-4581-ba22-c107fe5d513b";
+				PROVISIONING_PROFILE = "5db33ca3-7663-47eb-a6fd-b7dd017ee543";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 			};

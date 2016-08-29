@@ -389,7 +389,10 @@
     [self saveContext];
 }
 
-#pragma mark - Split view
+- (BOOL)application:(UIApplication *)application continueUserActivity:(nonnull NSUserActivity *)userActivity restorationHandler:(nonnull void (^)(NSArray * _Nullable))restorationHandler
+{
+    return YES;
+}
 
 
 #pragma mark - Core Data stack

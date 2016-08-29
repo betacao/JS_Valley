@@ -13,7 +13,7 @@
 /**
  *  各环境接口定义
  */
-//#define kSitTest
+#define kSitTest
 #define kReleaseH
 
 #ifdef kSitTest
